@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>704111315967-0avs2jtnl9ml72nbmjubn5amrvrbc6hv.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.704111315967-0avs2jtnl9ml72nbmjubn5amrvrbc6hv</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>704111315967-8sao6puusdgjbvq4lq95qv4tm26u8iph.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDR25YzBr4JWm15ZqYHWSNuBP01WbIGYB8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>704111315967</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.app.masa</string>
+	<key>PROJECT_ID</key>
+	<string>masa-ee579</string>
+	<key>STORAGE_BUCKET</key>
+	<string>masa-ee579.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:704111315967:ios:19cf7905489d644d55f5ca</string>
+</dict>
+</plist>

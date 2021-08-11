@@ -1,0 +1,204 @@
+import React, {useState, useEffect} from 'react';
+import {Text, View, FlatList, RefreshControl} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {useSelector} from 'react-redux';
+import Header from '../../Components/Header';
+import WrapperContainer from '../../Components/WrapperContainer';
+import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
+import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
+import colors from '../../styles/colors';
+import {
+  moderateScale,
+  moderateScaleVertical,
+} from '../../styles/responsiveSize';
+import {currencyNumberFormatter} from '../../utils/commonFunction';
+import stylesFun from './styles';
+import commonStylesFun from '../../styles/commonStyles';
+import moment from 'moment';
+import HTMLView from 'react-native-htmlview';
+import {useFocusEffect} from '@react-navigation/native';
+import {cloneDeep, debounce} from 'lodash';
+
+export default function Wallet({navigation}) {
+  const [state, setState] = useState({
+    pageNo: 1,
+    limit: 12,
+    wallet_amount: 0,
+    walletHistory: [],
+    isRefreshing: false,
+  });
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const {appData, themeColors} = useSelector((state) => state?.initBoot);
+  const userData = useSelector((state) => state.auth.userData);
+  const {appStyle} = useSelector((state) => state?.initBoot);
+  const fontFamily = appStyle?.fontSizeData;
+  const commonStyles = commonStylesFun({fontFamily});
+  const styles = stylesFun({fontFamily, themeColors});
+  const moveToNewScreen = (screenName, data) => () => {
+    navigation.navigate(screenName, {data});
+  };
+  const {pageNo, walletHistory, limit, wallet_amount, isRefreshing} = state;
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getWalletData();
+    }, [isRefreshing]),
+  );
+
+  useEffect(() => {
+    getWalletData();
+  }, [pageNo, isRefreshing]);
+
+  const getWalletData = () => {
+    actions
+      .walletHistory(
+        `?page=${pageNo}&limit=${limit}`,
+        {},
+        {
+          code: appData?.profile?.code,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'Wallet Responce');
+        updateState({
+          isRefreshing: false,
+          isLoading: false,
+          isLoadingB: false,
+          wallet_amount: res?.data?.wallet_amount,
+          walletHistory:
+            pageNo == 1
+              ? res.data.transactions.data
+              : [...walletHistory, ...res.data.transactions.data],
+        });
+      })
+      .catch(errorMethod);
+  };
+
+  //Error handling in screen
+  const errorMethod = (error) => {
+    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    showError(error?.message || error?.error);
+  };
+
+  const _renderItem = ({item, index}) => {
+    return (
+      <TouchableOpacity>
+        <View
+          style={{
+            backgroundColor: '#fff',
+            flexDirection: 'row',
+            paddingVertical: moderateScaleVertical(10),
+          }}>
+          <View style={styles.addedMoneyTimeCon}>
+            <Text style={styles.addedMoneyMonth}>
+              {moment(item.created_at).format('ll')}
+            </Text>
+            <Text style={styles.addedMoneyTime}>
+              {moment(item.created_at).format('LT')}
+            </Text>
+          </View>
+          <View
+            style={[styles.addMoneyListDesc, {backgroundColor: 'transparent'}]}>
+            <HTMLView value={item?.meta} />
+            {/* <Text numberOfLines={2} style={styles.addedText}>
+              {item.description}
+            </Text> */}
+          </View>
+          <View style={styles.addedMoneyValueCon}>
+            <Text numberOfLines={1} style={styles.addedMoneyValue}>
+              {item.type == 'deposit' ? '+$' : '-$'}{' '}
+              {currencyNumberFormatter(item.amount)}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+  const goToAddMoney = () => {
+    moveToNewScreen(navigationStrings.ADD_MONEY, {})();
+  };
+
+  //pagination of data
+  const onEndReached = ({distanceFromEnd}) => {
+    updateState({pageNo: pageNo + 1});
+  };
+
+  //Pull to refresh
+  const handleRefresh = () => {
+    updateState({pageNo: 1, isRefreshing: true});
+  };
+
+  const onEndReachedDelayed = debounce(onEndReached, 1000, {
+    leading: true,
+    trailing: false,
+  });
+  return (
+    <WrapperContainer
+      bgColor={colors.backgroundGrey}
+      statusBarColor={colors.white}>
+      <Header
+        leftIcon={imagePath.back}
+        centerTitle={strings.WALLET}
+        // rightIcon={imagePath.cartShop}
+        headerStyle={{backgroundColor: Colors.white}}
+      />
+      <View style={{...commonStyles.headerTopLine}} />
+      <View style={styles.availableBalanceCon}>
+        <View style={styles.balanceCon}>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={styles.availableBalanceText}>
+              {strings.AVAILABLE_BALANCE}
+            </Text>
+          </View>
+
+          <View style={{flexDirection: 'row'}}>
+            <Text style={styles.availableBalanceValue}>
+              {'$'} {currencyNumberFormatter(wallet_amount)}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.addMoneyCon}>
+          <TouchableOpacity onPress={goToAddMoney} style={styles.addMoneybtn}>
+            <Text style={styles.addMoneyText}>{strings.ADD_MONEY}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={styles.transactionHistoryCon}>
+        <Text style={styles.transactionHistoryText}>
+          {strings.TRANSACTION_HISTORY}
+        </Text>
+      </View>
+      <View style={{...commonStyles.headerTopLine}} />
+      <View style={{backgroundColor: '#fff', flex: 1}}>
+        <FlatList
+          data={walletHistory}
+          showsVerticalScrollIndicator={false}
+          ListHeaderComponent={<View style={{height: 4}} />}
+          ItemSeparatorComponent={(walletHistory, index) =>
+            index == walletHistory.length ? null : (
+              <View style={styles.cartItemLine}></View>
+            )
+          }
+          keyExtractor={(item, index) => String(index)}
+          // ListEmptyComponent={<ListEmptyOffers isLoading={true} />}
+          // ListFooterComponent={() => <View style={{height: 10}} />}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              tintColor={themeColors.primary_color}
+            />
+          }
+          initialNumToRender={12}
+          maxToRenderPerBatch={10}
+          onEndReached={onEndReachedDelayed}
+          onEndReachedThreshold={0.5}
+          renderItem={_renderItem}
+        />
+      </View>
+    </WrapperContainer>
+  );
+}

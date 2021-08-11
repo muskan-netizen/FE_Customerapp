@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "925764246332",
+    "project_id": "help-now-right-now",
+    "storage_bucket": "help-now-right-now.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925764246332:android:da3cb813daf44595241c39",
+        "android_client_info": {
+          "package_name": "com.helpnowrightnow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925764246332-3sbquibo4hj8lj1oh9tig0vphq62tdmd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.helpnowrightnow",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "925764246332-k19m13ps59ecvqh7f9rct6ob8482h65k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.helpnowrightnow",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "925764246332-rrkcjilf3burfut3ba9e4iv7tcrrav3o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.helpnowrightnow",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "925764246332-9oriudurdb5td69i9iasg19uah1v9niu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDX-j8RGfnFP3xEYwT9BeEFzc4Ocoer5bw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925764246332-9oriudurdb5td69i9iasg19uah1v9niu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

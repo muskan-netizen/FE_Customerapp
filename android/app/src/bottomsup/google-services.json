@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "691063963805",
+    "project_id": "bottomsup-53763",
+    "storage_bucket": "bottomsup-53763.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:691063963805:android:15bdc6694cd66628819474",
+        "android_client_info": {
+          "package_name": "com.bottomsup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "691063963805-39pepvhbho3b2is3a5tsls056qt8mdlh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bottomsup",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "691063963805-4hm2q45n32efqllmne12sbu3c4kkqiaa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bottomsup",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "691063963805-l32bid6s1a93i98o85aojcbuugfteml7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bottomsup",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "691063963805-l9a24fm17jmcd1prmahv6qhg5m6ds04h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEA4tXi0-gWqOuunRMIJgJxHIkXyTwRkE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "691063963805-l9a24fm17jmcd1prmahv6qhg5m6ds04h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "691063963805-1chspp35g7oakor8ajjvo07sgq94pgtm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bottomsup"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "951401687665",
+    "project_id": "instamobile-1098c",
+    "storage_bucket": "instamobile-1098c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951401687665:android:64bfa342ed5c18fad809d0",
+        "android_client_info": {
+          "package_name": "com.instamobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "951401687665-8kq188uem54of6rlvvjuklpmk18lp0ug.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP299Sxj7NY9WUo0uQWOwLZiI1cOofQRI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "951401687665-8kq188uem54of6rlvvjuklpmk18lp0ug.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "951401687665-2o831iu2e91fsf5og4osvlvbcnk1cmvm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.instamobile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

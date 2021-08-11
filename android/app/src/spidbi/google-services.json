@@ -1,0 +1,135 @@
+{
+  "project_info": {
+    "project_number": "607569841310",
+    "firebase_url": "https://spidbi-d1817.firebaseio.com",
+    "project_id": "spidbi-d1817",
+    "storage_bucket": "spidbi-d1817.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607569841310:android:0b0f8656fed824fc",
+        "android_client_info": {
+          "package_name": "com.spidbi.delivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607569841310-ktojjugttnrhuunm76fcjlrp9dl9cgr4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spidbi.delivery",
+            "certificate_hash": "5ae5529d07d8479e7c827edb88a5ecac4e9aced4"
+          }
+        },
+        {
+          "client_id": "607569841310-m1ubti404hteqbqrqehg1p0ofqaovoa8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS2P-xhTdiTkoBG9JCrKo6WlnB1rAVQVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607569841310-m1ubti404hteqbqrqehg1p0ofqaovoa8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "607569841310-s31a2dnpp6l7uc79sh6umamhpifguc03.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.francisco.spidbi"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607569841310:android:080026e3a461ec10",
+        "android_client_info": {
+          "package_name": "com.spidbi.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607569841310-h3vl94cf214omrp79stra5t7k2k1r55t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spidbi.user",
+            "certificate_hash": "5ae5529d07d8479e7c827edb88a5ecac4e9aced4"
+          }
+        },
+        {
+          "client_id": "607569841310-m1ubti404hteqbqrqehg1p0ofqaovoa8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS2P-xhTdiTkoBG9JCrKo6WlnB1rAVQVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607569841310-m1ubti404hteqbqrqehg1p0ofqaovoa8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "607569841310-s31a2dnpp6l7uc79sh6umamhpifguc03.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.francisco.spidbi"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607569841310:android:f216a9995cd39b54bbbf8f",
+        "android_client_info": {
+          "package_name": "com.user.spidbi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607569841310-m1ubti404hteqbqrqehg1p0ofqaovoa8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS2P-xhTdiTkoBG9JCrKo6WlnB1rAVQVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607569841310-m1ubti404hteqbqrqehg1p0ofqaovoa8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "607569841310-s31a2dnpp6l7uc79sh6umamhpifguc03.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.francisco.spidbi"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

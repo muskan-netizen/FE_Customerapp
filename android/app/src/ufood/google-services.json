@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "100144117339",
+    "project_id": "ufood-9fb98",
+    "storage_bucket": "ufood-9fb98.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100144117339:android:de19116a502b348485b17e",
+        "android_client_info": {
+          "package_name": "com.ufood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100144117339-6nrpnsad9iujhq2imm79c0cj3go5lm3q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBh2b2UifbGt5gk__cjguCcjZT1UzUMt2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100144117339-6nrpnsad9iujhq2imm79c0cj3go5lm3q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

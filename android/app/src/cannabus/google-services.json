@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "500093526105",
+    "project_id": "cannabus-2f14c",
+    "storage_bucket": "cannabus-2f14c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500093526105:android:cb83b7b3c664ad80f15148",
+        "android_client_info": {
+          "package_name": "com.cannabus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500093526105-65c084kd3gb1ina3apuankj3lrt9ndfu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cannabus",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "500093526105-ldf1n3sb358niu716ioifgu5dkjaoi4o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cannabus",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "500093526105-spr247ffb1l9um3ij2j4dn21c0dtgf50.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cannabus",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "500093526105-9q7tfjgevbb9mrs66h73mk3hh8furp5l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXQkJwTDj37SA0bXZHfOMQRGy6LSbvF5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "500093526105-9q7tfjgevbb9mrs66h73mk3hh8furp5l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

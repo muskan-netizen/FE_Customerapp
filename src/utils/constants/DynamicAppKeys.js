@@ -1,0 +1,227 @@
+import {Platform} from 'react-native';
+import {getBundleId} from 'react-native-device-info';
+
+const shortCodes = {
+  runrun: 'bf8608',
+  tranzit: '52a1a6',
+  hmoobhub: 'fa11e1',
+  capcorp: '149f3e',
+  masa: 'c8490a',
+  yogofood: '7c428e',
+  spidbi: '4a7329',
+  clicktoeat: 'd2f528',
+  instamobile: '73bb60',
+  bottomsup: '068ff0',
+  africanvillagemarket: '1dfe7c',
+  ufood: '14425c',
+  martinionwheels: '439319',
+  blip: 'fc7a07',
+  helpnowrightnow: '0f64b9',
+  cannabus: '45fdcb',
+  govachow: 'ceac45',
+  bustanfakieh: '9083c8',
+  shariff: '3fd449',
+  gajamove: '52fd5a',
+  getme: '4361d1',
+  orbit: '82c91c',
+  carlitoo: '879df2',
+  specialhalal: 'b0fc04',
+  thehouse: 'edcbc0',
+  tasmeem: '408d5a',
+  klickmat: 'de2c54',
+  lastminutedress: '6e940e',
+  rerak: 'f16959',
+  foodkart: 'c23640',
+  yoho: 'fdbcd9',
+  glamsouq: '583ade',
+  doctatransportation: '8115ce',
+  washvalley: 'd5403a',
+  equamd: '82a1eb',
+  hellodeliver: '5ed004',
+  hoganchef: '52a0c3',
+};
+
+const appIds = {
+  royoorder: Platform.select({
+    ios: 'com.codebrew.royoordersreactnative',
+    android: 'com.codebrew.royoorder',
+  }),
+  runrun: Platform.select({
+    ios: 'com.codebrew.runrun',
+    android: 'com.codebrew.runrun',
+  }),
+  tranzit: Platform.select({
+    ios: 'com.tranzit',
+    android: 'com.tranzit',
+  }),
+  hmoobhub: Platform.select({
+    ios: 'com.codebrew.hmoobhub',
+    android: 'com.codebrew.hmoobhub',
+  }),
+  capcorp: Platform.select({
+    ios: 'com.capcorpapp',
+    android: 'com.capcorpapp',
+  }),
+  masa: Platform.select({
+    ios: 'com.app.masa',
+    android: 'com.app.masa',
+  }),
+  yogofood: Platform.select({
+    ios: 'com.yogofood',
+    android: 'com.yogofood',
+  }),
+  spidbi: Platform.select({
+    ios: 'com.user.spidbi',
+    android: 'com.user.spidbi',
+  }),
+  clicktoeat: Platform.select({
+    ios: 'com.codebrew.clicktoeat',
+    android: 'com.clicktoeat',
+  }),
+  instamobile: Platform.select({
+    ios: 'com.instamobile',
+    android: 'com.instamobile',
+  }),
+  bottomsup: Platform.select({
+    ios: 'com.bottomsup',
+    android: 'com.bottomsup',
+  }),
+  africanvillagemarket: Platform.select({
+    ios: 'com.codebrew.africanvillagemarket',
+    android: 'com.africanvillagemarket',
+  }),
+  ufood: Platform.select({
+    ios: 'com.ufood',
+    android: 'com.ufood',
+  }),
+  martinionwheels: Platform.select({
+    ios: 'com.martinionwheels',
+    android: 'com.martinionwheels',
+  }),
+  blip: Platform.select({
+    ios: 'com.blip',
+    android: 'com.blip',
+  }),
+  helpnowrightnow: Platform.select({
+    ios: 'com.helpnowrightnow',
+    android: 'com.helpnowrightnow',
+  }),
+  cannabus: Platform.select({
+    ios: 'com.cannabus',
+    android: 'com.cannabus',
+  }),
+  govachow: Platform.select({
+    ios: 'com.codebrew.govachow',
+    android: 'com.govachow',
+  }),
+  bustanfakieh: Platform.select({
+    ios: 'com.codebrew.bustan',
+    android: 'com.codebrew.bustan',
+  }),
+  shariff: Platform.select({
+    ios: 'com.codebrew.shariff',
+    android: 'com.shariff',
+  }),
+  gajamove: Platform.select({
+    ios: 'com.codebrew.gajamove',
+    android: 'com.codebrew.gajamove',
+  }),
+  getme: Platform.select({
+    ios: 'com.codebrew.getme',
+    android: 'com.codebrew.getme',
+  }),
+  orbit: Platform.select({
+    ios: 'com.codebrew.orbit',
+    android: 'com.codebrew.orbit',
+  }),
+  carlitoo: Platform.select({
+    ios: 'com.codebrew.carlitoo',
+    android: 'com.codebrew.carlitoo',
+  }),
+  specialhalal: Platform.select({
+    ios: 'com.codebrew.specialhalal',
+    android: 'com.codebrew.specialhalal',
+  }),
+  thehouse: Platform.select({
+    ios: 'com.codebrew.thehouse',
+    android: 'com.codebrew.thehouse',
+  }),
+  tasmeem: Platform.select({
+    ios: 'com.codebrew.tasmeem',
+    android: 'com.codebrew.tasmeem',
+  }),
+  klickmat: Platform.select({
+    ios: 'com.codebrew.klickmat',
+    android: 'com.codebrew.klickmat',
+  }),
+  lastminutedress: Platform.select({
+    ios: 'com.codebrewLab.lastminutedress',
+    android: 'com.codebrewLab.lastminutedress',
+  }),
+  rerak: Platform.select({
+    ios: 'com.codebrew.rerak',
+    android: 'com.codebrew.rerak',
+  }),
+  foodkart: Platform.select({
+    ios: 'com.codebrew.foodkart',
+    android: 'com.codebrew.foodkart',
+  }),
+  yoho: Platform.select({
+    ios: 'com.codebrewlab.yoho',
+    android: 'com.codebrew.yoho',
+  }),
+  glamsouq: Platform.select({
+    ios: 'com.codebrew.glamsouq',
+    android: 'com.codebrew.glamsouq',
+  }),
+  doctatransportation: Platform.select({
+    ios: 'com.codebrew.doctatransportation',
+    android: 'com.codebrew.doctatransportation',
+  }),
+  washvalley: Platform.select({
+    ios: 'com.codebrew.washvalley',
+    android: 'com.codebrew.washvalley',
+  }),
+  equamd: Platform.select({
+    ios: 'com.codebrew.equamd',
+    android: 'com.codebrew.equamd',
+  }),
+  hellodeliver: Platform.select({
+    ios: 'com.codebrew.hellodeliver',
+    android: 'com.codebrew.hellodeliver',
+  }),
+  hoganchef: Platform.select({
+    ios: 'com.codebrew.hoganchef',
+    android: 'com.codebrew.hoganchef',
+  }),
+};
+
+const socialKeys = {
+  TWITTER_COMSUMER_KEY:
+    getBundleId() == appIds.runrun
+      ? 'OCOQeRWzRoDAnGNbNFsbN5kuk'
+      : getBundleId() == appIds.royoorder
+      ? 'R66DHARfuoYAPowApUxNxwbPi'
+      : getBundleId() == appIds.capcorp
+      ? 'R66DHARfuoYAPowApUxNxwbPi'
+      : getBundleId() == appIds.tranzit
+      ? 'iOOPhwfIqnQfmyjZqDbKzMNgP'
+      : getBundleId() == appIds.hmoobhub
+      ? 'AvNzKlREbm3Aan3sEKYbXv0k8'
+      : 'R66DHARfuoYAPowApUxNxwbPi',
+
+  TWITTER_CONSUMER_SECRET:
+    getBundleId() == appIds.runrun
+      ? 'zBfzttCBVAzimuaIsDWDU1MjqI4pWzvNsrW6YOYPVZtgtzTlN8'
+      : getBundleId() == appIds.royoorder
+      ? 'itcicJ7fUV3b73B8V05GEDBo4tzxGox2Si2q0BCk5pue327k15'
+      : getBundleId() == appIds.capcorp
+      ? 'itcicJ7fUV3b73B8V05GEDBo4tzxGox2Si2q0BCk5pue327k15'
+      : getBundleId() == appIds.tranzit
+      ? 'pg72uq6SVPkUn0Ts3lQWPfqHSXwR09Tb64d3bPrnIcPnZdd5Tq'
+      : getBundleId() == appIds.hmoobhub
+      ? '5UW5ukiVG49CmpAh7hBWP333K68gz8hfeUXzmoL3p6jIWy0qQa'
+      : 'itcicJ7fUV3b73B8V05GEDBo4tzxGox2Si2q0BCk5pue327k15',
+};
+
+export {appIds, socialKeys, shortCodes};

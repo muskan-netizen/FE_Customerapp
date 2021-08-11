@@ -1,0 +1,281 @@
+import {cloneDeep} from 'lodash';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  Image,
+  Keyboard,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Modal from 'react-native-modal';
+import {useSelector} from 'react-redux';
+import GradientButton from '../../Components/GradientButton';
+import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
+import colors from '../../styles/colors';
+import commonStyles from '../../styles/commonStyles';
+import fontFamily from '../../styles/fontFamily';
+import {
+  height,
+  moderateScale,
+  moderateScaleVertical,
+  textScale,
+  width,
+} from '../../styles/responsiveSize';
+import {getImageUrl} from '../../utils/helperFunctions';
+import {useNavigation} from '@react-navigation/native';
+import navigationStrings from '../../navigation/navigationStrings';
+import stylesFunc from './styles';
+import HTMLView from 'react-native-htmlview';
+
+export default function AddonModal({
+  productdetail = {},
+  addonSet = [],
+  isVisible = false,
+  onClose,
+  onPress,
+  resizeMode = 'cover',
+  imagestyle = {},
+}) {
+  const navigation = useNavigation();
+
+  const [state, setState] = useState({
+    addonSetData: addonSet,
+    viewHeight: 0,
+    maxLimitAddon: 0,
+  });
+  const {addonSetData, viewHeight, maxLimitAddon} = state;
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+
+  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
+    useSelector((state) => state?.initBoot);
+  const fontFamily = appStyle?.fontSizeData;
+  const styles = stylesFunc({themeColors, fontFamily});
+
+  let productImage = productdetail?.product_media[0];
+
+  const selectSpecificOptionsForAddions = (options, i, inx) => {
+    let newArray = cloneDeep(options);
+    console.log(i, 'i>>>i');
+    console.log(newArray, 'newArray>>>newArray');
+    console.log(addonSetData, 'addonSetData>>>addonSetData');
+    let find = addonSetData.find((x) => x?.addon_id == i?.addon_id);
+    console.log(find, 'find>>>find');
+
+    updateState({
+      addonSetData: addonSetData.map((vi, vnx) => {
+        if (vi.addon_id == i.addon_id) {
+          return {
+            ...vi,
+            setoptions: newArray.map((j, jnx) => {
+              if (vi?.max_select > 1) {
+                let incrementedValue = 0;
+                newArray.forEach((e) => {
+                  if (e.value) {
+                    incrementedValue = incrementedValue + 1;
+                  }
+                });
+                console.log(incrementedValue, 'incrementedValue');
+                if ((incrementedValue == vi?.max_select) && !j.value) {
+                  return {
+                    ...j,
+                  };
+                } else {
+                  if (j?.id == i?.id) {
+                    return {
+                      ...j,
+                      value: i?.value ? false : true,
+                    };
+                  }
+
+                  return {
+                    ...j,
+                  };
+                }
+              } else {
+                if (j.id == i.id) {
+                  return {
+                    ...j,
+                    value: i?.value ? false : true,
+                  };
+                }
+
+                return {
+                  ...j,
+                  value: false,
+                };
+              }
+            }),
+          };
+        } else {
+          return vi;
+        }
+      }),
+    });
+  };
+
+  const checkBoxButtonViewAddons = ({setoptions}) => {
+    return (
+      <View>
+        {setoptions.map((i, inx) => {
+          return (
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => {
+                selectSpecificOptionsForAddions(setoptions, i, inx);
+              }}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+
+                marginBottom: moderateScaleVertical(10),
+              }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={styles.variantValue}>
+                  {i?.title
+                    ? i.title.charAt(0).toUpperCase() + i.title.slice(1)
+                    : ''}
+                </Text>
+              </View>
+
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={styles.variantValue}>
+                  {`${currencies?.primary_currency?.symbol}${(
+                    Number(i?.multiplier) * Number(i?.price)
+                  ).toFixed(2)}`}
+                </Text>
+                <View style={{paddingLeft: moderateScale(5)}}>
+                  <Image
+                    source={i?.value ? imagePath.check : imagePath.unCheck}
+                  />
+                </View>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    );
+  };
+
+  const showAllAddons = () => {
+    let variantSetData = cloneDeep(addonSetData);
+    return (
+      <>
+        <View
+          style={{
+            marginVertical: moderateScaleVertical(5),
+          }}>
+          {variantSetData.map((i, inx) => {
+            return (
+              <View
+                key={inx}
+                style={{
+                  marginVertical: moderateScaleVertical(5),
+                }}>
+                <Text
+                  style={[styles.variantLable]}>{`Choice of ${i?.title}`}</Text>
+                <Text style={styles.chooseOption}>
+                  {strings.PLS_SELECT_ONE}
+                </Text>
+                {i?.setoptions ? checkBoxButtonViewAddons(i) : null}
+                <View
+                  style={{
+                    ...commonStyles.headerTopLine,
+                    marginVertical: moderateScaleVertical(10),
+                  }}
+                />
+              </View>
+            );
+          })}
+        </View>
+      </>
+    );
+  };
+
+  const addToCart = () => {
+    onClose();
+    navigation.navigate(navigationStrings.PRODUCTDETAIL, {
+      data: {
+        addonSetData: addonSetData,
+        randomValue:Math.random()
+      },
+    });
+  };
+
+  return (
+    <Modal
+      transparent={true}
+      isVisible={isVisible}
+      animationType={'none'}
+      style={styles.modalContainer}
+      onLayout={(event) => {
+        updateState({viewHeight: event.nativeEvent.layout.height});
+      }}>
+      <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+        <Image source={imagePath.crossB} />
+      </TouchableOpacity>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        bounces={false}
+        style={styles.modalMainViewContainer}>
+        <View style={styles.modalMainViewContainer}>
+          <Image
+            source={{
+              uri: getImageUrl(
+                productImage?.image?.path?.proxy_url,
+                productImage?.image?.path?.image_path,
+                '500/500',
+              ),
+            }}
+            style={[styles.cardView, imagestyle]}
+            resizeMode={resizeMode}
+          />
+          <View style={styles.mainView}>
+            <View>
+              <Text numberOfLines={1} style={styles.productName}>
+                {productdetail?.translation[0]?.title}
+              </Text>
+            </View>
+
+            {productdetail?.translation[0]?.body_html != null ? (
+              <View
+                style={{
+                  flexDirection: 'row',
+                }}>
+                <Text style={styles.description}>
+                  <HTMLView value={productdetail?.translation[0]?.body_html} />
+                </Text>
+              </View>
+            ) : null}
+
+            <View
+              style={{
+                ...commonStyles.headerTopLine,
+                marginVertical: moderateScaleVertical(10),
+              }}
+            />
+
+            {/* ********Addon set View*******  */}
+            {addonSetData && addonSetData.length ? showAllAddons() : null}
+          </View>
+        </View>
+
+        <View style={{height: moderateScaleVertical(100)}} />
+      </ScrollView>
+      <View
+        style={[styles.bottomAddToCartView, {top: viewHeight - height / 10}]}>
+        <GradientButton
+          colorsArray={[themeColors.primary_color, themeColors.primary_color]}
+          textStyle={styles.textStyle}
+          onPress={addToCart}
+          marginTop={moderateScaleVertical(10)}
+          marginBottom={moderateScaleVertical(10)}
+          btnText={strings.ADDTOCART}
+        />
+      </View>
+    </Modal>
+  );
+}

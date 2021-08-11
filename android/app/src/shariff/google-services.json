@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "285638988609",
+    "project_id": "shariff-8bb7e",
+    "storage_bucket": "shariff-8bb7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285638988609:android:475cac3c2c408a05a3c7c0",
+        "android_client_info": {
+          "package_name": "com.shariff"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285638988609-96qeggcpooa01cpqoq9p6rl08dj5ed3a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shariff",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "285638988609-idaor29dor1sghpbfg8bt2hcal0c5e93.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shariff",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "285638988609-uune9kjf8c2hrs07isk1ct31vn5fcjuf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shariff",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "285638988609-p882hv3nraql9cn93f0dk88oih6bqdjf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAagRIeWpKNYJyRP_6XjSfqFqqkQ_lcFAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "285638988609-p882hv3nraql9cn93f0dk88oih6bqdjf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

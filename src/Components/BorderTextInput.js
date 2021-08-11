@@ -1,0 +1,103 @@
+import React, {useEffect, useRef} from 'react';
+import {
+  I18nManager,
+  Image,
+  Platform,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
+import colors from '../styles/colors';
+import {hitSlopProp} from '../styles/commonStyles';
+import {
+  moderateScaleVertical,
+  textScale,
+  width,
+} from '../styles/responsiveSize';
+
+export default function BorderTextInput({
+  containerStyle,
+  textInputStyle,
+  leftIcon,
+  color = colors.textGreyOpcaity7,
+  rightIcon,
+  onChangeText,
+  value,
+  placeholder,
+  marginBottom = 20,
+  onPressRight = () => {},
+  withRef = false,
+  secureTextEntry = false,
+  ...props
+}) {
+  const inputRef = useRef();
+  const {appStyle} = useSelector((state) => state.initBoot);
+  const fontFamily = appStyle?.fontSizeData;
+
+  useEffect(() => {
+    if (withRef && Platform.OS === 'android') {
+      if (inputRef.current) {
+        inputRef.current.setNativeProps({
+          style: {fontFamily: fontFamily.regular},
+        });
+      }
+    }
+  }, [secureTextEntry]);
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        height: moderateScaleVertical(49),
+        color: colors.white,
+        borderWidth: 1,
+        borderRadius: 13,
+        borderColor: colors.borderLight,
+        marginBottom,
+        overflow: 'hidden',
+        ...containerStyle,
+      }}>
+      {leftIcon && (
+        <View style={{justifyContent: 'center', marginLeft: 10}}>
+          <Image source={leftIcon} />
+        </View>
+      )}
+
+      <TextInput
+        selectionColor={colors.black}
+        placeholder={placeholder}
+        placeholderTextColor={color}
+        style={{
+          flex: 1,
+          opacity: 0.7,
+          color,
+          fontFamily: fontFamily.medium,
+          fontSize: textScale(14),
+          paddingHorizontal: 8,
+          paddingTop: 0,
+          paddingBottom: 0,
+          textAlign: I18nManager.isRTL ? 'right' : 'left',
+          ...textInputStyle,
+        }}
+        ref={inputRef}
+        // numberOfLines
+        blurOnSubmit
+        onChangeText={onChangeText}
+        value={value}
+        secureTextEntry={secureTextEntry}
+        autoCapitalize={'none'}
+        {...props}
+      />
+
+      {rightIcon && (
+        <TouchableOpacity
+          style={{justifyContent: 'center', marginRight: 10}}
+          hitSlop={hitSlopProp}
+          onPress={onPressRight}>
+          <Image style={{tintColor: colors.white}} source={rightIcon} />
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+}

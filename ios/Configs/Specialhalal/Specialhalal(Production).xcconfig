@@ -1,0 +1,14 @@
+#include "Pods/Target Support Files/Pods-Specialhalal/Pods-Specialhalal.release.xcconfig"
+
+
+PROJECT_APPLE_ID = 1580390191
+PROJECT_BUNDLE_ID = com.codebrew.specialhalal
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME = Special halal
+PROJECT_GOOGLE_CLIENT_ID = 189449545738-jled60k4vfieg2gl7etjqe91n3taj3fj.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.189449545738-jled60k4vfieg2gl7etjqe91n3taj3fj
+PROJECT_FACEBOOK_ID = 150697170534010
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST = SpecialhalalInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

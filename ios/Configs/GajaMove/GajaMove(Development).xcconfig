@@ -1,0 +1,14 @@
+#include "Pods/Target Support Files/Pods-GajaMove/Pods-GajaMove.debug.xcconfig"
+
+
+PROJECT_APPLE_ID = 1579511777
+PROJECT_BUNDLE_ID = com.codebrew.gajamove
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 2
+PROJECT_APP_NAME = GajaMove
+PROJECT_GOOGLE_CLIENT_ID = 365171986921-a72efl1hfdfp9b36qgnriotvu4g5h8jq.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.365171986921-a72efl1hfdfp9b36qgnriotvu4g5h8jq
+PROJECT_FACEBOOK_ID = 355517689436783
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST = GajaMoveInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

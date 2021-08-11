@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>859143396573-cmd72lkrropjlefcrt9mcpop71g9rr9r.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.859143396573-cmd72lkrropjlefcrt9mcpop71g9rr9r</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>859143396573-6rgl2lrj1goiedl6t03bhqb7rvr7g494.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCrDQoACHNFkzyNkt0pBB9DoCZ4UPxo1_g</string>
+	<key>GCM_SENDER_ID</key>
+	<string>859143396573</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.codebrew.africanvillagemarket</string>
+	<key>PROJECT_ID</key>
+	<string>african-village-market</string>
+	<key>STORAGE_BUCKET</key>
+	<string>african-village-market.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:859143396573:ios:684a1ad99c231497efcf34</string>
+</dict>
+</plist>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1073948422654-evug2209p0rlpjno8t4f5ddfq4uavh4f.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1073948422654-evug2209p0rlpjno8t4f5ddfq4uavh4f</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1073948422654-irdg5coguj36tp460h8qlh3b9bbm2dh4.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAKxlO9OKIncFrbcb1tSpQgbfnY64Ou6sk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1073948422654</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.codebrew.royoordersreactnative</string>
+	<key>PROJECT_ID</key>
+	<string>royo-order-version2</string>
+	<key>STORAGE_BUCKET</key>
+	<string>royo-order-version2.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1073948422654:ios:dc0471afc0e5c629c410af</string>
+</dict>
+</plist>

@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "711046951889",
+    "project_id": "blip-8de3d",
+    "storage_bucket": "blip-8de3d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711046951889:android:e5bc167cd65f985fb9e6f0",
+        "android_client_info": {
+          "package_name": "com.blip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "711046951889-cdi65hvvo3g1nimhrftmb7p7o0c25481.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blip",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "711046951889-rri2dcujrh848792h0hor0n1c599ssql.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blip",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "711046951889-udrgmr83tdoo0l13rltnkqn897c76jkq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blip",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "711046951889-72mlkihcgkih6ctsaem5io2o2mnsc0ct.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-O3LpzCcCOO3irAOyBzCkoNAPB_pmTlQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "711046951889-72mlkihcgkih6ctsaem5io2o2mnsc0ct.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

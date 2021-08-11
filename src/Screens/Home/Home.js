@@ -1,0 +1,560 @@
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useEffect, useRef, useState} from 'react';
+import {Alert, BackHandler, Linking, View} from 'react-native';
+import Geocoder from 'react-native-geocoding';
+import {useSelector} from 'react-redux';
+import WrapperContainer from '../../Components/WrapperContainer';
+import staticStrings from '../../constants/staticStrings';
+import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
+import colors from '../../styles/colors';
+
+import {
+  androidBackButtonHandler,
+  getCurrentLocation,
+  showSuccess,
+} from '../../utils/helperFunctions';
+import {chekLocationPermission} from '../../utils/permissions';
+import {
+  DashBoardHeaderOne,
+  DashBoardOne,
+  DashBoardThree,
+} from './DashboardViews/Index';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
+import DeviceInfo from 'react-native-device-info';
+
+navigator.geolocation = require('react-native-geolocation-service');
+
+export default function Home({route, navigation}) {
+  const paramData = route?.params;
+
+  const location = useSelector((state) => state?.home?.location);
+  const [state, setState] = useState({
+    isLoading: true,
+    latitude: location?.latitude,
+    longitude: location?.longitude,
+    slider1ActiveSlide: 0,
+    // location: [],
+    isRefreshing: false,
+    updatedData: [],
+    selectedTabType: '',
+    updateTime: 0,
+  });
+  const appMainData = useSelector((state) => state?.home?.appMainData);
+  const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
+  const {
+    appData,
+    themeColors,
+    themeLayouts,
+    currencies,
+    languages,
+    internetConnection,
+    appStyle,
+  } = useSelector((state) => state?.initBoot);
+
+  const initData = useSelector((state) => state?.initBoot);
+  const userData = useSelector((state) => state?.auth?.userData);
+
+  const profileInfo = appData?.profile;
+  const {profile} = appData;
+  const {
+    updateTime,
+    isLoading,
+    longitude,
+    latitude,
+    slider1ActiveSlide,
+    isRefreshing,
+    themeLayout,
+    updatedData,
+    selectedTabType,
+  } = state;
+  useFocusEffect(
+    React.useCallback(() => {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        androidBackButtonHandler,
+      );
+      return () => backHandler.remove();
+    }, []),
+  );
+
+  useEffect(() => {
+    updateState({updatedData: appMainData?.categories});
+  }, [appMainData]);
+
+  useEffect(() => {
+    if (
+      paramData?.details &&
+      paramData?.details?.formatted_address != location?.address
+    ) {
+      const address = paramData?.details?.formatted_address;
+      const res = {
+        address: address,
+        latitude: paramData?.details?.geometry?.location.lat,
+        longitude: paramData?.details?.geometry?.location.lng,
+      };
+      if (
+        res?.latitude != location?.latitude &&
+        res?.longitude != location?.longitude
+      ) {
+        if (cartItemCount?.data?.item_count) {
+          checkCartWithLatLang(res);
+        } else {
+          updateLatLang(res);
+        }
+      } else {
+        updateLatLang(res);
+      }
+    }
+  }, [paramData?.details]);
+
+  const checkCartWithLatLang = (res) => {
+    console.log(res, 'res>>>>res>>>>>res>>>>');
+    Alert.alert(
+      '',
+      'This will remove your cart.Are your sure you want to remove the cart?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          // style: 'destructive',
+        },
+        {text: 'Clear Cart', onPress: () => clearCart(res)},
+      ],
+    );
+  };
+
+  const clearCart = (location) => {
+    updateLatLang(location);
+    actions
+      .clearCart(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        actions.cartItemQty(res);
+        homeData(location);
+      })
+      .catch(errorMethod);
+  };
+
+  const updateLatLang = (res) => {
+    updateState({updateTime: Math.random()});
+    actions.locationData(res);
+  };
+  useEffect(() => {
+    if (updateTime) {
+      homeData();
+    }
+  }, [updateTime]);
+
+  useEffect(() => {
+    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+    // dynamicLinks()
+    //   .getInitialLink()
+    //   .then((link) => {
+    //     if (link.url === 'https://play.google.com/') {
+    //       alert();
+    //       // navigation.navigate(navigationStrings.CART);
+    //     }
+    //   });
+  }, []);
+
+  useEffect(() => {
+    chekLocationPermission()
+      .then((result) => {
+        if (result !== 'goback') {
+          getCurrentLocation('home')
+            .then((res) => {
+              if (
+                appMainData &&
+                typeof appMainData?.reqData == 'object' &&
+                appMainData?.reqData?.latitude &&
+                (location?.latitude == '' || location?.longitude == '')
+              ) {
+                const data = {
+                  address: appMainData?.reqData?.address,
+                  latitude: appMainData?.reqData?.latitude,
+                  longitude: appMainData?.reqData?.longitude,
+                };
+                actions.locationData(data);
+              } else {
+                if (appData?.profile?.preferences?.is_hyperlocal) {
+                  if (!location?.address) {
+                    actions.locationData(res);
+                  }
+                }
+              }
+            })
+            .catch((err) => {});
+        }
+      })
+      .catch((error) => console.log('error while accessing location', error));
+  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // homeData();
+      getAllAddress();
+    }, []),
+  );
+
+  // useEffect(() => {
+  //   homeData();
+  // }, [appMainData]);
+
+  //get All address
+  const getAllAddress = () => {
+    if (!!userData?.auth_token) {
+      actions
+        .getAddress(
+          {},
+          {
+            code: appData?.profile?.code,
+          },
+        )
+        .then((res) => {
+          updateState({
+            isLoadingB: false,
+          });
+          if (res.data) {
+            actions.saveAllUserAddress(res.data);
+          }
+        })
+        .catch(errorMethod);
+    }
+  };
+
+  //Home data
+  const homeData = (slectedLocatonFromPreviousScreen) => {
+    let latlongObj = {};
+    console.log(location, 'redux location');
+    if (appData?.profile?.preferences?.is_hyperlocal) {
+      latlongObj = {
+        address: slectedLocatonFromPreviousScreen
+          ? slectedLocatonFromPreviousScreen?.address
+          : location?.address,
+        latitude: slectedLocatonFromPreviousScreen
+          ? slectedLocatonFromPreviousScreen?.latitude
+          : location?.latitude,
+        longitude: slectedLocatonFromPreviousScreen
+          ? slectedLocatonFromPreviousScreen?.longitude
+          : location?.longitude,
+      };
+    }
+    console.log(latlongObj, 'latlongObj');
+    console.log(selectedTabType, 'selectedTabType');
+    {
+      selectedTabType
+        ? actions
+            .homeData(
+              {
+                type: selectedTabType ? selectedTabType : 'delivery',
+                ...latlongObj,
+              },
+              {
+                code: appData?.profile?.code,
+                currency: currencies?.primary_currency?.id,
+                language: languages?.primary_language?.id,
+
+                // ...latlongObj,
+              },
+            )
+            .then((res) => {
+              console.log(res, 'Home data');
+              if (
+                appData?.profile?.preferences?.is_hyperlocal &&
+                location?.latitude == '' &&
+                location?.longitude == ''
+              ) {
+                if (
+                  typeof res?.data?.reqData == 'object' &&
+                  res?.data?.reqData?.latitude &&
+                  res?.data?.reqData?.longitude
+                ) {
+                  const data = {
+                    address: res?.data?.reqData?.address,
+                    latitude: res?.data?.reqData?.latitude,
+                    longitude: res?.data?.reqData?.longitude,
+                  };
+                  actions.locationData(data);
+                }
+              } else {
+                if (
+                  appData?.profile?.preferences?.is_hyperlocal &&
+                  location?.latitude != '' &&
+                  location?.longitude != ''
+                ) {
+                } else {
+                  const data = {
+                    address: '',
+                    latitude: '',
+                    longitude: '',
+                  };
+                  actions.locationData(data);
+                }
+              }
+              updateState({isLoading: false});
+            })
+            .catch(errorMethod)
+        : null;
+    }
+  };
+
+  //Error handling in screen
+  const errorMethod = (error) => {
+    console.log(error, 'error');
+    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    showError(error?.message || error?.error);
+  };
+
+  //update state
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+
+  //Naviagtion to specific screen
+  const moveToNewScreen =
+    (screenName, data = {}) =>
+    () => {
+      navigation.navigate(screenName, {data});
+    };
+
+  //Component reference
+  const {viewRef2, viewRef3, bannerRef} = useRef();
+
+  //onPress Category
+  const onPressCategory = (item) => {
+    if (item.redirect_to == staticStrings.VENDOR) {
+      moveToNewScreen(navigationStrings.VENDOR, item)();
+    } else if (
+      item.redirect_to == staticStrings.PRODUCT ||
+      item.redirect_to == staticStrings.CATEGORY
+    ) {
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
+    } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
+      if (!!userData?.auth_token) {
+        if (item?.warning_page_id) {
+          if (item?.warning_page_id == 2) {
+            moveToNewScreen(navigationStrings.DELIVERY, item)();
+          } else {
+            moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
+          }
+        } else {
+          if (item?.template_type_id == 1) {
+            moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
+          } else {
+            moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
+          }
+        }
+      } else {
+        // showError(strings.UNAUTHORIZED_MESSAGE);
+        moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      }
+    } else if (item.redirect_to == staticStrings.DISPATCHER) {
+      // moveToNewScreen(navigationStrings.DELIVERY, item)();
+    } else if (item.redirect_to == staticStrings.CELEBRITY) {
+      moveToNewScreen(navigationStrings.CELEBRITY)();
+    } else if (item.redirect_to == staticStrings.BRAND) {
+      moveToNewScreen(navigationStrings.BRANDS)();
+    } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
+      // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+    }
+  };
+
+  //On Press banner
+  const bannerPress = (data) => {
+    if (data?.redirect_id) {
+      let item = {
+        id: data.redirect_id,
+        redirect_to: data.redirect_to,
+        name: data.redirect_name,
+      };
+      if (data.redirect_to == staticStrings.VENDOR) {
+        data?.is_show_category
+          ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
+              item,
+              rootProducts: true,
+              // categoryData: data,
+            })()
+          : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+              id: data.redirect_id,
+              vendor: true,
+              name: data.redirect_name,
+            })();
+      } else if (data.redirect_to == staticStrings.CATEGORY) {
+        moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+          id: data.redirect_id,
+          // vendor: true,
+          name: data.redirect_name,
+        })();
+      }
+    }
+  };
+
+  //Reloads the screen
+  const initApiHit = () => {
+    actions
+      .initApp(
+        {},
+        {
+          code: appData?.profile?.code,
+        },
+        true,
+      )
+      .then((res) => {
+        updateState({isRefreshing: false});
+      })
+      .catch((error) => {
+        updateState({isRefreshing: false});
+      });
+  };
+
+  //Pull to refresh
+  const handleRefresh = () => {
+    updateState({isRefreshing: true});
+
+    initApiHit();
+    // homeData();
+  };
+  const updateCircleData = (data) => {
+    updateState({updatedData: data});
+  };
+  const selcetedToggle = (type) => {
+    actions.dineInData(type);
+    updateState({
+      selectedTabType: type,
+    });
+  };
+
+  useEffect(() => {
+    homeData();
+  }, [selectedTabType, appData]);
+
+  ///onPressCategory2
+  const onPressCategory2 = (item) => {
+    if (item.redirect_to == staticStrings.VENDOR) {
+      moveToNewScreen(navigationStrings.VENDOR, item)();
+    } else if (
+      item.redirect_to == staticStrings.PRODUCT ||
+      item.redirect_to == staticStrings.CATEGORY
+    ) {
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
+    } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
+      if (!!userData?.auth_token) {
+        if (item?.warning_page_id) {
+          if (item?.warning_page_id == 2) {
+            moveToNewScreen(navigationStrings.DELIVERY, item)();
+          } else {
+            moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
+          }
+        } else {
+          if (item?.template_type_id == 1) {
+            moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
+          } else {
+            moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
+          }
+        }
+      } else {
+        // showError(strings.UNAUTHORIZED_MESSAGE);
+        moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+      }
+    } else if (item.redirect_to == staticStrings.DISPATCHER) {
+      // moveToNewScreen(navigationStrings.DELIVERY, item)();
+    } else if (item.redirect_to == staticStrings.CELEBRITY) {
+      moveToNewScreen(navigationStrings.CELEBRITY)();
+    } else if (item.redirect_to == staticStrings.BRAND) {
+      moveToNewScreen(navigationStrings.BRANDS)();
+    } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
+      // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
+
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+    } else if (!!item.is_show_category) {
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+    }
+  };
+
+  return (
+    <WrapperContainer
+      statusBarColor={colors.backgroundGrey}
+      bgColor={colors.white}>
+      <View style={{flex: 1}}>
+        <>
+          <DashBoardHeaderOne navigation={navigation} location={location} />
+          <DashBoardOne
+            handleRefresh={() => handleRefresh()}
+            bannerPress={(item) => bannerPress(item)}
+            isLoading={isLoading}
+            isRefreshing={isRefreshing}
+            appMainData={appMainData}
+            onPressCategory={(item) => onPressCategory2(item)}
+            selcetedToggle={selcetedToggle}
+            toggleData={appData}
+          />
+        </>
+        {/* {(() => {
+          switch (appStyle?.homePageLayout) {
+            case 1:
+              return (
+                <>
+                  <DashBoardHeaderOne
+                    navigation={navigation}
+                    location={location}
+                  />
+                  <DashBoardOne
+                    handleRefresh={() => handleRefresh()}
+                    bannerPress={(item) => bannerPress(item)}
+                    isLoading={isLoading}
+                    isRefreshing={isRefreshing}
+                    appMainData={appMainData}
+                    onPressCategory={(item) => onPressCategory(item)}
+                    selcetedToggle={selcetedToggle}
+                    toggleData={appData}
+                  />
+                </>
+              );
+
+            case 2:
+              return (
+                <>
+                  <DashBoardHeaderTwo
+                    navigation={navigation}
+                    location={location}
+                    isLoading={isLoading}
+                    isRefreshing={isRefreshing}
+                    handleRefresh={() => handleRefresh()}
+                  />
+                  <DashBoardTwo
+                    handleRefresh={() => handleRefresh()}
+                    bannerPress={(item) => bannerPress(item)}
+                    isLoading={isLoading}
+                    isRefreshing={isRefreshing}
+                    updatedData={updatedData}
+                    appMainData={appMainData}
+                    updateCircleData={(data) => updateCircleData(data)}
+                    onPressCategory={(item) => onPressCategory(item)}
+                  />
+                </>
+              );
+            case 3:
+              return (
+                <>
+                  <DashBoardThree
+                    handleRefresh={() => handleRefresh()}
+                    bannerPress={(item) => bannerPress(item)}
+                    isLoading={isLoading}
+                    isRefreshing={isRefreshing}
+                    onPressCategory={(item) => onPressCategory(item)}
+                  />
+                </>
+              );
+          }
+        })} */}
+      </View>
+    </WrapperContainer>
+  );
+}

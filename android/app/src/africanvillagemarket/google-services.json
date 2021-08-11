@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "859143396573",
+    "project_id": "african-village-market",
+    "storage_bucket": "african-village-market.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859143396573:android:7d98ecc94cc7a69befcf34",
+        "android_client_info": {
+          "package_name": "com.africanvillagemarket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "859143396573-1dibh4o5pl07fd79obb363dffk231tqr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.africanvillagemarket",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "859143396573-bhnvag1iu2u90h47src7qe7lb2912ang.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.africanvillagemarket",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "859143396573-lh3pfbus8496kc2u6fm5ibnkvpgdu91s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.africanvillagemarket",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "859143396573-lcul1bsvnuhbkug5p9j5a1ljv9ip1dns.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJi2AdeVPwsJai2SWcj0zUzCW2q_AzrxA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "859143396573-lcul1bsvnuhbkug5p9j5a1ljv9ip1dns.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "859143396573-cmd72lkrropjlefcrt9mcpop71g9rr9r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.codebrew.africanvillagemarket"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
