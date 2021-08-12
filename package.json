@@ -48,7 +48,6 @@
     "yahu": "react-native run-android --variant=yahuDebug --appIdSuffix=yahu",
     "zuzuclean": "react-native run-android --variant=zuzucleanDebug --appIdSuffix=zuzuclean",
     "towtrek": "react-native run-android --variant=towtrekDebug --appIdSuffix=towtrek",
-
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "bustanfakiehRelease": "cd android && ./gradlew assembleBustanFakiehRelease",
@@ -94,7 +93,6 @@
     "yahuRelease": "cd android && ./gradlew assembleYahuRelease",
     "zuzucleanRelease": "cd android && ./gradlew assembleZuzuCleanRelease",
     "towtrekRelease": "cd android && ./gradlew assembleTowTrekRelease",
-
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
