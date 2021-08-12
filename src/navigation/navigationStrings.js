@@ -72,7 +72,8 @@ export default {
   WEBPAYMENTS: 'webPayment',
   PICKUPORDERDETAIL: 'pickOrderDetail',
   TRACKORDER: 'trackOrder',
-  WEBVIEWSCREEN:'webViewScreen',
-  SUBSCRIPTION:'subscriptions',
-  LOYALTY:'loyalty'
+  WEBVIEWSCREEN: 'webViewScreen',
+  SUBSCRIPTION: 'subscriptions',
+  LOYALTY: 'loyalty',
+  CART2: 'orders',
 };

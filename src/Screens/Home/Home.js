@@ -16,12 +16,14 @@ import {
 } from '../../utils/helperFunctions';
 import {chekLocationPermission} from '../../utils/permissions';
 import {
+  DashBoardFour,
   DashBoardHeaderOne,
   DashBoardOne,
   DashBoardThree,
 } from './DashboardViews/Index';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
-import DeviceInfo from 'react-native-device-info';
+import {getBundleId} from 'react-native-device-info';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -481,10 +483,22 @@ export default function Home({route, navigation}) {
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
-      bgColor={colors.white}>
+      bgColor={colors.backgroundGrey}>
       <View style={{flex: 1}}>
         <>
           <DashBoardHeaderOne navigation={navigation} location={location} />
+          {/* {getBundleId() !== appIds.capcorp ? (
+            <DashBoardFour
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => onPressCategory2(item)}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+            />
+          ) : ( */}
           <DashBoardOne
             handleRefresh={() => handleRefresh()}
             bannerPress={(item) => bannerPress(item)}
@@ -495,6 +509,7 @@ export default function Home({route, navigation}) {
             selcetedToggle={selcetedToggle}
             toggleData={appData}
           />
+          {/* )} */}
         </>
         {/* {(() => {
           switch (appStyle?.homePageLayout) {

@@ -35,7 +35,6 @@ export default function DashBoardHeaderOne({navigation = {}, location = []}) {
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
-  console.log(profileInfo, 'profileInfo');
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const imageURI = getImageUrl(
@@ -46,7 +45,6 @@ export default function DashBoardHeaderOne({navigation = {}, location = []}) {
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
 
-  console.log(imageURI, 'imageURI');
   return (
     <View
       style={{

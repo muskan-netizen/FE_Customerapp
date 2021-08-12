@@ -21,6 +21,8 @@ import {View} from 'react-native-animatable';
 import staticStrings from '../constants/staticStrings';
 import CustomTopTabBar from '../Components/CustomTopTabBar';
 import CustomBottomTabBar1 from '../Components/CustomBottomTabBar1';
+import {getBuildId} from 'react-native-device-info';
+import {appIds} from '../utils/constants/DynamicAppKeys';
 const Tab = createBottomTabNavigator();
 
 export default function TabRoutes(props) {
@@ -126,8 +128,8 @@ export default function TabRoutes(props) {
         component={CartStack}
         name={navigationStrings.CART}
         options={{
-          // tabBarLabel: strings.CART,
-          tabBarLabel: strings.ORDER_CART,
+          tabBarLabel: strings.CART,
+          // tabBarLabel: strings.ORDER_CART,
           tabBarIcon: ({focused, tintColor}) => (
             <View style={{alignItems: 'center'}}>
               {cartItemCount?.data?.item_count ? (
@@ -141,7 +143,9 @@ export default function TabRoutes(props) {
                 style={{tintColor: tintColor}}
                 source={focused ? imagePath.cartActive : imagePath.cartInActive}
                 // capcorp
-                // source={  focused ? imagePath.ordersActive : imagePath.ordersInActive }
+                // source={
+                //   focused ? imagePath.ordersActive : imagePath.ordersInActive
+                // }
               />
             </View>
           ),
@@ -160,7 +164,9 @@ export default function TabRoutes(props) {
               style={{tintColor: tintColor}}
               source={focused ? imagePath.tabEActive : imagePath.tabEInActive}
               // capcorp
-              // source={ focused ? imagePath.profileActive : imagePath.profileInActive }
+              // source={
+              //   focused ? imagePath.profileActive : imagePath.profileInActive
+              // }
             />
           ),
           //  unmountOnBlur: true,

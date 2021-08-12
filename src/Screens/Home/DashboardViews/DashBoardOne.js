@@ -124,11 +124,13 @@ export default function DashBoardOne({
       appMainData &&
       appMainData?.categories &&
       appMainData?.categories.length ? (
-        <BrickList
-          data={newCategoryData}
-          renderItem={(prop) => renderView(prop)}
-          columns={3}
-        />
+        <View style={{paddingHorizontal: moderateScale(5)}}>
+          <BrickList
+            data={newCategoryData}
+            renderItem={(prop) => renderView(prop)}
+            columns={3}
+          />
+        </View>
       ) : null}
       <View style={{height: moderateScaleVertical(70)}} />
     </ScrollView>

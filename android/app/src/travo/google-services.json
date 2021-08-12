@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "886852785284",
+    "project_id": "travo-b9fe1",
+    "storage_bucket": "travo-b9fe1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:886852785284:android:95a8b436e50aa2352e1ed1",
+        "android_client_info": {
+          "package_name": "com.travo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "886852785284-4dngvl3guv502hqjg14rf476ho7g2efg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.travo",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "886852785284-o4mueipflopi4g760jqstluodf9hgcac.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.travo",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "886852785284-up66ecma35kmp9ih7h83o2nmjl8k8ffu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.travo",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "886852785284-36p9kaq4c50sauprj73fmrv607891rbh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7vRxRX7C9RE7IaKw-GfGdlQ_uhv4jCw8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "886852785284-36p9kaq4c50sauprj73fmrv607891rbh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "886852785284-eihu5frr9f0tgkk1u4n2rs6bklofd55f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.codebrew.travo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

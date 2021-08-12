@@ -31,6 +31,7 @@ export default function CustomBottomTabBar({
       }}
       colors={[themeColors.primary_color, themeColors.primary_color]}>
       {state.routes.map((route, index) => {
+        // console.log(route, 'routesssssss');
         const {options} = descriptors[route.key];
         const isFocused = state.index === index;
         const label =

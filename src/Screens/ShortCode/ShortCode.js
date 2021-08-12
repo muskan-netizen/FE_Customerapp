@@ -210,18 +210,17 @@ export default function ShortCode({route, navigation}) {
           });
           break;
         case appIds.specialhalal:
-            updateState({
-              shortCode: shortCodes.specialhalal,
-              isShortcodePrefilled: true,
-            });
-            break;
+          updateState({
+            shortCode: shortCodes.specialhalal,
+            isShortcodePrefilled: true,
+          });
+          break;
         case appIds.thehouse:
-              updateState({
-                shortCode: shortCodes.thehouse,
-                isShortcodePrefilled: true,
-              });
-              break;
-            
+          updateState({
+            shortCode: shortCodes.thehouse,
+            isShortcodePrefilled: true,
+          });
+          break;
 
         case appIds.tasmeem:
           updateState({
@@ -230,72 +229,85 @@ export default function ShortCode({route, navigation}) {
           });
           break;
         case appIds.klickmat:
-            updateState({
-              shortCode: shortCodes.klickmat,
-              isShortcodePrefilled: true,
-            });
-            break;
-        case appIds.lastminutedress:
-              updateState({
-                shortCode: shortCodes.lastminutedress,
-                isShortcodePrefilled: true,
-              });
-              break;
-        case appIds.rerak:
-                updateState({
-                  shortCode: shortCodes.rerak,
-                  isShortcodePrefilled: true,
-                });
-                break;
-      case appIds.foodkart:
-            updateState({
-                    shortCode: shortCodes.foodkart,
-                    isShortcodePrefilled: true,
-           });
-            break;
-     case appIds.yoho:
-              updateState({
-                shortCode: shortCodes.yoho,
-                isShortcodePrefilled: true,
-              });
-              break;
-
-    case appIds.glamsouq:
-           updateState({
-                shortCode: shortCodes.glamsouq,
-                isShortcodePrefilled: true,
-            });
-             break;
-      case appIds.doctatransportation:
-              updateState({
-                   shortCode: shortCodes.doctatransportation,
-                   isShortcodePrefilled: true,
-               });
-                break;
-      case appIds.washvalley:
-            updateState({
-              shortCode: shortCodes.washvalley,
-              isShortcodePrefilled: true,
-            });
-      break;
-      case appIds.equamd:
           updateState({
-                  shortCode: shortCodes.equamd,
-                  isShortcodePrefilled: true,
-         });
+            shortCode: shortCodes.klickmat,
+            isShortcodePrefilled: true,
+          });
           break;
-      case appIds.hellodeliver:
-            updateState({
-                    shortCode: shortCodes.hellodeliver,
-                    isShortcodePrefilled: true,
-           });
-            break;
-     case appIds.hoganchef:
-              updateState({
-                      shortCode: shortCodes.hoganchef,
-                      isShortcodePrefilled: true,
-             });
-              break;
+        case appIds.lastminutedress:
+          updateState({
+            shortCode: shortCodes.lastminutedress,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.rerak:
+          updateState({
+            shortCode: shortCodes.rerak,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.foodkart:
+          updateState({
+            shortCode: shortCodes.foodkart,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.yoho:
+          updateState({
+            shortCode: shortCodes.yoho,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.glamsouq:
+          updateState({
+            shortCode: shortCodes.glamsouq,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.doctatransportation:
+          updateState({
+            shortCode: shortCodes.doctatransportation,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.washvalley:
+          updateState({
+            shortCode: shortCodes.washvalley,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.equamd:
+          updateState({
+            shortCode: shortCodes.equamd,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hellodeliver:
+          updateState({
+            shortCode: shortCodes.hellodeliver,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hoganchef:
+          updateState({
+            shortCode: shortCodes.hoganchef,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.servze:
+          updateState({
+            shortCode: shortCodes.servze,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.travo:
+          updateState({
+            shortCode: shortCodes.travo,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

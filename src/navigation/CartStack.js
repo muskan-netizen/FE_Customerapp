@@ -1,7 +1,17 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {AllPaymentMethods, Cart, Offers, OrderDetail, VerifyAccount, WebPayment} from '../Screens';
+import {getBundleId} from 'react-native-device-info';
+import {
+  AllPaymentMethods,
+  Cart,
+  Cart2,
+  Offers,
+  OrderDetail,
+  VerifyAccount,
+  WebPayment,
+} from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
+import {appIds} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
@@ -10,7 +20,14 @@ export default function () {
     <Stack.Navigator>
       <Stack.Screen
         name={navigationStrings.CART}
+        // component={getBundleId() === appIds.capcorp ? Cart2 : Cart}
         component={Cart}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.CART2}
+        component={Cart2}
         options={{headerShown: false}}
       />
 
@@ -40,7 +57,7 @@ export default function () {
         component={WebPayment}
         options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.VERIFY_ACCOUNT}
         component={VerifyAccount}
         options={{headerShown: false}}

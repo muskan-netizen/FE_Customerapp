@@ -44,6 +44,7 @@ export default function SubscriptionComponent({
   payNowUpcoming = () => {},
   cancelSubscription = () => {},
   subscriptionData,
+  allSubscriptions = [],
 }) {
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
@@ -65,10 +66,16 @@ export default function SubscriptionComponent({
   const subscriptionDateValue = moment(subscriptionData?.cancelled_at).format(
     'LL',
   );
+  const subscriptionEndDateValue = moment(subscriptionData?.end_date).format(
+    'LL',
+  );
 
   const currentTimeValue = new Date().getTime();
   const subscriptionTimeValue = new Date(
     subscriptionData?.cancelled_at,
+  ).getTime();
+  const subscriptionEndTimeValue = new Date(
+    subscriptionData?.end_date,
   ).getTime();
 
   return (
@@ -117,7 +124,7 @@ export default function SubscriptionComponent({
           marginTop: moderateScale(10),
         }}>
         <Text style={[styles.subtitle]}>
-          {'Get free delivery for all your orders.'}
+          {(subscriptionData && subscriptionData?.plan?.description)|| data?.description}
         </Text>
       </View>
       {currentSubscription ? null : (
@@ -170,29 +177,88 @@ export default function SubscriptionComponent({
                       )}`}
                 </Text>
               </View>
-              <GradientButton
-                colorsArray={[
-                  themeColors.primary_color,
-                  themeColors.primary_color,
-                ]}
-                textStyle={styles.textStyle}
-                onPress={() => onPress(data)}
-                marginTop={moderateScaleVertical(10)}
-                marginBottom={moderateScaleVertical(10)}
-                borderRadius={moderateScale(5)}
-                containerStyle={{
+              {allSubscriptions && allSubscriptions.length ? (
+                <GradientButton
+                  colorsArray={[
+                    themeColors.primary_color,
+                    themeColors.primary_color,
+                  ]}
+                  textStyle={styles.textStyle}
+                  // onPress={() => onPress(data)}
+                  marginTop={moderateScaleVertical(10)}
+                  marginBottom={moderateScaleVertical(10)}
+                  borderRadius={moderateScale(5)}
+                  containerStyle={{
+                    marginHorizontal: moderateScale(10),
+                    width: width / 3,
+                    backgroundColor: 'white',
+                  }}
+                  onPress={payNowUpcoming}
+                  btnText={
+                    currentDateValue == subscriptionDateValue ||
+                    currentTimeValue > subscriptionTimeValue
+                      ? `${strings.RENEW}(${data?.price})`
+                      : `${strings.PAY}(${data?.price})`
+                  }
+                />
+              ) : null}
+            </View>
+          ) : currentDateValue == subscriptionEndDateValue ||
+            currentTimeValue > subscriptionEndTimeValue ? (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
                   marginHorizontal: moderateScale(10),
-                  width: width / 3,
-                  backgroundColor: 'white',
-                }}
-                onPress={payNowUpcoming}
-                btnText={
-                  currentDateValue == subscriptionDateValue ||
-                  currentTimeValue > subscriptionTimeValue
-                    ? `${strings.RENEW}(${data?.price})`
-                    : `${strings.PAY}(${data?.price})`
-                }
-              />
+                  marginTop: moderateScale(10),
+                  marginBottom: moderateScaleVertical(10),
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  backgroundColor: 'grey',
+                  width: width / 2,
+                  justifyContent: 'center',
+                  padding: 5,
+                }}>
+                <Text
+                  style={[
+                    styles.updateBilling,
+                    {color: colors.white, fontSize: textScale(12)},
+                  ]}>
+                  {`Expired on ${moment(subscriptionData?.end_date).format(
+                    'LL',
+                  )}`}
+                </Text>
+              </View>
+              {allSubscriptions && allSubscriptions.length ? (
+                <GradientButton
+                  colorsArray={[
+                    themeColors.primary_color,
+                    themeColors.primary_color,
+                  ]}
+                  textStyle={styles.textStyle}
+                  // onPress={() => onPress(data)}
+                  marginTop={moderateScaleVertical(10)}
+                  marginBottom={moderateScaleVertical(10)}
+                  borderRadius={moderateScale(5)}
+                  containerStyle={{
+                    marginHorizontal: moderateScale(10),
+                    width: width / 3,
+                    backgroundColor: 'white',
+                  }}
+                  onPress={payNowUpcoming}
+                  btnText={
+                    currentDateValue == subscriptionDateValue ||
+                    currentTimeValue > subscriptionTimeValue
+                      ? `${strings.RENEW}(${data?.price})`
+                      : `${strings.PAY}(${data?.price})`
+                  }
+                />
+              ) : null}
             </View>
           ) : (
             <View
@@ -212,7 +278,9 @@ export default function SubscriptionComponent({
 
           {!currentSubscription ? null : (
             <>
-              {subscriptionData?.cancelled_at ? null : (
+              {subscriptionData?.cancelled_at ||
+              currentDateValue == subscriptionEndDateValue ||
+              currentTimeValue > subscriptionEndTimeValue ? null : (
                 <View
                   style={{marginTop: moderateScale(10), flexDirection: 'row'}}>
                   <GradientButton

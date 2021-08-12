@@ -140,7 +140,7 @@ export default function Subscriptions({navigation, route}) {
 
   //Subscribe for specific plan
   const selectSpecificSubscriptionPlan = (item) => {
-    console.log(item, 'item>>selectSpecificSubscriptionPlan');
+    console.log(item, '>>>>>>>>>>>>>selectSpecificSubscriptionPlan');
     updateState({isLoading: true});
     actions
       .selectSpecificSubscriptionPlan(
@@ -154,13 +154,21 @@ export default function Subscriptions({navigation, route}) {
       )
       .then((res) => {
         console.log('selectSpecificSubscriptionPlan data', res);
-        updateState({
-          isLoadingB: false,
-          isLoading: false,
-          isModalVisibleForPayment: true,
-          selectedPlan: res?.data?.sub_plan,
-          paymentOptions: res?.data?.payment_options,
-        });
+        if (res && res.status == 'Success') {
+          updateState({
+            isLoadingB: false,
+            isLoading: false,
+            isModalVisibleForPayment: true,
+            selectedPlan: res?.data?.sub_plan,
+            paymentOptions: res?.data?.payment_options,
+          });
+        } else {
+          showError(res?.message);
+          updateState({
+            isLoadingB: false,
+            isLoading: false,
+          });
+        }
       })
       .catch(errorMethod);
   };
@@ -217,6 +225,9 @@ export default function Subscriptions({navigation, route}) {
           data={item}
           clientCurrency={clientCurrency}
           onPress={(item) => selectSpecificSubscriptionPlan(item)}
+          payNowUpcoming={() =>
+            selectSpecificSubscriptionPlan(currentSubscription?.plan)
+          }
           // cancelSubscription={()=>cancelSubscription(item)}
           // onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
           // onAddtoWishlist={() => _onAddtoWishlist(item)}
@@ -456,7 +467,7 @@ export default function Subscriptions({navigation, route}) {
                 {
                   payment_option_id: selectedPaymentMethod?.id,
                   transaction_id: res?.token?.id,
-                  amount: selectedPlan?.id,
+                  // amount: selectedPlan?.id,
                 },
                 {
                   code: appData?.profile?.code,
@@ -567,9 +578,10 @@ export default function Subscriptions({navigation, route}) {
               data={currentSubscription?.plan}
               subscriptionData={currentSubscription}
               clientCurrency={clientCurrency}
-              onPress={(currentSubscription) =>
-                selectSpecificSubscriptionPlan(currentSubscription?.plan)
-              }
+              // onPress={(currentSubscription) =>
+              //   selectSpecificSubscriptionPlan(currentSubscription?.plan)
+              // }
+              allSubscriptions={allSubscriptions}
               currentSubscription={true}
               payNowUpcoming={() =>
                 selectSpecificSubscriptionPlan(currentSubscription?.plan)

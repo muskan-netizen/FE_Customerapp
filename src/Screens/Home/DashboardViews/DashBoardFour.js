@@ -27,7 +27,7 @@ import {getUserData} from '../../../utils/utils';
 import stylesFunc from '../styles';
 import ToggleTabBar from './ToggleTabBar';
 
-export default function DashBoardOne2({
+export default function DashBoardFour({
   handleRefresh = () => {},
   bannerPress = () => {},
   //   appMainData = {},
@@ -65,8 +65,6 @@ export default function DashBoardOne2({
   );
   const _changeVendorListStyle = () =>
     updateState({isVendorColumnList: !isVendorColumnList});
-
-  console.log(appMainData, 'appMainData');
 
   return (
     <ScrollView

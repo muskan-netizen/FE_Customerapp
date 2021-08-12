@@ -190,7 +190,7 @@ export default {
   homeActive: require('../assets/images/ic_homeblue.png'),
   homeInActive: require('../assets/images/ic_homedull.png'),
   ordersActive: require('../assets/images/ic_ordeer.png'),
-  ordersInActive: require('../assets/images/ic_packagegrey.png'),
+  ordersInActive: require('../assets/images/ic_orderdull.png'),
   profileActive: require('../assets/images/ic_profileblue.png'),
   profileInActive: require('../assets/images/ic_accountdull.png'),
   bronze: require('../assets/images/ic_bronze.png'),

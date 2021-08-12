@@ -45,7 +45,7 @@ import {
 } from '../../utils/helperFunctions';
 import ListEmptyCart from './ListEmptyCart';
 
-export default function Cart({navigation, route}) {
+export default function Cart2({navigation, route}) {
   let paramsData = route?.params;
   const [state, setState] = useState({
     isLoading: true,

@@ -547,6 +547,27 @@ android {
             resValue "string", "app_name", "Hogan Chef"
 
         }
+          servze{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.servze'
+            resValue "string", "app_name", "Servze"
+
+         }
+
+         travo{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.travo'
+            resValue "string", "app_name", "Travo"
+
+         }
     }
 }
 

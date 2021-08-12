@@ -39,6 +39,8 @@ const shortCodes = {
   equamd: '82a1eb',
   hellodeliver: '5ed004',
   hoganchef: '52a0c3',
+  servze: '0b3f8c',
+  travo: '6d58cc',
 };
 
 const appIds = {
@@ -193,6 +195,14 @@ const appIds = {
   hoganchef: Platform.select({
     ios: 'com.codebrew.hoganchef',
     android: 'com.codebrew.hoganchef',
+  }),
+  servze: Platform.select({
+    ios: 'com.servze',
+    android: 'com.servze',
+  }),
+  travo: Platform.select({
+    ios: 'com.codebrew.travo',
+    android: 'com.travo',
   }),
 };
 
