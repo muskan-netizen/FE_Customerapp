@@ -37,11 +37,11 @@ export default function WebviewScreen({navigation, route}) {
       statusBarColor={colors.white}>
       <Header
         leftIcon={imagePath.back}
-        centerTitle={paramData?.paymentTitle || ''}
+        centerTitle={paramData?.title || ''}
         headerStyle={{backgroundColor: Colors.white}}
       />
       <View style={{...commonStyles.headerTopLine}} />
-      <WebView source={{uri: paramData?.paymentUrl}} />
+      <WebView source={{uri: paramData?.url}} />
     </WrapperContainer>
   );
 }

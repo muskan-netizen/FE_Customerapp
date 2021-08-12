@@ -196,8 +196,8 @@ export default function OrderCardVendorComponent({
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate(navigationStrings.WEBVIEWSCREEN, {
-                    paymentTitle: strings.TRACKDETAIL,
-                    paymentUrl: data?.dispatch_traking_url,
+                    title: strings.TRACKDETAIL,
+                    url: data?.dispatch_traking_url,
                   })
                 }
                 style={{
