@@ -17,7 +17,7 @@ import ListEmptyVendors from '../Vendors/ListEmptyVendors';
 
 export default function VendorDetail({navigation, route}) {
   let vendorParams = route?.params?.data;
-  console.log(vendorParams,"vendorParams>>>>>>>");
+  console.log(vendorParams, 'vendorParams>>>>>>>');
 
   const [state, setState] = useState({
     vendorId: vendorParams?.item?.id,
@@ -57,7 +57,7 @@ export default function VendorDetail({navigation, route}) {
   /***********GET SUBCATEGORY  DETAIL DATA******** */
 
   const getSubCategoryDetailData = () => {
-    // 
+    //
     actions
       .getProductByCategoryId(
         `/${vendorId}?limit=${limit}&page=${pageNo}`,
@@ -69,12 +69,10 @@ export default function VendorDetail({navigation, route}) {
         },
       )
       .then((res) => {
-        
         updateState({isLoading: false});
         if (res && res.data) {
           updateState({vendorData: res.data.listData});
         }
-        
       })
       .catch(errorMethod);
   };
@@ -84,7 +82,7 @@ export default function VendorDetail({navigation, route}) {
   const getVendorDetailData = () => {
     let data = {};
     data['vendor_id'] = vendorId;
-    
+
     actions
       .getVendorDetail(data, {
         code: appData.profile.code,
@@ -95,7 +93,6 @@ export default function VendorDetail({navigation, route}) {
         updateState({isLoading: false});
         if (res && res.data) {
           let newArray = res.data;
-          
           // if (vendorParams?.rootProducts) {
           //   // console.log(
           //   //   newArray.filter((x) => x?.id != vendorParams?.categoryData?.id),
@@ -105,7 +102,6 @@ export default function VendorDetail({navigation, route}) {
           // }
           updateState({vendorData: newArray});
         }
-        
       })
       .catch(errorMethod);
   };
@@ -113,7 +109,6 @@ export default function VendorDetail({navigation, route}) {
   /********* */
 
   const errorMethod = (error) => {
-    
     updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
     showError(error?.message || error?.error);
   };
