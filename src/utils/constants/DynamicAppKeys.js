@@ -42,6 +42,7 @@ const shortCodes = {
   servze: '0b3f8c',
   travo: '6d58cc',
   cabdelivr: '5bf9f0',
+  arenagrub: '3f8210',
 };
 
 const appIds = {
@@ -208,6 +209,10 @@ const appIds = {
   cabdelivr: Platform.select({
     ios: 'com.cabdelivr',
     android: 'com.cabdelivr',
+  }),
+  arenagrub: Platform.select({
+    ios: 'com.arenagrub',
+    android: 'com.arenagrub',
   }),
 };
 

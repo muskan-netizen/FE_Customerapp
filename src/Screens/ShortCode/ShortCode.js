@@ -314,6 +314,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.arenagrub:
+          updateState({
+            shortCode: shortCodes.arenagrub,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
