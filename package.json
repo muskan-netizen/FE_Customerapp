@@ -43,6 +43,7 @@
     "hoganchef": "react-native run-android --variant=hoganchefDebug --appIdSuffix=hoganchef",
     "servze": "react-native run-android --variant=servzeDebug --appIdSuffix=servze",
     "travo": "react-native run-android --variant=travoDebug --appIdSuffix=travo",
+    "cabdelivr": "react-native run-android --variant=cabdelivrDebug --appIdSuffix=cabdelivr",
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "bustanfakiehRelease": "cd android && ./gradlew assembleBustanFakiehRelease",
@@ -83,6 +84,8 @@
     "hoganchefRelease": "cd android && ./gradlew assembleHoganChef",
     "servzeRelease": "cd android && ./gradlew assembleServzeRelease",
     "travoRelease": "cd android && ./gradlew assembleTravoRelease",
+    "cabdelivrRelease": "cd android && ./gradlew assembleCabdelivrRelease",
+    
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
