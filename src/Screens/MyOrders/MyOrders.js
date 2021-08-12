@@ -160,6 +160,7 @@ export default function MyOrders({navigation}) {
   };
 
   const renderOrders = ({item, index}) => {
+    // console.log(item,"item>>item")
     return (
       <OrderCardVendorComponent
         data={item}

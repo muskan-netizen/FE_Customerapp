@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "705724009306",
+    "project_id": "towtrek-3ecf6",
+    "storage_bucket": "towtrek-3ecf6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:705724009306:android:6beac917b3fc7e7c378163",
+        "android_client_info": {
+          "package_name": "com.towtrek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "705724009306-87k7eet5f8i5dnujpm387vd1c3a5t8hj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFnYTDZoEYWG0cKjSL39lM2QzgJbDBj0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "705724009306-87k7eet5f8i5dnujpm387vd1c3a5t8hj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

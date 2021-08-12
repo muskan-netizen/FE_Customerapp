@@ -576,9 +576,18 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.cabdelivr'
             resValue "string", "app_name", "Cabdelivr"
+         }
+        drus{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.drus'
+            resValue "string", "app_name", "Drus"
 
          }
-         arenagrub{
+        yahu{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -587,6 +596,26 @@ android {
             applicationId 'com.arenagrub'
             resValue "string", "app_name", "ArenaGrub"
 
+            applicationId 'com.yahu'
+            resValue "string", "app_name", "Yahu"
+         }
+        zuzuclean{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.zuzuclean'
+            resValue "string", "app_name", "Zuzu Clean"
+         }
+        towtrek{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.towtrek'
+            resValue "string", "app_name", "TowTrek"
          }
     }
 }

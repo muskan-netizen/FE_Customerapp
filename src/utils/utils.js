@@ -102,6 +102,7 @@ export async function apiReq(
       ...getTokenHeader,
       ...headers,
     };
+    console.log(headers,"headers");
     
     if (method === 'get' || method === 'delete') {
       data = {

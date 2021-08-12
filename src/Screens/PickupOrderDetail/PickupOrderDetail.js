@@ -112,6 +112,7 @@ export default function PickupOrderDetail({navigation, route}) {
     }, 3000);
     return () => clearInterval(intervalId);
   }, []);
+
   /*********Update driver detail screen********* */
   const _updateDriverLocationLocation = (url) => {
     actions
