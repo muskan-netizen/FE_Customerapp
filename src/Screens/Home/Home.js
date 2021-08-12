@@ -363,8 +363,8 @@ export default function Home({route, navigation}) {
     } else if (item.redirect_to == staticStrings.BRAND) {
       moveToNewScreen(navigationStrings.BRANDS)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
-      moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
-      // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+      // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
 
@@ -476,7 +476,7 @@ export default function Home({route, navigation}) {
 
       moveToNewScreen(navigationStrings.VENDOR_DETAIL, {data})();
     } else if (!!data.is_show_category) {
-      let item = data
+      let item = data;
       data?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
             item,
@@ -518,7 +518,7 @@ export default function Home({route, navigation}) {
               isLoading={isLoading}
               isRefreshing={isRefreshing}
               appMainData={appMainData}
-              onPressCategory={(item) => onPressCategory2(item)}
+              onPressCategory={(item) => onPressCategory(item)}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
             />

@@ -13,6 +13,7 @@ import {useSelector} from 'react-redux';
 import {dummyUser} from '../constants/constants';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
+import staticStrings from '../constants/staticStrings';
 import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
@@ -187,16 +188,18 @@ export default function OrderCardVendorComponent({
               </View>
             </View>
             {selectedTab &&
-            data?.dispatch_traking_url == null &&
+            data?.dispatch_traking_url &&
+            data?.product_details[0]?.category_type !=
+              staticStrings.PICKUPANDDELIEVRY &&
             (selectedTab == strings.ACTIVE_ORDERS ||
               selectedTab == strings.SCHEDULED_ORDERS) ? (
               <TouchableOpacity
-                // onPress={() =>
-                //   navigation.navigate(navigationStrings.WEBVIEWSCREEN, {
-                //     paymentTitle: strings.TRACKDETAIL,
-                //     paymentUrl: 'https://www.google.com',
-                //   })
-                // }
+                onPress={() =>
+                  navigation.navigate(navigationStrings.WEBVIEWSCREEN, {
+                    paymentTitle: strings.TRACKDETAIL,
+                    paymentUrl: data?.dispatch_traking_url,
+                  })
+                }
                 style={{
                   borderRadius: 10,
                   backgroundColor: themeColors.primary_color,
