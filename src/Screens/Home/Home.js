@@ -438,45 +438,58 @@ export default function Home({route, navigation}) {
   }, [selectedTabType, appData]);
 
   ///onPressCategory2
-  const onPressCategory2 = (item) => {
-    if (item.redirect_to == staticStrings.VENDOR) {
-      moveToNewScreen(navigationStrings.VENDOR, item)();
+  const onPressCategory2 = (data) => {
+    if (data.redirect_to == staticStrings.VENDOR) {
+      moveToNewScreen(navigationStrings.VENDOR, data)();
     } else if (
-      item.redirect_to == staticStrings.PRODUCT ||
-      item.redirect_to == staticStrings.CATEGORY
+      data.redirect_to == staticStrings.PRODUCT ||
+      data.redirect_to == staticStrings.CATEGORY
     ) {
-      moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
-    } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, data)();
+    } else if (data.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
-        if (item?.warning_page_id) {
-          if (item?.warning_page_id == 2) {
-            moveToNewScreen(navigationStrings.DELIVERY, item)();
+        if (data?.warning_page_id) {
+          if (data?.warning_page_id == 2) {
+            moveToNewScreen(navigationStrings.DELIVERY, data)();
           } else {
-            moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
+            moveToNewScreen(navigationStrings.HOMESCREENCOURIER, data)();
           }
         } else {
-          if (item?.template_type_id == 1) {
-            moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
+          if (data?.template_type_id == 1) {
+            moveToNewScreen(navigationStrings.SEND_PRODUCT, data)();
           } else {
-            moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
+            moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, data)();
           }
         }
       } else {
         // showError(strings.UNAUTHORIZED_MESSAGE);
         moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
       }
-    } else if (item.redirect_to == staticStrings.DISPATCHER) {
-      // moveToNewScreen(navigationStrings.DELIVERY, item)();
-    } else if (item.redirect_to == staticStrings.CELEBRITY) {
+    } else if (data.redirect_to == staticStrings.DISPATCHER) {
+      // moveToNewScreen(navigationStrings.DELIVERY, data)();
+    } else if (data.redirect_to == staticStrings.CELEBRITY) {
       moveToNewScreen(navigationStrings.CELEBRITY)();
-    } else if (item.redirect_to == staticStrings.BRAND) {
+    } else if (data.redirect_to == staticStrings.BRAND) {
       moveToNewScreen(navigationStrings.BRANDS)();
-    } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
-      // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
+    } else if (data.redirect_to == staticStrings.SUBCATEGORY) {
+      // moveToNewScreen(navigationStrings.PRODUCT_LIST, data)();
 
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
-    } else if (!!item.is_show_category) {
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {data})();
+    } else if (!!data.is_show_category) {
+      let item = data
+      data?.is_show_category
+        ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
+            item,
+            rootProducts: true,
+            // categoryData: data,
+          })()
+        : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+            id: data?.id,
+            vendor: true,
+            name: data?.name,
+          })();
+
+      // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
 
@@ -487,7 +500,7 @@ export default function Home({route, navigation}) {
       <View style={{flex: 1}}>
         <>
           <DashBoardHeaderOne navigation={navigation} location={location} />
-          {/* {getBundleId() !== appIds.capcorp ? (
+          {getBundleId() == appIds.capcorp ? (
             <DashBoardFour
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}
@@ -498,18 +511,18 @@ export default function Home({route, navigation}) {
               selcetedToggle={selcetedToggle}
               toggleData={appData}
             />
-          ) : ( */}
-          <DashBoardOne
-            handleRefresh={() => handleRefresh()}
-            bannerPress={(item) => bannerPress(item)}
-            isLoading={isLoading}
-            isRefreshing={isRefreshing}
-            appMainData={appMainData}
-            onPressCategory={(item) => onPressCategory2(item)}
-            selcetedToggle={selcetedToggle}
-            toggleData={appData}
-          />
-          {/* )} */}
+          ) : (
+            <DashBoardOne
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => onPressCategory2(item)}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+            />
+          )}
         </>
         {/* {(() => {
           switch (appStyle?.homePageLayout) {

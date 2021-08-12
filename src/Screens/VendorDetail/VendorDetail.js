@@ -17,7 +17,7 @@ import ListEmptyVendors from '../Vendors/ListEmptyVendors';
 
 export default function VendorDetail({navigation, route}) {
   let vendorParams = route?.params?.data;
-  
+  console.log(vendorParams,"vendorParams>>>>>>>");
 
   const [state, setState] = useState({
     vendorId: vendorParams?.item?.id,
