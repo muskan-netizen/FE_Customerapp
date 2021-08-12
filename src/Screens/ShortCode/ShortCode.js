@@ -308,6 +308,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.cabdelivr:
+          updateState({
+            shortCode: shortCodes.cabdelivr,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

@@ -41,6 +41,7 @@ const shortCodes = {
   hoganchef: '52a0c3',
   servze: '0b3f8c',
   travo: '6d58cc',
+  cabdelivr: '5bf9f0',
 };
 
 const appIds = {
@@ -203,6 +204,10 @@ const appIds = {
   travo: Platform.select({
     ios: 'com.codebrew.travo',
     android: 'com.travo',
+  }),
+  cabdelivr: Platform.select({
+    ios: 'com.cabdelivr',
+    android: 'com.cabdelivr',
   }),
 };
 
