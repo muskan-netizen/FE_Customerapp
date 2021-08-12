@@ -320,6 +320,24 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.yahu:
+          updateState({
+            shortCode: shortCodes.yahu,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.zuzuclean:
+          updateState({
+            shortCode: shortCodes.zuzuclean,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.towtrek:
+          updateState({
+            shortCode: shortCodes.towtrek,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

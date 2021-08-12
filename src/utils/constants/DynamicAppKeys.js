@@ -43,6 +43,9 @@ const shortCodes = {
   travo: '6d58cc',
   cabdelivr: '5bf9f0',
   drus: '351d30',
+  yahu: '2f6d58',
+  zuzuclean: '649a9a',
+  towtrek: 'e7a92f',
 };
 
 const appIds = {
@@ -213,6 +216,18 @@ const appIds = {
   drus: Platform.select({
     ios: 'com.drus',
     android: 'com.drus',
+  }),
+  yahu: Platform.select({
+    ios: 'com.yahu',
+    android: 'com.yahu',
+  }),
+  zuzuclean: Platform.select({
+    ios: 'com.zuzuclean',
+    android: 'com.zuzuclean',
+  }),
+  towtrek: Platform.select({
+    ios: 'com.towtrek',
+    android: 'com.towtrek',
   }),
 };
 

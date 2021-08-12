@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "981407968433",
+    "project_id": "zuzu-clean-ee42e",
+    "storage_bucket": "zuzu-clean-ee42e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:981407968433:android:edec30194fd5196b2e8690",
+        "android_client_info": {
+          "package_name": "com.zuzuclean"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "981407968433-ans6s2g15o3o6d4ptggltfef890s842t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zuzuclean",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "981407968433-lndbidb857tgbhd78el2j882ubt4jgs8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zuzuclean",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "981407968433-oet6d5v893hnesnvv3smcq4f3rjq192i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zuzuclean",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "981407968433-75fc9hfd0c0dq16mggj49gpkachto4tt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJoWzBb7dwPoQ9UJBfnDht4s0N0JU0sYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "981407968433-75fc9hfd0c0dq16mggj49gpkachto4tt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
