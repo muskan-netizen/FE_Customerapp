@@ -622,6 +622,8 @@ export default function Products({route, navigation}) {
     );
   };
 
+  console.log(productListData, 'productListData');
+
   return (
     <WrapperContainer
       bgColor={colors.backgroundGrey}
@@ -638,15 +640,6 @@ export default function Products({route, navigation}) {
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }
       />
-      {/* <Header2
-        centerTitle={data?.name || data?.translation[0]?.name}
-        // hideRight={true}
-        leftIcon={imagePath.backArrow}
-        rightIcon={imagePath.search}
-        onPressRight={() =>
-          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-        }
-      /> */}
       <View style={{...commonStyles.headerTopLine}} />
 
       <View
