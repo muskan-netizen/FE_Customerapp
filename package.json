@@ -44,6 +44,8 @@
     "servze": "react-native run-android --variant=servzeDebug --appIdSuffix=servze",
     "travo": "react-native run-android --variant=travoDebug --appIdSuffix=travo",
     "cabdelivr": "react-native run-android --variant=cabdelivrDebug --appIdSuffix=cabdelivr",
+    "drus": "react-native run-android --variant=drusDebug --appIdSuffix=drus",
+
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "bustanfakiehRelease": "cd android && ./gradlew assembleBustanFakiehRelease",
@@ -85,7 +87,8 @@
     "servzeRelease": "cd android && ./gradlew assembleServzeRelease",
     "travoRelease": "cd android && ./gradlew assembleTravoRelease",
     "cabdelivrRelease": "cd android && ./gradlew assembleCabdelivrRelease",
-    
+    "drusRelease": "cd android && ./gradlew assembleDrusRelease",
+
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

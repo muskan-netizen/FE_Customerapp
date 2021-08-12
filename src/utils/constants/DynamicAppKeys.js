@@ -42,6 +42,7 @@ const shortCodes = {
   servze: '0b3f8c',
   travo: '6d58cc',
   cabdelivr: '5bf9f0',
+  drus: '351d30',
 };
 
 const appIds = {
@@ -208,6 +209,10 @@ const appIds = {
   cabdelivr: Platform.select({
     ios: 'com.cabdelivr',
     android: 'com.cabdelivr',
+  }),
+  drus: Platform.select({
+    ios: 'com.drus',
+    android: 'com.drus',
   }),
 };
 

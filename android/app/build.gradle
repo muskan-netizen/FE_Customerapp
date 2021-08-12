@@ -576,6 +576,15 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.cabdelivr'
             resValue "string", "app_name", "Cabdelivr"
+         }
+        drus{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.drus'
+            resValue "string", "app_name", "Drus"
 
          }
     }

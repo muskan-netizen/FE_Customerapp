@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "948283400390",
+    "project_id": "drus-bbda7",
+    "storage_bucket": "drus-bbda7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948283400390:android:0bd57170be71f4aa7eb7c7",
+        "android_client_info": {
+          "package_name": "com.drus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948283400390-68uaver34spm2akmjk5gf2r3gq0j94uj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.drus",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "948283400390-ol8akrsr90htjrm2hnselg53vqibtahc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.drus",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "948283400390-513f4a5gmeralsko0p4cdlv7t98mlo00.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzDGH3IxrdIWhMLkQqhWzp7xkVHmosvp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948283400390-513f4a5gmeralsko0p4cdlv7t98mlo00.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
