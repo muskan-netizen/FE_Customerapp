@@ -23,15 +23,79 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
   const {selectedIndex, tabs} = state;
   useEffect(() => {
     addAllTabs();
-    //   if (dine_In_Type == 'delivery') {
-    //     setSelectedTab(0);
-    //   }
-    //   if (dine_In_Type == 'dine_in') {
-    //     setSelectedTab(1);
-    //   }
-    //   if (dine_In_Type == 'takeaway') {
-    //     setSelectedTab(2);
-    //   }
+    if (dine_In_Type == 'delivery') {
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(0);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(0);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        setSelectedTab(0);
+      } else {
+        setSelectedTab(0);
+      }
+    }
+    if (dine_In_Type == 'dine_in') {
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(1);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(0);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        setSelectedTab(1);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(1);
+      }
+    }
+    if (dine_In_Type == 'takeaway') {
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(1);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(1);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        setSelectedTab(1);
+      } else {
+        setSelectedTab(2);
+      }
+    }
   }, [appData]);
 
   const addAllTabs = () => {
