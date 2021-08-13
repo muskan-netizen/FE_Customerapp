@@ -216,7 +216,7 @@ const appIds = {
     android: 'com.cabdelivr',
   }),
   drus: Platform.select({
-    ios: 'com.drusapp',
+    ios: 'com.drus.customer',
     android: 'com.drus',
   }),
   yahu: Platform.select({

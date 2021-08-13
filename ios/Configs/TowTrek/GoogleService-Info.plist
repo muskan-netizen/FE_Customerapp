@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>705724009306-0ig6r1a9p5e09j0ancuttapl5sutfqbn.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.705724009306-0ig6r1a9p5e09j0ancuttapl5sutfqbn</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>705724009306-68s5gic2qql31kat58bj0hvbn3gm9egq.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDCTC9uDlENoDUER0hspoaFry4XCCSSZUs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>705724009306</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.towtrek</string>
+	<key>PROJECT_ID</key>
+	<string>towtrek-3ecf6</string>
+	<key>STORAGE_BUCKET</key>
+	<string>towtrek-3ecf6.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:705724009306:ios:c72210e645fd1df9378163</string>
+</dict>
+</plist>
