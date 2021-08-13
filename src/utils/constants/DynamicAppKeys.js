@@ -42,6 +42,11 @@ const shortCodes = {
   servze: '0b3f8c',
   travo: '6d58cc',
   cabdelivr: '5bf9f0',
+  drus: '351d30',
+  yahu: '2f6d58',
+  zuzuclean: '649a9a',
+  towtrek: 'e7a92f',
+  arenagrub: '3f8210',
 };
 
 const appIds = {
@@ -208,6 +213,26 @@ const appIds = {
   cabdelivr: Platform.select({
     ios: 'com.cabdelivr',
     android: 'com.cabdelivr',
+  }),
+  drus: Platform.select({
+    ios: 'com.drus',
+    android: 'com.drus',
+  }),
+  yahu: Platform.select({
+    ios: 'com.yahu',
+    android: 'com.yahu',
+  }),
+  zuzuclean: Platform.select({
+    ios: 'com.zuzuclean',
+    android: 'com.zuzuclean',
+  }),
+  towtrek: Platform.select({
+    ios: 'com.towtrek',
+    android: 'com.towtrek',
+  }),
+  arenagrub: Platform.select({
+    ios: 'com.arenagrub',
+    android: 'com.arenagrub',
   }),
 };
 
