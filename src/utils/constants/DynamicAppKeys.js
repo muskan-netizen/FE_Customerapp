@@ -47,6 +47,7 @@ const shortCodes = {
   zuzuclean: '649a9a',
   towtrek: 'e7a92f',
   arenagrub: '3f8210',
+  jet: '8fb14b',
 };
 
 const appIds = {
@@ -215,7 +216,7 @@ const appIds = {
     android: 'com.cabdelivr',
   }),
   drus: Platform.select({
-    ios: 'com.drus',
+    ios: 'com.drusapp',
     android: 'com.drus',
   }),
   yahu: Platform.select({
@@ -233,6 +234,10 @@ const appIds = {
   arenagrub: Platform.select({
     ios: 'com.arenagrub',
     android: 'com.arenagrub',
+  }),
+  jet: Platform.select({
+    ios: 'com.jet',
+    android: 'com.jet',
   }),
 };
 

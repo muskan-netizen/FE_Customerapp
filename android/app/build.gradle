@@ -617,6 +617,15 @@ android {
             applicationId 'com.towtrek'
             resValue "string", "app_name", "TowTrek"
          }
+          jet{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.jet'
+            resValue "string", "app_name", "Jet"
+         }
     }
 }
 
