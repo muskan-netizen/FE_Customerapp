@@ -112,7 +112,6 @@ export default function Cart({navigation, route}) {
       if (paramsData && paramsData?.selectedMethod) {
         updateState({selectedPayment: paramsData?.selectedMethod});
       }
-      checkforAddressUpdate();
       updateState({isLoadingB: true});
       getCartDetail();
     }, [
@@ -125,6 +124,10 @@ export default function Cart({navigation, route}) {
       isRefreshing,
     ]),
   );
+
+  useEffect(() => {
+    checkforAddressUpdate();
+  }, [selectedAddress, allAddresss]);
 
   //check for addreess Update and change
   const checkforAddressUpdate = () => {
@@ -144,15 +147,13 @@ export default function Cart({navigation, route}) {
     }
     if (selectedAddress && allAddresss.length) {
       // let find2=
-
+      console.log(allAddresss, 'allAddresss');
+      console.log(selectedAddress, 'selectedAddress');
       let find = allAddresss.find(
         (x) =>
           x.id == selectedAddress.id &&
           x.is_primary == selectedAddress.is_primary,
       );
-
-      //
-
       if (find) {
         selectAddress(find);
       } else {
@@ -178,6 +179,7 @@ export default function Cart({navigation, route}) {
             isLoadingB: false,
           });
           if (res.data) {
+            console.log(res.data, 'saveAllUserAddress >>data');
             actions.saveAllUserAddress(res.data);
           }
         })
@@ -774,41 +776,6 @@ export default function Cart({navigation, route}) {
     );
   };
 
-  //Add and update the addreess
-  const addUpdateLocation = (childData) => {
-    // setModalVisible(false);
-    updateState({isLoading: true});
-    actions
-      .addAddress(childData, {
-        code: appData?.profile?.code,
-      })
-      .then((res) => {
-        updateState({
-          isLoading: false,
-          isLoadingB: false,
-          isVisible: false,
-          isVisibleAddressModal: false,
-        });
-        actions.saveAddress(res.data);
-        getAllAddress();
-        showSuccess(res.message);
-        setTimeout(() => {
-          updateState({
-            selectedAddress: res.data,
-          });
-        }, 1000);
-      })
-      .catch((error) => {
-        updateState({
-          isLoading: false,
-          isLoadingB: false,
-          isVisible: false,
-          isVisibleAddressModal: false,
-        });
-        showError(error?.message || error?.error);
-      });
-  };
-
   const setModalVisible = (visible, type, id, data) => {
     if (!!userData?.auth_token) {
       updateState({
@@ -1226,6 +1193,45 @@ export default function Cart({navigation, route}) {
         });
     }
   };
+
+  //Add and update the addreess
+  const addUpdateLocation = (childData) => {
+    // setModalVisible(false);
+    updateState({isLoading: true});
+    actions
+      .addAddress(childData, {
+        code: appData?.profile?.code,
+      })
+      .then((res) => {
+        updateState({
+          isLoading: false,
+          isLoadingB: false,
+          isVisible: false,
+          isVisibleAddressModal: false,
+        });
+        getAllAddress();
+        setTimeout(() => {
+          let address = res.data;
+          address['is_primary'] = 1;
+          actions.saveAddress(address);
+          updateState({
+            selectedAddress: address,
+          });
+        }, 1000);
+
+        showSuccess(res.message);
+      })
+      .catch((error) => {
+        updateState({
+          isLoading: false,
+          isLoadingB: false,
+          isVisible: false,
+          isVisibleAddressModal: false,
+        });
+        showError(error?.message || error?.error);
+      });
+  };
+
   //Pull to refresh
   const handleRefresh = () => {
     updateState({pageNo: 1, isRefreshing: true});
