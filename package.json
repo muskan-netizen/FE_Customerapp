@@ -49,7 +49,7 @@
     "zuzuclean": "react-native run-android --variant=zuzucleanDebug --appIdSuffix=zuzuclean",
     "towtrek": "react-native run-android --variant=towtrekDebug --appIdSuffix=towtrek",
     "arenagrub": "react-native run-android --variant=arenagrubDebug --appIdSuffix=arenagrub",
-
+    "jet": "react-native run-android --variant=jetDebug --appIdSuffix=jet",
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "bustanfakiehRelease": "cd android && ./gradlew assembleBustanFakiehRelease",
@@ -96,7 +96,7 @@
     "zuzucleanRelease": "cd android && ./gradlew assembleZuzuCleanRelease",
     "towtrekRelease": "cd android && ./gradlew assembleTowTrekRelease",
     "arenagrubRelease": "cd android && ./gradlew assembleArenaGrubRelease",
-
+    "jetRelease": "cd android && ./gradlew assembleJetRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
