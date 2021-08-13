@@ -22,18 +22,19 @@ export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      activeOpacity={0.6}
+      activeOpacity={0.9}
       style={{
         height: moderateScale(145),
         width: moderateScale(145),
         // shadowOpacity: 0.5,
         marginVertical: moderateScale(5),
-        backgroundColor: colors.white,
         marginHorizontal: moderateScale(2),
         borderRadius: moderateScale(15),
         flexDirection: 'column',
         justifyContent: 'space-between',
-        ...Elevations[3],
+        backgroundColor: '#FFFCFC',
+
+        ...Elevations[2],
       }}>
       <View style={{flex: 0.4}}>
         <Text

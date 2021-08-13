@@ -49,7 +49,7 @@ export default ({fontFamily, buttonTextColor}) => {
     futuraBtHeavyFont16: {
       fontSize: textScale(16),
       color: colors.black,
-      fontFamily: fontFamily?.medium,
+      fontFamily: fontFamily?.bold,
     },
     futuraBtHeavyFont14: {
       fontSize: textScale(14),
@@ -102,9 +102,11 @@ export default ({fontFamily, buttonTextColor}) => {
       // borderWidth: 0.7,
     },
     buttonTextWhite: {
-      fontFamily: fontFamily?.bold? fontFamily?.bold:'SFProText-Bold',
+      fontFamily: fontFamily?.bold ? fontFamily?.bold : 'SFProText-Bold',
       textTransform: 'uppercase',
-      color: buttonTextColor?.secondary_color? buttonTextColor?.secondary_color:colors.white,
+      color: buttonTextColor?.secondary_color
+        ? buttonTextColor?.secondary_color
+        : colors.white,
       textAlign: 'center',
     },
 

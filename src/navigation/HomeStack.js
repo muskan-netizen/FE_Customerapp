@@ -1,5 +1,6 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
+import {getBundleId} from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import {
   BrandProducts,
@@ -13,7 +14,9 @@ import {
   Payment,
   PaymentSuccess,
   ProductDetail,
+  ProductDetail2,
   ProductList,
+  ProductList2,
   SearchProductVendorItem,
   SendProduct,
   ShippingDetails,
@@ -21,8 +24,11 @@ import {
   TrackDetail,
   Tracking,
   VendorDetail,
+  VendorDetail2,
   Vendors,
+  Vendors2,
 } from '../Screens';
+import {appIds} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 import TopTabRoutes from './TopTabRoutes';
 
@@ -52,17 +58,21 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.VENDOR}
-        component={Vendors}
+        component={getBundleId() === appIds.capcorp ? Vendors2 : Vendors}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.VENDOR_DETAIL}
-        component={VendorDetail}
+        component={
+          getBundleId() === appIds.capcorp ? VendorDetail2 : VendorDetail
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
-        component={ProductList}
+        component={
+          getBundleId() === appIds.capcorp ? ProductList2 : ProductList
+        }
         options={{headerShown: false}}
       />
 
@@ -94,7 +104,9 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
-        component={ProductDetail}
+        component={
+          getBundleId() === appIds.capcorp ? ProductDetail2 : ProductDetail
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen

@@ -1,6 +1,14 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {OrderDetail, ProductDetail, VendorList, VendorProducts} from '../Screens';
+import {getBundleId} from 'react-native-device-info';
+import {
+  OrderDetail,
+  ProductDetail,
+  ProductDetail2,
+  VendorList,
+  VendorProducts,
+} from '../Screens';
+import {appIds} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
@@ -22,9 +30,11 @@ export default function () {
         component={VendorList}
         options={{headerShown: false}}
       />
-        <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
-        component={ProductDetail}
+        component={
+          getBundleId() === appIds.capcorp ? ProductDetail2 : ProductDetail
+        }
         options={{headerShown: false}}
       />
     </Stack.Navigator>

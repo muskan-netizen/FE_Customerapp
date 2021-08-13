@@ -21,7 +21,7 @@ import {View} from 'react-native-animatable';
 import staticStrings from '../constants/staticStrings';
 import CustomTopTabBar from '../Components/CustomTopTabBar';
 import CustomBottomTabBar1 from '../Components/CustomBottomTabBar1';
-import {getBuildId} from 'react-native-device-info';
+import {getBuildId, getBundleId} from 'react-native-device-info';
 import {appIds} from '../utils/constants/DynamicAppKeys';
 const Tab = createBottomTabNavigator();
 
@@ -64,23 +64,25 @@ export default function TabRoutes(props) {
   }
   // capcorp
 
-  if (checkForBrand) {
-    brandTab = (
-      <Tab.Screen
-        component={BrandStack}
-        name={navigationStrings.BRANDS}
-        options={{
-          tabBarLabel: strings.BRANDS,
-          tabBarIcon: ({focused, tintColor}) => (
-            <Image
-              style={{tintColor: tintColor}}
-              source={focused ? imagePath.tabCActive : imagePath.tabCInActive}
-            />
-          ),
-          //  unmountOnBlur: true,
-        }}
-      />
-    );
+  if (getBundleId() !== appIds.capcorp) {
+    if (checkForBrand) {
+      brandTab = (
+        <Tab.Screen
+          component={BrandStack}
+          name={navigationStrings.BRANDS}
+          options={{
+            tabBarLabel: strings.BRANDS,
+            tabBarIcon: ({focused, tintColor}) => (
+              <Image
+                style={{tintColor: tintColor}}
+                source={focused ? imagePath.tabCActive : imagePath.tabCInActive}
+              />
+            ),
+            //  unmountOnBlur: true,
+          }}
+        />
+      );
+    }
   }
 
   return (
@@ -89,7 +91,11 @@ export default function TabRoutes(props) {
       tabBar={(props) => {
         switch (appStyle?.tabBarLayout) {
           case 1:
-            return <CustomBottomTabBar {...props} />;
+            return getBundleId() === appIds.capcorp ? (
+              <CustomBottomTabBar1 {...props} />
+            ) : (
+              <CustomBottomTabBar {...props} />
+            );
           case 2:
             return <CustomBottomTabBarTwo {...props} />;
           case 3:
@@ -116,9 +122,15 @@ export default function TabRoutes(props) {
           tabBarIcon: ({focused, tintColor}) => (
             <Image
               style={{tintColor: tintColor}}
-              source={focused ? imagePath.tabAActive : imagePath.tabAInActive}
-              // capcorp
-              // source={focused ? imagePath.homeActive : imagePath.homeInActive}
+              source={
+                getBundleId() === appIds.capcorp
+                  ? focused
+                    ? imagePath.homeActive
+                    : imagePath.homeInActive
+                  : focused
+                  ? imagePath.tabAActive
+                  : imagePath.tabAInActive
+              }
             />
           ),
           // unmountOnBlur: true,
@@ -129,7 +141,6 @@ export default function TabRoutes(props) {
         name={navigationStrings.CART}
         options={{
           tabBarLabel: strings.CART,
-          // tabBarLabel: strings.ORDER_CART,
           tabBarIcon: ({focused, tintColor}) => (
             <View style={{alignItems: 'center'}}>
               {cartItemCount?.data?.item_count ? (
@@ -141,11 +152,15 @@ export default function TabRoutes(props) {
               ) : null}
               <Image
                 style={{tintColor: tintColor}}
-                source={focused ? imagePath.cartActive : imagePath.cartInActive}
-                // capcorp
-                // source={
-                //   focused ? imagePath.ordersActive : imagePath.ordersInActive
-                // }
+                source={
+                  getBundleId() === appIds.capcorp
+                    ? focused
+                      ? imagePath.ordersActive
+                      : imagePath.ordersInActive
+                    : focused
+                    ? imagePath.cartActive
+                    : imagePath.cartInActive
+                }
               />
             </View>
           ),
@@ -162,11 +177,15 @@ export default function TabRoutes(props) {
           tabBarIcon: ({focused, tintColor}) => (
             <Image
               style={{tintColor: tintColor}}
-              source={focused ? imagePath.tabEActive : imagePath.tabEInActive}
-              // capcorp
-              // source={
-              //   focused ? imagePath.profileActive : imagePath.profileInActive
-              // }
+              source={
+                getBundleId() === appIds.capcorp
+                  ? focused
+                    ? imagePath.profileActive
+                    : imagePath.profileInActive
+                  : focused
+                  ? imagePath.tabEActive
+                  : imagePath.tabEInActive
+              }
             />
           ),
           //  unmountOnBlur: true,

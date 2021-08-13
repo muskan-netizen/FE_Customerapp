@@ -20,14 +20,7 @@ export default function () {
     <Stack.Navigator>
       <Stack.Screen
         name={navigationStrings.CART}
-        // component={getBundleId() === appIds.capcorp ? Cart2 : Cart}
-        component={Cart}
-        options={{headerShown: false}}
-      />
-
-      <Stack.Screen
-        name={navigationStrings.CART2}
-        component={Cart2}
+        component={getBundleId() === appIds.capcorp ? Cart2 : Cart}
         options={{headerShown: false}}
       />
 
