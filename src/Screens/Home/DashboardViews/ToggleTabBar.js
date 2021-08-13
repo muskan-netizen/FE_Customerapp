@@ -23,15 +23,15 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
   const {selectedIndex, tabs} = state;
   useEffect(() => {
     addAllTabs();
-    //   if (dine_In_Type == 'delivery') {
-    //     setSelectedTab(0);
-    //   }
-    //   if (dine_In_Type == 'dine_in') {
-    //     setSelectedTab(1);
-    //   }
-    //   if (dine_In_Type == 'takeaway') {
-    //     setSelectedTab(2);
-    //   }
+    if (dine_In_Type == 'delivery') {
+      if (tabs.length) setSelectedTab(0);
+    }
+    if (dine_In_Type == 'dine_in') {
+      setSelectedTab(1);
+    }
+    if (dine_In_Type == 'takeaway') {
+      setSelectedTab(2);
+    }
   }, [appData]);
 
   const addAllTabs = () => {
