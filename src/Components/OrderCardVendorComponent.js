@@ -165,11 +165,11 @@ export default function OrderCardVendorComponent({
               // onPress={onPressRateOrder}
               // style={{flex:0.6}}
               style={styles.bottomSecondHalf}>
-              {/* <View style={styles.orderAcceptAndReadyStyleSecond}>
+              <View style={styles.orderAcceptAndReadyStyleSecond}>
                 <Text style={styles.orderStatusStyleSecond}>
-                  {strings.REORDER}
+                  {strings.RETURNORDER}
                 </Text>
-              </View> */}
+              </View>
             </TouchableOpacity>
           </View>
         ) : (
