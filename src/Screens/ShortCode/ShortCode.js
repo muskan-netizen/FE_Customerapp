@@ -351,6 +351,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.africanize:
+          updateState({
+            shortCode: shortCodes.africanize,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

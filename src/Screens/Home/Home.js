@@ -8,6 +8,7 @@ import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
+import DeviceInfo from 'react-native-device-info';
 
 import {
   androidBackButtonHandler,
@@ -57,6 +58,7 @@ export default function Home({route, navigation}) {
   const initData = useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state?.auth?.userData);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
+  const cart_Item_Type = useSelector((state) => state?.cart?.cartItemType);
 
   const profileInfo = appData?.profile;
   const {profile} = appData;
@@ -427,65 +429,12 @@ export default function Home({route, navigation}) {
   const updateCircleData = (data) => {
     updateState({updatedData: data});
   };
+
   const selcetedToggle = (type) => {
-    // console.log(type, 'type');
-    // console.log(dine_In_Type, 'dine_In_Type');
-    // console.log(
-    //   cartItemCount?.data?.item_count,
-    //   'cartItemCount?.data?.item_count',
-    // );
-    // if (
-    //   (type == 'delivery' &&
-    //     (dine_In_Type == 'dine_in' || dine_In_Type == 'takeaway') &&
-    //     cartItemCount?.data?.item_count > 0) ||
-    //   (dine_In_Type == 'delivery' &&
-    //     (type == 'dine_in' || type == 'takeaway') &&
-    //     cartItemCount?.data?.item_count > 0)
-    // ) {
-    //   Alert.alert(
-    //     '',
-    //     'This Change Will Remove All Your Cart Products. Do You Really Want To Continue ?',
-    //     [
-    //       {
-    //         text: 'Cancel',
-    //         onPress: () => console.log('Cancel Pressed'),
-    //         // style: 'destructive',
-    //       },
-    //       {text: 'Clear Cart', onPress: () => clearCart2(type)},
-    //     ],
-    //   );
-    // } else {
-    //   actions.dineInData(type);
-    //   updateState({
-    //     selectedTabType: type,
-    //   });
-    // }
     actions.dineInData(type);
     updateState({
       selectedTabType: type,
     });
-  };
-
-  const clearCart2 = () => {
-    actions
-      .clearCart(
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
-      .then((res) => {
-        actions.cartItemQty(res);
-        actions.dineInData(type);
-        updateState({
-          selectedTabType: type,
-        });
-        showSuccess(res?.message);
-      })
-      .catch(errorMethod);
   };
 
   useEffect(() => {

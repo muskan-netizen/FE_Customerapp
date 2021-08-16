@@ -2,6 +2,7 @@ import types from '../types';
 
 const initial_state = {
   cartItemCount: {},
+  cartItemType: '',
   selectedAddress: null,
 };
 

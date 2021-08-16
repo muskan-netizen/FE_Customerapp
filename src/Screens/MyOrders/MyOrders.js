@@ -1,6 +1,14 @@
 import {cloneDeep, debounce} from 'lodash';
 import React, {createRef, useEffect, useState} from 'react';
-import {FlatList, RefreshControl, View} from 'react-native';
+import {
+  FlatList,
+  RefreshControl,
+  View,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Text
+} from 'react-native';
 import {useSelector} from 'react-redux';
 
 import CustomTopTabBar from '../../Components/CustomTopTabBar';
@@ -15,8 +23,11 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
-import {moderateScaleVertical, width} from '../../styles/responsiveSize';
+import {height, moderateScaleVertical, width} from '../../styles/responsiveSize';
 import {showError} from '../../utils/helperFunctions';
+import Modal from 'react-native-modal';
+import stylesFun from './styles';
+import DatePicker from 'react-native-date-picker';
 
 export default function MyOrders({navigation}) {
   const [state, setState] = useState({
@@ -37,6 +48,7 @@ export default function MyOrders({navigation}) {
     isLoading: false,
     isRefreshing: false,
     tabType: 'active',
+    isVisibleReturnOrderModal: false,
   });
   const {
     tabBarData,
@@ -52,6 +64,7 @@ export default function MyOrders({navigation}) {
     isRefreshing,
     tabType,
     orders,
+    isVisibleReturnOrderModal,
   } = state;
 
   //Update state in screen
@@ -63,6 +76,7 @@ export default function MyOrders({navigation}) {
   );
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
+  const styles = stylesFun({fontFamily, themeColors});
 
   //Get list of all orders
   useEffect(() => {
@@ -159,6 +173,9 @@ export default function MyOrders({navigation}) {
     navigation.navigate(navigationStrings.RATEORDER);
   };
 
+  const returnYourOrder = () => {
+    updateState({isVisibleReturnOrderModal: true});
+  };
   const renderOrders = ({item, index}) => {
     // console.log(item,"item>>item")
     return (
@@ -170,6 +187,9 @@ export default function MyOrders({navigation}) {
           selectedTab == strings.PAST_ORDERS ? () => rateYourOrder() : null
         }
         navigation={navigation}
+        onPressReturnOrder={
+          selectedTab == strings.PAST_ORDERS ? () => returnYourOrder() : null
+        }
       />
 
       // <OrderCardComponent
@@ -238,6 +258,10 @@ export default function MyOrders({navigation}) {
 
   //Give Rating
 
+  const onClose = () => {
+    updateState({isVisibleReturnOrderModal: false});
+  };
+
   return (
     <WrapperContainer
       bgColor={colors.backgroundGrey}
@@ -288,6 +312,42 @@ export default function MyOrders({navigation}) {
         ListFooterComponent={() => <View style={{height: 20}} />}
         // ListEmptyComponent={<ListEmptyProduct />}
       />
+
+      {/* <Modal
+        transparent={true}
+        isVisible={isVisibleReturnOrderModal}
+        animationType={'none'}
+        style={styles.modalContainer}
+        onLayout={(event) => {
+          // updateState({viewHeight: event.nativeEvent.layout.height});
+        }}>
+        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+          <Image source={imagePath.crossB} />
+        </TouchableOpacity>
+          <View style={styles.modalMainViewContainer}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            bounces={false}
+            style={styles.modalMainViewContainer}>
+            <View
+              style={{
+                // flex: 0.6,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 10,
+              }}>
+              <Text style={styles.carType}>{strings.SELECTDATEANDTIME}</Text>
+            </View>
+
+            <View style={{alignItems: 'center', height: height / 3.5}}>
+
+            </View>
+          </ScrollView>
+          
+        </View>
+      
+      </Modal>
+    */}
     </WrapperContainer>
   );
 }

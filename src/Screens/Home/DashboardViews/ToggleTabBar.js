@@ -1,14 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Alert} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
 import MaterialTabs from 'react-native-material-tabs';
-
+import DeviceInfo from 'react-native-device-info';
 import colors from '../../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../../styles/responsiveSize';
+import actions from '../../../redux/actions';
 
 export default function ToggleTabBar({selcetedToggle, toggleData}) {
   const [state, setState] = useState({
@@ -18,7 +19,11 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const [selectedTab, setSelectedTab] = useState(0);
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {appData, themeColors} = useSelector((state) => state?.initBoot);
+  const {appData, themeColors, currencies, languages} = useSelector(
+    (state) => state?.initBoot,
+  );
+  const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
+  const cartItemType = useSelector((state) => state?.cart?.cartItemType);
 
   const {selectedIndex, tabs} = state;
   useEffect(() => {
@@ -182,7 +187,49 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
       }
     }
   };
+  const dineInFuncation = () => {
+    Alert.alert(
+      '',
+      'This Change Will Remove Your Cart Products.Do you Really Want To Continue ?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          // style: 'destructive',
+        },
+        {text: 'Clear Cart', onPress: () => clearCart2()},
+      ],
+    );
+  };
 
+  const clearCart2 = () => {
+    actions
+      .clearCart(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        actions.cartItemQty(res);
+        actions.dineInData(type);
+        actions.cartItemTypeRemove();
+        updateState({
+          selectedTabType: type,
+        });
+        showSuccess(res?.message);
+      })
+      .catch(errorMethod);
+  };
+  //Error handling in screen
+  const errorMethod = (error) => {
+    console.log(error, 'error');
+    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    showError(error?.message || error?.error);
+  };
   return (
     <>
       {tabs.length > 1 ? (
@@ -195,7 +242,7 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
           <MaterialTabs
             items={tabs}
             selectedIndex={selectedTab}
-            onChange={setSelectedTab}
+            onChange={cartItemCount?.message ? setSelectedTab : dineInFuncation}
             barHeight={38}
             indicatorColor={themeColors.primary_color}
             activeTextColor={themeColors.primary_color}

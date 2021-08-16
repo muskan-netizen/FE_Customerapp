@@ -50,6 +50,8 @@
     "towtrek": "react-native run-android --variant=towtrekDebug --appIdSuffix=towtrek",
     "arenagrub": "react-native run-android --variant=arenagrubDebug --appIdSuffix=arenagrub",
     "jet": "react-native run-android --variant=jetDebug --appIdSuffix=jet",
+    "africanize": "react-native run-android --variant=africanizeDebug --appIdSuffix=africanize",
+
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "bustanfakiehRelease": "cd android && ./gradlew assembleBustanFakiehRelease",
@@ -97,6 +99,8 @@
     "towtrekRelease": "cd android && ./gradlew assembleTowTrekRelease",
     "arenagrubRelease": "cd android && ./gradlew assembleArenaGrubRelease",
     "jetRelease": "cd android && ./gradlew assembleJetRelease",
+    "africanizeRelease": "cd android && ./gradlew assembleAfricanizeRelease",
+
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
