@@ -10,6 +10,7 @@ import {
   moderateScaleVertical,
 } from '../../../styles/responsiveSize';
 import actions from '../../../redux/actions';
+import { showError, showSuccess } from '../../../utils/helperFunctions';
 
 export default function ToggleTabBar({selcetedToggle, toggleData}) {
   const [state, setState] = useState({
@@ -214,13 +215,11 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
         },
       )
       .then((res) => {
-        actions.cartItemQty(res);
-        actions.dineInData(type);
-        actions.cartItemTypeRemove();
-        updateState({
-          selectedTabType: type,
-        });
         showSuccess(res?.message);
+        console.log(res,"res>>>res>>>>")
+        actions.cartItemQty(res);
+       
+      
       })
       .catch(errorMethod);
   };
