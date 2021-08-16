@@ -709,10 +709,20 @@ export default function Cart({navigation, route}) {
             })
           : null}
 
-        {item?.isDeliverable ?null:
-        <View style={{marginHorizontal:moderateScale(10)}}>
-         <Text style={{fontSize:moderateScale(12),fontFamily:fontFamily.medium,color:colors.redFireBrick}}>{'The specific items are not deliverable to this address. Please remove the items or change the address '}</Text>
-          </View>}
+        {item?.isDeliverable ? null : (
+          <View style={{marginHorizontal: moderateScale(10)}}>
+            <Text
+              style={{
+                fontSize: moderateScale(12),
+                fontFamily: fontFamily.medium,
+                color: colors.redFireBrick,
+              }}>
+              {
+                'The specific items are not deliverable to this address. Please remove the items or change the address '
+              }
+            </Text>
+          </View>
+        )}
 
         {/* offerview */}
         <TouchableOpacity
