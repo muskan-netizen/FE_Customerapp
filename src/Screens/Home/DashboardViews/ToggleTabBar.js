@@ -10,7 +10,7 @@ import {
   moderateScaleVertical,
 } from '../../../styles/responsiveSize';
 import actions from '../../../redux/actions';
-import { showError, showSuccess } from '../../../utils/helperFunctions';
+import {showError, showSuccess} from '../../../utils/helperFunctions';
 
 export default function ToggleTabBar({selcetedToggle, toggleData}) {
   const [state, setState] = useState({
@@ -113,7 +113,7 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        selcetedToggle('delivery');
+        c;
       }
     }
     if (toggleData?.profile?.preferences?.dinein_check == 1) {
@@ -216,10 +216,8 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
       )
       .then((res) => {
         showSuccess(res?.message);
-        console.log(res,"res>>>res>>>>")
+        console.log(res, 'res>>>res>>>>');
         actions.cartItemQty(res);
-       
-      
       })
       .catch(errorMethod);
   };
@@ -241,7 +239,14 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
           <MaterialTabs
             items={tabs}
             selectedIndex={selectedTab}
-            onChange={cartItemCount?.message ? setSelectedTab : dineInFuncation}
+            onChange={
+              !(
+                cartItemCount?.message == null &&
+                cartItemCount?.data?.item_count > 0
+              )
+                ? setSelectedTab
+                : dineInFuncation
+            }
             barHeight={38}
             indicatorColor={themeColors.primary_color}
             activeTextColor={themeColors.primary_color}
