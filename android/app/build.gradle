@@ -673,6 +673,15 @@ android {
             applicationId 'com.mstechy'
             resValue "string", "app_name", "MsTechy"
          }
+         senshive{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.senshive'
+            resValue "string", "app_name", "Senshive"
+         }
     }
 }
 

@@ -53,6 +53,7 @@ const shortCodes = {
   sirvu: '5ea0ae',
   ublue: 'f9f655',
   mstechy: 'ec2a07',
+  senshive: 'f36591',
 };
 
 const appIds = {
@@ -263,6 +264,10 @@ const appIds = {
   mstechy: Platform.select({
     ios: 'com.mstechy',
     android: 'com.mstechy',
+  }),
+  senshive: Platform.select({
+    ios: 'com.senshive',
+    android: 'com.senshive',
   }),
 };
 
