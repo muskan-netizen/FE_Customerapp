@@ -1,8 +1,8 @@
 #include "Pods/Target Support Files/Pods-Drus/Pods-Drus.release.xcconfig"
 
 
-PROJECT_APPLE_ID = 1581078123
-PROJECT_BUNDLE_ID = com.drusapp
+PROJECT_APPLE_ID = 1581108891
+PROJECT_BUNDLE_ID = com.drus.customer
 PROJECT_APP_VERSION = 1.0
 PROJECT_BUILD_NUMBER = 1
 PROJECT_APP_NAME = Drus
