@@ -34,6 +34,7 @@ import Modal from 'react-native-modal';
 import stylesFun from './styles';
 import DatePicker from 'react-native-date-picker';
 import FastImage from 'react-native-fast-image';
+import GradientButton from '../../Components/GradientButton';
 
 export default function MyOrders({navigation}) {
   const [state, setState] = useState({
@@ -57,8 +58,10 @@ export default function MyOrders({navigation}) {
     isVisibleReturnOrderModal: false,
     selectedOrderForReturn: null,
     selectProductForRetrun: null,
+    viewHeight: 0,
   });
   const {
+    viewHeight,
     tabBarData,
     selectedTab,
     isLoading,
@@ -292,6 +295,19 @@ export default function MyOrders({navigation}) {
       });
     }
   };
+  const returnOrder = () => {
+    if (selectProductForRetrun) {
+      updateState({isVisibleReturnOrderModal: false});
+      setTimeout(() => {
+        navigation.navigate(navigationStrings.RETURNORDER, {
+          selectProductForRetrun: selectProductForRetrun,
+        });
+      }, 500);
+    } else {
+      showError('Please select the product to return');
+    }
+  };
+
   return (
     <WrapperContainer
       bgColor={colors.backgroundGrey}
@@ -346,18 +362,20 @@ export default function MyOrders({navigation}) {
       <Modal
         transparent={true}
         isVisible={isVisibleReturnOrderModal}
-        animationType={'none'}
-        style={styles.modalContainer}
-        onLayout={(event) => {
-          // updateState({viewHeight: event.nativeEvent.layout.height});
-        }}>
+        animationIn={'pulse'}
+        animationOut={'pulse'}
+        style={styles.modalContainer}>
         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
           <Image source={imagePath.crossB} />
         </TouchableOpacity>
-        <View style={styles.modalMainViewContainer}>
+        <View
+          style={styles.modalMainViewContainer}
+          onLayout={(event) => {
+            updateState({viewHeight: event.nativeEvent.layout.height});
+          }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            bounces={true}
+            bounces={false}
             style={styles.modalMainViewContainer}>
             <View
               style={{
@@ -436,9 +454,24 @@ export default function MyOrders({navigation}) {
                   );
                 })
               : null}
+            <View style={{height: 50}} />
           </ScrollView>
-          <View>
-            
+          <View
+            style={[
+              styles.bottomAddToCartView,
+              {top: viewHeight - height / 12},
+            ]}>
+            <GradientButton
+              colorsArray={[
+                themeColors.primary_color,
+                themeColors.primary_color,
+              ]}
+              // textStyle={styles.textStyle}
+              onPress={returnOrder}
+              marginTop={moderateScaleVertical(10)}
+              marginBottom={moderateScaleVertical(10)}
+              btnText={strings.SELECT}
+            />
           </View>
         </View>
       </Modal>

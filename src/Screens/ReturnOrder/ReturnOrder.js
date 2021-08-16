@@ -1,0 +1,514 @@
+import {cloneDeep} from 'lodash';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  Image,
+  ImageBackground,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+  RefreshControl,
+  I18nManager,
+} from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import StarRating from 'react-native-star-rating';
+import {useSelector} from 'react-redux';
+import GradientButton from '../../Components/GradientButton';
+import Header from '../../Components/Header';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import WrapperContainer from '../../Components/WrapperContainer';
+import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang/index';
+import actions from '../../redux/actions';
+import colors from '../../styles/colors';
+import commonStylesFun from '../../styles/commonStyles';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  width,
+} from '../../styles/responsiveSize';
+import {cameraHandler} from '../../utils/commonFunction';
+import {getImageUrl, showError} from '../../utils/helperFunctions';
+// import OrderCardComponent from './OrderCardComponent';
+import stylesFunc from './styles';
+import FastImage from 'react-native-fast-image';
+import DropDownPicker from 'react-native-dropdown-picker';
+
+export default function ReturnOrder({navigation, route}) {
+  const ratingData = route?.params?.item?.product_rating;
+  const selectProductForRetrun = route?.params?.selectProductForRetrun;
+  console.log(selectProductForRetrun, 'selectProductForRetrun....');
+  const [state, setState] = useState({
+    isLoading: false,
+    rating: 0,
+    returnText: '',
+    imageArray: [],
+    remove_image_ids: [],
+    isRefreshing: false,
+
+    returnReasons: [
+      {
+        id: 1,
+        name: 'The merchant shipped the wrong item',
+        label: 'The merchant shipped the wrong item',
+        value: 'The merchant shipped the wrong item',
+      },
+      {
+        id: 2,
+        name: 'Purchase arrived too late',
+        label: 'Purchase arrived too late',
+        value: 'Purchase arrived too late',
+      },
+      {
+        id: 3,
+        name: `Customer doesn't need anymore`,
+        label: `Customer doesn't need anymore`,
+        value: `Customer doesn't need anymore`,
+      },
+      {
+        id: 4,
+        name: 'The Product was damaged or defective',
+        label: 'The Product was damaged or defective',
+        value: 'The Product was damaged or defective',
+      },
+      {
+        id: 5,
+        name: 'Other',
+        label: 'Other',
+        value: 'Other',
+      },
+    ],
+    selectedReason: null,
+  });
+  const {
+    isLoading,
+    rating,
+    imageArray,
+    returnText,
+    remove_image_ids,
+    isRefreshing,
+    returnReasons,
+    selectedReason,
+  } = state;
+  const userData = useSelector((state) => state?.auth?.userData);
+
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+
+  const currentTheme = useSelector((state) => state.initBoot);
+  const {appData, currencies, languages, appStyle} = useSelector(
+    (state) => state.initBoot,
+  );
+  const {themeColors, themeLayouts} = currentTheme;
+  const fontFamily = appStyle?.fontSizeData;
+
+  const styles = stylesFunc({themeColors, fontFamily});
+  const commonStyles = commonStylesFun({fontFamily});
+
+  const onStarRatingPress = (rating) => {
+    updateState({rating: rating});
+  };
+
+  useEffect(() => {
+    console.log(remove_image_ids, 'remove_image_ids');
+  }, [remove_image_ids]);
+
+  /***********Remove Image from rating */
+  const _removeImageFromList = (selectdImage) => {
+    console.log(selectdImage, 'selectdImage>>>');
+    if (selectdImage?.id) {
+      console.log(selectdImage?.id, 'selectdImage?.id');
+      let copyArrayImages = cloneDeep(imageArray);
+      console.log(copyArrayImages, 'copyArrayImages');
+      copyArrayImages = copyArrayImages.filter(
+        (x) => x?.id !== selectdImage?.id,
+      );
+      updateState({
+        imageArray: copyArrayImages,
+        remove_image_ids: [...remove_image_ids, selectdImage?.id],
+      });
+    } else {
+      let copyArrayImages = cloneDeep(imageArray);
+      copyArrayImages = copyArrayImages.filter(
+        (x) => x?.image_id !== selectdImage?.image_id,
+      );
+      updateState({
+        imageArray: copyArrayImages,
+      });
+    }
+  };
+
+  //this function use for open actionsheet
+  let actionSheet = useRef();
+  const showActionSheet = () => {
+    {
+      !!userData?.auth_token
+        ? imageArray.length == 5
+          ? showError('Maximum photo selection limit reached')
+          : actionSheet.current.show()
+        : null;
+    }
+  };
+
+  // this funtion use for camera handle
+  const cameraHandle = (index) => {
+    if (index == 0 || index == 1) {
+      cameraHandler(index, {
+        width: 300,
+        height: 400,
+        cropping: false,
+        cropperCircleOverlay: false,
+        compressImageQuality: 0.5,
+        mediaType: 'photo',
+      })
+        .then((res) => {
+          console.log(res, 'res?.data');
+          if (res && (res?.sourceURL || res?.path)) {
+            console.log(res, 'response');
+            let file = {
+              image_id: Math.random(),
+              name: res?.filename,
+              type: res?.mime,
+              uri: res?.sourceURL || res?.path,
+            };
+            let find = imageArray.find((x) => x?.name == res?.filename);
+            if (find) {
+              showError('Image is already uploaded');
+            } else {
+              updateState({imageArray: [...imageArray, file]});
+            }
+          }
+        })
+        .catch((err) => {});
+    }
+  };
+
+  const _submitYourReturnOrder = () => {
+    // updateState({isLoading: true});
+    let data = {};
+    let formdata = new FormData();
+    formdata.append(
+      'order_vendor_product_id',
+      ratingData?.order_vendor_product_id,
+    );
+    formdata.append('order_id', sel);
+    formdata.append('product_id', ratingData.product_id);
+  
+    if (imageArray.length) {
+      imageArray.forEach((element) => {
+        if (element?.id) {
+          console.log(element?.id, 'element?.id.....');
+        } else {
+          formdata.append('files[]', {
+            name: element.name,
+            type: element.type,
+            uri: element.uri,
+          });
+          console.log('else Part Is Running.....');
+        }
+      });
+    }
+
+    // if (remove_image_ids.length) {
+    //   remove_image_ids.forEach((element) => {
+    //     formdata.append('remove_files[]', element);
+    //   });
+    // }
+
+    console.log(formdata, 'formdata>>>');
+    // actions
+    //   .giveRating(formdata, {
+    //     code: appData?.profile?.code,
+    //     currency: currencies?.primary_currency?.id,
+    //     language: languages?.primary_language?.id,
+    //     // 'Content-Type': 'multipart/form-data',
+    //   })
+    //   .then((res) => {
+    //     console.log(res, 'res>>>>>>782531');
+    //     updateState({isLoading: false});
+    //     navigation.goBack();
+    //   })
+    //   .catch(errorMethod);
+  };
+
+  //get All ratings of product
+
+  const getReviewRatings = () => {
+    actions
+      .getRating(
+        `?id=${ratingData.id}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          // 'Content-Type': 'multipart/form-data',
+        },
+      )
+      .then((res) => {
+        updateState({
+          // imageArray: res.data.review_files,
+          rating: res.data.rating,
+          returnText: res.data.review,
+          isLoading: false,
+          isRefreshing: false,
+        });
+        if (res.data.review_files.length) {
+          updateState({
+            imageArray: res.data.review_files.map((i, inx) => {
+              return {
+                uri: getImageUrl(
+                  i?.file?.image_fit,
+                  i?.file?.image_path,
+                  '600/360',
+                ),
+                id: i?.id,
+              };
+            }),
+          });
+        }
+        console.log(res.data, 'res.data.review_files');
+      })
+      .catch((error) => {
+        updateState({
+          isLoading: false,
+          isRefreshing: false,
+        });
+        showError(error?.message || error?.error);
+      });
+  };
+
+  useEffect(() => {
+    // updateState({isLoading: true});
+    // getReviewRatings();
+  }, []);
+
+  const errorMethod = (error) => {
+    console.log(error, 'error');
+    updateState({isLoading: false});
+    showError(error?.message || error?.error);
+  };
+
+  useEffect(() => {
+    // getReviewRatings();
+  }, [isRefreshing]);
+
+  //Pull to refresh
+  const handleRefresh = () => {
+    updateState({
+      // isRefreshing: true,
+    });
+  };
+
+  const updateReason = (item) => {
+    console.log(item, 'Selected item');
+    updateState({selectedReason: item});
+  };
+
+  return (
+    <WrapperContainer
+      bgColor={colors.backgroundGrey}
+      statusBarColor={colors.white}
+      source={loaderOne}
+      isLoadingB={isLoading}>
+      <Header
+        leftIcon={imagePath.back}
+        centerTitle={strings.RETURNORDER}
+        headerStyle={{backgroundColor: colors.white}}
+      />
+      <View style={{...commonStyles.headerTopLine}} />
+      <ScrollView
+      // refreshing={isRefreshing}
+      // refreshControl={
+      //   <RefreshControl
+      //     refreshing={isRefreshing}
+      //     onRefresh={handleRefresh}
+      //     tintColor={themeColors.primary_color}
+      //   />
+      // }
+      >
+        <View
+          style={{
+            marginHorizontal: moderateScale(20),
+            marginTop: moderateScaleVertical(20),
+            marginBottom: moderateScaleVertical(20),
+          }}>
+          {/* star View */}
+          <View style={[styles.starViewStyle]}>
+            <Text
+              style={{
+                fontSize: moderateScale(14),
+                fontFamily: fontFamily.medium,
+                color: colors.textGreyJ,
+              }}>
+              {'Here You Are For Return Product !'}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginBottom: moderateScaleVertical(20),
+              marginTop: moderateScaleVertical(10),
+            }}>
+            <View style={styles.cartItemImage}>
+              <FastImage
+                source={
+                  selectProductForRetrun?.image_path != '' &&
+                  selectProductForRetrun?.image_path != null
+                    ? {
+                        uri: getImageUrl(
+                          selectProductForRetrun?.image_path?.proxy_url,
+                          selectProductForRetrun?.image_path?.image_path,
+                          '300/300',
+                        ),
+                      }
+                    : imagePath.patternOne
+                }
+                style={styles.imageStyle}
+              />
+            </View>
+            <View style={{marginLeft: 10}}>
+              <Text
+                numberOfLines={1}
+                style={[styles.priceItemLabel2, {opacity: 0.8}]}>
+                {'XYZ'}
+              </Text>
+              {selectProductForRetrun?.qty && (
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{color: colors.textGrey}}>{strings.QTY}</Text>
+                  <Text style={styles.cartItemWeight}>
+                    {selectProductForRetrun?.qty}
+                  </Text>
+                </View>
+              )}
+            </View>
+          </View>
+
+          {/* Upload image */}
+          <View style={{marginTop: moderateScaleVertical(10)}}>
+            <Text style={styles.uploadImage}>{strings.UPLOAD_IMAGE}</Text>
+            <View
+              style={{
+                marginTop: moderateScaleVertical(10),
+                flexDirection: 'row',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+              }}>
+              <View
+                style={{
+                  marginRight: 5,
+                  marginBottom: moderateScaleVertical(10),
+                }}>
+                <TouchableOpacity
+                  onPress={showActionSheet}
+                  style={[styles.viewOverImage2, {borderStyle: 'dashed'}]}>
+                  <Image
+                    source={imagePath.icCamIcon}
+                    style={{tintColor: colors.themeColor}}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              {imageArray && imageArray.length
+                ? imageArray.map((i, inx) => {
+                    return (
+                      <ImageBackground
+                        source={{
+                          uri: i.uri,
+                        }}
+                        style={styles.imageOrderStyle}
+                        imageStyle={styles.imageOrderStyle}>
+                        <View style={styles.viewOverImage}>
+                          <View
+                            style={{
+                              position: 'absolute',
+                              top: -10,
+                              right: -10,
+                            }}>
+                            <TouchableOpacity
+                              onPress={() => _removeImageFromList(i)}>
+                              <Image source={imagePath.icRemoveIcon} />
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                      </ImageBackground>
+                    );
+                  })
+                : null}
+            </View>
+
+            <View style={{marginTop: moderateScaleVertical(20)}}>
+              <Text
+                style={{
+                  fontSize: moderateScale(14),
+                  fontFamily: fontFamily.medium,
+                  color: colors.textGreyJ,
+                }}>
+                {strings.RETURNREASONS}
+              </Text>
+            </View>
+
+            <DropDownPicker
+              items={returnReasons}
+              defaultValue={returnReasons[0].label || returnReasons[0].name}
+              containerStyle={{height: 40, marginTop: moderateScaleVertical(5)}}
+              style={{
+                backgroundColor: '#fafafa',
+                zIndex: 5000,
+                // marginHorizontal: moderateScale(20),
+                flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+              }}
+              itemStyle={{
+                justifyContent: 'flex-start',
+                flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+              }}
+              zIndex={5000}
+              dropDownStyle={{
+                backgroundColor: '#fafafa',
+                height: 150,
+                width: width - moderateScale(40),
+                alignSelf: 'center',
+              }}
+              onChangeItem={(item) => updateReason(item)}
+            />
+
+            {/* Message Container    */}
+            <View style={{marginTop: moderateScaleVertical(20)}}>
+              <Text style={styles.uploadImage}>{strings.COMMENTSOPTIONAL}</Text>
+              <View style={styles.textInputContainer}>
+                <TextInput
+                  style={styles.textInputStyle}
+                  multiline={true}
+                  value={returnText}
+                  onChangeText={(text) => updateState({returnText: text})}
+                />
+              </View>
+            </View>
+
+            <View style={{marginTop: moderateScaleVertical(20)}}>
+              <GradientButton
+                colorsArray={[
+                  themeColors.primary_color,
+                  themeColors.primary_color,
+                ]}
+                textStyle={styles.textStyle}
+                onPress={_submitYourReturnOrder}
+                btnText={strings.SUBMIT}
+              />
+            </View>
+          </View>
+        </View>
+        <ActionSheet
+          ref={actionSheet}
+          // title={'Choose one option'}
+          options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
+          cancelButtonIndex={2}
+          destructiveButtonIndex={2}
+          onPress={(index) => cameraHandle(index)}
+        />
+      </ScrollView>
+    </WrapperContainer>
+  );
+}
