@@ -198,4 +198,8 @@ export default {
   platinum: require('../assets/images/ic_platinum.png'),
   silver: require('../assets/images/ic_silver.png'),
   totalLoyaltyBackground: require('../assets/images/ic_total.png'),
+  ic_google2: require('../assets/images/ic_google2.png'),
+  ic_fb2: require('../assets/images/ic_fb2.png'),
+  ic_apple2: require('../assets/images/ic_apple2.png'),
+  ic_twitter2: require('../assets/images/ic_twitter2.png'),
 };

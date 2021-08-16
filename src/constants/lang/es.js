@@ -336,8 +336,12 @@ export default {
   PAYNOW: 'PAY NOW',
   LOYALTYPOINTS: 'Loyalty',
   TOTALSUBSCRIPTION: 'Subscription Discount',
-  DOYOUWANTTOGIVEATIP:'Do you want to give a tip?',
-  RENEW:'Renew',
+  DOYOUWANTTOGIVEATIP: 'Do you want to give a tip?',
+  RENEW: 'Renew',
   ORDER_CART: 'Orders',
-  RETURNORDER:'Return order'
+  RETURNORDER: 'Return order',
+  CONTINUE_GOOGLE: 'Continue using Google',
+  CONTINUE_FACEBOOK: 'Continue using Facebook',
+  CONTINUE_TWITTER: 'Continue using Twitter',
+  CONTINUE_APPLE: 'Continue using Apple',
 };

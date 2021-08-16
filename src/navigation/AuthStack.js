@@ -1,4 +1,5 @@
 import React from 'react';
+import {getBundleId} from 'react-native-device-info';
 import {
   Location,
   Login,
@@ -7,9 +8,13 @@ import {
   Signup,
   VerifyAccount,
   ResetPassword,
+  OuterScreen2,
+  Signup2,
 } from '../Screens';
 import ForgotPassword from '../Screens/ForgotPassword/ForgotPassword';
+import Login2 from '../Screens/Login/Login2';
 import ShortCode from '../Screens/ShortCode/ShortCode';
+import {appIds} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
 export default function (Stack) {
@@ -17,17 +22,19 @@ export default function (Stack) {
     <>
       <Stack.Screen
         name={navigationStrings.OUTER_SCREEN}
-        component={OuterScreen}
+        component={
+          getBundleId() === appIds.capcorp ? OuterScreen2 : OuterScreen
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.SIGN_UP}
-        component={Signup}
+        component={getBundleId() === appIds.capcorp ? Signup2 : Signup}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.LOGIN}
-        component={Login}
+        component={getBundleId() === appIds.capcorp ? Login2 : Login}
         options={{headerShown: false}}
       />
       <Stack.Screen

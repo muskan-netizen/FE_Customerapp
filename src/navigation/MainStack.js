@@ -10,6 +10,7 @@ import {
   Location,
   MyOrders,
   MyProfile,
+  MyProfile2,
   Notifications,
   OrderDetail,
   ProductDetail,
@@ -67,7 +68,7 @@ export default function (Stack) {
       />
       <Stack.Screen
         name={navigationStrings.MY_PROFILE}
-        component={MyProfile}
+        component={getBundleId() === appIds.capcorp ? MyProfile2 : MyProfile}
         options={{headerShown: false}}
       />
 

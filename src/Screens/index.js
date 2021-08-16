@@ -66,3 +66,7 @@ export {default as Vendors2} from './Vendors/Vendors2';
 export {default as ProductDetail2} from './ProductDetail/ProductDetail2';
 export {default as VendorDetail2} from './VendorDetail/VendorDetail2';
 export {default as ProductList2} from './ProductList/ProductList2';
+export {default as Login2} from './Login/Login2';
+export {default as OuterScreen2} from './OuterScreen/OuterScreen2';
+export {default as Signup2} from './Signup/Signup2';
+export {default as MyProfile2} from './MyProfile/MyProfile2';

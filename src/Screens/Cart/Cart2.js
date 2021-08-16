@@ -1111,7 +1111,7 @@ export function stylesFunc({fontFamily, themeColors}) {
     instructionView: {
       height: moderateScale(80),
       borderRadius: moderateScale(15),
-      backgroundColor: colors.white,
+      backgroundColor: colors.borderColorD,
       marginVertical: moderateScaleVertical(10),
       alignItems: 'center',
       justifyContent: 'center',

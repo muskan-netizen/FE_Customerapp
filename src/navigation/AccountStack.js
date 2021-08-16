@@ -35,6 +35,7 @@ import {
   Vendors2,
   ProductList2,
   ProductDetail2,
+  MyProfile2,
 } from '../Screens';
 import {appIds} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
@@ -50,7 +51,7 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.MY_PROFILE}
-        component={MyProfile}
+        component={getBundleId() === appIds.capcorp ? MyProfile2 : MyProfile}
         options={{headerShown: false}}
       />
 
