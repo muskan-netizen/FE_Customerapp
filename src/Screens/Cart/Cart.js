@@ -30,6 +30,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -38,10 +39,15 @@ import {
 import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFun from './styles';
+import Modal from 'react-native-modal';
+import GradientButton from '../../Components/GradientButton';
+import DatePicker from 'react-native-date-picker';
+
 export default function Cart({navigation, route}) {
   let paramsData = route?.params;
   const [state, setState] = useState({
     isLoading: true,
+    isVisibleTimeModal: false,
     isVisible: false,
     cartItems: [],
     cartData: {},
@@ -60,8 +66,11 @@ export default function Cart({navigation, route}) {
     isRefreshing: false,
     selectedTipvalue: null,
     selectedTipAmount: null,
+    viewHeight: 0,
   });
   const {
+    viewHeight,
+    isVisibleTimeModal,
     isLoading,
     cartItems,
     cartData,
@@ -808,7 +817,6 @@ export default function Cart({navigation, route}) {
 
   const selectedTip = (tip) => {
     console.log(tip, 'tip >>>ITEM');
-
     if (selectedTipvalue == 'custom') {
       updateState({selectedTipvalue: tip, selectedTipAmount: null});
     } else {
@@ -818,6 +826,12 @@ export default function Cart({navigation, route}) {
         updateState({selectedTipvalue: tip, selectedTipAmount: tip?.value});
       }
     }
+  };
+
+  const onPressPickUplater = () => {
+    updateState({
+      isVisibleTimeModal: true,
+    });
   };
   //Footer section in cart screen
   const getFooter = () => {
@@ -1054,7 +1068,7 @@ export default function Cart({navigation, route}) {
               marginHorizontal: 20,
               alignItems: 'center',
             }}
-            // onPress={onPressPickUplater}
+            onPress={onPressPickUplater}
             marginBottom={moderateScaleVertical(10)}
             marginTop={moderateScaleVertical(10)}
             containerStyle={{width: width / 2.5}}
@@ -1237,6 +1251,15 @@ export default function Cart({navigation, route}) {
     updateState({pageNo: 1, isRefreshing: true});
   };
 
+  const onClose = () => {
+    updateState({isVisibleTimeModal: false});
+  };
+
+  const onDateChange = (value) => {
+    console.log(value, 'value');
+    // _onDateChange(value);
+  };
+
   return (
     <WrapperContainer
       bgColor={colors.backgroundGrey}
@@ -1298,6 +1321,65 @@ export default function Cart({navigation, route}) {
         type={type}
         passLocation={(data) => addUpdateLocation(data)}
       />
+
+      {/* Date time modal */}
+      <Modal
+        transparent={true}
+        isVisible={isVisibleTimeModal}
+        animationType={'none'}
+        style={styles.modalContainer}
+        onLayout={(event) => {
+          updateState({viewHeight: event.nativeEvent.layout.height});
+        }}>
+        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+          <Image source={imagePath.crossB} />
+        </TouchableOpacity>
+        <View style={styles.modalMainViewContainer}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            bounces={false}
+            style={styles.modalMainViewContainer}>
+            <View
+              style={{
+                // flex: 0.6,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 10,
+              }}>
+              <Text style={styles.carType}>{strings.SELECTDATEANDTIME}</Text>
+            </View>
+
+            <View style={{alignItems: 'center', height: height / 3.5}}>
+              <DatePicker
+                date={new Date()}
+                mode="datetime"
+                minimumDate={new Date()}
+                style={{width: width - 20, height: height / 3.5}}
+                // onDateChange={setDate}
+                onDateChange={(value) => onDateChange(value)}
+              />
+            </View>
+          </ScrollView>
+          <View
+            style={[
+              styles.bottomAddToCartView,
+              {top: viewHeight - height / 6},
+            ]}>
+            <GradientButton
+              colorsArray={[
+                themeColors.primary_color,
+                themeColors.primary_color,
+              ]}
+              // textStyle={styles.textStyle}
+              onPress={() => alert('In progress')}
+              marginTop={moderateScaleVertical(10)}
+              marginBottom={moderateScaleVertical(30)}
+              btnText={strings.SELECT}
+            />
+          </View>
+        </View>
+     
+      </Modal>
     </WrapperContainer>
   );
 }
