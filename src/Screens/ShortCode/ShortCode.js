@@ -246,9 +246,9 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-        case appIds.foodkart:
+        case appIds.yummiidash:
           updateState({
-            shortCode: shortCodes.foodkart,
+            shortCode: shortCodes.yummiidash,
             isShortcodePrefilled: true,
           });
           break;

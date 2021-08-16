@@ -31,7 +31,7 @@ const shortCodes = {
   klickmat: 'de2c54',
   lastminutedress: '6e940e',
   rerak: 'f16959',
-  foodkart: 'c23640',
+  yummiidash: 'c23640',
   yoho: 'fdbcd9',
   glamsouq: '583ade',
   doctatransportation: '8115ce',
@@ -172,9 +172,9 @@ const appIds = {
     ios: 'com.codebrew.rerak',
     android: 'com.codebrew.rerak',
   }),
-  foodkart: Platform.select({
-    ios: 'com.codebrew.foodkart',
-    android: 'com.codebrew.foodkart',
+  yummiidash: Platform.select({
+    ios: 'com.yummiidash',
+    android: 'com.yummiidash',
   }),
   yoho: Platform.select({
     ios: 'com.codebrewlab.yoho',
