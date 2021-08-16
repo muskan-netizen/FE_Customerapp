@@ -188,14 +188,18 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
     }
   };
   const nmyfuncation = () => {
-    Alert.alert('', 'item exist', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        // style: 'destructive',
-      },
-      {text: 'Clear Cart', onPress: () => clearCart2()},
-    ]);
+    Alert.alert(
+      '',
+      'This Change Will Remove Your Cart Products.Do you Really Want To Continue ?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          // style: 'destructive',
+        },
+        {text: 'Clear Cart', onPress: () => clearCart2()},
+      ],
+    );
   };
 
   const clearCart2 = () => {
