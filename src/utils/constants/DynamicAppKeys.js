@@ -48,6 +48,7 @@ const shortCodes = {
   towtrek: 'e7a92f',
   arenagrub: '3f8210',
   jet: '8fb14b',
+  africanize: '35822a',
 };
 
 const appIds = {
@@ -236,8 +237,12 @@ const appIds = {
     android: 'com.arenagrub',
   }),
   jet: Platform.select({
-    ios: 'com.jet',
+    ios: 'com.jet.customer',
     android: 'com.jet',
+  }),
+  africanize: Platform.select({
+    ios: 'com.africanize',
+    android: 'com.africanize',
   }),
 };
 
