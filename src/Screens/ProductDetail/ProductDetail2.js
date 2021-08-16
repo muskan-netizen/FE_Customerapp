@@ -594,7 +594,7 @@ export default function ProductDetail2({route, navigation}) {
   );
   return (
     <WrapperContainer
-      bgColor={colors.white}
+      bgColor={colors.backgroundGrey}
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoadingC}>
@@ -611,6 +611,10 @@ export default function ProductDetail2({route, navigation}) {
       <Header2
         centerTitle={productDetailData?.translation[0]?.title}
         leftIcon={imagePath.backArrow}
+        rightIcon={!!data?.showAddToCart ? false : imagePath.search}
+        onPressRight={() =>
+          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+        }
       />
       <View style={{...commonStyles.headerTopLine}} />
 
@@ -780,7 +784,6 @@ export default function ProductDetail2({route, navigation}) {
                       <View style={{flex: 0.3, justifyContent: 'center'}}>
                         <View
                           style={{
-                            backgroundColor: colors.white,
                             borderRadius: moderateScale(5),
                             borderWidth: 1,
                             borderColor: themeColors.primary_color,
@@ -928,7 +931,7 @@ export default function ProductDetail2({route, navigation}) {
                     marginVertical: moderateScaleVertical(20),
                   }}>
                   <GradientButton
-                    colorsArray={[colors.white, colors.white]}
+                    colorsArray={[colors.backgroundGrey, colors.backgroundGrey]}
                     textStyle={{
                       fontFamily: fontFamily.medium,
                       color: themeColors.primary_color,

@@ -995,6 +995,7 @@ export default function Cart2({navigation, route}) {
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
+      bgColor={colors.backgroundGrey}
       source={loaderOne}
       isLoadingB={isLoadingB}>
       <Header2 leftIcon={imagePath.backArrow} />
@@ -1076,7 +1077,6 @@ export function stylesFunc({fontFamily, themeColors}) {
       fontSize: textScale(14),
     },
     cartAddRemoveView: {
-      backgroundColor: colors.white,
       borderRadius: moderateScale(15),
       flexDirection: 'row',
       justifyContent: 'space-evenly',
@@ -1111,7 +1111,7 @@ export function stylesFunc({fontFamily, themeColors}) {
     instructionView: {
       height: moderateScale(80),
       borderRadius: moderateScale(15),
-      backgroundColor: colors.grey2,
+      backgroundColor: colors.white,
       marginVertical: moderateScaleVertical(10),
       alignItems: 'center',
       justifyContent: 'center',
