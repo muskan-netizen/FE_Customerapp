@@ -635,6 +635,44 @@ android {
             applicationId 'com.africanize'
             resValue "string", "app_name", "Africanize"
          }
+
+          markita{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.markita'
+            resValue "string", "app_name", "Markita"
+         }
+          sirvu{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.sirvu'
+            resValue "string", "app_name", "SirVU"
+         }
+
+         ublue{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.ublue'
+            resValue "string", "app_name", "Ublue"
+         }
+          mstechy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.mstechy'
+            resValue "string", "app_name", "MsTechy"
+         }
     }
 }
 

@@ -49,6 +49,10 @@ const shortCodes = {
   arenagrub: '3f8210',
   jet: '8fb14b',
   africanize: '35822a',
+  markita: '4edbd9',
+  sirvu: '5ea0ae',
+  ublue: 'f9f655',
+  mstechy: 'ec2a07',
 };
 
 const appIds = {
@@ -243,6 +247,22 @@ const appIds = {
   africanize: Platform.select({
     ios: 'com.africanize',
     android: 'com.africanize',
+  }),
+  markita: Platform.select({
+    ios: 'com.markita',
+    android: 'com.markita',
+  }),
+  sirvu: Platform.select({
+    ios: 'com.sirvu',
+    android: 'com.sirvu',
+  }),
+  ublue: Platform.select({
+    ios: 'com.ublue',
+    android: 'com.ublue',
+  }),
+  mstechy: Platform.select({
+    ios: 'com.mstechy',
+    android: 'com.mstechy',
   }),
 };
 

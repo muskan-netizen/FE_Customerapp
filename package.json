@@ -51,7 +51,10 @@
     "arenagrub": "react-native run-android --variant=arenagrubDebug --appIdSuffix=arenagrub",
     "jet": "react-native run-android --variant=jetDebug --appIdSuffix=jet",
     "africanize": "react-native run-android --variant=africanizeDebug --appIdSuffix=africanize",
-
+    "markita": "react-native run-android --variant=markitaDebug --appIdSuffix=markita",
+    "sirvu": "react-native run-android --variant=sirvuDebug --appIdSuffix=sirvu",
+    "ublue": "react-native run-android --variant=ublueDebug --appIdSuffix=ublue",
+    "mstechy": "react-native run-android --variant=mstechyDebug --appIdSuffix=mstechy",
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "bustanfakiehRelease": "cd android && ./gradlew assembleBustanFakiehRelease",
@@ -100,7 +103,10 @@
     "arenagrubRelease": "cd android && ./gradlew assembleArenaGrubRelease",
     "jetRelease": "cd android && ./gradlew assembleJetRelease",
     "africanizeRelease": "cd android && ./gradlew assembleAfricanizeRelease",
-
+    "markitaRelease": "cd android && ./gradlew assembleMarkitaRelease",
+    "sirvuRelease": "cd android && ./gradlew assembleSirVURelease",
+    "ublueRelease": "cd android && ./gradlew assembleUblueRelease",
+    "mstechyRelease": "cd android && ./gradlew assembleMsTechyRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

@@ -356,6 +356,32 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+
+        case appIds.markita:
+          updateState({
+            shortCode: shortCodes.markita,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sirvu:
+          updateState({
+            shortCode: shortCodes.sirvu,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.ublue:
+          updateState({
+            shortCode: shortCodes.ublue,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mstechy:
+          updateState({
+            shortCode: shortCodes.mstechy,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
