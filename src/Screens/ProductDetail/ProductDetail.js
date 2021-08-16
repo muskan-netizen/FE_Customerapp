@@ -522,6 +522,7 @@ export default function ProductDetail({route, navigation}) {
       .then((res) => {
         console.log(res, 'res.data');
         actions.cartItemQty(res);
+
         showSuccess('Product successfully added');
 
         updateState({isLoadingC: false});

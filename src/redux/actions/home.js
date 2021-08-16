@@ -89,7 +89,6 @@ export function locationData(res) {
   });
 }
 export function profileAddress(res) {
-  
   setItem('profileAddress', res)
     .then((suc) => {
       dispatch({
@@ -97,9 +96,7 @@ export function profileAddress(res) {
         payload: res,
       });
     })
-    .catch((err) => {
-      
-    });
+    .catch((err) => {});
 }
 
 // export function updateProfileAddress(res) {
@@ -109,7 +106,7 @@ export function profileAddress(res) {
 //       payload: res,
 //     });
 //   }).catch(err=>{
-//     
+//
 //   })
 // }
 
@@ -120,7 +117,6 @@ export const addAddress = (data, headers = {}) => {
         resolve(res);
       })
       .catch((error) => {
-        
         reject(error);
       });
   });
@@ -128,14 +124,11 @@ export const addAddress = (data, headers = {}) => {
 
 export const updateAddress = (query = '', data = {}, headers = {}) => {
   return new Promise((resolve, reject) => {
-    
     apiPost(UPDATE_ADDRESS + query, data, headers)
       .then((res) => {
-        
         resolve(res);
       })
       .catch((error) => {
-        
         reject(error);
       });
   });
@@ -148,7 +141,6 @@ export const getAddress = (data = {}, headers = {}) => {
         resolve(res);
       })
       .catch((error) => {
-        
         reject(error);
       });
   });
@@ -156,14 +148,11 @@ export const getAddress = (data = {}, headers = {}) => {
 
 export const deleteAddress = (query = '', data = {}, headers = {}) => {
   return new Promise((resolve, reject) => {
-    
     apiGet(DELETE_ADDRESS + query, data, headers)
       .then((res) => {
-        
         resolve(res);
       })
       .catch((error) => {
-        
         reject(error);
       });
   });
@@ -171,21 +160,18 @@ export const deleteAddress = (query = '', data = {}, headers = {}) => {
 
 export const setPrimaryAddress = (query = '', data = {}, headers = {}) => {
   return new Promise((resolve, reject) => {
-    
     apiGet(SET_PRIMARY_ADDRESS + query, data, headers)
       .then((res) => {
-        
         resolve(res);
       })
       .catch((error) => {
-        
         reject(error);
       });
   });
 };
 
 export function dineInData(res) {
-  // setItem('dine_in_type', res);
+  setItem('dine_in_type', res);
   dispatch({
     type: types.DINE_IN_DATA,
     payload: res,

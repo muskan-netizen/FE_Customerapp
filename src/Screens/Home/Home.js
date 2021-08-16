@@ -8,6 +8,7 @@ import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
+import DeviceInfo from 'react-native-device-info';
 
 import {
   androidBackButtonHandler,
@@ -56,6 +57,8 @@ export default function Home({route, navigation}) {
 
   const initData = useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state?.auth?.userData);
+  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
+  const cart_Item_Type = useSelector((state) => state?.cart?.cartItemType);
 
   const profileInfo = appData?.profile;
   const {profile} = appData;
@@ -426,6 +429,7 @@ export default function Home({route, navigation}) {
   const updateCircleData = (data) => {
     updateState({updatedData: data});
   };
+
   const selcetedToggle = (type) => {
     actions.dineInData(type);
     updateState({

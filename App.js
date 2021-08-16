@@ -85,13 +85,13 @@ const App = () => {
         });
       }
 
-      // const dine_in_type = await getItem('dine_in_type');
-      // if (dine_in_type) {
-      //   dispatch({
-      //     type: types.DINE_IN_DATA,
-      //     payload: dine_in_type,
-      //   });
-      // }
+      const dine_in_type = await getItem('dine_in_type');
+      if (dine_in_type) {
+        dispatch({
+          type: types.DINE_IN_DATA,
+          payload: dine_in_type,
+        });
+      }
 
       //Language
       const getLanguage = await getItem('language');
