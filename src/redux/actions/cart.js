@@ -12,7 +12,13 @@ import {
   GET_ALL_PROMO_CODES_CAB_ORDER,
   VERIFY_PROMO_CODE_CAB_ORDER,
 } from '../../config/urls';
-import {apiGet, apiPost, saveSelectedAddress, setItem} from '../../utils/utils';
+import {
+  apiGet,
+  apiPost,
+  removeItem,
+  saveSelectedAddress,
+  setItem,
+} from '../../utils/utils';
 import store from '../store';
 import types from '../types';
 const {dispatch} = store;

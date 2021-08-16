@@ -179,6 +179,7 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+
         case appIds.shariff:
           updateState({
             shortCode: shortCodes.shariff,

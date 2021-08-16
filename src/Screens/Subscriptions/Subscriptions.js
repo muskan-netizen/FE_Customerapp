@@ -160,7 +160,9 @@ export default function Subscriptions({navigation, route}) {
             isLoading: false,
             isModalVisibleForPayment: true,
             selectedPlan: res?.data?.sub_plan,
-            paymentOptions: res?.data?.payment_options,
+            paymentOptions: res?.data?.payment_options
+              ? res?.data?.payment_options
+              : [],
           });
         } else {
           showError(res?.message);
@@ -211,7 +213,7 @@ export default function Subscriptions({navigation, route}) {
         {!!allSubscriptions.length && index == 0 && (
           <View
             style={{
-              marginTop: moderateScale(40),
+              marginTop: currentSubscription ? moderateScale(40) : null,
               marginBottom: moderateScale(20),
             }}>
             <Text style={styles.subscriptionTitle}>
@@ -402,35 +404,33 @@ export default function Subscriptions({navigation, route}) {
           }}
         />
 
-        {!!(paymentOptions && paymentOptions.length) && (
-          <View
-            style={{
-              justifyContent: 'center',
-              paddingHorizontal: moderateScale(20),
-              marginVertical: moderateScale(10),
-            }}>
-            <View>
-              <Text style={styles.title}>{'Debit From'}</Text>
-            </View>
-            <View>
-              <FlatList
-                data={paymentOptions}
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-                keyboardShouldPersistTaps={'handled'}
-                // horizontal
-                style={{marginTop: moderateScaleVertical(10)}}
-                keyExtractor={(item, index) => String(index)}
-                renderItem={_renderItemPayments}
-                ListEmptyComponent={() => (
-                  <Text style={{textAlign: 'center'}}>
-                    {'No Payment method found'}
-                  </Text>
-                )}
-              />
-            </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            paddingHorizontal: moderateScale(20),
+            marginVertical: moderateScale(10),
+          }}>
+          <View>
+            <Text style={styles.title}>{'Debit From'}</Text>
           </View>
-        )}
+          <View>
+            <FlatList
+              data={paymentOptions}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              keyboardShouldPersistTaps={'handled'}
+              // horizontal
+              style={{marginTop: moderateScaleVertical(10)}}
+              keyExtractor={(item, index) => String(index)}
+              renderItem={_renderItemPayments}
+              ListEmptyComponent={() => (
+                <Text style={{textAlign: 'center'}}>
+                  {'No Payment method found'}
+                </Text>
+              )}
+            />
+          </View>
+        </View>
       </>
     );
   };
@@ -519,21 +519,26 @@ export default function Subscriptions({navigation, route}) {
             borderRadius={moderateScale(5)}
             containerStyle={{
               marginHorizontal: moderateScale(10),
-              width: width / 3,
+              width: paymentOptions.length ? width / 3 : width - 60,
             }}
             btnText={strings.CANCEL}
           />
-          <GradientButton
-            colorsArray={[themeColors.primary_color, themeColors.primary_color]}
-            textStyle={styles.textStyle}
-            onPress={payAmount}
-            borderRadius={moderateScale(5)}
-            containerStyle={{
-              marginHorizontal: moderateScale(10),
-              width: width / 3,
-            }}
-            btnText={strings.PAY}
-          />
+          {paymentOptions.length ? (
+            <GradientButton
+              colorsArray={[
+                themeColors.primary_color,
+                themeColors.primary_color,
+              ]}
+              textStyle={styles.textStyle}
+              onPress={payAmount}
+              borderRadius={moderateScale(5)}
+              containerStyle={{
+                marginHorizontal: moderateScale(10),
+                width: width / 3,
+              }}
+              btnText={strings.PAY}
+            />
+          ) : null}
         </View>
       </>
     );
