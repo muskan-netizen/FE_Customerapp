@@ -187,7 +187,7 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
       }
     }
   };
-  const nmyfuncation = () => {
+  const dineInFuncation = () => {
     Alert.alert(
       '',
       'This Change Will Remove Your Cart Products.Do you Really Want To Continue ?',
@@ -242,7 +242,7 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
           <MaterialTabs
             items={tabs}
             selectedIndex={selectedTab}
-            onChange={cartItemCount?.message ? setSelectedTab : nmyfuncation}
+            onChange={cartItemCount?.message ? setSelectedTab : dineInFuncation}
             barHeight={38}
             indicatorColor={themeColors.primary_color}
             activeTextColor={themeColors.primary_color}

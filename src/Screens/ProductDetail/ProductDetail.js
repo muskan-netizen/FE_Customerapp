@@ -522,13 +522,7 @@ export default function ProductDetail({route, navigation}) {
       .then((res) => {
         console.log(res, 'res.data');
         actions.cartItemQty(res);
-        if (dine_In_Type === 'delivery') {
-          actions.cartItemType(0);
-        } else if (dine_In_Type === 'dine_in') {
-          actions.cartItemType(1);
-        } else {
-          actions.cartItemType(2);
-        }
+
         showSuccess('Product successfully added');
 
         updateState({isLoadingC: false});

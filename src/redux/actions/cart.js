@@ -67,23 +67,6 @@ export const cartItemQty = (data) => {
   });
 };
 
-export const cartItemType = (data) => {
-  setItem('cartItemtype', data).then((suc) => {
-    dispatch({
-      type: types.CART_ITEM_TYPE,
-      payload: data,
-    });
-  });
-};
-export const cartItemTypeRemove = (data = {}) => {
-  console.log('cartItemTypeRemove');
-  removeItem('cartItemtype').then((suc) => {
-    dispatch({
-      type: types.CART_ITEM_TYPE_REMOVE,
-      payload: data,
-    });
-  });
-};
 //remove product from cart
 export const removeProductFromCart = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
