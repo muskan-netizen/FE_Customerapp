@@ -12,7 +12,13 @@ import {
   GET_ALL_PROMO_CODES_CAB_ORDER,
   VERIFY_PROMO_CODE_CAB_ORDER,
 } from '../../config/urls';
-import {apiGet, apiPost, saveSelectedAddress, setItem} from '../../utils/utils';
+import {
+  apiGet,
+  apiPost,
+  removeItem,
+  saveSelectedAddress,
+  setItem,
+} from '../../utils/utils';
 import store from '../store';
 import types from '../types';
 const {dispatch} = store;
@@ -61,6 +67,23 @@ export const cartItemQty = (data) => {
   });
 };
 
+export const cartItemType = (data) => {
+  setItem('cartItemtype', data).then((suc) => {
+    dispatch({
+      type: types.CART_ITEM_TYPE,
+      payload: data,
+    });
+  });
+};
+export const cartItemTypeRemove = (data = {}) => {
+  console.log('cartItemTypeRemove');
+  removeItem('cartItemtype').then((suc) => {
+    dispatch({
+      type: types.CART_ITEM_TYPE_REMOVE,
+      payload: data,
+    });
+  });
+};
 //remove product from cart
 export const removeProductFromCart = (data, headers = {}) => {
   return new Promise((resolve, reject) => {

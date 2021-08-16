@@ -68,6 +68,15 @@ const App = () => {
           payload: cartItemCount,
         });
       }
+      const cartItemtype = await getItem('cartItemtype');
+
+      console.log();
+      if (cartItemtype) {
+        dispatch({
+          type: types.CART_ITEM_TYPE,
+          payload: cartItemtype,
+        });
+      }
 
       const allUserAddress = await getItem('saveUserAddress');
       if (allUserAddress) {

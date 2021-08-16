@@ -2,6 +2,7 @@ import types from '../types';
 
 const initial_state = {
   cartItemCount: {},
+  cartItemType: '',
   selectedAddress: null,
 };
 
@@ -15,6 +16,20 @@ export default function (state = initial_state, action) {
       };
     }
 
+    case types.CART_ITEM_TYPE: {
+      const data = action.payload;
+      return {
+        ...state,
+        cartItemType: data,
+      };
+    }
+    case types.CART_ITEM_TYPE_REMOVE: {
+      const data = action.payload;
+      return {
+        ...state,
+        cartItemType: {},
+      };
+    }
     case types.SELECTED_ADDRESS: {
       const data = action.payload;
       return {
