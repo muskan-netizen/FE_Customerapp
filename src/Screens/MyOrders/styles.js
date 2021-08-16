@@ -327,9 +327,9 @@ export default ({fontFamily, themeColors}) => {
       bottom: 0,
     },
     modalContainer: {
-      marginHorizontal: 0,
-      marginBottom: 0,
-      marginTop: moderateScaleVertical(height / 2),
+      marginHorizontal: 20,
+      marginVertical: 20,
+      //   marginTop: moderateScaleVertical(height / 2),
       overflow: 'hidden',
       justifyContent: 'center',
     },
@@ -339,10 +339,14 @@ export default ({fontFamily, themeColors}) => {
       marginVertical: moderateScaleVertical(10),
     },
     modalMainViewContainer: {
-      flex: 1,
+      //   flex: 1,
       backgroundColor: colors.white,
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
+      //   borderTopLeftRadius: 20,
+      //   borderTopRightRadius: 20,
+      borderRadius: 20,
+      maxHeight: height - width / 2,
+      minHeight: height / 3,
+      marginHorizontal: moderateScale(20),
 
       // overflow: 'hidden',
       // paddingHorizontal: moderateScale(24),
@@ -352,6 +356,18 @@ export default ({fontFamily, themeColors}) => {
       color: colors.blackC,
       fontFamily: fontFamily.bold,
     },
+    selectItemToReturn: {
+      fontSize: textScale(12),
+      color: colors.textGreyJ,
+      fontFamily: fontFamily.medium,
+    },
+    cartItemImage: {
+      height: width / 7,
+      width: width / 7,
+      backgroundColor: colors.white,
+      marginLeft:5
+    },
+    imageStyle: {height: width / 7, width: width / 7},
   });
   return styles;
 };

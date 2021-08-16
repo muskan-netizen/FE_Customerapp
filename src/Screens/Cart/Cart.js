@@ -709,6 +709,11 @@ export default function Cart({navigation, route}) {
             })
           : null}
 
+        {item?.isDeliverable ?null:
+        <View style={{marginHorizontal:moderateScale(10)}}>
+         <Text style={{fontSize:moderateScale(12),fontFamily:fontFamily.medium,color:colors.redFireBrick}}>{'The specific items are not deliverable to this address. Please remove the items or change the address '}</Text>
+          </View>}
+
         {/* offerview */}
         <TouchableOpacity
           disabled={item?.couponData ? true : false}
@@ -1054,39 +1059,42 @@ export default function Cart({navigation, route}) {
         </TouchableOpacity>
 
         {/* {payment submit button} */}
-        <View style={styles.paymentView}>
-          {/* <ButtonComponent
+
+        {!!cartData?.deliver_status && (
+          <View style={styles.paymentView}>
+            {/* <ButtonComponent
             btnText={strings.SCHEDULE_ORDER}
             borderRadius={moderateScale(13)}
             containerStyle={styles.sceduleOrderStyle}
           /> */}
 
-          <TransparentButtonWithTxtAndIcon
-            btnText={strings.SCHEDULE_ORDER}
-            borderRadius={moderateScale(13)}
-            containerStyle={{
-              marginHorizontal: 20,
-              alignItems: 'center',
-            }}
-            onPress={onPressPickUplater}
-            marginBottom={moderateScaleVertical(10)}
-            marginTop={moderateScaleVertical(10)}
-            containerStyle={{width: width / 2.5}}
-            textStyle={{
-              color: themeColors.primary_color,
-              textTransform: 'none',
-              fontSize: textScale(14),
-            }}
-          />
+            <TransparentButtonWithTxtAndIcon
+              btnText={strings.SCHEDULE_ORDER}
+              borderRadius={moderateScale(13)}
+              containerStyle={{
+                marginHorizontal: 20,
+                alignItems: 'center',
+              }}
+              onPress={onPressPickUplater}
+              marginBottom={moderateScaleVertical(10)}
+              marginTop={moderateScaleVertical(10)}
+              containerStyle={{width: width / 2.5}}
+              textStyle={{
+                color: themeColors.primary_color,
+                textTransform: 'none',
+                fontSize: textScale(14),
+              }}
+            />
 
-          <ButtonComponent
-            onPress={() => placeOrder()}
-            btnText={strings.PLACE_ORDER}
-            borderRadius={moderateScale(13)}
-            textStyle={{color: '#fff'}}
-            containerStyle={styles.placeOrderButtonStyle}
-          />
-        </View>
+            <ButtonComponent
+              onPress={() => placeOrder()}
+              btnText={strings.PLACE_ORDER}
+              borderRadius={moderateScale(13)}
+              textStyle={{color: '#fff'}}
+              containerStyle={styles.placeOrderButtonStyle}
+            />
+          </View>
+        )}
       </>
     );
   };
@@ -1378,7 +1386,6 @@ export default function Cart({navigation, route}) {
             />
           </View>
         </View>
-     
       </Modal>
     </WrapperContainer>
   );

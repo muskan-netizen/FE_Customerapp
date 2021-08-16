@@ -349,5 +349,7 @@ export default {
   RENEW:'Renew',
   ORDER_CART: 'Orders',
   RETURNORDER:'Return order',
-  SELECTDATEANDTIME:'Select Date and Time'
+  SELECTDATEANDTIME:'Select Date and Time',
+  DOYOUWANTTORETURNYOURORDER:'Do You Want To Return Your Order?',
+  SELECTITEMSFORRETURN:'Select item(s) for return'
 };
