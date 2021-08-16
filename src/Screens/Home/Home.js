@@ -58,7 +58,6 @@ export default function Home({route, navigation}) {
   const initData = useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state?.auth?.userData);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
-  const cart_Item_Type = useSelector((state) => state?.cart?.cartItemType);
 
   const profileInfo = appData?.profile;
   const {profile} = appData;
@@ -252,14 +251,16 @@ export default function Home({route, navigation}) {
           : location?.longitude,
       };
     }
+    console.log(dine_In_Type, 'dine_In_Type');
     console.log(latlongObj, 'latlongObj');
     console.log(selectedTabType, 'selectedTabType');
+
     {
       selectedTabType
         ? actions
             .homeData(
               {
-                type: selectedTabType ? selectedTabType : 'delivery',
+                type: dine_In_Type ? dine_In_Type : dine_In_Type,
                 ...latlongObj,
               },
               {
@@ -439,7 +440,7 @@ export default function Home({route, navigation}) {
 
   useEffect(() => {
     homeData();
-  }, [selectedTabType, appData]);
+  }, [selectedTabType, appData, dine_In_Type]);
 
   ///onPressCategory2
   const onPressCategory2 = (data) => {
