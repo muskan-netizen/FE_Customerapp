@@ -165,11 +165,11 @@ export default function OrderCardVendorComponent({
               // onPress={onPressRateOrder}
               // style={{flex:0.6}}
               style={styles.bottomSecondHalf}>
-              {/* <View style={styles.orderAcceptAndReadyStyleSecond}>
+              <View style={styles.orderAcceptAndReadyStyleSecond}>
                 <Text style={styles.orderStatusStyleSecond}>
-                  {strings.REORDER}
+                  {strings.RETURNORDER}
                 </Text>
-              </View> */}
+              </View>
             </TouchableOpacity>
           </View>
         ) : (
@@ -196,8 +196,8 @@ export default function OrderCardVendorComponent({
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate(navigationStrings.WEBVIEWSCREEN, {
-                    paymentTitle: strings.TRACKDETAIL,
-                    paymentUrl: data?.dispatch_traking_url,
+                    title: strings.TRACKDETAIL,
+                    url: data?.dispatch_traking_url,
                   })
                 }
                 style={{

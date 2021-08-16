@@ -346,6 +346,7 @@ export default {
   LOYALTYPOINTS:'Loyalty',
   TOTALSUBSCRIPTION:'Subscription Discount',
   DOYOUWANTTOGIVEATIP:'Do you want to give a tip?',
-  RENEW:'Renew'
-
+  RENEW:'Renew',
+  ORDER_CART: 'Orders',
+  RETURNORDER:'Return order'
 };

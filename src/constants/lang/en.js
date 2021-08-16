@@ -337,4 +337,5 @@ export default {
   DOYOUWANTTOGIVEATIP:'Do you want to give a tip?',
   RENEW:'Renew',
   ORDER_CART: 'Orders',
+  RETURNORDER:'Return order'
 };
