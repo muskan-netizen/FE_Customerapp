@@ -39,8 +39,11 @@ export default function ReturnOrder({navigation, route}) {
   const ratingData = route?.params?.item?.product_rating;
   const selectProductForRetrun = route?.params?.selectProductForRetrun;
   const selectedOrderForReturn = route?.params?.selectedOrderForReturn;
+  const reasons = route?.params?.reasons;
 
-  console.log(selectProductForRetrun, 'selectProductForRetrun....');
+  // console.log(reasons, 'reasons');
+  // console.log(selectProductForRetrun, 'selectProductForRetrun....');
+  // console.log(selectedOrderForReturn, 'selectedOrderForReturn....');
   const [state, setState] = useState({
     isLoading: false,
     rating: 0,
@@ -48,39 +51,7 @@ export default function ReturnOrder({navigation, route}) {
     imageArray: [],
     remove_image_ids: [],
     isRefreshing: false,
-
-    returnReasons: [
-      {
-        id: 1,
-        name: 'The merchant shipped the wrong item',
-        label: 'The merchant shipped the wrong item',
-        value: 'The merchant shipped the wrong item',
-      },
-      {
-        id: 2,
-        name: 'Purchase arrived too late',
-        label: 'Purchase arrived too late',
-        value: 'Purchase arrived too late',
-      },
-      {
-        id: 3,
-        name: `Customer doesn't need anymore`,
-        label: `Customer doesn't need anymore`,
-        value: `Customer doesn't need anymore`,
-      },
-      {
-        id: 4,
-        name: 'The Product was damaged or defective',
-        label: 'The Product was damaged or defective',
-        value: 'The Product was damaged or defective',
-      },
-      {
-        id: 5,
-        name: 'Other',
-        label: 'Other',
-        value: 'Other',
-      },
-    ],
+    returnReasons: reasons ? reasons : [],
     selectedReason: null,
   });
   const {
@@ -118,21 +89,12 @@ export default function ReturnOrder({navigation, route}) {
   /***********Remove Image from rating */
   const _removeImageFromList = (selectdImage) => {
     console.log(selectdImage, 'selectdImage>>>');
-    if (selectdImage?.id) {
+    if (selectdImage?.ids) {
       console.log(selectdImage?.id, 'selectdImage?.id');
       let copyArrayImages = cloneDeep(imageArray);
       console.log(copyArrayImages, 'copyArrayImages');
       copyArrayImages = copyArrayImages.filter(
-        (x) => x?.id !== selectdImage?.id,
-      );
-      updateState({
-        imageArray: copyArrayImages,
-        remove_image_ids: [...remove_image_ids, selectdImage?.id],
-      });
-    } else {
-      let copyArrayImages = cloneDeep(imageArray);
-      copyArrayImages = copyArrayImages.filter(
-        (x) => x?.image_id !== selectdImage?.image_id,
+        (x) => x?.ids !== selectdImage?.ids,
       );
       updateState({
         imageArray: copyArrayImages,
@@ -165,6 +127,7 @@ export default function ReturnOrder({navigation, route}) {
       })
         .then((res) => {
           console.log(res, 'res?.data');
+          updateState({isLoading: true});
           if (res && (res?.sourceURL || res?.path)) {
             console.log(res, 'response');
             let file = {
@@ -173,12 +136,32 @@ export default function ReturnOrder({navigation, route}) {
               type: res?.mime,
               uri: res?.sourceURL || res?.path,
             };
-            let find = imageArray.find((x) => x?.name == res?.filename);
-            if (find) {
-              showError('Image is already uploaded');
-            } else {
-              updateState({imageArray: [...imageArray, file]});
-            }
+            let formdata = new FormData();
+            formdata.append('images[]', file);
+            actions
+              .uploadReturnOrderImage(formdata, {
+                code: appData?.profile?.code,
+                currency: currencies?.primary_currency?.id,
+                language: languages?.primary_language?.id,
+                // 'Content-Type': 'multipart/form-data',
+              })
+              .then((res) => {
+                console.log(res, 'res>>>>>>uploadReturnOrderImage');
+                if (res && res.status == "Success") {
+                  updateState({isLoading: false});
+                  updateState({
+                    imageArray: imageArray.length
+                      ? [...imageArray, ...res?.data]
+                      : res?.data,
+                  });
+                } else {
+                  updateState({isLoading: false});
+                  showError(res?.message);
+                }
+              })
+              .catch(errorMethod);
+          } else {
+            updateState({isLoading: false});
           }
         })
         .catch((err) => {});
@@ -187,97 +170,37 @@ export default function ReturnOrder({navigation, route}) {
 
   const _submitYourReturnOrder = () => {
     // updateState({isLoading: true});
-    let data = {};
+
     let formdata = new FormData();
+    formdata.append('order_vendor_product_id', selectProductForRetrun?.id);
+    formdata.append('coments', returnText);
     formdata.append(
-      'order_vendor_product_id',
-      ratingData?.order_vendor_product_id,
+      'reason',
+      selectedReason ? selectedReason.value : returnReasons[0].label,
     );
-    formdata.append('order_id', sel);
-    formdata.append('product_id', ratingData.product_id);
 
     if (imageArray.length) {
       imageArray.forEach((element) => {
-        if (element?.id) {
-          console.log(element?.id, 'element?.id.....');
-        } else {
-          formdata.append('files[]', {
-            name: element.name,
-            type: element.type,
-            uri: element.uri,
-          });
-          console.log('else Part Is Running.....');
-        }
+        formdata.append('add_files[]', element?.name);
       });
     }
-
-    // if (remove_image_ids.length) {
-    //   remove_image_ids.forEach((element) => {
-    //     formdata.append('remove_files[]', element);
-    //   });
-    // }
-
+    console.log(selectedReason, 'selectedReason>selectedReason');
     console.log(formdata, 'formdata>>>');
-    // actions
-    //   .giveRating(formdata, {
-    //     code: appData?.profile?.code,
-    //     currency: currencies?.primary_currency?.id,
-    //     language: languages?.primary_language?.id,
-    //     // 'Content-Type': 'multipart/form-data',
-    //   })
-    //   .then((res) => {
-    //     console.log(res, 'res>>>>>>782531');
-    //     updateState({isLoading: false});
-    //     navigation.goBack();
-    //   })
-    //   .catch(errorMethod);
-  };
 
-  //get All ratings of product
-
-  const getReviewRatings = () => {
+    updateState({isLoading: true});
     actions
-      .getRating(
-        `?id=${ratingData.id}`,
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          // 'Content-Type': 'multipart/form-data',
-        },
-      )
-      .then((res) => {
-        updateState({
-          // imageArray: res.data.review_files,
-          rating: res.data.rating,
-          returnText: res.data.review,
-          isLoading: false,
-          isRefreshing: false,
-        });
-        if (res.data.review_files.length) {
-          updateState({
-            imageArray: res.data.review_files.map((i, inx) => {
-              return {
-                uri: getImageUrl(
-                  i?.file?.image_fit,
-                  i?.file?.image_path,
-                  '600/360',
-                ),
-                id: i?.id,
-              };
-            }),
-          });
-        }
-        console.log(res.data, 'res.data.review_files');
+      .submitReturnOrder(formdata, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        // 'Content-Type': 'multipart/form-data',
       })
-      .catch((error) => {
-        updateState({
-          isLoading: false,
-          isRefreshing: false,
-        });
-        showError(error?.message || error?.error);
-      });
+      .then((res) => {
+        console.log(res, 'res>>>>>>submitReturnOrder');
+        updateState({isLoading: false});
+        navigation.goBack();
+      })
+      .catch(errorMethod);
   };
 
   useEffect(() => {
@@ -306,6 +229,8 @@ export default function ReturnOrder({navigation, route}) {
     console.log(item, 'Selected item');
     updateState({selectedReason: item});
   };
+
+  const uploadImage = () => {};
 
   return (
     <WrapperContainer
@@ -357,12 +282,12 @@ export default function ReturnOrder({navigation, route}) {
             <View style={styles.cartItemImage}>
               <FastImage
                 source={
-                  selectProductForRetrun?.image_path != '' &&
-                  selectProductForRetrun?.image_path != null
+                  selectProductForRetrun?.image != '' &&
+                  selectProductForRetrun?.image != null
                     ? {
                         uri: getImageUrl(
-                          selectProductForRetrun?.image_path?.proxy_url,
-                          selectProductForRetrun?.image_path?.image_path,
+                          selectProductForRetrun?.image?.proxy_url,
+                          selectProductForRetrun?.image?.image_path,
                           '300/300',
                         ),
                       }
@@ -375,13 +300,13 @@ export default function ReturnOrder({navigation, route}) {
               <Text
                 numberOfLines={1}
                 style={[styles.priceItemLabel2, {opacity: 0.8}]}>
-                {selectProductForRetrun?.title}
+                {selectProductForRetrun?.product_name}
               </Text>
-              {selectProductForRetrun?.qty && (
+              {selectProductForRetrun?.quantity && (
                 <View style={{flexDirection: 'row'}}>
                   <Text style={{color: colors.textGrey}}>{strings.QTY}</Text>
                   <Text style={styles.cartItemWeight}>
-                    {selectProductForRetrun?.qty}
+                    {selectProductForRetrun?.quantity}
                   </Text>
                 </View>
               )}
@@ -417,8 +342,9 @@ export default function ReturnOrder({navigation, route}) {
                 ? imageArray.map((i, inx) => {
                     return (
                       <ImageBackground
+                        key={inx}
                         source={{
-                          uri: i.uri,
+                          uri: i.img_path,
                         }}
                         style={styles.imageOrderStyle}
                         imageStyle={styles.imageOrderStyle}>

@@ -7,6 +7,9 @@ import {
   GIVE_RATING_REVIEWS,
   GET_VENDOR_REVENUE,
   GET_RETURN_ORDER_DETAIL,
+  GET_RETURN_PRODUCT_DETAIL,
+  UPLOAD_PRODUCT_IMAGE,
+  SUBMIT_RETURN_ORDER
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -121,7 +124,7 @@ export function getOrderDetailPickUp(url = '', data = {}, headers = {}) {
   });
 }
 
-//Get Cart Detail
+//Get RETUREN ORDER Detail
 export function getReturnOrderDetailData(url = '', data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiGet(GET_RETURN_ORDER_DETAIL + url, data, headers)
@@ -133,3 +136,46 @@ export function getReturnOrderDetailData(url = '', data = {}, headers = {}) {
       });
   });
 }
+
+//Get RETURN PRODUCT Detail
+export function getReturnProductrDetailData(url = '', data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiGet(GET_RETURN_PRODUCT_DETAIL + url, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+
+//Upload return order image
+export function uploadReturnOrderImage( data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(UPLOAD_PRODUCT_IMAGE , data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+
+//Submit return order
+export function submitReturnOrder( data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(SUBMIT_RETURN_ORDER , data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+
