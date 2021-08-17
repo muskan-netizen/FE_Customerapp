@@ -698,6 +698,33 @@ android {
             applicationId 'com.ridemate'
             resValue "string", "app_name", "Ridemate"
          }
+          codiner{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.codiner'
+            resValue "string", "app_name", "Codiner"
+         }
+         housekeeper{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.housekeeper'
+            resValue "string", "app_name", "Housekeeper 4 Hire"
+         }
+          hairstonexpress{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.hairstonexpress'
+            resValue "string", "app_name", "Hairston Express"
+         }
     }
 }
 

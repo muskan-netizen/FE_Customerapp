@@ -395,6 +395,26 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+
+        case appIds.codiner:
+          updateState({
+            shortCode: shortCodes.codiner,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.housekeeper:
+          updateState({
+            shortCode: shortCodes.housekeeper,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hairstonexpress:
+          updateState({
+            shortCode: shortCodes.hairstonexpress,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

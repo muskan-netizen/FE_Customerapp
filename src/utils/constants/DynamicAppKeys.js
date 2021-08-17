@@ -55,6 +55,9 @@ const shortCodes = {
   mstechy: 'ec2a07',
   senshive: 'f36591',
   ridemate: 'd517bf',
+  codiner: 'd46808',
+  housekeeper: 'd8b741',
+  hairstonexpress: 'a64f8a',
 };
 
 const appIds = {
@@ -273,6 +276,18 @@ const appIds = {
   ridemate: Platform.select({
     ios: 'com.ridemate',
     android: 'com.ridemate',
+  }),
+  codiner: Platform.select({
+    ios: 'com.codiner',
+    android: 'com.codiner',
+  }),
+  housekeeper: Platform.select({
+    ios: 'com.housekeeper',
+    android: 'com.housekeeper',
+  }),
+  hairstonexpress: Platform.select({
+    ios: 'com.hairstonexpress',
+    android: 'com.hairstonexpress',
   }),
 };
 
