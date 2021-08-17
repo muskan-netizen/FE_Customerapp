@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {getBundleId} from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import DisplayModal from '../../Components/DisplayModal';
@@ -28,6 +29,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -472,7 +474,11 @@ export default function BrandProducts({route, navigation}) {
       isLoadingB={isLoadingB}
       source={loaderOne}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          getBundleId() === appIds.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={brand.name || brand.translation[0].title}
         headerStyle={{backgroundColor: colors.white}}
         rightIcon={imagePath.search}

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Image, View} from 'react-native';
+import {getBundleId} from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
@@ -16,6 +17,7 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
@@ -135,7 +137,11 @@ export default function ContactUs({navigation}) {
   return (
     <WrapperContainer bgColor={colors.white} statusBarColor={colors.white}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          getBundleId() === appIds.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.CONTACT_USS}
         headerStyle={{backgroundColor: colors.white}}
       />

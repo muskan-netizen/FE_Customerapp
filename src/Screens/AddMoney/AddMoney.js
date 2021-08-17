@@ -18,6 +18,7 @@ import {
   View,
   Alert,
 } from 'react-native';
+import {getBundleId} from 'react-native-device-info';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
 import GradientButton from '../../Components/GradientButton';
@@ -35,6 +36,7 @@ import {
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
 import stylesFun from './styles';
 
@@ -461,7 +463,11 @@ export default function AddMoney({navigation}) {
       isLoadingB={isLoadingB}
       source={loaderOne}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          getBundleId() === appIds.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.ADD_MONEY}
         headerStyle={{backgroundColor: Colors.white}}
       />

@@ -155,9 +155,9 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
     },
     productName: {
       color: colors.textGrey,
-      fontSize: textScale(14),
+      fontSize: textScale(16),
       lineHeight: 28,
-      fontFamily: fontFamily.futuraBtHeavy,
+      fontFamily: fontFamily.bold,
     },
     mainView: {
       marginVertical: moderateScaleVertical(15),

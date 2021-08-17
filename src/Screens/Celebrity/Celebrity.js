@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, ScrollView, Text, View} from 'react-native';
+import {getBundleId} from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import CelebrityLoader from '../../Components/Loaders/CelebrityLoader';
@@ -16,6 +17,7 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyCleb from './ListEmptyCeleb';
 import stylesFun from './styles';
@@ -146,25 +148,19 @@ export default function Celebrity({navigation}) {
     <WrapperContainer
       bgColor={colors.backgroundGrey}
       statusBarColor={colors.backgroundGrey}>
-      {homePageLayout == 2 ? (
-        <Header
-          centerTitle={strings.CELEBRITIES}
-          LeftIcon={true}
-          rightIcon={imagePath.search}
-          onPressRight={() =>
-            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-          }
-        />
-      ) : (
-        <Header
-          centerTitle={strings.CELEBRITIES}
-          noLeftIcon={true}
-          rightIcon={imagePath.search}
-          onPressRight={() =>
-            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-          }
-        />
-      )}
+      <Header
+        centerTitle={strings.CELEBRITIES}
+        leftIcon={
+          getBundleId() === appIds.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
+        rightIcon={imagePath.search}
+        onPressRight={() =>
+          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+        }
+      />
+
       <View style={{height: 50}}>
         <ScrollView
           style={styles.scrollviewHorizontal}

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
   Alert,
+  StatusBar,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -27,6 +28,7 @@ import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
 
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -89,6 +91,8 @@ export default function ProductDetail2({route, navigation}) {
     isVisibleAddonModal,
     lightBox,
     productQuantityForCart,
+    isLoading,
+    slider1ActiveSlide,
   } = state;
 
   const customRight = () => {
@@ -328,9 +332,9 @@ export default function ProductDetail2({route, navigation}) {
     }
   };
 
-  useEffect(() => {
-    myRef.current.scrollToPosition(1, 0, true);
-  }, [state.productId]);
+  // useEffect(() => {
+  //   myRef.current.scrollToPosition(1, 0, true);
+  // }, [state.productId]);
 
   const selectSpecificOptions = (options, i, inx) => {
     let newArray = cloneDeep(options);
@@ -588,405 +592,124 @@ export default function ProductDetail2({route, navigation}) {
     updateState({lightBox: true});
   };
 
-  console.log(
-    productTotalQuantity,
-    'productDetailData?.translation[0]?.body_html',
-  );
   return (
-    <WrapperContainer
-      bgColor={colors.backgroundGrey}
-      statusBarColor={colors.white}
-      source={loaderOne}
-      isLoadingB={isLoadingC}>
-      {/* <Header
-        leftIcon={imagePath.back}
-        centerTitle={productDetailData?.translation[0]?.title}
-        rightIcon={!!data?.showAddToCart ? false : imagePath.search}
-        onPressRight={() =>
-          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-        }
-        headerStyle={{backgroundColor: colors.white}}
-      /> */}
-
-      <Header2
-        centerTitle={productDetailData?.translation[0]?.title}
-        leftIcon={imagePath.backArrow}
-        rightIcon={!!data?.showAddToCart ? false : imagePath.search}
-        onPressRight={() =>
-          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-        }
+    <>
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle={'dark-content'}
       />
-      <View style={{...commonStyles.headerTopLine}} />
+      {isLoading && <ListEmptyProduct isLoading={isLoading} />}
 
-      <KeyboardAwareScrollView ref={myRef} showsVerticalScrollIndicator={false}>
-        {state.isLoading && <ListEmptyProduct isLoading={state.isLoading} />}
-
-        {!state.isLoading && (
-          <>
-            {/* //Top section slider */}
-
-            <View
-              style={{
-                flexDirection: 'row',
-                marginHorizontal: 20,
-                marginTop: moderateScaleVertical(20),
-                justifyContent: 'space-between',
-              }}>
-              {/* <View style={{ flex: 0.2 }}><Image source={imagePath.fav} /></View> */}
-              <View style={{flex: 1, alignItems: 'center'}}>
-                <Banner
-                  bannerRef={bannerRef}
-                  bannerData={productDetailData?.product_media}
-                  sliderWidth={width}
-                  itemWidth={width}
-                  pagination={false}
-                  setActiveState={(index) =>
-                    updateState({slider1ActiveSlide: index})
-                  }
-                  showLightbox={true}
-                  cardViewStyle={styles.cardViewStyle}
-                  childView={
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        padding: 10,
-                      }}>
-                      <TouchableOpacity
-                        onPress={() => _onAddtoWishlist(productDetailData)}>
-                        {productDetailData?.is_wishlist ? (
-                          <View>
-                            {!!productDetailData?.inwishlist ? (
-                              <Image source={imagePath.blackFilledHeart} />
-                            ) : (
-                              <Image source={imagePath.fav} />
-                            )}
-                          </View>
-                        ) : null}
-                      </TouchableOpacity>
-                      {productDetailData?.averageRating !== null && (
-                        <View style={{alignItems: 'flex-end'}}>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              borderRadius: 18,
-                              paddingHorizontal: 12,
-                              backgroundColor: colors.orange,
-                              padding: 10,
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                            }}>
-                            <Image source={imagePath.starWhite} />
-                            <Text style={styles.ratingColor}>
-                              {productDetailData?.averageRating !== null
-                                ? Number(
-                                    productDetailData?.averageRating,
-                                  ).toFixed(1)
-                                : ''}
-                            </Text>
-                          </View>
-                        </View>
-                      )}
-                    </View>
-                  }
-                />
-                <View style={{paddingTop: 5}}>
-                  <Pagination
-                    dotsLength={productDetailData?.product_media?.length}
-                    activeDotIndex={state.slider1ActiveSlide}
-                    dotColor={'grey'}
-                    dotStyle={[styles.dotStyle]}
-                    inactiveDotColor={'black'}
-                    inactiveDotOpacity={0.4}
-                    inactiveDotScale={0.8}
-                  />
-                </View>
-              </View>
-            </View>
-
-            {/* Product Name and Branc detail */}
-
-            <View
-              style={{
-                marginHorizontal: moderateScale(20),
-                marginVertical: moderateScaleVertical(10),
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}>
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: 'flex-start',
-                    justifyContent: 'center',
-                  }}>
-                  <Text
-                    numberOfLines={2}
-                    style={{
-                      color: colors.textGrey,
-                      fontSize: textScale(18),
-                      lineHeight: 28,
-                      fontFamily: fontFamily.bold,
-                    }}>
-                    {productDetailData?.translation[0]?.title}
-                  </Text>
-                </View>
-
-                {/* Product Price View */}
-                {/* <View
-                  style={{
-                    // marginHorizontal: 20,
-                    flex: 0.35,
-                    alignItems: 'flex-end',
-                    justifyContent: 'center',
-                  }}>
-                  <Text style={styles.productPrice}>{`${
-                    currencies?.primary_currency.symbol
-                  }${(
-                    Number(productPriceData?.multiplier) *
-                    Number(productPriceData?.price)
-                  ).toFixed(2)}`}</Text>
-                </View> */}
-              </View>
-
-              <View>
+      {!isLoading && (
+        <>
+          <View
+            style={{
+              alignItems: 'center',
+              height: height * 0.3,
+              backgroundColor: 'green',
+            }}>
+            <Banner
+              bannerRef={bannerRef}
+              bannerData={productDetailData?.product_media}
+              sliderWidth={width}
+              itemWidth={width}
+              pagination={false}
+              setActiveState={(index) =>
+                updateState({slider1ActiveSlide: index})
+              }
+              showLightbox={true}
+              cardViewStyle={{
+                alignItems: 'center',
+                height: width * 0.7,
+                width: width,
+              }}
+              childView={
                 <View
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    // alignItems: 'center',
+                    padding: 10,
                   }}>
-                  {/* Product Price View */}
-                  <View
-                    style={{
-                      // marginHorizontal: 20,
-                      flex: 0.35,
-                      alignItems: 'flex-start',
-                      justifyContent: 'center',
-                    }}>
-                    <Text
-                      style={{
-                        fontSize: textScale(17),
-                        lineHeight: 28,
-                        fontFamily: fontFamily.medium,
-                        color: colors.black,
-                      }}>{`${currencies?.primary_currency.symbol}${(
-                      Number(productPriceData?.multiplier) *
-                      Number(productPriceData?.price)
-                    ).toFixed(2)}`}</Text>
-                  </View>
-                  {!!productTotalQuantity &&
-                    !!productTotalQuantity != 0 &&
-                    (!!data?.showAddToCart ? null : (
-                      <View style={{flex: 0.3, justifyContent: 'center'}}>
-                        <View
-                          style={{
-                            borderRadius: moderateScale(5),
-                            borderWidth: 1,
-                            borderColor: themeColors.primary_color,
-                            flexDirection: 'row',
-                            justifyContent: 'space-evenly',
-                            paddingVertical: moderateScaleVertical(3),
-                          }}>
-                          <TouchableOpacity
-                            style={{flex: 0.3, alignItems: 'center'}}
-                            onPress={() => productIncrDecreamentForCart(2)}>
-                            <Text
-                              style={{
-                                fontFamily: fontFamily.bold,
-                                fontSize: moderateScale(20),
-                                color: themeColors.primary_color,
-                              }}>
-                              -
-                            </Text>
-                          </TouchableOpacity>
-                          <View style={{flex: 0.4, alignItems: 'center'}}>
-                            <Text
-                              style={{
-                                fontFamily: fontFamily.bold,
-                                fontSize: moderateScale(14),
-                                color: themeColors.primary_color,
-                                marginTop: moderateScaleVertical(5),
-                              }}>
-                              {productQuantityForCart}
-                            </Text>
-                          </View>
-                          <TouchableOpacity
-                            style={{flex: 0.3, alignItems: 'center'}}
-                            onPress={() => productIncrDecreamentForCart(1)}>
-                            <Text
-                              style={{
-                                fontFamily: fontFamily.bold,
-                                fontSize: moderateScale(20),
-                                color: themeColors.primary_color,
-                              }}>
-                              +
-                            </Text>
-                          </TouchableOpacity>
-                        </View>
+                  {productDetailData?.averageRating !== null && (
+                    <View style={{alignItems: 'flex-end'}}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          borderRadius: 18,
+                          paddingHorizontal: 12,
+                          backgroundColor: colors.orange,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <Image source={imagePath.starWhite} />
+                        <Text style={styles.ratingColor}>
+                          {productDetailData?.averageRating !== null
+                            ? Number(productDetailData?.averageRating).toFixed(
+                                1,
+                              )
+                            : ''}
+                        </Text>
                       </View>
-                    ))}
+                    </View>
+                  )}
                 </View>
-              </View>
-
-              <View>
-                <View style={{justifyContent: 'center'}}>
-                  <Text
-                    style={
-                      stylesFunc({
-                        themeColors,
-                        fontFamily,
-                        productTotalQuantity,
-                      }).productTypeAndBrandValue
-                    }>
-                    {productTotalQuantity && productTotalQuantity != 0
-                      ? ''
-                      : strings.OUT_OF_STOCK}
-                  </Text>
-                </View>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: moderateScaleVertical(10),
-                  justifyContent: 'space-between',
-                }}>
-                <View style={{maxWidth: width / 2}}>
-                  {/* <View style={styles.boxOne}>
-                    <Text numberOfLines={1} style={styles.productTypeAndBrand}>
-                      {venderDetail?.name}
-                    </Text>
-                  </View> */}
-                </View>
-
-                {/* <View style={{justifyContent: 'center'}}>
-                  <Text
-                    style={
-                      stylesFunc({themeColors, productTotalQuantity})
-                        .productTypeAndBrandValue
-                    }>
-                    {productTotalQuantity && productTotalQuantity != 0
-                      ? ''
-                      : 'Out of stock'}
-                  </Text>
-                </View> */}
-              </View>
+              }
+            />
+            <View style={{paddingTop: 5}}>
+              <Pagination
+                dotsLength={productDetailData?.product_media?.length}
+                activeDotIndex={slider1ActiveSlide}
+                dotColor={'grey'}
+                dotStyle={[styles.dotStyle]}
+                inactiveDotColor={'black'}
+                inactiveDotOpacity={0.4}
+                inactiveDotScale={0.8}
+              />
             </View>
-            {/* seperator */}
+          </View>
+
+          <View
+            style={{
+              height: height * 0.75,
+              backgroundColor: colors.backgroundGrey,
+              borderTopLeftRadius: moderateScale(20),
+              borderTopRightRadius: moderateScale(20),
+              marginTop: moderateScale(22),
+              paddingHorizontal: moderateScale(15),
+              paddingVertical: moderateScale(15),
+            }}>
             <View
               style={{
-                height: 2,
-                backgroundColor: colors.lightGreyBorder,
-                // marginTop: moderateScaleVertical(20),
-              }}
-            />
-
-            {/* Product description */}
-
-            {productDetailData?.translation[0]?.body_html != null ? (
-              <>
-                <View
-                  style={{
-                    marginHorizontal: moderateScale(20),
-                    flexDirection: 'row',
-                  }}>
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}>
+              <Text numberOfLines={2} style={styles.productName}>
+                {productDetailData?.translation[0]?.title}
+              </Text>
+              <TouchableOpacity
+                onPress={() => _onAddtoWishlist(productDetailData)}>
+                {productDetailData?.is_wishlist ? (
                   <View>
-                    <Text style={styles.descriptiontitle}>
-                      {strings.DESCRIPTION}
-                    </Text>
-                    {/* <Text style={styles.description}>
-                  {productDetailData?.translation[0]?.body_html}
-                </Text> */}
-
-                    <HTMLView
-                      value={productDetailData?.translation[0]?.body_html}
-                    />
+                    {!!productDetailData?.inwishlist ? (
+                      <Image source={imagePath.blackFilledHeart} />
+                    ) : (
+                      <Image source={imagePath.fav} />
+                    )}
                   </View>
-                </View>
-                <View
-                  style={{
-                    height: 2,
-                    backgroundColor: colors.lightGreyBorder,
-                    marginTop: moderateScaleVertical(20),
-                  }}
-                />
-              </>
-            ) : null}
-
-            {/* // Product variants */}
-            {variantSet && variantSet.length ? showAllVariants() : null}
-            {/* {addonSet && addonSet.length ? showAllAddons() : null} */}
-
-            {/* Add to Cart button */}
-            {!!productTotalQuantity &&
-              !!productTotalQuantity != 0 &&
-              (!!data?.showAddToCart ? null : (
-                <View
-                  style={{
-                    marginHorizontal: moderateScale(20),
-                    marginVertical: moderateScaleVertical(20),
-                  }}>
-                  <GradientButton
-                    colorsArray={[colors.backgroundGrey, colors.backgroundGrey]}
-                    textStyle={{
-                      fontFamily: fontFamily.medium,
-                      color: themeColors.primary_color,
-                    }}
-                    onPress={addToCart}
-                    marginTop={moderateScaleVertical(10)}
-                    marginBottom={moderateScaleVertical(10)}
-                    btnText={strings.ADDTOCART}
-                    containerStyle={{
-                      backgroundColor: colors.white,
-                      borderWidth: 1,
-                      borderColor: themeColors.primary_color,
-                    }}
-                  />
-                </View>
-              ))}
-
-            {/* related product */}
-            {!!relatedProducts && !!relatedProducts.length && (
-              <View
-                style={{
-                  marginHorizontal: moderateScale(20),
-                  flexDirection: 'row',
-                }}>
-                <Text style={styles.relatedProducts}>{strings.YOUMAYALSO}</Text>
-              </View>
-            )}
-
-            <FlatList
-              data={(!state.isLoading && relatedProducts) || []}
-              renderItem={renderProduct}
-              keyExtractor={(item, index) => String(index)}
-              keyboardShouldPersistTaps="always"
-              showsHorizontalScrollIndicator={false}
-              style={{flex: 1, marginVertical: moderateScaleVertical(10)}}
-              contentContainerStyle={{flexGrow: 1}}
-              horizontal
-              ItemSeparatorComponent={() => <View style={{height: 20}} />}
-              ListFooterComponent={() => <View style={{height: 20}} />}
-              // ListEmptyComponent={<ListEmptyProduct isLoading={state.isLoading}/>}
-            />
-            <AddonModal
-              productdetail={productDetailData}
-              isVisible={isVisibleAddonModal}
-              onClose={() => setModalVisibleForAddonModal(false)}
-              // onPress={(data) => alert('123')}
-              addonSet={addonSet}
-              // onPress={currentLocation}
-            />
-            {appStyle?.tabBarLayout == 3 ? (
-              <View style={{height: moderateScaleVertical(20)}} />
-            ) : null}
-          </>
-        )}
-      </KeyboardAwareScrollView>
-    </WrapperContainer>
+                ) : null}
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.productPrice}>{`${
+              currencies?.primary_currency.symbol
+            }${(
+              Number(productPriceData?.multiplier) *
+              Number(productPriceData?.price)
+            ).toFixed(2)}`}</Text>
+          </View>
+        </>
+      )}
+    </>
   );
 }

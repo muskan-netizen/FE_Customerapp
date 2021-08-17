@@ -21,6 +21,7 @@ import BorderTextInput from '../../Components/BorderTextInput';
 import CustomTopTabBar from '../../Components/CustomTopTabBar';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
+import Header2 from '../../Components/Header2';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import PhoneNumberInput2 from '../../Components/PhoneNumberInput2';
@@ -747,10 +748,10 @@ export default function MyProfile({route, navigation}) {
       bgColor={colors.backgroundGrey}
       statusBarColor={colors.backgroundGreyC}
       source={loaderOne}>
-      <Header
-        leftIcon={imagePath.back}
+      <Header2
+        leftIcon={imagePath.backArrow}
         centerTitle={strings.MY_PROFILE}
-        headerStyle={{backgroundColor: colors.backgroundGreyC}}
+        headerContainerStyle={{backgroundColor: colors.backgroundGreyC}}
       />
       <View style={{...commonStyles.headerTopLine}} />
       {/* top section user general info */}

@@ -1,6 +1,7 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {I18nManager, Text, View} from 'react-native';
+import {getBundleId} from 'react-native-device-info';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RNRestart from 'react-native-restart'; // Import package from node modules
 import {useSelector} from 'react-redux';
@@ -17,6 +18,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {setItem} from '../../utils/utils';
 import stylesFunc from './styles';
 
@@ -124,7 +126,11 @@ export default function Settings({route, navigation}) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          getBundleId() === appIds.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.SETTINGS}
         // rightIcon={imagePath.cartShop}
         headerStyle={{backgroundColor: colors.white}}

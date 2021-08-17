@@ -281,9 +281,9 @@ export default function Login2({navigation}) {
           flex: 1,
           marginHorizontal: moderateScale(24),
         }}>
-        <View style={{height: moderateScaleVertical(15)}} />
+        <View style={{height: moderateScaleVertical(10)}} />
         <Text style={styles.txtSmall}>{strings.ENTE_REGISTERED_EMAIL}</Text>
-        <View style={{height: moderateScaleVertical(35)}} />
+        <View style={{height: moderateScaleVertical(25)}} />
 
         <AutoUpLabelTxtInput
           value={email}

@@ -500,7 +500,7 @@ export default function Home({route, navigation}) {
       <View style={{flex: 1}}>
         <>
           <DashBoardHeaderOne navigation={navigation} location={location} />
-          {getBundleId() == appIds.capcorp ? (
+          {getBundleId() === appIds.capcorp ? (
             <DashBoardFour
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}

@@ -4,26 +4,28 @@ import React, {useEffect, useState} from 'react';
 import {
   Alert,
   FlatList,
-  I18nManager,
   Image,
   RefreshControl,
-  Text,
-  TouchableOpacity,
-  View,
   StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  I18nManager,
+  View,
 } from 'react-native';
 import DashedLine from 'react-native-dashed-line';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import AddressModal from '../../Components/AddressModal';
+import AddressModal2 from '../../Components/AddressModal2';
 import ButtonComponent from '../../Components/ButtonComponent';
 import ChooseAddressModal from '../../Components/ChooseAddressModal';
 import ConfirmationModal from '../../Components/ConfirmationModal';
+import Header from '../../Components/Header';
 import Header2 from '../../Components/Header2';
-import HeaderWithFilters from '../../Components/HeaderWithFilters';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import TransparentButtonWithTxtAndIcon from '../../Components/TransparentButtonWithTxtAndIcon';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -37,6 +39,7 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -64,6 +67,8 @@ export default function Cart2({navigation, route}) {
     },
     // selectedPayment: null,
     isRefreshing: false,
+    selectedTipvalue: null,
+    selectedTipAmount: null,
   });
   const {
     isLoading,
@@ -77,6 +82,8 @@ export default function Cart2({navigation, route}) {
     selectedAddress,
     selectedPayment,
     isRefreshing,
+    selectedTipvalue,
+    selectedTipAmount,
   } = state;
 
   //Redux store data
@@ -772,12 +779,13 @@ export default function Cart2({navigation, route}) {
     return (
       <>
         <View style={{marginHorizontal: moderateScale(20)}}>
-          <View style={styles.instructionView}>
-            <Text style={{color: colors.textGreyF}}>
-              Any restaurant requests? We’ll try our
-            </Text>
-            <Text style={{color: colors.textGreyF}}>best to convey it </Text>
-          </View>
+          <TextInput
+            multiline={true}
+            numberOfLines={4}
+            style={styles.instructionView}
+            placeholder={
+              ' Any restaurant requests? We’ll try our best to convey it '
+            }></TextInput>
           <Text
             style={{
               fontFamily: fontFamily.bold,
@@ -838,69 +846,153 @@ export default function Cart2({navigation, route}) {
             dashGap={2}
             dashColor={colors.greyLight}
           />
+
+          {!!cartData?.tip &&
+            cartData?.tip.length &&
+            Number(cartData?.total_payable_amount) != 0 && (
+              <View
+                style={[
+                  styles.bottomTabLableValue,
+                  {flexDirection: 'column', marginTop: 20},
+                ]}>
+                <Text style={[styles.priceTipLabel]}>
+                  {strings.DOYOUWANTTOGIVEATIP}
+                </Text>
+
+                <KeyboardAwareScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}>
+                  {cartData?.tip.map((j, jnx) => {
+                    return (
+                      <TouchableOpacity
+                        style={[
+                          styles.tipArrayStyle,
+                          {
+                            backgroundColor:
+                              selectedTipvalue?.value == j?.value
+                                ? themeColors.primary_color
+                                : 'transparent',
+                          },
+                        ]}
+                        onPress={() => selectedTip(j)}>
+                        <Text
+                          style={{
+                            color:
+                              selectedTipvalue?.value == j?.value
+                                ? colors.white
+                                : colors.black,
+                          }}>
+                          {`${currencies?.primary_currency?.symbol} ${j.value}`}
+                        </Text>
+                        <Text
+                          style={{
+                            color:
+                              selectedTipvalue?.value == j?.value
+                                ? colors.white
+                                : colors.textGreyB,
+                          }}>
+                          {j.label}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+
+                  <TouchableOpacity
+                    style={[
+                      styles.tipArrayStyle2,
+                      {
+                        backgroundColor:
+                          selectedTipvalue == 'custom'
+                            ? themeColors.primary_color
+                            : 'transparent',
+                      },
+                    ]}
+                    onPress={() => selectedTip('custom')}>
+                    <Text
+                      style={{
+                        color:
+                          selectedTipvalue == 'custom'
+                            ? colors.white
+                            : colors.black,
+                      }}>
+                      {'Custom'}
+                    </Text>
+                    <Text
+                      style={{
+                        color:
+                          selectedTipvalue == 'custom'
+                            ? colors.white
+                            : colors.black,
+                      }}>
+                      {'Amount'}
+                    </Text>
+                  </TouchableOpacity>
+                </KeyboardAwareScrollView>
+
+                {!!selectedTipvalue && selectedTipvalue == 'custom' && (
+                  <View
+                    style={{
+                      borderRadius: 5,
+                      borderWidth: 0.5,
+                      borderColor: colors.textGreyB,
+                      height: 40,
+                    }}>
+                    <TextInput
+                      value={selectedTipAmount}
+                      onChangeText={(text) =>
+                        updateState({selectedTipAmount: text})
+                      }
+                      style={{
+                        height: 40,
+                        alignItems: 'center',
+                        paddingHorizontal: 10,
+                      }}
+                      maxLength={5}
+                      returnKeyType={'done'}
+                      keyboardType={'number-pad'}
+                      placeholder={'Enter Custom Amount'}
+                    />
+                  </View>
+                )}
+              </View>
+            )}
+
           <View style={styles.amountPayable}>
-            <Text style={styles.totalTxts}>{strings.AMOUNT_PAYABLE}</Text>
-            <Text style={styles.totalTxts}>{`${
+            <Text style={styles.totalTxts2}>{strings.AMOUNT_PAYABLE}</Text>
+            <Text style={styles.priceItemLabel3}>{`${
               currencies?.primary_currency?.symbol
-            }${Number(cartData?.total_payable_amount).toFixed(2)}`}</Text>
+            }${(
+              Number(cartData?.total_payable_amount) +
+              (selectedTipAmount != null && selectedTipAmount != ''
+                ? Number(selectedTipAmount)
+                : 0)
+            ).toFixed(2)}`}</Text>
           </View>
         </View>
         <View style={{height: moderateScaleVertical(40)}} />
 
-        <View style={{marginHorizontal: moderateScale(20)}}>
-          <Text style={{fontFamily: fontFamily.bold, fontSize: textScale(14)}}>
-            Review your order and address details to avoid cancellations
-          </Text>
-          <View style={{marginHorizontal: 5, marginVertical: moderateScale(5)}}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginVertical: 10,
-              }}>
-              <Image source={imagePath.time2} style={{height: 20, width: 20}} />
-              <Text style={{fontFamily: fontFamily.regular, marginLeft: 15}}>
-                If you choose to cancel, you can do it within 60 seconds
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginVertical: 10,
-              }}>
-              <Image
-                source={imagePath.wallet2}
-                style={{height: 20, width: 20}}
-              />
-              <Text style={{fontFamily: fontFamily.regular, marginLeft: 15}}>
-                Post 60 seconds, you will be charged a 100% cancellation fee
-              </Text>
-            </View>
-
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginVertical: 10,
-              }}>
-              <Image
-                source={imagePath.heart2}
-                style={{height: 20, width: 20}}
-              />
-              <Text
-                style={{
-                  fontFamily: fontFamily.regular,
-                  marginLeft: 15,
-                  flexShrink: 1,
-                }}>
-                in the event of an unusal delay of your order, you will not be
-                charged a cancellation fee
-              </Text>
-            </View>
+        <TouchableOpacity
+          onPress={() =>
+            !!userData?.auth_token
+              ? moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
+              : showError(strings.UNAUTHORIZED_MESSAGE)
+          }
+          style={[styles.paymentMainView, {justifyContent: 'space-between'}]}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Image source={imagePath.paymentMethod} />
+            <Text style={styles.selectedMethod}>
+              {selectedPayment
+                ? selectedPayment.title
+                : strings.SELECT_PAYMENT_METHOD}
+            </Text>
           </View>
-        </View>
+          <View>
+            <Image
+              source={imagePath.goRight}
+              style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+            />
+          </View>
+        </TouchableOpacity>
 
         {/* {payment submit button} */}
         <View
@@ -909,7 +1001,7 @@ export default function Cart2({navigation, route}) {
             marginVertical:
               Platform.OS === 'ios'
                 ? moderateScaleVertical(40)
-                : moderateScaleVertical(85),
+                : moderateScaleVertical(25),
           }}>
           <ButtonComponent
             onPress={() => placeOrder()}
@@ -968,6 +1060,20 @@ export default function Cart2({navigation, route}) {
     );
   };
 
+  const selectedTip = (tip) => {
+    console.log(tip, 'tip >>>ITEM');
+
+    if (selectedTipvalue == 'custom') {
+      updateState({selectedTipvalue: tip, selectedTipAmount: null});
+    } else {
+      if (selectedTipvalue && selectedTipvalue?.value == tip?.value) {
+        updateState({selectedTipvalue: null, selectedTipAmount: null});
+      } else {
+        updateState({selectedTipvalue: tip, selectedTipAmount: tip?.value});
+      }
+    }
+  };
+
   //Native modal for Modal
   const openClearCartModal = () => {
     Alert.alert('', strings.AREYOUSURE, [
@@ -998,7 +1104,16 @@ export default function Cart2({navigation, route}) {
       bgColor={colors.backgroundGrey}
       source={loaderOne}
       isLoadingB={isLoadingB}>
-      <Header2 leftIcon={imagePath.backArrow} />
+      <Header
+        leftIcon={
+          getBundleId() === appIds.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
+        centerTitle={strings.CART}
+        headerStyle={{backgroundColor: colors.backgroundGrey}}
+      />
+      <View style={{height: 1, backgroundColor: colors.borderColorD}} />
       <FlatList
         data={cartItems}
         extraData={cartItems}
@@ -1040,11 +1155,11 @@ export default function Cart2({navigation, route}) {
         selectAddress={(data) => selectAddress(data)}
         selectedAddress={selectedAddressData}
       />
-      <AddressModal
+      <AddressModal2
         isVisible={isVisibleAddressModal}
         onClose={() => setModalVisibleForAddessModal(false)}
-        type={type}
         passLocation={(data) => addUpdateLocation(data)}
+        type={type}
       />
     </WrapperContainer>
   );
@@ -1113,12 +1228,16 @@ export function stylesFunc({fontFamily, themeColors}) {
       borderRadius: moderateScale(15),
       backgroundColor: colors.borderColorD,
       marginVertical: moderateScaleVertical(10),
-      alignItems: 'center',
-      justifyContent: 'center',
+      padding: moderateScale(5),
     },
     totalTxts: {
       color: colors.black,
       fontFamily: fontFamily.regular,
+      fontSize: textScale(14),
+    },
+    totalTxts2: {
+      color: colors.black,
+      fontFamily: fontFamily.bold,
       fontSize: textScale(14),
     },
     topLable: {
@@ -1187,6 +1306,11 @@ export function stylesFunc({fontFamily, themeColors}) {
       fontFamily: fontFamily.regular,
       fontSize: textScale(14),
     },
+    priceItemLabel3: {
+      color: colors.textGrey,
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(14),
+    },
     addInstruction: {
       color: colors.textGreyB,
       fontFamily: fontFamily.regular,
@@ -1202,8 +1326,10 @@ export function stylesFunc({fontFamily, themeColors}) {
     paymentMainView: {
       flexDirection: 'row',
       alignItems: 'center',
-      paddingHorizontal: moderateScaleVertical(20),
+      marginHorizontal: moderateScaleVertical(20),
+      paddingHorizontal: moderateScale(5),
       paddingVertical: moderateScaleVertical(10),
+      borderRadius: moderateScale(15),
       backgroundColor: colors.lightGreyBgB,
     },
 
@@ -1320,6 +1446,30 @@ export function stylesFunc({fontFamily, themeColors}) {
     textStyle: {
       ...commonStyles.mediumFont16,
       fontSize: textScale(18),
+    },
+    tipArrayStyle: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderWidth: 1,
+      paddingHorizontal: 15,
+      paddingVertical: 5,
+      borderColor: colors.textGreyB,
+      marginRight: 5,
+      marginVertical: 20,
+      borderRadius: moderateScale(5),
+      borderColor: themeColors.primary_color,
+    },
+    tipArrayStyle2: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderWidth: 1,
+      paddingHorizontal: 15,
+      paddingVertical: 5,
+      borderColor: colors.textGreyB,
+      marginRight: 5,
+      marginVertical: 20,
+      borderRadius: moderateScale(5),
+      borderColor: themeColors.primary_color,
     },
   });
   return styles;

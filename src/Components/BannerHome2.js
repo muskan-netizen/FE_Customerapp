@@ -105,9 +105,6 @@ const BannerHome2 = ({
         sliderWidth={sliderWidth}
         itemWidth={itemWidth}
         onSnapToItem={(index) => setSnapState(index)}
-        snapToInterval={width - 60}
-        containerCustomStyle={styles.slider}
-        contentContainerCustomStyle={styles.sliderContentContainer}
       />
     </View>
   );

@@ -1,25 +1,19 @@
-import {cloneDeep, debounce} from 'lodash';
-import React, {createRef, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
-  RefreshControl,
-  View,
-  Text,
   Image,
   ImageBackground,
+  Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
+import {getBundleId} from 'react-native-device-info';
 import {useSelector} from 'react-redux';
-
-import CustomTopTabBar from '../../Components/CustomTopTabBar';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import OrderCardVendorComponent from '../../Components/OrderCardVendorComponent';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
-import staticStrings from '../../constants/staticStrings';
-import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
@@ -29,6 +23,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   showError,
@@ -149,7 +144,11 @@ export default function Loyalty({navigation}) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          getBundleId() === appIds.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.LOYALTYPOINTS}
         headerStyle={{backgroundColor: colors.white}}
       />
@@ -201,7 +200,6 @@ export default function Loyalty({navigation}) {
           </View>
         </View>
       </View>
-
       {/* Current point status */}
       <View
         style={{
@@ -255,7 +253,6 @@ export default function Loyalty({navigation}) {
           </View>
         </View>
       </View>
-
       <View style={{marginHorizontal: moderateScale(20), flex: 1}}>
         <View style={{marginBottom: 20}}>
           <Text style={styles.upcoming}>{'Upcoming'}</Text>

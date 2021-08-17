@@ -331,7 +331,10 @@ export default function AddressModal2({
         updateState({viewHeight: event.nativeEvent.layout.height});
       }}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-        <Image source={imagePath.crossB} />
+        <Image
+          source={imagePath.crossB}
+          style={{tintColor: themeColors.secondary_color}}
+        />
       </TouchableOpacity>
       {/* <ScrollView
         showsVerticalScrollIndicator={false}

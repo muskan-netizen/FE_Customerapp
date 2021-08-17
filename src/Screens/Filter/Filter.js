@@ -2,6 +2,7 @@ import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {cloneDeep} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {I18nManager, Image, ScrollView, Text, View} from 'react-native';
+import {getBundleId} from 'react-native-device-info';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
@@ -17,6 +18,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 import stylesFunc from './styles';
 
 export default function Filter({route, navigation}) {
@@ -74,9 +76,10 @@ export default function Filter({route, navigation}) {
     };
 
   //***********filter lables******** */
-  const filterTypesListView = (item) => {
+  const filterTypesListView = (item, indx) => {
     return (
       <TouchableOpacity
+        key={indx}
         onPress={() => selectLableBasedOnValues(item)}
         style={{
           borderBottomColor: colors.lightGreyBorder,
@@ -285,29 +288,31 @@ export default function Filter({route, navigation}) {
 
   /**********Filter values views******/
   const filterValuesListView = (item) => {
-    return (
-      <TouchableOpacity
-        onPress={() => _selectFilterData(item)}
-        style={{
-          borderBottomColor: colors.lightGreyBorder,
-          borderBottomWidth: 1,
-          padding: moderateScale(10),
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
-        {/* radioInActive */}
-        <Image
-          source={
-            item?.value?.selected
-              ? imagePath.radioActive
-              : imagePath.radioInActive
-          }
-        />
-        <Text style={[styles.lableStyle, {paddingLeft: moderateScale(5)}]}>
-          {item.label}
-        </Text>
-      </TouchableOpacity>
-    );
+    if (item.label) {
+      return (
+        <TouchableOpacity
+          onPress={() => _selectFilterData(item)}
+          style={{
+            borderBottomColor: colors.lightGreyBorder,
+            borderBottomWidth: 1,
+            padding: moderateScale(10),
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          {/* radioInActive */}
+          <Image
+            source={
+              item?.value?.selected
+                ? imagePath.radioActive
+                : imagePath.radioInActive
+            }
+          />
+          <Text style={[styles.lableStyle, {paddingLeft: moderateScale(5)}]}>
+            {item.label}
+          </Text>
+        </TouchableOpacity>
+      );
+    } else return <></>;
   };
 
   //Price range handler
@@ -370,10 +375,19 @@ export default function Filter({route, navigation}) {
       source={loaderOne}>
       <Header
         customLeft={() => (
-          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Image
-                source={imagePath.back}
+                source={
+                  getBundleId() === appIds.capcorp
+                    ? imagePath.backArrow
+                    : imagePath.back
+                }
                 style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
               />
             </TouchableOpacity>
@@ -405,7 +419,7 @@ export default function Filter({route, navigation}) {
           <ScrollView>
             {filterTypes && filterTypes.length
               ? filterTypes.map((i, inx) => {
-                  return filterTypesListView(i);
+                  return filterTypesListView(i, inx);
                 })
               : null}
             {/* Price view */}

@@ -23,6 +23,8 @@ import {
 import {showError} from '../../utils/helperFunctions';
 import stylesFun from './styles';
 import HTMLView from 'react-native-htmlview';
+import {getBundleId} from 'react-native-device-info';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 
 export default function WebLinks({navigation, route}) {
   console.log(route, 'route>>>');
@@ -88,7 +90,11 @@ export default function WebLinks({navigation, route}) {
       isLoadingB={isLoading}
       source={loaderOne}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          getBundleId() === appIds.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={(paramData && paramData?.title) || ''}
         headerStyle={{backgroundColor: Colors.white}}
       />

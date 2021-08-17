@@ -15,6 +15,8 @@ import {moderateScale} from '../../styles/responsiveSize';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
 import {useFocusEffect} from '@react-navigation/native';
+import {getBundleId} from 'react-native-device-info';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 
 export default function Wishlist({navigation}) {
   const [state, setState] = useState({
@@ -160,6 +162,11 @@ export default function Wishlist({navigation}) {
       bgColor={colors.backgroundGrey}
       statusBarColor={colors.backgroundGrey}>
       <Header
+        leftIcon={
+          getBundleId() === appIds.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.WISHLIST}
         rightIcon={imagePath.search}
         onPressRight={() =>

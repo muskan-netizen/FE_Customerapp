@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
+import {getBundleId} from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
@@ -16,6 +17,7 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 
 export default function SearchProductVendorItem({navigation, route}) {
   const [state, setState] = useState({
@@ -188,7 +190,6 @@ export default function SearchProductVendorItem({navigation, route}) {
       </TouchableOpacity>
     );
   };
-  console.log(searchInput, 'THIS IS SEARCHINPUT');
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
@@ -196,7 +197,11 @@ export default function SearchProductVendorItem({navigation, route}) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          getBundleId() === appIds.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.SEARCH}
         // rightIcon={imagePath.cartShop}
         headerStyle={{backgroundColor: colors.greysearchHeader}}

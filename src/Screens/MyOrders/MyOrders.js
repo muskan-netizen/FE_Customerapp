@@ -1,8 +1,8 @@
 import {cloneDeep, debounce} from 'lodash';
 import React, {createRef, useEffect, useState} from 'react';
 import {FlatList, RefreshControl, View} from 'react-native';
+import {getBundleId} from 'react-native-device-info';
 import {useSelector} from 'react-redux';
-
 import CustomTopTabBar from '../../Components/CustomTopTabBar';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
@@ -16,6 +16,7 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
 import {moderateScaleVertical, width} from '../../styles/responsiveSize';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
 
 export default function MyOrders({navigation}) {
@@ -245,10 +246,15 @@ export default function MyOrders({navigation}) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          getBundleId() === appIds.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.MY_ORDERS}
         headerStyle={{backgroundColor: colors.white}}
       />
+
       <View style={{...commonStyles.headerTopLine}} />
 
       <CustomTopTabBar

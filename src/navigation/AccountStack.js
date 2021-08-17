@@ -36,6 +36,7 @@ import {
   ProductList2,
   ProductDetail2,
   MyProfile2,
+  Account2,
 } from '../Screens';
 import {appIds} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
@@ -45,7 +46,7 @@ export default function () {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        component={Account}
+        component={getBundleId() === appIds.capcorp ? Account2 : Account}
         name={navigationStrings.ACCOUNTS}
         options={{headerShown: false}}
       />
