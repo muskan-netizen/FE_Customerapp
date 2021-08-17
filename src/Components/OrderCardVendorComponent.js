@@ -36,6 +36,7 @@ export default function OrderCardVendorComponent({
   navigation,
   onPressRateOrder,
   updateOrderStatus,
+  onPressReturnOrder,
 }) {
   let cardWidth = width - 21.5;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
@@ -163,6 +164,7 @@ export default function OrderCardVendorComponent({
 
             <TouchableOpacity
               // onPress={onPressRateOrder}
+              onPress={onPressReturnOrder}
               // style={{flex:0.6}}
               style={styles.bottomSecondHalf}>
               <View style={styles.orderAcceptAndReadyStyleSecond}>

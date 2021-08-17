@@ -348,5 +348,10 @@ export default {
   DOYOUWANTTOGIVEATIP:'Do you want to give a tip?',
   RENEW:'Renew',
   ORDER_CART: 'Orders',
-  RETURNORDER:'Return order'
+  RETURNORDER:'Return order',
+  SELECTDATEANDTIME:'Select Date and Time',
+  DOYOUWANTTORETURNYOURORDER:'Do You Want To Return Your Order?',
+  SELECTITEMSFORRETURN:'Select item(s) for return',
+  RETURNREASONS:'Reason for return product',
+  COMMENTSOPTIONAL:'Comments (Optional):'
 };
