@@ -187,10 +187,27 @@ export default function MyOrders({navigation}) {
   };
 
   const returnYourOrder = (item) => {
-    updateState({
-      isVisibleReturnOrderModal: true,
-      selectedOrderForReturn: item,
-    });
+    console.log(item, 'item>item>');
+    actions
+      .getReturnOrderDetailData(
+        `?id=${item?.id}&vendor_id=${item?.vendor_id}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'res>>>');
+
+        updateState({
+          isVisibleReturnOrderModal: true,
+          selectedOrderForReturn: res?.data,
+          isLoading: false,
+        });
+      })
+      .catch(errorMethod);
   };
   const renderOrders = ({item, index}) => {
     // console.log(item,"item>>item")
@@ -301,6 +318,7 @@ export default function MyOrders({navigation}) {
       setTimeout(() => {
         navigation.navigate(navigationStrings.RETURNORDER, {
           selectProductForRetrun: selectProductForRetrun,
+          selectedOrderForReturn: selectedOrderForReturn,
         });
       }, 500);
     } else {
@@ -398,9 +416,8 @@ export default function MyOrders({navigation}) {
               </Text>
             </View>
 
-            {selectedOrderForReturn && selectedOrderForReturn?.product_details
-              ? selectedOrderForReturn?.product_details.map((item, index) => {
-                  item.id = Math.random();
+            {selectedOrderForReturn && selectedOrderForReturn?.products
+              ? selectedOrderForReturn?.products.map((item, index) => {
                   return (
                     <TouchableOpacity
                       onPress={() => selectProduct(item)}
@@ -412,7 +429,7 @@ export default function MyOrders({navigation}) {
                       <Image
                         source={
                           selectProductForRetrun &&
-                          selectProductForRetrun?.id == item?.id
+                          selectProductForRetrun?.product_id == item?.product_id
                             ? imagePath.radioActive
                             : imagePath.radioInActive
                         }
@@ -420,11 +437,11 @@ export default function MyOrders({navigation}) {
                       <View style={styles.cartItemImage}>
                         <FastImage
                           source={
-                            item?.image_path != '' && item?.image_path != null
+                            item?.image != '' && item?.image != null
                               ? {
                                   uri: getImageUrl(
-                                    item?.image_path?.proxy_url,
-                                    item?.image_path?.image_path,
+                                    item?.image?.proxy_url,
+                                    item?.image?.image_path,
                                     '300/300',
                                   ),
                                 }
@@ -434,18 +451,21 @@ export default function MyOrders({navigation}) {
                         />
                       </View>
                       <View style={{marginLeft: 10}}>
-                        <Text
-                          numberOfLines={1}
-                          style={[styles.priceItemLabel2, {opacity: 0.8}]}>
-                          {'XYZ'}
-                        </Text>
-                        {item?.qty && (
+                        <View style={{overflow: 'hidden'}}>
+                          <Text
+                            numberOfLines={2}
+                            style={[styles.priceItemLabel2, {opacity: 0.8}]}>
+                            {item?.product_name}
+                          </Text>
+                        </View>
+
+                        {item?.quantity && (
                           <View style={{flexDirection: 'row'}}>
                             <Text style={{color: colors.textGrey}}>
                               {strings.QTY}
                             </Text>
                             <Text style={styles.cartItemWeight}>
-                              {item?.qty}
+                              {item?.quantity}
                             </Text>
                           </View>
                         )}

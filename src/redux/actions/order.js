@@ -6,6 +6,7 @@ import {
   GET_RATING_DETAIL,
   GIVE_RATING_REVIEWS,
   GET_VENDOR_REVENUE,
+  GET_RETURN_ORDER_DETAIL,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -111,6 +112,19 @@ export const getRevenueData = (data = {}, headers = {}) => {
 export function getOrderDetailPickUp(url = '', data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiGet(url, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+//Get Cart Detail
+export function getReturnOrderDetailData(url = '', data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiGet(GET_RETURN_ORDER_DETAIL + url, data, headers)
       .then((res) => {
         resolve(res);
       })

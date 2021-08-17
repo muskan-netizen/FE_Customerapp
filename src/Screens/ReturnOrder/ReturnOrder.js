@@ -38,6 +38,8 @@ import DropDownPicker from 'react-native-dropdown-picker';
 export default function ReturnOrder({navigation, route}) {
   const ratingData = route?.params?.item?.product_rating;
   const selectProductForRetrun = route?.params?.selectProductForRetrun;
+  const selectedOrderForReturn = route?.params?.selectedOrderForReturn;
+
   console.log(selectProductForRetrun, 'selectProductForRetrun....');
   const [state, setState] = useState({
     isLoading: false,
@@ -193,7 +195,7 @@ export default function ReturnOrder({navigation, route}) {
     );
     formdata.append('order_id', sel);
     formdata.append('product_id', ratingData.product_id);
-  
+
     if (imageArray.length) {
       imageArray.forEach((element) => {
         if (element?.id) {
@@ -373,7 +375,7 @@ export default function ReturnOrder({navigation, route}) {
               <Text
                 numberOfLines={1}
                 style={[styles.priceItemLabel2, {opacity: 0.8}]}>
-                {'XYZ'}
+                {selectProductForRetrun?.title}
               </Text>
               {selectProductForRetrun?.qty && (
                 <View style={{flexDirection: 'row'}}>

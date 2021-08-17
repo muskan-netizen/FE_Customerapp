@@ -95,3 +95,6 @@ export const CANCEL_SPECIFIC_PLAN = getApiUrl('/user/subscription/cancel');
 // export const RENEW_SPECIFIC_PLAN = getApiUrl('/user/subscription/cancel');
 
 export const GET_LOYALTY_INFO = getApiUrl('/user/loyalty/info');
+export const GET_RETURN_ORDER_DETAIL = getApiUrl(
+  '/return-order/get-order-data-in-model',
+);
