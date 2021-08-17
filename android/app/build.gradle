@@ -473,14 +473,14 @@ android {
             applicationId 'com.codebrew.rerak'
             resValue "string", "app_name", "Rerak"
         }
-        foodkart{
+        yummiidash{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.codebrew.foodkart'
-            resValue "string", "app_name", "FoodKart"
+            applicationId 'com.yummiidash'
+            resValue "string", "app_name", "Yummiidash"
         }
          yoho{
             dimension "appType"
@@ -634,6 +634,53 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.africanize'
             resValue "string", "app_name", "Africanize"
+         }
+
+          markita{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.markita'
+            resValue "string", "app_name", "Markita"
+         }
+          sirvu{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.sirvu'
+            resValue "string", "app_name", "SirVU"
+         }
+
+         ublue{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.ublue'
+            resValue "string", "app_name", "Ublue"
+         }
+          mstechy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.mstechy'
+            resValue "string", "app_name", "MsTechy"
+         }
+         senshive{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.senshive'
+            resValue "string", "app_name", "Senshive"
          }
     }
 }
