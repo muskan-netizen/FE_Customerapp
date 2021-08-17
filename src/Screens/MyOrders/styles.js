@@ -334,9 +334,11 @@ export default ({fontFamily, themeColors}) => {
       justifyContent: 'center',
     },
     closeButton: {
-      alignItems: 'center',
+      alignItems: 'flex-end',
       justifyContent: 'center',
-      marginVertical: moderateScaleVertical(10),
+      marginVertical: moderateScaleVertical(-10),
+      marginHorizontal:moderateScale(20),
+      zIndex:1000
     },
     modalMainViewContainer: {
       //   flex: 1,

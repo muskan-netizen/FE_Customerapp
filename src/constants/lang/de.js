@@ -351,5 +351,7 @@ export default {
   RETURNORDER:'Return order',
   SELECTDATEANDTIME:'Select Date and Time',
   DOYOUWANTTORETURNYOURORDER:'Do You Want To Return Your Order?',
-  SELECTITEMSFORRETURN:'Select item(s) for return'
+  SELECTITEMSFORRETURN:'Select item(s) for return',
+  RETURNREASONS:'Reason for return product',
+  COMMENTSOPTIONAL:'Comments (Optional):'
 };
