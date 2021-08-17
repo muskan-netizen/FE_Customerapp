@@ -359,7 +359,7 @@ export default function MyOrders({navigation}) {
         // ListEmptyComponent={<ListEmptyProduct />}
       />
 
-      <Modal
+      {/* <Modal
         transparent={true}
         isVisible={isVisibleReturnOrderModal}
         animationIn={'pulse'}
@@ -475,6 +475,7 @@ export default function MyOrders({navigation}) {
           </View>
         </View>
       </Modal>
+    */}
     </WrapperContainer>
   );
 }
