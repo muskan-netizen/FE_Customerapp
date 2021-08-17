@@ -54,6 +54,7 @@ const shortCodes = {
   ublue: 'f9f655',
   mstechy: 'ec2a07',
   senshive: 'f36591',
+  ridemate: 'd517bf',
 };
 
 const appIds = {
@@ -268,6 +269,10 @@ const appIds = {
   senshive: Platform.select({
     ios: 'com.senshive',
     android: 'com.senshive',
+  }),
+  ridemate: Platform.select({
+    ios: 'com.ridemate',
+    android: 'com.ridemate',
   }),
 };
 

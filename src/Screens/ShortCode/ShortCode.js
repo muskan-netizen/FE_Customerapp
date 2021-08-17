@@ -389,6 +389,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.ridemate:
+          updateState({
+            shortCode: shortCodes.ridemate,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

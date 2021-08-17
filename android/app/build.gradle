@@ -587,17 +587,23 @@ android {
             resValue "string", "app_name", "Drus"
 
          }
-        yahu{
+        arenagrub{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.arenagrub'
-            resValue "string", "app_name", "ArenaGrub"
-
+            resValue "string", "app_name", "ArenaGrub" 
+         }
+          yahu{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.yahu'
-            resValue "string", "app_name", "Yahu"
+            resValue "string", "app_name", "Yahu" 
          }
         zuzuclean{
             dimension "appType"
@@ -681,6 +687,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.senshive'
             resValue "string", "app_name", "Senshive"
+         }
+
+          ridemate{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.ridemate'
+            resValue "string", "app_name", "Ridemate"
          }
     }
 }
