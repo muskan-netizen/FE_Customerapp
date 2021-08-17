@@ -129,7 +129,7 @@ export default function DashBoardOne({
       appMainData &&
       appMainData?.categories &&
       appMainData?.categories.length ? (
-        <View style={{paddingHorizontal: moderateScale(5)}}>
+        <View>
           <BrickList
             data={newCategoryData}
             renderItem={(prop) => renderView(prop)}

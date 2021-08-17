@@ -5,6 +5,7 @@ import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -16,7 +17,7 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import {showError} from '../../utils/helperFunctions';
+import {showError, showSuccess} from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
 export default function ContactUs({navigation}) {
@@ -31,8 +32,9 @@ export default function ContactUs({navigation}) {
     email: userData ? userData?.email : '',
     phoneNumber: userData ? userData?.phone_number : '',
     message: '',
+    isLoading:false
   });
-  const {message, phoneNumber, cca2, name, email} = state;
+  const {message, phoneNumber, cca2, name, email,isLoading} = state;
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -81,6 +83,10 @@ export default function ContactUs({navigation}) {
       message: message,
     };
 
+    console.log(data,"data>>contactus")
+    updateState({
+      isLoading: true,
+    });
     actions
       .contactUs(data, {
         code: appData?.profile?.code,
@@ -90,9 +96,18 @@ export default function ContactUs({navigation}) {
         updateState({
           isLoading: false,
         });
+        showSuccess(res?.message);
+        navigation.goBack()
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err, 'err>>>');
+        updateState({
+          isLoading: false,
+        });
+        showError(err?.message || err?.error);
+      });
   };
+
   // Basic information tab
   const basicInfoView = () => {
     return (
@@ -105,7 +120,6 @@ export default function ContactUs({navigation}) {
           onChangeText={_onChangeText('name')}
           placeholder={strings.YOUR_NAME}
           value={name}
-          
         />
         <BorderTextInput
           onChangeText={_onChangeText('email')}
@@ -124,7 +138,6 @@ export default function ContactUs({navigation}) {
           callingCode={state.callingCode}
           keyboardType={'number-pad'}
           returnKeyType={'done'}
-
         />
         <View style={{height: moderateScaleVertical(20)}} />
         <BorderTextInput
@@ -148,7 +161,8 @@ export default function ContactUs({navigation}) {
   };
 
   return (
-    <WrapperContainer bgColor={colors.white} statusBarColor={colors.white}>
+    <WrapperContainer bgColor={colors.white} statusBarColor={colors.white}     source={loaderOne}
+    isLoadingB={isLoading}>
       <Header
         leftIcon={imagePath.back}
         centerTitle={strings.CONTACT_USS}
