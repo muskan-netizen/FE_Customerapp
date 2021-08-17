@@ -21,18 +21,21 @@ import validations from '../../utils/validations';
 import stylesFun from './styles';
 export default function ContactUs({navigation}) {
   const currentTheme = useSelector((state) => state.appTheme);
+  const userData = useSelector((state) => state?.auth?.userData);
+  console.log(userData, 'userData>>>userData');
 
   const [state, setState] = useState({
     callingCode: '1',
-    cca2: 'US',
-    name: '',
-    email: '',
-    phoneNumber: '',
+    cca2: userData?.cca2 ? userData?.cca2 : 'US',
+    name: userData ? userData?.name : '',
+    email: userData ? userData?.email : '',
+    phoneNumber: userData ? userData?.phone_number : '',
     message: '',
   });
   const {message, phoneNumber, cca2, name, email} = state;
-  const {appData, appStyle} = useSelector((state) => state?.initBoot);
-
+  const {appData, currencies, languages, themeColors, appStyle} = useSelector(
+    (state) => state?.initBoot,
+  );
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily});
   const commonStyles = commonStylesFun({fontFamily});
@@ -77,11 +80,17 @@ export default function ContactUs({navigation}) {
       phone_number: '+' + callingCode + phoneNumber,
       message: message,
     };
+
     actions
       .contactUs(data, {
         code: appData?.profile?.code,
       })
-      .then((res) => {})
+      .then((res) => {
+        console.log(res, 'res>>>');
+        updateState({
+          isLoading: false,
+        });
+      })
       .catch((err) => {});
   };
   // Basic information tab
@@ -96,11 +105,13 @@ export default function ContactUs({navigation}) {
           onChangeText={_onChangeText('name')}
           placeholder={strings.YOUR_NAME}
           value={name}
+          
         />
         <BorderTextInput
           onChangeText={_onChangeText('email')}
           placeholder={strings.YOUR_EMAIL}
           value={email}
+          keyboardType={'email-address'}
         />
         <PhoneNumberInput
           onCountryChange={_onCountryChange}
@@ -111,6 +122,9 @@ export default function ContactUs({navigation}) {
           cca2={cca2}
           phoneNumber={phoneNumber}
           callingCode={state.callingCode}
+          keyboardType={'number-pad'}
+          returnKeyType={'done'}
+
         />
         <View style={{height: moderateScaleVertical(20)}} />
         <BorderTextInput
@@ -132,6 +146,7 @@ export default function ContactUs({navigation}) {
       </View>
     );
   };
+
   return (
     <WrapperContainer bgColor={colors.white} statusBarColor={colors.white}>
       <Header
