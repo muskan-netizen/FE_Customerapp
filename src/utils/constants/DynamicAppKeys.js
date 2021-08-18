@@ -238,8 +238,8 @@ const appIds = {
     android: 'com.zuzuclean',
   }),
   towtrek: Platform.select({
-    ios: 'com.towtrek',
-    android: 'com.towtrek',
+    ios: 'com.app.towtrek',
+    android: 'com.app.towtrek',
   }),
   arenagrub: Platform.select({
     ios: 'com.arenagrub',
