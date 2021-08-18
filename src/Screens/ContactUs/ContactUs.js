@@ -26,7 +26,7 @@ export default function ContactUs({navigation}) {
   console.log(userData, 'userData>>>userData');
 
   const [state, setState] = useState({
-    callingCode: '1',
+    callingCode: userData?.dial_code?userData?.dial_code:'1',
     cca2: userData?.cca2 ? userData?.cca2 : 'US',
     name: userData ? userData?.name : '',
     email: userData ? userData?.email : '',
