@@ -2,8 +2,8 @@
 
 // export const API_BASE_URL = 'http://192.168.96.195:8005/api/v1';
 
-// export const API_BASE_URL = 'http://192.168.96.240:8005/api/v1';
-export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
+export const API_BASE_URL = 'http://192.168.96.240:8005/api/v1';
+// export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
 
 //export const API_BASE_URL = 'http://192.168.98.193:8005/api/v1';
 
@@ -24,7 +24,7 @@ export const ADD_REMOVE_TO_WISHLIST = getApiUrl('/wishlist/update');
 export const PROFILE_BASIC_INFO = getApiUrl('/update/profile');
 export const UPLOAD_PROFILE_IMAGE = getApiUrl('/update/image');
 export const CHANGE_PASSWORD = getApiUrl('/changePassword');
-export const CONTACT_US = getApiUrl('/contactUs/contactUs');
+export const CONTACT_US = getApiUrl('/contact-us');
 export const VERIFY_ACCOUNT = getApiUrl('/auth/verifyAccount');
 export const RESEND_OTP = getApiUrl('/auth/sendToken');
 export const INCREASE_ITEM_QNT = getApiUrl('/cart/increaseItem');
@@ -95,3 +95,15 @@ export const CANCEL_SPECIFIC_PLAN = getApiUrl('/user/subscription/cancel');
 // export const RENEW_SPECIFIC_PLAN = getApiUrl('/user/subscription/cancel');
 
 export const GET_LOYALTY_INFO = getApiUrl('/user/loyalty/info');
+export const GET_RETURN_ORDER_DETAIL = getApiUrl(
+  '/return-order/get-order-data-in-model',
+);
+export const GET_RETURN_PRODUCT_DETAIL = getApiUrl(
+  '/return-order/get-return-products',
+);
+
+export const UPLOAD_PRODUCT_IMAGE = getApiUrl('/upload-file');
+
+export const SUBMIT_RETURN_ORDER = getApiUrl(
+  '/return-order/update-product-return',
+);

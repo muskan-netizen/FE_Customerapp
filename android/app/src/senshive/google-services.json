@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "488742352598",
+    "project_id": "senshive-53efc",
+    "storage_bucket": "senshive-53efc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488742352598:android:21b09e8bb8563f3c8d7b77",
+        "android_client_info": {
+          "package_name": "com.senshive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "488742352598-je2a4v3pp8vbfn7qk974f851d2binj0l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.senshive",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "488742352598-pp7htnc2mkf1hsi2vol91vb82gvhul54.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.senshive",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "488742352598-ub6jigh987ip0r6tb531kilcg9qkn8un.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.senshive",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "488742352598-2qte9gptl2vonvqmbgme8n1kgncas32t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3xOrkY9JSfrELUDX31yzBR9hfwfpk4jA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "488742352598-2qte9gptl2vonvqmbgme8n1kgncas32t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "488742352598-h1qhffvqb79tiocgvh3064j68jp9r23g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.senshive"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

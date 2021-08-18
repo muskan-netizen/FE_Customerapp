@@ -34,6 +34,7 @@ import Modal from 'react-native-modal';
 import stylesFun from './styles';
 import DatePicker from 'react-native-date-picker';
 import FastImage from 'react-native-fast-image';
+import GradientButton from '../../Components/GradientButton';
 
 export default function MyOrders({navigation}) {
   const [state, setState] = useState({
@@ -57,8 +58,11 @@ export default function MyOrders({navigation}) {
     isVisibleReturnOrderModal: false,
     selectedOrderForReturn: null,
     selectProductForRetrun: null,
+    viewHeight: 0,
+    reasons: [],
   });
   const {
+    viewHeight,
     tabBarData,
     selectedTab,
     isLoading,
@@ -75,6 +79,7 @@ export default function MyOrders({navigation}) {
     isVisibleReturnOrderModal,
     selectedOrderForReturn,
     selectProductForRetrun,
+    reasons,
   } = state;
 
   //Update state in screen
@@ -124,6 +129,7 @@ export default function MyOrders({navigation}) {
 
   //error handling of api
   const errorMethod = (error) => {
+    console.log(error, 'error>error');
     updateState({
       isLoading: false,
       isLoadingB: false,
@@ -184,11 +190,31 @@ export default function MyOrders({navigation}) {
   };
 
   const returnYourOrder = (item) => {
-    updateState({
-      isVisibleReturnOrderModal: true,
-      selectedOrderForReturn: item,
-    });
+    console.log(item, 'item>item>');
+    updateState({isLoading: true});
+    actions
+      .getReturnOrderDetailData(
+        `?id=${item?.order_id}&vendor_id=${item?.vendor_id}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'getReturnOrderDetailData>>>res>>>');
+
+        updateState({
+          isVisibleReturnOrderModal: true,
+          selectedOrderForReturn: res?.data,
+          selectProductForRetrun: null,
+          isLoading: false,
+        });
+      })
+      .catch(errorMethod);
   };
+
   const renderOrders = ({item, index}) => {
     // console.log(item,"item>>item")
     return (
@@ -282,6 +308,7 @@ export default function MyOrders({navigation}) {
   }, [selectedOrderForReturn]);
 
   const selectProduct = (item) => {
+    console.log(item, '>item>item');
     if (selectProductForRetrun && selectProductForRetrun?.id == item?.id) {
       updateState({
         selectProductForRetrun: null,
@@ -292,6 +319,49 @@ export default function MyOrders({navigation}) {
       });
     }
   };
+  const returnOrder = () => {
+    if (selectProductForRetrun) {
+      console.log(
+        selectProductForRetrun,
+        'selectProductForRetrun>>selectProductForRetrun',
+      );
+      updateState({isVisibleReturnOrderModal: false, isLoading: true});
+      actions
+        .getReturnProductrDetailData(
+          `?return_ids=${selectProductForRetrun?.id}&order_id=${selectProductForRetrun?.order_id}`,
+          {},
+          {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+          },
+        )
+        .then((res) => {
+          console.log(res, 'getReturnProductrDetailData>>>res>>>');
+          updateState({isLoading: false});
+          setTimeout(() => {
+            navigation.navigate(navigationStrings.RETURNORDER, {
+              selectProductForRetrun: selectProductForRetrun,
+              selectedOrderForReturn: res?.data?.order
+                ? res?.data?.order
+                : selectedOrderForReturn,
+              reasons:
+                res?.data?.reasons && res?.data?.reasons.length
+                  ? res?.data?.reasons.map((item, index) => {
+                      (item['value'] = item?.title),
+                        (item['label'] = item?.title);
+                      return item;
+                    })
+                  : [],
+            });
+          }, 500);
+        })
+        .catch(errorMethod);
+    } else {
+      showError('Please select the product to return');
+    }
+  };
+
   return (
     <WrapperContainer
       bgColor={colors.backgroundGrey}
@@ -346,18 +416,20 @@ export default function MyOrders({navigation}) {
       <Modal
         transparent={true}
         isVisible={isVisibleReturnOrderModal}
-        animationType={'none'}
-        style={styles.modalContainer}
-        onLayout={(event) => {
-          // updateState({viewHeight: event.nativeEvent.layout.height});
-        }}>
+        animationIn={'pulse'}
+        animationOut={'pulse'}
+        style={styles.modalContainer}>
         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
           <Image source={imagePath.crossB} />
         </TouchableOpacity>
-        <View style={styles.modalMainViewContainer}>
+        <View
+          style={styles.modalMainViewContainer}
+          onLayout={(event) => {
+            updateState({viewHeight: event.nativeEvent.layout.height});
+          }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            bounces={true}
+            bounces={false}
             style={styles.modalMainViewContainer}>
             <View
               style={{
@@ -380,65 +452,110 @@ export default function MyOrders({navigation}) {
               </Text>
             </View>
 
-            {selectedOrderForReturn && selectedOrderForReturn?.product_details
-              ? selectedOrderForReturn?.product_details.map((item, index) => {
-                  item.id = Math.random();
-                  return (
-                    <TouchableOpacity
-                      onPress={() => selectProduct(item)}
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginBottom: moderateScaleVertical(20),
-                      }}>
-                      <Image
-                        source={
-                          selectProductForRetrun &&
-                          selectProductForRetrun?.id == item?.id
-                            ? imagePath.radioActive
-                            : imagePath.radioInActive
-                        }
-                      />
-                      <View style={styles.cartItemImage}>
-                        <FastImage
-                          source={
-                            item?.image_path != '' && item?.image_path != null
-                              ? {
-                                  uri: getImageUrl(
-                                    item?.image_path?.proxy_url,
-                                    item?.image_path?.image_path,
-                                    '300/300',
-                                  ),
+            {selectedOrderForReturn &&
+            selectedOrderForReturn?.vendors &&
+            selectedOrderForReturn?.vendors[0]?.products
+              ? selectedOrderForReturn?.vendors[0]?.products.map(
+                  (item, index) => {
+                    return (
+                      <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            marginBottom: moderateScaleVertical(20),
+                          }}>
+                          {item?.product_return ? (
+                            <View>
+                              <Text
+                                style={{
+                                  fontFamily: fontFamily.medium,
+                                  fontSize: moderateScale(14),
+                                  color: colors.textGreyJ,
+                                }}>
+                                {item?.product_return?.status}
+                              </Text>
+                            </View>
+                          ) : (
+                            <TouchableOpacity
+                              onPress={() => selectProduct(item)}>
+                              <Image
+                                source={
+                                  selectProductForRetrun &&
+                                  selectProductForRetrun?.product_id ==
+                                    item?.product_id
+                                    ? imagePath.radioActive
+                                    : imagePath.radioInActive
                                 }
-                              : imagePath.patternOne
-                          }
-                          style={styles.imageStyle}
-                        />
-                      </View>
-                      <View style={{marginLeft: 10}}>
-                        <Text
-                          numberOfLines={1}
-                          style={[styles.priceItemLabel2, {opacity: 0.8}]}>
-                          {'XYZ'}
-                        </Text>
-                        {item?.qty && (
-                          <View style={{flexDirection: 'row'}}>
-                            <Text style={{color: colors.textGrey}}>
-                              {strings.QTY}
-                            </Text>
-                            <Text style={styles.cartItemWeight}>
-                              {item?.qty}
-                            </Text>
+                              />
+                            </TouchableOpacity>
+                          )}
+
+                          <View style={styles.cartItemImage}>
+                            <FastImage
+                              source={
+                                item?.image != '' && item?.image != null
+                                  ? {
+                                      uri: getImageUrl(
+                                        item?.image?.proxy_url,
+                                        item?.image?.image_path,
+                                        '300/300',
+                                      ),
+                                    }
+                                  : imagePath.patternOne
+                              }
+                              style={styles.imageStyle}
+                            />
                           </View>
-                        )}
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })
+                          <View style={{marginLeft: 10}}>
+                            <View style={{overflow: 'hidden'}}>
+                              <Text
+                                numberOfLines={2}
+                                style={[
+                                  styles.priceItemLabel2,
+                                  {opacity: 0.8},
+                                ]}>
+                                {item?.product_name}
+                              </Text>
+                            </View>
+
+                            {item?.quantity && (
+                              <View style={{flexDirection: 'row'}}>
+                                <Text style={{color: colors.textGrey}}>
+                                  {strings.QTY}
+                                </Text>
+                                <Text style={styles.cartItemWeight}>
+                                  {item?.quantity}
+                                </Text>
+                              </View>
+                            )}
+                          </View>
+                        </View>
+                      </ScrollView>
+                    );
+                  },
+                )
               : null}
+            <View style={{height: 50}} />
           </ScrollView>
-          <View>
-            
+          <View
+            style={[
+              styles.bottomAddToCartView,
+              {top: viewHeight - height / 12},
+            ]}>
+            <GradientButton
+              colorsArray={[
+                themeColors.primary_color,
+                themeColors.primary_color,
+              ]}
+              // textStyle={styles.textStyle}
+              onPress={returnOrder}
+              marginTop={moderateScaleVertical(10)}
+              marginBottom={moderateScaleVertical(10)}
+              btnText={strings.SELECT}
+            />
           </View>
         </View>
       </Modal>

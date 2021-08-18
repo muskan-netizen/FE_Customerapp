@@ -76,4 +76,5 @@ export default {
   SUBSCRIPTION: 'subscriptions',
   LOYALTY: 'loyalty',
   CART2: 'orders',
+  RETURNORDER:'returnOrder'
 };

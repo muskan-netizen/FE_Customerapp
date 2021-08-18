@@ -213,6 +213,7 @@ export default function Login({navigation}) {
       updateState({isLoading: false});
     } else {
       if (result && result?.id) {
+        console.log(result, 'fbresult');
         _saveSocailLogin(result, 'facebook');
       } else {
         updateState({isLoading: false});
@@ -264,7 +265,6 @@ export default function Login({navigation}) {
           value={email}
           keyboardType={'email-address'}
           autoCapitalize={'none'}
-
         />
         <BorderTextInput
           onChangeText={_onChangeText('password')}

@@ -1,8 +1,8 @@
 #include "Pods/Target Support Files/Pods-TowTrek/Pods-TowTrek.release.xcconfig"
 
 
-PROJECT_APPLE_ID = 1581089034
-PROJECT_BUNDLE_ID = com.towtrek
+PROJECT_APPLE_ID = 1581764564
+PROJECT_BUNDLE_ID = com.app.towtrek
 PROJECT_APP_VERSION = 1.0
 PROJECT_BUILD_NUMBER = 1
 PROJECT_APP_NAME = TowTrek

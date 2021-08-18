@@ -113,7 +113,7 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        c;
+        selcetedToggle('delivery');
       }
     }
     if (toggleData?.profile?.preferences?.dinein_check == 1) {
