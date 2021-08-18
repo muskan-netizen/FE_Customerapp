@@ -22,6 +22,7 @@ import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {textScale} from '../../styles/responsiveSize';
 import stylesFun from './styles';
+import DeviceInfo from 'react-native-device-info';
 
 export default function Account({navigation}) {
   const [state, setState] = useState({
@@ -112,6 +113,12 @@ export default function Account({navigation}) {
                 fontFamily: fontFamily.bold,
               }}>
               {strings.EDITCODE}
+            </Text>
+          )}
+          customRight={() => (
+            <Text numberOfLines={2} style={{color: colors.textGreyJ, opacity: 0.6}}>
+              {`${DeviceInfo.getVersion()}`}
+              <Text>{`(${DeviceInfo.getBuildNumber()})`}</Text>
             </Text>
           )}
           // rightIcon={imagePath.cartShop}

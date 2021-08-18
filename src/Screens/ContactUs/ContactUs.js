@@ -34,7 +34,7 @@ export default function ContactUs({navigation}) {
     message: '',
     isLoading: false,
   });
-  const {message, phoneNumber, cca2, name, email, isLoading} = state;
+  const {message, phoneNumber, cca2, name, email, isLoading}   = state;
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
