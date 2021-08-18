@@ -26,11 +26,11 @@ export default function ContactUs({navigation}) {
   console.log(userData, 'userData>>>userData');
 
   const [state, setState] = useState({
-    callingCode: userData?.dial_code ? userData?.dial_code : '1',
-    cca2: userData?.cca2 ? userData?.cca2 : 'US',
-    name: userData ? userData?.name : '',
-    email: userData ? userData?.email : '',
-    phoneNumber: userData ? userData?.phone_number : '',
+    callingCode:  userData && userData?.dial_code ? userData?.dial_code : '1',
+    cca2: userData && userData?.cca2 ? userData?.cca2 : 'US',
+    name: userData && userData?.name? userData?.name : '',
+    email: userData && userData?.email? userData?.email : '',
+    phoneNumber: userData &&  userData?.phone_number? userData?.phone_number : '',
     message: '',
     isLoading: false,
   });
@@ -76,6 +76,9 @@ export default function ContactUs({navigation}) {
     if (!checkValid) {
       return;
     }
+    // else if(message==''){
+    //   return showError('Enter message')
+    // }
     let data = {
       name: name,
       email: email,
