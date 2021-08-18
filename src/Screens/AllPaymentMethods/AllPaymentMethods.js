@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {getBundleId} from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import GradientButton from '../../Components/GradientButton';
@@ -21,7 +20,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {moderateScaleVertical} from '../../styles/responsiveSize';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   showError,
@@ -265,7 +264,7 @@ export default function AllPaymentMethods({navigation, route}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          getBundleId() === appIds.capcorp
+          appData?.profile?.code === shortCodes.capcorp
             ? imagePath.backArrow
             : imagePath.back
         }

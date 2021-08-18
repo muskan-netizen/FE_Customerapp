@@ -1,46 +1,45 @@
-import {cloneDeep, update} from 'lodash';
+import {useFocusEffect} from '@react-navigation/native';
+import {cloneDeep} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
+import {Platform} from 'react-native';
 import {
+  Alert,
   FlatList,
   Image,
+  ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Alert,
-  StatusBar,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import HTMLView from 'react-native-htmlview';
 import {Pagination} from 'react-native-snap-carousel';
 import {useSelector} from 'react-redux';
 import Banner from '../../Components/Banner';
+import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
 import GradientButton from '../../Components/GradientButton';
-import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import ProductCard from '../../Components/ProductCard';
-import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
-
 import {
   height,
   moderateScale,
   moderateScaleVertical,
+  StatusBarHeight,
   textScale,
   width,
 } from '../../styles/responsiveSize';
 import {showError, showSuccess} from '../../utils/helperFunctions';
+import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-import {useFocusEffect} from '@react-navigation/native';
-import AddonModal from './AddonModal';
-import HTMLView from 'react-native-htmlview';
-import Header2 from '../../Components/Header2';
 
 export default function ProductDetail2({route, navigation}) {
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
@@ -460,13 +459,14 @@ export default function ProductDetail2({route, navigation}) {
             {'Product Variant'}
           </Text>
         </View> */}
-        <View style={{marginHorizontal: moderateScale(20), marginVertical: 10}}>
+        <View
+          style={{marginVertical: 10, paddingHorizontal: moderateScale(15)}}>
           {variantSetData.map((i, inx) => {
             return (
               <View
                 key={inx}
                 style={{
-                  rtical: moderateScaleVertical(5),
+                  marginVertical: moderateScaleVertical(5),
                 }}>
                 <Text
                   style={[
@@ -593,21 +593,80 @@ export default function ProductDetail2({route, navigation}) {
   };
 
   return (
-    <>
+    <View style={{backgroundColor: '#fff'}}>
       <StatusBar
         translucent
         backgroundColor="transparent"
         barStyle={'dark-content'}
       />
-      {isLoading && <ListEmptyProduct isLoading={isLoading} />}
+      <CustomAnimatedLoader
+        source={loaderOne}
+        loaderTitle="Loading"
+        containerColor={colors.white}
+        loadercolor={themeColors.primary_color}
+        animationStyle={[
+          {
+            height: moderateScaleVertical(40),
+            width: moderateScale(40),
+          },
+        ]}
+        visible={isLoadingC}
+      />
+      {isLoading && (
+        <View style={{marginTop: StatusBarHeight + moderateScale(30)}}>
+          <ListEmptyProduct isLoading={isLoading} />
+        </View>
+      )}
+
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          position: 'absolute',
+          zIndex: 1000,
+          width: '95%',
+          top: 40,
+          alignSelf: 'center',
+        }}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.goBack()}
+          style={{
+            backgroundColor: colors.white,
+            height: 45,
+            width: 45,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: moderateScale(11),
+            elevation: 2,
+          }}>
+          <Image source={imagePath.backArrow} />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() =>
+            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+          }
+          style={{
+            backgroundColor: colors.white,
+            height: 45,
+            width: 45,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: moderateScale(11),
+            elevation: 2,
+          }}>
+          <Image source={!!data?.showAddToCart ? false : imagePath.search} />
+        </TouchableOpacity>
+      </View>
 
       {!isLoading && (
         <>
           <View
             style={{
               alignItems: 'center',
-              height: height * 0.3,
-              backgroundColor: 'green',
+              height: Platform.OS === 'ios' ? height * 0.27 : height * 0.3,
             }}>
             <Banner
               bannerRef={bannerRef}
@@ -625,48 +684,56 @@ export default function ProductDetail2({route, navigation}) {
                 width: width,
               }}
               childView={
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    padding: 10,
-                  }}>
-                  {productDetailData?.averageRating !== null && (
-                    <View style={{alignItems: 'flex-end'}}>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          borderRadius: 18,
-                          paddingHorizontal: 12,
-                          backgroundColor: colors.orange,
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}>
-                        <Image source={imagePath.starWhite} />
-                        <Text style={styles.ratingColor}>
-                          {productDetailData?.averageRating !== null
-                            ? Number(productDetailData?.averageRating).toFixed(
-                                1,
-                              )
-                            : ''}
-                        </Text>
+                <>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      padding: 10,
+                      marginTop: 'auto',
+                      marginBottom: moderateScale(20),
+                      alignItems: 'center',
+                      marginHorizontal: moderateScale(10),
+                    }}>
+                    {productDetailData?.averageRating !== null && (
+                      <View style={{alignItems: 'flex-end'}}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            borderRadius: 18,
+                            paddingHorizontal: 12,
+                            backgroundColor: colors.orange,
+                            padding: 10,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <Image source={imagePath.starWhite} />
+                          <Text style={styles.ratingColor}>
+                            {productDetailData?.averageRating !== null
+                              ? Number(
+                                  productDetailData?.averageRating,
+                                ).toFixed(1)
+                              : ''}
+                          </Text>
+                        </View>
                       </View>
-                    </View>
-                  )}
-                </View>
+                    )}
+                    <TouchableOpacity
+                      onPress={() => _onAddtoWishlist(productDetailData)}>
+                      {productDetailData?.is_wishlist ? (
+                        <View>
+                          {!!productDetailData?.inwishlist ? (
+                            <Image source={imagePath.blackFilledHeart} />
+                          ) : (
+                            <Image source={imagePath.fav} />
+                          )}
+                        </View>
+                      ) : null}
+                    </TouchableOpacity>
+                  </View>
+                </>
               }
             />
-            <View style={{paddingTop: 5}}>
-              <Pagination
-                dotsLength={productDetailData?.product_media?.length}
-                activeDotIndex={slider1ActiveSlide}
-                dotColor={'grey'}
-                dotStyle={[styles.dotStyle]}
-                inactiveDotColor={'black'}
-                inactiveDotOpacity={0.4}
-                inactiveDotScale={0.8}
-              />
-            </View>
           </View>
 
           <View
@@ -676,19 +743,52 @@ export default function ProductDetail2({route, navigation}) {
               borderTopLeftRadius: moderateScale(20),
               borderTopRightRadius: moderateScale(20),
               marginTop: moderateScale(22),
-              paddingHorizontal: moderateScale(15),
-              paddingVertical: moderateScale(15),
             }}>
+            <Pagination
+              dotsLength={productDetailData?.product_media?.length}
+              activeDotIndex={slider1ActiveSlide}
+              dotColor={'grey'}
+              dotStyle={[styles.dotStyle]}
+              inactiveDotColor={'black'}
+              inactiveDotOpacity={0.4}
+              inactiveDotScale={0.8}
+            />
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-between',
+                marginBottom: moderateScale(10),
+                paddingHorizontal: moderateScale(15),
+                paddingTop: moderateScale(15),
               }}>
               <Text numberOfLines={2} style={styles.productName}>
                 {productDetailData?.translation[0]?.title}
               </Text>
-              <TouchableOpacity
+              {!!productTotalQuantity &&
+                !!productTotalQuantity != 0 &&
+                (!!data?.showAddToCart ? null : (
+                  <View style={{flex: 0.5, justifyContent: 'center'}}>
+                    <View style={styles.incDecBtnContainer2}>
+                      <TouchableOpacity
+                        style={{flex: 0.3, alignItems: 'center'}}
+                        onPress={() => productIncrDecreamentForCart(2)}>
+                        <Text style={styles.cartItemValueBtn2}>-</Text>
+                      </TouchableOpacity>
+                      <View style={{flex: 0.4, alignItems: 'center'}}>
+                        <Text style={styles.cartItemValue2}>
+                          {productQuantityForCart}
+                        </Text>
+                      </View>
+                      <TouchableOpacity
+                        style={{flex: 0.3, alignItems: 'center'}}
+                        onPress={() => productIncrDecreamentForCart(1)}>
+                        <Text style={styles.cartItemValueBtn2}>+</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                ))}
+              {/* <TouchableOpacity
                 onPress={() => _onAddtoWishlist(productDetailData)}>
                 {productDetailData?.is_wishlist ? (
                   <View>
@@ -699,17 +799,134 @@ export default function ProductDetail2({route, navigation}) {
                     )}
                   </View>
                 ) : null}
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
-            <Text style={styles.productPrice}>{`${
-              currencies?.primary_currency.symbol
-            }${(
-              Number(productPriceData?.multiplier) *
-              Number(productPriceData?.price)
-            ).toFixed(2)}`}</Text>
+            <ScrollView
+              style={{marginBottom: moderateScale(90)}}
+              showsVerticalScrollIndicator={false}>
+              {productDetailData?.translation[0]?.body_html != null ? (
+                <View style={{paddingHorizontal: moderateScale(15)}}>
+                  <HTMLView
+                    value={productDetailData?.translation[0]?.body_html}
+                  />
+                  <View
+                    style={{
+                      height: 2,
+                      backgroundColor: colors.lightGreyBorder,
+                    }}
+                  />
+                </View>
+              ) : null}
+              {variantSet && variantSet.length ? showAllVariants() : null}
+
+              <View
+                style={{
+                  backgroundColor: colors.white,
+                  borderRadius: moderateScale(15),
+                  paddingHorizontal: moderateScale(5),
+                  paddingVertical: moderateScaleVertical(5),
+                  marginVertical: moderateScale(10),
+                  marginHorizontal: moderateScale(15),
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: fontFamily.bold,
+                      fontSize: textScale(15),
+                    }}>
+                    Total:{' '}
+                  </Text>
+                  <Text style={styles.productPrice2}>{`${
+                    currencies?.primary_currency.symbol
+                  }${(
+                    Number(productPriceData?.multiplier) *
+                    Number(productPriceData?.price)
+                  ).toFixed(2)}`}</Text>
+                </View>
+
+                {/* Out of stock view */}
+
+                <View style={{justifyContent: 'center'}}>
+                  <Text
+                    style={{
+                      color:
+                        productTotalQuantity && productTotalQuantity != 0
+                          ? colors.green
+                          : colors.orangeB,
+                      fontSize: textScale(10),
+                      lineHeight: 20,
+                      fontFamily: fontFamily.medium,
+                      textAlign: 'center',
+                    }}>
+                    {productTotalQuantity && productTotalQuantity != 0
+                      ? ''
+                      : strings.OUT_OF_STOCK}
+                  </Text>
+                </View>
+
+                {!!productTotalQuantity &&
+                  !!productTotalQuantity != 0 &&
+                  (!!data?.showAddToCart ? null : (
+                    <View
+                      style={{
+                        marginHorizontal: moderateScale(20),
+                      }}>
+                      <GradientButton
+                        colorsArray={[
+                          themeColors.primary_color,
+                          themeColors.primary_color,
+                        ]}
+                        textStyle={styles.textStyle}
+                        onPress={addToCart}
+                        marginTop={moderateScaleVertical(10)}
+                        marginBottom={moderateScaleVertical(10)}
+                        btnText={strings.ADDTOCART}
+                      />
+                    </View>
+                  ))}
+              </View>
+              {!!relatedProducts && !!relatedProducts.length && (
+                <View
+                  style={{
+                    marginHorizontal: moderateScale(20),
+                    flexDirection: 'row',
+                  }}>
+                  <Text style={styles.relatedProducts}>
+                    {strings.YOUMAYALSO}
+                  </Text>
+                </View>
+              )}
+
+              <FlatList
+                data={(!state.isLoading && relatedProducts) || []}
+                renderItem={renderProduct}
+                keyExtractor={(item, index) => String(index)}
+                keyboardShouldPersistTaps="always"
+                showsHorizontalScrollIndicator={false}
+                style={{flex: 1, marginVertical: moderateScaleVertical(10)}}
+                contentContainerStyle={{flexGrow: 1}}
+                horizontal
+                ItemSeparatorComponent={() => <View style={{height: 20}} />}
+                ListFooterComponent={() => <View style={{height: 20}} />}
+                // ListEmptyComponent={<ListEmptyProduct isLoading={state.isLoading}/>}
+              />
+              <AddonModal
+                productdetail={productDetailData}
+                isVisible={isVisibleAddonModal}
+                onClose={() => setModalVisibleForAddonModal(false)}
+                // onPress={(data) => alert('123')}
+                addonSet={addonSet}
+                // onPress={currentLocation}
+              />
+            </ScrollView>
           </View>
         </>
       )}
-    </>
+    </View>
   );
 }

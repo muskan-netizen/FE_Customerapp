@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
-import {getBundleId} from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
@@ -17,7 +16,7 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 
 export default function SearchProductVendorItem({navigation, route}) {
   const [state, setState] = useState({
@@ -198,7 +197,7 @@ export default function SearchProductVendorItem({navigation, route}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          getBundleId() === appIds.capcorp
+          appData?.profile?.code === shortCodes.capcorp
             ? imagePath.backArrow
             : imagePath.back
         }

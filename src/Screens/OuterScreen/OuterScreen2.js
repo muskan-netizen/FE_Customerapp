@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Image, Platform, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import GradientButton from '../../Components/GradientButton';
@@ -12,6 +19,7 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {hitSlopProp} from '../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -81,7 +89,6 @@ export default function OuterScreen2({navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'res>>>SOCIAL');
         if (!!res.data) {
           !!res.data?.client_preference?.verify_email ||
           !!res.data?.client_preference?.verify_phone
@@ -189,21 +196,20 @@ export default function OuterScreen2({navigation}) {
   return (
     <WrapperContainer isLoadingB={isLoading} source={loaderOne}>
       {shortCodeStatus && (
-        <Header2
-          leftIcon={imagePath.back}
-          onPressLeft={() =>
-            // navigation.push(navigationStrings.SHORT_CODE, {
-            //   shortCodeParam: true,
-            // })
-            navigation.goBack()
-          }
+        <Header
+          leftIcon={imagePath.backArrow}
+          centerTitle={strings.CREATE_YOUR_ACCOUNT}
+          onPressLeft={() => navigation.goBack()}
           // rightIcon={imagePath.cartShop}
           headerStyle={{backgroundColor: colors.white}}
         />
       )}
 
-      <View style={{marginTop: moderateScaleVertical(100), flex: 1}}>
-        <Text style={styles.header}>{strings.CREATE_YOUR_ACCOUNT}</Text>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {!shortCodeStatus && (
+          <Text style={styles.header}>{strings.CREATE_YOUR_ACCOUNT}</Text>
+        )}
+
         <View style={{marginHorizontal: moderateScale(24)}}>
           <View style={{marginHorizontal: moderateScaleVertical(30)}}>
             <Text numberOfLines={2} style={styles.txtSmall}>
@@ -211,7 +217,7 @@ export default function OuterScreen2({navigation}) {
             </Text>
           </View>
           <GradientButton
-            containerStyle={{marginTop: moderateScaleVertical(50)}}
+            containerStyle={{marginTop: moderateScaleVertical(30)}}
             btnText={strings.CREATE_AN_ACCOUNT}
             onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
           />
@@ -355,40 +361,39 @@ export default function OuterScreen2({navigation}) {
                   </Text>
                 </TouchableOpacity>
               )}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: moderateScale(20),
+                }}>
+                <Text
+                  style={{
+                    ...styles.txtSmall,
+                    color: colors.textGreyLight,
+                    marginTop: 0,
+                  }}>
+                  {strings.ALREADY_HAVE_AN_ACCOUNT}
+                </Text>
+                <TouchableOpacity
+                  hitSlop={hitSlopProp}
+                  onPress={moveToNewScreen(navigationStrings.LOGIN)}>
+                  <Text
+                    style={{
+                      color: themeColors.primary_color,
+                      // lineHeight:24,
+                      fontFamily: fontFamily.bold,
+                    }}>
+                    {' '}
+                    {strings.LOGIN}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
-        <View style={styles.bottomContainer}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Text
-              style={{
-                ...styles.txtSmall,
-                color: colors.textGreyLight,
-                marginTop: 0,
-              }}>
-              {strings.ALREADY_HAVE_AN_ACCOUNT}
-            </Text>
-            <TouchableOpacity
-              hitSlop={hitSlopProp}
-              onPress={moveToNewScreen(navigationStrings.LOGIN)}>
-              <Text
-                style={{
-                  color: themeColors.primary_color,
-                  // lineHeight:24,
-                  fontFamily: fontFamily.bold,
-                }}>
-                {' '}
-                {strings.LOGIN}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+      </ScrollView>
     </WrapperContainer>
   );
 }

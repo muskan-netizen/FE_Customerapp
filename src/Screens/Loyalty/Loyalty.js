@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {getBundleId} from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
@@ -23,7 +22,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   showError,
@@ -145,7 +144,7 @@ export default function Loyalty({navigation}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          getBundleId() === appIds.capcorp
+          appData?.profile?.code === shortCodes.capcorp
             ? imagePath.backArrow
             : imagePath.back
         }

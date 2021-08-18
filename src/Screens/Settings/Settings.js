@@ -1,7 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {I18nManager, Text, View} from 'react-native';
-import {getBundleId} from 'react-native-device-info';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RNRestart from 'react-native-restart'; // Import package from node modules
 import {useSelector} from 'react-redux';
@@ -18,7 +17,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {setItem} from '../../utils/utils';
 import stylesFunc from './styles';
 
@@ -127,7 +126,7 @@ export default function Settings({route, navigation}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          getBundleId() === appIds.capcorp
+          appData?.profile?.code === shortCodes.capcorp
             ? imagePath.backArrow
             : imagePath.back
         }

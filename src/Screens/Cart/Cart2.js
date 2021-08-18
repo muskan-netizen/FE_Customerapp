@@ -4,27 +4,25 @@ import React, {useEffect, useState} from 'react';
 import {
   Alert,
   FlatList,
+  I18nManager,
   Image,
   RefreshControl,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  I18nManager,
   View,
 } from 'react-native';
 import DashedLine from 'react-native-dashed-line';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
-import AddressModal from '../../Components/AddressModal';
 import AddressModal2 from '../../Components/AddressModal2';
 import ButtonComponent from '../../Components/ButtonComponent';
 import ChooseAddressModal from '../../Components/ChooseAddressModal';
 import ConfirmationModal from '../../Components/ConfirmationModal';
 import Header from '../../Components/Header';
-import Header2 from '../../Components/Header2';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -39,7 +37,7 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -1106,7 +1104,7 @@ export default function Cart2({navigation, route}) {
       isLoadingB={isLoadingB}>
       <Header
         leftIcon={
-          getBundleId() === appIds.capcorp
+          appData?.profile?.code === shortCodes.capcorp
             ? imagePath.backArrow
             : imagePath.back
         }
@@ -1228,7 +1226,7 @@ export function stylesFunc({fontFamily, themeColors}) {
       borderRadius: moderateScale(15),
       backgroundColor: colors.borderColorD,
       marginVertical: moderateScaleVertical(10),
-      padding: moderateScale(5),
+      padding: moderateScale(10),
     },
     totalTxts: {
       color: colors.black,

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {ScrollView, Text, View} from 'react-native';
-import {getBundleId} from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -12,7 +11,7 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import stylesFun from './styles';
 
 export default function AboutUs({navigation}) {
@@ -33,7 +32,7 @@ export default function AboutUs({navigation}) {
     <WrapperContainer bgColor={colors.white} statusBarColor={colors.white}>
       <Header
         leftIcon={
-          getBundleId() === appIds.capcorp
+          appData?.profile?.code === shortCodes.capcorp
             ? imagePath.backArrow
             : imagePath.back
         }

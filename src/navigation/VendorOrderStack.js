@@ -1,6 +1,6 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {getBundleId} from 'react-native-device-info';
+import {useSelector} from 'react-redux';
 import {
   OrderDetail,
   ProductDetail,
@@ -8,11 +8,13 @@ import {
   VendorList,
   VendorOrders,
 } from '../Screens';
-import {appIds} from '../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
+  const {appData} = useSelector((state) => state?.initBoot);
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -33,7 +35,9 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={
-          getBundleId() === appIds.capcorp ? ProductDetail2 : ProductDetail
+          appData?.profile?.code === shortCodes.capcorp
+            ? ProductDetail2
+            : ProductDetail
         }
         options={{headerShown: false}}
       />

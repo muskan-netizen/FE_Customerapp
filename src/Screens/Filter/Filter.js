@@ -2,7 +2,6 @@ import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {cloneDeep} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {I18nManager, Image, ScrollView, Text, View} from 'react-native';
-import {getBundleId} from 'react-native-device-info';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
@@ -18,11 +17,13 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import stylesFunc from './styles';
 
 export default function Filter({route, navigation}) {
-  const {themeColors, appStyle} = useSelector((state) => state?.initBoot);
+  const {themeColors, appStyle, appData} = useSelector(
+    (state) => state?.initBoot,
+  );
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
@@ -384,7 +385,7 @@ export default function Filter({route, navigation}) {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Image
                 source={
-                  getBundleId() === appIds.capcorp
+                  appData?.profile?.code === shortCodes.capcorp
                     ? imagePath.backArrow
                     : imagePath.back
                 }

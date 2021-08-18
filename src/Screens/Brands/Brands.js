@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, View} from 'react-native';
-import {getBundleId} from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import BrandCard from '../../Components/BrandCard';
 import Header from '../../Components/Header';
@@ -10,7 +9,7 @@ import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import colors from '../../styles/colors';
 import {moderateScaleVertical} from '../../styles/responsiveSize';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import ListEmptyBrands from './ListEmptyBrands';
 
 export default function Brand({navigation}) {
@@ -33,13 +32,12 @@ export default function Brand({navigation}) {
 
   const {isLoading} = state;
   //Redux store data
-  const {appStyle} = useSelector((state) => state.initBoot);
+  const {appStyle, appData} = useSelector((state) => state.initBoot);
   const homePageLayout = appStyle?.homePageLayout;
   const appMainData = useSelector((state) => state?.home?.appMainData);
 
   //Brand data
   const _renderItem = ({item, index}) => {
-    console.log(item, 'item>>>');
     return (
       <BrandCard
         data={item}
@@ -54,7 +52,7 @@ export default function Brand({navigation}) {
       <Header
         centerTitle={strings.BRANDS}
         leftIcon={
-          getBundleId() === appIds.capcorp
+          appData?.profile?.code === shortCodes.capcorp
             ? imagePath.backArrow
             : imagePath.back
         }

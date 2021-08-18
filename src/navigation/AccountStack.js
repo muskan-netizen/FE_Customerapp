@@ -1,58 +1,63 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {getBundleId} from 'react-native-device-info';
+import {useSelector} from 'react-redux';
 import {
   AboutUs,
   Account,
+  Account2,
+  AddMoney,
+  BrandProducts,
+  BuyProduct,
+  CMSLinks,
   ContactUs,
+  Delivery,
+  Loyalty,
   MyOrders,
   MyProfile,
+  MyProfile2,
   Notifications,
   OrderDetail,
+  PickupOrderDetail,
   ProductDetail,
-  Settings,
-  Wishlist,
-  Wallet,
-  AddMoney,
-  Tracking,
-  TrackDetail,
-  SearchProductVendorItem,
-  BrandProducts,
-  SendProduct,
-  BuyProduct,
-  Vendors,
-  Delivery,
+  ProductDetail2,
   ProductList,
+  ProductList2,
   RateOrder,
+  SearchProductVendorItem,
+  SendProduct,
   SendRefferal,
-  CMSLinks,
+  Settings,
+  Subscriptions,
+  TrackDetail,
+  Tracking,
+  Vendors,
+  Vendors2,
+  Wallet,
   WebLinks,
   WebPayment,
-  PickupOrderDetail,
   WebviewScreen,
-  Subscriptions,
-  Loyalty,
-  Vendors2,
-  ProductList2,
-  ProductDetail2,
-  MyProfile2,
-  Account2,
+  Wishlist,
 } from '../Screens';
-import {appIds} from '../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
+  const {appData} = useSelector((state) => state?.initBoot);
   return (
     <Stack.Navigator>
       <Stack.Screen
-        component={getBundleId() === appIds.capcorp ? Account2 : Account}
+        component={
+          appData?.profile?.code === shortCodes.capcorp ? Account2 : Account
+        }
         name={navigationStrings.ACCOUNTS}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.MY_PROFILE}
-        component={getBundleId() === appIds.capcorp ? MyProfile2 : MyProfile}
+        component={
+          appData?.profile?.code === shortCodes.capcorp ? MyProfile2 : MyProfile
+        }
         options={{headerShown: false}}
       />
 
@@ -106,7 +111,9 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={
-          getBundleId() === appIds.capcorp ? ProductDetail2 : ProductDetail
+          appData?.profile?.code === shortCodes.capcorp
+            ? ProductDetail2
+            : ProductDetail
         }
         options={{headerShown: false}}
       />
@@ -148,7 +155,9 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.VENDOR}
-        component={getBundleId() === appIds.capcorp ? Vendors2 : Vendors}
+        component={
+          appData?.profile?.code === shortCodes.capcorp ? Vendors2 : Vendors
+        }
         options={{headerShown: false}}
       />
 
@@ -161,7 +170,9 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
         component={
-          getBundleId() === appIds.capcorp ? ProductList2 : ProductList
+          appData?.profile?.code === shortCodes.capcorp
+            ? ProductList2
+            : ProductList
         }
         options={{headerShown: false}}
       />

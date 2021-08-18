@@ -1,40 +1,47 @@
 import React from 'react';
-import {getBundleId} from 'react-native-device-info';
+import {useSelector} from 'react-redux';
 import {
+  ForgotPassword2,
   Location,
   Login,
   OtpVerification,
   OuterScreen,
-  Signup,
-  VerifyAccount,
-  ResetPassword,
   OuterScreen2,
+  ResetPassword,
+  Signup,
   Signup2,
+  VerifyAccount,
 } from '../Screens';
 import ForgotPassword from '../Screens/ForgotPassword/ForgotPassword';
 import Login2 from '../Screens/Login/Login2';
-import ShortCode from '../Screens/ShortCode/ShortCode';
-import {appIds} from '../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
 export default function (Stack) {
+  const {appData} = useSelector((state) => state?.initBoot);
   return (
     <>
       <Stack.Screen
         name={navigationStrings.OUTER_SCREEN}
         component={
-          getBundleId() === appIds.capcorp ? OuterScreen2 : OuterScreen
+          appData?.profile?.code === shortCodes.capcorp
+            ? OuterScreen2
+            : OuterScreen
         }
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.SIGN_UP}
-        component={getBundleId() === appIds.capcorp ? Signup2 : Signup}
+        component={
+          appData?.profile?.code === shortCodes.capcorp ? Signup2 : Signup
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.LOGIN}
-        component={getBundleId() === appIds.capcorp ? Login2 : Login}
+        component={
+          appData?.profile?.code === shortCodes.capcorp ? Login2 : Login
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -49,7 +56,11 @@ export default function (Stack) {
       />
       <Stack.Screen
         name={navigationStrings.FORGOT_PASSWORD}
-        component={ForgotPassword}
+        component={
+          appData?.profile?.code === shortCodes.capcorp
+            ? ForgotPassword2
+            : ForgotPassword
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen

@@ -65,6 +65,13 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
       lineHeight: 28,
       fontFamily: fontFamily.bold,
     },
+    productPrice2: {
+      color: colors.orangeB,
+      fontSize: textScale(18),
+      lineHeight: 28,
+      fontFamily: fontFamily.bold,
+      textAlign: 'center',
+    },
     descriptiontitle: {
       color: colors.textGrey,
       fontSize: textScale(16),
@@ -201,6 +208,13 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
       justifyContent: 'space-evenly',
       paddingVertical: moderateScaleVertical(3),
     },
+    incDecBtnContainer2: {
+      borderRadius: moderateScale(5),
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      borderWidth: 0.5,
+      borderColor: themeColors.primary_color,
+    },
     cartItemValueBtn: {
       fontFamily: fontFamily.bold,
       fontSize: moderateScale(20),
@@ -212,9 +226,15 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
       color: colors.white,
       marginTop: moderateScaleVertical(5),
     },
-    cartItemValueBtn: {
+    cartItemValue2: {
+      fontFamily: fontFamily.bold,
+      fontSize: moderateScale(14),
+      color: themeColors.primary_color,
+      marginTop: moderateScaleVertical(5),
+    },
+    cartItemValueBtn2: {
       fontFamily: fontFamily.bold,
       fontSize: moderateScale(20),
-      color: colors.white,
+      color: themeColors.primary_color,
     },
   });

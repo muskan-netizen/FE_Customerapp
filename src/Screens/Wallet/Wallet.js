@@ -3,7 +3,6 @@ import {debounce} from 'lodash';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 import {FlatList, RefreshControl, Text, View} from 'react-native';
-import {getBundleId} from 'react-native-device-info';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import HTMLView from 'react-native-htmlview';
 import {useSelector} from 'react-redux';
@@ -17,7 +16,7 @@ import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {moderateScaleVertical} from '../../styles/responsiveSize';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import stylesFun from './styles';
 
 export default function Wallet({navigation}) {
@@ -139,7 +138,7 @@ export default function Wallet({navigation}) {
       statusBarColor={colors.white}>
       <Header
         leftIcon={
-          getBundleId() === appIds.capcorp
+          appData?.profile?.code === shortCodes.capcorp
             ? imagePath.backArrow
             : imagePath.back
         }

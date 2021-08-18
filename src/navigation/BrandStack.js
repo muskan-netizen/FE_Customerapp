@@ -1,26 +1,27 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {getBundleId} from 'react-native-device-info';
+import {useSelector} from 'react-redux';
 import {
   BrandProducts,
   Brands,
+  BuyProduct,
+  Delivery,
   Filter,
   ProductDetail,
+  ProductDetail2,
+  ProductList,
+  ProductList2,
   SearchProductVendorItem,
   SendProduct,
-  BuyProduct,
   Vendors,
-  Delivery,
-  ProductList,
   Vendors2,
-  ProductList2,
-  ProductDetail2,
 } from '../Screens';
-import {appIds} from '../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
+  const {appData} = useSelector((state) => state?.initBoot);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -36,7 +37,9 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={
-          getBundleId() === appIds.capcorp ? ProductDetail2 : ProductDetail
+          appData?.profile?.code === shortCodes.capcorp
+            ? ProductDetail2
+            : ProductDetail
         }
         options={{headerShown: false}}
       />
@@ -65,7 +68,9 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.VENDOR}
-        component={getBundleId() === appIds.capcorp ? Vendors2 : Vendors}
+        component={
+          appData?.profile?.code === shortCodes.capcorp ? Vendors2 : Vendors
+        }
         options={{headerShown: false}}
       />
 
@@ -78,7 +83,9 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
         component={
-          getBundleId() === appIds.capcorp ? ProductList2 : ProductList
+          appData?.profile?.code === shortCodes.capcorp
+            ? ProductList2
+            : ProductList
         }
         options={{headerShown: false}}
       />

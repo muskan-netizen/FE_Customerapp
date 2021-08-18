@@ -71,3 +71,4 @@ export {default as OuterScreen2} from './OuterScreen/OuterScreen2';
 export {default as Signup2} from './Signup/Signup2';
 export {default as MyProfile2} from './MyProfile/MyProfile2';
 export {default as Account2} from './Account/Account2';
+export {default as ForgotPassword2} from './ForgotPassword/ForgotPassword2';

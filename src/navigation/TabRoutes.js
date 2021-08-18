@@ -1,28 +1,25 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {Image, Text, StyleSheet} from 'react-native';
+import {Image, StyleSheet, Text} from 'react-native';
+import {View} from 'react-native-animatable';
+import {useSelector} from 'react-redux';
 import CustomBottomTabBar from '../Components/CustomBottomTabBar';
-import CustomBottomTabBarTwo from '../Components/CustomBottomTabBarTwo';
+import CustomBottomTabBar1 from '../Components/CustomBottomTabBar1';
 import CustomBottomTabBarThree from '../Components/CustomBottomTabBarThree';
-
+import CustomBottomTabBarTwo from '../Components/CustomBottomTabBarTwo';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
-import {useSelector} from 'react-redux';
-import {Cart} from '../Screens';
+import staticStrings from '../constants/staticStrings';
 import colors from '../styles/colors';
 import {moderateScale, textScale} from '../styles/responsiveSize';
+import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import AccountStack from './AccountStack';
 import BrandStack from './BrandStack';
+import CartStack from './CartStack';
 import CelebrityStack from './CelebrityStack';
 import HomeStack from './HomeStack';
-import CartStack from './CartStack';
 import navigationStrings from './navigationStrings';
-import {View} from 'react-native-animatable';
-import staticStrings from '../constants/staticStrings';
-import CustomTopTabBar from '../Components/CustomTopTabBar';
-import CustomBottomTabBar1 from '../Components/CustomBottomTabBar1';
-import {getBuildId, getBundleId} from 'react-native-device-info';
-import {appIds} from '../utils/constants/DynamicAppKeys';
+
 const Tab = createBottomTabNavigator();
 
 export default function TabRoutes(props) {
@@ -64,7 +61,7 @@ export default function TabRoutes(props) {
   }
   // capcorp
 
-  if (getBundleId() !== appIds.capcorp) {
+  if (appData?.profile?.code !== shortCodes.capcorp) {
     if (checkForBrand) {
       brandTab = (
         <Tab.Screen
@@ -91,7 +88,7 @@ export default function TabRoutes(props) {
       tabBar={(props) => {
         switch (appStyle?.tabBarLayout) {
           case 1:
-            return getBundleId() === appIds.capcorp ? (
+            return appData?.profile?.code === shortCodes.capcorp ? (
               <CustomBottomTabBar1 {...props} />
             ) : (
               <CustomBottomTabBar {...props} />
@@ -123,7 +120,7 @@ export default function TabRoutes(props) {
             <Image
               style={{tintColor: tintColor}}
               source={
-                getBundleId() === appIds.capcorp
+                appData?.profile?.code === shortCodes.capcorp
                   ? focused
                     ? imagePath.homeActive
                     : imagePath.homeInActive
@@ -153,7 +150,7 @@ export default function TabRoutes(props) {
               <Image
                 style={{tintColor: tintColor}}
                 source={
-                  getBundleId() === appIds.capcorp
+                  appData?.profile?.code === shortCodes.capcorp
                     ? focused
                       ? imagePath.ordersActive
                       : imagePath.ordersInActive
@@ -178,7 +175,7 @@ export default function TabRoutes(props) {
             <Image
               style={{tintColor: tintColor}}
               source={
-                getBundleId() === appIds.capcorp
+                appData?.profile?.code === shortCodes.capcorp
                   ? focused
                     ? imagePath.profileActive
                     : imagePath.profileInActive

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Image, Text, View} from 'react-native';
-import {getBundleId} from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 import GradientButton from '../../Components/GradientButton';
@@ -11,12 +10,12 @@ import strings from '../../constants/lang/index';
 import navigationStrings from '../../navigation/navigationStrings';
 import colors from '../../styles/colors';
 import {moderateScaleVertical} from '../../styles/responsiveSize';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
 import stylesFun from './styles';
 export default function BuyProduct({navigation}) {
   const currentTheme = useSelector((state) => state.appTheme);
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle, appData} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily});
@@ -98,7 +97,7 @@ export default function BuyProduct({navigation}) {
       statusBarColor={colors.backgroundGrey}>
       <Header
         leftIcon={
-          getBundleId() === appIds.capcorp
+          appData?.profile?.code === shortCodes.capcorp
             ? imagePath.backArrow
             : imagePath.back
         }

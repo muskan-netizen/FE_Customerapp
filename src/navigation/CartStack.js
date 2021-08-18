@@ -1,6 +1,6 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {getBundleId} from 'react-native-device-info';
+import {useSelector} from 'react-redux';
 import {
   AllPaymentMethods,
   Cart,
@@ -11,16 +11,18 @@ import {
   WebPayment,
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
-import {appIds} from '../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
+  const {appData} = useSelector((state) => state?.initBoot);
+
   return (
     <Stack.Navigator>
       <Stack.Screen
         name={navigationStrings.CART}
-        component={getBundleId() === appIds.capcorp ? Cart2 : Cart}
+        component={appData?.profile?.code === shortCodes.capcorp ? Cart2 : Cart}
         options={{headerShown: false}}
       />
 

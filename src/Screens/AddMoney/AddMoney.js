@@ -8,6 +8,7 @@ import {
 } from '@stripe/stripe-react-native';
 import React, {useEffect, useState} from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   Keyboard,
@@ -16,9 +17,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  Alert,
 } from 'react-native';
-import {getBundleId} from 'react-native-device-info';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
 import GradientButton from '../../Components/GradientButton';
@@ -36,7 +35,7 @@ import {
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
 import stylesFun from './styles';
 
@@ -464,7 +463,7 @@ export default function AddMoney({navigation}) {
       source={loaderOne}>
       <Header
         leftIcon={
-          getBundleId() === appIds.capcorp
+          appData?.profile?.code === shortCodes.capcorp
             ? imagePath.backArrow
             : imagePath.back
         }

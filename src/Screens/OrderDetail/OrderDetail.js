@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
@@ -27,7 +26,7 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {getImageUrl, showError} from '../../utils/helperFunctions';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
@@ -573,7 +572,7 @@ export default function OrderDetail({navigation, route}) {
       isLoadingB={isLoading}>
       <HeaderWithFilters
         leftIcon={
-          getBundleId() === appIds.capcorp
+          appData?.profile?.code === shortCodes.capcorp
             ? imagePath.backArrow
             : imagePath.back
         }

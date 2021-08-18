@@ -6,9 +6,9 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
-import { getColorCodeWithOpactiyNumber } from '../../utils/helperFunctions';
+import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
 
-export default ({fontFamily,themeColors}) => {
+export default ({fontFamily, themeColors}) => {
   const commonStyles = commonStylesFunc({fontFamily});
   const styles = StyleSheet.create({
     header: {
@@ -48,7 +48,7 @@ export default ({fontFamily,themeColors}) => {
     },
     guestBtn: {
       marginTop: moderateScaleVertical(20),
-      backgroundColor:  getColorCodeWithOpactiyNumber(
+      backgroundColor: getColorCodeWithOpactiyNumber(
         themeColors.primary_color.substr(1),
         20,
       ),

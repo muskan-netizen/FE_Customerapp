@@ -1,5 +1,5 @@
 import React from 'react';
-import {getBundleId} from 'react-native-device-info';
+import {useSelector} from 'react-redux';
 import {
   AboutUs,
   BrandProducts,
@@ -27,11 +27,13 @@ import {
   Vendors,
   Vendors2,
 } from '../Screens';
-import {appIds} from '../utils/constants/DynamicAppKeys';
+import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 import TabRoutes from './TabRoutes';
 
 export default function (Stack) {
+  const {appData} = useSelector((state) => state?.initBoot);
+
   return (
     <>
       <Stack.Screen
@@ -51,7 +53,9 @@ export default function (Stack) {
       />
       <Stack.Screen
         name={navigationStrings.VENDOR}
-        component={getBundleId() === appIds.capcorp ? Vendors2 : Vendors}
+        component={
+          appData?.profile?.code === shortCodes.capcorp ? Vendors2 : Vendors
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -62,13 +66,17 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
         component={
-          getBundleId() === appIds.capcorp ? ProductList2 : ProductList
+          appData?.profile?.code === shortCodes.capcorp
+            ? ProductList2
+            : ProductList
         }
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.MY_PROFILE}
-        component={getBundleId() === appIds.capcorp ? MyProfile2 : MyProfile}
+        component={
+          appData?.profile?.code === shortCodes.capcorp ? MyProfile2 : MyProfile
+        }
         options={{headerShown: false}}
       />
 
@@ -126,7 +134,9 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={
-          getBundleId() === appIds.capcorp ? ProductDetail2 : ProductDetail
+          appData?.profile?.code === shortCodes.capcorp
+            ? ProductDetail2
+            : ProductDetail
         }
         options={{headerShown: false}}
       />
