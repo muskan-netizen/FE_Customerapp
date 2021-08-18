@@ -102,12 +102,17 @@ export default function DashBoardOne({
           containerStyle={{marginHorizontal: moderateScale(10)}}
         />
       )}
-      {!isLoading && appData && appData.banners && appData.banners.length ? (
+      {!!(
+        !isLoading &&
+        appData &&
+        appData?.banners &&
+        appData.banners.length
+      ) && (
         <>
           <BannerHome
             bannerRef={bannerRef}
             slider1ActiveSlide={slider1ActiveSlide}
-            bannerData={appData.banners}
+            bannerData={appData?.banners}
             sliderWidth={sliderWidth}
             itemWidth={itemWidth}
             onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
@@ -115,7 +120,7 @@ export default function DashBoardOne({
           />
           <View style={{height: moderateScaleVertical(5)}} />
         </>
-      ) : null}
+      )}
 
       <ToggleTabBar toggleData={toggleData} selcetedToggle={selcetedToggle} />
 
@@ -124,7 +129,7 @@ export default function DashBoardOne({
       appMainData &&
       appMainData?.categories &&
       appMainData?.categories.length ? (
-        <View style={{paddingHorizontal: moderateScale(5)}}>
+        <View>
           <BrickList
             data={newCategoryData}
             renderItem={(prop) => renderView(prop)}

@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "643531318809",
+    "project_id": "housekeeper-f921b",
+    "storage_bucket": "housekeeper-f921b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643531318809:android:8b3cc8d6b1c979f6472c88",
+        "android_client_info": {
+          "package_name": "com.housekeeper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "643531318809-42focemfum51ok327hpe64e92o536ejr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.housekeeper",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "643531318809-rhnhtmnpmvitb9ppgoeb2qi2vb8ute6k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.housekeeper",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "643531318809-s87t98fb8ku45j0ge08t1id6tq5q213n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.housekeeper",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "643531318809-35chdjvkec8k2sqprs9uqvlf84naula5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfHYTkdk85Dswrd8Jisrxc1AHvoDolWoc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "643531318809-35chdjvkec8k2sqprs9uqvlf84naula5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "643531318809-ravqqndrffv6lqe79qr431ee2f86plkl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.housekeeper"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

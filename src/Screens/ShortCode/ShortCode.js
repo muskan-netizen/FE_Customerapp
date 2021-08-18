@@ -247,9 +247,9 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-        case appIds.foodkart:
+        case appIds.yummiidash:
           updateState({
-            shortCode: shortCodes.foodkart,
+            shortCode: shortCodes.yummiidash,
             isShortcodePrefilled: true,
           });
           break;
@@ -354,6 +354,64 @@ export default function ShortCode({route, navigation}) {
         case appIds.africanize:
           updateState({
             shortCode: shortCodes.africanize,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.markita:
+          updateState({
+            shortCode: shortCodes.markita,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sirvu:
+          updateState({
+            shortCode: shortCodes.sirvu,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.ublue:
+          updateState({
+            shortCode: shortCodes.ublue,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mstechy:
+          updateState({
+            shortCode: shortCodes.mstechy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.senshive:
+          updateState({
+            shortCode: shortCodes.senshive,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ridemate:
+          updateState({
+            shortCode: shortCodes.ridemate,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.codiner:
+          updateState({
+            shortCode: shortCodes.codiner,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.housekeeper:
+          updateState({
+            shortCode: shortCodes.housekeeper,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hairstonexpress:
+          updateState({
+            shortCode: shortCodes.hairstonexpress,
             isShortcodePrefilled: true,
           });
           break;
