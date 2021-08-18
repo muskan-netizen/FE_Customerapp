@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -26,15 +26,15 @@ export default function ContactUs({navigation}) {
   console.log(userData, 'userData>>>userData');
 
   const [state, setState] = useState({
-    callingCode: userData?.dial_code?userData?.dial_code:'1',
+    callingCode: userData?.dial_code ? userData?.dial_code : '1',
     cca2: userData?.cca2 ? userData?.cca2 : 'US',
     name: userData ? userData?.name : '',
     email: userData ? userData?.email : '',
     phoneNumber: userData ? userData?.phone_number : '',
     message: '',
-    isLoading:false
+    isLoading: false,
   });
-  const {message, phoneNumber, cca2, name, email,isLoading} = state;
+  const {message, phoneNumber, cca2, name, email, isLoading} = state;
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -83,7 +83,7 @@ export default function ContactUs({navigation}) {
       message: message,
     };
 
-    console.log(data,"data>>contactus")
+    console.log(data, 'data>>contactus');
     updateState({
       isLoading: true,
     });
@@ -97,7 +97,7 @@ export default function ContactUs({navigation}) {
           isLoading: false,
         });
         showSuccess(res?.message);
-        navigation.goBack()
+        navigation.goBack();
       })
       .catch((err) => {
         console.log(err, 'err>>>');
@@ -161,8 +161,11 @@ export default function ContactUs({navigation}) {
   };
 
   return (
-    <WrapperContainer bgColor={colors.white} statusBarColor={colors.white}     source={loaderOne}
-    isLoadingB={isLoading}>
+    <WrapperContainer
+      bgColor={colors.white}
+      statusBarColor={colors.white}
+      source={loaderOne}
+      isLoadingB={isLoading}>
       <Header
         leftIcon={imagePath.back}
         centerTitle={strings.CONTACT_USS}

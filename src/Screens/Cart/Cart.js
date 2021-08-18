@@ -1245,11 +1245,11 @@ export default function Cart({navigation, route}) {
         setTimeout(() => {
           let address = res.data;
           address['is_primary'] = 1;
-          actions.saveAddress(address);
+          // actions.saveAddress(address);
           updateState({
             selectedAddress: address,
           });
-        }, 1000);
+        }, 500);
 
         showSuccess(res.message);
       })
