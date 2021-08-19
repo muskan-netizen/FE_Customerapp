@@ -725,6 +725,16 @@ android {
             applicationId 'com.hairstonexpress'
             resValue "string", "app_name", "Hairston Express"
          }
+
+         diamonddashers{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.diamonddashers'
+            resValue "string", "app_name", "Diamond Dashers"
+         }
     }
 }
 

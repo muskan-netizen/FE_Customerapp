@@ -58,6 +58,7 @@ const shortCodes = {
   codiner: 'd46808',
   housekeeper: 'd8b741',
   hairstonexpress: 'a64f8a',
+  diamonddashers: '015a80',
 };
 
 const appIds = {
@@ -288,6 +289,10 @@ const appIds = {
   hairstonexpress: Platform.select({
     ios: 'com.hairstonexpress',
     android: 'com.hairstonexpress',
+  }),
+  diamonddashers: Platform.select({
+    ios: 'com.diamonddashers',
+    android: 'com.diamonddashers',
   }),
 };
 

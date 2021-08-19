@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "154159799344",
+    "project_id": "diamond-dashers",
+    "storage_bucket": "diamond-dashers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154159799344:android:e8047297e491a6c04ee1f5",
+        "android_client_info": {
+          "package_name": "com.diamonddashers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "154159799344-6sculkbaijqgj63ntdnsqikcp3j42jho.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diamonddashers",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "154159799344-j17nnib5cmemptt95tpmkpivhe7kkep4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diamonddashers",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "154159799344-r06p8q7bk0o616o2lmtb2mjm86qcq3me.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diamonddashers",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "154159799344-36u8507rrajd44oh0n9mai0unb4irv4s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-01Ru8o3kI7irWbjXM7OKDDMaFUuY6Hc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "154159799344-36u8507rrajd44oh0n9mai0unb4irv4s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "154159799344-j4fetcl3b5oca0dvhhf9don454di5nif.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.diamonddashers"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
