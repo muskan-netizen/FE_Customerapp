@@ -105,7 +105,7 @@ export default function ProductCard2({
           dashLength={5}
           dashThickness={1}
           dashGap={2}
-          dashColor={colors.textGrey}
+          dashColor={colors.greyLight}
           style={{marginTop: moderateScale(7)}}
         />
       </View>

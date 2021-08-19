@@ -59,9 +59,10 @@ export default function MarketCard2({
             dashColor={colors.borderColorD}
           />
         </View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Image style={{tintColor: colors.black}} source={imagePath.star} />
-          {!data?.product_avg_average_rating && (
+        {data?.product_avg_average_rating && (
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Image style={{tintColor: colors.black}} source={imagePath.star} />
+
             <Text
               style={{
                 color: colors.blackC,
@@ -71,8 +72,8 @@ export default function MarketCard2({
               }}>
               {Number(data?.product_avg_average_rating).toFixed(1)}
             </Text>
-          )}
-        </View>
+          </View>
+        )}
       </View>
       <FastImage
         style={{

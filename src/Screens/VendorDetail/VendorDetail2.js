@@ -227,7 +227,7 @@ export default function VendorDetail2({navigation, route}) {
                 marginRight: moderateScale(70),
               }}>
               <View style={{flexDirection: 'column'}}>
-                {!vendorParams?.item?.product_avg_average_rating && (
+                {vendorParams?.item?.product_avg_average_rating && (
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <Image
                       source={imagePath.starWhite}
