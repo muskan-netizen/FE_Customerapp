@@ -1,25 +1,18 @@
-import {cloneDeep, debounce} from 'lodash';
-import React, {createRef, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
-  RefreshControl,
-  View,
-  Text,
   Image,
   ImageBackground,
+  Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-
-import CustomTopTabBar from '../../Components/CustomTopTabBar';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import OrderCardVendorComponent from '../../Components/OrderCardVendorComponent';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
-import staticStrings from '../../constants/staticStrings';
-import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
@@ -29,6 +22,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   showError,
@@ -152,7 +146,11 @@ export default function Loyalty({navigation}) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.LOYALTYPOINTS}
         headerStyle={{backgroundColor: colors.white}}
       />
@@ -265,7 +263,6 @@ export default function Loyalty({navigation}) {
           </View>
         ) : null}
       </View>
-
       <View style={{marginHorizontal: moderateScale(20), flex: 1}}>
         {upcomingLoyalty?.length ? (
           <View style={{marginBottom: 20}}>

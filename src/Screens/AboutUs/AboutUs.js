@@ -11,6 +11,7 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import stylesFun from './styles';
 
 export default function AboutUs({navigation}) {
@@ -30,7 +31,11 @@ export default function AboutUs({navigation}) {
   return (
     <WrapperContainer bgColor={colors.white} statusBarColor={colors.white}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.ABOUT_US}
         // rightIcon={imagePath.cartShop}
         headerStyle={{backgroundColor: colors.white}}

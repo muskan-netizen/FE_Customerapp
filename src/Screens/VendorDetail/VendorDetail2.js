@@ -24,6 +24,7 @@ import {getImageUrl, showError} from '../../utils/helperFunctions';
 export default function VendorDetail2({navigation, route}) {
   let vendorParams = route?.params?.data;
   console.log(vendorParams, 'VendorDetail params');
+  const userData = useSelector((state) => state?.auth?.userData);
 
   const [state, setState] = useState({
     vendorId: vendorParams?.item?.id,
@@ -110,7 +111,6 @@ export default function VendorDetail2({navigation, route}) {
           // }
           updateState({vendorData: newArray});
         }
-        console.log(res, 'Vendor data response');
       })
       .catch(errorMethod);
   };
@@ -118,24 +118,26 @@ export default function VendorDetail2({navigation, route}) {
   /********* */
 
   const errorMethod = (error) => {
-    console.log(error, 'Error>>>>>');
     updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
     showError(error?.message || error?.error);
   };
 
   const _renderItem = ({item, index}) => {
-    console.log(item, 'vendorDatavendorData');
-
     return (
       <ThreeColumnCard2
-        onPress={moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-          id: item.id,
-          rootProducts: vendorParams?.rootProducts,
-          // vendor: true,
-          // rootProducts:
-          name: item.name,
-        })}
-        // onPress={() => navigation.navigate(navigationStrings.PRODUCT_LIST)}
+        onPress={
+          item.name === 'Pick & Drop'
+            ? userData?.auth_token
+              ? moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)
+              : moveToNewScreen(navigationStrings.OUTER_SCREEN, {})
+            : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+                id: item.id,
+                rootProducts: vendorParams?.rootProducts,
+                // vendor: true,
+                // rootProducts:
+                name: item.name,
+              })
+        }
         data={item}
         withTextBG
         cardIndex={index}

@@ -18,6 +18,7 @@ export default function Header2({
   onPressLeft,
   leftIcon,
   rightIcon,
+  headerContainerStyle = {},
 }) {
   const {appStyle} = useSelector((state) => state?.initBoot);
 
@@ -25,7 +26,13 @@ export default function Header2({
   const styles = stylesFunc({fontFamily});
   const navigation = useNavigation();
   return (
-    <View style={styles.headerContainer}>
+    <View
+      style={{
+        height: StatusBarHeight,
+        alignItems: 'center',
+        flexDirection: 'row',
+        ...headerContainerStyle,
+      }}>
       <View
         style={{
           flexDirection: 'row',
@@ -70,11 +77,6 @@ export default function Header2({
 
 export function stylesFunc({fontFamily}) {
   const styles = StyleSheet.create({
-    headerContainer: {
-      height: StatusBarHeight,
-      alignItems: 'center',
-      flexDirection: 'row',
-    },
     leftIcon: {
       height: moderateScaleVertical(25),
       width: moderateScaleVertical(20),

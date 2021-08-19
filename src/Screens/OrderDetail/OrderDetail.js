@@ -26,6 +26,7 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {getImageUrl, showError} from '../../utils/helperFunctions';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
@@ -570,7 +571,11 @@ export default function OrderDetail({navigation, route}) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <HeaderWithFilters
-        leftIcon={imagePath.back}
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.ORDER_DET}
       />
       <View style={{height: 1, backgroundColor: colors.borderLight}} />

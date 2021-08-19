@@ -17,6 +17,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {setItem} from '../../utils/utils';
 import stylesFunc from './styles';
 
@@ -124,7 +125,11 @@ export default function Settings({route, navigation}) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.SETTINGS}
         // rightIcon={imagePath.cartShop}
         headerStyle={{backgroundColor: colors.white}}

@@ -1,22 +1,23 @@
-import React, {useEffect, useState, createRef} from 'react';
+import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
+import React, {createRef, useEffect, useState} from 'react';
 import {
-  ScrollView,
-  StyleSheet,
+  FlatList,
+  Image,
+  Keyboard,
+  RefreshControl,
   Text,
   TouchableOpacity,
   View,
-  FlatList,
-  RefreshControl,
-  Image,
-  Keyboard,
 } from 'react-native';
-import {WebView} from 'react-native-webview';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
+import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import ModalView from '../../Components/Modal';
+import SubscriptionComponent from '../../Components/SubscriptionComponent';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
@@ -26,23 +27,10 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError, showSuccess} from '../../utils/helperFunctions';
-import stylesFun from './styles';
-import HTMLView from 'react-native-htmlview';
-import strings from '../../constants/lang';
-import SubscriptionComponent from '../../Components/SubscriptionComponent';
-import navigationStrings from '../../navigation/navigationStrings';
 import ListEmptySubscriptions from './ListEmptySubscriptions';
-import ModalView from '../../Components/Modal';
-import {
-  CardField,
-  createToken,
-  initStripe,
-  StripeProvider,
-  useStripe,
-} from '@stripe/stripe-react-native';
-import GradientButton from '../../Components/GradientButton';
-import ConfettiCannon from 'react-native-confetti-cannon';
+import stylesFun from './styles';
 
 export default function Subscriptions({navigation, route}) {
   //   console.log(route, 'route>>>');
@@ -606,10 +594,15 @@ export default function Subscriptions({navigation, route}) {
       isLoadingB={isLoading}
       source={loaderOne}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.SUBSCRIPTION}
-        headerStyle={{backgroundColor: Colors.white}}
+        headerStyle={{backgroundColor: colors.white}}
       />
+
       <View style={{...commonStyles.headerTopLine}} />
 
       <View style={{flex: 1}}>

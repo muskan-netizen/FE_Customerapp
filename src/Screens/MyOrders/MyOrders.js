@@ -10,7 +10,6 @@ import {
   Text,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-
 import CustomTopTabBar from '../../Components/CustomTopTabBar';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
@@ -35,6 +34,8 @@ import stylesFun from './styles';
 import DatePicker from 'react-native-date-picker';
 import FastImage from 'react-native-fast-image';
 import GradientButton from '../../Components/GradientButton';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+
 
 export default function MyOrders({navigation}) {
   const [state, setState] = useState({
@@ -369,10 +370,15 @@ export default function MyOrders({navigation}) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.MY_ORDERS}
         headerStyle={{backgroundColor: colors.white}}
       />
+
       <View style={{...commonStyles.headerTopLine}} />
 
       <CustomTopTabBar

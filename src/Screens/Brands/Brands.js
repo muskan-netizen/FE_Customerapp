@@ -9,6 +9,7 @@ import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import colors from '../../styles/colors';
 import {moderateScaleVertical} from '../../styles/responsiveSize';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import ListEmptyBrands from './ListEmptyBrands';
 
 export default function Brand({navigation}) {
@@ -31,13 +32,12 @@ export default function Brand({navigation}) {
 
   const {isLoading} = state;
   //Redux store data
-  const {appStyle} = useSelector((state) => state.initBoot);
+  const {appStyle, appData} = useSelector((state) => state.initBoot);
   const homePageLayout = appStyle?.homePageLayout;
   const appMainData = useSelector((state) => state?.home?.appMainData);
 
   //Brand data
   const _renderItem = ({item, index}) => {
-    console.log(item, 'item>>>');
     return (
       <BrandCard
         data={item}
@@ -49,25 +49,19 @@ export default function Brand({navigation}) {
     <WrapperContainer
       bgColor={colors.backgroundGrey}
       statusBarColor={colors.backgroundGrey}>
-      {homePageLayout == 2 ? (
-        <Header
-          centerTitle={strings.BRANDS}
-          LeftIcon={true}
-          rightIcon={imagePath.search}
-          onPressRight={() =>
-            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-          }
-        />
-      ) : (
-        <Header
-          centerTitle={strings.BRANDS}
-          noLeftIcon={true}
-          rightIcon={imagePath.search}
-          onPressRight={() =>
-            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-          }
-        />
-      )}
+      <Header
+        centerTitle={strings.BRANDS}
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
+        rightIcon={imagePath.search}
+        onPressRight={() =>
+          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+        }
+      />
+
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
 
       <FlatList

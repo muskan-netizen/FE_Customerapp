@@ -95,7 +95,7 @@ export default function DashBoardFour({
           <BannerHome2
             bannerRef={bannerRef}
             slider1ActiveSlide={slider1ActiveSlide}
-            bannerData={appData?.banners}
+            bannerData={appData.banners}
             sliderWidth={sliderWidth}
             itemWidth={itemWidth}
             onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}

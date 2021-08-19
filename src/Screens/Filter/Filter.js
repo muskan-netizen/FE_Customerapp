@@ -17,10 +17,13 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import stylesFunc from './styles';
 
 export default function Filter({route, navigation}) {
-  const {themeColors, appStyle} = useSelector((state) => state?.initBoot);
+  const {themeColors, appStyle, appData} = useSelector(
+    (state) => state?.initBoot,
+  );
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
@@ -74,9 +77,10 @@ export default function Filter({route, navigation}) {
     };
 
   //***********filter lables******** */
-  const filterTypesListView = (item) => {
+  const filterTypesListView = (item, indx) => {
     return (
       <TouchableOpacity
+        key={indx}
         onPress={() => selectLableBasedOnValues(item)}
         style={{
           borderBottomColor: colors.lightGreyBorder,
@@ -285,29 +289,31 @@ export default function Filter({route, navigation}) {
 
   /**********Filter values views******/
   const filterValuesListView = (item) => {
-    return (
-      <TouchableOpacity
-        onPress={() => _selectFilterData(item)}
-        style={{
-          borderBottomColor: colors.lightGreyBorder,
-          borderBottomWidth: 1,
-          padding: moderateScale(10),
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
-        {/* radioInActive */}
-        <Image
-          source={
-            item?.value?.selected
-              ? imagePath.radioActive
-              : imagePath.radioInActive
-          }
-        />
-        <Text style={[styles.lableStyle, {paddingLeft: moderateScale(5)}]}>
-          {item.label}
-        </Text>
-      </TouchableOpacity>
-    );
+    if (item.label) {
+      return (
+        <TouchableOpacity
+          onPress={() => _selectFilterData(item)}
+          style={{
+            borderBottomColor: colors.lightGreyBorder,
+            borderBottomWidth: 1,
+            padding: moderateScale(10),
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          {/* radioInActive */}
+          <Image
+            source={
+              item?.value?.selected
+                ? imagePath.radioActive
+                : imagePath.radioInActive
+            }
+          />
+          <Text style={[styles.lableStyle, {paddingLeft: moderateScale(5)}]}>
+            {item.label}
+          </Text>
+        </TouchableOpacity>
+      );
+    } else return <></>;
   };
 
   //Price range handler
@@ -370,10 +376,19 @@ export default function Filter({route, navigation}) {
       source={loaderOne}>
       <Header
         customLeft={() => (
-          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Image
-                source={imagePath.back}
+                source={
+                  appData?.profile?.code === shortCodes.capcorp
+                    ? imagePath.backArrow
+                    : imagePath.back
+                }
                 style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
               />
             </TouchableOpacity>
@@ -405,7 +420,7 @@ export default function Filter({route, navigation}) {
           <ScrollView>
             {filterTypes && filterTypes.length
               ? filterTypes.map((i, inx) => {
-                  return filterTypesListView(i);
+                  return filterTypesListView(i, inx);
                 })
               : null}
             {/* Price view */}
