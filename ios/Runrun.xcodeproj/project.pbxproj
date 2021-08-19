@@ -31,10 +31,10 @@
 		46BB8DA7E461DE52FF2C3096 /* libPods-Runrun.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D35CA57B7683C491BCC2E63 /* libPods-Runrun.a */; };
 		479BBC9DCDB3D2E284A4203C /* libPods-Cannabus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE2E7300A50BB92D6E73E83 /* libPods-Cannabus.a */; };
 		48200DB09BF182B3A9D74FE1 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		49B62D337515A2F9B2B2D70B /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		569BE2A368AA48948F645526 /* libPods-SirVU.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B50715C6CD2C28B4E06B0CD /* libPods-SirVU.a */; };
 		4F007673C381598D4311BE87 /* libPods-BustanFakieh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0864806BD356D4FA593856E2 /* libPods-BustanFakieh.a */; };
 		5167314063F552B904013485 /* libPods-Getme.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E7EC9EF9DA63130B3752E58 /* libPods-Getme.a */; };
-		569BE2A368AA48948F645526 /* libPods-SirVU.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B50715C6CD2C28B4E06B0CD /* libPods-SirVU.a */; };
+		53FC170B8EDBB04F2C666824 /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB441AE2A81F50F4570AC4EA /* libPods-RoyoOrder.a */; };
 		58CD509BCDD7E7AC1C711265 /* libPods-Jet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6605B61E40F45263DE49BC /* libPods-Jet.a */; };
 		5E2BC5973EFE3BA4E3E6DCE8 /* libPods-GovaChow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146C128CBC991B6731ACB110 /* libPods-GovaChow.a */; };
 		68B5A25D89B82C13CE1085B7 /* libPods-Spidbi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7B91CC363476F6C5AA9DD2 /* libPods-Spidbi.a */; };
@@ -2798,6 +2798,7 @@
 				0E6605B61E40F45263DE49BC /* libPods-Jet.a */,
 				B0B6F42ACD9E0F3F22CA3F40 /* libPods-Africanize.a */,
 				DA3361D81CBE83ABF5B375D8 /* libPods-Yummiidash.a */,
+				BB441AE2A81F50F4570AC4EA /* libPods-RoyoOrder.a */,
 				BDBD3865494D03F2525CA75B /* libPods-Markita.a */,
 				0B50715C6CD2C28B4E06B0CD /* libPods-SirVU.a */,
 				2725D7076E9D8D92F31805F9 /* libPods-Ublue.a */,
@@ -5120,7 +5121,7 @@
 					};
 					846E75F926C689C600C7A2C5 = {
 						DevelopmentTeam = 6FXUMT5X23;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					846E7A2B26C6943B00C7A2C5 = {
 						DevelopmentTeam = 6FXUMT5X23;
@@ -15243,6 +15244,10 @@
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84F464E726A6F14700D378D5 /* AppDelegate.m in Sources */,
+				84F464E826A6F14700D378D5 /* BuildFile in Sources */,
+				84F4679E26A7F27500D378D5 /* Royo.swift in Sources */,
+				84F464E926A6F14700D378D5 /* main.m in Sources */,
 			);
 			inputPaths = (
 				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
@@ -17780,10 +17785,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TowTrek.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -17797,7 +17802,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = TowTrek;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -17828,7 +17833,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = TowTrek;
+				PROVISIONING_PROFILE_SPECIFIER = TowTrekApp;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

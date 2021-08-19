@@ -462,7 +462,7 @@ export default function VerifyAccount({navigation, route}) {
                       </View>
                     ) : (
                       <Text style={styles.didintRecieveCode}>
-                        {'If you didn’t receive a code? '}
+                          {"If you didn't receive a code? "}
                         <Text
                           onPress={() => resendOtpData('email')}
                           style={styles.resend}>
@@ -600,7 +600,7 @@ export default function VerifyAccount({navigation, route}) {
                       </Text>
                     ) : (
                       <Text style={styles.didintRecieveCode}>
-                        {'If you didn’t receive a code? '}
+                        {"If you didn't receive a code? "}
                         <Text
                           onPress={() => resendOtpData('phone')}
                           style={styles.resend}>
