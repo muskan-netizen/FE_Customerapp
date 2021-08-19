@@ -415,6 +415,13 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+
+        case appIds.diamonddashers:
+          updateState({
+            shortCode: shortCodes.diamonddashers,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
