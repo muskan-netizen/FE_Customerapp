@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "681369500057",
+    "project_id": "hairston-express-7eb2a",
+    "storage_bucket": "hairston-express-7eb2a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681369500057:android:d9832ee6c27c3c84b1fb08",
+        "android_client_info": {
+          "package_name": "com.hairstonexpress"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681369500057-4ntqhl1o3d9loiucjlb0l1tf67v6b2cl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hairstonexpress",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "681369500057-9i2igiiove7fpdcmgea1bi8t7gccpsbt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hairstonexpress",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "681369500057-jru4941mkko42j039v7uu41o0fkr0vca.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hairstonexpress",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "681369500057-363vnfl77v1d4sg8tqcel3lftkng2j8p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhnz3h6XrnA6ROFkbrzPONh7gI_0XMrfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "681369500057-363vnfl77v1d4sg8tqcel3lftkng2j8p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "681369500057-dih3ffn1dn3jnh7qko6k3ntd05uagiuv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hairstonexpress"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

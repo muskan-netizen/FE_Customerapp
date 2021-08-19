@@ -1,14 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Alert} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
 import MaterialTabs from 'react-native-material-tabs';
-
+import DeviceInfo from 'react-native-device-info';
 import colors from '../../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../../styles/responsiveSize';
+import actions from '../../../redux/actions';
+import {showError, showSuccess} from '../../../utils/helperFunctions';
 
 export default function ToggleTabBar({selcetedToggle, toggleData}) {
   const [state, setState] = useState({
@@ -18,20 +20,88 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const [selectedTab, setSelectedTab] = useState(0);
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {appData, themeColors} = useSelector((state) => state?.initBoot);
+  const {appData, themeColors, currencies, languages} = useSelector(
+    (state) => state?.initBoot,
+  );
+  const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
+  const cartItemType = useSelector((state) => state?.cart?.cartItemType);
 
   const {selectedIndex, tabs} = state;
   useEffect(() => {
     addAllTabs();
-    //   if (dine_In_Type == 'delivery') {
-    //     setSelectedTab(0);
-    //   }
-    //   if (dine_In_Type == 'dine_in') {
-    //     setSelectedTab(1);
-    //   }
-    //   if (dine_In_Type == 'takeaway') {
-    //     setSelectedTab(2);
-    //   }
+    if (dine_In_Type == 'delivery') {
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(0);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(0);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        setSelectedTab(0);
+      } else {
+        setSelectedTab(0);
+      }
+    }
+    if (dine_In_Type == 'dine_in') {
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(1);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(0);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        setSelectedTab(1);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(1);
+      }
+    }
+    if (dine_In_Type == 'takeaway') {
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(1);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(1);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        setSelectedTab(1);
+      } else {
+        setSelectedTab(2);
+      }
+    }
   }, [appData]);
 
   const addAllTabs = () => {
@@ -118,7 +188,45 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
       }
     }
   };
+  const dineInFuncation = () => {
+    Alert.alert(
+      '',
+      'This Change Will Remove Your Cart Products.Do you Really Want To Continue ?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          // style: 'destructive',
+        },
+        {text: 'Clear Cart', onPress: () => clearCart2()},
+      ],
+    );
+  };
 
+  const clearCart2 = () => {
+    actions
+      .clearCart(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        showSuccess(res?.message);
+        console.log(res, 'res>>>res>>>>');
+        actions.cartItemQty(res);
+      })
+      .catch(errorMethod);
+  };
+  //Error handling in screen
+  const errorMethod = (error) => {
+    console.log(error, 'error');
+    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    showError(error?.message || error?.error);
+  };
   return (
     <>
       {tabs.length > 1 ? (
@@ -131,7 +239,14 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
           <MaterialTabs
             items={tabs}
             selectedIndex={selectedTab}
-            onChange={setSelectedTab}
+            onChange={
+              !(
+                cartItemCount?.message == null &&
+                cartItemCount?.data?.item_count > 0
+              )
+                ? setSelectedTab
+                : dineInFuncation
+            }
             barHeight={38}
             indicatorColor={themeColors.primary_color}
             activeTextColor={themeColors.primary_color}
