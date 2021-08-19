@@ -2105,7 +2105,7 @@
 			files = (
 				569BE2A368AA48948F645526 /* libPods-SirVU.a in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 0;		
 		};
 		843491F226CCDA3900DB8C18 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
