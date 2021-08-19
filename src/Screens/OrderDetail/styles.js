@@ -28,6 +28,7 @@ export default ({fontFamily}) => {
       backgroundColor: colors.backgroundGrey,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
+      marginBottom: moderateScale(5),
       // justifyContent: 'flex-end',
 
       // marginBottom: moderateScaleVertical(20),

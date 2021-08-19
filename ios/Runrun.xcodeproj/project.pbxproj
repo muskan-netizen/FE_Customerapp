@@ -2087,7 +2087,7 @@
 			files = (
 				569BE2A368AA48948F645526 /* libPods-SirVU.a in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 0;		
 		};
 		843491F226CCDA3900DB8C18 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -5023,6 +5023,7 @@
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
 					76693A57269D9B87000F83B2 = {
+						DevelopmentTeam = 6FXUMT5X23;
 						LastSwiftMigration = 1240;
 						ProvisioningStyle = Automatic;
 					};

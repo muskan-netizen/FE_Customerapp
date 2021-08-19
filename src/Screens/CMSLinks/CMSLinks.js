@@ -1,24 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
+  ScrollView,
+  StyleSheet,
   Text,
-  TextInput,
-  Image,
   TouchableOpacity,
   View,
-  StyleSheet,
-  ScrollView,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
-import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {
-  loaderFour,
-  loaderOne,
-  loaderThree,
-  loaderTwo,
-} from '../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -30,7 +22,7 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
 import stylesFun from './styles';
 export default function CMSLinks({navigation}) {
@@ -116,7 +108,11 @@ export default function CMSLinks({navigation}) {
       isLoadingB={isLoading}
       source={loaderOne}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.LINKS}
         headerStyle={{backgroundColor: Colors.white}}
       />

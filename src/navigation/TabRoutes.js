@@ -1,28 +1,25 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {Image, Text, StyleSheet} from 'react-native';
+import {Image, StyleSheet, Text} from 'react-native';
+import {View} from 'react-native-animatable';
+import {useSelector} from 'react-redux';
 import CustomBottomTabBar from '../Components/CustomBottomTabBar';
-import CustomBottomTabBarTwo from '../Components/CustomBottomTabBarTwo';
+import CustomBottomTabBar1 from '../Components/CustomBottomTabBar1';
 import CustomBottomTabBarThree from '../Components/CustomBottomTabBarThree';
-
+import CustomBottomTabBarTwo from '../Components/CustomBottomTabBarTwo';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
-import {useSelector} from 'react-redux';
-import {Cart} from '../Screens';
+import staticStrings from '../constants/staticStrings';
 import colors from '../styles/colors';
 import {moderateScale, textScale} from '../styles/responsiveSize';
+import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import AccountStack from './AccountStack';
 import BrandStack from './BrandStack';
+import CartStack from './CartStack';
 import CelebrityStack from './CelebrityStack';
 import HomeStack from './HomeStack';
-import CartStack from './CartStack';
 import navigationStrings from './navigationStrings';
-import {View} from 'react-native-animatable';
-import staticStrings from '../constants/staticStrings';
-import CustomTopTabBar from '../Components/CustomTopTabBar';
-import CustomBottomTabBar1 from '../Components/CustomBottomTabBar1';
-import {getBuildId} from 'react-native-device-info';
-import {appIds} from '../utils/constants/DynamicAppKeys';
+
 const Tab = createBottomTabNavigator();
 
 export default function TabRoutes(props) {
@@ -64,23 +61,25 @@ export default function TabRoutes(props) {
   }
   // capcorp
 
-  if (checkForBrand) {
-    brandTab = (
-      <Tab.Screen
-        component={BrandStack}
-        name={navigationStrings.BRANDS}
-        options={{
-          tabBarLabel: strings.BRANDS,
-          tabBarIcon: ({focused, tintColor}) => (
-            <Image
-              style={{tintColor: tintColor}}
-              source={focused ? imagePath.tabCActive : imagePath.tabCInActive}
-            />
-          ),
-          //  unmountOnBlur: true,
-        }}
-      />
-    );
+  if (appData?.profile?.code !== shortCodes.capcorp) {
+    if (checkForBrand) {
+      brandTab = (
+        <Tab.Screen
+          component={BrandStack}
+          name={navigationStrings.BRANDS}
+          options={{
+            tabBarLabel: strings.BRANDS,
+            tabBarIcon: ({focused, tintColor}) => (
+              <Image
+                style={{tintColor: tintColor}}
+                source={focused ? imagePath.tabCActive : imagePath.tabCInActive}
+              />
+            ),
+            //  unmountOnBlur: true,
+          }}
+        />
+      );
+    }
   }
 
   return (
@@ -89,7 +88,11 @@ export default function TabRoutes(props) {
       tabBar={(props) => {
         switch (appStyle?.tabBarLayout) {
           case 1:
-            return <CustomBottomTabBar {...props} />;
+            return appData?.profile?.code === shortCodes.capcorp ? (
+              <CustomBottomTabBar1 {...props} />
+            ) : (
+              <CustomBottomTabBar {...props} />
+            );
           case 2:
             return <CustomBottomTabBarTwo {...props} />;
           case 3:
@@ -116,9 +119,15 @@ export default function TabRoutes(props) {
           tabBarIcon: ({focused, tintColor}) => (
             <Image
               style={{tintColor: tintColor}}
-              source={focused ? imagePath.tabAActive : imagePath.tabAInActive}
-              // capcorp
-              // source={focused ? imagePath.homeActive : imagePath.homeInActive}
+              source={
+                appData?.profile?.code === shortCodes.capcorp
+                  ? focused
+                    ? imagePath.homeActive
+                    : imagePath.homeInActive
+                  : focused
+                  ? imagePath.tabAActive
+                  : imagePath.tabAInActive
+              }
             />
           ),
           // unmountOnBlur: true,
@@ -129,7 +138,6 @@ export default function TabRoutes(props) {
         name={navigationStrings.CART}
         options={{
           tabBarLabel: strings.CART,
-          // tabBarLabel: strings.ORDER_CART,
           tabBarIcon: ({focused, tintColor}) => (
             <View style={{alignItems: 'center'}}>
               {cartItemCount?.data?.item_count ? (
@@ -141,11 +149,15 @@ export default function TabRoutes(props) {
               ) : null}
               <Image
                 style={{tintColor: tintColor}}
-                source={focused ? imagePath.cartActive : imagePath.cartInActive}
-                // capcorp
-                // source={
-                //   focused ? imagePath.ordersActive : imagePath.ordersInActive
-                // }
+                source={
+                  appData?.profile?.code === shortCodes.capcorp
+                    ? focused
+                      ? imagePath.ordersActive
+                      : imagePath.ordersInActive
+                    : focused
+                    ? imagePath.cartActive
+                    : imagePath.cartInActive
+                }
               />
             </View>
           ),
@@ -162,11 +174,15 @@ export default function TabRoutes(props) {
           tabBarIcon: ({focused, tintColor}) => (
             <Image
               style={{tintColor: tintColor}}
-              source={focused ? imagePath.tabEActive : imagePath.tabEInActive}
-              // capcorp
-              // source={
-              //   focused ? imagePath.profileActive : imagePath.profileInActive
-              // }
+              source={
+                appData?.profile?.code === shortCodes.capcorp
+                  ? focused
+                    ? imagePath.profileActive
+                    : imagePath.profileInActive
+                  : focused
+                  ? imagePath.tabEActive
+                  : imagePath.tabEInActive
+              }
             />
           ),
           //  unmountOnBlur: true,

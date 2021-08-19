@@ -1,52 +1,64 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {
   AboutUs,
   Account,
+  Account2,
+  AddMoney,
+  BrandProducts,
+  BuyProduct,
+  CMSLinks,
   ContactUs,
+  Delivery,
+  Loyalty,
   MyOrders,
   MyProfile,
+  MyProfile2,
   Notifications,
   OrderDetail,
+  PickupOrderDetail,
   ProductDetail,
-  Settings,
-  Wishlist,
-  Wallet,
-  AddMoney,
-  Tracking,
-  TrackDetail,
-  SearchProductVendorItem,
-  BrandProducts,
-  SendProduct,
-  BuyProduct,
-  Vendors,
-  Delivery,
+  ProductDetail2,
   ProductList,
+  ProductList2,
   RateOrder,
+  SearchProductVendorItem,
+  SendProduct,
   SendRefferal,
-  CMSLinks,
+  Settings,
+  Subscriptions,
+  TrackDetail,
+  Tracking,
+  Vendors,
+  Vendors2,
+  Wallet,
   WebLinks,
   WebPayment,
-  PickupOrderDetail,
   WebviewScreen,
-  Subscriptions,
-  Loyalty,
+  Wishlist,
   ReturnOrder,
 } from '../Screens';
+import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
+  const {appData} = useSelector((state) => state?.initBoot);
   return (
     <Stack.Navigator>
       <Stack.Screen
-        component={Account}
+        component={
+          appData?.profile?.code === shortCodes.capcorp ? Account2 : Account
+        }
         name={navigationStrings.ACCOUNTS}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.MY_PROFILE}
-        component={MyProfile}
+        component={
+          appData?.profile?.code === shortCodes.capcorp ? MyProfile2 : MyProfile
+        }
         options={{headerShown: false}}
       />
 
@@ -99,7 +111,11 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
-        component={ProductDetail}
+        component={
+          appData?.profile?.code === shortCodes.capcorp
+            ? ProductDetail2
+            : ProductDetail
+        }
         options={{headerShown: false}}
       />
 
@@ -140,7 +156,9 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.VENDOR}
-        component={Vendors}
+        component={
+          appData?.profile?.code === shortCodes.capcorp ? Vendors2 : Vendors
+        }
         options={{headerShown: false}}
       />
 
@@ -152,7 +170,11 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
-        component={ProductList}
+        component={
+          appData?.profile?.code === shortCodes.capcorp
+            ? ProductList2
+            : ProductList
+        }
         options={{headerShown: false}}
       />
 

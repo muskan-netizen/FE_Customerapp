@@ -13,7 +13,9 @@ import {
   Payment,
   PaymentSuccess,
   ProductDetail,
+  ProductDetail2,
   ProductList,
+  ProductList2,
   SearchProductVendorItem,
   SendProduct,
   ShippingDetails,
@@ -21,14 +23,17 @@ import {
   TrackDetail,
   Tracking,
   VendorDetail,
+  VendorDetail2,
   Vendors,
+  Vendors2,
 } from '../Screens';
+import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 import TopTabRoutes from './TopTabRoutes';
 
 const Stack = createStackNavigator();
 export default function () {
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle, appData} = useSelector((state) => state?.initBoot);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -52,17 +57,27 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.VENDOR}
-        component={Vendors}
+        component={
+          appData?.profile?.code === shortCodes.capcorp ? Vendors2 : Vendors
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.VENDOR_DETAIL}
-        component={VendorDetail}
+        component={
+          appData?.profile?.code === shortCodes.capcorp
+            ? VendorDetail2
+            : VendorDetail
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
-        component={ProductList}
+        component={
+          appData?.profile?.code === shortCodes.capcorp
+            ? ProductList2
+            : ProductList
+        }
         options={{headerShown: false}}
       />
 
@@ -94,7 +109,11 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
-        component={ProductDetail}
+        component={
+          appData?.profile?.code === shortCodes.capcorp
+            ? ProductDetail2
+            : ProductDetail
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen

@@ -14,6 +14,14 @@ export default ({fontFamily, themeColors}) => {
       borderBottomWidth: 0.7,
       // flexDirection:'row'
     },
+    containerStyle2: {
+      paddingVertical: 0,
+      height: moderateScaleVertical(58),
+      alignItems: 'center',
+      borderBottomColor: colors.transparent,
+      borderBottomWidth: 0.7,
+      // flexDirection:'row'
+    },
     loginView: {
       marginTop: moderateScaleVertical(30),
       marginBottom:

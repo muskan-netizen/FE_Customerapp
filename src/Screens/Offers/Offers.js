@@ -11,6 +11,7 @@ import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptyOffers from './ListEmptyOffers';
 
@@ -195,7 +196,14 @@ export default function Offer({route, navigation}) {
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
       isLoadingB={isLoadingB}>
-      <Header centerTitle={strings.OFFERS} />
+      <Header
+        centerTitle={strings.OFFERS}
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
+      />
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
       <FlatList
         data={isLoading ? [] : allAvailableCoupons}

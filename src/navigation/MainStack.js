@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {
   AboutUs,
   BrandProducts,
@@ -9,10 +10,13 @@ import {
   Location,
   MyOrders,
   MyProfile,
+  MyProfile2,
   Notifications,
   OrderDetail,
   ProductDetail,
+  ProductDetail2,
   ProductList,
+  ProductList2,
   SearchProductVendorItem,
   SendProduct,
   Settings,
@@ -21,11 +25,15 @@ import {
   TrackDetail,
   Tracking,
   Vendors,
+  Vendors2,
 } from '../Screens';
+import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 import TabRoutes from './TabRoutes';
 
 export default function (Stack) {
+  const {appData} = useSelector((state) => state?.initBoot);
+
   return (
     <>
       <Stack.Screen
@@ -45,7 +53,9 @@ export default function (Stack) {
       />
       <Stack.Screen
         name={navigationStrings.VENDOR}
-        component={Vendors}
+        component={
+          appData?.profile?.code === shortCodes.capcorp ? Vendors2 : Vendors
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -55,12 +65,18 @@ export default function (Stack) {
       />
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
-        component={ProductList}
+        component={
+          appData?.profile?.code === shortCodes.capcorp
+            ? ProductList2
+            : ProductList
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.MY_PROFILE}
-        component={MyProfile}
+        component={
+          appData?.profile?.code === shortCodes.capcorp ? MyProfile2 : MyProfile
+        }
         options={{headerShown: false}}
       />
 
@@ -117,7 +133,11 @@ export default function (Stack) {
       />
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
-        component={ProductDetail}
+        component={
+          appData?.profile?.code === shortCodes.capcorp
+            ? ProductDetail2
+            : ProductDetail
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen

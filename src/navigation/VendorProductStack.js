@@ -1,10 +1,20 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {OrderDetail, ProductDetail, VendorList, VendorProducts} from '../Screens';
+import {useSelector} from 'react-redux';
+import {
+  OrderDetail,
+  ProductDetail,
+  ProductDetail2,
+  VendorList,
+  VendorProducts,
+} from '../Screens';
+import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
+  const {appData} = useSelector((state) => state?.initBoot);
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -22,9 +32,13 @@ export default function () {
         component={VendorList}
         options={{headerShown: false}}
       />
-        <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
-        component={ProductDetail}
+        component={
+          appData?.profile?.code === shortCodes.capcorp
+            ? ProductDetail2
+            : ProductDetail
+        }
         options={{headerShown: false}}
       />
     </Stack.Navigator>

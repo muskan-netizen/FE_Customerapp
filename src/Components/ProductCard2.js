@@ -1,9 +1,7 @@
 import React from 'react';
-import {Animated, Text, TouchableOpacity, View, Image} from 'react-native';
+import {Animated, Text, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
-import {transparentProductImage} from '../constants/constants';
-import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
@@ -14,7 +12,6 @@ import {
 } from '../styles/responsiveSize';
 import {
   getImageUrl,
-  getScaleTransformationStyle,
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
@@ -69,7 +66,8 @@ export default function ProductCard2({
           <Text
             numberOfLines={1}
             style={{
-              ...commonStyles.futuraBtHeavyFont16,
+              ...commonStyles.futuraBtHeavyFont14,
+              width: moderateScaleVertical(220),
             }}>
             {data?.translation[0]?.title}
           </Text>

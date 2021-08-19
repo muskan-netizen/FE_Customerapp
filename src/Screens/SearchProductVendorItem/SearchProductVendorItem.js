@@ -16,6 +16,7 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 
 export default function SearchProductVendorItem({navigation, route}) {
   const [state, setState] = useState({
@@ -188,7 +189,6 @@ export default function SearchProductVendorItem({navigation, route}) {
       </TouchableOpacity>
     );
   };
-  console.log(searchInput, 'THIS IS SEARCHINPUT');
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
@@ -196,7 +196,11 @@ export default function SearchProductVendorItem({navigation, route}) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.SEARCH}
         // rightIcon={imagePath.cartShop}
         headerStyle={{backgroundColor: colors.greysearchHeader}}
