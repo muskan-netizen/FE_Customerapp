@@ -9,6 +9,8 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import DeviceInfo from 'react-native-device-info';
+
 import {
   androidBackButtonHandler,
   getCurrentLocation,
@@ -51,6 +53,7 @@ export default function Home({route, navigation}) {
 
   const initData = useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state?.auth?.userData);
+  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
 
   const profileInfo = appData?.profile;
   const {profile} = appData;
@@ -244,14 +247,16 @@ export default function Home({route, navigation}) {
           : location?.longitude,
       };
     }
+    console.log(dine_In_Type, 'dine_In_Type');
     console.log(latlongObj, 'latlongObj');
     console.log(selectedTabType, 'selectedTabType');
+
     {
       selectedTabType
         ? actions
             .homeData(
               {
-                type: selectedTabType ? selectedTabType : 'delivery',
+                type: dine_In_Type ? dine_In_Type : dine_In_Type,
                 ...latlongObj,
               },
               {
@@ -421,6 +426,7 @@ export default function Home({route, navigation}) {
   const updateCircleData = (data) => {
     updateState({updatedData: data});
   };
+
   const selcetedToggle = (type) => {
     actions.dineInData(type);
     updateState({
@@ -430,7 +436,7 @@ export default function Home({route, navigation}) {
 
   useEffect(() => {
     homeData();
-  }, [selectedTabType, appData]);
+  }, [selectedTabType, appData, dine_In_Type]);
 
   ///onPressCategory2
   const onPressCategory2 = (data) => {

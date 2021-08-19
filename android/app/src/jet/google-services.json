@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "245213600836",
+    "project_id": "taxijet-ec813",
+    "storage_bucket": "taxijet-ec813.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245213600836:android:e71fe16fa53ca95cfe3011",
+        "android_client_info": {
+          "package_name": "com.jet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245213600836-hh19u693t5bq0aq4g0cu890sdqpnhssn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jet",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "245213600836-n6b0ursc77rpolh4pu472c63o7lu4tca.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jet",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "245213600836-q07359f7fvmvjcikilufrlldqjedo9g2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jet",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "245213600836-blksslmt719ttqlb9158t0hb2qou5ld5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhBUQXLVgfl5MoVO5UNXVkBRAm5Cd2zQg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245213600836-blksslmt719ttqlb9158t0hb2qou5ld5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "245213600836-c9hfo7ovn60d2uqgsupuk5jlc5v9f01o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jet"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

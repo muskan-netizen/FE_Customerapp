@@ -37,6 +37,7 @@ import {
   WebPayment,
   WebviewScreen,
   Wishlist,
+  ReturnOrder,
 } from '../Screens';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
@@ -229,6 +230,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.LOYALTY}
         component={Loyalty}
+        options={{headerShown: false}}
+      />
+        <Stack.Screen
+        name={navigationStrings.RETURNORDER}
+        component={ReturnOrder}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

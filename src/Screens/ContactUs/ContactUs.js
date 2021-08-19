@@ -5,6 +5,7 @@ import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -17,23 +18,27 @@ import {
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {showError} from '../../utils/helperFunctions';
+import {showError, showSuccess} from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
 export default function ContactUs({navigation}) {
   const currentTheme = useSelector((state) => state.appTheme);
+  const userData = useSelector((state) => state?.auth?.userData);
+  console.log(userData, 'userData>>>userData');
 
   const [state, setState] = useState({
-    callingCode: '1',
-    cca2: 'US',
-    name: '',
-    email: '',
-    phoneNumber: '',
+    callingCode:  userData && userData?.dial_code ? userData?.dial_code : '1',
+    cca2: userData && userData?.cca2 ? userData?.cca2 : 'US',
+    name: userData && userData?.name? userData?.name : '',
+    email: userData && userData?.email? userData?.email : '',
+    phoneNumber: userData &&  userData?.phone_number? userData?.phone_number : '',
     message: '',
+    isLoading: false,
   });
-  const {message, phoneNumber, cca2, name, email} = state;
-  const {appData, appStyle} = useSelector((state) => state?.initBoot);
-
+  const {message, phoneNumber, cca2, name, email, isLoading}   = state;
+  const {appData, currencies, languages, themeColors, appStyle} = useSelector(
+    (state) => state?.initBoot,
+  );
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily});
   const commonStyles = commonStylesFun({fontFamily});
@@ -72,19 +77,41 @@ export default function ContactUs({navigation}) {
     if (!checkValid) {
       return;
     }
+    // else if(message==''){
+    //   return showError('Enter message')
+    // }
     let data = {
       name: name,
       email: email,
       phone_number: '+' + callingCode + phoneNumber,
       message: message,
     };
+
+    console.log(data, 'data>>contactus');
+    updateState({
+      isLoading: true,
+    });
     actions
       .contactUs(data, {
         code: appData?.profile?.code,
       })
-      .then((res) => {})
-      .catch((err) => {});
+      .then((res) => {
+        console.log(res, 'res>>>');
+        updateState({
+          isLoading: false,
+        });
+        showSuccess(res?.message);
+        navigation.goBack();
+      })
+      .catch((err) => {
+        console.log(err, 'err>>>');
+        updateState({
+          isLoading: false,
+        });
+        showError(err?.message || err?.error);
+      });
   };
+
   // Basic information tab
   const basicInfoView = () => {
     return (
@@ -102,6 +129,7 @@ export default function ContactUs({navigation}) {
           onChangeText={_onChangeText('email')}
           placeholder={strings.YOUR_EMAIL}
           value={email}
+          keyboardType={'email-address'}
         />
         <PhoneNumberInput
           onCountryChange={_onCountryChange}
@@ -112,6 +140,8 @@ export default function ContactUs({navigation}) {
           cca2={cca2}
           phoneNumber={phoneNumber}
           callingCode={state.callingCode}
+          keyboardType={'number-pad'}
+          returnKeyType={'done'}
         />
         <View style={{height: moderateScaleVertical(20)}} />
         <BorderTextInput
@@ -133,8 +163,13 @@ export default function ContactUs({navigation}) {
       </View>
     );
   };
+
   return (
-    <WrapperContainer bgColor={colors.white} statusBarColor={colors.white}>
+    <WrapperContainer
+      bgColor={colors.white}
+      statusBarColor={colors.white}
+      source={loaderOne}
+      isLoadingB={isLoading}>
       <Header
         leftIcon={
           appData?.profile?.code === shortCodes.capcorp

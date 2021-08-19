@@ -97,9 +97,12 @@ export default function Loyalty({navigation}) {
 
   //Error handling in screen
   const errorMethod = (error) => {
+    console.log('getUserLoyaltyInfo', error);
     updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
+
+  console.log(upcomingLoyalty, 'upcomingLoyalty');
 
   const renderProduct = ({item, index}) => {
     const cardWidthNew = width * 0.5 - 21.5;
@@ -152,53 +155,56 @@ export default function Loyalty({navigation}) {
         headerStyle={{backgroundColor: colors.white}}
       />
       {/* current loyalty status */}
-      <View
-        style={{
-          marginTop: 30,
-          width: width / 1.5,
-          backgroundColor: colors.white,
-          padding: 10,
-          ...commonStyles.shadowStyle,
-          justifyContent: 'center',
-          alignSelf: 'center',
-          borderRadius: moderateScale(8),
-        }}>
-        <View style={{flexDirection: 'row'}}>
-          {!!currentLoyalty && (
-            <Image
-              source={
-                currentLoyalty && currentLoyalty?.name == 'Bronze'
-                  ? imagePath.bronze
-                  : currentLoyalty?.name == 'Silver'
-                  ? imagePath.silver
-                  : currentLoyalty?.name == 'Gold'
-                  ? imagePath.gold
-                  : imagePath.platinum
-              }
-              style={{height: 75, width: 75}}
-            />
-          )}
-          <View style={{marginLeft: 10}}>
-            <Text style={styles.youareat}>{'You are at'}</Text>
-            <Text
-              style={[
-                styles.currentLoyaltyColor,
-                {
-                  color:
-                    currentLoyalty?.name == 'Bronze'
-                      ? '#8E572F'
-                      : currentLoyalty?.name == 'Silver'
-                      ? '#D2D2D2'
-                      : currentLoyalty?.name == 'Gold'
-                      ? '#BD9B4A'
-                      : '#D2D2D2',
-                },
-              ]}>
-              {currentLoyalty?.name}
-            </Text>
+      {!!currentLoyalty ? (
+        <View
+          style={{
+            marginTop: 30,
+            width: width / 1.5,
+            backgroundColor: colors.white,
+            padding: 10,
+            ...commonStyles.shadowStyle,
+            justifyContent: 'center',
+            alignSelf: 'center',
+            borderRadius: moderateScale(8),
+          }}>
+          <View style={{flexDirection: 'row'}}>
+            {!!currentLoyalty && (
+              <Image
+                source={
+                  currentLoyalty && currentLoyalty?.name == 'Bronze'
+                    ? imagePath.bronze
+                    : currentLoyalty?.name == 'Silver'
+                    ? imagePath.silver
+                    : currentLoyalty?.name == 'Gold'
+                    ? imagePath.gold
+                    : imagePath.platinum
+                }
+                style={{height: 75, width: 75}}
+              />
+            )}
+
+            <View style={{marginLeft: 10}}>
+              <Text style={styles.youareat}>{'You are at'}</Text>
+              <Text
+                style={[
+                  styles.currentLoyaltyColor,
+                  {
+                    color:
+                      currentLoyalty?.name == 'Bronze'
+                        ? '#8E572F'
+                        : currentLoyalty?.name == 'Silver'
+                        ? '#D2D2D2'
+                        : currentLoyalty?.name == 'Gold'
+                        ? '#BD9B4A'
+                        : '#D2D2D2',
+                  },
+                ]}>
+                {currentLoyalty?.name}
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
+      ) : null}
       {/* Current point status */}
       <View
         style={{
@@ -206,56 +212,64 @@ export default function Loyalty({navigation}) {
           marginVertical: moderateScaleVertical(20),
           marginHorizontal: moderateScale(20),
         }}>
-        <ImageBackground
-          source={imagePath.totalLoyaltyBackground}
-          imageStyle={[styles.imageStyle, {justifyContent: 'center'}]}
-          style={styles.imageStyle}>
-          <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={styles.loyaltyPointsEarned}>
-              {loyaltyPointsEarned}
-            </Text>
-            <Text style={styles.loyaltyPointsUsed}>
-              {'Total Earned Points'}
-            </Text>
-          </View>
-        </ImageBackground>
-        <View
-          style={{
-            marginLeft: 10,
-            borderRadius: moderateScale(8),
+        {!!currentLoyalty ? (
+          <ImageBackground
+            source={imagePath.totalLoyaltyBackground}
+            imageStyle={[styles.imageStyle, {justifyContent: 'center'}]}
+            style={styles.imageStyle}>
+            <View
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={styles.loyaltyPointsEarned}>
+                {loyaltyPointsEarned}
+              </Text>
+              <Text style={styles.loyaltyPointsUsed}>
+                {'Total Earned Points'}
+              </Text>
+            </View>
+          </ImageBackground>
+        ) : null}
 
-            ...commonStyles.shadowStyle,
-            height: height / 7,
-            width: width - width / 1.6,
-            backgroundColor: getColorCodeWithOpactiyNumber(
-              themeColors?.primary_color.substr(1),
-              20,
-            ),
-          }}>
+        {!!currentLoyalty ? (
           <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text
-              style={[
-                styles.loyaltyPointsEarned,
-                {color: themeColors?.primary_color},
-              ]}>
-              {loyaltyPointsUsed}
-            </Text>
-            <Text
-              style={[
-                styles.loyaltyPointsUsed,
-                {color: themeColors?.primary_color},
-              ]}>
-              {'Spendable points'}
-            </Text>
+            style={{
+              marginLeft: 10,
+              borderRadius: moderateScale(8),
+
+              ...commonStyles.shadowStyle,
+              height: height / 7,
+              width: width - width / 1.6,
+              backgroundColor: getColorCodeWithOpactiyNumber(
+                themeColors?.primary_color.substr(1),
+                20,
+              ),
+            }}>
+            <View
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Text
+                style={[
+                  styles.loyaltyPointsEarned,
+                  {color: themeColors?.primary_color},
+                ]}>
+                {loyaltyPointsUsed}
+              </Text>
+              <Text
+                style={[
+                  styles.loyaltyPointsUsed,
+                  {color: themeColors?.primary_color},
+                ]}>
+                {'Spendable points'}
+              </Text>
+            </View>
           </View>
-        </View>
+        ) : null}
       </View>
       <View style={{marginHorizontal: moderateScale(20), flex: 1}}>
-        <View style={{marginBottom: 20}}>
-          <Text style={styles.upcoming}>{'Upcoming'}</Text>
-        </View>
+        {upcomingLoyalty?.length ? (
+          <View style={{marginBottom: 20}}>
+            <Text style={styles.upcoming}>{'Upcoming'}</Text>
+          </View>
+        ) : null}
+
         <FlatList
           data={upcomingLoyalty}
           extraData={upcomingLoyalty}

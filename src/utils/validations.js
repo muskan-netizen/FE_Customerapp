@@ -35,7 +35,7 @@ export default function (data) {
     states,
     country,
   } = data;
-
+  console.log(message, 'message');
   if (username !== undefined) {
     let emptyValidationText = checkEmpty(username, 'Name');
     if (emptyValidationText !== '') {
@@ -47,7 +47,6 @@ export default function (data) {
       }
     }
   }
-
 
   if (name !== undefined) {
     let emptyValidationText = checkEmpty(name, 'Name');
@@ -76,7 +75,7 @@ export default function (data) {
   }
 
   if (city !== undefined) {
-    console.log(city,"city>>>>>>>>>>>")
+    console.log(city, 'city>>>>>>>>>>>');
     let emptyValidationText = checkEmpty(city, strings.CITY);
     if (emptyValidationText !== '') {
       return emptyValidationText;
@@ -101,10 +100,6 @@ export default function (data) {
       return emptyValidationText;
     }
   }
-
- 
-
-
 
   // if (lastName !== undefined) {
   // 	let emptyValidationText = checkEmpty(lastName, 'last name');

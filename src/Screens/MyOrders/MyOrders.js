@@ -1,6 +1,14 @@
 import {cloneDeep, debounce} from 'lodash';
 import React, {createRef, useEffect, useState} from 'react';
-import {FlatList, RefreshControl, View} from 'react-native';
+import {
+  FlatList,
+  RefreshControl,
+  View,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Text,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 import CustomTopTabBar from '../../Components/CustomTopTabBar';
 import Header from '../../Components/Header';
@@ -14,9 +22,20 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
-import {moderateScaleVertical, width} from '../../styles/responsiveSize';
+import {
+  height,
+  moderateScale,
+  moderateScaleVertical,
+  width,
+} from '../../styles/responsiveSize';
+import {getImageUrl, showError} from '../../utils/helperFunctions';
+import Modal from 'react-native-modal';
+import stylesFun from './styles';
+import DatePicker from 'react-native-date-picker';
+import FastImage from 'react-native-fast-image';
+import GradientButton from '../../Components/GradientButton';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {showError} from '../../utils/helperFunctions';
+
 
 export default function MyOrders({navigation}) {
   const [state, setState] = useState({
@@ -37,8 +56,14 @@ export default function MyOrders({navigation}) {
     isLoading: false,
     isRefreshing: false,
     tabType: 'active',
+    isVisibleReturnOrderModal: false,
+    selectedOrderForReturn: null,
+    selectProductForRetrun: null,
+    viewHeight: 0,
+    reasons: [],
   });
   const {
+    viewHeight,
     tabBarData,
     selectedTab,
     isLoading,
@@ -52,6 +77,10 @@ export default function MyOrders({navigation}) {
     isRefreshing,
     tabType,
     orders,
+    isVisibleReturnOrderModal,
+    selectedOrderForReturn,
+    selectProductForRetrun,
+    reasons,
   } = state;
 
   //Update state in screen
@@ -63,6 +92,7 @@ export default function MyOrders({navigation}) {
   );
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
+  const styles = stylesFun({fontFamily, themeColors});
 
   //Get list of all orders
   useEffect(() => {
@@ -100,6 +130,7 @@ export default function MyOrders({navigation}) {
 
   //error handling of api
   const errorMethod = (error) => {
+    console.log(error, 'error>error');
     updateState({
       isLoading: false,
       isLoadingB: false,
@@ -159,6 +190,32 @@ export default function MyOrders({navigation}) {
     navigation.navigate(navigationStrings.RATEORDER);
   };
 
+  const returnYourOrder = (item) => {
+    console.log(item, 'item>item>');
+    updateState({isLoading: true});
+    actions
+      .getReturnOrderDetailData(
+        `?id=${item?.order_id}&vendor_id=${item?.vendor_id}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'getReturnOrderDetailData>>>res>>>');
+
+        updateState({
+          isVisibleReturnOrderModal: true,
+          selectedOrderForReturn: res?.data,
+          selectProductForRetrun: null,
+          isLoading: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+
   const renderOrders = ({item, index}) => {
     // console.log(item,"item>>item")
     return (
@@ -170,6 +227,11 @@ export default function MyOrders({navigation}) {
           selectedTab == strings.PAST_ORDERS ? () => rateYourOrder() : null
         }
         navigation={navigation}
+        onPressReturnOrder={
+          selectedTab == strings.PAST_ORDERS
+            ? () => returnYourOrder(item)
+            : null
+        }
       />
 
       // <OrderCardComponent
@@ -238,6 +300,69 @@ export default function MyOrders({navigation}) {
 
   //Give Rating
 
+  const onClose = () => {
+    updateState({isVisibleReturnOrderModal: false});
+  };
+
+  useEffect(() => {
+    console.log(selectedOrderForReturn, 'selectedOrderForReturn');
+  }, [selectedOrderForReturn]);
+
+  const selectProduct = (item) => {
+    console.log(item, '>item>item');
+    if (selectProductForRetrun && selectProductForRetrun?.id == item?.id) {
+      updateState({
+        selectProductForRetrun: null,
+      });
+    } else {
+      updateState({
+        selectProductForRetrun: item,
+      });
+    }
+  };
+  const returnOrder = () => {
+    if (selectProductForRetrun) {
+      console.log(
+        selectProductForRetrun,
+        'selectProductForRetrun>>selectProductForRetrun',
+      );
+      updateState({isVisibleReturnOrderModal: false, isLoading: true});
+      actions
+        .getReturnProductrDetailData(
+          `?return_ids=${selectProductForRetrun?.id}&order_id=${selectProductForRetrun?.order_id}`,
+          {},
+          {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+          },
+        )
+        .then((res) => {
+          console.log(res, 'getReturnProductrDetailData>>>res>>>');
+          updateState({isLoading: false});
+          setTimeout(() => {
+            navigation.navigate(navigationStrings.RETURNORDER, {
+              selectProductForRetrun: selectProductForRetrun,
+              selectedOrderForReturn: res?.data?.order
+                ? res?.data?.order
+                : selectedOrderForReturn,
+              reasons:
+                res?.data?.reasons && res?.data?.reasons.length
+                  ? res?.data?.reasons.map((item, index) => {
+                      (item['value'] = item?.title),
+                        (item['label'] = item?.title);
+                      return item;
+                    })
+                  : [],
+            });
+          }, 500);
+        })
+        .catch(errorMethod);
+    } else {
+      showError('Please select the product to return');
+    }
+  };
+
   return (
     <WrapperContainer
       bgColor={colors.backgroundGrey}
@@ -293,6 +418,153 @@ export default function MyOrders({navigation}) {
         ListFooterComponent={() => <View style={{height: 20}} />}
         // ListEmptyComponent={<ListEmptyProduct />}
       />
+
+      <Modal
+        transparent={true}
+        isVisible={isVisibleReturnOrderModal}
+        animationIn={'pulse'}
+        animationOut={'pulse'}
+        style={styles.modalContainer}>
+        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+          <Image source={imagePath.crossB} />
+        </TouchableOpacity>
+        <View
+          style={styles.modalMainViewContainer}
+          onLayout={(event) => {
+            updateState({viewHeight: event.nativeEvent.layout.height});
+          }}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            bounces={false}
+            style={styles.modalMainViewContainer}>
+            <View
+              style={{
+                // flex: 0.6,
+                // alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 10,
+              }}>
+              <Text style={styles.carType}>
+                {strings.DOYOUWANTTORETURNYOURORDER}
+              </Text>
+            </View>
+            <View
+              style={{
+                marginVertical: moderateScaleVertical(10),
+                marginBottom: moderateScale(20),
+              }}>
+              <Text style={styles.selectItemToReturn}>
+                {strings.SELECTITEMSFORRETURN}
+              </Text>
+            </View>
+
+            {selectedOrderForReturn &&
+            selectedOrderForReturn?.vendors &&
+            selectedOrderForReturn?.vendors[0]?.products
+              ? selectedOrderForReturn?.vendors[0]?.products.map(
+                  (item, index) => {
+                    return (
+                      <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            marginBottom: moderateScaleVertical(20),
+                          }}>
+                          {item?.product_return ? (
+                            <View>
+                              <Text
+                                style={{
+                                  fontFamily: fontFamily.medium,
+                                  fontSize: moderateScale(14),
+                                  color: colors.textGreyJ,
+                                }}>
+                                {item?.product_return?.status}
+                              </Text>
+                            </View>
+                          ) : (
+                            <TouchableOpacity
+                              onPress={() => selectProduct(item)}>
+                              <Image
+                                source={
+                                  selectProductForRetrun &&
+                                  selectProductForRetrun?.product_id ==
+                                    item?.product_id
+                                    ? imagePath.radioActive
+                                    : imagePath.radioInActive
+                                }
+                              />
+                            </TouchableOpacity>
+                          )}
+
+                          <View style={styles.cartItemImage}>
+                            <FastImage
+                              source={
+                                item?.image != '' && item?.image != null
+                                  ? {
+                                      uri: getImageUrl(
+                                        item?.image?.proxy_url,
+                                        item?.image?.image_path,
+                                        '300/300',
+                                      ),
+                                    }
+                                  : imagePath.patternOne
+                              }
+                              style={styles.imageStyle}
+                            />
+                          </View>
+                          <View style={{marginLeft: 10}}>
+                            <View style={{overflow: 'hidden'}}>
+                              <Text
+                                numberOfLines={2}
+                                style={[
+                                  styles.priceItemLabel2,
+                                  {opacity: 0.8},
+                                ]}>
+                                {item?.product_name}
+                              </Text>
+                            </View>
+
+                            {item?.quantity && (
+                              <View style={{flexDirection: 'row'}}>
+                                <Text style={{color: colors.textGrey}}>
+                                  {strings.QTY}
+                                </Text>
+                                <Text style={styles.cartItemWeight}>
+                                  {item?.quantity}
+                                </Text>
+                              </View>
+                            )}
+                          </View>
+                        </View>
+                      </ScrollView>
+                    );
+                  },
+                )
+              : null}
+            <View style={{height: 50}} />
+          </ScrollView>
+          <View
+            style={[
+              styles.bottomAddToCartView,
+              {top: viewHeight - height / 12},
+            ]}>
+            <GradientButton
+              colorsArray={[
+                themeColors.primary_color,
+                themeColors.primary_color,
+              ]}
+              // textStyle={styles.textStyle}
+              onPress={returnOrder}
+              marginTop={moderateScaleVertical(10)}
+              marginBottom={moderateScaleVertical(10)}
+              btnText={strings.SELECT}
+            />
+          </View>
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 }

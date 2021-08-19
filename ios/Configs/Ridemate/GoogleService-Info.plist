@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>216951895597-l30lqnki1vsijc7fgn3vfhnben9u3e4g.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.216951895597-l30lqnki1vsijc7fgn3vfhnben9u3e4g</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>216951895597-227bfkllh1f86j8lf0cl02igcjfv1uju.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBGgpa224NLTtV4hCP4qBCsDwG6sv_rTSQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>216951895597</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ridemate</string>
+	<key>PROJECT_ID</key>
+	<string>ridemate-19b32</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ridemate-19b32.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:216951895597:ios:9377ac8019bc11af596aa4</string>
+</dict>
+</plist>

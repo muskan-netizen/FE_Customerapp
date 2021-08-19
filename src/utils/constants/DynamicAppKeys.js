@@ -31,7 +31,7 @@ const shortCodes = {
   klickmat: 'de2c54',
   lastminutedress: '6e940e',
   rerak: 'f16959',
-  foodkart: 'c23640',
+  yummiidash: 'c23640',
   yoho: 'fdbcd9',
   glamsouq: '583ade',
   doctatransportation: '8115ce',
@@ -47,6 +47,18 @@ const shortCodes = {
   zuzuclean: '649a9a',
   towtrek: 'e7a92f',
   arenagrub: '3f8210',
+  jet: '8fb14b',
+  africanize: '35822a',
+  markita: '4edbd9',
+  sirvu: '5ea0ae',
+  ublue: 'f9f655',
+  mstechy: 'ec2a07',
+  senshive: 'f36591',
+  ridemate: 'd517bf',
+  codiner: 'd46808',
+  housekeeper: 'd8b741',
+  hairstonexpress: 'a64f8a',
+  diamonddashers: '015a80',
 };
 
 const appIds = {
@@ -170,9 +182,9 @@ const appIds = {
     ios: 'com.codebrew.rerak',
     android: 'com.codebrew.rerak',
   }),
-  foodkart: Platform.select({
-    ios: 'com.codebrew.foodkart',
-    android: 'com.codebrew.foodkart',
+  yummiidash: Platform.select({
+    ios: 'com.yummiidash',
+    android: 'com.yummiidash',
   }),
   yoho: Platform.select({
     ios: 'com.codebrewlab.yoho',
@@ -215,7 +227,7 @@ const appIds = {
     android: 'com.cabdelivr',
   }),
   drus: Platform.select({
-    ios: 'com.drus',
+    ios: 'com.drus.customer',
     android: 'com.drus',
   }),
   yahu: Platform.select({
@@ -227,12 +239,60 @@ const appIds = {
     android: 'com.zuzuclean',
   }),
   towtrek: Platform.select({
-    ios: 'com.towtrek',
-    android: 'com.towtrek',
+    ios: 'com.app.towtrek',
+    android: 'com.app.towtrek',
   }),
   arenagrub: Platform.select({
     ios: 'com.arenagrub',
     android: 'com.arenagrub',
+  }),
+  jet: Platform.select({
+    ios: 'com.jet.customer',
+    android: 'com.jet',
+  }),
+  africanize: Platform.select({
+    ios: 'com.africanize',
+    android: 'com.africanize',
+  }),
+  markita: Platform.select({
+    ios: 'com.markita',
+    android: 'com.markita',
+  }),
+  sirvu: Platform.select({
+    ios: 'com.sirvu',
+    android: 'com.sirvu',
+  }),
+  ublue: Platform.select({
+    ios: 'com.ublue',
+    android: 'com.ublue',
+  }),
+  mstechy: Platform.select({
+    ios: 'com.mstechy',
+    android: 'com.mstechy',
+  }),
+  senshive: Platform.select({
+    ios: 'com.senshive',
+    android: 'com.senshive',
+  }),
+  ridemate: Platform.select({
+    ios: 'com.ridemate',
+    android: 'com.ridemate',
+  }),
+  codiner: Platform.select({
+    ios: 'com.codiner',
+    android: 'com.codiner',
+  }),
+  housekeeper: Platform.select({
+    ios: 'com.housekeeper',
+    android: 'com.housekeeper',
+  }),
+  hairstonexpress: Platform.select({
+    ios: 'com.hairstonexpress',
+    android: 'com.hairstonexpress',
+  }),
+  diamonddashers: Platform.select({
+    ios: 'com.diamonddashers',
+    android: 'com.diamonddashers',
   }),
 };
 

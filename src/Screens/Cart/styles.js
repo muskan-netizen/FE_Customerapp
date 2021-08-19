@@ -2,6 +2,7 @@ import {Platform, StyleSheet} from 'react-native';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -305,9 +306,8 @@ export default ({fontFamily, themeColors}) => {
       marginVertical: 20,
       borderRadius: moderateScale(5),
       borderColor: themeColors.primary_color,
-      
     },
-    tipArrayStyle2:{
+    tipArrayStyle2: {
       justifyContent: 'center',
       alignItems: 'center',
       borderWidth: 1,
@@ -318,9 +318,38 @@ export default ({fontFamily, themeColors}) => {
       marginVertical: 20,
       borderRadius: moderateScale(5),
       borderColor: themeColors.primary_color,
-     
-    }
-
+    },
+    bottomAddToCartView: {
+      marginHorizontal: moderateScale(20),
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      bottom: 0,
+    },
+    modalContainer: {
+      marginHorizontal: 0,
+      marginBottom: 0,
+      marginTop: moderateScaleVertical(height / 2),
+      overflow: 'hidden',
+    },
+    closeButton: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginVertical: moderateScaleVertical(10),
+    },
+    modalMainViewContainer: {
+      flex: 1,
+      backgroundColor: colors.white,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      // overflow: 'hidden',
+      // paddingHorizontal: moderateScale(24),
+    },
+    carType: {
+      fontSize: textScale(14),
+      color: colors.blackC,
+      fontFamily: fontFamily.bold,
+    },
   });
   return styles;
 };

@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "668396276235",
+    "project_id": "markita-64d33",
+    "storage_bucket": "markita-64d33.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668396276235:android:3c79d36df9f8ae7800d50e",
+        "android_client_info": {
+          "package_name": "com.markita"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "668396276235-148l29i6isita40g378095ifm2q4m1nt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.markita",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "668396276235-htmlhbv3nfo61k93oqp6j1drm4tp9a24.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.markita",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "668396276235-viidqng35v25119kenhihgo1ch0scmjf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.markita",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "668396276235-a0o5pgvtju3cq8v4nr3gc0ld5qv7c7tu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0Jp2eUR_S9GUhpeiMzf6-adgd-_AdDpo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "668396276235-a0o5pgvtju3cq8v4nr3gc0ld5qv7c7tu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
