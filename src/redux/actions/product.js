@@ -39,6 +39,22 @@ export function getProductByVendorId(query = '', data = {}, headers = {}) {
   });
 }
 
+
+//Get all Products by Vendor id
+
+export function getProductByVendorCategoryId(query = '', data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiGet(GET_PRODUCT_DATA_BY_VENDORID + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+
 //Get Category data
 export function getProductByCategoryId(query = '', data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
