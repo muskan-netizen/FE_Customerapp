@@ -125,7 +125,6 @@ export default function ProductDetail2({route, navigation}) {
             }
           })
           .filter((x) => x != undefined);
-        console.log(variantSetData, 'variantSetData');
         if (variantSetData.length) {
           getProductDetailBasedOnFilter(variantSetData);
         } else {
@@ -175,7 +174,6 @@ export default function ProductDetail2({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res.data, 'res.data');
         updateState({
           isLoading: false,
           isLoadingB: false,
@@ -213,7 +211,6 @@ export default function ProductDetail2({route, navigation}) {
         language: languages.primary_language.id,
       })
       .then((res) => {
-        console.log(res.data, 'res.data by vendor id ');
         updateState({
           isLoading: false,
           isLoadingB: false,
@@ -231,8 +228,6 @@ export default function ProductDetail2({route, navigation}) {
   };
 
   const errorMethod = (error) => {
-    console.log(error.message.alert, 'Error>>>>>');
-
     if (error?.message?.alert == 1) {
       updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
       // showError(error?.message?.error || error?.error);
@@ -251,8 +246,6 @@ export default function ProductDetail2({route, navigation}) {
   };
 
   const errorMethodSecond = (error, addonSet) => {
-    console.log(error.message.alert, 'Error>>>>>');
-
     if (error?.message?.alert == 1) {
       updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
       // showError(error?.message?.error || error?.error);
@@ -302,8 +295,6 @@ export default function ProductDetail2({route, navigation}) {
 
   //add Product to wishlist
   const _onAddtoWishlist = (item) => {
-    console.log(item, 'itemwishlist');
-
     if (!!userData?.auth_token) {
       actions
         .updateProductWishListData(
@@ -316,7 +307,6 @@ export default function ProductDetail2({route, navigation}) {
           },
         )
         .then((res) => {
-          console.log(res, 'addtowishlist response');
           showSuccess(res.message);
 
           if (item.inwishlist) {
@@ -362,8 +352,6 @@ export default function ProductDetail2({route, navigation}) {
         }
       }),
     });
-
-    console.log(variantSet, 'newArray>>>>>');
   };
 
   const radioButtonView = (options) => {
@@ -499,7 +487,6 @@ export default function ProductDetail2({route, navigation}) {
 
     addonSet.map((i, inx) => {
       i.setoptions.map((j, jnx) => {
-        console.log(j, 'J');
         if (j?.value == true) {
           addon_ids.push(j?.addon_id);
           addon_options.push(j?.id);
@@ -518,7 +505,6 @@ export default function ProductDetail2({route, navigation}) {
       data['addon_ids'] = addon_ids;
       data['addon_options'] = addon_options;
     }
-    console.log(data, 'data for cart');
     updateState({isLoadingC: true, isVisibleAddonModal: false});
     actions
       .addProductsToCart(data, {
@@ -528,7 +514,6 @@ export default function ProductDetail2({route, navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'res.data');
         actions.cartItemQty(res);
         showSuccess('Product successfully added');
 
