@@ -680,7 +680,53 @@ target 'Codiner' do
   
 end
 
+#Housekeeper4Hire Target
+target 'Housekeeper4Hire' do
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  config = use_native_modules!
+  use_react_native!(:path => config["reactNativePath"])
+  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  
+end
 
+#HairstonExpress Target
+target 'HairstonExpress' do
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  config = use_native_modules!
+  use_react_native!(:path => config["reactNativePath"])
+  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  
+end
+
+#DiamondDashers Target
+target 'DiamondDashers' do
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  config = use_native_modules!
+  use_react_native!(:path => config["reactNativePath"])
+  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  
+end
+
+#DestinationOps Target
+target 'DestinationOps' do
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  config = use_native_modules!
+  use_react_native!(:path => config["reactNativePath"])
+  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  
+end
 
 
 
