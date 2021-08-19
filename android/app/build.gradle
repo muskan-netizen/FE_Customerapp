@@ -133,9 +133,9 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"   
-        multifDexEnabled true
-        vectorDrawables.useSupportLibrary true
+        versionName "1.0"
+        multiDexEnabled true
+       vectorDrawables.useSupportLibrary true
     }
     splits {
         abi {
@@ -740,8 +740,9 @@ android {
 }
 
 
-dependencies {
 
+dependencies {
+   
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.facebook.fresco:animated-gif:1.12.0'
     // For WebP support, including animated WebP
