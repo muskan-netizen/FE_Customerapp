@@ -3,6 +3,7 @@ import {Animated, Text, TouchableOpacity, View} from 'react-native';
 import DashedLine from 'react-native-dashed-line';
 import {Image} from 'react-native-elements';
 import {useSelector} from 'react-redux';
+import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {
@@ -39,50 +40,21 @@ export default function ThreeColumnCard2({
       // onPressOut={() => pressOutAnimation(scaleInAnimated)}
 
       style={{
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginVertical: moderateScaleVertical(10),
+        flexDirection: 'column',
+        alignItems: 'center',
+        backgroundColor: colors.white,
+        borderRadius: moderateScale(10),
+        elevation: 5,
+        borderWidth: 0.5,
+        borderColor: colors.borderColorD,
+        marginHorizontal: moderateScale(7.5),
       }}>
-      <View>
-        <Text
-          style={{
-            fontFamily: fontFamily.medium,
-            fontSize: textScale(16),
-            color: colors.black,
-          }}>
-          {data?.name}
-        </Text>
-        {/* <Text
-          style={{
-            marginTop: moderateScaleVertical(5),
-            fontFamily: fontFamily.medium,
-            fontSize: textScale(13),
-          }}>
-          $120
-        </Text> */}
-        <Text
-          style={{
-            fontFamily: fontFamily.regular,
-            color: colors.textGreyG,
-            marginTop: moderateScale(5),
-          }}>
-          Uramaki styled spicy chicken
-        </Text>
-        <Text
-          style={{
-            fontFamily: fontFamily.regular,
-            color: colors.textGreyG,
-          }}>
-          dimsums with chef’s ...more
-        </Text>
-      </View>
-
       <View
         style={{
-          width: moderateScale(90),
-          height: moderateScaleVertical(90),
-          borderRadius: moderateScale(15),
+          width: (width - moderateScale(65)) / 3,
+          height: moderateScaleVertical(100),
+          borderTopLeftRadius: moderateScale(10),
+          borderTopRightRadius: moderateScale(10),
           overflow: 'hidden',
         }}>
         <Image
@@ -96,25 +68,28 @@ export default function ThreeColumnCard2({
                 ),
               }}
               style={{
-                width: cardWidth,
+                width: '100%',
                 height: moderateScaleVertical(128),
-                borderRadius: moderateScale(10),
               }}
             />
           }
-          source={{
-            uri: getImageUrl(
-              data?.avatar?.proxy_url || data?.image?.proxy_url,
-              data?.avatar?.image_path || data?.image?.image_path,
-              `130/140`,
-            ),
-          }}
+          source={imagePath.nature}
           style={{
             width: '100%',
             height: '100%',
           }}
         />
       </View>
+
+      <Text
+        style={{
+          fontFamily: fontFamily.medium,
+          fontSize: textScale(15),
+          color: colors.black,
+          marginVertical: 10,
+        }}>
+        {data?.name}
+      </Text>
     </TouchableOpacity>
   );
 }

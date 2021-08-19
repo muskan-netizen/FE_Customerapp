@@ -612,7 +612,7 @@ export default function ProductDetail2({route, navigation}) {
           position: 'absolute',
           zIndex: 1000,
           width: width - moderateScale(20),
-          top: 50,
+          top: height > 700 ? 50 : 30,
           alignSelf: 'center',
         }}>
         <TouchableOpacity
@@ -675,7 +675,8 @@ export default function ProductDetail2({route, navigation}) {
                   justifyContent: 'space-between',
                   padding: 10,
                   marginTop: 'auto',
-                  marginBottom: moderateScale(20),
+                  marginBottom:
+                    height > 700 ? moderateScale(20) : moderateScale(55),
                   alignItems: 'center',
                   marginHorizontal: moderateScale(10),
                 }}>
@@ -793,6 +794,7 @@ export default function ProductDetail2({route, navigation}) {
                 style={{
                   height: 2,
                   backgroundColor: colors.lightGreyBorder,
+                  marginTop: moderateScale(7),
                 }}
               />
             </View>

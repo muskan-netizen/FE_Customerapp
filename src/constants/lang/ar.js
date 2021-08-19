@@ -344,4 +344,7 @@ export default {
   CONTINUE_FACEBOOK: 'Continue using Facebook',
   CONTINUE_TWITTER: 'Continue using Twitter',
   CONTINUE_APPLE: 'Continue using Apple',
+  HEY_MSG: 'Hey',
+  GREETING_MSG: 'what are you up to today?',
+  NEAR_VENDOR: 'Top vendors near you',
 };

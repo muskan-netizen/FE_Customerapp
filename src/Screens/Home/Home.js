@@ -476,7 +476,7 @@ export default function Home({route, navigation}) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, data)();
 
       moveToNewScreen(navigationStrings.VENDOR_DETAIL, {data})();
-    } else if (!!data.is_show_category) {
+    } else if (!data.is_show_category || data.is_show_category) {
       let item = data;
       data?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {

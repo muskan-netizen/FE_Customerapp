@@ -29,10 +29,10 @@ export default function Vendors({route, navigation}) {
 
   const categoryData = useSelector((state) => state?.vendor?.categoryData);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
-  
+
   const {isLoading, pageNo, isRefreshing, limit} = state;
   const {data} = route.params;
-  
+
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -55,7 +55,6 @@ export default function Vendors({route, navigation}) {
         {code: appData.profile.code},
       )
       .then((res) => {
-        
         updateState({isLoading: false, isRefreshing: false});
         const vendorData = {
           category: res.data.category,
@@ -91,7 +90,7 @@ export default function Vendors({route, navigation}) {
 
   //************Check the redirecton screen********/
   const _checkRedirectScreen = (item) => {
-    console.log("clickon vendor ",item);
+    console.log('clickon vendor ', item);
     {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {

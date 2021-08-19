@@ -5,6 +5,7 @@ import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
+import commonStyles from '../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -28,33 +29,24 @@ export default function MarketCard2({
       style={styles.mainTouchContainer}>
       <View style={{flex: 0.9}}>
         <Text style={styles.categoryText}>{data.name}</Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginVertical: moderateScaleVertical(4),
-          }}>
-          <Text
+        {data.desc && (
+          <View
             style={{
-              fontSize: textScale(12),
-              color: colors.textGreyJ,
-              fontFamily: fontFamily.regular,
+              flexDirection: 'row',
+              marginVertical: moderateScaleVertical(4),
             }}>
-            Westheimer Road · 2.9 kms
-          </Text>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-          }}>
-          <Text
-            style={{
-              fontSize: textScale(12),
-              color: colors.textGreyJ,
-              fontFamily: fontFamily.regular,
-            }}>
-            German · Continental
-          </Text>
-        </View>
+            <Text
+              numberOfLines={2}
+              style={{
+                fontSize: textScale(12),
+                color: colors.textGreyJ,
+                fontFamily: fontFamily.regular,
+              }}>
+              {data.desc}
+            </Text>
+          </View>
+        )}
+
         <View
           style={{
             width: '90%',
@@ -69,15 +61,17 @@ export default function MarketCard2({
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Image style={{tintColor: colors.black}} source={imagePath.star} />
-          <Text
-            style={{
-              color: colors.blackC,
-              fontSize: textScale(11),
-              fontFamily: fontFamily.medium,
-              marginHorizontal: moderateScale(5),
-            }}>
-            4.0 · 31 mins · $40 for two
-          </Text>
+          {!data?.product_avg_average_rating && (
+            <Text
+              style={{
+                color: colors.blackC,
+                fontSize: textScale(11),
+                fontFamily: fontFamily.medium,
+                marginHorizontal: moderateScale(5),
+              }}>
+              {Number(data?.product_avg_average_rating).toFixed(1)}
+            </Text>
+          )}
         </View>
       </View>
       <FastImage

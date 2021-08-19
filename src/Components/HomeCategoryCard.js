@@ -46,16 +46,6 @@ export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
           }}>
           {data.name}
         </Text>
-        <Text
-          style={{
-            fontFamily: fontFamily.regular,
-            color: colors.greyLight,
-            marginLeft: moderateScale(15),
-            marginTop: moderateScale(2),
-            marginBottom: moderateScale(8),
-          }}>
-          Deliver anything
-        </Text>
       </View>
       <View
         style={{

@@ -214,6 +214,7 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
       justifyContent: 'space-evenly',
       borderWidth: 0.5,
       borderColor: themeColors.primary_color,
+      paddingVertical: moderateScale(5),
     },
     cartItemValueBtn: {
       fontFamily: fontFamily.bold,
