@@ -326,6 +326,7 @@ export default function MyProfile({route, navigation}) {
 
   // this funtion use for camera handle
   const cameraHandle = (index) => {
+    console.log(index, 'imageIndex');
     if (index == 0 || index == 1) {
       cameraHandler(index, {
         width: 300,
