@@ -11,6 +11,7 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableNativeFeedback,
 } from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
@@ -370,7 +371,7 @@ export default function ProductDetail2({route, navigation}) {
       <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         {options.map((i, inx) => {
           return (
-            <TouchableOpacity
+            <TouchableNativeFeedback
               disabled={options && options.length == 1 ? true : false}
               onPress={() => selectSpecificOptions(options, i, inx)}
               style={{
@@ -381,7 +382,7 @@ export default function ProductDetail2({route, navigation}) {
               }}>
               <Image source={i?.value ? imagePath.check : imagePath.unCheck} />
               <Text style={styles.variantValue}>{i.title}</Text>
-            </TouchableOpacity>
+            </TouchableNativeFeedback>
           );
         })}
       </View>
@@ -393,7 +394,7 @@ export default function ProductDetail2({route, navigation}) {
       <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         {options.map((i, inx) => {
           return (
-            <TouchableOpacity
+            <TouchableNativeFeedback
               disabled={options && options.length == 1 ? true : false}
               onPress={() => selectSpecificOptions(options, i, inx)}
               style={{
@@ -428,7 +429,7 @@ export default function ProductDetail2({route, navigation}) {
                     },
                   ]}></View>
               </View>
-            </TouchableOpacity>
+            </TouchableNativeFeedback>
           );
         })}
       </View>
@@ -631,6 +632,7 @@ export default function ProductDetail2({route, navigation}) {
         }}>
         <TouchableOpacity
           activeOpacity={0.8}
+          background={colors.green}
           onPress={() => navigation.goBack()}
           style={{
             backgroundColor: colors.white,
@@ -713,7 +715,7 @@ export default function ProductDetail2({route, navigation}) {
                     </View>
                   </View>
                 )}
-                <TouchableOpacity
+                <TouchableNativeFeedback
                   onPress={() => _onAddtoWishlist(productDetailData)}>
                   {productDetailData?.is_wishlist ? (
                     <View>
@@ -724,7 +726,7 @@ export default function ProductDetail2({route, navigation}) {
                       )}
                     </View>
                   ) : null}
-                </TouchableOpacity>
+                </TouchableNativeFeedback>
               </View>
             </>
           }
@@ -765,25 +767,25 @@ export default function ProductDetail2({route, navigation}) {
             (!!data?.showAddToCart ? null : (
               <View style={{flex: 0.5, justifyContent: 'center'}}>
                 <View style={styles.incDecBtnContainer2}>
-                  <TouchableOpacity
+                  <TouchableNativeFeedback
                     style={{flex: 0.3, alignItems: 'center'}}
                     onPress={() => productIncrDecreamentForCart(2)}>
                     <Text style={styles.cartItemValueBtn2}>-</Text>
-                  </TouchableOpacity>
+                  </TouchableNativeFeedback>
                   <View style={{flex: 0.4, alignItems: 'center'}}>
                     <Text style={styles.cartItemValue2}>
                       {productQuantityForCart}
                     </Text>
                   </View>
-                  <TouchableOpacity
+                  <TouchableNativeFeedback
                     style={{flex: 0.3, alignItems: 'center'}}
                     onPress={() => productIncrDecreamentForCart(1)}>
                     <Text style={styles.cartItemValueBtn2}>+</Text>
-                  </TouchableOpacity>
+                  </TouchableNativeFeedback>
                 </View>
               </View>
             ))}
-          {/* <TouchableOpacity
+          {/* <TouchableNativeFeedback
                   onPress={() => _onAddtoWishlist(productDetailData)}>
                   {productDetailData?.is_wishlist ? (
                     <View>
@@ -794,7 +796,7 @@ export default function ProductDetail2({route, navigation}) {
                       )}
                     </View>
                   ) : null}
-                </TouchableOpacity> */}
+                </TouchableNativeFeedback> */}
         </View>
         <ScrollView
           style={{marginBottom: moderateScale(90)}}
