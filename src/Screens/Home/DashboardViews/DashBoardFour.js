@@ -14,6 +14,7 @@ import HomeCategoryCard from '../../../Components/HomeCategoryCard';
 import CardLoader from '../../../Components/Loaders/CardLoader';
 import ProductLoader2 from '../../../Components/Loaders/ProductLoader2';
 import MarketCard2 from '../../../Components/MarketCard2';
+import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
 import {
   itemWidth,
@@ -95,7 +96,7 @@ export default function DashBoardFour({
           <BannerHome2
             bannerRef={bannerRef}
             slider1ActiveSlide={slider1ActiveSlide}
-            bannerData={appData?.banners}
+            bannerData={appData.banners}
             sliderWidth={sliderWidth}
             itemWidth={itemWidth}
             onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
@@ -115,7 +116,7 @@ export default function DashBoardFour({
               marginTop: moderateScale(15),
               marginHorizontal: moderateScale(6),
             }}>
-            Hey {userData.name},
+            {strings.HEY_MSG} {userData.name},
           </Text>
           <Text
             style={{
@@ -124,7 +125,7 @@ export default function DashBoardFour({
               marginHorizontal: moderateScale(6),
               marginBottom: moderateScaleVertical(5),
             }}>
-            what are you up to today?
+            {strings.GREETING_MSG}
           </Text>
         </>
       )}
@@ -162,7 +163,7 @@ export default function DashBoardFour({
               marginBottom: moderateScale(25),
               marginLeft: moderateScale(5),
             }}>
-            Top vendors near you
+            {strings.NEAR_VENDOR}
           </Text>
         </>
       ) : null}

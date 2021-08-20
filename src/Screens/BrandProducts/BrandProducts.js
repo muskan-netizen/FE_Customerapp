@@ -28,6 +28,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -472,7 +473,11 @@ export default function BrandProducts({route, navigation}) {
       isLoadingB={isLoadingB}
       source={loaderOne}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={brand.name || brand.translation[0].title}
         headerStyle={{backgroundColor: colors.white}}
         rightIcon={imagePath.search}

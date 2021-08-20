@@ -173,7 +173,7 @@ export default ({themeColors, fontFamily}) => {
     applyPromoBtn: {
       marginHorizontal: moderateScale(7),
       borderRadius: moderateScale(15),
-      borderWidth: 1,
+      borderWidth: 1.5,
       borderColor: colors.borderColorD,
       paddingVertical: moderateScaleVertical(15),
       paddingHorizontal: moderateScaleVertical(10),

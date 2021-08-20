@@ -10,11 +10,12 @@ import strings from '../../constants/lang/index';
 import navigationStrings from '../../navigation/navigationStrings';
 import colors from '../../styles/colors';
 import {moderateScaleVertical} from '../../styles/responsiveSize';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
 import stylesFun from './styles';
 export default function BuyProduct({navigation}) {
   const currentTheme = useSelector((state) => state.appTheme);
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle, appData} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily});
@@ -95,7 +96,11 @@ export default function BuyProduct({navigation}) {
       bgColor={colors.backgroundGrey}
       statusBarColor={colors.backgroundGrey}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.BUY_SOME}
         headerStyle={{backgroundColor: colors.backgroundGrey}}
       />

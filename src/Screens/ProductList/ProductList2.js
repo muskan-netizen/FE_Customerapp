@@ -633,29 +633,6 @@ export default function Products({route, navigation}) {
         }
       />
       <View style={{...commonStyles.headerTopLine}} />
-      {/* <View
-        style={{
-          flexDirection: 'row',
-          marginHorizontal: moderateScale(28),
-          justifyContent: 'space-between',
-          paddingVertical: 10,
-        }}>
-        <IconTextRow
-          icon={imagePath.time}
-          text="20-30 min"
-          textStyle={{color: colors.textGrey, opacity: 0.6}}
-        />
-        <IconTextRow
-          icon={imagePath.percentRed}
-          text="20%"
-          textStyle={{ color: colors.textGrey, opacity: 0.6 }}
-        />
-        <IconTextRow
-          icon={imagePath.locationGreen}
-          text="2.2 Kin"
-          textStyle={{color: colors.textGrey, opacity: 0.6}}
-        />
-      </View> */}
 
       <View
         style={{

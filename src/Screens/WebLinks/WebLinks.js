@@ -1,12 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {WebView} from 'react-native-webview';
+import {ScrollView, View} from 'react-native';
+import HTMLView from 'react-native-htmlview';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
@@ -20,9 +14,9 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
 import stylesFun from './styles';
-import HTMLView from 'react-native-htmlview';
 
 export default function WebLinks({navigation, route}) {
   console.log(route, 'route>>>');
@@ -88,7 +82,11 @@ export default function WebLinks({navigation, route}) {
       isLoadingB={isLoading}
       source={loaderOne}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={(paramData && paramData?.title) || ''}
         headerStyle={{backgroundColor: Colors.white}}
       />

@@ -12,9 +12,9 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {moderateScale} from '../../styles/responsiveSize';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
-import {useFocusEffect} from '@react-navigation/native';
 
 export default function Wishlist({navigation}) {
   const [state, setState] = useState({
@@ -160,6 +160,11 @@ export default function Wishlist({navigation}) {
       bgColor={colors.backgroundGrey}
       statusBarColor={colors.backgroundGrey}>
       <Header
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.WISHLIST}
         rightIcon={imagePath.search}
         onPressRight={() =>

@@ -57,6 +57,15 @@ export default ({themeColors, fontFamily}) => {
       marginTop: 0,
       marginHorizontal: moderateScale(16),
     },
+    orText2: {
+      lineHeight: 24,
+      textAlign: 'center',
+      fontFamily: fontFamily.bold,
+      marginTop: 0,
+      marginHorizontal: moderateScale(16),
+      color: colors.black,
+      fontSize: textScale(14),
+    },
     forgotContainer: {
       flexDirection: 'row',
       justifyContent: 'flex-end',

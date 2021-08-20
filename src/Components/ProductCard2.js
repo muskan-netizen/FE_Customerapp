@@ -1,9 +1,7 @@
 import React from 'react';
-import {Animated, Text, TouchableOpacity, View, Image} from 'react-native';
+import {Animated, Text, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
-import {transparentProductImage} from '../constants/constants';
-import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
@@ -14,10 +12,11 @@ import {
 } from '../styles/responsiveSize';
 import {
   getImageUrl,
-  getScaleTransformationStyle,
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
+import HTMLView from 'react-native-htmlview';
+import DashedLine from 'react-native-dashed-line';
 
 export default function ProductCard2({
   data = {},
@@ -60,16 +59,16 @@ export default function ProductCard2({
           marginVertical: moderateScaleVertical(10),
         },
       ]}>
-      <View>
+      <View style={{width: width - moderateScale(160), overflow: 'hidden'}}>
         <View
           style={{
-            // height: 30,
             paddingTop: moderateScale(5),
           }}>
           <Text
             numberOfLines={1}
             style={{
-              ...commonStyles.futuraBtHeavyFont16,
+              ...commonStyles.futuraBtHeavyFont14,
+              width: moderateScaleVertical(220),
             }}>
             {data?.translation[0]?.title}
           </Text>
@@ -93,23 +92,28 @@ export default function ProductCard2({
             ).toFixed(2)}`}
           </Text>
         </View>
-        <Text
-          style={{
-            fontFamily: fontFamily.regular,
-            color: colors.textGreyG,
-          }}>
-          Uramaki styled spicy chicken
-        </Text>
-        <Text
-          style={{
-            fontFamily: fontFamily.regular,
-            color: colors.textGreyG,
-          }}>
-          dimsums with chef’s ...more
-        </Text>
+        {data?.translation[0]?.body_html && (
+          <HTMLView
+            value={data?.translation[0]?.body_html}
+            nodeComponentProps={{
+              numberOfLines: 1,
+            }}
+          />
+        )}
+
+        <DashedLine
+          dashLength={5}
+          dashThickness={1}
+          dashGap={2}
+          dashColor={colors.greyLight}
+          style={{marginTop: moderateScale(7)}}
+        />
       </View>
       <Animated.View
-        style={{height: moderateScale(115), width: moderateScale(115)}}>
+        style={{
+          height: moderateScale(100),
+          width: moderateScale(100),
+        }}>
         <FastImage
           source={{uri: url1 && url2 ? getImage : ''}}
           style={{

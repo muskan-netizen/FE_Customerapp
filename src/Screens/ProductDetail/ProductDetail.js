@@ -1,15 +1,17 @@
-import {cloneDeep, update} from 'lodash';
+import {useFocusEffect} from '@react-navigation/native';
+import {cloneDeep} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Alert,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import HTMLView from 'react-native-htmlview';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Pagination} from 'react-native-snap-carousel';
 import {useSelector} from 'react-redux';
@@ -25,18 +27,15 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
-
 import {
   moderateScale,
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
 import {showError, showSuccess} from '../../utils/helperFunctions';
+import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-import {useFocusEffect} from '@react-navigation/native';
-import AddonModal from './AddonModal';
-import HTMLView from 'react-native-htmlview';
 
 export default function ProductDetail({route, navigation}) {
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
@@ -927,9 +926,6 @@ export default function ProductDetail({route, navigation}) {
               addonSet={addonSet}
               // onPress={currentLocation}
             />
-            {appStyle?.tabBarLayout == 3 ? (
-              <View style={{height: moderateScaleVertical(20)}} />
-            ) : null}
           </>
         )}
       </KeyboardAwareScrollView>

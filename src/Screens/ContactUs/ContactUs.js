@@ -17,6 +17,7 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
@@ -170,7 +171,11 @@ export default function ContactUs({navigation}) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.CONTACT_USS}
         headerStyle={{backgroundColor: colors.white}}
       />

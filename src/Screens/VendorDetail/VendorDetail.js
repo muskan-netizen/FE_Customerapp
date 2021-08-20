@@ -69,6 +69,7 @@ export default function VendorDetail({navigation, route}) {
         },
       )
       .then((res) => {
+        console.log(res, 'res>>>category data');
         updateState({isLoading: false});
         if (res && res.data) {
           updateState({vendorData: res.data.listData});
@@ -92,6 +93,7 @@ export default function VendorDetail({navigation, route}) {
       .then((res) => {
         updateState({isLoading: false});
         if (res && res.data) {
+          console.log(res, 'res>>res');
           let newArray = res.data;
           // if (vendorParams?.rootProducts) {
           //   // console.log(
@@ -119,8 +121,10 @@ export default function VendorDetail({navigation, route}) {
         onPress={moveToNewScreen(navigationStrings.PRODUCT_LIST, {
           id: item.id,
           rootProducts: vendorParams?.rootProducts,
-          // vendor: true,
+          vendor: vendorParams?.irootProductstem?true:false,
           // rootProducts:
+          vendorData: vendorParams?.item,
+          categoryInfo: item,
           name: item.name,
         })}
         // onPress={() => navigation.navigate(navigationStrings.PRODUCT_LIST)}

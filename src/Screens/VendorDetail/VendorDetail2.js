@@ -24,6 +24,7 @@ import {getImageUrl, showError} from '../../utils/helperFunctions';
 export default function VendorDetail2({navigation, route}) {
   let vendorParams = route?.params?.data;
   console.log(vendorParams, 'VendorDetail params');
+  const userData = useSelector((state) => state?.auth?.userData);
 
   const [state, setState] = useState({
     vendorId: vendorParams?.item?.id,
@@ -110,7 +111,6 @@ export default function VendorDetail2({navigation, route}) {
           // }
           updateState({vendorData: newArray});
         }
-        console.log(res, 'Vendor data response');
       })
       .catch(errorMethod);
   };
@@ -118,24 +118,28 @@ export default function VendorDetail2({navigation, route}) {
   /********* */
 
   const errorMethod = (error) => {
-    console.log(error, 'Error>>>>>');
     updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
     showError(error?.message || error?.error);
   };
 
-  const _renderItem = ({item, index}) => {
-    console.log(item, 'vendorDatavendorData');
+  const ary = [5, 6, 4, 5, 5, 6, 4, 5];
 
+  const _renderItem = ({item, index}) => {
     return (
       <ThreeColumnCard2
-        onPress={moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-          id: item.id,
-          rootProducts: vendorParams?.rootProducts,
-          // vendor: true,
-          // rootProducts:
-          name: item.name,
-        })}
-        // onPress={() => navigation.navigate(navigationStrings.PRODUCT_LIST)}
+        onPress={
+          item.name === 'Pick & Drop'
+            ? userData?.auth_token
+              ? moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)
+              : moveToNewScreen(navigationStrings.OUTER_SCREEN, {})
+            : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+                id: item.id,
+                rootProducts: vendorParams?.rootProducts,
+                // vendor: true,
+                // rootProducts:
+                name: item.name,
+              })
+        }
         data={item}
         withTextBG
         cardIndex={index}
@@ -197,22 +201,17 @@ export default function VendorDetail2({navigation, route}) {
               ]}>
               {vendorParams?.item?.name}
             </Text>
-            {/* </TouchableOpacity> */}
-            <Text
-              style={{
-                marginTop: moderateScaleVertical(13),
-                fontFamily: fontFamily.regular,
-              }}>
-              Westheimer Road · 2.9 kms
-            </Text>
-            <Text
-              style={{
-                marginTop: moderateScaleVertical(5),
-                marginBottom: moderateScaleVertical(15),
-                fontFamily: fontFamily.regular,
-              }}>
-              German · Continental · Chinese
-            </Text>
+            {vendorParams?.item?.desc && (
+              <Text
+                style={{
+                  marginTop: moderateScaleVertical(13),
+                  fontFamily: fontFamily.regular,
+                  marginBottom: moderateScale(7),
+                  color: colors.textGrey,
+                }}>
+                {vendorParams?.item?.desc}
+              </Text>
+            )}
 
             <DashedLine
               dashLength={5}
@@ -228,47 +227,31 @@ export default function VendorDetail2({navigation, route}) {
                 marginRight: moderateScale(70),
               }}>
               <View style={{flexDirection: 'column'}}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Image
-                    source={imagePath.starWhite}
-                    style={{
-                      tintColor: colors.black,
-                      height: 10,
-                      width: 10,
-                      marginRight: moderateScale(5),
-                    }}
-                  />
-                  <Text style={{fontFamily: fontFamily.bold}}>4.0</Text>
-                </View>
-                <Text
-                  style={{
-                    fontFamily: fontFamily.regular,
-                    color: colors.greyLight,
-                  }}>
-                  100+ ratings
-                </Text>
-              </View>
+                {vendorParams?.item?.product_avg_average_rating && (
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Image
+                      source={imagePath.starWhite}
+                      style={{
+                        tintColor: colors.black,
+                        height: 10,
+                        width: 10,
+                        marginRight: moderateScale(5),
+                      }}
+                    />
 
-              <View style={{flexDirection: 'column'}}>
-                <Text style={{fontFamily: fontFamily.bold}}>33 mins</Text>
-                <Text
-                  style={{
-                    fontFamily: fontFamily.regular,
-                    color: colors.greyLight,
-                  }}>
-                  Delivery time
-                </Text>
-              </View>
-
-              <View style={{flexDirection: 'column'}}>
-                <Text style={{fontFamily: fontFamily.bold}}>$200</Text>
-                <Text
-                  style={{
-                    fontFamily: fontFamily.regular,
-                    color: colors.greyLight,
-                  }}>
-                  For two
-                </Text>
+                    <Text
+                      style={{
+                        color: colors.blackC,
+                        fontSize: textScale(11),
+                        fontFamily: fontFamily.medium,
+                        marginHorizontal: moderateScale(5),
+                      }}>
+                      {Number(
+                        vendorParams?.item?.product_avg_average_rating,
+                      ).toFixed(1)}
+                    </Text>
+                  </View>
+                )}
               </View>
             </View>
           </View>
@@ -282,30 +265,21 @@ export default function VendorDetail2({navigation, route}) {
             <ProductLoader2 isLoading={isLoading} isProductList />
           </View>
         ) : (
-          <>
+          <View style={{marginHorizontal: moderateScale(7.5)}}>
             <FlatList
               data={vendorData || []}
-              // numColumns={3}
               ListHeaderComponent={<View style={{height: 10}} />}
               showsVerticalScrollIndicator={false}
               scrollEnabled={false}
-              // columnWrapperStyle={{justifyContent: 'space-between'}}
-              contentContainerStyle={{marginHorizontal: moderateScale(16)}}
+              numColumns={3}
               ItemSeparatorComponent={() => (
-                <View style={{width: '70%'}}>
-                  <DashedLine
-                    dashLength={2}
-                    dashThickness={1}
-                    dashGap={5}
-                    dashColor={colors.greyLight}
-                  />
-                </View>
+                <View style={{height: moderateScale(15)}}></View>
               )}
               renderItem={_renderItem}
               ListEmptyComponent={<EmptyListLoader />}
               keyExtractor={(item, index) => String(index)}
             />
-          </>
+          </View>
         )}
       </ScrollView>
     </WrapperContainer>

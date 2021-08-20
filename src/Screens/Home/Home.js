@@ -1,6 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {Alert, BackHandler, Linking, View} from 'react-native';
+import {Alert, BackHandler, View} from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import {useSelector} from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -8,23 +8,19 @@ import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import DeviceInfo from 'react-native-device-info';
 
 import {
   androidBackButtonHandler,
   getCurrentLocation,
-  showSuccess,
 } from '../../utils/helperFunctions';
 import {chekLocationPermission} from '../../utils/permissions';
 import {
   DashBoardFour,
   DashBoardHeaderOne,
   DashBoardOne,
-  DashBoardThree,
 } from './DashboardViews/Index';
-import dynamicLinks from '@react-native-firebase/dynamic-links';
-import {getBundleId} from 'react-native-device-info';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -480,7 +476,7 @@ export default function Home({route, navigation}) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, data)();
 
       moveToNewScreen(navigationStrings.VENDOR_DETAIL, {data})();
-    } else if (!!data.is_show_category) {
+    } else if (!data.is_show_category || data.is_show_category) {
       let item = data;
       data?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
@@ -505,7 +501,7 @@ export default function Home({route, navigation}) {
       <View style={{flex: 1}}>
         <>
           <DashBoardHeaderOne navigation={navigation} location={location} />
-          {getBundleId() == appIds.capcorp ? (
+          {appData?.profile?.code === shortCodes.capcorp ? (
             <DashBoardFour
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}

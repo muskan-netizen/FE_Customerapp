@@ -1,7 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {Text, View, FlatList, RefreshControl} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
+import {debounce} from 'lodash';
+import moment from 'moment';
+import React, {useEffect, useState} from 'react';
+import {FlatList, RefreshControl, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import HTMLView from 'react-native-htmlview';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -10,17 +13,11 @@ import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {
-  moderateScale,
-  moderateScaleVertical,
-} from '../../styles/responsiveSize';
-import {currencyNumberFormatter} from '../../utils/commonFunction';
-import stylesFun from './styles';
 import commonStylesFun from '../../styles/commonStyles';
-import moment from 'moment';
-import HTMLView from 'react-native-htmlview';
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, debounce} from 'lodash';
+import {moderateScaleVertical} from '../../styles/responsiveSize';
+import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import stylesFun from './styles';
 
 export default function Wallet({navigation}) {
   const [state, setState] = useState({
@@ -140,11 +137,21 @@ export default function Wallet({navigation}) {
       bgColor={colors.backgroundGrey}
       statusBarColor={colors.white}>
       <Header
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
+        centerTitle={strings.WALLET}
+        headerStyle={{backgroundColor: colors.white}}
+      />
+
+      {/* <Header
         leftIcon={imagePath.back}
         centerTitle={strings.WALLET}
         // rightIcon={imagePath.cartShop}
         headerStyle={{backgroundColor: Colors.white}}
-      />
+      /> */}
       <View style={{...commonStyles.headerTopLine}} />
       <View style={styles.availableBalanceCon}>
         <View style={styles.balanceCon}>

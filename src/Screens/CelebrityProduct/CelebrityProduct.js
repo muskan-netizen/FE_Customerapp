@@ -28,6 +28,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -461,7 +462,11 @@ export default function CelebrityProduct({route, navigation}) {
       isLoadingB={isLoadingB}
       source={loaderOne}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={celebrity.name || celebrity.translation[0].title}
         rightIcon={imagePath.search}
         onPressRight={() =>

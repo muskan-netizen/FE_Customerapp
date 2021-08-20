@@ -9,6 +9,7 @@ import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import colors from '../../styles/colors';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {chekLocationPermission} from '../../utils/permissions';
 import stylesFun from './styles';
 
@@ -108,7 +109,11 @@ export default function Location({route, navigation}) {
       statusBarColor={colors.backgroundGrey}
       bgColor={colors.backgroundGrey}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appData?.profile?.code === shortCodes.capcorp
+            ? imagePath.backArrow
+            : imagePath.back
+        }
         centerTitle={strings.LOCATION}
         headerStyle={{backgroundColor: colors.backgroundGrey}}
       />

@@ -340,4 +340,11 @@ export default {
   SELECTITEMSFORRETURN: 'حدد العنصر (العناصر) للعودة',
   RETURNREASONS: 'سبب إرجاع المنتج',
   COMMENTSOPTIONAL: 'التعليقات (اختيارية):',
+  CONTINUE_GOOGLE: 'Continue using Google',
+  CONTINUE_FACEBOOK: 'Continue using Facebook',
+  CONTINUE_TWITTER: 'Continue using Twitter',
+  CONTINUE_APPLE: 'Continue using Apple',
+  HEY_MSG: 'Hey',
+  GREETING_MSG: 'what are you up to today?',
+  NEAR_VENDOR: 'Top vendors near you',
 };
