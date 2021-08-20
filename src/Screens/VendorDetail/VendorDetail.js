@@ -121,7 +121,7 @@ export default function VendorDetail({navigation, route}) {
         onPress={moveToNewScreen(navigationStrings.PRODUCT_LIST, {
           id: item.id,
           rootProducts: vendorParams?.rootProducts,
-          vendor: true,
+          vendor: vendorParams?.irootProductstem?true:false,
           // rootProducts:
           vendorData: vendorParams?.item,
           categoryInfo: item,
