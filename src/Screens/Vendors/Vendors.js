@@ -32,7 +32,7 @@ export default function Vendors({route, navigation}) {
   
   const {isLoading, pageNo, isRefreshing, limit} = state;
   const {data} = route.params;
-  
+  console.log(data,"data>vendor");
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -55,7 +55,8 @@ export default function Vendors({route, navigation}) {
         {code: appData.profile.code},
       )
       .then((res) => {
-        
+        console.log(res,"res>vendor");
+
         updateState({isLoading: false, isRefreshing: false});
         const vendorData = {
           category: res.data.category,
