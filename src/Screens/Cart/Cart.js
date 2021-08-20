@@ -881,6 +881,16 @@ export default function Cart({navigation, route}) {
             </View>
           )}
 
+          {!!cartData?.wallet_amount_used && (
+            <View style={styles.bottomTabLableValue}>
+              <Text style={styles.priceItemLabel}>{strings.WALLET}</Text>
+              <Text style={styles.priceItemLabel}>{`-${
+                currencies?.primary_currency?.symbol
+              }${Number(
+                cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
+              ).toFixed(2)}`}</Text>
+            </View>
+          )}
           {!!cartData?.total_subscription_discount && (
             <View style={styles.bottomTabLableValue}>
               <Text style={styles.priceItemLabel}>

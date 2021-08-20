@@ -38,7 +38,7 @@ import ListEmptyProduct from './ListEmptyProduct';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
-
+  console.log(data, 'data>data >>>>PARAMS');
   const [state, setState] = useState({
     isVisibleModal: false,
     isOffline: false,
@@ -202,7 +202,12 @@ export default function Products({route, navigation}) {
 
     if (data?.vendor) {
       {
-        filterExist ? getAllProductsVendorFilter() : getAllProductsByVendor();
+        filterExist
+          ? getAllProductsVendorFilter()
+          : 
+          data?.vendorData
+          ? getAllProductsByVendorCategory()
+          : getAllProductsByVendor();
       }
     } else {
       {
@@ -346,6 +351,37 @@ export default function Products({route, navigation}) {
   };
 
   /****Get all list items by vendor id */
+  const getAllProductsByVendorCategory = () => {
+    // alert("21312")
+    console.log(`/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,"url");
+    actions
+      .getProductByVendorCategoryId(
+        `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
+        {},
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+        },
+      )
+      .then((res) => {
+        console.log(res,"resz")
+        updateState({
+          isLoading: false,
+          isRefreshing: false,
+          categoryInfo: res?.data?.vendor,
+          filterData: res?.data?.filterData,
+          productListData:
+            pageNo == 1
+              ? res.data.products.data
+              : [...productListData, ...res?.data?.products?.data],
+        });
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+      })
+      .catch(errorMethod);
+  };
+
+  /****Get all list items by vendor id */
   const getAllProductsByVendor = () => {
     actions
       .getProductByVendorId(
@@ -448,6 +484,7 @@ export default function Products({route, navigation}) {
   };
 
   const errorMethod = (error) => {
+    console.log(error,"error")
     updateState({isLoading: false, isRefreshing: false, isLoadingB: false});
     showError(error?.message || error?.error);
   };
