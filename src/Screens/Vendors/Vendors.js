@@ -32,7 +32,6 @@ export default function Vendors({route, navigation}) {
 
   const {isLoading, pageNo, isRefreshing, limit} = state;
   const {data} = route.params;
-
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 

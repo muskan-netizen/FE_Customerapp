@@ -16,7 +16,6 @@ const openPicker = (options) => {
 };
 
 // Call multiple image picker
-console.log("sf");
 
 const openPickerMultiple = (options) => {
   options['includeBase64'] = true;

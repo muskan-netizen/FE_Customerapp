@@ -102,9 +102,12 @@ export default function ProductCartListView({
                 {/* {data?.translation[0]?.title} */}
                 <HTMLView
                   value={data?.translation[0]?.body_html}
-                  textComponentProps={{
-                    numberOfLines: 2,
-                  }}
+                  // textComponentProps={{
+                  //   numberOfLines: 2,
+                  // }}
+                  // nodeComponentProps={{numberOfLines: 2}}
+
+
                 />
               </Text>
             </View>
