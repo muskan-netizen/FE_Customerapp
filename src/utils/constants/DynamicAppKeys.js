@@ -63,6 +63,7 @@ const shortCodes = {
   loopwhole: '62ee0e',
   vici: '121eb9',
   carhop: 'e292ec',
+  yogolift: '4f3624',
 };
 
 const appIds = {
@@ -313,6 +314,10 @@ const appIds = {
   carhop: Platform.select({
     ios: 'com.carhop',
     android: 'com.carhop',
+  }),
+  yogolift: Platform.select({
+    ios: 'com.yogolift',
+    android: 'com.yogolift',
   }),
 };
 

@@ -449,6 +449,13 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+
+        case appIds.yogolift:
+          updateState({
+            shortCode: shortCodes.yogolift,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

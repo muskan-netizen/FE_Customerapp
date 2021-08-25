@@ -753,7 +753,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.loopwhole'
-            resValue "string", "app_name", "LoopWholess"
+            resValue "string", "app_name", "LoopWhole"
          }
          vici{
             dimension "appType"
@@ -772,6 +772,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.carhop'
             resValue "string", "app_name", "Car Hop"
+         }
+
+         yogolift{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.yogolift'
+            resValue "string", "app_name", "Yogo Lift"
          }
     }
 }

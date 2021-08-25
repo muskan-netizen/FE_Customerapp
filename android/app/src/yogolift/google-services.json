@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "124396801578",
+    "project_id": "yogo-lift",
+    "storage_bucket": "yogo-lift.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124396801578:android:7d56dfe84694f708e7bd53",
+        "android_client_info": {
+          "package_name": "com.yogolift"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124396801578-036pshkjpijofmcd7fdojseaubvi114g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yogolift",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "124396801578-0ksnktffgfh1t19aj3fd71gsf2702fhu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yogolift",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "124396801578-q5orfcj8t3jv98e2kmvqrgt4cmti4557.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yogolift",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "124396801578-3g5a0pdd6kdt8ov7f48dboau5likgbjm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQfsVoRbD7XLoPrJMLqmbPQJdA2O5CBLg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124396801578-3g5a0pdd6kdt8ov7f48dboau5likgbjm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "124396801578-4g1r0km4e24v5hkfvhfp8arncbmppsbv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.yogolift"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

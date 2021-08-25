@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>564884329661-nmdnj2lmgrv3j73pmgrnsothfqusb9bn.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.564884329661-nmdnj2lmgrv3j73pmgrnsothfqusb9bn</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>564884329661-o8g7v13tq32e0d430smg9pvmdtnnp7eu.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAftxcE-t4u5pPuuGILa3jZefl02qOqGoQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>564884329661</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.vici</string>
+	<key>PROJECT_ID</key>
+	<string>vici-aa1fd</string>
+	<key>STORAGE_BUCKET</key>
+	<string>vici-aa1fd.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:564884329661:ios:cdae3230f655e36e8b13d4</string>
+</dict>
+</plist>
