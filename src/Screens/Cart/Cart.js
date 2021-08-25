@@ -42,6 +42,7 @@ import stylesFun from './styles';
 import Modal from 'react-native-modal';
 import GradientButton from '../../Components/GradientButton';
 import DatePicker from 'react-native-date-picker';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 export default function Cart({navigation, route}) {
   let paramsData = route?.params;
@@ -51,6 +52,7 @@ export default function Cart({navigation, route}) {
     isVisible: false,
     cartItems: [],
     cartData: {},
+    vendorTable: [],
     isLoadingB: false,
     isModalVisibleForClearCart: false,
     isVisibleAddressModal: false,
@@ -85,6 +87,7 @@ export default function Cart({navigation, route}) {
     vendorAddress,
     selectedTipvalue,
     selectedTipAmount,
+    vendorTable,
   } = state;
 
   //Redux store data
@@ -200,6 +203,7 @@ export default function Cart({navigation, route}) {
   const getCartDetail = () => {
     actions
       .getCartDetail(
+        `/?type=${dineInType}`,
         {},
         {
           code: appData?.profile?.code,
@@ -217,6 +221,7 @@ export default function Cart({navigation, route}) {
             cartItems: res.data.products,
             vendorAddress: res.data.address,
             cartData: res.data,
+            vendorTable: res?.data?.vendor_details?.vendor_tables,
           });
         } else {
           updateState({
@@ -251,6 +256,7 @@ export default function Cart({navigation, route}) {
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
           systemuser: DeviceInfo.getUniqueId(),
+          type: dineInType,
         })
         .then((res) => {
           actions.cartItemQty(res);
@@ -278,6 +284,7 @@ export default function Cart({navigation, route}) {
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
         systemuser: DeviceInfo.getUniqueId(),
+        type: dineInType,
       })
       .then((res) => {
         actions.cartItemQty(res);
@@ -313,6 +320,7 @@ export default function Cart({navigation, route}) {
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
           systemuser: DeviceInfo.getUniqueId(),
+          type: dineInType,
         },
       )
       .then((res) => {
@@ -1124,7 +1132,68 @@ export default function Cart({navigation, route}) {
     return (
       <>
         {/* Delivery Location */}
-        {!vendorAddress ? (
+        {vendorAddress ? (
+          <>
+            <View
+              style={{
+                marginTop: moderateScale(20),
+                flex: 0.35,
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginHorizontal: moderateScale(20),
+              }}>
+              <Image
+                style={{tintColor: colors.black}}
+                source={imagePath.locationGreen}
+              />
+              <Text numberOfLines={1} style={styles.deliveryLocationAndTime}>
+                {strings.ADDRESS}:
+              </Text>
+              <Text numberOfLines={1} style={styles.address}>
+                {vendorAddress}
+              </Text>
+            </View>
+            <View style={styles.clearCartView}>
+              <TouchableOpacity onPress={() => openClearCartModal()}>
+                <Text style={styles.clearCart}>{strings.CLEARCART}</Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                height: 60,
+                width: width,
+                backgroundColor: 'green',
+              }}>
+              {cartData?.vendor_details?.vendor_tables && (
+                <DropDownPicker
+                  items={vendorTable || []}
+                  containerStyle={{
+                    height: 40,
+                    marginTop: moderateScaleVertical(5),
+                  }}
+                  style={{
+                    backgroundColor: '#fafafa',
+                    zIndex: 5000,
+                    marginHorizontal: moderateScale(20),
+                    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                  }}
+                  itemStyle={{
+                    justifyContent: 'flex-start',
+                    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                  }}
+                  zIndex={5000}
+                  dropDownStyle={{
+                    backgroundColor: '#fafafa',
+                    height: 120,
+                    width: width - moderateScale(40),
+                    alignSelf: 'center',
+                  }}
+                  // onChangeItem={(item) => updateCurrency(item)}
+                />
+              )}
+            </View>
+          </>
+        ) : (
           <>
             <View style={[styles.topLable, {marginTop: moderateScale(20)}]}>
               <View
@@ -1158,33 +1227,6 @@ export default function Cart({navigation, route}) {
               </TouchableOpacity>
             </View>
             {/* clear cart  */}
-            <View style={styles.clearCartView}>
-              <TouchableOpacity onPress={() => openClearCartModal()}>
-                <Text style={styles.clearCart}>{strings.CLEARCART}</Text>
-              </TouchableOpacity>
-            </View>
-          </>
-        ) : (
-          <>
-            <View
-              style={{
-                marginTop: moderateScale(20),
-                flex: 0.35,
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginHorizontal: moderateScale(20),
-              }}>
-              <Image
-                style={{tintColor: colors.black}}
-                source={imagePath.locationGreen}
-              />
-              <Text numberOfLines={1} style={styles.deliveryLocationAndTime}>
-                {strings.ADDRESS}:
-              </Text>
-              <Text numberOfLines={1} style={styles.address}>
-                {vendorAddress}
-              </Text>
-            </View>
             <View style={styles.clearCartView}>
               <TouchableOpacity onPress={() => openClearCartModal()}>
                 <Text style={styles.clearCart}>{strings.CLEARCART}</Text>
@@ -1300,6 +1342,7 @@ export default function Cart({navigation, route}) {
       ) : (
         <HeaderWithFilters centerTitle={strings.CART} noLeftIcon={true} />
       )}
+
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
       <View style={styles.mainComponent}>
         <FlatList

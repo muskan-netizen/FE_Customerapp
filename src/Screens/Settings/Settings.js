@@ -117,6 +117,7 @@ export default function Settings({route, navigation}) {
       }
     }
   };
+  console.log(appCurrencies.all_currencies, 'appCurrencies.all_currencies');
 
   return (
     <WrapperContainer

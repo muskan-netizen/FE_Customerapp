@@ -33,9 +33,9 @@ export const saveAddress = (data) => {
 };
 
 //Get Cart Detail
-export function getCartDetail(data = {}, headers = {}) {
+export function getCartDetail(url, data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
-    apiGet(GET_CART_DETAIL, data, headers)
+    apiGet(GET_CART_DETAIL + url, data, headers)
       .then((res) => {
         resolve(res);
       })

@@ -135,7 +135,7 @@ export default function DashBoardOne({
           columns={3}
         />
       ) : null}
-      <View style={{height: moderateScaleVertical(70)}} />
+      <View style={{height: moderateScaleVertical(80)}} />
     </ScrollView>
   );
 }
