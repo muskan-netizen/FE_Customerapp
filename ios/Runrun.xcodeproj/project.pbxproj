@@ -34,10 +34,12 @@
 		4F007673C381598D4311BE87 /* libPods-BustanFakieh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0864806BD356D4FA593856E2 /* libPods-BustanFakieh.a */; };
 		5151A699661ABBB406B0C8ED /* libPods-DiamondDashers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 241F3DDE125214CE57F01E15 /* libPods-DiamondDashers.a */; };
 		5167314063F552B904013485 /* libPods-Getme.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E7EC9EF9DA63130B3752E58 /* libPods-Getme.a */; };
+		5237AA11F7715FA6E0AB4E75 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		569BE2A368AA48948F645526 /* libPods-SirVU.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B50715C6CD2C28B4E06B0CD /* libPods-SirVU.a */; };
 		58CD509BCDD7E7AC1C711265 /* libPods-Jet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6605B61E40F45263DE49BC /* libPods-Jet.a */; };
 		5E2BC5973EFE3BA4E3E6DCE8 /* libPods-GovaChow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146C128CBC991B6731ACB110 /* libPods-GovaChow.a */; };
 		68B5A25D89B82C13CE1085B7 /* libPods-Spidbi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7B91CC363476F6C5AA9DD2 /* libPods-Spidbi.a */; };
+		693ABDA01D03BD9B0E1AE8B9 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		6B86E76152F2B9D92F0B0452 /* libPods-Specialhalal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17C6EFA7AE79730F61F88FB9 /* libPods-Specialhalal.a */; };
 		6B955100E823F31B557EC795 /* libPods-LastMinuteDress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11A1E427DE14A9C816357ED3 /* libPods-LastMinuteDress.a */; };
 		6CA6C5CCDED4CF33503F84D1 /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58DC4E9E12D85319579B90F0 /* libPods-RoyoOrder.a */; };
@@ -1548,6 +1550,7 @@
 		EC6C4BCC8D84EAE8EECC172D /* libPods-Servze.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7E7817914AE50A3D2AB9ED /* libPods-Servze.a */; };
 		EED3E1630053797C82B182AB /* libPods-Africanize.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B6F42ACD9E0F3F22CA3F40 /* libPods-Africanize.a */; };
 		EF5D1BE6EEB761946817CFB8 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		F03DDEB5872E13FAD41D8339 /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58DC4E9E12D85319579B90F0 /* libPods-RoyoOrder.a */; };
 		F8CB13A6B507E500CD1EC527 /* libPods-Glamsouq.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E7A52E9F003237A3F3EC693 /* libPods-Glamsouq.a */; };
 		FA237E2559CDAD50DDECD671 /* libPods-DestinationOps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CA14219228168C9B9FC266 /* libPods-DestinationOps.a */; };
 		FB70107D9BABA5560C231E1E /* libPods-HelpNowRightNow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29C4EBA1380829D899FAE722 /* libPods-HelpNowRightNow.a */; };
@@ -2421,7 +2424,10 @@
 				42306BF20E5582B8D3D917F0 /* BuildFile in Frameworks */,
 				B007C5DE756DB161C202DC79 /* BuildFile in Frameworks */,
 				6D17E68B63EFE60D7039FEF5 /* BuildFile in Frameworks */,
-				6CA6C5CCDED4CF33503F84D1 /* libPods-RoyoOrder.a in Frameworks */,
+				5237AA11F7715FA6E0AB4E75 /* BuildFile in Frameworks */,
+				657A0A0988EF9FBAFBBCF3D0 /* BuildFile in Frameworks */,
+				693ABDA01D03BD9B0E1AE8B9 /* BuildFile in Frameworks */,
+				F03DDEB5872E13FAD41D8339 /* libPods-RoyoOrder.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
