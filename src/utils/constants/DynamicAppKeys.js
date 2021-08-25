@@ -59,7 +59,10 @@ const shortCodes = {
   housekeeper: 'd8b741',
   hairstonexpress: 'a64f8a',
   diamonddashers: '015a80',
-  destinationOps:'83c6db'
+  destinationOps: '83c6db',
+  loopwhole: '62ee0e',
+  vici: '121eb9',
+  carhop: 'e292ec',
 };
 
 const appIds = {
@@ -298,6 +301,18 @@ const appIds = {
   destinationOps: Platform.select({
     ios: 'com.destinationOps',
     android: 'com.destinationOps',
+  }),
+  loopwhole: Platform.select({
+    ios: 'com.loopwhole',
+    android: 'com.loopwhole',
+  }),
+  vici: Platform.select({
+    ios: 'com.vici',
+    android: 'com.vici',
+  }),
+  carhop: Platform.select({
+    ios: 'com.carhop',
+    android: 'com.carhop',
   }),
 };
 

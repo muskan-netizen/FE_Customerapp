@@ -746,6 +746,33 @@ android {
             applicationId 'com.destinationOps'
             resValue "string", "app_name", "Destination Ops"
          }
+          loopwhole{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.loopwhole'
+            resValue "string", "app_name", "LoopWholess"
+         }
+         vici{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.vici'
+            resValue "string", "app_name", "VICI"
+         }
+         carhop{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.carhop'
+            resValue "string", "app_name", "Car Hop"
+         }
     }
 }
 
