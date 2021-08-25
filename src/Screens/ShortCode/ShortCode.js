@@ -422,6 +422,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+          case appIds.destinationOps:
+            updateState({
+              shortCode: shortCodes.destinationOps,
+              isShortcodePrefilled: true,
+            });
+            break;
       }
     })();
   }, []);

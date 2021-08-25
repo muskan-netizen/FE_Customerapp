@@ -59,6 +59,7 @@ const shortCodes = {
   housekeeper: 'd8b741',
   hairstonexpress: 'a64f8a',
   diamonddashers: '015a80',
+  destinationOps:'83c6db'
 };
 
 const appIds = {
@@ -283,7 +284,7 @@ const appIds = {
     android: 'com.codiner',
   }),
   housekeeper: Platform.select({
-    ios: 'com.housekeeper',
+    ios: 'com.housekeeper4hire',
     android: 'com.housekeeper',
   }),
   hairstonexpress: Platform.select({
@@ -293,6 +294,10 @@ const appIds = {
   diamonddashers: Platform.select({
     ios: 'com.diamonddashers',
     android: 'com.diamonddashers',
+  }),
+  destinationOps: Platform.select({
+    ios: 'com.destinationOps',
+    android: 'com.destinationOps',
   }),
 };
 
