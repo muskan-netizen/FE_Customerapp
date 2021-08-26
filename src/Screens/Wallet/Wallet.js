@@ -14,7 +14,10 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import {moderateScaleVertical} from '../../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+} from '../../styles/responsiveSize';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import stylesFun from './styles';
@@ -179,7 +182,12 @@ export default function Wallet({navigation}) {
         </Text>
       </View>
       <View style={{...commonStyles.headerTopLine}} />
-      <View style={{backgroundColor: '#fff', flex: 1}}>
+      <View
+        style={{
+          backgroundColor: '#fff',
+          flex: 1,
+          paddingBottom: moderateScaleVertical(80),
+        }}>
         <FlatList
           data={walletHistory}
           showsVerticalScrollIndicator={false}

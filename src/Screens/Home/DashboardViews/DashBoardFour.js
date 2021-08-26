@@ -109,24 +109,10 @@ export default function DashBoardFour({
       <ToggleTabBar toggleData={toggleData} selcetedToggle={selcetedToggle} />
       {userData?.auth_token && (
         <>
-          <Text
-            style={{
-              fontFamily: fontFamily.bold,
-              fontSize: textScale(17),
-              marginTop: moderateScale(15),
-              marginHorizontal: moderateScale(6),
-            }}>
+          <Text style={styles.heyMsg}>
             {strings.HEY_MSG} {userData.name},
           </Text>
-          <Text
-            style={{
-              fontFamily: fontFamily.bold,
-              fontSize: textScale(17),
-              marginHorizontal: moderateScale(6),
-              marginBottom: moderateScaleVertical(5),
-            }}>
-            {strings.GREETING_MSG}
-          </Text>
+          <Text style={styles.greetingMsg}>{strings.GREETING_MSG}</Text>
         </>
       )}
 
@@ -156,15 +142,7 @@ export default function DashBoardFour({
       <View style={{height: moderateScale(25)}} />
       {appMainData?.vendors && appMainData?.vendors?.length ? (
         <>
-          <Text
-            style={{
-              fontFamily: fontFamily.bold,
-              fontSize: textScale(16),
-              marginBottom: moderateScale(25),
-              marginLeft: moderateScale(5),
-            }}>
-            {strings.NEAR_VENDOR}
-          </Text>
+          <Text style={styles.nearVendorTxt}>{strings.NEAR_VENDOR}</Text>
         </>
       ) : null}
       {!isLoading && !isVendorColumnList && appMainData?.vendors?.length ? (
@@ -234,13 +212,8 @@ export default function DashBoardFour({
           activeOpacity={0.7}
           onPress={_changeVendorListStyle}
           style={styles.applyPromoBtn}>
-          <Text
-            style={{
-              fontFamily: fontFamily.medium,
-              fontSize: textScale(14),
-              color: themeColors.primary_color,
-            }}>
-            {!isVendorColumnList ? 'View all vendors' : 'Close'}
+          <Text style={styles.viewAllBtn}>
+            {!isVendorColumnList ? strings.VIEW_ALL_VENDORS : strings.CLOSE}
           </Text>
         </TouchableOpacity>
       ) : null}

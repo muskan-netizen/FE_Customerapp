@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
+import {cloneDeep, forEach} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {
   Alert,
@@ -42,6 +42,8 @@ import stylesFun from './styles';
 import Modal from 'react-native-modal';
 import GradientButton from '../../Components/GradientButton';
 import DatePicker from 'react-native-date-picker';
+import DropDownPicker from 'react-native-dropdown-picker';
+import {getItem, removeItem, setItem, setUserData} from '../../utils/utils';
 
 export default function Cart({navigation, route}) {
   let paramsData = route?.params;
@@ -67,6 +69,9 @@ export default function Cart({navigation, route}) {
     selectedTipvalue: null,
     selectedTipAmount: null,
     viewHeight: 0,
+    tableData: [],
+    isTableDropDown: false,
+    defaultSelectedTable: '',
   });
   const {
     viewHeight,
@@ -85,6 +90,9 @@ export default function Cart({navigation, route}) {
     vendorAddress,
     selectedTipvalue,
     selectedTipAmount,
+    tableData,
+    isTableDropDown,
+    defaultSelectedTable,
   } = state;
 
   //Redux store data
@@ -200,6 +208,7 @@ export default function Cart({navigation, route}) {
   const getCartDetail = () => {
     actions
       .getCartDetail(
+        `/?type=${dineInType}`,
         {},
         {
           code: appData?.profile?.code,
@@ -209,10 +218,27 @@ export default function Cart({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res, 'cart detail');
+        console.log(res.data, 'cart detail');
         actions.cartItemQty(res);
         updateState({isLoadingB: false, isRefreshing: false});
         if (res && res.data) {
+          if (res.data.vendor_details.vendor_tables) {
+            res.data.vendor_details.vendor_tables.forEach(
+              (item, indx) =>
+                (tableData[indx] = {
+                  id: item.id,
+                  label: `Category: ${item.category.title} | Table: ${item.table_number} | Seat Capacity: ${item.seating_number}`,
+                  value: `Category: ${item.category.title} | Table: ${item.table_number} | Seat Capacity: ${item.seating_number}`,
+                  title: item.category.title,
+                  table_number: item.table_number,
+                  seating_number: item.seating_number,
+                  vendor_id: res.data.vendor_details.vendor_address.id,
+                }),
+              updateState({
+                tableData: tableData,
+              }),
+            );
+          }
           updateState({
             cartItems: res.data.products,
             vendorAddress: res.data.address,
@@ -227,6 +253,16 @@ export default function Cart({navigation, route}) {
         }
       })
       .catch(errorMethod);
+
+    getItem('selectedTable')
+      .then((res) => {
+        updateState({
+          defaultSelectedTable: res,
+        });
+      })
+      .catch((error) => {
+        showError(error.message);
+      });
   };
 
   //add /delete products from cart
@@ -244,6 +280,7 @@ export default function Cart({navigation, route}) {
       data['cart_id'] = itemToUpdate?.cart_id;
       data['quantity'] = quanitity;
       data['cart_product_id'] = itemToUpdate?.id;
+      data['type'] = dineInType;
 
       actions
         .increaseDecreaseItemQty(data, {
@@ -263,6 +300,8 @@ export default function Cart({navigation, route}) {
         .catch(errorMethod);
     } else {
       updateState({isLoadingB: true});
+      removeItem('selectedTable');
+      console.log(defaultSelectedTable, 'defaultSelectedTable');
       removeProductFromCart(itemToUpdate);
     }
   };
@@ -272,6 +311,7 @@ export default function Cart({navigation, route}) {
     let data = {};
     data['cart_id'] = item?.cart_id;
     data['cart_product_id'] = item?.id;
+    data['type'] = dineInType;
     actions
       .removeProductFromCart(data, {
         code: appData?.profile?.code,
@@ -298,6 +338,7 @@ export default function Cart({navigation, route}) {
 
   const bottomButtonClick = () => {
     updateState({isLoadingB: true, isModalVisibleForClearCart: false});
+    removeItem('selectedTable');
     setTimeout(() => {
       clearEntireCart();
     }, 1000);
@@ -543,17 +584,14 @@ export default function Cart({navigation, route}) {
     }
   };
 
-  //render cart item and cart detail
   const _renderItem = ({item, index}) => {
-    // return <OffersCard />;
-
-    let {itemCount} = state;
     return (
       <View
         style={{
           backgroundColor: '#fff',
-          marginHorizontal: moderateScale(10),
-          marginVertical: moderateScale(10),
+          paddingHorizontal: moderateScale(10),
+          marginVertical: moderateScaleVertical(10),
+          marginBottom: moderateScaleVertical(10),
         }}>
         <View style={styles.vendorView}>
           <Text numberOfLines={1} style={styles.vendorText}>
@@ -639,16 +677,6 @@ export default function Cart({navigation, route}) {
                           justifyContent: 'space-between',
                         }}>
                         <View style={{flex: 0.5, justifyContent: 'center'}}>
-                          {i?.quantity && (
-                            <View style={{flexDirection: 'row'}}>
-                              <Text style={{color: colors.textGrey}}>
-                                {strings.QTY}
-                              </Text>
-                              <Text style={styles.cartItemWeight}>
-                                {i?.quantity}
-                              </Text>
-                            </View>
-                          )}
                           {!!i?.product_addons.length && (
                             <View>
                               <Text style={styles.cartItemWeight2}>
@@ -1123,8 +1151,68 @@ export default function Cart({navigation, route}) {
   const getHeader = () => {
     return (
       <>
-        {/* Delivery Location */}
-        {!vendorAddress ? (
+        {vendorAddress ? (
+          <View
+            style={{
+              height: isTableDropDown
+                ? moderateScaleVertical(190)
+                : moderateScaleVertical(120),
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginHorizontal: moderateScale(20),
+                marginTop: moderateScaleVertical(10),
+              }}>
+              <Image
+                style={{tintColor: colors.black}}
+                source={imagePath.locationGreen}
+              />
+              <Text numberOfLines={1} style={styles.deliveryLocationAndTime}>
+                {strings.ADDRESS}:
+              </Text>
+              <Text numberOfLines={1} style={styles.address}>
+                {vendorAddress}
+              </Text>
+            </View>
+            <View style={styles.clearCartView}>
+              <TouchableOpacity onPress={() => openClearCartModal()}>
+                <Text style={styles.clearCart}>{strings.CLEARCART}</Text>
+              </TouchableOpacity>
+            </View>
+
+            {dineInType === 'dine_in' &&
+              cartData?.vendor_details?.vendor_tables && (
+                <DropDownPicker
+                  items={tableData}
+                  onOpen={() => updateState({isTableDropDown: true})}
+                  onClose={() => updateState({isTableDropDown: false})}
+                  defaultValue={
+                    defaultSelectedTable || tableData[0].label || ''
+                  }
+                  containerStyle={{
+                    height: 40,
+                    marginTop: moderateScaleVertical(10),
+                  }}
+                  style={{
+                    marginHorizontal: moderateScale(20),
+                    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                  }}
+                  itemStyle={{
+                    justifyContent: 'flex-start',
+                    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                  }}
+                  dropDownStyle={{
+                    height: 80,
+                    width: width - moderateScale(40),
+                    alignSelf: 'center',
+                  }}
+                  onChangeItem={(item) => _onTableSelection(item)}
+                />
+              )}
+          </View>
+        ) : (
           <>
             <View style={[styles.topLable, {marginTop: moderateScale(20)}]}>
               <View
@@ -1164,33 +1252,6 @@ export default function Cart({navigation, route}) {
               </TouchableOpacity>
             </View>
           </>
-        ) : (
-          <>
-            <View
-              style={{
-                marginTop: moderateScale(20),
-                flex: 0.35,
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginHorizontal: moderateScale(20),
-              }}>
-              <Image
-                style={{tintColor: colors.black}}
-                source={imagePath.locationGreen}
-              />
-              <Text numberOfLines={1} style={styles.deliveryLocationAndTime}>
-                {strings.ADDRESS}:
-              </Text>
-              <Text numberOfLines={1} style={styles.address}>
-                {vendorAddress}
-              </Text>
-            </View>
-            <View style={styles.clearCartView}>
-              <TouchableOpacity onPress={() => openClearCartModal()}>
-                <Text style={styles.clearCart}>{strings.CLEARCART}</Text>
-              </TouchableOpacity>
-            </View>
-          </>
         )}
       </>
     );
@@ -1218,16 +1279,12 @@ export default function Cart({navigation, route}) {
           code: appData?.profile?.code,
         })
         .then((res) => {
-          // updateState({isLoadingB: false, del: del ? false : true});
           actions.saveAddress(address);
           updateState({
             isVisible: false,
             isLoadingB: false,
             selectedAddress: address,
           });
-          // getCartDetail();
-
-          // showSuccess(res.message);
         })
         .catch((error) => {
           updateState({isLoadingB: false});
@@ -1289,6 +1346,27 @@ export default function Cart({navigation, route}) {
     // _onDateChange(value);
   };
 
+  const _onTableSelection = (item) => {
+    const data = {
+      vendor_id: item.id,
+      table: item.table_number,
+    };
+    actions
+      .vendorTableCart(data, {
+        code: appData?.profile?.code,
+      })
+      .then((res) => {
+        setItem('selectedTable', item.label || null);
+      })
+      .catch((error) => {
+        updateState({
+          isLoading: false,
+          isLoadingB: false,
+        });
+        showError(error?.message || error?.error);
+      });
+  };
+
   return (
     <WrapperContainer
       bgColor={colors.backgroundGrey}
@@ -1300,6 +1378,7 @@ export default function Cart({navigation, route}) {
       ) : (
         <HeaderWithFilters centerTitle={strings.CART} noLeftIcon={true} />
       )}
+
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
       <View style={styles.mainComponent}>
         <FlatList

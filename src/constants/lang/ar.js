@@ -347,4 +347,6 @@ export default {
   HEY_MSG: 'Hey',
   GREETING_MSG: 'what are you up to today?',
   NEAR_VENDOR: 'Top vendors near you',
+  VIEW_ALL_VENDORS: 'View all vendors',
+  CLOSE: 'Close',
 };
