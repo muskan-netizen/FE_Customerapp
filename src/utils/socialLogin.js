@@ -29,15 +29,20 @@ export const googleLogin = async () => {
     // await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
     const userInfo = await GoogleSignin.signIn();
+    console.log('google login in try block');
     return userInfo;
   } catch (error) {
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      console.log('SIGN_IN_CANCELLED');
       return error;
     } else if (error.code === statusCodes.IN_PROGRESS) {
+      console.log('IN_PROGRESS');
       return error;
     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      console.log('PLAY_SERVICES_NOT_AVAILABLE');
       return error;
     } else {
+      console.log(error, 'error in gmail');
       return error;
     }
   }
