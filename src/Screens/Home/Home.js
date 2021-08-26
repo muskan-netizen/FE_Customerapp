@@ -109,7 +109,6 @@ export default function Home({route, navigation}) {
   }, [paramData?.details]);
 
   const checkCartWithLatLang = (res) => {
-    console.log(res, 'res>>>>res>>>>>res>>>>');
     Alert.alert(
       '',
       'This will remove your cart.Are your sure you want to remove the cart?',
@@ -233,7 +232,7 @@ export default function Home({route, navigation}) {
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
     let latlongObj = {};
-    console.log(location, 'redux location');
+
     if (appData?.profile?.preferences?.is_hyperlocal) {
       latlongObj = {
         address: slectedLocatonFromPreviousScreen
@@ -247,9 +246,6 @@ export default function Home({route, navigation}) {
           : location?.longitude,
       };
     }
-    console.log(dine_In_Type, 'dine_In_Type');
-    console.log(latlongObj, 'latlongObj');
-    console.log(selectedTabType, 'selectedTabType');
 
     {
       selectedTabType
@@ -263,7 +259,6 @@ export default function Home({route, navigation}) {
                 code: appData?.profile?.code,
                 currency: currencies?.primary_currency?.id,
                 language: languages?.primary_language?.id,
-
                 // ...latlongObj,
               },
             )

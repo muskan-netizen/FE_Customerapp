@@ -220,7 +220,7 @@ const appIds = {
     android: 'com.codebrew.hoganchef',
   }),
   servze: Platform.select({
-    ios: 'com.servze',
+    ios: 'com.app.servze',
     android: 'com.servze',
   }),
   travo: Platform.select({
