@@ -42,8 +42,6 @@ export default function Settings({route, navigation}) {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log(currencies, 'currencies-updated');
-      console.log(languages, 'languages-updated');
       updateState({
         appCurrencies: currencies,
         appLanguages: languages,
@@ -117,8 +115,8 @@ export default function Settings({route, navigation}) {
       }
     }
   };
-  console.log(appCurrencies.all_currencies, 'appCurrencies.all_currencies');
 
+  console.log(appCurrencies.all_currencies, 'll_currencies');
   return (
     <WrapperContainer
       bgColor={colors.white}
@@ -174,6 +172,7 @@ export default function Settings({route, navigation}) {
           flexDirection: 'row',
           marginHorizontal: moderateScale(20),
           marginTop: moderateScaleVertical(10),
+
           zIndex: 4000,
         }}>
         <Text style={styles.currency}>{strings.LANGUAGES}</Text>

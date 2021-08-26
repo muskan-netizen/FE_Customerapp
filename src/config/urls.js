@@ -1,8 +1,8 @@
-export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.96.195:8005/api/v1';
 
-// export const API_BASE_URL = 'http://192.168.96.240:8005/api/v1';
+export const API_BASE_URL = 'http://192.168.96.240:8005/api/v1';
 // export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
 
 //export const API_BASE_URL = 'http://192.168.98.193:8005/api/v1';
@@ -107,3 +107,5 @@ export const UPLOAD_PRODUCT_IMAGE = getApiUrl('/upload-file');
 export const SUBMIT_RETURN_ORDER = getApiUrl(
   '/return-order/update-product-return',
 );
+
+export const VENDOR_TABLE_CART = getApiUrl('/add/vendorTable/cart');
