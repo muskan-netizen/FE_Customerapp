@@ -200,6 +200,7 @@ export default function Cart({navigation, route}) {
   const getCartDetail = () => {
     actions
       .getCartDetail(
+        `/?type=${dineInType}`,
         {},
         {
           code: appData?.profile?.code,
@@ -546,7 +547,6 @@ export default function Cart({navigation, route}) {
   //render cart item and cart detail
   const _renderItem = ({item, index}) => {
     // return <OffersCard />;
-
     let {itemCount} = state;
     return (
       <View
@@ -717,9 +717,7 @@ export default function Cart({navigation, route}) {
                 fontFamily: fontFamily.medium,
                 color: colors.redFireBrick,
               }}>
-              {
-                'The specific items are not deliverable to this address. Please remove the items or change the address '
-              }
+              {strings.ITEM_NOT_DELIVERABLE}
             </Text>
           </View>
         )}
