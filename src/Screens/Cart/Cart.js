@@ -464,7 +464,7 @@ export default function Cart({navigation, route}) {
       if (!selectedAddressData) {
         // showError('Please select address');
         setModalVisible(true);
-      } else if (!selectedPayment) {
+      } else if (!paramsData?.selectedMethod) {
         showError('Please select a payment method');
       } else {
         if (!!userData) {
@@ -691,7 +691,7 @@ export default function Cart({navigation, route}) {
                                     <Text
                                       style={styles.cartItemWeight2}
                                       numberOfLines={1}>
-                                      {j.addon_title}{' '}
+                                      {j.addon_title}
                                     </Text>
                                     <Text
                                       style={styles.cartItemWeight2}
@@ -1133,9 +1133,7 @@ export default function Cart({navigation, route}) {
 
             <ButtonComponent
               onPress={() => {
-                paramsData?.selectedMethod
-                  ? placeOrder()
-                  : alert('No payment method found');
+                placeOrder();
               }}
               btnText={strings.PLACE_ORDER}
               borderRadius={moderateScale(13)}
