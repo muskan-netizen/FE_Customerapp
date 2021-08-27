@@ -182,6 +182,29 @@ export default ({themeColors, fontFamily}) => {
       justifyContent: 'center',
       alignItems: 'center',
     },
+    nearVendorTxt: {
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(16),
+      marginBottom: moderateScale(25),
+      marginLeft: moderateScale(5),
+    },
+    viewAllBtn: {
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(14),
+      color: themeColors.primary_color,
+    },
+    greetingMsg: {
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(17),
+      marginHorizontal: moderateScale(6),
+      marginBottom: moderateScaleVertical(5),
+    },
+    heyMsg: {
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(17),
+      marginTop: moderateScale(15),
+      marginHorizontal: moderateScale(6),
+    },
   });
 
   return styles;

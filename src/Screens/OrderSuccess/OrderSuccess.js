@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Platform} from 'react-native';
 import {Image, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -73,7 +74,10 @@ export default function OrderSuccess({navigation, route}) {
         </View>
       </KeyboardAwareScrollView>
       <View
-        style={{alignItems: 'center', marginBottom: moderateScaleVertical(60)}}>
+        style={{
+          alignItems: 'center',
+          marginBottom: moderateScaleVertical(90),
+        }}>
         <ButtonComponent
           btnText={strings.VIEW_DETAIL}
           onPress={viewOrderDetail}

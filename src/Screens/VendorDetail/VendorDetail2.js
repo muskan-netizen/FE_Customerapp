@@ -5,7 +5,9 @@ import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
 import EmptyListLoader from '../../Components/EmptyListLoader';
 import Header2 from '../../Components/Header2';
-import ProductLoader2 from '../../Components/Loaders/ProductLoader2';
+import CardLoader from '../../Components/Loaders/CardLoader';
+import CelebrityLoader from '../../Components/Loaders/CelebrityLoader';
+import ProductLoader from '../../Components/Loaders/ProductLoader';
 import ThreeColumnCard2 from '../../Components/ThreeColumnCard2';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -18,6 +20,7 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../../styles/responsiveSize';
 import {getImageUrl, showError} from '../../utils/helperFunctions';
 
@@ -260,9 +263,16 @@ export default function VendorDetail2({navigation, route}) {
         {isLoading ? (
           <View
             style={{
-              marginTop: moderateScale(40),
+              marginTop: moderateScale(25),
+              marginHorizontal: moderateScale(20),
             }}>
-            <ProductLoader2 isLoading={isLoading} isProductList />
+            <CelebrityLoader
+              isLoading={isLoading}
+              pRows={1}
+              isRow
+              cardWidth={(width - moderateScale(60)) / 3}
+              marginHorizontal={moderateScale(0)}
+            />
           </View>
         ) : (
           <View style={{marginHorizontal: moderateScale(7.5)}}>

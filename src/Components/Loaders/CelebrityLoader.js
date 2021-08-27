@@ -13,6 +13,8 @@ export default function CelebrityLoader({
   height = moderateScaleVertical(128),
   containerStyle = {},
   isRow = false,
+  pRows = 1,
+  marginHorizontal = moderateScale(8),
 }) {
   const contentCard = () => {
     return (
@@ -23,7 +25,7 @@ export default function CelebrityLoader({
           tWidth={cardWidth}
           titleStyles={{marginLeft: 0, paddingLeft: 0}}
           tHeight={height}
-          pRows={1}
+          pRows={pRows}
           pWidth={['100%']}
           paragraphStyles={{marginTop: -4, marginBottom: 10}}
           containerStyles={{
@@ -43,7 +45,7 @@ export default function CelebrityLoader({
           flexDirection: 'row',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
-          marginHorizontal: moderateScale(8),
+          marginHorizontal: marginHorizontal,
         }}>
         {contentCard()}
         {contentCard()}

@@ -50,8 +50,19 @@ export default function TabRoutes(props) {
           tabBarLabel: strings.CELEBRITY,
           tabBarIcon: ({focused, tintColor}) => (
             <Image
-              style={{tintColor: tintColor}}
-              source={focused ? imagePath.tabDActive : imagePath.tabDInActive}
+              style={[
+                {tintColor: tintColor},
+                appStyle?.tabBarLayout === 2 && {height: 23, width: 23},
+              ]}
+              source={
+                focused
+                  ? appStyle?.tabBarLayout === 2
+                    ? imagePath.celebActive
+                    : imagePath.tabDActive
+                  : appStyle?.tabBarLayout === 2
+                  ? imagePath.celebInActive
+                  : imagePath.tabDInActive
+              }
             />
           ),
           unmountOnBlur: true,
@@ -71,8 +82,19 @@ export default function TabRoutes(props) {
             tabBarLabel: strings.BRANDS,
             tabBarIcon: ({focused, tintColor}) => (
               <Image
-                style={{tintColor: tintColor}}
-                source={focused ? imagePath.tabCActive : imagePath.tabCInActive}
+                style={[
+                  {tintColor: tintColor},
+                  appStyle?.tabBarLayout === 2 && {height: 20, width: 20},
+                ]}
+                source={
+                  focused
+                    ? appStyle?.tabBarLayout === 2
+                      ? imagePath.brandsActive
+                      : imagePath.tabCActive
+                    : appStyle?.tabBarLayout === 2
+                    ? imagePath.brandInActive
+                    : imagePath.tabCInActive
+                }
               />
             ),
             //  unmountOnBlur: true,
@@ -118,14 +140,21 @@ export default function TabRoutes(props) {
           tabBarLabel: strings.HOME,
           tabBarIcon: ({focused, tintColor}) => (
             <Image
-              style={{tintColor: tintColor}}
+              style={[
+                {tintColor: tintColor},
+                appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
+              ]}
               source={
                 appData?.profile?.code === shortCodes.capcorp
                   ? focused
                     ? imagePath.homeActive
                     : imagePath.homeInActive
                   : focused
-                  ? imagePath.tabAActive
+                  ? appStyle?.tabBarLayout === 2
+                    ? imagePath.home2Active
+                    : imagePath.tabAActive
+                  : appStyle?.tabBarLayout === 2
+                  ? imagePath.home2InActive
                   : imagePath.tabAInActive
               }
             />
@@ -148,14 +177,21 @@ export default function TabRoutes(props) {
                 </View>
               ) : null}
               <Image
-                style={{tintColor: tintColor}}
+                style={[
+                  {tintColor: tintColor},
+                  appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
+                ]}
                 source={
                   appData?.profile?.code === shortCodes.capcorp
                     ? focused
                       ? imagePath.ordersActive
                       : imagePath.ordersInActive
                     : focused
-                    ? imagePath.cartActive
+                    ? appStyle?.tabBarLayout === 2
+                      ? imagePath.cart2Active
+                      : imagePath.cartActive
+                    : appStyle?.tabBarLayout === 2
+                    ? imagePath.cart2InActive
                     : imagePath.cartInActive
                 }
               />
@@ -173,14 +209,21 @@ export default function TabRoutes(props) {
           tabBarLabel: strings.ACCOUNTS,
           tabBarIcon: ({focused, tintColor}) => (
             <Image
-              style={{tintColor: tintColor}}
+              style={[
+                {tintColor: tintColor},
+                appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
+              ]}
               source={
                 appData?.profile?.code === shortCodes.capcorp
                   ? focused
                     ? imagePath.profileActive
                     : imagePath.profileInActive
                   : focused
-                  ? imagePath.tabEActive
+                  ? appStyle?.tabBarLayout === 2
+                    ? imagePath.accountActive
+                    : imagePath.tabEActive
+                  : appStyle?.tabBarLayout === 2
+                  ? imagePath.accountInActive
                   : imagePath.tabEInActive
               }
             />

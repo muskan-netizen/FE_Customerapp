@@ -52,7 +52,7 @@ export default ({fontFamily, themeColors}) => {
     vendorView: {
       flexDirection: 'row',
       height: moderateScaleVertical(35),
-      backgroundColor: colors.white,
+      // backgroundColor: colors.white,
       alignItems: 'center',
       paddingHorizontal: moderateScale(10),
       borderBottomWidth: moderateScaleVertical(0.5),
@@ -153,7 +153,7 @@ export default ({fontFamily, themeColors}) => {
       flexDirection: 'row',
       paddingVertical: moderateScaleVertical(10),
       paddingHorizontal: moderateScale(10),
-      backgroundColor: colors.white,
+      // backgroundColor: colors.white,
     },
     cartItemImage: {
       height: width / 4.5,

@@ -27,3 +27,22 @@ export const iosConfig = {
   appId: '1:925764246332:ios:d0f28bdc9fbad709241c39',
   messagingSenderId: '925764246332',
 };
+
+export const royoOrderAndroidConfigs = {
+  apiKey: 'AIzaSyBy2IpueD5vKX_VpGaH8gj7f2NqA58h2dg',
+  authDomain: 'royo-order-version2.firebaseapp.com',
+  databaseURL: 'https://royo-order-version2.firebaseio.com',
+  projectId: 'royo-order-version2',
+  storageBucket: 'royo-order-version2.appspot.com',
+  appId: '1:1073948422654:android:48458405b2be731dc410af',
+  messagingSenderId: '1073948422654',
+};
+export const royoOrderiOSconfigs = {
+  apiKey: 'AIzaSyAKxlO9OKIncFrbcb1tSpQgbfnY64Ou6sk',
+  authDomain: 'royo-order-version2.firebaseapp.com',
+  databaseURL: 'https://royo-order-version2.firebaseio.com',
+  projectId: 'royo-order-version2',
+  storageBucket: 'royo-order-version2.appspot.com',
+  appId: '1:1073948422654:ios:dc0471afc0e5c629c410af',
+  messagingSenderId: '1073948422654',
+};
