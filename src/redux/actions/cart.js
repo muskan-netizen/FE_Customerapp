@@ -34,12 +34,7 @@ export const saveAddress = (data) => {
 };
 
 //Get Cart Detail
-<<<<<<< HEAD
-export function getCartDetail(url = '', data = {}, headers = {}) {
-  console.log(GET_CART_DETAIL + url, 'GET_CART_DETAIL + url');
-=======
 export function getCartDetail(url, data = {}, headers = {}) {
->>>>>>> 26d8f817c56c94c529a7a1d901ae9ea4fc77153b
   return new Promise((resolve, reject) => {
     apiGet(GET_CART_DETAIL + url, data, headers)
       .then((res) => {
