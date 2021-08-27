@@ -1135,7 +1135,7 @@ export default function Cart({navigation, route}) {
               onPress={() => {
                 paramsData?.selectedMethod
                   ? placeOrder()
-                  : alert('no payment found');
+                  : alert('No payment method found');
               }}
               btnText={strings.PLACE_ORDER}
               borderRadius={moderateScale(13)}
