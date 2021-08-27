@@ -61,7 +61,7 @@ export default function Cart({navigation, route}) {
     selectedAddress: null,
     selectedPayment: {
       id: 1,
-      title: 'Cash on Delivery',
+      title: 'Select Payment Method',
       off_site: 0,
     },
     // selectedPayment: null,
@@ -857,7 +857,6 @@ export default function Cart({navigation, route}) {
   };
 
   const selectedTip = (tip) => {
-    console.log(tip, 'tip >>>ITEM');
     if (selectedTipvalue == 'custom') {
       updateState({selectedTipvalue: tip, selectedTipAmount: null});
     } else {
@@ -1133,7 +1132,11 @@ export default function Cart({navigation, route}) {
             />
 
             <ButtonComponent
-              onPress={() => placeOrder()}
+              onPress={() => {
+                paramsData?.selectedMethod
+                  ? placeOrder()
+                  : alert('no payment found');
+              }}
               btnText={strings.PLACE_ORDER}
               borderRadius={moderateScale(13)}
               textStyle={{color: '#fff'}}
