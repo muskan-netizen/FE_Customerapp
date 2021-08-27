@@ -867,6 +867,7 @@
 		84800BCE26CE2B550014F500 /* Housekeeper4Hire(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84800BCD26CE2B550014F500 /* Housekeeper4Hire(Production).xcconfig */; };
 		84800C0C26CE2B6E0014F500 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84800C0B26CE2B6E0014F500 /* Images.xcassets */; };
 		84800C4A26CE2CD90014F500 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84800C4926CE2CD80014F500 /* GoogleService-Info.plist */; };
+		8480D27126D9100600002CD6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8480D27026D9100500002CD6 /* GoogleService-Info.plist */; };
 		84854E1026C4ED7E00BFFD11 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84854E1126C4ED7E00BFFD11 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		84854E1226C4ED7E00BFFD11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -1986,6 +1987,7 @@
 		84800C0B26CE2B6E0014F500 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84800C4926CE2CD80014F500 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84800D3B26CE2EBE0014F500 /* Housekeeper4Hire.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Housekeeper4Hire.entitlements; sourceTree = "<group>"; };
+		8480D27026D9100500002CD6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84854E3826C4ED7E00BFFD11 /* Servze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Servze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84854EB926C4EE9000BFFD11 /* Servze(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Servze(Development).xcconfig"; sourceTree = "<group>"; };
 		84854F0F26C4EEB500BFFD11 /* Servze(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Servze(Production).xcconfig"; sourceTree = "<group>"; };
@@ -4135,6 +4137,7 @@
 			isa = PBXGroup;
 			children = (
 				846E7ED426C6A74800C7A2C5 /* GoogleService-Info.plist */,
+				8480D27026D9100500002CD6 /* GoogleService-Info.plist */,
 				84E176DD26C6535A00E71F11 /* Drus(Development).xcconfig */,
 				84E1770C26C6537A00E71F11 /* Drus(Production).xcconfig */,
 				84E1773B26C653A500E71F11 /* Images.xcassets */,
@@ -7649,6 +7652,7 @@
 				84E176DE26C6535A00E71F11 /* Drus(Development).xcconfig in Resources */,
 				84E175EB26C651E000E71F11 /* CircularStd-Medium.otf in Resources */,
 				84E175EC26C651E000E71F11 /* FuturaBT-Heavy.ttf in Resources */,
+				8480D27126D9100600002CD6 /* GoogleService-Info.plist in Resources */,
 				84E175ED26C651E000E71F11 /* CircularStd-Bold.ttf in Resources */,
 				84E175EF26C651E000E71F11 /* SFProText-Bold.ttf in Resources */,
 			);
