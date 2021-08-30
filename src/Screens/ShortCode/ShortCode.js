@@ -456,6 +456,13 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+
+        case appIds.fleety:
+          updateState({
+            shortCode: shortCodes.fleety,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

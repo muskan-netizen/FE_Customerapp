@@ -353,4 +353,5 @@ export default {
     'The specific items are not deliverable to this address. Please remove the items or change the address ',
   VIEW_ALL_VENDORS: 'View all vendors',
   CLOSE: 'Close',
+  NOOFFERS: 'No Offers',
 };

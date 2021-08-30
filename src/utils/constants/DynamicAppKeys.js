@@ -64,6 +64,7 @@ const shortCodes = {
   vici: '121eb9',
   carhop: 'e292ec',
   yogolift: '4f3624',
+  fleety: '45bef7',
 };
 
 const appIds = {
@@ -318,6 +319,10 @@ const appIds = {
   yogolift: Platform.select({
     ios: 'com.yogolift',
     android: 'com.yogolift',
+  }),
+  fleety: Platform.select({
+    ios: 'com.fleety',
+    android: 'com.fleety',
   }),
 };
 
