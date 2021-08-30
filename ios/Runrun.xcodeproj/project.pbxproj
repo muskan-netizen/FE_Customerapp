@@ -1366,7 +1366,6 @@
 		84D482A026C14F5800EE9EB5 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		84D482CA26C1508A00EE9EB5 /* LastMinuteDress(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84D482C926C1508A00EE9EB5 /* LastMinuteDress(Development).xcconfig */; };
 		84D4832826C150F200EE9EB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84D4832726C150F200EE9EB5 /* Images.xcassets */; };
-		84D4836626C1525A00EE9EB5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84D4836526C1525A00EE9EB5 /* GoogleService-Info.plist */; };
 		84D484D826C1566500EE9EB5 /* LastMinuteDress(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84D4830726C150BC00EE9EB5 /* LastMinuteDress(Production).xcconfig */; };
 		84D486F926C161C800EE9EB5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84D486FA26C161C800EE9EB5 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -1390,6 +1389,7 @@
 		84D4877A26C162E100EE9EB5 /* Specialhalal(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84D4877926C162E100EE9EB5 /* Specialhalal(Production).xcconfig */; };
 		84D4879B26C1632500EE9EB5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84D4879A26C1632500EE9EB5 /* GoogleService-Info.plist */; };
 		84D487BC26C1633700EE9EB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84D487BB26C1633700EE9EB5 /* Images.xcassets */; };
+		84D5F26626D76D7400C6E5DB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84D5F26526D76D7300C6E5DB /* GoogleService-Info.plist */; };
 		84D8C35B269F03220020B09A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84D8C35D269F03220020B09A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		84D8C364269F03220020B09A /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
@@ -2116,7 +2116,6 @@
 		84D482C926C1508A00EE9EB5 /* LastMinuteDress(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "LastMinuteDress(Development).xcconfig"; sourceTree = "<group>"; };
 		84D4830726C150BC00EE9EB5 /* LastMinuteDress(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "LastMinuteDress(Production).xcconfig"; sourceTree = "<group>"; };
 		84D4832726C150F200EE9EB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		84D4836526C1525A00EE9EB5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84D483FD26C1539200EE9EB5 /* LastMinuteDress.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LastMinuteDress.entitlements; sourceTree = "<group>"; };
 		84D4871726C161C800EE9EB5 /* Specialhalal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specialhalal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D4873926C162BC00EE9EB5 /* Specialhalal(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Specialhalal(Development).xcconfig"; sourceTree = "<group>"; };
@@ -2124,6 +2123,7 @@
 		84D4879A26C1632500EE9EB5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84D487BB26C1633700EE9EB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84D4889626C166A200EE9EB5 /* Specialhalal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Specialhalal.entitlements; sourceTree = "<group>"; };
+		84D5F26526D76D7300C6E5DB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84D8C37B269F03220020B09A /* Yogo Food.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yogo Food.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D8C3C8269F04A70020B09A /* YogoFood(Production).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "YogoFood(Production).xcconfig"; sourceTree = "<group>"; };
 		84D8C3C9269F04A70020B09A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -4081,7 +4081,7 @@
 		84D482C826C1505700EE9EB5 /* LastMinuteDress */ = {
 			isa = PBXGroup;
 			children = (
-				84D4836526C1525A00EE9EB5 /* GoogleService-Info.plist */,
+				84D5F26526D76D7300C6E5DB /* GoogleService-Info.plist */,
 				84D482C926C1508A00EE9EB5 /* LastMinuteDress(Development).xcconfig */,
 				84D4830726C150BC00EE9EB5 /* LastMinuteDress(Production).xcconfig */,
 				84D4832726C150F200EE9EB5 /* Images.xcassets */,
@@ -6002,6 +6002,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					84E175C926C651E000E71F11 = {
+						DevelopmentTeam = 6FXUMT5X23;
 						ProvisioningStyle = Automatic;
 					};
 					84ECE25B26A7FA8F009A0F8C = {
@@ -6021,6 +6022,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					84FFFF1B26D672E600F2B059 = {
+						DevelopmentTeam = 6FXUMT5X23;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -7542,7 +7544,7 @@
 				84D4829626C14F5800EE9EB5 /* SFProText-SemiBold.ttf in Resources */,
 				84D4829726C14F5800EE9EB5 /* SFProText-Medium.ttf in Resources */,
 				84D4829926C14F5800EE9EB5 /* Plists in Resources */,
-				84D4836626C1525A00EE9EB5 /* GoogleService-Info.plist in Resources */,
+				84D5F26626D76D7400C6E5DB /* GoogleService-Info.plist in Resources */,
 				84D4829A26C14F5800EE9EB5 /* Futura-Normal.ttf in Resources */,
 				84D4829B26C14F5800EE9EB5 /* Futura-Book.ttf in Resources */,
 				84D4829C26C14F5800EE9EB5 /* CircularStd-Medium.otf in Resources */,
@@ -22311,7 +22313,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Yogo Food.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
@@ -22405,7 +22407,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -22717,7 +22719,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

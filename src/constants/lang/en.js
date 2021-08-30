@@ -349,6 +349,8 @@ export default {
   HEY_MSG: 'Hey',
   GREETING_MSG: 'what are you up to today?',
   NEAR_VENDOR: 'Top vendors near you',
+  ITEM_NOT_DELIVERABLE:
+    'The specific items are not deliverable to this address. Please remove the items or change the address ',
   VIEW_ALL_VENDORS: 'View all vendors',
   CLOSE: 'Close',
 };
