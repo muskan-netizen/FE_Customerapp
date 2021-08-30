@@ -252,13 +252,12 @@ export default ({fontFamily, themeColors}) => {
       marginVertical: moderateScaleVertical(10),
     },
     paymentView: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-around',
+      alignSelf: 'flex-end',
       marginVertical:
         Platform.OS === 'ios'
-          ? moderateScaleVertical(40)
-          : moderateScaleVertical(85),
+          ? moderateScaleVertical(15)
+          : moderateScaleVertical(60),
+      marginHorizontal: moderateScale(10),
     },
     placeOrderButtonStyle: {
       backgroundColor: themeColors.primary_color,

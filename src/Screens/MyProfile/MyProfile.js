@@ -326,14 +326,12 @@ export default function MyProfile({route, navigation}) {
 
   // this funtion use for camera handle
   const cameraHandle = (index) => {
-    console.log(index, 'imageIndex');
     if (index == 0 || index == 1) {
       cameraHandler(index, {
         width: 300,
         height: 400,
         cropping: true,
         cropperCircleOverlay: true,
-        compressImageQuality: 0.5,
         mediaType: 'photo',
       })
         .then((res) => {
