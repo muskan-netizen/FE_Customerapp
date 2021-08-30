@@ -3,21 +3,17 @@ import {Text, View, SafeAreaView, Image} from 'react-native';
 import CardLoader from '../../Components/Loaders/CardLoader';
 import {useSelector} from 'react-redux';
 import imagePath from '../../constants/imagePath';
-import strings from '../../constants/lang';
+
 import stylesFun from './styles';
 
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
 
-export default function ListEmptyOffers({
-  isLoading = false,
-  containerStyle = {},
-  textStyle = {},
-  text = strings.NOOFFERS,
-}) {
+export default function ListEmptyOffers({isLoading = false}) {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
@@ -33,10 +29,9 @@ export default function ListEmptyOffers({
     );
   }
   return (
-    <SafeAreaView style={styles.containerStyle}>
-      <View>
-        <Image source={imagePath.noOffers} />
-        <Text style={{...styles.textStyle, ...textStyle}}>{text}</Text>
+    <SafeAreaView>
+      <View style={styles.containerStyle}>
+        <Image source={imagePath.noOffers} style={{marginTop: height / 4}} />
       </View>
     </SafeAreaView>
   );

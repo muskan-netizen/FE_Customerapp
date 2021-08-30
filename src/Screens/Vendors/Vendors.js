@@ -114,7 +114,6 @@ export default function Vendors({route, navigation}) {
   const _renderItem = ({item, index}) => {
     return (
       <MarketCard onPress={() => _checkRedirectScreen(item)} data={item} />
-      // <MarketCard2 onPress={() => _checkRedirectScreen(item)} data={item} />
     );
   };
 

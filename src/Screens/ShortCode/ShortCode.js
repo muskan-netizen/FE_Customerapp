@@ -463,6 +463,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.flyinghorse:
+          updateState({
+            shortCode: shortCodes.flyinghorse,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

@@ -103,7 +103,7 @@ export default {
   noDataFound2: require('../assets/images/ic_nodatafound.png'),
   icCamIcon: require('../assets/images/ic_capture.png'),
   icRemoveIcon: require('../assets/images/ic_remove_product.png'),
-  noOffers: require('../assets/images/ic_no-offer.png'),
+  noOffers: require('../assets/images/ic_nooffers.png'),
 
   //CARLITOOICONS
   carlitoLogo: require('../assets/images/CARLITOO/CARLITOO_TEXT_logo.png'),

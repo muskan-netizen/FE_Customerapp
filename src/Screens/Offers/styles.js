@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import commonStylesFun from '../../styles/commonStyles';
-import {textScale} from '../../styles/responsiveSize';
+import {height, textScale} from '../../styles/responsiveSize';
 export default ({fontFamily, themeColors}) => {
   const commonStyles = commonStylesFun({fontFamily});
   const styles = StyleSheet.create({
