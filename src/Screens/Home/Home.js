@@ -1,6 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {Alert, BackHandler, View} from 'react-native';
+import {Alert, BackHandler, View, Linking} from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import {useSelector} from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -154,14 +154,16 @@ export default function Home({route, navigation}) {
 
   useEffect(() => {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
-    // dynamicLinks()
-    //   .getInitialLink()
-    //   .then((link) => {
-    //     if (link.url === 'https://play.google.com/') {
-    //       alert();
-    //       // navigation.navigate(navigationStrings.CART);
-    //     }
-    //   });
+    console.log('sfjdkfj');
+    (async () => {
+      // First, you may want to do the default deep link handling
+      // Check if app was opened from a deep link
+      const url = await Linking.getInitialURL();
+
+      if (url != null) {
+        console.log(url, 'urlllll');
+      }
+    })();
   }, []);
 
   useEffect(() => {

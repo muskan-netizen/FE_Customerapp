@@ -301,7 +301,6 @@ export default function Cart({navigation, route}) {
     } else {
       updateState({isLoadingB: true});
       removeItem('selectedTable');
-      console.log(defaultSelectedTable, 'defaultSelectedTable');
       removeProductFromCart(itemToUpdate);
     }
   };
@@ -1356,7 +1355,7 @@ export default function Cart({navigation, route}) {
         code: appData?.profile?.code,
       })
       .then((res) => {
-        setItem('selectedTable', item.label || null);
+        setItem('selectedTable', item?.label);
       })
       .catch((error) => {
         updateState({

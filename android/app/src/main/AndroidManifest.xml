@@ -36,6 +36,17 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter> -->
 
+        <!-- Deeplinking started -->
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+             <data android:scheme="royoorder" android:host=""  android:pathPrefix="" />  
+               <data android:scheme="https" android:host="sales.royoorders.com"  android:pathPrefix=""/>
+       </intent-filter>
+      <!-- Deeplinking ended -->
+
+      
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
 
