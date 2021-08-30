@@ -36,7 +36,12 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
+import {
+  getImageUrl,
+  getParameterByName,
+  showError,
+  showSuccess,
+} from '../../utils/helperFunctions';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFun from './styles';
 import Modal from 'react-native-modal';
@@ -72,6 +77,7 @@ export default function Cart({navigation, route}) {
     tableData: [],
     isTableDropDown: false,
     defaultSelectedTable: '',
+    deepLinkUrl: null,
   });
   const {
     viewHeight,
@@ -93,6 +99,7 @@ export default function Cart({navigation, route}) {
     tableData,
     isTableDropDown,
     defaultSelectedTable,
+    deepLinkUrl,
   } = state;
 
   //Redux store data
@@ -1148,6 +1155,7 @@ export default function Cart({navigation, route}) {
 
   //Header section of cart screen
   const getHeader = () => {
+    console.log(deepLinkUrl, 'deepLinkUrl===>');
     return (
       <>
         {vendorAddress ? (
@@ -1182,13 +1190,18 @@ export default function Cart({navigation, route}) {
             </View>
 
             {dineInType === 'dine_in' &&
+              userData?.auth_token &&
               cartData?.vendor_details?.vendor_tables && (
                 <DropDownPicker
                   items={tableData}
                   onOpen={() => updateState({isTableDropDown: true})}
                   onClose={() => updateState({isTableDropDown: false})}
                   defaultValue={
-                    defaultSelectedTable || tableData[0].label || ''
+                    deepLinkUrl
+                      ? deepLinkUrl == 1
+                        ? tableData[0]?.label
+                        : tableData[1]?.label
+                      : defaultSelectedTable || tableData[0]?.label || ''
                   }
                   containerStyle={{
                     height: 40,
@@ -1345,6 +1358,20 @@ export default function Cart({navigation, route}) {
     // _onDateChange(value);
   };
 
+  useEffect(() => {
+    getItem('deepLinkUrl')
+      .then((res) => {
+        if (res) {
+          let table_number = getParameterByName('table', res);
+          console.log(res, 'table_number');
+          updateState({deepLinkUrl: table_number});
+        }
+      })
+      .catch((error) => {
+        showError(error.message);
+      });
+  }, []);
+
   const _onTableSelection = (item) => {
     const data = {
       vendor_id: item.id,
@@ -1355,6 +1382,7 @@ export default function Cart({navigation, route}) {
         code: appData?.profile?.code,
       })
       .then((res) => {
+        removeItem('deepLinkUrl');
         setItem('selectedTable', item?.label);
       })
       .catch((error) => {

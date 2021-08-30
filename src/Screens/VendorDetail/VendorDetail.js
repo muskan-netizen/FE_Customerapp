@@ -17,10 +17,9 @@ import ListEmptyVendors from '../Vendors/ListEmptyVendors';
 
 export default function VendorDetail({navigation, route}) {
   let vendorParams = route?.params?.data;
-  console.log(vendorParams, 'vendorParams>>>>>>>');
 
   const [state, setState] = useState({
-    vendorId: vendorParams?.item?.id,
+    vendorId: vendorParams?.item?.id || vendorParams.id,
     vendorData: [],
     isLoading: true,
     limit: 12,
@@ -121,7 +120,7 @@ export default function VendorDetail({navigation, route}) {
         onPress={moveToNewScreen(navigationStrings.PRODUCT_LIST, {
           id: item.id,
           rootProducts: vendorParams?.rootProducts,
-          vendor: vendorParams?.irootProductstem?true:false,
+          vendor: vendorParams?.irootProductstem ? true : false,
           // rootProducts:
           vendorData: vendorParams?.item,
           categoryInfo: item,
@@ -135,15 +134,15 @@ export default function VendorDetail({navigation, route}) {
     );
   };
 
+  console.log(vendorData, 'vendorDatavendorData');
+
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
       bgColor={colors.backgroundGrey}>
-      {/* <Header centerTitle={vendorParams?.item?.name} hideRight={false} /> */}
-
       <Header
         leftIcon={imagePath.back}
-        centerTitle={vendorParams?.item?.name}
+        centerTitle={vendorParams?.item?.name || vendorData.vendor_name}
         rightIcon={imagePath.search}
         onPressRight={() =>
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
@@ -158,7 +157,7 @@ export default function VendorDetail({navigation, route}) {
         </View>
       ) : (
         <FlatList
-          data={vendorData}
+          data={vendorData?.category_details || vendorData}
           numColumns={3}
           ListHeaderComponent={<View style={{height: 10}} />}
           // columnWrapperStyle={{justifyContent: 'space-between'}}

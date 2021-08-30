@@ -14,6 +14,8 @@ import DeviceInfo from 'react-native-device-info';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
+  getParameterByName,
+  getUrlRoutes,
 } from '../../utils/helperFunctions';
 import {chekLocationPermission} from '../../utils/permissions';
 import {
@@ -21,6 +23,7 @@ import {
   DashBoardHeaderOne,
   DashBoardOne,
 } from './DashboardViews/Index';
+import {setItem} from '../../utils/utils';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -154,14 +157,22 @@ export default function Home({route, navigation}) {
 
   useEffect(() => {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
-    console.log('sfjdkfj');
     (async () => {
       // First, you may want to do the default deep link handling
       // Check if app was opened from a deep link
-      const url = await Linking.getInitialURL();
+      const deepLinkUrl = await Linking.getInitialURL();
 
-      if (url != null) {
-        console.log(url, 'urlllll');
+      if (deepLinkUrl != null) {
+        setItem('deepLinkUrl', deepLinkUrl);
+        console.log(deepLinkUrl, '<======url');
+
+        let id = getParameterByName('id', deepLinkUrl);
+        let routeName = getUrlRoutes(deepLinkUrl, 1);
+        if (routeName === 'vendor') {
+          const item = {};
+          item['id'] = id;
+          moveToNewScreen(navigationStrings.VENDOR_DETAIL, item)();
+        }
       }
     })();
   }, []);

@@ -6,6 +6,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <TwitterKit/TWTRKit.h>
 #import "RNSplashScreen.h"  // here
+#import <React/RCTLinkingManager.h> //deeplinking
 @import GooglePlaces;
 @import GoogleMaps;
 // AppDelegate.m
@@ -19,7 +20,7 @@
   [GMSPlacesClient provideAPIKey:googlePlacesKey];
   [GMSServices provideAPIKey:googlePlacesKey];
   
-  [FBSDKApplicationDelegate initializeSDK:launchOptions];
+
   
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
@@ -57,7 +58,8 @@
  {
    [[FBSDKApplicationDelegate sharedInstance] application:application
                                                   openURL:url
-                                                  options:options] || [[Twitter sharedInstance] application:application openURL:url options:options];
+                                                  options:options] || [[Twitter sharedInstance] application:application openURL:url options:options]
+   || [RCTLinkingManager application:application openURL:url options:options];
    return YES;
  }
 
@@ -76,4 +78,14 @@
 #endif
 }
 
+
+//deeplinking
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity
+ restorationHandler:(nonnull void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler
+{
+ return [RCTLinkingManager application:application
+                  continueUserActivity:userActivity
+                    restorationHandler:restorationHandler];
+}
 @end

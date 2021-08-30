@@ -93,7 +93,6 @@ export default function Vendors({route, navigation}) {
 
   //************Check the redirecton screen********/
   const _checkRedirectScreen = (item) => {
-    console.log('clickon vendor ', item);
     {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
