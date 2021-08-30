@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import {Text, View} from 'react-native';
 import CardLoader from '../../Components/Loaders/CardLoader';
 import {
   moderateScale,
   moderateScaleVertical,
-  width
+  width,
 } from '../../styles/responsiveSize';
 
 export default function ListEmptyOffers({isLoading = false}) {
@@ -19,8 +19,10 @@ export default function ListEmptyOffers({isLoading = false}) {
     );
   }
   return (
-    <View>
-      <Text></Text>
-    </View>
+    <NoDataFound
+      text={text}
+      isLoading={isLoading}
+      containerStyle={containerStyle}
+    />
   );
 }
