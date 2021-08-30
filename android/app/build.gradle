@@ -802,6 +802,15 @@ android {
             applicationId 'com.flyinghorse'
             resValue "string", "app_name", "Flying Horse"
          }
+         errand{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.errand'
+            resValue "string", "app_name", "Errand"
+         }
     }
 }
 

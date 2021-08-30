@@ -66,6 +66,7 @@ const shortCodes = {
   yogolift: '4f3624',
   fleety: '45bef7',
   flyinghorse: '8577b8',
+  errand: '62a348',
 };
 
 const appIds = {
@@ -328,6 +329,10 @@ const appIds = {
   flyinghorse: Platform.select({
     ios: 'com.flyinghorse',
     android: 'com.flyinghorse',
+  }),
+  errand: Platform.select({
+    ios: 'com.errand',
+    android: 'com.errand',
   }),
 };
 

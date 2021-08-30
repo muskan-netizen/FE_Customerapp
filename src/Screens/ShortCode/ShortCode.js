@@ -469,6 +469,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.errand:
+          updateState({
+            shortCode: shortCodes.errand,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
