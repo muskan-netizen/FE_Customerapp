@@ -233,7 +233,7 @@ const appIds = {
   }),
   drus: Platform.select({
     ios: 'com.drus.customer',
-    android: 'com.drus',
+    android: 'com.app.drus',
   }),
   yahu: Platform.select({
     ios: 'com.yahu',

@@ -627,7 +627,6 @@
 		846E771F26C68AE900C7A2C5 /* TowTrek(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 846E771E26C68AE900C7A2C5 /* TowTrek(Development).xcconfig */; };
 		846E778126C68B1000C7A2C5 /* TowTrek(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 846E778026C68B1000C7A2C5 /* TowTrek(Production).xcconfig */; };
 		846E77B326C68B2700C7A2C5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 846E77B226C68B2700C7A2C5 /* Images.xcassets */; };
-		846E77E526C68B5800C7A2C5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 846E77E426C68B5700C7A2C5 /* GoogleService-Info.plist */; };
 		846E7A2F26C6943B00C7A2C5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		846E7A3026C6943B00C7A2C5 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		846E7A3126C6943B00C7A2C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -868,6 +867,7 @@
 		84800BCE26CE2B550014F500 /* Housekeeper4Hire(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84800BCD26CE2B550014F500 /* Housekeeper4Hire(Production).xcconfig */; };
 		84800C0C26CE2B6E0014F500 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84800C0B26CE2B6E0014F500 /* Images.xcassets */; };
 		84800C4A26CE2CD90014F500 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84800C4926CE2CD80014F500 /* GoogleService-Info.plist */; };
+		8480D27126D9100600002CD6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8480D27026D9100500002CD6 /* GoogleService-Info.plist */; };
 		84854E1026C4ED7E00BFFD11 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84854E1126C4ED7E00BFFD11 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		84854E1226C4ED7E00BFFD11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -916,6 +916,7 @@
 		8493F65326CB861E006AD6AD /* Yummiidash(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8493F65226CB861E006AD6AD /* Yummiidash(Production).xcconfig */; };
 		8493F68926CB863D006AD6AD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8493F68826CB863D006AD6AD /* Images.xcassets */; };
 		8493F6BF26CB874D006AD6AD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8493F6BE26CB874C006AD6AD /* GoogleService-Info.plist */; };
+		849A371426D7C48600A1D9AA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849A371326D7C48500A1D9AA /* GoogleService-Info.plist */; };
 		849AE06A26C5245800B6C20D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		849AE06B26C5245800B6C20D /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		849AE06C26C5245800B6C20D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -1365,7 +1366,6 @@
 		84D482A026C14F5800EE9EB5 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		84D482CA26C1508A00EE9EB5 /* LastMinuteDress(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84D482C926C1508A00EE9EB5 /* LastMinuteDress(Development).xcconfig */; };
 		84D4832826C150F200EE9EB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84D4832726C150F200EE9EB5 /* Images.xcassets */; };
-		84D4836626C1525A00EE9EB5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84D4836526C1525A00EE9EB5 /* GoogleService-Info.plist */; };
 		84D484D826C1566500EE9EB5 /* LastMinuteDress(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84D4830726C150BC00EE9EB5 /* LastMinuteDress(Production).xcconfig */; };
 		84D486F926C161C800EE9EB5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84D486FA26C161C800EE9EB5 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -1389,6 +1389,7 @@
 		84D4877A26C162E100EE9EB5 /* Specialhalal(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84D4877926C162E100EE9EB5 /* Specialhalal(Production).xcconfig */; };
 		84D4879B26C1632500EE9EB5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84D4879A26C1632500EE9EB5 /* GoogleService-Info.plist */; };
 		84D487BC26C1633700EE9EB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84D487BB26C1633700EE9EB5 /* Images.xcassets */; };
+		84D5F26626D76D7400C6E5DB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84D5F26526D76D7300C6E5DB /* GoogleService-Info.plist */; };
 		84D8C35B269F03220020B09A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84D8C35D269F03220020B09A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		84D8C364269F03220020B09A /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
@@ -1926,7 +1927,6 @@
 		846E771E26C68AE900C7A2C5 /* TowTrek(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "TowTrek(Development).xcconfig"; sourceTree = "<group>"; };
 		846E778026C68B1000C7A2C5 /* TowTrek(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "TowTrek(Production).xcconfig"; sourceTree = "<group>"; };
 		846E77B226C68B2700C7A2C5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		846E77E426C68B5700C7A2C5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		846E78A626C68DB100C7A2C5 /* TowTrek.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TowTrek.entitlements; sourceTree = "<group>"; };
 		846E7A5D26C6943B00C7A2C5 /* ArenaGrub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArenaGrub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		846E7B2426C695A700C7A2C5 /* ArenaGrub(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ArenaGrub(Development).xcconfig"; sourceTree = "<group>"; };
@@ -1987,6 +1987,7 @@
 		84800C0B26CE2B6E0014F500 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84800C4926CE2CD80014F500 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84800D3B26CE2EBE0014F500 /* Housekeeper4Hire.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Housekeeper4Hire.entitlements; sourceTree = "<group>"; };
+		8480D27026D9100500002CD6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84854E3826C4ED7E00BFFD11 /* Servze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Servze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84854EB926C4EE9000BFFD11 /* Servze(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Servze(Development).xcconfig"; sourceTree = "<group>"; };
 		84854F0F26C4EEB500BFFD11 /* Servze(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Servze(Production).xcconfig"; sourceTree = "<group>"; };
@@ -1999,6 +2000,7 @@
 		8493F68826CB863D006AD6AD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8493F6BE26CB874C006AD6AD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8493F7C426CB8BB0006AD6AD /* Yummiidash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Yummiidash.entitlements; sourceTree = "<group>"; };
+		849A371326D7C48500A1D9AA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		849AE09326C5245800B6C20D /* Travo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Travo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		849AE16D26C5263300B6C20D /* Travo(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Travo(Development).xcconfig"; sourceTree = "<group>"; };
 		849AE1C526C5264A00B6C20D /* Travo(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Travo(Production).xcconfig"; sourceTree = "<group>"; };
@@ -2114,7 +2116,6 @@
 		84D482C926C1508A00EE9EB5 /* LastMinuteDress(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "LastMinuteDress(Development).xcconfig"; sourceTree = "<group>"; };
 		84D4830726C150BC00EE9EB5 /* LastMinuteDress(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "LastMinuteDress(Production).xcconfig"; sourceTree = "<group>"; };
 		84D4832726C150F200EE9EB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		84D4836526C1525A00EE9EB5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84D483FD26C1539200EE9EB5 /* LastMinuteDress.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LastMinuteDress.entitlements; sourceTree = "<group>"; };
 		84D4871726C161C800EE9EB5 /* Specialhalal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specialhalal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D4873926C162BC00EE9EB5 /* Specialhalal(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Specialhalal(Development).xcconfig"; sourceTree = "<group>"; };
@@ -2122,6 +2123,7 @@
 		84D4879A26C1632500EE9EB5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84D487BB26C1633700EE9EB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84D4889626C166A200EE9EB5 /* Specialhalal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Specialhalal.entitlements; sourceTree = "<group>"; };
+		84D5F26526D76D7300C6E5DB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84D8C37B269F03220020B09A /* Yogo Food.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yogo Food.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D8C3C8269F04A70020B09A /* YogoFood(Production).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "YogoFood(Production).xcconfig"; sourceTree = "<group>"; };
 		84D8C3C9269F04A70020B09A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -3738,7 +3740,7 @@
 		846E771D26C68AB100C7A2C5 /* TowTrek */ = {
 			isa = PBXGroup;
 			children = (
-				846E77E426C68B5700C7A2C5 /* GoogleService-Info.plist */,
+				849A371326D7C48500A1D9AA /* GoogleService-Info.plist */,
 				846E771E26C68AE900C7A2C5 /* TowTrek(Development).xcconfig */,
 				846E778026C68B1000C7A2C5 /* TowTrek(Production).xcconfig */,
 				846E77B226C68B2700C7A2C5 /* Images.xcassets */,
@@ -4079,7 +4081,7 @@
 		84D482C826C1505700EE9EB5 /* LastMinuteDress */ = {
 			isa = PBXGroup;
 			children = (
-				84D4836526C1525A00EE9EB5 /* GoogleService-Info.plist */,
+				84D5F26526D76D7300C6E5DB /* GoogleService-Info.plist */,
 				84D482C926C1508A00EE9EB5 /* LastMinuteDress(Development).xcconfig */,
 				84D4830726C150BC00EE9EB5 /* LastMinuteDress(Production).xcconfig */,
 				84D4832726C150F200EE9EB5 /* Images.xcassets */,
@@ -4135,6 +4137,7 @@
 			isa = PBXGroup;
 			children = (
 				846E7ED426C6A74800C7A2C5 /* GoogleService-Info.plist */,
+				8480D27026D9100500002CD6 /* GoogleService-Info.plist */,
 				84E176DD26C6535A00E71F11 /* Drus(Development).xcconfig */,
 				84E1770C26C6537A00E71F11 /* Drus(Production).xcconfig */,
 				84E1773B26C653A500E71F11 /* Images.xcassets */,
@@ -5999,6 +6002,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					84E175C926C651E000E71F11 = {
+						DevelopmentTeam = 6FXUMT5X23;
 						ProvisioningStyle = Automatic;
 					};
 					84ECE25B26A7FA8F009A0F8C = {
@@ -6018,6 +6022,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					84FFFF1B26D672E600F2B059 = {
+						DevelopmentTeam = 6FXUMT5X23;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -6709,12 +6714,12 @@
 				846E761826C689C600C7A2C5 /* SFProText-Medium.ttf in Resources */,
 				846E77B326C68B2700C7A2C5 /* Images.xcassets in Resources */,
 				846E761B26C689C600C7A2C5 /* Plists in Resources */,
-				846E77E526C68B5800C7A2C5 /* GoogleService-Info.plist in Resources */,
 				846E778126C68B1000C7A2C5 /* TowTrek(Production).xcconfig in Resources */,
 				846E761C26C689C600C7A2C5 /* Futura-Normal.ttf in Resources */,
 				846E761D26C689C600C7A2C5 /* Futura-Book.ttf in Resources */,
 				846E761E26C689C600C7A2C5 /* CircularStd-Medium.otf in Resources */,
 				846E761F26C689C600C7A2C5 /* FuturaBT-Heavy.ttf in Resources */,
+				849A371426D7C48600A1D9AA /* GoogleService-Info.plist in Resources */,
 				846E762026C689C600C7A2C5 /* CircularStd-Bold.ttf in Resources */,
 				846E762326C689C600C7A2C5 /* SFProText-Bold.ttf in Resources */,
 			);
@@ -7539,7 +7544,7 @@
 				84D4829626C14F5800EE9EB5 /* SFProText-SemiBold.ttf in Resources */,
 				84D4829726C14F5800EE9EB5 /* SFProText-Medium.ttf in Resources */,
 				84D4829926C14F5800EE9EB5 /* Plists in Resources */,
-				84D4836626C1525A00EE9EB5 /* GoogleService-Info.plist in Resources */,
+				84D5F26626D76D7400C6E5DB /* GoogleService-Info.plist in Resources */,
 				84D4829A26C14F5800EE9EB5 /* Futura-Normal.ttf in Resources */,
 				84D4829B26C14F5800EE9EB5 /* Futura-Book.ttf in Resources */,
 				84D4829C26C14F5800EE9EB5 /* CircularStd-Medium.otf in Resources */,
@@ -7649,6 +7654,7 @@
 				84E176DE26C6535A00E71F11 /* Drus(Development).xcconfig in Resources */,
 				84E175EB26C651E000E71F11 /* CircularStd-Medium.otf in Resources */,
 				84E175EC26C651E000E71F11 /* FuturaBT-Heavy.ttf in Resources */,
+				8480D27126D9100600002CD6 /* GoogleService-Info.plist in Resources */,
 				84E175ED26C651E000E71F11 /* CircularStd-Bold.ttf in Resources */,
 				84E175EF26C651E000E71F11 /* SFProText-Bold.ttf in Resources */,
 			);
@@ -22307,7 +22313,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Yogo Food.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
@@ -22401,7 +22407,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -22713,7 +22719,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

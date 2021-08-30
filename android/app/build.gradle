@@ -584,7 +584,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.drus'
+            applicationId 'com.app.drus'
             resValue "string", "app_name", "Drus"
 
          }
