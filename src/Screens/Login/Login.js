@@ -204,6 +204,7 @@ export default function Login({navigation}) {
         }
       })
       .catch((err) => {
+        console.log(err, 'error in gmail login');
         updateState({isLoading: false});
       });
   };

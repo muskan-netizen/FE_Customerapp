@@ -1,50 +1,65 @@
 {
   "project_info": {
-    "project_number": "948283400390",
-    "project_id": "drus-bbda7",
-    "storage_bucket": "drus-bbda7.appspot.com"
+    "project_number": "663603800114",
+    "project_id": "drus-296510",
+    "storage_bucket": "drus-296510.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:948283400390:android:0bd57170be71f4aa7eb7c7",
+        "mobilesdk_app_id": "1:663603800114:android:66e671839a90a7e388f42b",
         "android_client_info": {
-          "package_name": "com.drus"
+          "package_name": "com.app.drus"
         }
       },
       "oauth_client": [
         {
-          "client_id": "948283400390-68uaver34spm2akmjk5gf2r3gq0j94uj.apps.googleusercontent.com",
+          "client_id": "663603800114-3mv8le8a2khe2bpa9cu0lnqbqf7qs8n6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.drus",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "948283400390-ol8akrsr90htjrm2hnselg53vqibtahc.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.drus",
+            "package_name": "com.app.drus",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "948283400390-513f4a5gmeralsko0p4cdlv7t98mlo00.apps.googleusercontent.com",
+          "client_id": "663603800114-8vjg2g9f3fkivknpcml6es5qgsvior1a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.drus",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "663603800114-m8ked19u0l4truv4ji7gdi53oedvvgrp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.drus",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "663603800114-n1k5obp96g25dfes01c5a8rp5aiu12v2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAzDGH3IxrdIWhMLkQqhWzp7xkVHmosvp8"
+          "current_key": "AIzaSyA3jtAWVh1q9IYnbjg-QCJj2lRgg39WWXU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "948283400390-513f4a5gmeralsko0p4cdlv7t98mlo00.apps.googleusercontent.com",
+              "client_id": "663603800114-n1k5obp96g25dfes01c5a8rp5aiu12v2.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "663603800114-pm2osrjr3bf9chfsg84grtkb19ngdf99.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.drus.customer"
+              }
             }
           ]
         }

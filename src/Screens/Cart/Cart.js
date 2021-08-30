@@ -66,7 +66,7 @@ export default function Cart({navigation, route}) {
     selectedAddress: null,
     selectedPayment: {
       id: 1,
-      title: 'Cash on Delivery',
+      title: 'Select Payment Method',
       off_site: 0,
     },
     // selectedPayment: null,
@@ -470,7 +470,7 @@ export default function Cart({navigation, route}) {
       if (!selectedAddressData) {
         // showError('Please select address');
         setModalVisible(true);
-      } else if (!selectedPayment) {
+      } else if (!paramsData?.selectedMethod) {
         showError('Please select a payment method');
       } else {
         if (!!userData) {
@@ -697,7 +697,7 @@ export default function Cart({navigation, route}) {
                                     <Text
                                       style={styles.cartItemWeight2}
                                       numberOfLines={1}>
-                                      {j.addon_title}{' '}
+                                      {j.addon_title}
                                     </Text>
                                     <Text
                                       style={styles.cartItemWeight2}
@@ -751,9 +751,7 @@ export default function Cart({navigation, route}) {
                 fontFamily: fontFamily.medium,
                 color: colors.redFireBrick,
               }}>
-              {
-                'The specific items are not deliverable to this address. Please remove the items or change the address '
-              }
+              {strings.ITEM_NOT_DELIVERABLE}
             </Text>
           </View>
         )}
@@ -865,7 +863,6 @@ export default function Cart({navigation, route}) {
   };
 
   const selectedTip = (tip) => {
-    console.log(tip, 'tip >>>ITEM');
     if (selectedTipvalue == 'custom') {
       updateState({selectedTipvalue: tip, selectedTipAmount: null});
     } else {
@@ -1141,7 +1138,9 @@ export default function Cart({navigation, route}) {
             />
 
             <ButtonComponent
-              onPress={() => placeOrder()}
+              onPress={() => {
+                placeOrder();
+              }}
               btnText={strings.PLACE_ORDER}
               borderRadius={moderateScale(13)}
               textStyle={{color: '#fff'}}

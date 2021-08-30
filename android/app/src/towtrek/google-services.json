@@ -7,12 +7,36 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:705724009306:android:6beac917b3fc7e7c378163",
+        "mobilesdk_app_id": "1:705724009306:android:c40efbc2903de241378163",
         "android_client_info": {
-          "package_name": "com.towtrek"
+          "package_name": "com.app.towtrek"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "705724009306-4t80dkftckmtu6dp273bbrc1ce4b9feu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.towtrek",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "705724009306-9s1i90g0vr8a2hn8tgteomqnn8it642n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.towtrek",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "705724009306-beu8ap2o5jvb6tc80tuehoeojsls0jln.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.towtrek",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
         {
           "client_id": "705724009306-87k7eet5f8i5dnujpm387vd1c3a5t8hj.apps.googleusercontent.com",
           "client_type": 3
@@ -29,6 +53,13 @@
             {
               "client_id": "705724009306-87k7eet5f8i5dnujpm387vd1c3a5t8hj.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "705724009306-0ig6r1a9p5e09j0ancuttapl5sutfqbn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.towtrek"
+              }
             }
           ]
         }
