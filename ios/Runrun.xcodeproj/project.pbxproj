@@ -1906,6 +1906,7 @@
 		84243C0B26AE93BD000754C2 /* BLIP(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BLIP(Production).xcconfig"; sourceTree = "<group>"; };
 		84243C3C26AE9410000754C2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84243C4D26AE9434000754C2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		842EEE7726DCD3EF00F121B5 /* RoyoOrder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RoyoOrder.entitlements; sourceTree = "<group>"; };
 		84324FD126C658580041E569 /* Drus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Drus.entitlements; sourceTree = "<group>"; };
 		84348D4426CCC9D200DB8C18 /* SirVU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SirVU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84348E8B26CCCB4A00DB8C18 /* SirVU(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "SirVU(Development).xcconfig"; sourceTree = "<group>"; };
@@ -1969,7 +1970,6 @@
 		84534BE826733A850006EEB3 /* Hmoobhub(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Hmoobhub(Production).xcconfig"; sourceTree = "<group>"; };
 		84534BF126733AA50006EEB3 /* Hmoobhub(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Hmoobhub(Development).xcconfig"; sourceTree = "<group>"; };
 		845AEAEF265504520075224A /* RoyoOrder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoyoOrder.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8464AF6C26A5B70300C760FB /* RoyoOrder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RoyoOrder.entitlements; sourceTree = "<group>"; };
 		8468004A26A831920076EBC5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8468FE8C26A82E960076EBC5 /* Spidbi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spidbi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8468FF3526A82ED90076EBC5 /* Spidbi(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Spidbi(Development).xcconfig"; sourceTree = "<group>"; };
@@ -3411,6 +3411,7 @@
 				8449646626DD0A13001401BF /* ErrandDebug.entitlements */,
 				84BEA5CF26DCF37600390501 /* FlyingHorseDebug.entitlements */,
 				847E8F9226DCB7EF0054CD42 /* Fleety.entitlements */,
+				842EEE7726DCD3EF00F121B5 /* RoyoOrder.entitlements */,
 				84FF002C26D676C200F2B059 /* YogoLift.entitlements */,
 				84FFFCE926D669C200F2B059 /* LoopWhole.entitlements */,
 				84FFF79F26D656E900F2B059 /* Vici.entitlements */,
@@ -3469,7 +3470,6 @@
 				84ECE2E926A7FD83009A0F8C /* InstaMobile.entitlements */,
 				84F4679626A7F27500D378D5 /* Royo.swift */,
 				84F4661426A707BC00D378D5 /* BottomsUp.entitlements */,
-				8464AF6C26A5B70300C760FB /* RoyoOrder.entitlements */,
 				84D8C52F269F0DD40020B09A /* Yogo Food.entitlements */,
 				76804BF7269C15CB007926EE /* Hmoobhub.entitlements */,
 				76804BF6269C157F007926EE /* Tranzit.entitlements */,
@@ -20766,6 +20766,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
@@ -20797,6 +20798,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
 				PROVISIONING_PROFILE_SPECIFIER = "com.codebrew.royoordersreactnative AppStore";
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";

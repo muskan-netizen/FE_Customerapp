@@ -143,16 +143,27 @@ export default function Login({navigation}) {
 
   //Saving login user to backend
   const _saveSocailLogin = (socialLoginData, type) => {
-    console.log(socialLoginData, 'socialLoginData>>>');
     let data = {};
-    data['name'] = socialLoginData?.name || socialLoginData?.userName;
-    data['auth_id'] = socialLoginData?.id || socialLoginData?.userID;
+    data['name'] =
+      socialLoginData?.name ||
+      socialLoginData?.userName ||
+      socialLoginData?.fullName?.givenName;
+    data['auth_id'] =
+      socialLoginData?.id ||
+      socialLoginData?.userID ||
+      socialLoginData?.identityToken;
     data['phone_number'] = '';
     data['email'] = socialLoginData?.email;
     data['device_type'] = Platform.OS;
-    data['device_token'] = 'sadassa';
+    data['device_token'] = DeviceInfo.getUniqueId();
+
     let query = '';
-    if (type == 'facebook' || type == 'twitter' || type == 'google') {
+    if (
+      type == 'facebook' ||
+      type == 'twitter' ||
+      type == 'google' ||
+      type == 'apple'
+    ) {
       query = type;
     }
     actions
@@ -184,7 +195,8 @@ export default function Login({navigation}) {
     updateState({isLoading: false});
     handleAppleLogin()
       .then((res) => {
-        updateState({isLoading: false});
+        _saveSocailLogin(res, 'apple');
+        // updateState({isLoading: false});
       })
       .catch((err) => {
         updateState({isLoading: false});
