@@ -3,6 +3,8 @@ import {ScrollView, View} from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
+import BorderTextInput from '../../Components/BorderTextInput';
+
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -17,6 +19,8 @@ import {
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
 import stylesFun from './styles';
+import PhoneNumberInput from '../../Components/PhoneNumberInput';
+import strings from '../../constants/lang';
 
 export default function WebLinks({navigation, route}) {
   console.log(route, 'route>>>');
@@ -24,6 +28,14 @@ export default function WebLinks({navigation, route}) {
   const [state, setState] = useState({
     isLoading: false,
     htmlContent: null,
+    callingCode: '91',
+    cca2: 'IN',
+    phoneNumber: '',
+    fullname: '',
+    email: '',
+    title: '',
+    password: '',
+    confirm_password: '',
   });
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -74,7 +86,14 @@ export default function WebLinks({navigation, route}) {
     updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
-
+  const _onChangeText = (key) => (val) => {
+    updateState({[key]: val});
+  };
+  const _onCountryChange = (data) => {
+    updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
+    return;
+  };
+  const {cca2, phoneNumber} = state;
   return (
     <WrapperContainer
       bgColor={colors.backgroundGrey}
@@ -103,6 +122,48 @@ export default function WebLinks({navigation, route}) {
               <WebView source={{uri: paramData?.url}} />
             )} */}
             {htmlContent && <HTMLView value={htmlContent} />}
+          </View>
+          <View
+            style={{
+              marginTop: moderateScaleVertical(40),
+              marginHorizontal: moderateScale(24),
+            }}>
+            <BorderTextInput
+              placeholder={strings.YOUR_NAME}
+              onChangeText={_onChangeText('fullname')}
+            />
+
+            <BorderTextInput
+              placeholder={strings.YOUR_EMAIL}
+              onChangeText={_onChangeText('email')}
+            />
+            <BorderTextInput
+              placeholder={strings.ENTER_TITLE}
+              label={'Title'}
+              onChangeText={_onChangeText('title')}
+            />
+            <PhoneNumberInput
+              onCountryChange={_onCountryChange}
+              onChangePhone={(phoneNumber) =>
+                updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
+              }
+              cca2={cca2}
+              phoneNumber={phoneNumber}
+              callingCode={state.callingCode}
+              placeholder={strings.YOUR_PHONE_NUMBER}
+              keyboardType={'phone-pad'}
+            />
+            <View style={{height: moderateScaleVertical(20)}} />
+            <BorderTextInput
+              secureTextEntry={true}
+              placeholder={strings.ENTER_PASSWORD}
+              onChangeText={_onChangeText('password')}
+            />
+            <BorderTextInput
+              secureTextEntry={true}
+              placeholder={strings.CONFIRM_PASSWORD}
+              onChangeText={_onChangeText('confirm_password')}
+            />
           </View>
         </View>
       </ScrollView>

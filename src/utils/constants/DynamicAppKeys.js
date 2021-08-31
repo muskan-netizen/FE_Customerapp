@@ -67,6 +67,7 @@ const shortCodes = {
   fleety: '45bef7',
   flyinghorse: '8577b8',
   errand: '62a348',
+  partnerproject: '246a2a',
 };
 
 const appIds = {
@@ -333,6 +334,10 @@ const appIds = {
   errand: Platform.select({
     ios: 'com.errand',
     android: 'com.errand',
+  }),
+  partnerproject: Platform.select({
+    ios: 'com.partnerproject',
+    android: 'com.partnerproject',
   }),
 };
 
