@@ -18,7 +18,7 @@ import {
 import stylesFunc from './styles';
 export default function OrderSuccess({navigation, route}) {
   const currentTheme = useSelector((state) => state.appTheme);
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
@@ -28,7 +28,7 @@ export default function OrderSuccess({navigation, route}) {
   const {} = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {themeColors, themeLayouts} = currentTheme;
+  // const {themeColors, themeLayouts} = currentTheme;
 
   const viewOrderDetail = () => {
     navigation.navigate(navigationStrings.ORDER_DETAIL, {
@@ -81,10 +81,10 @@ export default function OrderSuccess({navigation, route}) {
         <ButtonComponent
           btnText={strings.VIEW_DETAIL}
           onPress={viewOrderDetail}
-          textStyle={{color: colors.textBlue}}
+          textStyle={{color: themeColors.secondary_color}}
           borderRadius={moderateScale(13)}
           containerStyle={{
-            backgroundColor: 'rgba(67,162,231,0.3)',
+            backgroundColor: themeColors.primary_color,
             width: width / 1.2,
           }}
         />

@@ -255,8 +255,8 @@ export default ({fontFamily, themeColors}) => {
       alignSelf: 'flex-end',
       marginVertical:
         Platform.OS === 'ios'
-          ? moderateScaleVertical(15)
-          : moderateScaleVertical(60),
+          ? moderateScaleVertical(2)
+          : moderateScaleVertical(50),
       marginHorizontal: moderateScale(10),
     },
     placeOrderButtonStyle: {

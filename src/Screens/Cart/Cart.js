@@ -401,6 +401,7 @@ export default function Cart({navigation, route}) {
 
   //Error handling in screen
   const errorMethod = (error) => {
+    console.log(error, 'error');
     updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
@@ -519,6 +520,7 @@ export default function Cart({navigation, route}) {
   const placeOrder = () => {
     var d1 = new Date();
     var d2 = new Date(sheduledorderdate);
+    console.log(d1);
     if (!!userData?.auth_token) {
       if (!selectedAddressData) {
         // showError('Please select address');
@@ -527,7 +529,7 @@ export default function Cart({navigation, route}) {
         showError('Please select a payment method');
       } else if (!(sheduledorderdate && selectedTimeOption)) {
         showError('Please select a Order type');
-      } else if (d1.getTime() >= d2.getTime()) {
+      } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
         showError('Invalid  Scheduled Date');
       } else {
         if (!!userData) {
@@ -1217,7 +1219,6 @@ export default function Cart({navigation, route}) {
                 style={{
                   paddingHorizontal: 10,
                   paddingVertical: 5,
-
                   backgroundColor:
                     selectedTimeOption && selectedTimeOption?.id == i.id
                       ? themeColors?.primary_color
