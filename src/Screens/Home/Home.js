@@ -19,16 +19,20 @@ import {
 } from '../../utils/helperFunctions';
 import {chekLocationPermission} from '../../utils/permissions';
 import {
+  DashBoardFive,
   DashBoardFour,
+  DashBoardHeaderFive,
   DashBoardHeaderOne,
   DashBoardOne,
 } from './DashboardViews/Index';
 import {setItem} from '../../utils/utils';
+import {useDeepLinkURL} from '../../Components/DeepLinkHook';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
 export default function Home({route, navigation}) {
   const paramData = route?.params;
+  const {linkedURL, resetURL} = useDeepLinkURL();
 
   const location = useSelector((state) => state?.home?.location);
   const [state, setState] = useState({
@@ -41,6 +45,7 @@ export default function Home({route, navigation}) {
     updatedData: [],
     selectedTabType: '',
     updateTime: 0,
+    isDineInSelected: false,
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
@@ -52,6 +57,7 @@ export default function Home({route, navigation}) {
     languages,
     internetConnection,
     appStyle,
+    isDineInSelected,
   } = useSelector((state) => state?.initBoot);
 
   const initData = useSelector((state) => state?.initBoot);
@@ -155,27 +161,50 @@ export default function Home({route, navigation}) {
     }
   }, [updateTime]);
 
+  // useEffect(() => {
+
+  //   Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+  //   // Linking.addEventListener('deepLinkUrl', ({deepLinkUrl}) =>
+  //   //   moveToLink(deepLinkUrl),
+  //   // );
+
+  //   // if app is not opened
+  //   const getAsyncURL = async () => {
+  //     const deepLinkUrl = await Linking.getInitialURL();
+  //     moveToLink(deepLinkUrl);
+  //   };
+
+  //   getAsyncURL();
+  // }, []);
+
+  // useEffect(() => {
+  //   Linking.addEventListener('url', callback);
+  //   return () => {
+  //     Linking.removeEventListener('url', callback);
+  //   };
+  // }, []);
+
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
-    (async () => {
-      // First, you may want to do the default deep link handling
-      // Check if app was opened from a deep link
-      const deepLinkUrl = await Linking.getInitialURL();
+    if (linkedURL) {
+      moveToLink(linkedURL);
+    }
+    resetURL();
+  }, [linkedURL, resetURL]);
 
-      if (deepLinkUrl != null) {
-        setItem('deepLinkUrl', deepLinkUrl);
-        console.log(deepLinkUrl, '<======url');
-
-        let id = getParameterByName('id', deepLinkUrl);
-        let routeName = getUrlRoutes(deepLinkUrl, 1);
-        if (routeName === 'vendor') {
-          const item = {};
-          item['id'] = id;
-          moveToNewScreen(navigationStrings.VENDOR_DETAIL, item)();
-        }
+  const moveToLink = (deepLinkUrl) => {
+    console.log();
+    if (deepLinkUrl != null) {
+      setItem('deepLinkUrl', deepLinkUrl);
+      let id = getParameterByName('id', deepLinkUrl);
+      let routeName = getUrlRoutes(deepLinkUrl, 1);
+      if (routeName === 'vendor') {
+        selcetedToggle('dine_in');
+        const item = {};
+        item['id'] = id;
+        moveToNewScreen(navigationStrings.VENDOR_DETAIL, item)();
       }
-    })();
-  }, []);
+    }
+  };
 
   useEffect(() => {
     chekLocationPermission()
@@ -276,7 +305,6 @@ export default function Home({route, navigation}) {
               },
             )
             .then((res) => {
-              console.log(res, 'Home data');
               if (
                 appData?.profile?.preferences?.is_hyperlocal &&
                 location?.latitude == '' &&
@@ -508,9 +536,9 @@ export default function Home({route, navigation}) {
       bgColor={colors.backgroundGrey}>
       <View style={{flex: 1}}>
         <>
-          <DashBoardHeaderOne navigation={navigation} location={location} />
+          <DashBoardHeaderFive navigation={navigation} location={location} />
           {appData?.profile?.code === shortCodes.capcorp ? (
-            <DashBoardFour
+            <DashBoardFive
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}
               isLoading={isLoading}
@@ -528,6 +556,7 @@ export default function Home({route, navigation}) {
               isRefreshing={isRefreshing}
               appMainData={appMainData}
               onPressCategory={(item) => onPressCategory(item)}
+              isDineInSelected={isDineInSelected}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
             />

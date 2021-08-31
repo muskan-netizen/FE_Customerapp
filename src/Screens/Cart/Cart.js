@@ -234,8 +234,20 @@ export default function Cart({navigation, route}) {
               (item, indx) =>
                 (tableData[indx] = {
                   id: item.id,
-                  label: `Category: ${item.category.title} | Table: ${item.table_number} | Seat Capacity: ${item.seating_number}`,
-                  value: `Category: ${item.category.title} | Table: ${item.table_number} | Seat Capacity: ${item.seating_number}`,
+                  label: `Category: ${
+                    item.category.title ? item.category.title : ''
+                  } | Table: ${
+                    item.table_number ? item.table_number : 0
+                  } | Seat Capacity: ${
+                    item.seating_number ? item.seating_number : 0
+                  }`,
+                  value: `Category: ${
+                    item.category.title ? item.category.title : ''
+                  } | Table: ${
+                    item.table_number ? item.table_number : 0
+                  } | Seat Capacity: ${
+                    item.seating_number ? item.seating_number : 0
+                  }`,
                   title: item.category.title,
                   table_number: item.table_number,
                   seating_number: item.seating_number,
@@ -1154,7 +1166,6 @@ export default function Cart({navigation, route}) {
 
   //Header section of cart screen
   const getHeader = () => {
-    console.log(deepLinkUrl, 'deepLinkUrl===>');
     return (
       <>
         {vendorAddress ? (

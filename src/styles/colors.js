@@ -80,4 +80,5 @@ export default {
   grey2: '#f7f7f7',
   blue: '#1667c6',
   whiteSmokeColor: '#f5f5f5',
+  redNew: '#FC3C31',
 };

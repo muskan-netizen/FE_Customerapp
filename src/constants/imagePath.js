@@ -213,4 +213,7 @@ export default {
   celebInActive: require('../assets/images/ic_celeb1.png'),
   home2Active: require('../assets/images/ic_home3.png'),
   home2InActive: require('../assets/images/ic_house1.png'),
+  delivery: require('../assets/images/ic_delivery.png'),
+  redLocation: require('../assets/images/ic_location.png'),
+  location2: require('../assets/images/ic_location2.png'),
 };
