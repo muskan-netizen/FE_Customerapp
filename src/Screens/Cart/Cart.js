@@ -528,11 +528,13 @@ export default function Cart({navigation, route}) {
         setModalVisible(true);
       } else if (!paramsData?.selectedMethod) {
         showError('Please select a payment method');
-      } else if (!(sheduledorderdate && selectedTimeOption)) {
-        showError('Please select a Order type');
-      } else if (d1.getTime() >= d2.getTime()) {
-        showError('Invalid  Scheduled Date');
-      } else {
+      } 
+      // else if (!(sheduledorderdate && selectedTimeOption)) {
+      //   showError('Please select a Order type');
+      // } else if (d1.getTime() >= d2.getTime()) {
+      //   showError('Invalid  Scheduled Date');
+      // }
+       else {
         if (!!userData) {
           !!userData?.client_preference?.verify_email ||
           !!userData?.client_preference?.verify_phone
@@ -1193,7 +1195,7 @@ export default function Cart({navigation, route}) {
         </TouchableOpacity>
 
         {/* {payment submit button} */}
-        <View
+        {/* <View
           style={{
             flexDirection: 'row',
             marginVertical: moderateScaleVertical(20),
@@ -1247,7 +1249,7 @@ export default function Cart({navigation, route}) {
               </Text>
             )}
           </View>
-        </View>
+        </View> */}
 
         {!!cartData?.deliver_status && (
           <View style={styles.paymentView}>
