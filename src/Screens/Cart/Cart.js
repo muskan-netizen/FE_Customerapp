@@ -1,5 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
+import moment from 'moment';
+import {cloneDeep, forEach} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {
   Alert,
@@ -36,12 +37,20 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
+import {
+  getColorCodeWithOpactiyNumber,
+  getImageUrl,
+  showError,
+  showSuccess,
+} from '../../utils/helperFunctions';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFun from './styles';
 import Modal from 'react-native-modal';
 import GradientButton from '../../Components/GradientButton';
 import DatePicker from 'react-native-date-picker';
+import DropDownPicker from 'react-native-dropdown-picker';
+import {getItem, removeItem, setItem, setUserData} from '../../utils/utils';
+import commonStyles from '../../styles/commonStyles';
 
 export default function Cart({navigation, route}) {
   let paramsData = route?.params;
@@ -59,7 +68,7 @@ export default function Cart({navigation, route}) {
     selectedAddress: null,
     selectedPayment: {
       id: 1,
-      title: 'Cash on Delivery',
+      title: 'Select Payment Method',
       off_site: 0,
     },
     // selectedPayment: null,
@@ -67,6 +76,16 @@ export default function Cart({navigation, route}) {
     selectedTipvalue: null,
     selectedTipAmount: null,
     viewHeight: 0,
+    tableData: [],
+    isTableDropDown: false,
+    defaultSelectedTable: '',
+    selectedTimeOptions: [
+      {id: 1, title: 'Now', type: 'now'},
+      {id: 2, title: 'Schedule Order', type: 'schedule'},
+    ],
+    selectedTimeOption: null,
+    sheduledorderdate: null,
+    scheduleType: null,
   });
   const {
     viewHeight,
@@ -85,6 +104,13 @@ export default function Cart({navigation, route}) {
     vendorAddress,
     selectedTipvalue,
     selectedTipAmount,
+    tableData,
+    isTableDropDown,
+    defaultSelectedTable,
+    selectedTimeOptions,
+    selectedTimeOption,
+    sheduledorderdate,
+    scheduleType,
   } = state;
 
   //Redux store data
@@ -116,6 +142,7 @@ export default function Cart({navigation, route}) {
   // const styles = stylesFun({fontFamily, themeColors});
 
   //On focus fucntion
+  console.log(selectedTimeOption?.type, 'selectedTimeOption');
   useFocusEffect(
     React.useCallback(() => {
       if (paramsData && paramsData?.selectedMethod) {
@@ -200,6 +227,7 @@ export default function Cart({navigation, route}) {
   const getCartDetail = () => {
     actions
       .getCartDetail(
+        `/?type=${dineInType}`,
         {},
         {
           code: appData?.profile?.code,
@@ -209,10 +237,38 @@ export default function Cart({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res, 'cart detail');
+        console.log(res.data, 'cart detail');
         actions.cartItemQty(res);
-        updateState({isLoadingB: false, isRefreshing: false});
+        updateState({
+          isLoadingB: false,
+          isRefreshing: false,
+          sheduledorderdate: res?.data?.scheduled_date_time,
+          scheduleType: res?.data?.schedule_type,
+          selectedTimeOption:
+            res?.data?.schedule_type == 'now'
+              ? {id: 1, title: 'Now', type: 'now'}
+              : res?.data?.schedule_type == 'schedule'
+              ? {id: 2, title: 'Schedule Order', type: 'schedule'}
+              : null,
+        });
         if (res && res.data) {
+          if (res.data.vendor_details.vendor_tables) {
+            res.data.vendor_details.vendor_tables.forEach(
+              (item, indx) =>
+                (tableData[indx] = {
+                  id: item.id,
+                  label: `Category: ${item.category.title} | Table: ${item.table_number} | Seat Capacity: ${item.seating_number}`,
+                  value: `Category: ${item.category.title} | Table: ${item.table_number} | Seat Capacity: ${item.seating_number}`,
+                  title: item.category.title,
+                  table_number: item.table_number,
+                  seating_number: item.seating_number,
+                  vendor_id: res.data.vendor_details.vendor_address.id,
+                }),
+              updateState({
+                tableData: tableData,
+              }),
+            );
+          }
           updateState({
             cartItems: res.data.products,
             vendorAddress: res.data.address,
@@ -227,6 +283,16 @@ export default function Cart({navigation, route}) {
         }
       })
       .catch(errorMethod);
+
+    getItem('selectedTable')
+      .then((res) => {
+        updateState({
+          defaultSelectedTable: res,
+        });
+      })
+      .catch((error) => {
+        showError(error.message);
+      });
   };
 
   //add /delete products from cart
@@ -244,6 +310,7 @@ export default function Cart({navigation, route}) {
       data['cart_id'] = itemToUpdate?.cart_id;
       data['quantity'] = quanitity;
       data['cart_product_id'] = itemToUpdate?.id;
+      data['type'] = dineInType;
 
       actions
         .increaseDecreaseItemQty(data, {
@@ -263,6 +330,7 @@ export default function Cart({navigation, route}) {
         .catch(errorMethod);
     } else {
       updateState({isLoadingB: true});
+      removeItem('selectedTable');
       removeProductFromCart(itemToUpdate);
     }
   };
@@ -272,6 +340,7 @@ export default function Cart({navigation, route}) {
     let data = {};
     data['cart_id'] = item?.cart_id;
     data['cart_product_id'] = item?.id;
+    data['type'] = dineInType;
     actions
       .removeProductFromCart(data, {
         code: appData?.profile?.code,
@@ -298,6 +367,7 @@ export default function Cart({navigation, route}) {
 
   const bottomButtonClick = () => {
     updateState({isLoadingB: true, isModalVisibleForClearCart: false});
+    removeItem('selectedTable');
     setTimeout(() => {
       clearEntireCart();
     }, 1000);
@@ -405,6 +475,36 @@ export default function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
+  useEffect(() => {
+    if (
+      (selectedTimeOption != null && selectedTimeOption != undefined) ||
+      (sheduledorderdate != null && sheduledorderdate != undefined)
+    )
+      setDateAndTimeSchedule();
+  }, [selectedTimeOption, sheduledorderdate]);
+
+  const setDateAndTimeSchedule = () => {
+    let data = {};
+    data['task_type'] = selectedTimeOption?.type;
+    data['schedule_dt'] = sheduledorderdate
+      ? new Date(sheduledorderdate).toISOString()
+      : null;
+
+    actions
+      .scheduledOrder(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        updateState({
+          isLoadingB: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+
   const _finalPayment = () => {
     if (selectedPayment?.id == 1 && selectedPayment?.off_site == 0) {
       updateState({isLoadingB: true});
@@ -417,15 +517,24 @@ export default function Cart({navigation, route}) {
       }
     }
   };
+
   //Clear cart
   const placeOrder = () => {
+    var d1 = new Date();
+    var d2 = new Date(sheduledorderdate);
     if (!!userData?.auth_token) {
       if (!selectedAddressData) {
         // showError('Please select address');
         setModalVisible(true);
-      } else if (!selectedPayment) {
+      } else if (!paramsData?.selectedMethod) {
         showError('Please select a payment method');
-      } else {
+      } 
+      // else if (!(sheduledorderdate && selectedTimeOption)) {
+      //   showError('Please select a Order type');
+      // } else if (d1.getTime() >= d2.getTime()) {
+      //   showError('Invalid  Scheduled Date');
+      // }
+       else {
         if (!!userData) {
           !!userData?.client_preference?.verify_email ||
           !!userData?.client_preference?.verify_phone
@@ -543,17 +652,36 @@ export default function Cart({navigation, route}) {
     }
   };
 
-  //render cart item and cart detail
-  const _renderItem = ({item, index}) => {
-    // return <OffersCard />;
+  const _selectTime = (item) => {
+    {
+      selectedTimeOption && selectedTimeOption?.id == item?.id
+        ? updateState({
+            isVisibleTimeModal: item?.type === 'schedule' ? true : false,
+            isLoading: true,
+          })
+        : updateState({
+            selectedTimeOption: item,
+            isLoading: true,
+            isVisibleTimeModal: item?.type === 'schedule' ? true : false,
+          });
+    }
 
-    let {itemCount} = state;
+    item?.type == 'now' ? setDateAndTimeSchedule() : null;
+  };
+
+  const selectOrderDate = () => {
+    onClose();
+    setDateAndTimeSchedule();
+  };
+
+  const _renderItem = ({item, index}) => {
     return (
       <View
         style={{
           backgroundColor: '#fff',
-          marginHorizontal: moderateScale(10),
-          marginVertical: moderateScale(10),
+          paddingHorizontal: moderateScale(10),
+          marginVertical: moderateScaleVertical(10),
+          marginBottom: moderateScaleVertical(10),
         }}>
         <View style={styles.vendorView}>
           <Text numberOfLines={1} style={styles.vendorText}>
@@ -639,16 +767,6 @@ export default function Cart({navigation, route}) {
                           justifyContent: 'space-between',
                         }}>
                         <View style={{flex: 0.5, justifyContent: 'center'}}>
-                          {i?.quantity && (
-                            <View style={{flexDirection: 'row'}}>
-                              <Text style={{color: colors.textGrey}}>
-                                {strings.QTY}
-                              </Text>
-                              <Text style={styles.cartItemWeight}>
-                                {i?.quantity}
-                              </Text>
-                            </View>
-                          )}
                           {!!i?.product_addons.length && (
                             <View>
                               <Text style={styles.cartItemWeight2}>
@@ -663,7 +781,7 @@ export default function Cart({navigation, route}) {
                                     <Text
                                       style={styles.cartItemWeight2}
                                       numberOfLines={1}>
-                                      {j.addon_title}{' '}
+                                      {j.addon_title}
                                     </Text>
                                     <Text
                                       style={styles.cartItemWeight2}
@@ -717,9 +835,7 @@ export default function Cart({navigation, route}) {
                 fontFamily: fontFamily.medium,
                 color: colors.redFireBrick,
               }}>
-              {
-                'The specific items are not deliverable to this address. Please remove the items or change the address '
-              }
+              {strings.ITEM_NOT_DELIVERABLE}
             </Text>
           </View>
         )}
@@ -831,7 +947,6 @@ export default function Cart({navigation, route}) {
   };
 
   const selectedTip = (tip) => {
-    console.log(tip, 'tip >>>ITEM');
     if (selectedTipvalue == 'custom') {
       updateState({selectedTipvalue: tip, selectedTipAmount: null});
     } else {
@@ -843,12 +958,13 @@ export default function Cart({navigation, route}) {
     }
   };
 
-  const onPressPickUplater = () => {
-    updateState({
-      isVisibleTimeModal: true,
-    });
-  };
+  // const onPressPickUplater = () => {
+  //   updateState({
+  //     isVisibleTimeModal: true,
+  //   });
+  // };
   //Footer section in cart screen
+
   const getFooter = () => {
     return (
       <>
@@ -1079,35 +1195,68 @@ export default function Cart({navigation, route}) {
         </TouchableOpacity>
 
         {/* {payment submit button} */}
+        {/* <View
+          style={{
+            flexDirection: 'row',
+            marginVertical: moderateScaleVertical(20),
+            marginHorizontal: moderateScale(10),
+          }}>
+          {selectedTimeOptions.map((i, inx) => {
+            return (
+              <TouchableOpacity
+                onPress={() => _selectTime(i)}
+                style={{
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+
+                  backgroundColor:
+                    selectedTimeOption && selectedTimeOption?.id == i.id
+                      ? themeColors?.primary_color
+                      : getColorCodeWithOpactiyNumber(
+                          themeColors.primary_color.substr(1),
+                          20,
+                        ),
+                  borderColor: themeColors.primary_color,
+                  borderWidth:
+                    selectedTimeOption && selectedTimeOption?.id == i.id
+                      ? 1
+                      : 0,
+                  borderRadius: 10,
+                  marginRight: 10,
+                }}>
+                <Text
+                  style={{
+                    fontFamily: fontFamily.medium,
+                    color:
+                      selectedTimeOption && selectedTimeOption?.id == i.id
+                        ? colors.white
+                        : themeColors.primary_color,
+                  }}>
+                  {i.title}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+          <View
+            style={{
+              justifyContent: 'center',
+            }}>
+            {selectedTimeOption?.type === 'now' ? null : (
+              <Text>
+                {sheduledorderdate
+                  ? `${moment(sheduledorderdate).format('DD MMM,YYYY HH:mm')}`
+                  : null}
+              </Text>
+            )}
+          </View>
+        </View> */}
 
         {!!cartData?.deliver_status && (
           <View style={styles.paymentView}>
-            {/* <ButtonComponent
-            btnText={strings.SCHEDULE_ORDER}
-            borderRadius={moderateScale(13)}
-            containerStyle={styles.sceduleOrderStyle}
-          /> */}
-
-            <TransparentButtonWithTxtAndIcon
-              btnText={strings.SCHEDULE_ORDER}
-              borderRadius={moderateScale(13)}
-              containerStyle={{
-                marginHorizontal: 20,
-                alignItems: 'center',
-              }}
-              onPress={onPressPickUplater}
-              marginBottom={moderateScaleVertical(10)}
-              marginTop={moderateScaleVertical(10)}
-              containerStyle={{width: width / 2.5}}
-              textStyle={{
-                color: themeColors.primary_color,
-                textTransform: 'none',
-                fontSize: textScale(14),
-              }}
-            />
-
             <ButtonComponent
-              onPress={() => placeOrder()}
+              onPress={() => {
+                placeOrder();
+              }}
               btnText={strings.PLACE_ORDER}
               borderRadius={moderateScale(13)}
               textStyle={{color: '#fff'}}
@@ -1123,8 +1272,68 @@ export default function Cart({navigation, route}) {
   const getHeader = () => {
     return (
       <>
-        {/* Delivery Location */}
-        {!vendorAddress ? (
+        {vendorAddress ? (
+          <View
+            style={{
+              height: isTableDropDown
+                ? moderateScaleVertical(190)
+                : moderateScaleVertical(120),
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginHorizontal: moderateScale(20),
+                marginTop: moderateScaleVertical(10),
+              }}>
+              <Image
+                style={{tintColor: colors.black}}
+                source={imagePath.locationGreen}
+              />
+              <Text numberOfLines={1} style={styles.deliveryLocationAndTime}>
+                {strings.ADDRESS}:
+              </Text>
+              <Text numberOfLines={1} style={styles.address}>
+                {vendorAddress}
+              </Text>
+            </View>
+            <View style={styles.clearCartView}>
+              <TouchableOpacity onPress={() => openClearCartModal()}>
+                <Text style={styles.clearCart}>{strings.CLEARCART}</Text>
+              </TouchableOpacity>
+            </View>
+
+            {dineInType === 'dine_in' &&
+              cartData?.vendor_details?.vendor_tables && (
+                <DropDownPicker
+                  items={tableData}
+                  onOpen={() => updateState({isTableDropDown: true})}
+                  onClose={() => updateState({isTableDropDown: false})}
+                  defaultValue={
+                    defaultSelectedTable || tableData[0].label || ''
+                  }
+                  containerStyle={{
+                    height: 40,
+                    marginTop: moderateScaleVertical(10),
+                  }}
+                  style={{
+                    marginHorizontal: moderateScale(20),
+                    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                  }}
+                  itemStyle={{
+                    justifyContent: 'flex-start',
+                    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                  }}
+                  dropDownStyle={{
+                    height: 80,
+                    width: width - moderateScale(40),
+                    alignSelf: 'center',
+                  }}
+                  onChangeItem={(item) => _onTableSelection(item)}
+                />
+              )}
+          </View>
+        ) : (
           <>
             <View style={[styles.topLable, {marginTop: moderateScale(20)}]}>
               <View
@@ -1164,33 +1373,6 @@ export default function Cart({navigation, route}) {
               </TouchableOpacity>
             </View>
           </>
-        ) : (
-          <>
-            <View
-              style={{
-                marginTop: moderateScale(20),
-                flex: 0.35,
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginHorizontal: moderateScale(20),
-              }}>
-              <Image
-                style={{tintColor: colors.black}}
-                source={imagePath.locationGreen}
-              />
-              <Text numberOfLines={1} style={styles.deliveryLocationAndTime}>
-                {strings.ADDRESS}:
-              </Text>
-              <Text numberOfLines={1} style={styles.address}>
-                {vendorAddress}
-              </Text>
-            </View>
-            <View style={styles.clearCartView}>
-              <TouchableOpacity onPress={() => openClearCartModal()}>
-                <Text style={styles.clearCart}>{strings.CLEARCART}</Text>
-              </TouchableOpacity>
-            </View>
-          </>
         )}
       </>
     );
@@ -1218,16 +1400,12 @@ export default function Cart({navigation, route}) {
           code: appData?.profile?.code,
         })
         .then((res) => {
-          // updateState({isLoadingB: false, del: del ? false : true});
           actions.saveAddress(address);
           updateState({
             isVisible: false,
             isLoadingB: false,
             selectedAddress: address,
           });
-          // getCartDetail();
-
-          // showSuccess(res.message);
         })
         .catch((error) => {
           updateState({isLoadingB: false});
@@ -1281,12 +1459,38 @@ export default function Cart({navigation, route}) {
   };
 
   const onClose = () => {
-    updateState({isVisibleTimeModal: false});
+    updateState({
+      isVisibleTimeModal: false,
+    });
   };
 
   const onDateChange = (value) => {
-    console.log(value, 'value');
+    // console.log(value, 'value');
     // _onDateChange(value);
+    updateState({
+      sheduledorderdate: value,
+    });
+  };
+
+  const _onTableSelection = (item) => {
+    const data = {
+      vendor_id: item.id,
+      table: item.table_number,
+    };
+    actions
+      .vendorTableCart(data, {
+        code: appData?.profile?.code,
+      })
+      .then((res) => {
+        setItem('selectedTable', item?.label);
+      })
+      .catch((error) => {
+        updateState({
+          isLoading: false,
+          isLoadingB: false,
+        });
+        showError(error?.message || error?.error);
+      });
   };
 
   return (
@@ -1300,6 +1504,7 @@ export default function Cart({navigation, route}) {
       ) : (
         <HeaderWithFilters centerTitle={strings.CART} noLeftIcon={true} />
       )}
+
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
       <View style={styles.mainComponent}>
         <FlatList
@@ -1380,9 +1585,12 @@ export default function Cart({navigation, route}) {
 
             <View style={{alignItems: 'center', height: height / 3.5}}>
               <DatePicker
-                date={new Date()}
+                date={
+                  sheduledorderdate ? new Date(sheduledorderdate) : new Date()
+                }
                 mode="datetime"
                 minimumDate={new Date()}
+                maximumDate={undefined}
                 style={{width: width - 20, height: height / 3.5}}
                 // onDateChange={setDate}
                 onDateChange={(value) => onDateChange(value)}
@@ -1400,7 +1608,7 @@ export default function Cart({navigation, route}) {
                 themeColors.primary_color,
               ]}
               // textStyle={styles.textStyle}
-              onPress={() => alert('In progress')}
+              onPress={selectOrderDate}
               marginTop={moderateScaleVertical(10)}
               marginBottom={moderateScaleVertical(30)}
               btnText={strings.SELECT}

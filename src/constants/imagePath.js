@@ -103,6 +103,7 @@ export default {
   noDataFound2: require('../assets/images/ic_nodatafound.png'),
   icCamIcon: require('../assets/images/ic_capture.png'),
   icRemoveIcon: require('../assets/images/ic_remove_product.png'),
+  noOffers: require('../assets/images/ic_nooffers.png'),
 
   //CARLITOOICONS
   carlitoLogo: require('../assets/images/CARLITOO/CARLITOO_TEXT_logo.png'),
@@ -202,4 +203,15 @@ export default {
   ic_fb2: require('../assets/images/ic_fb2.png'),
   ic_apple2: require('../assets/images/ic_apple2.png'),
   ic_twitter2: require('../assets/images/ic_twitter2.png'),
+
+  accountActive: require('../assets/images/ic_account2.png'),
+  accountInActive: require('../assets/images/ic_account1.png'),
+  brandsActive: require('../assets/images/ic_brands2.png'),
+  brandInActive: require('../assets/images/ic_brand1.png'),
+  cart2Active: require('../assets/images/ic_cart2.png'),
+  cart2InActive: require('../assets/images/ic_cart1.png'),
+  celebActive: require('../assets/images/ic_celeb2.png'),
+  celebInActive: require('../assets/images/ic_celeb1.png'),
+  home2Active: require('../assets/images/ic_home3.png'),
+  home2InActive: require('../assets/images/ic_house1.png'),
 };

@@ -20,6 +20,7 @@ import {
 } from '../../styles/responsiveSize';
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from './ListEmptyVendors';
+import ProductLoader2 from '../../Components/Loaders/ProductLoader2';
 
 export default function Vendors2({route, navigation}) {
   const [state, setState] = useState({
@@ -136,39 +137,48 @@ export default function Vendors2({route, navigation}) {
         }
       />
       <View style={{...commonStyles.headerTopLine}} />
-      <View style={{marginHorizontal: moderateScale(20), flex: 1}}>
-        {isLoading && categoryData?.listData && (
-          <EmptyListLoader isLoading={isLoading} isVendorList />
-        )}
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={(!isLoading && categoryData?.listData) || []}
-          ListHeaderComponent={<View style={{height: 20}} />}
-          ItemSeparatorComponent={() => (
-            <View style={{height: moderateScaleVertical(50)}} />
+      {isLoading ? (
+        <View
+          style={{
+            marginTop: moderateScale(40),
+          }}>
+          <ProductLoader2 isLoading={isLoading} isProductList />
+        </View>
+      ) : (
+        <View style={{marginHorizontal: moderateScale(20), flex: 1}}>
+          {isLoading && categoryData?.listData && (
+            <EmptyListLoader isLoading={isLoading} isVendorList />
           )}
-          keyExtractor={(item, index) => String(index)}
-          renderItem={_renderItem}
-          refreshing={isRefreshing}
-          refreshControl={
-            <RefreshControl
-              refreshing={isRefreshing}
-              onRefresh={handleRefresh}
-              tintColor={themeColors.primary_color}
-              // titleColor="#fff"
-            />
-          }
-          getItemLayout={getItemLayout}
-          initialNumToRender={5}
-          maxToRenderPerBatch={10}
-          windowSize={10}
-          onEndReached={onEndReachedDelayed}
-          onEndReachedThreshold={0.5}
-          // onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
-          ListEmptyComponent={<NoDataFound text={strings.NODATAFOUND} />}
-          ListFooterComponent={() => <View style={{height: 20}} />}
-        />
-      </View>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={(!isLoading && categoryData?.listData) || []}
+            ListHeaderComponent={<View style={{height: 20}} />}
+            ItemSeparatorComponent={() => (
+              <View style={{height: moderateScaleVertical(50)}} />
+            )}
+            keyExtractor={(item, index) => String(index)}
+            renderItem={_renderItem}
+            refreshing={isRefreshing}
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                onRefresh={handleRefresh}
+                tintColor={themeColors.primary_color}
+                // titleColor="#fff"
+              />
+            }
+            getItemLayout={getItemLayout}
+            initialNumToRender={5}
+            maxToRenderPerBatch={10}
+            windowSize={10}
+            onEndReached={onEndReachedDelayed}
+            onEndReachedThreshold={0.5}
+            // onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
+            // ListEmptyComponent={<NoDataFound text={strings.NODATAFOUND} />}
+            ListFooterComponent={() => <View style={{height: 20}} />}
+          />
+        </View>
+      )}
     </WrapperContainer>
     //<VendorsDesign1 />
   );

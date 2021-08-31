@@ -52,7 +52,7 @@ export default ({fontFamily, themeColors}) => {
     vendorView: {
       flexDirection: 'row',
       height: moderateScaleVertical(35),
-      backgroundColor: colors.white,
+      // backgroundColor: colors.white,
       alignItems: 'center',
       paddingHorizontal: moderateScale(10),
       borderBottomWidth: moderateScaleVertical(0.5),
@@ -153,7 +153,7 @@ export default ({fontFamily, themeColors}) => {
       flexDirection: 'row',
       paddingVertical: moderateScaleVertical(10),
       paddingHorizontal: moderateScale(10),
-      backgroundColor: colors.white,
+      // backgroundColor: colors.white,
     },
     cartItemImage: {
       height: width / 4.5,
@@ -252,13 +252,12 @@ export default ({fontFamily, themeColors}) => {
       marginVertical: moderateScaleVertical(10),
     },
     paymentView: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-around',
+      alignSelf: 'flex-end',
       marginVertical:
         Platform.OS === 'ios'
-          ? moderateScaleVertical(40)
-          : moderateScaleVertical(85),
+          ? moderateScaleVertical(15)
+          : moderateScaleVertical(60),
+      marginHorizontal: moderateScale(10),
     },
     placeOrderButtonStyle: {
       backgroundColor: themeColors.primary_color,

@@ -11,6 +11,8 @@ import {
   GETWEBURL,
   GET_ALL_PROMO_CODES_CAB_ORDER,
   VERIFY_PROMO_CODE_CAB_ORDER,
+  VENDOR_TABLE_CART,
+  SCHEDULE_ORDER,
 } from '../../config/urls';
 import {
   apiGet,
@@ -33,9 +35,9 @@ export const saveAddress = (data) => {
 };
 
 //Get Cart Detail
-export function getCartDetail(data = {}, headers = {}) {
+export function getCartDetail(url, data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
-    apiGet(GET_CART_DETAIL, data, headers)
+    apiGet(GET_CART_DETAIL + url, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -200,3 +202,27 @@ export function openPaymentWebUrl(query = '', data = {}, headers = {}) {
       });
   });
 }
+
+export function vendorTableCart(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(VENDOR_TABLE_CART, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export const scheduledOrder = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(SCHEDULE_ORDER, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};

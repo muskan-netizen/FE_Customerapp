@@ -107,3 +107,7 @@ export const UPLOAD_PRODUCT_IMAGE = getApiUrl('/upload-file');
 export const SUBMIT_RETURN_ORDER = getApiUrl(
   '/return-order/update-product-return',
 );
+
+export const VENDOR_TABLE_CART = getApiUrl('/add/vendorTable/cart');
+
+export const SCHEDULE_ORDER = getApiUrl('/cart/schedule/update');

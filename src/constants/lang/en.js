@@ -4,8 +4,7 @@ export default {
   VERIFY_EMAIL: 'Email Verify',
   VERIFY_NOW: 'Verify Now',
   VERIFY_NUMBER: 'Phone Number Verify',
-  JOIN_US_FOR_EMERGENCY:
-    'Join us for medical  emergency. Create a  free account and join us!',
+  JOIN_US: 'Create a  free account and join us!',
   CREATE_AN_ACCOUNT: 'CREATE NEW ACCOUNT',
   GUEST_LOGIN: 'GUEST LOGIN',
   OR_SIGNUP_WITH: 'Or signup with',
@@ -350,4 +349,9 @@ export default {
   HEY_MSG: 'Hey',
   GREETING_MSG: 'what are you up to today?',
   NEAR_VENDOR: 'Top vendors near you',
+  ITEM_NOT_DELIVERABLE:
+    'The specific items are not deliverable to this address. Please remove the items or change the address ',
+  VIEW_ALL_VENDORS: 'View all vendors',
+  CLOSE: 'Close',
+  NOOFFERS: 'No Offers',
 };

@@ -1,6 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {Alert, BackHandler, View} from 'react-native';
+import {Alert, BackHandler, View, Linking} from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import {useSelector} from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -109,7 +109,6 @@ export default function Home({route, navigation}) {
   }, [paramData?.details]);
 
   const checkCartWithLatLang = (res) => {
-    console.log(res, 'res>>>>res>>>>>res>>>>');
     Alert.alert(
       '',
       'This will remove your cart.Are your sure you want to remove the cart?',
@@ -155,14 +154,16 @@ export default function Home({route, navigation}) {
 
   useEffect(() => {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
-    // dynamicLinks()
-    //   .getInitialLink()
-    //   .then((link) => {
-    //     if (link.url === 'https://play.google.com/') {
-    //       alert();
-    //       // navigation.navigate(navigationStrings.CART);
-    //     }
-    //   });
+    console.log('sfjdkfj');
+    (async () => {
+      // First, you may want to do the default deep link handling
+      // Check if app was opened from a deep link
+      const url = await Linking.getInitialURL();
+
+      if (url != null) {
+        console.log(url, 'urlllll');
+      }
+    })();
   }, []);
 
   useEffect(() => {
@@ -233,7 +234,7 @@ export default function Home({route, navigation}) {
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
     let latlongObj = {};
-    console.log(location, 'redux location');
+
     if (appData?.profile?.preferences?.is_hyperlocal) {
       latlongObj = {
         address: slectedLocatonFromPreviousScreen
@@ -247,9 +248,6 @@ export default function Home({route, navigation}) {
           : location?.longitude,
       };
     }
-    console.log(dine_In_Type, 'dine_In_Type');
-    console.log(latlongObj, 'latlongObj');
-    console.log(selectedTabType, 'selectedTabType');
 
     {
       selectedTabType
@@ -263,7 +261,6 @@ export default function Home({route, navigation}) {
                 code: appData?.profile?.code,
                 currency: currencies?.primary_currency?.id,
                 language: languages?.primary_language?.id,
-
                 // ...latlongObj,
               },
             )

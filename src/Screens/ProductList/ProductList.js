@@ -204,8 +204,7 @@ export default function Products({route, navigation}) {
       {
         filterExist
           ? getAllProductsVendorFilter()
-          : 
-          data?.vendorData
+          : data?.vendorData
           ? getAllProductsByVendorCategory()
           : getAllProductsByVendor();
       }
@@ -353,7 +352,10 @@ export default function Products({route, navigation}) {
   /****Get all list items by vendor id */
   const getAllProductsByVendorCategory = () => {
     // alert("21312")
-    console.log(`/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,"url");
+    console.log(
+      `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
+      'url',
+    );
     actions
       .getProductByVendorCategoryId(
         `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
@@ -365,7 +367,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res,"resz")
+        console.log(res, 'resz');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -484,7 +486,7 @@ export default function Products({route, navigation}) {
   };
 
   const errorMethod = (error) => {
-    console.log(error,"error")
+    console.log(error, 'error');
     updateState({isLoading: false, isRefreshing: false, isLoadingB: false});
     showError(error?.message || error?.error);
   };
@@ -556,7 +558,7 @@ export default function Products({route, navigation}) {
               <IconTextColumn
                 isActive={selectedSbCategoryID == -1 ? true : false}
                 icon={imagePath.allProducts}
-                text="All Product"
+                text={strings.ALLPRODUCT}
                 onPress={() => updateState({selectedSbCategoryID: -1})}
               />
               {categoryInfo.childs.map((item, inx) => {

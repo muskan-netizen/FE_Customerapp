@@ -12,7 +12,11 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import {moderateScale, width} from '../../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  width,
+} from '../../styles/responsiveSize';
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from './ListEmptyVendors';
 import VendorsDesign1 from './Vendors2';
@@ -110,7 +114,6 @@ export default function Vendors({route, navigation}) {
   const _renderItem = ({item, index}) => {
     return (
       <MarketCard onPress={() => _checkRedirectScreen(item)} data={item} />
-      // <MarketCard2 onPress={() => _checkRedirectScreen(item)} data={item} />
     );
   };
 
@@ -134,6 +137,7 @@ export default function Vendors({route, navigation}) {
         }
       />
       <View style={{...commonStyles.headerTopLine}} />
+
       <FlatList
         showsVerticalScrollIndicator={false}
         data={(!isLoading && categoryData?.listData) || []}
@@ -160,9 +164,10 @@ export default function Vendors({route, navigation}) {
         ListEmptyComponent={
           <ListEmptyVendors isLoading={isLoading} emptyText={'No data found'} />
         }
-        ListFooterComponent={() => <View style={{height: 20}} />}
+        ListFooterComponent={() => <View style={{height: 100}} />}
       />
     </WrapperContainer>
+
     //<VendorsDesign1 />
   );
 }

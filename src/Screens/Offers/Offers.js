@@ -205,16 +205,18 @@ export default function Offer({route, navigation}) {
         }
       />
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
-      <FlatList
-        data={isLoading ? [] : allAvailableCoupons}
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={<View style={{height: 20}} />}
-        ItemSeparatorComponent={() => <View style={{height: 8}} />}
-        keyExtractor={(item, index) => String(index)}
-        ListEmptyComponent={<ListEmptyOffers isLoading={isLoading} />}
-        ListFooterComponent={() => <View style={{height: 20}} />}
-        renderItem={_renderItem}
-      />
+      <View style={{flex: 1}}>
+        <FlatList
+          data={isLoading ? [] : allAvailableCoupons}
+          showsVerticalScrollIndicator={false}
+          ListHeaderComponent={<View style={{height: 20}} />}
+          ItemSeparatorComponent={() => <View style={{height: 8}} />}
+          keyExtractor={(item, index) => String(index)}
+          ListEmptyComponent={<ListEmptyOffers isLoading={isLoading} />}
+          ListFooterComponent={() => <View style={{height: 20}} />}
+          renderItem={_renderItem}
+        />
+      </View>
     </WrapperContainer>
   );
 }

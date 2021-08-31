@@ -519,7 +519,7 @@ export default function Products({route, navigation}) {
               <IconTextColumn
                 isActive={selectedSbCategoryID == -1 ? true : false}
                 icon={imagePath.allProducts}
-                text="All Product"
+                text={strings.ALLPRODUCT}
                 onPress={() => updateState({selectedSbCategoryID: -1})}
               />
               {categoryInfo.childs.map((item, inx) => {

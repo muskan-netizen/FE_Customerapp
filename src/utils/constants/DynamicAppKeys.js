@@ -59,7 +59,14 @@ const shortCodes = {
   housekeeper: 'd8b741',
   hairstonexpress: 'a64f8a',
   diamonddashers: '015a80',
-  destinationOps:'83c6db'
+  destinationOps: '83c6db',
+  loopwhole: '62ee0e',
+  vici: '121eb9',
+  carhop: 'e292ec',
+  yogolift: '4f3624',
+  fleety: '45bef7',
+  flyinghorse: '8577b8',
+  errand: '62a348',
 };
 
 const appIds = {
@@ -216,7 +223,7 @@ const appIds = {
     android: 'com.codebrew.hoganchef',
   }),
   servze: Platform.select({
-    ios: 'com.servze',
+    ios: 'com.app.servze',
     android: 'com.servze',
   }),
   travo: Platform.select({
@@ -229,7 +236,7 @@ const appIds = {
   }),
   drus: Platform.select({
     ios: 'com.drus.customer',
-    android: 'com.drus',
+    android: 'com.app.drus',
   }),
   yahu: Platform.select({
     ios: 'com.yahu',
@@ -298,6 +305,34 @@ const appIds = {
   destinationOps: Platform.select({
     ios: 'com.destinationOps',
     android: 'com.destinationOps',
+  }),
+  loopwhole: Platform.select({
+    ios: 'com.loopwhole',
+    android: 'com.loopwhole',
+  }),
+  vici: Platform.select({
+    ios: 'com.vici',
+    android: 'com.vici',
+  }),
+  carhop: Platform.select({
+    ios: 'com.carhop',
+    android: 'com.carhop',
+  }),
+  yogolift: Platform.select({
+    ios: 'com.yogolift',
+    android: 'com.yogolift',
+  }),
+  fleety: Platform.select({
+    ios: 'com.fleety',
+    android: 'com.fleety',
+  }),
+  flyinghorse: Platform.select({
+    ios: 'com.flyinghorse',
+    android: 'com.flyinghorse',
+  }),
+  errand: Platform.select({
+    ios: 'com.errand',
+    android: 'com.errand',
   }),
 };
 

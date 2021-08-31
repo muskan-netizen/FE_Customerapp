@@ -1,13 +1,23 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import {Text, View, SafeAreaView, Image} from 'react-native';
 import CardLoader from '../../Components/Loaders/CardLoader';
+import {useSelector} from 'react-redux';
+import imagePath from '../../constants/imagePath';
+
+import stylesFun from './styles';
+
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   width
 } from '../../styles/responsiveSize';
 
 export default function ListEmptyOffers({isLoading = false}) {
+  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+
+  const fontFamily = appStyle?.fontSizeData;
+  const styles = stylesFun({fontFamily, themeColors});
   if (isLoading) {
     return (
       <CardLoader
@@ -19,8 +29,10 @@ export default function ListEmptyOffers({isLoading = false}) {
     );
   }
   return (
-    <View>
-      <Text></Text>
-    </View>
+    <SafeAreaView>
+      <View style={styles.containerStyle}>
+        <Image source={imagePath.noOffers} style={{marginTop: height / 4}} />
+      </View>
+    </SafeAreaView>
   );
 }

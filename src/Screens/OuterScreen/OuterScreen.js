@@ -60,15 +60,26 @@ export default function OuterScreen({navigation}) {
   //Saving login user to backend
   const _saveSocailLogin = (socialLoginData, type) => {
     let data = {};
-    data['name'] = socialLoginData?.name || socialLoginData?.userName;
-    data['auth_id'] = socialLoginData?.id || socialLoginData?.userID;
+    data['name'] =
+      socialLoginData?.name ||
+      socialLoginData?.userName ||
+      socialLoginData?.fullName?.givenName;
+    data['auth_id'] =
+      socialLoginData?.id ||
+      socialLoginData?.userID ||
+      socialLoginData?.identityToken;
     data['phone_number'] = '';
     data['email'] = socialLoginData?.email;
     data['device_type'] = Platform.OS;
     data['device_token'] = DeviceInfo.getUniqueId();
 
     let query = '';
-    if (type == 'facebook' || type == 'twitter' || type == 'google') {
+    if (
+      type == 'facebook' ||
+      type == 'twitter' ||
+      type == 'google' ||
+      type == 'apple'
+    ) {
       query = type;
     }
     actions
@@ -79,7 +90,7 @@ export default function OuterScreen({navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res,"res>>>SOCIAL")
+        console.log(res, 'res>>>SOCIAL');
         if (!!res.data) {
           !!res.data?.client_preference?.verify_email ||
           !!res.data?.client_preference?.verify_phone
@@ -123,7 +134,8 @@ export default function OuterScreen({navigation}) {
     updateState({isLoading: false});
     handleAppleLogin()
       .then((res) => {
-        updateState({isLoading: false});
+        _saveSocailLogin(res, 'apple');
+        // updateState({isLoading: false});
       })
       .catch((err) => {
         updateState({isLoading: false});
@@ -205,7 +217,7 @@ export default function OuterScreen({navigation}) {
         <View style={{marginHorizontal: moderateScale(24)}}>
           <View style={{marginHorizontal: moderateScaleVertical(30)}}>
             <Text numberOfLines={2} style={styles.txtSmall}>
-              {strings.JOIN_US_FOR_EMERGENCY}
+              {strings.JOIN_US}
             </Text>
           </View>
           <GradientButton

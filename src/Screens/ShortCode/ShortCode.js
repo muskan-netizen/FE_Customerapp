@@ -27,7 +27,8 @@ import firebase from '@react-native-firebase/app';
 
 export default function ShortCode({route, navigation}) {
   const shortCodeParam = route?.params?.shortCodeParam;
-
+  console.log(shortCodeParam, 'shortCodeParam');
+  // alert(shortCodeParam)
   const [state, setState] = useState({
     email: '',
     password: '',
@@ -58,14 +59,24 @@ export default function ShortCode({route, navigation}) {
       const saveShortCode = await getItem('saveShortCode');
       switch (getBundleId()) {
         case appIds.royoorder:
-          // updateState({shortCode: '245bae', isShortcodePrefilled: true});
+          // if (shortCodeParam) {
+          //   updateState({shortCode: '', isShortcodePrefilled: false});
+          // } else {
+          //   updateState({shortCode: '245bae', isShortcodePrefilled: true});
+          // }
+
           if (saveShortCode && !shortCodeParam) {
             updateState({
               shortCode: saveShortCode,
               isShortcodePrefilled: true,
             });
           } else {
-            updateState({shortCode: '', isShortcodePrefilled: false});
+            // updateState({shortCode: '', isShortcodePrefilled: false});
+            if (shortCodeParam) {
+              updateState({shortCode: '', isShortcodePrefilled: false});
+            } else {
+              updateState({shortCode: '245bae', isShortcodePrefilled: true});
+            }
           }
           break;
         case appIds.tranzit:
@@ -422,12 +433,59 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.destinationOps:
-            updateState({
-              shortCode: shortCodes.destinationOps,
-              isShortcodePrefilled: true,
-            });
-            break;
+        case appIds.destinationOps:
+          updateState({
+            shortCode: shortCodes.destinationOps,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.loopwhole:
+          updateState({
+            shortCode: shortCodes.loopwhole,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.vici:
+          updateState({
+            shortCode: shortCodes.vici,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.carhop:
+          updateState({
+            shortCode: shortCodes.carhop,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.yogolift:
+          updateState({
+            shortCode: shortCodes.yogolift,
+            isShortcodePrefilled: true,
+          });
+          break;
+
+        case appIds.fleety:
+          updateState({
+            shortCode: shortCodes.fleety,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.flyinghorse:
+          updateState({
+            shortCode: shortCodes.flyinghorse,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.errand:
+          updateState({
+            shortCode: shortCodes.errand,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

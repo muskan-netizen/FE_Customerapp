@@ -417,13 +417,13 @@ export default function OrderDetail({navigation, route}) {
             currencies?.primary_currency?.symbol
           }${Number(cartData?.total_amount).toFixed(2)}`}</Text>
         </View>
-        {!!cartData?.wallet_amount && (
+        {!!cartData?.wallet_amount_used && (
           <View style={styles.bottomTabLableValue}>
             <Text style={styles.priceItemLabel}>{strings.WALLET}</Text>
-            <Text style={styles.priceItemLabel}>{`${
+            <Text style={styles.priceItemLabel}>{`-${
               currencies?.primary_currency?.symbol
             }${Number(
-              cartData?.wallet_amount ? cartData?.wallet_amount : 0,
+              cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
             ).toFixed(2)}`}</Text>
           </View>
         )}
@@ -489,7 +489,6 @@ export default function OrderDetail({navigation, route}) {
               {cartData?.payment_option?.title || ''}
             </Text>
           </View>
-          <View></View>
         </TouchableOpacity>
       </>
     );
