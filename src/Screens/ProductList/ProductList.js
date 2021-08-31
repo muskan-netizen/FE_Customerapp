@@ -38,7 +38,6 @@ import ListEmptyProduct from './ListEmptyProduct';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
-  console.log(data, 'data>data >>>>PARAMS');
   const [state, setState] = useState({
     isVisibleModal: false,
     isOffline: false,
@@ -661,7 +660,6 @@ export default function Products({route, navigation}) {
     );
   };
 
-  console.log(productListData, 'productListData');
 
   return (
     <WrapperContainer
