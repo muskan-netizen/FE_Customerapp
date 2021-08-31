@@ -51,6 +51,7 @@ import DatePicker from 'react-native-date-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {getItem, removeItem, setItem, setUserData} from '../../utils/utils';
 import commonStyles from '../../styles/commonStyles';
+import * as RNLocalize from 'react-native-localize';
 
 export default function Cart({navigation, route}) {
   let paramsData = route?.params;
@@ -142,7 +143,7 @@ export default function Cart({navigation, route}) {
   // const styles = stylesFun({fontFamily, themeColors});
 
   //On focus fucntion
-  console.log(selectedTimeOption?.type, 'selectedTimeOption');
+  console.log(RNLocalize.getTimeZone(), 'timezone');
   useFocusEffect(
     React.useCallback(() => {
       if (paramsData && paramsData?.selectedMethod) {
@@ -234,6 +235,7 @@ export default function Cart({navigation, route}) {
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
           systemuser: DeviceInfo.getUniqueId(),
+          timezone: RNLocalize.getTimeZone(),
         },
       )
       .then((res) => {
@@ -475,20 +477,15 @@ export default function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
-  useEffect(() => {
-    if (
-      (selectedTimeOption != null && selectedTimeOption != undefined) ||
-      (sheduledorderdate != null && sheduledorderdate != undefined)
-    )
-      setDateAndTimeSchedule();
-  }, [selectedTimeOption, sheduledorderdate]);
-
   const setDateAndTimeSchedule = () => {
+    console.log(scheduleType, 'scheduleType>>>updated');
     let data = {};
-    data['task_type'] = selectedTimeOption?.type;
-    data['schedule_dt'] = sheduledorderdate
-      ? new Date(sheduledorderdate).toISOString()
-      : null;
+    data['task_type'] = scheduleType;
+    data['schedule_dt'] =
+      scheduleType != 'now' && sheduledorderdate
+        ? new Date(sheduledorderdate).toISOString()
+        : null;
+    console.log(data, 'setDateAndTimeSchedule data');
 
     actions
       .scheduledOrder(data, {
@@ -650,7 +647,20 @@ export default function Cart({navigation, route}) {
     }
   };
 
+  useEffect(() => {
+    // console.log(scheduleType, 'scheduleType scheduleType');
+    if (scheduleType != null && scheduleType == 'now') {
+      setDateAndTimeSchedule();
+    }
+  }, [scheduleType]);
+
   const _selectTime = (item) => {
+    // console.log(item, 'item');
+    // console.log(selectedTimeOption, 'selectedTimeOption selectedTimeOption');
+    updateState({
+      scheduleType: item?.type,
+    });
+
     {
       selectedTimeOption && selectedTimeOption?.id == item?.id
         ? updateState({
@@ -663,12 +673,13 @@ export default function Cart({navigation, route}) {
             isVisibleTimeModal: item?.type === 'schedule' ? true : false,
           });
     }
-
-    item?.type == 'now' ? setDateAndTimeSchedule() : null;
   };
 
   const selectOrderDate = () => {
     onClose();
+    updateState({
+      scheduleType: 'schedule',
+    });
     setDateAndTimeSchedule();
   };
 
@@ -1241,7 +1252,7 @@ export default function Cart({navigation, route}) {
             }}>
             {selectedTimeOption?.type === 'now' ? null : (
               <Text>
-                {sheduledorderdate
+                {sheduledorderdate && scheduleType
                   ? `${moment(sheduledorderdate).format('DD MMM,YYYY HH:mm')}`
                   : null}
               </Text>

@@ -35,7 +35,7 @@ import DatePicker from 'react-native-date-picker';
 import FastImage from 'react-native-fast-image';
 import GradientButton from '../../Components/GradientButton';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-
+import * as RNLocalize from 'react-native-localize';
 
 export default function MyOrders({navigation}) {
   const [state, setState] = useState({
@@ -101,6 +101,7 @@ export default function MyOrders({navigation}) {
   }, [selectedTab]);
 
   //Get list of all orders api
+  console.log(RNLocalize.getTimeZone(), 'RNLocalize.getTimeZone()');
   const _getListOfOrders = () => {
     actions
       .getOrderListing(
@@ -110,6 +111,7 @@ export default function MyOrders({navigation}) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
+          timezone: RNLocalize.getTimeZone(),
         },
       )
       .then((res) => {
