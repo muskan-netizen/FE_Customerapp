@@ -214,4 +214,9 @@ export default {
   celebInActive: require('../assets/images/ic_celeb1.png'),
   home2Active: require('../assets/images/ic_home3.png'),
   home2InActive: require('../assets/images/ic_house1.png'),
+  greyRoundSearch: require('../assets/images/ic_search_round.png'),
+  greyRoundBack: require('../assets/images/ic_back_round.png'),
+
+  
+  
 };

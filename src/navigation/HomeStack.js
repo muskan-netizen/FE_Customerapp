@@ -16,6 +16,7 @@ import {
   ProductDetail2,
   ProductList,
   ProductList2,
+  ProductList3,
   SearchProductVendorItem,
   SendProduct,
   ShippingDetails,
@@ -76,7 +77,8 @@ export default function () {
         component={
           appData?.profile?.code === shortCodes.capcorp
             ? ProductList2
-            : ProductList
+            // : ProductList
+            : ProductList3
         }
         options={{headerShown: false}}
       />
@@ -112,7 +114,7 @@ export default function () {
         component={
           appData?.profile?.code === shortCodes.capcorp
             ? ProductDetail2
-            : ProductDetail
+            : ProductDetail2
         }
         options={{headerShown: false}}
       />

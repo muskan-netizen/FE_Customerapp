@@ -303,6 +303,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
+        
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -425,6 +426,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
+        console.log(res,"all list products");
         updateState({
           isLoading: false,
           isRefreshing: false,

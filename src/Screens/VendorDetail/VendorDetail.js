@@ -39,6 +39,28 @@ export default function VendorDetail({navigation, route}) {
     }
   }, [vendorId]);
 
+
+  const  convertLocalDateToUTCDate=(date, toUTC)=> {
+    date = new Date(date);
+    //Local time converted to UTC
+    console.log("Time: " + date);
+    var localOffset = date.getTimezoneOffset() * 60000;
+    var localTime = date.getTime();
+    if (toUTC) {
+        date = localTime + localOffset;
+    } else {
+        date = localTime - localOffset;
+    }
+    date = new Date(date);
+    console.log("Converted time: " + date);
+    return date;
+}
+
+  useEffect(()=>{
+    convertLocalDateToUTCDate('2021-09-28T00:00',true)
+  },[])
+
+
   const {appData, appStyle, currencies, languages} = useSelector(
     (state) => state.initBoot,
   );
