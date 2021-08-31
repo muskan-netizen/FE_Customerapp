@@ -356,4 +356,8 @@ export default {
   VIEW_ALL_VENDORS: 'View all vendors',
   CLOSE: 'Close',
   NOOFFERS: 'No Offers',
+  PERSONAL_DETAILS: 'Personal Details',
+  STORE_DETAILS: 'Store Details',
+  VENDER_NAME: 'Vender name',
+  WEBSITE: 'Website',
 };

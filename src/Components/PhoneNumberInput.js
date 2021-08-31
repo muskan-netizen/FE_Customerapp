@@ -19,6 +19,7 @@ export default function PhoneNumberInput({
   onCountryChange,
   phoneNumber,
   placeholder,
+  containerStyle,
 }) {
   const [state, setState] = useState({
     countryPickerModalVisible: false,
@@ -47,6 +48,7 @@ export default function PhoneNumberInput({
         borderRadius: 13,
         borderColor: colors.borderLight,
         height: moderateScale(49),
+        ...containerStyle,
       }}>
       <TouchableOpacity
         style={{
