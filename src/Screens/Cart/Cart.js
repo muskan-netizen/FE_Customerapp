@@ -1,4 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
+import moment from 'moment';
 import {cloneDeep, forEach} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {
@@ -36,7 +37,12 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
+import {
+  getColorCodeWithOpactiyNumber,
+  getImageUrl,
+  showError,
+  showSuccess,
+} from '../../utils/helperFunctions';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFun from './styles';
 import Modal from 'react-native-modal';
@@ -44,6 +50,7 @@ import GradientButton from '../../Components/GradientButton';
 import DatePicker from 'react-native-date-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {getItem, removeItem, setItem, setUserData} from '../../utils/utils';
+import commonStyles from '../../styles/commonStyles';
 
 export default function Cart({navigation, route}) {
   let paramsData = route?.params;
@@ -72,6 +79,13 @@ export default function Cart({navigation, route}) {
     tableData: [],
     isTableDropDown: false,
     defaultSelectedTable: '',
+    selectedTimeOptions: [
+      {id: 1, title: 'Now', type: 'now'},
+      {id: 2, title: 'Schedule Order', type: 'schedule'},
+    ],
+    selectedTimeOption: null,
+    sheduledorderdate: null,
+    scheduleType: null,
   });
   const {
     viewHeight,
@@ -93,6 +107,10 @@ export default function Cart({navigation, route}) {
     tableData,
     isTableDropDown,
     defaultSelectedTable,
+    selectedTimeOptions,
+    selectedTimeOption,
+    sheduledorderdate,
+    scheduleType,
   } = state;
 
   //Redux store data
@@ -124,6 +142,7 @@ export default function Cart({navigation, route}) {
   // const styles = stylesFun({fontFamily, themeColors});
 
   //On focus fucntion
+  console.log(selectedTimeOption?.type, 'selectedTimeOption');
   useFocusEffect(
     React.useCallback(() => {
       if (paramsData && paramsData?.selectedMethod) {
@@ -220,7 +239,18 @@ export default function Cart({navigation, route}) {
       .then((res) => {
         console.log(res.data, 'cart detail');
         actions.cartItemQty(res);
-        updateState({isLoadingB: false, isRefreshing: false});
+        updateState({
+          isLoadingB: false,
+          isRefreshing: false,
+          sheduledorderdate: res?.data?.scheduled_date_time,
+          scheduleType: res?.data?.schedule_type,
+          selectedTimeOption:
+            res?.data?.schedule_type == 'now'
+              ? {id: 1, title: 'Now', type: 'now'}
+              : res?.data?.schedule_type == 'schedule'
+              ? {id: 2, title: 'Schedule Order', type: 'schedule'}
+              : null,
+        });
         if (res && res.data) {
           if (res.data.vendor_details.vendor_tables) {
             res.data.vendor_details.vendor_tables.forEach(
@@ -445,6 +475,36 @@ export default function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
+  useEffect(() => {
+    if (
+      (selectedTimeOption != null && selectedTimeOption != undefined) ||
+      (sheduledorderdate != null && sheduledorderdate != undefined)
+    )
+      setDateAndTimeSchedule();
+  }, [selectedTimeOption, sheduledorderdate]);
+
+  const setDateAndTimeSchedule = () => {
+    let data = {};
+    data['task_type'] = selectedTimeOption?.type;
+    data['schedule_dt'] = sheduledorderdate
+      ? new Date(sheduledorderdate).toISOString()
+      : null;
+
+    actions
+      .scheduledOrder(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        updateState({
+          isLoadingB: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+
   const _finalPayment = () => {
     if (selectedPayment?.id == 1 && selectedPayment?.off_site == 0) {
       updateState({isLoadingB: true});
@@ -457,14 +517,21 @@ export default function Cart({navigation, route}) {
       }
     }
   };
+
   //Clear cart
   const placeOrder = () => {
+    var d1 = new Date();
+    var d2 = new Date(sheduledorderdate);
     if (!!userData?.auth_token) {
       if (!selectedAddressData) {
         // showError('Please select address');
         setModalVisible(true);
       } else if (!paramsData?.selectedMethod) {
         showError('Please select a payment method');
+      } else if (!(sheduledorderdate && selectedTimeOption)) {
+        showError('Please select a Order type');
+      } else if (d1.getTime() >= d2.getTime()) {
+        showError('Invalid  Scheduled Date');
       } else {
         if (!!userData) {
           !!userData?.client_preference?.verify_email ||
@@ -581,6 +648,28 @@ export default function Cart({navigation, route}) {
         'You have not added the cart detail for the selected payment method',
       );
     }
+  };
+
+  const _selectTime = (item) => {
+    {
+      selectedTimeOption && selectedTimeOption?.id == item?.id
+        ? updateState({
+            isVisibleTimeModal: item?.type === 'schedule' ? true : false,
+            isLoading: true,
+          })
+        : updateState({
+            selectedTimeOption: item,
+            isLoading: true,
+            isVisibleTimeModal: item?.type === 'schedule' ? true : false,
+          });
+    }
+
+    item?.type == 'now' ? setDateAndTimeSchedule() : null;
+  };
+
+  const selectOrderDate = () => {
+    onClose();
+    setDateAndTimeSchedule();
   };
 
   const _renderItem = ({item, index}) => {
@@ -867,12 +956,13 @@ export default function Cart({navigation, route}) {
     }
   };
 
-  const onPressPickUplater = () => {
-    updateState({
-      isVisibleTimeModal: true,
-    });
-  };
+  // const onPressPickUplater = () => {
+  //   updateState({
+  //     isVisibleTimeModal: true,
+  //   });
+  // };
   //Footer section in cart screen
+
   const getFooter = () => {
     return (
       <>
@@ -1103,33 +1193,64 @@ export default function Cart({navigation, route}) {
         </TouchableOpacity>
 
         {/* {payment submit button} */}
+        <View
+          style={{
+            flexDirection: 'row',
+            marginVertical: moderateScaleVertical(20),
+            marginHorizontal: moderateScale(10),
+          }}>
+          {selectedTimeOptions.map((i, inx) => {
+            return (
+              <TouchableOpacity
+                onPress={() => _selectTime(i)}
+                style={{
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+
+                  backgroundColor:
+                    selectedTimeOption && selectedTimeOption?.id == i.id
+                      ? themeColors?.primary_color
+                      : getColorCodeWithOpactiyNumber(
+                          themeColors.primary_color.substr(1),
+                          20,
+                        ),
+                  borderColor: themeColors.primary_color,
+                  borderWidth:
+                    selectedTimeOption && selectedTimeOption?.id == i.id
+                      ? 1
+                      : 0,
+                  borderRadius: 10,
+                  marginRight: 10,
+                }}>
+                <Text
+                  style={{
+                    fontFamily: fontFamily.medium,
+                    color:
+                      selectedTimeOption && selectedTimeOption?.id == i.id
+                        ? colors.white
+                        : themeColors.primary_color,
+                  }}>
+                  {i.title}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+          <View
+            style={{
+              justifyContent: 'center',
+            }}>
+            {selectedTimeOption?.type === 'now' ? null : (
+              <Text>
+                {sheduledorderdate
+                  ? `${moment(sheduledorderdate).format('DD MMM,YYYY HH:mm')}`
+                  : null}
+              </Text>
+            )}
+          </View>
+        </View>
 
         {!!cartData?.deliver_status && (
           <View style={styles.paymentView}>
-            {/* <ButtonComponent
-            btnText={strings.SCHEDULE_ORDER}
-            borderRadius={moderateScale(13)}
-            containerStyle={styles.sceduleOrderStyle}
-          /> */}
-
-            <TransparentButtonWithTxtAndIcon
-              btnText={strings.SCHEDULE_ORDER}
-              borderRadius={moderateScale(13)}
-              containerStyle={{
-                marginHorizontal: 20,
-                alignItems: 'center',
-              }}
-              onPress={onPressPickUplater}
-              marginBottom={moderateScaleVertical(10)}
-              marginTop={moderateScaleVertical(10)}
-              containerStyle={{width: width / 2.5}}
-              textStyle={{
-                color: themeColors.primary_color,
-                textTransform: 'none',
-                fontSize: textScale(14),
-              }}
-            />
-
             <ButtonComponent
               onPress={() => {
                 placeOrder();
@@ -1336,12 +1457,17 @@ export default function Cart({navigation, route}) {
   };
 
   const onClose = () => {
-    updateState({isVisibleTimeModal: false});
+    updateState({
+      isVisibleTimeModal: false,
+    });
   };
 
   const onDateChange = (value) => {
-    console.log(value, 'value');
+    // console.log(value, 'value');
     // _onDateChange(value);
+    updateState({
+      sheduledorderdate: value,
+    });
   };
 
   const _onTableSelection = (item) => {
@@ -1457,9 +1583,12 @@ export default function Cart({navigation, route}) {
 
             <View style={{alignItems: 'center', height: height / 3.5}}>
               <DatePicker
-                date={new Date()}
+                date={
+                  sheduledorderdate ? new Date(sheduledorderdate) : new Date()
+                }
                 mode="datetime"
                 minimumDate={new Date()}
+                maximumDate={undefined}
                 style={{width: width - 20, height: height / 3.5}}
                 // onDateChange={setDate}
                 onDateChange={(value) => onDateChange(value)}
@@ -1477,7 +1606,7 @@ export default function Cart({navigation, route}) {
                 themeColors.primary_color,
               ]}
               // textStyle={styles.textStyle}
-              onPress={() => alert('In progress')}
+              onPress={selectOrderDate}
               marginTop={moderateScaleVertical(10)}
               marginBottom={moderateScaleVertical(30)}
               btnText={strings.SELECT}
