@@ -36,6 +36,7 @@ import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
 import ActionSheet from 'react-native-actionsheet';
 import {cameraHandler} from '../../utils/commonFunction';
+import ToggleSwitch from 'toggle-switch-react-native';
 
 export default function WebLinks({navigation, route}) {
   console.log(route, 'route>>>');
@@ -56,6 +57,9 @@ export default function WebLinks({navigation, route}) {
     address: '',
     website: '',
     imageArray: [],
+    isDineIn: false,
+    isTakeaway: false,
+    isDelivery: false,
   });
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -181,7 +185,8 @@ export default function WebLinks({navigation, route}) {
         .catch((err) => {});
     }
   };
-  const {cca2, phoneNumber, imageArray} = state;
+  const {cca2, phoneNumber, imageArray, isDineIn, isDelivery, isTakeaway} =
+    state;
   return (
     <WrapperContainer
       bgColor={colors.backgroundGrey}
@@ -309,6 +314,7 @@ export default function WebLinks({navigation, route}) {
                       alignSelf: 'center',
                       marginBottom: moderateScaleVertical(12),
                       fontFamily: fontFamily.medium,
+                      color: colors.textGreyOpcaity7,
                     }}>
                     {strings.UPLOAD_LOGO}
                   </Text>
@@ -342,9 +348,10 @@ export default function WebLinks({navigation, route}) {
                       style={{
                         justifyContent: 'center',
                         alignItems: 'center',
-                        borderWidth: 0.2,
+                        borderWidth: 1,
                         height: height / 10,
                         marginHorizontal: moderateScale(12),
+                        borderColor: colors.borderLight,
                       }}>
                       <TouchableOpacity
                         onPress={showActionSheet}
@@ -370,6 +377,7 @@ export default function WebLinks({navigation, route}) {
                       alignSelf: 'center',
                       marginBottom: moderateScaleVertical(12),
                       fontFamily: fontFamily.medium,
+                      color: colors.textGreyOpcaity7,
                     }}>
                     {strings.UPLOAD_BANNER}
                   </Text>
@@ -403,9 +411,10 @@ export default function WebLinks({navigation, route}) {
                       style={{
                         justifyContent: 'center',
                         alignItems: 'center',
-                        borderWidth: 0.2,
+                        borderWidth: 1,
                         height: height / 10,
                         marginHorizontal: moderateScale(12),
+                        borderColor: colors.borderLight,
                       }}>
                       <TouchableOpacity
                         onPress={showActionSheet}
@@ -421,6 +430,70 @@ export default function WebLinks({navigation, route}) {
                     </View>
                   )}
                 </View>
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+
+                marginHorizontal: moderateScale(10),
+                marginVertical: moderateScaleVertical(24),
+              }}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    marginBottom: moderateScaleVertical(8),
+                    fontFamily: fontFamily.medium,
+                    color: colors.textGreyOpcaity7,
+                  }}>
+                  Dine In
+                </Text>
+                <ToggleSwitch
+                  isOn={isDineIn}
+                  onColor={colors.themeColor}
+                  offColor={colors.borderLight}
+                  size="small"
+                  onToggle={() => updateState({isDineIn: !isDineIn})}
+                />
+              </View>
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Text
+                  style={{
+                    marginBottom: moderateScaleVertical(8),
+                    fontFamily: fontFamily.medium,
+                    color: colors.textGreyOpcaity7,
+                  }}>
+                  Takeaway
+                </Text>
+                <ToggleSwitch
+                  isOn={isTakeaway}
+                  onColor={colors.themeColor}
+                  offColor={colors.borderLight}
+                  size="small"
+                  onToggle={() => updateState({isTakeaway: !isTakeaway})}
+                />
+              </View>
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Text
+                  style={{
+                    marginBottom: moderateScaleVertical(8),
+                    fontFamily: fontFamily.medium,
+                    color: colors.textGreyOpcaity7,
+                  }}>
+                  Delivery
+                </Text>
+                <ToggleSwitch
+                  isOn={isDelivery}
+                  onColor={colors.themeColor}
+                  offColor={colors.borderLight}
+                  size="small"
+                  onToggle={() => updateState({isDelivery: !isDelivery})}
+                />
               </View>
             </View>
 

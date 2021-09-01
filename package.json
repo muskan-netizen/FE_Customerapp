@@ -71,6 +71,7 @@
     "errand": "react-native run-android --variant=errandDebug --appIdSuffix=errand",
     "partnerproject": "react-native run-android --variant=partnerprojectDebug --appIdSuffix=partnerproject",
     "menus": "react-native run-android --variant=menusDebug --appIdSuffix=menus",
+    "doorstep": "react-native run-android --variant=doorstepDebug --appIdSuffix=doorstep",
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "bustanfakiehRelease": "cd android && ./gradlew assembleBustanFakiehRelease",
@@ -139,6 +140,7 @@
     "errandRelease": "cd android && ./gradlew assembleErrandRelease",
     "partnerprojectRelease": "cd android && ./gradlew assemblePartnerProjectRelease",
     "menusRelease": "cd android && ./gradlew assembleMenusRelease",
+    "doorstepRelease": "cd android && ./gradlew assembleDoorStepRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
@@ -254,6 +256,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "toastify-react-native": "^2.0.0",
+    "toggle-switch-react-native": "^3.2.0",
     "translate-json-object": "^2.3.7"
   },
   "devDependencies": {

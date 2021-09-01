@@ -498,6 +498,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.doorstep:
+          updateState({
+            shortCode: shortCodes.doorstep,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

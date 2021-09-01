@@ -78,14 +78,16 @@ export default ({fontFamily}) => {
     imageOrderStyle: {
       justifyContent: 'center',
       alignItems: 'center',
-      borderWidth: 0.2,
+      borderWidth: 1,
+      borderColor: colors.borderLight,
       marginHorizontal: moderateScale(12),
     },
     imageStyle: {
       justifyContent: 'center',
       alignItems: 'center',
-      borderWidth: 0.2,
+      borderWidth: 1,
       resizeMode: 'contain',
+      borderColor: colors.borderLight,
     },
     viewOverImage: {
       height: width / 5,

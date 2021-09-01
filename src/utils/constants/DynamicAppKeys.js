@@ -69,6 +69,7 @@ const shortCodes = {
   errand: '62a348',
   partnerproject: '246a2a',
   menus: 'f644c8',
+  doorstep: 'f76099',
 };
 
 const appIds = {
@@ -343,6 +344,10 @@ const appIds = {
   menus: Platform.select({
     ios: 'com.menusvirtual',
     android: 'com.menus',
+  }),
+  doorstep: Platform.select({
+    ios: 'com.doorstep',
+    android: 'com.doorstep',
   }),
 };
 
