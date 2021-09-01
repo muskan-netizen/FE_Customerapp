@@ -17,6 +17,8 @@ import {
   StatusBarHeight,
   textScale,
 } from '../styles/responsiveSize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 const Header = ({
   leftIcon = imagePath.back,
@@ -38,10 +40,10 @@ const Header = ({
   imageAlongwithTitleStyle = {tintColor: colors.black},
   onPressImageAlongwithTitle,
   onPressCenterTitle,
-  leftIconStyle
+  leftIconStyle,
 }) => {
   const {appStyle} = useSelector((state) => state?.initBoot);
-
+  const isDarkMode = useDarkMode();
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
   const navigation = useNavigation();
@@ -73,7 +75,18 @@ const Header = ({
                 <Image
                   resizeMode="contain"
                   source={leftIcon}
-                  style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],...leftIconStyle}}
+                  style={
+                    isDarkMode
+                      ? {
+                          transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                          ...leftIconStyle,
+                          tintColor: MyDarkTheme.colors.text,
+                        }
+                      : {
+                          transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                          ...leftIconStyle,
+                        }
+                  }
                 />
               </TouchableOpacity>
             ))}
@@ -89,11 +102,20 @@ const Header = ({
             <Text
               onPress={onPressCenterTitle}
               numberOfLines={1}
-              style={{
-                ...styles.textStyle,
-                ...textStyle,
-                // width: moderateScale(150),
-              }}>
+              style={
+                isDarkMode
+                  ? {
+                      ...styles.textStyle,
+                      ...textStyle,
+                      color: MyDarkTheme.colors.text,
+                      // width: moderateScale(150),
+                    }
+                  : {
+                      ...styles.textStyle,
+                      ...textStyle,
+                      // width: moderateScale(150),
+                    }
+              }>
               {centerTitle}
             </Text>
             {!!showImageAlongwithTitle && (
@@ -110,7 +132,18 @@ const Header = ({
         <View style={{flex: 0.2, alignItems: 'flex-end'}}>
           {!!rightIcon ? (
             <TouchableOpacity onPress={onPressRight}>
-              <Image style={rightIconStyle} source={rightIcon} />
+              <Image
+                style={
+                  isDarkMode
+                    ? {
+                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                        ...leftIconStyle,
+                        tintColor: MyDarkTheme.colors.text,
+                      }
+                    : rightIconStyle
+                }
+                source={rightIcon}
+              />
             </TouchableOpacity>
           ) : !!customRight ? (
             customRight()

@@ -53,7 +53,7 @@ export default function BorderTextInput({
         color: colors.white,
         borderWidth: 1,
         borderRadius: 13,
-        borderColor: colors.borderLight,
+        borderColor: color ? color : colors.borderLight,
         marginBottom,
         overflow: 'hidden',
         ...containerStyle,

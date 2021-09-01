@@ -36,8 +36,11 @@ import {showError, showSuccess} from '../../utils/helperFunctions';
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function ProductDetail({route, navigation}) {
+  const isDarkMode = useDarkMode();
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
   const {productListData} = useSelector((state) => state?.product);
@@ -373,7 +376,14 @@ export default function ProductDetail({route, navigation}) {
                 marginBottom: moderateScaleVertical(10),
               }}>
               <Image source={i?.value ? imagePath.check : imagePath.unCheck} />
-              <Text style={styles.variantValue}>{i.title}</Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.variantValue, {color: MyDarkTheme.colors.text}]
+                    : styles.variantValue
+                }>
+                {i.title}
+              </Text>
             </TouchableOpacity>
           );
         })}
@@ -465,6 +475,7 @@ export default function ProductDetail({route, navigation}) {
                   style={[
                     styles.variantLable,
                     {marginBottom: moderateScale(5)},
+                    isDarkMode ? {color: MyDarkTheme.colors.text} : null,
                   ]}>{`${i?.title}`}</Text>
                 {i?.options ? variantSetValue(i) : null}
               </View>
@@ -592,7 +603,7 @@ export default function ProductDetail({route, navigation}) {
   );
   return (
     <WrapperContainer
-      bgColor={colors.white}
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoadingC}>
@@ -603,7 +614,11 @@ export default function ProductDetail({route, navigation}) {
         onPressRight={() =>
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={{
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.white,
+        }}
       />
       <View style={{...commonStyles.headerTopLine}} />
 
@@ -646,9 +661,23 @@ export default function ProductDetail({route, navigation}) {
                         {productDetailData?.is_wishlist ? (
                           <View>
                             {!!productDetailData?.inwishlist ? (
-                              <Image source={imagePath.blackFilledHeart} />
+                              <Image
+                                style={
+                                  isDarkMode
+                                    ? {tintColor: MyDarkTheme.colors.text}
+                                    : null
+                                }
+                                source={imagePath.blackFilledHeart}
+                              />
                             ) : (
-                              <Image source={imagePath.fav} />
+                              <Image
+                                style={
+                                  isDarkMode
+                                    ? {tintColor: MyDarkTheme.colors.text}
+                                    : null
+                                }
+                                source={imagePath.fav}
+                              />
                             )}
                           </View>
                         ) : null}
@@ -712,7 +741,13 @@ export default function ProductDetail({route, navigation}) {
                     alignItems: 'flex-start',
                     justifyContent: 'center',
                   }}>
-                  <Text numberOfLines={2} style={styles.productName}>
+                  <Text
+                    numberOfLines={2}
+                    style={
+                      isDarkMode
+                        ? [styles.productName, {color: MyDarkTheme.colors.text}]
+                        : styles.productName
+                    }>
                     {productDetailData?.translation[0]?.title}
                   </Text>
                 </View>
@@ -845,7 +880,15 @@ export default function ProductDetail({route, navigation}) {
                     flexDirection: 'row',
                   }}>
                   <View>
-                    <Text style={styles.descriptiontitle}>
+                    <Text
+                      style={
+                        isDarkMode
+                          ? [
+                              styles.descriptiontitle,
+                              {color: MyDarkTheme.colors.text},
+                            ]
+                          : styles.descriptiontitle
+                      }>
                       {strings.DESCRIPTION}
                     </Text>
                     {/* <Text style={styles.description}>

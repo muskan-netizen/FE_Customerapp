@@ -43,7 +43,11 @@ import {
 } from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
+
 export default function MyProfile({route, navigation}) {
+  const isDarkMode = useDarkMode();
   const currentTheme = useSelector((state) => state?.initBoot);
   const {themeColors, themeLayouts, appStyle} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
@@ -457,7 +461,9 @@ export default function MyProfile({route, navigation}) {
                 }}>
                 <Text
                   style={
-                    styles.referralCode
+                    isDarkMode
+                      ? [styles.referralCode, {color: MyDarkTheme.colors.text}]
+                      : styles.referralCode
                   }>{`Your refferal code: ${userData?.refferal_code}`}</Text>
               </View>
               <View
@@ -485,11 +491,13 @@ export default function MyProfile({route, navigation}) {
             onChangeText={_onChangeText('name')}
             placeholder={strings.YOUR_NAME}
             value={name}
+            color={isDarkMode ? MyDarkTheme.colors.text : null}
           />
           <BorderTextInput
             onChangeText={_onChangeText('email')}
             placeholder={strings.YOUR_EMAIL}
             value={email}
+            color={isDarkMode ? MyDarkTheme.colors.text : null}
           />
           <PhoneNumberInput
             onCountryChange={_onCountryChange}
@@ -500,6 +508,7 @@ export default function MyProfile({route, navigation}) {
             cca2={cca2}
             phoneNumber={phoneNumber}
             callingCode={state.callingCode}
+            color={isDarkMode ? MyDarkTheme.colors.text : null}
           />
           <View style={{height: moderateScaleVertical(20)}} />
 
@@ -530,12 +539,14 @@ export default function MyProfile({route, navigation}) {
             placeholder={strings.ENTER_CURRENT_PASS}
             value={currentpassword}
             secureTextEntry={true}
+            color={isDarkMode ? MyDarkTheme.colors.text : null}
           />
           <BorderTextInput
             onChangeText={_onChangeText('newPassword')}
             placeholder={strings.ENTER_NEW_PASS}
             value={newPassword}
             secureTextEntry={true}
+            color={isDarkMode ? MyDarkTheme.colors.text : null}
           />
 
           <BorderTextInput
@@ -543,6 +554,7 @@ export default function MyProfile({route, navigation}) {
             placeholder={strings.ENTER_CONFIRM_PASS}
             value={confirmPassword}
             secureTextEntry={true}
+            color={isDarkMode ? MyDarkTheme.colors.text : null}
           />
 
           <GradientButton
@@ -572,7 +584,11 @@ export default function MyProfile({route, navigation}) {
           btnText={strings.ADD_NEW_ADDRESS}
           icon={imagePath.add}
           onPress={() => setModalVisible(true, 'addAddress')}
-          textStyle={{marginLeft: 10}}
+          textStyle={
+            isDarkMode
+              ? {marginLeft: 10, color: MyDarkTheme.colors.text}
+              : {marginLeft: 10}
+          }
           borderRadius={moderateScale(13)}
           containerStyle={{marginHorizontal: 20}}
           marginBottom={moderateScaleVertical(20)}
@@ -605,6 +621,11 @@ export default function MyProfile({route, navigation}) {
                         justifyContent: 'center',
                       }}>
                       <Image
+                        style={
+                          isDarkMode
+                            ? {tintColor: MyDarkTheme.colors.text}
+                            : null
+                        }
                         source={
                           itm?.type == 1
                             ? imagePath.home
@@ -615,7 +636,17 @@ export default function MyProfile({route, navigation}) {
                     <View style={{flex: 0.8}}>
                       <Text
                         numberOfLines={2}
-                        style={[styles.address, {textAlign: 'left'}]}>
+                        style={
+                          isDarkMode
+                            ? [
+                                styles.address,
+                                {
+                                  textAlign: 'left',
+                                  color: MyDarkTheme.colors.text,
+                                },
+                              ]
+                            : [styles.address, {textAlign: 'left'}]
+                        }>
                         {itm?.address}
                       </Text>
                     </View>
@@ -724,18 +755,32 @@ export default function MyProfile({route, navigation}) {
   return (
     <WrapperContainer
       isLoadingB={isLoading}
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGreyC}
       source={loaderOne}>
       <Header
         leftIcon={imagePath.back}
         centerTitle={strings.MY_PROFILE}
-        headerStyle={{backgroundColor: colors.backgroundGreyC}}
+        headerStyle={{
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.backgroundGreyC,
+        }}
       />
       <View style={{...commonStyles.headerTopLine}} />
       {/* top section user general info */}
 
-      <View style={styles.topSection}>
+      <View
+        style={
+          isDarkMode
+            ? [
+                styles.topSection,
+                {backgroundColor: MyDarkTheme.colors.background},
+              ]
+            : styles.topSection
+        }>
         <TouchableWithoutFeedback onPress={showActionSheet}>
           <View style={styles.userProfileView}>
             <FastImage
@@ -763,12 +808,34 @@ export default function MyProfile({route, navigation}) {
             justifyContent: 'center',
             marginTop: moderateScaleVertical(20),
           }}>
-          <Text style={styles.userName}>{userData?.name}</Text>
-          <Text style={styles.userEmail}>{userData?.email}</Text>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.userName, {color: MyDarkTheme.colors.text}]
+                : styles.userName
+            }>
+            {userData?.name}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.userEmail, {color: MyDarkTheme.colors.text}]
+                : styles.userEmail
+            }>
+            {userData?.email}
+          </Text>
         </View>
       </View>
 
-      <View style={styles.bottomSection}>
+      <View
+        style={
+          isDarkMode
+            ? [
+                styles.bottomSection,
+                {backgroundColor: MyDarkTheme.colors.background},
+              ]
+            : styles.bottomSection
+        }>
         {/* scrolllablr tob bar */}
         <CustomTopTabBar
           scrollEnabled={true}
@@ -778,6 +845,7 @@ export default function MyProfile({route, navigation}) {
           // containerStyle={{  width: width / 3}}
           customTextContainerStyle={{
             width: width / 2.8,
+
             // flexWrap: 'wrap',
             // alignSelf:'center'
             // justifyContent: 'center',

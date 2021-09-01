@@ -36,8 +36,11 @@ import FastImage from 'react-native-fast-image';
 import GradientButton from '../../Components/GradientButton';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import * as RNLocalize from 'react-native-localize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function MyOrders({navigation}) {
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     tabBarData: [
       {title: strings.ACTIVE_ORDERS, isActive: true},
@@ -367,7 +370,9 @@ export default function MyOrders({navigation}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
@@ -378,7 +383,11 @@ export default function MyOrders({navigation}) {
             : imagePath.back
         }
         centerTitle={strings.MY_ORDERS}
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
+        }
       />
 
       <View style={{...commonStyles.headerTopLine}} />
@@ -386,7 +395,11 @@ export default function MyOrders({navigation}) {
       <CustomTopTabBar
         scrollEnabled={true}
         tabBarItems={tabBarData}
-        customContainerStyle={{backgroundColor: colors.white}}
+        customContainerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
+        }
         onPress={(tabData) => changeTab(tabData)}
         customTextContainerStyle={{width: width / 3}}
       />
@@ -426,19 +439,33 @@ export default function MyOrders({navigation}) {
         isVisible={isVisibleReturnOrderModal}
         animationIn={'pulse'}
         animationOut={'pulse'}
-        style={styles.modalContainer}>
+        style={[styles.modalContainer]}>
         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
           <Image source={imagePath.crossB} />
         </TouchableOpacity>
         <View
-          style={styles.modalMainViewContainer}
+          style={
+            isDarkMode
+              ? [
+                  styles.modalMainViewContainer,
+                  {backgroundColor: MyDarkTheme.colors.lightDark},
+                ]
+              : styles.modalMainViewContainer
+          }
           onLayout={(event) => {
             updateState({viewHeight: event.nativeEvent.layout.height});
           }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             bounces={false}
-            style={styles.modalMainViewContainer}>
+            style={
+              isDarkMode
+                ? [
+                    styles.modalMainViewContainer,
+                    {backgroundColor: MyDarkTheme.colors.lightDark},
+                  ]
+                : styles.modalMainViewContainer
+            }>
             <View
               style={{
                 // flex: 0.6,
@@ -446,7 +473,12 @@ export default function MyOrders({navigation}) {
                 justifyContent: 'center',
                 marginTop: 10,
               }}>
-              <Text style={styles.carType}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.carType, {color: MyDarkTheme.colors.text}]
+                    : styles.carType
+                }>
                 {strings.DOYOUWANTTORETURNYOURORDER}
               </Text>
             </View>
@@ -455,7 +487,15 @@ export default function MyOrders({navigation}) {
                 marginVertical: moderateScaleVertical(10),
                 marginBottom: moderateScale(20),
               }}>
-              <Text style={styles.selectItemToReturn}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                        styles.selectItemToReturn,
+                        {color: MyDarkTheme.colors.text},
+                      ]
+                    : styles.selectItemToReturn
+                }>
                 {strings.SELECTITEMSFORRETURN}
               </Text>
             </View>
@@ -481,7 +521,9 @@ export default function MyOrders({navigation}) {
                                 style={{
                                   fontFamily: fontFamily.medium,
                                   fontSize: moderateScale(14),
-                                  color: colors.textGreyJ,
+                                  color: isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : colors.textGreyJ,
                                 }}>
                                 {item?.product_return?.status}
                               </Text>
@@ -521,17 +563,29 @@ export default function MyOrders({navigation}) {
                             <View style={{overflow: 'hidden'}}>
                               <Text
                                 numberOfLines={2}
-                                style={[
-                                  styles.priceItemLabel2,
-                                  {opacity: 0.8},
-                                ]}>
+                                style={
+                                  isDarkMode
+                                    ? [
+                                        styles.priceItemLabel2,
+                                        {
+                                          opacity: 0.8,
+                                          color: MyDarkTheme.colors.text,
+                                        },
+                                      ]
+                                    : [styles.priceItemLabel2, {opacity: 0.8}]
+                                }>
                                 {item?.product_name}
                               </Text>
                             </View>
 
                             {item?.quantity && (
                               <View style={{flexDirection: 'row'}}>
-                                <Text style={{color: colors.textGrey}}>
+                                <Text
+                                  style={
+                                    isDarkMode
+                                      ? {color: MyDarkTheme.colors.text}
+                                      : {color: colors.textGrey}
+                                  }>
                                   {strings.QTY}
                                 </Text>
                                 <Text style={styles.cartItemWeight}>

@@ -19,6 +19,7 @@ export default function PhoneNumberInput({
   onCountryChange,
   phoneNumber,
   placeholder,
+  color,
 }) {
   const [state, setState] = useState({
     countryPickerModalVisible: false,
@@ -45,7 +46,7 @@ export default function PhoneNumberInput({
         flexDirection: 'row',
         borderWidth: 1,
         borderRadius: 13,
-        borderColor: colors.borderLight,
+        borderColor: color ? color : colors.borderLight,
         height: moderateScale(49),
       }}>
       <TouchableOpacity
@@ -64,14 +65,14 @@ export default function PhoneNumberInput({
         placeholder={placeholder}
         keyboardType="numeric"
         value={phoneNumber}
-        placeholderTextColor={colors.textGreyOpcaity7}
+        placeholderTextColor={color ? color : colors.textGreyOpcaity7}
         onChangeText={onChangePhone}
         style={{
           // flex: 1,
           width: width / 1.57,
           borderLeftWidth: 1,
           fontFamily: fontFamily.medium,
-          color: colors.textGrey,
+          color: color ? color : colors.textGrey,
           fontSize: textScale(14),
           borderLeftColor: colors.borderLight,
           opacity: 0.7,

@@ -1,6 +1,7 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
 import React, {useEffect, useState} from 'react';
+import moment from 'moment';
 import {
   Alert,
   FlatList,
@@ -321,6 +322,7 @@ export default function Cart2({navigation, route}) {
 
   //Error handling in screen
   const errorMethod = (error) => {
+    console.log(error, 'error');
     updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
@@ -521,6 +523,20 @@ export default function Cart2({navigation, route}) {
           });
     }
   };
+  const onDateChange = (value) => {
+    // console.log(value, 'value');
+    // _onDateChange(value);
+    updateState({
+      sheduledorderdate: value,
+    });
+  };
+
+  useEffect(() => {
+    // console.log(scheduleType, 'scheduleType scheduleType');
+    if (scheduleType != null && scheduleType == 'now') {
+      setDateAndTimeSchedule();
+    }
+  }, [scheduleType]);
 
   const selectOrderDate = () => {
     onClose();
@@ -534,6 +550,32 @@ export default function Cart2({navigation, route}) {
     updateState({
       isVisibleTimeModal: false,
     });
+  };
+
+  const setDateAndTimeSchedule = () => {
+    console.log(scheduleType, 'scheduleType>>>updated');
+    let data = {};
+    data['task_type'] = scheduleType;
+    data['schedule_dt'] =
+      scheduleType != 'now' && sheduledorderdate
+        ? new Date(sheduledorderdate).toISOString()
+        : null;
+    console.log(data, 'setDateAndTimeSchedule data');
+
+    actions
+      .scheduledOrder(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res, 'response');
+        updateState({
+          isLoadingB: false,
+        });
+      })
+      .catch(errorMethod);
   };
 
   //render cart item and cart detail
@@ -1055,7 +1097,7 @@ export default function Cart2({navigation, route}) {
           style={{
             flexDirection: 'row',
             marginVertical: moderateScaleVertical(20),
-            marginHorizontal: moderateScale(10),
+            marginHorizontal: moderateScale(20),
           }}>
           {selectedTimeOptions.map((i, inx) => {
             return (
@@ -1111,7 +1153,7 @@ export default function Cart2({navigation, route}) {
             marginHorizontal: moderateScale(20),
             marginVertical:
               Platform.OS === 'ios'
-                ? moderateScaleVertical(40)
+                ? moderateScaleVertical(15)
                 : moderateScaleVertical(25),
           }}>
           <ButtonComponent
@@ -1644,6 +1686,37 @@ export function stylesFunc({fontFamily, themeColors}) {
       marginVertical: 20,
       borderRadius: moderateScale(5),
       borderColor: themeColors.primary_color,
+    },
+    modalContainer: {
+      marginHorizontal: 0,
+      marginBottom: 0,
+      marginTop: moderateScaleVertical(height / 2),
+      overflow: 'hidden',
+    },
+    closeButton: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginVertical: moderateScaleVertical(10),
+    },
+    modalMainViewContainer: {
+      flex: 1,
+      backgroundColor: colors.white,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      // overflow: 'hidden',
+      // paddingHorizontal: moderateScale(24),
+    },
+    carType: {
+      fontSize: textScale(14),
+      color: colors.blackC,
+      fontFamily: fontFamily.bold,
+    },
+    bottomAddToCartView: {
+      marginHorizontal: moderateScale(20),
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      bottom: 0,
     },
   });
   return styles;

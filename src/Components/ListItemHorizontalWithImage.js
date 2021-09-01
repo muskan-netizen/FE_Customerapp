@@ -8,6 +8,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 const ListItemHorizontal = ({
   leftIconStyle,
@@ -23,7 +25,7 @@ const ListItemHorizontal = ({
   rightIconStyle = {},
 }) => {
   const {appStyle} = useSelector((state) => state?.initBoot);
-
+  const isDarkMode = useDarkMode();
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
   return (
@@ -44,7 +46,14 @@ const ListItemHorizontal = ({
         <TouchableOpacity style={{...leftIconStyle}}>
           <Image
             source={iconLeft}
-            style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+            style={
+              isDarkMode
+                ? {
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    tintColor: MyDarkTheme.colors.text,
+                  }
+                : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+            }
           />
         </TouchableOpacity>
       ) : (

@@ -31,10 +31,13 @@ import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptySubscriptions from './ListEmptySubscriptions';
 import stylesFun from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Subscriptions({navigation, route}) {
   //   console.log(route, 'route>>>');
   const paramData = route?.params;
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     isLoading: false,
     isLoadingB: false,
@@ -563,7 +566,15 @@ export default function Subscriptions({navigation, route}) {
         {!!currentSubscription && (
           <>
             <View style={{marginVertical: moderateScale(10)}}>
-              <Text style={styles.subscriptionTitle}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                        styles.subscriptionTitle,
+                        {color: MyDarkTheme.colors.text},
+                      ]
+                    : styles.subscriptionTitle
+                }>
                 {strings.MYSUBSCRIPTION}
               </Text>
             </View>
@@ -589,7 +600,9 @@ export default function Subscriptions({navigation, route}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.white}
       isLoadingB={isLoading}
       source={loaderOne}>
@@ -600,7 +613,11 @@ export default function Subscriptions({navigation, route}) {
             : imagePath.back
         }
         centerTitle={strings.SUBSCRIPTION}
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
+        }
       />
 
       <View style={{...commonStyles.headerTopLine}} />

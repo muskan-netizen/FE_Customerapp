@@ -14,11 +14,13 @@ import commonStylesFun from '../../styles/commonStyles';
 import {moderateScale} from '../../styles/responsiveSize';
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from '../Vendors/ListEmptyVendors';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function VendorDetail({navigation, route}) {
   let vendorParams = route?.params?.data;
   console.log(vendorParams, 'vendorParams>>>>>>>');
-
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     vendorId: vendorParams?.item?.id,
     vendorData: [],
@@ -121,7 +123,7 @@ export default function VendorDetail({navigation, route}) {
         onPress={moveToNewScreen(navigationStrings.PRODUCT_LIST, {
           id: item.id,
           rootProducts: vendorParams?.rootProducts,
-          vendor: vendorParams?.irootProductstem?true:false,
+          vendor: vendorParams?.irootProductstem ? true : false,
           // rootProducts:
           vendorData: vendorParams?.item,
           categoryInfo: item,
@@ -138,7 +140,9 @@ export default function VendorDetail({navigation, route}) {
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
-      bgColor={colors.backgroundGrey}>
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }>
       {/* <Header centerTitle={vendorParams?.item?.name} hideRight={false} /> */}
 
       <Header

@@ -18,6 +18,7 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
 
 export default function ProductCard({
   data = {},
@@ -32,7 +33,7 @@ export default function ProductCard({
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const {appStyle} = useSelector((state) => state?.initBoot);
-
+  const isDarkMode = useDarkMode();
   const fontFamily = appStyle?.fontSizeData;
 
   const {themeColors, themeLayouts} = currentTheme;
