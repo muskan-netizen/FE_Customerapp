@@ -21,9 +21,11 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../../styles/responsiveSize';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
@@ -296,31 +298,22 @@ export default function WebLinks({navigation, route}) {
               containerStyle={styles.containerStyle}
             />
             <View style={{marginTop: moderateScaleVertical(20)}}>
-              <Text style={styles.uploadImage}>{strings.UPLOAD_IMAGE}</Text>
-              <View
-                style={{
-                  marginTop: moderateScaleVertical(10),
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  flexWrap: 'wrap',
-                }}>
+              <View style={{flexDirection: 'row'}}>
                 <View
                   style={{
-                    marginRight: 5,
-                    marginBottom: moderateScaleVertical(10),
+                    width: width / 2 - moderateScale(22),
                   }}>
-                  <TouchableOpacity
-                    onPress={showActionSheet}
-                    style={[styles.viewOverImage2, {borderStyle: 'dashed'}]}>
-                    <Image
-                      source={imagePath.icCamIcon}
-                      style={{tintColor: colors.themeColor}}
-                    />
-                  </TouchableOpacity>
-                </View>
-
-                {imageArray && imageArray.length
-                  ? imageArray.map((i, inx) => {
+                  <Text
+                    style={{
+                      justifyContent: 'center',
+                      alignSelf: 'center',
+                      marginBottom: moderateScaleVertical(12),
+                      fontFamily: fontFamily.medium,
+                    }}>
+                    {strings.UPLOAD_LOGO}
+                  </Text>
+                  {imageArray && imageArray.length ? (
+                    imageArray.map((i, inx) => {
                       return (
                         <ImageBackground
                           source={{
@@ -333,7 +326,7 @@ export default function WebLinks({navigation, route}) {
                               style={{
                                 position: 'absolute',
                                 top: -10,
-                                right: -10,
+                                right: 30,
                               }}>
                               <TouchableOpacity
                                 onPress={() => _removeImageFromList(i)}>
@@ -344,7 +337,90 @@ export default function WebLinks({navigation, route}) {
                         </ImageBackground>
                       );
                     })
-                  : null}
+                  ) : (
+                    <View
+                      style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderWidth: 0.2,
+                        height: height / 10,
+                        marginHorizontal: moderateScale(12),
+                      }}>
+                      <TouchableOpacity
+                        onPress={showActionSheet}
+                        style={[
+                          styles.viewOverImage2,
+                          {borderStyle: 'dashed'},
+                        ]}>
+                        <Image
+                          source={imagePath.icCamIcon}
+                          style={{tintColor: colors.themeColor}}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                </View>
+                <View
+                  style={{
+                    width: width / 2 - moderateScale(22),
+                  }}>
+                  <Text
+                    style={{
+                      justifyContent: 'center',
+                      alignSelf: 'center',
+                      marginBottom: moderateScaleVertical(12),
+                      fontFamily: fontFamily.medium,
+                    }}>
+                    {strings.UPLOAD_BANNER}
+                  </Text>
+                  {imageArray && imageArray.length ? (
+                    imageArray.map((i, inx) => {
+                      return (
+                        <ImageBackground
+                          source={{
+                            uri: i.uri,
+                          }}
+                          style={styles.imageOrderStyle}
+                          imageStyle={styles.imageStyle}>
+                          <View style={styles.viewOverImage}>
+                            <View
+                              style={{
+                                position: 'absolute',
+                                top: -10,
+                                right: 30,
+                              }}>
+                              <TouchableOpacity
+                                onPress={() => _removeImageFromList(i)}>
+                                <Image source={imagePath.icRemoveIcon} />
+                              </TouchableOpacity>
+                            </View>
+                          </View>
+                        </ImageBackground>
+                      );
+                    })
+                  ) : (
+                    <View
+                      style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderWidth: 0.2,
+                        height: height / 10,
+                        marginHorizontal: moderateScale(12),
+                      }}>
+                      <TouchableOpacity
+                        onPress={showActionSheet}
+                        style={[
+                          styles.viewOverImage2,
+                          {borderStyle: 'dashed'},
+                        ]}>
+                        <Image
+                          source={imagePath.icCamIcon}
+                          style={{tintColor: colors.themeColor}}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                </View>
               </View>
             </View>
 

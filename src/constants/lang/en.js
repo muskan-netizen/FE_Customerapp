@@ -360,4 +360,6 @@ export default {
   STORE_DETAILS: 'Store Details',
   VENDER_NAME: 'Vender name',
   WEBSITE: 'Website',
+  UPLOAD_LOGO: 'Upload Logo',
+  UPLOAD_BANNER: 'Upload Banner',
 };

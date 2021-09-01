@@ -1,6 +1,7 @@
 import {I18nManager, StyleSheet} from 'react-native';
 import colors from '../../styles/colors';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -75,11 +76,16 @@ export default ({fontFamily}) => {
       color: colors.textGreyD,
     },
     imageOrderStyle: {
-      height: width / 5,
-      width: width / 5,
-      borderRadius: 5,
-      marginRight: 10,
-      marginBottom: moderateScaleVertical(10),
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderWidth: 0.2,
+      marginHorizontal: moderateScale(12),
+    },
+    imageStyle: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderWidth: 0.2,
+      resizeMode: 'contain',
     },
     viewOverImage: {
       height: width / 5,
