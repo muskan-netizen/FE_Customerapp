@@ -26,6 +26,7 @@ import {
   VendorDetail2,
   Vendors,
   Vendors2,
+  Vendors3,
 } from '../Screens';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
@@ -58,7 +59,8 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.VENDOR}
         component={
-          appData?.profile?.code === shortCodes.capcorp ? Vendors2 : Vendors
+          // appData?.profile?.code === shortCodes.capcorp ? Vendors2 : Vendors
+          Vendors3
         }
         options={{headerShown: false}}
       />

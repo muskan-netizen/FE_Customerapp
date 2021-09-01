@@ -536,30 +536,53 @@ export default function Home({route, navigation}) {
       bgColor={colors.backgroundGrey}>
       <View style={{flex: 1}}>
         <>
-          <DashBoardHeaderFive navigation={navigation} location={location} />
           {appData?.profile?.code === shortCodes.capcorp ? (
-            <DashBoardFive
-              handleRefresh={() => handleRefresh()}
-              bannerPress={(item) => bannerPress(item)}
-              isLoading={isLoading}
-              isRefreshing={isRefreshing}
-              appMainData={appMainData}
-              onPressCategory={(item) => onPressCategory2(item)}
-              selcetedToggle={selcetedToggle}
-              toggleData={appData}
-            />
+            <>
+              <DashBoardHeaderOne navigation={navigation} location={location} />
+
+              <DashBoardFour
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => onPressCategory2(item)}
+                selcetedToggle={selcetedToggle}
+                toggleData={appData}
+              />
+            </>
           ) : (
-            <DashBoardOne
-              handleRefresh={() => handleRefresh()}
-              bannerPress={(item) => bannerPress(item)}
-              isLoading={isLoading}
-              isRefreshing={isRefreshing}
-              appMainData={appMainData}
-              onPressCategory={(item) => onPressCategory(item)}
-              isDineInSelected={isDineInSelected}
-              selcetedToggle={selcetedToggle}
-              toggleData={appData}
-            />
+            <>
+              {/* <DashBoardHeaderOne navigation={navigation} location={location} />
+              <DashBoardOne
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => onPressCategory(item)}
+                isDineInSelected={isDineInSelected}
+                selcetedToggle={selcetedToggle}
+                toggleData={appData}
+              /> */}
+              <DashBoardHeaderFive
+                navigation={navigation}
+                location={location}
+              />
+
+              <DashBoardFive
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => onPressCategory(item)}
+                isDineInSelected={isDineInSelected}
+                selcetedToggle={selcetedToggle}
+                toggleData={appData}
+                navigation={navigation}
+              />
+            </>
           )}
         </>
         {/* {(() => {

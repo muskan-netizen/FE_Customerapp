@@ -26,6 +26,7 @@ const BannerHome2 = ({
   onPress = () => {},
   childView = null,
   showLightbox = false,
+  carouselViewStyle = {},
 }) => {
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -94,6 +95,7 @@ const BannerHome2 = ({
       style={{
         height: width * 0.4,
         borderRadius: moderateScale(25),
+        ...carouselViewStyle,
       }}>
       <Carousel
         ref={bannerRef}

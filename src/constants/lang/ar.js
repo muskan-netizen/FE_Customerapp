@@ -349,4 +349,8 @@ export default {
   NEAR_VENDOR: 'Top vendors near you',
   VIEW_ALL_VENDORS: 'View all vendors',
   CLOSE: 'Close',
+  SELECT_CATEGORY: 'Select Category',
+  EXPLORE_STORES: 'Explore Stores',
+  OPEN: 'Open',
+  SEARCH_HERE: 'Search here…..',
 };

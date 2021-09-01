@@ -216,4 +216,16 @@ export default {
   delivery: require('../assets/images/ic_delivery.png'),
   redLocation: require('../assets/images/ic_location.png'),
   location2: require('../assets/images/ic_location2.png'),
+
+  homeRedActive: require('../assets/images/ic_home4.png'),
+  homeRedInActive: require('../assets/images/ic_home_black4.png'),
+  cartRedActive: require('../assets/images/ic_cart4.png'),
+  cartRedInActive: require('../assets/images/ic_cart_black4.png'),
+  ordersRedActive: require('../assets/images/ic_orders2.png'),
+  ordersRedInActive: require('../assets/images/ic_orders1.png'),
+  accountRedActive: require('../assets/images/ic_account_red.png'),
+  accountRedInActive: require('../assets/images/ic_account3.png'),
+  search1: require('../assets/images/ic_search1.png'),
+  backArrow1: require('../assets/images/ic_back1.png'),
+  filter1: require('../assets/images/filter_ico.png'),
 };

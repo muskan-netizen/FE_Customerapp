@@ -81,4 +81,7 @@ export default {
   blue: '#1667c6',
   whiteSmokeColor: '#f5f5f5',
   redNew: '#FC3C31',
+  greyNew: '#EFEFEF',
+  yellowC: '#F7B500',
+  greenA: '#71C94B',
 };

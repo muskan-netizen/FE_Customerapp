@@ -5,6 +5,7 @@ import {View} from 'react-native-animatable';
 import {useSelector} from 'react-redux';
 import CustomBottomTabBar from '../Components/CustomBottomTabBar';
 import CustomBottomTabBar1 from '../Components/CustomBottomTabBar1';
+import CustomBottomTabBarFour from '../Components/CustomBottomTabBarFour';
 import CustomBottomTabBarThree from '../Components/CustomBottomTabBarThree';
 import CustomBottomTabBarTwo from '../Components/CustomBottomTabBarTwo';
 import imagePath from '../constants/imagePath';
@@ -87,13 +88,16 @@ export default function TabRoutes(props) {
                   appStyle?.tabBarLayout === 2 && {height: 20, width: 20},
                 ]}
                 source={
+                  // focused
+                  //   ? appStyle?.tabBarLayout === 2
+                  //     ? imagePath.brandsActive
+                  //     : imagePath.tabCActive
+                  //   : appStyle?.tabBarLayout === 2
+                  //   ? imagePath.brandInActive
+                  //   : imagePath.tabCInActive
                   focused
-                    ? appStyle?.tabBarLayout === 2
-                      ? imagePath.brandsActive
-                      : imagePath.tabCActive
-                    : appStyle?.tabBarLayout === 2
-                    ? imagePath.brandInActive
-                    : imagePath.tabCInActive
+                    ? imagePath.ordersRedActive
+                    : imagePath.ordersRedInActive
                 }
               />
             ),
@@ -116,7 +120,8 @@ export default function TabRoutes(props) {
               <CustomBottomTabBar {...props} />
             );
           case 2:
-            return <CustomBottomTabBarTwo {...props} />;
+            // return <CustomBottomTabBarTwo {...props} />;
+            return <CustomBottomTabBarFour {...props} />;
           case 3:
             return <CustomBottomTabBarThree {...props} />;
         }
@@ -145,17 +150,18 @@ export default function TabRoutes(props) {
                 appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
               ]}
               source={
-                appData?.profile?.code === shortCodes.capcorp
-                  ? focused
-                    ? imagePath.homeActive
-                    : imagePath.homeInActive
-                  : focused
-                  ? appStyle?.tabBarLayout === 2
-                    ? imagePath.home2Active
-                    : imagePath.tabAActive
-                  : appStyle?.tabBarLayout === 2
-                  ? imagePath.home2InActive
-                  : imagePath.tabAInActive
+                // appData?.profile?.code === shortCodes.capcorp
+                //   ? focused
+                //     ? imagePath.homeActive
+                //     : imagePath.homeInActive
+                //   : focused
+                //   ? appStyle?.tabBarLayout === 2
+                //     ? imagePath.home2Active
+                //     : imagePath.tabAActive
+                //   : appStyle?.tabBarLayout === 2
+                //   ? imagePath.home2InActive
+                //   : imagePath.tabAInActive
+                focused ? imagePath.homeRedActive : imagePath.homeRedInActive
               }
             />
           ),
@@ -182,17 +188,18 @@ export default function TabRoutes(props) {
                   appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
                 ]}
                 source={
-                  appData?.profile?.code === shortCodes.capcorp
-                    ? focused
-                      ? imagePath.ordersActive
-                      : imagePath.ordersInActive
-                    : focused
-                    ? appStyle?.tabBarLayout === 2
-                      ? imagePath.cart2Active
-                      : imagePath.cartActive
-                    : appStyle?.tabBarLayout === 2
-                    ? imagePath.cart2InActive
-                    : imagePath.cartInActive
+                  // appData?.profile?.code === shortCodes.capcorp
+                  //   ? focused
+                  //     ? imagePath.ordersActive
+                  //     : imagePath.ordersInActive
+                  //   : focused
+                  //   ? appStyle?.tabBarLayout === 2
+                  //     ? imagePath.cart2Active
+                  //     : imagePath.cartActive
+                  //   : appStyle?.tabBarLayout === 2
+                  //   ? imagePath.cart2InActive
+                  //   : imagePath.cartInActive
+                  focused ? imagePath.cartRedActive : imagePath.cartRedInActive
                 }
               />
             </View>
@@ -214,17 +221,20 @@ export default function TabRoutes(props) {
                 appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
               ]}
               source={
-                appData?.profile?.code === shortCodes.capcorp
-                  ? focused
-                    ? imagePath.profileActive
-                    : imagePath.profileInActive
-                  : focused
-                  ? appStyle?.tabBarLayout === 2
-                    ? imagePath.accountActive
-                    : imagePath.tabEActive
-                  : appStyle?.tabBarLayout === 2
-                  ? imagePath.accountInActive
-                  : imagePath.tabEInActive
+                // appData?.profile?.code === shortCodes.capcorp
+                //   ? focused
+                //     ? imagePath.profileActive
+                //     : imagePath.profileInActive
+                //   : focused
+                //   ? appStyle?.tabBarLayout === 2
+                //     ? imagePath.accountActive
+                //     : imagePath.tabEActive
+                //   : appStyle?.tabBarLayout === 2
+                //   ? imagePath.accountInActive
+                //   : imagePath.tabEInActive
+                focused
+                  ? imagePath.accountRedActive
+                  : imagePath.accountRedInActive
               }
             />
           ),

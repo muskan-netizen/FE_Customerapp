@@ -1,20 +1,22 @@
 import React, {useRef, useState} from 'react';
 import {
   FlatList,
+  Image,
+  Platform,
   RefreshControl,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Pagination} from 'react-native-snap-carousel';
 import {useSelector} from 'react-redux';
 import BannerHome2 from '../../../Components/BannerHome2';
-import EmptyListLoader from '../../../Components/EmptyListLoader';
-import HomeCategoryCard from '../../../Components/HomeCategoryCard';
-import CardLoader from '../../../Components/Loaders/CardLoader';
-import ProductLoader2 from '../../../Components/Loaders/ProductLoader2';
-import MarketCard2 from '../../../Components/MarketCard2';
+import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
+import MarketCard3 from '../../../Components/MarketCard3';
+import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
+import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import {
   itemWidth,
@@ -24,9 +26,7 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {getUserData} from '../../../utils/utils';
 import stylesFunc from '../styles';
-import ToggleTabBar from './ToggleTabBar';
 
 export default function DashBoardFive({
   handleRefresh = () => {},
@@ -37,6 +37,7 @@ export default function DashBoardFive({
   onPressCategory = () => {},
   selcetedToggle,
   toggleData,
+  navigation = {},
 }) {
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -58,167 +59,148 @@ export default function DashBoardFive({
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const _renderItem = ({item}) => (
-    <HomeCategoryCard data={item} onPress={() => onPressCategory(item)} />
+    <HomeCategoryCard2 data={item} onPress={() => onPressCategory(item)} />
   );
 
   const _renderVendors = ({item}) => (
-    <MarketCard2 data={item} onPress={() => onPressCategory(item)} />
+    <MarketCard3 data={item} onPress={() => onPressCategory(item)} />
   );
   const _changeVendorListStyle = () =>
     updateState({isVendorColumnList: !isVendorColumnList});
 
+  // console.log(appMainData, 'appMainData');
+
   return (
-    <ScrollView
-      refreshing={isRefreshing}
-      refreshControl={
-        <RefreshControl
-          refreshing={isRefreshing}
-          onRefresh={handleRefresh}
-          tintColor={themeColors.primary_color}
-        />
-      }
-      alwaysBounceVertical={true}
-      showsVerticalScrollIndicator={false}
-      style={{
-        flex: 1,
-        paddingHorizontal: moderateScale(15),
-      }}>
-      {isLoading && appData?.banners?.length ? (
-        <CardLoader
-          listSize={1}
-          cardWidth={sliderWidth}
-          height={180}
-          containerStyle={{marginHorizontal: moderateScale(10)}}
-        />
-      ) : null}
-      {!isLoading && appData?.banners?.length ? (
-        <>
-          <BannerHome2
-            bannerRef={bannerRef}
-            slider1ActiveSlide={slider1ActiveSlide}
-            bannerData={appData.banners}
-            sliderWidth={sliderWidth}
-            itemWidth={itemWidth}
-            onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
-            onPress={(item) => bannerPress(item)}
-          />
-          <View style={{height: moderateScaleVertical(5)}} />
-        </>
-      ) : null}
-
-      <ToggleTabBar toggleData={toggleData} selcetedToggle={selcetedToggle} />
-      {userData?.auth_token && (
-        <>
-          <Text style={styles.heyMsg}>
-            {strings.HEY_MSG} {userData.name},
+    <>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        style={{
+          flexDirection: 'row',
+          height: moderateScaleVertical(50),
+          backgroundColor: colors.greyNew,
+          borderRadius: moderateScale(15),
+          paddingHorizontal: moderateScale(15),
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginHorizontal: moderateScale(15),
+          marginVertical: moderateScale(13),
+        }}
+        onPress={() =>
+          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+        }>
+        <View style={{width: '90%'}}>
+          <Text style={{fontFamily: fontFamily.regular}}>
+            {strings.SEARCH_HERE}
           </Text>
-          <Text style={styles.greetingMsg}>{strings.GREETING_MSG}</Text>
-        </>
-      )}
-
-      {isLoading && (
-        <EmptyListLoader isLoading={isLoading} listSize={1} isRow />
-      )}
-      {isLoading && <ProductLoader2 isLoading={isLoading} isProductList />}
-
-      {!isLoading &&
-      appMainData &&
-      appMainData?.categories &&
-      appMainData?.categories.length ? (
-        <View
-          style={{
-            marginTop: moderateScaleVertical(10),
-          }}>
-          <FlatList
-            horizontal={true}
-            data={appMainData?.categories}
-            keyExtractor={(item) => item.id.toString()}
-            showsHorizontalScrollIndicator={false}
-            renderItem={_renderItem}
-            ItemSeparatorComponent={() => <View style={{width: 6}} />}
-          />
         </View>
-      ) : null}
-      <View style={{height: moderateScale(25)}} />
-      {appMainData?.vendors && appMainData?.vendors?.length ? (
-        <>
-          <Text style={styles.nearVendorTxt}>{strings.NEAR_VENDOR}</Text>
-        </>
-      ) : null}
-      {!isLoading && !isVendorColumnList && appMainData?.vendors?.length ? (
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            flexDirection: 'column',
-            marginLeft: moderateScale(2),
-          }}>
-          <View
-            style={{flexDirection: 'row', marginBottom: moderateScale(15)}}
-            horizontal={true}>
-            {appMainData?.vendors
-              ? appMainData?.vendors.map((itm, inx) => {
-                  if (inx < appMainData?.vendors.length / 2) {
-                    return (
-                      <MarketCard2
-                        key={inx}
-                        data={itm}
-                        onPress={() => onPressCategory(itm)}
-                        extraStyles={{
-                          width: width * 0.8,
-                          marginRight: moderateScale(20),
-                        }}
-                      />
-                    );
-                  }
-                })
-              : null}
+        <Image source={imagePath.search1} />
+      </TouchableOpacity>
+      <ScrollView
+        refreshing={isRefreshing}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+            tintColor={themeColors.primary_color}
+          />
+        }
+        alwaysBounceVertical={true}
+        showsVerticalScrollIndicator={false}
+        style={{
+          flex: 1,
+          paddingHorizontal: moderateScale(15),
+        }}>
+        {isLoading &&
+        appMainData &&
+        appMainData?.categories &&
+        appMainData?.categories.length ? (
+          <View style={{width: '100%'}}>
+            <Text
+              style={{
+                fontFamily: fontFamily.bold,
+                fontSize: textScale(16),
+                marginVertical: moderateScale(15),
+              }}>
+              {strings.SELECT_CATEGORY}
+            </Text>
+            <FlatList
+              numColumns={4}
+              data={appMainData?.categories}
+              keyExtractor={(item) => item.id.toString()}
+              showsHorizontalScrollIndicator={false}
+              renderItem={_renderItem}
+              ItemSeparatorComponent={() => (
+                <View style={{height: moderateScale(10)}} />
+              )}
+            />
           </View>
-          <View style={{flexDirection: 'row', marginTop: moderateScale(15)}}>
-            {!isLoading && appMainData?.vendors
-              ? appMainData?.vendors.map((itm, inx) => {
-                  if (inx >= appMainData?.vendors.length / 2) {
-                    return (
-                      <MarketCard2
-                        key={inx}
-                        data={itm}
-                        onPress={() => onPressCategory(itm)}
-                        extraStyles={{
-                          width: width * 0.8,
-                          marginRight: moderateScale(20),
-                        }}
-                      />
-                    );
-                  }
-                })
-              : null}
+        ) : null}
+
+        {isLoading && appData?.banners?.length ? (
+          <View style={{marginTop: moderateScale(20)}}>
+            <BannerHome2
+              bannerRef={bannerRef}
+              slider1ActiveSlide={slider1ActiveSlide}
+              bannerData={appData.banners}
+              sliderWidth={sliderWidth}
+              itemWidth={itemWidth}
+              onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
+              setActiveState={(index) =>
+                updateState({slider1ActiveSlide: index})
+              }
+              onPress={(item) => bannerPress(item)}
+              carouselViewStyle={{height: width * 0.33}}
+            />
+
+            <Pagination
+              dotsLength={appData.banners.length}
+              activeDotIndex={slider1ActiveSlide}
+              containerStyle={{
+                marginTop: -15,
+              }}
+              dotColor={themeColors.primary_color}
+              dotStyle={{
+                height: 6,
+                width: 18,
+                borderRadius: 12 / 2,
+                marginLeft: -8,
+              }}
+              inactiveDotColor={colors.greyLight}
+              inactiveDotOpacity={0.4}
+              inactiveDotScale={0.8}
+              inactiveDotStyle={{
+                height: 8,
+                width: 8,
+                borderRadius: 4,
+                marginLeft: -8,
+              }}
+            />
           </View>
-        </ScrollView>
-      ) : null}
+        ) : null}
 
-      {!isLoading && isVendorColumnList && appMainData?.vendors ? (
-        <FlatList
-          data={appMainData?.vendors || []}
-          showsVerticalScrollIndicator={false}
-          renderItem={_renderVendors}
-          ItemSeparatorComponent={() => (
-            <View style={{height: moderateScale(20)}} />
-          )}
-          keyExtractor={(item) => item.id.toString()}
-        />
-      ) : null}
-      {!isLoading && appMainData?.vendors?.length ? (
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={_changeVendorListStyle}
-          style={styles.applyPromoBtn}>
-          <Text style={styles.viewAllBtn}>
-            {!isVendorColumnList ? strings.VIEW_ALL_VENDORS : strings.CLOSE}
-          </Text>
-        </TouchableOpacity>
-      ) : null}
-
-      <View style={{height: moderateScaleVertical(70)}} />
-    </ScrollView>
+        {appMainData?.vendors && appMainData?.vendors?.length ? (
+          <View>
+            <Text
+              style={{
+                fontFamily: fontFamily.bold,
+                fontSize: textScale(16),
+                marginBottom: moderateScale(10),
+              }}>
+              {strings.EXPLORE_STORES}
+            </Text>
+            <FlatList
+              data={appMainData?.vendors}
+              keyExtractor={(item) => item.id.toString()}
+              showsHorizontalScrollIndicator={false}
+              renderItem={_renderVendors}
+              ItemSeparatorComponent={() => (
+                <View style={{height: moderateScale(10)}} />
+              )}
+            />
+          </View>
+        ) : null}
+        <View style={{height: Platform.OS === 'ios' ? 55 : 90}} />
+      </ScrollView>
+    </>
   );
 }
