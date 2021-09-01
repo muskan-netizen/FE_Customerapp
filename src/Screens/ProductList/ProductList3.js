@@ -1,40 +1,35 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep, debounce} from 'lodash';
 import React, {Fragment, useEffect, useState} from 'react';
-import {ImageBackground} from 'react-native';
 import {
   FlatList,
   Image,
+  ImageBackground,
   RefreshControl,
   ScrollView,
-  TouchableOpacity,
-  View,
   StatusBar,
   Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import EmptyListLoader from '../../Components/EmptyListLoader';
-import Header2 from '../../Components/Header2';
-import IconTextColumn from '../../Components/IconTextColumn';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import ProductLoader2 from '../../Components/Loaders/ProductLoader2';
-import ProductCard2 from '../../Components/ProductCard2';
-import WrapperContainer from '../../Components/WrapperContainer';
+import ProductCard3 from '../../Components/ProductCard3';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
-import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
+  textScale,
   width,
 } from '../../styles/responsiveSize';
 import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
 import stylesFunc from './styles';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
@@ -430,7 +425,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(pageNo, 'pageNO');
+        // console.log(pageNo, 'pageNO');
         console.log(res, 'res--getproducts');
         updateState({
           isLoading: false,
@@ -519,14 +514,17 @@ export default function Products({route, navigation}) {
   const renderProduct = ({item, index}) => {
     const {isSelectItem} = state;
     return (
-      <ProductCard2
+      <ProductCard3
         data={item}
+        index={index}
         onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
         onAddtoWishlist={() => _onAddtoWishlist(item)}
         addToCart={() => _addToCart(item)}
       />
     );
   };
+
+  console.log(productListData, 'productListDataproductListDataproductListData');
 
   const openModal = () => {
     updateState({isVisibleModal: true});
@@ -536,6 +534,7 @@ export default function Products({route, navigation}) {
   };
 
   const onPressChildCards = (item) => {
+    console.log(item, 'item upload');
     // updateState({selectedSbCategoryID: item.id});
     navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
   };
@@ -558,110 +557,43 @@ export default function Products({route, navigation}) {
               horizontal
               style={{
                 marginHorizontal: moderateScale(16),
-                marginTop: moderateScaleVertical(10),
+                marginTop: moderateScaleVertical(5),
               }}>
-              <IconTextColumn
-                isActive={selectedSbCategoryID == -1 ? true : false}
-                icon={imagePath.allProducts}
-                text={strings.ALLPRODUCT}
-                onPress={() => updateState({selectedSbCategoryID: -1})}
-              />
+              {/* <View><Image source={imagePath.}/></View> */}
               {categoryInfo.childs.map((item, inx) => {
                 return (
                   <View key={inx}>
-                    <IconTextColumn
-                      isActive={selectedSbCategoryID == item.id ? true : false}
-                      icon={{
-                        uri: getImageUrl(
-                          item.icon.proxy_url,
-                          item.icon.image_path,
-                          '200/200',
-                        ),
+                    <TouchableOpacity
+                      style={{
+                        padding: moderateScale(10),
+                        backgroundColor: colors.lightGreyBg,
+                        marginRight: moderateScale(10),
+                        borderRadius: moderateScale(12),
                       }}
-                      imageStyle={{height: 40, width: 40, borderRadius: 40 / 2}}
-                      // url={getImageUrl(item.icon.proxy_url, item.icon.image_path, '200/200') }
-                      onPress={() => onPressChildCards(item)}
-                      text={item?.translation[0]?.name}
-                    />
+                      onPress={() => onPressChildCards(item)}>
+                      <Text
+                        style={{
+                          color: colors.black,
+                          opacity: 0.61,
+                          fontSize: textScale(12),
+                          fontFamily: fontFamily.medium,
+                        }}>
+                        {item?.translation[0]?.name}
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 );
               })}
             </ScrollView>
           </View>
         ) : null}
-        <View
-          style={{
-            marginTop: 20,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginHorizontal: moderateScale(16),
-            alignItems: 'center',
-          }}>
-          {/* <Text style={{ ...commonStyles.futuraBtHeavyFont16 }}>
-      All Products
-    </Text> */}
-          <View style={{flex: 0.4}} />
-          <View
-            style={{
-              flex: 0.6,
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-            }}>
-            <TouchableOpacity
-              // onPress={() => navigation.navigate(navigationStrings.FILTER)}
-              onPress={moveToNewScreen(navigationStrings.FILTER, {
-                // brandData: brandData,
-                // filterData: filterData,
-                allFilters: allFilters,
-                minPrice: minimumPrice,
-                maxPrice: maximumPrice,
-                checkForMinimumPriceChange: checkForMinimumPriceChange,
-                checkForMaximumPriceChange: checkForMaximumPriceChange,
-                getProductBasedOnFilter: (
-                  minPrice,
-                  maxPrice,
-                  checkForMinimumPriceChange,
-                  checkForMaximumPriceChange,
-                  sortByIds,
-                  brandIds,
-                  variants,
-                  options,
-                  allSelectdFilters,
-                ) =>
-                  getProductBasedOnFilter(
-                    minPrice,
-                    maxPrice,
-                    checkForMinimumPriceChange,
-                    checkForMaximumPriceChange,
-                    sortByIds,
-                    brandIds,
-                    variants,
-                    options,
-                    allSelectdFilters,
-                  ),
-              })}>
-              <Image source={imagePath.slider} />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={moveToNewScreen(navigationStrings.SEARCHPRODUCTOVENDOR, {
-                type: data?.vendor
-                  ? staticStrings.VENDOR
-                  : staticStrings.CATEGORY,
-                id: data?.vendor ? data?.id : productListId?.id,
-              })}
-              style={{marginLeft: 10}}>
-              <Image source={imagePath.search} />
-            </TouchableOpacity>
-          </View>
-        </View>
         <View style={{marginTop: moderateScaleVertical(20)}} />
       </Fragment>
     );
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: '#fff'}}>
+    <View style={{backgroundColor: '#fff', flex: 1}}>
       <StatusBar
         translucent
         backgroundColor="transparent"
@@ -670,93 +602,134 @@ export default function Products({route, navigation}) {
 
       <View
         style={{
-          alignItems: 'center',
+          // alignItems: 'center',
           // height: Platform.OS === 'ios' ? height * 0.27 : height * 0.3,
           zIndex: Platform.OS === 'ios' ? 0 : -1000,
         }}>
-        <ImageBackground
-          source={{
-            uri: getImageUrl(
-              data?.categoryInfo?.image?.proxy_url,
-              data?.categoryInfo?.image?.image_path,
-              '1000/1000',
-            ),
-          }}
-          style={{
-            height: width * 0.6,
-            width: width,
-          }}
-          imageStyle={{
-            alignItems: 'center',
-            height: width * 0.6,
-            width: width,
-          }}>
-          <View style={styles.topHeaderView}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              background={colors.green}
-              onPress={() => navigation.goBack()}
-              style={styles.leftRightHeaderIconStyle}>
-              <Image source={imagePath.greyRoundBack} />
-            </TouchableOpacity>
+        <View style={{backgroundColor: colors.grey}}>
+          <ImageBackground
+            source={{
+              uri: getImageUrl(
+                data?.categoryInfo?.image?.proxy_url || data?.image?.proxy_url,
+                data?.categoryInfo?.image?.image_path ||
+                  data?.image?.image_path,
+                '500/500',
+              ),
+            }}
+            style={{
+              height: width * 0.5,
+              width: width,
+            }}
+            imageStyle={{
+              alignItems: 'center',
+              height: width * 0.5,
+              width: width,
+            }}>
+            <LinearGradient
+              style={{alignItems: 'center', height: width * 0.5, width: width}}
+              colors={['rgba(0,0,0,0.5)', 'rgba(0,0,0,0.5)']}>
+              <View style={styles.topHeaderView}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  background={colors.green}
+                  onPress={() => navigation.goBack()}
+                  style={styles.leftRightHeaderIconStyle}>
+                  <Image source={imagePath.greyRoundBack} />
+                </TouchableOpacity>
 
-            <View>
-              <Image
-                source={{
-                  uri: getImageUrl(
-                    data?.categoryInfo?.icon?.proxy_url,
-                    data?.categoryInfo?.icon?.image_path,
-                    '200/200',
-                  ),
-                }}
-                style={{height: 67, width: 67, borderRadius: 67 / 2}}
-              />
-            </View>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() =>
-                navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-              }
-              style={styles.leftRightHeaderIconStyle}>
-              <Image
-                source={
-                  !!data?.showAddToCart ? false : imagePath.greyRoundSearch
-                }
-              />
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.bottomHeaderView}>
-            <View style={{flex: 0.5}}>
-              <Text
-                style={{
-                  color: colors.black,
-                  fontSize: moderateScale(16),
-                  fontFamily: fontFamily.medium,
-                }}>
-                {'Foodies Hub'}
-              </Text>
-              <Text>{'0.2 km | 30 mins'}</Text>
-            </View>
-
-            <View style={{flex: 0.5, alignItems: 'flex-end'}}>
-              <View
-                style={{
-                  backgroundColor: colors.yellowB,
-                  padding: 5,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderTopLeftRadius: 5,
-                  borderBottomLeftRadius: 5,
-                }}>
-                <Image source={imagePath.star} style={{tintColor: 'white'}} />
-                <Text style={{color: colors.white}}>{'4.5'}</Text>
+                <View>
+                  <Image
+                    source={{
+                      uri: getImageUrl(
+                        data?.categoryInfo?.icon?.proxy_url ||
+                          data?.icon?.proxy_url,
+                        data?.categoryInfo?.icon?.image_path ||
+                          data?.icon?.image_path,
+                        '200/200',
+                      ),
+                    }}
+                    style={{height: 67, width: 67, borderRadius: 67 / 2}}
+                  />
+                </View>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() =>
+                    navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+                  }
+                  style={styles.leftRightHeaderIconStyle}>
+                  <Image
+                    source={
+                      !!data?.showAddToCart ? false : imagePath.greyRoundSearch
+                    }
+                  />
+                </TouchableOpacity>
+              </View>
+            </LinearGradient>
+            <View style={styles.bottomHeaderView}>
+              <View style={{flex: 0.5}}>
+                <Text
+                  style={{
+                    color: colors.black,
+                    fontSize: moderateScale(16),
+                    fontFamily: fontFamily.medium,
+                  }}>
+                  {data?.categoryInfo?.name || data?.name}
+                </Text>
+                <Text style={styles.distanceAndTimeView}>
+                  {'0.2 km | 30 mins'}
+                </Text>
               </View>
 
-              <Text>{'Open'}</Text>
+              <View style={{flex: 0.5, alignItems: 'flex-end'}}>
+                <View style={styles.rateViewStyle}>
+                  <Image
+                    source={imagePath.star}
+                    style={{tintColor: colors.white}}
+                  />
+                  <Text style={{color: colors.white}}>{'4.5'}</Text>
+                </View>
+                <Text style={styles.openCloseStatus}>{'Open'}</Text>
+              </View>
             </View>
-          </View>
-        </ImageBackground>
+          </ImageBackground>
+          {/* <View style={styles.overlay} /> */}
+        </View>
+
+        <View style={{height: moderateScaleVertical(50)}} />
+        <FlatList
+          data={(!isLoading && productListData) || []}
+          renderItem={renderProduct}
+          ListHeaderComponent={listHeaderComponent()}
+          keyExtractor={(item, index) => String(index)}
+          keyboardShouldPersistTaps="always"
+          showsVerticalScrollIndicator={false}
+          // style={{flex: 1}}
+          contentContainerStyle={{
+            flexGrow: 1,
+            // flex:1,
+            // backgroundColor:'red',
+            marginTop: width * 0.1,
+          }}
+          ItemSeparatorComponent={() => <View style={{height: 10}} />}
+          refreshing={isRefreshing}
+          getItemLayout={getItemLayout}
+          initialNumToRender={12}
+          maxToRenderPerBatch={10}
+          // windowSize={10}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              tintColor={themeColors.primary_color}
+            />
+          }
+          onEndReached={onEndReachedDelayed}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={() => (
+            <View style={{marginBottom: width / 1.3}} />
+          )}
+          ListEmptyComponent={<EmptyListLoader />}
+        />
       </View>
     </View>
   );

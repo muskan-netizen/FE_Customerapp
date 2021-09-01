@@ -43,7 +43,6 @@
 		569BE2A368AA48948F645526 /* libPods-SirVU.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B50715C6CD2C28B4E06B0CD /* libPods-SirVU.a */; };
 		58CD509BCDD7E7AC1C711265 /* libPods-Jet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6605B61E40F45263DE49BC /* libPods-Jet.a */; };
 		5E2BC5973EFE3BA4E3E6DCE8 /* libPods-GovaChow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146C128CBC991B6731ACB110 /* libPods-GovaChow.a */; };
-		657A0A0988EF9FBAFBBCF3D0 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		68B5A25D89B82C13CE1085B7 /* libPods-Spidbi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7B91CC363476F6C5AA9DD2 /* libPods-Spidbi.a */; };
 		693ABDA01D03BD9B0E1AE8B9 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		6B86E76152F2B9D92F0B0452 /* libPods-Specialhalal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17C6EFA7AE79730F61F88FB9 /* libPods-Specialhalal.a */; };
@@ -485,6 +484,207 @@
 		84534BCF267337590006EEB3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84534BCB267337580006EEB3 /* Images.xcassets */; };
 		84534BE926733A850006EEB3 /* Hmoobhub(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84534BE826733A850006EEB3 /* Hmoobhub(Production).xcconfig */; };
 		84534BF226733AA50006EEB3 /* Hmoobhub(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84534BF126733AA50006EEB3 /* Hmoobhub(Development).xcconfig */; };
+		8455CA3926DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA3A26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA3B26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA3C26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA3D26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA3E26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA3F26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA4026DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA4126DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA4226DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA4326DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA4426DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA4526DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA4626DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA4726DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA4826DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA4926DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA4A26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA4B26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA4C26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA4D26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA4E26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA4F26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA5026DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA5126DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA5226DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA5326DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA5426DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA5526DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA5626DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA5726DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA5826DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA5926DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA5A26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA5B26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA5C26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA5D26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA5E26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA5F26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA6026DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA6126DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA6226DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA6326DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA6426DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA6526DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA6626DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA6726DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA6826DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA6926DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA6A26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA6B26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA6C26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA6D26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA6E26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA6F26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA7026DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA7126DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA7226DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA7326DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA7426DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA7526DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA7626DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA7726DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA7826DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA7926DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA7A26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA7B26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		8455CA7C26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA7D26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA7E26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA7F26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA8026DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA8126DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA8226DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA8326DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA8426DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA8526DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA8626DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA8726DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA8826DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA8926DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA8A26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA8B26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA8C26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA8D26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA8E26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA8F26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA9026DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA9126DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA9226DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA9326DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA9426DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA9526DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA9626DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA9726DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA9826DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA9926DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA9A26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA9B26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA9C26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA9D26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA9E26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CA9F26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAA026DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAA126DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAA226DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAA326DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAA426DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAA526DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAA626DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAA726DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAA826DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAA926DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAAA26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAAB26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAAC26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAAD26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAAE26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAAF26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAB026DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAB126DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAB226DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAB326DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAB426DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAB526DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAB626DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAB726DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAB826DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CAB926DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CABA26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CABB26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CABC26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CABD26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CABE26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		8455CABF26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAC026DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAC126DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAC226DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAC326DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAC426DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAC526DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAC626DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAC726DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAC826DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAC926DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CACA26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CACB26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CACC26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CACD26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CACE26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CACF26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAD026DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAD126DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAD226DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAD326DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAD426DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAD526DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAD626DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAD726DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAD826DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAD926DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CADA26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CADB26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CADC26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CADD26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CADE26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CADF26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAE026DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAE126DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAE226DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAE326DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAE426DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAE526DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAE626DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAE726DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAE826DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAE926DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAEA26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAEB26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAEC26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAED26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAEE26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAEF26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAF026DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAF126DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAF226DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAF326DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAF426DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAF526DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAF626DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAF726DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAF826DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAF926DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAFA26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAFB26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAFC26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAFD26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAFE26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CAFF26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CB0026DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		8455CB0126DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
 		845AEAD3265504520075224A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		845AEAD5265504520075224A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		845AEADA265504520075224A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -1722,7 +1922,6 @@
 		EDFBB3F392BDCCB37D4DF400 /* libPods-Errand.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ECD5B3330E56545D71E24DE8 /* libPods-Errand.a */; };
 		EED3E1630053797C82B182AB /* libPods-Africanize.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B6F42ACD9E0F3F22CA3F40 /* libPods-Africanize.a */; };
 		EF5D1BE6EEB761946817CFB8 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
-		F03DDEB5872E13FAD41D8339 /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58DC4E9E12D85319579B90F0 /* libPods-RoyoOrder.a */; };
 		F03DDEB5872E13FAD41D8339 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		F8CB13A6B507E500CD1EC527 /* libPods-Glamsouq.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E7A52E9F003237A3F3EC693 /* libPods-Glamsouq.a */; };
 		FA237E2559CDAD50DDECD671 /* libPods-DestinationOps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CA14219228168C9B9FC266 /* libPods-DestinationOps.a */; };
@@ -1970,6 +2169,9 @@
 		84534BCB267337580006EEB3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84534BE826733A850006EEB3 /* Hmoobhub(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Hmoobhub(Production).xcconfig"; sourceTree = "<group>"; };
 		84534BF126733AA50006EEB3 /* Hmoobhub(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Hmoobhub(Development).xcconfig"; sourceTree = "<group>"; };
+		8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Eina02-Bold.ttf"; sourceTree = "<group>"; };
+		8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Eina02-SemiBold.ttf"; sourceTree = "<group>"; };
+		8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Eina02-Regular.ttf"; sourceTree = "<group>"; };
 		845AEAEF265504520075224A /* RoyoOrder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoyoOrder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8468004A26A831920076EBC5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8468FE8C26A82E960076EBC5 /* Spidbi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spidbi.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2665,7 +2867,6 @@
 				F03DDEB5872E13FAD41D8339 /* (null) in Frameworks */,
 				14F223EE5F1A0544245B3322 /* (null) in Frameworks */,
 				1C460C2099CBB24433268494 /* (null) in Frameworks */,
-				5EA53C664CF2D96134393B29 /* (null) in Frameworks */,
 				20EE00A76B224D1D1A738A2D /* (null) in Frameworks */,
 				15ED4E4B5AB4AAE729CBB737 /* libPods-RoyoOrder.a in Frameworks */,
 			);
@@ -3821,6 +4022,9 @@
 		844FDD0F267397EF00C16835 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */,
+				8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */,
+				8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */,
 				846DA78E2681E47100CC5BA2 /* Futura Hv BT.ttf */,
 				846DA7932681E47100CC5BA2 /* Futura-Book.ttf */,
 				846DA7902681E47100CC5BA2 /* Futura-Medium.ttf */,
@@ -6390,8 +6594,11 @@
 				846DA79D2681E47100CC5BA2 /* SFProText-Regular.ttf in Resources */,
 				846DA7A52681E47100CC5BA2 /* SFProText-SemiBold.ttf in Resources */,
 				846DA7B92681E47100CC5BA2 /* SFProText-Medium.ttf in Resources */,
+				8455CA3926DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84DD36D92653D9EF00E2097D /* Plists in Resources */,
+				8455CA7C26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 				844FDD232673989300C16835 /* CircularStd-Medium.otf in Resources */,
+				8455CABF26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				846DA7B12681E47100CC5BA2 /* Futura-Normal.ttf in Resources */,
 				846DA7B52681E47100CC5BA2 /* Futura-Book.ttf in Resources */,
 				844804C82653D04F0050AA67 /* Images.xcassets in Resources */,
@@ -6428,8 +6635,11 @@
 				76693A68269D9B87000F83B2 /* SFProText-Regular.ttf in Resources */,
 				76693A69269D9B87000F83B2 /* SFProText-SemiBold.ttf in Resources */,
 				76693A6A269D9B87000F83B2 /* SFProText-Medium.ttf in Resources */,
+				8455CA3D26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				76693AA8269D9EF4000F83B2 /* Images.xcassets in Resources */,
+				8455CA8026DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 				76693A6C269D9B87000F83B2 /* Plists in Resources */,
+				8455CAC326DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				76693A6D269D9B87000F83B2 /* Futura-Normal.ttf in Resources */,
 				76693A6E269D9B87000F83B2 /* Futura-Book.ttf in Resources */,
 				76693A6F269D9B87000F83B2 /* CircularStd-Medium.otf in Resources */,
@@ -6444,6 +6654,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAED26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				8412E15826CA27D2007B8D4F /* SFProDisplay-Regular.ttf in Resources */,
 				8412E15926CA27D2007B8D4F /* Futura-Medium.ttf in Resources */,
 				84DD314E26CA298700F02437 /* Jet(Production).xcconfig in Resources */,
@@ -6456,6 +6667,7 @@
 				84DD31B626CA29D700F02437 /* Images.xcassets in Resources */,
 				8412E15F26CA27D2007B8D4F /* SFProText-Medium.ttf in Resources */,
 				84DD31EA26CA2A0A00F02437 /* GoogleService-Info.plist in Resources */,
+				8455CA6726DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8412E16226CA27D2007B8D4F /* Plists in Resources */,
 				8412E16326CA27D2007B8D4F /* Futura-Normal.ttf in Resources */,
 				8412E16426CA27D2007B8D4F /* Futura-Book.ttf in Resources */,
@@ -6463,6 +6675,7 @@
 				8412E16626CA27D2007B8D4F /* FuturaBT-Heavy.ttf in Resources */,
 				8412E16726CA27D2007B8D4F /* CircularStd-Bold.ttf in Resources */,
 				8412E16A26CA27D2007B8D4F /* SFProText-Bold.ttf in Resources */,
+				8455CAAA26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6470,6 +6683,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAD426DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				8413658226BBE89200008438 /* Shariff(Production).xcconfig in Resources */,
 				8413659D26BBE9AC00008438 /* Images.xcassets in Resources */,
 				8413650026BBE43300008438 /* SFProDisplay-Regular.ttf in Resources */,
@@ -6482,6 +6696,7 @@
 				8413650626BBE43300008438 /* SFProText-SemiBold.ttf in Resources */,
 				8413650726BBE43300008438 /* SFProText-Medium.ttf in Resources */,
 				8413650926BBE43300008438 /* Plists in Resources */,
+				8455CA4E26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8413650A26BBE43300008438 /* Futura-Normal.ttf in Resources */,
 				8413650B26BBE43300008438 /* Futura-Book.ttf in Resources */,
 				8413650C26BBE43300008438 /* CircularStd-Medium.otf in Resources */,
@@ -6489,6 +6704,7 @@
 				8413650E26BBE43300008438 /* CircularStd-Bold.ttf in Resources */,
 				8413651026BBE43300008438 /* SFProText-Bold.ttf in Resources */,
 				8413660526BBEC3300008438 /* GoogleService-Info.plist in Resources */,
+				8455CA9126DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6496,6 +6712,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAD026DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				8415976B26B4169D00FF20F4 /* SFProDisplay-Regular.ttf in Resources */,
 				841597F426B416FB00FF20F4 /* Images.xcassets in Resources */,
 				8415976C26B4169D00FF20F4 /* Futura-Medium.ttf in Resources */,
@@ -6508,6 +6725,7 @@
 				8415977126B4169D00FF20F4 /* SFProText-SemiBold.ttf in Resources */,
 				8415977226B4169D00FF20F4 /* SFProText-Medium.ttf in Resources */,
 				8415977426B4169D00FF20F4 /* Plists in Resources */,
+				8455CA4A26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8415977526B4169D00FF20F4 /* Futura-Normal.ttf in Resources */,
 				8415977626B4169D00FF20F4 /* Futura-Book.ttf in Resources */,
 				8415977726B4169D00FF20F4 /* CircularStd-Medium.otf in Resources */,
@@ -6515,6 +6733,7 @@
 				8415977926B4169D00FF20F4 /* CircularStd-Bold.ttf in Resources */,
 				8415977B26B4169D00FF20F4 /* SFProText-Bold.ttf in Resources */,
 				8415980B26B417FA00FF20F4 /* GoogleService-Info.plist in Resources */,
+				8455CA8D26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6522,6 +6741,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAF526DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				8416E60926CD1FF600D9B686 /* SFProDisplay-Regular.ttf in Resources */,
 				8416E60A26CD1FF600D9B686 /* Futura-Medium.ttf in Resources */,
 				8416E60B26CD1FF600D9B686 /* LaunchScreen.storyboard in Resources */,
@@ -6534,6 +6754,7 @@
 				8416E61426CD1FF600D9B686 /* Futura-Normal.ttf in Resources */,
 				8416E7FD26CD24B300D9B686 /* GoogleService-Info.plist in Resources */,
 				8416E61526CD1FF600D9B686 /* Futura-Book.ttf in Resources */,
+				8455CA6F26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8416E61626CD1FF600D9B686 /* CircularStd-Medium.otf in Resources */,
 				8416E74926CD235600D9B686 /* Ridemate(Development).xcconfig in Resources */,
 				8416E61726CD1FF600D9B686 /* FuturaBT-Heavy.ttf in Resources */,
@@ -6541,6 +6762,7 @@
 				8416E78526CD238300D9B686 /* Ridemate(Production).xcconfig in Resources */,
 				8416E61826CD1FF600D9B686 /* CircularStd-Bold.ttf in Resources */,
 				8416E61B26CD1FF600D9B686 /* SFProText-Bold.ttf in Resources */,
+				8455CAB226DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6548,6 +6770,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAF626DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				8416EBAE26CD339500D9B686 /* SFProDisplay-Regular.ttf in Resources */,
 				8416EBAF26CD339500D9B686 /* Futura-Medium.ttf in Resources */,
 				8416EBB026CD339500D9B686 /* LaunchScreen.storyboard in Resources */,
@@ -6560,6 +6783,7 @@
 				8416ECB826CD34A900D9B686 /* Codiner(Development).xcconfig in Resources */,
 				8416EBB826CD339500D9B686 /* Plists in Resources */,
 				8416EBB926CD339500D9B686 /* Futura-Normal.ttf in Resources */,
+				8455CA7026DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8416EBBA26CD339500D9B686 /* Futura-Book.ttf in Resources */,
 				8416ED3226CD34E700D9B686 /* Images.xcassets in Resources */,
 				8416EBBB26CD339500D9B686 /* CircularStd-Medium.otf in Resources */,
@@ -6567,6 +6791,7 @@
 				8416EBBD26CD339500D9B686 /* CircularStd-Bold.ttf in Resources */,
 				8416ED6F26CD363100D9B686 /* GoogleService-Info.plist in Resources */,
 				8416EBC026CD339500D9B686 /* SFProText-Bold.ttf in Resources */,
+				8455CAB326DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6574,6 +6799,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CACA26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84243BA426AE9349000754C2 /* SFProDisplay-Regular.ttf in Resources */,
 				84243C3D26AE9410000754C2 /* Images.xcassets in Resources */,
 				84243BA526AE9349000754C2 /* Futura-Medium.ttf in Resources */,
@@ -6586,6 +6812,7 @@
 				84243BAD26AE9349000754C2 /* Plists in Resources */,
 				84243C0C26AE93BD000754C2 /* BLIP(Production).xcconfig in Resources */,
 				84243BAE26AE9349000754C2 /* Futura-Normal.ttf in Resources */,
+				8455CA4426DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84243BAF26AE9349000754C2 /* Futura-Book.ttf in Resources */,
 				84243BB026AE9349000754C2 /* CircularStd-Medium.otf in Resources */,
 				84243BB126AE9349000754C2 /* FuturaBT-Heavy.ttf in Resources */,
@@ -6593,6 +6820,7 @@
 				84243BB426AE9349000754C2 /* SFProText-Bold.ttf in Resources */,
 				84243BDD26AE9387000754C2 /* BLIP(Development).xcconfig in Resources */,
 				84243C4E26AE9435000754C2 /* GoogleService-Info.plist in Resources */,
+				8455CA8726DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6600,6 +6828,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAF126DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84348D2A26CCC9D200DB8C18 /* SFProDisplay-Regular.ttf in Resources */,
 				84348D2B26CCC9D200DB8C18 /* Futura-Medium.ttf in Resources */,
 				84348D2C26CCC9D200DB8C18 /* LaunchScreen.storyboard in Resources */,
@@ -6612,6 +6841,7 @@
 				84348EFC26CCCBBD00DB8C18 /* Images.xcassets in Resources */,
 				84348D3126CCC9D200DB8C18 /* SFProText-Medium.ttf in Resources */,
 				84348F3426CCCC7F00DB8C18 /* GoogleService-Info.plist in Resources */,
+				8455CA6B26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84348D3426CCC9D200DB8C18 /* Plists in Resources */,
 				84348D3526CCC9D200DB8C18 /* Futura-Normal.ttf in Resources */,
 				84348D3626CCC9D200DB8C18 /* Futura-Book.ttf in Resources */,
@@ -6619,6 +6849,7 @@
 				84348D3826CCC9D200DB8C18 /* FuturaBT-Heavy.ttf in Resources */,
 				84348D3926CCC9D200DB8C18 /* CircularStd-Bold.ttf in Resources */,
 				84348D3C26CCC9D200DB8C18 /* SFProText-Bold.ttf in Resources */,
+				8455CAAE26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6626,6 +6857,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAF226DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				8434920726CCDA3900DB8C18 /* SFProDisplay-Regular.ttf in Resources */,
 				8434920826CCDA3900DB8C18 /* Futura-Medium.ttf in Resources */,
 				8434920926CCDA3900DB8C18 /* LaunchScreen.storyboard in Resources */,
@@ -6638,6 +6870,7 @@
 				843493E126CCDD8F00DB8C18 /* Images.xcassets in Resources */,
 				843493A826CCDD7300DB8C18 /* Ublue(Production).xcconfig in Resources */,
 				8434941A26CCDF3000DB8C18 /* GoogleService-Info.plist in Resources */,
+				8455CA6C26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8434921226CCDA3900DB8C18 /* Futura-Normal.ttf in Resources */,
 				8434921326CCDA3900DB8C18 /* Futura-Book.ttf in Resources */,
 				8434933826CCDD4D00DB8C18 /* Ublue(Development).xcconfig in Resources */,
@@ -6645,6 +6878,7 @@
 				8434921526CCDA3900DB8C18 /* FuturaBT-Heavy.ttf in Resources */,
 				8434921626CCDA3900DB8C18 /* CircularStd-Bold.ttf in Resources */,
 				8434921926CCDA3900DB8C18 /* SFProText-Bold.ttf in Resources */,
+				8455CAAF26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6652,6 +6886,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAF326DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				8434973026CCEB5000DB8C18 /* SFProDisplay-Regular.ttf in Resources */,
 				8434973126CCEB5000DB8C18 /* Futura-Medium.ttf in Resources */,
 				8434973226CCEB5000DB8C18 /* LaunchScreen.storyboard in Resources */,
@@ -6664,6 +6899,7 @@
 				843498DA26CCECDD00DB8C18 /* Images.xcassets in Resources */,
 				8434973A26CCEB5000DB8C18 /* Plists in Resources */,
 				8434991426CCED8300DB8C18 /* GoogleService-Info.plist in Resources */,
+				8455CA6D26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8434973B26CCEB5000DB8C18 /* Futura-Normal.ttf in Resources */,
 				8434973C26CCEB5000DB8C18 /* Futura-Book.ttf in Resources */,
 				8434973D26CCEB5000DB8C18 /* CircularStd-Medium.otf in Resources */,
@@ -6671,6 +6907,7 @@
 				8434986626CCEC7C00DB8C18 /* MsTechy(Development).xcconfig in Resources */,
 				8434973F26CCEB5000DB8C18 /* CircularStd-Bold.ttf in Resources */,
 				8434974226CCEB5000DB8C18 /* SFProText-Bold.ttf in Resources */,
+				8455CAB026DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6678,6 +6915,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAF426DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84349BC726CD057C00DB8C18 /* SFProDisplay-Regular.ttf in Resources */,
 				84349BC826CD057C00DB8C18 /* Futura-Medium.ttf in Resources */,
 				84349BC926CD057C00DB8C18 /* LaunchScreen.storyboard in Resources */,
@@ -6690,6 +6928,7 @@
 				84349D0626CD078800DB8C18 /* Images.xcassets in Resources */,
 				84349BCE26CD057C00DB8C18 /* SFProText-Medium.ttf in Resources */,
 				84349D4126CD09E800DB8C18 /* GoogleService-Info.plist in Resources */,
+				8455CA6E26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84349BD126CD057C00DB8C18 /* Plists in Resources */,
 				84349BD226CD057C00DB8C18 /* Futura-Normal.ttf in Resources */,
 				84349BD326CD057C00DB8C18 /* Futura-Book.ttf in Resources */,
@@ -6697,6 +6936,7 @@
 				84349BD526CD057C00DB8C18 /* FuturaBT-Heavy.ttf in Resources */,
 				84349BD626CD057C00DB8C18 /* CircularStd-Bold.ttf in Resources */,
 				84349BD926CD057C00DB8C18 /* SFProText-Bold.ttf in Resources */,
+				8455CAB126DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6704,6 +6944,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAFB26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				843BA51926D63B1A0033721D /* SFProDisplay-Regular.ttf in Resources */,
 				843BA51A26D63B1A0033721D /* Futura-Medium.ttf in Resources */,
 				843BA51B26D63B1A0033721D /* LaunchScreen.storyboard in Resources */,
@@ -6716,6 +6957,7 @@
 				84FFEFC026D63DF800F2B059 /* Images.xcassets in Resources */,
 				843BA52326D63B1A0033721D /* Plists in Resources */,
 				84FFF00226D63F7D00F2B059 /* GoogleService-Info.plist in Resources */,
+				8455CA7526DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				843BA52426D63B1A0033721D /* Futura-Normal.ttf in Resources */,
 				843BA52526D63B1A0033721D /* Futura-Book.ttf in Resources */,
 				843BA52626D63B1A0033721D /* CircularStd-Medium.otf in Resources */,
@@ -6723,6 +6965,7 @@
 				843BA52726D63B1A0033721D /* FuturaBT-Heavy.ttf in Resources */,
 				843BA52826D63B1A0033721D /* CircularStd-Bold.ttf in Resources */,
 				843BA52B26D63B1A0033721D /* SFProText-Bold.ttf in Resources */,
+				8455CAB826DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6730,6 +6973,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAD226DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				843DF07626BA9A52008210BD /* BustanFakieh(Development).xcconfig in Resources */,
 				843DF02C26BA99A3008210BD /* SFProDisplay-Regular.ttf in Resources */,
 				843DF02D26BA99A3008210BD /* Futura-Medium.ttf in Resources */,
@@ -6742,6 +6986,7 @@
 				843DF03526BA99A3008210BD /* Plists in Resources */,
 				843DF03626BA99A3008210BD /* Futura-Normal.ttf in Resources */,
 				843DF03726BA99A3008210BD /* Futura-Book.ttf in Resources */,
+				8455CA4C26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				843DF03826BA99A3008210BD /* CircularStd-Medium.otf in Resources */,
 				843DF03926BA99A3008210BD /* FuturaBT-Heavy.ttf in Resources */,
 				843DF0D626BA9C56008210BD /* Images.xcassets in Resources */,
@@ -6749,6 +6994,7 @@
 				843DF0EF26BA9F02008210BD /* GoogleService-Info.plist in Resources */,
 				843DF03A26BA99A3008210BD /* CircularStd-Bold.ttf in Resources */,
 				843DF03C26BA99A3008210BD /* SFProText-Bold.ttf in Resources */,
+				8455CA8F26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6764,8 +7010,11 @@
 				846DA79F2681E47100CC5BA2 /* SFProText-Regular.ttf in Resources */,
 				846DA7A72681E47100CC5BA2 /* SFProText-SemiBold.ttf in Resources */,
 				846DA7BB2681E47100CC5BA2 /* SFProText-Medium.ttf in Resources */,
+				8455CA3B26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8442CA2A265D1C7900EDB001 /* Images.xcassets in Resources */,
+				8455CA7E26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 				8442C9FD265D1A7A00EDB001 /* Plists in Resources */,
+				8455CAC126DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				846DA7B32681E47100CC5BA2 /* Futura-Normal.ttf in Resources */,
 				846DA7B72681E47100CC5BA2 /* Futura-Book.ttf in Resources */,
 				844FDD252673989300C16835 /* CircularStd-Medium.otf in Resources */,
@@ -6780,6 +7029,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CB0126DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				8449625726DD0567001401BF /* SFProDisplay-Regular.ttf in Resources */,
 				8449625826DD0567001401BF /* Futura-Medium.ttf in Resources */,
 				8449625926DD0567001401BF /* LaunchScreen.storyboard in Resources */,
@@ -6792,6 +7042,7 @@
 				8449639126DD0745001401BF /* Images.xcassets in Resources */,
 				8449626126DD0567001401BF /* Plists in Resources */,
 				844963D926DD07E2001401BF /* GoogleService-Info.plist in Resources */,
+				8455CA7B26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8449626226DD0567001401BF /* Futura-Normal.ttf in Resources */,
 				8449626326DD0567001401BF /* Futura-Book.ttf in Resources */,
 				8449634726DD06FE001401BF /* Errand(Development).xcconfig in Resources */,
@@ -6799,6 +7050,7 @@
 				8449626526DD0567001401BF /* FuturaBT-Heavy.ttf in Resources */,
 				8449626626DD0567001401BF /* CircularStd-Bold.ttf in Resources */,
 				8449626926DD0567001401BF /* SFProText-Bold.ttf in Resources */,
+				8455CABE26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6806,6 +7058,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAF026DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				844F281226CBC42100A7708F /* SFProDisplay-Regular.ttf in Resources */,
 				844F28CF26CBC57C00A7708F /* Markita(Development).xcconfig in Resources */,
 				844F281326CBC42100A7708F /* Futura-Medium.ttf in Resources */,
@@ -6818,6 +7071,7 @@
 				844F281C26CBC42100A7708F /* Plists in Resources */,
 				844F281D26CBC42100A7708F /* Futura-Normal.ttf in Resources */,
 				844F2A1326CBC65300A7708F /* GoogleService-Info.plist in Resources */,
+				8455CA6A26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				844F293B26CBC59E00A7708F /* Markita(Production).xcconfig in Resources */,
 				844F281E26CBC42100A7708F /* Futura-Book.ttf in Resources */,
 				844F297226CBC5BF00A7708F /* Images.xcassets in Resources */,
@@ -6825,6 +7079,7 @@
 				844F282026CBC42100A7708F /* FuturaBT-Heavy.ttf in Resources */,
 				844F282126CBC42100A7708F /* CircularStd-Bold.ttf in Resources */,
 				844F282426CBC42100A7708F /* SFProText-Bold.ttf in Resources */,
+				8455CAAD26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6832,6 +7087,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAC226DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84534BA72673363C0006EEB3 /* LaunchScreen.storyboard in Resources */,
 				84534BF226733AA50006EEB3 /* Hmoobhub(Development).xcconfig in Resources */,
 				846DA7B82681E47100CC5BA2 /* Futura-Book.ttf in Resources */,
@@ -6844,6 +7100,7 @@
 				846DA7BC2681E47100CC5BA2 /* SFProText-Medium.ttf in Resources */,
 				846DA7A02681E47100CC5BA2 /* SFProText-Regular.ttf in Resources */,
 				84534BCF267337590006EEB3 /* Images.xcassets in Resources */,
+				8455CA3C26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84534BE926733A850006EEB3 /* Hmoobhub(Production).xcconfig in Resources */,
 				84468BF526734BFC00AEA0F1 /* GoogleService-Info.plist in Resources */,
 				846DA7B42681E47100CC5BA2 /* Futura-Normal.ttf in Resources */,
@@ -6851,6 +7108,7 @@
 				844FDD2A2673989300C16835 /* CircularStd-Book.otf in Resources */,
 				846DA7A42681E47100CC5BA2 /* Futura Hv BT.ttf in Resources */,
 				844FDD222673989300C16835 /* CircularStd-Bold.ttf in Resources */,
+				8455CA7F26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6858,6 +7116,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAC026DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				846DA79A2681E47100CC5BA2 /* SFProDisplay-Regular.ttf in Resources */,
 				846DA7AA2681E47100CC5BA2 /* Futura-Medium.ttf in Resources */,
 				845AEADA265504520075224A /* LaunchScreen.storyboard in Resources */,
@@ -6870,6 +7129,7 @@
 				84E1765426C6523200E71F11 /* RoyoOrder(Production).xcconfig in Resources */,
 				845AEADE265504520075224A /* Plists in Resources */,
 				846DA7B22681E47100CC5BA2 /* Futura-Normal.ttf in Resources */,
+				8455CA3A26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846DA7B62681E47100CC5BA2 /* Futura-Book.ttf in Resources */,
 				844FDD242673989300C16835 /* CircularStd-Medium.otf in Resources */,
 				846DA7962681E47100CC5BA2 /* FuturaBT-Heavy.ttf in Resources */,
@@ -6877,6 +7137,7 @@
 				84E1762626C6522C00E71F11 /* RoyoOrder(Development).xcconfig in Resources */,
 				767C68672655484700AA80AD /* GoogleService-Info.plist in Resources */,
 				846DA7AE2681E47100CC5BA2 /* SFProText-Bold.ttf in Resources */,
+				8455CA7D26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6884,6 +7145,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAC826DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				8468FE7526A82E960076EBC5 /* SFProDisplay-Regular.ttf in Resources */,
 				8468FF5426A82EFE0076EBC5 /* Images.xcassets in Resources */,
 				8468FE7626A82E960076EBC5 /* Futura-Medium.ttf in Resources */,
@@ -6896,6 +7158,7 @@
 				8468FE7E26A82E960076EBC5 /* Plists in Resources */,
 				8468FE7F26A82E960076EBC5 /* Futura-Normal.ttf in Resources */,
 				8468004B26A831920076EBC5 /* GoogleService-Info.plist in Resources */,
+				8455CA4226DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8468FE8026A82E960076EBC5 /* Futura-Book.ttf in Resources */,
 				8468FE8126A82E960076EBC5 /* CircularStd-Medium.otf in Resources */,
 				8468FE8226A82E960076EBC5 /* FuturaBT-Heavy.ttf in Resources */,
@@ -6903,6 +7166,7 @@
 				8468FE8326A82E960076EBC5 /* CircularStd-Bold.ttf in Resources */,
 				8468FE8526A82E960076EBC5 /* SFProText-Bold.ttf in Resources */,
 				8468FF4526A82EEE0076EBC5 /* Spidbi(Production).xcconfig in Resources */,
+				8455CA8526DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6910,6 +7174,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CACF26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				846C57F626B403AB00C646F6 /* SFProDisplay-Regular.ttf in Resources */,
 				846C585226B4043900C646F6 /* Images.xcassets in Resources */,
 				846C57F726B403AB00C646F6 /* Futura-Medium.ttf in Resources */,
@@ -6922,6 +7187,7 @@
 				846C57FD26B403AB00C646F6 /* SFProText-Medium.ttf in Resources */,
 				846C57FF26B403AB00C646F6 /* Plists in Resources */,
 				846C580026B403AB00C646F6 /* Futura-Normal.ttf in Resources */,
+				8455CA4926DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846C580126B403AB00C646F6 /* Futura-Book.ttf in Resources */,
 				846C580226B403AB00C646F6 /* CircularStd-Medium.otf in Resources */,
 				846C580326B403AB00C646F6 /* FuturaBT-Heavy.ttf in Resources */,
@@ -6929,6 +7195,7 @@
 				846C580626B403AB00C646F6 /* SFProText-Bold.ttf in Resources */,
 				846C582626B4040E00C646F6 /* AfricanVillageMarket(Development).xcconfig in Resources */,
 				846C586826B4048600C646F6 /* GoogleService-Info.plist in Resources */,
+				8455CA8C26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6936,6 +7203,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAE926DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				846E6CF626C66EC300C7A2C5 /* SFProDisplay-Regular.ttf in Resources */,
 				846E6CF726C66EC300C7A2C5 /* Futura-Medium.ttf in Resources */,
 				846E6CF826C66EC300C7A2C5 /* LaunchScreen.storyboard in Resources */,
@@ -6948,6 +7216,7 @@
 				846E6D0126C66EC300C7A2C5 /* Futura-Normal.ttf in Resources */,
 				846E6DFA26C66F8C00C7A2C5 /* Yahu(Development).xcconfig in Resources */,
 				846E6EB926C6702400C7A2C5 /* GoogleService-Info.plist in Resources */,
+				8455CA6326DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846E6D0226C66EC300C7A2C5 /* Futura-Book.ttf in Resources */,
 				846E6D0326C66EC300C7A2C5 /* CircularStd-Medium.otf in Resources */,
 				846E6E5A26C66FCA00C7A2C5 /* Images.xcassets in Resources */,
@@ -6955,6 +7224,7 @@
 				846E6D0526C66EC300C7A2C5 /* CircularStd-Bold.ttf in Resources */,
 				846E6D0826C66EC300C7A2C5 /* SFProText-Bold.ttf in Resources */,
 				846E6E2A26C66FB000C7A2C5 /* Yahu(Production).xcconfig in Resources */,
+				8455CAA626DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6962,6 +7232,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAEA26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				846E710226C67AD200C7A2C5 /* SFProDisplay-Regular.ttf in Resources */,
 				846E710326C67AD200C7A2C5 /* Futura-Medium.ttf in Resources */,
 				846E710426C67AD200C7A2C5 /* LaunchScreen.storyboard in Resources */,
@@ -6974,6 +7245,7 @@
 				846E710C26C67AD200C7A2C5 /* Plists in Resources */,
 				846E710D26C67AD200C7A2C5 /* Futura-Normal.ttf in Resources */,
 				846E710E26C67AD200C7A2C5 /* Futura-Book.ttf in Resources */,
+				8455CA6426DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846E710F26C67AD200C7A2C5 /* CircularStd-Medium.otf in Resources */,
 				846E723E26C67C2900C7A2C5 /* Images.xcassets in Resources */,
 				846E71AD26C67BE500C7A2C5 /* ZuzuClean(Production).xcconfig in Resources */,
@@ -6981,6 +7253,7 @@
 				846E711126C67AD200C7A2C5 /* CircularStd-Bold.ttf in Resources */,
 				846E726F26C67C5200C7A2C5 /* GoogleService-Info.plist in Resources */,
 				846E711426C67AD200C7A2C5 /* SFProText-Bold.ttf in Resources */,
+				8455CAA726DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6988,6 +7261,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAEB26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				846E771F26C68AE900C7A2C5 /* TowTrek(Development).xcconfig in Resources */,
 				846E761126C689C600C7A2C5 /* SFProDisplay-Regular.ttf in Resources */,
 				846E761226C689C600C7A2C5 /* Futura-Medium.ttf in Resources */,
@@ -7000,6 +7274,7 @@
 				846E77B326C68B2700C7A2C5 /* Images.xcassets in Resources */,
 				846E761B26C689C600C7A2C5 /* Plists in Resources */,
 				846E778126C68B1000C7A2C5 /* TowTrek(Production).xcconfig in Resources */,
+				8455CA6526DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846E761C26C689C600C7A2C5 /* Futura-Normal.ttf in Resources */,
 				846E761D26C689C600C7A2C5 /* Futura-Book.ttf in Resources */,
 				846E761E26C689C600C7A2C5 /* CircularStd-Medium.otf in Resources */,
@@ -7007,6 +7282,7 @@
 				849A371426D7C48600A1D9AA /* GoogleService-Info.plist in Resources */,
 				846E762026C689C600C7A2C5 /* CircularStd-Bold.ttf in Resources */,
 				846E762326C689C600C7A2C5 /* SFProText-Bold.ttf in Resources */,
+				8455CAA826DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7014,6 +7290,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAEC26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				846E7A4326C6943B00C7A2C5 /* SFProDisplay-Regular.ttf in Resources */,
 				846E7A4426C6943B00C7A2C5 /* Futura-Medium.ttf in Resources */,
 				846E7A4526C6943B00C7A2C5 /* LaunchScreen.storyboard in Resources */,
@@ -7026,6 +7303,7 @@
 				846E7BBC26C695F200C7A2C5 /* Images.xcassets in Resources */,
 				846E7A4D26C6943B00C7A2C5 /* Plists in Resources */,
 				846E7BEF26C6967500C7A2C5 /* GoogleService-Info.plist in Resources */,
+				8455CA6626DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846E7B2526C695A700C7A2C5 /* ArenaGrub(Development).xcconfig in Resources */,
 				846E7A4E26C6943B00C7A2C5 /* Futura-Normal.ttf in Resources */,
 				846E7A4F26C6943B00C7A2C5 /* Futura-Book.ttf in Resources */,
@@ -7033,6 +7311,7 @@
 				846E7A5126C6943B00C7A2C5 /* FuturaBT-Heavy.ttf in Resources */,
 				846E7A5226C6943B00C7A2C5 /* CircularStd-Bold.ttf in Resources */,
 				846E7A5526C6943B00C7A2C5 /* SFProText-Bold.ttf in Resources */,
+				8455CAA926DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7040,6 +7319,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAC926DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				846EA80426A939B6000073CE /* SFProDisplay-Regular.ttf in Resources */,
 				846EA87826A93B79000073CE /* Images.xcassets in Resources */,
 				846EA85A26A93B05000073CE /* UFood(Production).xcconfig in Resources */,
@@ -7052,6 +7332,7 @@
 				846EA80A26A939B6000073CE /* SFProText-SemiBold.ttf in Resources */,
 				846EA80B26A939B6000073CE /* SFProText-Medium.ttf in Resources */,
 				846EA97B26A9414A000073CE /* GoogleService-Info.plist in Resources */,
+				8455CA4326DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846EA80D26A939B6000073CE /* Plists in Resources */,
 				846EA80E26A939B6000073CE /* Futura-Normal.ttf in Resources */,
 				846EA80F26A939B6000073CE /* Futura-Book.ttf in Resources */,
@@ -7059,6 +7340,7 @@
 				846EA81126A939B6000073CE /* FuturaBT-Heavy.ttf in Resources */,
 				846EA81226A939B6000073CE /* CircularStd-Bold.ttf in Resources */,
 				846EA81426A939B6000073CE /* SFProText-Bold.ttf in Resources */,
+				8455CA8626DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7066,6 +7348,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAF826DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				846EB0F926CE39CD004CA92B /* SFProDisplay-Regular.ttf in Resources */,
 				846EB0FA26CE39CD004CA92B /* Futura-Medium.ttf in Resources */,
 				846EB0FB26CE39CD004CA92B /* LaunchScreen.storyboard in Resources */,
@@ -7078,6 +7361,7 @@
 				846EB2C626CE3AE5004CA92B /* Images.xcassets in Resources */,
 				846EB10426CE39CD004CA92B /* Futura-Normal.ttf in Resources */,
 				846EB30526CE3B69004CA92B /* GoogleService-Info.plist in Resources */,
+				8455CA7226DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846EB24826CE3AA6004CA92B /* HairstonExpress(Development).xcconfig in Resources */,
 				846EB10526CE39CD004CA92B /* Futura-Book.ttf in Resources */,
 				846EB10626CE39CD004CA92B /* CircularStd-Medium.otf in Resources */,
@@ -7085,6 +7369,7 @@
 				846EB28726CE3ACC004CA92B /* HairstonExpress(Production).xcconfig in Resources */,
 				846EB10826CE39CD004CA92B /* CircularStd-Bold.ttf in Resources */,
 				846EB10B26CE39CD004CA92B /* SFProText-Bold.ttf in Resources */,
+				8455CAB526DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7092,6 +7377,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAF926DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				846EB57326CE5143004CA92B /* SFProDisplay-Regular.ttf in Resources */,
 				846EB57426CE5143004CA92B /* Futura-Medium.ttf in Resources */,
 				846EB57526CE5143004CA92B /* LaunchScreen.storyboard in Resources */,
@@ -7104,6 +7390,7 @@
 				846EB57E26CE5143004CA92B /* Futura-Normal.ttf in Resources */,
 				846EB70526CE5253004CA92B /* DiamondDashers(Development).xcconfig in Resources */,
 				846EB74526CE5278004CA92B /* DiamondDashers(Production).xcconfig in Resources */,
+				8455CA7326DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846EB57F26CE5143004CA92B /* Futura-Book.ttf in Resources */,
 				846EB58026CE5143004CA92B /* CircularStd-Medium.otf in Resources */,
 				846EB78526CE528E004CA92B /* Images.xcassets in Resources */,
@@ -7111,6 +7398,7 @@
 				846EB7C526CE5395004CA92B /* GoogleService-Info.plist in Resources */,
 				846EB58226CE5143004CA92B /* CircularStd-Bold.ttf in Resources */,
 				846EB58526CE5143004CA92B /* SFProText-Bold.ttf in Resources */,
+				8455CAB626DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7118,6 +7406,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAFA26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				846EBAB826CE67AF004CA92B /* SFProDisplay-Regular.ttf in Resources */,
 				846EBAB926CE67AF004CA92B /* Futura-Medium.ttf in Resources */,
 				846EBABA26CE67AF004CA92B /* LaunchScreen.storyboard in Resources */,
@@ -7130,6 +7419,7 @@
 				846EBC9326CE68AD004CA92B /* Images.xcassets in Resources */,
 				846EBAC326CE67AF004CA92B /* Futura-Normal.ttf in Resources */,
 				846EBCD426CE6960004CA92B /* GoogleService-Info.plist in Resources */,
+				8455CA7426DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846EBAC426CE67AF004CA92B /* Futura-Book.ttf in Resources */,
 				846EBBD226CE686C004CA92B /* DestinationOps(Development).xcconfig in Resources */,
 				846EBAC526CE67AF004CA92B /* CircularStd-Medium.otf in Resources */,
@@ -7137,6 +7427,7 @@
 				846EBAC726CE67AF004CA92B /* CircularStd-Bold.ttf in Resources */,
 				846EBACA26CE67AF004CA92B /* SFProText-Bold.ttf in Resources */,
 				846EBC5226CE688F004CA92B /* DestinationOps(Production).xcconfig in Resources */,
+				8455CAB726DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7144,6 +7435,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CACB26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				846ECC0C26AFD59000EED0B4 /* SFProDisplay-Regular.ttf in Resources */,
 				846ECC9C26AFD60B00EED0B4 /* Images.xcassets in Resources */,
 				846ECC6726AFD5CC00EED0B4 /* HelpNowRightNow(Development).xcconfig in Resources */,
@@ -7156,6 +7448,7 @@
 				846ECC1226AFD59000EED0B4 /* SFProText-SemiBold.ttf in Resources */,
 				846ECC1326AFD59000EED0B4 /* SFProText-Medium.ttf in Resources */,
 				846ECC1526AFD59000EED0B4 /* Plists in Resources */,
+				8455CA4526DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846ECC1626AFD59000EED0B4 /* Futura-Normal.ttf in Resources */,
 				846ECC1726AFD59000EED0B4 /* Futura-Book.ttf in Resources */,
 				846ECC1826AFD59000EED0B4 /* CircularStd-Medium.otf in Resources */,
@@ -7163,6 +7456,7 @@
 				846ECCBE26AFD69600EED0B4 /* GoogleService-Info.plist in Resources */,
 				846ECC1A26AFD59000EED0B4 /* CircularStd-Bold.ttf in Resources */,
 				846ECC1C26AFD59000EED0B4 /* SFProText-Bold.ttf in Resources */,
+				8455CA8826DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7170,6 +7464,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CACC26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				846ECE1526B000B600EED0B4 /* SFProDisplay-Regular.ttf in Resources */,
 				846ECE8926B0016900EED0B4 /* Images.xcassets in Resources */,
 				846ECE1626B000B600EED0B4 /* Futura-Medium.ttf in Resources */,
@@ -7182,6 +7477,7 @@
 				846ECE1C26B000B600EED0B4 /* SFProText-Medium.ttf in Resources */,
 				846ECE7626B0013600EED0B4 /* MartiniOnWheels(Production).xcconfig in Resources */,
 				846ECF0226B0048C00EED0B4 /* GoogleService-Info.plist in Resources */,
+				8455CA4626DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846ECE1E26B000B600EED0B4 /* Plists in Resources */,
 				846ECE1F26B000B600EED0B4 /* Futura-Normal.ttf in Resources */,
 				846ECE2026B000B600EED0B4 /* Futura-Book.ttf in Resources */,
@@ -7189,6 +7485,7 @@
 				846ECE2226B000B600EED0B4 /* FuturaBT-Heavy.ttf in Resources */,
 				846ECE2326B000B600EED0B4 /* CircularStd-Bold.ttf in Resources */,
 				846ECE2526B000B600EED0B4 /* SFProText-Bold.ttf in Resources */,
+				8455CA8926DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7196,6 +7493,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CACD26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				846ED0DC26B01EAB00EED0B4 /* SFProDisplay-Regular.ttf in Resources */,
 				846ED15526B01F0D00EED0B4 /* Images.xcassets in Resources */,
 				846ED0DD26B01EAB00EED0B4 /* Futura-Medium.ttf in Resources */,
@@ -7208,6 +7506,7 @@
 				846ED0E226B01EAB00EED0B4 /* SFProText-SemiBold.ttf in Resources */,
 				846ED0E326B01EAB00EED0B4 /* SFProText-Medium.ttf in Resources */,
 				846ED1B126B0203F00EED0B4 /* GoogleService-Info.plist in Resources */,
+				8455CA4726DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846ED0E526B01EAB00EED0B4 /* Plists in Resources */,
 				846ED0E626B01EAB00EED0B4 /* Futura-Normal.ttf in Resources */,
 				846ED0E726B01EAB00EED0B4 /* Futura-Book.ttf in Resources */,
@@ -7215,6 +7514,7 @@
 				846ED0E926B01EAB00EED0B4 /* FuturaBT-Heavy.ttf in Resources */,
 				846ED0EA26B01EAB00EED0B4 /* CircularStd-Bold.ttf in Resources */,
 				846ED0EC26B01EAB00EED0B4 /* SFProText-Bold.ttf in Resources */,
+				8455CA8A26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7222,6 +7522,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAD126DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84796FFB26B96BB000B8D286 /* SFProDisplay-Regular.ttf in Resources */,
 				84B0CBD526B975B400515D81 /* Images.xcassets in Resources */,
 				8479705926B96C1600B8D286 /* GajaMove(Development).xcconfig in Resources */,
@@ -7234,6 +7535,7 @@
 				8479700126B96BB000B8D286 /* SFProText-SemiBold.ttf in Resources */,
 				8479700226B96BB000B8D286 /* SFProText-Medium.ttf in Resources */,
 				8479700426B96BB000B8D286 /* Plists in Resources */,
+				8455CA4B26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8479700526B96BB000B8D286 /* Futura-Normal.ttf in Resources */,
 				8479700626B96BB000B8D286 /* Futura-Book.ttf in Resources */,
 				8479700726B96BB000B8D286 /* CircularStd-Medium.otf in Resources */,
@@ -7241,6 +7543,7 @@
 				8479700926B96BB000B8D286 /* CircularStd-Bold.ttf in Resources */,
 				8479700B26B96BB000B8D286 /* SFProText-Bold.ttf in Resources */,
 				847970B726B96C7C00B8D286 /* GoogleService-Info.plist in Resources */,
+				8455CA8E26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7248,6 +7551,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAFF26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				847E8E3926DCB3960054CD42 /* Fleety(Production).xcconfig in Resources */,
 				847E8D0926DCB1DE0054CD42 /* SFProDisplay-Regular.ttf in Resources */,
 				847E8D0A26DCB1DE0054CD42 /* Futura-Medium.ttf in Resources */,
@@ -7260,6 +7564,7 @@
 				847E8E3B26DCB3B50054CD42 /* Images.xcassets in Resources */,
 				847E8DF326DCB3690054CD42 /* Fleety(Development).xcconfig in Resources */,
 				847E8E8126DCB4690054CD42 /* GoogleService-Info.plist in Resources */,
+				8455CA7926DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				847E8D1326DCB1DE0054CD42 /* Plists in Resources */,
 				847E8D1426DCB1DE0054CD42 /* Futura-Normal.ttf in Resources */,
 				847E8D1526DCB1DE0054CD42 /* Futura-Book.ttf in Resources */,
@@ -7267,6 +7572,7 @@
 				847E8D1726DCB1DE0054CD42 /* FuturaBT-Heavy.ttf in Resources */,
 				847E8D1826DCB1DE0054CD42 /* CircularStd-Bold.ttf in Resources */,
 				847E8D1B26DCB1DE0054CD42 /* SFProText-Bold.ttf in Resources */,
+				8455CABC26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7274,6 +7580,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAF726DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				848007C826CE260D0014F500 /* SFProDisplay-Regular.ttf in Resources */,
 				848007C926CE260D0014F500 /* Futura-Medium.ttf in Resources */,
 				848007CA26CE260D0014F500 /* LaunchScreen.storyboard in Resources */,
@@ -7286,6 +7593,7 @@
 				84800C0C26CE2B6E0014F500 /* Images.xcassets in Resources */,
 				84800BCE26CE2B550014F500 /* Housekeeper4Hire(Production).xcconfig in Resources */,
 				84800C4A26CE2CD90014F500 /* GoogleService-Info.plist in Resources */,
+				8455CA7126DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				848007D226CE260D0014F500 /* Plists in Resources */,
 				848007D326CE260D0014F500 /* Futura-Normal.ttf in Resources */,
 				848007D426CE260D0014F500 /* Futura-Book.ttf in Resources */,
@@ -7293,6 +7601,7 @@
 				848007D626CE260D0014F500 /* FuturaBT-Heavy.ttf in Resources */,
 				848007D726CE260D0014F500 /* CircularStd-Bold.ttf in Resources */,
 				848007DA26CE260D0014F500 /* SFProText-Bold.ttf in Resources */,
+				8455CAB426DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7300,6 +7609,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAE526DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84854E2026C4ED7E00BFFD11 /* SFProDisplay-Regular.ttf in Resources */,
 				84854E2126C4ED7E00BFFD11 /* Futura-Medium.ttf in Resources */,
 				84854E2226C4ED7E00BFFD11 /* LaunchScreen.storyboard in Resources */,
@@ -7312,6 +7622,7 @@
 				84854F3C26C4EEDC00BFFD11 /* Images.xcassets in Resources */,
 				84854E2A26C4ED7E00BFFD11 /* Futura-Normal.ttf in Resources */,
 				8485508F26C4FBF800BFFD11 /* GoogleService-Info.plist in Resources */,
+				8455CA5F26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84854E2B26C4ED7E00BFFD11 /* Futura-Book.ttf in Resources */,
 				84854F1026C4EEB500BFFD11 /* Servze(Production).xcconfig in Resources */,
 				84854E2C26C4ED7E00BFFD11 /* CircularStd-Medium.otf in Resources */,
@@ -7319,6 +7630,7 @@
 				84854E2E26C4ED7E00BFFD11 /* CircularStd-Bold.ttf in Resources */,
 				84854EBA26C4EE9000BFFD11 /* Servze(Development).xcconfig in Resources */,
 				84854E3026C4ED7E00BFFD11 /* SFProText-Bold.ttf in Resources */,
+				8455CAA226DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7326,6 +7638,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAEF26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				8491385026CB837E00AD4105 /* SFProDisplay-Regular.ttf in Resources */,
 				8491385126CB837E00AD4105 /* Futura-Medium.ttf in Resources */,
 				8491385226CB837E00AD4105 /* LaunchScreen.storyboard in Resources */,
@@ -7338,6 +7651,7 @@
 				8493F68926CB863D006AD6AD /* Images.xcassets in Resources */,
 				8491385A26CB837E00AD4105 /* Plists in Resources */,
 				8493F6BF26CB874D006AD6AD /* GoogleService-Info.plist in Resources */,
+				8455CA6926DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8491385B26CB837E00AD4105 /* Futura-Normal.ttf in Resources */,
 				8493F5E926CB85F3006AD6AD /* Yummiidash(Development).xcconfig in Resources */,
 				8491385C26CB837E00AD4105 /* Futura-Book.ttf in Resources */,
@@ -7345,6 +7659,7 @@
 				8491385E26CB837E00AD4105 /* FuturaBT-Heavy.ttf in Resources */,
 				8491385F26CB837E00AD4105 /* CircularStd-Bold.ttf in Resources */,
 				8491386226CB837E00AD4105 /* SFProText-Bold.ttf in Resources */,
+				8455CAAC26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7352,6 +7667,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAE626DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				849AE07B26C5245800B6C20D /* SFProDisplay-Regular.ttf in Resources */,
 				849AE07C26C5245800B6C20D /* Futura-Medium.ttf in Resources */,
 				849AE07D26C5245800B6C20D /* LaunchScreen.storyboard in Resources */,
@@ -7364,6 +7680,7 @@
 				849AE1F326C5265D00B6C20D /* Images.xcassets in Resources */,
 				849AE08526C5245800B6C20D /* Futura-Normal.ttf in Resources */,
 				849AE22026C5297200B6C20D /* GoogleService-Info.plist in Resources */,
+				8455CA6026DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				849AE1C626C5264A00B6C20D /* Travo(Production).xcconfig in Resources */,
 				849AE16E26C5263300B6C20D /* Travo(Development).xcconfig in Resources */,
 				849AE08626C5245800B6C20D /* Futura-Book.ttf in Resources */,
@@ -7371,6 +7688,7 @@
 				849AE08826C5245800B6C20D /* FuturaBT-Heavy.ttf in Resources */,
 				849AE08926C5245800B6C20D /* CircularStd-Bold.ttf in Resources */,
 				849AE08B26C5245800B6C20D /* SFProText-Bold.ttf in Resources */,
+				8455CAA326DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7378,6 +7696,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAE726DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				849AE5EE26C53BDE00B6C20D /* Cabdelivr(Development).xcconfig in Resources */,
 				849AE64A26C53C0B00B6C20D /* Images.xcassets in Resources */,
 				849AE4F426C53A3F00B6C20D /* SFProDisplay-Regular.ttf in Resources */,
@@ -7390,6 +7709,7 @@
 				849AE4FA26C53A3F00B6C20D /* SFProText-SemiBold.ttf in Resources */,
 				849AE4FB26C53A3F00B6C20D /* SFProText-Medium.ttf in Resources */,
 				849AE6D026C53E9700B6C20D /* GoogleService-Info.plist in Resources */,
+				8455CA6126DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				849AE4FD26C53A3F00B6C20D /* Plists in Resources */,
 				849AE4FE26C53A3F00B6C20D /* Futura-Normal.ttf in Resources */,
 				849AE4FF26C53A3F00B6C20D /* Futura-Book.ttf in Resources */,
@@ -7397,6 +7717,7 @@
 				849AE50126C53A3F00B6C20D /* FuturaBT-Heavy.ttf in Resources */,
 				849AE50226C53A3F00B6C20D /* CircularStd-Bold.ttf in Resources */,
 				849AE50426C53A3F00B6C20D /* SFProText-Bold.ttf in Resources */,
+				8455CAA426DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7409,6 +7730,7 @@
 				84A1A243269EE69D00A83511 /* Hmoobhub(Development).xcconfig in Resources */,
 				84A1A244269EE69D00A83511 /* Futura-Book.ttf in Resources */,
 				84A1A245269EE69D00A83511 /* Futura-Medium.ttf in Resources */,
+				8455CA8126DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 				84A1A246269EE69D00A83511 /* Plists in Resources */,
 				84A1A247269EE69D00A83511 /* SFProDisplay-Regular.ttf in Resources */,
 				84A1A248269EE69D00A83511 /* FuturaBT-Heavy.ttf in Resources */,
@@ -7420,8 +7742,10 @@
 				84A1A250269EE69D00A83511 /* Futura-Normal.ttf in Resources */,
 				84A1A251269EE69D00A83511 /* CircularStd-Medium.otf in Resources */,
 				84A1A268269EE71100A83511 /* Masa(Development).xcconfig in Resources */,
+				8455CA3E26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84A1A252269EE69D00A83511 /* CircularStd-Book.otf in Resources */,
 				84A1A253269EE69D00A83511 /* Futura Hv BT.ttf in Resources */,
+				8455CAC426DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84A1A27D269EE7F500A83511 /* Masa(Production).xcconfig in Resources */,
 				84A1A254269EE69D00A83511 /* CircularStd-Bold.ttf in Resources */,
 				849FC00926B17BAE006C8D91 /* GoogleService-Info.plist in Resources */,
@@ -7432,6 +7756,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAE126DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84A8020626C3982E00F35132 /* SFProDisplay-Regular.ttf in Resources */,
 				84A8033026C3994000F35132 /* Images.xcassets in Resources */,
 				84A8020726C3982E00F35132 /* Futura-Medium.ttf in Resources */,
@@ -7444,6 +7769,7 @@
 				84A8020C26C3982E00F35132 /* SFProText-SemiBold.ttf in Resources */,
 				84A8020D26C3982E00F35132 /* SFProText-Medium.ttf in Resources */,
 				84A8020F26C3982E00F35132 /* Plists in Resources */,
+				8455CA5B26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84A8021026C3982E00F35132 /* Futura-Normal.ttf in Resources */,
 				84A8021126C3982E00F35132 /* Futura-Book.ttf in Resources */,
 				84A8021226C3982E00F35132 /* CircularStd-Medium.otf in Resources */,
@@ -7451,6 +7777,7 @@
 				84A8021426C3982E00F35132 /* CircularStd-Bold.ttf in Resources */,
 				84A8021626C3982E00F35132 /* SFProText-Bold.ttf in Resources */,
 				84A8035826C3997C00F35132 /* GoogleService-Info.plist in Resources */,
+				8455CA9E26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7458,6 +7785,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAE226DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84A807C326C3D2E400F35132 /* EquaMD(Development).xcconfig in Resources */,
 				84A8081526C3D31100F35132 /* Images.xcassets in Resources */,
 				84A8070B26C3D23700F35132 /* SFProDisplay-Regular.ttf in Resources */,
@@ -7470,6 +7798,7 @@
 				84A8071126C3D23700F35132 /* SFProText-SemiBold.ttf in Resources */,
 				84A8071226C3D23700F35132 /* SFProText-Medium.ttf in Resources */,
 				84A8071426C3D23700F35132 /* Plists in Resources */,
+				8455CA5C26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84A8071526C3D23700F35132 /* Futura-Normal.ttf in Resources */,
 				84A8071626C3D23700F35132 /* Futura-Book.ttf in Resources */,
 				84A8071726C3D23700F35132 /* CircularStd-Medium.otf in Resources */,
@@ -7477,6 +7806,7 @@
 				84A8071926C3D23700F35132 /* CircularStd-Bold.ttf in Resources */,
 				84A8071B26C3D23700F35132 /* SFProText-Bold.ttf in Resources */,
 				84A8083E26C3D47800F35132 /* GoogleService-Info.plist in Resources */,
+				8455CA9F26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7484,6 +7814,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAE326DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84A80A1526C3DAA200F35132 /* SFProDisplay-Regular.ttf in Resources */,
 				84A80AFD26C3DD4B00F35132 /* Images.xcassets in Resources */,
 				84A80AD326C3DD2300F35132 /* HelloDeliver(Production).xcconfig in Resources */,
@@ -7496,6 +7827,7 @@
 				84A80A1C26C3DAA200F35132 /* SFProText-Medium.ttf in Resources */,
 				84A80A1E26C3DAA200F35132 /* Plists in Resources */,
 				84A80A1F26C3DAA200F35132 /* Futura-Normal.ttf in Resources */,
+				8455CA5D26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84A80A2026C3DAA200F35132 /* Futura-Book.ttf in Resources */,
 				84A80A2126C3DAA200F35132 /* CircularStd-Medium.otf in Resources */,
 				84A80A2226C3DAA200F35132 /* FuturaBT-Heavy.ttf in Resources */,
@@ -7503,6 +7835,7 @@
 				84A80A2326C3DAA200F35132 /* CircularStd-Bold.ttf in Resources */,
 				84A80A2526C3DAA200F35132 /* SFProText-Bold.ttf in Resources */,
 				84A80B2726C3E0D700F35132 /* GoogleService-Info.plist in Resources */,
+				8455CAA026DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7510,6 +7843,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAE426DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84A80ECF26C3FA0B00F35132 /* SFProDisplay-Regular.ttf in Resources */,
 				84A80F9326C3FAF400F35132 /* Images.xcassets in Resources */,
 				84A80F1426C3FABC00F35132 /* HoganChef(Development).xcconfig in Resources */,
@@ -7522,6 +7856,7 @@
 				84A80ED626C3FA0B00F35132 /* SFProText-Medium.ttf in Resources */,
 				84A80ED826C3FA0B00F35132 /* Plists in Resources */,
 				84A8101026C3FD4100F35132 /* GoogleService-Info.plist in Resources */,
+				8455CA5E26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84A80ED926C3FA0B00F35132 /* Futura-Normal.ttf in Resources */,
 				84A80EDA26C3FA0B00F35132 /* Futura-Book.ttf in Resources */,
 				84A80EDB26C3FA0B00F35132 /* CircularStd-Medium.otf in Resources */,
@@ -7529,6 +7864,7 @@
 				84A80EDD26C3FA0B00F35132 /* CircularStd-Bold.ttf in Resources */,
 				84A80F6826C3FAE100F35132 /* HoganChef(Production).xcconfig in Resources */,
 				84A80EDF26C3FA0B00F35132 /* SFProText-Bold.ttf in Resources */,
+				8455CAA126DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7536,6 +7872,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CADB26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84ABE49626C241CB00658CE6 /* Klickmat(Production).xcconfig in Resources */,
 				84ABE4B826C241DE00658CE6 /* Images.xcassets in Resources */,
 				84ABE3F826C2411C00658CE6 /* SFProDisplay-Regular.ttf in Resources */,
@@ -7548,6 +7885,7 @@
 				84ABE3FF26C2411C00658CE6 /* SFProText-Medium.ttf in Resources */,
 				84ABE40126C2411C00658CE6 /* Plists in Resources */,
 				84ABE4FA26C242C700658CE6 /* GoogleService-Info.plist in Resources */,
+				8455CA5526DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84ABE40226C2411C00658CE6 /* Futura-Normal.ttf in Resources */,
 				84ABE40326C2411C00658CE6 /* Futura-Book.ttf in Resources */,
 				84ABE40426C2411C00658CE6 /* CircularStd-Medium.otf in Resources */,
@@ -7555,6 +7893,7 @@
 				84ABE40626C2411C00658CE6 /* CircularStd-Bold.ttf in Resources */,
 				84ABE40826C2411C00658CE6 /* SFProText-Bold.ttf in Resources */,
 				84ABE45426C241B000658CE6 /* Klickmat(Development).xcconfig in Resources */,
+				8455CA9826DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7563,6 +7902,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				84ABE6EA26C24ADF00658CE6 /* SFProDisplay-Regular.ttf in Resources */,
+				8455CA9926DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
+				8455CADC26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84ABE6EB26C24ADF00658CE6 /* Futura-Medium.ttf in Resources */,
 				84ABE6EC26C24ADF00658CE6 /* LaunchScreen.storyboard in Resources */,
 				84ABE6ED26C24ADF00658CE6 /* CircularStd-Book.otf in Resources */,
@@ -7570,6 +7911,7 @@
 				84ABE6EF26C24ADF00658CE6 /* SFProText-Regular.ttf in Resources */,
 				84ABE6F026C24ADF00658CE6 /* SFProText-SemiBold.ttf in Resources */,
 				84ABE6F126C24ADF00658CE6 /* SFProText-Medium.ttf in Resources */,
+				8455CA5626DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84ABE6F326C24ADF00658CE6 /* Plists in Resources */,
 				84ABE6F426C24ADF00658CE6 /* Futura-Normal.ttf in Resources */,
 				84ABE6F526C24ADF00658CE6 /* Futura-Book.ttf in Resources */,
@@ -7584,6 +7926,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CADD26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84ABE9AE26C256AB00658CE6 /* SFProDisplay-Regular.ttf in Resources */,
 				84ABEA3426C2577500658CE6 /* Images.xcassets in Resources */,
 				84ABE9AF26C256AB00658CE6 /* Futura-Medium.ttf in Resources */,
@@ -7596,6 +7939,7 @@
 				84ABE9B726C256AB00658CE6 /* Plists in Resources */,
 				84ABE9B826C256AB00658CE6 /* Futura-Normal.ttf in Resources */,
 				84ABE9B926C256AB00658CE6 /* Futura-Book.ttf in Resources */,
+				8455CA5726DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84ABE9BA26C256AB00658CE6 /* CircularStd-Medium.otf in Resources */,
 				84ABE9BB26C256AB00658CE6 /* FuturaBT-Heavy.ttf in Resources */,
 				84ABE9BC26C256AB00658CE6 /* CircularStd-Bold.ttf in Resources */,
@@ -7603,6 +7947,7 @@
 				84ABE9CA26C2573300658CE6 /* Rerak(Development).xcconfig in Resources */,
 				84ABEA1026C2575E00658CE6 /* Rerak(Production).xcconfig in Resources */,
 				84B06FAA26C25989006C0FC7 /* GoogleService-Info.plist in Resources */,
+				8455CA9A26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7610,6 +7955,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAD326DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84AE317226BACC02005257F6 /* SFProDisplay-Regular.ttf in Resources */,
 				84AE317326BACC02005257F6 /* Futura-Medium.ttf in Resources */,
 				84AE317426BACC02005257F6 /* LaunchScreen.storyboard in Resources */,
@@ -7622,6 +7968,7 @@
 				84AE317B26BACC02005257F6 /* Plists in Resources */,
 				84AE31D626BACF76005257F6 /* Getme(Development).xcconfig in Resources */,
 				84AE317C26BACC02005257F6 /* Futura-Normal.ttf in Resources */,
+				8455CA4D26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84AE317D26BACC02005257F6 /* Futura-Book.ttf in Resources */,
 				84AE317E26BACC02005257F6 /* CircularStd-Medium.otf in Resources */,
 				84AE317F26BACC02005257F6 /* FuturaBT-Heavy.ttf in Resources */,
@@ -7629,6 +7976,7 @@
 				84AE318026BACC02005257F6 /* CircularStd-Bold.ttf in Resources */,
 				84AE322226BAD02A005257F6 /* GoogleService-Info.plist in Resources */,
 				84AE318226BACC02005257F6 /* SFProText-Bold.ttf in Resources */,
+				8455CA9026DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7636,6 +7984,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CADE26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84B367BC26C264CF00DF67B0 /* SFProDisplay-Regular.ttf in Resources */,
 				84B3695626C2759600DF67B0 /* Images.xcassets in Resources */,
 				84B367BD26C264CF00DF67B0 /* Futura-Medium.ttf in Resources */,
@@ -7648,6 +7997,7 @@
 				84B367C326C264CF00DF67B0 /* SFProText-Medium.ttf in Resources */,
 				84B367C526C264CF00DF67B0 /* Plists in Resources */,
 				84B36C5026C2845900DF67B0 /* GoogleService-Info.plist in Resources */,
+				8455CA5826DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84B367C626C264CF00DF67B0 /* Futura-Normal.ttf in Resources */,
 				84B367C726C264CF00DF67B0 /* Futura-Book.ttf in Resources */,
 				84B367C826C264CF00DF67B0 /* CircularStd-Medium.otf in Resources */,
@@ -7655,6 +8005,7 @@
 				84B367CA26C264CF00DF67B0 /* CircularStd-Bold.ttf in Resources */,
 				84B367CC26C264CF00DF67B0 /* SFProText-Bold.ttf in Resources */,
 				84B3693126C2757E00DF67B0 /* Yoho(Production).xcconfig in Resources */,
+				8455CA9B26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7662,6 +8013,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CADF26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84B36D0326C28AED00DF67B0 /* SFProDisplay-Regular.ttf in Resources */,
 				84B36E1F26C28C6700DF67B0 /* Images.xcassets in Resources */,
 				84B36D0426C28AED00DF67B0 /* Futura-Medium.ttf in Resources */,
@@ -7674,6 +8026,7 @@
 				84B36DF926C28BF200DF67B0 /* Glamsouq(Production).xcconfig in Resources */,
 				84B36D0A26C28AED00DF67B0 /* SFProText-Medium.ttf in Resources */,
 				84B36E8D26C28DA200DF67B0 /* GoogleService-Info.plist in Resources */,
+				8455CA5926DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84B36D0C26C28AED00DF67B0 /* Plists in Resources */,
 				84B36D0D26C28AED00DF67B0 /* Futura-Normal.ttf in Resources */,
 				84B36D0E26C28AED00DF67B0 /* Futura-Book.ttf in Resources */,
@@ -7681,6 +8034,7 @@
 				84B36D1026C28AED00DF67B0 /* FuturaBT-Heavy.ttf in Resources */,
 				84B36D1126C28AED00DF67B0 /* CircularStd-Bold.ttf in Resources */,
 				84B36D1326C28AED00DF67B0 /* SFProText-Bold.ttf in Resources */,
+				8455CA9C26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7688,6 +8042,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAE026DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84B36FFD26C2930300DF67B0 /* SFProDisplay-Regular.ttf in Resources */,
 				84B370B126C2954400DF67B0 /* Images.xcassets in Resources */,
 				84B3703E26C2951500DF67B0 /* DoctaTransportation(Development).xcconfig in Resources */,
@@ -7700,6 +8055,7 @@
 				84B3700426C2930300DF67B0 /* SFProText-Medium.ttf in Resources */,
 				84B3700626C2930300DF67B0 /* Plists in Resources */,
 				84B3712226C2978A00DF67B0 /* GoogleService-Info.plist in Resources */,
+				8455CA5A26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84B3700726C2930300DF67B0 /* Futura-Normal.ttf in Resources */,
 				84B3700826C2930300DF67B0 /* Futura-Book.ttf in Resources */,
 				84B3700926C2930300DF67B0 /* CircularStd-Medium.otf in Resources */,
@@ -7707,6 +8063,7 @@
 				84B3700B26C2930300DF67B0 /* CircularStd-Bold.ttf in Resources */,
 				84B3708A26C2953000DF67B0 /* DoctaTransportation(Production).xcconfig in Resources */,
 				84B3700D26C2930300DF67B0 /* SFProText-Bold.ttf in Resources */,
+				8455CA9D26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7714,6 +8071,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CB0026DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84BEA2B326DCECE300390501 /* SFProDisplay-Regular.ttf in Resources */,
 				84BEA2B426DCECE300390501 /* Futura-Medium.ttf in Resources */,
 				84BEA2B526DCECE300390501 /* LaunchScreen.storyboard in Resources */,
@@ -7726,6 +8084,7 @@
 				84BEA4B826DCEE6800390501 /* Images.xcassets in Resources */,
 				84BEA2BD26DCECE300390501 /* Plists in Resources */,
 				84BEA4BA26DCEF1E00390501 /* GoogleService-Info.plist in Resources */,
+				8455CA7A26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84BEA2BE26DCECE300390501 /* Futura-Normal.ttf in Resources */,
 				84BEA46F26DCEE2100390501 /* FlyingHorse(Development).xcconfig in Resources */,
 				84BEA2BF26DCECE300390501 /* Futura-Book.ttf in Resources */,
@@ -7733,6 +8092,7 @@
 				84BEA2C126DCECE300390501 /* FuturaBT-Heavy.ttf in Resources */,
 				84BEA2C226DCECE300390501 /* CircularStd-Bold.ttf in Resources */,
 				84BEA2C526DCECE300390501 /* SFProText-Bold.ttf in Resources */,
+				8455CABD26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7740,6 +8100,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CACE26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84C0673E26B2A4AC0096845B /* SFProDisplay-Regular.ttf in Resources */,
 				84C0679526B2A4EA0096845B /* Images.xcassets in Resources */,
 				84C0673F26B2A4AC0096845B /* Futura-Medium.ttf in Resources */,
@@ -7752,6 +8113,7 @@
 				84C0674526B2A4AC0096845B /* SFProText-Medium.ttf in Resources */,
 				84C0674726B2A4AC0096845B /* Plists in Resources */,
 				84C067E326B2A68B0096845B /* GoogleService-Info.plist in Resources */,
+				8455CA4826DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84C0674826B2A4AC0096845B /* Futura-Normal.ttf in Resources */,
 				84C0674926B2A4AC0096845B /* Futura-Book.ttf in Resources */,
 				84C0674A26B2A4AC0096845B /* CircularStd-Medium.otf in Resources */,
@@ -7759,6 +8121,7 @@
 				84C0674C26B2A4AC0096845B /* CircularStd-Bold.ttf in Resources */,
 				84C0678026B2A4D50096845B /* ClickEat(Production).xcconfig in Resources */,
 				84C0674E26B2A4AC0096845B /* SFProText-Bold.ttf in Resources */,
+				8455CA8B26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7766,6 +8129,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAD526DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84CDD88626BC0BDB001FE3EE /* Orbit(Production).xcconfig in Resources */,
 				84CDD8A226BC0BF9001FE3EE /* Images.xcassets in Resources */,
 				84CDD80026BC0A9A001FE3EE /* SFProDisplay-Regular.ttf in Resources */,
@@ -7778,6 +8142,7 @@
 				84CDD80726BC0A9A001FE3EE /* SFProText-Medium.ttf in Resources */,
 				84CDD80926BC0A9A001FE3EE /* Plists in Resources */,
 				84CDD85026BC0BBC001FE3EE /* Orbit(Development).xcconfig in Resources */,
+				8455CA4F26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84CDD80A26BC0A9A001FE3EE /* Futura-Normal.ttf in Resources */,
 				84CDD80B26BC0A9A001FE3EE /* Futura-Book.ttf in Resources */,
 				84CDD80C26BC0A9A001FE3EE /* CircularStd-Medium.otf in Resources */,
@@ -7785,6 +8150,7 @@
 				84CDD80E26BC0A9A001FE3EE /* CircularStd-Bold.ttf in Resources */,
 				84CDD8BE26BC0D1E001FE3EE /* GoogleService-Info.plist in Resources */,
 				84CDD81026BC0A9A001FE3EE /* SFProText-Bold.ttf in Resources */,
+				8455CA9226DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7792,6 +8158,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAD626DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84D1F02626BD700000530751 /* SFProDisplay-Regular.ttf in Resources */,
 				84D1F10326BD735900530751 /* Images.xcassets in Resources */,
 				84D1F02726BD700000530751 /* Futura-Medium.ttf in Resources */,
@@ -7804,6 +8171,7 @@
 				84D1F02D26BD700000530751 /* SFProText-Medium.ttf in Resources */,
 				84D1F02F26BD700000530751 /* Plists in Resources */,
 				84D1F03026BD700000530751 /* Futura-Normal.ttf in Resources */,
+				8455CA5026DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84D1F03126BD700000530751 /* Futura-Book.ttf in Resources */,
 				84D1F0CB26BD732000530751 /* Carlitoo(Production).xcconfig in Resources */,
 				84D1F03226BD700000530751 /* CircularStd-Medium.otf in Resources */,
@@ -7811,6 +8179,7 @@
 				84D1F03426BD700000530751 /* CircularStd-Bold.ttf in Resources */,
 				84D1F13B26BD74EA00530751 /* GoogleService-Info.plist in Resources */,
 				84D1F03626BD700000530751 /* SFProText-Bold.ttf in Resources */,
+				8455CA9326DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7818,6 +8187,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAD726DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84D47CED26C1349700EE9EB5 /* SFProDisplay-Regular.ttf in Resources */,
 				84D47CEE26C1349700EE9EB5 /* Futura-Medium.ttf in Resources */,
 				84D47CEF26C1349700EE9EB5 /* LaunchScreen.storyboard in Resources */,
@@ -7830,6 +8200,7 @@
 				84D47D9926C1364E00EE9EB5 /* Images.xcassets in Resources */,
 				84D47CF626C1349700EE9EB5 /* Plists in Resources */,
 				84D47DB726C136D200EE9EB5 /* GoogleService-Info.plist in Resources */,
+				8455CA5126DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84D47CF726C1349700EE9EB5 /* Futura-Normal.ttf in Resources */,
 				84D47CF826C1349700EE9EB5 /* Futura-Book.ttf in Resources */,
 				84D47CF926C1349700EE9EB5 /* CircularStd-Medium.otf in Resources */,
@@ -7837,6 +8208,7 @@
 				84D47CFA26C1349700EE9EB5 /* FuturaBT-Heavy.ttf in Resources */,
 				84D47CFB26C1349700EE9EB5 /* CircularStd-Bold.ttf in Resources */,
 				84D47CFD26C1349700EE9EB5 /* SFProText-Bold.ttf in Resources */,
+				8455CA9426DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7844,6 +8216,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAD826DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84D47FC226C1416800EE9EB5 /* SFProDisplay-Regular.ttf in Resources */,
 				84D4808E26C142D300EE9EB5 /* TheHouse(Production).xcconfig in Resources */,
 				84D47FC326C1416800EE9EB5 /* Futura-Medium.ttf in Resources */,
@@ -7856,6 +8229,7 @@
 				84D480CA26C1430000EE9EB5 /* Images.xcassets in Resources */,
 				84D47FC926C1416800EE9EB5 /* SFProText-Medium.ttf in Resources */,
 				84D480E926C1465300EE9EB5 /* GoogleService-Info.plist in Resources */,
+				8455CA5226DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84D47FCB26C1416800EE9EB5 /* Plists in Resources */,
 				84D47FCC26C1416800EE9EB5 /* Futura-Normal.ttf in Resources */,
 				84D47FCD26C1416800EE9EB5 /* Futura-Book.ttf in Resources */,
@@ -7863,6 +8237,7 @@
 				84D47FCF26C1416800EE9EB5 /* FuturaBT-Heavy.ttf in Resources */,
 				84D47FD026C1416800EE9EB5 /* CircularStd-Bold.ttf in Resources */,
 				84D47FD226C1416800EE9EB5 /* SFProText-Bold.ttf in Resources */,
+				8455CA9526DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7870,6 +8245,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAD926DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84D4829026C14F5800EE9EB5 /* SFProDisplay-Regular.ttf in Resources */,
 				84D4832826C150F200EE9EB5 /* Images.xcassets in Resources */,
 				84D4829126C14F5800EE9EB5 /* Futura-Medium.ttf in Resources */,
@@ -7882,6 +8258,7 @@
 				84D4829726C14F5800EE9EB5 /* SFProText-Medium.ttf in Resources */,
 				84D4829926C14F5800EE9EB5 /* Plists in Resources */,
 				84D5F26626D76D7400C6E5DB /* GoogleService-Info.plist in Resources */,
+				8455CA5326DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84D4829A26C14F5800EE9EB5 /* Futura-Normal.ttf in Resources */,
 				84D4829B26C14F5800EE9EB5 /* Futura-Book.ttf in Resources */,
 				84D4829C26C14F5800EE9EB5 /* CircularStd-Medium.otf in Resources */,
@@ -7889,6 +8266,7 @@
 				84D4829E26C14F5800EE9EB5 /* CircularStd-Bold.ttf in Resources */,
 				84D484D826C1566500EE9EB5 /* LastMinuteDress(Production).xcconfig in Resources */,
 				84D482A026C14F5800EE9EB5 /* SFProText-Bold.ttf in Resources */,
+				8455CA9626DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7896,6 +8274,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CADA26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84D486FF26C161C800EE9EB5 /* SFProDisplay-Regular.ttf in Resources */,
 				84D4870026C161C800EE9EB5 /* Futura-Medium.ttf in Resources */,
 				84D4870126C161C800EE9EB5 /* LaunchScreen.storyboard in Resources */,
@@ -7908,6 +8287,7 @@
 				84D4873A26C162BC00EE9EB5 /* Specialhalal(Development).xcconfig in Resources */,
 				84D4870826C161C800EE9EB5 /* Plists in Resources */,
 				84D4879B26C1632500EE9EB5 /* GoogleService-Info.plist in Resources */,
+				8455CA5426DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84D4870926C161C800EE9EB5 /* Futura-Normal.ttf in Resources */,
 				84D4870A26C161C800EE9EB5 /* Futura-Book.ttf in Resources */,
 				84D4870B26C161C800EE9EB5 /* CircularStd-Medium.otf in Resources */,
@@ -7915,6 +8295,7 @@
 				84D4870C26C161C800EE9EB5 /* FuturaBT-Heavy.ttf in Resources */,
 				84D4870D26C161C800EE9EB5 /* CircularStd-Bold.ttf in Resources */,
 				84D4870F26C161C800EE9EB5 /* SFProText-Bold.ttf in Resources */,
+				8455CA9726DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7922,6 +8303,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAC526DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84D8C364269F03220020B09A /* SFProDisplay-Regular.ttf in Resources */,
 				84D8C365269F03220020B09A /* Futura-Medium.ttf in Resources */,
 				84D8C366269F03220020B09A /* LaunchScreen.storyboard in Resources */,
@@ -7934,6 +8316,7 @@
 				84D8C36E269F03220020B09A /* Futura-Normal.ttf in Resources */,
 				84D8C36F269F03220020B09A /* Futura-Book.ttf in Resources */,
 				84D8C370269F03220020B09A /* CircularStd-Medium.otf in Resources */,
+				8455CA3F26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84D8C371269F03220020B09A /* FuturaBT-Heavy.ttf in Resources */,
 				84D8C3CB269F04A70020B09A /* YogoFood(Production).xcconfig in Resources */,
 				84D8C3CC269F04A70020B09A /* Images.xcassets in Resources */,
@@ -7941,6 +8324,7 @@
 				84D8C374269F03220020B09A /* SFProText-Bold.ttf in Resources */,
 				84D8C3CD269F04A70020B09A /* YogoFood(Development).xcconfig in Resources */,
 				84D8C3E3269F06AA0020B09A /* GoogleService-Info.plist in Resources */,
+				8455CA8226DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7948,6 +8332,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAEE26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84DD35EE26CA43E100F02437 /* SFProDisplay-Regular.ttf in Resources */,
 				84DD35EF26CA43E100F02437 /* Futura-Medium.ttf in Resources */,
 				84DD35F026CA43E100F02437 /* LaunchScreen.storyboard in Resources */,
@@ -7960,6 +8345,7 @@
 				84DD377526CA452A00F02437 /* Images.xcassets in Resources */,
 				84DD35F826CA43E100F02437 /* Plists in Resources */,
 				84DD37AA26CA459700F02437 /* GoogleService-Info.plist in Resources */,
+				8455CA6826DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84DD35F926CA43E100F02437 /* Futura-Normal.ttf in Resources */,
 				84DD35FA26CA43E100F02437 /* Futura-Book.ttf in Resources */,
 				84DD35FB26CA43E100F02437 /* CircularStd-Medium.otf in Resources */,
@@ -7967,6 +8353,7 @@
 				84DD35FD26CA43E100F02437 /* CircularStd-Bold.ttf in Resources */,
 				84DD36D826CA44E800F02437 /* Africanize(Development).xcconfig in Resources */,
 				84DD360026CA43E100F02437 /* SFProText-Bold.ttf in Resources */,
+				8455CAAB26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7975,6 +8362,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84E175DF26C651E000E71F11 /* SFProDisplay-Regular.ttf in Resources */,
+				8455CAE826DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84E175E026C651E000E71F11 /* Futura-Medium.ttf in Resources */,
 				84E175E126C651E000E71F11 /* LaunchScreen.storyboard in Resources */,
 				84E175E226C651E000E71F11 /* CircularStd-Book.otf in Resources */,
@@ -7985,6 +8373,8 @@
 				84E175E626C651E000E71F11 /* SFProText-Medium.ttf in Resources */,
 				84E1773C26C653A500E71F11 /* Images.xcassets in Resources */,
 				84E175E826C651E000E71F11 /* Plists in Resources */,
+				8455CA6226DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
+				8455CAA526DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 				846E7ED526C6A74800C7A2C5 /* GoogleService-Info.plist in Resources */,
 				84E175E926C651E000E71F11 /* Futura-Normal.ttf in Resources */,
 				84E175EA26C651E000E71F11 /* Futura-Book.ttf in Resources */,
@@ -8001,6 +8391,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAC726DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84ECE26926A7FA8F009A0F8C /* SFProDisplay-Regular.ttf in Resources */,
 				84ECE26A26A7FA8F009A0F8C /* Futura-Medium.ttf in Resources */,
 				84ECE26B26A7FA8F009A0F8C /* LaunchScreen.storyboard in Resources */,
@@ -8013,6 +8404,7 @@
 				84ECE27026A7FA8F009A0F8C /* SFProText-Medium.ttf in Resources */,
 				84ECE27226A7FA8F009A0F8C /* Plists in Resources */,
 				84ECE27326A7FA8F009A0F8C /* Futura-Normal.ttf in Resources */,
+				8455CA4126DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84ECE27426A7FA8F009A0F8C /* Futura-Book.ttf in Resources */,
 				84ECE27526A7FA8F009A0F8C /* CircularStd-Medium.otf in Resources */,
 				84ECE27626A7FA8F009A0F8C /* FuturaBT-Heavy.ttf in Resources */,
@@ -8020,6 +8412,7 @@
 				84ECE27726A7FA8F009A0F8C /* CircularStd-Bold.ttf in Resources */,
 				84ECE27926A7FA8F009A0F8C /* SFProText-Bold.ttf in Resources */,
 				84ECE3BD26A80385009A0F8C /* GoogleService-Info.plist in Resources */,
+				8455CA8426DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8027,6 +8420,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAC626DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84F4654A26A6F22C00D378D5 /* BottomsUp(Production).xcconfig in Resources */,
 				84F464EF26A6F14700D378D5 /* SFProDisplay-Regular.ttf in Resources */,
 				84F464F026A6F14700D378D5 /* Futura-Medium.ttf in Resources */,
@@ -8039,6 +8433,7 @@
 				84F4652226A6F1BD00D378D5 /* Images.xcassets in Resources */,
 				84F464F826A6F14700D378D5 /* Plists in Resources */,
 				84F4653C26A6F20F00D378D5 /* BottomsUp(Development).xcconfig in Resources */,
+				8455CA4026DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84F464F926A6F14700D378D5 /* Futura-Normal.ttf in Resources */,
 				84F464FA26A6F14700D378D5 /* Futura-Book.ttf in Resources */,
 				84F464FB26A6F14700D378D5 /* CircularStd-Medium.otf in Resources */,
@@ -8046,6 +8441,7 @@
 				84F4660526A6F98200D378D5 /* GoogleService-Info.plist in Resources */,
 				84F464FD26A6F14700D378D5 /* CircularStd-Bold.ttf in Resources */,
 				84F464FF26A6F14700D378D5 /* SFProText-Bold.ttf in Resources */,
+				8455CA8326DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8053,6 +8449,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAFC26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84FFF3EC26D6520700F2B059 /* SFProDisplay-Regular.ttf in Resources */,
 				84FFF3ED26D6520700F2B059 /* Futura-Medium.ttf in Resources */,
 				84FFF3EE26D6520700F2B059 /* LaunchScreen.storyboard in Resources */,
@@ -8065,6 +8462,7 @@
 				84FFF61626D6535D00F2B059 /* Images.xcassets in Resources */,
 				84FFF5D326D6532600F2B059 /* Vici(Production).xcconfig in Resources */,
 				84FFF65926D653AD00F2B059 /* GoogleService-Info.plist in Resources */,
+				8455CA7626DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84FFF3F626D6520700F2B059 /* Plists in Resources */,
 				84FFF3F726D6520700F2B059 /* Futura-Normal.ttf in Resources */,
 				84FFF3F826D6520700F2B059 /* Futura-Book.ttf in Resources */,
@@ -8072,6 +8470,7 @@
 				84FFF3FA26D6520700F2B059 /* FuturaBT-Heavy.ttf in Resources */,
 				84FFF3FB26D6520700F2B059 /* CircularStd-Bold.ttf in Resources */,
 				84FFF3FE26D6520700F2B059 /* SFProText-Bold.ttf in Resources */,
+				8455CAB926DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8079,6 +8478,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAFD26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84FFF96A26D6652C00F2B059 /* SFProDisplay-Regular.ttf in Resources */,
 				84FFF96B26D6652C00F2B059 /* Futura-Medium.ttf in Resources */,
 				84FFF96C26D6652C00F2B059 /* LaunchScreen.storyboard in Resources */,
@@ -8091,6 +8491,7 @@
 				84FFFB9C26D666D800F2B059 /* Images.xcassets in Resources */,
 				84FFF97426D6652C00F2B059 /* Plists in Resources */,
 				84FFFBE026D666FD00F2B059 /* GoogleService-Info.plist in Resources */,
+				8455CA7726DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84FFF97526D6652C00F2B059 /* Futura-Normal.ttf in Resources */,
 				84FFF97626D6652C00F2B059 /* Futura-Book.ttf in Resources */,
 				84FFFAD226D6669D00F2B059 /* LoopWhole(Development).xcconfig in Resources */,
@@ -8098,6 +8499,7 @@
 				84FFF97826D6652C00F2B059 /* FuturaBT-Heavy.ttf in Resources */,
 				84FFF97926D6652C00F2B059 /* CircularStd-Bold.ttf in Resources */,
 				84FFF97C26D6652C00F2B059 /* SFProText-Bold.ttf in Resources */,
+				8455CABA26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8105,6 +8507,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8455CAFE26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84FFFF3E26D672E600F2B059 /* SFProDisplay-Regular.ttf in Resources */,
 				84FFFF3F26D672E600F2B059 /* Futura-Medium.ttf in Resources */,
 				84FFFF4026D672E600F2B059 /* LaunchScreen.storyboard in Resources */,
@@ -8117,6 +8520,7 @@
 				84FFFFE626D6747700F2B059 /* Images.xcassets in Resources */,
 				84FFFFE426D6745600F2B059 /* YogoLift(Production).xcconfig in Resources */,
 				84FFFFE826D6754300F2B059 /* GoogleService-Info.plist in Resources */,
+				8455CA7826DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84FFFF4926D672E600F2B059 /* Futura-Normal.ttf in Resources */,
 				84FFFF4A26D672E600F2B059 /* Futura-Book.ttf in Resources */,
 				84FFFF4B26D672E600F2B059 /* CircularStd-Medium.otf in Resources */,
@@ -8124,6 +8528,7 @@
 				84FFFF4D26D672E600F2B059 /* CircularStd-Bold.ttf in Resources */,
 				84FFFF9F26D6742D00F2B059 /* YogoLift(Development).xcconfig in Resources */,
 				84FFFF5026D672E600F2B059 /* SFProText-Bold.ttf in Resources */,
+				8455CABB26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

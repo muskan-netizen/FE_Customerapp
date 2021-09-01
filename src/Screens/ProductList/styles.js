@@ -35,7 +35,7 @@ export default ({themeColors, fontFamily}) =>
       position: 'absolute',
       zIndex: 1000,
       width: width - moderateScale(40),
-      top: width * 0.5,
+      top: width * 0.4,
       alignSelf: 'center',
       backgroundColor: 'white',
       borderRadius: moderateScale(12),
@@ -48,4 +48,18 @@ export default ({themeColors, fontFamily}) =>
       shadowRadius: 2,
       elevation: 2,
     },
+    rateViewStyle:{
+      backgroundColor: colors.yellowB,
+      padding: 5,
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderTopLeftRadius: 5,
+      borderBottomLeftRadius: 5,
+    },
+    overlay: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: 'rgba(0,0,0,0.5)'
+    },
+    openCloseStatus:{fontFamily:fontFamily.bold, color:colors.green,fontSize:textScale(12), paddingTop:moderateScaleVertical(10)},
+    distanceAndTimeView:{color:colors.black,opacity:0.48,fontSize:textScale(12),paddingTop:moderateScaleVertical(10)}
   });

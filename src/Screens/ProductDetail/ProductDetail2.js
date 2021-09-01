@@ -648,7 +648,7 @@ export default function ProductDetail2({route, navigation}) {
           <Image source={!!data?.showAddToCart ? false : imagePath.search} />
         </TouchableOpacity>
       </View>
-     
+
       <View
         style={{
           alignItems: 'center',

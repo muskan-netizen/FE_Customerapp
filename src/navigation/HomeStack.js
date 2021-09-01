@@ -77,8 +77,8 @@ export default function () {
         component={
           appData?.profile?.code === shortCodes.capcorp
             ? ProductList2
-            // : ProductList
-            : ProductList3
+            : // : ProductList
+              ProductList3
         }
         options={{headerShown: false}}
       />
