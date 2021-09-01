@@ -358,7 +358,7 @@ export default {
   NOOFFERS: 'No Offers',
   PERSONAL_DETAILS: 'Personal Details',
   STORE_DETAILS: 'Store Details',
-  VENDER_NAME: 'Vender name',
+  VENDOR_NAME: 'Vendor name',
   WEBSITE: 'Website',
   UPLOAD_LOGO: 'Upload Logo',
   UPLOAD_BANNER: 'Upload Banner',

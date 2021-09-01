@@ -346,7 +346,7 @@ const appIds = {
     android: 'com.menus',
   }),
   doorstep: Platform.select({
-    ios: 'com.doorstep',
+    ios: 'com.doorstepone',
     android: 'com.doorstep',
   }),
 };

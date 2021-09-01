@@ -53,10 +53,11 @@ export default function WebLinks({navigation, route}) {
     password: '',
     confirm_password: '',
     description: '',
-    vender_name: '',
+    vendor_name: '',
     address: '',
     website: '',
     imageArray: [],
+    imageArrayBanner: [],
     isDineIn: false,
     isTakeaway: false,
     isDelivery: false,
@@ -118,7 +119,7 @@ export default function WebLinks({navigation, route}) {
     return;
   };
 
-  /***********Remove Image from rating */
+  /***********Remove Image from logo */
   const _removeImageFromList = (selectdImage) => {
     console.log(selectdImage, 'selectdImage>>>');
     if (selectdImage?.id) {
@@ -142,17 +143,43 @@ export default function WebLinks({navigation, route}) {
       });
     }
   };
+  /// remove banner
+
+  const _removeBannerFromList = (selectdImage) => {
+    console.log(selectdImage, 'selectdImage>>>');
+    if (selectdImage?.id) {
+      console.log(selectdImage?.id, 'selectdImage?.id');
+      let copyArrayImages = cloneDeep(imageArrayBanner);
+      console.log(copyArrayImages, 'copyArrayImages');
+      copyArrayImages = copyArrayImages.filter(
+        (x) => x?.id !== selectdImage?.id,
+      );
+      updateState({
+        imageArrayBanner: copyArrayImages,
+        remove_image_ids: [...remove_image_ids, selectdImage?.id],
+      });
+    } else {
+      let copyArrayImages = cloneDeep(imageArrayBanner);
+      copyArrayImages = copyArrayImages.filter(
+        (x) => x?.image_id !== selectdImage?.image_id,
+      );
+      updateState({
+        imageArrayBanner: copyArrayImages,
+      });
+    }
+  };
   //this function use for open actionsheet
   let actionSheet = useRef();
   const showActionSheet = () => {
     {
       !!userData?.auth_token
-        ? imageArray.length == 5
-          ? showError('Maximum photo selection limit reached')
-          : actionSheet.current.show()
+        ? // imageArray.length == 5
+          //   ? showError('Maximum photo selection limit reached')
+          actionSheet.current.show()
         : null;
     }
   };
+
   // this funtion use for camera handle
   const cameraHandle = (index) => {
     if (index == 0 || index == 1) {
@@ -175,6 +202,7 @@ export default function WebLinks({navigation, route}) {
               uri: res?.sourceURL || res?.path,
             };
             let find = imageArray.find((x) => x?.name == res?.filename);
+            console.log(imageArray, 'imageeeeeeee');
             if (find) {
               showError('Image is already uploaded');
             } else {
@@ -185,8 +213,48 @@ export default function WebLinks({navigation, route}) {
         .catch((err) => {});
     }
   };
-  const {cca2, phoneNumber, imageArray, isDineIn, isDelivery, isTakeaway} =
-    state;
+
+  // banner camera Handle
+  const bannerCameraHandle = (index) => {
+    if (index == 0 || index == 1) {
+      cameraHandler(index, {
+        width: 300,
+        height: 400,
+        cropping: false,
+        cropperCircleOverlay: false,
+        compressImageQuality: 0.5,
+        mediaType: 'photo',
+      })
+        .then((res) => {
+          console.log(res, 'res?.data');
+          if (res && (res?.sourceURL || res?.path)) {
+            console.log(res, 'response');
+            let file = {
+              image_id: Math.random(),
+              name: res?.filename,
+              type: res?.mime,
+              uri: res?.sourceURL || res?.path,
+            };
+            let find = imageArrayBanner.find((x) => x?.name == res?.filename);
+            if (find) {
+              showError('Image is already uploaded');
+            } else {
+              updateState({imageArrayBanner: [...imageArrayBanner, file]});
+            }
+          }
+        })
+        .catch((err) => {});
+    }
+  };
+  const {
+    cca2,
+    phoneNumber,
+    imageArray,
+    isDineIn,
+    isDelivery,
+    isTakeaway,
+    imageArrayBanner,
+  } = state;
   return (
     <WrapperContainer
       bgColor={colors.backgroundGrey}
@@ -273,7 +341,7 @@ export default function WebLinks({navigation, route}) {
               onChangeText={_onChangeText('confirm_password')}
               containerStyle={styles.containerStyle}
             />
-            <View style={{marginBottom: moderateScaleVertical(12)}}>
+            <View>
               <Text
                 style={{
                   fontSize: textScale(18),
@@ -282,27 +350,8 @@ export default function WebLinks({navigation, route}) {
                 {strings.STORE_DETAILS}
               </Text>
             </View>
-            <BorderTextInput
-              placeholder={strings.VENDER_NAME}
-              onChangeText={_onChangeText('vender_name')}
-              containerStyle={styles.containerStyle}
-            />
-            <BorderTextInput
-              placeholder={strings.DESCRIPTION}
-              onChangeText={_onChangeText('description')}
-              containerStyle={styles.containerStyle}
-            />
-            <BorderTextInput
-              placeholder={strings.ADDRESS}
-              onChangeText={_onChangeText('address')}
-              containerStyle={styles.containerStyle}
-            />
-            <BorderTextInput
-              placeholder={strings.WEBSITE}
-              onChangeText={_onChangeText('website')}
-              containerStyle={styles.containerStyle}
-            />
-            <View style={{marginTop: moderateScaleVertical(20)}}>
+
+            <View style={{marginVertical: moderateScaleVertical(20)}}>
               <View style={{flexDirection: 'row'}}>
                 <View
                   style={{
@@ -381,8 +430,8 @@ export default function WebLinks({navigation, route}) {
                     }}>
                     {strings.UPLOAD_BANNER}
                   </Text>
-                  {imageArray && imageArray.length ? (
-                    imageArray.map((i, inx) => {
+                  {imageArrayBanner && imageArrayBanner.length ? (
+                    imageArrayBanner.map((i, inx) => {
                       return (
                         <ImageBackground
                           source={{
@@ -398,7 +447,7 @@ export default function WebLinks({navigation, route}) {
                                 right: 30,
                               }}>
                               <TouchableOpacity
-                                onPress={() => _removeImageFromList(i)}>
+                                onPress={() => _removeBannerFromList(i)}>
                                 <Image source={imagePath.icRemoveIcon} />
                               </TouchableOpacity>
                             </View>
@@ -432,13 +481,33 @@ export default function WebLinks({navigation, route}) {
                 </View>
               </View>
             </View>
+            <BorderTextInput
+              placeholder={strings.VENDOR_NAME}
+              onChangeText={_onChangeText('vendor_name')}
+              containerStyle={styles.containerStyle}
+            />
+            <BorderTextInput
+              placeholder={strings.DESCRIPTION}
+              onChangeText={_onChangeText('description')}
+              containerStyle={styles.containerStyle}
+            />
+            <BorderTextInput
+              placeholder={strings.ADDRESS}
+              onChangeText={_onChangeText('address')}
+              containerStyle={styles.containerStyle}
+            />
+            <BorderTextInput
+              placeholder={strings.WEBSITE}
+              onChangeText={_onChangeText('website')}
+              containerStyle={styles.containerStyle}
+            />
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
 
                 marginHorizontal: moderateScale(10),
-                marginVertical: moderateScaleVertical(24),
+                marginVertical: moderateScaleVertical(16),
               }}>
               <View
                 style={{
@@ -501,6 +570,7 @@ export default function WebLinks({navigation, route}) {
               marginTop={moderateScaleVertical(10)}
               btnText={strings.SUBMIT}
             />
+            <View style={{height: moderateScaleVertical(20)}} />
           </View>
         </View>
         <ActionSheet
@@ -510,6 +580,14 @@ export default function WebLinks({navigation, route}) {
           cancelButtonIndex={2}
           destructiveButtonIndex={2}
           onPress={(index) => cameraHandle(index)}
+        />
+        <ActionSheet
+          ref={actionSheet}
+          // title={'Choose one option'}
+          options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
+          cancelButtonIndex={2}
+          destructiveButtonIndex={2}
+          onPress={(index) => bannerCameraHandle(index)}
         />
       </ScrollView>
     </WrapperContainer>
