@@ -68,6 +68,7 @@ const shortCodes = {
   flyinghorse: '8577b8',
   errand: '62a348',
   partnerproject: '246a2a',
+  menus: 'f644c8',
 };
 
 const appIds = {
@@ -338,6 +339,10 @@ const appIds = {
   partnerproject: Platform.select({
     ios: 'com.partnerproject',
     android: 'com.partnerproject',
+  }),
+  menus: Platform.select({
+    ios: 'com.menus',
+    android: 'com.menus',
   }),
 };
 
