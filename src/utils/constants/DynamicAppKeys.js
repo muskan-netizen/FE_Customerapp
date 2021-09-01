@@ -341,7 +341,7 @@ const appIds = {
     android: 'com.partnerproject',
   }),
   menus: Platform.select({
-    ios: 'com.menus',
+    ios: 'com.menusvirtual',
     android: 'com.menus',
   }),
 };
