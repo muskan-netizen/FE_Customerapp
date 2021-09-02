@@ -362,4 +362,6 @@ export default {
   WEBSITE: 'Website',
   UPLOAD_LOGO: 'Upload Logo',
   UPLOAD_BANNER: 'Upload Banner',
+  FSSAI_LICENSE: 'FSSAI License',
+  SFC_LICENSE: 'SFC Licence',
 };

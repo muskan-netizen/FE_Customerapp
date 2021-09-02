@@ -93,8 +93,7 @@ export default ({fontFamily}) => {
       height: width / 5,
       width: width / 5,
       borderRadius: 5,
-
-      backgroundColor: 'rgba(0,0,0,0.2)',
+      resizeMode: 'contain',
     },
   });
   return styles;

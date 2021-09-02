@@ -41,6 +41,7 @@ export default function Signup({navigation}) {
     deviceToken: '',
     referralCode: '',
   });
+
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const userData = useSelector((state) => state.auth.userData);
   const {appData, themeColors, themeLayouts, currencies, languages} =

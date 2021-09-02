@@ -20,6 +20,7 @@ import imagePath from '../../constants/imagePath';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {
   height,
   moderateScale,
@@ -34,9 +35,10 @@ import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import strings from '../../constants/lang';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
-import ActionSheet from 'react-native-actionsheet';
+
 import {cameraHandler} from '../../utils/commonFunction';
 import ToggleSwitch from 'toggle-switch-react-native';
+import DocumentPicker from 'react-native-document-picker';
 
 export default function WebLinks({navigation, route}) {
   console.log(route, 'route>>>');
@@ -61,6 +63,8 @@ export default function WebLinks({navigation, route}) {
     isDineIn: false,
     isTakeaway: false,
     isDelivery: false,
+    sfcLicense: [],
+    fssaiLicense: [],
   });
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -143,6 +147,7 @@ export default function WebLinks({navigation, route}) {
       });
     }
   };
+
   /// remove banner
 
   const _removeBannerFromList = (selectdImage) => {
@@ -168,82 +173,155 @@ export default function WebLinks({navigation, route}) {
       });
     }
   };
-  //this function use for open actionsheet
-  let actionSheet = useRef();
-  const showActionSheet = () => {
-    {
-      !!userData?.auth_token
-        ? // imageArray.length == 5
-          //   ? showError('Maximum photo selection limit reached')
-          actionSheet.current.show()
-        : null;
+  /// remove fssaiLicence
+
+  const _removeFssaiLicence = (selectdImage) => {
+    console.log(selectdImage, 'selectdImage>>>');
+    if (selectdImage?.id) {
+      console.log(selectdImage?.id, 'selectdImage?.id');
+      let copyArrayImages = cloneDeep(fssaiLicense);
+      console.log(copyArrayImages, 'copyArrayImages');
+      copyArrayImages = copyArrayImages.filter(
+        (x) => x?.id !== selectdImage?.id,
+      );
+      updateState({
+        fssaiLicense: copyArrayImages,
+        remove_image_ids: [...remove_image_ids, selectdImage?.id],
+      });
+    } else {
+      let copyArrayImages = cloneDeep(fssaiLicense);
+      copyArrayImages = copyArrayImages.filter(
+        (x) => x?.image_id !== selectdImage?.image_id,
+      );
+      updateState({
+        fssaiLicense: copyArrayImages,
+      });
+    }
+  };
+  /// remove sfcLicence
+
+  const _removeSfcLicence = (selectdImage) => {
+    console.log(selectdImage, 'selectdImage>>>');
+    if (selectdImage?.id) {
+      console.log(selectdImage?.id, 'selectdImage?.id');
+      let copyArrayImages = cloneDeep(sfcLicense);
+      console.log(copyArrayImages, 'copyArrayImages');
+      copyArrayImages = copyArrayImages.filter(
+        (x) => x?.id !== selectdImage?.id,
+      );
+      updateState({
+        sfcLicense: copyArrayImages,
+        remove_image_ids: [...remove_image_ids, selectdImage?.id],
+      });
+    } else {
+      let copyArrayImages = cloneDeep(sfcLicense);
+      copyArrayImages = copyArrayImages.filter(
+        (x) => x?.image_id !== selectdImage?.image_id,
+      );
+      updateState({
+        sfcLicense: copyArrayImages,
+      });
     }
   };
 
-  // this funtion use for camera handle
-  const cameraHandle = (index) => {
-    if (index == 0 || index == 1) {
-      cameraHandler(index, {
-        width: 300,
-        height: 400,
-        cropping: false,
-        cropperCircleOverlay: false,
-        compressImageQuality: 0.5,
-        mediaType: 'photo',
-      })
-        .then((res) => {
-          console.log(res, 'res?.data');
-          if (res && (res?.sourceURL || res?.path)) {
-            console.log(res, 'response');
-            let file = {
-              image_id: Math.random(),
-              name: res?.filename,
-              type: res?.mime,
-              uri: res?.sourceURL || res?.path,
-            };
-            let find = imageArray.find((x) => x?.name == res?.filename);
-            console.log(imageArray, 'imageeeeeeee');
-            if (find) {
-              showError('Image is already uploaded');
-            } else {
-              updateState({imageArray: [...imageArray, file]});
-            }
-          }
-        })
-        .catch((err) => {});
+  // upload Banner function
+  const uploadFile = async () => {
+    console.log('dffdffdf');
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images || DocumentPicker.types.doc],
+      });
+      console.log(res, 'response');
+      let file = {
+        image_id: Math.random(),
+        name: res[0]?.name,
+        type: res[0]?.type,
+        uri: res[0]?.uri,
+      };
+      console.log(file, 'file');
+      updateState({imageArrayBanner: [...imageArrayBanner, file]});
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker, exit any dialogs or menus and move on
+        console.log('cancel');
+      } else {
+        throw err;
+      }
     }
   };
-
-  // banner camera Handle
-  const bannerCameraHandle = (index) => {
-    if (index == 0 || index == 1) {
-      cameraHandler(index, {
-        width: 300,
-        height: 400,
-        cropping: false,
-        cropperCircleOverlay: false,
-        compressImageQuality: 0.5,
-        mediaType: 'photo',
-      })
-        .then((res) => {
-          console.log(res, 'res?.data');
-          if (res && (res?.sourceURL || res?.path)) {
-            console.log(res, 'response');
-            let file = {
-              image_id: Math.random(),
-              name: res?.filename,
-              type: res?.mime,
-              uri: res?.sourceURL || res?.path,
-            };
-            let find = imageArrayBanner.find((x) => x?.name == res?.filename);
-            if (find) {
-              showError('Image is already uploaded');
-            } else {
-              updateState({imageArrayBanner: [...imageArrayBanner, file]});
-            }
-          }
-        })
-        .catch((err) => {});
+  // upload logo function
+  const uploadLogo = async () => {
+    console.log('dffdffdf');
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images || DocumentPicker.types.doc],
+      });
+      console.log(res, 'response');
+      let file = {
+        image_id: Math.random(),
+        name: res[0]?.name,
+        type: res[0]?.type,
+        uri: res[0]?.uri,
+      };
+      console.log(file, 'file');
+      updateState({imageArray: [...imageArray, file]});
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker, exit any dialogs or menus and move on
+        console.log('cancel');
+      } else {
+        throw err;
+      }
+    }
+  };
+  // upload FSSAI License function
+  const fssaiuploadFile = async () => {
+    console.log('dffdffdf');
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images || DocumentPicker.types.doc],
+      });
+      console.log(res, 'response');
+      let file = {
+        image_id: Math.random(),
+        name: res[0]?.name,
+        type: res[0]?.type,
+        uri: res[0]?.uri,
+      };
+      console.log(file, 'file');
+      updateState({fssaiLicense: [...fssaiLicense, file]});
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker, exit any dialogs or menus and move on
+        console.log('cancel');
+      } else {
+        throw err;
+      }
+    }
+  };
+  // upload SFC License function
+  const sfcuploadFile = async () => {
+    console.log('dffdffdf');
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images || DocumentPicker.types.doc],
+      });
+      console.log(res, 'response');
+      let file = {
+        image_id: Math.random(),
+        name: res[0]?.name,
+        type: res[0]?.type,
+        uri: res[0]?.uri,
+      };
+      console.log(file, 'file');
+      updateState({sfcLicense: [...sfcLicense, file]});
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker, exit any dialogs or menus and move on
+        console.log('cancel');
+      } else {
+        throw err;
+      }
     }
   };
   const {
@@ -254,6 +332,8 @@ export default function WebLinks({navigation, route}) {
     isDelivery,
     isTakeaway,
     imageArrayBanner,
+    fssaiLicense,
+    sfcLicense,
   } = state;
   return (
     <WrapperContainer
@@ -272,7 +352,12 @@ export default function WebLinks({navigation, route}) {
       />
       <View style={{...commonStyles.headerTopLine}} />
 
-      <ScrollView>
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        style={{
+          flex: 1,
+        }}>
         <View style={{flex: 1}}>
           <View
             style={{
@@ -341,7 +426,7 @@ export default function WebLinks({navigation, route}) {
               onChangeText={_onChangeText('confirm_password')}
               containerStyle={styles.containerStyle}
             />
-            <View>
+            <View style={{marginTop: moderateScaleVertical(10)}}>
               <Text
                 style={{
                   fontSize: textScale(18),
@@ -401,9 +486,10 @@ export default function WebLinks({navigation, route}) {
                         height: height / 10,
                         marginHorizontal: moderateScale(12),
                         borderColor: colors.borderLight,
+                        borderRadius: moderateScale(5),
                       }}>
                       <TouchableOpacity
-                        onPress={showActionSheet}
+                        onPress={uploadLogo}
                         style={[
                           styles.viewOverImage2,
                           {borderStyle: 'dashed'},
@@ -464,9 +550,10 @@ export default function WebLinks({navigation, route}) {
                         height: height / 10,
                         marginHorizontal: moderateScale(12),
                         borderColor: colors.borderLight,
+                        borderRadius: moderateScale(5),
                       }}>
                       <TouchableOpacity
-                        onPress={showActionSheet}
+                        onPress={uploadFile}
                         style={[
                           styles.viewOverImage2,
                           {borderStyle: 'dashed'},
@@ -565,6 +652,138 @@ export default function WebLinks({navigation, route}) {
                 />
               </View>
             </View>
+            <View style={{marginVertical: moderateScaleVertical(20)}}>
+              <View style={{flexDirection: 'row'}}>
+                <View
+                  style={{
+                    width: width / 2 - moderateScale(22),
+                  }}>
+                  <Text
+                    style={{
+                      justifyContent: 'center',
+                      alignSelf: 'center',
+                      marginBottom: moderateScaleVertical(12),
+                      fontFamily: fontFamily.medium,
+                      color: colors.textGreyOpcaity7,
+                    }}>
+                    {strings.FSSAI_LICENSE}
+                  </Text>
+                  {fssaiLicense && fssaiLicense.length ? (
+                    fssaiLicense.map((i, inx) => {
+                      return (
+                        <ImageBackground
+                          source={{
+                            uri: i.uri,
+                          }}
+                          style={styles.imageOrderStyle}
+                          imageStyle={styles.imageOrderStyle}>
+                          <View style={styles.viewOverImage}>
+                            <View
+                              style={{
+                                position: 'absolute',
+                                top: -10,
+                                right: 30,
+                              }}>
+                              <TouchableOpacity
+                                onPress={() => _removeFssaiLicence(i)}>
+                                <Image source={imagePath.icRemoveIcon} />
+                              </TouchableOpacity>
+                            </View>
+                          </View>
+                        </ImageBackground>
+                      );
+                    })
+                  ) : (
+                    <View
+                      style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderWidth: 1,
+                        height: height / 10,
+                        marginHorizontal: moderateScale(12),
+                        borderColor: colors.borderLight,
+                        borderRadius: moderateScale(5),
+                      }}>
+                      <TouchableOpacity
+                        onPress={fssaiuploadFile}
+                        style={[
+                          styles.viewOverImage2,
+                          {borderStyle: 'dashed'},
+                        ]}>
+                        <Image
+                          source={imagePath.icCamIcon}
+                          style={{tintColor: colors.themeColor}}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                </View>
+                <View
+                  style={{
+                    width: width / 2 - moderateScale(22),
+                  }}>
+                  <Text
+                    style={{
+                      justifyContent: 'center',
+                      alignSelf: 'center',
+                      marginBottom: moderateScaleVertical(12),
+                      fontFamily: fontFamily.medium,
+                      color: colors.textGreyOpcaity7,
+                    }}>
+                    {strings.SFC_LICENSE}
+                  </Text>
+                  {sfcLicense && sfcLicense.length ? (
+                    sfcLicense.map((i, inx) => {
+                      return (
+                        <ImageBackground
+                          source={{
+                            uri: i.uri,
+                          }}
+                          style={styles.imageOrderStyle}
+                          imageStyle={styles.imageStyle}>
+                          <View style={styles.viewOverImage}>
+                            <View
+                              style={{
+                                position: 'absolute',
+                                top: -10,
+                                right: 30,
+                              }}>
+                              <TouchableOpacity
+                                onPress={() => _removeSfcLicence(i)}>
+                                <Image source={imagePath.icRemoveIcon} />
+                              </TouchableOpacity>
+                            </View>
+                          </View>
+                        </ImageBackground>
+                      );
+                    })
+                  ) : (
+                    <View
+                      style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderWidth: 1,
+                        height: height / 10,
+                        marginHorizontal: moderateScale(12),
+                        borderColor: colors.borderLight,
+                        borderRadius: moderateScale(5),
+                      }}>
+                      <TouchableOpacity
+                        onPress={sfcuploadFile}
+                        style={[
+                          styles.viewOverImage2,
+                          {borderStyle: 'dashed'},
+                        ]}>
+                        <Image
+                          source={imagePath.icCamIcon}
+                          style={{tintColor: colors.themeColor}}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                </View>
+              </View>
+            </View>
 
             <GradientButton
               marginTop={moderateScaleVertical(10)}
@@ -573,23 +792,7 @@ export default function WebLinks({navigation, route}) {
             <View style={{height: moderateScaleVertical(20)}} />
           </View>
         </View>
-        <ActionSheet
-          ref={actionSheet}
-          // title={'Choose one option'}
-          options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
-          cancelButtonIndex={2}
-          destructiveButtonIndex={2}
-          onPress={(index) => cameraHandle(index)}
-        />
-        <ActionSheet
-          ref={actionSheet}
-          // title={'Choose one option'}
-          options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
-          cancelButtonIndex={2}
-          destructiveButtonIndex={2}
-          onPress={(index) => bannerCameraHandle(index)}
-        />
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </WrapperContainer>
   );
 }
