@@ -30,10 +30,12 @@ import {
 import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
 import stylesFunc from './styles';
 import LinearGradient from 'react-native-linear-gradient';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
-  console.log(data, 'data listing >>>>>');
+  console.log(data, 'data params >>>>>');
   const [state, setState] = useState({
     isVisibleModal: false,
     isOffline: false,
@@ -91,6 +93,8 @@ export default function Products({route, navigation}) {
     checkForMinimumPriceChange: false,
     checkForMaximumPriceChange: false,
     showFilterSlectedIcon: false,
+    isLoadingC: false,
+    selectedCategory: null,
   });
 
   const {
@@ -103,6 +107,8 @@ export default function Products({route, navigation}) {
     appStyle,
   } = useSelector((state) => state?.initBoot);
   const {
+    selectedCategory,
+    isLoadingC,
     isLoading,
     isOffline,
     pageNo,
@@ -429,8 +435,9 @@ export default function Products({route, navigation}) {
         console.log(res, 'res--getproducts');
         updateState({
           isLoading: false,
+          isLoadingC: false,
           isRefreshing: false,
-          categoryInfo: res.data.category,
+          categoryInfo: categoryInfo ? categoryInfo : res.data.category,
           filterData: res.data.filterData,
           productListData:
             pageNo == 1
@@ -535,8 +542,27 @@ export default function Products({route, navigation}) {
 
   const onPressChildCards = (item) => {
     console.log(item, 'item upload');
-    // updateState({selectedSbCategoryID: item.id});
-    navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
+    let filterExist =
+      sleectdBrands.length ||
+      selectedVariants.length ||
+      selectedOptions.length ||
+      slectedSortBy.length ||
+      minimumPrice != 0 ||
+      maximumPrice != 50000 ||
+      checkForMaximumPriceChange ||
+      checkForMinimumPriceChange;
+    updateState({
+      selectedCategory: item,
+      productListData: [],
+      productListId: item,
+      pageNo: 1,
+      limit: 12,
+      isLoadingC: true,
+    });
+    setTimeout(() => {
+      filterExist ? getAllProductsCategoryFilter() : getAllProducts();
+    }, 1000);
+    // navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
   };
 
   // we set the height of item is fixed
@@ -566,15 +592,25 @@ export default function Products({route, navigation}) {
                     <TouchableOpacity
                       style={{
                         padding: moderateScale(10),
-                        backgroundColor: colors.lightGreyBg,
+                        // backgroundColor: colors.lightGreyBg,
                         marginRight: moderateScale(10),
                         borderRadius: moderateScale(12),
+                        backgroundColor:
+                          selectedCategory && selectedCategory?.id == item?.id
+                            ? themeColors.primary_color
+                            : colors.lightGreyBg,
                       }}
                       onPress={() => onPressChildCards(item)}>
                       <Text
                         style={{
-                          color: colors.black,
-                          opacity: 0.61,
+                          color:
+                            selectedCategory && selectedCategory?.id == item?.id
+                              ? colors.white
+                              : colors.black,
+                          opacity:
+                            selectedCategory && selectedCategory?.id == item?.id
+                              ? 1
+                              : 0.61,
                           fontSize: textScale(12),
                           fontFamily: fontFamily.medium,
                         }}>
@@ -598,6 +634,19 @@ export default function Products({route, navigation}) {
         translucent
         backgroundColor="transparent"
         barStyle={'dark-content'}
+      />
+      <CustomAnimatedLoader
+        source={loaderOne}
+        loaderTitle="Loading"
+        containerColor={colors.white}
+        loadercolor={themeColors.primary_color}
+        animationStyle={[
+          {
+            height: moderateScaleVertical(40),
+            width: moderateScale(40),
+          },
+        ]}
+        visible={isLoadingC}
       />
 
       <View
