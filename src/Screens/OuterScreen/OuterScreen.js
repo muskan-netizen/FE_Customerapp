@@ -217,7 +217,9 @@ export default function OuterScreen({navigation}) {
         <View style={{marginHorizontal: moderateScale(24)}}>
           <View style={{marginHorizontal: moderateScaleVertical(30)}}>
             <Text numberOfLines={2} style={styles.txtSmall}>
-              {strings.JOIN_US}
+              {appData?.profile?.preferences?.home_tag_line
+                ? appData?.profile?.preferences?.home_tag_line
+                : ''}
             </Text>
           </View>
           <GradientButton

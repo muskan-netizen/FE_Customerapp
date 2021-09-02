@@ -30,18 +30,6 @@ import stylesFun from './styles';
 import commonStylesFun from '../../styles/commonStyles';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 export default function Signup({navigation}) {
-  const [state, setState] = useState({
-    isLoading: false,
-    callingCode: '91',
-    cca2: 'IN',
-    name: '',
-    email: '',
-    password: '',
-    phoneNumber: '',
-    deviceToken: '',
-    referralCode: '',
-  });
-
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const userData = useSelector((state) => state.auth.userData);
   const {appData, themeColors, themeLayouts, currencies, languages} =
@@ -50,6 +38,20 @@ export default function Signup({navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
   const styles = stylesFun({fontFamily});
+
+  const [state, setState] = useState({
+    isLoading: false,
+    callingCode: '91',
+    cca2: appData?.profile?.country?.code
+      ? appData?.profile?.country?.code
+      : 'IN',
+    name: '',
+    email: '',
+    password: '',
+    phoneNumber: '',
+    deviceToken: '',
+    referralCode: '',
+  });
   const _onCountryChange = (data) => {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
     return;

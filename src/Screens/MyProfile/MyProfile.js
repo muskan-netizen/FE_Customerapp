@@ -45,6 +45,7 @@ import validations from '../../utils/validations';
 import stylesFunc from './styles';
 export default function MyProfile({route, navigation}) {
   const currentTheme = useSelector((state) => state?.initBoot);
+
   const {themeColors, themeLayouts, appStyle} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
