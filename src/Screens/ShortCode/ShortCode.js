@@ -504,6 +504,19 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.sunshinerideshare:
+          updateState({
+            shortCode: shortCodes.sunshinerideshare,
+            isShortcodePrefilled: true,
+          });
+          break;
+          break;
+        case appIds.autotek:
+          updateState({
+            shortCode: shortCodes.autotek,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

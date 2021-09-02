@@ -70,6 +70,8 @@ const shortCodes = {
   partnerproject: '246a2a',
   menus: 'f644c8',
   doorstep: 'f76099',
+  sunshinerideshare: 'cef206',
+  autotek: '2fbe83',
 };
 
 const appIds = {
@@ -348,6 +350,14 @@ const appIds = {
   doorstep: Platform.select({
     ios: 'com.doorstepone',
     android: 'com.doorstep',
+  }),
+  sunshinerideshare: Platform.select({
+    ios: 'com.sunshinerideshare',
+    android: 'com.sunshinerideshare',
+  }),
+  autotek: Platform.select({
+    ios: 'com.autotek',
+    android: 'com.autotek',
   }),
 };
 

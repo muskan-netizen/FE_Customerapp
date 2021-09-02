@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "956417482971",
+    "project_id": "autotek-f1047",
+    "storage_bucket": "autotek-f1047.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956417482971:android:45c78620b296fe7cbb2cfe",
+        "android_client_info": {
+          "package_name": "com.autotek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "956417482971-1nh6c0ltv0135fin1tqgmf72d7q99jb8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.autotek",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "956417482971-j10lunjgaq8lshif1jf041g69ceke1k5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.autotek",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "956417482971-uv8ec8rorack1dccjlrc44skgsmssa4h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.autotek",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "956417482971-vk8pm33s7tq8neqvs9vau654tvsor0c8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqgs6MiwXbHaCGlbKVTuV-HZvJEfmm6yc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "956417482971-vk8pm33s7tq8neqvs9vau654tvsor0c8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "956417482971-63rfa438hsrmnk3713a6qrk2mhmp3hv3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.autotek"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
