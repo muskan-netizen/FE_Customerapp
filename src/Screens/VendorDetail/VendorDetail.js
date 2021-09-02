@@ -20,12 +20,13 @@ export default function VendorDetail({navigation, route}) {
 
   const [state, setState] = useState({
     vendorId: vendorParams?.item?.id || vendorParams.id,
+    vendordName: vendorParams.name || '',
     vendorData: [],
     isLoading: true,
     limit: 12,
     pageNo: 1,
   });
-  const {vendorId, vendorData, isLoading, limit, pageNo} = state;
+  const {vendorId, vendorData, isLoading, limit, pageNo, vendordName} = state;
   useEffect(() => {
     if (
       vendorParams &&
@@ -134,15 +135,13 @@ export default function VendorDetail({navigation, route}) {
     );
   };
 
-  console.log(vendorData, 'vendorDatavendorData');
-
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
       bgColor={colors.backgroundGrey}>
       <Header
         leftIcon={imagePath.back}
-        centerTitle={vendorParams?.item?.name || vendorData.vendor_name}
+        centerTitle={vendorParams?.item?.name || vendordName}
         rightIcon={imagePath.search}
         onPressRight={() =>
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
@@ -157,7 +156,7 @@ export default function VendorDetail({navigation, route}) {
         </View>
       ) : (
         <FlatList
-          data={vendorData?.category_details || vendorData}
+          data={vendorData}
           numColumns={3}
           ListHeaderComponent={<View style={{height: 10}} />}
           // columnWrapperStyle={{justifyContent: 'space-between'}}

@@ -1,19 +1,11 @@
 import React, {createRef, useState} from 'react';
-import {I18nManager} from 'react-native';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {I18nManager, Image, Text, TouchableOpacity, View} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-
 import {useSelector} from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
-import {
-  height,
-  moderateScale,
-  moderateScaleVertical,
-  textScale,
-  width,
-} from '../../../styles/responsiveSize';
+import {moderateScale, textScale, width} from '../../../styles/responsiveSize';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 
@@ -134,7 +126,7 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
             alignSelf: 'center',
           }}
           arrowColor={themeColors.primary_color}
-          onChangeItem={(item) => console.log(item, 'selectedITTTTM')}
+          arrowStyle={{height: 15}}
         />
       </View>
     </View>
