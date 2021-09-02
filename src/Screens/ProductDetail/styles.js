@@ -238,4 +238,10 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
       fontSize: moderateScale(20),
       color: themeColors.primary_color,
     },
+    descriptionStyle:{
+        color: colors.textGreyE,
+        fontSize: textScale(14), 
+        fontFamily: 'Futura-Book',
+        lineHeight: moderateScale(22)
+    }
   });
