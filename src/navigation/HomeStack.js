@@ -78,7 +78,7 @@ export default function () {
           appData?.profile?.code === shortCodes.capcorp
             ? ProductList2
             : // : ProductList
-              ProductList3
+              ProductList
         }
         options={{headerShown: false}}
       />
@@ -114,7 +114,7 @@ export default function () {
         component={
           appData?.profile?.code === shortCodes.capcorp
             ? ProductDetail2
-            : ProductDetail2
+            : ProductDetail
         }
         options={{headerShown: false}}
       />
