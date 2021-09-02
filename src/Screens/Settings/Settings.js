@@ -20,8 +20,11 @@ import {
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {setItem} from '../../utils/utils';
 import stylesFunc from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Settings({route, navigation}) {
+  const isDarkMode = useDarkMode();
   // const appData = useSelector(state => state?.initBoot?.appData);
   const {currencies, appData, languages, appStyle} = useSelector(
     (state) => state?.initBoot,
@@ -119,7 +122,7 @@ export default function Settings({route, navigation}) {
   console.log(appCurrencies.all_currencies, 'll_currencies');
   return (
     <WrapperContainer
-      bgColor={colors.white}
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
@@ -131,13 +134,24 @@ export default function Settings({route, navigation}) {
         }
         centerTitle={strings.SETTINGS}
         // rightIcon={imagePath.cartShop}
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
+        }
       />
 
       <View style={{...commonStyles.headerTopLine}} />
       {/* <KeyboardAwareScrollView bounces={false}> */}
       <View style={{flexDirection: 'row', marginHorizontal: moderateScale(20)}}>
-        <Text style={styles.currency}>{strings.CURRENCIES}</Text>
+        <Text
+          style={
+            isDarkMode
+              ? [styles.currency, {color: MyDarkTheme.colors.text}]
+              : styles.currency
+          }>
+          {strings.CURRENCIES}
+        </Text>
       </View>
       <DropDownPicker
         items={appCurrencies.all_currencies}
@@ -148,18 +162,25 @@ export default function Settings({route, navigation}) {
         }
         containerStyle={{height: 40, marginTop: moderateScaleVertical(5)}}
         style={{
-          backgroundColor: '#fafafa',
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.lightDark
+            : '#fafafa',
           zIndex: 5000,
           marginHorizontal: moderateScale(20),
           flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
         }}
+        labelStyle={
+          isDarkMode ? {color: MyDarkTheme.colors.text} : {color: null}
+        }
         itemStyle={{
           justifyContent: 'flex-start',
           flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
         }}
         zIndex={5000}
         dropDownStyle={{
-          backgroundColor: '#fafafa',
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.lightDark
+            : '#fafafa',
           height: 120,
           width: width - moderateScale(40),
           alignSelf: 'center',
@@ -175,7 +196,14 @@ export default function Settings({route, navigation}) {
 
           zIndex: 4000,
         }}>
-        <Text style={styles.currency}>{strings.LANGUAGES}</Text>
+        <Text
+          style={
+            isDarkMode
+              ? [styles.currency, {color: MyDarkTheme.colors.text}]
+              : styles.currency
+          }>
+          {strings.LANGUAGES}
+        </Text>
       </View>
       <DropDownPicker
         items={appLanguages.all_languages}
@@ -186,7 +214,9 @@ export default function Settings({route, navigation}) {
         }
         containerStyle={{height: 40, marginTop: moderateScaleVertical(5)}}
         style={{
-          backgroundColor: '#fafafa',
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.lightDark
+            : '#fafafa',
           zIndex: 4000,
           marginHorizontal: moderateScale(20),
           flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
@@ -198,9 +228,14 @@ export default function Settings({route, navigation}) {
         labelStyle={{
           textAlign: I18nManager.isRTL ? 'right' : 'left',
         }}
+        labelStyle={
+          isDarkMode ? {color: MyDarkTheme.colors.text} : {color: null}
+        }
         zIndex={4000}
         dropDownStyle={{
-          backgroundColor: '#fafafa',
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.lightDark
+            : '#fafafa',
           height: 120,
           width: width - moderateScale(40),
           alignSelf: 'center',

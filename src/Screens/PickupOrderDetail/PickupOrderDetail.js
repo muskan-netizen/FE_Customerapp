@@ -19,12 +19,15 @@ import {useIsFocused} from '@react-navigation/native';
 import OrderDetailView from './OrderDetailView';
 import Communications from 'react-native-communications';
 import navigationStrings from '../../navigation/navigationStrings';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default function PickupOrderDetail({navigation, route}) {
+  const isDarkMode = useDarkMode();
   const paramData = route?.params;
   console.log(paramData, '>>>>paramData>>>>');
   const [state, setState] = useState({
@@ -221,7 +224,7 @@ export default function PickupOrderDetail({navigation, route}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.white}
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>

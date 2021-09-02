@@ -896,7 +896,9 @@ export default function ProductDetail({route, navigation}) {
                 </Text> */}
 
                     <HTMLView
-                      value={productDetailData?.translation[0]?.body_html}
+                      stylesheet={isDarkMode ? htmlStyle : null}
+                      value={`<h2>${productDetailData?.translation[0]?.body_html}</h2>`}
+                      //value={productDetailData?.translation[0]?.body_html}
                     />
                   </View>
                 </View>
@@ -975,3 +977,8 @@ export default function ProductDetail({route, navigation}) {
     </WrapperContainer>
   );
 }
+const htmlStyle = StyleSheet.create({
+  h2: {
+    color: '#e5e5e7', // make links coloured pink
+  },
+});

@@ -23,6 +23,8 @@ import {
 } from '../styles/responsiveSize';
 import {showError} from '../utils/helperFunctions';
 import TransparentButtonWithTxtAndIcon from './TransparentButtonWithTxtAndIcon';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 // navigator.geolocation = require('@react-native-community/geolocation');
 navigator.geolocation = require('react-native-geolocation-service');
@@ -40,7 +42,7 @@ export default function ChooseAddressModal({
   selectedAddress,
 }) {
   //close yout modal
-
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     allAddress: [],
     isLoading: true,
@@ -120,12 +122,29 @@ export default function ChooseAddressModal({
                         alignItems: 'flex-start',
                         justifyContent: 'center',
                       }}>
-                      <Image source={imagePath.home} />
+                      <Image
+                        style={
+                          isDarkMode
+                            ? {tintColor: MyDarkTheme.colors.text}
+                            : {tintColor: null}
+                        }
+                        source={imagePath.home}
+                      />
                     </View>
                     <View style={{flex: 0.8}}>
                       <Text
                         numberOfLines={2}
-                        style={[styles.address, {textAlign: 'left'}]}>
+                        style={
+                          isDarkMode
+                            ? [
+                                styles.address,
+                                {
+                                  textAlign: 'left',
+                                  color: MyDarkTheme.colors.text,
+                                },
+                              ]
+                            : [styles.address, {textAlign: 'left'}]
+                        }>
                         {itm?.address}
                       </Text>
                     </View>
@@ -158,16 +177,37 @@ export default function ChooseAddressModal({
         updateState({viewHeight: event.nativeEvent.layout.height});
       }}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-        <Image source={imagePath.crossB} />
+        <Image
+          style={
+            isDarkMode
+              ? {tintColor: MyDarkTheme.colors.text}
+              : {tintColor: null}
+          }
+          source={imagePath.crossB}
+        />
       </TouchableOpacity>
 
       <ScrollView
         showsVerticalScrollIndicator={false}
         bounces={false}
         style={[styles.modalMainViewContainer]}>
-        <View style={styles.modalMainViewContainer}>
+        <View
+          style={
+            isDarkMode
+              ? [
+                  styles.modalMainViewContainer,
+                  {backgroundColor: MyDarkTheme.colors.lightDark},
+                ]
+              : styles.modalMainViewContainer
+          }>
           <View style={styles.selectAndAddesssView}>
-            <Text numberOfLines={1} style={styles.selectAddressText}>
+            <Text
+              numberOfLines={1}
+              style={
+                isDarkMode
+                  ? [styles.selectAddressText, {color: MyDarkTheme.colors.text}]
+                  : styles.selectAddressText
+              }>
               {strings.SELECT_AN_ADDRESS}
             </Text>
           </View>
@@ -175,14 +215,24 @@ export default function ChooseAddressModal({
             btnText={strings.ADD_NEW_ADDRESS}
             icon={imagePath.add}
             onPress={openAddressModal}
-            textStyle={{marginLeft: 10}}
+            textStyle={
+              isDarkMode
+                ? {marginLeft: 10, color: MyDarkTheme.colors.text}
+                : {marginLeft: 10}
+            }
             borderRadius={moderateScale(13)}
             containerStyle={{marginHorizontal: 20, alignItems: 'flex-start'}}
             marginBottom={moderateScaleVertical(20)}
           />
           <View style={{height: 1, backgroundColor: colors.lightGreyBg}} />
           <View style={styles.savedAddressView}>
-            <Text numberOfLines={1} style={styles.savedAddressText}>
+            <Text
+              numberOfLines={1}
+              style={
+                isDarkMode
+                  ? [styles.savedAddressText, {color: MyDarkTheme.colors.text}]
+                  : styles.savedAddressText
+              }>
               {strings.SAVED_ADDRESS}
             </Text>
           </View>

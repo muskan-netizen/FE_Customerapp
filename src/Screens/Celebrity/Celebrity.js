@@ -20,6 +20,8 @@ import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyCleb from './ListEmptyCeleb';
 import stylesFun from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Celebrity({navigation}) {
   const swiperRef = useRef();
@@ -39,8 +41,8 @@ export default function Celebrity({navigation}) {
     selectedTab: 'All',
     pageIndex: 0,
   });
-
-  const {appData, currencies, languages, appStyle} = useSelector(
+  const isDarkMode = useDarkMode();
+  const {appData, currencies, languages, appStyle, themeColors} = useSelector(
     (state) => state.initBoot,
   );
   const homePageLayout = appStyle?.homePageLayout;
@@ -145,7 +147,9 @@ export default function Celebrity({navigation}) {
   };
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGrey}>
       <Header
         centerTitle={strings.CELEBRITIES}
@@ -173,7 +177,7 @@ export default function Celebrity({navigation}) {
                 onPress={() => _onPress(item, index)}
                 style={
                   selectedTab == item
-                    ? [styles.headerText, {color: colors.themeColor}]
+                    ? [styles.headerText, {color: themeColors.primary_color}]
                     : [styles.headerText]
                 }>
                 {item}

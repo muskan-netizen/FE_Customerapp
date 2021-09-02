@@ -16,12 +16,14 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function BorderTextInput({
   containerStyle,
   textInputStyle,
   leftIcon,
-  color = colors.textGreyOpcaity7,
+  color = useDarkMode() ? MyDarkTheme.colors.text : colors.textGreyOpcaity7,
   rightIcon,
   onChangeText,
   value,
@@ -32,6 +34,7 @@ export default function BorderTextInput({
   secureTextEntry = false,
   ...props
 }) {
+  const isDarkMode = useDarkMode();
   const inputRef = useRef();
   const {appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -65,7 +68,7 @@ export default function BorderTextInput({
       )}
 
       <TextInput
-        selectionColor={colors.black}
+        selectionColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
         placeholder={placeholder}
         placeholderTextColor={color}
         style={{

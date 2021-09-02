@@ -24,10 +24,13 @@ import {
   _twitterSignIn,
 } from '../../utils/socialLogin';
 import DeviceInfo from 'react-native-device-info';
-
 import stylesFunc from './styles';
 import Header from '../../Components/Header';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
+
 export default function OuterScreen({navigation}) {
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     getLanguage: '',
     isLoading: false,
@@ -197,7 +200,10 @@ export default function OuterScreen({navigation}) {
     navigation.push(navigationStrings.DRAWER_ROUTES);
   };
   return (
-    <WrapperContainer isLoadingB={isLoading} source={loaderOne}>
+    <WrapperContainer
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
+      isLoadingB={isLoading}
+      source={loaderOne}>
       {shortCodeStatus && (
         <Header
           leftIcon={imagePath.back}
@@ -208,15 +214,32 @@ export default function OuterScreen({navigation}) {
             navigation.goBack()
           }
           // rightIcon={imagePath.cartShop}
-          headerStyle={{backgroundColor: colors.white}}
+          headerStyle={
+            isDarkMode
+              ? {backgroundColor: MyDarkTheme.colors.background}
+              : {backgroundColor: colors.white}
+          }
         />
       )}
 
       <View style={{marginTop: moderateScaleVertical(100), flex: 1}}>
-        <Text style={styles.header}>{strings.CREATE_YOUR_ACCOUNT}</Text>
+        <Text
+          style={
+            isDarkMode
+              ? [styles.header, {color: MyDarkTheme.colors.text}]
+              : styles.header
+          }>
+          {strings.CREATE_YOUR_ACCOUNT}
+        </Text>
         <View style={{marginHorizontal: moderateScale(24)}}>
           <View style={{marginHorizontal: moderateScaleVertical(30)}}>
-            <Text numberOfLines={2} style={styles.txtSmall}>
+            <Text
+              numberOfLines={2}
+              style={
+                isDarkMode
+                  ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+                  : styles.txtSmall
+              }>
               {strings.JOIN_US}
             </Text>
           </View>
@@ -238,7 +261,14 @@ export default function OuterScreen({navigation}) {
             !!apple_login ? (
               <View style={styles.socialRow}>
                 <View style={styles.hyphen} />
-                <Text style={styles.orText}>{strings.OR_SIGNUP_WITH}</Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.orText, {color: MyDarkTheme.colors.text}]
+                      : styles.orText
+                  }>
+                  {strings.OR_SIGNUP_WITH}
+                </Text>
                 <View style={styles.hyphen} />
               </View>
             ) : null}

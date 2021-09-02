@@ -21,21 +21,26 @@ import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
+
 export default function ContactUs({navigation}) {
+  const isDarkMode = useDarkMode();
   const currentTheme = useSelector((state) => state.appTheme);
   const userData = useSelector((state) => state?.auth?.userData);
   console.log(userData, 'userData>>>userData');
 
   const [state, setState] = useState({
-    callingCode:  userData && userData?.dial_code ? userData?.dial_code : '1',
+    callingCode: userData && userData?.dial_code ? userData?.dial_code : '1',
     cca2: userData && userData?.cca2 ? userData?.cca2 : 'US',
-    name: userData && userData?.name? userData?.name : '',
-    email: userData && userData?.email? userData?.email : '',
-    phoneNumber: userData &&  userData?.phone_number? userData?.phone_number : '',
+    name: userData && userData?.name ? userData?.name : '',
+    email: userData && userData?.email ? userData?.email : '',
+    phoneNumber:
+      userData && userData?.phone_number ? userData?.phone_number : '',
     message: '',
     isLoading: false,
   });
-  const {message, phoneNumber, cca2, name, email, isLoading}   = state;
+  const {message, phoneNumber, cca2, name, email, isLoading} = state;
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -142,6 +147,7 @@ export default function ContactUs({navigation}) {
           callingCode={state.callingCode}
           keyboardType={'number-pad'}
           returnKeyType={'done'}
+          color={isDarkMode ? MyDarkTheme.colors.text : null}
         />
         <View style={{height: moderateScaleVertical(20)}} />
         <BorderTextInput
@@ -166,7 +172,7 @@ export default function ContactUs({navigation}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.white}
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
@@ -177,7 +183,11 @@ export default function ContactUs({navigation}) {
             : imagePath.back
         }
         centerTitle={strings.CONTACT_USS}
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
+        }
       />
       <View style={{...commonStyles.headerTopLine}} />
       {/* top section user general info */}

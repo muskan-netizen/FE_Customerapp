@@ -29,7 +29,11 @@ import validations from '../../utils/validations';
 import stylesFun from './styles';
 import commonStylesFun from '../../styles/commonStyles';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
+
 export default function Signup({navigation}) {
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     isLoading: false,
     callingCode: '91',
@@ -139,7 +143,10 @@ export default function Signup({navigation}) {
     referralCode,
   } = state;
   return (
-    <WrapperContainer isLoadingB={isLoading} source={loaderOne}>
+    <WrapperContainer
+      isLoadingB={isLoading}
+      source={loaderOne}
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
       <View
         style={{
           height: moderateScaleVertical(60),
@@ -151,7 +158,14 @@ export default function Signup({navigation}) {
           style={{alignSelf: 'flex-start'}}>
           <Image
             source={imagePath.back}
-            style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+            style={
+              isDarkMode
+                ? {
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    tintColor: MyDarkTheme.colors.text,
+                  }
+                : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+            }
           />
         </TouchableOpacity>
       </View>
@@ -163,8 +177,22 @@ export default function Signup({navigation}) {
         }}>
         <View style={{flex: 1}}>
           <View style={{marginTop: moderateScaleVertical(50)}}>
-            <Text style={styles.header}>{strings.CREATE_YOUR_ACCOUNT}</Text>
-            <Text style={styles.txtSmall}>{strings.ENTER_DETAILS_BELOW}</Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.header, {color: MyDarkTheme.colors.text}]
+                  : styles.header
+              }>
+              {strings.CREATE_YOUR_ACCOUNT}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+                  : styles.txtSmall
+              }>
+              {strings.ENTER_DETAILS_BELOW}
+            </Text>
           </View>
 
           <View
@@ -176,6 +204,7 @@ export default function Signup({navigation}) {
               onChangeText={_onChangeText('name')}
               placeholder={strings.YOUR_NAME}
               value={name}
+              color={isDarkMode ? MyDarkTheme.colors.text : null}
             />
             <BorderTextInput
               // autoCapitalize={'none'}
@@ -183,6 +212,7 @@ export default function Signup({navigation}) {
               placeholder={strings.YOUR_EMAIL}
               value={email}
               keyboardType={'email-address'}
+              color={isDarkMode ? MyDarkTheme.colors.text : null}
             />
             <PhoneNumberInput
               onCountryChange={_onCountryChange}
@@ -194,6 +224,7 @@ export default function Signup({navigation}) {
               callingCode={state.callingCode}
               placeholder={strings.YOUR_PHONE_NUMBER}
               keyboardType={'phone-pad'}
+              color={isDarkMode ? MyDarkTheme.colors.text : null}
             />
             <View style={{height: moderateScaleVertical(20)}} />
             <BorderTextInput
@@ -201,11 +232,13 @@ export default function Signup({navigation}) {
               onChangeText={_onChangeText('password')}
               placeholder={strings.ENTER_PASSWORD}
               value={password}
+              color={isDarkMode ? MyDarkTheme.colors.text : null}
             />
             <BorderTextInput
               onChangeText={_onChangeText('referralCode')}
               placeholder={strings.ENTERREFERALCODE}
               value={referralCode}
+              color={isDarkMode ? MyDarkTheme.colors.text : null}
             />
             <GradientButton
               onPress={onSignup}
@@ -214,7 +247,12 @@ export default function Signup({navigation}) {
             />
           </View>
           <View style={styles.bottomContainer}>
-            <Text style={{...styles.txtSmall, color: colors.textGreyLight}}>
+            <Text
+              style={
+                isDarkMode
+                  ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
+                  : {...styles.txtSmall, color: colors.textGreyLight}
+              }>
               {strings.ALREADY_HAVE_AN_ACCOUNT}
               <Text
                 onPress={moveToNewScreen(navigationStrings.LOGIN)}

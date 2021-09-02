@@ -491,13 +491,11 @@ export default function MyProfile({route, navigation}) {
             onChangeText={_onChangeText('name')}
             placeholder={strings.YOUR_NAME}
             value={name}
-            color={isDarkMode ? MyDarkTheme.colors.text : null}
           />
           <BorderTextInput
             onChangeText={_onChangeText('email')}
             placeholder={strings.YOUR_EMAIL}
             value={email}
-            color={isDarkMode ? MyDarkTheme.colors.text : null}
           />
           <PhoneNumberInput
             onCountryChange={_onCountryChange}
@@ -539,14 +537,12 @@ export default function MyProfile({route, navigation}) {
             placeholder={strings.ENTER_CURRENT_PASS}
             value={currentpassword}
             secureTextEntry={true}
-            color={isDarkMode ? MyDarkTheme.colors.text : null}
           />
           <BorderTextInput
             onChangeText={_onChangeText('newPassword')}
             placeholder={strings.ENTER_NEW_PASS}
             value={newPassword}
             secureTextEntry={true}
-            color={isDarkMode ? MyDarkTheme.colors.text : null}
           />
 
           <BorderTextInput
@@ -554,7 +550,6 @@ export default function MyProfile({route, navigation}) {
             placeholder={strings.ENTER_CONFIRM_PASS}
             value={confirmPassword}
             secureTextEntry={true}
-            color={isDarkMode ? MyDarkTheme.colors.text : null}
           />
 
           <GradientButton

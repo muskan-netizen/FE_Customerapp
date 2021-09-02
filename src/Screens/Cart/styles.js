@@ -349,6 +349,10 @@ export default ({fontFamily, themeColors}) => {
       color: colors.blackC,
       fontFamily: fontFamily.bold,
     },
+    dateTimePickerText: {
+      width: width - 20,
+      height: height / 3.5,
+    },
   });
   return styles;
 };
