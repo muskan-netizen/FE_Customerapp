@@ -36,7 +36,6 @@ import FastImage from 'react-native-fast-image';
 import GradientButton from '../../Components/GradientButton';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 
-
 export default function MyOrders({navigation}) {
   const [state, setState] = useState({
     tabBarData: [
@@ -179,6 +178,7 @@ export default function MyOrders({navigation}) {
         navigation.navigate(navigationStrings.ORDER_DETAIL, {
           orderId: item?.order_id,
           fromVendorApp: true,
+          orderStatus: item?.order_status,
           selectedVendor: {id: item?.vendor_id},
           showRating:
             item?.order_status?.current_status?.id != 6 ? false : true,

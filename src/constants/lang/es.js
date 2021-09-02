@@ -354,6 +354,6 @@ export default {
   NEAR_VENDOR: 'Top vendors near you',
   VIEW_ALL_VENDORS: 'View all vendors',
   CLOSE: 'Close',
-  NOVARIANTPRODUCTAVAILABLE:'This option is currenty not available'
-
+  NOVARIANTPRODUCTAVAILABLE:'This option is currenty not available',
+  WAITINGTOACCEPT:'Waiting for order to be accepted'
 };
