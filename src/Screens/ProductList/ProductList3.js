@@ -777,7 +777,7 @@ export default function Products({route, navigation}) {
           ListFooterComponent={() => (
             <View style={{marginBottom: width / 1.3}} />
           )}
-          ListEmptyComponent={<EmptyListLoader />}
+          // ListEmptyComponent={<EmptyListLoader />}
         />
       </View>
     </View>

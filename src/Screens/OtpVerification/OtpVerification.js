@@ -63,7 +63,6 @@ export default function OtpVerification({navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});
 
-  const homePageLayout = appStyle?.homePageLayout;
   const moveToNewScreen = (screenName, data) => () => {
     navigation.navigate(screenName, {});
   };

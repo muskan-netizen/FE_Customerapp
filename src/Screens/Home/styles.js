@@ -205,6 +205,22 @@ export default ({themeColors, fontFamily}) => {
       marginTop: moderateScale(15),
       marginHorizontal: moderateScale(6),
     },
+    modalMainViewContainer: {
+      backgroundColor: colors.white,
+
+      borderRadius: 20,
+      maxHeight: height - width / 2,
+      minHeight: height / 3,
+      marginHorizontal: moderateScale(20),
+      padding: moderateScale(10),
+    },
+    closeButton: {
+      alignItems: 'flex-end',
+      justifyContent: 'center',
+      marginVertical: moderateScaleVertical(-10),
+      marginHorizontal: moderateScale(20),
+      zIndex: 1000,
+    },
   });
 
   return styles;

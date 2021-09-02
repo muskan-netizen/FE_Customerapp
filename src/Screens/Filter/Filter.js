@@ -385,7 +385,7 @@ export default function Filter({route, navigation}) {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Image
                 source={
-                  appData?.profile?.code === shortCodes.capcorp
+                  appStyle?.homePageLayout === 2
                     ? imagePath.backArrow
                     : imagePath.back
                 }

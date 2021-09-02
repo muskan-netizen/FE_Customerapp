@@ -23,7 +23,7 @@ export default function CustomBottomTabBarFour({
 
   const fontFamily = appStyle?.fontSizeData;
 
-  const styles = stylesData({fontFamily, themeColors});
+  const styles = stylesData({fontFamily});
 
   return (
     <View style={[styles.tabBarStyle]}>
@@ -83,7 +83,10 @@ export default function CustomBottomTabBarFour({
   );
 }
 
-export function stylesData({fontFamily, themeColors}) {
+export function stylesData({fontFamily}) {
+  const currentTheme = useSelector((state) => state.initBoot);
+  const {themeColors} = currentTheme;
+
   const styles = StyleSheet.create({
     tabBarStyle: {
       // height: Platform.OS === 'ios' ? 60 + insets.bottom : 70 + insets.bottom,
@@ -94,7 +97,7 @@ export function stylesData({fontFamily, themeColors}) {
       position: 'absolute',
       left: moderateScale(25),
       right: moderateScale(25),
-      bottom: moderateScaleVertical(10),
+      bottom: moderateScaleVertical(20),
       borderRadius: moderateScale(35.5),
       shadowColor: colors.black,
       shadowOffset: {width: 0, height: 1},

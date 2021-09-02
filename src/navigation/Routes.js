@@ -36,7 +36,6 @@ export function shortCode(Stack) {
 export default function Routes() {
   const userData = useSelector((state) => state?.auth?.userData);
   const {shortCodeStatus, appStyle} = useSelector((state) => state?.initBoot);
-  const homePageLayout = appStyle?.homePageLayout;
   const MyTheme = {
     ...DefaultTheme,
     colors: {
@@ -62,15 +61,6 @@ export default function Routes() {
           {shortCode(Stack)}
           {AuthStack(Stack)}
           {CourierStack(Stack)}
-          {/* <Stack.Screen
-          name={
-            homePageLayout == 2
-              ? navigationStrings.DRAWER_ROUTES
-              : navigationStrings.TAB_ROUTES
-          }
-          component={homePageLayout == 2 ? DrawerRoutes : TabRoutes}
-          options={{headerShown: false, gestureEnabled: false}}
-        /> */}
 
           <Stack.Screen
             name={navigationStrings.DRAWER_ROUTES}

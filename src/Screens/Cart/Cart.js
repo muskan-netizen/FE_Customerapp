@@ -120,7 +120,6 @@ export default function Cart({navigation, route}) {
   const userData = useSelector((state) => state?.auth?.userData);
   const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
-  const homePageLayout = appStyle?.homePageLayout;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
 
@@ -543,13 +542,13 @@ export default function Cart({navigation, route}) {
         setModalVisible(true);
       } else if (!paramsData?.selectedMethod) {
         showError('Please select a payment method');
-      } 
+      }
       // else if (!(sheduledorderdate && selectedTimeOption)) {
       //   showError('Please select a Order type');
       // } else if (d1.getTime() >= d2.getTime()) {
       //   showError('Invalid  Scheduled Date');
       // }
-       else {
+      else {
         if (!!userData) {
           !!userData?.client_preference?.verify_email ||
           !!userData?.client_preference?.verify_phone
@@ -1534,11 +1533,7 @@ export default function Cart({navigation, route}) {
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
       isLoadingB={isLoadingB}>
-      {homePageLayout == 2 ? (
-        <HeaderWithFilters centerTitle={strings.CART} LeftIcon={true} />
-      ) : (
-        <HeaderWithFilters centerTitle={strings.CART} noLeftIcon={true} />
-      )}
+      {<HeaderWithFilters centerTitle={strings.CART} noLeftIcon={true} />}
 
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
       <View style={styles.mainComponent}>

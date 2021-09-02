@@ -4,7 +4,7 @@ import {Image, StyleSheet, Text} from 'react-native';
 import {View} from 'react-native-animatable';
 import {useSelector} from 'react-redux';
 import CustomBottomTabBar from '../Components/CustomBottomTabBar';
-import CustomBottomTabBar1 from '../Components/CustomBottomTabBar1';
+import CustomBottomTabBarFive from '../Components/CustomBottomTabBarFive';
 import CustomBottomTabBarFour from '../Components/CustomBottomTabBarFour';
 import CustomBottomTabBarThree from '../Components/CustomBottomTabBarThree';
 import CustomBottomTabBarTwo from '../Components/CustomBottomTabBarTwo';
@@ -71,9 +71,8 @@ export default function TabRoutes(props) {
       />
     );
   }
-  // capcorp
 
-  if (appData?.profile?.code !== shortCodes.capcorp) {
+  if (appStyle?.tabBarLayout !== 5) {
     if (checkForBrand) {
       brandTab = (
         <Tab.Screen
@@ -88,16 +87,13 @@ export default function TabRoutes(props) {
                   appStyle?.tabBarLayout === 2 && {height: 20, width: 20},
                 ]}
                 source={
-                  // focused
-                  //   ? appStyle?.tabBarLayout === 2
-                  //     ? imagePath.brandsActive
-                  //     : imagePath.tabCActive
-                  //   : appStyle?.tabBarLayout === 2
-                  //   ? imagePath.brandInActive
-                  //   : imagePath.tabCInActive
-                  focused
-                    ? imagePath.ordersRedActive
-                    : imagePath.ordersRedInActive
+                  appStyle?.tabBarLayout === 5
+                    ? focused
+                      ? imagePath.ordersRedActive
+                      : imagePath.ordersRedInActive
+                    : focused
+                    ? imagePath.tabCActive
+                    : imagePath.tabCInActive
                 }
               />
             ),
@@ -114,21 +110,18 @@ export default function TabRoutes(props) {
       tabBar={(props) => {
         switch (appStyle?.tabBarLayout) {
           case 1:
-            return appData?.profile?.code === shortCodes.capcorp ? (
-              <CustomBottomTabBar1 {...props} />
-            ) : (
-              <CustomBottomTabBar {...props} />
-            );
+            return <CustomBottomTabBar {...props} />;
           case 2:
-            // return <CustomBottomTabBarTwo {...props} />;
-            return <CustomBottomTabBarFour {...props} />;
+            return <CustomBottomTabBarTwo {...props} />;
           case 3:
             return <CustomBottomTabBarThree {...props} />;
+          case 4:
+            return <CustomBottomTabBarFour {...props} />;
+          case 5:
+            return <CustomBottomTabBarFive {...props} />;
         }
       }}
       tabBarOptions={{
-        // activeTintColor: colors.white,
-        // inactiveTintColor: colors.tabGrey,
         labelStyle: {
           textTransform: 'capitalize',
           fontFamily: fontFamily?.medium,
@@ -150,18 +143,17 @@ export default function TabRoutes(props) {
                 appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
               ]}
               source={
-                // appData?.profile?.code === shortCodes.capcorp
-                //   ? focused
-                //     ? imagePath.homeActive
-                //     : imagePath.homeInActive
-                //   : focused
-                //   ? appStyle?.tabBarLayout === 2
-                //     ? imagePath.home2Active
-                //     : imagePath.tabAActive
-                //   : appStyle?.tabBarLayout === 2
-                //   ? imagePath.home2InActive
-                //   : imagePath.tabAInActive
-                focused ? imagePath.homeRedActive : imagePath.homeRedInActive
+                appStyle?.tabBarLayout === 5
+                  ? focused
+                    ? imagePath.homeActive
+                    : imagePath.homeInActive
+                  : appStyle?.tabBarLayout === 4
+                  ? focused
+                    ? imagePath.homeRedActive
+                    : imagePath.homeRedInActive
+                  : focused
+                  ? imagePath.tabAActive
+                  : imagePath.tabAInActive
               }
             />
           ),
@@ -188,18 +180,17 @@ export default function TabRoutes(props) {
                   appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
                 ]}
                 source={
-                  // appData?.profile?.code === shortCodes.capcorp
-                  //   ? focused
-                  //     ? imagePath.ordersActive
-                  //     : imagePath.ordersInActive
-                  //   : focused
-                  //   ? appStyle?.tabBarLayout === 2
-                  //     ? imagePath.cart2Active
-                  //     : imagePath.cartActive
-                  //   : appStyle?.tabBarLayout === 2
-                  //   ? imagePath.cart2InActive
-                  //   : imagePath.cartInActive
-                  focused ? imagePath.cartRedActive : imagePath.cartRedInActive
+                  appStyle?.tabBarLayout === 5
+                    ? focused
+                      ? imagePath.ordersActive
+                      : imagePath.ordersInActive
+                    : appStyle?.tabBarLayout === 4
+                    ? focused
+                      ? imagePath.cartRedActive
+                      : imagePath.cartRedInActive
+                    : focused
+                    ? imagePath.cartActive
+                    : imagePath.cartInActive
                 }
               />
             </View>
@@ -221,20 +212,17 @@ export default function TabRoutes(props) {
                 appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
               ]}
               source={
-                // appData?.profile?.code === shortCodes.capcorp
-                //   ? focused
-                //     ? imagePath.profileActive
-                //     : imagePath.profileInActive
-                //   : focused
-                //   ? appStyle?.tabBarLayout === 2
-                //     ? imagePath.accountActive
-                //     : imagePath.tabEActive
-                //   : appStyle?.tabBarLayout === 2
-                //   ? imagePath.accountInActive
-                //   : imagePath.tabEInActive
-                focused
-                  ? imagePath.accountRedActive
-                  : imagePath.accountRedInActive
+                appStyle?.tabBarLayout === 5
+                  ? focused
+                    ? imagePath.profileActive
+                    : imagePath.profileInActive
+                  : appStyle?.tabBarLayout === 4
+                  ? focused
+                    ? imagePath.accountRedActive
+                    : imagePath.accountRedInActive
+                  : focused
+                  ? imagePath.tabEActive
+                  : imagePath.tabEInActive
               }
             />
           ),

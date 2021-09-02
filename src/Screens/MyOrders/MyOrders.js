@@ -36,7 +36,6 @@ import FastImage from 'react-native-fast-image';
 import GradientButton from '../../Components/GradientButton';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 
-
 export default function MyOrders({navigation}) {
   const [state, setState] = useState({
     tabBarData: [
@@ -371,9 +370,7 @@ export default function MyOrders({navigation}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          appData?.profile?.code === shortCodes.capcorp
-            ? imagePath.backArrow
-            : imagePath.back
+          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         centerTitle={strings.MY_ORDERS}
         headerStyle={{backgroundColor: colors.white}}

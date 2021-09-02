@@ -43,7 +43,6 @@ export default function Celebrity({navigation}) {
   const {appData, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
-  const homePageLayout = appStyle?.homePageLayout;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily});
 
@@ -150,9 +149,7 @@ export default function Celebrity({navigation}) {
       <Header
         centerTitle={strings.CELEBRITIES}
         leftIcon={
-          appData?.profile?.code === shortCodes.capcorp
-            ? imagePath.backArrow
-            : imagePath.back
+          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         rightIcon={imagePath.search}
         onPressRight={() =>

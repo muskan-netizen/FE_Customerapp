@@ -33,7 +33,6 @@ export default function Brand({navigation}) {
   const {isLoading} = state;
   //Redux store data
   const {appStyle, appData} = useSelector((state) => state.initBoot);
-  const homePageLayout = appStyle?.homePageLayout;
   const appMainData = useSelector((state) => state?.home?.appMainData);
 
   //Brand data
@@ -52,9 +51,7 @@ export default function Brand({navigation}) {
       <Header
         centerTitle={strings.BRANDS}
         leftIcon={
-          appData?.profile?.code === shortCodes.capcorp
-            ? imagePath.backArrow
-            : imagePath.back
+          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         rightIcon={imagePath.search}
         onPressRight={() =>

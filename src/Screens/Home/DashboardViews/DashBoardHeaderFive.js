@@ -5,9 +5,16 @@ import {useSelector} from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
-import {moderateScale, textScale, width} from '../../../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  textScale,
+  width,
+} from '../../../styles/responsiveSize';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
+import Modal from 'react-native-modal';
+import {RadioButton} from 'react-native-paper';
 
 export default function DashBoardHeaderFive({navigation = {}, location = []}) {
   const pickerRef = createRef();
@@ -18,8 +25,10 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
       {label: 'Dine-in', value: '1'},
       {label: 'Takeaway', value: '1'},
     ],
+    isModalVisible: false,
+    checked: 'first',
   });
-  const {tableData} = state;
+  const {tableData, isModalVisible, checked} = state;
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -34,7 +43,6 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
     '800/400',
   );
 
-  const isSVG = imageURI ? imageURI.includes('.svg') : null;
   return (
     <View
       style={{
@@ -48,7 +56,7 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
           flexDirection: 'row',
           flex: 1,
         }}>
-        {appData?.profile?.preferences?.is_hyperlocal && (
+        {!!appData?.profile?.preferences?.is_hyperlocal && (
           <TouchableOpacity
             activeOpacity={1}
             onPress={() =>
@@ -58,7 +66,11 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
             }
             style={{flexDirection: 'row', alignItems: 'center', flex: 0.85}}>
             <Image
-              style={{height: 18, width: 18}}
+              style={{
+                height: moderateScale(18),
+                width: moderateScale(18),
+                tintColor: themeColors.primary_color,
+              }}
               source={imagePath.redLocation}
               resizeMode="contain"
             />
@@ -78,29 +90,46 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
           </TouchableOpacity>
         )}
       </View>
-      <View
+      <TouchableOpacity
+        activeOpacity={0.7}
         style={{
-          justifyContent: 'center',
           // flex: 0,
-          alignItems: 'flex-end',
-          // paddingTop: moderateScaleVertical(12),
+          paddingVertical: moderateScaleVertical(5),
           flexDirection: 'row',
           alignItems: 'center',
-        }}>
+        }}
+        onPress={() => updateState({isModalVisible: true})}>
         <Image
           source={imagePath.delivery}
-          style={{width: 18, height: 18}}
+          style={{
+            width: moderateScale(18),
+            height: moderateScale(18),
+            tintColor: themeColors.primary_color,
+          }}
           resizeMode="contain"
         />
-        {/* <Text
+
+        <Text
           style={{
-            color: themeColors.primary_color,
             fontFamily: fontFamily.regular,
+            color: themeColors.primary_color,
+            marginHorizontal: moderateScale(3),
           }}>
-          {' '}
           Delivery
-        </Text> */}
-        <DropDownPicker
+        </Text>
+
+        <Image
+          source={imagePath.dropDownNew}
+          style={{
+            width: moderateScale(8),
+            height: moderateScale(8),
+            tintColor: themeColors.primary_color,
+            marginTop: moderateScaleVertical(3),
+          }}
+          resizeMode="contain"
+        />
+
+        {/* <DropDownPicker
           items={tableData}
           defaultValue={tableData[0]?.label}
           containerStyle={{
@@ -127,8 +156,30 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
           }}
           arrowColor={themeColors.primary_color}
           arrowStyle={{height: 15}}
-        />
-      </View>
+        /> */}
+      </TouchableOpacity>
+      <Modal
+        transparent={true}
+        isVisible={isModalVisible}
+        style={styles.modalContainer}>
+        <TouchableOpacity
+          style={styles.closeButton}
+          onPress={() => updateState({isModalVisible: false})}>
+          <Image source={imagePath.crossB} />
+        </TouchableOpacity>
+        <View style={styles.modalMainViewContainer}>
+          <RadioButton
+            value="first"
+            status={checked === 'first' ? 'checked' : 'unchecked'}
+            onPress={() => updateState({checked: 'first'})}
+          />
+          <RadioButton
+            value="second"
+            status={checked === 'second' ? 'checked' : 'unchecked'}
+            onPress={() => updateState({checked: 'second'})}
+          />
+        </View>
+      </Modal>
     </View>
   );
 }

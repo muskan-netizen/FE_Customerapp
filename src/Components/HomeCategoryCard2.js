@@ -33,17 +33,19 @@ export default function HomeCategoryCard2({data = {}, onPress = () => {}}) {
       }}>
       <View>
         {isSVG ? (
-          <SvgUri height={50} width={50} uri={imageURI} />
+          <SvgUri
+            height={moderateScale(50)}
+            width={moderateScale(50)}
+            uri={imageURI}
+          />
         ) : (
           <View
             style={{
-              flex: 1,
-              borderBottomRightRadius: moderateScale(15),
-              borderBottomLeftRadius: moderateScale(15),
               overflow: 'hidden',
+              borderRadius: moderateScale(15),
             }}>
             <Image
-              style={{height: 82, width: 82}}
+              style={{height: moderateScale(50), width: moderateScale(50)}}
               source={{
                 uri: imageURI,
               }}

@@ -19,11 +19,11 @@ export default function CustomBottomTabBarTwo({
 }) {
   const insets = useSafeAreaInsets();
 
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
 
-  const styles = stylesData({fontFamily});
+  const styles = stylesData({fontFamily, themeColors});
 
   return (
     <View style={[styles.tabBarStyle]}>
@@ -83,16 +83,13 @@ export default function CustomBottomTabBarTwo({
   );
 }
 
-export function stylesData({fontFamily}) {
-  const currentTheme = useSelector((state) => state.initBoot);
-  const {themeColors} = currentTheme;
-
+export function stylesData({fontFamily, themeColors}) {
   const styles = StyleSheet.create({
     tabBarStyle: {
       // height: Platform.OS === 'ios' ? 60 + insets.bottom : 70 + insets.bottom,
       flexDirection: 'row',
       paddingHorizontal: moderateScale(5),
-      paddingVertical: moderateScaleVertical(15),
+      paddingVertical: moderateScaleVertical(8),
       backgroundColor: colors.white,
       position: 'absolute',
       left: moderateScale(25),

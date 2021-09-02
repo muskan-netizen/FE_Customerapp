@@ -530,62 +530,14 @@ export default function Home({route, navigation}) {
     }
   };
 
+  console.log(appMainData, 'appMainData');
+
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
       bgColor={colors.backgroundGrey}>
       <View style={{flex: 1}}>
-        <>
-          {appData?.profile?.code === shortCodes.capcorp ? (
-            <>
-              <DashBoardHeaderOne navigation={navigation} location={location} />
-
-              <DashBoardFour
-                handleRefresh={() => handleRefresh()}
-                bannerPress={(item) => bannerPress(item)}
-                isLoading={isLoading}
-                isRefreshing={isRefreshing}
-                appMainData={appMainData}
-                onPressCategory={(item) => onPressCategory2(item)}
-                selcetedToggle={selcetedToggle}
-                toggleData={appData}
-              />
-            </>
-          ) : (
-            <>
-              {/* <DashBoardHeaderOne navigation={navigation} location={location} />
-              <DashBoardOne
-                handleRefresh={() => handleRefresh()}
-                bannerPress={(item) => bannerPress(item)}
-                isLoading={isLoading}
-                isRefreshing={isRefreshing}
-                appMainData={appMainData}
-                onPressCategory={(item) => onPressCategory(item)}
-                isDineInSelected={isDineInSelected}
-                selcetedToggle={selcetedToggle}
-                toggleData={appData}
-              /> */}
-              <DashBoardHeaderFive
-                navigation={navigation}
-                location={location}
-              />
-
-              <DashBoardFive
-                handleRefresh={() => handleRefresh()}
-                bannerPress={(item) => bannerPress(item)}
-                isLoading={isLoading}
-                isRefreshing={isRefreshing}
-                appMainData={appMainData}
-                onPressCategory={(item) => onPressCategory(item)}
-                isDineInSelected={isDineInSelected}
-                selcetedToggle={selcetedToggle}
-                toggleData={appData}
-                navigation={navigation}
-              />
-            </>
-          )}
-        </>
-        {/* {(() => {
+        {() => {
           switch (appStyle?.homePageLayout) {
             case 1:
               return (
@@ -610,39 +562,45 @@ export default function Home({route, navigation}) {
             case 2:
               return (
                 <>
-                  <DashBoardHeaderTwo
+                  <DashBoardHeaderOne
                     navigation={navigation}
                     location={location}
-                    isLoading={isLoading}
-                    isRefreshing={isRefreshing}
-                    handleRefresh={() => handleRefresh()}
                   />
-                  <DashBoardTwo
+                  <DashBoardFour
                     handleRefresh={() => handleRefresh()}
                     bannerPress={(item) => bannerPress(item)}
                     isLoading={isLoading}
                     isRefreshing={isRefreshing}
-                    updatedData={updatedData}
                     appMainData={appMainData}
-                    updateCircleData={(data) => updateCircleData(data)}
-                    onPressCategory={(item) => onPressCategory(item)}
+                    onPressCategory={(item) => onPressCategory2(item)}
+                    selcetedToggle={selcetedToggle}
+                    toggleData={appData}
                   />
                 </>
               );
             case 3:
               return (
                 <>
-                  <DashBoardThree
+                  <DashBoardHeaderFive
+                    navigation={navigation}
+                    location={location}
+                  />
+                  <DashBoardFive
                     handleRefresh={() => handleRefresh()}
                     bannerPress={(item) => bannerPress(item)}
                     isLoading={isLoading}
                     isRefreshing={isRefreshing}
+                    appMainData={appMainData}
                     onPressCategory={(item) => onPressCategory(item)}
+                    isDineInSelected={isDineInSelected}
+                    selcetedToggle={selcetedToggle}
+                    toggleData={appData}
+                    navigation={navigation}
                   />
                 </>
               );
           }
-        })} */}
+        }}
       </View>
     </WrapperContainer>
   );

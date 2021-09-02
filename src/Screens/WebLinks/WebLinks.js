@@ -83,9 +83,7 @@ export default function WebLinks({navigation, route}) {
       source={loaderOne}>
       <Header
         leftIcon={
-          appData?.profile?.code === shortCodes.capcorp
-            ? imagePath.backArrow
-            : imagePath.back
+          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         centerTitle={(paramData && paramData?.title) || ''}
         headerStyle={{backgroundColor: Colors.white}}

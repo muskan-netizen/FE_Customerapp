@@ -13,7 +13,7 @@ import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
-  const {appData} = useSelector((state) => state?.initBoot);
+  const {appData, appStyle} = useSelector((state) => state?.initBoot);
 
   return (
     <Stack.Navigator>
@@ -35,9 +35,7 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={
-          appData?.profile?.code === shortCodes.capcorp
-            ? ProductDetail2
-            : ProductDetail
+          appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail
         }
         options={{headerShown: false}}
       />

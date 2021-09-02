@@ -39,12 +39,8 @@ export default function () {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={
-          appStyle?.homePageLayout === 3
-            ? navigationStrings.TOP_TAB_ROUTES
-            : navigationStrings.HOME
-        }
-        component={appStyle?.homePageLayout === 3 ? TopTabRoutes : Home}
+        name={navigationStrings.HOME}
+        component={Home}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -60,24 +56,25 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.VENDOR}
         component={
-          // appData?.profile?.code === shortCodes.capcorp ? Vendors2 : Vendors
-          Vendors3
+          appStyle?.homePageLayout === 2
+            ? Vendors2
+            : appStyle?.homePageLayout === 3
+            ? Vendors3
+            : Vendors
         }
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.VENDOR_DETAIL}
         component={
-          appData?.profile?.code === shortCodes.capcorp
-            ? VendorDetail2
-            : VendorDetail
+          appStyle?.homePageLayout === 2 ? VendorDetail2 : VendorDetail
         }
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
         component={
-          appData?.profile?.code === shortCodes.capcorp
+          appStyle?.homePageLayout === 2
             ? ProductList2
             : // : ProductList
               ProductList3
@@ -114,9 +111,7 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={
-          appData?.profile?.code === shortCodes.capcorp
-            ? ProductDetail2
-            : ProductDetail2
+          appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail2
         }
         options={{headerShown: false}}
       />

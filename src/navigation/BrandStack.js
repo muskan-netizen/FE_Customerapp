@@ -21,7 +21,7 @@ import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
-  const {appData} = useSelector((state) => state?.initBoot);
+  const {appData, appStyle} = useSelector((state) => state?.initBoot);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -37,9 +37,7 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={
-          appData?.profile?.code === shortCodes.capcorp
-            ? ProductDetail2
-            : ProductDetail
+          appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail
         }
         options={{headerShown: false}}
       />
@@ -68,9 +66,7 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.VENDOR}
-        component={
-          appData?.profile?.code === shortCodes.capcorp ? Vendors2 : Vendors
-        }
+        component={appStyle?.homePageLayout === 2 ? Vendors2 : Vendors}
         options={{headerShown: false}}
       />
 
@@ -82,11 +78,7 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
-        component={
-          appData?.profile?.code === shortCodes.capcorp
-            ? ProductList2
-            : ProductList
-        }
+        component={appStyle?.homePageLayout === 2 ? ProductList2 : ProductList}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

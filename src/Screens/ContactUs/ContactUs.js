@@ -27,15 +27,16 @@ export default function ContactUs({navigation}) {
   console.log(userData, 'userData>>>userData');
 
   const [state, setState] = useState({
-    callingCode:  userData && userData?.dial_code ? userData?.dial_code : '1',
+    callingCode: userData && userData?.dial_code ? userData?.dial_code : '1',
     cca2: userData && userData?.cca2 ? userData?.cca2 : 'US',
-    name: userData && userData?.name? userData?.name : '',
-    email: userData && userData?.email? userData?.email : '',
-    phoneNumber: userData &&  userData?.phone_number? userData?.phone_number : '',
+    name: userData && userData?.name ? userData?.name : '',
+    email: userData && userData?.email ? userData?.email : '',
+    phoneNumber:
+      userData && userData?.phone_number ? userData?.phone_number : '',
     message: '',
     isLoading: false,
   });
-  const {message, phoneNumber, cca2, name, email, isLoading}   = state;
+  const {message, phoneNumber, cca2, name, email, isLoading} = state;
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -172,9 +173,7 @@ export default function ContactUs({navigation}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          appData?.profile?.code === shortCodes.capcorp
-            ? imagePath.backArrow
-            : imagePath.back
+          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         centerTitle={strings.CONTACT_USS}
         headerStyle={{backgroundColor: colors.white}}

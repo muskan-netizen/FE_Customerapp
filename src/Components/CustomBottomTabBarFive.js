@@ -11,7 +11,7 @@ import {
 import Elevations from 'react-native-elevation';
 import {BlurView} from '@react-native-community/blur';
 
-export default function CustomBottomTabBarTwo({
+export default function CustomBottomTabBarFive({
   state,
   descriptors,
   navigation,
