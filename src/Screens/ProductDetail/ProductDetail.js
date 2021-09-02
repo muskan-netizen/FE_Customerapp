@@ -30,6 +30,7 @@ import commonStylesFunc from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
   width,
 } from '../../styles/responsiveSize';
 import {showError, showSuccess} from '../../utils/helperFunctions';
@@ -64,6 +65,7 @@ export default function ProductDetail({route, navigation}) {
     isVisibleAddonModal: false,
     lightBox: false,
     productQuantityForCart: 1,
+    showErrorMessageTitle: false,
   });
   //Saving the initial state
   const initialState = cloneDeep(state);
@@ -86,6 +88,7 @@ export default function ProductDetail({route, navigation}) {
     isVisibleAddonModal,
     lightBox,
     productQuantityForCart,
+    showErrorMessageTitle,
   } = state;
 
   const customRight = () => {
@@ -217,13 +220,14 @@ export default function ProductDetail({route, navigation}) {
           },
           productSku: res.data.sku,
           productVariantId: res.data.id,
+          showErrorMessageTitle: false,
         });
       })
       .catch(errorMethod);
   };
 
   const errorMethod = (error) => {
-    console.log(error.message.alert, 'Error>>>>>');
+    console.log(error, 'Error>>>>>');
 
     if (error?.message?.alert == 1) {
       updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
@@ -237,8 +241,17 @@ export default function ProductDetail({route, navigation}) {
         {text: 'Clear Cart', onPress: () => clearCart()},
       ]);
     } else {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
-      showError(error?.message || error?.error);
+      if (error?.data?.variant_empty) {
+        updateState({
+          isLoading: false,
+          showErrorMessageTitle: true,
+          isLoadingB: false,
+          isLoadingC: false,
+        });
+      } else {
+        updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+        showError(error?.message || error?.error);
+      }
     }
   };
 
@@ -871,10 +884,21 @@ export default function ProductDetail({route, navigation}) {
             {variantSet && variantSet.length ? showAllVariants() : null}
             {/* {addonSet && addonSet.length ? showAllAddons() : null} */}
 
+            {showErrorMessageTitle ? (
+              <Text
+                style={{
+                  fontSize: textScale(14),
+                  marginHorizontal: moderateScale(20),
+                  color: colors.redB,
+                  fontFamily: fontFamily.medium,
+                }}>
+                {strings.NOVARIANTPRODUCTAVAILABLE}
+              </Text>
+            ) : null}
             {/* Add to Cart button */}
             {!!productTotalQuantity &&
               !!productTotalQuantity != 0 &&
-              (!!data?.showAddToCart ? null : (
+              (!!data?.showAddToCart ? null : showErrorMessageTitle ? null : (
                 <View
                   style={{
                     marginHorizontal: moderateScale(20),

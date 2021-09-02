@@ -32,9 +32,7 @@ export default function ProductCard({
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const {appStyle} = useSelector((state) => state?.initBoot);
-
   const fontFamily = appStyle?.fontSizeData;
-
   const {themeColors, themeLayouts} = currentTheme;
   const commonStyles = commonStylesFunc({fontFamily});
   const cardWidthNew = cardWidth ? cardWidth : width * 0.5 - 21.5;
@@ -135,6 +133,7 @@ export default function ProductCard({
                   ...commonStyles.mediumFont14,
                   opacity: 1,
                   color: colors.white,
+                  fontFamily: fontFamily?.regular,
                 }}>
                 {strings.BUY_NOW}
               </Text>
@@ -173,6 +172,7 @@ export default function ProductCard({
                   ...commonStyles.mediumFont14,
                   opacity: 1,
                   color: colors.white,
+                  fontFamily: fontFamily?.regular,
                 }}>
                 {bottomText}
               </Text>

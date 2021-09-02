@@ -367,4 +367,5 @@ export default {
   EXPLORE_STORES: 'Explore Stores',
   OPEN: 'Open',
   SEARCH_HERE: 'Search here…..',
+  NOVARIANTPRODUCTAVAILABLE: 'This option is currenty not available',
 };

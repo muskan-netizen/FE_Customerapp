@@ -64,6 +64,9 @@ const shortCodes = {
   vici: '121eb9',
   carhop: 'e292ec',
   yogolift: '4f3624',
+  fleety: '45bef7',
+  flyinghorse: '8577b8',
+  errand: '62a348',
 };
 
 const appIds = {
@@ -318,6 +321,18 @@ const appIds = {
   yogolift: Platform.select({
     ios: 'com.yogolift',
     android: 'com.yogolift',
+  }),
+  fleety: Platform.select({
+    ios: 'com.fleety',
+    android: 'com.fleety',
+  }),
+  flyinghorse: Platform.select({
+    ios: 'com.flyinghorse',
+    android: 'com.flyinghorse',
+  }),
+  errand: Platform.select({
+    ios: 'com.errand',
+    android: 'com.errand',
   }),
 };
 

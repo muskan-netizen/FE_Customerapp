@@ -12,6 +12,7 @@ import {
   GET_ALL_PROMO_CODES_CAB_ORDER,
   VERIFY_PROMO_CODE_CAB_ORDER,
   VENDOR_TABLE_CART,
+  SCHEDULE_ORDER,
 } from '../../config/urls';
 import {
   apiGet,
@@ -213,3 +214,15 @@ export function vendorTableCart(data = {}, headers = {}) {
       });
   });
 }
+
+export const scheduledOrder = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(SCHEDULE_ORDER, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};

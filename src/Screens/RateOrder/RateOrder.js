@@ -33,7 +33,7 @@ import stylesFunc from './styles';
 
 export default function RateOrder({navigation, route}) {
   const ratingData = route?.params?.item?.product_rating;
-  console.log(ratingData.id, 'ratingData....');
+  
   const [state, setState] = useState({
     isLoading: false,
     rating: 0,
@@ -69,16 +69,16 @@ export default function RateOrder({navigation, route}) {
   };
 
   useEffect(() => {
-    console.log(remove_image_ids, 'remove_image_ids');
+    
   }, [remove_image_ids]);
 
   /***********Remove Image from rating */
   const _removeImageFromList = (selectdImage) => {
-    console.log(selectdImage, 'selectdImage>>>');
+    
     if (selectdImage?.id) {
-      console.log(selectdImage?.id, 'selectdImage?.id');
+      
       let copyArrayImages = cloneDeep(imageArray);
-      console.log(copyArrayImages, 'copyArrayImages');
+      
       copyArrayImages = copyArrayImages.filter(
         (x) => x?.id !== selectdImage?.id,
       );
@@ -121,9 +121,9 @@ export default function RateOrder({navigation, route}) {
         mediaType: 'photo',
       })
         .then((res) => {
-          console.log(res, 'res?.data');
+          
           if (res && (res?.sourceURL || res?.path)) {
-            console.log(res, 'response');
+            
             let file = {
               image_id: Math.random(),
               name: res?.filename,
@@ -144,7 +144,7 @@ export default function RateOrder({navigation, route}) {
 
   const _giveRatingToProduct = () => {
     updateState({isLoading: true});
-    console.log(imageArray[0], 'imageArray');
+    
     let data = {};
     let formdata = new FormData();
     formdata.append(
@@ -159,14 +159,14 @@ export default function RateOrder({navigation, route}) {
     if (imageArray.length) {
       imageArray.forEach((element) => {
         if (element?.id) {
-          console.log(element?.id, 'element?.id.....');
+          
         } else {
-          formdata.append('files[]', {
+          formdata.append('file[]', {
             name: element.name,
             type: element.type,
             uri: element.uri,
           });
-          console.log('else Part Is Running.....');
+          
         }
       });
     }
@@ -177,7 +177,7 @@ export default function RateOrder({navigation, route}) {
       });
     }
 
-    console.log(formdata, 'formdata>>>');
+    
     actions
       .giveRating(formdata, {
         code: appData?.profile?.code,
@@ -186,7 +186,7 @@ export default function RateOrder({navigation, route}) {
         // 'Content-Type': 'multipart/form-data',
       })
       .then((res) => {
-        console.log(res, 'res>>>>>>782531');
+        
         updateState({isLoading: false});
         navigation.goBack();
       })
@@ -229,7 +229,7 @@ export default function RateOrder({navigation, route}) {
             }),
           });
         }
-        console.log(res.data, 'res.data.review_files');
+        
       })
       .catch((error) => {
         updateState({
@@ -246,7 +246,7 @@ export default function RateOrder({navigation, route}) {
   }, []);
 
   const errorMethod = (error) => {
-    console.log(error, 'error');
+    
     updateState({isLoading: false});
     showError(error?.message || error?.error);
   };

@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "760046971596",
+    "project_id": "flyinghorse-130da",
+    "storage_bucket": "flyinghorse-130da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760046971596:android:ec1e51de4a67b2d585b069",
+        "android_client_info": {
+          "package_name": "com.flyinghorse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760046971596-3ri3brtg6qt1nkfsrcv0m2p00b4cpbtn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.flyinghorse",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "760046971596-jtd63bcsivv1jl98mfpg27mbko00ook9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.flyinghorse",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "760046971596-r49sttji85nqhi1ii6oj0jr4r6knfm6v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.flyinghorse",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "760046971596-autndh283e4mcctrjp75fh7nt7pfq9od.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpvJnUUKv0FWQvjGcFP-Ud0WSSxs6o20M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760046971596-autndh283e4mcctrjp75fh7nt7pfq9od.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "760046971596-8q2hqkt121qd3kphcmdemf2r05lff0um.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.flyinghorse"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

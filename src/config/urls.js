@@ -109,3 +109,5 @@ export const SUBMIT_RETURN_ORDER = getApiUrl(
 );
 
 export const VENDOR_TABLE_CART = getApiUrl('/add/vendorTable/cart');
+
+export const SCHEDULE_ORDER = getApiUrl('/cart/schedule/update');
