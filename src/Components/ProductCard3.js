@@ -119,6 +119,7 @@ export default function ProductCard3({
         <Animatable.View
           key={selectedIndex}
           animation={selectedIndex == index ? 'fadeInDown' : 'fadeInLeft'}>
+          {/* Title View */}
           <View
             style={{
               paddingTop: moderateScale(5),
@@ -134,6 +135,7 @@ export default function ProductCard3({
             </Text>
           </View>
 
+          {/* Price view */}
           <View
             style={{
               // height: 30,
@@ -153,6 +155,7 @@ export default function ProductCard3({
             </Text>
           </View>
 
+          {/* rating View */}
           {!!Number(data?.averageRating) && (
             <View
               style={{
@@ -179,22 +182,11 @@ export default function ProductCard3({
           )}
         </Animatable.View>
 
-        <Animatable.View
-          key={selectedIndexForCartIcon}
-          style={{justifyContent: 'center'}}
-          animation={
-            selectedIndexForCartIcon == index ? 'fadeInUp' : 'fadeInDown'
-          }>
-          {selectedIndexForCartIcon == index ? (
-            <TouchableOpacity onPress={changePositionForCartIcon}>
-              <Image source={imagePath.back} />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={changePositionForCartIcon}>
-              <Image source={imagePath.greyRoundPlus} />
-            </TouchableOpacity>
-          )}
-        </Animatable.View>
+        <View>
+          <TouchableOpacity>
+            <Image source={imagePath.greyRoundPlus} />
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableOpacity>
   );
