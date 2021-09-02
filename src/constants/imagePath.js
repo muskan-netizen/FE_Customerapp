@@ -214,7 +214,6 @@ export default {
   celebInActive: require('../assets/images/ic_celeb1.png'),
   home2Active: require('../assets/images/ic_home3.png'),
   home2InActive: require('../assets/images/ic_house1.png'),
-<<<<<<< HEAD
   delivery: require('../assets/images/ic_delivery.png'),
   redLocation: require('../assets/images/ic_location.png'),
   location2: require('../assets/images/ic_location2.png'),
@@ -230,13 +229,10 @@ export default {
   search1: require('../assets/images/ic_search1.png'),
   backArrow1: require('../assets/images/ic_back1.png'),
   filter1: require('../assets/images/filter_ico.png'),
-=======
   greyRoundSearch: require('../assets/images/ic_search_round.png'),
   greyRoundBack: require('../assets/images/ic_back_round.png'),
   greyRoundPlus: require('../assets/images/ic_plus.png'),
   startwo: require('../assets/images/ic_star_2.png'),
   backRound2: require('../assets/images/ic_back_round_2.png'),
   searchRound2: require('../assets/images/ic_search_2.png'),
-   
->>>>>>> 8264456b97d87937fbda61babe10a2fd358ab49a
 };
