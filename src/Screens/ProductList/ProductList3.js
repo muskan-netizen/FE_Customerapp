@@ -37,6 +37,7 @@ import {MyDarkTheme} from '../../styles/theme';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
+  console.log(data, 'Datais ');
   console.log(data, 'data params >>>>>');
   const isDarkMode = useDarkMode();
   const [state, setState] = useState({
