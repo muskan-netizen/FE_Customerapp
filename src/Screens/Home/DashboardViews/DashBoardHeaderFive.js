@@ -1,5 +1,12 @@
-import React, {createRef, useState} from 'react';
-import {I18nManager, Image, Text, TouchableOpacity, View} from 'react-native';
+import React, {createRef, useEffect, useState} from 'react';
+import {
+  Alert,
+  I18nManager,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {useSelector} from 'react-redux';
 import imagePath from '../../../constants/imagePath';
@@ -12,31 +19,40 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {getImageUrl} from '../../../utils/helperFunctions';
+import {getImageUrl, showSuccess} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 import Modal from 'react-native-modal';
 import {RadioButton} from 'react-native-paper';
+import actions from '../../../redux/actions';
+import deviceInfoModule from 'react-native-device-info';
+
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 
-export default function DashBoardHeaderFive({navigation = {}, location = []}) {
+export default function DashBoardHeaderFive({
+  navigation = {},
+  location = [],
+  selcetedToggle,
+  toggleData,
+}) {
   const pickerRef = createRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
-  const [state, setState] = useState({
-    tableData: [
-      {label: 'Delivery', value: 'Delivery'},
-      {label: 'Dine-in', value: '1'},
-      {label: 'Takeaway', value: '1'},
-    ],
-    isModalVisible: false,
-    checked: 'Delivery',
-  });
-  const {tableData, isModalVisible, checked} = state;
-  const {appData, themeColors, appStyle} = useSelector(
+  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
+  const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
+  const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
+  const [state, setState] = useState({
+    isModalVisible: false,
+    checked: '',
+    tabs: [],
+    setSelectedTab: 0,
+  });
+
+  const {isModalVisible, checked, tabs} = state;
+
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
@@ -48,12 +64,237 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
     '800/400',
   );
 
-  // const renderRadioItems = () => {
-  //   return tableData.map(
-  //     (itm, inx) => console.log(itm, 'djflksdjflkjs'),
-  //     // return <RadioButton.Item label={itm.label} value={itm.value} />;
-  //   );
-  // };
+  useEffect(() => {
+    addAllTabs();
+    // getSelectedTab();
+    userSelectedtab();
+  }, [appData]);
+
+  const addAllTabs = () => {
+    const localTabsArray = [];
+
+    if (toggleData?.profile?.preferences?.delivery_check == 1) {
+      localTabsArray.push('Delivery');
+      if (
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        selcetedToggle('delivery');
+      }
+    }
+    if (toggleData?.profile?.preferences?.dinein_check == 1) {
+      localTabsArray.push('Dine-In');
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        selcetedToggle('dine_in');
+      }
+    }
+    if (toggleData?.profile?.preferences?.takeaway_check == 1) {
+      localTabsArray.push('Takeaway');
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 0
+      ) {
+        selcetedToggle('takeaway');
+      }
+    }
+    updateState({
+      tabs: localTabsArray,
+      checked: localTabsArray[0],
+    });
+  };
+  const getSelectedTab = () => {
+    if (dine_In_Type == 'delivery') {
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        updateState({checked: 'Dine-In'});
+      } else {
+        updateState({checked: 'Delivery'});
+      }
+    }
+    if (dine_In_Type == 'dine_in') {
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        updateState({checked: 'Dine-In'});
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        updateState({checked: 'Delivery'});
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        updateState({checked: 'Dine-In'});
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        updateState({checked: 'Dine-In'});
+      }
+    }
+    if (dine_In_Type == 'takeaway') {
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        updateState({checked: 'Dine-In'});
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        updateState({checked: 'Dine-In'});
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        updateState({checked: 'Dine-In'});
+      } else {
+        updateState({checked: 'Takeaway'});
+      }
+    }
+  };
+
+  // useEffect(() => {
+  //   userSelectedtab();
+  // }, [checked]);
+
+  const userSelectedtab = () => {
+    console.log(dine_In_Type, 'dine_In_Type');
+
+    if (dine_In_Type === 'delivery') {
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        selcetedToggle('dine_in');
+        updateState({
+          checked: 'Dine-In',
+        });
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        selcetedToggle('takeaway');
+        updateState({
+          checked: 'Takeaway',
+        });
+      } else selcetedToggle('delivery');
+      updateState({
+        checked: 'Delivery',
+      });
+    } else if (dine_In_Type === 'dine_in') {
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        selcetedToggle('dine_in');
+        updateState({
+          checked: 'Dine-In',
+        });
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        selcetedToggle('takeaway');
+        updateState({
+          checked: 'Takeaway',
+        });
+      } else selcetedToggle('delivery');
+      updateState({
+        checked: 'Delivery',
+      });
+    } else {
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        selcetedToggle('dine_in');
+        updateState({
+          checked: 'Dine-In',
+        });
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        selcetedToggle('takeaway');
+        updateState({
+          checked: 'Takeaway',
+        });
+      } else selcetedToggle('delivery');
+
+      updateState({
+        checked: 'Delivery',
+      });
+    }
+  };
+
+  const _onChangeRadioToggle = (value) => {
+    selcetedToggle(value.toLowerCase().replace('-', '_'));
+    updateState({
+      checked: value,
+      isModalVisible: false,
+    });
+  };
+
+  const dineInFunction = () => {
+    Alert.alert(
+      '',
+      'This Change Will Remove Your Cart Products. Do you Really Want To Continue?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          // style: 'destructive',
+        },
+        {text: 'Clear Cart', onPress: clearCart},
+      ],
+    );
+  };
+
+  const clearCart = () => {
+    actions
+      .clearCart(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: deviceInfoModule.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        showSuccess(res?.message);
+        actions.cartItemQty(res);
+        updateState({isModalVisible: false});
+      })
+      .catch(errorMethod);
+  };
+
+  const errorMethod = (error) => {
+    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    showError(error?.message || error?.error);
+  };
 
   return (
     <View
@@ -127,7 +368,7 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
             color: themeColors.primary_color,
             marginHorizontal: moderateScale(3),
           }}>
-          Delivery
+          {checked}
         </Text>
 
         <Image
@@ -173,20 +414,45 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
       <Modal
         transparent={true}
         isVisible={isModalVisible}
-        style={styles.modalContainer}>
-        <TouchableOpacity
-          style={styles.closeButton}
-          onPress={() => updateState({isModalVisible: false})}>
-          <Image source={imagePath.crossB} />
-        </TouchableOpacity>
+        testID={'modal'}
+        style={{justifyContent: 'flex-end', margin: 0}}>
         <View style={styles.modalMainViewContainer}>
-          <RadioButton.Group
-            onValueChange={(value) => updateState({checked: value})}
-            value={checked}>
-            <RadioButton.Item label="Delivery" value="first" />
-            <RadioButton.Item label="Dine-in" value="second" />
-            <RadioButton.Item label="Takeaway" value="third" />
-          </RadioButton.Group>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => updateState({isModalVisible: false})}>
+            <Image
+              source={imagePath.crossB}
+              style={{
+                tintColor: themeColors.primary_color,
+                height: moderateScale(23),
+                width: moderateScale(23),
+              }}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+          <View style={{marginHorizontal: moderateScale(30)}}>
+            <RadioButton.Group
+              onValueChange={
+                !(
+                  cartItemCount?.message == null &&
+                  cartItemCount?.data?.item_count > 0
+                )
+                  ? _onChangeRadioToggle
+                  : dineInFunction
+              }
+              value={checked}>
+              {tabs.map((item, indx) => {
+                return (
+                  <RadioButton.Item
+                    color={themeColors.primary_color}
+                    key={indx}
+                    label={item}
+                    value={item}
+                  />
+                );
+              })}
+            </RadioButton.Group>
+          </View>
         </View>
       </Modal>
     </View>

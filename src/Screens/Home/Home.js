@@ -578,7 +578,12 @@ export default function Home({route, navigation}) {
       case 3:
         return (
           <>
-            <DashBoardHeaderFive navigation={navigation} location={location} />
+            <DashBoardHeaderFive
+              navigation={navigation}
+              location={location}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+            />
             <DashBoardFive
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}

@@ -69,7 +69,11 @@ export default function MyProfile({route, navigation}) {
     ],
     selectedTab: strings.BASIC_INFO,
     callingCode: '1',
-    cca2: userData?.cca2 ? userData?.cca2 : appData?.profile?.country?.code,
+    cca2: userData?.cca2
+      ? userData?.cca2
+      : appData?.profile?.country?.code
+      ? appData?.profile?.country?.code
+      : 'IN',
     name: userData?.name,
     email: userData?.email,
     password: '',

@@ -207,20 +207,17 @@ export default ({themeColors, fontFamily}) => {
     },
     modalMainViewContainer: {
       backgroundColor: colors.white,
-
-      borderRadius: 20,
+      borderTopLeftRadius: moderateScale(20),
+      borderTopRightRadius: moderateScale(20),
       maxHeight: height - width / 2,
       minHeight: height / 4,
-      marginHorizontal: moderateScale(20),
-      padding: moderateScale(10),
-      justifyContent: 'center',
+      paddingHorizontal: moderateScale(10),
     },
     closeButton: {
-      alignItems: 'flex-end',
-      justifyContent: 'center',
-      marginVertical: moderateScaleVertical(-10),
       marginHorizontal: moderateScale(20),
-      zIndex: 1000,
+      alignSelf: 'flex-end',
+      marginTop: moderateScale(20),
+      marginBottom: moderateScale(5),
     },
   });
 

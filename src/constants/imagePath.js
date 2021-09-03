@@ -203,7 +203,7 @@ export default {
   ic_fb2: require('../assets/images/ic_fb2.png'),
   ic_apple2: require('../assets/images/ic_apple2.png'),
   ic_twitter2: require('../assets/images/ic_twitter2.png'),
-
+  ic_apple: require('../assets/images/ic_apple.png'),
   accountActive: require('../assets/images/ic_account2.png'),
   accountInActive: require('../assets/images/ic_account1.png'),
   brandsActive: require('../assets/images/ic_brands2.png'),
