@@ -173,18 +173,18 @@ export default function Products({route, navigation}) {
     getAllListItems();
   }, [pageNo, isRefreshing]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      updateState({pageNo: 1});
-      getAllListItems();
-    }, [
-      sleectdBrands,
-      selectedOptions,
-      slectedSortBy,
-      minimumPrice,
-      maximumPrice,
-    ]),
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     updateState({pageNo: 1});
+  //     getAllListItems();
+  //   }, [
+  //     sleectdBrands,
+  //     selectedOptions,
+  //     slectedSortBy,
+  //     minimumPrice,
+  //     maximumPrice,
+  //   ]),
+  // );
 
   const getAllListItems = () => {
     let filterExist =
@@ -421,7 +421,7 @@ export default function Products({route, navigation}) {
   const getAllProducts = () => {
     actions
       .getProductByCategoryId(
-        `/${productListId.id}?limit=${limit}&page=${pageNo}&product_list=${
+        `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${
           data?.rootProducts ? true : false
         }`,
         {},
@@ -445,6 +445,17 @@ export default function Products({route, navigation}) {
               ? res.data.listData.data
               : [...productListData, ...res.data.listData.data],
         });
+        {
+          pageNo == 1 && res?.data?.listData?.data.length == 0 && res?.data?.category && res?.data?.category?.childs.length
+            ? updateState({
+                selectedCategory: res.data.category.childs[0],
+                productListId: res.data.category.childs[0],
+                pageNo: 1,
+                limit: 12,
+                isLoadingC: true,
+              })
+            : null;
+        }
         updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
       .catch(errorMethod);
@@ -543,28 +554,24 @@ export default function Products({route, navigation}) {
 
   const onPressChildCards = (item) => {
     console.log(item, 'item upload');
-    let filterExist =
-      sleectdBrands.length ||
-      selectedVariants.length ||
-      selectedOptions.length ||
-      slectedSortBy.length ||
-      minimumPrice != 0 ||
-      maximumPrice != 50000 ||
-      checkForMaximumPriceChange ||
-      checkForMinimumPriceChange;
+
     updateState({
       selectedCategory: item,
-      productListData: [],
+      // productListData: [],
       productListId: item,
       pageNo: 1,
       limit: 12,
       isLoadingC: true,
     });
-    setTimeout(() => {
-      filterExist ? getAllProductsCategoryFilter() : getAllProducts();
-    }, 1000);
+
     // navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
   };
+
+  useEffect(() => {
+    if (isLoadingC) {
+      getAllProducts(true);
+    }
+  }, [isLoadingC]);
 
   // we set the height of item is fixed
   const getItemLayout = (data, index) => ({

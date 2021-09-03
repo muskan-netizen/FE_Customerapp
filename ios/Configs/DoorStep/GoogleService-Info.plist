@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>724134696036-m8nk7d5be2r1scdmeahasldmu579ngr0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.724134696036-m8nk7d5be2r1scdmeahasldmu579ngr0</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>724134696036-9u1ffj2jn748g43htnnbpcll6rbm77d4.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCVR6K1ES1BVdUR_Nh6oEVHiQdhBvlBNaM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>724134696036</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.doorstepone</string>
+	<key>PROJECT_ID</key>
+	<string>doorstep-5d03b</string>
+	<key>STORAGE_BUCKET</key>
+	<string>doorstep-5d03b.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:724134696036:ios:3f7cdd8308792a4f3e3b71</string>
+</dict>
+</plist>

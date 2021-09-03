@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "673566394556",
+    "project_id": "menus-8b485",
+    "storage_bucket": "menus-8b485.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673566394556:android:a7443fad9f13e0166968b9",
+        "android_client_info": {
+          "package_name": "com.menus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "673566394556-h0h2r5tqbghaimvj9s9t3i8aa4l84haa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.menus",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "673566394556-h8dmhotbrr2t1kh9fq210r6p3nak4v3u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.menus",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "673566394556-vg1ngtgpb2e37qp771dldgdfbuqaquqe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.menus",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "673566394556-dfnrf04hvvclgk10h09c2u33d5irf63a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7OLFKh3u-DD273jqRMyfFjARHrIsPMV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "673566394556-dfnrf04hvvclgk10h09c2u33d5irf63a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "673566394556-kq4uth3vj74rr76s7uoedhg661sr0lph.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.menus"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

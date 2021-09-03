@@ -67,6 +67,11 @@ const shortCodes = {
   fleety: '45bef7',
   flyinghorse: '8577b8',
   errand: '62a348',
+  partnerproject: '246a2a',
+  menus: 'f644c8',
+  doorstep: 'f76099',
+  sunshinerideshare: 'cef206',
+  autotek: '2fbe83',
 };
 
 const appIds = {
@@ -333,6 +338,26 @@ const appIds = {
   errand: Platform.select({
     ios: 'com.errand',
     android: 'com.errand',
+  }),
+  partnerproject: Platform.select({
+    ios: 'com.partnerproject',
+    android: 'com.partnerproject',
+  }),
+  menus: Platform.select({
+    ios: 'com.menusvirtual',
+    android: 'com.menus',
+  }),
+  doorstep: Platform.select({
+    ios: 'com.doorstepone',
+    android: 'com.doorstep',
+  }),
+  sunshinerideshare: Platform.select({
+    ios: 'com.sunshinerideshare',
+    android: 'com.sunshinerideshare',
+  }),
+  autotek: Platform.select({
+    ios: 'com.autotek',
+    android: 'com.autotek',
   }),
 };
 

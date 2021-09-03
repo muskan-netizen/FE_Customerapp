@@ -1,8 +1,11 @@
 import {I18nManager, StyleSheet} from 'react-native';
 import colors from '../../styles/colors';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
+  textScale,
+  width,
 } from '../../styles/responsiveSize';
 
 export default ({fontFamily}) => {
@@ -57,11 +60,41 @@ export default ({fontFamily}) => {
       left: 20,
       right: 20,
     },
-    title2:{
+    title2: {
       fontFamily: fontFamily.medium,
       fontSize: moderateScale(16),
       color: colors.blackC,
-    }
+    },
+    containerStyle: {
+      borderRadius: 8,
+      height: moderateScaleVertical(44),
+      marginBottom: moderateScaleVertical(14),
+    },
+    uploadImage: {
+      fontSize: textScale(12),
+      fontFamily: fontFamily.bold,
+      color: colors.textGreyD,
+    },
+    imageOrderStyle: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: colors.borderLight,
+      marginHorizontal: moderateScale(12),
+    },
+    imageStyle: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderWidth: 1,
+      resizeMode: 'contain',
+      borderColor: colors.borderLight,
+    },
+    viewOverImage: {
+      height: width / 5,
+      width: width / 5,
+      borderRadius: 5,
+      resizeMode: 'contain',
+    },
   });
   return styles;
 };

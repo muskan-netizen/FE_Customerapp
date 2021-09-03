@@ -155,6 +155,8 @@ export default function VendorDetail({navigation, route}) {
     );
   };
 
+  
+
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}

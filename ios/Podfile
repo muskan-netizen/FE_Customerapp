@@ -812,6 +812,64 @@ target 'Errand' do
   
 end
 
+#PartnerProject Target
+target 'PartnerProject' do
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  config = use_native_modules!
+  use_react_native!(:path => config["reactNativePath"])
+  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  
+end
+
+#Menus Target
+target 'Menus' do
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  config = use_native_modules!
+  use_react_native!(:path => config["reactNativePath"])
+  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  
+end
+#DoorStep Target
+target 'DoorStep' do
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  config = use_native_modules!
+  use_react_native!(:path => config["reactNativePath"])
+  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  
+end
+
+#SunshineRideshare Target
+target 'SunshineRideshare' do
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  config = use_native_modules!
+  use_react_native!(:path => config["reactNativePath"])
+  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  
+end
+
+#Autotek Target
+target 'Autotek' do
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  config = use_native_modules!
+  use_react_native!(:path => config["reactNativePath"])
+  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  
+end
 
 post_install do |installer|
 

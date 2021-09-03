@@ -300,6 +300,14 @@ export default ({fontFamily}) => {
       ...commonStyles.mediumFont16,
       fontSize: textScale(18),
     },
+    waitToAccept:{
+      fontFamily: fontFamily.regular,
+      color: colors.black,
+      fontSize: textScale(14),
+      lineHeight:19,
+      opacity:0.7,
+      paddingVertical:10
+    }
   });
   return styles;
 };

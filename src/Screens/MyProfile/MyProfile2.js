@@ -9,21 +9,16 @@ import {
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import {getBundleId} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
-import AddressModal from '../../Components/AddressModal';
 import AddressModal2 from '../../Components/AddressModal2';
 import AutoUpLabelTxtInput from '../../Components/AutoUpLabelTxtInput';
-import BorderTextInput from '../../Components/BorderTextInput';
 import CustomTopTabBar from '../../Components/CustomTopTabBar';
 import GradientButton from '../../Components/GradientButton';
-import Header from '../../Components/Header';
 import Header2 from '../../Components/Header2';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import PhoneNumberInput2 from '../../Components/PhoneNumberInput2';
 import TransparentButtonWithTxtAndIcon from '../../Components/TransparentButtonWithTxtAndIcon';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -40,7 +35,6 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {cameraHandler} from '../../utils/commonFunction';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -49,6 +43,7 @@ import {
 } from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
+
 export default function MyProfile({route, navigation}) {
   const currentTheme = useSelector((state) => state?.initBoot);
   const {themeColors, themeLayouts, appStyle} = currentTheme;
@@ -57,6 +52,7 @@ export default function MyProfile({route, navigation}) {
   const commonStyles = commonStylesFunc({fontFamily});
   const paramData = route?.params;
   const userData = useSelector((state) => state?.auth?.userData);
+  const appData = useSelector((state) => state?.initBoot?.appData);
   console.log(userData, 'userData>>');
   const [state, setState] = useState({
     currentPassword: '',
@@ -69,7 +65,7 @@ export default function MyProfile({route, navigation}) {
     ],
     selectedTab: strings.BASIC_INFO,
     callingCode: '1',
-    cca2: userData?.cca2 ? userData?.cca2 : 'IN',
+    cca2: userData?.cca2 ? userData?.cca2 : appData?.profile?.country?.code,
     name: userData?.name,
     email: userData?.email,
     password: '',
@@ -119,7 +115,7 @@ export default function MyProfile({route, navigation}) {
   } = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const appData = useSelector((state) => state?.initBoot?.appData);
+
   const profileAddress = useSelector((state) => state?.home?.profileAddress);
   const moveToNewScreen = (screenName, data) => () => {
     navigation.navigate(screenName, {data});
