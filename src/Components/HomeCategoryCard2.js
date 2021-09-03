@@ -7,8 +7,13 @@ import {moderateScale, textScale, width} from '../styles/responsiveSize';
 import {getImageUrl} from '../utils/helperFunctions';
 import {SvgUri} from 'react-native-svg';
 import Elevations from 'react-native-elevation';
+// import {Image} from 'react-native-elements';
 
-export default function HomeCategoryCard2({data = {}, onPress = () => {}}) {
+export default function HomeCategoryCard2({
+  data = {},
+  onPress = () => {},
+  isLoading = false,
+}) {
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const imageURI = getImageUrl(
@@ -18,7 +23,6 @@ export default function HomeCategoryCard2({data = {}, onPress = () => {}}) {
   );
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
-
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -30,8 +34,9 @@ export default function HomeCategoryCard2({data = {}, onPress = () => {}}) {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        height: moderateScale(70),
       }}>
-      <View>
+      <View style={{flex: 0.8}}>
         {isSVG ? (
           <SvgUri
             height={moderateScale(50)}
@@ -44,7 +49,7 @@ export default function HomeCategoryCard2({data = {}, onPress = () => {}}) {
               overflow: 'hidden',
               borderRadius: moderateScale(15),
             }}>
-            <Image
+            <FastImage
               style={{height: moderateScale(50), width: moderateScale(50)}}
               source={{
                 uri: imageURI,
@@ -53,13 +58,12 @@ export default function HomeCategoryCard2({data = {}, onPress = () => {}}) {
           </View>
         )}
       </View>
-      <View style={{flex: 0.4}}>
+      <View style={{flex: 0.2}}>
         <Text
           numberOfLines={1}
           style={{
             fontFamily: fontFamily.regular,
             fontSize: textScale(10),
-            marginTop: moderateScale(10),
           }}>
           {data.name}
         </Text>
