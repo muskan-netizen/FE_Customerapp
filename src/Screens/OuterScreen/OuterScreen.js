@@ -220,7 +220,7 @@ export default function OuterScreen({navigation}) {
         />
       )}
 
-      <View style={{marginTop: moderateScaleVertical(100), flex: 1}}>
+      <View style={{marginTop: moderateScaleVertical(70), flex: 1}}>
         <Text
           style={
             isDarkMode
@@ -276,7 +276,7 @@ export default function OuterScreen({navigation}) {
               </View>
             ) : null}
 
-            <View style={styles.socialRowBtn}>
+            {/* <View style={styles.socialRowBtn}>
               {!!google_login && (
                 <TouchableOpacity
                   onPress={() => openGmailLogin()}
@@ -306,6 +306,149 @@ export default function OuterScreen({navigation}) {
                   <Image source={imagePath.apple} />
                 </TouchableOpacity>
               )}
+            </View> */}
+             <View
+              style={{
+                flexDirection: 'column',
+              }}>
+              {!!google_login && (
+                <TouchableOpacity
+                  onPress={() => openGmailLogin()}
+                  style={{
+                    borderWidth: 1,
+                    borderColor: colors.borderColorD,
+                    borderRadius: moderateScale(15),
+                    paddingVertical: moderateScale(10),
+                    paddingHorizontal: moderateScale(10),
+                    marginTop: moderateScale(25),
+                    flexDirection: 'row',
+                  }}>
+                  <Image
+                    source={imagePath.ic_google2}
+                    style={{width: 35, height: 35}}
+                  />
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      textAlign: 'center',
+                      flex: 0.9,
+                      fontFamily: fontFamily.regular,
+                    }}>
+                    {strings.CONTINUE_GOOGLE}
+                  </Text>
+                </TouchableOpacity>
+              )}
+              {!!fb_login && (
+                <TouchableOpacity
+                  onPress={() => openFacebookLogin()}
+                  style={{
+                    borderWidth: 1,
+                    borderColor: colors.borderColorD,
+                    borderRadius: moderateScale(15),
+                    paddingVertical: moderateScale(10),
+                    paddingHorizontal: moderateScale(10),
+                    marginTop: moderateScale(10),
+                    flexDirection: 'row',
+                  }}>
+                  <Image
+                    source={imagePath.ic_fb2}
+                    style={{width: 35, height: 35}}
+                  />
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      textAlign: 'center',
+                      flex: 0.9,
+                      fontFamily: fontFamily.regular,
+                    }}>
+                    {strings.CONTINUE_FACEBOOK}
+                  </Text>
+                </TouchableOpacity>
+              )}
+              {!!twitter_login && (
+                <TouchableOpacity
+                  onPress={() => openTwitterLogin()}
+                  style={{
+                    borderWidth: 1,
+                    borderColor: colors.borderColorD,
+                    borderRadius: moderateScale(15),
+                    paddingVertical: moderateScale(10),
+                    paddingHorizontal: moderateScale(10),
+                    marginTop: moderateScale(10),
+                    flexDirection: 'row',
+                  }}>
+                  <Image
+                    source={imagePath.ic_twitter2}
+                    style={{width: 35, height: 35}}
+                  />
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      textAlign: 'center',
+                      flex: 0.9,
+                      fontFamily: fontFamily.regular,
+                    }}>
+                    {strings.CONTINUE_TWITTER}
+                  </Text>
+                </TouchableOpacity>
+              )}
+
+              {!!apple_login && Platform.OS == 'ios' && (
+                <TouchableOpacity
+                  onPress={() => openAppleLogin()}
+                  style={{
+                    borderWidth: 1,
+                    borderColor: colors.borderColorD,
+                    borderRadius: moderateScale(15),
+                    paddingVertical: moderateScale(10),
+                    paddingHorizontal: moderateScale(10),
+                    marginTop: moderateScale(10),
+                    flexDirection: 'row',
+                  }}>
+                  <Image
+                    source={imagePath.ic_apple2}
+                    style={{width: 35, height: 35}}
+                  />
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      textAlign: 'center',
+                      flex: 0.9,
+                      fontFamily: fontFamily.regular,
+                    }}>
+                    {strings.CONTINUE_APPLE}
+                  </Text>
+                </TouchableOpacity>
+              )}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: moderateScale(20),
+                }}>
+                <Text
+                  style={{
+                    ...styles.txtSmall,
+                    color: colors.textGreyLight,
+                    marginTop: 0,
+                  }}>
+                  {strings.ALREADY_HAVE_AN_ACCOUNT}
+                </Text>
+                <TouchableOpacity
+                  hitSlop={hitSlopProp}
+                  onPress={moveToNewScreen(navigationStrings.LOGIN)}>
+                  <Text
+                    style={{
+                      color: themeColors.primary_color,
+                      // lineHeight:24,
+                      fontFamily: fontFamily.bold,
+                    }}>
+                    {' '}
+                    {strings.LOGIN}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>

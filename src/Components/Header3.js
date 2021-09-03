@@ -18,6 +18,8 @@ import {
   StatusBarHeight,
   textScale,
 } from '../styles/responsiveSize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 const Header3 = ({
   leftIcon = imagePath.back,
@@ -43,7 +45,9 @@ const Header3 = ({
   leftIconStyle,
 }) => {
   const {appStyle} = useSelector((state) => state?.initBoot);
-
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
   const navigation = useNavigation();
@@ -80,7 +84,7 @@ const Header3 = ({
             // height:20,
             lineHeight: 20,
             fontFamily: fontFamily.medium,
-            color: colors.black,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             fontSize: textScale(10),
             width: '70%',
           }}>

@@ -29,7 +29,11 @@ import {
 } from '../../styles/responsiveSize';
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from './ListEmptyVendors';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
+
 export default function Vendors3({route, navigation}) {
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     isLoading: true,
     pageNo: 1,
@@ -41,6 +45,8 @@ export default function Vendors3({route, navigation}) {
 
   const categoryData = useSelector((state) => state?.vendor?.categoryData);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
+
+  // alert(dine_In_Type);
   const location = useSelector((state) => state?.home?.location);
 
   const {isLoading, pageNo, isRefreshing, limit} = state;
@@ -136,7 +142,9 @@ export default function Vendors3({route, navigation}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGrey}>
       <Header3
         leftIcon={imagePath.backArrow1}
@@ -171,7 +179,14 @@ export default function Vendors3({route, navigation}) {
           </View>
           <Image source={imagePath.search1} />
         </TouchableOpacity>
-        <Image source={imagePath.filter1} />
+        <Image
+          style={
+            isDarkMode
+              ? {tintColor: MyDarkTheme.colors.text}
+              : {tintColor: null}
+          }
+          source={imagePath.filter1}
+        />
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}

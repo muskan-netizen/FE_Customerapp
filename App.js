@@ -92,26 +92,26 @@ const App = () => {
           payload: dine_in_type,
         });
       }
-      const theme = await getItem('theme');
-      if (theme.type == 'dark') {
-        dispatch({
-          type: types.THEME,
-          payload: true,
-        });
-      }
-      if (theme.type == 'light') {
-        dispatch({
-          type: types.THEME,
-          payload: false,
-        });
-      }
-      const themeToggle = await getItem('istoggle');
-      if (themeToggle) {
-        dispatch({
-          type: types.THEME_TOGGLE,
-          payload: JSON.parse(themeToggle),
-        });
-      }
+      // const theme = await getItem('theme');
+      // if (theme?.type == 'dark') {
+      //   dispatch({
+      //     type: types.THEME,
+      //     payload: true,
+      //   });
+      // }
+      // if (theme?.type == 'light') {
+      //   dispatch({
+      //     type: types.THEME,
+      //     payload: false,
+      //   });
+      // }
+      // const themeToggle = await getItem('istoggle');
+      // if (themeToggle) {
+      //   dispatch({
+      //     type: types.THEME_TOGGLE,
+      //     payload: JSON.parse(themeToggle),
+      //   });
+      // }
       //Language
       const getLanguage = await getItem('language');
       if (getLanguage) {
