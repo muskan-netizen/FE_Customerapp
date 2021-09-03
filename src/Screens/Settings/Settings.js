@@ -161,18 +161,25 @@ export default function Settings({route, navigation}) {
     }
   };
 
-  function _toggleOnOff(isOn) {
+  const _toggleOnOff = (isOn) => {
+    console.log(typeof isOn, 'isOn');
+    // actions.setToggle(isOn);
     setTimeout(() => {
       updateState({
         isOn: isOn ? true : false,
       });
     }, 0);
-    actions.setToggle(isOn);
-  }
+  };
 
   const _setApperance = (item) => {
-    actions.setAppTheme(item);
+    // actions.setAppTheme(item);
 
+    // if (item?.type == 'light') {
+    //   actions.setAppTheme(false);
+    // } else {
+    //   actions.setAppTheme(true);
+    // }
+    // console.log(item, 'item>item>item');
     {
       selectedThemeOption && selectedThemeOption?.id == item?.id
         ? null
