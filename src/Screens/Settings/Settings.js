@@ -69,7 +69,7 @@ export default function Settings({route, navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
   const commonStyles = commonStylesFunc({fontFamily});
-  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
+  const isDarkMode = useDarkMode();
 
   useFocusEffect(
     React.useCallback(() => {
