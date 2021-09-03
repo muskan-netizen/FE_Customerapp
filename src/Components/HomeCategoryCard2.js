@@ -57,7 +57,7 @@ export default function HomeCategoryCard2({data = {}, onPress = () => {}}) {
         <Text
           numberOfLines={1}
           style={{
-            fontFamily: fontFamily.medium,
+            fontFamily: fontFamily.regular,
             fontSize: textScale(10),
             marginTop: moderateScale(10),
           }}>

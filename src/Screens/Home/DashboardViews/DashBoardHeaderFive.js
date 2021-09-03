@@ -89,7 +89,7 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
                 paddingLeft: 5,
                 // height:20,
                 lineHeight: 20,
-                fontFamily: fontFamily.medium,
+                fontFamily: fontFamily.regular,
                 color: colors.black,
                 fontSize: textScale(10),
               }}>

@@ -356,7 +356,7 @@ export default {
   SELECT_CATEGORY: 'Select Category',
   EXPLORE_STORES: 'Explore Stores',
   OPEN: 'Open',
-  SEARCH_HERE: 'Search here…..',
+  SEARCH_HERE: 'Whar are you looking for?',
   NOOFFERS: 'No Offers',
   NOVARIANTPRODUCTAVAILABLE: 'This option is currenty not available',
 };

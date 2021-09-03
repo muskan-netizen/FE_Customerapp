@@ -9,6 +9,7 @@ import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
+import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
@@ -556,7 +557,11 @@ export default function Home({route, navigation}) {
               isLoading={isLoading}
               isRefreshing={isRefreshing}
               appMainData={appMainData}
-              onPressCategory={(item) => onPressCategory2(item)}
+              onPressCategory={(item) => {
+                shortCodes.capcorp === appIds.capcorp
+                  ? onPressCategory2(item)
+                  : onPressCategory(item);
+              }}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
             />
@@ -572,7 +577,11 @@ export default function Home({route, navigation}) {
               isLoading={isLoading}
               isRefreshing={isRefreshing}
               appMainData={appMainData}
-              onPressCategory={(item) => onPressCategory(item)}
+              onPressCategory={(item) => {
+                shortCodes.capcorp === appIds.capcorp
+                  ? onPressCategory2(item)
+                  : onPressCategory2(item);
+              }}
               isDineInSelected={isDineInSelected}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
@@ -582,6 +591,7 @@ export default function Home({route, navigation}) {
         );
     }
   };
+  console.log(appMainData, 'appMainData');
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}

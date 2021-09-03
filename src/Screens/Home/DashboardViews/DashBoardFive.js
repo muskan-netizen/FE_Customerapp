@@ -89,7 +89,8 @@ export default function DashBoardFive({
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }>
         <View style={{width: '90%'}}>
-          <Text style={{fontFamily: fontFamily.regular}}>
+          <Text
+            style={{fontFamily: fontFamily.regular, color: colors.textGreyB}}>
             {strings.SEARCH_HERE}
           </Text>
         </View>
@@ -114,14 +115,14 @@ export default function DashBoardFive({
         appMainData?.categories &&
         appMainData?.categories.length ? (
           <View style={{width: '100%'}}>
-            <Text
+            {/* <Text
               style={{
-                fontFamily: fontFamily.bold,
+                fontFamily: fontFamily.regular,
                 fontSize: textScale(16),
                 marginVertical: moderateScale(15),
               }}>
               {strings.SELECT_CATEGORY}
-            </Text>
+            </Text> */}
             <FlatList
               numColumns={4}
               data={appMainData?.categories}
@@ -181,7 +182,7 @@ export default function DashBoardFive({
           <View>
             <Text
               style={{
-                fontFamily: fontFamily.bold,
+                fontFamily: fontFamily.regular,
                 fontSize: textScale(16),
                 marginBottom: moderateScale(10),
               }}>
