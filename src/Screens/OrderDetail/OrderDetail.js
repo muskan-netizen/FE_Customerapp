@@ -11,10 +11,12 @@ import {
   View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {BarIndicator, UIActivityIndicator} from 'react-native-indicators';
 import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
 import HeaderWithFilters from '../../Components/HeaderWithFilters';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import StepIndicators from '../../Components/StepIndicator';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -40,8 +42,10 @@ export default function OrderDetail({navigation, route}) {
     cartItems: [],
     cartData: {},
     selectedPayment: null,
+    labels: ['Accepted', 'Processing', 'Out For Delivery', 'Delivered'],
+    currentPosition: null,
   });
-  const {isLoading, cartItems, cartData} = state;
+  const {isLoading, cartItems, cartData, labels, currentPosition} = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -94,6 +98,9 @@ export default function OrderDetail({navigation, route}) {
             cartItems: res.data.vendors,
             cartData: res.data,
             isLoading: false,
+            currentPosition: paramData?.orderStatus
+              ? labels.indexOf(paramData?.orderStatus?.current_status?.title)
+              : null,
           });
         }
       })
@@ -500,8 +507,37 @@ export default function OrderDetail({navigation, route}) {
       cartData?.user_image?.image_path,
       '500/500',
     );
+    console.log(cartData, 'cartData>cartData>cartData');
     return (
       <>
+        {paramData?.orderStatus?.current_status?.title == 'Placed' && (
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: moderateScaleVertical(10),
+            }}>
+            <UIActivityIndicator
+              size={45}
+              count={15}
+              color={themeColors.primary_color}
+            />
+            <Text style={styles.waitToAccept}>{strings.WAITINGTOACCEPT}</Text>
+          </View>
+        )}
+        {paramData?.orderStatus?.current_status?.title != 'Rejected' && (
+          <View
+            style={{
+              marginVertical: moderateScaleVertical(20),
+            }}>
+            <StepIndicators
+              labels={labels}
+              currentPosition={currentPosition}
+              themeColor={themeColors}
+            />
+          </View>
+        )}
+
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <View
             style={{

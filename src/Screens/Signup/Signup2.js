@@ -34,10 +34,14 @@ import {TextInput} from 'react-native-paper';
 import PhoneNumberInput2 from '../../Components/PhoneNumberInput2';
 import AutoUpLabelTxtInput from '../../Components/AutoUpLabelTxtInput';
 export default function Signup2({navigation}) {
+  const {appData, themeColors, themeLayouts, currencies, languages} =
+    useSelector((state) => state?.initBoot);
   const [state, setState] = useState({
     isLoading: false,
     callingCode: '91',
-    cca2: 'IN',
+    cca2: appData?.profile?.country?.code
+      ? appData?.profile?.country?.code
+      : 'IN',
     name: '',
     email: '',
     password: '',
@@ -47,8 +51,7 @@ export default function Signup2({navigation}) {
   });
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const userData = useSelector((state) => state.auth.userData);
-  const {appData, themeColors, themeLayouts, currencies, languages} =
-    useSelector((state) => state?.initBoot);
+
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});

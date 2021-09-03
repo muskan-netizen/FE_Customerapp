@@ -45,11 +45,13 @@ import validations from '../../utils/validations';
 import stylesFunc from './styles';
 export default function MyProfile({route, navigation}) {
   const currentTheme = useSelector((state) => state?.initBoot);
+
   const {themeColors, themeLayouts, appStyle} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
   const commonStyles = commonStylesFunc({fontFamily});
   const paramData = route?.params;
+  const appData = useSelector((state) => state?.initBoot?.appData);
   const userData = useSelector((state) => state?.auth?.userData);
   console.log(userData, 'userData>>');
   const [state, setState] = useState({
@@ -63,7 +65,7 @@ export default function MyProfile({route, navigation}) {
     ],
     selectedTab: strings.BASIC_INFO,
     callingCode: '1',
-    cca2: userData?.cca2 ? userData?.cca2 : 'IN',
+    cca2: userData?.cca2 ? userData?.cca2 : appData?.profile?.country?.code,
     name: userData?.name,
     email: userData?.email,
     password: '',
@@ -113,7 +115,7 @@ export default function MyProfile({route, navigation}) {
   } = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const appData = useSelector((state) => state?.initBoot?.appData);
+
   const profileAddress = useSelector((state) => state?.home?.profileAddress);
   const moveToNewScreen = (screenName, data) => () => {
     navigation.navigate(screenName, {data});

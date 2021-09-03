@@ -484,6 +484,37 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.partnerproject:
+          updateState({
+            shortCode: shortCodes.partnerproject,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.menus:
+          updateState({
+            shortCode: shortCodes.menus,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.doorstep:
+          updateState({
+            shortCode: shortCodes.doorstep,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sunshinerideshare:
+          updateState({
+            shortCode: shortCodes.sunshinerideshare,
+            isShortcodePrefilled: true,
+          });
+          break;
+          break;
+        case appIds.autotek:
+          updateState({
+            shortCode: shortCodes.autotek,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
