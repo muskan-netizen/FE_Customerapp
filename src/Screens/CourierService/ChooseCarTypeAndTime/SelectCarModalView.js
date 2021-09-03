@@ -104,7 +104,6 @@ export default function SelectCarModalView({
               )}
             </View>
           </View>
-
           <View
             style={{
               flex: 0.7,

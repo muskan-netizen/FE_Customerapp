@@ -415,7 +415,9 @@ export default function ReturnOrder({navigation, route}) {
               defaultValue={returnReasons[0].label || returnReasons[0].name}
               containerStyle={{height: 40, marginTop: moderateScaleVertical(5)}}
               style={{
-                backgroundColor: '#fafafa',
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.lightDark
+                  : '#fafafa',
                 zIndex: 5000,
                 // marginHorizontal: moderateScale(20),
                 flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
@@ -424,9 +426,14 @@ export default function ReturnOrder({navigation, route}) {
                 justifyContent: 'flex-start',
                 flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
               }}
+              labelStyle={
+                isDarkMode ? {color: MyDarkTheme.colors.text} : {color: null}
+              }
               zIndex={5000}
               dropDownStyle={{
-                backgroundColor: '#fafafa',
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.lightDark
+                  : '#fafafa',
                 height: 150,
                 width: width - moderateScale(40),
                 alignSelf: 'center',
@@ -449,7 +456,7 @@ export default function ReturnOrder({navigation, route}) {
                 <TextInput
                   style={{
                     ...styles.textInputStyle,
-                    col: isDarkMode
+                    color: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.textGreyJ,
                   }}

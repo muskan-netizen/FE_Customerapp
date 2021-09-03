@@ -8,10 +8,7 @@ import {
   setAppData,
   setItem,
 } from '../../utils/utils';
-import {  
-  LIST_OF_CMS,
-  CMS_PAGE_DETAIL
-} from '../../config/urls';
+import {LIST_OF_CMS, CMS_PAGE_DETAIL} from '../../config/urls';
 import store from '../store';
 import types from '../types';
 const {dispatch} = store;
@@ -181,8 +178,6 @@ export function saveShortCode(data = {}) {
   });
 }
 
-
-
 //Get List of payment method
 export function getListOfAllCmsLinks(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
@@ -196,7 +191,6 @@ export function getListOfAllCmsLinks(data = {}, headers = {}) {
   });
 }
 
-
 //Get CMS page detail
 export function getCmsPageDetail(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
@@ -208,4 +202,20 @@ export function getCmsPageDetail(data = {}, headers = {}) {
         reject(error);
       });
   });
+}
+
+export function setAppTheme(res) {
+  setItem('theme', res);
+  if (res.type == 'dark') {
+    dispatch({
+      type: types.THEME,
+      payload: true,
+    });
+  }
+  if (res.type == 'light') {
+    dispatch({
+      type: types.THEME,
+      payload: false,
+    });
+  }
 }

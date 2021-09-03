@@ -354,4 +354,5 @@ export default {
   VIEW_ALL_VENDORS: 'View all vendors',
   CLOSE: 'Close',
   NOOFFERS: 'No Offers',
+  DARK_APPEARANCE: 'Theme Appearance',
 };

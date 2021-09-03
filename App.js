@@ -92,7 +92,19 @@ const App = () => {
           payload: dine_in_type,
         });
       }
-
+      const theme = await getItem('theme');
+      if (theme.type == 'dark') {
+        dispatch({
+          type: types.THEME,
+          payload: true,
+        });
+      }
+      if (theme.type == 'light') {
+        dispatch({
+          type: types.THEME,
+          payload: false,
+        });
+      }
       //Language
       const getLanguage = await getItem('language');
       if (getLanguage) {

@@ -216,4 +216,6 @@ export default {
   home2InActive: require('../assets/images/ic_house1.png'),
   ic_add: require('../assets/images/ic_add_new_location.png'),
   ic_cross: require('../assets/images/ic_backwd_dark.png'),
+  dark: require('../assets/images/DARK.jpg'),
+  light: require('../assets/images/LIGHT.jpg'),
 };

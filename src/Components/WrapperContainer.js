@@ -44,7 +44,9 @@ const WrapperContainer = ({
       <CustomAnimatedLoader
         source={source}
         loaderTitle="Loading"
-        containerColor={colors.white}
+        containerColor={
+          isDarkMode ? MyDarkTheme.colors.lightDark : colors.white
+        }
         loadercolor={customColor}
         animationStyle={[
           {

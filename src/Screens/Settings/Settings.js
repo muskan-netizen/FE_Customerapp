@@ -1,6 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useState} from 'react';
-import {I18nManager, Text, View} from 'react-native';
+import {I18nManager, Text, View, Image, TouchableOpacity} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RNRestart from 'react-native-restart'; // Import package from node modules
 import {useSelector} from 'react-redux';
@@ -13,6 +13,7 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   width,
@@ -22,22 +23,49 @@ import {setItem} from '../../utils/utils';
 import stylesFunc from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import ToggleSwitch from 'toggle-switch-react-native';
+import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
 
 export default function Settings({route, navigation}) {
   const isDarkMode = useDarkMode();
   // const appData = useSelector(state => state?.initBoot?.appData);
-  const {currencies, appData, languages, appStyle} = useSelector(
+  const {currencies, appData, languages, appStyle, themeColors} = useSelector(
     (state) => state?.initBoot,
   );
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  console.log(theme, 'theme');
 
   const [state, setState] = useState({
     isLoading: false,
     country: 'uk',
     appCurrencies: currencies,
     appLanguages: languages,
+    isOn: false,
+    selectedThemeOptions: [
+      {
+        id: 1,
+        image: imagePath.light,
+        selectedImage: imagePath.done,
+        type: 'light',
+      },
+      {
+        id: 2,
+        image: imagePath.dark,
+        selectedImage: imagePath.done,
+        type: 'dark',
+      },
+    ],
+    selectedThemeOption: null,
   });
 
-  const {isLoading, appCurrencies, appLanguages} = state;
+  const {
+    isLoading,
+    appCurrencies,
+    appLanguages,
+    isOn,
+    selectedThemeOptions,
+    selectedThemeOption,
+  } = state;
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
@@ -119,6 +147,23 @@ export default function Settings({route, navigation}) {
     }
   };
 
+  function _toggleOnOff(isOn) {
+    updateState({
+      isOn: isOn ? true : false,
+    });
+  }
+
+  const _selectTime = (item) => {
+    actions.setAppTheme(item);
+    {
+      selectedThemeOption && selectedThemeOption?.id == item?.id
+        ? null
+        : updateState({
+            selectedThemeOption: item,
+          });
+    }
+  };
+
   console.log(appCurrencies.all_currencies, 'll_currencies');
   return (
     <WrapperContainer
@@ -143,6 +188,79 @@ export default function Settings({route, navigation}) {
 
       <View style={{...commonStyles.headerTopLine}} />
       {/* <KeyboardAwareScrollView bounces={false}> */}
+
+      {/* <View
+        style={{
+          flexDirection: 'row',
+          marginHorizontal: moderateScale(20),
+          marginTop: moderateScaleVertical(20),
+          justifyContent: 'space-between',
+          ...commonStyles.shadowStyle,
+          paddingVertical: moderateScaleVertical(10),
+          paddingHorizontal: moderateScale(5),
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.lightDark
+            : colors.white,
+        }}>
+        <Text
+          style={
+            isDarkMode
+              ? [
+                  styles.darkAppearanceTextStyle,
+                  {color: MyDarkTheme.colors.text},
+                ]
+              : styles.darkAppearanceTextStyle
+          }>
+          {strings.DARK_APPEARANCE}
+        </Text>
+        <ToggleSwitch
+          isOn={isOn}
+          onColor={themeColors.primary_color}
+          offColor={colors.textGreyB}
+          size="medium"
+          onToggle={(isOn) => _toggleOnOff(isOn)}
+        />
+      </View>
+
+      {isOn ? (
+        <View
+          style={{
+            flexDirection: 'row',
+            marginHorizontal: moderateScale(20),
+            marginTop: moderateScaleVertical(20),
+            justifyContent: 'space-around',
+            paddingVertical: moderateScaleVertical(10),
+            paddingHorizontal: moderateScale(20),
+            height: moderateScaleVertical(height - height + 60),
+            marginVertical: moderateScaleVertical(20),
+          }}>
+          {selectedThemeOptions.map((i, inx) => {
+            return (
+              <TouchableOpacity onPress={() => _selectTime(i)}>
+                <View
+                  style={{
+                    position: 'absolute',
+                    zIndex: 1000,
+                    end: -15,
+                    marginTop: -12,
+                  }}>
+                  {selectedThemeOption && selectedThemeOption?.id == i.id ? (
+                    <Image source={i.selectedImage} />
+                  ) : null}
+                </View>
+                <Image
+                  style={{
+                    height: moderateScaleVertical(70),
+                    width: moderateScale(70),
+                  }}
+                  source={i.image}
+                />
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      ) : null} */}
+
       <View style={{flexDirection: 'row', marginHorizontal: moderateScale(20)}}>
         <Text
           style={
