@@ -22,7 +22,7 @@ import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
-  const {appData} = useSelector((state) => state?.initBoot);
+  const {appData, appStyle} = useSelector((state) => state?.initBoot);
 
   return (
     <Stack.Navigator>

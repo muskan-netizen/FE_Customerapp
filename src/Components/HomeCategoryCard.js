@@ -7,8 +7,11 @@ import {moderateScale, textScale} from '../styles/responsiveSize';
 import {getImageUrl} from '../utils/helperFunctions';
 import {SvgUri} from 'react-native-svg';
 import Elevations from 'react-native-elevation';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
+  const isDarkMode = useDarkMode();
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const imageURI = getImageUrl(

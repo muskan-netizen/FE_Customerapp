@@ -13,12 +13,15 @@ import {
   textScale,
 } from '../styles/responsiveSize';
 import {getImageUrl} from '../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function MarketCard3({
   data = {},
   onPress = () => {},
   extraStyles = {},
 }) {
+  const isDarkMode = useDarkMode();
   const {appStyle} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
@@ -49,7 +52,13 @@ export default function MarketCard3({
           flexDirection: 'row',
           justifyContent: 'space-between',
         }}>
-        <Text numberOfLines={1} style={styles.categoryText}>
+        <Text
+          numberOfLines={1}
+          style={
+            isDarkMode
+              ? [styles.categoryText, {color: MyDarkTheme.colors.text}]
+              : styles.categoryText
+          }>
           {data.name}
         </Text>
         {data?.product_avg_average_rating && (

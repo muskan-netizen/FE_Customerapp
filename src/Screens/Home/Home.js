@@ -25,11 +25,14 @@ import {
   DashBoardHeaderOne,
   DashBoardOne,
 } from './DashboardViews/Index';
+import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
 export default function Home({route, navigation}) {
   const paramData = route?.params;
+  const isDarkMode = useDarkMode();
   const {linkedURL, resetURL} = useDeepLinkURL();
 
   const location = useSelector((state) => state?.home?.location);
@@ -595,7 +598,9 @@ export default function Home({route, navigation}) {
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
-      bgColor={colors.backgroundGrey}>
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }>
       <View style={{flex: 1}}>{renderHomeScreen()}</View>
     </WrapperContainer>
   );

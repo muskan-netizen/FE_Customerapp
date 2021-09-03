@@ -32,10 +32,13 @@ import stylesFunc from './styles';
 import LinearGradient from 'react-native-linear-gradient';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
   console.log(data, 'data params >>>>>');
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     isVisibleModal: false,
     isOffline: false,
@@ -639,11 +642,15 @@ export default function Products({route, navigation}) {
   };
 
   return (
-    <View style={{backgroundColor: '#fff', flex: 1}}>
+    <View
+      style={{
+        backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
+        flex: 1,
+      }}>
       <StatusBar
         translucent
         backgroundColor="transparent"
-        barStyle={'dark-content'}
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
       />
       <CustomAnimatedLoader
         source={loaderOne}
@@ -665,7 +672,10 @@ export default function Products({route, navigation}) {
           // height: Platform.OS === 'ios' ? height * 0.27 : height * 0.3,
           zIndex: Platform.OS === 'ios' ? 0 : -1000,
         }}>
-        <View style={{backgroundColor: colors.grey}}>
+        <View
+          style={{
+            backgroundColor: colors.grey,
+          }}>
           <ImageBackground
             source={{
               uri: getImageUrl(
@@ -729,17 +739,33 @@ export default function Products({route, navigation}) {
                 </TouchableOpacity>
               </View>
             </LinearGradient>
-            <View style={styles.bottomHeaderView}>
+            <View
+              style={
+                isDarkMode
+                  ? [
+                      styles.bottomHeaderView,
+                      {backgroundColor: MyDarkTheme.colors.lightDark},
+                    ]
+                  : styles.bottomHeaderView
+              }>
               <View style={{flex: 0.5}}>
                 <Text
                   style={{
-                    color: colors.black,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                     fontSize: moderateScale(16),
                     fontFamily: fontFamily.medium,
                   }}>
                   {data?.categoryInfo?.name || data?.name}
                 </Text>
-                <Text style={styles.distanceAndTimeView}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.distanceAndTimeView,
+                          {color: MyDarkTheme.colors.text},
+                        ]
+                      : styles.distanceAndTimeView
+                  }>
                   {'0.2 km | 30 mins'}
                 </Text>
               </View>

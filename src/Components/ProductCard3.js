@@ -21,6 +21,8 @@ import {
 import HTMLView from 'react-native-htmlview';
 import DashedLine from 'react-native-dashed-line';
 import imagePath from '../constants/imagePath';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function ProductCard3({
   data = {},
@@ -35,7 +37,7 @@ export default function ProductCard3({
 }) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [selectedIndexForCartIcon, setSelectedIndexForCartIcon] = useState(-1);
-
+  const isDarkMode = useDarkMode();
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
@@ -126,11 +128,20 @@ export default function ProductCard3({
             }}>
             <Text
               numberOfLines={1}
-              style={{
-                ...commonStyles.futuraBtHeavyFont14,
-                width: moderateScaleVertical(220),
-                // fontFamily: 'Eina02-SemiBold',
-              }}>
+              style={
+                isDarkMode
+                  ? {
+                      ...commonStyles.futuraBtHeavyFont14,
+                      width: moderateScaleVertical(220),
+                      // fontFamily: 'Eina02-SemiBold',
+                      color: MyDarkTheme.colors.text,
+                    }
+                  : {
+                      ...commonStyles.futuraBtHeavyFont14,
+                      width: moderateScaleVertical(220),
+                      // fontFamily: 'Eina02-SemiBold',
+                    }
+              }>
               {data?.translation[0]?.title}
             </Text>
           </View>
@@ -146,7 +157,7 @@ export default function ProductCard3({
               numberOfLines={1}
               style={{
                 ...commonStyles.mediumFont14,
-                color: colors.black,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
               {`${currencies?.primary_currency?.symbol}${(
                 Number(data?.variant[0]?.multiplier) *

@@ -16,9 +16,13 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import stylesFunc from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
+
 export default function OrderSuccess({navigation, route}) {
+  const isDarkMode = useDarkMode();
   const currentTheme = useSelector((state) => state.appTheme);
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
@@ -28,7 +32,7 @@ export default function OrderSuccess({navigation, route}) {
   const {} = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {themeColors, themeLayouts} = currentTheme;
+  // const {themeColors, themeLayouts} = currentTheme;
 
   const viewOrderDetail = () => {
     navigation.navigate(navigationStrings.ORDER_DETAIL, {
@@ -37,7 +41,9 @@ export default function OrderSuccess({navigation, route}) {
   };
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGrey}>
       <KeyboardAwareScrollView
         alwaysBounceVertical={false}
@@ -47,24 +53,48 @@ export default function OrderSuccess({navigation, route}) {
           onPress={() => {
             navigation.goBack();
           }}>
-          <Image source={imagePath.cross} />
+          <Image
+            style={
+              isDarkMode
+                ? {tintColor: MyDarkTheme.colors.text}
+                : {tintColor: null}
+            }
+            source={imagePath.cross}
+          />
         </TouchableOpacity>
         <View style={styles.doneIconView}>
           <Image
             source={imagePath.successfulIcon}
             style={{marginBottom: moderateScaleVertical(30)}}
           />
-          <Text style={styles.requestSubmitText}>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.requestSubmitText, {color: MyDarkTheme.colors.text}]
+                : styles.requestSubmitText
+            }>
             {'Your order has been submitted!'}
           </Text>
-          <Text style={styles.successfully}>successfully!</Text>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.successfully, {color: MyDarkTheme.colors.text}]
+                : styles.successfully
+            }>
+            successfully!
+          </Text>
         </View>
         <View
           style={{
             alignItems: 'center',
             marginVertical: moderateScaleVertical(50),
           }}>
-          <Text style={styles.yourAWBText}>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.yourAWBText, {color: MyDarkTheme.colors.text}]
+                : styles.yourAWBText
+            }>
             {`Your order number is ${
               paramData && paramData?.orderDetail
                 ? paramData?.orderDetail?.order_number
@@ -81,10 +111,10 @@ export default function OrderSuccess({navigation, route}) {
         <ButtonComponent
           btnText={strings.VIEW_DETAIL}
           onPress={viewOrderDetail}
-          textStyle={{color: colors.textBlue}}
+          textStyle={{color: themeColors.secondary_color}}
           borderRadius={moderateScale(13)}
           containerStyle={{
-            backgroundColor: 'rgba(67,162,231,0.3)',
+            backgroundColor: themeColors.primary_color,
             width: width / 1.2,
           }}
         />

@@ -8,6 +8,8 @@ import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {moderateScale, textScale, width} from '../styles/responsiveSize';
 import {getImageUrl} from '../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function ProductCartListView({
   data = {},
@@ -20,7 +22,7 @@ export default function ProductCartListView({
 }) {
   const currentTheme = useSelector((state) => state?.appTheme);
   const {currencies, appStyle} = useSelector((state) => state?.initBoot);
-
+  const isDarkMode = useDarkMode();
   const {themeColors, themeLayouts} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
@@ -38,15 +40,28 @@ export default function ProductCartListView({
     <TouchableOpacity
       activeOpacity={activeOpacity}
       onPress={onPress}
-      style={{
-        width: cardWidthNew,
-        ...commonStyles.shadowStyle,
-        borderRadius: 10,
-        alignSelf: 'center',
-        padding: 10,
-        // paddingTop: moderateScaleVertical(14),
-        ...cardStyle,
-      }}>
+      style={
+        isDarkMode
+          ? {
+              width: cardWidthNew,
+              ...commonStyles.shadowStyle,
+              borderRadius: 10,
+              alignSelf: 'center',
+              padding: 10,
+              backgroundColor: MyDarkTheme.colors.lightDark,
+              // paddingTop: moderateScaleVertical(14),
+              ...cardStyle,
+            }
+          : {
+              width: cardWidthNew,
+              ...commonStyles.shadowStyle,
+              borderRadius: 10,
+              alignSelf: 'center',
+              padding: 10,
+              // paddingTop: moderateScaleVertical(14),
+              ...cardStyle,
+            }
+      }>
       <View style={{flexDirection: 'row'}}>
         <View style={{flex: 0.3}}>
           <FastImage
@@ -68,7 +83,9 @@ export default function ProductCartListView({
               <Text
                 numberOfLines={1}
                 style={{
-                  color: colors.textGreyI,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyI,
                   fontSize: textScale(14),
                   fontFamily: fontFamily.bold,
                 }}>
@@ -78,7 +95,9 @@ export default function ProductCartListView({
             <View style={{flex: 0.4, alignItems: 'flex-end'}}>
               <Text
                 style={{
-                  color: colors.textGreyI,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyI,
                   fontSize: textScale(16),
                   fontFamily: fontFamily.bold,
                 }}>
@@ -106,8 +125,6 @@ export default function ProductCartListView({
                   //   numberOfLines: 2,
                   // }}
                   // nodeComponentProps={{numberOfLines: 2}}
-
-
                 />
               </Text>
             </View>

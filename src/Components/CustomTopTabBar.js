@@ -28,6 +28,7 @@ export default function CustomTopTabBar({
         alignSelf: 'center',
         borderBottomColor: colors.lightGreyBorder,
         borderBottomWidth: 1,
+
         ...customContainerStyle,
       }}>
       <ScrollView

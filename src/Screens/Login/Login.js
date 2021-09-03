@@ -33,8 +33,11 @@ import {
 } from '../../utils/socialLogin';
 import validator from '../../utils/validations';
 import stylesFunc from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Login({navigation}) {
+  const isDarkMode = useDarkMode();
   var clonedState = {};
   const [state, setState] = useState({
     email: '',
@@ -251,14 +254,24 @@ export default function Login({navigation}) {
   };
 
   return (
-    <WrapperContainer isLoadingB={isLoading} source={loaderOne}>
+    <WrapperContainer
+      isLoadingB={isLoading}
+      source={loaderOne}
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
       <View style={styles.headerContainer}>
         <TouchableOpacity
           onPress={() => navigation.goBack(null)}
           style={{alignSelf: 'flex-start'}}>
           <Image
             source={imagePath.back}
-            style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+            style={
+              isDarkMode
+                ? {
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    tintColor: MyDarkTheme.colors.text,
+                  }
+                : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+            }
           />
         </TouchableOpacity>
       </View>
@@ -270,8 +283,22 @@ export default function Login({navigation}) {
           marginHorizontal: moderateScale(24),
         }}>
         <View style={{height: moderateScaleVertical(48)}} />
-        <Text style={styles.header}>{strings.LOGIN_YOUR_ACCOUNT}</Text>
-        <Text style={styles.txtSmall}>{strings.ENTE_REGISTERED_EMAIL}</Text>
+        <Text
+          style={
+            isDarkMode
+              ? [styles.header, {color: MyDarkTheme.colors.text}]
+              : styles.header
+          }>
+          {strings.LOGIN_YOUR_ACCOUNT}
+        </Text>
+        <Text
+          style={
+            isDarkMode
+              ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+              : styles.txtSmall
+          }>
+          {strings.ENTE_REGISTERED_EMAIL}
+        </Text>
         <View style={{height: moderateScaleVertical(50)}} />
         <BorderTextInput
           onChangeText={_onChangeText('email')}
@@ -307,7 +334,14 @@ export default function Login({navigation}) {
           {!!google_login || !!fb_login || !!twitter_login || !!apple_login ? (
             <View style={styles.socialRow}>
               <View style={styles.hyphen} />
-              <Text style={styles.orText}>{strings.OR_LOGIN_WITH}</Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.orText, {color: MyDarkTheme.colors.text}]
+                    : styles.orText
+                }>
+                {strings.OR_LOGIN_WITH}
+              </Text>
               <View style={styles.hyphen} />
             </View>
           ) : null}
@@ -344,7 +378,12 @@ export default function Login({navigation}) {
           </View>
         </View>
         <View style={styles.bottomContainer}>
-          <Text style={{...styles.txtSmall, color: colors.textGreyLight}}>
+          <Text
+            style={
+              isDarkMode
+                ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
+                : {...styles.txtSmall, color: colors.textGreyLight}
+            }>
             {strings.ALREADY_HAVE_AN_ACCOUNT}
             <Text
               onPress={moveToNewScreen(navigationStrings.SIGN_UP)}

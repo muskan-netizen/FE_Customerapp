@@ -27,6 +27,8 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 import stylesFunc from '../styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 
 export default function DashBoardFive({
   handleRefresh = () => {},
@@ -39,6 +41,7 @@ export default function DashBoardFive({
   toggleData,
   navigation = {},
 }) {
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
@@ -90,7 +93,10 @@ export default function DashBoardFive({
         }>
         <View style={{width: '90%'}}>
           <Text
-            style={{fontFamily: fontFamily.regular, color: colors.textGreyB}}>
+            style={{
+              fontFamily: fontFamily.regular,
+              color: colors.textGreyB,
+            }}>
             {strings.SEARCH_HERE}
           </Text>
         </View>
@@ -182,6 +188,7 @@ export default function DashBoardFive({
           <View>
             <Text
               style={{
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
                 fontFamily: fontFamily.regular,
                 fontSize: textScale(16),
                 marginBottom: moderateScale(10),

@@ -33,13 +33,17 @@ import commonStylesFun from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
+  width,
 } from '../../styles/responsiveSize';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
 import stylesFun from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function AddMoney({navigation}) {
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     amount: '',
     data: [
@@ -138,12 +142,31 @@ export default function AddMoney({navigation}) {
       <TouchableOpacity onPress={() => chooseAmount(item)}>
         <View
           style={{
-            backgroundColor: '#fff',
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : '#fff',
             flexDirection: 'row',
             paddingVertical: moderateScaleVertical(8),
           }}>
-          <View style={styles.selectAmountCon}>
-            <Text numberOfLines={1} style={styles.chooseAddMoney}>
+          <View
+            style={
+              isDarkMode
+                ? [
+                    styles.selectAmountCon,
+                    {
+                      backgroundColor: MyDarkTheme.colors.lightDark,
+                      borderColor: MyDarkTheme.colors.text,
+                    },
+                  ]
+                : styles.selectAmountCon
+            }>
+            <Text
+              numberOfLines={1}
+              style={
+                isDarkMode
+                  ? [styles.chooseAddMoney, {color: MyDarkTheme.colors.text}]
+                  : styles.chooseAddMoney
+              }>
               {'+ $'} {currencyNumberFormatter(item.amount)}
             </Text>
           </View>
@@ -373,10 +396,33 @@ export default function AddMoney({navigation}) {
     return (
       <>
         <View style={{...commonStyles.headerTopLine}} />
-        <View style={styles.addMoneyTopCon}>
-          <View style={styles.inputAmountCon}>
+        <View
+          style={
+            isDarkMode
+              ? [
+                  styles.addMoneyTopCon,
+                  {backgroundColor: MyDarkTheme.colors.background},
+                ]
+              : styles.addMoneyTopCon
+          }>
+          <View
+            style={
+              isDarkMode
+                ? [
+                    styles.inputAmountCon,
+                    {backgroundColor: MyDarkTheme.colors.background},
+                  ]
+                : styles.inputAmountCon
+            }>
             <View style={{flexDirection: 'row'}}>
-              <Text style={styles.inputAmountText}>{strings.INPUT_AMOUNT}</Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.inputAmountText, {color: MyDarkTheme.colors.text}]
+                    : styles.inputAmountText
+                }>
+                {strings.INPUT_AMOUNT}
+              </Text>
             </View>
 
             <View
@@ -386,12 +432,34 @@ export default function AddMoney({navigation}) {
                 alignItems: 'center',
                 paddingHorizontal: moderateScale(3),
               }}>
-              <Text style={styles.currencySymble}>{'$'}</Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.currencySymble, {color: MyDarkTheme.colors.text}]
+                    : styles.currencySymble
+                }>
+                {'$'}
+              </Text>
               <TextInput
-                style={styles.addMoneyInputField}
+                style={
+                  isDarkMode
+                    ? [
+                        styles.addMoneyInputField,
+                        {
+                          backgroundColor: MyDarkTheme.colors.text,
+                          marginLeft: moderateScale(10),
+                          width: width - 50,
+                        },
+                      ]
+                    : styles.addMoneyInputField
+                }
                 value={`${state.amount}`}
                 onChangeText={_onChangeText('amount')}
                 keyboardType={'numeric'}
+                placeholder={'Enter amount'}
+                placeholderTextColor={
+                  isDarkMode ? MyDarkTheme.colors.background : colors.textGrey
+                }
               />
             </View>
           </View>
@@ -421,7 +489,16 @@ export default function AddMoney({navigation}) {
               }}>
               {!!(
                 allAvailAblePaymentMethods && allAvailAblePaymentMethods.length
-              ) && <Text style={styles.debitFrom}>{strings.DEBIT_FROM}</Text>}
+              ) && (
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.debitFrom, {color: MyDarkTheme.colors.text}]
+                      : styles.debitFrom
+                  }>
+                  {strings.DEBIT_FROM}
+                </Text>
+              )}
               <FlatList
                 data={allAvailAblePaymentMethods}
                 showsVerticalScrollIndicator={false}
@@ -457,7 +534,9 @@ export default function AddMoney({navigation}) {
   };
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.white}
       isLoadingB={isLoadingB}
       source={loaderOne}>
@@ -466,7 +545,11 @@ export default function AddMoney({navigation}) {
           appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         centerTitle={strings.ADD_MONEY}
-        headerStyle={{backgroundColor: Colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: Colors.white}
+        }
       />
       {preferences?.stripe_publishable_key ? (
         <StripeProvider

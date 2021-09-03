@@ -235,5 +235,10 @@ export default {
   startwo: require('../assets/images/ic_star_2.png'),
   backRound2: require('../assets/images/ic_back_round_2.png'),
   searchRound2: require('../assets/images/ic_search_2.png'),
+
+  ic_add: require('../assets/images/ic_add_new_location.png'),
+  ic_cross: require('../assets/images/ic_backwd_dark.png'),
+  dark: require('../assets/images/DARK.jpg'),
+  light: require('../assets/images/LIGHT.jpg'),
   dropDownNew: require('../assets/images/ic_drpdwn.png'),
 };

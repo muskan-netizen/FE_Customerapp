@@ -16,10 +16,12 @@ import {getImageUrl} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 import Modal from 'react-native-modal';
 import {RadioButton} from 'react-native-paper';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 
 export default function DashBoardHeaderFive({navigation = {}, location = []}) {
   const pickerRef = createRef();
-
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     tableData: [
       {label: 'Delivery', value: 'Delivery'},
@@ -90,7 +92,7 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
                 // height:20,
                 lineHeight: 20,
                 fontFamily: fontFamily.regular,
-                color: colors.black,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 fontSize: textScale(10),
               }}>
               {location?.address}

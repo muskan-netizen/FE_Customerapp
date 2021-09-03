@@ -27,6 +27,8 @@ import {
 } from '../../../utils/helperFunctions';
 import ListEmptyCar from './ListEmptyCar';
 import stylesFun from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 
 export default function SelectCarModalView({
   isLoading = false,
@@ -40,6 +42,7 @@ export default function SelectCarModalView({
   _select,
   onPressAvailableVendor,
 }) {
+  const isDarkMode = useDarkMode();
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -59,10 +62,13 @@ export default function SelectCarModalView({
         onPress={() => onPressAvailableCar(item)}
         style={{
           borderWidth: 1,
-          backgroundColor:
-            selectedCarOption?.id == item?.id
+          backgroundColor: isDarkMode
+            ? selectedCarOption?.id == item?.id
               ? colors.lightBlueBackground
-              : colors.white,
+              : MyDarkTheme.colors.lightDark
+            : selectedCarOption?.id == item?.id
+            ? colors.lightBlueBackground
+            : colors.white,
           borderColor:
             selectedCarOption?.id == item?.id
               ? 'transparent'
@@ -98,7 +104,6 @@ export default function SelectCarModalView({
               )}
             </View>
           </View>
-
           <View
             style={{
               flex: 0.7,
@@ -110,7 +115,20 @@ export default function SelectCarModalView({
             {/* <Text style={styles.carType}>{item.carType}</Text> */}
             <View style={{flex: 0.5}}>
               {/* <Text style={styles.packageSize}>{item.packageSize}</Text> */}
-              <Text numberOfLines={1} style={styles.carType}>
+              <Text
+                numberOfLines={1}
+                style={
+                  selectedCarOption?.id == item?.id
+                    ? [styles.carType, {color: themeColors.primary_color}]
+                    : [
+                        styles.carType,
+                        {
+                          color: isDarkMode
+                            ? colors.white
+                            : colors.textGreyOpcaity7,
+                        },
+                      ]
+                }>
                 {item?.translation[0]?.title}
               </Text>
             </View>
@@ -119,7 +137,24 @@ export default function SelectCarModalView({
                 flex: 0.4,
                 alignItems: 'flex-end',
               }}>
-              <Text numberOfLines={1} style={styles.priceStyle}>
+              <Text
+                numberOfLines={1}
+                style={
+                  selectedCarOption?.id == item?.id
+                    ? [styles.priceStyle, {color: themeColors.primary_color}]
+                    : [
+                        styles.priceStyle,
+                        {
+                          color: isDarkMode
+                            ? colors.white
+                            : colors.textGreyOpcaity7,
+                        },
+                      ]
+
+                  // isDarkMode
+                  //   ? [styles.priceStyle, {color: MyDarkTheme.colors.text}]
+                  //   : styles.priceStyle
+                }>
                 {`${currencies?.primary_currency?.symbol}${Number(
                   item.tags_price,
                 ).toFixed(2)}`}
@@ -164,11 +199,26 @@ export default function SelectCarModalView({
   };
 
   return (
-    <View style={[styles.bottomView]}>
+    <View
+      style={
+        isDarkMode
+          ? [
+              styles.bottomView,
+              {backgroundColor: MyDarkTheme.colors.background},
+            ]
+          : [styles.bottomView]
+      }>
       <View style={{padding: moderateScale(20)}}>
         {/* <Text style={styles.addressMainTitle}>{addressLabel}</Text> */}
 
-        <Text style={styles.chooseSuitable}>{strings.CHOSSESUITABLECAR}</Text>
+        <Text
+          style={
+            isDarkMode
+              ? [styles.chooseSuitable, {color: MyDarkTheme.colors.text}]
+              : styles.chooseSuitable
+          }>
+          {strings.CHOSSESUITABLECAR}
+        </Text>
         {availableVendors.length > 1 ? (
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {availableVendors.map((i, inx) => {
