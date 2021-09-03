@@ -32,9 +32,7 @@ export default function AboutUs({navigation}) {
     <WrapperContainer bgColor={colors.white} statusBarColor={colors.white}>
       <Header
         leftIcon={
-          appData?.profile?.code === shortCodes.capcorp
-            ? imagePath.backArrow
-            : imagePath.back
+          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         centerTitle={strings.ABOUT_US}
         // rightIcon={imagePath.cartShop}

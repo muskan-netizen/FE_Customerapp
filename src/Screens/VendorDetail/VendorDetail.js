@@ -22,13 +22,14 @@ export default function VendorDetail({navigation, route}) {
   console.log(vendorParams, 'vendorParams>>>>>>>');
   const isDarkMode = useDarkMode();
   const [state, setState] = useState({
-    vendorId: vendorParams?.item?.id,
+    vendorId: vendorParams?.item?.id || vendorParams.id,
+    vendordName: vendorParams.name || '',
     vendorData: [],
     isLoading: true,
     limit: 12,
     pageNo: 1,
   });
-  const {vendorId, vendorData, isLoading, limit, pageNo} = state;
+  const {vendorId, vendorData, isLoading, limit, pageNo, vendordName} = state;
   useEffect(() => {
     if (
       vendorParams &&
@@ -167,7 +168,7 @@ export default function VendorDetail({navigation, route}) {
 
       <Header
         leftIcon={imagePath.back}
-        centerTitle={vendorParams?.item?.name}
+        centerTitle={vendorParams?.item?.name || vendordName}
         rightIcon={imagePath.search}
         onPressRight={() =>
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)

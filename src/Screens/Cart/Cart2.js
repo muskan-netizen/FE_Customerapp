@@ -110,7 +110,6 @@ export default function Cart2({navigation, route}) {
   const dineInType = useSelector((state) => state?.home?.dineInType);
   const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
-  const homePageLayout = appStyle?.homePageLayout;
   const fontFamily = appStyle?.fontSizeData;
   // const styles = stylesFun({fontFamily, themeColors});
   const styles = stylesFunc({fontFamily, themeColors});
@@ -1259,9 +1258,7 @@ export default function Cart2({navigation, route}) {
       isLoadingB={isLoadingB}>
       <Header
         leftIcon={
-          appData?.profile?.code === shortCodes.capcorp
-            ? imagePath.backArrow
-            : imagePath.back
+          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         centerTitle={strings.CART}
         headerStyle={{backgroundColor: colors.backgroundGrey}}

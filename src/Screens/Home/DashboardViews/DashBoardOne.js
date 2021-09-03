@@ -24,6 +24,7 @@ export default function DashBoardOne({
   onPressCategory = () => {},
   selcetedToggle,
   toggleData,
+  isDineInSelected = false,
 }) {
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -122,7 +123,11 @@ export default function DashBoardOne({
         </>
       )}
 
-      <ToggleTabBar toggleData={toggleData} selcetedToggle={selcetedToggle} />
+      <ToggleTabBar
+        toggleData={toggleData}
+        selcetedToggle={selcetedToggle}
+        isDineInSelected={isDineInSelected}
+      />
 
       {isLoading && <CardLoader listSize={6} isRow />}
       {!isLoading &&

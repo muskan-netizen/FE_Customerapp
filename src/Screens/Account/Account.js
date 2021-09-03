@@ -35,6 +35,7 @@ export default function Account({navigation}) {
   );
   const isDarkMode = useDarkMode();
   const homePageLayout = appStyle?.homePageLayout;
+
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
   const commonStyles = commonStylesFun({fontFamily});
@@ -131,10 +132,7 @@ export default function Account({navigation}) {
           centerTitle={strings.MY_ACCOUNT}
         />
       ) : (
-        <Header
-          centerTitle={strings.MY_ACCOUNT}
-          noLeftIcon={homePageLayout == 2 ? false : true}
-        />
+        <Header centerTitle={strings.MY_ACCOUNT} noLeftIcon={true} />
       )}
 
       <View style={{...commonStyles.headerTopLine}} />

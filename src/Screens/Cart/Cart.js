@@ -38,6 +38,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {
+  getParameterByName,
   getColorCodeWithOpactiyNumber,
   getImageUrl,
   showError,
@@ -83,6 +84,7 @@ export default function Cart({navigation, route}) {
     tableData: [],
     isTableDropDown: false,
     defaultSelectedTable: '',
+    deepLinkUrl: null,
     selectedTimeOptions: [
       {id: 1, title: 'Now', type: 'now'},
       {id: 2, title: 'Schedule Order', type: 'schedule'},
@@ -111,6 +113,7 @@ export default function Cart({navigation, route}) {
     tableData,
     isTableDropDown,
     defaultSelectedTable,
+    deepLinkUrl,
     selectedTimeOptions,
     selectedTimeOption,
     sheduledorderdate,
@@ -121,7 +124,6 @@ export default function Cart({navigation, route}) {
   const userData = useSelector((state) => state?.auth?.userData);
   const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
-  const homePageLayout = appStyle?.homePageLayout;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
 
@@ -262,8 +264,20 @@ export default function Cart({navigation, route}) {
               (item, indx) =>
                 (tableData[indx] = {
                   id: item.id,
-                  label: `Category: ${item.category.title} | Table: ${item.table_number} | Seat Capacity: ${item.seating_number}`,
-                  value: `Category: ${item.category.title} | Table: ${item.table_number} | Seat Capacity: ${item.seating_number}`,
+                  label: `Category: ${
+                    item.category.title ? item.category.title : ''
+                  } | Table: ${
+                    item.table_number ? item.table_number : 0
+                  } | Seat Capacity: ${
+                    item.seating_number ? item.seating_number : 0
+                  }`,
+                  value: `Category: ${
+                    item.category.title ? item.category.title : ''
+                  } | Table: ${
+                    item.table_number ? item.table_number : 0
+                  } | Seat Capacity: ${
+                    item.seating_number ? item.seating_number : 0
+                  }`,
                   title: item.category.title,
                   table_number: item.table_number,
                   seating_number: item.seating_number,
@@ -1613,13 +1627,18 @@ export default function Cart({navigation, route}) {
             </View>
 
             {dineInType === 'dine_in' &&
+              userData?.auth_token &&
               cartData?.vendor_details?.vendor_tables && (
                 <DropDownPicker
                   items={tableData}
                   onOpen={() => updateState({isTableDropDown: true})}
                   onClose={() => updateState({isTableDropDown: false})}
                   defaultValue={
-                    defaultSelectedTable || tableData[0].label || ''
+                    deepLinkUrl
+                      ? deepLinkUrl == 1
+                        ? tableData[0]?.label
+                        : tableData[1]?.label
+                      : defaultSelectedTable || tableData[0]?.label || ''
                   }
                   containerStyle={{
                     height: 40,
@@ -1805,6 +1824,20 @@ export default function Cart({navigation, route}) {
     });
   };
 
+  useEffect(() => {
+    getItem('deepLinkUrl')
+      .then((res) => {
+        if (res) {
+          let table_number = getParameterByName('table', res);
+          console.log(res, 'table_number');
+          updateState({deepLinkUrl: table_number});
+        }
+      })
+      .catch((error) => {
+        showError(error.message);
+      });
+  }, []);
+
   const _onTableSelection = (item) => {
     const data = {
       vendor_id: item.id,
@@ -1815,6 +1848,7 @@ export default function Cart({navigation, route}) {
         code: appData?.profile?.code,
       })
       .then((res) => {
+        removeItem('deepLinkUrl');
         setItem('selectedTable', item?.label);
       })
       .catch((error) => {
@@ -1834,11 +1868,7 @@ export default function Cart({navigation, route}) {
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
       isLoadingB={isLoadingB}>
-      {homePageLayout == 2 ? (
-        <HeaderWithFilters centerTitle={strings.CART} LeftIcon={true} />
-      ) : (
-        <HeaderWithFilters centerTitle={strings.CART} noLeftIcon={true} />
-      )}
+      {<HeaderWithFilters centerTitle={strings.CART} noLeftIcon={true} />}
 
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
       <View

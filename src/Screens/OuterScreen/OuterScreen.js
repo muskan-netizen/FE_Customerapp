@@ -51,8 +51,6 @@ export default function OuterScreen({navigation}) {
   const {apple_login, fb_login, twitter_login, google_login} =
     appData?.profile?.preferences;
 
-  const homePageLayout = appStyle?.homePageLayout;
-
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const moveToNewScreen =
     (screenName, data = {}) =>

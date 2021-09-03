@@ -465,9 +465,7 @@ export default function CelebrityProduct({route, navigation}) {
       source={loaderOne}>
       <Header
         leftIcon={
-          appData?.profile?.code === shortCodes.capcorp
-            ? imagePath.backArrow
-            : imagePath.back
+          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         centerTitle={celebrity.name || celebrity.translation[0].title}
         rightIcon={imagePath.search}

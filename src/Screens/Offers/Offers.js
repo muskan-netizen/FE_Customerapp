@@ -27,7 +27,7 @@ export default function Offer({route, navigation}) {
 
   const vendorInfo = route?.params?.data;
   console.log(vendorInfo, '>>>>>>>>>>>>>>>>>>>');
-  const {appData, themeColors, themeLayouts, currencies, languages} =
+  const {appData, appStyle, themeColors, themeLayouts, currencies, languages} =
     useSelector((state) => state.initBoot);
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -204,9 +204,7 @@ export default function Offer({route, navigation}) {
       <Header
         centerTitle={strings.OFFERS}
         leftIcon={
-          appData?.profile?.code === shortCodes.capcorp
-            ? imagePath.backArrow
-            : imagePath.back
+          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
       />
       <View style={{height: 1, backgroundColor: colors.borderLight}} />

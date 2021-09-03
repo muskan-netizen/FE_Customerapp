@@ -178,9 +178,7 @@ export default function ContactUs({navigation}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          appData?.profile?.code === shortCodes.capcorp
-            ? imagePath.backArrow
-            : imagePath.back
+          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         centerTitle={strings.CONTACT_USS}
         headerStyle={
