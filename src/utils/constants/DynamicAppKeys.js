@@ -72,6 +72,7 @@ const shortCodes = {
   doorstep: 'f76099',
   sunshinerideshare: 'cef206',
   autotek: '2fbe83',
+  wegotit: 'f755bb',
 };
 
 const appIds = {
@@ -358,6 +359,10 @@ const appIds = {
   autotek: Platform.select({
     ios: 'com.autotek',
     android: 'com.autotek',
+  }),
+  wegotit: Platform.select({
+    ios: 'com.wegotit',
+    android: 'com.wegotit',
   }),
 };
 
