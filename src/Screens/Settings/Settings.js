@@ -25,16 +25,15 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import ToggleSwitch from 'toggle-switch-react-native';
 import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
+import navigationStrings from '../../navigation/navigationStrings';
 
 export default function Settings({route, navigation}) {
-  const isDarkMode = useDarkMode();
   // const appData = useSelector(state => state?.initBoot?.appData);
   const {currencies, appData, languages, appStyle, themeColors} = useSelector(
     (state) => state?.initBoot,
   );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-
   const [state, setState] = useState({
     isLoading: false,
     country: 'uk',
@@ -70,34 +69,30 @@ export default function Settings({route, navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
   const commonStyles = commonStylesFunc({fontFamily});
+  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
 
   useFocusEffect(
     React.useCallback(() => {
       updateState({
         appCurrencies: currencies,
         appLanguages: languages,
+        isOn: toggleTheme,
+        selectedThemeOption: theme
+          ? {
+              id: 2,
+              image: imagePath.dark,
+              selectedImage: imagePath.done,
+              type: 'dark',
+            }
+          : {
+              id: 1,
+              image: imagePath.light,
+              selectedImage: imagePath.done,
+              type: 'light',
+            },
       });
     }, [currencies, languages]),
   );
-
-  useEffect(() => {
-    updateState({
-      isOn: toggleTheme,
-      selectedThemeOption: theme
-        ? {
-            id: 2,
-            image: imagePath.dark,
-            selectedImage: imagePath.done,
-            type: 'dark',
-          }
-        : {
-            id: 1,
-            image: imagePath.light,
-            selectedImage: imagePath.done,
-            type: 'light',
-          },
-    });
-  }, [currencies, languages]);
 
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -167,14 +162,17 @@ export default function Settings({route, navigation}) {
   };
 
   function _toggleOnOff(isOn) {
+    setTimeout(() => {
+      updateState({
+        isOn: isOn ? true : false,
+      });
+    }, 0);
     actions.setToggle(isOn);
-    updateState({
-      isOn: isOn ? true : false,
-    });
   }
 
-  const _selectTime = (item) => {
+  const _setApperance = (item) => {
     actions.setAppTheme(item);
+
     {
       selectedThemeOption && selectedThemeOption?.id == item?.id
         ? null
@@ -254,7 +252,7 @@ export default function Settings({route, navigation}) {
           }}>
           {selectedThemeOptions.map((i, inx) => {
             return (
-              <TouchableOpacity onPress={() => _selectTime(i)}>
+              <TouchableOpacity onPress={() => _setApperance(i)}>
                 <View
                   style={{
                     position: 'absolute',
