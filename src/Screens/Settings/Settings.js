@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {I18nManager, Text, View, Image, TouchableOpacity} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RNRestart from 'react-native-restart'; // Import package from node modules
@@ -33,7 +33,7 @@ export default function Settings({route, navigation}) {
     (state) => state?.initBoot,
   );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  console.log(theme, 'theme');
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
   const [state, setState] = useState({
     isLoading: false,
@@ -79,6 +79,25 @@ export default function Settings({route, navigation}) {
       });
     }, [currencies, languages]),
   );
+
+  useEffect(() => {
+    updateState({
+      isOn: toggleTheme,
+      selectedThemeOption: theme
+        ? {
+            id: 2,
+            image: imagePath.dark,
+            selectedImage: imagePath.done,
+            type: 'dark',
+          }
+        : {
+            id: 1,
+            image: imagePath.light,
+            selectedImage: imagePath.done,
+            type: 'light',
+          },
+    });
+  }, [currencies, languages]);
 
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -148,6 +167,7 @@ export default function Settings({route, navigation}) {
   };
 
   function _toggleOnOff(isOn) {
+    actions.setToggle(isOn);
     updateState({
       isOn: isOn ? true : false,
     });
@@ -187,7 +207,7 @@ export default function Settings({route, navigation}) {
       <View style={{...commonStyles.headerTopLine}} />
       {/* <KeyboardAwareScrollView bounces={false}> */}
 
-      {/* <View
+      <View
         style={{
           flexDirection: 'row',
           marginHorizontal: moderateScale(20),
@@ -257,7 +277,7 @@ export default function Settings({route, navigation}) {
             );
           })}
         </View>
-      ) : null} */}
+      ) : null}
 
       <View style={{flexDirection: 'row', marginHorizontal: moderateScale(20)}}>
         <Text

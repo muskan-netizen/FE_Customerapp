@@ -43,6 +43,7 @@ export default function OrderCardVendorComponent({
   let cardWidth = width - 21.5;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
   const imageUrl =
     data && data.user_image

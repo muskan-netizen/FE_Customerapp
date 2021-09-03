@@ -29,6 +29,7 @@ const initial_state = {
     homePageLayout: 1,
   },
   themeColor: null,
+  themeToggle: null,
   //internetConnection: false,
 };
 
@@ -132,6 +133,14 @@ export default function (state = initial_state, action) {
       return {
         ...state,
         themeColor: data,
+      };
+    }
+    case types.THEME_TOGGLE: {
+      const data = action.payload;
+      console.log();
+      return {
+        ...state,
+        themeToggle: data,
       };
     }
 

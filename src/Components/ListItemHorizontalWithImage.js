@@ -25,6 +25,7 @@ const ListItemHorizontal = ({
   rightIconStyle = {},
 }) => {
   const {appStyle} = useSelector((state) => state?.initBoot);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});

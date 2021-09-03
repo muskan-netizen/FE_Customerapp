@@ -47,6 +47,7 @@ export default function AddressModal({
   indicator,
   navigation,
 }) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
   const appData = useSelector((state) => state?.initBoot?.appData);
   const currentTheme = useSelector((state) => state.initBoot);

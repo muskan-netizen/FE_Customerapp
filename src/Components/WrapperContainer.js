@@ -23,6 +23,7 @@ const WrapperContainer = ({
   extraStyles = {},
 }) => {
   const {themeColors} = useSelector((state) => state?.initBoot);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
 
   const customColor = loadercolor ? loadercolor : themeColors.primary_color;

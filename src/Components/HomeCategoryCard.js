@@ -11,6 +11,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 
 export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;

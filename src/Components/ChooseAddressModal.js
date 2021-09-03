@@ -42,6 +42,7 @@ export default function ChooseAddressModal({
   selectedAddress,
 }) {
   //close yout modal
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     allAddress: [],

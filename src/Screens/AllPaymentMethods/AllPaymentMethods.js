@@ -30,6 +30,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function AllPaymentMethods({navigation, route}) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
   const {appData, appStyle, themeColors, currencies, languages} = useSelector(
     (state) => state?.initBoot,

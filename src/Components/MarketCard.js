@@ -37,6 +37,7 @@ export default function MarketCard({
   activeOpacity = 1,
 }) {
   const {appStyle} = useSelector((state) => state?.initBoot);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
   // const appTheme=useSelector(state=>state.colors.appTheme)
   const navigation = useNavigation();

@@ -37,6 +37,7 @@ export default function ProductCard3({
 }) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [selectedIndexForCartIcon, setSelectedIndexForCartIcon] = useState(-1);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);

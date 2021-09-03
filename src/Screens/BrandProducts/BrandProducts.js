@@ -42,6 +42,7 @@ import {MyDarkTheme} from '../../styles/theme';
 
 export default function BrandProducts({route, navigation}) {
   const {data} = route.params;
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     slider1ActiveSlide: 0,

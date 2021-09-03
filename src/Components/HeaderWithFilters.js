@@ -31,6 +31,7 @@ const HeaderWithFilters = ({
   onPressRight,
   headerStyle,
 }) => {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
   const navigation = useNavigation();
   const {appStyle} = useSelector((state) => state?.initBoot);

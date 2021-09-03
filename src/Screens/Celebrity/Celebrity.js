@@ -41,6 +41,7 @@ export default function Celebrity({navigation}) {
     selectedTab: 'All',
     pageIndex: 0,
   });
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
   const {appData, currencies, languages, appStyle, themeColors} = useSelector(
     (state) => state.initBoot,

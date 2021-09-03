@@ -219,3 +219,12 @@ export function setAppTheme(res) {
     });
   }
 }
+
+export function setToggle(res) {
+  // console.log(JSON.stringify(res), 'response from toggle');
+  setItem('istoggle', JSON.stringify(res));
+  dispatch({
+    type: types.THEME_TOGGLE,
+    payload: res ? true : false,
+  });
+}

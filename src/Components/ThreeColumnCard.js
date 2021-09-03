@@ -30,6 +30,7 @@ export default function ThreeColumnCard({
   //marginHorizontal for center item is 8 which is toal 16
   //total spcaing required is width-32+16 or 48
   // width - 48 will be the width of each card and
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
   const {themeColors, appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;

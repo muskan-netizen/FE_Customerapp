@@ -34,6 +34,7 @@ export default function BorderTextInput({
   secureTextEntry = false,
   ...props
 }) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
   const inputRef = useRef();
   const {appStyle} = useSelector((state) => state.initBoot);

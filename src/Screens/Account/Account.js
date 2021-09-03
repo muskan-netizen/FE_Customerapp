@@ -33,6 +33,7 @@ export default function Account({navigation}) {
   const {shortCodeStatus, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
   const homePageLayout = appStyle?.homePageLayout;
 

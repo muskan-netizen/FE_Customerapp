@@ -105,6 +105,13 @@ const App = () => {
           payload: false,
         });
       }
+      const themeToggle = await getItem('istoggle');
+      if (themeToggle) {
+        dispatch({
+          type: types.THEME_TOGGLE,
+          payload: JSON.parse(themeToggle),
+        });
+      }
       //Language
       const getLanguage = await getItem('language');
       if (getLanguage) {

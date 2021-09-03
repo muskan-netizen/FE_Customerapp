@@ -31,6 +31,7 @@ export default function ProductCard({
   activeOpacity = 1,
   bottomText = strings.BUY_NOW,
 }) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
