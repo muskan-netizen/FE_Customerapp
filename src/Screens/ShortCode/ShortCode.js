@@ -27,7 +27,6 @@ import firebase from '@react-native-firebase/app';
 
 export default function ShortCode({route, navigation}) {
   const shortCodeParam = route?.params?.shortCodeParam;
-  console.log(shortCodeParam, 'shortCodeParam');
   // alert(shortCodeParam)
   const [state, setState] = useState({
     email: '',

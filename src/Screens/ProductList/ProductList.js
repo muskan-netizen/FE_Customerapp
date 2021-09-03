@@ -38,7 +38,6 @@ import ListEmptyProduct from './ListEmptyProduct';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
-  console.log(data, 'data>data >>>>PARAMS');
   const [state, setState] = useState({
     isVisibleModal: false,
     isOffline: false,
@@ -426,6 +425,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
+        console.log(res, 'all list products');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -660,8 +660,6 @@ export default function Products({route, navigation}) {
       </Fragment>
     );
   };
-
-  console.log(productListData, 'productListData');
 
   return (
     <WrapperContainer

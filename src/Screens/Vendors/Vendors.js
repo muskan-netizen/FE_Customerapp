@@ -30,6 +30,7 @@ export default function Vendors({route, navigation}) {
   });
   const {appData, themeColors, themeLayouts, currencies, languages} =
     useSelector((state) => state.initBoot);
+  const location = useSelector((state) => state?.home?.location);
 
   const categoryData = useSelector((state) => state?.vendor?.categoryData);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
@@ -51,13 +52,22 @@ export default function Vendors({route, navigation}) {
   const commonStyles = commonStylesFun({fontFamily});
 
   useEffect(() => {
+    // let latlongObj = {};
+    // if (appData?.profile?.preferences?.is_hyperlocal) {
+    //   latlongObj = {
+    //     address: location?.address,
+    //     latitude: location?.latitude,
+    //     longitude: location?.longitude,
+    //   };
+    // }
     actions
       .getDataByCategoryId(
         `/${data.id}?limit=${limit}&page=${pageNo}&type=${dine_In_Type}`,
         {},
-        {code: appData.profile.code},
+        {code: appData.profile.code,},
       )
       .then((res) => {
+        console.log('All vendors', res);
         updateState({isLoading: false, isRefreshing: false});
         const vendorData = {
           category: res.data.category,

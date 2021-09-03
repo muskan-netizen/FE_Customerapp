@@ -197,7 +197,11 @@ export default function Products({route, navigation}) {
 
     if (data?.vendor) {
       {
-        filterExist ? getAllProductsVendorFilter() : getAllProductsByVendor();
+        filterExist
+          ? getAllProductsVendorFilter()
+          : data?.vendorData
+          ? getAllProductsByVendorCategory()
+          : getAllProductsByVendor();
       }
     } else {
       {
@@ -205,6 +209,41 @@ export default function Products({route, navigation}) {
       }
     }
   };
+
+  /****Get all list items by vendor id */
+  const getAllProductsByVendorCategory = () => {
+    // alert("21312")
+    console.log(
+      `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
+      'url',
+    );
+    actions
+      .getProductByVendorCategoryId(
+        `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
+        {},
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'resz');
+        updateState({
+          isLoading: false,
+          isRefreshing: false,
+          categoryInfo: res?.data?.vendor,
+          filterData: res?.data?.filterData,
+          productListData:
+            pageNo == 1
+              ? res.data.products.data
+              : [...productListData, ...res?.data?.products?.data],
+        });
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+      })
+      .catch(errorMethod);
+  };
+
 
   const updateBrandAndCategoryFilter = (filterData, allBrands) => {
     var brandDatas = [];

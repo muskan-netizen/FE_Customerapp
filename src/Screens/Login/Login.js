@@ -103,6 +103,7 @@ export default function Login({navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        console.log(res,"login data")
         if (!!res.data) {
           !!res.data?.client_preference?.verify_email ||
           !!res.data?.client_preference?.verify_phone
