@@ -522,6 +522,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.survuhs:
+          updateState({
+            shortCode: shortCodes.survuhs,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

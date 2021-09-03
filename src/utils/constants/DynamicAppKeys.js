@@ -73,6 +73,7 @@ const shortCodes = {
   sunshinerideshare: 'cef206',
   autotek: '2fbe83',
   wegotit: 'f755bb',
+  survuhs: 'ac8cda',
 };
 
 const appIds = {
@@ -363,6 +364,10 @@ const appIds = {
   wegotit: Platform.select({
     ios: 'com.wegotit',
     android: 'com.wegotit',
+  }),
+  survuhs: Platform.select({
+    ios: 'com.survuhs',
+    android: 'com.survuhs',
   }),
 };
 
