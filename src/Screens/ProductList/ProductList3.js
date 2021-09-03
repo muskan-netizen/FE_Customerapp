@@ -445,7 +445,10 @@ export default function Products({route, navigation}) {
               : [...productListData, ...res.data.listData.data],
         });
         {
-          pageNo == 1 && res?.data?.listData?.data.length == 0 && res?.data?.category && res?.data?.category?.childs.length
+          pageNo == 1 &&
+          res?.data?.listData?.data.length == 0 &&
+          res?.data?.category &&
+          res?.data?.category?.childs.length
             ? updateState({
                 selectedCategory: res.data.category.childs[0],
                 productListId: res.data.category.childs[0],
@@ -666,9 +669,12 @@ export default function Products({route, navigation}) {
           <ImageBackground
             source={{
               uri: getImageUrl(
-                data?.categoryInfo?.image?.proxy_url || data?.image?.proxy_url,
+                data?.categoryInfo?.image?.proxy_url ||
+                  data?.image?.proxy_url ||
+                  categoryInfo?.banner?.proxy_url,
                 data?.categoryInfo?.image?.image_path ||
-                  data?.image?.image_path,
+                  data?.image?.image_path ||
+                  categoryInfo?.banner?.image_path,
                 '500/500',
               ),
             }}
@@ -698,9 +704,11 @@ export default function Products({route, navigation}) {
                     source={{
                       uri: getImageUrl(
                         data?.categoryInfo?.icon?.proxy_url ||
-                          data?.icon?.proxy_url,
+                          data?.icon?.proxy_url ||
+                          categoryInfo?.logo?.proxy_url,
                         data?.categoryInfo?.icon?.image_path ||
-                          data?.icon?.image_path,
+                          data?.icon?.image_path ||
+                          categoryInfo?.logo?.image_path,
                         '200/200',
                       ),
                     }}
