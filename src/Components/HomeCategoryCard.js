@@ -13,7 +13,7 @@ import {MyDarkTheme} from '../styles/theme';
 export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
+  const isDarkMode = useDarkMode();
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const imageURI = getImageUrl(
@@ -58,6 +58,8 @@ export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
         }}>
         {isSVG ? (
           <SvgUri
+          height={moderateScale(70)}
+          width={moderateScale(70)}
             style={{
               marginHorizontal: moderateScale(10),
               position: 'absolute',

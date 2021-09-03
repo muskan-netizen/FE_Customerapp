@@ -568,7 +568,7 @@ export default function Home({route, navigation}) {
               onPressCategory={(item) => {
                 shortCodes.capcorp === appIds.capcorp
                   ? onPressCategory2(item)
-                  : onPressCategory(item);
+                  : onPressCategory2(item);
               }}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
