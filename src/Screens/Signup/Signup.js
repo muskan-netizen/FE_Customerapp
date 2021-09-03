@@ -93,6 +93,7 @@ export default function Signup({navigation}) {
       device_type: Platform.OS,
       device_token: DeviceInfo.getUniqueId(),
       refferal_code: referralCode,
+
       // country_id: '1',
     };
     console.log(data, 'signup--data');
