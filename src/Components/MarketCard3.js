@@ -102,8 +102,24 @@ export default function MarketCard3({
           </Text>
         </View>
 
-        <Text numberOfLines={1} style={{color: colors.greenA}}>
+        {/* <Text numberOfLines={1} style={{color: colors.greenA}}>
           {strings.OPEN}
+        </Text> */}
+        <Text
+          style={{
+            ...commonStyles.mediumFont14Normal,
+            fontSize: textScale(12),
+            color: data?.show_slot
+              ? colors.green
+              : data?.slot && data?.slot.length
+              ? colors.green
+              : colors.redB,
+          }}>
+          {data?.show_slot
+            ? 'Open'
+            : data?.slot && data?.slot.length
+            ? 'Open'
+            : 'Close'}
         </Text>
       </View>
     </TouchableOpacity>
