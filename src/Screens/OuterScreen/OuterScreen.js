@@ -28,6 +28,8 @@ import stylesFunc from './styles';
 import Header from '../../Components/Header';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
+
 
 export default function OuterScreen({navigation}) {
   const isDarkMode = useDarkMode();
@@ -230,22 +232,15 @@ export default function OuterScreen({navigation}) {
           {strings.CREATE_YOUR_ACCOUNT}
         </Text>
         <View style={{marginHorizontal: moderateScale(24)}}>
-          <View style={{marginHorizontal: moderateScaleVertical(30)}}>
+          {appData?.profile?.preferences?.home_tag_line?<View style={{marginHorizontal: moderateScaleVertical(30)}}>
             <Text numberOfLines={2} style={styles.txtSmall}>
               {appData?.profile?.preferences?.home_tag_line
                 ? appData?.profile?.preferences?.home_tag_line
                 : ''}
             </Text>
-            <Text
-              numberOfLines={2}
-              style={
-                isDarkMode
-                  ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
-                  : styles.txtSmall
-              }>
-              {strings.JOIN_US}
-            </Text>
-          </View>
+           
+          </View>:null}
+          
           <GradientButton
             containerStyle={{marginTop: moderateScaleVertical(50)}}
             btnText={strings.CREATE_AN_ACCOUNT}
@@ -276,179 +271,59 @@ export default function OuterScreen({navigation}) {
               </View>
             ) : null}
 
-            {/* <View style={styles.socialRowBtn}>
-              {!!google_login && (
-                <TouchableOpacity
-                  onPress={() => openGmailLogin()}
-                  style={{marginHorizontal: moderateScale(20)}}>
-                  <Image source={imagePath.google} />
-                </TouchableOpacity>
-              )}
-              {!!fb_login && (
-                <TouchableOpacity
-                  onPress={() => openFacebookLogin()}
-                  style={{marginHorizontal: moderateScale(20)}}>
-                  <Image source={imagePath.fb} />
-                </TouchableOpacity>
-              )}
-              {!!twitter_login && (
-                <TouchableOpacity
-                  onPress={() => openTwitterLogin()}
-                  style={{marginHorizontal: moderateScale(20)}}>
-                  <Image source={imagePath.twitterIcon} />
-                </TouchableOpacity>
-              )}
-
-              {!!apple_login && Platform.OS == 'ios' && (
-                <TouchableOpacity
-                  onPress={() => openAppleLogin()}
-                  style={{marginHorizontal: moderateScale(20)}}>
-                  <Image source={imagePath.apple} />
-                </TouchableOpacity>
-              )}
-            </View> */}
+            
              <View
               style={{
                 flexDirection: 'column',
               }}>
               {!!google_login && (
-                <TouchableOpacity
-                  onPress={() => openGmailLogin()}
-                  style={{
-                    borderWidth: 1,
-                    borderColor: colors.borderColorD,
-                    borderRadius: moderateScale(15),
-                    paddingVertical: moderateScale(10),
-                    paddingHorizontal: moderateScale(10),
-                    marginTop: moderateScale(25),
-                    flexDirection: 'row',
-                  }}>
-                  <Image
-                    source={imagePath.ic_google2}
-                    style={{width: 35, height: 35}}
-                  />
-                  <Text
-                    style={{
-                      alignSelf: 'center',
-                      textAlign: 'center',
-                      flex: 0.9,
-                      fontFamily: fontFamily.regular,
-                    }}>
-                    {strings.CONTINUE_GOOGLE}
-                  </Text>
-                </TouchableOpacity>
+              
+                <View style={{marginTop:moderateScaleVertical(15)}}>
+                <TransparentButtonWithTxtAndIcon 
+                icon={imagePath.ic_google2} 
+                btnText={strings.CONTINUE_GOOGLE} 
+                containerStyle={{backgroundColor:isDarkMode?MyDarkTheme.colors.lightDark:colors.white,borderColor:colors.borderColorD,borderWidth: 1}}
+                textStyle={{color:isDarkMode?colors.white:colors.textGreyB,marginHorizontal:moderateScale(15)}}
+                onPress={() => openGmailLogin()}
+                />
+              </View>
               )}
               {!!fb_login && (
-                <TouchableOpacity
-                  onPress={() => openFacebookLogin()}
-                  style={{
-                    borderWidth: 1,
-                    borderColor: colors.borderColorD,
-                    borderRadius: moderateScale(15),
-                    paddingVertical: moderateScale(10),
-                    paddingHorizontal: moderateScale(10),
-                    marginTop: moderateScale(10),
-                    flexDirection: 'row',
-                  }}>
-                  <Image
-                    source={imagePath.ic_fb2}
-                    style={{width: 35, height: 35}}
-                  />
-                  <Text
-                    style={{
-                      alignSelf: 'center',
-                      textAlign: 'center',
-                      flex: 0.9,
-                      fontFamily: fontFamily.regular,
-                    }}>
-                    {strings.CONTINUE_FACEBOOK}
-                  </Text>
-                </TouchableOpacity>
+                
+                <View style={{marginVertical:moderateScaleVertical(15)}}>
+                  <TransparentButtonWithTxtAndIcon 
+                icon={imagePath.ic_fb2} 
+                btnText={strings.CONTINUE_FACEBOOK} 
+                containerStyle={{backgroundColor:isDarkMode?MyDarkTheme.colors.lightDark:colors.white,borderColor:colors.borderColorD,borderWidth: 1}}
+                textStyle={{color:isDarkMode?colors.white:colors.textGreyB,marginHorizontal:moderateScale(5)}}
+                onPress={() => openFacebookLogin()}
+                />
+                </View>
               )}
               {!!twitter_login && (
-                <TouchableOpacity
-                  onPress={() => openTwitterLogin()}
-                  style={{
-                    borderWidth: 1,
-                    borderColor: colors.borderColorD,
-                    borderRadius: moderateScale(15),
-                    paddingVertical: moderateScale(10),
-                    paddingHorizontal: moderateScale(10),
-                    marginTop: moderateScale(10),
-                    flexDirection: 'row',
-                  }}>
-                  <Image
-                    source={imagePath.ic_twitter2}
-                    style={{width: 35, height: 35}}
-                  />
-                  <Text
-                    style={{
-                      alignSelf: 'center',
-                      textAlign: 'center',
-                      flex: 0.9,
-                      fontFamily: fontFamily.regular,
-                    }}>
-                    {strings.CONTINUE_TWITTER}
-                  </Text>
-                </TouchableOpacity>
+               
+                <TransparentButtonWithTxtAndIcon 
+                icon={imagePath.ic_twitter2} 
+                btnText= {strings.CONTINUE_TWITTER}
+                containerStyle={{backgroundColor:isDarkMode?MyDarkTheme.colors.lightDark:colors.white,borderColor:colors.borderColorD,borderWidth: 1}}
+                textStyle={{color:isDarkMode?colors.white:colors.textGreyB,marginHorizontal:moderateScale(10)}}
+                nPress={() => openTwitterLogin()}
+                />
               )}
 
               {!!apple_login && Platform.OS == 'ios' && (
-                <TouchableOpacity
-                  onPress={() => openAppleLogin()}
-                  style={{
-                    borderWidth: 1,
-                    borderColor: colors.borderColorD,
-                    borderRadius: moderateScale(15),
-                    paddingVertical: moderateScale(10),
-                    paddingHorizontal: moderateScale(10),
-                    marginTop: moderateScale(10),
-                    flexDirection: 'row',
-                  }}>
-                  <Image
-                    source={imagePath.ic_apple2}
-                    style={{width: 35, height: 35}}
-                  />
-                  <Text
-                    style={{
-                      alignSelf: 'center',
-                      textAlign: 'center',
-                      flex: 0.9,
-                      fontFamily: fontFamily.regular,
-                    }}>
-                    {strings.CONTINUE_APPLE}
-                  </Text>
-                </TouchableOpacity>
+               
+                <View style={{marginVertical:moderateScaleVertical(15)}}>
+                <TransparentButtonWithTxtAndIcon 
+                icon={isDarkMode? imagePath.ic_apple :imagePath.ic_apple2} 
+                btnText={strings.CONTINUE_APPLE} 
+                containerStyle={{backgroundColor:isDarkMode?MyDarkTheme.colors.lightDark:colors.white,borderColor:colors.borderColorD,borderWidth: 1}}
+                textStyle={{color:isDarkMode?colors.white:colors.textGreyB,marginHorizontal:moderateScale(17)}}
+                onPress={() => openAppleLogin()}
+                />
+                </View>
               )}
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginTop: moderateScale(20),
-                }}>
-                <Text
-                  style={{
-                    ...styles.txtSmall,
-                    color: colors.textGreyLight,
-                    marginTop: 0,
-                  }}>
-                  {strings.ALREADY_HAVE_AN_ACCOUNT}
-                </Text>
-                <TouchableOpacity
-                  hitSlop={hitSlopProp}
-                  onPress={moveToNewScreen(navigationStrings.LOGIN)}>
-                  <Text
-                    style={{
-                      color: themeColors.primary_color,
-                      // lineHeight:24,
-                      fontFamily: fontFamily.bold,
-                    }}>
-                    {' '}
-                    {strings.LOGIN}
-                  </Text>
-                </TouchableOpacity>
-              </View>
+            
             </View>
           </View>
         </View>

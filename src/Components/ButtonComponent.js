@@ -2,6 +2,9 @@ import React from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import commonStylesFun from '../styles/commonStyles';
+import { moderateScaleVertical } from '../styles/responsiveSize';
+
+
 
 const TransparentButtonWithTxtAndIcon = ({
   containerStyle,
@@ -24,6 +27,7 @@ const TransparentButtonWithTxtAndIcon = ({
         borderWidth: 0,
         marginTop,
         marginBottom,
+       
         ...containerStyle,
       }}
       onPress={onPress}>
@@ -35,6 +39,7 @@ const TransparentButtonWithTxtAndIcon = ({
           width: '100%',
           borderRadius,
           flexDirection: 'row',
+          
           ...btnStyle,
         }}>
         {icon && <Image source={icon} />}
