@@ -65,7 +65,10 @@ export default function CustomBottomTabBarFour({
 
                 // marginBottom:20
               }}>
-              {options.tabBarIcon({focused: isFocused})}
+              {options.tabBarIcon({
+                focused: isFocused,
+                tintColor: isFocused ? themeColors.primary_color : colors.black,
+              })}
               <Text
                 style={{
                   ...props.labelStyle,

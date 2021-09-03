@@ -72,7 +72,7 @@ export default function TabRoutes(props) {
     );
   }
 
-  if (appStyle?.tabBarLayout !== 5) {
+  if (appStyle?.homePageLayout !== 2 && appStyle?.homePageLayout !== 3) {
     if (checkForBrand) {
       brandTab = (
         <Tab.Screen

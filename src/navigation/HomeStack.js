@@ -76,8 +76,9 @@ export default function () {
         component={
           appStyle?.homePageLayout === 2
             ? ProductList2
-            : // : ProductList
-              ProductList3
+            : appStyle?.homePageLayout === 3
+            ? ProductList3
+            : ProductList
         }
         options={{headerShown: false}}
       />
@@ -111,7 +112,7 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={
-          appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail2
+          appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail
         }
         options={{headerShown: false}}
       />

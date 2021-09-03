@@ -210,9 +210,10 @@ export default ({themeColors, fontFamily}) => {
 
       borderRadius: 20,
       maxHeight: height - width / 2,
-      minHeight: height / 3,
+      minHeight: height / 4,
       marginHorizontal: moderateScale(20),
       padding: moderateScale(10),
+      justifyContent: 'center',
     },
     closeButton: {
       alignItems: 'flex-end',

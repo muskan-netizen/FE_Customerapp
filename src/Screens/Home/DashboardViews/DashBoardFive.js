@@ -110,8 +110,7 @@ export default function DashBoardFive({
           flex: 1,
           paddingHorizontal: moderateScale(15),
         }}>
-        {isLoading &&
-        appMainData &&
+        {appMainData &&
         appMainData?.categories &&
         appMainData?.categories.length ? (
           <View style={{width: '100%'}}>
@@ -136,7 +135,7 @@ export default function DashBoardFive({
           </View>
         ) : null}
 
-        {isLoading && appData?.banners?.length ? (
+        {appData?.banners?.length ? (
           <View style={{marginTop: moderateScale(20)}}>
             <BannerHome2
               bannerRef={bannerRef}

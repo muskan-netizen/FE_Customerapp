@@ -1,16 +1,14 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {Alert, BackHandler, View, Linking} from 'react-native';
-import Geocoder from 'react-native-geocoding';
+import {Alert, BackHandler, View} from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import {useSelector} from 'react-redux';
+import {useDeepLinkURL} from '../../Components/DeepLinkHook';
 import WrapperContainer from '../../Components/WrapperContainer';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import DeviceInfo from 'react-native-device-info';
-
 import {
   androidBackButtonHandler,
   getCurrentLocation,
@@ -18,6 +16,7 @@ import {
   getUrlRoutes,
 } from '../../utils/helperFunctions';
 import {chekLocationPermission} from '../../utils/permissions';
+import {setItem} from '../../utils/utils';
 import {
   DashBoardFive,
   DashBoardFour,
@@ -25,8 +24,6 @@ import {
   DashBoardHeaderOne,
   DashBoardOne,
 } from './DashboardViews/Index';
-import {setItem} from '../../utils/utils';
-import {useDeepLinkURL} from '../../Components/DeepLinkHook';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -530,78 +527,66 @@ export default function Home({route, navigation}) {
     }
   };
 
-  console.log(appMainData, 'appMainData');
+  const renderHomeScreen = () => {
+    switch (appStyle?.homePageLayout) {
+      case 1:
+        return (
+          <>
+            <DashBoardHeaderOne navigation={navigation} location={location} />
+            <DashBoardOne
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => onPressCategory(item)}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+            />
+          </>
+        );
 
+      case 2:
+        return (
+          <>
+            <DashBoardHeaderOne navigation={navigation} location={location} />
+            <DashBoardFour
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => onPressCategory2(item)}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+            />
+          </>
+        );
+      case 3:
+        return (
+          <>
+            <DashBoardHeaderFive navigation={navigation} location={location} />
+            <DashBoardFive
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => onPressCategory(item)}
+              isDineInSelected={isDineInSelected}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              navigation={navigation}
+            />
+          </>
+        );
+    }
+  };
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
       bgColor={colors.backgroundGrey}>
-      <View style={{flex: 1}}>
-        {() => {
-          switch (appStyle?.homePageLayout) {
-            case 1:
-              return (
-                <>
-                  <DashBoardHeaderOne
-                    navigation={navigation}
-                    location={location}
-                  />
-                  <DashBoardOne
-                    handleRefresh={() => handleRefresh()}
-                    bannerPress={(item) => bannerPress(item)}
-                    isLoading={isLoading}
-                    isRefreshing={isRefreshing}
-                    appMainData={appMainData}
-                    onPressCategory={(item) => onPressCategory(item)}
-                    selcetedToggle={selcetedToggle}
-                    toggleData={appData}
-                  />
-                </>
-              );
-
-            case 2:
-              return (
-                <>
-                  <DashBoardHeaderOne
-                    navigation={navigation}
-                    location={location}
-                  />
-                  <DashBoardFour
-                    handleRefresh={() => handleRefresh()}
-                    bannerPress={(item) => bannerPress(item)}
-                    isLoading={isLoading}
-                    isRefreshing={isRefreshing}
-                    appMainData={appMainData}
-                    onPressCategory={(item) => onPressCategory2(item)}
-                    selcetedToggle={selcetedToggle}
-                    toggleData={appData}
-                  />
-                </>
-              );
-            case 3:
-              return (
-                <>
-                  <DashBoardHeaderFive
-                    navigation={navigation}
-                    location={location}
-                  />
-                  <DashBoardFive
-                    handleRefresh={() => handleRefresh()}
-                    bannerPress={(item) => bannerPress(item)}
-                    isLoading={isLoading}
-                    isRefreshing={isRefreshing}
-                    appMainData={appMainData}
-                    onPressCategory={(item) => onPressCategory(item)}
-                    isDineInSelected={isDineInSelected}
-                    selcetedToggle={selcetedToggle}
-                    toggleData={appData}
-                    navigation={navigation}
-                  />
-                </>
-              );
-          }
-        }}
-      </View>
+      <View style={{flex: 1}}>{renderHomeScreen()}</View>
     </WrapperContainer>
   );
 }

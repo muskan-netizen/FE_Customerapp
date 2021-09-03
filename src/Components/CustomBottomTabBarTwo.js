@@ -70,7 +70,7 @@ export default function CustomBottomTabBarTwo({
                 style={{
                   ...props.labelStyle,
                   ...styles.labelStyle,
-                  color: isFocused ? colors.white : colors.whiteOpacity5,
+                  color: isFocused ? colors.white : colors.white,
                   opacity: isFocused ? 1 : 0.6,
                 }}>
                 {label}

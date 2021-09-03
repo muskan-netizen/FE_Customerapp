@@ -6,6 +6,7 @@ import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import {
+  itemWidth,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -26,7 +27,7 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
       {label: 'Takeaway', value: '1'},
     ],
     isModalVisible: false,
-    checked: 'first',
+    checked: 'Delivery',
   });
   const {tableData, isModalVisible, checked} = state;
   const {appData, themeColors, appStyle} = useSelector(
@@ -42,6 +43,13 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
     profileInfo?.logo?.image_path,
     '800/400',
   );
+
+  // const renderRadioItems = () => {
+  //   return tableData.map(
+  //     (itm, inx) => console.log(itm, 'djflksdjflkjs'),
+  //     // return <RadioButton.Item label={itm.label} value={itm.value} />;
+  //   );
+  // };
 
   return (
     <View
@@ -168,16 +176,13 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
           <Image source={imagePath.crossB} />
         </TouchableOpacity>
         <View style={styles.modalMainViewContainer}>
-          <RadioButton
-            value="first"
-            status={checked === 'first' ? 'checked' : 'unchecked'}
-            onPress={() => updateState({checked: 'first'})}
-          />
-          <RadioButton
-            value="second"
-            status={checked === 'second' ? 'checked' : 'unchecked'}
-            onPress={() => updateState({checked: 'second'})}
-          />
+          <RadioButton.Group
+            onValueChange={(value) => updateState({checked: value})}
+            value={checked}>
+            <RadioButton.Item label="Delivery" value="first" />
+            <RadioButton.Item label="Dine-in" value="second" />
+            <RadioButton.Item label="Takeaway" value="third" />
+          </RadioButton.Group>
         </View>
       </Modal>
     </View>
