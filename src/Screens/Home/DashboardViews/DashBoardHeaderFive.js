@@ -21,7 +21,9 @@ import {MyDarkTheme} from '../../../styles/theme';
 
 export default function DashBoardHeaderFive({navigation = {}, location = []}) {
   const pickerRef = createRef();
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
   const [state, setState] = useState({
     tableData: [
       {label: 'Delivery', value: 'Delivery'},
