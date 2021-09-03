@@ -19,6 +19,8 @@ import {
 } from '../../styles/responsiveSize';
 import {getImageUrl} from '../../utils/helperFunctions';
 import stylesFun from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function OrderDetailView({
   isLoading = false,
@@ -35,7 +37,7 @@ export default function OrderDetailView({
   );
   const fontFamily = appStyle?.fontSizeData;
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-
+  const isDarkMode = useDarkMode();
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});
   const commonStyles = commonStylesFun({fontFamily});
@@ -45,7 +47,15 @@ export default function OrderDetailView({
   console.log(agent_image, 'agent_image>>>');
   return (
     <>
-      <View style={{marginBottom: -30, paddingHorizontal: 10, zIndex: 1000}}>
+      <View
+        style={{
+          marginBottom: -30,
+          paddingHorizontal: 10,
+          zIndex: 1000,
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.white,
+        }}>
         <ScaledImage
           width={width / 3}
           source={
@@ -70,7 +80,15 @@ export default function OrderDetailView({
           }
         />
       </View>
-      <View style={styles.bottomView}>
+      <View
+        style={
+          isDarkMode
+            ? [
+                styles.bottomView,
+                {backgroundColor: MyDarkTheme.colors.background},
+              ]
+            : styles.bottomView
+        }>
         <ScrollView
           // bounces={true}
           showsVerticalScrollIndicator={false}
@@ -90,12 +108,22 @@ export default function OrderDetailView({
                 alignItems: 'center',
               }}>
               <View style={{flex: 0.8}}>
-                <Text style={styles.lable1}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.lable1, {color: MyDarkTheme.colors.text}]
+                      : styles.lable1
+                  }>
                   {!!agent_location
                     ? orderDetail?.name || ''
                     : 'Searching for nearby drivers'}
                 </Text>
-                <Text style={styles.lable2}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.lable2, {color: MyDarkTheme.colors.text}]
+                      : styles.lable2
+                  }>
                   {/* {'Jason is on the way to pick up the package'} */}
                   {!!agent_location
                     ? orderDetail?.phone_number || ''
@@ -138,28 +166,78 @@ export default function OrderDetailView({
                 // borderBottomWidth: 1,
               }}>
               <View style={{flex: 0.33}}>
-                <Text style={styles.distanceDurationDeliveryLable}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.distanceDurationDeliveryLable,
+                          {color: MyDarkTheme.colors.text},
+                        ]
+                      : styles.distanceDurationDeliveryLable
+                  }>
                   {strings.ETA}
                 </Text>
-                <Text style={styles.distanceDurationDeliveryValue}>{'--'}</Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.distanceDurationDeliveryLable,
+                          {color: MyDarkTheme.colors.text},
+                        ]
+                      : styles.distanceDurationDeliveryValue
+                  }>
+                  {'--'}
+                </Text>
               </View>
               <View style={{flex: 0.33}}>
-                <Text style={styles.distanceDurationDeliveryLable}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.distanceDurationDeliveryLable,
+                          {color: MyDarkTheme.colors.text},
+                        ]
+                      : styles.distanceDurationDeliveryLable
+                  }>
                   {strings.orderID}
                 </Text>
-                <Text style={styles.distanceDurationDeliveryValue}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.distanceDurationDeliveryValue,
+                          {color: MyDarkTheme.colors.text},
+                        ]
+                      : styles.distanceDurationDeliveryValue
+                  }>
                   {productDetail && productDetail?.order_number
                     ? productDetail?.order_number
                     : '--'}
                 </Text>
               </View>
               <View style={{flex: 0.33}}>
-                <Text style={styles.distanceDurationDeliveryLable}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.distanceDurationDeliveryLable,
+                          {color: MyDarkTheme.colors.text},
+                        ]
+                      : styles.distanceDurationDeliveryLable
+                  }>
                   {strings.amountPaid}
                 </Text>
 
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={styles.distanceDurationDeliveryValue}>
+                  <Text
+                    style={
+                      isDarkMode
+                        ? [
+                            styles.distanceDurationDeliveryValue,
+                            {color: MyDarkTheme.colors.text},
+                          ]
+                        : styles.distanceDurationDeliveryValue
+                    }>
                     {productDetail && productDetail?.payable_amount
                       ? `${currencies?.primary_currency?.symbol}${Number(
                           productDetail?.payable_amount,

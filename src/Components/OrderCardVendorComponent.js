@@ -27,6 +27,8 @@ import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function OrderCardVendorComponent({
   data = {},
@@ -41,6 +43,7 @@ export default function OrderCardVendorComponent({
   let cardWidth = width - 21.5;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
+  const isDarkMode = useDarkMode();
   const imageUrl =
     data && data.user_image
       ? getImageUrl(
@@ -56,7 +59,11 @@ export default function OrderCardVendorComponent({
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={1}
-      style={styles.cardStyle}>
+      style={
+        isDarkMode
+          ? [styles.cardStyle, {backgroundColor: MyDarkTheme.colors.lightDark}]
+          : styles.cardStyle
+      }>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View
           style={{
@@ -74,24 +81,41 @@ export default function OrderCardVendorComponent({
             }}
           /> */}
           <View>
-            <Text style={styles.userName}>{data?.user_name || ''}</Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.userName, {color: MyDarkTheme.colors.text}]
+                  : styles.userName
+              }>
+              {data?.user_name || ''}
+            </Text>
             <View style={{flexWrap: 'wrap'}}>
               <Text
-                style={styles.orderLableStyle}>{`#${data?.order_number}`}</Text>
-              <Text style={styles.orderLableStyle}>{`${moment(
+                style={
+                  isDarkMode
+                    ? [styles.orderLableStyle, {color: MyDarkTheme.colors.text}]
+                    : styles.orderLableStyle
+                }>{`#${data?.order_number}`}</Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.orderLableStyle, {color: MyDarkTheme.colors.text}]
+                    : styles.orderLableStyle
+                }>{`${moment(data?.date_time).format('DD MMM,YYYY')} ${moment(
                 data?.date_time,
-              ).format('DD MMM,YYYY')} ${moment(data?.date_time).format(
-                'LT',
-              )} `}</Text>
+              ).format('LT')} `}</Text>
             </View>
           </View>
         </View>
 
         <View
           style={{flex: 0.3, alignItems: 'center', padding: moderateScale(10)}}>
-          <Text style={[styles.userName]}>{`${
-            currencies?.primary_currency?.symbol
-          }${
+          <Text
+            style={
+              isDarkMode
+                ? [styles.userName, {color: MyDarkTheme.colors.text}]
+                : [styles.userName]
+            }>{`${currencies?.primary_currency?.symbol}${
             // Number(i?.pvariant?.multiplier) *
             Number(data?.payable_amount).toFixed(2)
           }`}</Text>
@@ -120,7 +144,15 @@ export default function OrderCardVendorComponent({
                 style={styles.imageCardStyle}
                 imageStyle={styles.imageCardStyle}>
                 <View style={styles.circularQuantityView}>
-                  <Text style={styles.qunatityText}>{`x${i.qty}`}</Text>
+                  <Text
+                    style={
+                      isDarkMode
+                        ? [
+                            styles.qunatityText,
+                            {color: MyDarkTheme.colors.text},
+                          ]
+                        : styles.qunatityText
+                    }>{`x${i.qty}`}</Text>
                 </View>
               </ImageBackground>
             );
@@ -137,7 +169,18 @@ export default function OrderCardVendorComponent({
             source={imagePath.iconPayments}
             style={{tintColor: colors.textGreyB}}
           />
-          <Text style={[styles.lableOrders, {paddingLeft: moderateScale(5)}]}>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.lableOrders,
+                    {
+                      paddingLeft: moderateScale(5),
+                      color: MyDarkTheme.colors.text,
+                    },
+                  ]
+                : [styles.lableOrders, {paddingLeft: moderateScale(5)}]
+            }>
             {`${strings.PAYMENT} : `}
             <Text style={styles.valueOrders}>{data?.payment_option_title}</Text>
           </Text>

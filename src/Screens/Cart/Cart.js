@@ -51,8 +51,12 @@ import DatePicker from 'react-native-date-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {getItem, removeItem, setItem, setUserData} from '../../utils/utils';
 import commonStyles from '../../styles/commonStyles';
+import * as RNLocalize from 'react-native-localize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
 
 export default function Cart({navigation, route}) {
+  const isDarkMode = useDarkMode();
   let paramsData = route?.params;
   const [state, setState] = useState({
     isLoading: true,
@@ -142,7 +146,7 @@ export default function Cart({navigation, route}) {
   // const styles = stylesFun({fontFamily, themeColors});
 
   //On focus fucntion
-  console.log(selectedTimeOption?.type, 'selectedTimeOption');
+  console.log(RNLocalize.getTimeZone(), 'timezone');
   useFocusEffect(
     React.useCallback(() => {
       if (paramsData && paramsData?.selectedMethod) {
@@ -234,6 +238,7 @@ export default function Cart({navigation, route}) {
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
           systemuser: DeviceInfo.getUniqueId(),
+          timezone: RNLocalize.getTimeZone(),
         },
       )
       .then((res) => {
@@ -399,6 +404,7 @@ export default function Cart({navigation, route}) {
 
   //Error handling in screen
   const errorMethod = (error) => {
+    console.log(error, 'error');
     updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
@@ -475,20 +481,15 @@ export default function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
-  useEffect(() => {
-    if (
-      (selectedTimeOption != null && selectedTimeOption != undefined) ||
-      (sheduledorderdate != null && sheduledorderdate != undefined)
-    )
-      setDateAndTimeSchedule();
-  }, [selectedTimeOption, sheduledorderdate]);
-
   const setDateAndTimeSchedule = () => {
+    console.log(scheduleType, 'scheduleType>>>updated');
     let data = {};
-    data['task_type'] = selectedTimeOption?.type;
-    data['schedule_dt'] = sheduledorderdate
-      ? new Date(sheduledorderdate).toISOString()
-      : null;
+    data['task_type'] = scheduleType;
+    data['schedule_dt'] =
+      scheduleType != 'now' && sheduledorderdate
+        ? new Date(sheduledorderdate).toISOString()
+        : null;
+    console.log(data, 'setDateAndTimeSchedule data');
 
     actions
       .scheduledOrder(data, {
@@ -522,19 +523,24 @@ export default function Cart({navigation, route}) {
   const placeOrder = () => {
     var d1 = new Date();
     var d2 = new Date(sheduledorderdate);
+    console.log(d1);
     if (!!userData?.auth_token) {
       if (!selectedAddressData) {
         // showError('Please select address');
         setModalVisible(true);
       } else if (!paramsData?.selectedMethod) {
         showError('Please select a payment method');
-      } 
+      }
       // else if (!(sheduledorderdate && selectedTimeOption)) {
       //   showError('Please select a Order type');
       // } else if (d1.getTime() >= d2.getTime()) {
       //   showError('Invalid  Scheduled Date');
       // }
-       else {
+      else if (!(sheduledorderdate && selectedTimeOption)) {
+        showError('Please select a Order type');
+      } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
+        showError('Invalid  Scheduled Date');
+      } else {
         if (!!userData) {
           !!userData?.client_preference?.verify_email ||
           !!userData?.client_preference?.verify_phone
@@ -652,7 +658,20 @@ export default function Cart({navigation, route}) {
     }
   };
 
+  useEffect(() => {
+    // console.log(scheduleType, 'scheduleType scheduleType');
+    if (scheduleType != null && scheduleType == 'now') {
+      setDateAndTimeSchedule();
+    }
+  }, [scheduleType]);
+
   const _selectTime = (item) => {
+    // console.log(item, 'item');
+    // console.log(selectedTimeOption, 'selectedTimeOption selectedTimeOption');
+    updateState({
+      scheduleType: item?.type,
+    });
+
     {
       selectedTimeOption && selectedTimeOption?.id == item?.id
         ? updateState({
@@ -665,12 +684,13 @@ export default function Cart({navigation, route}) {
             isVisibleTimeModal: item?.type === 'schedule' ? true : false,
           });
     }
-
-    item?.type == 'now' ? setDateAndTimeSchedule() : null;
   };
 
   const selectOrderDate = () => {
     onClose();
+    updateState({
+      scheduleType: 'schedule',
+    });
     setDateAndTimeSchedule();
   };
 
@@ -678,13 +698,19 @@ export default function Cart({navigation, route}) {
     return (
       <View
         style={{
-          backgroundColor: '#fff',
+          backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
           paddingHorizontal: moderateScale(10),
           marginVertical: moderateScaleVertical(10),
           marginBottom: moderateScaleVertical(10),
         }}>
         <View style={styles.vendorView}>
-          <Text numberOfLines={1} style={styles.vendorText}>
+          <Text
+            numberOfLines={1}
+            style={
+              isDarkMode
+                ? [styles.vendorText, {color: MyDarkTheme.colors.text}]
+                : styles.vendorText
+            }>
             {item?.vendor?.name}
           </Text>
         </View>
@@ -719,7 +745,17 @@ export default function Cart({navigation, route}) {
                         <View style={{flex: 0.6}}>
                           <Text
                             numberOfLines={1}
-                            style={[styles.priceItemLabel2, {opacity: 0.8}]}>
+                            style={
+                              isDarkMode
+                                ? [
+                                    styles.priceItemLabel2,
+                                    {
+                                      opacity: 0.8,
+                                      color: MyDarkTheme.colors.text,
+                                    },
+                                  ]
+                                : [styles.priceItemLabel2, {opacity: 0.8}]
+                            }>
                             {i?.product?.translation[0]?.title}
                           </Text>
                           {i?.variant_options.length
@@ -727,12 +763,30 @@ export default function Cart({navigation, route}) {
                                 return (
                                   <View style={{flexDirection: 'row'}}>
                                     <Text
-                                      style={styles.cartItemWeight2}
+                                      style={
+                                        isDarkMode
+                                          ? [
+                                              styles.cartItemWeight2,
+                                              {
+                                                color: MyDarkTheme.colors.text,
+                                              },
+                                            ]
+                                          : styles.cartItemWeight2
+                                      }
                                       numberOfLines={1}>
                                       {j.title}{' '}
                                     </Text>
                                     <Text
-                                      style={styles.cartItemWeight2}
+                                      style={
+                                        isDarkMode
+                                          ? [
+                                              styles.cartItemWeight2,
+                                              {
+                                                color: MyDarkTheme.colors.text,
+                                              },
+                                            ]
+                                          : styles.cartItemWeight2
+                                      }
                                       numberOfLines={1}>{`(${j.option})`}</Text>
                                   </View>
                                 );
@@ -769,7 +823,17 @@ export default function Cart({navigation, route}) {
                         <View style={{flex: 0.5, justifyContent: 'center'}}>
                           {!!i?.product_addons.length && (
                             <View>
-                              <Text style={styles.cartItemWeight2}>
+                              <Text
+                                style={
+                                  isDarkMode
+                                    ? [
+                                        styles.cartItemWeight2,
+                                        {
+                                          color: MyDarkTheme.colors.text,
+                                        },
+                                      ]
+                                    : styles.cartItemWeight2
+                                }>
                                 {strings.EXTRA}
                               </Text>
                             </View>
@@ -779,20 +843,47 @@ export default function Cart({navigation, route}) {
                                 return (
                                   <View style={{flexDirection: 'row'}}>
                                     <Text
-                                      style={styles.cartItemWeight2}
+                                      style={
+                                        isDarkMode
+                                          ? [
+                                              styles.cartItemWeight2,
+                                              {
+                                                color: MyDarkTheme.colors.text,
+                                              },
+                                            ]
+                                          : styles.cartItemWeight2
+                                      }
                                       numberOfLines={1}>
                                       {j.addon_title}
                                     </Text>
                                     <Text
-                                      style={styles.cartItemWeight2}
+                                      style={
+                                        isDarkMode
+                                          ? [
+                                              styles.cartItemWeight2,
+                                              {
+                                                color: MyDarkTheme.colors.text,
+                                              },
+                                            ]
+                                          : styles.cartItemWeight2
+                                      }
                                       numberOfLines={
                                         1
                                       }>{`(${j.option_title})`}</Text>
                                     <Text
-                                      style={[
-                                        styles.cartItemWeight2,
-                                        {color: colors.textGrey},
-                                      ]}
+                                      style={
+                                        isDarkMode
+                                          ? [
+                                              styles.cartItemWeight2,
+                                              {
+                                                color: MyDarkTheme.colors.text,
+                                              },
+                                            ]
+                                          : [
+                                              styles.cartItemWeight2,
+                                              {color: colors.textGrey},
+                                            ]
+                                      }
                                       numberOfLines={1}>{` ${
                                       currencies?.primary_currency?.symbol
                                     }${(
@@ -884,33 +975,91 @@ export default function Cart({navigation, route}) {
         </TouchableOpacity>
         {!!item?.discount_amount && (
           <View style={styles.itemPriceDiscountTaxView}>
-            <Text style={styles.priceItemLabel}>{strings.DISCOUNT}</Text>
-            <Text style={styles.priceItemLabel}>{`- ${
-              currencies?.primary_currency?.symbol
-            }${Number(
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                      },
+                    ]
+                  : styles.priceItemLabel
+              }>
+              {strings.DISCOUNT}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                      },
+                    ]
+                  : styles.priceItemLabel
+              }>{`- ${currencies?.primary_currency?.symbol}${Number(
               item?.discount_amount ? item?.discount_amount : 0,
             ).toFixed(2)}`}</Text>
           </View>
         )}
         {!!item?.deliver_charge && (
           <View style={styles.itemPriceDiscountTaxView}>
-            <Text style={styles.priceItemLabel}>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                      },
+                    ]
+                  : styles.priceItemLabel
+              }>
               {strings.DELIVERY_CHARGES}
             </Text>
-            <Text style={styles.priceItemLabel}>{`${
-              currencies?.primary_currency?.symbol
-            }${Number(item?.deliver_charge ? item?.deliver_charge : 0).toFixed(
-              2,
-            )}`}</Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                      },
+                    ]
+                  : styles.priceItemLabel
+              }>{`${currencies?.primary_currency?.symbol}${Number(
+              item?.deliver_charge ? item?.deliver_charge : 0,
+            ).toFixed(2)}`}</Text>
           </View>
         )}
         <View style={styles.itemPriceDiscountTaxView}>
-          <Text style={styles.priceItemLabel2}>{strings.AMOUNT}</Text>
-          <Text style={styles.priceItemLabel2}>{`${
-            currencies?.primary_currency?.symbol
-          }${Number(item?.payable_amount ? item?.payable_amount : 0).toFixed(
-            2,
-          )}`}</Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.priceItemLabel2,
+                    {
+                      color: MyDarkTheme.colors.text,
+                    },
+                  ]
+                : styles.priceItemLabel2
+            }>
+            {strings.AMOUNT}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.priceItemLabel2,
+                    {
+                      color: MyDarkTheme.colors.text,
+                    },
+                  ]
+                : styles.priceItemLabel2
+            }>{`${currencies?.primary_currency?.symbol}${Number(
+            item?.payable_amount ? item?.payable_amount : 0,
+          ).toFixed(2)}`}</Text>
         </View>
       </View>
     );
@@ -971,27 +1120,59 @@ export default function Cart({navigation, route}) {
         {/* Price section */}
         <View style={styles.priceSection}>
           <View style={[styles.bottomTabLableValue]}>
-            <Text style={styles.priceItemLabel}>{strings.SUBTOTAL}</Text>
-            <Text style={styles.priceItemLabel}>{`${
-              currencies?.primary_currency?.symbol
-            }${Number(cartData?.gross_paybale_amount).toFixed(2)}`}</Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles.priceItemLabel
+              }>
+              {strings.SUBTOTAL}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  : styles.priceItemLabel
+              }>{`${currencies?.primary_currency?.symbol}${Number(
+              cartData?.gross_paybale_amount,
+            ).toFixed(2)}`}</Text>
           </View>
           {!!cartData?.wallet_amount && (
             <View style={styles.bottomTabLableValue}>
-              <Text style={styles.priceItemLabel}>{strings.WALLET}</Text>
-              <Text style={styles.priceItemLabel}>{`${
-                currencies?.primary_currency?.symbol
-              }${Number(
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    : styles.priceItemLabel
+                }>
+                {strings.WALLET}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    : styles.priceItemLabel
+                }>{`${currencies?.primary_currency?.symbol}${Number(
                 cartData?.wallet_amount ? cartData?.wallet_amount : 0,
               ).toFixed(2)}`}</Text>
             </View>
           )}
           {!!cartData?.loyalty_amount && (
             <View style={styles.bottomTabLableValue}>
-              <Text style={styles.priceItemLabel}>{strings.LOYALTY}</Text>
-              <Text style={styles.priceItemLabel}>{`-${
-                currencies?.primary_currency?.symbol
-              }${Number(
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    : styles.priceItemLabel
+                }>
+                {strings.LOYALTY}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    : styles.priceItemLabel
+                }>{`-${currencies?.primary_currency?.symbol}${Number(
                 cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
               ).toFixed(2)}`}</Text>
             </View>
@@ -999,24 +1180,42 @@ export default function Cart({navigation, route}) {
 
           {!!cartData?.wallet_amount_used && (
             <View style={styles.bottomTabLableValue}>
-              <Text style={styles.priceItemLabel}>{strings.WALLET}</Text>
-              <Text style={styles.priceItemLabel}>{`-${
-                currencies?.primary_currency?.symbol
-              }${Number(
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    : styles.priceItemLabel
+                }>
+                {strings.WALLET}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    : styles.priceItemLabel
+                }>{`-${currencies?.primary_currency?.symbol}${Number(
                 cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
               ).toFixed(2)}`}</Text>
             </View>
           )}
           {!!cartData?.total_subscription_discount && (
             <View style={styles.bottomTabLableValue}>
-              <Text style={styles.priceItemLabel}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    : styles.priceItemLabel
+                }>
                 {strings.TOTALSUBSCRIPTION}
               </Text>
-              <Text style={styles.priceItemLabel}>{`-${
-                currencies?.primary_currency?.symbol
-              }${Number(cartData?.total_subscription_discount).toFixed(
-                2,
-              )}`}</Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    : styles.priceItemLabel
+                }>{`-${currencies?.primary_currency?.symbol}${Number(
+                cartData?.total_subscription_discount,
+              ).toFixed(2)}`}</Text>
             </View>
           )}
 
@@ -1039,7 +1238,12 @@ export default function Cart({navigation, route}) {
                   styles.bottomTabLableValue,
                   {flexDirection: 'column', marginTop: 20},
                 ]}>
-                <Text style={[styles.priceTipLabel]}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.priceTipLabel, {color: MyDarkTheme.colors.text}]
+                      : [styles.priceTipLabel]
+                  }>
                   {strings.DOYOUWANTTOGIVEATIP}
                 </Text>
 
@@ -1058,12 +1262,21 @@ export default function Cart({navigation, route}) {
                         ]}
                         onPress={() => selectedTip(j)}>
                         <Text
-                          style={{
-                            color:
-                              selectedTipvalue?.value == j?.value
-                                ? colors.white
-                                : colors.black,
-                          }}>
+                          style={
+                            isDarkMode
+                              ? {
+                                  color:
+                                    selectedTipvalue?.value == j?.value
+                                      ? colors.white
+                                      : MyDarkTheme.colors.text,
+                                }
+                              : {
+                                  color:
+                                    selectedTipvalue?.value == j?.value
+                                      ? colors.white
+                                      : colors.black,
+                                }
+                          }>
                           {`${currencies?.primary_currency?.symbol} ${j.value}`}
                         </Text>
                         <Text
@@ -1091,21 +1304,39 @@ export default function Cart({navigation, route}) {
                     ]}
                     onPress={() => selectedTip('custom')}>
                     <Text
-                      style={{
-                        color:
-                          selectedTipvalue == 'custom'
-                            ? colors.white
-                            : colors.black,
-                      }}>
+                      style={
+                        isDarkMode
+                          ? {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : MyDarkTheme.colors.text,
+                            }
+                          : {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : colors.black,
+                            }
+                      }>
                       {'Custom'}
                     </Text>
                     <Text
-                      style={{
-                        color:
-                          selectedTipvalue == 'custom'
-                            ? colors.white
-                            : colors.black,
-                      }}>
+                      style={
+                        isDarkMode
+                          ? {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : MyDarkTheme.colors.text,
+                            }
+                          : {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : colors.black,
+                            }
+                      }>
                       {'Amount'}
                     </Text>
                   </TouchableOpacity>
@@ -1128,11 +1359,19 @@ export default function Cart({navigation, route}) {
                         height: 40,
                         alignItems: 'center',
                         paddingHorizontal: 10,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.textGreyOpcaity7,
                       }}
                       maxLength={5}
                       returnKeyType={'done'}
                       keyboardType={'number-pad'}
                       placeholder={'Enter Custom Amount'}
+                      placeholderTextColor={
+                        isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.textGreyOpcaity7
+                      }
                     />
                   </View>
                 )}
@@ -1141,20 +1380,40 @@ export default function Cart({navigation, route}) {
 
           {!!cartData?.total_tax && (
             <View style={styles.bottomTabLableValue}>
-              <Text style={styles.priceItemLabel}>{strings.TAX_AMOUNT}</Text>
-              <Text style={styles.priceItemLabel}>{`${
-                currencies?.primary_currency?.symbol
-              }${Number(cartData?.total_tax ? cartData?.total_tax : 0).toFixed(
-                2,
-              )}`}</Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    : styles.priceItemLabel
+                }>
+                {strings.TAX_AMOUNT}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    : styles.priceItemLabel
+                }>{`${currencies?.primary_currency?.symbol}${Number(
+                cartData?.total_tax ? cartData?.total_tax : 0,
+              ).toFixed(2)}`}</Text>
             </View>
           )}
 
           <View style={styles.amountPayable}>
-            <Text style={styles.priceItemLabel2}>{strings.AMOUNT_PAYABLE}</Text>
-            <Text style={styles.priceItemLabel2}>{`${
-              currencies?.primary_currency?.symbol
-            }${(
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel2, {color: MyDarkTheme.colors.text}]
+                  : styles.priceItemLabel2
+              }>
+              {strings.AMOUNT_PAYABLE}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel2, {color: MyDarkTheme.colors.text}]
+                  : styles.priceItemLabel2
+              }>{`${currencies?.primary_currency?.symbol}${(
               Number(cartData?.total_payable_amount) +
               (selectedTipAmount != null && selectedTipAmount != ''
                 ? Number(selectedTipAmount)
@@ -1177,10 +1436,32 @@ export default function Cart({navigation, route}) {
               ? moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
               : showError(strings.UNAUTHORIZED_MESSAGE)
           }
-          style={[styles.paymentMainView, {justifyContent: 'space-between'}]}>
+          style={
+            isDarkMode
+              ? [
+                  styles.paymentMainView,
+                  {
+                    justifyContent: 'space-between',
+                    backgroundColor: MyDarkTheme.colors.lightDark,
+                  },
+                ]
+              : [styles.paymentMainView, {justifyContent: 'space-between'}]
+          }>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Image source={imagePath.paymentMethod} />
-            <Text style={styles.selectedMethod}>
+            <Image
+              style={
+                isDarkMode
+                  ? {tintColor: MyDarkTheme.colors.text}
+                  : {tintColor: null}
+              }
+              source={imagePath.paymentMethod}
+            />
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.selectedMethod, {color: MyDarkTheme.colors.text}]
+                  : styles.selectedMethod
+              }>
               {selectedPayment
                 ? selectedPayment.title
                 : strings.SELECT_PAYMENT_METHOD}
@@ -1189,7 +1470,14 @@ export default function Cart({navigation, route}) {
           <View>
             <Image
               source={imagePath.goRight}
-              style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+              style={
+                isDarkMode
+                  ? {
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                      tintColor: MyDarkTheme.colors.text,
+                    }
+                  : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+              }
             />
           </View>
         </TouchableOpacity>
@@ -1208,7 +1496,6 @@ export default function Cart({navigation, route}) {
                 style={{
                   paddingHorizontal: 10,
                   paddingVertical: 5,
-
                   backgroundColor:
                     selectedTimeOption && selectedTimeOption?.id == i.id
                       ? themeColors?.primary_color
@@ -1242,8 +1529,11 @@ export default function Cart({navigation, route}) {
               justifyContent: 'center',
             }}>
             {selectedTimeOption?.type === 'now' ? null : (
-              <Text>
-                {sheduledorderdate
+              <Text
+                style={
+                  isDarkMode ? {color: MyDarkTheme.colors.text} : {color: null}
+                }>
+                {sheduledorderdate && scheduleType
                   ? `${moment(sheduledorderdate).format('DD MMM,YYYY HH:mm')}`
                   : null}
               </Text>
@@ -1287,13 +1577,32 @@ export default function Cart({navigation, route}) {
                 marginTop: moderateScaleVertical(10),
               }}>
               <Image
-                style={{tintColor: colors.black}}
+                style={
+                  isDarkMode
+                    ? {tintColor: MyDarkTheme.colors.text}
+                    : {tintColor: colors.black}
+                }
                 source={imagePath.locationGreen}
               />
-              <Text numberOfLines={1} style={styles.deliveryLocationAndTime}>
+              <Text
+                numberOfLines={1}
+                style={
+                  isDarkMode
+                    ? [
+                        styles.deliveryLocationAndTime,
+                        {color: MyDarkTheme.colors.text},
+                      ]
+                    : styles.deliveryLocationAndTime
+                }>
                 {strings.ADDRESS}:
               </Text>
-              <Text numberOfLines={1} style={styles.address}>
+              <Text
+                numberOfLines={1}
+                style={
+                  isDarkMode
+                    ? [styles.address, {color: MyDarkTheme.colors.text}]
+                    : styles.address
+                }>
                 {vendorAddress}
               </Text>
             </View>
@@ -1319,12 +1628,23 @@ export default function Cart({navigation, route}) {
                   style={{
                     marginHorizontal: moderateScale(20),
                     flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                    backgroundColor: isDarkMode
+                      ? MyDarkTheme.colors.lightDark
+                      : '#fafafa',
                   }}
+                  labelStyle={
+                    isDarkMode
+                      ? {color: MyDarkTheme.colors.text}
+                      : {color: null}
+                  }
                   itemStyle={{
                     justifyContent: 'flex-start',
                     flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
                   }}
                   dropDownStyle={{
+                    backgroundColor: isDarkMode
+                      ? MyDarkTheme.colors.lightDark
+                      : '#fafafa',
                     height: 80,
                     width: width - moderateScale(40),
                     alignSelf: 'center',
@@ -1343,10 +1663,23 @@ export default function Cart({navigation, route}) {
                   alignItems: 'center',
                 }}>
                 <Image
-                  style={{tintColor: colors.black}}
+                  style={
+                    isDarkMode
+                      ? {tintColor: MyDarkTheme.colors.text}
+                      : {tintColor: colors.black}
+                  }
                   source={imagePath.locationGreen}
                 />
-                <Text numberOfLines={1} style={styles.deliveryLocationAndTime}>
+                <Text
+                  numberOfLines={1}
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.deliveryLocationAndTime,
+                          {color: MyDarkTheme.colors.text},
+                        ]
+                      : styles.deliveryLocationAndTime
+                  }>
                   {strings.DELIVERYAT}
                 </Text>
               </View>
@@ -1495,7 +1828,9 @@ export default function Cart({navigation, route}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
       isLoadingB={isLoadingB}>
@@ -1506,7 +1841,15 @@ export default function Cart({navigation, route}) {
       )}
 
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
-      <View style={styles.mainComponent}>
+      <View
+        style={
+          isDarkMode
+            ? [
+                styles.mainComponent,
+                {backgroundColor: MyDarkTheme.colors.background},
+              ]
+            : styles.mainComponent
+        }>
         <FlatList
           data={cartItems}
           extraData={cartItems}
@@ -1566,13 +1909,35 @@ export default function Cart({navigation, route}) {
           updateState({viewHeight: event.nativeEvent.layout.height});
         }}>
         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-          <Image source={imagePath.crossB} />
+          <Image
+            style={
+              isDarkMode
+                ? {tintColor: MyDarkTheme.colors.white}
+                : {tintColor: null}
+            }
+            source={imagePath.crossB}
+          />
         </TouchableOpacity>
-        <View style={styles.modalMainViewContainer}>
+        <View
+          style={
+            isDarkMode
+              ? [
+                  styles.modalMainViewContainer,
+                  {backgroundColor: MyDarkTheme.colors.lightDark},
+                ]
+              : styles.modalMainViewContainer
+          }>
           <ScrollView
             showsVerticalScrollIndicator={false}
             bounces={false}
-            style={styles.modalMainViewContainer}>
+            style={
+              isDarkMode
+                ? [
+                    styles.modalMainViewContainer,
+                    {backgroundColor: MyDarkTheme.colors.lightDark},
+                  ]
+                : styles.modalMainViewContainer
+            }>
             <View
               style={{
                 // flex: 0.6,
@@ -1580,18 +1945,30 @@ export default function Cart({navigation, route}) {
                 justifyContent: 'center',
                 marginTop: 10,
               }}>
-              <Text style={styles.carType}>{strings.SELECTDATEANDTIME}</Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.carType, {color: MyDarkTheme.colors.text}]
+                    : styles.carType
+                }>
+                {strings.SELECTDATEANDTIME}
+              </Text>
             </View>
 
-            <View style={{alignItems: 'center', height: height / 3.5}}>
+            <View
+              style={{
+                alignItems: 'center',
+                height: height / 3.5,
+              }}>
               <DatePicker
                 date={
                   sheduledorderdate ? new Date(sheduledorderdate) : new Date()
                 }
+                textColor={isDarkMode ? '#fff' : colors.blackB}
                 mode="datetime"
                 minimumDate={new Date()}
                 maximumDate={undefined}
-                style={{width: width - 20, height: height / 3.5}}
+                style={styles.datetimePickerText}
                 // onDateChange={setDate}
                 onDateChange={(value) => onDateChange(value)}
               />

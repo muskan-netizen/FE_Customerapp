@@ -12,9 +12,12 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function BrandCard({data = {}, onPress = () => {}}) {
   const navigation = useNavigation();
+  const isDarkMode = useDarkMode();
   const scaleInAnimated = new Animated.Value(0);
   const {appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -27,7 +30,12 @@ export default function BrandCard({data = {}, onPress = () => {}}) {
       onPressOut={() => pressOutAnimation(scaleInAnimated)}
       style={[
         styles.imgContainer,
-        {...commonStyles.shadowStyle},
+        isDarkMode
+          ? {
+              ...commonStyles.shadowStyle,
+              backgroundColor: MyDarkTheme.colors.lightDark,
+            }
+          : {...commonStyles.shadowStyle},
         {...getScaleTransformationStyle(scaleInAnimated)},
       ]}>
       <FastImage
@@ -49,7 +57,15 @@ export default function BrandCard({data = {}, onPress = () => {}}) {
           justifyContent: 'center',
           paddingLeft: moderateScale(39),
         }}>
-        <Text style={{...commonStyles.futuraBtHeavyFont16}}>
+        <Text
+          style={
+            isDarkMode
+              ? {
+                  ...commonStyles.futuraBtHeavyFont16,
+                  color: MyDarkTheme.colors.text,
+                }
+              : {...commonStyles.futuraBtHeavyFont16}
+          }>
           {data?.translation[0]?.title}
         </Text>
       </View>

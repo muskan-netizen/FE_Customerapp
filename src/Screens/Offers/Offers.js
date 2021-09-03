@@ -14,8 +14,11 @@ import colors from '../../styles/colors';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptyOffers from './ListEmptyOffers';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Offer({route, navigation}) {
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     isLoading: true,
     allAvailableCoupons: [],
@@ -192,7 +195,9 @@ export default function Offer({route, navigation}) {
   const {isLoading, allAvailableCoupons, isLoadingB} = state;
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
       isLoadingB={isLoadingB}>

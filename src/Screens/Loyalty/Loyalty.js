@@ -28,8 +28,11 @@ import {
   showError,
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Loyalty({navigation}) {
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     isLoading: false,
     isRefreshing: false,
@@ -141,7 +144,9 @@ export default function Loyalty({navigation}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
@@ -152,7 +157,11 @@ export default function Loyalty({navigation}) {
             : imagePath.back
         }
         centerTitle={strings.LOYALTYPOINTS}
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
+        }
       />
       {/* current loyalty status */}
       {!!currentLoyalty ? (

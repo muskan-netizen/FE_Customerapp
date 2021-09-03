@@ -37,9 +37,12 @@ import {
 } from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function BrandProducts({route, navigation}) {
   const {data} = route.params;
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     isLoading: true,
@@ -468,8 +471,8 @@ export default function BrandProducts({route, navigation}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.white}
-      statusBarColor={colors.white}
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
+      statusBarColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       isLoadingB={isLoadingB}
       source={loaderOne}>
       <Header
@@ -479,7 +482,11 @@ export default function BrandProducts({route, navigation}) {
             : imagePath.back
         }
         centerTitle={brand.name || brand.translation[0].title}
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
+        }
         rightIcon={imagePath.search}
         onPressRight={() =>
           moveToNewScreen(navigationStrings.SEARCHPRODUCTOVENDOR, {
@@ -531,13 +538,26 @@ export default function BrandProducts({route, navigation}) {
                   },
                 ]}>
                 <Image
+                  style={{
+                    tintColor: isDarkMode ? MyDarkTheme.colors.text : null,
+                  }}
                   source={
                     showSortSelectedicon
                       ? imagePath.sortSelected
                       : imagePath.sort
                   }
                 />
-                <Text style={[styles.sortFilter]}>{strings.SORT}</Text>
+                <Text
+                  style={[
+                    styles.sortFilter,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGrey,
+                    },
+                  ]}>
+                  {strings.SORT}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={moveToNewScreen(navigationStrings.FILTER, {
@@ -575,13 +595,26 @@ export default function BrandProducts({route, navigation}) {
                 })}
                 style={styles.tabLable}>
                 <Image
+                  style={{
+                    tintColor: isDarkMode ? MyDarkTheme.colors.text : null,
+                  }}
                   source={
                     showFilterSlectedIcon
                       ? imagePath.filterSelected
                       : imagePath.filter
                   }
                 />
-                <Text style={styles.sortFilter}>{strings.FILTER}</Text>
+                <Text
+                  style={[
+                    styles.sortFilter,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGrey,
+                    },
+                  ]}>
+                  {strings.FILTER}
+                </Text>
               </TouchableOpacity>
             </View>
             {/* )} */}

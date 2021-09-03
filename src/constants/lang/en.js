@@ -364,6 +364,7 @@ export default {
   UPLOAD_BANNER: 'Upload Banner',
   FSSAI_LICENSE: 'FSSAI License',
   SFC_LICENSE: 'SFC Licence',
-  NOVARIANTPRODUCTAVAILABLE:'This option is currenty not available',
-  WAITINGTOACCEPT:'Waiting for order to be accepted'
+  NOVARIANTPRODUCTAVAILABLE: 'This option is currenty not available',
+  WAITINGTOACCEPT: 'Waiting for order to be accepted',
+  DARK_APPEARANCE: 'Theme Appearance',
 };

@@ -7,6 +7,7 @@ import {
   Image,
   TextInput,
   ImageBackground,
+  StyleSheet,
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -39,8 +40,11 @@ import GradientButton from '../../Components/GradientButton';
 import {cameraHandler} from '../../utils/commonFunction';
 import ToggleSwitch from 'toggle-switch-react-native';
 import DocumentPicker from 'react-native-document-picker';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function WebLinks({navigation, route}) {
+  const isDarkMode = useDarkMode();
   console.log(route, 'route>>>');
   const paramData = route?.params;
   const [state, setState] = useState({
@@ -337,7 +341,9 @@ export default function WebLinks({navigation, route}) {
   } = state;
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.white}
       isLoadingB={isLoading}
       source={loaderOne}>
@@ -348,7 +354,11 @@ export default function WebLinks({navigation, route}) {
             : imagePath.back
         }
         centerTitle={(paramData && paramData?.title) || ''}
-        headerStyle={{backgroundColor: Colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: Colors.white}
+        }
       />
       <View style={{...commonStyles.headerTopLine}} />
 
@@ -367,7 +377,12 @@ export default function WebLinks({navigation, route}) {
             {/* {!!(paramData && paramData?.url) && (
               <WebView source={{uri: paramData?.url}} />
             )} */}
-            {htmlContent && <HTMLView value={htmlContent} />}
+            {htmlContent && (
+              <HTMLView
+                stylesheet={isDarkMode ? htmlStyle : null}
+                value={`<p>${htmlContent}</p>`}
+              />
+            )}
           </View>
           <View
             style={{
@@ -796,3 +811,10 @@ export default function WebLinks({navigation, route}) {
     </WrapperContainer>
   );
 }
+
+const htmlStyle = StyleSheet.create({
+  p: {
+    fontWeight: '300',
+    color: '#e5e5e7', // make links coloured pink
+  },
+});
