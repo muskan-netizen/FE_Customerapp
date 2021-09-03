@@ -1,3 +1,4 @@
+import {callingCodes} from 'country-data';
 import React, {useState} from 'react';
 import {
   I18nManager,
@@ -60,6 +61,7 @@ export default function PhoneNumberInput({
         }}
         onPress={_openCountryPicker}>
         <Flag countryCode={cca2} />
+
         <Image source={imagePath.dropdownTriangle} />
       </TouchableOpacity>
       <TextInput
@@ -87,6 +89,7 @@ export default function PhoneNumberInput({
       />
       {countryPickerModalVisible && (
         <CountryPicker
+          withCallingCode={callingCodes}
           cca2={cca2}
           visible={countryPickerModalVisible}
           withFlagButton={false}
