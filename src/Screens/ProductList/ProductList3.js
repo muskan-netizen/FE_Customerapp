@@ -32,10 +32,13 @@ import stylesFunc from './styles';
 import LinearGradient from 'react-native-linear-gradient';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
   console.log(data, 'data params >>>>>');
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     isVisibleModal: false,
     isOffline: false,
@@ -445,7 +448,10 @@ export default function Products({route, navigation}) {
               : [...productListData, ...res.data.listData.data],
         });
         {
-          pageNo == 1 && res?.data?.listData?.data.length == 0 && res?.data?.category && res?.data?.category?.childs.length
+          pageNo == 1 &&
+          res?.data?.listData?.data.length == 0 &&
+          res?.data?.category &&
+          res?.data?.category?.childs.length
             ? updateState({
                 selectedCategory: res.data.category.childs[0],
                 productListId: res.data.category.childs[0],
@@ -636,11 +642,15 @@ export default function Products({route, navigation}) {
   };
 
   return (
-    <View style={{backgroundColor: '#fff', flex: 1}}>
+    <View
+      style={{
+        backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
+        flex: 1,
+      }}>
       <StatusBar
         translucent
         backgroundColor="transparent"
-        barStyle={'dark-content'}
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
       />
       <CustomAnimatedLoader
         source={loaderOne}
@@ -662,13 +672,19 @@ export default function Products({route, navigation}) {
           // height: Platform.OS === 'ios' ? height * 0.27 : height * 0.3,
           zIndex: Platform.OS === 'ios' ? 0 : -1000,
         }}>
-        <View style={{backgroundColor: colors.grey}}>
+        <View
+          style={{
+            backgroundColor: colors.grey,
+          }}>
           <ImageBackground
             source={{
               uri: getImageUrl(
-                data?.categoryInfo?.image?.proxy_url || data?.image?.proxy_url,
+                data?.categoryInfo?.image?.proxy_url ||
+                  data?.image?.proxy_url ||
+                  categoryInfo?.banner?.proxy_url,
                 data?.categoryInfo?.image?.image_path ||
-                  data?.image?.image_path,
+                  data?.image?.image_path ||
+                  categoryInfo?.banner?.image_path,
                 '500/500',
               ),
             }}
@@ -698,9 +714,11 @@ export default function Products({route, navigation}) {
                     source={{
                       uri: getImageUrl(
                         data?.categoryInfo?.icon?.proxy_url ||
-                          data?.icon?.proxy_url,
+                          data?.icon?.proxy_url ||
+                          categoryInfo?.logo?.proxy_url,
                         data?.categoryInfo?.icon?.image_path ||
-                          data?.icon?.image_path,
+                          data?.icon?.image_path ||
+                          categoryInfo?.logo?.image_path,
                         '200/200',
                       ),
                     }}
@@ -721,17 +739,33 @@ export default function Products({route, navigation}) {
                 </TouchableOpacity>
               </View>
             </LinearGradient>
-            <View style={styles.bottomHeaderView}>
+            <View
+              style={
+                isDarkMode
+                  ? [
+                      styles.bottomHeaderView,
+                      {backgroundColor: MyDarkTheme.colors.lightDark},
+                    ]
+                  : styles.bottomHeaderView
+              }>
               <View style={{flex: 0.5}}>
                 <Text
                   style={{
-                    color: colors.black,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                     fontSize: moderateScale(16),
                     fontFamily: fontFamily.medium,
                   }}>
                   {data?.categoryInfo?.name || data?.name}
                 </Text>
-                <Text style={styles.distanceAndTimeView}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.distanceAndTimeView,
+                          {color: MyDarkTheme.colors.text},
+                        ]
+                      : styles.distanceAndTimeView
+                  }>
                   {'0.2 km | 30 mins'}
                 </Text>
               </View>
@@ -784,7 +818,7 @@ export default function Products({route, navigation}) {
           ListFooterComponent={() => (
             <View style={{marginBottom: width / 1.3}} />
           )}
-          ListEmptyComponent={<EmptyListLoader />}
+          // ListEmptyComponent={<EmptyListLoader />}
         />
       </View>
     </View>

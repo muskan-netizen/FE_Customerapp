@@ -17,6 +17,8 @@ import {
   pressOutAnimation,
 } from '../utils/helperFunctions';
 import {Image} from 'react-native-elements';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function ThreeColumnCard({
   data = {},
@@ -28,6 +30,8 @@ export default function ThreeColumnCard({
   //marginHorizontal for center item is 8 which is toal 16
   //total spcaing required is width-32+16 or 48
   // width - 48 will be the width of each card and
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = useDarkMode();
   const {themeColors, appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const cardWidth = width / 3 - moderateScale(16);
@@ -72,7 +76,9 @@ export default function ThreeColumnCard({
           style={[
             withTextBG && {
               paddingVertical: 3,
-              backgroundColor: colors.white,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.white,
               justifyContent: 'center',
               alignItems: 'center',
             },
@@ -86,6 +92,7 @@ export default function ThreeColumnCard({
                 textAlign: 'center',
                 marginTop: moderateScale(8),
                 lineHeight: moderateScaleVertical(20),
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
               },
               withTextBG && {fontSize: textScale(12)},
             ]}>

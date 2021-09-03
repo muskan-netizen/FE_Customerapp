@@ -34,8 +34,11 @@ import {getImageUrl, showError} from '../../utils/helperFunctions';
 import stylesFunc from './styles';
 import FastImage from 'react-native-fast-image';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function ReturnOrder({navigation, route}) {
+  const isDarkMode = useDarkMode();
   const ratingData = route?.params?.item?.product_rating;
   const selectProductForRetrun = route?.params?.selectProductForRetrun;
   const selectedOrderForReturn = route?.params?.selectedOrderForReturn;
@@ -147,7 +150,7 @@ export default function ReturnOrder({navigation, route}) {
               })
               .then((res) => {
                 console.log(res, 'res>>>>>>uploadReturnOrderImage');
-                if (res && res.status == "Success") {
+                if (res && res.status == 'Success') {
                   updateState({isLoading: false});
                   updateState({
                     imageArray: imageArray.length
@@ -234,14 +237,20 @@ export default function ReturnOrder({navigation, route}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
         leftIcon={imagePath.back}
         centerTitle={strings.RETURNORDER}
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
+        }
       />
       <View style={{...commonStyles.headerTopLine}} />
       <ScrollView
@@ -266,7 +275,7 @@ export default function ReturnOrder({navigation, route}) {
               style={{
                 fontSize: moderateScale(14),
                 fontFamily: fontFamily.medium,
-                color: colors.textGreyJ,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyJ,
               }}>
               {'Here You Are For Return Product !'}
             </Text>
@@ -299,12 +308,27 @@ export default function ReturnOrder({navigation, route}) {
             <View style={{marginLeft: 10}}>
               <Text
                 numberOfLines={1}
-                style={[styles.priceItemLabel2, {opacity: 0.8}]}>
+                style={[
+                  styles.priceItemLabel2,
+                  {
+                    opacity: 0.8,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGrey,
+                  },
+                ]}>
                 {selectProductForRetrun?.product_name}
               </Text>
               {selectProductForRetrun?.quantity && (
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={{color: colors.textGrey}}>{strings.QTY}</Text>
+                  <Text
+                    style={{
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGrey,
+                    }}>
+                    {strings.QTY}
+                  </Text>
                   <Text style={styles.cartItemWeight}>
                     {selectProductForRetrun?.quantity}
                   </Text>
@@ -315,7 +339,13 @@ export default function ReturnOrder({navigation, route}) {
 
           {/* Upload image */}
           <View style={{marginTop: moderateScaleVertical(10)}}>
-            <Text style={styles.uploadImage}>{strings.UPLOAD_IMAGE}</Text>
+            <Text
+              style={{
+                ...styles.uploadImage,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyD,
+              }}>
+              {strings.UPLOAD_IMAGE}
+            </Text>
             <View
               style={{
                 marginTop: moderateScaleVertical(10),
@@ -372,7 +402,9 @@ export default function ReturnOrder({navigation, route}) {
                 style={{
                   fontSize: moderateScale(14),
                   fontFamily: fontFamily.medium,
-                  color: colors.textGreyJ,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyJ,
                 }}>
                 {strings.RETURNREASONS}
               </Text>
@@ -383,7 +415,9 @@ export default function ReturnOrder({navigation, route}) {
               defaultValue={returnReasons[0].label || returnReasons[0].name}
               containerStyle={{height: 40, marginTop: moderateScaleVertical(5)}}
               style={{
-                backgroundColor: '#fafafa',
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.lightDark
+                  : '#fafafa',
                 zIndex: 5000,
                 // marginHorizontal: moderateScale(20),
                 flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
@@ -392,9 +426,14 @@ export default function ReturnOrder({navigation, route}) {
                 justifyContent: 'flex-start',
                 flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
               }}
+              labelStyle={
+                isDarkMode ? {color: MyDarkTheme.colors.text} : {color: null}
+              }
               zIndex={5000}
               dropDownStyle={{
-                backgroundColor: '#fafafa',
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.lightDark
+                  : '#fafafa',
                 height: 150,
                 width: width - moderateScale(40),
                 alignSelf: 'center',
@@ -404,13 +443,29 @@ export default function ReturnOrder({navigation, route}) {
 
             {/* Message Container    */}
             <View style={{marginTop: moderateScaleVertical(20)}}>
-              <Text style={styles.uploadImage}>{strings.COMMENTSOPTIONAL}</Text>
+              <Text
+                style={{
+                  ...styles.uploadImage,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyD,
+                }}>
+                {strings.COMMENTSOPTIONAL}
+              </Text>
               <View style={styles.textInputContainer}>
                 <TextInput
-                  style={styles.textInputStyle}
+                  style={{
+                    ...styles.textInputStyle,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyJ,
+                  }}
                   multiline={true}
                   value={returnText}
                   onChangeText={(text) => updateState({returnText: text})}
+                  placeholderTextColor={
+                    isDarkMode ? MyDarkTheme.colors.text : colors.textGreyJ
+                  }
                 />
               </View>
             </View>

@@ -18,30 +18,22 @@ import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
 export default function (Stack) {
-  const {appData} = useSelector((state) => state?.initBoot);
+  const {appData, appStyle} = useSelector((state) => state?.initBoot);
   return (
     <>
       <Stack.Screen
         name={navigationStrings.OUTER_SCREEN}
-        component={
-          appData?.profile?.code === shortCodes.capcorp
-            ? OuterScreen2
-            : OuterScreen
-        }
+        component={appStyle?.homePageLayout === 2 ? OuterScreen2 : OuterScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.SIGN_UP}
-        component={
-          appData?.profile?.code === shortCodes.capcorp ? Signup2 : Signup
-        }
+        component={appStyle?.homePageLayout === 2 ? Signup2 : Signup}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.LOGIN}
-        component={
-          appData?.profile?.code === shortCodes.capcorp ? Login2 : Login
-        }
+        component={appStyle?.homePageLayout === 2 ? Login2 : Login}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -57,9 +49,7 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.FORGOT_PASSWORD}
         component={
-          appData?.profile?.code === shortCodes.capcorp
-            ? ForgotPassword2
-            : ForgotPassword
+          appStyle?.homePageLayout === 2 ? ForgotPassword2 : ForgotPassword
         }
         options={{headerShown: false}}
       />

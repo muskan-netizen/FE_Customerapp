@@ -17,7 +17,11 @@ import {
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
+
 export default function ForgotPassword({navigation}) {
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     isLoading: false,
     callingCode: '1',
@@ -86,14 +90,24 @@ export default function ForgotPassword({navigation}) {
   };
 
   return (
-    <WrapperContainer isLoadingB={isLoading} source={loaderOne}>
+    <WrapperContainer
+      isLoadingB={isLoading}
+      source={loaderOne}
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
       <View style={styles.mainView}>
         <TouchableOpacity
           onPress={() => navigation.goBack(null)}
           style={{alignSelf: 'flex-start'}}>
           <Image
             source={imagePath.back}
-            style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+            style={
+              isDarkMode
+                ? {
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    tintColor: MyDarkTheme.colors.text,
+                  }
+                : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+            }
           />
         </TouchableOpacity>
       </View>
@@ -106,11 +120,25 @@ export default function ForgotPassword({navigation}) {
         <View style={{flex: 1}}>
           <View style={{marginTop: moderateScaleVertical(50)}}>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-              <Text style={styles.header}>{strings.FORGOT_PASSWORD}</Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.header, {color: MyDarkTheme.colors.text}]
+                    : styles.header
+                }>
+                {strings.FORGOT_PASSWORD}
+              </Text>
             </View>
 
             <View style={styles.forgetDesc}>
-              <Text style={styles.txtSmall}>{strings.FORGOT_DESCRIPTION}</Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+                    : styles.txtSmall
+                }>
+                {strings.FORGOT_DESCRIPTION}
+              </Text>
             </View>
           </View>
           <View

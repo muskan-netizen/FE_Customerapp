@@ -1,6 +1,7 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
 import React, {useEffect, useState} from 'react';
+import moment from 'moment';
 import {
   Alert,
   FlatList,
@@ -11,6 +12,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  ScrollView,
   View,
 } from 'react-native';
 import DashedLine from 'react-native-dashed-line';
@@ -36,6 +38,7 @@ import {
   moderateScaleVertical,
   textScale,
   width,
+  height,
 } from '../../styles/responsiveSize';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
@@ -45,12 +48,16 @@ import {
   showSuccess,
 } from '../../utils/helperFunctions';
 import ListEmptyCart from './ListEmptyCart';
+import Modal from 'react-native-modal';
+import DatePicker from 'react-native-date-picker';
+import GradientButton from '../../Components/GradientButton';
 
 export default function Cart2({navigation, route}) {
   let paramsData = route?.params;
   const [state, setState] = useState({
     isLoading: true,
     isVisible: false,
+    isVisibleTimeModal: false,
     cartItems: [],
     cartData: {},
     isLoadingB: false,
@@ -67,10 +74,19 @@ export default function Cart2({navigation, route}) {
     isRefreshing: false,
     selectedTipvalue: null,
     selectedTipAmount: null,
+    selectedTimeOptions: [
+      {id: 1, title: 'Now', type: 'now'},
+      {id: 2, title: 'Schedule Order', type: 'schedule'},
+    ],
+    selectedTimeOption: null,
+    sheduledorderdate: null,
+    scheduleType: null,
+    viewHeight: 0,
   });
   const {
     isLoading,
     cartItems,
+    isVisibleTimeModal,
     cartData,
     isLoadingB,
     isModalVisibleForClearCart,
@@ -82,13 +98,18 @@ export default function Cart2({navigation, route}) {
     isRefreshing,
     selectedTipvalue,
     selectedTipAmount,
+    selectedTimeOptions,
+    selectedTimeOption,
+    sheduledorderdate,
+    scheduleType,
+    viewHeight,
   } = state;
 
   //Redux store data
   const userData = useSelector((state) => state?.auth?.userData);
+  const dineInType = useSelector((state) => state?.home?.dineInType);
   const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
-  const homePageLayout = appStyle?.homePageLayout;
   const fontFamily = appStyle?.fontSizeData;
   // const styles = stylesFun({fontFamily, themeColors});
   const styles = stylesFunc({fontFamily, themeColors});
@@ -177,6 +198,7 @@ export default function Cart2({navigation, route}) {
   const getCartDetail = () => {
     actions
       .getCartDetail(
+        `/?type=${dineInType}`,
         {},
         {
           code: appData?.profile?.code,
@@ -299,6 +321,7 @@ export default function Cart2({navigation, route}) {
 
   //Error handling in screen
   const errorMethod = (error) => {
+    console.log(error, 'error');
     updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
@@ -477,6 +500,81 @@ export default function Cart2({navigation, route}) {
         'You have not added the cart detail for the selected payment method',
       );
     }
+  };
+
+  const _selectTime = (item) => {
+    // console.log(item, 'item');
+    // console.log(selectedTimeOption, 'selectedTimeOption selectedTimeOption');
+    updateState({
+      scheduleType: item?.type,
+    });
+
+    {
+      selectedTimeOption && selectedTimeOption?.id == item?.id
+        ? updateState({
+            isVisibleTimeModal: item?.type === 'schedule' ? true : false,
+            isLoading: true,
+          })
+        : updateState({
+            selectedTimeOption: item,
+            isLoading: true,
+            isVisibleTimeModal: item?.type === 'schedule' ? true : false,
+          });
+    }
+  };
+  const onDateChange = (value) => {
+    // console.log(value, 'value');
+    // _onDateChange(value);
+    updateState({
+      sheduledorderdate: value,
+    });
+  };
+
+  useEffect(() => {
+    // console.log(scheduleType, 'scheduleType scheduleType');
+    if (scheduleType != null && scheduleType == 'now') {
+      setDateAndTimeSchedule();
+    }
+  }, [scheduleType]);
+
+  const selectOrderDate = () => {
+    onClose();
+    updateState({
+      scheduleType: 'schedule',
+    });
+    setDateAndTimeSchedule();
+  };
+
+  const onClose = () => {
+    updateState({
+      isVisibleTimeModal: false,
+    });
+  };
+
+  const setDateAndTimeSchedule = () => {
+    console.log(scheduleType, 'scheduleType>>>updated');
+    let data = {};
+    data['task_type'] = scheduleType;
+    data['schedule_dt'] =
+      scheduleType != 'now' && sheduledorderdate
+        ? new Date(sheduledorderdate).toISOString()
+        : null;
+    console.log(data, 'setDateAndTimeSchedule data');
+
+    actions
+      .scheduledOrder(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res, 'response');
+        updateState({
+          isLoadingB: false,
+        });
+      })
+      .catch(errorMethod);
   };
 
   //render cart item and cart detail
@@ -993,12 +1091,68 @@ export default function Cart2({navigation, route}) {
         </TouchableOpacity>
 
         {/* {payment submit button} */}
+
+        <View
+          style={{
+            flexDirection: 'row',
+            marginVertical: moderateScaleVertical(20),
+            marginHorizontal: moderateScale(20),
+          }}>
+          {selectedTimeOptions.map((i, inx) => {
+            return (
+              <TouchableOpacity
+                onPress={() => _selectTime(i)}
+                style={{
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                  backgroundColor:
+                    selectedTimeOption && selectedTimeOption?.id == i.id
+                      ? themeColors?.primary_color
+                      : getColorCodeWithOpactiyNumber(
+                          themeColors.primary_color.substr(1),
+                          20,
+                        ),
+                  borderColor: themeColors.primary_color,
+                  borderWidth:
+                    selectedTimeOption && selectedTimeOption?.id == i.id
+                      ? 1
+                      : 0,
+                  borderRadius: 10,
+                  marginRight: 10,
+                }}>
+                <Text
+                  style={{
+                    fontFamily: fontFamily.medium,
+                    color:
+                      selectedTimeOption && selectedTimeOption?.id == i.id
+                        ? colors.white
+                        : themeColors.primary_color,
+                  }}>
+                  {i.title}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+          <View
+            style={{
+              justifyContent: 'center',
+            }}>
+            {selectedTimeOption?.type === 'now' ? null : (
+              <Text>
+                {sheduledorderdate && scheduleType
+                  ? `${moment(sheduledorderdate).format('DD MMM,YYYY HH:mm')}`
+                  : null}
+              </Text>
+            )}
+          </View>
+        </View>
+
         <View
           style={{
             marginHorizontal: moderateScale(20),
             marginVertical:
               Platform.OS === 'ios'
-                ? moderateScaleVertical(40)
+                ? moderateScaleVertical(15)
                 : moderateScaleVertical(25),
           }}>
           <ButtonComponent
@@ -1104,36 +1258,37 @@ export default function Cart2({navigation, route}) {
       isLoadingB={isLoadingB}>
       <Header
         leftIcon={
-          appData?.profile?.code === shortCodes.capcorp
-            ? imagePath.backArrow
-            : imagePath.back
+          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         centerTitle={strings.CART}
         headerStyle={{backgroundColor: colors.backgroundGrey}}
       />
       <View style={{height: 1, backgroundColor: colors.borderColorD}} />
-      <FlatList
-        data={cartItems}
-        extraData={cartItems}
-        // ListHeaderComponent={cartItems?.length ? getHeader() : null}
-        ListFooterComponent={cartItems?.length ? getFooter() : null}
-        showsVerticalScrollIndicator={false}
-        style={{backgroundColor: colors.backgroundGrey}}
-        keyExtractor={(item, index) => String(index)}
-        renderItem={_renderItem}
-        ListEmptyComponent={<ListEmptyCart isLoading={isLoadingB} />}
-        style={{flex: 1}}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={handleRefresh}
-            tintColor={themeColors.primary_color}
-          />
-        }
-        contentContainerStyle={{
-          flexGrow: 1,
-        }}
-      />
+      <View style={styles.mainComponent}>
+        <FlatList
+          data={cartItems}
+          extraData={cartItems}
+          // ListHeaderComponent={cartItems?.length ? getHeader() : null}
+          ListFooterComponent={cartItems?.length ? getFooter() : null}
+          showsVerticalScrollIndicator={false}
+          style={{backgroundColor: colors.backgroundGrey}}
+          keyExtractor={(item, index) => String(index)}
+          renderItem={_renderItem}
+          ListEmptyComponent={<ListEmptyCart isLoading={isLoadingB} />}
+          // style={{flex: 1}}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              tintColor={themeColors.primary_color}
+            />
+          }
+          contentContainerStyle={{
+            flexGrow: 1,
+          }}
+        />
+      </View>
+
       {!!isModalVisibleForClearCart && (
         <ConfirmationModal
           closeModal={() => closeOptionModal()}
@@ -1159,6 +1314,66 @@ export default function Cart2({navigation, route}) {
         passLocation={(data) => addUpdateLocation(data)}
         type={type}
       />
+
+      <Modal
+        transparent={true}
+        isVisible={isVisibleTimeModal}
+        animationType={'none'}
+        style={styles.modalContainer}
+        onLayout={(event) => {
+          updateState({viewHeight: event.nativeEvent.layout.height});
+        }}>
+        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+          <Image source={imagePath.crossB} />
+        </TouchableOpacity>
+        <View style={styles.modalMainViewContainer}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            bounces={false}
+            style={styles.modalMainViewContainer}>
+            <View
+              style={{
+                // flex: 0.6,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 10,
+              }}>
+              <Text style={styles.carType}>{strings.SELECTDATEANDTIME}</Text>
+            </View>
+
+            <View style={{alignItems: 'center', height: height / 3.5}}>
+              <DatePicker
+                date={
+                  sheduledorderdate ? new Date(sheduledorderdate) : new Date()
+                }
+                mode="datetime"
+                minimumDate={new Date()}
+                maximumDate={undefined}
+                style={{width: width - 20, height: height / 3.5}}
+                // onDateChange={setDate}
+                onDateChange={(value) => onDateChange(value)}
+              />
+            </View>
+          </ScrollView>
+          <View
+            style={[
+              styles.bottomAddToCartView,
+              {top: viewHeight - height / 6},
+            ]}>
+            <GradientButton
+              colorsArray={[
+                themeColors.primary_color,
+                themeColors.primary_color,
+              ]}
+              // textStyle={styles.textStyle}
+              onPress={selectOrderDate}
+              marginTop={moderateScaleVertical(10)}
+              marginBottom={moderateScaleVertical(30)}
+              btnText={strings.SELECT}
+            />
+          </View>
+        </View>
+      </Modal>
     </WrapperContainer>
   );
 }
@@ -1468,6 +1683,37 @@ export function stylesFunc({fontFamily, themeColors}) {
       marginVertical: 20,
       borderRadius: moderateScale(5),
       borderColor: themeColors.primary_color,
+    },
+    modalContainer: {
+      marginHorizontal: 0,
+      marginBottom: 0,
+      marginTop: moderateScaleVertical(height / 2),
+      overflow: 'hidden',
+    },
+    closeButton: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginVertical: moderateScaleVertical(10),
+    },
+    modalMainViewContainer: {
+      flex: 1,
+      backgroundColor: colors.white,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      // overflow: 'hidden',
+      // paddingHorizontal: moderateScale(24),
+    },
+    carType: {
+      fontSize: textScale(14),
+      color: colors.blackC,
+      fontFamily: fontFamily.bold,
+    },
+    bottomAddToCartView: {
+      marginHorizontal: moderateScale(20),
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      bottom: 0,
     },
   });
   return styles;

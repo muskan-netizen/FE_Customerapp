@@ -37,11 +37,14 @@ import {
 } from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function CelebrityProduct({route, navigation}) {
   //Route data / params coming from some screen
   const {data} = route.params;
-
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     isLoading: true,
@@ -457,22 +460,24 @@ export default function CelebrityProduct({route, navigation}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.white}
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
       isLoadingB={isLoadingB}
       source={loaderOne}>
       <Header
         leftIcon={
-          appData?.profile?.code === shortCodes.capcorp
-            ? imagePath.backArrow
-            : imagePath.back
+          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         centerTitle={celebrity.name || celebrity.translation[0].title}
         rightIcon={imagePath.search}
         onPressRight={() =>
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
+        }
       />
 
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
@@ -547,13 +552,25 @@ export default function CelebrityProduct({route, navigation}) {
                   },
                 ]}>
                 <Image
+                  style={
+                    isDarkMode
+                      ? {tintColor: MyDarkTheme.colors.text}
+                      : {tintColor: null}
+                  }
                   source={
                     showSortSelectedicon
                       ? imagePath.sortSelected
                       : imagePath.sort
                   }
                 />
-                <Text style={[styles.sortFilter]}>{strings.SORT}</Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.sortFilter, {color: MyDarkTheme.colors.text}]
+                      : [styles.sortFilter]
+                  }>
+                  {strings.SORT}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 // onPress={() => navigation.navigate(navigationStrings.FILTER)}
@@ -592,13 +609,25 @@ export default function CelebrityProduct({route, navigation}) {
                 })}
                 style={styles.tabLable}>
                 <Image
+                  style={
+                    isDarkMode
+                      ? {tintColor: MyDarkTheme.colors.text}
+                      : {tintColor: null}
+                  }
                   source={
                     showFilterSlectedIcon
                       ? imagePath.filterSelected
                       : imagePath.filter
                   }
                 />
-                <Text style={styles.sortFilter}>{strings.FILTER}</Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.sortFilter, {color: MyDarkTheme.colors.text}]
+                      : [styles.sortFilter]
+                  }>
+                  {strings.FILTER}
+                </Text>
               </TouchableOpacity>
             </View>
             <FlatList

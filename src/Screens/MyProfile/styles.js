@@ -16,11 +16,11 @@ export default ({fontFamily}) => {
       borderBottomWidth: 0.7,
     },
     userProfileView: {
+      backgroundColor: colors.backgroundGrey,
       alignSelf: 'center',
       height: moderateScale(100),
       width: moderateScale(100),
       borderRadius: moderateScale(100 / 2),
-      backgroundColor: colors.backgroundGrey,
       borderWidth: moderateScale(5),
       borderColor: colors.white,
       marginTop: moderateScale(20),

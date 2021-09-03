@@ -44,21 +44,17 @@ import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
-  const {appData} = useSelector((state) => state?.initBoot);
+  const {appData, appStyle} = useSelector((state) => state?.initBoot);
   return (
     <Stack.Navigator>
       <Stack.Screen
-        component={
-          appData?.profile?.code === shortCodes.capcorp ? Account2 : Account
-        }
+        component={appStyle?.homePageLayout === 2 ? Account2 : Account}
         name={navigationStrings.ACCOUNTS}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.MY_PROFILE}
-        component={
-          appData?.profile?.code === shortCodes.capcorp ? MyProfile2 : MyProfile
-        }
+        component={appStyle?.homePageLayout === 2 ? MyProfile2 : MyProfile}
         options={{headerShown: false}}
       />
 
@@ -112,9 +108,7 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={
-          appData?.profile?.code === shortCodes.capcorp
-            ? ProductDetail2
-            : ProductDetail
+          appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail
         }
         options={{headerShown: false}}
       />
@@ -156,9 +150,7 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.VENDOR}
-        component={
-          appData?.profile?.code === shortCodes.capcorp ? Vendors2 : Vendors
-        }
+        component={appStyle?.homePageLayout === 2 ? Vendors2 : Vendors}
         options={{headerShown: false}}
       />
 
@@ -170,11 +162,7 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
-        component={
-          appData?.profile?.code === shortCodes.capcorp
-            ? ProductList2
-            : ProductList
-        }
+        component={appStyle?.homePageLayout === 2 ? ProductList2 : ProductList}
         options={{headerShown: false}}
       />
 
@@ -232,7 +220,7 @@ export default function () {
         component={Loyalty}
         options={{headerShown: false}}
       />
-        <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.RETURNORDER}
         component={ReturnOrder}
         options={{headerShown: false}}

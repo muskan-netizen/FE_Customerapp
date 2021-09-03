@@ -6,6 +6,8 @@ import Loader from './Loader';
 import {defaultLoader} from '../Components/Loaders/AnimatedLoaderFiles';
 import {useSelector} from 'react-redux';
 import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 const WrapperContainer = ({
   children,
@@ -21,6 +23,8 @@ const WrapperContainer = ({
   extraStyles = {},
 }) => {
   const {themeColors} = useSelector((state) => state?.initBoot);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = useDarkMode();
 
   const customColor = loadercolor ? loadercolor : themeColors.primary_color;
 
@@ -28,15 +32,22 @@ const WrapperContainer = ({
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: statusBarColor,
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.background
+          : statusBarColor,
       }}>
-      <StatusBar backgroundColor={statusBarColor} barStyle={barStyle} />
+      <StatusBar
+        backgroundColor={statusBarColor}
+        barStyle={isDarkMode ? 'light-content' : barStyle}
+      />
       <View style={{backgroundColor: bgColor, flex: 1}}>{children}</View>
       <Loader isLoading={isLoading} withModal={withModal} />
       <CustomAnimatedLoader
         source={source}
         loaderTitle="Loading"
-        containerColor={colors.white}
+        containerColor={
+          isDarkMode ? MyDarkTheme.colors.lightDark : colors.white
+        }
         loadercolor={customColor}
         animationStyle={[
           {

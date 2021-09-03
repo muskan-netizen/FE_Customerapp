@@ -35,9 +35,13 @@ import {
 } from '../../styles/responsiveSize';
 import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
+  console.log(data, 'data>data >>>>PARAMS');
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     isVisibleModal: false,
     isOffline: false,
@@ -636,6 +640,7 @@ export default function Products({route, navigation}) {
                   ),
               })}>
               <Image
+                style={{tintColor: isDarkMode ? MyDarkTheme.colors.text : null}}
                 source={
                   showFilterSlectedIcon
                     ? imagePath.filterSelected
@@ -652,7 +657,10 @@ export default function Products({route, navigation}) {
                 id: data?.vendor ? data?.id : productListId?.id,
               })}
               style={{marginLeft: 10}}>
-              <Image source={imagePath.search} />
+              <Image
+                style={{tintColor: isDarkMode ? MyDarkTheme.colors.text : null}}
+                source={imagePath.search}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -663,7 +671,9 @@ export default function Products({route, navigation}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
       isLoadingB={isLoadingB}>
@@ -682,7 +692,9 @@ export default function Products({route, navigation}) {
       <View
         style={{
           height: 10,
-          backgroundColor: colors.backgroundGreyB,
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.backgroundGreyB,
           marginBottom: 2,
         }}
       />

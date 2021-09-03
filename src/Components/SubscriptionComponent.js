@@ -29,6 +29,8 @@ import {
   pressOutAnimation,
 } from '../utils/helperFunctions';
 import GradientButton from './GradientButton';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function SubscriptionComponent({
   data = {},
@@ -46,6 +48,8 @@ export default function SubscriptionComponent({
   subscriptionData,
   allSubscriptions = [],
 }) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = useDarkMode();
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
@@ -82,12 +86,24 @@ export default function SubscriptionComponent({
     <TouchableOpacity
       activeOpacity={activeOpacity}
       // onPress={onPress}
-      style={[
-        {width: cardWidthNew},
-        {...commonStyles.shadowStyle},
-        {...cardStyle},
-        {borderRadius: 10, justifyContent: 'center'},
-      ]}>
+      style={
+        isDarkMode
+          ? [
+              {width: cardWidthNew},
+              {
+                ...commonStyles.shadowStyle,
+                backgroundColor: MyDarkTheme.colors.lightDark,
+              },
+              {...cardStyle},
+              {borderRadius: 10, justifyContent: 'center'},
+            ]
+          : [
+              {width: cardWidthNew},
+              {...commonStyles.shadowStyle},
+              {...cardStyle},
+              {borderRadius: 10, justifyContent: 'center'},
+            ]
+      }>
       <View>
         <View style={{padding: 10}}>
           <Image
@@ -110,8 +126,20 @@ export default function SubscriptionComponent({
           // backgroundColor:'red',
           alignItems: 'center',
         }}>
-        <Text style={styles.title}>{data?.title}</Text>
-        <Text style={styles.title}>
+        <Text
+          style={
+            isDarkMode
+              ? [styles.title, {color: MyDarkTheme.colors.text}]
+              : styles.title
+          }>
+          {data?.title}
+        </Text>
+        <Text
+          style={
+            isDarkMode
+              ? [styles.title, {color: MyDarkTheme.colors.text}]
+              : styles.title
+          }>
           {currentSubscription
             ? `${subscriptionData?.subscription_amount}/${subscriptionData?.frequency}`
             : `${data?.price}/${data?.frequency}`}
@@ -123,8 +151,14 @@ export default function SubscriptionComponent({
           marginHorizontal: moderateScale(10),
           marginTop: moderateScale(10),
         }}>
-        <Text style={[styles.subtitle]}>
-          {(subscriptionData && subscriptionData?.plan?.description)|| data?.description}
+        <Text
+          style={
+            isDarkMode
+              ? [styles.subtitle, {color: MyDarkTheme.colors.text}]
+              : [styles.subtitle]
+          }>
+          {(subscriptionData && subscriptionData?.plan?.description) ||
+            data?.description}
         </Text>
       </View>
       {currentSubscription ? null : (
@@ -136,7 +170,14 @@ export default function SubscriptionComponent({
             alignItems: 'center',
           }}>
           <Image source={imagePath.tick2} />
-          <Text style={[styles.freeDelivery]}>{'Free Delivery'}</Text>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.freeDelivery, {color: MyDarkTheme.colors.text}]
+                : [styles.freeDelivery]
+            }>
+            {'Free Delivery'}
+          </Text>
         </View>
       )}
 

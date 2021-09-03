@@ -1,6 +1,6 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { cloneDeep } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import {cloneDeep} from 'lodash';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
   FlatList,
@@ -12,13 +12,13 @@ import {
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import HTMLView from 'react-native-htmlview';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Pagination } from 'react-native-snap-carousel';
-import { useSelector } from 'react-redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Pagination} from 'react-native-snap-carousel';
+import {useSelector} from 'react-redux';
 import Banner from '../../Components/Banner';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import ProductCard from '../../Components/ProductCard';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -33,19 +33,22 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { showError, showSuccess } from '../../utils/helperFunctions';
+import {showError, showSuccess} from '../../utils/helperFunctions';
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
-export default function ProductDetail({ route, navigation }) {
-  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
+export default function ProductDetail({route, navigation}) {
+  const isDarkMode = useDarkMode();
+  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
-  const { productListData } = useSelector((state) => state?.product);
+  const {productListData} = useSelector((state) => state?.product);
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ themeColors, fontFamily });
-  const commonStyles = commonStylesFunc({ fontFamily });
-  const { data } = route.params;
+  const styles = stylesFunc({themeColors, fontFamily});
+  const commonStyles = commonStylesFunc({fontFamily});
+  const {data} = route.params;
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     isLoading: true,
@@ -71,8 +74,8 @@ export default function ProductDetail({ route, navigation }) {
   const initialState = cloneDeep(state);
   const userData = useSelector((state) => state?.auth?.userData);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
-  const { bannerRef } = useRef();
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const {bannerRef} = useRef();
   const {
     productDetailData,
     productPriceData,
@@ -93,19 +96,19 @@ export default function ProductDetail({ route, navigation }) {
 
   const customRight = () => {
     return (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <Image source={imagePath.search} />
       </View>
     );
   };
 
-  let plainHtml = productDetailData?.translation[0]?.body_html || null
+  let plainHtml = productDetailData?.translation[0]?.body_html || null;
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -190,7 +193,7 @@ export default function ProductDetail({ route, navigation }) {
           variantSet &&
           !variantSet.length
         ) {
-          updateState({ variantSet: res.data.products.variant_set });
+          updateState({variantSet: res.data.products.variant_set});
         }
       })
       .catch(errorMethod);
@@ -198,7 +201,7 @@ export default function ProductDetail({ route, navigation }) {
 
   //Get Product detail based on varint selection
   const getProductDetailBasedOnFilter = (variantSetData) => {
-    updateState({ isLoadingC: true });
+    updateState({isLoadingC: true});
     let data = {};
     data['variants'] = variantSetData.map((i) => i.variant_id);
     data['options'] = variantSetData.map((i) => i.optionId);
@@ -231,7 +234,7 @@ export default function ProductDetail({ route, navigation }) {
     console.log(error, 'Error>>>>>');
 
     if (error?.message?.alert == 1) {
-      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
+      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
@@ -239,7 +242,7 @@ export default function ProductDetail({ route, navigation }) {
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        { text: 'Clear Cart', onPress: () => clearCart() },
+        {text: 'Clear Cart', onPress: () => clearCart()},
       ]);
     } else {
       if (error?.data?.variant_empty) {
@@ -260,7 +263,7 @@ export default function ProductDetail({ route, navigation }) {
     console.log(error.message.alert, 'Error>>>>>');
 
     if (error?.message?.alert == 1) {
-      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
+      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
@@ -268,10 +271,10 @@ export default function ProductDetail({ route, navigation }) {
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        { text: 'Clear Cart', onPress: () => clearCart(addonSet) },
+        {text: 'Clear Cart', onPress: () => clearCart(addonSet)},
       ]);
     } else {
-      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
+      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
       showError(error?.message || error?.error);
     }
   };
@@ -327,10 +330,10 @@ export default function ProductDetail({ route, navigation }) {
 
           if (item.inwishlist) {
             item.inwishlist = null;
-            updateState({ productDetailData: item });
+            updateState({productDetailData: item});
           } else {
-            item.inwishlist = { product_id: item.id };
-            updateState({ productDetailData: item });
+            item.inwishlist = {product_id: item.id};
+            updateState({productDetailData: item});
           }
         })
         .catch(errorMethod);
@@ -374,7 +377,7 @@ export default function ProductDetail({ route, navigation }) {
 
   const radioButtonView = (options) => {
     return (
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         {options.map((i, inx) => {
           return (
             <TouchableOpacity
@@ -387,7 +390,14 @@ export default function ProductDetail({ route, navigation }) {
                 marginBottom: moderateScaleVertical(10),
               }}>
               <Image source={i?.value ? imagePath.check : imagePath.unCheck} />
-              <Text style={styles.variantValue}>{i.title}</Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.variantValue, {color: MyDarkTheme.colors.text}]
+                    : styles.variantValue
+                }>
+                {i.title}
+              </Text>
             </TouchableOpacity>
           );
         })}
@@ -397,7 +407,7 @@ export default function ProductDetail({ route, navigation }) {
 
   const circularView = (options) => {
     return (
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         {options.map((i, inx) => {
           return (
             <TouchableOpacity
@@ -418,7 +428,7 @@ export default function ProductDetail({ route, navigation }) {
 
                     borderColor:
                       i?.value &&
-                        (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
+                      (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
                         ? colors.textGrey
                         : i.hexacode,
                   },
@@ -441,7 +451,7 @@ export default function ProductDetail({ route, navigation }) {
       </View>
     );
   };
-  const variantSetValue = ({ options, type }) => {
+  const variantSetValue = ({options, type}) => {
     if (type == 1) {
       return <>{radioButtonView(options)}</>;
     }
@@ -467,7 +477,7 @@ export default function ProductDetail({ route, navigation }) {
             {'Product Variant'}
           </Text>
         </View> */}
-        <View style={{ marginHorizontal: moderateScale(20), marginVertical: 10 }}>
+        <View style={{marginHorizontal: moderateScale(20), marginVertical: 10}}>
           {variantSetData.map((i, inx) => {
             return (
               <View
@@ -478,7 +488,8 @@ export default function ProductDetail({ route, navigation }) {
                 <Text
                   style={[
                     styles.variantLable,
-                    { marginBottom: moderateScale(5) },
+                    {marginBottom: moderateScale(5)},
+                    isDarkMode ? {color: MyDarkTheme.colors.text} : null,
                   ]}>{`${i?.title}`}</Text>
                 {i?.options ? variantSetValue(i) : null}
               </View>
@@ -491,7 +502,7 @@ export default function ProductDetail({ route, navigation }) {
 
   useEffect(() => {
     if (data?.addonSetData && data?.randomValue) {
-      updateState({ addonSet: data?.addonSetData });
+      updateState({addonSet: data?.addonSetData});
       setTimeout(() => {
         _finalAddToCart(data?.addonSetData);
       }, 1000);
@@ -524,7 +535,7 @@ export default function ProductDetail({ route, navigation }) {
       data['addon_options'] = addon_options;
     }
     console.log(data, 'data for cart');
-    updateState({ isLoadingC: true, isVisibleAddonModal: false });
+    updateState({isLoadingC: true, isVisibleAddonModal: false});
     actions
       .addProductsToCart(data, {
         code: appData.profile.code,
@@ -538,7 +549,7 @@ export default function ProductDetail({ route, navigation }) {
 
         showSuccess('Product successfully added');
 
-        updateState({ isLoadingC: false });
+        updateState({isLoadingC: false});
         navigation.goBack();
       })
       .catch((error) => errorMethodSecond(error, addonSet));
@@ -547,7 +558,7 @@ export default function ProductDetail({ route, navigation }) {
   const addToCart = () => {
     {
       addonSet && addonSet.length
-        ? updateState({ isVisibleAddonModal: true })
+        ? updateState({isVisibleAddonModal: true})
         : _finalAddToCart(addonSet);
     }
     // _finalAddToCart()
@@ -574,18 +585,18 @@ export default function ProductDetail({ route, navigation }) {
     }
   };
 
-  const renderProduct = ({ item, index }) => {
+  const renderProduct = ({item, index}) => {
     item.showAddToCart = true;
     return (
       <ProductCard
         onPress={() =>
-          navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
+          navigation.push(navigationStrings.PRODUCTDETAIL, {data: item})
         }
         onAddtoWishlist={() => _onAddtoWishlist(item)}
         data={item}
-        cardStyle={{ marginHorizontal: moderateScale(10) }}
+        cardStyle={{marginHorizontal: moderateScale(10)}}
         addToCart={() =>
-          navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
+          navigation.push(navigationStrings.PRODUCTDETAIL, {data: item})
         }
         bottomText={strings.VIEW_DETAIL}
       />
@@ -593,11 +604,11 @@ export default function ProductDetail({ route, navigation }) {
   };
 
   const setModalVisibleForAddonModal = (visible) => {
-    updateState({ isVisibleAddonModal: false });
+    updateState({isVisibleAddonModal: false});
   };
 
   const onclickBanner = () => {
-    updateState({ lightBox: true });
+    updateState({lightBox: true});
   };
 
   console.log(
@@ -606,7 +617,7 @@ export default function ProductDetail({ route, navigation }) {
   );
   return (
     <WrapperContainer
-      bgColor={colors.white}
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoadingC}>
@@ -617,9 +628,13 @@ export default function ProductDetail({ route, navigation }) {
         onPressRight={() =>
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }
-        headerStyle={{ backgroundColor: colors.white }}
+        headerStyle={{
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.white,
+        }}
       />
-      <View style={{ ...commonStyles.headerTopLine }} />
+      <View style={{...commonStyles.headerTopLine}} />
 
       <KeyboardAwareScrollView ref={myRef} showsVerticalScrollIndicator={false}>
         {state.isLoading && <ListEmptyProduct isLoading={state.isLoading} />}
@@ -636,7 +651,7 @@ export default function ProductDetail({ route, navigation }) {
                 justifyContent: 'space-between',
               }}>
               {/* <View style={{ flex: 0.2 }}><Image source={imagePath.fav} /></View> */}
-              <View style={{ flex: 1, alignItems: 'center' }}>
+              <View style={{flex: 1, alignItems: 'center'}}>
                 <Banner
                   bannerRef={bannerRef}
                   bannerData={productDetailData?.product_media}
@@ -644,7 +659,7 @@ export default function ProductDetail({ route, navigation }) {
                   itemWidth={width}
                   pagination={false}
                   setActiveState={(index) =>
-                    updateState({ slider1ActiveSlide: index })
+                    updateState({slider1ActiveSlide: index})
                   }
                   showLightbox={true}
                   cardViewStyle={styles.cardViewStyle}
@@ -660,15 +675,29 @@ export default function ProductDetail({ route, navigation }) {
                         {productDetailData?.is_wishlist ? (
                           <View>
                             {!!productDetailData?.inwishlist ? (
-                              <Image source={imagePath.blackFilledHeart} />
+                              <Image
+                                style={
+                                  isDarkMode
+                                    ? {tintColor: MyDarkTheme.colors.text}
+                                    : null
+                                }
+                                source={imagePath.blackFilledHeart}
+                              />
                             ) : (
-                              <Image source={imagePath.fav} />
+                              <Image
+                                style={
+                                  isDarkMode
+                                    ? {tintColor: MyDarkTheme.colors.text}
+                                    : null
+                                }
+                                source={imagePath.fav}
+                              />
                             )}
                           </View>
                         ) : null}
                       </TouchableOpacity>
                       {productDetailData?.averageRating !== null && (
-                        <View style={{ alignItems: 'flex-end' }}>
+                        <View style={{alignItems: 'flex-end'}}>
                           <View
                             style={{
                               flexDirection: 'row',
@@ -683,8 +712,8 @@ export default function ProductDetail({ route, navigation }) {
                             <Text style={styles.ratingColor}>
                               {productDetailData?.averageRating !== null
                                 ? Number(
-                                  productDetailData?.averageRating,
-                                ).toFixed(1)
+                                    productDetailData?.averageRating,
+                                  ).toFixed(1)
                                 : ''}
                             </Text>
                           </View>
@@ -693,7 +722,7 @@ export default function ProductDetail({ route, navigation }) {
                     </View>
                   }
                 />
-                <View style={{ paddingTop: 5 }}>
+                <View style={{paddingTop: 5}}>
                   <Pagination
                     dotsLength={productDetailData?.product_media?.length}
                     activeDotIndex={state.slider1ActiveSlide}
@@ -726,7 +755,13 @@ export default function ProductDetail({ route, navigation }) {
                     alignItems: 'flex-start',
                     justifyContent: 'center',
                   }}>
-                  <Text numberOfLines={2} style={styles.productName}>
+                  <Text
+                    numberOfLines={2}
+                    style={
+                      isDarkMode
+                        ? [styles.productName, {color: MyDarkTheme.colors.text}]
+                        : styles.productName
+                    }>
                     {productDetailData?.translation[0]?.title}
                   </Text>
                 </View>
@@ -763,29 +798,30 @@ export default function ProductDetail({ route, navigation }) {
                       alignItems: 'flex-start',
                       justifyContent: 'center',
                     }}>
-                    <Text style={styles.productPrice}>{`${currencies?.primary_currency.symbol
-                      }${(
-                        Number(productPriceData?.multiplier) *
-                        Number(productPriceData?.price)
-                      ).toFixed(2)}`}</Text>
+                    <Text style={styles.productPrice}>{`${
+                      currencies?.primary_currency.symbol
+                    }${(
+                      Number(productPriceData?.multiplier) *
+                      Number(productPriceData?.price)
+                    ).toFixed(2)}`}</Text>
                   </View>
                   {!!productTotalQuantity &&
                     !!productTotalQuantity != 0 &&
                     (!!data?.showAddToCart ? null : (
-                      <View style={{ flex: 0.3, justifyContent: 'center' }}>
+                      <View style={{flex: 0.3, justifyContent: 'center'}}>
                         <View style={styles.incDecBtnContainer}>
                           <TouchableOpacity
-                            style={{ flex: 0.3, alignItems: 'center' }}
+                            style={{flex: 0.3, alignItems: 'center'}}
                             onPress={() => productIncrDecreamentForCart(2)}>
                             <Text style={styles.cartItemValueBtn}>-</Text>
                           </TouchableOpacity>
-                          <View style={{ flex: 0.4, alignItems: 'center' }}>
+                          <View style={{flex: 0.4, alignItems: 'center'}}>
                             <Text style={styles.cartItemValue}>
                               {productQuantityForCart}
                             </Text>
                           </View>
                           <TouchableOpacity
-                            style={{ flex: 0.3, alignItems: 'center' }}
+                            style={{flex: 0.3, alignItems: 'center'}}
                             onPress={() => productIncrDecreamentForCart(1)}>
                             <Text style={styles.cartItemValueBtn}>+</Text>
                           </TouchableOpacity>
@@ -796,7 +832,7 @@ export default function ProductDetail({ route, navigation }) {
               </View>
 
               <View>
-                <View style={{ justifyContent: 'center' }}>
+                <View style={{justifyContent: 'center'}}>
                   <Text
                     style={
                       stylesFunc({
@@ -818,7 +854,7 @@ export default function ProductDetail({ route, navigation }) {
                   marginTop: moderateScaleVertical(10),
                   justifyContent: 'space-between',
                 }}>
-                <View style={{ maxWidth: width / 2 }}>
+                <View style={{maxWidth: width / 2}}>
                   {/* <View style={styles.boxOne}>
                     <Text numberOfLines={1} style={styles.productTypeAndBrand}>
                       {venderDetail?.name}
@@ -858,7 +894,15 @@ export default function ProductDetail({ route, navigation }) {
                     flexDirection: 'row',
                   }}>
                   <View>
-                    <Text style={styles.descriptiontitle}>
+                    <Text
+                      style={
+                        isDarkMode
+                          ? [
+                              styles.descriptiontitle,
+                              {color: MyDarkTheme.colors.text},
+                            ]
+                          : styles.descriptiontitle
+                      }>
                       {strings.DESCRIPTION}
                     </Text>
                     {/* <Text style={styles.description}>
@@ -866,8 +910,12 @@ export default function ProductDetail({ route, navigation }) {
                 </Text> */}
 
                     <HTMLView
-                      value={plainHtml.startsWith('<p>') ? plainHtml : "<p>" + plainHtml + "</p>"}
-                      stylesheet={{ p: styles.descriptionStyle }}
+                      value={
+                        plainHtml.startsWith('<p>')
+                          ? plainHtml
+                          : '<p>' + plainHtml + '</p>'
+                      }
+                      stylesheet={{p: styles.descriptionStyle}}
                     />
                   </View>
                 </View>
@@ -936,12 +984,12 @@ export default function ProductDetail({ route, navigation }) {
               keyExtractor={(item, index) => String(index)}
               keyboardShouldPersistTaps="always"
               showsHorizontalScrollIndicator={false}
-              style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
-              contentContainerStyle={{ flexGrow: 1 }}
+              style={{flex: 1, marginVertical: moderateScaleVertical(10)}}
+              contentContainerStyle={{flexGrow: 1}}
               horizontal
-              ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-              ListFooterComponent={() => <View style={{ height: 20 }} />}
-            // ListEmptyComponent={<ListEmptyProduct isLoading={state.isLoading}/>}
+              ItemSeparatorComponent={() => <View style={{height: 20}} />}
+              ListFooterComponent={() => <View style={{height: 20}} />}
+              // ListEmptyComponent={<ListEmptyProduct isLoading={state.isLoading}/>}
             />
             <AddonModal
               productdetail={productDetailData}
@@ -949,7 +997,7 @@ export default function ProductDetail({ route, navigation }) {
               onClose={() => setModalVisibleForAddonModal(false)}
               // onPress={(data) => alert('123')}
               addonSet={addonSet}
-            // onPress={currentLocation}
+              // onPress={currentLocation}
             />
           </>
         )}
@@ -957,3 +1005,8 @@ export default function ProductDetail({ route, navigation }) {
     </WrapperContainer>
   );
 }
+const htmlStyle = StyleSheet.create({
+  h2: {
+    color: '#e5e5e7', // make links coloured pink
+  },
+});

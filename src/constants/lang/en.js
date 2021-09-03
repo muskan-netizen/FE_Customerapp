@@ -355,7 +355,12 @@ export default {
     'The specific items are not deliverable to this address. Please remove the items or change the address ',
   VIEW_ALL_VENDORS: 'View all vendors',
   CLOSE: 'Close',
+  SELECT_CATEGORY: 'Select Category',
+  EXPLORE_STORES: 'Explore Stores',
+  OPEN: 'Open',
+  SEARCH_HERE: 'Whar are you looking for?',
   NOOFFERS: 'No Offers',
+  NOVARIANTPRODUCTAVAILABLE: 'This option is currenty not available',
   PERSONAL_DETAILS: 'Personal Details',
   STORE_DETAILS: 'Store Details',
   VENDOR_NAME: 'Vendor name',
@@ -364,6 +369,7 @@ export default {
   UPLOAD_BANNER: 'Upload Banner',
   FSSAI_LICENSE: 'FSSAI License',
   SFC_LICENSE: 'SFC Licence',
-  NOVARIANTPRODUCTAVAILABLE:'This option is currenty not available',
-  WAITINGTOACCEPT:'Waiting for order to be accepted'
+  NOVARIANTPRODUCTAVAILABLE: 'This option is currenty not available',
+  WAITINGTOACCEPT: 'Waiting for order to be accepted',
+  DARK_APPEARANCE: 'Theme Appearance',
 };

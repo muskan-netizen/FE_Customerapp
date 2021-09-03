@@ -11,13 +11,21 @@ import {
 } from '../../../styles/responsiveSize';
 import actions from '../../../redux/actions';
 import {showError, showSuccess} from '../../../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 
-export default function ToggleTabBar({selcetedToggle, toggleData}) {
+export default function ToggleTabBar({
+  selcetedToggle,
+  toggleData,
+  isDineInSelected = false,
+}) {
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     selectedIndex: 0,
     tabs: [],
   });
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
+
   const [selectedTab, setSelectedTab] = useState(0);
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {appData, themeColors, currencies, languages} = useSelector(
@@ -29,6 +37,40 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
   const {selectedIndex, tabs} = state;
   useEffect(() => {
     addAllTabs();
+    getSelectedTab();
+  }, [appData]);
+
+  useEffect(() => {
+    if (dine_In_Type == 'dine_in') {
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(1);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(0);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        setSelectedTab(1);
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        setSelectedTab(1);
+      }
+    }
+  }, [dine_In_Type]);
+
+  const getSelectedTab = () => {
     if (dine_In_Type == 'delivery') {
       if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
@@ -102,7 +144,7 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
         setSelectedTab(2);
       }
     }
-  }, [appData]);
+  };
 
   const addAllTabs = () => {
     const localTabsArray = [];
@@ -188,10 +230,10 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
       }
     }
   };
-  const dineInFuncation = () => {
+  const dineInFunction = () => {
     Alert.alert(
       '',
-      'This Change Will Remove Your Cart Products.Do you Really Want To Continue ?',
+      'This Change Will Remove Your Cart Products. Do you Really Want To Continue?',
       [
         {
           text: 'Cancel',
@@ -216,14 +258,11 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
       )
       .then((res) => {
         showSuccess(res?.message);
-        console.log(res, 'res>>>res>>>>');
         actions.cartItemQty(res);
       })
       .catch(errorMethod);
   };
-  //Error handling in screen
   const errorMethod = (error) => {
-    console.log(error, 'error');
     updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
@@ -245,13 +284,15 @@ export default function ToggleTabBar({selcetedToggle, toggleData}) {
                 cartItemCount?.data?.item_count > 0
               )
                 ? setSelectedTab
-                : dineInFuncation
+                : dineInFunction
             }
             barHeight={38}
             indicatorColor={themeColors.primary_color}
             activeTextColor={themeColors.primary_color}
-            barColor={'#EEEEEE'}
-            inactiveTextColor={colors.textGreyF}
+            barColor={isDarkMode ? MyDarkTheme.colors.lightDark : '#EEEEEE'}
+            inactiveTextColor={
+              isDarkMode ? MyDarkTheme.colors.text : colors.textGreyF
+            }
             indicatorHeight={3}
           />
         </View>

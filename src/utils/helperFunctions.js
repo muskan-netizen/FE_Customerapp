@@ -307,6 +307,23 @@ export const pressOutAnimation = (
   }).start();
 };
 
+const getParameterByName = (name, url) => {
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+};
+
+const getUrlRoutes = (url, indexOfRoute) => {
+  const route = url.replace(/.*?:\/\//g, '');
+  const routeName = route.split('/')[0 + indexOfRoute];
+
+  return routeName;
+};
+
 export {
   showError,
   showSuccess,
@@ -314,4 +331,6 @@ export {
   getCurrentLocation,
   androidBackButtonHandler,
   renameKey,
+  getParameterByName,
+  getUrlRoutes,
 };

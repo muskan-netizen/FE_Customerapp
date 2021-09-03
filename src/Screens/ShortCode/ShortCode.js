@@ -51,7 +51,6 @@ export default function ShortCode({route, navigation}) {
     (state) => state?.initBoot,
   );
 
-  const homePageLayout = appStyle?.homePageLayout;
 
   useEffect(() => {
     (async () => {

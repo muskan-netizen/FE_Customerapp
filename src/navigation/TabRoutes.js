@@ -4,7 +4,8 @@ import {Image, StyleSheet, Text} from 'react-native';
 import {View} from 'react-native-animatable';
 import {useSelector} from 'react-redux';
 import CustomBottomTabBar from '../Components/CustomBottomTabBar';
-import CustomBottomTabBar1 from '../Components/CustomBottomTabBar1';
+import CustomBottomTabBarFive from '../Components/CustomBottomTabBarFive';
+import CustomBottomTabBarFour from '../Components/CustomBottomTabBarFour';
 import CustomBottomTabBarThree from '../Components/CustomBottomTabBarThree';
 import CustomBottomTabBarTwo from '../Components/CustomBottomTabBarTwo';
 import imagePath from '../constants/imagePath';
@@ -70,9 +71,8 @@ export default function TabRoutes(props) {
       />
     );
   }
-  // capcorp
 
-  if (appData?.profile?.code !== shortCodes.capcorp) {
+  if (appStyle?.homePageLayout !== 2 && appStyle?.homePageLayout !== 3) {
     if (checkForBrand) {
       brandTab = (
         <Tab.Screen
@@ -87,12 +87,12 @@ export default function TabRoutes(props) {
                   appStyle?.tabBarLayout === 2 && {height: 20, width: 20},
                 ]}
                 source={
-                  focused
-                    ? appStyle?.tabBarLayout === 2
-                      ? imagePath.brandsActive
-                      : imagePath.tabCActive
-                    : appStyle?.tabBarLayout === 2
-                    ? imagePath.brandInActive
+                  appStyle?.tabBarLayout === 5
+                    ? focused
+                      ? imagePath.ordersRedActive
+                      : imagePath.ordersRedInActive
+                    : focused
+                    ? imagePath.tabCActive
                     : imagePath.tabCInActive
                 }
               />
@@ -110,20 +110,18 @@ export default function TabRoutes(props) {
       tabBar={(props) => {
         switch (appStyle?.tabBarLayout) {
           case 1:
-            return appData?.profile?.code === shortCodes.capcorp ? (
-              <CustomBottomTabBar1 {...props} />
-            ) : (
-              <CustomBottomTabBar {...props} />
-            );
+            return <CustomBottomTabBar {...props} />;
           case 2:
             return <CustomBottomTabBarTwo {...props} />;
           case 3:
             return <CustomBottomTabBarThree {...props} />;
+          case 4:
+            return <CustomBottomTabBarFour {...props} />;
+          case 5:
+            return <CustomBottomTabBarFive {...props} />;
         }
       }}
       tabBarOptions={{
-        // activeTintColor: colors.white,
-        // inactiveTintColor: colors.tabGrey,
         labelStyle: {
           textTransform: 'capitalize',
           fontFamily: fontFamily?.medium,
@@ -145,16 +143,16 @@ export default function TabRoutes(props) {
                 appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
               ]}
               source={
-                appData?.profile?.code === shortCodes.capcorp
+                appStyle?.tabBarLayout === 5
                   ? focused
                     ? imagePath.homeActive
                     : imagePath.homeInActive
+                  : appStyle?.tabBarLayout === 4
+                  ? focused
+                    ? imagePath.homeRedActive
+                    : imagePath.homeRedInActive
                   : focused
-                  ? appStyle?.tabBarLayout === 2
-                    ? imagePath.home2Active
-                    : imagePath.tabAActive
-                  : appStyle?.tabBarLayout === 2
-                  ? imagePath.home2InActive
+                  ? imagePath.tabAActive
                   : imagePath.tabAInActive
               }
             />
@@ -182,16 +180,16 @@ export default function TabRoutes(props) {
                   appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
                 ]}
                 source={
-                  appData?.profile?.code === shortCodes.capcorp
+                  appStyle?.tabBarLayout === 5
                     ? focused
                       ? imagePath.ordersActive
                       : imagePath.ordersInActive
+                    : appStyle?.tabBarLayout === 4
+                    ? focused
+                      ? imagePath.cartRedActive
+                      : imagePath.cartRedInActive
                     : focused
-                    ? appStyle?.tabBarLayout === 2
-                      ? imagePath.cart2Active
-                      : imagePath.cartActive
-                    : appStyle?.tabBarLayout === 2
-                    ? imagePath.cart2InActive
+                    ? imagePath.cartActive
                     : imagePath.cartInActive
                 }
               />
@@ -214,16 +212,16 @@ export default function TabRoutes(props) {
                 appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
               ]}
               source={
-                appData?.profile?.code === shortCodes.capcorp
+                appStyle?.tabBarLayout === 5
                   ? focused
                     ? imagePath.profileActive
                     : imagePath.profileInActive
+                  : appStyle?.tabBarLayout === 4
+                  ? focused
+                    ? imagePath.accountRedActive
+                    : imagePath.accountRedInActive
                   : focused
-                  ? appStyle?.tabBarLayout === 2
-                    ? imagePath.accountActive
-                    : imagePath.tabEActive
-                  : appStyle?.tabBarLayout === 2
-                  ? imagePath.accountInActive
+                  ? imagePath.tabEActive
                   : imagePath.tabEInActive
               }
             />
