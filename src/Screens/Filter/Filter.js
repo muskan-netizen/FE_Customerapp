@@ -19,12 +19,14 @@ import {
 } from '../../styles/responsiveSize';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import stylesFunc from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Filter({route, navigation}) {
   const {themeColors, appStyle, appData} = useSelector(
     (state) => state?.initBoot,
   );
-
+  const isDarkMode = useDarkMode();
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
   const commonStyles = commonStylesFunc({fontFamily});
@@ -87,7 +89,14 @@ export default function Filter({route, navigation}) {
           borderBottomWidth: 1,
           padding: moderateScale(10),
         }}>
-        <Text style={styles.lableStyle}>{item.label}</Text>
+        <Text
+          style={
+            isDarkMode
+              ? [styles.lableStyle, {color: MyDarkTheme.colors.text}]
+              : styles.lableStyle
+          }>
+          {item.label}
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -308,7 +317,23 @@ export default function Filter({route, navigation}) {
                 : imagePath.radioInActive
             }
           />
-          <Text style={[styles.lableStyle, {paddingLeft: moderateScale(5)}]}>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.lableStyle,
+                    {
+                      paddingLeft: moderateScale(5),
+                      color: isDarkMode ? MyDarkTheme.colors.text : null,
+                    },
+                  ]
+                : [
+                    styles.lableStyle,
+                    {
+                      paddingLeft: moderateScale(5),
+                    },
+                  ]
+            }>
             {item.label}
           </Text>
         </TouchableOpacity>
@@ -361,8 +386,18 @@ export default function Filter({route, navigation}) {
             flexDirection: 'row',
             justifyContent: 'space-between',
           }}>
-          <Text style={styles.priceMinrange}>{`${minimumPrice}`}</Text>
-          <Text style={styles.priceMinrange}>{`${maximumPrice}`}</Text>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.priceMinrange, {color: MyDarkTheme.colors.text}]
+                : styles.priceMinrange
+            }>{`${minimumPrice}`}</Text>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.priceMinrange, {color: MyDarkTheme.colors.text}]
+                : styles.priceMinrange
+            }>{`${maximumPrice}`}</Text>
         </View>
       </View>
     );
@@ -370,7 +405,7 @@ export default function Filter({route, navigation}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.white}
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
       isLoadingB={isLoading}
       source={loaderOne}>
@@ -385,21 +420,40 @@ export default function Filter({route, navigation}) {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Image
                 source={
-                  appData?.profile?.code === shortCodes.capcorp
+                  appStyle?.homePageLayout === 2
                     ? imagePath.backArrow
                     : imagePath.back
                 }
-                style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+                style={
+                  isDarkMode
+                    ? {
+                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                        tintColor: MyDarkTheme.colors.text,
+                      }
+                    : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+                }
               />
             </TouchableOpacity>
 
-            <Text style={[styles.textStyle, {marginLeft: 20}]}>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.textStyle,
+                      {marginLeft: 20, color: MyDarkTheme.colors.text},
+                    ]
+                  : [styles.textStyle, {marginLeft: 20}]
+              }>
               {strings.FILTER}
             </Text>
           </View>
         )}
         rightViewStyle={{flex: 0.3}}
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
+        }
       />
       <View style={{...commonStyles.headerTopLine}} />
       <View
@@ -408,15 +462,31 @@ export default function Filter({route, navigation}) {
           justifyContent: 'space-between',
           padding: moderateScale(10),
         }}>
-        <Text style={styles.categoryText}>{strings.CATEGORY}</Text>
+        <Text
+          style={
+            isDarkMode
+              ? [styles.categoryText, {color: MyDarkTheme.colors.text}]
+              : styles.categoryText
+          }>
+          {strings.CATEGORY}
+        </Text>
         <TouchableOpacity
           onPress={moveToNewScreen(navigationStrings.SEARCHPRODUCTOVENDOR)}>
-          <Image source={imagePath.search} />
+          <Image
+            style={isDarkMode ? {tintColor: MyDarkTheme.colors.text} : null}
+            source={imagePath.search}
+          />
         </TouchableOpacity>
       </View>
       <View style={{...commonStyles.headerTopLine}} />
       <View style={{flex: 1, flexDirection: 'row'}}>
-        <View style={{flex: 0.5, backgroundColor: colors.backGroundGreyD}}>
+        <View
+          style={{
+            flex: 0.5,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : colors.backGroundGreyD,
+          }}>
           <ScrollView>
             {filterTypes && filterTypes.length
               ? filterTypes.map((i, inx) => {
@@ -431,7 +501,14 @@ export default function Filter({route, navigation}) {
                 borderBottomWidth: 1,
                 padding: moderateScale(10),
               }}>
-              <Text style={styles.lableStyle}>{strings.PRICE}</Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.lableStyle, {color: MyDarkTheme.colors.text}]
+                    : styles.lableStyle
+                }>
+                {strings.PRICE}
+              </Text>
             </TouchableOpacity>
           </ScrollView>
           <View style={styles.bottomViewButtonStyle}>
@@ -457,7 +534,7 @@ export default function Filter({route, navigation}) {
               onPress={() => applyFilters()}
               style={[
                 styles.buttonMainView,
-                {backgroundColor: colors.themeColor},
+                {backgroundColor: themeColors.primary_color},
               ]}>
               <Text style={styles.apply}>{strings.APPLY}</Text>
             </TouchableOpacity>

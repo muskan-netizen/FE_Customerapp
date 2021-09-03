@@ -21,13 +21,15 @@ const initial_state = {
   shortCodeStatus: null,
   appStyle: {
     fontSizeData: {
-      regular:'CircularStd-Book',
-      medium:'CircularStd-Medium',
+      regular: 'CircularStd-Book',
+      medium: 'CircularStd-Medium',
       bold: 'CircularStd-Bold',
     },
     tabBarLayout: 1,
     homePageLayout: 1,
   },
+  themeColor: null,
+  themeToggle: null,
   //internetConnection: false,
 };
 
@@ -80,8 +82,6 @@ export default function (state = initial_state, action) {
       };
     }
 
-    
-
     case types.UPDATE_CURRENCY: {
       let currenciesData = {};
       currenciesData['primary_currency'] = action.payload;
@@ -126,6 +126,22 @@ export default function (state = initial_state, action) {
     case types.NO_INTERNET: {
       const internetConnection = action.payload;
       return {...state, internetConnection};
+    }
+    case types.THEME: {
+      const data = action.payload;
+
+      return {
+        ...state,
+        themeColor: data,
+      };
+    }
+    case types.THEME_TOGGLE: {
+      const data = action.payload;
+      console.log();
+      return {
+        ...state,
+        themeToggle: data,
+      };
     }
 
     default: {

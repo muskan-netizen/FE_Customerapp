@@ -17,6 +17,8 @@ import {
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function SearchProductVendorItem({navigation, route}) {
   const [state, setState] = useState({
@@ -25,7 +27,7 @@ export default function SearchProductVendorItem({navigation, route}) {
     searchData: [],
     showRightIcon: false,
   });
-
+  const isDarkMode = useDarkMode();
   const {isLoading, searchInput, searchData, showRightIcon} = state;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
@@ -184,7 +186,14 @@ export default function SearchProductVendorItem({navigation, route}) {
           </Text>
         </View>
         <View style={{flex: 0.1}}>
-          <Image style={{opacity: 0.7}} source={imagePath.sideUpwordArrow} />
+          <Image
+            style={
+              isDarkMode
+                ? {tintColor: MyDarkTheme.colors.text, opacity: 0.7}
+                : {opacity: 0.7}
+            }
+            source={imagePath.sideUpwordArrow}
+          />
         </View>
       </TouchableOpacity>
     );
@@ -192,25 +201,31 @@ export default function SearchProductVendorItem({navigation, route}) {
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          appData?.profile?.code === shortCodes.capcorp
-            ? imagePath.backArrow
-            : imagePath.back
+          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         centerTitle={strings.SEARCH}
         // rightIcon={imagePath.cartShop}
-        headerStyle={{backgroundColor: colors.greysearchHeader}}
+        headerStyle={{
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.greysearchHeader,
+        }}
       />
 
       <View style={{...commonStyles.headerTopLine}} />
       <View
         style={{
           flex: 1,
-          backgroundColor: colors.greySearchBackground,
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.greySearchBackground,
         }}>
         <View
           style={{

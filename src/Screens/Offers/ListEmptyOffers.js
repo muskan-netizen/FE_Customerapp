@@ -10,7 +10,7 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
-  width
+  width,
 } from '../../styles/responsiveSize';
 
 export default function ListEmptyOffers({isLoading = false}) {

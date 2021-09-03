@@ -255,8 +255,8 @@ export default ({fontFamily, themeColors}) => {
       alignSelf: 'flex-end',
       marginVertical:
         Platform.OS === 'ios'
-          ? moderateScaleVertical(15)
-          : moderateScaleVertical(60),
+          ? moderateScaleVertical(2)
+          : moderateScaleVertical(50),
       marginHorizontal: moderateScale(10),
     },
     placeOrderButtonStyle: {
@@ -348,6 +348,10 @@ export default ({fontFamily, themeColors}) => {
       fontSize: textScale(14),
       color: colors.blackC,
       fontFamily: fontFamily.bold,
+    },
+    dateTimePickerText: {
+      width: width - 20,
+      height: height / 3.5,
     },
   });
   return styles;

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View,Keyboard} from 'react-native';
+import {StyleSheet, Text, View, Keyboard} from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {useSelector} from 'react-redux';
@@ -13,6 +13,8 @@ import {
 } from '../styles/responsiveSize';
 import {getAddressComponent} from '../utils/helperFunctions';
 navigator.geolocation = require('react-native-geolocation-service');
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function GooglePlaceInput({
   type,
@@ -37,6 +39,9 @@ export default function GooglePlaceInput({
   onBlur = () => {},
   onFocus = () => {},
   ListHeaderComponent = () => {},
+  placeholderTextColor = useDarkMode()
+    ? colors.textGreyOpcaity7
+    : colors.textGreyOpcaity7,
   getResults = () => {},
 }) {
   const [state, setState] = useState({
@@ -132,6 +137,7 @@ export default function GooglePlaceInput({
       <GooglePlacesAutocomplete
         placeholder={placeholder ? placeholder : 'Search location'}
         textInputProps={{
+          placeholderTextColor: placeholderTextColor,
           autoFocus: autoFocus,
           value: getDefaultValue,
           onChangeText: (text) => {

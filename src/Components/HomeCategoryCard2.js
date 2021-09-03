@@ -1,0 +1,76 @@
+import React from 'react';
+import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
+import FastImage from 'react-native-fast-image';
+import {useSelector} from 'react-redux';
+import colors from '../styles/colors';
+import {moderateScale, textScale, width} from '../styles/responsiveSize';
+import {getImageUrl} from '../utils/helperFunctions';
+import {SvgUri} from 'react-native-svg';
+import Elevations from 'react-native-elevation';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
+
+export default function HomeCategoryCard2({data = {}, onPress = () => {}}) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = useDarkMode();
+  const {appStyle} = useSelector((state) => state?.initBoot);
+  const fontFamily = appStyle?.fontSizeData;
+  const imageURI = getImageUrl(
+    data?.icon?.proxy_url,
+    data?.icon?.image_path,
+    '400/200',
+  );
+
+  const isSVG = imageURI ? imageURI.includes('.svg') : null;
+
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.9}
+      style={{
+        // shadowOpacity: 0.5,
+        width: (width - moderateScale(30)) / 4,
+        marginVertical: moderateScale(10),
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <View>
+        {isSVG ? (
+          <SvgUri
+            height={moderateScale(50)}
+            width={moderateScale(50)}
+            uri={imageURI}
+          />
+        ) : (
+          <View
+            style={{
+              overflow: 'hidden',
+              borderRadius: moderateScale(15),
+            }}>
+            <Image
+              style={{height: moderateScale(50), width: moderateScale(50)}}
+              source={{
+                uri: imageURI,
+              }}
+            />
+          </View>
+        )}
+      </View>
+      <View style={{flex: 0.4}}>
+        <Text
+          numberOfLines={1}
+          style={{
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
+            fontFamily: fontFamily.regular,
+            fontSize: textScale(10),
+            marginTop: moderateScale(10),
+          }}>
+          {data.name}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+const styles = StyleSheet.create({});

@@ -1,10 +1,10 @@
-import { cloneDeep, debounce } from 'lodash';
-import React, { Fragment, useEffect, useState } from 'react';
-import { FlatList, RefreshControl, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import {cloneDeep, debounce} from 'lodash';
+import React, {Fragment, useEffect, useState} from 'react';
+import {FlatList, RefreshControl, View} from 'react-native';
+import {useSelector} from 'react-redux';
 import CustomTopTabBar from '../../../Components/CustomTopTabBar';
 import Header from '../../../Components/Header';
-import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import ProductCard from '../../../Components/ProductCard';
 import ProductCartListView from '../../../Components/ProductCartListView';
 import WrapperContainer from '../../../Components/WrapperContainer';
@@ -18,12 +18,15 @@ import commonStylesFun from '../../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
-  width
+  width,
 } from '../../../styles/responsiveSize';
-import { showError } from '../../../utils/helperFunctions';
+import {showError} from '../../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 
 export default function VendorProducts({route, navigation}) {
+  const isDarkMode = useDarkMode();
   const paramData = route.params;
   console.log(paramData, 'paramData');
 
@@ -228,7 +231,11 @@ export default function VendorProducts({route, navigation}) {
           <CustomTopTabBar
             scrollEnabled={true}
             tabBarItems={category_list}
-            customContainerStyle={{backgroundColor: colors.white}}
+            customContainerStyle={
+              isDarkMode
+                ? {backgroundColor: MyDarkTheme.colors.background}
+                : {backgroundColor: colors.white}
+            }
             onPress={(tabData) => changeTab(tabData)}
             customTextContainerStyle={{width: width / 3}}
             textStyle={{fontFamily: fontFamily.circularMedium}}
@@ -258,7 +265,9 @@ export default function VendorProducts({route, navigation}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
@@ -275,7 +284,11 @@ export default function VendorProducts({route, navigation}) {
         rightIconStyle={{tintColor: colors.black}}
         onPressCenterTitle={() => _reDirectToVendorList()}
         onPressImageAlongwithTitle={() => _reDirectToVendorList()}
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
+        }
       />
       {listHeaderComponent()}
       <View style={{...commonStyles.headerTopLine}} />

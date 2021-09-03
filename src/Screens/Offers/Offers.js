@@ -14,8 +14,11 @@ import colors from '../../styles/colors';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptyOffers from './ListEmptyOffers';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Offer({route, navigation}) {
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     isLoading: true,
     allAvailableCoupons: [],
@@ -24,7 +27,7 @@ export default function Offer({route, navigation}) {
 
   const vendorInfo = route?.params?.data;
   console.log(vendorInfo, '>>>>>>>>>>>>>>>>>>>');
-  const {appData, themeColors, themeLayouts, currencies, languages} =
+  const {appData, appStyle, themeColors, themeLayouts, currencies, languages} =
     useSelector((state) => state.initBoot);
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -192,16 +195,16 @@ export default function Offer({route, navigation}) {
   const {isLoading, allAvailableCoupons, isLoadingB} = state;
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
       isLoadingB={isLoadingB}>
       <Header
         centerTitle={strings.OFFERS}
         leftIcon={
-          appData?.profile?.code === shortCodes.capcorp
-            ? imagePath.backArrow
-            : imagePath.back
+          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
       />
       <View style={{height: 1, backgroundColor: colors.borderLight}} />

@@ -25,7 +25,6 @@ export default function DrawerRoutes(props) {
   const {shortCodeStatus, appStyle, appData} = useSelector(
     (state) => state?.initBoot,
   );
-  const homePageLayout = appStyle?.homePageLayout;
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
 
@@ -38,8 +37,8 @@ export default function DrawerRoutes(props) {
 
   var celebTab = null;
   var brandTab = null;
-  var gestureEnabled = homePageLayout && homePageLayout == 2 ? true : false;
-  var swipeEnabled = homePageLayout && homePageLayout == 2 ? true : false;
+  var gestureEnabled = false;
+  var swipeEnabled = false;
   if (checkForCeleb) {
     celebTab = (
       <Drawer.Screen
@@ -88,9 +87,7 @@ export default function DrawerRoutes(props) {
       drawerStyle={{width: '75%', backgroundColor: colors.blueHeaderColor}}
       drawerContent={(props) => <CustomDrawerContent {...props} />}>
       <Drawer.Screen
-        component={
-          homePageLayout && homePageLayout == 2 ? HomeStack : TabRoutes
-        }
+        component={TabRoutes}
         name={navigationStrings.HOMESTACK}
         options={{
           gestureEnabled: gestureEnabled,

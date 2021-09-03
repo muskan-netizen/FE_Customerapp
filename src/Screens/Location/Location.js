@@ -12,6 +12,8 @@ import colors from '../../styles/colors';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {chekLocationPermission} from '../../utils/permissions';
 import stylesFun from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -21,6 +23,7 @@ export default function Location({route, navigation}) {
   const addressType = route?.params?.addressType;
 
   console.log(addressType, 'addressType');
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     isLoading: true,
     address: '',
@@ -107,15 +110,19 @@ export default function Location({route, navigation}) {
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
-      bgColor={colors.backgroundGrey}>
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }>
       <Header
         leftIcon={
-          appData?.profile?.code === shortCodes.capcorp
-            ? imagePath.backArrow
-            : imagePath.back
+          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         centerTitle={strings.LOCATION}
-        headerStyle={{backgroundColor: colors.backgroundGrey}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.backgroundGrey}
+        }
       />
 
       <View style={{height: 1, backgroundColor: colors.borderLight}} />

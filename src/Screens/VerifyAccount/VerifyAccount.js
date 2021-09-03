@@ -27,8 +27,11 @@ import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import CountryPicker, {Flag} from 'react-native-country-picker-modal';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import validations from '../../utils/validations';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function VerifyAccount({navigation, route}) {
+  const isDarkMode = useDarkMode();
   let paramsData = route?.params;
   const userData = useSelector((state) => state?.auth?.userData);
   const [state, setState] = useState({
@@ -340,14 +343,24 @@ export default function VerifyAccount({navigation, route}) {
   };
 
   return (
-    <WrapperContainer isLoadingB={isLoading} source={loaderOne}>
+    <WrapperContainer
+      isLoadingB={isLoading}
+      source={loaderOne}
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
       <View style={styles.headerContainer}>
         <TouchableOpacity
           onPress={() => navigation.goBack(null)}
           style={{alignSelf: 'flex-start'}}>
           <Image
             source={imagePath.back}
-            style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+            style={
+              isDarkMode
+                ? {
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    tintColor: MyDarkTheme.colors.text,
+                  }
+                : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+            }
           />
         </TouchableOpacity>
         {!!(
@@ -387,8 +400,20 @@ export default function VerifyAccount({navigation, route}) {
                     marginVertical: moderateScaleVertical(20),
                     marginHorizontal: moderateScale(20),
                   }}>
-                  <Text style={styles.header}>{'Verify Email Address'}</Text>
-                  <Text style={styles.txtSmall}>
+                  <Text
+                    style={
+                      isDarkMode
+                        ? [styles.header, {color: MyDarkTheme.colors.text}]
+                        : styles.header
+                    }>
+                    {'Verify Email Address'}
+                  </Text>
+                  <Text
+                    style={
+                      isDarkMode
+                        ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+                        : styles.txtSmall
+                    }>
                     {'Enter the code we just sent you on your email address'}
                   </Text>
                 </View>
@@ -399,14 +424,25 @@ export default function VerifyAccount({navigation, route}) {
                   }}>
                   <View style={styles.inputContainer}>
                     <View
-                      style={[
-                        styles.textInputContainer,
-                        {
-                          backgroundColor: editableEmail
-                            ? colors.white
-                            : '#EBEBEB',
-                        },
-                      ]}>
+                      style={
+                        isDarkMode
+                          ? [
+                              styles.textInputContainer,
+                              {
+                                backgroundColor: editableEmail
+                                  ? colors.white
+                                  : '#EBEBEB',
+                              },
+                            ]
+                          : [
+                              styles.textInputContainer,
+                              {
+                                backgroundColor: editableEmail
+                                  ? colors.white
+                                  : '#EBEBEB',
+                              },
+                            ]
+                      }>
                       <TextInput
                         editable={editableEmail}
                         selectionColor={colors.black}
@@ -461,8 +497,16 @@ export default function VerifyAccount({navigation, route}) {
                         </Text>
                       </View>
                     ) : (
-                      <Text style={styles.didintRecieveCode}>
-                          {"If you didn't receive a code? "}
+                      <Text
+                        style={
+                          isDarkMode
+                            ? [
+                                styles.didintRecieveCode,
+                                {color: MyDarkTheme.colors.text},
+                              ]
+                            : styles.didintRecieveCode
+                        }>
+                        {"If you didn't receive a code? "}
                         <Text
                           onPress={() => resendOtpData('email')}
                           style={styles.resend}>
@@ -517,8 +561,20 @@ export default function VerifyAccount({navigation, route}) {
                     marginTop: moderateScaleVertical(40),
                     marginHorizontal: moderateScale(20),
                   }}>
-                  <Text style={styles.header}>{'Verify Phone number'}</Text>
-                  <Text style={styles.txtSmall}>
+                  <Text
+                    style={
+                      isDarkMode
+                        ? [styles.header, {color: MyDarkTheme.colors.text}]
+                        : styles.header
+                    }>
+                    {'Verify Phone number'}
+                  </Text>
+                  <Text
+                    style={
+                      isDarkMode
+                        ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+                        : styles.txtSmall
+                    }>
                     {'Enter the code we just sent you on your mobile'}
                   </Text>
                 </View>
@@ -599,7 +655,15 @@ export default function VerifyAccount({navigation, route}) {
                         </Text>
                       </Text>
                     ) : (
-                      <Text style={styles.didintRecieveCode}>
+                      <Text
+                        style={
+                          isDarkMode
+                            ? [
+                                styles.didintRecieveCode,
+                                {color: MyDarkTheme.colors.text},
+                              ]
+                            : styles.didintRecieveCode
+                        }>
                         {"If you didn't receive a code? "}
                         <Text
                           onPress={() => resendOtpData('phone')}

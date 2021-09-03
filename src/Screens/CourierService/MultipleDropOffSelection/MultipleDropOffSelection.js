@@ -33,9 +33,12 @@ import {
 import {getAddressComponent, showError} from '../../../utils/helperFunctions';
 import {chekLocationPermission} from '../../../utils/permissions';
 import stylesFun from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 
 export default function MultipleDropOffSelection({navigation, route}) {
   const paramData = route?.params;
+  const isDarkMode = useDarkMode();
   console.log(paramData, 'paramData');
   const {appData, allAddresss, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
@@ -388,28 +391,28 @@ export default function MultipleDropOffSelection({navigation, route}) {
     ) {
       if (showDropOfTwo) {
       } else {
-        return imagePath.plus;
+        return imagePath.ic_add;
       }
     } else if (
       type == 'dropOffLocationTwo' &&
       dropOffLocationTwo != '' &&
       dropOffLocationTwoLatLng
     ) {
-      return imagePath.crossB;
+      return imagePath.ic_cross;
     } else if (
       type == 'dropOffLocationThree' &&
       dropOffLocationThree != '' &&
       dropOffLocationThreeLatLng
     ) {
-      return imagePath.crossB;
+      return imagePath.ic_cross;
     } else if (type == 'dropOffLocation') {
       // return imagePath.plus;
       if (showDropOfTwo) {
       } else {
-        return imagePath.plus;
+        return imagePath.ic_add;
       }
     } else if (type == 'dropOffLocationTwo') {
-      return imagePath.crossB;
+      return imagePath.ic_cross;
     }
     // else if (type == 'dropOffLocationThree') {
     //   return imagePath.crossB;
@@ -428,7 +431,15 @@ export default function MultipleDropOffSelection({navigation, route}) {
             justifyContent: 'center',
           }}>
           <Image
-            style={{height: 25, width: 25}}
+            style={
+              isDarkMode
+                ? {
+                    height: 25,
+                    width: 25,
+                    tintColor: MyDarkTheme.colors.text,
+                  }
+                : {height: 25, width: 25, tintColor: colors.blackB}
+            }
             source={getImageAndFunctionality(type)}
           />
         </TouchableOpacity>
@@ -521,7 +532,9 @@ export default function MultipleDropOffSelection({navigation, route}) {
     );
   };
   return (
-    <WrapperContainer bgColor={colors.white} statusBarColor={colors.white}>
+    <WrapperContainer
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
+      statusBarColor={colors.white}>
       {/* <Header
         leftIcon={imagePath.backArrowCourier}
         // centerTitle={strings.WHERETOPICKUP}
@@ -537,7 +550,9 @@ export default function MultipleDropOffSelection({navigation, route}) {
         centerTitle={strings.WHERETOPICKUP}
         // rightIcon={imagePath.cartShop}
         headerStyle={{
-          backgroundColor: colors.white,
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.white,
           marginVertical: moderateScaleVertical(10),
         }}
       />
@@ -761,14 +776,37 @@ export default function MultipleDropOffSelection({navigation, route}) {
           <View
             style={
               Platform.OS === 'ios'
-                ? styles.shadowStyle
-                : styles.shadowStyleAndroid
+                ? [
+                    styles.shadowStyle,
+                    {
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : colors.white,
+                    },
+                  ]
+                : [
+                    styles.shadowStyleAndroid,
+                    {
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : colors.white,
+                    },
+                  ]
             }
           />
           {!!(allSavedAddress && allSavedAddress.length) ? (
             <>
               <View style={styles.savedAddressView}>
-                <Text numberOfLines={1} style={styles.addresssLableName}>
+                <Text
+                  numberOfLines={1}
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.addresssLableName,
+                          {color: MyDarkTheme.colors.text},
+                        ]
+                      : styles.addresssLableName
+                  }>
                   {strings.SAVED_ADDRESS}
                 </Text>
               </View>
@@ -777,7 +815,16 @@ export default function MultipleDropOffSelection({navigation, route}) {
             </>
           ) : (
             <View style={styles.savedAddressView}>
-              <Text numberOfLines={1} style={styles.addresssLableName}>
+              <Text
+                numberOfLines={1}
+                style={
+                  isDarkMode
+                    ? [
+                        styles.addresssLableName,
+                        {color: MyDarkTheme.colors.text},
+                      ]
+                    : styles.addresssLableName
+                }>
                 {/* {strings.SAVED_ADDRESS} */}
               </Text>
             </View>

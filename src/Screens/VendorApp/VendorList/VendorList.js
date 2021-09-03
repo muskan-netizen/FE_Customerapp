@@ -16,10 +16,13 @@ import {
   textScale,
 } from '../../../styles/responsiveSize';
 import {getImageUrl} from '../../../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 
 // import OrderCardComponent from './OrderCardComponent';
 
 export default function VendorList({navigation, route}) {
+  const isDarkMode = useDarkMode();
   console.log(route.params, 'VendorList params');
   const {allVendors, selectedVendor, screenType} = route.params;
   const [state, setState] = useState({
@@ -54,14 +57,20 @@ export default function VendorList({navigation, route}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
         leftIcon={imagePath.back}
         centerTitle={'Available Stores'}
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
+        }
       />
       <View style={{...commonStyles.headerTopLine}} />
 
@@ -79,7 +88,14 @@ export default function VendorList({navigation, route}) {
                 <TouchableOpacity
                   onPress={() => setStoreAndRedirect(i)}
                   key={inx}
-                  style={styles.listViewStyle}>
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.listViewStyle,
+                          {backgroundColor: MyDarkTheme.colors.lightDark},
+                        ]
+                      : styles.listViewStyle
+                  }>
                   <View
                     style={{
                       flex: 0.8,
@@ -94,7 +110,17 @@ export default function VendorList({navigation, route}) {
                         borderRadius: moderateScale(48 / 2),
                       }}
                     />
-                    <Text style={styles.vendorTitleStyle}>{i.name}</Text>
+                    <Text
+                      style={
+                        isDarkMode
+                          ? [
+                              styles.vendorTitleStyle,
+                              {color: MyDarkTheme.colors.text},
+                            ]
+                          : styles.vendorTitleStyle
+                      }>
+                      {i.name}
+                    </Text>
                   </View>
 
                   <View
@@ -104,7 +130,10 @@ export default function VendorList({navigation, route}) {
                       alignItems: 'flex-end',
                     }}>
                     {!!(i?.id == selectedVendorInStore?.id) && (
-                      <Image source={imagePath.done} />
+                      <Image
+                        style={{tintColor: themeColors.primary_color}}
+                        source={imagePath.done}
+                      />
                     )}
                   </View>
                 </TouchableOpacity>

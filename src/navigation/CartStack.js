@@ -16,13 +16,13 @@ import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
-  const {appData} = useSelector((state) => state?.initBoot);
+  const {appData, appStyle} = useSelector((state) => state?.initBoot);
 
   return (
     <Stack.Navigator>
       <Stack.Screen
         name={navigationStrings.CART}
-        component={appData?.profile?.code === shortCodes.capcorp ? Cart2 : Cart}
+        component={appStyle?.homePageLayout === 2 ? Cart2 : Cart}
         options={{headerShown: false}}
       />
 

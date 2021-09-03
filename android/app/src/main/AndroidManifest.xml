@@ -38,15 +38,14 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter> -->
 
-        <!-- Deeplinking started -->
+        <!-- Deeplinking -->
         <intent-filter>
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
              <data android:scheme="royoorder" android:host=""  android:pathPrefix="" />  
-               <data android:scheme="https" android:host="sales.royoorders.com"  android:pathPrefix=""/>
+               <data android:scheme="https" android:host="sales.alerthire.com"  android:pathPrefix=""/>
        </intent-filter>
-      <!-- Deeplinking ended -->
 
       
       </activity>

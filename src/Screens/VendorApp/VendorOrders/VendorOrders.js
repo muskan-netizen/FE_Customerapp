@@ -17,8 +17,11 @@ import commonStylesFun from '../../../styles/commonStyles';
 import {moderateScaleVertical} from '../../../styles/responsiveSize';
 import {showError} from '../../../utils/helperFunctions';
 // import OrderCardComponent from './OrderCardComponent';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 
 export default function VendorOrders({navigation, route}) {
+  const isDarkMode = useDarkMode();
   const paramData = route.params;
   console.log(paramData, 'paramData');
   const [state, setState] = useState({
@@ -212,7 +215,9 @@ export default function VendorOrders({navigation, route}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading || isLoadingB}>
@@ -223,7 +228,11 @@ export default function VendorOrders({navigation, route}) {
         // rightIcon={imagePath.cartShop}
         onPressCenterTitle={() => _reDirectToVendorList()}
         onPressImageAlongwithTitle={() => _reDirectToVendorList()}
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
+        }
       />
       <View style={{...commonStyles.headerTopLine}} />
 

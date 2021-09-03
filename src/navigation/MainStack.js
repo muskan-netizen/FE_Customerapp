@@ -32,7 +32,7 @@ import navigationStrings from './navigationStrings';
 import TabRoutes from './TabRoutes';
 
 export default function (Stack) {
-  const {appData} = useSelector((state) => state?.initBoot);
+  const {appData, appStyle} = useSelector((state) => state?.initBoot);
 
   return (
     <>
@@ -53,9 +53,7 @@ export default function (Stack) {
       />
       <Stack.Screen
         name={navigationStrings.VENDOR}
-        component={
-          appData?.profile?.code === shortCodes.capcorp ? Vendors2 : Vendors
-        }
+        component={appStyle?.homePageLayout === 2 ? Vendors2 : Vendors}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -65,18 +63,12 @@ export default function (Stack) {
       />
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
-        component={
-          appData?.profile?.code === shortCodes.capcorp
-            ? ProductList2
-            : ProductList
-        }
+        component={appStyle?.homePageLayout === 2 ? ProductList2 : ProductList}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.MY_PROFILE}
-        component={
-          appData?.profile?.code === shortCodes.capcorp ? MyProfile2 : MyProfile
-        }
+        component={appStyle?.homePageLayout === 2 ? MyProfile2 : MyProfile}
         options={{headerShown: false}}
       />
 
@@ -134,9 +126,7 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={
-          appData?.profile?.code === shortCodes.capcorp
-            ? ProductDetail2
-            : ProductDetail
+          appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail
         }
         options={{headerShown: false}}
       />
