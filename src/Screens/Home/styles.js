@@ -207,18 +207,15 @@ export default ({themeColors, fontFamily}) => {
     },
     modalMainViewContainer: {
       backgroundColor: colors.white,
-
       borderRadius: 20,
       maxHeight: height - width / 2,
       minHeight: height / 4,
-      marginHorizontal: moderateScale(20),
-      padding: moderateScale(10),
+      paddingHorizontal: moderateScale(10),
       justifyContent: 'center',
     },
     closeButton: {
       alignItems: 'flex-end',
       justifyContent: 'center',
-      marginVertical: moderateScaleVertical(-10),
       marginHorizontal: moderateScale(20),
       zIndex: 1000,
     },

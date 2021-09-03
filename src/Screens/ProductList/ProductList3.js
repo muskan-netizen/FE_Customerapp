@@ -35,6 +35,7 @@ import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
+  console.log(data, 'Datais ');
   console.log(data, 'data params >>>>>');
   const [state, setState] = useState({
     isVisibleModal: false,

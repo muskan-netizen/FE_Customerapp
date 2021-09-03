@@ -1,4 +1,4 @@
-import React, {createRef, useState} from 'react';
+import React, {createRef, useEffect, useState} from 'react';
 import {I18nManager, Image, Text, TouchableOpacity, View} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {useSelector} from 'react-redux';
@@ -17,22 +17,29 @@ import stylesFunc from '../styles';
 import Modal from 'react-native-modal';
 import {RadioButton} from 'react-native-paper';
 
-export default function DashBoardHeaderFive({navigation = {}, location = []}) {
-  const pickerRef = createRef();
-
-  const [state, setState] = useState({
-    tableData: [
-      {label: 'Delivery', value: 'Delivery'},
-      {label: 'Dine-in', value: '1'},
-      {label: 'Takeaway', value: '1'},
-    ],
-    isModalVisible: false,
-    checked: 'Delivery',
-  });
-  const {tableData, isModalVisible, checked} = state;
+export default function DashBoardHeaderFive({
+  navigation = {},
+  location = [],
+  selcetedToggle,
+  toggleData,
+}) {
+  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const [state, setState] = useState({
+    tableData: [
+      {label: 'Delivery', value: 'delivery'},
+      {label: 'Dine-in', value: 'dine-in'},
+      {label: 'Takeaway', value: 'takeaway'},
+    ],
+    isModalVisible: false,
+    checked: '',
+    tabs: [],
+  });
+
+  const {tableData, isModalVisible, checked, tabs} = state;
+
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
@@ -44,12 +51,54 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
     '800/400',
   );
 
+  console.log(dine_In_Type, 'dine_In_Type');
   // const renderRadioItems = () => {
   //   return tableData.map(
   //     (itm, inx) => console.log(itm, 'djflksdjflkjs'),
   //     // return <RadioButton.Item label={itm.label} value={itm.value} />;
   //   );
   // };
+
+  useEffect(() => {
+    addAllTabs();
+    // getSelectedTab();
+  }, [appData]);
+
+  const addAllTabs = () => {
+    const localTabsArray = [];
+    // userSelectedtab();
+    if (toggleData?.profile?.preferences?.delivery_check == 1) {
+      localTabsArray.push('Delivery');
+      if (
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        selcetedToggle('delivery');
+      }
+    }
+    if (toggleData?.profile?.preferences?.dinein_check == 1) {
+      localTabsArray.push('Dine-In');
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        selcetedToggle('dine_in');
+      }
+    }
+    if (toggleData?.profile?.preferences?.takeaway_check == 1) {
+      localTabsArray.push('Takeaway');
+      if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 0
+      ) {
+        selcetedToggle('takeaway');
+      }
+    }
+    updateState({
+      tabs: localTabsArray,
+      checked: tabs[0],
+    });
+  };
 
   return (
     <View
@@ -169,19 +218,29 @@ export default function DashBoardHeaderFive({navigation = {}, location = []}) {
       <Modal
         transparent={true}
         isVisible={isModalVisible}
-        style={styles.modalContainer}>
-        <TouchableOpacity
-          style={styles.closeButton}
-          onPress={() => updateState({isModalVisible: false})}>
-          <Image source={imagePath.crossB} />
-        </TouchableOpacity>
+        testID={'modal'}
+        // swipeDirection={['up', 'left', 'right', 'down']}
+        style={{justifyContent: 'flex-end', margin: 0}}>
         <View style={styles.modalMainViewContainer}>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => updateState({isModalVisible: false})}>
+            <Image
+              source={imagePath.crossB}
+              style={{
+                tintColor: themeColors.primary_color,
+                height: moderateScale(20),
+                width: moderateScale(20),
+              }}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
           <RadioButton.Group
             onValueChange={(value) => updateState({checked: value})}
             value={checked}>
-            <RadioButton.Item label="Delivery" value="first" />
-            <RadioButton.Item label="Dine-in" value="second" />
-            <RadioButton.Item label="Takeaway" value="third" />
+            {tabs.map((item) => {
+              return <RadioButton.Item label={item} value={item} />;
+            })}
           </RadioButton.Group>
         </View>
       </Modal>
