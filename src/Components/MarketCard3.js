@@ -23,7 +23,7 @@ export default function MarketCard3({
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = useDarkMode();
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, extraStyles});
@@ -87,7 +87,10 @@ export default function MarketCard3({
           marginHorizontal: moderateScale(3),
         }}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Image source={imagePath.location2} />
+          <Image
+            style={{tintColor: themeColors.primary_color}}
+            source={imagePath.location2}
+          />
           <Text
             style={{
               color: colors.greyLight,
