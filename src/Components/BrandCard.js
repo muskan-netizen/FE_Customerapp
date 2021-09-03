@@ -18,7 +18,8 @@ import {MyDarkTheme} from '../styles/theme';
 export default function BrandCard({data = {}, onPress = () => {}}) {
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = useDarkMode();
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
   const scaleInAnimated = new Animated.Value(0);
   const {appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;

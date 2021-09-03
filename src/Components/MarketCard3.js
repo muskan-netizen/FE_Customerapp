@@ -22,7 +22,8 @@ export default function MarketCard3({
   extraStyles = {},
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = useDarkMode();
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
@@ -102,8 +103,24 @@ export default function MarketCard3({
           </Text>
         </View>
 
-        <Text numberOfLines={1} style={{color: colors.greenA}}>
+        {/* <Text numberOfLines={1} style={{color: colors.greenA}}>
           {strings.OPEN}
+        </Text> */}
+        <Text
+          style={{
+            ...commonStyles.mediumFont14Normal,
+            fontSize: textScale(12),
+            color: data?.show_slot
+              ? colors.green
+              : data?.slot && data?.slot.length
+              ? colors.green
+              : colors.redB,
+          }}>
+          {data?.show_slot
+            ? 'Open'
+            : data?.slot && data?.slot.length
+            ? 'Open'
+            : 'Close'}
         </Text>
       </View>
     </TouchableOpacity>

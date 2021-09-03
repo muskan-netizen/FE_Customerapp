@@ -13,7 +13,7 @@ const initial_state = {
     addAddress: '',
     updatedAddress: '',
   },
-  dineInType: '',
+  dineInType: 'delivery',
 };
 
 export default function (state = initial_state, action) {

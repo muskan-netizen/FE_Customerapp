@@ -44,7 +44,8 @@ const Header = ({
 }) => {
   const {appStyle} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = useDarkMode();
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
   const navigation = useNavigation();

@@ -32,7 +32,8 @@ const HeaderWithFilters = ({
   headerStyle,
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = useDarkMode();
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
   const navigation = useNavigation();
   const {appStyle} = useSelector((state) => state?.initBoot);
 

@@ -28,8 +28,8 @@ const initial_state = {
     tabBarLayout: 1,
     homePageLayout: 1,
   },
-  themeColor: null,
-  themeToggle: null,
+  themeColor: false,
+  themeToggle: false,
   //internetConnection: false,
 };
 
