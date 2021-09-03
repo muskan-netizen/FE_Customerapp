@@ -679,9 +679,12 @@ export default function Products({route, navigation}) {
           <ImageBackground
             source={{
               uri: getImageUrl(
-                data?.categoryInfo?.image?.proxy_url || data?.image?.proxy_url,
+                data?.categoryInfo?.image?.proxy_url ||
+                  data?.image?.proxy_url ||
+                  categoryInfo?.banner?.proxy_url,
                 data?.categoryInfo?.image?.image_path ||
-                  data?.image?.image_path,
+                  data?.image?.image_path ||
+                  categoryInfo?.banner?.image_path,
                 '500/500',
               ),
             }}
@@ -711,9 +714,11 @@ export default function Products({route, navigation}) {
                     source={{
                       uri: getImageUrl(
                         data?.categoryInfo?.icon?.proxy_url ||
-                          data?.icon?.proxy_url,
+                          data?.icon?.proxy_url ||
+                          categoryInfo?.logo?.proxy_url,
                         data?.categoryInfo?.icon?.image_path ||
-                          data?.icon?.image_path,
+                          data?.icon?.image_path ||
+                          categoryInfo?.logo?.image_path,
                         '200/200',
                       ),
                     }}
