@@ -2,7 +2,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {debounce} from 'lodash';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
-import {FlatList, RefreshControl, Text, View} from 'react-native';
+import {FlatList, RefreshControl, Text, View, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import HTMLView from 'react-native-htmlview';
 import {useSelector} from 'react-redux';
@@ -21,6 +21,8 @@ import {
 import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import stylesFun from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Wallet({navigation}) {
   const [state, setState] = useState({
@@ -30,6 +32,7 @@ export default function Wallet({navigation}) {
     walletHistory: [],
     isRefreshing: false,
   });
+  const isDarkMode = useDarkMode();
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {appData, themeColors} = useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state.auth.userData);
@@ -88,27 +91,48 @@ export default function Wallet({navigation}) {
       <TouchableOpacity>
         <View
           style={{
-            backgroundColor: '#fff',
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : '#fff',
             flexDirection: 'row',
             paddingVertical: moderateScaleVertical(10),
           }}>
           <View style={styles.addedMoneyTimeCon}>
-            <Text style={styles.addedMoneyMonth}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.addedMoneyMonth, {color: MyDarkTheme.colors.text}]
+                  : styles.addedMoneyMonth
+              }>
               {moment(item.created_at).format('ll')}
             </Text>
-            <Text style={styles.addedMoneyTime}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.addedMoneyMonth, {color: MyDarkTheme.colors.text}]
+                  : styles.addedMoneyTime
+              }>
               {moment(item.created_at).format('LT')}
             </Text>
           </View>
           <View
             style={[styles.addMoneyListDesc, {backgroundColor: 'transparent'}]}>
-            <HTMLView value={item?.meta} />
+            <HTMLView
+              stylesheet={isDarkMode ? htmlStyle : null}
+              value={`<p>${item?.meta}</p>`}
+            />
             {/* <Text numberOfLines={2} style={styles.addedText}>
               {item.description}
             </Text> */}
           </View>
           <View style={styles.addedMoneyValueCon}>
-            <Text numberOfLines={1} style={styles.addedMoneyValue}>
+            <Text
+              numberOfLines={1}
+              style={
+                isDarkMode
+                  ? [styles.addedMoneyValue, {color: MyDarkTheme.colors.text}]
+                  : styles.addedMoneyValue
+              }>
               {item.type == 'deposit' ? '+$' : '-$'}{' '}
               {currencyNumberFormatter(item.amount)}
             </Text>
@@ -137,14 +161,20 @@ export default function Wallet({navigation}) {
   });
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.white}>
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         centerTitle={strings.WALLET}
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
+        }
       />
 
       {/* <Header
@@ -154,16 +184,40 @@ export default function Wallet({navigation}) {
         headerStyle={{backgroundColor: Colors.white}}
       /> */}
       <View style={{...commonStyles.headerTopLine}} />
-      <View style={styles.availableBalanceCon}>
+      <View
+        style={
+          isDarkMode
+            ? [
+                styles.availableBalanceCon,
+                {backgroundColor: MyDarkTheme.colors.background},
+              ]
+            : styles.availableBalanceCon
+        }>
         <View style={styles.balanceCon}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.availableBalanceText}>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.availableBalanceText,
+                      {color: MyDarkTheme.colors.text},
+                    ]
+                  : styles.availableBalanceText
+              }>
               {strings.AVAILABLE_BALANCE}
             </Text>
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.availableBalanceValue}>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.availableBalanceValue,
+                      {color: MyDarkTheme.colors.text},
+                    ]
+                  : styles.availableBalanceValue
+              }>
               {'$'} {currencyNumberFormatter(wallet_amount)}
             </Text>
           </View>
@@ -174,15 +228,31 @@ export default function Wallet({navigation}) {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.transactionHistoryCon}>
-        <Text style={styles.transactionHistoryText}>
+      <View
+        style={
+          isDarkMode
+            ? [
+                styles.transactionHistoryCon,
+                {backgroundColor: MyDarkTheme.colors.background},
+              ]
+            : styles.transactionHistoryCon
+        }>
+        <Text
+          style={
+            isDarkMode
+              ? [
+                  styles.transactionHistoryText,
+                  {color: MyDarkTheme.colors.text},
+                ]
+              : styles.transactionHistoryText
+          }>
           {strings.TRANSACTION_HISTORY}
         </Text>
       </View>
       <View style={{...commonStyles.headerTopLine}} />
       <View
         style={{
-          backgroundColor: '#fff',
+          backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
           flex: 1,
           paddingBottom: moderateScaleVertical(80),
         }}>
@@ -215,3 +285,9 @@ export default function Wallet({navigation}) {
     </WrapperContainer>
   );
 }
+const htmlStyle = StyleSheet.create({
+  p: {
+    fontWeight: '300',
+    color: '#e5e5e7', // make links coloured pink
+  },
+});

@@ -27,8 +27,11 @@ import {
   getColorCodeWithOpactiyNumber,
   showError,
 } from '../../../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 
 export default function VendorRevenue({navigation, route}) {
+  const isDarkMode = useDarkMode();
   const paramData = route.params;
   // console.log(paramData, 'paramData');
 
@@ -348,7 +351,9 @@ export default function VendorRevenue({navigation, route}) {
   };
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
@@ -359,7 +364,11 @@ export default function VendorRevenue({navigation, route}) {
         // rightIcon={imagePath.cartShop}
         onPressCenterTitle={() => _reDirectToVendorList()}
         onPressImageAlongwithTitle={() => _reDirectToVendorList()}
-        headerStyle={{backgroundColor: colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
+        }
       />
       <View style={{...commonStyles.headerTopLine}} />
 
@@ -442,6 +451,7 @@ export default function VendorRevenue({navigation, route}) {
         <CombinedChart
           data={mapData}
           xAxis={xAxis}
+          yAxis={yAxis}
           // onSelect={this.handleSelect.bind(this)}
           // onChange={(event) => console.log(event.nativeEvent)}
           // marker={this.state.marker}
@@ -453,7 +463,9 @@ export default function VendorRevenue({navigation, route}) {
             marginTop: moderateScaleVertical(40),
             justifyContent: 'center',
             alignItems: 'stretch',
-            backgroundColor: 'transparent',
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.text
+              : 'transparent',
           }}
         />
       ) : (

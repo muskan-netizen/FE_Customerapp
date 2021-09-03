@@ -13,6 +13,13 @@ export default ({fontFamily}) => {
       fontSize: textScale(14),
       marginTop: moderateScaleVertical(14),
     },
+    darkAppearanceTextStyle: {
+      lineHeight: 24,
+      color: colors.blackB,
+      // textAlign: 'center',
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(14),
+    },
   });
   return styles;
 };

@@ -17,6 +17,8 @@ import {
   StatusBarHeight,
   textScale,
 } from '../styles/responsiveSize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 const HeaderWithFilters = ({
   leftIcon = imagePath.back,
@@ -29,6 +31,9 @@ const HeaderWithFilters = ({
   onPressRight,
   headerStyle,
 }) => {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
   const navigation = useNavigation();
   const {appStyle} = useSelector((state) => state?.initBoot);
 
@@ -59,19 +64,36 @@ const HeaderWithFilters = ({
               <Image
                 resizeMode="contain"
                 source={leftIcon}
-                style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+                style={
+                  isDarkMode
+                    ? {
+                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                        tintColor: MyDarkTheme.colors.text,
+                      }
+                    : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+                }
               />
             </TouchableOpacity>
           )}
         </View>
         <View style={{flex: 0.8}}>
           <Text
-            style={{
-              ...styles.textStyle,
-              ...textStyle,
-              marginLeft: moderateScale(12),
-              width: moderateScale(150),
-            }}>
+            style={
+              isDarkMode
+                ? {
+                    ...styles.textStyle,
+                    ...textStyle,
+                    marginLeft: moderateScale(12),
+                    width: moderateScale(150),
+                    color: MyDarkTheme.colors.text,
+                  }
+                : {
+                    ...styles.textStyle,
+                    ...textStyle,
+                    marginLeft: moderateScale(12),
+                    width: moderateScale(150),
+                  }
+            }>
             {centerTitle}
           </Text>
         </View>

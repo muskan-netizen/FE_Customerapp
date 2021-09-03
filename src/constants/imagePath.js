@@ -203,7 +203,7 @@ export default {
   ic_fb2: require('../assets/images/ic_fb2.png'),
   ic_apple2: require('../assets/images/ic_apple2.png'),
   ic_twitter2: require('../assets/images/ic_twitter2.png'),
-
+  ic_apple: require('../assets/images/ic_apple.png'),
   accountActive: require('../assets/images/ic_account2.png'),
   accountInActive: require('../assets/images/ic_account1.png'),
   brandsActive: require('../assets/images/ic_brands2.png'),
@@ -235,5 +235,10 @@ export default {
   startwo: require('../assets/images/ic_star_2.png'),
   backRound2: require('../assets/images/ic_back_round_2.png'),
   searchRound2: require('../assets/images/ic_search_2.png'),
+
+  ic_add: require('../assets/images/ic_add_new_location.png'),
+  ic_cross: require('../assets/images/ic_backwd_dark.png'),
+  dark: require('../assets/images/DARK.jpg'),
+  light: require('../assets/images/LIGHT.jpg'),
   dropDownNew: require('../assets/images/ic_drpdwn.png'),
 };

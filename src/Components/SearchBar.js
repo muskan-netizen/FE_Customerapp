@@ -10,6 +10,8 @@ import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function SearchBar({
   containerStyle = {},
@@ -19,6 +21,8 @@ export default function SearchBar({
   rightIconPress = () => {},
   searchValue = '',
 }) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = useDarkMode();
   const {appStyle} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
@@ -41,7 +45,6 @@ export default function SearchBar({
             paddingBottom: 0,
             fontFamily: fontFamily.medium,
             color: colors.textGrey,
-            color: colors.blackLight,
             textAlign: I18nManager.isRTL ? 'right' : 'left',
           }}
           value={searchValue}
@@ -49,6 +52,9 @@ export default function SearchBar({
           placeholder={placeholder}
           onChangeText={onChangeText}
           //onChange={onChangeText}
+          placeholderTextColor={
+            isDarkMode ? colors.textGreyB : colors.textGreyB
+          }
         />
       </View>
       {showRightIcon && (

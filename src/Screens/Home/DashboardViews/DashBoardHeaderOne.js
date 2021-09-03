@@ -26,12 +26,15 @@ import {getImageUrl} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 import navigationStrings from '../../../navigation/navigationStrings';
 import {SvgUri} from 'react-native-svg';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 
 export default function DashBoardHeaderOne({navigation = {}, location = []}) {
   const [state, setState] = useState({});
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const isDarkMode = useDarkMode();
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
@@ -110,7 +113,15 @@ export default function DashBoardHeaderOne({navigation = {}, location = []}) {
               style={{flexDirection: 'row', alignItems: 'center'}}>
               <View style={{paddingLeft: 10}}>
                 <Image
-                  style={{height: 15, width: 15}}
+                  style={
+                    isDarkMode
+                      ? {
+                          height: 15,
+                          width: 15,
+                          tintColor: MyDarkTheme.colors.text,
+                        }
+                      : {height: 15, width: 15}
+                  }
                   source={imagePath.locationSmall}
                 />
               </View>
@@ -131,7 +142,10 @@ export default function DashBoardHeaderOne({navigation = {}, location = []}) {
           onPress={() =>
             navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
           }>
-          <Image source={imagePath.search} />
+          <Image
+            style={isDarkMode ? {tintColor: MyDarkTheme.colors.text} : null}
+            source={imagePath.search}
+          />
         </TouchableOpacity>
       </View>
     </View>

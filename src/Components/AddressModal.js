@@ -30,6 +30,8 @@ import validations from '../utils/validations';
 import BorderTextInput from './BorderTextInput';
 import GooglePlaceInput from './GooglePlaceInput';
 import GradientButton from './GradientButton';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 // navigator.geolocation = require('@react-native-community/geolocation');
 navigator.geolocation = require('react-native-geolocation-service');
@@ -45,6 +47,9 @@ export default function AddressModal({
   indicator,
   navigation,
 }) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
   const appData = useSelector((state) => state?.initBoot?.appData);
   const currentTheme = useSelector((state) => state.initBoot);
   const {themeColors, themeLayouts, appStyle} = currentTheme;
@@ -316,7 +321,10 @@ export default function AddressModal({
   //Get Dyamic textinput style
   const getTextInputStyle = (input, type) => {
     return input != '' && input != undefined
-      ? styles.textInput
+      ? [
+          styles.textInput,
+          {color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey},
+        ]
       : {fontSize: textScale(12)};
   };
 
@@ -330,7 +338,10 @@ export default function AddressModal({
         updateState({viewHeight: event.nativeEvent.layout.height});
       }}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-        <Image source={imagePath.crossB} />
+        <Image
+          style={isDarkMode ? {tintColor: colors.white} : {tintColor: null}}
+          source={imagePath.crossB}
+        />
       </TouchableOpacity>
       {/* <ScrollView
         showsVerticalScrollIndicator={false}
@@ -342,12 +353,28 @@ export default function AddressModal({
 
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps="always"
-        style={[
-          styles.modalMainViewContainer,
-          {paddingHorizontal: moderateScale(24)},
-        ]}>
+        style={
+          isDarkMode
+            ? [
+                styles.modalMainViewContainer,
+                {
+                  paddingHorizontal: moderateScale(24),
+                  backgroundColor: MyDarkTheme.colors.lightDark,
+                },
+              ]
+            : [
+                styles.modalMainViewContainer,
+                {paddingHorizontal: moderateScale(24)},
+              ]
+        }>
         <View style={styles.addAddessView}>
-          <Text numberOfLines={1} style={styles.addNewAddeessText}>
+          <Text
+            numberOfLines={1}
+            style={
+              isDarkMode
+                ? [styles.addNewAddeessText, {color: MyDarkTheme.colors.text}]
+                : styles.addNewAddeessText
+            }>
             {strings.ADD_NEW_ADDRESS}
           </Text>
         </View>
@@ -454,19 +481,25 @@ export default function AddressModal({
                 height: moderateScaleVertical(49),
                 borderWidth: 1,
                 borderRadius: 13,
-                borderColor: colors.borderLight,
+                borderColor: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.borderLight,
                 marginBottom: 20,
                 justifyContent: 'center',
                 paddingHorizontal: 8,
               }}>
               <TextInput
                 selectionColor={colors.black}
-                placeholderTextColor={colors.textGreyOpcaity7}
+                placeholderTextColor={
+                  isDarkMode
+                    ? [styles.textGreyOpcaity7, {color: '#ffff'}]
+                    : colors.textGreyOpcaity7
+                }
                 onChangeText={_onChangeText('country')}
                 placeholder={strings.COUNTRY}
                 // textInputStyle={getTextInputStyle(country)}
                 value={country}
-                style={[styles.textInput3, {opacity: 0.7}]}
+                style={[styles.textInput3, {opacity: 0.7, color: '#fff'}]}
               />
             </View>
             <BorderTextInput

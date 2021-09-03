@@ -26,7 +26,12 @@ import {
   showError,
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
+
 export default function AllPaymentMethods({navigation, route}) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = useDarkMode();
   const {appData, appStyle, themeColors, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
@@ -201,7 +206,14 @@ export default function AllPaymentMethods({navigation, route}) {
             }
           />
           {/* {strings.CASE_ON_DELIVERY} */}
-          <Text style={styles.caseOnDeliveryText}>{item.title}</Text>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.caseOnDeliveryText, {color: MyDarkTheme.colors.text}]
+                : styles.caseOnDeliveryText
+            }>
+            {item.title}
+          </Text>
         </TouchableOpacity>
         {!!(
           selectedPaymentMethod &&
@@ -258,7 +270,9 @@ export default function AllPaymentMethods({navigation, route}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
       isLoadingB={isLoading}>
@@ -267,7 +281,11 @@ export default function AllPaymentMethods({navigation, route}) {
           appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         centerTitle={strings.PAYMENT}
-        headerStyle={{backgroundColor: colors.backgroundGrey}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.backgroundGrey}
+        }
       />
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
       <KeyboardAwareScrollView

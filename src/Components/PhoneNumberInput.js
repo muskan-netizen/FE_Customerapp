@@ -1,3 +1,4 @@
+import {callingCodes} from 'country-data';
 import React, {useState} from 'react';
 import {
   I18nManager,
@@ -20,6 +21,7 @@ export default function PhoneNumberInput({
   phoneNumber,
   placeholder,
   containerStyle,
+  color,
 }) {
   const [state, setState] = useState({
     countryPickerModalVisible: false,
@@ -46,7 +48,7 @@ export default function PhoneNumberInput({
         flexDirection: 'row',
         borderWidth: 1,
         borderRadius: 13,
-        borderColor: colors.borderLight,
+        borderColor: color ? color : colors.borderLight,
         height: moderateScale(49),
         ...containerStyle,
       }}>
@@ -59,6 +61,7 @@ export default function PhoneNumberInput({
         }}
         onPress={_openCountryPicker}>
         <Flag countryCode={cca2} />
+
         <Image source={imagePath.dropdownTriangle} />
       </TouchableOpacity>
       <TextInput
@@ -66,14 +69,14 @@ export default function PhoneNumberInput({
         placeholder={placeholder}
         keyboardType="numeric"
         value={phoneNumber}
-        placeholderTextColor={colors.textGreyOpcaity7}
+        placeholderTextColor={color ? color : colors.textGreyOpcaity7}
         onChangeText={onChangePhone}
         style={{
           // flex: 1,
           width: width / 1.57,
           borderLeftWidth: 1,
           fontFamily: fontFamily.medium,
-          color: colors.textGrey,
+          color: color ? color : colors.textGrey,
           fontSize: textScale(14),
           borderLeftColor: colors.borderLight,
           opacity: 0.7,
@@ -86,6 +89,7 @@ export default function PhoneNumberInput({
       />
       {countryPickerModalVisible && (
         <CountryPicker
+          withCallingCode={callingCodes}
           cca2={cca2}
           visible={countryPickerModalVisible}
           withFlagButton={false}

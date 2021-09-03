@@ -26,18 +26,24 @@ import {RadioButton} from 'react-native-paper';
 import actions from '../../../redux/actions';
 import deviceInfoModule from 'react-native-device-info';
 
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
+
 export default function DashBoardHeaderFive({
   navigation = {},
   location = [],
   selcetedToggle,
   toggleData,
 }) {
+  const pickerRef = createRef();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
-
   const [state, setState] = useState({
     isModalVisible: false,
     checked: '',
@@ -329,7 +335,7 @@ export default function DashBoardHeaderFive({
                 // height:20,
                 lineHeight: 20,
                 fontFamily: fontFamily.regular,
-                color: colors.black,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 fontSize: textScale(10),
               }}>
               {location?.address}
