@@ -231,11 +231,6 @@ export default function OuterScreen({navigation}) {
         </Text>
         <View style={{marginHorizontal: moderateScale(24)}}>
           <View style={{marginHorizontal: moderateScaleVertical(30)}}>
-            <Text numberOfLines={2} style={styles.txtSmall}>
-              {appData?.profile?.preferences?.home_tag_line
-                ? appData?.profile?.preferences?.home_tag_line
-                : ''}
-            </Text>
             <Text
               numberOfLines={2}
               style={
@@ -243,7 +238,9 @@ export default function OuterScreen({navigation}) {
                   ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
                   : styles.txtSmall
               }>
-              {strings.JOIN_US}
+              {appData?.profile?.preferences?.home_tag_line
+                ? appData?.profile?.preferences?.home_tag_line
+                : ''}
             </Text>
           </View>
           <GradientButton

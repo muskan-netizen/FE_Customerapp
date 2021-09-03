@@ -74,6 +74,7 @@ const shortCodes = {
   autotek: '2fbe83',
   wegotit: 'f755bb',
   survuhs: 'ac8cda',
+  igolux: 'd190a2',
 };
 
 const appIds = {
@@ -368,6 +369,10 @@ const appIds = {
   survuhs: Platform.select({
     ios: 'com.survuhs',
     android: 'com.survuhs',
+  }),
+  igolux: Platform.select({
+    ios: 'com.igolux',
+    android: 'com.igolux',
   }),
 };
 

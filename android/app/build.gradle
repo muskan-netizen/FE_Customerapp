@@ -874,6 +874,15 @@ android {
             applicationId 'com.survuhs'
             resValue "string", "app_name", "Sur-vuhs"
          }
+         igolux{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.igolux'
+            resValue "string", "app_name", "iGoLux"
+         }
     }
 }
 
