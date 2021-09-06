@@ -532,6 +532,13 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+          break;
+        case appIds.toda:
+          updateState({
+            shortCode: shortCodes.toda,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

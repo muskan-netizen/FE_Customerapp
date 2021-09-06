@@ -883,6 +883,15 @@ android {
             applicationId 'com.igolux'
             resValue "string", "app_name", "iGoLux"
          }
+         toda{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.toda'
+            resValue "string", "app_name", "Toda"
+         }
     }
 }
 
