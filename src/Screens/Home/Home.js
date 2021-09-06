@@ -558,9 +558,7 @@ export default function Home({route, navigation}) {
               isRefreshing={isRefreshing}
               appMainData={appMainData}
               onPressCategory={(item) => {
-                shortCodes.capcorp === appIds.capcorp
-                  ? onPressCategory2(item)
-                  : onPressCategory(item);
+                onPressCategory2(item);
               }}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
@@ -583,9 +581,7 @@ export default function Home({route, navigation}) {
               isRefreshing={isRefreshing}
               appMainData={appMainData}
               onPressCategory={(item) => {
-                shortCodes.capcorp === appIds.capcorp
-                  ? onPressCategory2(item)
-                  : onPressCategory2(item);
+                onPressCategory2(item);
               }}
               isDineInSelected={isDineInSelected}
               selcetedToggle={selcetedToggle}

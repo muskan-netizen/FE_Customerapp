@@ -167,9 +167,10 @@ export default function DashBoardHeaderFive({
   //   userSelectedtab();
   // }, [checked]);
 
-  const userSelectedtab = () => {
-    console.log(dine_In_Type, 'dine_In_Type');
+  console.log(dine_In_Type, 'dine_In_Type');
+  console.log(toggleData?.profile?.preferences, 'preferences');
 
+  const userSelectedtab = () => {
     if (dine_In_Type === 'delivery') {
       if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
@@ -189,10 +190,21 @@ export default function DashBoardHeaderFive({
         updateState({
           checked: 'Takeaway',
         });
-      } else selcetedToggle('delivery');
-      updateState({
-        checked: 'Delivery',
-      });
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        selcetedToggle('dine_in');
+        updateState({
+          checked: 'Dine-In',
+        });
+      } else {
+        selcetedToggle('delivery');
+        updateState({
+          checked: 'Delivery',
+        });
+      }
     } else if (dine_In_Type === 'dine_in') {
       if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
@@ -212,19 +224,30 @@ export default function DashBoardHeaderFive({
         updateState({
           checked: 'Takeaway',
         });
-      } else selcetedToggle('delivery');
-      updateState({
-        checked: 'Delivery',
-      });
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        selcetedToggle('dine_in');
+        updateState({
+          checked: 'Dine-In',
+        });
+      } else {
+        selcetedToggle('dine_in');
+        updateState({
+          checked: 'Dine-In',
+        });
+      }
     } else {
       if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        selcetedToggle('dine_in');
+        selcetedToggle('takeaway');
         updateState({
-          checked: 'Dine-In',
+          checked: 'Takeaway',
         });
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
@@ -235,15 +258,35 @@ export default function DashBoardHeaderFive({
         updateState({
           checked: 'Takeaway',
         });
-      } else selcetedToggle('delivery');
-
-      updateState({
-        checked: 'Delivery',
-      });
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        selcetedToggle('takeaway');
+        updateState({
+          checked: 'Takeaway',
+        });
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 0 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        selcetedToggle('dine_in');
+        updateState({
+          checked: 'Dine-In',
+        });
+      } else {
+        selcetedToggle('delivery');
+        updateState({
+          checked: 'Delivery',
+        });
+      }
     }
   };
 
   const _onChangeRadioToggle = (value) => {
+    console.log(value.toLowerCase().replace('-', '_'), 'onchange type');
     selcetedToggle(value.toLowerCase().replace('-', '_'));
     updateState({
       checked: value,
