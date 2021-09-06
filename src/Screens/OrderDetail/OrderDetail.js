@@ -1039,7 +1039,9 @@ export default function OrderDetail({navigation, route}) {
         leftIcon={
           appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
-        centerTitle={`Order #${cartData?.order_number?cartData?.order_number:''}`}
+        centerTitle={`Order #${
+          cartData?.order_number ? cartData?.order_number : ''
+        }`}
       />
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
       <View
