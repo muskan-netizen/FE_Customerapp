@@ -74,7 +74,9 @@ export default function BorderTextInput({
       <TextInput
         selectionColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
         placeholder={placeholder}
-        placeholderTextColor={isDarkMode ? MyDarkTheme.colors.text : color}
+        placeholderTextColor={
+          isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB
+        }
         style={{
           flex: 1,
           opacity: 0.7,

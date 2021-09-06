@@ -215,7 +215,15 @@ export default function DashBoardFive({
           />
         ) : appMainData?.vendors && appMainData?.vendors?.length ? (
           <View>
-            <Text style={styles.exploreStoresTxt}>
+            <Text
+              style={[
+                styles.exploreStoresTxt,
+                {
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyB,
+                },
+              ]}>
               {strings.EXPLORE_STORES}
             </Text>
             <FlatList

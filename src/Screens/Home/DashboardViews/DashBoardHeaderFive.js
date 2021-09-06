@@ -27,6 +27,7 @@ import actions from '../../../redux/actions';
 import deviceInfoModule from 'react-native-device-info';
 
 import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
+import {MyDarkTheme} from '../../../styles/theme';
 
 export default function DashBoardHeaderFive({
   navigation = {},
@@ -293,7 +294,16 @@ export default function DashBoardHeaderFive({
                 resizeMode="contain"
               />
 
-              <Text numberOfLines={1} style={styles.locationTxt}>
+              <Text
+                numberOfLines={1}
+                style={[
+                  styles.locationTxt,
+                  {
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGrey,
+                  },
+                ]}>
                 {location?.address}
               </Text>
             </TouchableOpacity>
