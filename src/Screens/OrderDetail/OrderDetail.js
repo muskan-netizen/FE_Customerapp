@@ -838,7 +838,6 @@ export default function OrderDetail({navigation, route}) {
               color={themeColors.primary_color}
             /> */}
 
-           
             <LottieView
               source={loaderFive}
               autoPlay
@@ -1040,7 +1039,7 @@ export default function OrderDetail({navigation, route}) {
         leftIcon={
           appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
-        centerTitle={strings.ORDER_DET}
+        centerTitle={`Order #${cartData?.order_number?cartData?.order_number:''}`}
       />
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
       <View
