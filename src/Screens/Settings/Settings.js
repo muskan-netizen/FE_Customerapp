@@ -218,54 +218,52 @@ export default function Settings({route, navigation}) {
       <View style={{...commonStyles.headerTopLine}} />
       {/* <KeyboardAwareScrollView bounces={false}> */}
 
-      {isOn ? (
-        <View
-          style={{
-            flexDirection: 'row',
-            marginHorizontal: moderateScale(20),
-            marginTop: moderateScaleVertical(20),
-
-            justifyContent: 'space-around',
-            paddingVertical: moderateScaleVertical(10),
-            paddingHorizontal: moderateScale(20),
-            height: moderateScaleVertical(height - height + 60),
-            marginVertical: moderateScaleVertical(20),
-          }}>
-          {selectedThemeOptions.map((i, inx) => {
-            return (
-              <TouchableOpacity onPress={() => _setApperance(i)}>
-                <Image source={i.image} />
-                <Text
-                  style={{
-                    marginHorizontal: moderateScale(12),
-                    marginVertical: moderateScaleVertical(5),
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}>
-                  {i.themeType}
-                </Text>
-                <View
-                  style={{
-                    marginHorizontal: moderateScale(15),
-                    marginVertical: moderateScaleVertical(5),
-                  }}>
-                  {selectedThemeOption && selectedThemeOption?.id == i.id ? (
-                    <Image source={i.selectedImage} />
-                  ) : (
-                    <Image source={imagePath.inactive_checkbox} />
-                  )}
-                </View>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-      ) : null}
       <View
         style={{
           flexDirection: 'row',
           marginHorizontal: moderateScale(20),
-          marginTop: toggleTheme
-            ? moderateScaleVertical(95)
-            : moderateScaleVertical(20),
+          marginTop: moderateScaleVertical(20),
+
+          justifyContent: 'space-around',
+          paddingVertical: moderateScaleVertical(10),
+          paddingHorizontal: moderateScale(20),
+          height: moderateScaleVertical(height - height + 60),
+          marginVertical: moderateScaleVertical(20),
+        }}>
+        {selectedThemeOptions.map((i, inx) => {
+          return (
+            <TouchableOpacity onPress={() => _setApperance(i)}>
+              <Image source={i.image} />
+              <Text
+                style={{
+                  marginHorizontal: moderateScale(12),
+                  marginVertical: moderateScaleVertical(5),
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
+                {i.themeType}
+              </Text>
+              <View
+                style={{
+                  marginHorizontal: moderateScale(15),
+                  marginVertical: moderateScaleVertical(5),
+                }}>
+                {selectedThemeOption && selectedThemeOption?.id == i.id ? (
+                  <Image source={i.selectedImage} />
+                ) : (
+                  <Image source={imagePath.inactive_checkbox} />
+                )}
+              </View>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+
+      <View
+        style={{
+          flexDirection: 'row',
+          marginHorizontal: moderateScale(20),
+          marginTop: moderateScaleVertical(95),
+
           justifyContent: 'space-between',
           ...commonStyles.shadowStyle,
           paddingVertical: moderateScaleVertical(10),
