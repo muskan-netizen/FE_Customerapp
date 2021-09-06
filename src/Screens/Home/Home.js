@@ -37,7 +37,7 @@ export default function Home({route, navigation}) {
 
   console.log(theme, 'theme');
   console.log(toggleTheme, 'toggleTheme');
-  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
+  const isDarkMode = useDarkMode();
   const {linkedURL, resetURL} = useDeepLinkURL();
 
   const location = useSelector((state) => state?.home?.location);
@@ -566,9 +566,7 @@ export default function Home({route, navigation}) {
               isRefreshing={isRefreshing}
               appMainData={appMainData}
               onPressCategory={(item) => {
-                shortCodes.capcorp === appIds.capcorp
-                  ? onPressCategory2(item)
-                  : onPressCategory(item);
+                onPressCategory2(item);
               }}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
@@ -578,7 +576,13 @@ export default function Home({route, navigation}) {
       case 3:
         return (
           <>
-            <DashBoardHeaderFive navigation={navigation} location={location} />
+            <DashBoardHeaderFive
+              navigation={navigation}
+              location={location}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              isLoading={isLoading}
+            />
             <DashBoardFive
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}
@@ -586,9 +590,7 @@ export default function Home({route, navigation}) {
               isRefreshing={isRefreshing}
               appMainData={appMainData}
               onPressCategory={(item) => {
-                shortCodes.capcorp === appIds.capcorp
-                  ? onPressCategory2(item)
-                  : onPressCategory2(item);
+                onPressCategory2(item);
               }}
               isDineInSelected={isDineInSelected}
               selcetedToggle={selcetedToggle}

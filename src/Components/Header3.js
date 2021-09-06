@@ -47,7 +47,7 @@ const Header3 = ({
   const {appStyle} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
+  const isDarkMode = useDarkMode();
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
   const navigation = useNavigation();
@@ -83,8 +83,8 @@ const Header3 = ({
             paddingLeft: 5,
             // height:20,
             lineHeight: 20,
-            fontFamily: fontFamily.medium,
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            fontFamily: fontFamily.regular,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
             fontSize: textScale(10),
             width: '70%',
           }}>

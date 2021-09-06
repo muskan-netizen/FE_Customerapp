@@ -2,6 +2,8 @@ import React from 'react';
 import {Image} from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 import imagePath from '../constants/imagePath';
+import {useSelector} from 'react-redux';
+import colors from '../styles/colors';
 
 export default function StepIndicators({
   containerStyle = {},
@@ -11,6 +13,11 @@ export default function StepIndicators({
   themeColor,
   stepCount = 4,
 }) {
+  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
+    (state) => state.initBoot,
+  );
+  const fontFamily = appStyle?.fontSizeData;
+
   const thirdIndicatorStyles = {
     stepIndicatorSize: 24,
     currentStepIndicatorSize: 24,
@@ -30,9 +37,10 @@ export default function StepIndicators({
     stepIndicatorLabelCurrentColor: 'transparent',
     stepIndicatorLabelFinishedColor: 'transparent',
     stepIndicatorLabelUnFinishedColor: 'transparent',
-    labelColor: '#999999',
-    labelSize: 13,
+    labelColor: colors.lightGreyBgColor,
+    labelSize: 12,
     currentStepLabelColor: themeColor.primary_color,
+    labelFontFamily: fontFamily.regular,
   };
 
   const getSourceImage = ({position, stepStatus}) => {
@@ -46,12 +54,22 @@ export default function StepIndicators({
     return <Image source={getSourceImage({position, stepStatus})} />;
   };
 
+  const renderLabel = ({position, stepStatus, label, currentPosition}) => {
+    //console.log(position, 'position', stepStatus, 'stepStatus');
+    return <Image source={getSourceImage({position, stepStatus})} />;
+  };
+
+  const allLables = labels.map((i, inx) => {
+    return `${i.lable}\n${i.orderDate}`;
+  });
+
   return (
     <StepIndicator
       stepCount={stepCount}
       customStyles={thirdIndicatorStyles}
       currentPosition={currentPosition}
       renderStepIndicator={renderStepIndicator}
+      // renderLabel={renderLabel}
       labels={labels}
     />
   );

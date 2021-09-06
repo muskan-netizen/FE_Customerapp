@@ -22,7 +22,6 @@ export default ({fontFamily, buttonTextColor}) => {
       justifyContent: 'center',
     },
     mediumFont12: {
-      // fontSize:RFValue(14,height),
       fontSize: textScale(12),
       color: colors.textGrey,
       fontFamily: fontFamily?.medium,

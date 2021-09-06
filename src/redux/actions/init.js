@@ -206,27 +206,20 @@ export function getCmsPageDetail(data = {}, headers = {}) {
 
 export function setAppTheme(res) {
   console.log(res, 'res>res>res');
-  setItem('theme', res);
-  if (res.type == 'dark') {
-    dispatch({
-      type: types.THEME,
-      payload: true,
-    });
-  }
-  if (res.type == 'light') {
-    dispatch({
-      type: types.THEME,
-      payload: false,
-    });
-  }
+  console.log(typeof res, 'typeof setAppTheme');
+  setItem('theme', JSON.stringify(res));
+  dispatch({
+    type: types.THEME,
+    payload: res,
+  });
 }
 
 export function setToggle(res) {
   // console.log(JSON.stringify(res), 'response from toggle');
-
+  console.log(typeof res, 'typeof res');
   setItem('istoggle', JSON.stringify(res));
   dispatch({
     type: types.THEME_TOGGLE,
-    payload: res ? true : false,
+    payload: res,
   });
 }

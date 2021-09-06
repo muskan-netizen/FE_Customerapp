@@ -67,7 +67,7 @@ export default function Vendors({route, navigation}) {
       .getDataByCategoryId(
         `/${data.id}?limit=${limit}&page=${pageNo}&type=${dine_In_Type}`,
         {},
-        {code: appData.profile.code,},
+        {code: appData.profile.code},
       )
       .then((res) => {
         console.log('All vendors', res);
