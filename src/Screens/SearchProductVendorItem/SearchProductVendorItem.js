@@ -198,6 +198,14 @@ export default function SearchProductVendorItem({navigation, route}) {
       </TouchableOpacity>
     );
   };
+
+  const _listEmptyComponent = () => {
+    return (
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <Image source={imagePath.search_gif} />
+      </View>
+    );
+  };
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
@@ -261,6 +269,7 @@ export default function SearchProductVendorItem({navigation, route}) {
             marginHorizontal: moderateScale(20),
             // backgroundColor: 'black',
           }}
+          ListEmptyComponent={_listEmptyComponent}
           ItemSeparatorComponent={() => <View style={{height: 30}} />}
         />
       </View>
