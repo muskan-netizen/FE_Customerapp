@@ -41,7 +41,8 @@ import {MyDarkTheme} from '../../styles/theme';
 export default function Products({route, navigation}) {
   const {data} = route.params;
   console.log(data, 'data>data >>>>PARAMS');
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const [state, setState] = useState({
     isVisibleModal: false,
     isOffline: false,

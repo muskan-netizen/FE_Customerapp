@@ -1,3 +1,4 @@
+import {callingCodes} from 'country-data';
 import React, {useState} from 'react';
 import {
   I18nManager,
@@ -5,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Text,
 } from 'react-native';
 import CountryPicker, {Flag} from 'react-native-country-picker-modal';
 import {useSelector} from 'react-redux';
@@ -14,7 +16,7 @@ import {moderateScale, textScale, width} from '../styles/responsiveSize';
 
 export default function PhoneNumberInput({
   cca2 = '',
-  callingCode,
+  callingCode = '',
   onChangePhone,
   onCountryChange,
   phoneNumber,
@@ -59,7 +61,19 @@ export default function PhoneNumberInput({
           width: moderateScale(88),
         }}
         onPress={_openCountryPicker}>
-        <Flag countryCode={cca2} />
+        <Text
+          style={{
+            fontFamily: fontFamily.medium,
+            color: color ? color : colors.textGreyOpcaity7,
+            marginStart: 2,
+          }}>
+          +{callingCode}
+        </Text>
+
+        <View style={{marginRight: moderateScale(-10)}}>
+          <Flag countryCode={cca2} />
+        </View>
+
         <Image source={imagePath.dropdownTriangle} />
       </TouchableOpacity>
       <TextInput
@@ -87,12 +101,14 @@ export default function PhoneNumberInput({
       />
       {countryPickerModalVisible && (
         <CountryPicker
+          withCallingCode={callingCode}
           cca2={cca2}
           visible={countryPickerModalVisible}
           withFlagButton={false}
           withFilter
           onClose={_onCountryPickerModalClose}
           onSelect={_onCountryChange}
+          closeButtonImage={imagePath.closeButton}
         />
       )}
     </View>

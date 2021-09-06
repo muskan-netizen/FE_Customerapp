@@ -7,7 +7,7 @@ import strings from './src/constants/lang';
 import Routes from './src/navigation/Routes';
 import store from './src/redux/store';
 import types from './src/redux/types';
-import {getItem, getUserData} from './src/utils/utils';
+import {getItem, getUserData, setItem} from './src/utils/utils';
 import {
   GoogleSignin,
   statusCodes,
@@ -20,10 +20,46 @@ import Container from './src/library/toastify-react-native';
 import {moderateScaleVertical, width} from './src/styles/responsiveSize';
 import fontFamily from './src/styles/fontFamily';
 import {RFPercentage} from 'react-native-responsive-fontsize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from './src/styles/theme';
+import colors from './src/styles/colors';
+import {Linking} from 'react-native';
+import {navigate} from './src/navigation/NavigationService';
+import {getParameterByName, getUrlRoutes} from './src/utils/helperFunctions';
+import navigationStrings from './src/navigation/navigationStrings';
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
 
+  // deep linking
+
+  // async function handleDynamicLink(deepLinkUrl) {
+  //   if (deepLinkUrl != null) {
+  //     setItem('deepLinkUrl', deepLinkUrl);
+  //     let id = getParameterByName('id', deepLinkUrl);
+  //     let routeName = getUrlRoutes(deepLinkUrl, 1);
+  //     if (routeName === 'vendor') {
+  //       const item = {};
+  //       item['id'] = id;
+  //       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, item)();
+
+  //       setTimeout(() => {
+  //         navigate(navigationStrings.VENDOR_DETAIL, item);
+  //       }, 2000);
+  //     }
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   Linking.getInitialURL().then((link) => handleDynamicLink(link));
+
+  //   Linking.addEventListener('url', handleDynamicLink);
+  //   return () => {
+  //     Linking.removeEventListener('url', handleDynamicLink);
+  //   };
+  // }, []);
+
+  const isDarkMode = useDarkMode();
   useEffect(() => {
     //stop splahs screen from loading
     setTimeout(() => {
@@ -92,26 +128,35 @@ const App = () => {
           payload: dine_in_type,
         });
       }
-      // const theme = await getItem('theme');
-      // if (theme?.type == 'dark') {
-      //   dispatch({
-      //     type: types.THEME,
-      //     payload: true,
-      //   });
-      // }
-      // if (theme?.type == 'light') {
-      //   dispatch({
-      //     type: types.THEME,
-      //     payload: false,
-      //   });
-      // }
-      // const themeToggle = await getItem('istoggle');
-      // if (themeToggle) {
-      //   dispatch({
-      //     type: types.THEME_TOGGLE,
-      //     payload: JSON.parse(themeToggle),
-      //   });
-      // }
+      const theme = await getItem('theme');
+      const themeToggle = await getItem('istoggle');
+      if (JSON.parse(themeToggle)) {
+        dispatch({
+          type: types.THEME_TOGGLE,
+          payload: JSON.parse(themeToggle),
+        });
+        if (JSON.parse(theme)) {
+          dispatch({
+            type: types.THEME,
+            payload: true,
+          });
+        } else {
+          dispatch({
+            type: types.THEME,
+            payload: false,
+          });
+        }
+      } else {
+        dispatch({
+          type: types.THEME,
+          payload: isDarkMode,
+        });
+        dispatch({
+          type: types.THEME_TOGGLE,
+          payload: JSON.parse(themeToggle),
+        });
+      }
+
       //Language
       const getLanguage = await getItem('language');
       if (getLanguage) {

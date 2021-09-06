@@ -32,7 +32,8 @@ export default function Wallet({navigation}) {
     walletHistory: [],
     isRefreshing: false,
   });
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {appData, themeColors} = useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state.auth.userData);

@@ -40,12 +40,13 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function MyOrders({navigation}) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const [state, setState] = useState({
     tabBarData: [
       {title: strings.ACTIVE_ORDERS, isActive: true},
       {title: strings.PAST_ORDERS, isActive: false},
-      {title: strings.SCHEDULED_ORDERS, isActive: false},
+      // {title: strings.SCHEDULED_ORDERS, isActive: false},
     ],
     selectedTab: strings.ACTIVE_ORDERS,
     orders: [],
@@ -400,7 +401,7 @@ export default function MyOrders({navigation}) {
             : {backgroundColor: colors.white}
         }
         onPress={(tabData) => changeTab(tabData)}
-        customTextContainerStyle={{width: width / 3}}
+        customTextContainerStyle={{width: width / 2}}
       />
 
       <FlatList

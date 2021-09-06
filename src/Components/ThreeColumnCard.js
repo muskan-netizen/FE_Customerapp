@@ -31,7 +31,8 @@ export default function ThreeColumnCard({
   //total spcaing required is width-32+16 or 48
   // width - 48 will be the width of each card and
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = useDarkMode();
+
+  const isDarkMode = theme;
   const {themeColors, appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const cardWidth = width / 3 - moderateScale(16);

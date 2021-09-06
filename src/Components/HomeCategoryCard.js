@@ -13,7 +13,8 @@ import {MyDarkTheme} from '../styles/theme';
 export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
+
+  const isDarkMode = theme;
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const imageURI = getImageUrl(
@@ -23,6 +24,7 @@ export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
   );
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
+  console.log(imageURI, 'imageURI');
 
   return (
     <TouchableOpacity
@@ -37,17 +39,21 @@ export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
         borderRadius: moderateScale(15),
         flexDirection: 'column',
         justifyContent: 'space-between',
-        backgroundColor: '#FFFCFC',
+        backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : '#FFFCFC',
 
         ...Elevations[2],
       }}>
-      <View style={{flex: 0.4}}>
+      <View
+        style={{
+          flex: 0.4,
+        }}>
         <Text
           style={{
             fontFamily: fontFamily.bold,
             fontSize: textScale(16),
             marginLeft: moderateScale(15),
             marginTop: moderateScale(10),
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           }}>
           {data.name}
         </Text>
@@ -58,8 +64,10 @@ export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
         }}>
         {isSVG ? (
           <SvgUri
+            height={moderateScale(90)}
+            width={moderateScale(90)}
             style={{
-              marginHorizontal: moderateScale(10),
+              marginHorizontal: moderateScale(5),
               position: 'absolute',
               right: 0,
               bottom: 0,

@@ -255,7 +255,7 @@ export default ({fontFamily, themeColors}) => {
       alignSelf: 'flex-end',
       marginVertical:
         Platform.OS === 'ios'
-          ? moderateScaleVertical(2)
+          ? moderateScaleVertical(10)
           : moderateScaleVertical(50),
       marginHorizontal: moderateScale(10),
     },

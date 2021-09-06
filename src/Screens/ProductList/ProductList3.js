@@ -43,13 +43,12 @@ import ProductDetailLoader from '../../Components/Loaders/ProductDetailLoader';
 import * as Animatable from 'react-native-animatable';
 import RoundImg from '../../Components/RoundImg';
 
-
-export default function Products({ route, navigation }) {
-  const { data } = route.params;
+export default function Products({route, navigation}) {
+  const {data} = route.params;
+  console.log(data, 'Datais ');
   console.log(data, 'data params >>>>>');
-  const isDarkMode = useDarkMode();
-
-
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const [state, setState] = useState({
     isVisibleModal: false,
     isOffline: false,

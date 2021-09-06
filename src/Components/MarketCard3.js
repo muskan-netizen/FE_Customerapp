@@ -23,7 +23,8 @@ export default function MarketCard3({
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
+
+  const isDarkMode = theme;
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
@@ -34,12 +35,7 @@ export default function MarketCard3({
       onPress={onPress}
       style={styles.mainTouchContainer}>
       <FastImage
-        style={{
-          height: moderateScaleVertical(140),
-          width: '100%',
-          borderRadius: moderateScale(10),
-          resizeMode: 'cover',
-        }}
+        style={styles.mainImage}
         source={{
           uri: getImageUrl(
             data.banner.proxy_url || data.image.proxy_url,
@@ -48,12 +44,7 @@ export default function MarketCard3({
           ),
         }}
       />
-      <View
-        style={{
-          marginTop: moderateScale(8),
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}>
+      <View style={styles.descView}>
         <Text
           numberOfLines={1}
           style={
@@ -69,24 +60,13 @@ export default function MarketCard3({
               style={{tintColor: colors.yellowC}}
               source={imagePath.star}
             />
-            <Text
-              style={{
-                color: colors.yellowC,
-                fontSize: textScale(11),
-                fontFamily: fontFamily.medium,
-              }}>
+            <Text style={styles.ratingTxt}>
               {Number(data?.product_avg_average_rating).toFixed(1)}
             </Text>
           </View>
         )}
       </View>
-      <View
-        style={{
-          marginTop: moderateScale(5),
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginHorizontal: moderateScale(3),
-        }}>
+      <View style={styles.distanceView}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Image
             style={{tintColor: themeColors.primary_color}}
@@ -103,9 +83,6 @@ export default function MarketCard3({
           </Text>
         </View>
 
-        {/* <Text numberOfLines={1} style={{color: colors.greenA}}>
-          {strings.OPEN}
-        </Text> */}
         <Text
           style={{
             ...commonStyles.mediumFont14Normal,
@@ -138,6 +115,28 @@ export function stylesFunc({fontFamily, extraStyles}) {
       color: colors.black,
       fontFamily: fontFamily.medium,
       width: '85%',
+    },
+    mainImage: {
+      height: moderateScaleVertical(140),
+      width: '100%',
+      borderRadius: moderateScale(10),
+      resizeMode: 'cover',
+    },
+    descView: {
+      marginTop: moderateScale(8),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    ratingTxt: {
+      color: colors.yellowC,
+      fontSize: textScale(11),
+      fontFamily: fontFamily.medium,
+    },
+    distanceView: {
+      marginTop: moderateScale(5),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginHorizontal: moderateScale(3),
     },
   });
   return styles;

@@ -51,7 +51,6 @@ export default function ShortCode({route, navigation}) {
     (state) => state?.initBoot,
   );
 
-
   useEffect(() => {
     (async () => {
       const saveShortCode = await getItem('saveShortCode');
@@ -518,6 +517,25 @@ export default function ShortCode({route, navigation}) {
         case appIds.wegotit:
           updateState({
             shortCode: shortCodes.wegotit,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.survuhs:
+          updateState({
+            shortCode: shortCodes.survuhs,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.igolux:
+          updateState({
+            shortCode: shortCodes.igolux,
+            isShortcodePrefilled: true,
+          });
+          break;
+          break;
+        case appIds.toda:
+          updateState({
+            shortCode: shortCodes.toda,
             isShortcodePrefilled: true,
           });
           break;

@@ -47,7 +47,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function MyProfile({route, navigation}) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const currentTheme = useSelector((state) => state?.initBoot);
 
   const {themeColors, themeLayouts, appStyle} = currentTheme;
@@ -68,8 +69,16 @@ export default function MyProfile({route, navigation}) {
       {title: strings.ADDRESS, isActive: false},
     ],
     selectedTab: strings.BASIC_INFO,
-    callingCode: '1',
-    cca2: userData?.cca2 ? userData?.cca2 : appData?.profile?.country?.code,
+    callingCode: userData?.dial_code
+      ? userData?.dial_code
+      : appData?.profile?.country?.phonecode
+      ? appData?.profile?.country?.phonecode
+      : '91',
+    cca2: userData?.cca2
+      ? userData?.cca2
+      : appData?.profile?.country?.code
+      ? appData?.profile?.country?.code
+      : 'IN',
     name: userData?.name,
     email: userData?.email,
     password: '',

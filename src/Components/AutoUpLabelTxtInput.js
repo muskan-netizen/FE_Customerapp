@@ -5,6 +5,8 @@ import strings from '../constants/lang';
 import {moderateScale} from '../styles/responsiveSize';
 import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function AutoUpLabelTxtInput({
   onChangeText = () => {},
@@ -16,6 +18,11 @@ export default function AutoUpLabelTxtInput({
   secureTextEntry = false,
   txtInputStyle = {},
 }) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+
+  const isDarkMode = theme;
+
   console.log(secureTextEntry, 'secureTextEntry');
   const {themeColors} = useSelector((state) => state?.initBoot);
   return (
@@ -29,7 +36,7 @@ export default function AutoUpLabelTxtInput({
         label={label}
         secureTextEntry={secureTextEntry}
         underlineColor={colors.transparent}
-        selectionColor={colors.black}
+        selectionColor={isDarkMode ? themeColors.primary_color : colors.black}
         keyboardType={keyboardType}
         value={value}
         multiline={false}

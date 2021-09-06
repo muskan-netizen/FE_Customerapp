@@ -13,6 +13,9 @@ import {Pagination} from 'react-native-snap-carousel';
 import {useSelector} from 'react-redux';
 import BannerHome2 from '../../../Components/BannerHome2';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
+import CardLoader from '../../../Components/Loaders/CardLoader';
+import CategoryLoader from '../../../Components/Loaders/CategoryLoader';
+import VendorDetailLoader from '../../../Components/Loaders/VendorDetailLoader';
 import MarketCard3 from '../../../Components/MarketCard3';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
@@ -26,9 +29,12 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
+import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
 import stylesFunc from '../styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
+import {SearchBar} from 'react-native-elements/dist/searchbar/SearchBar';
+import SearchBar2 from '../../../Components/SearchBar2';
 
 export default function DashBoardFive({
   handleRefresh = () => {},
@@ -43,7 +49,8 @@ export default function DashBoardFive({
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
+
+  const isDarkMode = theme;
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
@@ -64,7 +71,11 @@ export default function DashBoardFive({
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const _renderItem = ({item}) => (
-    <HomeCategoryCard2 data={item} onPress={() => onPressCategory(item)} />
+    <HomeCategoryCard2
+      data={item}
+      onPress={() => onPressCategory(item)}
+      isLoading={isLoading}
+    />
   );
 
   const _renderVendors = ({item}) => (
@@ -77,33 +88,16 @@ export default function DashBoardFive({
 
   return (
     <>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        style={{
-          flexDirection: 'row',
-          height: moderateScaleVertical(50),
-          backgroundColor: colors.greyNew,
-          borderRadius: moderateScale(15),
-          paddingHorizontal: moderateScale(15),
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginHorizontal: moderateScale(15),
-          marginVertical: moderateScale(13),
-        }}
-        onPress={() =>
-          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-        }>
-        <View style={{width: '90%'}}>
-          <Text
-            style={{
-              fontFamily: fontFamily.regular,
-              color: colors.textGreyB,
-            }}>
-            {strings.SEARCH_HERE}
-          </Text>
-        </View>
-        <Image source={imagePath.search1} />
-      </TouchableOpacity>
+      {isLoading ? (
+        <ListEmptyVendors
+          isLoading={isLoading}
+          listSize={1}
+          height={moderateScaleVertical(40)}
+          vendorContainerStyle={{marginVertical: moderateScale(15)}}
+        />
+      ) : (
+        <SearchBar2 navigation={navigation} />
+      )}
       <ScrollView
         refreshing={isRefreshing}
         refreshControl={
@@ -119,9 +113,20 @@ export default function DashBoardFive({
           flex: 1,
           paddingHorizontal: moderateScale(15),
         }}>
-        {appMainData &&
-        appMainData?.categories &&
-        appMainData?.categories.length ? (
+        {isLoading ? (
+          <View style={{marginTop: moderateScale(5)}}>
+            <CategoryLoader
+              listSize={2}
+              isRow
+              cardWidth={80}
+              pRows={1}
+              height={moderateScale(70)}
+              containerStyle={{marginVertical: moderateScale(5)}}
+            />
+          </View>
+        ) : appMainData &&
+          appMainData?.categories &&
+          appMainData?.categories.length ? (
           <View style={{width: '100%'}}>
             {/* <Text
               style={{
@@ -143,58 +148,82 @@ export default function DashBoardFive({
             />
           </View>
         ) : null}
-
-        {appData?.banners?.length ? (
-          <View style={{marginTop: moderateScale(20)}}>
-            <BannerHome2
-              bannerRef={bannerRef}
-              slider1ActiveSlide={slider1ActiveSlide}
-              bannerData={appData.banners}
-              sliderWidth={sliderWidth}
-              itemWidth={itemWidth}
-              onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
-              setActiveState={(index) =>
-                updateState({slider1ActiveSlide: index})
-              }
-              onPress={(item) => bannerPress(item)}
-              carouselViewStyle={{height: width * 0.33}}
+        <View style={{marginVertical: moderateScale(30)}}>
+          {isLoading ? (
+            <ListEmptyVendors
+              isLoading={isLoading}
+              emptyText={'No data found'}
+              listSize={1}
+              dotsLength={true}
+              height={moderateScaleVertical(130)}
+              vendorContainerStyle={{marginLeft: 0}}
             />
+          ) : appData?.banners?.length ? (
+            <>
+              <BannerHome2
+                bannerRef={bannerRef}
+                slider1ActiveSlide={slider1ActiveSlide}
+                bannerData={appData.banners}
+                sliderWidth={sliderWidth}
+                itemWidth={itemWidth}
+                onSnapToItem={(index) =>
+                  updateState({slider1ActiveSlide: index})
+                }
+                setActiveState={(index) =>
+                  updateState({slider1ActiveSlide: index})
+                }
+                onPress={(item) => bannerPress(item)}
+                carouselViewStyle={{height: width * 0.33}}
+              />
 
-            <Pagination
-              dotsLength={appData.banners.length}
-              activeDotIndex={slider1ActiveSlide}
-              containerStyle={{
-                marginTop: -15,
-              }}
-              dotColor={themeColors.primary_color}
-              dotStyle={{
-                height: 6,
-                width: 18,
-                borderRadius: 12 / 2,
-                marginLeft: -8,
-              }}
-              inactiveDotColor={colors.greyLight}
-              inactiveDotOpacity={0.4}
-              inactiveDotScale={0.8}
-              inactiveDotStyle={{
-                height: 8,
-                width: 8,
-                borderRadius: 4,
-                marginLeft: -8,
-              }}
-            />
-          </View>
-        ) : null}
-
-        {appMainData?.vendors && appMainData?.vendors?.length ? (
+              <Pagination
+                dotsLength={appData.banners.length}
+                activeDotIndex={slider1ActiveSlide}
+                containerStyle={{
+                  marginTop: -15,
+                }}
+                dotColor={themeColors.primary_color}
+                dotStyle={{
+                  height: 6,
+                  width: 18,
+                  borderRadius: 12 / 2,
+                  marginLeft: -8,
+                }}
+                inactiveDotColor={colors.greyLight}
+                inactiveDotOpacity={0.4}
+                inactiveDotScale={0.8}
+                inactiveDotStyle={{
+                  height: 8,
+                  width: 8,
+                  borderRadius: 4,
+                  marginLeft: -8,
+                }}
+              />
+            </>
+          ) : null}
+        </View>
+        {isLoading ? (
+          <ListEmptyVendors
+            isLoading={isLoading}
+            emptyText={'No data found'}
+            listSize={3}
+            pRows={2}
+            pWidth={'100%'}
+            rowContainerstyle={{marginBottom: moderateScale(25)}}
+            height={moderateScaleVertical(130)}
+            vendorContainerStyle={{marginLeft: 0}}
+          />
+        ) : appMainData?.vendors && appMainData?.vendors?.length ? (
           <View>
             <Text
-              style={{
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
-                fontFamily: fontFamily.regular,
-                fontSize: textScale(16),
-                marginBottom: moderateScale(10),
-              }}>
+              style={[
+                styles.exploreStoresTxt,
+                {
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyB,
+                },
+              ]}>
               {strings.EXPLORE_STORES}
             </Text>
             <FlatList
@@ -208,7 +237,12 @@ export default function DashBoardFive({
             />
           </View>
         ) : null}
-        <View style={{height: Platform.OS === 'ios' ? 55 : 90}} />
+        <View
+          style={{
+            height:
+              Platform.OS === 'ios' ? moderateScale(55) : moderateScale(90),
+          }}
+        />
       </ScrollView>
     </>
   );

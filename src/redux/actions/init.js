@@ -205,15 +205,13 @@ export function getCmsPageDetail(data = {}, headers = {}) {
 }
 
 export function setAppTheme(res) {
-  console.log(res, 'res>res>res');
-  setItem('theme', res);
-  if (res.type == 'dark') {
+  setItem('theme', JSON.stringify(res));
+  if (res) {
     dispatch({
       type: types.THEME,
       payload: true,
     });
-  }
-  if (res.type == 'light') {
+  } else {
     dispatch({
       type: types.THEME,
       payload: false,
@@ -227,6 +225,6 @@ export function setToggle(res) {
   setItem('istoggle', JSON.stringify(res));
   dispatch({
     type: types.THEME_TOGGLE,
-    payload: res ? true : false,
+    payload: res,
   });
 }

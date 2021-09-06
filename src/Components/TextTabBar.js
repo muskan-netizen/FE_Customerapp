@@ -47,7 +47,7 @@ export default function TextTabBar({
         <View style={{justifyContent: 'flex-end', alignItems: 'center'}}>
           <View
             style={{
-              width: moderateScale(width / 3),
+              width: moderateScale(width / 2),
               borderBottomWidth: 2,
               borderBottomColor: themeColors.primary_color,
             }}

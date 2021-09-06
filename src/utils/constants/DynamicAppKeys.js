@@ -73,6 +73,9 @@ const shortCodes = {
   sunshinerideshare: 'cef206',
   autotek: '2fbe83',
   wegotit: 'f755bb',
+  survuhs: 'ac8cda',
+  igolux: 'd190a2',
+  toda: '1a6236',
 };
 
 const appIds = {
@@ -363,6 +366,18 @@ const appIds = {
   wegotit: Platform.select({
     ios: 'com.wegotit',
     android: 'com.wegotit',
+  }),
+  survuhs: Platform.select({
+    ios: 'com.survuhs',
+    android: 'com.survuhs',
+  }),
+  igolux: Platform.select({
+    ios: 'com.igolux',
+    android: 'com.igolux',
+  }),
+  toda: Platform.select({
+    ios: 'com.toda.orders',
+    android: 'com.toda',
   }),
 };
 

@@ -137,7 +137,6 @@ export default function (state = initial_state, action) {
     }
     case types.THEME_TOGGLE: {
       const data = action.payload;
-      console.log();
       return {
         ...state,
         themeToggle: data,

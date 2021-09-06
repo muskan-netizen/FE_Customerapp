@@ -20,7 +20,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function OrderSuccess({navigation, route}) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const currentTheme = useSelector((state) => state.appTheme);
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 

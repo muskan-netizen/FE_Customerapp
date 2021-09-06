@@ -26,7 +26,8 @@ export default function Filter({route, navigation}) {
   const {themeColors, appStyle, appData} = useSelector(
     (state) => state?.initBoot,
   );
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
   const commonStyles = commonStylesFunc({fontFamily});
