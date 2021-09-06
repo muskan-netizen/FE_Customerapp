@@ -1,36 +1,21 @@
 import {debounce} from 'lodash';
 import React, {useEffect, useState} from 'react';
-import {
-  FlatList,
-  RefreshControl,
-  View,
-  TouchableOpacity,
-  Text,
-  Image,
-} from 'react-native';
+import {FlatList, Image, RefreshControl, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
-import Header from '../../Components/Header';
 import Header3 from '../../Components/Header3';
-import HeaderWithFilters from '../../Components/HeaderWithFilters';
-import MarketCard from '../../Components/MarketCard';
-import MarketCard2 from '../../Components/MarketCard2';
 import MarketCard3 from '../../Components/MarketCard3';
+import SearchBar2 from '../../Components/SearchBar2';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
-import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import {
-  moderateScale,
-  moderateScaleVertical,
-  width,
-} from '../../styles/responsiveSize';
+import {moderateScale, width} from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from './ListEmptyVendors';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
 
 export default function Vendors3({route, navigation}) {
   const isDarkMode = useDarkMode();
@@ -40,7 +25,7 @@ export default function Vendors3({route, navigation}) {
     limit: 5,
     isRefreshing: false,
   });
-  const {appData, themeColors, themeLayouts, currencies, languages} =
+  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state.initBoot);
 
   const categoryData = useSelector((state) => state?.vendor?.categoryData);
@@ -61,7 +46,6 @@ export default function Vendors3({route, navigation}) {
       navigation.navigate(screenName, {data});
     };
 
-  const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
 
@@ -156,29 +140,7 @@ export default function Vendors3({route, navigation}) {
         }
       />
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          style={{
-            flexDirection: 'row',
-            height: moderateScaleVertical(50),
-            backgroundColor: colors.greyNew,
-            borderRadius: moderateScale(15),
-            paddingHorizontal: moderateScale(15),
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginHorizontal: moderateScale(15),
-            marginVertical: moderateScale(13),
-          }}
-          onPress={() =>
-            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-          }>
-          <View style={{width: '80%'}}>
-            <Text style={{fontFamily: fontFamily.regular}}>
-              {strings.SEARCH_HERE}
-            </Text>
-          </View>
-          <Image source={imagePath.search1} />
-        </TouchableOpacity>
+        <SearchBar2 navigation={navigation} />
         <Image
           style={
             isDarkMode

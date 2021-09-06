@@ -581,6 +581,7 @@ export default function Home({route, navigation}) {
               location={location}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
+              isLoading={isLoading}
             />
             <DashBoardFive
               handleRefresh={() => handleRefresh()}
