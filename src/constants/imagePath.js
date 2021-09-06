@@ -1,3 +1,5 @@
+import { requireNativeComponent } from 'react-native';
+
 export default {
   dropdownTriangle: require('../assets/images/ic_dropdown.png'),
   fb: require('../assets/images/ic_facebook.png'),
@@ -241,4 +243,10 @@ export default {
   dark: require('../assets/images/DARK.jpg'),
   light: require('../assets/images/LIGHT.jpg'),
   dropDownNew: require('../assets/images/ic_drpdwn.png'),
+  icBackb: require('../assets/images/ic_back_b.png'),
+  icSearchb: require('../assets/images/ic_search_b.png'),
+  icShareb: require('../assets/images/ic_share_b.png'),
+  icVeg: require('../assets/images/ic_veg.png'),
+  icNonVeg: require('../assets/images/ic_nonveg.png'),
+
 };
