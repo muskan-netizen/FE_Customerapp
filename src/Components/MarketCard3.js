@@ -23,7 +23,8 @@ export default function MarketCard3({
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const isDarkMode = useDarkMode();
+
+  const isDarkMode = theme;
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;

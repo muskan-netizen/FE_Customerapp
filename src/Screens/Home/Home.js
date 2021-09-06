@@ -35,9 +35,7 @@ export default function Home({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
-  console.log(theme, 'theme');
-  console.log(toggleTheme, 'toggleTheme');
-  const isDarkMode = useDarkMode();
+  const isDarkMode = theme;
   const {linkedURL, resetURL} = useDeepLinkURL();
 
   const location = useSelector((state) => state?.home?.location);

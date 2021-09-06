@@ -37,7 +37,8 @@ import {MyDarkTheme} from '../../styles/theme';
 export default function Subscriptions({navigation, route}) {
   //   console.log(route, 'route>>>');
   const paramData = route?.params;
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const [state, setState] = useState({
     isLoading: false,
     isLoadingB: false,

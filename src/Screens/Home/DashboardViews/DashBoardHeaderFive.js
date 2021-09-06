@@ -38,8 +38,9 @@ export default function DashBoardHeaderFive({
   const pickerRef = createRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const isDarkMode = useDarkMode();
-    const dine_In_Type = useSelector((state) => state?.home?.dineInType);
+
+  const isDarkMode = theme;
+  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );

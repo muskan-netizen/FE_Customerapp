@@ -27,7 +27,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function VendorDetail2({navigation, route}) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   let vendorParams = route?.params?.data;
   console.log(vendorParams, 'VendorDetail params');
   const userData = useSelector((state) => state?.auth?.userData);

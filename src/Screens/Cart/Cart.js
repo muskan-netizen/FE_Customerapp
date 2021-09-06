@@ -58,7 +58,8 @@ import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = useDarkMode();
+
+  const isDarkMode = theme;
   let paramsData = route?.params;
   const [state, setState] = useState({
     isLoading: true,

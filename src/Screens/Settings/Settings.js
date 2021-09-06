@@ -32,8 +32,9 @@ export default function Settings({route, navigation}) {
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const isDarkMode = useDarkMode();
-  //const isDarkMode = toggleTheme ? true : false;
+  // const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
+
   const {currencies, appData, languages, appStyle, themeColors} = useSelector(
     (state) => state?.initBoot,
   );
@@ -165,7 +166,6 @@ export default function Settings({route, navigation}) {
   };
 
   const _toggleOnOff = (isOn) => {
-    console.log(typeof isOn, 'isOn');
     actions.setToggle(isOn);
     setTimeout(() => {
       updateState({
@@ -175,14 +175,12 @@ export default function Settings({route, navigation}) {
   };
 
   const _setApperance = (item) => {
-    actions.setAppTheme(item);
-
     if (item?.type == 'light') {
       actions.setAppTheme(false);
-    } else {
+    } else if (item?.type == 'dark') {
       actions.setAppTheme(true);
     }
-    console.log(item, 'item>item>item');
+
     {
       selectedThemeOption && selectedThemeOption?.id == item?.id
         ? null
@@ -215,7 +213,7 @@ export default function Settings({route, navigation}) {
       <View style={{...commonStyles.headerTopLine}} />
       {/* <KeyboardAwareScrollView bounces={false}> */}
 
-      {/* <View
+      <View
         style={{
           flexDirection: 'row',
           marginHorizontal: moderateScale(20),
@@ -285,7 +283,7 @@ export default function Settings({route, navigation}) {
             );
           })}
         </View>
-      ) : null} */}
+      ) : null}
 
       <View style={{flexDirection: 'row', marginHorizontal: moderateScale(20)}}>
         <Text

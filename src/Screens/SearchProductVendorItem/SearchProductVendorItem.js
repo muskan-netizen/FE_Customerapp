@@ -27,7 +27,8 @@ export default function SearchProductVendorItem({navigation, route}) {
     searchData: [],
     showRightIcon: false,
   });
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const {isLoading, searchInput, searchData, showRightIcon} = state;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);

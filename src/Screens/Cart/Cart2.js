@@ -55,7 +55,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
 export default function Cart2({navigation, route}) {
   let paramsData = route?.params;
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const [state, setState] = useState({
     isLoading: true,
     isVisible: false,

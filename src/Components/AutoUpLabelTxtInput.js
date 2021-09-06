@@ -18,7 +18,11 @@ export default function AutoUpLabelTxtInput({
   secureTextEntry = false,
   txtInputStyle = {},
 }) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+
+  const isDarkMode = theme;
+
   console.log(secureTextEntry, 'secureTextEntry');
   const {themeColors} = useSelector((state) => state?.initBoot);
   return (

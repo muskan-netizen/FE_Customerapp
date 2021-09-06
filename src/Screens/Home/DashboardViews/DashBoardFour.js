@@ -40,7 +40,8 @@ export default function DashBoardFour({
   selcetedToggle,
   toggleData,
 }) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],

@@ -47,7 +47,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function MyProfile({route, navigation}) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const currentTheme = useSelector((state) => state?.initBoot);
   const {themeColors, themeLayouts, appStyle} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
@@ -748,13 +749,19 @@ export default function MyProfile({route, navigation}) {
   return (
     <WrapperContainer
       isLoadingB={isLoading}
-      bgColor={isDarkMode?MyDarkTheme.colors.background:colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGreyC}
       source={loaderOne}>
       <Header2
         leftIcon={imagePath.backArrow}
         centerTitle={strings.MY_PROFILE}
-        headerContainerStyle={{backgroundColor:isDarkMode?MyDarkTheme.colors.background: colors.backgroundGreyC}}
+        headerContainerStyle={{
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.backgroundGreyC,
+        }}
       />
       <View style={{...commonStyles.headerTopLine}} />
       {/* top section user general info */}

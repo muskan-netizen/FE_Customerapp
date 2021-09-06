@@ -49,7 +49,9 @@ export default function AddressModal({
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const isDarkMode = useDarkMode();
+  // const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
+
   const appData = useSelector((state) => state?.initBoot?.appData);
   const currentTheme = useSelector((state) => state.initBoot);
   const {themeColors, themeLayouts, appStyle} = currentTheme;

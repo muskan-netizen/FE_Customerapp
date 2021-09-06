@@ -42,7 +42,8 @@ export default function Signup({navigation}) {
   const commonStyles = commonStylesFun({fontFamily});
   const styles = stylesFun({fontFamily});
 
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const [state, setState] = useState({
     isLoading: false,
     callingCode: '91',

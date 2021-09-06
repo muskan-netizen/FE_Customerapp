@@ -38,7 +38,8 @@ import {MyDarkTheme} from '../../styles/theme';
 const {height, width} = Dimensions.get('window');
 
 export default function OrderDetail({navigation, route}) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const paramData = route?.params;
   console.log(paramData, 'paramsData.....');
   const [state, setState] = useState({

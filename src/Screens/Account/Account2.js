@@ -32,7 +32,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function Account2({navigation}) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const [state, setState] = useState({
     isLoading: false,
   });

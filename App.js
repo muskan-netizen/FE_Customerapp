@@ -26,6 +26,7 @@ import colors from './src/styles/colors';
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
+
   const isDarkMode = useDarkMode();
   useEffect(() => {
     //stop splahs screen from loading
@@ -96,21 +97,28 @@ const App = () => {
         });
       }
       const theme = await getItem('theme');
-      if (isDarkMode) {
-        dispatch({
-          type: types.THEME,
-          payload: true,
-        });
-      }
-      if (theme) {
-        dispatch({
-          type: types.THEME,
-          payload: JSON.parse(theme),
-        });
-      }
-
       const themeToggle = await getItem('istoggle');
-      if (themeToggle) {
+      if (JSON.parse(themeToggle)) {
+        dispatch({
+          type: types.THEME_TOGGLE,
+          payload: JSON.parse(themeToggle),
+        });
+        if (JSON.parse(theme)) {
+          dispatch({
+            type: types.THEME,
+            payload: true,
+          });
+        } else {
+          dispatch({
+            type: types.THEME,
+            payload: false,
+          });
+        }
+      } else {
+        dispatch({
+          type: types.THEME,
+          payload: isDarkMode,
+        });
         dispatch({
           type: types.THEME_TOGGLE,
           payload: JSON.parse(themeToggle),

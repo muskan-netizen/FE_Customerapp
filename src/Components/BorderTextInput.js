@@ -23,7 +23,7 @@ export default function BorderTextInput({
   containerStyle,
   textInputStyle,
   leftIcon,
-  color = useDarkMode() ? MyDarkTheme.colors.text : colors.textGreyOpcaity7,
+  color,
   rightIcon,
   onChangeText,
   value,
@@ -36,7 +36,9 @@ export default function BorderTextInput({
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const isDarkMode = useDarkMode();
+
+  const isDarkMode = theme;
+
   const inputRef = useRef();
   const {appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -76,7 +78,7 @@ export default function BorderTextInput({
         style={{
           flex: 1,
           opacity: 0.7,
-          color,
+          color: theme ? MyDarkTheme.colors.text : colors.textGreyOpcaity7,
           fontFamily: fontFamily.medium,
           fontSize: textScale(14),
           paddingHorizontal: 8,

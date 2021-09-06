@@ -16,7 +16,8 @@ import {MyDarkTheme} from '../../styles/theme';
 
 export default function Brand({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = useDarkMode();
+
+  const isDarkMode = theme;
   const [state, setState] = useState({
     isLoading: true,
   });

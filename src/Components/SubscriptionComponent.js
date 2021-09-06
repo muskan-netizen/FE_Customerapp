@@ -49,7 +49,8 @@ export default function SubscriptionComponent({
   allSubscriptions = [],
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = useDarkMode();
+
+  const isDarkMode = theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);

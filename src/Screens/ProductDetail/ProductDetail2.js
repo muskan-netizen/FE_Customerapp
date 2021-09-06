@@ -48,7 +48,8 @@ import {MyDarkTheme} from '../../styles/theme';
 export default function ProductDetail2({route, navigation}) {
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const {productListData} = useSelector((state) => state?.product);
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});

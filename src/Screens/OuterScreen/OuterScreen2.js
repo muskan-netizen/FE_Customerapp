@@ -41,7 +41,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 export default function OuterScreen2({navigation}) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const [state, setState] = useState({
     getLanguage: '',
     isLoading: false,

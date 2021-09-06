@@ -38,7 +38,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function ReturnOrder({navigation, route}) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const ratingData = route?.params?.item?.product_rating;
   const selectProductForRetrun = route?.params?.selectProductForRetrun;
   const selectedOrderForReturn = route?.params?.selectedOrderForReturn;

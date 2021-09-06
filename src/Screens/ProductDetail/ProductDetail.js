@@ -41,7 +41,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function ProductDetail({route, navigation}) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
   const {productListData} = useSelector((state) => state?.product);

@@ -20,7 +20,8 @@ import {MyDarkTheme} from '../../styles/theme';
 export default function VendorDetail({navigation, route}) {
   let vendorParams = route?.params?.data;
   console.log(vendorParams, 'vendorParams>>>>>>>');
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const [state, setState] = useState({
     vendorId: vendorParams?.item?.id || vendorParams.id,
     vendordName: vendorParams.name || '',

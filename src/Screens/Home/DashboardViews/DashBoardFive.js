@@ -47,7 +47,8 @@ export default function DashBoardFive({
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const isDarkMode = useDarkMode();
+
+  const isDarkMode = theme;
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
