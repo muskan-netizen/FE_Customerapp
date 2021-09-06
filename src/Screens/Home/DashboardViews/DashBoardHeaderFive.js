@@ -14,6 +14,10 @@ import {
 } from '../../../styles/responsiveSize';
 import {getImageUrl, showSuccess} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
+import {RadioButton} from 'react-native-paper';
+
+import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
+import {MyDarkTheme} from '../../../styles/theme';
 
 export default function DashBoardHeaderFive({
   navigation = {},
@@ -25,6 +29,8 @@ export default function DashBoardHeaderFive({
   const pickerRef = createRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+
+  const isDarkMode = theme;
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
@@ -376,7 +382,16 @@ export default function DashBoardHeaderFive({
                 resizeMode="contain"
               />
 
-              <Text numberOfLines={1} style={styles.locationTxt}>
+              <Text
+                numberOfLines={1}
+                style={[
+                  styles.locationTxt,
+                  {
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGrey,
+                  },
+                ]}>
                 {location?.address}
               </Text>
             </TouchableOpacity>

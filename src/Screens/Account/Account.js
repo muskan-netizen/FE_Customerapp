@@ -34,7 +34,8 @@ export default function Account({navigation}) {
     (state) => state?.initBoot,
   );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = useDarkMode();
+
+  const isDarkMode = theme;
   const homePageLayout = appStyle?.homePageLayout;
 
   const fontFamily = appStyle?.fontSizeData;

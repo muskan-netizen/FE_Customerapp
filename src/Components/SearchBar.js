@@ -22,7 +22,8 @@ export default function SearchBar({
   searchValue = '',
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = useDarkMode();
+
+  const isDarkMode = theme;
   const {appStyle} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;

@@ -28,7 +28,8 @@ export default function SelectTimeModalView({
   _selectTime,
   _onDateChange,
 }) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );

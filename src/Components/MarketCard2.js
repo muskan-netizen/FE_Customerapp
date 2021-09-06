@@ -12,12 +12,16 @@ import {
   textScale,
 } from '../styles/responsiveSize';
 import {getImageUrl} from '../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function MarketCard2({
   data = {},
   onPress = () => {},
   extraStyles = {},
 }) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const {appStyle} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
@@ -28,7 +32,14 @@ export default function MarketCard2({
       onPress={onPress}
       style={styles.mainTouchContainer}>
       <View style={{flex: 0.9}}>
-        <Text style={styles.categoryText}>{data.name}</Text>
+        <Text
+          style={
+            isDarkMode
+              ? [styles.categoryText, {color: MyDarkTheme.colors.text}]
+              : styles.categoryText
+          }>
+          {data.name}
+        </Text>
         {data.desc && (
           <View
             style={{
@@ -39,7 +50,7 @@ export default function MarketCard2({
               numberOfLines={2}
               style={{
                 fontSize: textScale(12),
-                color: colors.textGreyJ,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyJ,
                 fontFamily: fontFamily.regular,
               }}>
               {data.desc}
@@ -61,11 +72,14 @@ export default function MarketCard2({
         </View>
         {data?.product_avg_average_rating && (
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Image style={{tintColor: colors.black}} source={imagePath.star} />
+            <Image
+              style={{tintColor: isDarkMode ? colors.yellowB : colors.black}}
+              source={imagePath.star}
+            />
 
             <Text
               style={{
-                color: colors.blackC,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.blackC,
                 fontSize: textScale(11),
                 fontFamily: fontFamily.medium,
                 marginHorizontal: moderateScale(5),

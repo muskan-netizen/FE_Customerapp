@@ -11,8 +11,6 @@ import {
 import {MyDarkTheme} from '../../styles/theme';
 
 export default ({themeColors, fontFamily}) => {
-  const isDarkMode = useDarkMode();
-
   const styles = StyleSheet.create({
     topLogo: {
       justifyContent: 'center',
@@ -234,7 +232,7 @@ export default ({themeColors, fontFamily}) => {
       paddingLeft: 5,
       lineHeight: 20,
       fontFamily: fontFamily.regular,
-      color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+      color: colors.textGrey,
       fontSize: textScale(10),
     },
     deliveryIcon: {
@@ -274,7 +272,7 @@ export default ({themeColors, fontFamily}) => {
       marginVertical: moderateScale(13),
     },
     exploreStoresTxt: {
-      color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
+      color: colors.textGreyB,
       fontFamily: fontFamily.regular,
       fontSize: textScale(16),
       marginBottom: moderateScale(10),

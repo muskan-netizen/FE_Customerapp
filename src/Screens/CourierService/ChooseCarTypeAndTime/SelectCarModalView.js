@@ -42,7 +42,8 @@ export default function SelectCarModalView({
   _select,
   onPressAvailableVendor,
 }) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );

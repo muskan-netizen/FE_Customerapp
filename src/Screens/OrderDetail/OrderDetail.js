@@ -47,7 +47,8 @@ import LottieView from 'lottie-react-native';
 const {height, width} = Dimensions.get('window');
 
 export default function OrderDetail({navigation, route}) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const paramData = route?.params;
 
   const [state, setState] = useState({
@@ -909,7 +910,6 @@ export default function OrderDetail({navigation, route}) {
                 // top right sand 1
               ]}
             />
-
             <Text style={styles.waitToAccept}>{strings.WAITINGTOACCEPT}</Text>
           </View>
         )}
@@ -1039,7 +1039,9 @@ export default function OrderDetail({navigation, route}) {
         leftIcon={
           appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
-        centerTitle={`Order #${cartData?.order_number?cartData?.order_number:''}`}
+        centerTitle={`Order #${
+          cartData?.order_number ? cartData?.order_number : ''
+        }`}
       />
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
       <View

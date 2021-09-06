@@ -23,7 +23,8 @@ export default function Location({route, navigation}) {
   const addressType = route?.params?.addressType;
 
   console.log(addressType, 'addressType');
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const [state, setState] = useState({
     isLoading: true,
     address: '',

@@ -9,7 +9,7 @@ export default ({fontFamily}) => {
       lineHeight: 24,
       color: colors.blackB,
       // textAlign: 'center',
-      fontFamily: fontFamily.bold,
+      fontFamily: fontFamily.regular,
       fontSize: textScale(14),
       marginTop: moderateScaleVertical(14),
     },
@@ -17,7 +17,7 @@ export default ({fontFamily}) => {
       lineHeight: 24,
       color: colors.blackB,
       // textAlign: 'center',
-      fontFamily: fontFamily.bold,
+      fontFamily: fontFamily.regular,
       fontSize: textScale(14),
     },
   });

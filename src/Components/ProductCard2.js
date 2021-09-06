@@ -17,6 +17,9 @@ import {
 } from '../utils/helperFunctions';
 import HTMLView from 'react-native-htmlview';
 import DashedLine from 'react-native-dashed-line';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
+import {StyleSheet} from 'react-native';
 
 export default function ProductCard2({
   data = {},
@@ -28,6 +31,8 @@ export default function ProductCard2({
   activeOpacity = 1,
   bottomText = strings.BUY_NOW,
 }) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
@@ -69,6 +74,7 @@ export default function ProductCard2({
             style={{
               ...commonStyles.futuraBtHeavyFont14,
               width: moderateScaleVertical(220),
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
             {data?.translation[0]?.title}
           </Text>
@@ -84,7 +90,7 @@ export default function ProductCard2({
             numberOfLines={1}
             style={{
               ...commonStyles.mediumFont14,
-              color: colors.black,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
             {`${currencies?.primary_currency?.symbol}${(
               Number(data?.variant[0]?.multiplier) *
@@ -94,10 +100,11 @@ export default function ProductCard2({
         </View>
         {data?.translation[0]?.body_html && (
           <HTMLView
-            value={data?.translation[0]?.body_html}
+            value={`<p>${data?.translation[0]?.body_html} </p>`}
             nodeComponentProps={{
               numberOfLines: 1,
             }}
+            stylesheet={htmlStyle}
           />
         )}
 
@@ -227,3 +234,9 @@ export default function ProductCard2({
     </TouchableOpacity>
   );
 }
+
+const htmlStyle = StyleSheet.create({
+  p: {
+    color: '#e5e5e7', // make links coloured pink
+  },
+});

@@ -11,7 +11,11 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import {moderateScale} from '../../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  width,
+} from '../../styles/responsiveSize';
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from '../Vendors/ListEmptyVendors';
 import {useDarkMode} from 'react-native-dark-mode';
@@ -20,7 +24,9 @@ import {MyDarkTheme} from '../../styles/theme';
 export default function VendorDetail({navigation, route}) {
   let vendorParams = route?.params?.data;
   console.log(vendorParams, 'vendorParams>>>>>>>');
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  // alert("312")
+  const isDarkMode = theme;
   const [state, setState] = useState({
     vendorId: vendorParams?.item?.id || vendorParams.id,
     vendordName: vendorParams.name || '',
@@ -191,10 +197,20 @@ export default function VendorDetail({navigation, route}) {
           ItemSeparatorComponent={() => <View style={{height: 10}} />}
           renderItem={_renderItem}
           ListEmptyComponent={
-            <ListEmptyVendors
-              isLoading={isLoading}
-              emptyText={'No data found'}
-            />
+            !isLoading && (
+              <View
+                style={{
+                  flex: 1,
+                  marginTop: moderateScaleVertical(width / 2),
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <ListEmptyVendors
+                  isLoading={isLoading}
+                  emptyText={'No data found'}
+                />
+              </View>
+            )
           }
           keyExtractor={(item, index) => String(index)}
         />

@@ -44,7 +44,8 @@ export default function OrderCardVendorComponent({
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = useDarkMode();
+
+  const isDarkMode = theme;
   const imageUrl =
     data && data.user_image
       ? getImageUrl(

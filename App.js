@@ -20,6 +20,9 @@ import Container from './src/library/toastify-react-native';
 import {moderateScaleVertical, width} from './src/styles/responsiveSize';
 import fontFamily from './src/styles/fontFamily';
 import {RFPercentage} from 'react-native-responsive-fontsize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from './src/styles/theme';
+import colors from './src/styles/colors';
 import {Linking} from 'react-native';
 import {navigate} from './src/navigation/NavigationService';
 import {getParameterByName, getUrlRoutes} from './src/utils/helperFunctions';
@@ -56,6 +59,7 @@ const App = () => {
   //   };
   // }, []);
 
+  const isDarkMode = useDarkMode();
   useEffect(() => {
     //stop splahs screen from loading
     setTimeout(() => {
@@ -124,21 +128,34 @@ const App = () => {
           payload: dine_in_type,
         });
       }
-      // const theme = await getItem('theme');
-      // if (theme) {
-      //   dispatch({
-      //     type: types.THEME,
-      //     payload: JSON.parse(theme),
-      //   });
-      // }
-
-      // const themeToggle = await getItem('istoggle');
-      // if (themeToggle) {
-      //   dispatch({
-      //     type: types.THEME_TOGGLE,
-      //     payload: JSON.parse(themeToggle),
-      //   });
-      // }
+      const theme = await getItem('theme');
+      const themeToggle = await getItem('istoggle');
+      if (JSON.parse(themeToggle)) {
+        dispatch({
+          type: types.THEME_TOGGLE,
+          payload: JSON.parse(themeToggle),
+        });
+        if (JSON.parse(theme)) {
+          dispatch({
+            type: types.THEME,
+            payload: true,
+          });
+        } else {
+          dispatch({
+            type: types.THEME,
+            payload: false,
+          });
+        }
+      } else {
+        dispatch({
+          type: types.THEME,
+          payload: isDarkMode,
+        });
+        dispatch({
+          type: types.THEME_TOGGLE,
+          payload: JSON.parse(themeToggle),
+        });
+      }
 
       //Language
       const getLanguage = await getItem('language');

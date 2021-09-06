@@ -38,7 +38,8 @@ import {MyDarkTheme} from '../../../styles/theme';
 
 export default function MultipleDropOffSelection({navigation, route}) {
   const paramData = route?.params;
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   console.log(paramData, 'paramData');
   const {appData, allAddresss, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,

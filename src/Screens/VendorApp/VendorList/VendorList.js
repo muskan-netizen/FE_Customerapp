@@ -22,7 +22,8 @@ import {MyDarkTheme} from '../../../styles/theme';
 // import OrderCardComponent from './OrderCardComponent';
 
 export default function VendorList({navigation, route}) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   console.log(route.params, 'VendorList params');
   const {allVendors, selectedVendor, screenType} = route.params;
   const [state, setState] = useState({

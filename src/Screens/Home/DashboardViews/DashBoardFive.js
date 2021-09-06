@@ -49,7 +49,8 @@ export default function DashBoardFive({
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const isDarkMode = useDarkMode();
+
+  const isDarkMode = theme;
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
@@ -214,7 +215,15 @@ export default function DashBoardFive({
           />
         ) : appMainData?.vendors && appMainData?.vendors?.length ? (
           <View>
-            <Text style={styles.exploreStoresTxt}>
+            <Text
+              style={[
+                styles.exploreStoresTxt,
+                {
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyB,
+                },
+              ]}>
               {strings.EXPLORE_STORES}
             </Text>
             <FlatList

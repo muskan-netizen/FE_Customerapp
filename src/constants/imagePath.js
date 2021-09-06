@@ -170,6 +170,7 @@ export default {
   mapPin3: require('../assets/images/Courier/destination.png'),
   cabImage: require('../assets/images/Courier/cab.png'),
   checkbox: require('../assets/images/Courier/Checkbox.png'),
+  inactive_checkbox: require('../assets/images/Courier/ic_inactive2.png'),
   toolTip: require('../assets/images/Courier/info.png'),
   user: require('../assets/images/Courier/user.png'),
   briefcase: require('../assets/images/Courier/briefcase.png'),
@@ -238,8 +239,8 @@ export default {
 
   ic_add: require('../assets/images/ic_add_new_location.png'),
   ic_cross: require('../assets/images/ic_backwd_dark.png'),
-  dark: require('../assets/images/DARK.jpg'),
-  light: require('../assets/images/LIGHT.jpg'),
+  dark: require('../assets/images/ic_dark.png'),
+  light: require('../assets/images/ic_light.png'),
   dropDownNew: require('../assets/images/ic_drpdwn.png'),
   dineIn: require('../assets/images/ic_dine.png'),
   dineInInActive: require('../assets/images/ic_dine1.png'),
@@ -249,4 +250,10 @@ export default {
   radioNewInActive: require('../assets/images/ic_radio1.png'),
   deliveryInActive: require('../assets/images/ic_delivery1.png'),
   crossC: require('../assets/images/ic_crossNew.png'),
+
+  //gif images
+  search_gif: require('../assets/images/gif/search.gif'),
+  cart_gif:require('../assets/images/gif/emptycart.gif'),
+
+  
 };
