@@ -18,19 +18,9 @@ export default function ListEmptyVendors({
   vendorContainerStyle = {},
   pRows = 0,
   dotsLength = false,
+  rowContainerstyle = {},
+  pWidth = 0,
 }) {
-  // const dotsView = () => {
-  //   for (i = 0; i <= dotsLength, i++; ) {
-  //     <View
-  //       style={{
-  //         backgroundColor: 'green',
-  //         height: moderateScale(8),
-  //         width: moderateScale(8),
-  //         alignSelf: 'center',
-  //       }}></View>;
-  //   }
-  // };
-
   const dotsView = () => {
     return (
       <View
@@ -51,6 +41,8 @@ export default function ListEmptyVendors({
           height={height}
           listSize={listSize}
           pRows={pRows}
+          pWidth={pWidth}
+          rowContainerstyle={rowContainerstyle}
           containerStyle={{
             marginLeft: moderateScale(16),
             ...vendorContainerStyle,

@@ -206,8 +206,11 @@ export default function DashBoardFive({
             isLoading={isLoading}
             emptyText={'No data found'}
             listSize={3}
+            pRows={2}
+            pWidth={'100%'}
+            rowContainerstyle={{marginBottom: moderateScale(25)}}
             height={moderateScaleVertical(130)}
-            vendorContainerStyle={{marginLeft: 0}}
+            vendorContainerStyle={{marginLeft: 0, marginTop: moderateScale(60)}}
           />
         ) : appMainData?.vendors && appMainData?.vendors?.length ? (
           <View>

@@ -173,7 +173,13 @@ export default function Vendors3({route, navigation}) {
         onEndReachedThreshold={0.5}
         // onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
         ListEmptyComponent={
-          <ListEmptyVendors isLoading={isLoading} emptyText={'No data found'} />
+          <ListEmptyVendors
+            isLoading={isLoading}
+            emptyText={'No data found'}
+            pRows={2}
+            pWidth={'100%'}
+            rowContainerstyle={{marginBottom: moderateScale(25)}}
+          />
         }
         ListFooterComponent={() => <View style={{height: 100}} />}
       />
