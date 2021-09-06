@@ -491,11 +491,11 @@ export default function AddressModal({
                 paddingHorizontal: 8,
               }}>
               <TextInput
-                selectionColor={colors.black}
+                selectionColor={
+                  isDarkMode ? MyDarkTheme.colors.text : colors.black
+                }
                 placeholderTextColor={
-                  isDarkMode
-                    ? [styles.textGreyOpcaity7, {color: '#ffff'}]
-                    : colors.textGreyOpcaity7
+                  isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7
                 }
                 onChangeText={_onChangeText('country')}
                 placeholder={strings.COUNTRY}

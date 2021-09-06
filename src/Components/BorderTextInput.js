@@ -60,7 +60,7 @@ export default function BorderTextInput({
         color: colors.white,
         borderWidth: 1,
         borderRadius: 13,
-        borderColor: color ? color : colors.borderLight,
+        borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.borderLight,
         marginBottom,
         overflow: 'hidden',
         ...containerStyle,
@@ -74,11 +74,11 @@ export default function BorderTextInput({
       <TextInput
         selectionColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
         placeholder={placeholder}
-        placeholderTextColor={color}
+        placeholderTextColor={isDarkMode ? MyDarkTheme.colors.text : color}
         style={{
           flex: 1,
           opacity: 0.7,
-          color: theme ? MyDarkTheme.colors.text : colors.textGreyOpcaity7,
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7,
           fontFamily: fontFamily.medium,
           fontSize: textScale(14),
           paddingHorizontal: 8,
