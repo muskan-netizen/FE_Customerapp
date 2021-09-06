@@ -39,7 +39,9 @@ const WrapperContainer = ({
           : statusBarColor,
       }}>
       <StatusBar
-        backgroundColor={statusBarColor}
+        backgroundColor={
+          isDarkMode ? MyDarkTheme.colors.background : statusBarColor
+        }
         barStyle={isDarkMode ? 'light-content' : barStyle}
       />
       <View style={{backgroundColor: bgColor, flex: 1}}>{children}</View>
