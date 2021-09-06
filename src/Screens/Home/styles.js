@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import colors from '../../styles/colors';
 import {
   height,
@@ -7,8 +8,11 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default ({themeColors, fontFamily}) => {
+  const isDarkMode = useDarkMode();
+
   const styles = StyleSheet.create({
     topLogo: {
       justifyContent: 'center',
@@ -218,6 +222,62 @@ export default ({themeColors, fontFamily}) => {
       alignSelf: 'flex-end',
       marginTop: moderateScale(20),
       marginBottom: moderateScale(5),
+    },
+    headerContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingHorizontal: moderateScale(15),
+      marginTop: moderateScale(5),
+    },
+    locationIcon: {
+      height: moderateScale(18),
+      width: moderateScale(18),
+      tintColor: themeColors.primary_color,
+    },
+    locationTxt: {
+      paddingLeft: 5,
+      lineHeight: 20,
+      fontFamily: fontFamily.regular,
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+      fontSize: textScale(10),
+    },
+    deliveryIcon: {
+      width: moderateScale(18),
+      height: moderateScale(18),
+      tintColor: themeColors.primary_color,
+    },
+    checkedTxt: {
+      fontFamily: fontFamily.regular,
+      color: themeColors.primary_color,
+      marginHorizontal: moderateScale(3),
+    },
+    customDropDownIcon: {
+      width: moderateScale(8),
+      height: moderateScale(8),
+      tintColor: themeColors.primary_color,
+      marginTop: moderateScaleVertical(3),
+    },
+    crossIcon: {
+      tintColor: themeColors.primary_color,
+      height: moderateScale(23),
+      width: moderateScale(23),
+    },
+    searchBar: {
+      flexDirection: 'row',
+      height: moderateScaleVertical(50),
+      backgroundColor: colors.greyNew,
+      borderRadius: moderateScale(15),
+      paddingHorizontal: moderateScale(15),
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginHorizontal: moderateScale(15),
+      marginVertical: moderateScale(13),
+    },
+    exploreStoresTxt: {
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(16),
+      marginBottom: moderateScale(10),
     },
   });
 

@@ -241,4 +241,7 @@ export default {
   dark: require('../assets/images/DARK.jpg'),
   light: require('../assets/images/LIGHT.jpg'),
   dropDownNew: require('../assets/images/ic_drpdwn.png'),
+
+  //gif images
+  search_gif:require('../assets/images/gif/search.gif'),
 };

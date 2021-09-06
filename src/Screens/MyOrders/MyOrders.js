@@ -46,7 +46,7 @@ export default function MyOrders({navigation}) {
     tabBarData: [
       {title: strings.ACTIVE_ORDERS, isActive: true},
       {title: strings.PAST_ORDERS, isActive: false},
-      {title: strings.SCHEDULED_ORDERS, isActive: false},
+      // {title: strings.SCHEDULED_ORDERS, isActive: false},
     ],
     selectedTab: strings.ACTIVE_ORDERS,
     orders: [],
@@ -401,7 +401,7 @@ export default function MyOrders({navigation}) {
             : {backgroundColor: colors.white}
         }
         onPress={(tabData) => changeTab(tabData)}
-        customTextContainerStyle={{width: width / 3}}
+        customTextContainerStyle={{width: width / 2}}
       />
 
       <FlatList
