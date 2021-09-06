@@ -3,6 +3,7 @@ import {Image} from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 import imagePath from '../constants/imagePath';
 import {useSelector} from 'react-redux';
+import colors from '../styles/colors';
 
 export default function StepIndicators({
   containerStyle = {},
@@ -36,7 +37,7 @@ export default function StepIndicators({
     stepIndicatorLabelCurrentColor: 'transparent',
     stepIndicatorLabelFinishedColor: 'transparent',
     stepIndicatorLabelUnFinishedColor: 'transparent',
-    labelColor: '#000000',
+    labelColor: colors.lightGreyBgColor,
     labelSize: 12,
     currentStepLabelColor: themeColor.primary_color,
     labelFontFamily: fontFamily.regular,
