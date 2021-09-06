@@ -31,7 +31,7 @@ export default function StepIndicators({
     stepIndicatorLabelFinishedColor: 'transparent',
     stepIndicatorLabelUnFinishedColor: 'transparent',
     labelColor: '#999999',
-    labelSize: 13,
+    labelSize: 12,
     currentStepLabelColor: themeColor.primary_color,
   };
 

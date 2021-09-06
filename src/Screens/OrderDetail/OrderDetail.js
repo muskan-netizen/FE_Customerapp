@@ -40,7 +40,7 @@ const {height, width} = Dimensions.get('window');
 export default function OrderDetail({navigation, route}) {
   const isDarkMode = useDarkMode();
   const paramData = route?.params;
-  console.log(paramData, 'paramsData.....');
+  
   const [state, setState] = useState({
     isLoading: true,
     cartItems: [],
@@ -84,8 +84,8 @@ export default function OrderDetail({navigation, route}) {
       data['vendor_id'] = paramData?.selectedVendor.id;
     }
 
-    console.log(data, '_getOrderDetailScreen data >>>>>>');
-    // console.log(paramData?.orderId,"orderId");
+    
+    // 
     updateState({isLoading: true});
     actions
       .getOrderDetail(data, {
@@ -95,7 +95,7 @@ export default function OrderDetail({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'get order detail res>>>>');
+        
         updateState({isLoading: false});
         if (res?.data) {
           updateState({
@@ -112,13 +112,13 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const errorMethod = (error) => {
-    console.log(error, 'error');
+    
     updateState({isLoading: false, isLoading: false, isLoadingC: false});
     showError(error?.message || error?.error);
   };
 
   const onStarRatingPress = (i, rating) => {
-    console.log(i, 't>>>');
+    
     // updateState({isLoading: true});
     _giveRatingToProduct(i, rating);
   };
@@ -133,7 +133,7 @@ export default function OrderDetail({navigation, route}) {
       ? productDetail?.product_rating?.review
       : '';
     // data['vendor_id'] = productDetail.vendor_id;
-    console.log(data, '>datadatadatadatadata');
+    
     actions
       .giveRating(data, {
         code: appData?.profile?.code,
@@ -141,7 +141,7 @@ export default function OrderDetail({navigation, route}) {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res, 'res>>>');
+        
         let cloned_cartItems = cloneDeep(cartItems);
         updateState({
           isLoading: false,
@@ -811,7 +811,7 @@ export default function OrderDetail({navigation, route}) {
       cartData?.user_image?.image_path,
       '500/500',
     );
-    console.log(cartData, 'cartData>cartData>cartData');
+    
     return (
       <>
         {paramData?.orderStatus?.current_status?.title == 'Placed' && (
@@ -829,18 +829,19 @@ export default function OrderDetail({navigation, route}) {
             <Text style={styles.waitToAccept}>{strings.WAITINGTOACCEPT}</Text>
           </View>
         )}
-        {paramData?.orderStatus?.current_status?.title != 'Rejected' && (
-          <View
-            style={{
-              marginVertical: moderateScaleVertical(20),
-            }}>
-            <StepIndicators
-              labels={labels}
-              currentPosition={currentPosition}
-              themeColor={themeColors}
-            />
-          </View>
-        )}
+        {paramData?.orderStatus?.current_status?.title != 'Rejected' &&
+          paramData?.orderStatus?.current_status?.title != 'Placed' && (
+            <View
+              style={{
+                marginVertical: moderateScaleVertical(20),
+              }}>
+              <StepIndicators
+                labels={labels}
+                currentPosition={currentPosition}
+                themeColor={themeColors}
+              />
+            </View>
+          )}
 
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <View
