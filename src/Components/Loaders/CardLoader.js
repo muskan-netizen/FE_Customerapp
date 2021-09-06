@@ -18,7 +18,12 @@ export default function CardLoader({
 }) {
   const contentCard = () => {
     return (
-      <View style={{...containerStyle, width: cardWidth, padding: 0}}>
+      <View
+        style={{
+          ...containerStyle,
+          width: cardWidth,
+          padding: 0,
+        }}>
         <ContentLoader
           active
           listSize={listSize}

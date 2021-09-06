@@ -113,12 +113,13 @@ export default function DashBoardFive({
           paddingHorizontal: moderateScale(15),
         }}>
         {isLoading ? (
-          <View style={{marginTop: moderateScale(10)}}>
+          <View style={{marginTop: moderateScale(5)}}>
             <CategoryLoader
               listSize={2}
               isRow
               cardWidth={80}
-              height={moderateScale(80)}
+              pRows={1}
+              height={moderateScale(70)}
               containerStyle={{marginVertical: moderateScale(5)}}
             />
           </View>
@@ -146,12 +147,13 @@ export default function DashBoardFive({
             />
           </View>
         ) : null}
-        <View style={{marginTop: moderateScale(20)}}>
+        <View style={{marginVertical: moderateScale(30)}}>
           {isLoading ? (
             <ListEmptyVendors
               isLoading={isLoading}
               emptyText={'No data found'}
               listSize={1}
+              dotsLength={true}
               height={moderateScaleVertical(130)}
               vendorContainerStyle={{marginLeft: 0}}
             />

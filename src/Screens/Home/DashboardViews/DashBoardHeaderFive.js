@@ -266,108 +266,100 @@ export default function DashBoardHeaderFive({
 
   return (
     <>
-      {isLoading ? (
-        <ListEmptyVendors
-          isLoading={isLoading}
-          listSize={1}
-          height={moderateScaleVertical(35)}
-        />
-      ) : (
-        <View style={styles.headerContainer}>
-          <View
-            style={{
-              flexDirection: 'row',
-              flex: 1,
-            }}>
-            {!!appData?.profile?.preferences?.is_hyperlocal && (
-              <TouchableOpacity
-                activeOpacity={1}
-                onPress={() =>
-                  navigation.navigate(navigationStrings.LOCATION, {
-                    type: 'Home1',
-                  })
-                }
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  flex: 0.85,
-                }}>
-                <Image
-                  style={styles.locationIcon}
-                  source={imagePath.redLocation}
-                  resizeMode="contain"
-                />
+      <View style={styles.headerContainer}>
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 1,
+          }}>
+          {!!appData?.profile?.preferences?.is_hyperlocal && (
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() =>
+                navigation.navigate(navigationStrings.LOCATION, {
+                  type: 'Home1',
+                })
+              }
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                flex: 0.85,
+              }}>
+              <Image
+                style={styles.locationIcon}
+                source={imagePath.redLocation}
+                resizeMode="contain"
+              />
 
-                <Text numberOfLines={1} style={styles.locationTxt}>
-                  {location?.address}
-                </Text>
-              </TouchableOpacity>
-            )}
-          </View>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            style={{
-              paddingVertical: moderateScaleVertical(5),
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-            onPress={() => updateState({isModalVisible: true})}>
-            <Image
-              source={imagePath.delivery}
-              style={styles.deliveryIcon}
-              resizeMode="contain"
-            />
-
-            <Text style={styles.checkedTxt}>{checked}</Text>
-
-            <Image
-              source={imagePath.dropDownNew}
-              style={styles.customDropDownIcon}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <Modal
-            transparent={true}
-            isVisible={isModalVisible}
-            testID={'modal'}
-            style={{justifyContent: 'flex-end', margin: 0}}>
-            <View style={styles.modalMainViewContainer}>
-              <TouchableOpacity
-                style={styles.closeButton}
-                onPress={() => updateState({isModalVisible: false})}>
-                <Image
-                  source={imagePath.crossB}
-                  style={styles.crossIcon}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-              <View style={{marginHorizontal: moderateScale(30)}}>
-                <RadioButton.Group
-                  onValueChange={
-                    !(
-                      cartItemCount?.message == null &&
-                      cartItemCount?.data?.item_count > 0
-                    )
-                      ? _onChangeRadioToggle
-                      : dineInFunction
-                  }
-                  value={checked}>
-                  {tabs.map((item, indx) => {
-                    return (
-                      <RadioButton.Item
-                        color={themeColors.primary_color}
-                        key={indx}
-                        label={item}
-                        value={item}
-                      />
-                    );
-                  })}
-                </RadioButton.Group>
-              </View>
-            </View>
-          </Modal>
+              <Text numberOfLines={1} style={styles.locationTxt}>
+                {location?.address}
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
-      )}
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={{
+            paddingVertical: moderateScaleVertical(5),
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+          onPress={() => updateState({isModalVisible: true})}>
+          <Image
+            source={imagePath.delivery}
+            style={styles.deliveryIcon}
+            resizeMode="contain"
+          />
+
+          <Text style={styles.checkedTxt}>{checked}</Text>
+
+          <Image
+            source={imagePath.dropDownNew}
+            style={styles.customDropDownIcon}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+        <Modal
+          transparent={true}
+          isVisible={isModalVisible}
+          testID={'modal'}
+          style={{justifyContent: 'flex-end', margin: 0}}>
+          <View style={styles.modalMainViewContainer}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => updateState({isModalVisible: false})}>
+              <Image
+                source={imagePath.crossB}
+                style={styles.crossIcon}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+            <View style={{marginHorizontal: moderateScale(30)}}>
+              <RadioButton.Group
+                onValueChange={
+                  !(
+                    cartItemCount?.message == null &&
+                    cartItemCount?.data?.item_count > 0
+                  )
+                    ? _onChangeRadioToggle
+                    : dineInFunction
+                }
+                value={checked}>
+                {tabs.map((item, indx) => {
+                  return (
+                    <RadioButton.Item
+                      color={themeColors.primary_color}
+                      key={indx}
+                      label={item}
+                      value={item}
+                    />
+                  );
+                })}
+              </RadioButton.Group>
+            </View>
+          </View>
+        </Modal>
+      </View>
     </>
   );
 }

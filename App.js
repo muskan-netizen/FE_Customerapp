@@ -20,9 +20,40 @@ import Container from './src/library/toastify-react-native';
 import {moderateScaleVertical, width} from './src/styles/responsiveSize';
 import fontFamily from './src/styles/fontFamily';
 import {RFPercentage} from 'react-native-responsive-fontsize';
+import {Linking} from 'react-native';
+import {navigate} from './src/navigation/NavigationService';
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
+
+  // deep linking
+
+  // async function handleDynamicLink(deepLinkUrl) {
+  //   if (deepLinkUrl != null) {
+  //     setItem('deepLinkUrl', deepLinkUrl);
+  //     let id = getParameterByName('id', deepLinkUrl);
+  //     let routeName = getUrlRoutes(deepLinkUrl, 1);
+  //     if (routeName === 'vendor') {
+  //       selcetedToggle('dine_in');
+  //       const item = {};
+  //       item['id'] = id;
+  //       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, item)();
+
+  //       setTimeout(() => {
+  //         navigate(navigationStrings.POST_DETAIL, item);
+  //       }, 2000);
+  //     }
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   Linking.getInitialURL().then((link) => handleDynamicLink(link));
+
+  //   Linking.addEventListener('url', handleDynamicLink);
+  //   return () => {
+  //     Linking.removeEventListener('url', handleDynamicLink);
+  //   };
+  // }, []);
 
   useEffect(() => {
     //stop splahs screen from loading

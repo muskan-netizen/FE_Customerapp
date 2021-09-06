@@ -27,6 +27,7 @@ import {
 } from './DashboardViews/Index';
 import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
 import {useDarkMode} from 'react-native-dark-mode';
+import Geocoder from 'react-native-geocoding';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -166,6 +167,9 @@ export default function Home({route, navigation}) {
       homeData();
     }
   }, [updateTime]);
+  useEffect(() => {
+    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+  }, []);
 
   // useEffect(() => {
 
@@ -190,27 +194,27 @@ export default function Home({route, navigation}) {
   //   };
   // }, []);
 
-  useEffect(() => {
-    if (linkedURL) {
-      moveToLink(linkedURL);
-    }
-    resetURL();
-  }, [linkedURL, resetURL]);
+  // useEffect(() => {
+  //   if (linkedURL) {
+  //     moveToLink(linkedURL);
+  //   }
+  //   resetURL();
+  // }, [linkedURL, resetURL]);
 
-  const moveToLink = (deepLinkUrl) => {
-    console.log();
-    if (deepLinkUrl != null) {
-      setItem('deepLinkUrl', deepLinkUrl);
-      let id = getParameterByName('id', deepLinkUrl);
-      let routeName = getUrlRoutes(deepLinkUrl, 1);
-      if (routeName === 'vendor') {
-        selcetedToggle('dine_in');
-        const item = {};
-        item['id'] = id;
-        moveToNewScreen(navigationStrings.VENDOR_DETAIL, item)();
-      }
-    }
-  };
+  // const moveToLink = (deepLinkUrl) => {
+  //   console.log();
+  //   if (deepLinkUrl != null) {
+  //     setItem('deepLinkUrl', deepLinkUrl);
+  //     let id = getParameterByName('id', deepLinkUrl);
+  //     let routeName = getUrlRoutes(deepLinkUrl, 1);
+  //     if (routeName === 'vendor') {
+  //       selcetedToggle('dine_in');
+  //       const item = {};
+  //       item['id'] = id;
+  //       moveToNewScreen(navigationStrings.VENDOR_DETAIL, item)();
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     chekLocationPermission()
