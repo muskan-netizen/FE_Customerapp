@@ -48,14 +48,16 @@ export default function Settings({route, navigation}) {
       {
         id: 1,
         image: imagePath.light,
-        selectedImage: imagePath.done,
+        selectedImage: imagePath.checkbox,
         type: 'light',
+        themeType: 'Light',
       },
       {
         id: 2,
         image: imagePath.dark,
-        selectedImage: imagePath.done,
+        selectedImage: imagePath.checkbox,
         type: 'dark',
+        themeType: 'Dark',
       },
     ],
     selectedThemeOption: null,
@@ -216,11 +218,54 @@ export default function Settings({route, navigation}) {
       <View style={{...commonStyles.headerTopLine}} />
       {/* <KeyboardAwareScrollView bounces={false}> */}
 
+      {isOn ? (
+        <View
+          style={{
+            flexDirection: 'row',
+            marginHorizontal: moderateScale(20),
+            marginTop: moderateScaleVertical(20),
+
+            justifyContent: 'space-around',
+            paddingVertical: moderateScaleVertical(10),
+            paddingHorizontal: moderateScale(20),
+            height: moderateScaleVertical(height - height + 60),
+            marginVertical: moderateScaleVertical(20),
+          }}>
+          {selectedThemeOptions.map((i, inx) => {
+            return (
+              <TouchableOpacity onPress={() => _setApperance(i)}>
+                <Image source={i.image} />
+                <Text
+                  style={{
+                    marginHorizontal: moderateScale(12),
+                    marginVertical: moderateScaleVertical(5),
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  }}>
+                  {i.themeType}
+                </Text>
+                <View
+                  style={{
+                    marginHorizontal: moderateScale(15),
+                    marginVertical: moderateScaleVertical(5),
+                  }}>
+                  {selectedThemeOption && selectedThemeOption?.id == i.id ? (
+                    <Image source={i.selectedImage} />
+                  ) : (
+                    <Image source={imagePath.inactive_checkbox} />
+                  )}
+                </View>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      ) : null}
       <View
         style={{
           flexDirection: 'row',
           marginHorizontal: moderateScale(20),
-          marginTop: moderateScaleVertical(20),
+          marginTop: toggleTheme
+            ? moderateScaleVertical(95)
+            : moderateScaleVertical(20),
           justifyContent: 'space-between',
           ...commonStyles.shadowStyle,
           paddingVertical: moderateScaleVertical(10),
@@ -248,47 +293,11 @@ export default function Settings({route, navigation}) {
           onToggle={(isOn) => _toggleOnOff(isOn)}
         />
       </View>
-
-      {isOn ? (
-        <View
-          style={{
-            flexDirection: 'row',
-            marginHorizontal: moderateScale(20),
-            marginTop: moderateScaleVertical(20),
-            justifyContent: 'space-around',
-            paddingVertical: moderateScaleVertical(10),
-            paddingHorizontal: moderateScale(20),
-            height: moderateScaleVertical(height - height + 60),
-            marginVertical: moderateScaleVertical(20),
-          }}>
-          {selectedThemeOptions.map((i, inx) => {
-            return (
-              <TouchableOpacity onPress={() => _setApperance(i)}>
-                <View
-                  style={{
-                    position: 'absolute',
-                    zIndex: 1000,
-                    end: -15,
-                    marginTop: -12,
-                  }}>
-                  {selectedThemeOption && selectedThemeOption?.id == i.id ? (
-                    <Image source={i.selectedImage} />
-                  ) : null}
-                </View>
-                <Image
-                  style={{
-                    height: moderateScaleVertical(70),
-                    width: moderateScale(70),
-                  }}
-                  source={i.image}
-                />
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-      ) : null}
-
-      <View style={{flexDirection: 'row', marginHorizontal: moderateScale(20)}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          marginHorizontal: moderateScale(20),
+        }}>
         <Text
           style={
             isDarkMode

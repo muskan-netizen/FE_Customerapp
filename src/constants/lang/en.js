@@ -371,5 +371,5 @@ export default {
   SFC_LICENSE: 'SFC Licence',
   NOVARIANTPRODUCTAVAILABLE: 'This option is currenty not available',
   WAITINGTOACCEPT: 'Waiting for the order to be accepted',
-  DARK_APPEARANCE: 'Theme Appearance',
+  DARK_APPEARANCE: 'Appearance',
 };
