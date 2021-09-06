@@ -1907,6 +1907,7 @@ export default function Cart({navigation, route}) {
                   width: moderateScale(100),
                 }}
               />
+               <Text style={styles.textStyle}>{strings.NOPRODUCTCART}</Text>
             </View>
           )}
           style={{flex: 1}}

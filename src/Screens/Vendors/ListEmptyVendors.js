@@ -1,13 +1,18 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import CardLoader from '../../Components/Loaders/CardLoader';
 import NoDataFound from '../../Components/NoDataFound';
 import imagePath from '../../constants/imagePath';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
   width,
 } from '../../styles/responsiveSize';
+import LottieView from 'lottie-react-native';
+import {noDataFound} from '../../Components/Loaders/AnimatedLoaderFiles';
+import {useSelector} from 'react-redux';
+import commonStylesFunc from '../../styles/commonStyles';
 
 export default function ListEmptyVendors({
   isLoading = false,
@@ -22,6 +27,7 @@ export default function ListEmptyVendors({
   rowContainerstyle = {},
   pWidth = 0,
 }) {
+  const styles = stylesData();
   const dotsView = () => {
     return (
       <View
@@ -64,14 +70,40 @@ export default function ListEmptyVendors({
     );
   }
   return (
-    <NoDataFound
-      text={emptyText}
-      isLoading={isLoading}
-      containerStyle={containerStyle}
-    />
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <LottieView
+        source={noDataFound}
+        autoPlay
+        loop
+        style={{
+          height: moderateScaleVertical(width / 2),
+          width: moderateScale(width / 2),
+        }}
+      />
+      <Text style={styles.textStyle}>{emptyText}</Text>
+    </View>
     // <View>
     //   <Image source={imagePath.}/>
     // </View>
-    
   );
+}
+
+export function stylesData(params) {
+  const {themeColors, appStyle} = useSelector((state) => state.initBoot);
+  const fontFamily = appStyle?.fontSizeData;
+  const commonStyles = commonStylesFunc({fontFamily});
+
+  const styles = StyleSheet.create({
+    containerStyle: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      // marginVertical: moderateScaleVertical(height / 4),
+    },
+    textStyle: {
+      ...commonStyles.mediumFont16,
+      fontSize: textScale(18),
+    },
+  });
+  return styles;
 }

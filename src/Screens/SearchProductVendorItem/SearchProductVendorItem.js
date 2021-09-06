@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne, searchLoader} from '../../Components/Loaders/AnimatedLoaderFiles';
 import SearchBar from '../../Components/SearchBar';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -19,6 +19,7 @@ import {
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import LottieView from 'lottie-react-native';
 
 export default function SearchProductVendorItem({navigation, route}) {
   const [state, setState] = useState({
@@ -203,7 +204,16 @@ export default function SearchProductVendorItem({navigation, route}) {
   const _listEmptyComponent = () => {
     return (
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
-        <Image source={imagePath.search_gif} />
+        <LottieView
+                source={searchLoader}
+                autoPlay
+                loop
+                style={{
+                  height: moderateScaleVertical(200),
+                  width: moderateScale(200),
+                }}
+              />
+        {/* <Image source={imagePath.search_gif} /> */}
       </View>
     );
   };
