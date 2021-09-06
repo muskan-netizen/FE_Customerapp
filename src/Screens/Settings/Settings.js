@@ -32,9 +32,8 @@ export default function Settings({route, navigation}) {
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  // const theme = useSelector((state) => state?.initBoot?.themeColor);
+  // const isDarkMode = useDarkMode();
   const isDarkMode = theme;
-
   const {currencies, appData, languages, appStyle, themeColors} = useSelector(
     (state) => state?.initBoot,
   );
@@ -175,6 +174,8 @@ export default function Settings({route, navigation}) {
   };
 
   const _setApperance = (item) => {
+    actions.setAppTheme(item);
+
     if (item?.type == 'light') {
       actions.setAppTheme(false);
     } else if (item?.type == 'dark') {

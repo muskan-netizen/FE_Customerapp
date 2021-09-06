@@ -211,7 +211,6 @@ export default function Signup({navigation}) {
               onChangeText={_onChangeText('name')}
               placeholder={strings.YOUR_NAME}
               value={name}
-              color={isDarkMode ? MyDarkTheme.colors.text : null}
             />
             <BorderTextInput
               // autoCapitalize={'none'}
@@ -219,7 +218,6 @@ export default function Signup({navigation}) {
               placeholder={strings.YOUR_EMAIL}
               value={email}
               keyboardType={'email-address'}
-              color={isDarkMode ? MyDarkTheme.colors.text : null}
             />
             <PhoneNumberInput
               onCountryChange={_onCountryChange}
@@ -239,13 +237,11 @@ export default function Signup({navigation}) {
               onChangeText={_onChangeText('password')}
               placeholder={strings.ENTER_PASSWORD}
               value={password}
-              color={isDarkMode ? MyDarkTheme.colors.text : null}
             />
             <BorderTextInput
               onChangeText={_onChangeText('referralCode')}
               placeholder={strings.ENTERREFERALCODE}
               value={referralCode}
-              color={isDarkMode ? MyDarkTheme.colors.text : null}
             />
             <GradientButton
               onPress={onSignup}
