@@ -79,24 +79,28 @@ export default function Settings({route, navigation}) {
       updateState({
         appCurrencies: currencies,
         appLanguages: languages,
-        isOn: toggleTheme,
-        selectedThemeOption: theme
-          ? {
-              id: 2,
-              image: imagePath.dark,
-              selectedImage: imagePath.done,
-              type: 'dark',
-            }
-          : {
-              id: 1,
-              image: imagePath.light,
-              selectedImage: imagePath.done,
-              type: 'light',
-            },
       });
     }, [currencies, languages]),
   );
 
+  useEffect(() => {
+    updateState({
+      isOn: toggleTheme,
+      selectedThemeOption: theme
+        ? {
+            id: 2,
+            image: imagePath.dark,
+            selectedImage: imagePath.done,
+            type: 'dark',
+          }
+        : {
+            id: 1,
+            image: imagePath.light,
+            selectedImage: imagePath.done,
+            type: 'light',
+          },
+    });
+  }, [currencies, languages]);
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -166,11 +170,9 @@ export default function Settings({route, navigation}) {
 
   const _toggleOnOff = (isOn) => {
     actions.setToggle(isOn);
-    setTimeout(() => {
-      updateState({
-        isOn: isOn ? true : false,
-      });
-    }, 0);
+    updateState({
+      isOn: isOn ? true : false,
+    });
   };
 
   const _setApperance = (item) => {
