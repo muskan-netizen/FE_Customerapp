@@ -44,7 +44,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function WebLinks({navigation, route}) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   console.log(route, 'route>>>');
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,

@@ -27,7 +27,7 @@ const ListItemHorizontal = ({
   const {appStyle} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const isDarkMode = useDarkMode();
+  const isDarkMode = theme;
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
   return (
@@ -71,7 +71,7 @@ const ListItemHorizontal = ({
           style={{
             fontSize: textScale(18),
             fontFamily: fontFamily?.regular,
-            color: colors.black,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             textAlign: I18nManager.isRTL ? 'right' : 'left',
             ...centerHeadingStyle,
           }}>

@@ -27,7 +27,8 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default function PickupOrderDetail({navigation, route}) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const paramData = route?.params;
   console.log(paramData, '>>>>paramData>>>>');
   const [state, setState] = useState({

@@ -22,7 +22,10 @@ import ButtonComponent from '../../Components/ButtonComponent';
 import ChooseAddressModal from '../../Components/ChooseAddressModal';
 import ConfirmationModal from '../../Components/ConfirmationModal';
 import HeaderWithFilters from '../../Components/HeaderWithFilters';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import {
+  loaderOne,
+  loaderSix,
+} from '../../Components/Loaders/AnimatedLoaderFiles';
 import TransparentButtonWithTxtAndIcon from '../../Components/TransparentButtonWithTxtAndIcon';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -55,10 +58,12 @@ import commonStyles from '../../styles/commonStyles';
 import * as RNLocalize from 'react-native-localize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
+import LottieView from 'lottie-react-native';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = useDarkMode();
+
+  const isDarkMode = theme;
   let paramsData = route?.params;
   const [state, setState] = useState({
     isLoading: true,
@@ -1498,63 +1503,67 @@ export default function Cart({navigation, route}) {
         </TouchableOpacity>
 
         {/* {payment submit button} */}
-        {/* <View
-          style={{
-            flexDirection: 'row',
-            marginVertical: moderateScaleVertical(20),
-            marginHorizontal: moderateScale(10),
-          }}>
-          {selectedTimeOptions.map((i, inx) => {
-            return (
-              <TouchableOpacity
-                onPress={() => _selectTime(i)}
-                style={{
-                  paddingHorizontal: 10,
-                  paddingVertical: 5,
-                  backgroundColor:
-                    selectedTimeOption && selectedTimeOption?.id == i.id
-                      ? themeColors?.primary_color
-                      : getColorCodeWithOpactiyNumber(
-                          themeColors.primary_color.substr(1),
-                          20,
-                        ),
-                  borderColor: themeColors.primary_color,
-                  borderWidth:
-                    selectedTimeOption && selectedTimeOption?.id == i.id
-                      ? 1
-                      : 0,
-                  borderRadius: 10,
-                  marginRight: 10,
-                }}>
-                <Text
-                  style={{
-                    fontFamily: fontFamily.medium,
-                    color:
-                      selectedTimeOption && selectedTimeOption?.id == i.id
-                        ? colors.white
-                        : themeColors.primary_color,
-                  }}>
-                  {i.title}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
+        {userData ? (
           <View
             style={{
-              justifyContent: 'center',
+              flexDirection: 'row',
+              marginVertical: moderateScaleVertical(20),
+              marginHorizontal: moderateScale(10),
             }}>
-            {selectedTimeOption?.type === 'now' ? null : (
-              <Text
-                style={
-                  isDarkMode ? {color: MyDarkTheme.colors.text} : {color: null}
-                }>
-                {sheduledorderdate && scheduleType
-                  ? `${moment(sheduledorderdate).format('DD MMM,YYYY HH:mm')}`
-                  : null}
-              </Text>
-            )}
+            {selectedTimeOptions.map((i, inx) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => _selectTime(i)}
+                  style={{
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    backgroundColor:
+                      selectedTimeOption && selectedTimeOption?.id == i.id
+                        ? themeColors?.primary_color
+                        : getColorCodeWithOpactiyNumber(
+                            themeColors.primary_color.substr(1),
+                            20,
+                          ),
+                    borderColor: themeColors.primary_color,
+                    borderWidth:
+                      selectedTimeOption && selectedTimeOption?.id == i.id
+                        ? 1
+                        : 0,
+                    borderRadius: 10,
+                    marginRight: 10,
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: fontFamily.medium,
+                      color:
+                        selectedTimeOption && selectedTimeOption?.id == i.id
+                          ? colors.white
+                          : themeColors.primary_color,
+                    }}>
+                    {i.title}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+            <View
+              style={{
+                justifyContent: 'center',
+              }}>
+              {selectedTimeOption?.type === 'now' ? null : (
+                <Text
+                  style={
+                    isDarkMode
+                      ? {color: MyDarkTheme.colors.text}
+                      : {color: null}
+                  }>
+                  {sheduledorderdate && scheduleType
+                    ? `${moment(sheduledorderdate).format('DD MMM,YYYY HH:mm')}`
+                    : null}
+                </Text>
+              )}
+            </View>
           </View>
-        </View> */}
+        ) : null}
 
         {!!cartData?.deliver_status && (
           <View style={styles.paymentView}>
@@ -1890,7 +1899,21 @@ export default function Cart({navigation, route}) {
           style={{backgroundColor: colors.backgroundGrey}}
           keyExtractor={(item, index) => String(index)}
           renderItem={_renderItem}
-          ListEmptyComponent={<ListEmptyCart isLoading={isLoadingB} />}
+          ListEmptyComponent={() => (
+            <View
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <LottieView
+                source={loaderSix}
+                autoPlay
+                loop
+                style={{
+                  height: moderateScaleVertical(100),
+                  width: moderateScale(100),
+                }}
+              />
+               <Text style={styles.textStyle}>{strings.NOPRODUCTCART}</Text>
+            </View>
+          )}
           style={{flex: 1}}
           refreshControl={
             <RefreshControl

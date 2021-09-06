@@ -30,10 +30,14 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
   console.log(data, 'data listing >>>>>');
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const [state, setState] = useState({
     isVisibleModal: false,
     isOffline: false,
@@ -243,7 +247,6 @@ export default function Products({route, navigation}) {
       })
       .catch(errorMethod);
   };
-
 
   const updateBrandAndCategoryFilter = (filterData, allBrands) => {
     var brandDatas = [];
@@ -635,7 +638,10 @@ export default function Products({route, navigation}) {
                     allSelectdFilters,
                   ),
               })}>
-              <Image source={imagePath.slider} />
+              <Image
+                style={{tintColor: isDarkMode ? MyDarkTheme.colors.text : null}}
+                source={imagePath.slider}
+              />
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -646,7 +652,10 @@ export default function Products({route, navigation}) {
                 id: data?.vendor ? data?.id : productListId?.id,
               })}
               style={{marginLeft: 10}}>
-              <Image source={imagePath.search} />
+              <Image
+                style={{tintColor: isDarkMode ? MyDarkTheme.colors.text : null}}
+                source={imagePath.search}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -657,7 +666,9 @@ export default function Products({route, navigation}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
       isLoadingB={isLoadingB}>
@@ -666,17 +677,26 @@ export default function Products({route, navigation}) {
       <Header2
         centerTitle={data?.name || data?.translation[0]?.name}
         // hideRight={true}
+        textStyle={
+          isDarkMode ? {color: MyDarkTheme.colors.text} : {color: null}
+        }
         leftIcon={imagePath.backArrow}
         onPressRight={() =>
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }
       />
-      <View style={{...commonStyles.headerTopLine}} />
+      <View
+        style={{
+          ...commonStyles.headerTopLine,
+        }}
+      />
 
       <View
         style={{
           height: 10,
-          backgroundColor: colors.backgroundGreyB,
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.lightDark
+            : colors.backgroundGreyB,
           marginBottom: 2,
         }}
       />

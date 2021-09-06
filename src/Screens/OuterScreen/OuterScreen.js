@@ -30,9 +30,9 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 
-
 export default function OuterScreen({navigation}) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const [state, setState] = useState({
     getLanguage: '',
     isLoading: false,
@@ -232,15 +232,16 @@ export default function OuterScreen({navigation}) {
           {strings.CREATE_YOUR_ACCOUNT}
         </Text>
         <View style={{marginHorizontal: moderateScale(24)}}>
-          {appData?.profile?.preferences?.home_tag_line?<View style={{marginHorizontal: moderateScaleVertical(30)}}>
-            <Text numberOfLines={2} style={styles.txtSmall}>
-              {appData?.profile?.preferences?.home_tag_line
-                ? appData?.profile?.preferences?.home_tag_line
-                : ''}
-            </Text>
-           
-          </View>:null}
-          
+          {appData?.profile?.preferences?.home_tag_line ? (
+            <View style={{marginHorizontal: moderateScaleVertical(30)}}>
+              <Text numberOfLines={2} style={styles.txtSmall}>
+                {appData?.profile?.preferences?.home_tag_line
+                  ? appData?.profile?.preferences?.home_tag_line
+                  : ''}
+              </Text>
+            </View>
+          ) : null}
+
           <GradientButton
             containerStyle={{marginTop: moderateScaleVertical(50)}}
             btnText={strings.CREATE_AN_ACCOUNT}
@@ -271,59 +272,89 @@ export default function OuterScreen({navigation}) {
               </View>
             ) : null}
 
-            
-             <View
+            <View
               style={{
                 flexDirection: 'column',
               }}>
               {!!google_login && (
-              
-                <View style={{marginTop:moderateScaleVertical(15)}}>
-                <TransparentButtonWithTxtAndIcon 
-                icon={imagePath.ic_google2} 
-                btnText={strings.CONTINUE_GOOGLE} 
-                containerStyle={{backgroundColor:isDarkMode?MyDarkTheme.colors.lightDark:colors.white,borderColor:colors.borderColorD,borderWidth: 1}}
-                textStyle={{color:isDarkMode?colors.white:colors.textGreyB,marginHorizontal:moderateScale(15)}}
-                onPress={() => openGmailLogin()}
-                />
-              </View>
+                <View style={{marginTop: moderateScaleVertical(15)}}>
+                  <TransparentButtonWithTxtAndIcon
+                    icon={imagePath.ic_google2}
+                    btnText={strings.CONTINUE_GOOGLE}
+                    containerStyle={{
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : colors.white,
+                      borderColor: colors.borderColorD,
+                      borderWidth: 1,
+                    }}
+                    textStyle={{
+                      color: isDarkMode ? colors.white : colors.textGreyB,
+                      marginHorizontal: moderateScale(15),
+                    }}
+                    onPress={() => openGmailLogin()}
+                  />
+                </View>
               )}
               {!!fb_login && (
-                
-                <View style={{marginVertical:moderateScaleVertical(15)}}>
-                  <TransparentButtonWithTxtAndIcon 
-                icon={imagePath.ic_fb2} 
-                btnText={strings.CONTINUE_FACEBOOK} 
-                containerStyle={{backgroundColor:isDarkMode?MyDarkTheme.colors.lightDark:colors.white,borderColor:colors.borderColorD,borderWidth: 1}}
-                textStyle={{color:isDarkMode?colors.white:colors.textGreyB,marginHorizontal:moderateScale(5)}}
-                onPress={() => openFacebookLogin()}
-                />
+                <View style={{marginVertical: moderateScaleVertical(15)}}>
+                  <TransparentButtonWithTxtAndIcon
+                    icon={imagePath.ic_fb2}
+                    btnText={strings.CONTINUE_FACEBOOK}
+                    containerStyle={{
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : colors.white,
+                      borderColor: colors.borderColorD,
+                      borderWidth: 1,
+                    }}
+                    textStyle={{
+                      color: isDarkMode ? colors.white : colors.textGreyB,
+                      marginHorizontal: moderateScale(5),
+                    }}
+                    onPress={() => openFacebookLogin()}
+                  />
                 </View>
               )}
               {!!twitter_login && (
-               
-                <TransparentButtonWithTxtAndIcon 
-                icon={imagePath.ic_twitter2} 
-                btnText= {strings.CONTINUE_TWITTER}
-                containerStyle={{backgroundColor:isDarkMode?MyDarkTheme.colors.lightDark:colors.white,borderColor:colors.borderColorD,borderWidth: 1}}
-                textStyle={{color:isDarkMode?colors.white:colors.textGreyB,marginHorizontal:moderateScale(10)}}
-                nPress={() => openTwitterLogin()}
+                <TransparentButtonWithTxtAndIcon
+                  icon={imagePath.ic_twitter2}
+                  btnText={strings.CONTINUE_TWITTER}
+                  containerStyle={{
+                    backgroundColor: isDarkMode
+                      ? MyDarkTheme.colors.lightDark
+                      : colors.white,
+                    borderColor: colors.borderColorD,
+                    borderWidth: 1,
+                  }}
+                  textStyle={{
+                    color: isDarkMode ? colors.white : colors.textGreyB,
+                    marginHorizontal: moderateScale(10),
+                  }}
+                  nPress={() => openTwitterLogin()}
                 />
               )}
 
               {!!apple_login && Platform.OS == 'ios' && (
-               
-                <View style={{marginVertical:moderateScaleVertical(15)}}>
-                <TransparentButtonWithTxtAndIcon 
-                icon={isDarkMode? imagePath.ic_apple :imagePath.ic_apple2} 
-                btnText={strings.CONTINUE_APPLE} 
-                containerStyle={{backgroundColor:isDarkMode?MyDarkTheme.colors.lightDark:colors.white,borderColor:colors.borderColorD,borderWidth: 1}}
-                textStyle={{color:isDarkMode?colors.white:colors.textGreyB,marginHorizontal:moderateScale(17)}}
-                onPress={() => openAppleLogin()}
-                />
+                <View style={{marginVertical: moderateScaleVertical(15)}}>
+                  <TransparentButtonWithTxtAndIcon
+                    icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
+                    btnText={strings.CONTINUE_APPLE}
+                    containerStyle={{
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : colors.white,
+                      borderColor: colors.borderColorD,
+                      borderWidth: 1,
+                    }}
+                    textStyle={{
+                      color: isDarkMode ? colors.white : colors.textGreyB,
+                      marginHorizontal: moderateScale(17),
+                    }}
+                    onPress={() => openAppleLogin()}
+                  />
                 </View>
               )}
-            
             </View>
           </View>
         </View>

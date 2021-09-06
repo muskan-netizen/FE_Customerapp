@@ -26,7 +26,8 @@ import {MyDarkTheme} from '../../styles/theme';
 
 export default function ContactUs({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = useDarkMode();
+
+  const isDarkMode = theme;
   const currentTheme = useSelector((state) => state.appTheme);
   const userData = useSelector((state) => state?.auth?.userData);
   console.log(userData, 'userData>>>userData');

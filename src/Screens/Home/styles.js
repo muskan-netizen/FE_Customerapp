@@ -11,8 +11,6 @@ import {
 import {MyDarkTheme} from '../../styles/theme';
 
 export default ({themeColors, fontFamily}) => {
-  const isDarkMode = useDarkMode();
-
   const styles = StyleSheet.create({
     topLogo: {
       justifyContent: 'center',
@@ -211,18 +209,14 @@ export default ({themeColors, fontFamily}) => {
     },
     modalMainViewContainer: {
       backgroundColor: colors.white,
-      borderTopLeftRadius: moderateScale(20),
-      borderTopRightRadius: moderateScale(20),
+      borderTopLeftRadius: moderateScale(15),
+      borderTopRightRadius: moderateScale(15),
       maxHeight: height - width / 2,
       minHeight: height / 4,
       paddingHorizontal: moderateScale(10),
+      justifyContent: 'center',
     },
-    closeButton: {
-      marginHorizontal: moderateScale(20),
-      alignSelf: 'flex-end',
-      marginTop: moderateScale(20),
-      marginBottom: moderateScale(5),
-    },
+
     headerContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -238,7 +232,7 @@ export default ({themeColors, fontFamily}) => {
       paddingLeft: 5,
       lineHeight: 20,
       fontFamily: fontFamily.regular,
-      color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+      color: colors.textGrey,
       fontSize: textScale(10),
     },
     deliveryIcon: {
@@ -257,10 +251,14 @@ export default ({themeColors, fontFamily}) => {
       tintColor: themeColors.primary_color,
       marginTop: moderateScaleVertical(3),
     },
+    closeButton: {
+      alignSelf: 'center',
+      height: moderateScaleVertical(30),
+      marginBottom: moderateScale(15),
+    },
     crossIcon: {
-      tintColor: themeColors.primary_color,
-      height: moderateScale(23),
-      width: moderateScale(23),
+      height: moderateScale(35),
+      width: moderateScale(35),
     },
     searchBar: {
       flexDirection: 'row',
@@ -274,7 +272,7 @@ export default ({themeColors, fontFamily}) => {
       marginVertical: moderateScale(13),
     },
     exploreStoresTxt: {
-      color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
+      color: colors.textGreyB,
       fontFamily: fontFamily.regular,
       fontSize: textScale(16),
       marginBottom: moderateScale(10),

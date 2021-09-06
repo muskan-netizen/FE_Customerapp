@@ -28,8 +28,12 @@ import {
 } from '../../styles/responsiveSize';
 import {getImageUrl} from '../../utils/helperFunctions';
 import stylesFun from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Account2({navigation}) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const [state, setState] = useState({
     isLoading: false,
   });
@@ -100,7 +104,9 @@ export default function Account2({navigation}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGrey}>
       {shortCodeStatus ? (
         <Header
@@ -165,6 +171,9 @@ export default function Account2({navigation}) {
                 }}>
                 <Text
                   style={{
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyJ,
                     fontFamily: fontFamily.bold,
                     fontSize: textScale(16),
                   }}>
@@ -174,7 +183,9 @@ export default function Account2({navigation}) {
                   style={{
                     fontFamily: fontFamily.regular,
                     fontSize: textScale(14),
-                    color: colors.textGreyJ,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyJ,
                     marginTop: moderateScaleVertical(5),
                   }}>
                   {userData?.email}

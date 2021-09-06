@@ -84,5 +84,6 @@ export default {
   greyNew: '#EFEFEF',
   yellowC: '#F7B500',
   greenA: '#71C94B',
-  greyColor:'#D8D8D8'
+  greyColor: '#D8D8D8',
+  iconGrey: '#A5A5A5',
 };

@@ -44,7 +44,8 @@ import {MyDarkTheme} from '../../styles/theme';
 
 export default function AddMoney({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = useDarkMode();
+
+  const isDarkMode = theme;
   const [state, setState] = useState({
     amount: '',
     data: [

@@ -49,7 +49,9 @@ export default function AddressModal({
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const isDarkMode = useDarkMode();
+  // const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
+
   const appData = useSelector((state) => state?.initBoot?.appData);
   const currentTheme = useSelector((state) => state.initBoot);
   const {themeColors, themeLayouts, appStyle} = currentTheme;
@@ -489,11 +491,11 @@ export default function AddressModal({
                 paddingHorizontal: 8,
               }}>
               <TextInput
-                selectionColor={colors.black}
+                selectionColor={
+                  isDarkMode ? MyDarkTheme.colors.text : colors.black
+                }
                 placeholderTextColor={
-                  isDarkMode
-                    ? [styles.textGreyOpcaity7, {color: '#ffff'}]
-                    : colors.textGreyOpcaity7
+                  isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7
                 }
                 onChangeText={_onChangeText('country')}
                 placeholder={strings.COUNTRY}

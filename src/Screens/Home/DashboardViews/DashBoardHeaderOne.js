@@ -34,7 +34,8 @@ export default function DashBoardHeaderOne({navigation = {}, location = []}) {
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});

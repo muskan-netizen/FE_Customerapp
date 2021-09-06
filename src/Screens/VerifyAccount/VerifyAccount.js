@@ -31,7 +31,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function VerifyAccount({navigation, route}) {
-  const isDarkMode = useDarkMode();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   let paramsData = route?.params;
   const userData = useSelector((state) => state?.auth?.userData);
   const [state, setState] = useState({

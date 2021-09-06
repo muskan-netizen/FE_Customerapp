@@ -1,32 +1,23 @@
 import React, {createRef, useEffect, useState} from 'react';
-import {
-  Alert,
-  I18nManager,
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
+import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
+import deviceInfoModule from 'react-native-device-info';
+import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
+import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import {
-  itemWidth,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
 } from '../../../styles/responsiveSize';
 import {getImageUrl, showSuccess} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
-import Modal from 'react-native-modal';
 import {RadioButton} from 'react-native-paper';
-import actions from '../../../redux/actions';
-import deviceInfoModule from 'react-native-device-info';
 
 import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
+import {MyDarkTheme} from '../../../styles/theme';
 
 export default function DashBoardHeaderFive({
   navigation = {},
@@ -38,6 +29,8 @@ export default function DashBoardHeaderFive({
   const pickerRef = createRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+
+  const isDarkMode = theme;
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
@@ -67,11 +60,37 @@ export default function DashBoardHeaderFive({
     userSelectedtab();
   }, [appData]);
 
+  const checkSelectedTab = () => {
+    const newTabs = [...tabs];
+    newTabs.forEach((item, index) => {
+      console.log(item.label, dine_In_Type, 'dine_In_Type2');
+      if (item.label === dine_In_Type) {
+        console.log('hello');
+        newTabs[index].isActive = true;
+        updateState({
+          tabs: [...newTabs],
+        });
+      } else {
+        console.log('newHello');
+        newTabs[index].isActive = false;
+        updateState({
+          tabs: [...newTabs],
+        });
+      }
+    });
+  };
+
   const addAllTabs = () => {
     const localTabsArray = [];
 
     if (toggleData?.profile?.preferences?.delivery_check == 1) {
-      localTabsArray.push('Delivery');
+      localTabsArray.push({
+        value: 'Delivery',
+        label: 'delivery',
+        icon: imagePath.delivery,
+        iconInActive: imagePath.deliveryInActive,
+        isActive: true,
+      });
       if (
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
@@ -80,7 +99,12 @@ export default function DashBoardHeaderFive({
       }
     }
     if (toggleData?.profile?.preferences?.dinein_check == 1) {
-      localTabsArray.push('Dine-In');
+      localTabsArray.push({
+        value: 'Dine-In',
+        label: 'dine_in',
+        icon: imagePath.dineIn,
+        isActive: false,
+      });
       if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
@@ -89,7 +113,12 @@ export default function DashBoardHeaderFive({
       }
     }
     if (toggleData?.profile?.preferences?.takeaway_check == 1) {
-      localTabsArray.push('Takeaway');
+      localTabsArray.push({
+        value: 'Takeaway',
+        label: 'takeaway',
+        icon: imagePath.takeaway,
+        isActive: false,
+      });
       if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 0
@@ -166,6 +195,33 @@ export default function DashBoardHeaderFive({
         updateState({
           checked: 'Dine-In',
         });
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 1
+      ) {
+        selcetedToggle('delivery');
+        updateState({
+          checked: 'Delivery',
+        });
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        selcetedToggle('delivery');
+        updateState({
+          checked: 'Delivery',
+        });
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        selcetedToggle('delivery');
+        updateState({
+          checked: 'Delivery',
+        });
       } else {
         selcetedToggle('dine_in');
         updateState({
@@ -209,21 +265,31 @@ export default function DashBoardHeaderFive({
         updateState({
           checked: 'Dine-In',
         });
-      } else {
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 1 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
         selcetedToggle('delivery');
         updateState({
           checked: 'Delivery',
         });
+      } else if (
+        toggleData?.profile?.preferences?.delivery_check == 1 &&
+        toggleData?.profile?.preferences?.dinein_check == 0 &&
+        toggleData?.profile?.preferences?.takeaway_check == 0
+      ) {
+        selcetedToggle('delivery');
+        updateState({
+          checked: 'Delivery',
+        });
+      } else {
+        selcetedToggle('takeaway');
+        updateState({
+          checked: 'Takeaway',
+        });
       }
     }
-  };
-
-  const _onChangeRadioToggle = (value) => {
-    selcetedToggle(value.toLowerCase().replace('-', '_'));
-    updateState({
-      checked: value,
-      isModalVisible: false,
-    });
   };
 
   const dineInFunction = () => {
@@ -264,110 +330,191 @@ export default function DashBoardHeaderFive({
     showError(error?.message || error?.error);
   };
 
+  const _onTableItm = (item, indx) => {
+    const newTabs = [...tabs];
+    newTabs.forEach((item, index) => {
+      if (index === indx) {
+        selcetedToggle(item.label);
+        newTabs[index].isActive = true;
+        updateState({
+          tabs: [...newTabs],
+          checked: item.value,
+          isModalVisible: false,
+        });
+      } else {
+        newTabs[index].isActive = false;
+        updateState({
+          tabs: [...newTabs],
+        });
+      }
+    });
+  };
+
+  const _onTableLabel = () => {
+    checkSelectedTab();
+    updateState({isModalVisible: true});
+  };
+
   return (
     <>
-      {isLoading ? (
-        <ListEmptyVendors
-          isLoading={isLoading}
-          listSize={1}
-          height={moderateScaleVertical(35)}
-        />
-      ) : (
-        <View style={styles.headerContainer}>
-          <View
-            style={{
-              flexDirection: 'row',
-              flex: 1,
-            }}>
-            {!!appData?.profile?.preferences?.is_hyperlocal && (
-              <TouchableOpacity
-                activeOpacity={1}
-                onPress={() =>
-                  navigation.navigate(navigationStrings.LOCATION, {
-                    type: 'Home1',
-                  })
-                }
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  flex: 0.85,
-                }}>
-                <Image
-                  style={styles.locationIcon}
-                  source={imagePath.redLocation}
-                  resizeMode="contain"
-                />
+      <View style={styles.headerContainer}>
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 1,
+          }}>
+          {!!appData?.profile?.preferences?.is_hyperlocal && (
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() =>
+                navigation.navigate(navigationStrings.LOCATION, {
+                  type: 'Home1',
+                })
+              }
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                flex: 0.85,
+              }}>
+              <Image
+                style={styles.locationIcon}
+                source={imagePath.redLocation}
+                resizeMode="contain"
+              />
 
-                <Text numberOfLines={1} style={styles.locationTxt}>
-                  {location?.address}
-                </Text>
-              </TouchableOpacity>
-            )}
-          </View>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            style={{
-              paddingVertical: moderateScaleVertical(5),
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-            onPress={() => updateState({isModalVisible: true})}>
-            <Image
-              source={imagePath.delivery}
-              style={styles.deliveryIcon}
-              resizeMode="contain"
-            />
+              <Text
+                numberOfLines={1}
+                style={[
+                  styles.locationTxt,
+                  {
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGrey,
+                  },
+                ]}>
+                {location?.address}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={{
+            paddingVertical: moderateScaleVertical(5),
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+          onPress={_onTableLabel}>
+          <Image
+            source={
+              checked === 'Delivery'
+                ? imagePath.delivery
+                : checked === 'Dine-In'
+                ? imagePath.dineIn
+                : imagePath.takeaway
+            }
+            style={styles.deliveryIcon}
+            resizeMode="contain"
+          />
 
-            <Text style={styles.checkedTxt}>{checked}</Text>
+          <Text style={styles.checkedTxt}>{checked}</Text>
 
-            <Image
-              source={imagePath.dropDownNew}
-              style={styles.customDropDownIcon}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <Modal
-            transparent={true}
-            isVisible={isModalVisible}
-            testID={'modal'}
-            style={{justifyContent: 'flex-end', margin: 0}}>
+          <Image
+            source={imagePath.dropDownNew}
+            style={styles.customDropDownIcon}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+        <Modal
+          transparent={true}
+          isVisible={isModalVisible}
+          testID={'modal'}
+          style={{justifyContent: 'flex-end', margin: 0}}>
+          <>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => updateState({isModalVisible: false})}>
+              <Image
+                source={imagePath.crossC}
+                style={styles.crossIcon}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
             <View style={styles.modalMainViewContainer}>
-              <TouchableOpacity
-                style={styles.closeButton}
-                onPress={() => updateState({isModalVisible: false})}>
-                <Image
-                  source={imagePath.crossB}
-                  style={styles.crossIcon}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-              <View style={{marginHorizontal: moderateScale(30)}}>
-                <RadioButton.Group
-                  onValueChange={
-                    !(
-                      cartItemCount?.message == null &&
-                      cartItemCount?.data?.item_count > 0
-                    )
-                      ? _onChangeRadioToggle
-                      : dineInFunction
-                  }
-                  value={checked}>
-                  {tabs.map((item, indx) => {
-                    return (
-                      <RadioButton.Item
-                        color={themeColors.primary_color}
-                        key={indx}
-                        label={item}
-                        value={item}
+              <View style={{padding: moderateScale(10)}}>
+                {tabs.map((item, indx) => {
+                  return (
+                    <TouchableOpacity
+                      style={{
+                        borderColor: item.isActive
+                          ? themeColors.primary_color
+                          : colors.transparent,
+                        borderWidth: 1,
+                        flexDirection: 'row',
+                        paddingVertical: moderateScaleVertical(15),
+                        margin: moderateScale(5),
+                        borderRadius: moderateScale(10),
+                        alignItems: 'center',
+                        paddingHorizontal: moderateScale(20),
+                        justifyContent: 'space-between',
+                      }}
+                      onPress={() =>
+                        !(
+                          cartItemCount?.message == null &&
+                          cartItemCount?.data?.item_count > 0
+                        )
+                          ? _onTableItm(item, indx)
+                          : dineInFunction()
+                      }>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                        }}>
+                        <Image
+                          source={
+                            item.isActive
+                              ? imagePath.radioNewActive
+                              : imagePath.radioNewInActive
+                          }
+                          style={{
+                            height: moderateScale(20),
+                            width: moderateScale(20),
+                            tintColor: item.isActive
+                              ? themeColors.primary_color
+                              : colors.iconGrey,
+                          }}
+                        />
+                        <Text
+                          style={{
+                            fontFamily: fontFamily.medium,
+                            color: colors.black,
+                            fontSize: textScale(12),
+                            marginHorizontal: moderateScale(10),
+                          }}>
+                          {item.value}
+                        </Text>
+                      </View>
+                      <Image
+                        source={item.icon}
+                        style={{
+                          height: moderateScale(22),
+                          width: moderateScale(22),
+                          tintColor: item.isActive
+                            ? themeColors.primary_color
+                            : colors.black,
+                          alignSelf: 'flex-end',
+                        }}
+                        resizeMode="contain"
                       />
-                    );
-                  })}
-                </RadioButton.Group>
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
             </View>
-          </Modal>
-        </View>
-      )}
+          </>
+        </Modal>
+      </View>
     </>
   );
 }

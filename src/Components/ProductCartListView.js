@@ -23,7 +23,8 @@ export default function ProductCartListView({
   const currentTheme = useSelector((state) => state?.appTheme);
   const {currencies, appStyle} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = useDarkMode();
+
+  const isDarkMode = theme;
   const {themeColors, themeLayouts} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});

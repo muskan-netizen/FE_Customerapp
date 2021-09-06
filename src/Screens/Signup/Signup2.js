@@ -33,9 +33,13 @@ import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import {TextInput} from 'react-native-paper';
 import PhoneNumberInput2 from '../../Components/PhoneNumberInput2';
 import AutoUpLabelTxtInput from '../../Components/AutoUpLabelTxtInput';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 export default function Signup2({navigation}) {
   const {appData, themeColors, themeLayouts, currencies, languages} =
     useSelector((state) => state?.initBoot);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = theme;
   const [state, setState] = useState({
     isLoading: false,
     callingCode: appData?.profile.country?.phonecode
@@ -148,7 +152,10 @@ export default function Signup2({navigation}) {
     referralCode,
   } = state;
   return (
-    <WrapperContainer isLoadingB={isLoading} source={loaderOne}>
+    <WrapperContainer
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
+      isLoadingB={isLoading}
+      source={loaderOne}>
       <View
         style={{
           height: moderateScaleVertical(80),
@@ -164,12 +171,19 @@ export default function Signup2({navigation}) {
           <TouchableOpacity onPress={() => navigation.goBack(null)}>
             <Image
               source={imagePath.backArrow}
-              style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+              style={
+                isDarkMode
+                  ? {
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                      tintColor: MyDarkTheme.colors.text,
+                    }
+                  : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+              }
             />
           </TouchableOpacity>
           <Text
             style={{
-              color: colors.black,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               fontSize: textScale(16),
               fontFamily: fontFamily.bold,
               flex: 1,
@@ -194,7 +208,14 @@ export default function Signup2({navigation}) {
         }}>
         <View style={{flex: 1}}>
           <View style={{marginTop: moderateScaleVertical(25)}}>
-            <Text style={styles.txtSmall}>{strings.ENTER_DETAILS_BELOW}</Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.txtSmall, {color: MyDarkTheme.colors.text}]
+                  : styles.txtSmall
+              }>
+              {strings.ENTER_DETAILS_BELOW}
+            </Text>
           </View>
 
           <View
