@@ -29,6 +29,7 @@ import {
   pressOutAnimation,
 } from '../utils/helperFunctions';
 import IconTextRow from './IconTextRow';
+import {useDarkMode} from 'react-native-dark-mode';
 
 export default function MarketCard({
   data = {},
@@ -36,6 +37,9 @@ export default function MarketCard({
   activeOpacity = 1,
 }) {
   const {appStyle} = useSelector((state) => state?.initBoot);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const isDarkMode = useDarkMode();
   // const appTheme=useSelector(state=>state.colors.appTheme)
   const navigation = useNavigation();
   const scaleInAnimated = new Animated.Value(0);
@@ -68,6 +72,7 @@ export default function MarketCard({
             height: moderateScaleVertical(170),
             width: width - moderateScale(32),
             borderRadius: 4,
+            backgroundColor: isDarkMode ? colors.white : null,
           }}
           imageStyle={{borderRadius: 4}}>
           <LinearGradient

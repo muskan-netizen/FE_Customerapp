@@ -72,6 +72,9 @@ const shortCodes = {
   doorstep: 'f76099',
   sunshinerideshare: 'cef206',
   autotek: '2fbe83',
+  wegotit: 'f755bb',
+  survuhs: 'ac8cda',
+  igolux: 'd190a2',
 };
 
 const appIds = {
@@ -358,6 +361,18 @@ const appIds = {
   autotek: Platform.select({
     ios: 'com.autotek',
     android: 'com.autotek',
+  }),
+  wegotit: Platform.select({
+    ios: 'com.wegotit',
+    android: 'com.wegotit',
+  }),
+  survuhs: Platform.select({
+    ios: 'com.survuhs',
+    android: 'com.survuhs',
+  }),
+  igolux: Platform.select({
+    ios: 'com.igolux',
+    android: 'com.igolux',
   }),
 };
 

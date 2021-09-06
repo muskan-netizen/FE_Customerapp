@@ -195,7 +195,7 @@ android {
     productFlavors {
         royoorder {
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -855,6 +855,33 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.autotek'
             resValue "string", "app_name", "Autotek"
+         }
+         wegotit{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.wegotit'
+            resValue "string", "app_name", "WeGotit"
+         }
+         survuhs{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.survuhs'
+            resValue "string", "app_name", "Sur-vuhs"
+         }
+         igolux{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.igolux'
+            resValue "string", "app_name", "iGoLux"
          }
     }
 }

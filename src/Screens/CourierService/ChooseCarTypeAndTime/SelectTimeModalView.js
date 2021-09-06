@@ -15,6 +15,8 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 import stylesFun from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 
 export default function SelectTimeModalView({
   isLoading = false,
@@ -26,6 +28,7 @@ export default function SelectTimeModalView({
   _selectTime,
   _onDateChange,
 }) {
+  const isDarkMode = useDarkMode();
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -41,7 +44,15 @@ export default function SelectTimeModalView({
     _onDateChange(value);
   };
   return (
-    <View style={[styles.bottomView, {width: width}]}>
+    <View
+      style={
+        isDarkMode
+          ? [
+              styles.bottomView,
+              {width: width, backgroundColor: MyDarkTheme.colors.background},
+            ]
+          : [styles.bottomView, {width: width}]
+      }>
       <View style={{marginBottom: moderateScale(20)}}>
         <View
           style={{
@@ -51,7 +62,14 @@ export default function SelectTimeModalView({
             justifyContent: 'space-between',
           }}>
           <TouchableOpacity style={{flex: 0.2}} onPress={onPressBack}>
-            <Image source={imagePath.backArrowCourier} />
+            <Image
+              style={
+                isDarkMode
+                  ? {tintColor: MyDarkTheme.colors.text}
+                  : {tintColor: null}
+              }
+              source={imagePath.backArrowCourier}
+            />
           </TouchableOpacity>
           <View
             style={{
@@ -59,7 +77,14 @@ export default function SelectTimeModalView({
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Text style={styles.carType}>{strings.SELECTTIME}</Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.carType, {color: MyDarkTheme.colors.text}]
+                  : styles.carType
+              }>
+              {strings.SELECTTIME}
+            </Text>
           </View>
           <View style={{flex: 0.2}}></View>
         </View>
@@ -111,6 +136,7 @@ export default function SelectTimeModalView({
           <DatePicker
             date={date}
             mode="datetime"
+            textColor={isDarkMode ? '#fff' : colors.blackB}
             minimumDate={new Date()}
             style={{width: width - 20, height: height / 3.5}}
             // onDateChange={setDate}

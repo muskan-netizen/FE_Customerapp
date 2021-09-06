@@ -20,8 +20,11 @@ import {
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from './ListEmptyVendors';
 import VendorsDesign1 from './Vendors2';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Vendors({route, navigation}) {
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     isLoading: true,
     pageNo: 1,
@@ -64,7 +67,7 @@ export default function Vendors({route, navigation}) {
       .getDataByCategoryId(
         `/${data.id}?limit=${limit}&page=${pageNo}&type=${dine_In_Type}`,
         {},
-        {code: appData.profile.code,},
+        {code: appData.profile.code},
       )
       .then((res) => {
         console.log('All vendors', res);
@@ -135,7 +138,9 @@ export default function Vendors({route, navigation}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGrey}>
       <Header
         leftIcon={imagePath.back}

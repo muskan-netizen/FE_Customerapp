@@ -15,8 +15,11 @@ import {moderateScale} from '../../styles/responsiveSize';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Wishlist({navigation}) {
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     isLoading: false,
     isRefreshing: false,
@@ -157,7 +160,9 @@ export default function Wishlist({navigation}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGrey}>
       <Header
         leftIcon={

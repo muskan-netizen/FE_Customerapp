@@ -11,12 +11,15 @@ import {
 } from '../../../styles/responsiveSize';
 import actions from '../../../redux/actions';
 import {showError, showSuccess} from '../../../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 
 export default function ToggleTabBar({
   selcetedToggle,
   toggleData,
   isDineInSelected = false,
 }) {
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     selectedIndex: 0,
     tabs: [],
@@ -286,8 +289,10 @@ export default function ToggleTabBar({
             barHeight={38}
             indicatorColor={themeColors.primary_color}
             activeTextColor={themeColors.primary_color}
-            barColor={'#EEEEEE'}
-            inactiveTextColor={colors.textGreyF}
+            barColor={isDarkMode ? MyDarkTheme.colors.lightDark : '#EEEEEE'}
+            inactiveTextColor={
+              isDarkMode ? MyDarkTheme.colors.text : colors.textGreyF
+            }
             indicatorHeight={3}
           />
         </View>

@@ -7,7 +7,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 
-export default ({fontFamily}) => {
+export default ({fontFamily, themeColors}) => {
   const styles = StyleSheet.create({
     textStyle: {
       color: colors.black2Color,
@@ -68,7 +68,7 @@ export default ({fontFamily}) => {
       fontFamily: fontFamily.futuraHeavyBt,
     },
     selectedStyle: {
-      backgroundColor: colors.themeColor,
+      backgroundColor: themeColors.primary_color,
       alignItems: 'center',
       justifyContent: 'center',
       height: 3,
@@ -76,7 +76,7 @@ export default ({fontFamily}) => {
     customMarker: {
       alignItems: 'center',
       height: 15,
-      backgroundColor: colors.themeColor,
+      backgroundColor: themeColors.primary_color,
       width: 15,
       borderRadius: 15 / 2,
     },

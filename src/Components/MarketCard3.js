@@ -13,13 +13,18 @@ import {
   textScale,
 } from '../styles/responsiveSize';
 import {getImageUrl} from '../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function MarketCard3({
   data = {},
   onPress = () => {},
   extraStyles = {},
 }) {
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const isDarkMode = useDarkMode();
+  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, extraStyles});
@@ -49,7 +54,13 @@ export default function MarketCard3({
           flexDirection: 'row',
           justifyContent: 'space-between',
         }}>
-        <Text numberOfLines={1} style={styles.categoryText}>
+        <Text
+          numberOfLines={1}
+          style={
+            isDarkMode
+              ? [styles.categoryText, {color: MyDarkTheme.colors.text}]
+              : styles.categoryText
+          }>
           {data.name}
         </Text>
         {data?.product_avg_average_rating && (
@@ -77,7 +88,10 @@ export default function MarketCard3({
           marginHorizontal: moderateScale(3),
         }}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Image source={imagePath.location2} />
+          <Image
+            style={{tintColor: themeColors.primary_color}}
+            source={imagePath.location2}
+          />
           <Text
             style={{
               color: colors.greyLight,
@@ -89,8 +103,24 @@ export default function MarketCard3({
           </Text>
         </View>
 
-        <Text numberOfLines={1} style={{color: colors.greenA}}>
+        {/* <Text numberOfLines={1} style={{color: colors.greenA}}>
           {strings.OPEN}
+        </Text> */}
+        <Text
+          style={{
+            ...commonStyles.mediumFont14Normal,
+            fontSize: textScale(12),
+            color: data?.show_slot
+              ? colors.green
+              : data?.slot && data?.slot.length
+              ? colors.green
+              : colors.redB,
+          }}>
+          {data?.show_slot
+            ? 'Open'
+            : data?.slot && data?.slot.length
+            ? 'Open'
+            : 'Close'}
         </Text>
       </View>
     </TouchableOpacity>

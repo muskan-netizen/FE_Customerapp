@@ -25,7 +25,12 @@ import {
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
 import stylesFun from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
+
 export default function CMSLinks({navigation}) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     cmsLinks: [],
     isLoading: false,
@@ -92,8 +97,14 @@ export default function CMSLinks({navigation}) {
             paddingVertical: 15,
             paddingHorizontal: 10,
             borderRadius: 10,
+            borderColor: isDarkMode ? MyDarkTheme.colors.text : null,
           }}>
-          <Text style={styles.title2}>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.title2, {color: MyDarkTheme.colors.text}]
+                : styles.title2
+            }>
             {index + 1}. {item.title}
           </Text>
         </View>
@@ -103,7 +114,9 @@ export default function CMSLinks({navigation}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.white}
       isLoadingB={isLoading}
       source={loaderOne}>
@@ -112,7 +125,11 @@ export default function CMSLinks({navigation}) {
           appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         centerTitle={strings.LINKS}
-        headerStyle={{backgroundColor: Colors.white}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: Colors.white}
+        }
       />
       <View style={{...commonStyles.headerTopLine}} />
 

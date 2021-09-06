@@ -7,13 +7,13 @@ import {moderateScale, textScale, width} from '../styles/responsiveSize';
 import {getImageUrl} from '../utils/helperFunctions';
 import {SvgUri} from 'react-native-svg';
 import Elevations from 'react-native-elevation';
-// import {Image} from 'react-native-elements';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
-export default function HomeCategoryCard2({
-  data = {},
-  onPress = () => {},
-  isLoading = false,
-}) {
+export default function HomeCategoryCard2({data = {}, onPress = () => {},isLoading = false,}) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const isDarkMode = useDarkMode();
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const imageURI = getImageUrl(
@@ -62,6 +62,7 @@ export default function HomeCategoryCard2({
         <Text
           numberOfLines={1}
           style={{
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
             fontFamily: fontFamily.regular,
             fontSize: textScale(10),
           }}>

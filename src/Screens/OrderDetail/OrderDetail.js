@@ -32,11 +32,15 @@ import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {getImageUrl, showError} from '../../utils/helperFunctions';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
+
 const {height, width} = Dimensions.get('window');
 
 export default function OrderDetail({navigation, route}) {
+  const isDarkMode = useDarkMode();
   const paramData = route?.params;
-  console.log(paramData, 'paramsData.....');
+  
   const [state, setState] = useState({
     isLoading: true,
     cartItems: [],
@@ -80,8 +84,8 @@ export default function OrderDetail({navigation, route}) {
       data['vendor_id'] = paramData?.selectedVendor.id;
     }
 
-    console.log(data, '_getOrderDetailScreen data >>>>>>');
-    // console.log(paramData?.orderId,"orderId");
+    
+    // 
     updateState({isLoading: true});
     actions
       .getOrderDetail(data, {
@@ -91,7 +95,7 @@ export default function OrderDetail({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'get order detail res>>>>');
+        
         updateState({isLoading: false});
         if (res?.data) {
           updateState({
@@ -108,13 +112,13 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const errorMethod = (error) => {
-    console.log(error, 'error');
+    
     updateState({isLoading: false, isLoading: false, isLoadingC: false});
     showError(error?.message || error?.error);
   };
 
   const onStarRatingPress = (i, rating) => {
-    console.log(i, 't>>>');
+    
     // updateState({isLoading: true});
     _giveRatingToProduct(i, rating);
   };
@@ -129,7 +133,7 @@ export default function OrderDetail({navigation, route}) {
       ? productDetail?.product_rating?.review
       : '';
     // data['vendor_id'] = productDetail.vendor_id;
-    console.log(data, '>datadatadatadatadata');
+    
     actions
       .giveRating(data, {
         code: appData?.profile?.code,
@@ -137,7 +141,7 @@ export default function OrderDetail({navigation, route}) {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res, 'res>>>');
+        
         let cloned_cartItems = cloneDeep(cartItems);
         updateState({
           isLoading: false,
@@ -168,20 +172,54 @@ export default function OrderDetail({navigation, route}) {
     return (
       <View
         style={{
-          backgroundColor: '#fff',
+          backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
           marginHorizontal: moderateScale(10),
           marginVertical: moderateScale(10),
         }}>
-        <View style={styles.vendorView}>
-          <Text style={styles.vendorText}>{item?.vendor_name}</Text>
+        <View
+          style={
+            isDarkMode
+              ? [
+                  styles.vendorView,
+                  {backgroundColor: MyDarkTheme.colors.background},
+                ]
+              : styles.vendorView
+          }>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.vendorText, {color: MyDarkTheme.colors.text}]
+                : styles.vendorText
+            }>
+            {item?.vendor_name}
+          </Text>
         </View>
         {item?.products.length
           ? item?.products.map((i, inx) => {
               if (item?.vendor_id == i?.vendor_id) {
                 return (
                   <View key={inx}>
-                    <View style={[styles.cartItemMainContainer]}>
-                      <View style={styles.cartItemImage}>
+                    <View
+                      style={
+                        isDarkMode
+                          ? [
+                              styles.cartItemMainContainer,
+                              {backgroundColor: MyDarkTheme.colors.background},
+                            ]
+                          : [styles.cartItemMainContainer]
+                      }>
+                      <View
+                        style={
+                          isDarkMode
+                            ? [
+                                styles.cartItemImage,
+                                {
+                                  backgroundColor:
+                                    MyDarkTheme.colors.background,
+                                },
+                              ]
+                            : styles.cartItemImage
+                        }>
                         <FastImage
                           source={
                             i?.image_path
@@ -212,7 +250,17 @@ export default function OrderDetail({navigation, route}) {
                             }}>
                             <Text
                               numberOfLines={2}
-                              style={[styles.priceItemLabel2, {opacity: 0.8}]}>
+                              style={
+                                isDarkMode
+                                  ? [
+                                      styles.priceItemLabel2,
+                                      {
+                                        opacity: 0.8,
+                                        color: MyDarkTheme.colors.text,
+                                      },
+                                    ]
+                                  : [styles.priceItemLabel2, {opacity: 0.8}]
+                              }>
                               {i?.translation?.title}
                             </Text>
                             {i?.variant_options.length
@@ -220,12 +268,32 @@ export default function OrderDetail({navigation, route}) {
                                   return (
                                     <View style={{flexDirection: 'row'}}>
                                       <Text
-                                        style={styles.cartItemWeight2}
+                                        style={
+                                          isDarkMode
+                                            ? [
+                                                styles.cartItemWeight2,
+                                                {
+                                                  color:
+                                                    MyDarkTheme.colors.text,
+                                                },
+                                              ]
+                                            : styles.cartItemWeight2
+                                        }
                                         numberOfLines={1}>
                                         {j.title}{' '}
                                       </Text>
                                       <Text
-                                        style={styles.cartItemWeight2}
+                                        style={
+                                          isDarkMode
+                                            ? [
+                                                styles.cartItemWeight2,
+                                                {
+                                                  color:
+                                                    MyDarkTheme.colors.text,
+                                                },
+                                              ]
+                                            : styles.cartItemWeight2
+                                        }
                                         numberOfLines={
                                           1
                                         }>{`(${j.option})`}</Text>
@@ -259,10 +327,17 @@ export default function OrderDetail({navigation, route}) {
                             {i?.quantity && (
                               <View style={{flexDirection: 'row'}}>
                                 <Text
-                                  style={{
-                                    color: colors.textGrey,
-                                    fontSize: textScale(14),
-                                  }}>
+                                  style={
+                                    isDarkMode
+                                      ? {
+                                          color: MyDarkTheme.colors.text,
+                                          fontSize: textScale(14),
+                                        }
+                                      : {
+                                          color: colors.textGrey,
+                                          fontSize: textScale(14),
+                                        }
+                                  }>
                                   {strings.QTY}
                                 </Text>
                                 <Text style={styles.cartItemWeight}>
@@ -379,33 +454,97 @@ export default function OrderDetail({navigation, route}) {
         </TouchableOpacity> */}
         {!!Number(item?.discount_amount) && (
           <View style={styles.itemPriceDiscountTaxView}>
-            <Text style={styles.priceItemLabel}>{strings.DISCOUNT}</Text>
-            <Text style={styles.priceItemLabel}>{`- ${
-              currencies?.primary_currency?.symbol
-            }${Number(
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        fontSize: textScale(14),
+                      },
+                    ]
+                  : styles.priceItemLabel
+              }>
+              {strings.DISCOUNT}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        fontSize: textScale(14),
+                      },
+                    ]
+                  : styles.priceItemLabel
+              }>{`- ${currencies?.primary_currency?.symbol}${Number(
               item?.discount_amount ? item?.discount_amount : 0,
             ).toFixed(2)}`}</Text>
           </View>
         )}
         {!!Number(item?.delivery_fee) && (
           <View style={styles.itemPriceDiscountTaxView}>
-            <Text style={styles.priceItemLabel}>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        fontSize: textScale(14),
+                      },
+                    ]
+                  : styles.priceItemLabel
+              }>
               {strings.DELIVERY_CHARGES}
             </Text>
-            <Text style={styles.priceItemLabel}>{`${
-              currencies?.primary_currency?.symbol
-            }${Number(item?.delivery_fee ? item?.delivery_fee : 0).toFixed(
-              2,
-            )}`}</Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        fontSize: textScale(14),
+                      },
+                    ]
+                  : styles.priceItemLabel
+              }>{`${currencies?.primary_currency?.symbol}${Number(
+              item?.delivery_fee ? item?.delivery_fee : 0,
+            ).toFixed(2)}`}</Text>
           </View>
         )}
         <View style={styles.itemPriceDiscountTaxView}>
-          <Text style={styles.priceItemLabel2}>{strings.AMOUNT}</Text>
-          <Text style={styles.priceItemLabel2}>{`${
-            currencies?.primary_currency?.symbol
-          }${Number(item?.payable_amount ? item?.payable_amount : 0).toFixed(
-            2,
-          )}`}</Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.priceItemLabel2,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      fontSize: textScale(14),
+                    },
+                  ]
+                : styles.priceItemLabel2
+            }>
+            {strings.AMOUNT}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.priceItemLabel2,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      fontSize: textScale(14),
+                    },
+                  ]
+                : styles.priceItemLabel2
+            }>{`${currencies?.primary_currency?.symbol}${Number(
+            item?.payable_amount ? item?.payable_amount : 0,
+          ).toFixed(2)}`}</Text>
         </View>
       </View>
     );
@@ -419,27 +558,95 @@ export default function OrderDetail({navigation, route}) {
             styles.bottomTabLableValue,
             // {marginTop: moderateScaleVertical(10)},
           ]}>
-          <Text style={styles.priceItemLabel}>{strings.SUBTOTAL}</Text>
-          <Text style={styles.priceItemLabel}>{`${
-            currencies?.primary_currency?.symbol
-          }${Number(cartData?.total_amount).toFixed(2)}`}</Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.priceItemLabel,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      fontSize: textScale(14),
+                    },
+                  ]
+                : styles.priceItemLabel
+            }>
+            {strings.SUBTOTAL}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.priceItemLabel,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      fontSize: textScale(14),
+                    },
+                  ]
+                : styles.priceItemLabel
+            }>{`${currencies?.primary_currency?.symbol}${Number(
+            cartData?.total_amount,
+          ).toFixed(2)}`}</Text>
         </View>
         {!!cartData?.wallet_amount_used && (
           <View style={styles.bottomTabLableValue}>
-            <Text style={styles.priceItemLabel}>{strings.WALLET}</Text>
-            <Text style={styles.priceItemLabel}>{`-${
-              currencies?.primary_currency?.symbol
-            }${Number(
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        fontSize: textScale(14),
+                      },
+                    ]
+                  : styles.priceItemLabel
+              }>
+              {strings.WALLET}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        fontSize: textScale(14),
+                      },
+                    ]
+                  : styles.priceItemLabel
+              }>{`-${currencies?.primary_currency?.symbol}${Number(
               cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
             ).toFixed(2)}`}</Text>
           </View>
         )}
         {!!cartData?.loyalty_amount_saved && (
           <View style={styles.bottomTabLableValue}>
-            <Text style={styles.priceItemLabel}>{strings.LOYALTY}</Text>
-            <Text style={styles.priceItemLabel}>{`-${
-              currencies?.primary_currency?.symbol
-            }${Number(
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        fontSize: textScale(14),
+                      },
+                    ]
+                  : styles.priceItemLabel
+              }>
+              {strings.LOYALTY}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        fontSize: textScale(14),
+                      },
+                    ]
+                  : styles.priceItemLabel
+              }>{`-${currencies?.primary_currency?.symbol}${Number(
               cartData?.loyalty_amount_saved
                 ? cartData?.loyalty_amount_saved
                 : 0,
@@ -449,28 +656,98 @@ export default function OrderDetail({navigation, route}) {
 
         {!!cartData?.total_discount && (
           <View style={styles.bottomTabLableValue}>
-            <Text style={styles.priceItemLabel}>{strings.TOTAL_DISCOUNT}</Text>
-            <Text style={styles.priceItemLabel}>{`-${
-              currencies?.primary_currency?.symbol
-            }${Number(cartData?.total_discount).toFixed(2)}`}</Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        fontSize: textScale(14),
+                      },
+                    ]
+                  : styles.priceItemLabel
+              }>
+              {strings.TOTAL_DISCOUNT}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        fontSize: textScale(14),
+                      },
+                    ]
+                  : styles.priceItemLabel
+              }>{`-${currencies?.primary_currency?.symbol}${Number(
+              cartData?.total_discount,
+            ).toFixed(2)}`}</Text>
           </View>
         )}
         {!!cartData?.taxable_amount && (
           <View style={styles.bottomTabLableValue}>
-            <Text style={styles.priceItemLabel}>{strings.TAX_AMOUNT}</Text>
-            <Text style={styles.priceItemLabel}>{`${
-              currencies?.primary_currency?.symbol
-            }${Number(
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        fontSize: textScale(14),
+                      },
+                    ]
+                  : styles.priceItemLabel
+              }>
+              {strings.TAX_AMOUNT}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        fontSize: textScale(14),
+                      },
+                    ]
+                  : styles.priceItemLabel
+              }>{`${currencies?.primary_currency?.symbol}${Number(
               cartData?.taxable_amount ? cartData?.taxable_amount : 0,
             ).toFixed(2)}`}</Text>
           </View>
         )}
 
         <View style={styles.amountPayable}>
-          <Text style={styles.priceItemLabel2}>{strings.AMOUNT_PAYABLE}</Text>
-          <Text style={styles.priceItemLabel2}>{`${
-            currencies?.primary_currency?.symbol
-          }${Number(cartData?.payable_amount).toFixed(2)}`}</Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.priceItemLabel2,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      fontSize: textScale(14),
+                    },
+                  ]
+                : styles.priceItemLabel2
+            }>
+            {strings.AMOUNT_PAYABLE}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.priceItemLabel2,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      fontSize: textScale(14),
+                    },
+                  ]
+                : styles.priceItemLabel2
+            }>{`${currencies?.primary_currency?.symbol}${Number(
+            cartData?.payable_amount,
+          ).toFixed(2)}`}</Text>
         </View>
       </View>
     );
@@ -489,10 +766,37 @@ export default function OrderDetail({navigation, route}) {
         {/* select payment method */}
         <TouchableOpacity
           disabled={true}
-          style={[styles.paymentMainView, {justifyContent: 'space-between'}]}>
+          style={
+            isDarkMode
+              ? [
+                  styles.paymentMainView,
+                  {
+                    justifyContent: 'space-between',
+                    backgroundColor: MyDarkTheme.colors.lightDark,
+                  },
+                ]
+              : [styles.paymentMainView, {justifyContent: 'space-between'}]
+          }>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Image source={imagePath.paymentMethod} />
-            <Text style={styles.selectedMethod}>
+            <Image
+              style={
+                isDarkMode
+                  ? {tintColor: MyDarkTheme.colors.text}
+                  : {tintColor: null}
+              }
+              source={imagePath.paymentMethod}
+            />
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.selectedMethod,
+                      {
+                        color: MyDarkTheme.colors.text,
+                      },
+                    ]
+                  : styles.selectedMethod
+              }>
               {cartData?.payment_option?.title || ''}
             </Text>
           </View>
@@ -507,7 +811,7 @@ export default function OrderDetail({navigation, route}) {
       cartData?.user_image?.image_path,
       '500/500',
     );
-    console.log(cartData, 'cartData>cartData>cartData');
+    
     return (
       <>
         {paramData?.orderStatus?.current_status?.title == 'Placed' && (
@@ -525,18 +829,19 @@ export default function OrderDetail({navigation, route}) {
             <Text style={styles.waitToAccept}>{strings.WAITINGTOACCEPT}</Text>
           </View>
         )}
-        {paramData?.orderStatus?.current_status?.title != 'Rejected' && (
-          <View
-            style={{
-              marginVertical: moderateScaleVertical(20),
-            }}>
-            <StepIndicators
-              labels={labels}
-              currentPosition={currentPosition}
-              themeColor={themeColors}
-            />
-          </View>
-        )}
+        {paramData?.orderStatus?.current_status?.title != 'Rejected' &&
+          paramData?.orderStatus?.current_status?.title != 'Placed' && (
+            <View
+              style={{
+                marginVertical: moderateScaleVertical(20),
+              }}>
+              <StepIndicators
+                labels={labels}
+                currentPosition={currentPosition}
+                themeColor={themeColors}
+              />
+            </View>
+          )}
 
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <View
@@ -559,18 +864,45 @@ export default function OrderDetail({navigation, route}) {
             )} */}
             <View style={{marginLeft: moderateScale(10)}}>
               {!!paramData?.fromVendorApp && (
-                <Text style={styles.userName}>{cartData?.user_name}</Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.userName,
+                          {
+                            color: MyDarkTheme.colors.text,
+                          },
+                        ]
+                      : styles.userName
+                  }>
+                  {cartData?.user_name}
+                </Text>
               )}
               <View style={{flexDirection: 'row'}}>
                 <Text
                   style={
-                    styles.orderLableStyle
+                    isDarkMode
+                      ? [
+                          styles.orderLableStyle,
+                          {
+                            color: MyDarkTheme.colors.text,
+                          },
+                        ]
+                      : styles.orderLableStyle
                   }>{`#${cartData?.order_number}  |  `}</Text>
-                <Text style={styles.orderLableStyle}>{`${moment(
-                  cartData?.created_at,
-                ).format('DD MMM,YYYY')} ${moment(cartData?.created_at).format(
-                  'LT',
-                )} `}</Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.orderLableStyle,
+                          {
+                            color: MyDarkTheme.colors.text,
+                          },
+                        ]
+                      : styles.orderLableStyle
+                  }>{`${moment(cartData?.created_at).format(
+                  'DD MMM,YYYY',
+                )} ${moment(cartData?.created_at).format('LT')} `}</Text>
               </View>
             </View>
           </View>
@@ -601,7 +933,9 @@ export default function OrderDetail({navigation, route}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
       isLoadingB={isLoading}>
@@ -612,7 +946,15 @@ export default function OrderDetail({navigation, route}) {
         centerTitle={strings.ORDER_DET}
       />
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
-      <View style={styles.mainComponent}>
+      <View
+        style={
+          isDarkMode
+            ? [
+                styles.mainComponent,
+                {backgroundColor: MyDarkTheme.colors.background},
+              ]
+            : styles.mainComponent
+        }>
         <FlatList
           data={cartItems}
           extraData={cartItems}

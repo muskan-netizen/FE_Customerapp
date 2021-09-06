@@ -8,10 +8,7 @@ import {
   setAppData,
   setItem,
 } from '../../utils/utils';
-import {  
-  LIST_OF_CMS,
-  CMS_PAGE_DETAIL
-} from '../../config/urls';
+import {LIST_OF_CMS, CMS_PAGE_DETAIL} from '../../config/urls';
 import store from '../store';
 import types from '../types';
 const {dispatch} = store;
@@ -181,8 +178,6 @@ export function saveShortCode(data = {}) {
   });
 }
 
-
-
 //Get List of payment method
 export function getListOfAllCmsLinks(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
@@ -196,7 +191,6 @@ export function getListOfAllCmsLinks(data = {}, headers = {}) {
   });
 }
 
-
 //Get CMS page detail
 export function getCmsPageDetail(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
@@ -207,5 +201,25 @@ export function getCmsPageDetail(data = {}, headers = {}) {
       .catch((error) => {
         reject(error);
       });
+  });
+}
+
+export function setAppTheme(res) {
+  console.log(res, 'res>res>res');
+  console.log(typeof res, 'typeof setAppTheme');
+  setItem('theme', JSON.stringify(res));
+  dispatch({
+    type: types.THEME,
+    payload: res,
+  });
+}
+
+export function setToggle(res) {
+  // console.log(JSON.stringify(res), 'response from toggle');
+  console.log(typeof res, 'typeof res');
+  setItem('istoggle', JSON.stringify(res));
+  dispatch({
+    type: types.THEME_TOGGLE,
+    payload: res,
   });
 }

@@ -23,6 +23,8 @@ import commonStylesFun from '../../styles/commonStyles';
 import {textScale} from '../../styles/responsiveSize';
 import stylesFun from './styles';
 import DeviceInfo from 'react-native-device-info';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Account({navigation}) {
   const [state, setState] = useState({
@@ -31,6 +33,9 @@ export default function Account({navigation}) {
   const {shortCodeStatus, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = useDarkMode();
+  const homePageLayout = appStyle?.homePageLayout;
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
@@ -95,7 +100,9 @@ export default function Account({navigation}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGrey}>
       {shortCodeStatus ? (
         <Header
@@ -142,7 +149,11 @@ export default function Account({navigation}) {
             containerStyle={styles.containerStyle}
             iconRight={imagePath.goRight}
             rightIconStyle={{tintColor: colors.textGreyLight}}
-            centerHeadingStyle={{fontSize: textScale(15)}}
+            centerHeadingStyle={
+              isDarkMode
+                ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+                : {fontSize: textScale(15)}
+            }
           />
         )}
         {!!userData?.auth_token && (
@@ -153,7 +164,11 @@ export default function Account({navigation}) {
             iconLeft={imagePath.myOrder}
             centerHeading={strings.MY_ORDERS}
             containerStyle={styles.containerStyle}
-            centerHeadingStyle={{fontSize: textScale(15)}}
+            centerHeadingStyle={
+              isDarkMode
+                ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+                : {fontSize: textScale(15)}
+            }
             iconRight={imagePath.goRight}
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
@@ -167,7 +182,11 @@ export default function Account({navigation}) {
             iconLeft={imagePath.myOrder}
             centerHeading={strings.SUBSCRIPTION}
             containerStyle={styles.containerStyle}
-            centerHeadingStyle={{fontSize: textScale(15)}}
+            centerHeadingStyle={
+              isDarkMode
+                ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+                : {fontSize: textScale(15)}
+            }
             iconRight={imagePath.goRight}
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
@@ -181,7 +200,11 @@ export default function Account({navigation}) {
             iconLeft={imagePath.myOrder}
             centerHeading={strings.LOYALTYPOINTS}
             containerStyle={styles.containerStyle}
-            centerHeadingStyle={{fontSize: textScale(15)}}
+            centerHeadingStyle={
+              isDarkMode
+                ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+                : {fontSize: textScale(15)}
+            }
             iconRight={imagePath.goRight}
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
@@ -208,7 +231,11 @@ export default function Account({navigation}) {
             iconLeft={imagePath.wallet}
             centerHeading={strings.WALLET}
             containerStyle={styles.containerStyle}
-            centerHeadingStyle={{fontSize: textScale(15)}}
+            centerHeadingStyle={
+              isDarkMode
+                ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+                : {fontSize: textScale(15)}
+            }
             iconRight={imagePath.goRight}
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
@@ -221,7 +248,11 @@ export default function Account({navigation}) {
             iconLeft={imagePath.fav}
             centerHeading={strings.FAVOURITE}
             containerStyle={styles.containerStyle}
-            centerHeadingStyle={{fontSize: textScale(15)}}
+            centerHeadingStyle={
+              isDarkMode
+                ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+                : {fontSize: textScale(15)}
+            }
             iconRight={imagePath.goRight}
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
@@ -234,7 +265,11 @@ export default function Account({navigation}) {
           iconLeft={imagePath.about}
           centerHeading={strings.LINKS}
           containerStyle={styles.containerStyle}
-          centerHeadingStyle={{fontSize: textScale(15)}}
+          centerHeadingStyle={
+            isDarkMode
+              ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+              : {fontSize: textScale(15)}
+          }
           iconRight={imagePath.goRight}
           rightIconStyle={{tintColor: colors.textGreyLight}}
         />
@@ -246,7 +281,11 @@ export default function Account({navigation}) {
             iconLeft={imagePath.share}
             centerHeading={strings.SHARE_APP}
             containerStyle={styles.containerStyle}
-            centerHeadingStyle={{fontSize: textScale(15)}}
+            centerHeadingStyle={
+              isDarkMode
+                ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+                : {fontSize: textScale(15)}
+            }
             iconRight={imagePath.goRight}
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
@@ -259,7 +298,11 @@ export default function Account({navigation}) {
           iconLeft={imagePath.settings}
           centerHeading={strings.SETTINGS}
           containerStyle={styles.containerStyle}
-          centerHeadingStyle={{fontSize: textScale(15)}}
+          centerHeadingStyle={
+            isDarkMode
+              ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+              : {fontSize: textScale(15)}
+          }
           iconRight={imagePath.goRight}
           rightIconStyle={{tintColor: colors.textGreyLight}}
         />
@@ -282,7 +325,11 @@ export default function Account({navigation}) {
           iconLeft={imagePath.message}
           centerHeading={strings.CONTACT_US}
           containerStyle={styles.containerStyle}
-          centerHeadingStyle={{fontSize: textScale(15)}}
+          centerHeadingStyle={
+            isDarkMode
+              ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+              : {fontSize: textScale(15)}
+          }
           iconRight={imagePath.goRight}
           rightIconStyle={{tintColor: colors.textGreyLight}}
         />
@@ -295,7 +342,11 @@ export default function Account({navigation}) {
             iconLeft={imagePath.myStoreIcon}
             centerHeading={strings.MYSTORES}
             containerStyle={styles.containerStyle}
-            centerHeadingStyle={{fontSize: textScale(15)}}
+            centerHeadingStyle={
+              isDarkMode
+                ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+                : {fontSize: textScale(15)}
+            }
             iconRight={imagePath.goRight}
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />

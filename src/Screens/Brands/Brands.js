@@ -11,8 +11,12 @@ import colors from '../../styles/colors';
 import {moderateScaleVertical} from '../../styles/responsiveSize';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import ListEmptyBrands from './ListEmptyBrands';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Brand({navigation}) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     isLoading: true,
   });
@@ -46,8 +50,12 @@ export default function Brand({navigation}) {
   };
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
-      statusBarColor={colors.backgroundGrey}>
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
+      statusBarColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }>
       <Header
         centerTitle={strings.BRANDS}
         leftIcon={

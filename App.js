@@ -92,6 +92,21 @@ const App = () => {
           payload: dine_in_type,
         });
       }
+      // const theme = await getItem('theme');
+      // if (theme) {
+      //   dispatch({
+      //     type: types.THEME,
+      //     payload: JSON.parse(theme),
+      //   });
+      // }
+
+      // const themeToggle = await getItem('istoggle');
+      // if (themeToggle) {
+      //   dispatch({
+      //     type: types.THEME_TOGGLE,
+      //     payload: JSON.parse(themeToggle),
+      //   });
+      // }
 
       //Language
       const getLanguage = await getItem('language');

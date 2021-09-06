@@ -43,8 +43,11 @@ import {
 } from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function MyProfile({route, navigation}) {
+  const isDarkMode = useDarkMode();
   const currentTheme = useSelector((state) => state?.initBoot);
   const {themeColors, themeLayouts, appStyle} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
@@ -65,7 +68,11 @@ export default function MyProfile({route, navigation}) {
     ],
     selectedTab: strings.BASIC_INFO,
     callingCode: '1',
-    cca2: userData?.cca2 ? userData?.cca2 : appData?.profile?.country?.code,
+    cca2: userData?.cca2
+      ? userData?.cca2
+      : appData?.profile?.country?.code
+      ? appData?.profile?.country?.code
+      : 'IN',
     name: userData?.name,
     email: userData?.email,
     password: '',
@@ -741,13 +748,13 @@ export default function MyProfile({route, navigation}) {
   return (
     <WrapperContainer
       isLoadingB={isLoading}
-      bgColor={colors.backgroundGrey}
+      bgColor={isDarkMode?MyDarkTheme.colors.background:colors.backgroundGrey}
       statusBarColor={colors.backgroundGreyC}
       source={loaderOne}>
       <Header2
         leftIcon={imagePath.backArrow}
         centerTitle={strings.MY_PROFILE}
-        headerContainerStyle={{backgroundColor: colors.backgroundGreyC}}
+        headerContainerStyle={{backgroundColor:isDarkMode?MyDarkTheme.colors.background: colors.backgroundGreyC}}
       />
       <View style={{...commonStyles.headerTopLine}} />
       {/* top section user general info */}
