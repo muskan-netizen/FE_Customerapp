@@ -910,7 +910,6 @@ export default function OrderDetail({navigation, route}) {
                 // top right sand 1
               ]}
             />
-
             <Text style={styles.waitToAccept}>{strings.WAITINGTOACCEPT}</Text>
           </View>
         )}
