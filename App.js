@@ -7,7 +7,7 @@ import strings from './src/constants/lang';
 import Routes from './src/navigation/Routes';
 import store from './src/redux/store';
 import types from './src/redux/types';
-import {getItem, getUserData} from './src/utils/utils';
+import {getItem, getUserData, setItem} from './src/utils/utils';
 import {
   GoogleSignin,
   statusCodes,
@@ -22,6 +22,8 @@ import fontFamily from './src/styles/fontFamily';
 import {RFPercentage} from 'react-native-responsive-fontsize';
 import {Linking} from 'react-native';
 import {navigate} from './src/navigation/NavigationService';
+import {getParameterByName, getUrlRoutes} from './src/utils/helperFunctions';
+import navigationStrings from './src/navigation/navigationStrings';
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
@@ -34,13 +36,12 @@ const App = () => {
   //     let id = getParameterByName('id', deepLinkUrl);
   //     let routeName = getUrlRoutes(deepLinkUrl, 1);
   //     if (routeName === 'vendor') {
-  //       selcetedToggle('dine_in');
   //       const item = {};
   //       item['id'] = id;
   //       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, item)();
 
   //       setTimeout(() => {
-  //         navigate(navigationStrings.POST_DETAIL, item);
+  //         navigate(navigationStrings.VENDOR_DETAIL, item);
   //       }, 2000);
   //     }
   //   }

@@ -33,11 +33,7 @@ navigator.geolocation = require('react-native-geolocation-service');
 
 export default function Home({route, navigation}) {
   const paramData = route?.params;
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
-  console.log(theme, 'theme');
-  console.log(toggleTheme, 'toggleTheme');
   const isDarkMode = useDarkMode();
   const {linkedURL, resetURL} = useDeepLinkURL();
 
@@ -170,51 +166,6 @@ export default function Home({route, navigation}) {
   useEffect(() => {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
-
-  // useEffect(() => {
-
-  //   Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
-  //   // Linking.addEventListener('deepLinkUrl', ({deepLinkUrl}) =>
-  //   //   moveToLink(deepLinkUrl),
-  //   // );
-
-  //   // if app is not opened
-  //   const getAsyncURL = async () => {
-  //     const deepLinkUrl = await Linking.getInitialURL();
-  //     moveToLink(deepLinkUrl);
-  //   };
-
-  //   getAsyncURL();
-  // }, []);
-
-  // useEffect(() => {
-  //   Linking.addEventListener('url', callback);
-  //   return () => {
-  //     Linking.removeEventListener('url', callback);
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   if (linkedURL) {
-  //     moveToLink(linkedURL);
-  //   }
-  //   resetURL();
-  // }, [linkedURL, resetURL]);
-
-  // const moveToLink = (deepLinkUrl) => {
-  //   console.log();
-  //   if (deepLinkUrl != null) {
-  //     setItem('deepLinkUrl', deepLinkUrl);
-  //     let id = getParameterByName('id', deepLinkUrl);
-  //     let routeName = getUrlRoutes(deepLinkUrl, 1);
-  //     if (routeName === 'vendor') {
-  //       selcetedToggle('dine_in');
-  //       const item = {};
-  //       item['id'] = id;
-  //       moveToNewScreen(navigationStrings.VENDOR_DETAIL, item)();
-  //     }
-  //   }
-  // };
 
   useEffect(() => {
     chekLocationPermission()
@@ -411,6 +362,20 @@ export default function Home({route, navigation}) {
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
       moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+    } else if (!item.is_show_category || item.is_show_category) {
+      item?.is_show_category
+        ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
+            item,
+            rootProducts: true,
+            // categoryData: data,
+          })()
+        : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+            id: item?.id,
+            vendor: true,
+            name: item?.name,
+          })();
+
+      // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
 
@@ -594,7 +559,7 @@ export default function Home({route, navigation}) {
               isRefreshing={isRefreshing}
               appMainData={appMainData}
               onPressCategory={(item) => {
-                onPressCategory2(item);
+                onPressCategory(item);
               }}
               isDineInSelected={isDineInSelected}
               selcetedToggle={selcetedToggle}

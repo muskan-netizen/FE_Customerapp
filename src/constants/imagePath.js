@@ -241,4 +241,12 @@ export default {
   dark: require('../assets/images/DARK.jpg'),
   light: require('../assets/images/LIGHT.jpg'),
   dropDownNew: require('../assets/images/ic_drpdwn.png'),
+  dineIn: require('../assets/images/ic_dine.png'),
+  dineInInActive: require('../assets/images/ic_dine1.png'),
+  takeaway: require('../assets/images/ic_takeaway.png'),
+  takeawayInActive: require('../assets/images/ic_take1.png'),
+  radioNewActive: require('../assets/images/ic_radio.png'),
+  radioNewInActive: require('../assets/images/ic_radio1.png'),
+  deliveryInActive: require('../assets/images/ic_delivery1.png'),
+  crossC: require('../assets/images/ic_crossNew.png'),
 };
