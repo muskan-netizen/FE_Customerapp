@@ -245,4 +245,7 @@ export default {
 
   //gif images
   search_gif: require('../assets/images/gif/search.gif'),
+  cart_gif:require('../assets/images/gif/emptycart.gif'),
+
+  
 };
