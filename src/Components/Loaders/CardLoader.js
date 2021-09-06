@@ -15,10 +15,16 @@ export default function CardLoader({
   isRow = false,
   rowContainerstyle = {},
   pRows = 0,
+  pWidth = 0,
 }) {
   const contentCard = () => {
     return (
-      <View style={{...containerStyle, width: cardWidth, padding: 0}}>
+      <View
+        style={{
+          ...containerStyle,
+          width: cardWidth,
+          padding: 0,
+        }}>
         <ContentLoader
           active
           listSize={listSize}
@@ -26,6 +32,7 @@ export default function CardLoader({
           titleStyles={{marginLeft: 0, paddingLeft: 0}}
           tHeight={height}
           pRows={pRows}
+          pWidth={pWidth}
           containerStyles={{
             ...rowContainerstyle,
             marginLeft: 0,

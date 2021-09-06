@@ -11,11 +11,18 @@ import {
   View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {BarIndicator, UIActivityIndicator} from 'react-native-indicators';
+import {
+  BarIndicator,
+  BallIndicator,
+  UIActivityIndicator,
+} from 'react-native-indicators';
 import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
 import HeaderWithFilters from '../../Components/HeaderWithFilters';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import {
+  loaderFive,
+  loaderOne,
+} from '../../Components/Loaders/AnimatedLoaderFiles';
 import StepIndicators from '../../Components/StepIndicator';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -34,6 +41,8 @@ import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
+import LottieView from 'lottie-react-native';
 
 const {height, width} = Dimensions.get('window');
 
@@ -41,13 +50,19 @@ export default function OrderDetail({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = theme;
   const paramData = route?.params;
-  console.log(paramData, 'paramsData.....');
+
   const [state, setState] = useState({
     isLoading: true,
     cartItems: [],
     cartData: {},
     selectedPayment: null,
     labels: ['Accepted', 'Processing', 'Out For Delivery', 'Delivered'],
+    // labels: [
+    //   {lable: 'Accepted', orderDate: '12/12/1233'},
+    //   {lable: 'Processing', orderDate: ''},
+    //   {lable: 'Out For Delivery', orderDate: ''},
+    //   {lable: 'Delivered', orderDate: ''},
+    // ],
     currentPosition: null,
   });
   const {isLoading, cartItems, cartData, labels, currentPosition} = state;
@@ -85,8 +100,7 @@ export default function OrderDetail({navigation, route}) {
       data['vendor_id'] = paramData?.selectedVendor.id;
     }
 
-    console.log(data, '_getOrderDetailScreen data >>>>>>');
-    // console.log(paramData?.orderId,"orderId");
+    //
     updateState({isLoading: true});
     actions
       .getOrderDetail(data, {
@@ -96,7 +110,7 @@ export default function OrderDetail({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'get order detail res>>>>');
+        console.log(res, 'resorder detail');
         updateState({isLoading: false});
         if (res?.data) {
           updateState({
@@ -113,13 +127,11 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const errorMethod = (error) => {
-    console.log(error, 'error');
     updateState({isLoading: false, isLoading: false, isLoadingC: false});
     showError(error?.message || error?.error);
   };
 
   const onStarRatingPress = (i, rating) => {
-    console.log(i, 't>>>');
     // updateState({isLoading: true});
     _giveRatingToProduct(i, rating);
   };
@@ -134,7 +146,7 @@ export default function OrderDetail({navigation, route}) {
       ? productDetail?.product_rating?.review
       : '';
     // data['vendor_id'] = productDetail.vendor_id;
-    console.log(data, '>datadatadatadatadata');
+
     actions
       .giveRating(data, {
         code: appData?.profile?.code,
@@ -142,7 +154,6 @@ export default function OrderDetail({navigation, route}) {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res, 'res>>>');
         let cloned_cartItems = cloneDeep(cartItems);
         updateState({
           isLoading: false,
@@ -812,7 +823,7 @@ export default function OrderDetail({navigation, route}) {
       cartData?.user_image?.image_path,
       '500/500',
     );
-    console.log(cartData, 'cartData>cartData>cartData');
+
     return (
       <>
         {paramData?.orderStatus?.current_status?.title == 'Placed' && (
@@ -822,26 +833,101 @@ export default function OrderDetail({navigation, route}) {
               justifyContent: 'center',
               marginTop: moderateScaleVertical(10),
             }}>
-            <UIActivityIndicator
-              size={45}
-              count={15}
+            {/* <BallIndicator
+              size={35}
+              count={10}
               color={themeColors.primary_color}
+            /> */}
+
+            <LottieView
+              source={loaderFive}
+              autoPlay
+              loop
+              style={{
+                height: moderateScaleVertical(100),
+                width: moderateScale(100),
+              }}
+              colorFilters={[
+                {
+                  keypath: 'right sand',
+                  color: themeColors.primary_color,
+                },
+                {
+                  keypath: 'left sand',
+                  color: themeColors.primary_color,
+                },
+                {
+                  keypath: 'right sand 2',
+                  color: themeColors.primary_color,
+                },
+                {
+                  keypath: 'left sand 2',
+                  color: themeColors.primary_color,
+                },
+
+                {
+                  keypath: 'right top sand 2',
+                  color: themeColors.primary_color,
+                },
+                {
+                  keypath: 'left top sand 2',
+                  color: themeColors.primary_color,
+                },
+                {
+                  keypath: 'top left sand 1',
+                  color: themeColors.primary_color,
+                },
+                {
+                  keypath: 'top left sand 2',
+                  color: themeColors.primary_color,
+                },
+                {
+                  keypath: 'right fallin sand',
+                  color: themeColors.primary_color,
+                },
+                {
+                  keypath: 'bottom cyrcle 12',
+                  color: themeColors.primary_color,
+                },
+                {
+                  keypath: 'bottom cyrcle 11',
+                  color: themeColors.primary_color,
+                },
+
+                {
+                  keypath: 'left fallin sand 2',
+                  color: themeColors.primary_color,
+                },
+                {
+                  keypath: 'top right sand 1',
+                  color: themeColors.primary_color,
+                },
+                {
+                  keypath: 'top right sand 1',
+                  color: themeColors.primary_color,
+                },
+
+                // top right sand 1
+              ]}
             />
+
             <Text style={styles.waitToAccept}>{strings.WAITINGTOACCEPT}</Text>
           </View>
         )}
-        {paramData?.orderStatus?.current_status?.title != 'Rejected' && (
-          <View
-            style={{
-              marginVertical: moderateScaleVertical(20),
-            }}>
-            <StepIndicators
-              labels={labels}
-              currentPosition={currentPosition}
-              themeColor={themeColors}
-            />
-          </View>
-        )}
+        {paramData?.orderStatus &&
+          paramData?.orderStatus?.current_status?.title != 'Rejected' &&
+          paramData?.orderStatus?.current_status?.title != 'Placed' && (
+            <View
+              style={{
+                marginVertical: moderateScaleVertical(20),
+              }}>
+              <StepIndicators
+                labels={labels}
+                currentPosition={currentPosition}
+                themeColor={themeColors}
+              />
+            </View>
+          )}
 
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <View
@@ -878,7 +964,11 @@ export default function OrderDetail({navigation, route}) {
                   {cartData?.user_name}
                 </Text>
               )}
-              <View style={{flexDirection: 'row'}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginTop: moderateScaleVertical(10),
+                }}>
                 <Text
                   style={
                     isDarkMode
@@ -910,7 +1000,8 @@ export default function OrderDetail({navigation, route}) {
 
         {/* Delivery Location */}
         <View style={[styles.topLable, {marginTop: moderateScale(10)}]}>
-          <View style={{flex: 0.35, flexDirection: 'row'}}>
+          <View
+            style={{flex: 0.35, flexDirection: 'row', alignItems: 'center'}}>
             <Image
               style={{tintColor: colors.black}}
               source={imagePath.locationGreen}
@@ -919,7 +1010,13 @@ export default function OrderDetail({navigation, route}) {
               {strings.DELIVERYAT}
             </Text>
           </View>
-          <View style={{flex: 0.7, flexWrap: 'wrap', justifyContent: 'center'}}>
+          <View
+            style={{
+              flex: 0.7,
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
             <View>
               <Text numberOfLines={1} style={styles.address}>
                 {cartData?.address?.address}
@@ -943,7 +1040,7 @@ export default function OrderDetail({navigation, route}) {
         leftIcon={
           appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
-        centerTitle={strings.ORDER_DET}
+        centerTitle={`Order #${cartData?.order_number?cartData?.order_number:''}`}
       />
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
       <View

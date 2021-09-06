@@ -68,7 +68,11 @@ export default function MyProfile({route, navigation}) {
       {title: strings.ADDRESS, isActive: false},
     ],
     selectedTab: strings.BASIC_INFO,
-    callingCode: '1',
+    callingCode: userData?.dial_code
+      ? userData?.dial_code
+      : appData?.profile?.country?.phonecode
+      ? appData?.profile?.country?.phonecode
+      : '91',
     cca2: userData?.cca2
       ? userData?.cca2
       : appData?.profile?.country?.code

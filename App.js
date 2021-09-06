@@ -23,6 +23,8 @@ import {RFPercentage} from 'react-native-responsive-fontsize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from './src/styles/theme';
 import colors from './src/styles/colors';
+import {Linking} from 'react-native';
+import {navigate} from './src/navigation/NavigationService';
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);

@@ -84,8 +84,8 @@ const Header3 = ({
             paddingLeft: 5,
             // height:20,
             lineHeight: 20,
-            fontFamily: fontFamily.medium,
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            fontFamily: fontFamily.regular,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
             fontSize: textScale(10),
             width: '70%',
           }}>

@@ -33,6 +33,8 @@ import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
 import stylesFunc from '../styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
+import {SearchBar} from 'react-native-elements/dist/searchbar/SearchBar';
+import SearchBar2 from '../../../Components/SearchBar2';
 
 export default function DashBoardFive({
   handleRefresh = () => {},
@@ -86,33 +88,16 @@ export default function DashBoardFive({
 
   return (
     <>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        style={{
-          flexDirection: 'row',
-          height: moderateScaleVertical(50),
-          backgroundColor: colors.greyNew,
-          borderRadius: moderateScale(15),
-          paddingHorizontal: moderateScale(15),
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginHorizontal: moderateScale(15),
-          marginVertical: moderateScale(13),
-        }}
-        onPress={() =>
-          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-        }>
-        <View style={{width: '90%'}}>
-          <Text
-            style={{
-              fontFamily: fontFamily.regular,
-              color: colors.textGreyB,
-            }}>
-            {strings.SEARCH_HERE}
-          </Text>
-        </View>
-        <Image source={imagePath.search1} />
-      </TouchableOpacity>
+      {isLoading ? (
+        <ListEmptyVendors
+          isLoading={isLoading}
+          listSize={1}
+          height={moderateScaleVertical(40)}
+          vendorContainerStyle={{marginVertical: moderateScale(15)}}
+        />
+      ) : (
+        <SearchBar2 navigation={navigation} />
+      )}
       <ScrollView
         refreshing={isRefreshing}
         refreshControl={
@@ -129,13 +114,14 @@ export default function DashBoardFive({
           paddingHorizontal: moderateScale(15),
         }}>
         {isLoading ? (
-          <View style={{marginTop: moderateScale(10)}}>
+          <View style={{marginTop: moderateScale(5)}}>
             <CategoryLoader
               listSize={2}
               isRow
               cardWidth={80}
-              height={moderateScale(80)}
-              containerStyle={{margin: moderateScale(5)}}
+              pRows={1}
+              height={moderateScale(70)}
+              containerStyle={{marginVertical: moderateScale(5)}}
             />
           </View>
         ) : appMainData &&
@@ -162,12 +148,13 @@ export default function DashBoardFive({
             />
           </View>
         ) : null}
-        <View style={{marginTop: moderateScale(20)}}>
+        <View style={{marginVertical: moderateScale(30)}}>
           {isLoading ? (
             <ListEmptyVendors
               isLoading={isLoading}
               emptyText={'No data found'}
               listSize={1}
+              dotsLength={true}
               height={moderateScaleVertical(130)}
               vendorContainerStyle={{marginLeft: 0}}
             />
@@ -220,18 +207,15 @@ export default function DashBoardFive({
             isLoading={isLoading}
             emptyText={'No data found'}
             listSize={3}
+            pRows={2}
+            pWidth={'100%'}
+            rowContainerstyle={{marginBottom: moderateScale(25)}}
             height={moderateScaleVertical(130)}
-            vendorContainerStyle={{marginLeft: 0}}
+            vendorContainerStyle={{marginLeft: 0, marginTop: moderateScale(60)}}
           />
         ) : appMainData?.vendors && appMainData?.vendors?.length ? (
           <View>
-            <Text
-              style={{
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
-                fontFamily: fontFamily.regular,
-                fontSize: textScale(16),
-                marginBottom: moderateScale(10),
-              }}>
+            <Text style={styles.exploreStoresTxt}>
               {strings.EXPLORE_STORES}
             </Text>
             <FlatList
@@ -245,7 +229,12 @@ export default function DashBoardFive({
             />
           </View>
         ) : null}
-        <View style={{height: Platform.OS === 'ios' ? 55 : 90}} />
+        <View
+          style={{
+            height:
+              Platform.OS === 'ios' ? moderateScale(55) : moderateScale(90),
+          }}
+        />
       </ScrollView>
     </>
   );
