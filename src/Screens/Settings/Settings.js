@@ -29,11 +29,15 @@ import navigationStrings from '../../navigation/navigationStrings';
 
 export default function Settings({route, navigation}) {
   // const appData = useSelector(state => state?.initBoot?.appData);
+
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const isDarkMode = useDarkMode();
+  //const isDarkMode = toggleTheme ? true : false;
   const {currencies, appData, languages, appStyle, themeColors} = useSelector(
     (state) => state?.initBoot,
   );
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+
   const [state, setState] = useState({
     isLoading: false,
     country: 'uk',
@@ -69,7 +73,6 @@ export default function Settings({route, navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
   const commonStyles = commonStylesFunc({fontFamily});
-  const isDarkMode = useDarkMode();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -163,7 +166,7 @@ export default function Settings({route, navigation}) {
 
   const _toggleOnOff = (isOn) => {
     console.log(typeof isOn, 'isOn');
-    // actions.setToggle(isOn);
+    actions.setToggle(isOn);
     setTimeout(() => {
       updateState({
         isOn: isOn ? true : false,
@@ -172,14 +175,14 @@ export default function Settings({route, navigation}) {
   };
 
   const _setApperance = (item) => {
-    // actions.setAppTheme(item);
+    actions.setAppTheme(item);
 
-    // if (item?.type == 'light') {
-    //   actions.setAppTheme(false);
-    // } else {
-    //   actions.setAppTheme(true);
-    // }
-    // console.log(item, 'item>item>item');
+    if (item?.type == 'light') {
+      actions.setAppTheme(false);
+    } else {
+      actions.setAppTheme(true);
+    }
+    console.log(item, 'item>item>item');
     {
       selectedThemeOption && selectedThemeOption?.id == item?.id
         ? null
@@ -212,7 +215,7 @@ export default function Settings({route, navigation}) {
       <View style={{...commonStyles.headerTopLine}} />
       {/* <KeyboardAwareScrollView bounces={false}> */}
 
-      <View
+      {/* <View
         style={{
           flexDirection: 'row',
           marginHorizontal: moderateScale(20),
@@ -282,7 +285,7 @@ export default function Settings({route, navigation}) {
             );
           })}
         </View>
-      ) : null}
+      ) : null} */}
 
       <View style={{flexDirection: 'row', marginHorizontal: moderateScale(20)}}>
         <Text

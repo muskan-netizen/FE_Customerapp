@@ -23,8 +23,11 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {getImageUrl, showError} from '../../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function VendorDetail2({navigation, route}) {
+  const isDarkMode = useDarkMode();
   let vendorParams = route?.params?.data;
   console.log(vendorParams, 'VendorDetail params');
   const userData = useSelector((state) => state?.auth?.userData);
@@ -153,7 +156,9 @@ export default function VendorDetail2({navigation, route}) {
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
-      bgColor={colors.backgroundGrey}>
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }>
       {/* <Header centerTitle={vendorParams?.item?.name} hideRight={false} /> */}
 
       <Header2

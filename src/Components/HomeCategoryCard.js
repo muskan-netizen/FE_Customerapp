@@ -13,7 +13,7 @@ import {MyDarkTheme} from '../styles/theme';
 export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
+  const isDarkMode = useDarkMode();
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const imageURI = getImageUrl(
@@ -37,17 +37,21 @@ export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
         borderRadius: moderateScale(15),
         flexDirection: 'column',
         justifyContent: 'space-between',
-        backgroundColor: '#FFFCFC',
+        backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : '#FFFCFC',
 
         ...Elevations[2],
       }}>
-      <View style={{flex: 0.4}}>
+      <View
+        style={{
+          flex: 0.4,
+        }}>
         <Text
           style={{
             fontFamily: fontFamily.bold,
             fontSize: textScale(16),
             marginLeft: moderateScale(15),
             marginTop: moderateScale(10),
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           }}>
           {data.name}
         </Text>
@@ -58,6 +62,8 @@ export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
         }}>
         {isSVG ? (
           <SvgUri
+            height={moderateScale(70)}
+            width={moderateScale(70)}
             style={{
               marginHorizontal: moderateScale(10),
               position: 'absolute',

@@ -10,6 +10,8 @@ import {
   StatusBarHeight,
   textScale,
 } from '../styles/responsiveSize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function Header2({
   centerTitle = '',
@@ -21,7 +23,7 @@ export default function Header2({
   headerContainerStyle = {},
 }) {
   const {appStyle} = useSelector((state) => state?.initBoot);
-
+  const isDarkMode = useDarkMode();
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
   const navigation = useNavigation();
@@ -50,7 +52,11 @@ export default function Header2({
           <Image
             resizeMode="contain"
             source={leftIcon}
-            style={styles.leftIcon}
+            style={
+              isDarkMode
+                ? [styles.leftIcon, {tintColor: MyDarkTheme.colors.text}]
+                : styles.leftIcon
+            }
           />
         </TouchableOpacity>
         <Text

@@ -205,8 +205,7 @@ export function getCmsPageDetail(data = {}, headers = {}) {
 }
 
 export function setAppTheme(res) {
-  console.log(res, 'res>res>res');
-  console.log(typeof res, 'typeof setAppTheme');
+  console.log(res, 'res of theme');
   setItem('theme', JSON.stringify(res));
   dispatch({
     type: types.THEME,
@@ -216,7 +215,7 @@ export function setAppTheme(res) {
 
 export function setToggle(res) {
   // console.log(JSON.stringify(res), 'response from toggle');
-  console.log(typeof res, 'typeof res');
+
   setItem('istoggle', JSON.stringify(res));
   dispatch({
     type: types.THEME_TOGGLE,

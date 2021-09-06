@@ -51,9 +51,11 @@ import ListEmptyCart from './ListEmptyCart';
 import Modal from 'react-native-modal';
 import DatePicker from 'react-native-date-picker';
 import GradientButton from '../../Components/GradientButton';
-
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
 export default function Cart2({navigation, route}) {
   let paramsData = route?.params;
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     isLoading: true,
     isVisible: false,
@@ -586,14 +588,20 @@ export default function Cart2({navigation, route}) {
       <>
         <View style={styles.mainContainer}>
           <View style={{flexDirection: 'column'}}>
-            <Text numberOfLines={1} style={styles.vendorText}>
+            <Text
+              numberOfLines={1}
+              style={
+                isDarkMode
+                  ? [styles.vendorText, {color: MyDarkTheme.colors.text}]
+                  : styles.vendorText
+              }>
               {item?.vendor?.name}
             </Text>
             <Text
               numberOfLines={1}
               style={{
                 fontFamily: fontFamily.regular,
-                color: colors.textGreyF,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyF,
                 marginTop: moderateScale(8),
               }}>
               Westheimer Road · 2.9 kms
@@ -602,7 +610,7 @@ export default function Cart2({navigation, route}) {
               numberOfLines={1}
               style={{
                 fontFamily: fontFamily.regular,
-                color: colors.textGreyF,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyF,
                 marginVertical: moderateScale(2),
               }}>
               German · Continental
@@ -629,7 +637,16 @@ export default function Cart2({navigation, route}) {
                   <View>
                     <View style={styles.cartCountView}>
                       <View style={{flex: 0.5}}>
-                        <Text numberOfLines={1} style={styles.cartItemTitle}>
+                        <Text
+                          numberOfLines={1}
+                          style={[
+                            styles.cartItemTitle,
+                            {
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.black,
+                            },
+                          ]}>
                           {i?.product?.translation[0]?.title}
                         </Text>
                         {i?.variant_options.length
@@ -637,12 +654,26 @@ export default function Cart2({navigation, route}) {
                               return (
                                 <View style={{flexDirection: 'row'}}>
                                   <Text
-                                    style={styles.cartItemWeight2}
+                                    style={[
+                                      styles.cartItemWeight2,
+                                      {
+                                        color: isDarkMode
+                                          ? MyDarkTheme.colors.text
+                                          : colors.textGreyB,
+                                      },
+                                    ]}
                                     numberOfLines={1}>
                                     {j.title}{' '}
                                   </Text>
                                   <Text
-                                    style={styles.cartItemWeight2}
+                                    style={[
+                                      styles.cartItemWeight2,
+                                      {
+                                        color: isDarkMode
+                                          ? MyDarkTheme.colors.text
+                                          : colors.textGreyB,
+                                      },
+                                    ]}
                                     numberOfLines={1}>
                                     {`(${j.option})`}
                                   </Text>
@@ -681,7 +712,16 @@ export default function Cart2({navigation, route}) {
                           justifyContent: 'center',
                           alignItems: 'flex-end',
                         }}>
-                        <Text numberOfLines={1} style={styles.itemPriceText}>
+                        <Text
+                          numberOfLines={1}
+                          style={[
+                            styles.itemPriceText,
+                            {
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.black,
+                            },
+                          ]}>
                           {`${currencies?.primary_currency?.symbol}${
                             // Number(i?.pvariant?.multiplier) *
                             Number(i?.variants?.quantity_price).toFixed(2)
@@ -697,7 +737,15 @@ export default function Cart2({navigation, route}) {
                           justifyContent: 'space-between',
                           paddingHorizontal: moderateScale(10),
                         }}>
-                        <Text style={styles.cartItemWeight2}>
+                        <Text
+                          style={[
+                            styles.cartItemWeight2,
+                            {
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.textGreyB,
+                            },
+                          ]}>
                           {strings.EXTRA}
                         </Text>
                         {i?.product_addons.length
@@ -705,19 +753,37 @@ export default function Cart2({navigation, route}) {
                               return (
                                 <View style={{flexDirection: 'row'}}>
                                   <Text
-                                    style={styles.cartItemWeight2}
+                                    style={[
+                                      styles.cartItemWeight2,
+                                      {
+                                        color: isDarkMode
+                                          ? MyDarkTheme.colors.text
+                                          : colors.textGreyB,
+                                      },
+                                    ]}
                                     numberOfLines={1}>
                                     {j.addon_title}
                                   </Text>
                                   <Text
-                                    style={styles.cartItemWeight2}
+                                    style={[
+                                      styles.cartItemWeight2,
+                                      {
+                                        color: isDarkMode
+                                          ? MyDarkTheme.colors.text
+                                          : colors.textGreyB,
+                                      },
+                                    ]}
                                     numberOfLines={
                                       1
                                     }>{`(${j.option_title})`}</Text>
                                   <Text
                                     style={[
                                       styles.cartItemWeight2,
-                                      {color: colors.textGrey},
+                                      {
+                                        color: isDarkMode
+                                          ? MyDarkTheme.colors.text
+                                          : colors.textGrey,
+                                      },
                                     ]}
                                     numberOfLines={1}>{` ${
                                     currencies?.primary_currency?.symbol
@@ -759,7 +825,14 @@ export default function Cart2({navigation, route}) {
               </Text>
               <Text
                 onPress={() => _removeCoupon(item, cartData)}
-                style={[styles.removeCoupon, {color: colors.cartItemPrice}]}>
+                style={[
+                  styles.removeCoupon,
+                  {
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.cartItemPrice,
+                  },
+                ]}>
                 {strings.REMOVE}
               </Text>
             </View>
@@ -773,10 +846,26 @@ export default function Cart2({navigation, route}) {
           {!!item?.discount_amount && (
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text style={styles.priceItemLabel}>{strings.DISCOUNT}</Text>
-              <Text style={styles.priceItemLabel}>{`- ${
-                currencies?.primary_currency?.symbol
-              }${Number(
+              <Text
+                style={[
+                  styles.priceItemLabel,
+                  {
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyB,
+                  },
+                ]}>
+                {strings.DISCOUNT}
+              </Text>
+              <Text
+                style={[
+                  styles.priceItemLabel,
+                  {
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyB,
+                  },
+                ]}>{`- ${currencies?.primary_currency?.symbol}${Number(
                 item?.discount_amount ? item?.discount_amount : 0,
               ).toFixed(2)}`}</Text>
             </View>
@@ -784,23 +873,45 @@ export default function Cart2({navigation, route}) {
           {!!item?.deliver_charge && (
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text style={styles.priceItemLabel}>
+              <Text
+                style={[
+                  styles.priceItemLabel,
+                  {
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyB,
+                  },
+                ]}>
                 {strings.DELIVERY_CHARGES}
               </Text>
-              <Text style={styles.priceItemLabel}>{`${
-                currencies?.primary_currency?.symbol
-              }${Number(
+              <Text
+                style={[
+                  styles.priceItemLabel,
+                  {
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyB,
+                  },
+                ]}>{`${currencies?.primary_currency?.symbol}${Number(
                 item?.deliver_charge ? item?.deliver_charge : 0,
               ).toFixed(2)}`}</Text>
             </View>
           )}
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.priceItemLabel2}>{strings.AMOUNT}</Text>
-            <Text style={styles.priceItemLabel2}>{`${
-              currencies?.primary_currency?.symbol
-            }${Number(item?.payable_amount ? item?.payable_amount : 0).toFixed(
-              2,
-            )}`}</Text>
+            <Text
+              style={[
+                styles.priceItemLabel2,
+                {color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey},
+              ]}>
+              {strings.AMOUNT}
+            </Text>
+            <Text
+              style={[
+                styles.priceItemLabel2,
+                {color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey},
+              ]}>{`${currencies?.primary_currency?.symbol}${Number(
+              item?.payable_amount ? item?.payable_amount : 0,
+            ).toFixed(2)}`}</Text>
           </View>
         </View>
       </>
@@ -887,31 +998,58 @@ export default function Cart2({navigation, route}) {
               fontFamily: fontFamily.bold,
               fontSize: textScale(15),
               marginVertical: moderateScale(20),
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
             Order details
           </Text>
           <View style={[styles.bottomTabLableValue]}>
-            <Text style={styles.totalTxts}>{strings.SUBTOTAL}</Text>
-            <Text style={styles.totalTxts}>{`${
-              currencies?.primary_currency?.symbol
-            }${Number(cartData?.gross_paybale_amount).toFixed(2)}`}</Text>
+            <Text
+              style={[
+                styles.totalTxts,
+                {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+              ]}>
+              {strings.SUBTOTAL}
+            </Text>
+            <Text
+              style={[
+                styles.totalTxts,
+                {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+              ]}>{`${currencies?.primary_currency?.symbol}${Number(
+              cartData?.gross_paybale_amount,
+            ).toFixed(2)}`}</Text>
           </View>
           {!!cartData?.wallet_amount && (
             <View style={styles.bottomTabLableValue}>
-              <Text style={styles.totalTxts}>{strings.WALLET}</Text>
-              <Text style={styles.totalTxts}>{`${
-                currencies?.primary_currency?.symbol
-              }${Number(
+              <Text
+                style={[
+                  styles.totalTxts,
+                  {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+                ]}>
+                {strings.WALLET}
+              </Text>
+              <Text
+                style={[
+                  styles.totalTxts,
+                  {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+                ]}>{`${currencies?.primary_currency?.symbol}${Number(
                 cartData?.wallet_amount ? cartData?.wallet_amount : 0,
               ).toFixed(2)}`}</Text>
             </View>
           )}
           {!!cartData?.loyalty_amount && (
             <View style={styles.bottomTabLableValue}>
-              <Text style={styles.totalTxts}>{strings.LOYALTY}</Text>
-              <Text style={styles.totalTxts}>{`-${
-                currencies?.primary_currency?.symbol
-              }${Number(
+              <Text
+                style={[
+                  styles.totalTxts,
+                  {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+                ]}>
+                {strings.LOYALTY}
+              </Text>
+              <Text
+                style={[
+                  styles.totalTxts,
+                  {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+                ]}>{`-${currencies?.primary_currency?.symbol}${Number(
                 cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
               ).toFixed(2)}`}</Text>
             </View>
@@ -919,20 +1057,38 @@ export default function Cart2({navigation, route}) {
 
           {!!cartData?.total_discount_amount && (
             <View style={styles.bottomTabLableValue}>
-              <Text style={styles.totalTxts}>{strings.TOTAL_DISCOUNT}</Text>
-              <Text style={styles.totalTxts}>{`-${
-                currencies?.primary_currency?.symbol
-              }${Number(cartData?.total_discount_amount).toFixed(2)}`}</Text>
+              <Text
+                style={[
+                  styles.totalTxts,
+                  {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+                ]}>
+                {strings.TOTAL_DISCOUNT}
+              </Text>
+              <Text
+                style={[
+                  styles.totalTxts,
+                  {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+                ]}>{`-${currencies?.primary_currency?.symbol}${Number(
+                cartData?.total_discount_amount,
+              ).toFixed(2)}`}</Text>
             </View>
           )}
           {!!cartData?.total_tax && (
             <View style={styles.bottomTabLableValue}>
-              <Text style={styles.totalTxts}>{strings.TAX_AMOUNT}</Text>
-              <Text style={styles.totalTxts}>{`${
-                currencies?.primary_currency?.symbol
-              }${Number(cartData?.total_tax ? cartData?.total_tax : 0).toFixed(
-                2,
-              )}`}</Text>
+              <Text
+                style={[
+                  styles.totalTxts,
+                  {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+                ]}>
+                {strings.TAX_AMOUNT}
+              </Text>
+              <Text
+                style={[
+                  styles.totalTxts,
+                  {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+                ]}>{`${currencies?.primary_currency?.symbol}${Number(
+                cartData?.total_tax ? cartData?.total_tax : 0,
+              ).toFixed(2)}`}</Text>
             </View>
           )}
           <View style={{height: 5}} />
@@ -951,7 +1107,15 @@ export default function Cart2({navigation, route}) {
                   styles.bottomTabLableValue,
                   {flexDirection: 'column', marginTop: 20},
                 ]}>
-                <Text style={[styles.priceTipLabel]}>
+                <Text
+                  style={[
+                    styles.priceTipLabel,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                    },
+                  ]}>
                   {strings.DOYOUWANTTOGIVEATIP}
                 </Text>
 
@@ -972,21 +1136,39 @@ export default function Cart2({navigation, route}) {
                         ]}
                         onPress={() => selectedTip(j)}>
                         <Text
-                          style={{
-                            color:
-                              selectedTipvalue?.value == j?.value
-                                ? colors.white
-                                : colors.black,
-                          }}>
+                          style={
+                            isDarkMode
+                              ? {
+                                  color:
+                                    selectedTipvalue?.value == j?.value
+                                      ? colors.white
+                                      : MyDarkTheme.colors.text,
+                                }
+                              : {
+                                  color:
+                                    selectedTipvalue?.value == j?.value
+                                      ? colors.white
+                                      : colors.black,
+                                }
+                          }>
                           {`${currencies?.primary_currency?.symbol} ${j.value}`}
                         </Text>
                         <Text
-                          style={{
-                            color:
-                              selectedTipvalue?.value == j?.value
-                                ? colors.white
-                                : colors.textGreyB,
-                          }}>
+                          style={
+                            isDarkMode
+                              ? {
+                                  color:
+                                    selectedTipvalue?.value == j?.value
+                                      ? colors.white
+                                      : MyDarkTheme.colors.text,
+                                }
+                              : {
+                                  color:
+                                    selectedTipvalue?.value == j?.value
+                                      ? colors.white
+                                      : colors.textGreyB,
+                                }
+                          }>
                           {j.label}
                         </Text>
                       </TouchableOpacity>
@@ -1005,21 +1187,39 @@ export default function Cart2({navigation, route}) {
                     ]}
                     onPress={() => selectedTip('custom')}>
                     <Text
-                      style={{
-                        color:
-                          selectedTipvalue == 'custom'
-                            ? colors.white
-                            : colors.black,
-                      }}>
+                      style={
+                        isDarkMode
+                          ? {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : MyDarkTheme.colors.text,
+                            }
+                          : {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : colors.black,
+                            }
+                      }>
                       {'Custom'}
                     </Text>
                     <Text
-                      style={{
-                        color:
-                          selectedTipvalue == 'custom'
-                            ? colors.white
-                            : colors.black,
-                      }}>
+                      style={
+                        isDarkMode
+                          ? {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : MyDarkTheme.colors.text,
+                            }
+                          : {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : colors.black,
+                            }
+                      }>
                       {'Amount'}
                     </Text>
                   </TouchableOpacity>
@@ -1030,7 +1230,9 @@ export default function Cart2({navigation, route}) {
                     style={{
                       borderRadius: 5,
                       borderWidth: 0.5,
-                      borderColor: colors.textGreyB,
+                      borderColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
                       height: 40,
                     }}>
                     <TextInput
@@ -1042,11 +1244,17 @@ export default function Cart2({navigation, route}) {
                         height: 40,
                         alignItems: 'center',
                         paddingHorizontal: 10,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
                       }}
                       maxLength={5}
                       returnKeyType={'done'}
                       keyboardType={'number-pad'}
                       placeholder={'Enter Custom Amount'}
+                      placeholderTextColor={
+                        isDarkMode ? MyDarkTheme.colors.text : colors.black
+                      }
                     />
                   </View>
                 )}
@@ -1054,10 +1262,18 @@ export default function Cart2({navigation, route}) {
             )}
 
           <View style={styles.amountPayable}>
-            <Text style={styles.totalTxts2}>{strings.AMOUNT_PAYABLE}</Text>
-            <Text style={styles.priceItemLabel3}>{`${
-              currencies?.primary_currency?.symbol
-            }${(
+            <Text
+              style={[
+                styles.totalTxts2,
+                {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+              ]}>
+              {strings.AMOUNT_PAYABLE}
+            </Text>
+            <Text
+              style={[
+                styles.priceItemLabel3,
+                {color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey},
+              ]}>{`${currencies?.primary_currency?.symbol}${(
               Number(cartData?.total_payable_amount) +
               (selectedTipAmount != null && selectedTipAmount != ''
                 ? Number(selectedTipAmount)
@@ -1073,10 +1289,31 @@ export default function Cart2({navigation, route}) {
               ? moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
               : showError(strings.UNAUTHORIZED_MESSAGE)
           }
-          style={[styles.paymentMainView, {justifyContent: 'space-between'}]}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Image source={imagePath.paymentMethod} />
-            <Text style={styles.selectedMethod}>
+          style={[
+            styles.paymentMainView,
+            {
+              justifyContent: 'space-between',
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.white,
+            },
+          ]}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Image
+              style={{
+                tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}
+              source={imagePath.paymentMethod}
+            />
+            <Text
+              style={[
+                styles.selectedMethod,
+                {color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey},
+              ]}>
               {selectedPayment
                 ? selectedPayment.title
                 : strings.SELECT_PAYMENT_METHOD}
@@ -1085,7 +1322,10 @@ export default function Cart2({navigation, route}) {
           <View>
             <Image
               source={imagePath.goRight}
-              style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+              style={{
+                transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}
             />
           </View>
         </TouchableOpacity>
@@ -1253,7 +1493,9 @@ export default function Cart2({navigation, route}) {
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       source={loaderOne}
       isLoadingB={isLoadingB}>
       <Header
@@ -1261,17 +1503,33 @@ export default function Cart2({navigation, route}) {
           appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
         }
         centerTitle={strings.CART}
-        headerStyle={{backgroundColor: colors.backgroundGrey}}
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.backgroundGrey}
+        }
       />
       <View style={{height: 1, backgroundColor: colors.borderColorD}} />
-      <View style={styles.mainComponent}>
+      <View
+        style={
+          isDarkMode
+            ? [
+                styles.mainComponent,
+                {backgroundColor: MyDarkTheme.colors.background},
+              ]
+            : styles.mainComponent
+        }>
         <FlatList
           data={cartItems}
           extraData={cartItems}
           // ListHeaderComponent={cartItems?.length ? getHeader() : null}
           ListFooterComponent={cartItems?.length ? getFooter() : null}
           showsVerticalScrollIndicator={false}
-          style={{backgroundColor: colors.backgroundGrey}}
+          style={{
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.backgroundGrey,
+          }}
           keyExtractor={(item, index) => String(index)}
           renderItem={_renderItem}
           ListEmptyComponent={<ListEmptyCart isLoading={isLoadingB} />}

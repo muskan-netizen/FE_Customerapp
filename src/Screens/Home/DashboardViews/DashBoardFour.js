@@ -27,6 +27,8 @@ import {
 import {getUserData} from '../../../utils/utils';
 import stylesFunc from '../styles';
 import ToggleTabBar from './ToggleTabBar';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 
 export default function DashBoardFour({
   handleRefresh = () => {},
@@ -38,6 +40,7 @@ export default function DashBoardFour({
   selcetedToggle,
   toggleData,
 }) {
+  const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
@@ -142,7 +145,14 @@ export default function DashBoardFour({
       <View style={{height: moderateScale(25)}} />
       {appMainData?.vendors && appMainData?.vendors?.length ? (
         <>
-          <Text style={styles.nearVendorTxt}>{strings.NEAR_VENDOR}</Text>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.nearVendorTxt, {color: MyDarkTheme.colors.text}]
+                : styles.nearVendorTxt
+            }>
+            {strings.NEAR_VENDOR}
+          </Text>
         </>
       ) : null}
       {!isLoading && !isVendorColumnList && appMainData?.vendors?.length ? (

@@ -20,10 +20,13 @@ import Container from './src/library/toastify-react-native';
 import {moderateScaleVertical, width} from './src/styles/responsiveSize';
 import fontFamily from './src/styles/fontFamily';
 import {RFPercentage} from 'react-native-responsive-fontsize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from './src/styles/theme';
+import colors from './src/styles/colors';
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
-
+  const isDarkMode = useDarkMode();
   useEffect(() => {
     //stop splahs screen from loading
     setTimeout(() => {
@@ -92,21 +95,27 @@ const App = () => {
           payload: dine_in_type,
         });
       }
-      // const theme = await getItem('theme');
-      // if (theme) {
-      //   dispatch({
-      //     type: types.THEME,
-      //     payload: JSON.parse(theme),
-      //   });
-      // }
+      const theme = await getItem('theme');
+      if (isDarkMode) {
+        dispatch({
+          type: types.THEME,
+          payload: true,
+        });
+      }
+      if (theme) {
+        dispatch({
+          type: types.THEME,
+          payload: JSON.parse(theme),
+        });
+      }
 
-      // const themeToggle = await getItem('istoggle');
-      // if (themeToggle) {
-      //   dispatch({
-      //     type: types.THEME_TOGGLE,
-      //     payload: JSON.parse(themeToggle),
-      //   });
-      // }
+      const themeToggle = await getItem('istoggle');
+      if (themeToggle) {
+        dispatch({
+          type: types.THEME_TOGGLE,
+          payload: JSON.parse(themeToggle),
+        });
+      }
 
       //Language
       const getLanguage = await getItem('language');
