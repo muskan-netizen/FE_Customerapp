@@ -45,7 +45,9 @@ export default function Signup({navigation}) {
   const isDarkMode = useDarkMode();
   const [state, setState] = useState({
     isLoading: false,
-    callingCode: '91',
+    callingCode: appData?.profile.country?.phonecode
+      ? appData?.profile.country?.phonecode
+      : '91',
     cca2: appData?.profile?.country?.code
       ? appData?.profile?.country?.code
       : 'IN',
@@ -90,7 +92,7 @@ export default function Signup({navigation}) {
       name: name,
       // phone_number: '+' + callingCode + phoneNumber,
       phone_number: phoneNumber,
-      dial_code: callingCode,
+      dial_code: callingCode.toString(),
       country_code: cca2,
       email: email,
       password: password,
