@@ -39,7 +39,7 @@ export default function DashBoardHeaderFive({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const isDarkMode = useDarkMode();
-    const dine_In_Type = useSelector((state) => state?.home?.dineInType);
+  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
@@ -378,7 +378,7 @@ export default function DashBoardHeaderFive({
                 // height:20,
                 lineHeight: 20,
                 fontFamily: fontFamily.regular,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
                 fontSize: textScale(10),
               }}>
               {location?.address}
@@ -389,7 +389,6 @@ export default function DashBoardHeaderFive({
       <TouchableOpacity
         activeOpacity={0.7}
         style={{
-          // flex: 0,
           paddingVertical: moderateScaleVertical(5),
           flexDirection: 'row',
           alignItems: 'center',
