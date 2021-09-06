@@ -13,7 +13,7 @@ import {MyDarkTheme} from '../styles/theme';
 export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const isDarkMode = toggleTheme && theme ? useDarkMode() : false;
+  const isDarkMode = useDarkMode();
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const imageURI = getImageUrl(
@@ -23,6 +23,7 @@ export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
   );
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
+  console.log(imageURI, 'imageURI');
 
   return (
     <TouchableOpacity
@@ -58,8 +59,10 @@ export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
         }}>
         {isSVG ? (
           <SvgUri
+            height={moderateScale(90)}
+            width={moderateScale(90)}
             style={{
-              marginHorizontal: moderateScale(10),
+              marginHorizontal: moderateScale(5),
               position: 'absolute',
               right: 0,
               bottom: 0,

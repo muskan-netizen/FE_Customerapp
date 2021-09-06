@@ -93,18 +93,13 @@ const App = () => {
         });
       }
       // const theme = await getItem('theme');
-      // if (theme?.type == 'dark') {
+      // if (theme) {
       //   dispatch({
       //     type: types.THEME,
-      //     payload: true,
+      //     payload: JSON.parse(theme),
       //   });
       // }
-      // if (theme?.type == 'light') {
-      //   dispatch({
-      //     type: types.THEME,
-      //     payload: false,
-      //   });
-      // }
+
       // const themeToggle = await getItem('istoggle');
       // if (themeToggle) {
       //   dispatch({
@@ -112,6 +107,7 @@ const App = () => {
       //     payload: JSON.parse(themeToggle),
       //   });
       // }
+
       //Language
       const getLanguage = await getItem('language');
       if (getLanguage) {
