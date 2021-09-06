@@ -811,9 +811,9 @@ export default function Products({ route, navigation }) {
               </TouchableOpacity>
               {AnimatedHeaderValue && !!productListData && productListData.length > 0 &&
                 (<Animatable.View
-                  key={AnimatedHeaderValue}
-                  duration={10}
-                  animation={AnimatedHeaderValue ? 'fadeIn' : 'fadeOut'}
+                  // key={AnimatedHeaderValue}
+                  // duration={10}
+                  // animation={AnimatedHeaderValue ? 'fadeIn' : 'fadeOut'}
                   style={{ marginLeft: moderateScale(8), flex: 0.7 }}
                 >
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
