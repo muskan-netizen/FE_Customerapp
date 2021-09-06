@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import CardLoader from '../../Components/Loaders/CardLoader';
 import NoDataFound from '../../Components/NoDataFound';
+import imagePath from '../../constants/imagePath';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -68,5 +69,9 @@ export default function ListEmptyVendors({
       isLoading={isLoading}
       containerStyle={containerStyle}
     />
+    // <View>
+    //   <Image source={imagePath.}/>
+    // </View>
+    
   );
 }

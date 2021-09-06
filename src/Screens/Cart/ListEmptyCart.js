@@ -10,6 +10,7 @@ export default function ListEmptyCart({
   containerStyle = {},
   text = strings.NOPRODUCTCART,
   textStyle = {},
+  image=null
 }) {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
@@ -19,7 +20,7 @@ export default function ListEmptyCart({
     return (
       <SafeAreaView style={{flex: 1}}>
         <View style={[styles.containerStyle, containerStyle]}>
-          <Image source={imagePath.emptyCart2} />
+          <Image source={image?image:imagePath.emptyCart2} />
           <Text style={{...styles.textStyle, ...textStyle}}>{text}</Text>
         </View>
       </SafeAreaView>

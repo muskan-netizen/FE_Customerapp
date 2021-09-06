@@ -22,7 +22,10 @@ import ButtonComponent from '../../Components/ButtonComponent';
 import ChooseAddressModal from '../../Components/ChooseAddressModal';
 import ConfirmationModal from '../../Components/ConfirmationModal';
 import HeaderWithFilters from '../../Components/HeaderWithFilters';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import {
+  loaderOne,
+  loaderSix,
+} from '../../Components/Loaders/AnimatedLoaderFiles';
 import TransparentButtonWithTxtAndIcon from '../../Components/TransparentButtonWithTxtAndIcon';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -55,6 +58,7 @@ import commonStyles from '../../styles/commonStyles';
 import * as RNLocalize from 'react-native-localize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
+import LottieView from 'lottie-react-native';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -1891,7 +1895,20 @@ export default function Cart({navigation, route}) {
           style={{backgroundColor: colors.backgroundGrey}}
           keyExtractor={(item, index) => String(index)}
           renderItem={_renderItem}
-          ListEmptyComponent={<ListEmptyCart isLoading={isLoadingB} />}
+          ListEmptyComponent={() => (
+            <View
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <LottieView
+                source={loaderSix}
+                autoPlay
+                loop
+                style={{
+                  height: moderateScaleVertical(100),
+                  width: moderateScale(100),
+                }}
+              />
+            </View>
+          )}
           style={{flex: 1}}
           refreshControl={
             <RefreshControl
