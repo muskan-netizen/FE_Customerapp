@@ -100,7 +100,7 @@ export function stylesData({fontFamily}) {
       position: 'absolute',
       left: moderateScale(25),
       right: moderateScale(25),
-      bottom: moderateScaleVertical(20),
+      bottom: moderateScaleVertical(10),
       borderRadius: moderateScale(35.5),
       shadowColor: colors.black,
       shadowOffset: {width: 0, height: 1},

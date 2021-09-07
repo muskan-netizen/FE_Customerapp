@@ -245,6 +245,7 @@
     "react-native-paper": "^4.7.2",
     "react-native-permissions": "^3.0.5",
     "react-native-photo-view-ex": "^1.1.0",
+    "react-native-radio-buttons-group": "^2.2.5",
     "react-native-reanimated": "^1.13.2",
     "react-native-responsive-fontsize": "^0.5.0",
     "react-native-restart": "^0.0.22",
