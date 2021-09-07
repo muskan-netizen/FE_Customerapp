@@ -13,6 +13,7 @@ export default function CustomTopTabBar({
   scrollEnabled = true,
   activeStyle = {},
   textStyle = {},
+  textTabWidth=null,
   ...props
 }) {
   const insets = useSafeAreaInsets();
@@ -45,6 +46,7 @@ export default function CustomTopTabBar({
                   isActive={i.isActive || i.is_selected}
                   containerStyle={customTextContainerStyle}
                   onPress={() => onPress(i)}
+                  textTabWidth={textTabWidth}
                   activeStyle={activeStyle}
                   textStyle={textStyle}
                 />

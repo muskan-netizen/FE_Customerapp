@@ -849,6 +849,7 @@ export default function MyProfile({route, navigation}) {
           onPress={(tabData) => changeTab(tabData)}
           numberOfLines={1}
           // containerStyle={{  width: width / 3}}
+          textTabWidth={width / 2.8}
           customTextContainerStyle={{
             width: width / 2.8,
 

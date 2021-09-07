@@ -12,6 +12,7 @@ export default function TextTabBar({
   textStyle = {},
   isActive = false,
   activeStyle = {},
+  textTabWidth = null,
 }) {
   const currentTheme = useSelector((state) => state.initBoot);
   const {themeColors, themeLayouts, appStyle} = currentTheme;
@@ -47,7 +48,7 @@ export default function TextTabBar({
         <View style={{justifyContent: 'flex-end', alignItems: 'center'}}>
           <View
             style={{
-              width: moderateScale(width / 2),
+              width: textTabWidth ? textTabWidth : moderateScale(width / 2),
               borderBottomWidth: 2,
               borderBottomColor: themeColors.primary_color,
             }}

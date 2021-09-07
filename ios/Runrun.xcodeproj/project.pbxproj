@@ -34,12 +34,13 @@
 		3CA6CA12377BBDE5C592B157 /* libPods-ZuzuClean.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F3421DE736017B0361A7350 /* libPods-ZuzuClean.a */; };
 		3D3B4FE62157B111C9D4D963 /* libPods-WashValley.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6F5BFFEEC8907E8FD08E71 /* libPods-WashValley.a */; };
 		3D5F74D78E619D94A5071D08 /* libPods-Orbit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34DF5131701C200BCCCE051D /* libPods-Orbit.a */; };
+		3E90892A316034834B947B29 /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DD2040F6DAD92524365BB0 /* libPods-RoyoOrder.a */; };
 		42306BF20E5582B8D3D917F0 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		446C3BA5D3801D83BDFF8A8A /* libPods-Capcorp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0222F063AAC5F4828123287 /* libPods-Capcorp.a */; };
 		46BB8DA7E461DE52FF2C3096 /* libPods-Runrun.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D35CA57B7683C491BCC2E63 /* libPods-Runrun.a */; };
 		479BBC9DCDB3D2E284A4203C /* libPods-Cannabus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE2E7300A50BB92D6E73E83 /* libPods-Cannabus.a */; };
 		48200DB09BF182B3A9D74FE1 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		4EE15BD954F26B9DE5A4A947 /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE515884482B3D6C322B44E /* libPods-RoyoOrder.a */; };
+		4EE15BD954F26B9DE5A4A947 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		4F007673C381598D4311BE87 /* libPods-BustanFakieh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0864806BD356D4FA593856E2 /* libPods-BustanFakieh.a */; };
 		5151A699661ABBB406B0C8ED /* libPods-DiamondDashers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 241F3DDE125214CE57F01E15 /* libPods-DiamondDashers.a */; };
 		5167314063F552B904013485 /* libPods-Getme.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E7EC9EF9DA63130B3752E58 /* libPods-Getme.a */; };
@@ -1682,42 +1683,6 @@
 		84B1186526E61A5700497B86 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84B1186626E61A5700497B86 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		84B1186726E61A5700497B86 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		84B1186926E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1186A26E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1186B26E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1186C26E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1186D26E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1186E26E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1186F26E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1187026E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1187126E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1187226E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1187326E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1187426E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1187526E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1187626E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1187726E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1187826E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1187926E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1187A26E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1187B26E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1187C26E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1187D26E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1187E26E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1187F26E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1188026E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1188126E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1188226E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1188326E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1188426E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1188526E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1188626E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1188726E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1188826E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1188926E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1188A26E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1188B26E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		84B1188C26E61A5700497B86 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		84B1188F26E61A5700497B86 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
 		84B1189026E61A5700497B86 /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
 		84B1189126E61A5700497B86 /* Futura-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7902681E47100CC5BA2 /* Futura-Medium.ttf */; };
@@ -2350,6 +2315,7 @@
 		46D5E66DEA3300775B96515A /* libPods-DoctaTransportation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DoctaTransportation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C9225FBC16D16011A0C87A /* Pods-HoganChef.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HoganChef.debug.xcconfig"; path = "Target Support Files/Pods-HoganChef/Pods-HoganChef.debug.xcconfig"; sourceTree = "<group>"; };
 		49A46AD0AE52EFC3CB2EF3D1 /* Pods-AfricanVillageMarket.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AfricanVillageMarket.debug.xcconfig"; path = "Target Support Files/Pods-AfricanVillageMarket/Pods-AfricanVillageMarket.debug.xcconfig"; sourceTree = "<group>"; };
+		49DD2040F6DAD92524365BB0 /* libPods-RoyoOrder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RoyoOrder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49DEA6F0D413B2FEEC296F5E /* Pods-RoyoOrder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RoyoOrder.release.xcconfig"; path = "Target Support Files/Pods-RoyoOrder/Pods-RoyoOrder.release.xcconfig"; sourceTree = "<group>"; };
 		4AE54B62525A00AE829358C5 /* Pods-Ridemate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ridemate.debug.xcconfig"; path = "Target Support Files/Pods-Ridemate/Pods-Ridemate.debug.xcconfig"; sourceTree = "<group>"; };
 		4BCB22267F739D4339BB2F66 /* Pods-Hmoobhub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hmoobhub.debug.xcconfig"; path = "Target Support Files/Pods-Hmoobhub/Pods-Hmoobhub.debug.xcconfig"; sourceTree = "<group>"; };
@@ -3293,7 +3259,8 @@
 				65449B8FFE0A8AD79A41877C /* BuildFile in Frameworks */,
 				54A74C5E6D686EE3C0EB4729 /* BuildFile in Frameworks */,
 				9322389440851FAC8A6E24E2 /* BuildFile in Frameworks */,
-				4EE15BD954F26B9DE5A4A947 /* libPods-RoyoOrder.a in Frameworks */,
+				4EE15BD954F26B9DE5A4A947 /* BuildFile in Frameworks */,
+				3E90892A316034834B947B29 /* libPods-RoyoOrder.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4158,6 +4125,7 @@
 				2E4C4E4D3E42AD2ADF6C6689 /* libPods-Survuhs.a */,
 				C6715DD5EED122C322B66BB6 /* libPods-IGoLux.a */,
 				6B294015FEB0DDCD0D5C2046 /* libPods-Toda.a */,
+				49DD2040F6DAD92524365BB0 /* libPods-RoyoOrder.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
