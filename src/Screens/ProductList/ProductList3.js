@@ -42,9 +42,11 @@ import CardLoader from '../../Components/Loaders/CardLoader';
 import ProductDetailLoader from '../../Components/Loaders/ProductDetailLoader';
 import * as Animatable from 'react-native-animatable';
 import RoundImg from '../../Components/RoundImg';
+import WrapperContainer from '../../Components/WrapperContainer';
+import CircularLoader from '../../Components/Loaders/CircularLoader';
 
-export default function Products({route, navigation}) {
-  const {data} = route.params;
+export default function Products({ route, navigation }) {
+  const { data } = route.params;
   console.log(data, 'Datais ');
   console.log(data, 'data params >>>>>');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -607,7 +609,7 @@ export default function Products({route, navigation}) {
                 <View style={{}}>
                   <RoundImg
                     img={getImageUrl(categoryInfo?.logo?.image_fit, categoryInfo?.logo?.image_path, '400/400')}
-                  
+
                   />
                 </View>
                 <View style={{ marginLeft: moderateScale(12) }}>
@@ -620,13 +622,13 @@ export default function Products({route, navigation}) {
                     }}>
                     {data?.categoryInfo?.name || data?.name}
                   </Text>
-                  {!!categoryInfo?.desc &&  (<Text
+                  {!!categoryInfo?.desc && (<Text
                     numberOfLines={2}
                     style={{
                       color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity86,
                       fontSize: moderateScale(12),
                       fontFamily: fontFamily.regular,
-                    
+
                     }}>{categoryInfo?.desc}</Text>)}
                   {!!categoryInfo?.address && (<Text
                     numberOfLines={2}
@@ -679,7 +681,7 @@ export default function Products({route, navigation}) {
                   }}
                   resizeMode="stretch"
                 >
-                 
+
                 </ImageBackground>
               </View>
             </View>
@@ -744,21 +746,51 @@ export default function Products({route, navigation}) {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <CardLoader cardWidth={width} height={width * 0.5} />
-        <View style={{ position: 'absolute', top: moderateScaleVertical(120), alignSelf: 'center' }}>
-          <CardLoader cardWidth={width / 1.12} />
-        </View>
-        <View style={{ marginHorizontal: 16, marginTop: moderateScaleVertical(100) }}>
-          <ProductDetailLoader />
-          <View style={{ marginBottom: moderateScaleVertical(12) }} />
-          <ProductDetailLoader />
-          <View style={{ marginBottom: moderateScaleVertical(12) }} />
-          <ProductDetailLoader />
-          <View style={{ marginBottom: moderateScaleVertical(12) }} />
-          <ProductDetailLoader />
-          <View style={{ marginBottom: moderateScaleVertical(12) }} />
-        </View>
+      <View style={{ flex: 1, backgroundColor: colors.white }}>
+        <SafeAreaView>
+          <View style={{ marginHorizontal: 16 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <CardLoader
+                cardWidth={20}
+                height={20}
+              />
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <CardLoader
+                  cardWidth={20}
+                  height={20}
+                />
+                <View style={{ marginHorizontal: moderateScale(6) }} />
+                <CardLoader
+                  cardWidth={20}
+                  height={20}
+                />
+              </View>
+            </View>
+
+            <View style={{ marginVertical: moderateScaleVertical(16), marginBottom: moderateScaleVertical(24), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <CircularLoader />
+              <View>
+                <CardLoader
+                  cardWidth={40}
+                  height={20}
+                />
+                <CardLoader
+                  cardWidth={40}
+                  height={20}
+                />
+              </View>
+            </View>
+
+            <ProductDetailLoader />
+            <View style={{ marginBottom: moderateScaleVertical(12) }} />
+            <ProductDetailLoader />
+            <View style={{ marginBottom: moderateScaleVertical(12) }} />
+            <ProductDetailLoader />
+            <View style={{ marginBottom: moderateScaleVertical(12) }} />
+            <ProductDetailLoader />
+            <View style={{ marginBottom: moderateScaleVertical(12) }} />
+          </View>
+        </SafeAreaView>
       </View>
     )
   }
