@@ -19,6 +19,7 @@ export const CircleListItem = ({circlualistData, onPress = () => {}}) => {
                 circlualistData.icon.image_path,
                 '600/360',
               ),
+              priority: FastImage.priority.high,
             }}
           />
           <Text style={styles.categoryText}>{circlualistData.name}</Text>

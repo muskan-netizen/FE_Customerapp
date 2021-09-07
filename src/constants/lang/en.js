@@ -372,4 +372,6 @@ export default {
   NOVARIANTPRODUCTAVAILABLE: 'This option is currenty not available',
   WAITINGTOACCEPT: 'Waiting for the order to be accepted',
   DARK_APPEARANCE: 'Appearance',
+  REMOVE_CART_MSG:
+    'This Change Will Remove Your Cart Products. Do you Really Want To Continue?',
 };

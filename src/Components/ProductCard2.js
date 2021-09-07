@@ -136,7 +136,10 @@ export default function ProductCard2({
           width: moderateScale(100),
         }}>
         <FastImage
-          source={{uri: url1 && url2 ? getImage : ''}}
+          source={{
+            uri: url1 && url2 ? getImage : '',
+            priority: FastImage.priority.high,
+          }}
           style={{
             height: moderateScale(100),
             width: moderateScale(100),

@@ -129,8 +129,6 @@ export default function VendorDetail2({navigation, route}) {
     showError(error?.message || error?.error);
   };
 
-  const ary = [5, 6, 4, 5, 5, 6, 4, 5];
-
   const _renderItem = ({item, index}) => {
     return (
       <ThreeColumnCard2
@@ -160,8 +158,6 @@ export default function VendorDetail2({navigation, route}) {
       bgColor={
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }>
-      {/* <Header centerTitle={vendorParams?.item?.name} hideRight={false} /> */}
-
       <Header2
         leftIcon={imagePath.backArrow}
         centerTitle={vendorParams?.item?.name}
@@ -191,6 +187,7 @@ export default function VendorDetail2({navigation, route}) {
 
                   `800/400`,
                 ),
+                priority: FastImage.priority.high,
               }}
               style={{
                 width: moderateScale(95),

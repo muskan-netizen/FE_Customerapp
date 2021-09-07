@@ -625,6 +625,7 @@ export default function Cart2({navigation, route}) {
                   item?.vendor?.banner?.image_path,
                   '300/300',
                 ),
+                priority: FastImage.priority.high,
               }}
               style={styles.cartVendorImage}
             />

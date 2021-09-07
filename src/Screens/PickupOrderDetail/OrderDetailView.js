@@ -146,6 +146,7 @@ export default function OrderDetailView({
                         agent_image != undefined
                           ? agent_image
                           : dummyUser,
+                      priority: FastImage.priority.high,
                     }}
                     style={{
                       height: moderateScale(64),

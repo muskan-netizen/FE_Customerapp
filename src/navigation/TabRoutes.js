@@ -72,7 +72,7 @@ export default function TabRoutes(props) {
     );
   }
 
-  if (appStyle?.homePageLayout !== 2 && appStyle?.homePageLayout !== 3) {
+  if (appStyle?.tabBarLayout !== 5) {
     if (checkForBrand) {
       brandTab = (
         <Tab.Screen
@@ -87,7 +87,7 @@ export default function TabRoutes(props) {
                   appStyle?.tabBarLayout === 2 && {height: 20, width: 20},
                 ]}
                 source={
-                  appStyle?.tabBarLayout === 5
+                  appStyle?.tabBarLayout === 4
                     ? focused
                       ? imagePath.ordersRedActive
                       : imagePath.ordersRedInActive

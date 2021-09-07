@@ -40,7 +40,7 @@ export default function ImgCardSmall({
       ]}>
       <Animated.View>
         <FastImage
-          source={{uri: rectImage}}
+          source={{uri: rectImage, priority: FastImage.priority.high}}
           style={[styles.imgSmall, imageStyle]}
         />
         <View style={styles.imgOverlay} />
