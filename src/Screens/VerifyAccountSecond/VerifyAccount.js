@@ -31,12 +31,17 @@ import validations from '../../utils/validations';
 export default function VerifyAccountSecond({navigation, route}) {
   let paramsData = route?.params;
   const userData = useSelector((state) => state?.auth?.userData);
+  const appData = useSelector((state) => state?.initBoot?.appData);
   const [state, setState] = useState({
     timer2: 0,
     timer: 0,
     isLoading: false,
-    callingCode: userData?.dial_code || '91',
-    cca2: userData?.cca2 || 'IN',
+    callingCode: appData?.profile?.country?.phonecode
+      ? appData?.profile?.country?.phonecode
+      : '91',
+    cca2: appData?.profile?.country?.code
+      ? appData?.profile?.country?.code
+      : 'IN',
     name: '',
     email: userData?.email || '',
     password: '',
@@ -50,7 +55,6 @@ export default function VerifyAccountSecond({navigation, route}) {
     countryPickerModalVisible: false,
   });
 
-  const appData = useSelector((state) => state?.initBoot?.appData);
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   // console.log(userData, 'userData>>>>');
@@ -184,7 +188,7 @@ export default function VerifyAccountSecond({navigation, route}) {
     let data = {};
     data['type'] = type;
     data['otp'] = otp;
-    if(type=='phone'){
+    if (type == 'phone') {
       data['phone_number'] = phoneNumber;
     }
 
@@ -373,6 +377,8 @@ export default function VerifyAccountSecond({navigation, route}) {
           withFilter
           onClose={_onCountryPickerModalClose}
           onSelect={_onCountryChange}
+          closeButtonImage={imagePath.closeButton}
+          withCallingCode={callingCode}
         />
       )}
       <KeyboardAwareScrollView
@@ -548,7 +554,18 @@ export default function VerifyAccountSecond({navigation, route}) {
                           width: moderateScale(60),
                         }}
                         onPress={() => _openCountryPicker()}>
-                        <Flag countryCode={cca2} />
+                        <Text
+                          style={{
+                            fontFamily: fontFamily.medium,
+                            color: colors.textGreyOpcaity7,
+                            marginStart: 2,
+                          }}>
+                          +{callingCode}
+                        </Text>
+
+                        <View style={{marginRight: moderateScale(-10)}}>
+                          <Flag countryCode={cca2} />
+                        </View>
                         <Image source={imagePath.dropdownTriangle} />
                       </TouchableOpacity>
                       <TextInput

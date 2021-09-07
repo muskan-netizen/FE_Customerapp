@@ -79,7 +79,7 @@ export default function ProductCard3({
   };
   return (
     <TouchableOpacity
-      disabled
+      // disabled
       activeOpacity={0.6}
       onPress={onPress}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
@@ -200,9 +200,35 @@ export default function ProductCard3({
         </Animatable.View>
 
         <View>
-          {!!selectedCart && selectedCart?.id == data.id ? null : (
-            <TouchableOpacity onPress={() => setSelectedCart(data)}>
-              <Image source={imagePath.greyRoundPlus} />
+          {!!selectedCart && selectedCart?.id == data.id ? null : 
+          <TouchableOpacity
+            // onPress={() => setSelectedCart(data)}
+            onPress={onPress}
+          >
+            <Image source={imagePath.greyRoundPlus} />
+          </TouchableOpacity>}
+
+          {/* {!!selectedCart && selectedCart?.id == data.id && <View
+            style={{
+              borderRadius: moderateScale(5),
+              backgroundColor: themeColors.primary_color,
+              padding: moderateScale(10),
+              borderRadius: 16,
+              alignItems: 'center',
+              marginTop: selectedIndex == index ? moderateScaleVertical(20) : 0
+            }}
+          >
+            <TouchableOpacity
+              style={{ alignItems: 'center' }}
+              // onPress={() => productIncrDecreamentForCart(2)}
+              activeOpacity={0.8}
+              hitSlop={hitSlopProp}
+            >
+              <Text style={{
+                fontFamily: fontFamily.bold,
+                fontSize: moderateScale(20),
+                color: colors.white,
+              }}>-</Text>
             </TouchableOpacity>
           )}
 
@@ -257,7 +283,19 @@ export default function ProductCard3({
                 </Text>
               </TouchableOpacity>
             </View>
-          )}
+            <TouchableOpacity
+              style={{ alignItems: 'center' }}
+              activeOpacity={0.8}
+              hitSlop={hitSlopProp}
+            // onPress={() => productIncrDecreamentForCart(1)}
+            >
+              <Text style={{
+                fontFamily: fontFamily.bold,
+                fontSize: moderateScale(20),
+                color: colors.white,
+              }}>+</Text>
+            </TouchableOpacity>
+          </View>} */}
         </View>
       </View>
     </TouchableOpacity>

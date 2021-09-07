@@ -1670,7 +1670,7 @@ export default function Cart({navigation, route}) {
                   labelStyle={
                     isDarkMode
                       ? {color: MyDarkTheme.colors.text}
-                      : {color: null}
+                      : {color: colors.textGrey}
                   }
                   itemStyle={{
                     justifyContent: 'flex-start',

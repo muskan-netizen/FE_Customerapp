@@ -81,6 +81,7 @@ export default ({fontFamily}) => {
       borderWidth: 1,
       borderColor: colors.borderLight,
       marginHorizontal: moderateScale(12),
+      height: height / 6,
     },
     imageStyle: {
       justifyContent: 'center',
@@ -92,8 +93,21 @@ export default ({fontFamily}) => {
     viewOverImage: {
       height: width / 5,
       width: width / 5,
-      borderRadius: 5,
+
       resizeMode: 'contain',
+    },
+    imageView: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderWidth: 1,
+      height: height / 6,
+      marginHorizontal: moderateScale(12),
+      borderColor: colors.borderLight,
+    },
+    crossIconStyle: {
+      position: 'absolute',
+      top: 25,
+      right: 30,
     },
   });
   return styles;
