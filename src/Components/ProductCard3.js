@@ -93,7 +93,7 @@ export default function ProductCard3({
       >
         <TouchableOpacity onPress={changePosition} activeOpacity={1}>
           <FastImage
-            source={{ uri: url1 && url2 ? getImage : '' }}
+            source={{ uri: url1 && url2 ? getImage : '', priority: FastImage.priority.high}}
             style={{
               height:
                 selectedIndex == index
