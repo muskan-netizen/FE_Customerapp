@@ -26,6 +26,7 @@ import {MyDarkTheme} from '../../styles/theme';
 import ToggleSwitch from 'toggle-switch-react-native';
 import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
 import navigationStrings from '../../navigation/navigationStrings';
+import {color} from 'react-native-elements/dist/helpers';
 
 export default function Settings({route, navigation}) {
   // const appData = useSelector(state => state?.initBoot?.appData);
@@ -337,7 +338,9 @@ export default function Settings({route, navigation}) {
           flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
         }}
         labelStyle={
-          isDarkMode ? {color: MyDarkTheme.colors.text} : {color: null}
+          isDarkMode
+            ? {color: MyDarkTheme.colors.text}
+            : {color: colors.textGrey}
         }
         itemStyle={{
           justifyContent: 'flex-start',
@@ -396,7 +399,9 @@ export default function Settings({route, navigation}) {
           textAlign: I18nManager.isRTL ? 'right' : 'left',
         }}
         labelStyle={
-          isDarkMode ? {color: MyDarkTheme.colors.text} : {color: null}
+          isDarkMode
+            ? {color: MyDarkTheme.colors.text}
+            : {color: colors.textGrey}
         }
         zIndex={4000}
         dropDownStyle={{
