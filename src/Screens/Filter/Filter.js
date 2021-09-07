@@ -410,6 +410,7 @@ export default function Filter({route, navigation}) {
       statusBarColor={colors.white}
       isLoadingB={isLoading}
       source={loaderOne}>
+   
       <Header
         customLeft={() => (
           <View

@@ -47,6 +47,7 @@ import WrapperContainer from '../../Components/WrapperContainer';
 import CircularLoader from '../../Components/Loaders/CircularLoader';
 import LottieLoader from '../../Components/LottieLoader';
 import { noDataFound } from '../../Components/Loaders/AnimatedLoaderFiles';
+import staticStrings from '../../constants/staticStrings';
 
 export default function Products({ route, navigation }) {
   const { data } = route.params;
@@ -830,6 +831,9 @@ export default function Products({ route, navigation }) {
             <View style={{ marginBottom: moderateScaleVertical(12) }} />
             <ProductDetailLoader />
             <View style={{ marginBottom: moderateScaleVertical(12) }} />
+            <ProductDetailLoader />
+            <View style={{ marginBottom: moderateScaleVertical(12) }} />
+            
           </View>
         </SafeAreaView>
       </View>
@@ -837,13 +841,31 @@ export default function Products({ route, navigation }) {
   }
 
   const onScroll = ({ nativeEvent }) => {
-    let position = nativeEvent.contentOffset
-    console.log("positon", position)
-    if (position.y > 20) {
-      updateState({ AnimatedHeaderValue: true })
+    let offset = nativeEvent.contentOffset.y;
+    let index = parseInt(offset / 10);   // your cell height
+    console.log("now index is " + index)
+    if (index > 1) {
+      if (!AnimatedHeaderValue) {
+        updateState({ AnimatedHeaderValue: true })
+      }
       return;
     }
-    updateState({ AnimatedHeaderValue: false })
+    if (index < 1) {
+      if (AnimatedHeaderValue) {
+        updateState({ AnimatedHeaderValue: false })
+        return;
+      }
+      return;
+    }
+    // let position = nativeEvent.contentOffset
+    // // console.log("positon", position)
+    // if (position.y > 20) {
+    //   updateState({ AnimatedHeaderValue: true })
+    //   return;
+    // }
+    // if (position < 4) {
+    //   updateState({ AnimatedHeaderValue: false })
+
   }
 
   return (
@@ -920,9 +942,12 @@ export default function Products({ route, navigation }) {
             <View style={{ flexDirection: "row", alignItems: 'center' }}>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() =>
-                  navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-                }
+                onPress={moveToNewScreen(navigationStrings.SEARCHPRODUCTOVENDOR, {
+                  type: data?.vendor
+                    ? staticStrings.VENDOR
+                    : staticStrings.CATEGORY,
+                  id: data?.vendor ? data?.id : productListId?.id,
+                })}
               >
                 <Image
                   source={
@@ -944,6 +969,10 @@ export default function Products({ route, navigation }) {
           <View style={{ height: moderateScale(10) }} />
           <FlatList
             onScroll={onScroll}
+            disableScrollViewPanResponder
+            // scrollEventThrottle={e => console.log("eeee1", e)}
+            // initialScrollIndex={e => console.log("eeee2", e)}
+            // overScrollMode={e => console.log("eeee3", e)}
             showsVerticalScrollIndicator={false}
             data={(!isLoading && productListData) || []}
             renderItem={renderProduct}

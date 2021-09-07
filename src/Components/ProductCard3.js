@@ -32,6 +32,7 @@ import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../styles/theme';
 import AddonModal from '../Screens/ProductDetail/AddonModal';
 import Modal from 'react-native-modal';
+import StarRating from 'react-native-star-rating';
 
 export default function ProductCard3({
   data = {},
@@ -47,7 +48,7 @@ export default function ProductCard3({
   onDecrement,
   selectedCartItem
 }) {
-    // data['qty'] = 1
+  // data['qty'] = 1
   const [state, setState] = useState({
     selectedIndex: -1,
     selectedIndexForCartIcon: -1
@@ -122,13 +123,13 @@ export default function ProductCard3({
               style={{
                 height:
                   selectedIndex == index
-                    ? moderateScale(150)
+                    ? moderateScale(200)
                     : moderateScale(100),
                 width: selectedIndex == index ? '100%' : moderateScale(100),
                 borderRadius: moderateScale(15),
 
               }}
-              resizeMode={selectedIndex == index ? "cover" : 'stretch'}
+              resizeMode={selectedIndex == index ? "contain" : 'stretch'}
             />
           </TouchableOpacity>
         </Animatable.View>
@@ -139,7 +140,7 @@ export default function ProductCard3({
             overflow: 'hidden',
             justifyContent: 'space-between',
             flexDirection: 'row',
-            flex: 1
+            flex: 1,
             // alignItems: 'center',
           }}>
           <Animatable.View
@@ -198,28 +199,24 @@ export default function ProductCard3({
             </View>
 
             {/* rating View */}
-            {!!Number(data?.averageRating) && (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  // height: 30,
-                  alignItems: 'center',
-                  paddingBottom: moderateScale(5),
-                }}>
-                <Image source={imagePath.startwo} />
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    color: colors.yellowB,
-                    paddingLeft: 5,
-                    fontFamily: fontFamily?.bold,
-                    opacity: 1,
-                    fontSize: textScale(12),
-                  }}>
-                  {data?.averageRating
-                    ? Number(data?.averageRating).toFixed(1)
-                    : 0}
-                </Text>
+            {!!data?.averageRating && (
+              <View style={{
+                borderWidth: 1,
+                alignSelf:'flex-start',
+                padding: 2,
+                borderRadius: 2,
+                marginBottom:moderateScaleVertical(12),
+                borderColor: colors.yellowB,
+                backgroundColor: colors.yellowOpacity10
+              }}>
+                <StarRating
+                  disabled={false}
+                  maxStars={5}
+                  rating={Number(data?.averageRating).toFixed(1)}
+                  fullStarColor={colors.yellowB}
+                  starSize={12}
+                 containerStyle={{width:width/5}}
+                />
               </View>
             )}
             <View style={{ width: width / 2 }}>
@@ -244,7 +241,7 @@ export default function ProductCard3({
           </Animatable.View>
 
           <View style={{ marginTop: selectedIndex == index ? moderateScaleVertical(8) : 0, }}>
-            {!!data?.qty  ? null :
+            {!!data?.qty ? null :
               <TouchableOpacity
                 onPress={addToCart}
                 style={{
