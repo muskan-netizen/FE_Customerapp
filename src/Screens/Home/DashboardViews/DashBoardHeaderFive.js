@@ -17,6 +17,7 @@ import stylesFunc from '../styles';
 import {RadioButton} from 'react-native-paper';
 
 import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
+import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
 
@@ -30,8 +31,8 @@ export default function DashBoardHeaderFive({
   const pickerRef = createRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-
-  const isDarkMode = theme;
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,

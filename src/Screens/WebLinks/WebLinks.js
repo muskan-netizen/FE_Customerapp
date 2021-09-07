@@ -45,7 +45,9 @@ import {MyDarkTheme} from '../../styles/theme';
 
 export default function WebLinks({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   console.log(route, 'route>>>');
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,

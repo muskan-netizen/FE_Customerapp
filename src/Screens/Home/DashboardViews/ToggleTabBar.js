@@ -20,7 +20,9 @@ export default function ToggleTabBar({
   isDineInSelected = false,
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     selectedIndex: 0,
     tabs: [],

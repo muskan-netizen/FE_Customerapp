@@ -23,7 +23,9 @@ import {MyDarkTheme} from '../../../styles/theme';
 
 export default function VendorList({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   console.log(route.params, 'VendorList params');
   const {allVendors, selectedVendor, screenType} = route.params;
   const [state, setState] = useState({

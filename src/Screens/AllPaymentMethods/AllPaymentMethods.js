@@ -32,7 +32,9 @@ import {MyDarkTheme} from '../../styles/theme';
 export default function AllPaymentMethods({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {appData, appStyle, themeColors, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );

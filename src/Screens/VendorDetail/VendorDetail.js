@@ -26,7 +26,9 @@ export default function VendorDetail({navigation, route}) {
   console.log(vendorParams, 'vendorParams>>>>>>>');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   // alert("312")
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     vendorId: vendorParams?.item?.id || vendorParams.id,
     vendordName: vendorParams.name || '',

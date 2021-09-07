@@ -1,6 +1,13 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useState, useEffect} from 'react';
-import {I18nManager, Text, View, Image, TouchableOpacity} from 'react-native';
+import {
+  I18nManager,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Vibration,
+} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RNRestart from 'react-native-restart'; // Import package from node modules
 import {useSelector} from 'react-redux';
@@ -27,14 +34,15 @@ import ToggleSwitch from 'toggle-switch-react-native';
 import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
 import navigationStrings from '../../navigation/navigationStrings';
 import {color} from 'react-native-elements/dist/helpers';
+import SwitchToggle from 'react-native-switch-toggle';
 
 export default function Settings({route, navigation}) {
   // const appData = useSelector(state => state?.initBoot?.appData);
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  // const isDarkMode = useDarkMode();
-  const isDarkMode = theme;
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {currencies, appData, languages, appStyle, themeColors} = useSelector(
     (state) => state?.initBoot,
   );
@@ -173,10 +181,34 @@ export default function Settings({route, navigation}) {
 
   const _toggleOnOff = (isOn) => {
     actions.setToggle(isOn);
+    Vibration.vibrate(40);
     updateState({
       isOn: isOn ? true : false,
     });
   };
+
+  useEffect(() => {
+    if (isOn) {
+      if (darkthemeusingDevice) {
+        let dark = {
+          id: 2,
+          image: imagePath.dark,
+          selectedImage: imagePath.done,
+          type: 'dark',
+        };
+
+        _setApperance(dark);
+      } else {
+        let light = {
+          id: 1,
+          image: imagePath.light,
+          selectedImage: imagePath.done,
+          type: 'light',
+        };
+        _setApperance(light);
+      }
+    }
+  }, [isOn, darkthemeusingDevice]);
 
   const _setApperance = (item) => {
     actions.setAppTheme(item);
@@ -299,12 +331,14 @@ export default function Settings({route, navigation}) {
           }>
           {strings.AUTOMATIC}
         </Text>
+
         <ToggleSwitch
           isOn={isOn}
           onColor={themeColors.primary_color}
           offColor={colors.textGreyB}
           size="medium"
           onToggle={(isOn) => _toggleOnOff(isOn)}
+          animationSpeed={400}
         />
       </View>
       <View

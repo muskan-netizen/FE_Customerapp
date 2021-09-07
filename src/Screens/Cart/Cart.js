@@ -63,7 +63,9 @@ import LottieView from 'lottie-react-native';
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   let paramsData = route?.params;
   const [state, setState] = useState({
     isLoading: true,

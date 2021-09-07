@@ -45,7 +45,9 @@ export default function CelebrityProduct({route, navigation}) {
   const {data} = route.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     isLoading: true,

@@ -34,7 +34,8 @@ const HeaderWithFilters = ({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
-  const isDarkMode = theme;
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const navigation = useNavigation();
   const {appStyle} = useSelector((state) => state?.initBoot);
 
@@ -77,7 +78,7 @@ const HeaderWithFilters = ({
             </TouchableOpacity>
           )}
         </View>
-        <View style={{flex: 0.8,justifyContent:'center'}}>
+        <View style={{flex: 0.8, justifyContent: 'center'}}>
           <Text
             style={
               isDarkMode
@@ -99,7 +100,7 @@ const HeaderWithFilters = ({
           </Text>
         </View>
 
-        <View style={{flexDirection: 'row', flex:0.2}}>
+        <View style={{flexDirection: 'row', flex: 0.2}}>
           {/* <TouchableOpacity>
             <Image source={imagePath.search} />
           </TouchableOpacity>

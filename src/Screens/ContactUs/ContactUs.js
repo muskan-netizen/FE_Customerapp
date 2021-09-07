@@ -29,7 +29,9 @@ export default function ContactUs({navigation}) {
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state.appTheme);
   const userData = useSelector((state) => state?.auth?.userData);
   console.log(userData, 'userData>>>userData');

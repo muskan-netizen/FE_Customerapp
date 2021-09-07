@@ -37,7 +37,9 @@ export default function Products({route, navigation}) {
   const {data} = route.params;
   console.log(data, 'data listing >>>>>');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isVisibleModal: false,
     isOffline: false,

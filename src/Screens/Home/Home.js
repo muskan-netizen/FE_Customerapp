@@ -34,7 +34,9 @@ navigator.geolocation = require('react-native-geolocation-service');
 export default function Home({route, navigation}) {
   const paramData = route?.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {linkedURL, resetURL} = useDeepLinkURL();
 
   const location = useSelector((state) => state?.home?.location);
