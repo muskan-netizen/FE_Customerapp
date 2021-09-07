@@ -1391,10 +1391,11 @@ export default function Cart2({navigation, route}) {
         <View
           style={{
             marginHorizontal: moderateScale(20),
-            marginVertical:
+            marginTop:
               Platform.OS === 'ios'
                 ? moderateScaleVertical(15)
                 : moderateScaleVertical(25),
+            marginBottom: moderateScaleVertical(110),
           }}>
           <ButtonComponent
             onPress={() => placeOrder()}

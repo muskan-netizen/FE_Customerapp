@@ -240,7 +240,9 @@ export default function DashBoardFive({
         <View
           style={{
             height:
-              Platform.OS === 'ios' ? moderateScale(55) : moderateScale(90),
+              Platform.OS === 'ios'
+                ? moderateScaleVertical(70)
+                : moderateScaleVertical(90),
           }}
         />
       </ScrollView>

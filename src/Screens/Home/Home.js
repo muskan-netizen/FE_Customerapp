@@ -536,7 +536,7 @@ export default function Home({route, navigation}) {
               isRefreshing={isRefreshing}
               appMainData={appMainData}
               onPressCategory={(item) => {
-                onPressCategory2(item);
+                onPressCategory(item);
               }}
               selcetedToggle={selcetedToggle}
               toggleData={appData}

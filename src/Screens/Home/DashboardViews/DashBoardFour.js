@@ -109,7 +109,6 @@ export default function DashBoardFour({
           <View style={{height: moderateScaleVertical(5)}} />
         </>
       ) : null}
-
       <ToggleTabBar toggleData={toggleData} selcetedToggle={selcetedToggle} />
       {userData?.auth_token && (
         <>
@@ -119,12 +118,10 @@ export default function DashBoardFour({
           <Text style={styles.greetingMsg}>{strings.GREETING_MSG}</Text>
         </>
       )}
-
       {isLoading && (
         <EmptyListLoader isLoading={isLoading} listSize={1} isRow />
       )}
       {isLoading && <ProductLoader2 isLoading={isLoading} isProductList />}
-
       {!isLoading &&
       appMainData &&
       appMainData?.categories &&
@@ -206,7 +203,6 @@ export default function DashBoardFour({
           </View>
         </ScrollView>
       ) : null}
-
       {!isLoading && isVendorColumnList && appMainData?.vendors ? (
         <FlatList
           data={appMainData?.vendors || []}
@@ -228,8 +224,7 @@ export default function DashBoardFour({
           </Text>
         </TouchableOpacity>
       ) : null}
-
-      <View style={{height: moderateScaleVertical(70)}} />
+      <View style={{height: moderateScaleVertical(65)}} />
     </ScrollView>
   );
 }
