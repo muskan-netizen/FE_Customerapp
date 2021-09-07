@@ -44,6 +44,8 @@ import * as Animatable from 'react-native-animatable';
 import RoundImg from '../../Components/RoundImg';
 import WrapperContainer from '../../Components/WrapperContainer';
 import CircularLoader from '../../Components/Loaders/CircularLoader';
+import LottieLoader from '../../Components/LottieLoader';
+import { noDataFound } from '../../Components/Loaders/AnimatedLoaderFiles';
 
 export default function Products({ route, navigation }) {
   const { data } = route.params;
@@ -748,8 +750,8 @@ export default function Products({ route, navigation }) {
     return (
       <View style={{ flex: 1, backgroundColor: colors.white }}>
         <SafeAreaView>
-          <View style={{ marginHorizontal: 16 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <View style={{ margin: 16 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',height: moderateScale(42) }}>
               <CardLoader
                 cardWidth={20}
                 height={20}
@@ -932,10 +934,8 @@ export default function Products({ route, navigation }) {
             }
             onEndReached={onEndReachedDelayed}
             onEndReachedThreshold={0.5}
-            ListFooterComponent={() => (
-              <View style={{ marginBottom: width / 1.3 }} />
-            )}
-          // ListEmptyComponent={<EmptyListLoader />}
+
+            ListEmptyComponent={!isLoading && <LottieLoader containerStyle={{ flex: 0 }} noDataFound={noDataFound} emptyText="No Data Found" />}
           />
         </View>
       </SafeAreaView>
