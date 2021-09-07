@@ -39,7 +39,9 @@ import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 
 export default function Login({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   var clonedState = {};
   const [state, setState] = useState({
     email: '',

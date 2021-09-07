@@ -48,7 +48,9 @@ export default function ProductCard3({
   const [selectedIndexForCartIcon, setSelectedIndexForCartIcon] = useState(-1);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
@@ -200,13 +202,13 @@ export default function ProductCard3({
         </Animatable.View>
 
         <View>
-          {!!selectedCart && selectedCart?.id == data.id ? null : 
-          <TouchableOpacity
-            // onPress={() => setSelectedCart(data)}
-            onPress={onPress}
-          >
-            <Image source={imagePath.greyRoundPlus} />
-          </TouchableOpacity>}
+          {!!selectedCart && selectedCart?.id == data.id ? null : (
+            <TouchableOpacity
+              // onPress={() => setSelectedCart(data)}
+              onPress={onPress}>
+              <Image source={imagePath.greyRoundPlus} />
+            </TouchableOpacity>
+          )}
 
           {/* {!!selectedCart && selectedCart?.id == data.id && <View
             style={{

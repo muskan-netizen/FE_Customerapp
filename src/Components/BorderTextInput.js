@@ -36,8 +36,8 @@ export default function BorderTextInput({
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-
-  const isDarkMode = theme;
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const inputRef = useRef();
   const {appStyle} = useSelector((state) => state.initBoot);

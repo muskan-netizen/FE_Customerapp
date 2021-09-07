@@ -33,7 +33,9 @@ export default function Wallet({navigation}) {
     isRefreshing: false,
   });
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {appData, themeColors} = useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state.auth.userData);

@@ -39,8 +39,8 @@ export default function MarketCard({
   const {appStyle} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-
-  const isDarkMode = theme;
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   // const appTheme=useSelector(state=>state.colors.appTheme)
   const navigation = useNavigation();
   const scaleInAnimated = new Animated.Value(0);
