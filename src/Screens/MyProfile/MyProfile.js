@@ -45,6 +45,7 @@ import validations from '../../utils/validations';
 import stylesFunc from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import {androidCameraPermission} from '../../utils/permissions';
 
 export default function MyProfile({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -340,46 +341,50 @@ export default function MyProfile({route, navigation}) {
   };
 
   // this funtion use for camera handle
-  const cameraHandle = (index) => {
-    if (index == 0 || index == 1) {
-      cameraHandler(index, {
-        width: 300,
-        height: 400,
-        cropping: true,
-        cropperCircleOverlay: true,
-        mediaType: 'photo',
-      })
-        .then((res) => {
-          if (res?.data) {
-            updateState({isLoading: true});
-          }
-          let data = {
-            type: 'jpg',
-            avatar: res?.data,
-          };
-
-          actions
-            .uploadProfileImage(data, {
-              code: appData?.profile?.code,
-            })
-            .then((res) => {
-              const source = {
-                uri: getImageUrl(
-                  res.data.proxy_url,
-                  res.data.image_path,
-                  '200/200',
-                ),
-              };
-              const image = {
-                source,
-              };
-              actions.updateProfile({...userData, ...image});
-              updateState({isLoading: false});
-              showSuccess(res.message);
-            })
-            .catch((err) => {});
+  const cameraHandle = async (index) => {
+    const permissionStatus = await androidCameraPermission();
+    console.log(permissionStatus, 'permissionStatus');
+    if (permissionStatus) {
+      if (index == 0 || index == 1) {
+        cameraHandler(index, {
+          width: 300,
+          height: 400,
+          cropping: true,
+          cropperCircleOverlay: true,
+          mediaType: 'photo',
         })
-        .catch((err) => {});
+          .then((res) => {
+            if (res?.data) {
+              updateState({isLoading: true});
+            }
+            let data = {
+              type: 'jpg',
+              avatar: res?.data,
+            };
+
+            actions
+              .uploadProfileImage(data, {
+                code: appData?.profile?.code,
+              })
+              .then((res) => {
+                const source = {
+                  uri: getImageUrl(
+                    res.data.proxy_url,
+                    res.data.image_path,
+                    '200/200',
+                  ),
+                };
+                const image = {
+                  source,
+                };
+                actions.updateProfile({...userData, ...image});
+                updateState({isLoading: false});
+                showSuccess(res.message);
+              })
+              .catch((err) => {});
+          })
+          .catch((err) => {});
+      }
     }
   };
 

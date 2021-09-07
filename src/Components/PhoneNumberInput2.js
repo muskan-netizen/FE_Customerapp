@@ -9,7 +9,7 @@ import {TextInput} from 'react-native-paper';
 
 export default function PhoneNumberInput2({
   cca2 = '',
-  callingCode,
+  callingCode = '',
   onChangePhone,
   onCountryChange,
   phoneNumber,
@@ -55,7 +55,18 @@ export default function PhoneNumberInput2({
           ...textInputStyle,
         }}
         onPress={_openCountryPicker}>
-        <Flag countryCode={cca2} />
+        <Text
+          style={{
+            fontFamily: fontFamily.medium,
+            color: color ? color : colors.textGreyOpcaity7,
+            marginStart: 2,
+          }}>
+          +{callingCode}
+        </Text>
+
+        <View style={{marginRight: moderateScale(-10)}}>
+          <Flag countryCode={cca2} />
+        </View>
         <Image source={imagePath.dropdownTriangle} />
       </TouchableOpacity>
 

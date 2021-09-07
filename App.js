@@ -132,6 +132,15 @@ const App = () => {
       const themeToggle = await getItem('istoggle');
       if (JSON.parse(themeToggle)) {
         dispatch({
+          type: types.THEME,
+          payload: isDarkMode,
+        });
+        dispatch({
+          type: types.THEME_TOGGLE,
+          payload: JSON.parse(themeToggle),
+        });
+      } else {
+        dispatch({
           type: types.THEME_TOGGLE,
           payload: JSON.parse(themeToggle),
         });
@@ -146,17 +155,7 @@ const App = () => {
             payload: false,
           });
         }
-      } else {
-        dispatch({
-          type: types.THEME,
-          payload: isDarkMode,
-        });
-        dispatch({
-          type: types.THEME_TOGGLE,
-          payload: JSON.parse(themeToggle),
-        });
       }
-
       //Language
       const getLanguage = await getItem('language');
       if (getLanguage) {
