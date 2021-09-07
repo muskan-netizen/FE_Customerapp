@@ -227,7 +227,6 @@ export default function Settings({route, navigation}) {
           justifyContent: 'space-around',
           paddingVertical: moderateScaleVertical(10),
           paddingHorizontal: moderateScale(20),
-          height: moderateScaleVertical(height - height + 60),
           marginVertical: moderateScaleVertical(20),
         }}>
         {selectedThemeOptions.map((i, inx) => {
@@ -262,7 +261,6 @@ export default function Settings({route, navigation}) {
         style={{
           flexDirection: 'row',
           marginHorizontal: moderateScale(20),
-          marginTop: moderateScaleVertical(95),
 
           justifyContent: 'space-between',
           ...commonStyles.shadowStyle,
