@@ -96,5 +96,13 @@ export default ({ themeColors, fontFamily }) =>
       margin: 5,
       padding: 7,
       backgroundColor: "#ECEFF1"
+    },
+    loaderHeader: {
+      marginTop:moderateScaleVertical(16),
+      marginHorizontal: moderateScale(12), 
+      flexDirection: 'row', 
+      alignItems: 'center', 
+      justifyContent: 'space-between', 
+      height: moderateScale(42)
     }
   });
