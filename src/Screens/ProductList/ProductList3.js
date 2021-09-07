@@ -113,7 +113,8 @@ export default function Products({ route, navigation }) {
     showFilterSlectedIcon: false,
     isLoadingC: false,
     selectedCategory: null,
-    AnimatedHeaderValue: false
+    AnimatedHeaderValue: false,
+    selectedCartItem: null
   });
 
   const {
@@ -151,7 +152,8 @@ export default function Products({ route, navigation }) {
     checkForMinimumPriceChange,
     checkForMaximumPriceChange,
     showFilterSlectedIcon,
-    AnimatedHeaderValue
+    AnimatedHeaderValue,
+    selectedCartItem
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -548,20 +550,54 @@ export default function Products({ route, navigation }) {
 
   //Add product to cart
   const _addToCart = (item) => {
-    moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
+
+    let updateArray = productListData.map((val, i) => {
+      if (val.id == item.id) {
+        return { ...val, qty: 1 }
+      }
+      return val
+    })
+    updateState({ productListData: updateArray, selectedCartItem: item })
+    // moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
   };
+
+  const onIncrement = (item) => {
+    let updateArray = productListData.map((val, i) => {
+      if (val.id == item.id) {
+        return { ...val, qty: item.qty + 1 }
+      }
+      return val
+    })
+    updateState({ productListData: updateArray })
+  }
+
+  const onDecrement = (item) => {
+    // if (item.qty == 1) {
+    //   updateState({ selectedCartItem: null })
+    //   return;
+    // }
+    let updateArray = productListData.map((val, i) => {
+      if (val.id == item.id) {
+        return { ...val, qty: item.qty == 1 ? null : item.qty - 1 }
+      }
+      return val
+    })
+    updateState({ productListData: updateArray })
+  }
 
   const renderProduct = ({ item, index }) => {
     const { isSelectItem } = state;
     return (
-   
-        <ProductCard3
-          data={item}
-          index={index}
-          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-          onAddtoWishlist={() => _onAddtoWishlist(item)}
-          addToCart={() => _addToCart(item)}
-        />
+      <ProductCard3
+        data={item}
+        index={index}
+        onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+        onAddtoWishlist={() => _onAddtoWishlist(item)}
+        addToCart={() => _addToCart(item)}
+        onIncrement={() => onIncrement(item)}
+        onDecrement={() => onDecrement(item)}
+        selectedCartItem={selectedCartItem}
+      />
     );
   };
 
@@ -752,40 +788,40 @@ export default function Products({ route, navigation }) {
     return (
       <View style={{ flex: 1, backgroundColor: colors.white }}>
         <SafeAreaView>
-            <View style={styles.loaderHeader}>
+          <View style={styles.loaderHeader}>
+            <CardLoader
+              cardWidth={20}
+              height={20}
+            />
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <CardLoader
                 cardWidth={20}
                 height={20}
               />
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <CardLoader
-                  cardWidth={20}
-                  height={20}
-                />
-                <View style={{ marginHorizontal: moderateScale(6) }} />
-                <CardLoader
-                  cardWidth={20}
-                  height={20}
-                />
-              </View>
+              <View style={{ marginHorizontal: moderateScale(6) }} />
+              <CardLoader
+                cardWidth={20}
+                height={20}
+              />
             </View>
+          </View>
 
-            <View style={{ marginVertical: moderateScaleVertical(16), marginBottom: moderateScaleVertical(24), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-              <CircularLoader />
-              <View>
-                <CardLoader
-                  cardWidth={40}
-                  height={20}
-                />
-                <CardLoader
-                  cardWidth={40}
-                  height={20}
-                />
-              </View>
+          <View style={{ marginVertical: moderateScaleVertical(16), marginBottom: moderateScaleVertical(24), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <CircularLoader />
+            <View>
+              <CardLoader
+                cardWidth={40}
+                height={20}
+              />
+              <CardLoader
+                cardWidth={40}
+                height={20}
+              />
             </View>
+          </View>
 
-            <View style={{marginHorizontal:moderateScale(16)}}>
-           
+          <View style={{ marginHorizontal: moderateScale(16) }}>
+
             <ProductDetailLoader />
             <View style={{ marginBottom: moderateScaleVertical(12) }} />
             <ProductDetailLoader />
@@ -794,7 +830,7 @@ export default function Products({ route, navigation }) {
             <View style={{ marginBottom: moderateScaleVertical(12) }} />
             <ProductDetailLoader />
             <View style={{ marginBottom: moderateScaleVertical(12) }} />
-            </View>
+          </View>
         </SafeAreaView>
       </View>
     )

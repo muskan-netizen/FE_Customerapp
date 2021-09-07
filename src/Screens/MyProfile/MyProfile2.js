@@ -782,6 +782,7 @@ export default function MyProfile({route, navigation}) {
                         userData?.source?.image_path,
                         '200/200',
                       ),
+                      priority: FastImage.priority.high,
                     }
                   : userData?.source
               }

@@ -215,7 +215,7 @@ export default function AddonModal({
         updateState({viewHeight: event.nativeEvent.layout.height});
       }}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-        <Image source={imagePath.crossB} />
+        <Image source={imagePath.crossC} />
       </TouchableOpacity>
       <ScrollView
         showsVerticalScrollIndicator={false}

@@ -300,6 +300,7 @@ export default function ReturnOrder({navigation, route}) {
                           selectProductForRetrun?.image?.image_path,
                           '300/300',
                         ),
+                        priority: FastImage.priority.high,
                       }
                     : imagePath.patternOne
                 }

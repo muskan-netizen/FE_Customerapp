@@ -501,7 +501,14 @@ export default function AddressModal({
                 placeholder={strings.COUNTRY}
                 // textInputStyle={getTextInputStyle(country)}
                 value={country}
-                style={[styles.textInput3, {opacity: 0.7, color: '#fff'}]}
+                style={
+                  isDarkMode
+                    ? [styles.textInput3, {opacity: 0.7, color: '#fff'}]
+                    : [
+                        styles.textInput3,
+                        {opacity: 0.7, color: colors.textGrey},
+                      ]
+                }
               />
             </View>
             <BorderTextInput

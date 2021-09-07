@@ -8,6 +8,7 @@ import commonStylesFunc from '../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
   width,
 } from '../styles/responsiveSize';
 import {
@@ -104,7 +105,20 @@ export default function ProductCard2({
             nodeComponentProps={{
               numberOfLines: 1,
             }}
-            stylesheet={htmlStyle}
+            stylesheet={{
+              p: [
+                {
+                  color: colors.textGreyE,
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                },
+                {
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyE,
+                },
+              ],
+            }}
           />
         )}
 
@@ -122,7 +136,10 @@ export default function ProductCard2({
           width: moderateScale(100),
         }}>
         <FastImage
-          source={{uri: url1 && url2 ? getImage : ''}}
+          source={{
+            uri: url1 && url2 ? getImage : '',
+            priority: FastImage.priority.high,
+          }}
           style={{
             height: moderateScale(100),
             width: moderateScale(100),
@@ -234,9 +251,3 @@ export default function ProductCard2({
     </TouchableOpacity>
   );
 }
-
-const htmlStyle = StyleSheet.create({
-  p: {
-    color: '#e5e5e7', // make links coloured pink
-  },
-});

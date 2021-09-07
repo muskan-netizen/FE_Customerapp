@@ -44,6 +44,29 @@ export default function StepIndicators({
   };
 
   const getSourceImage = ({position, stepStatus}) => {
+    // let iconConfig = null;
+    // switch (position) {
+    //   case 0: {
+    //     iconConfig = 'shopping-cart';
+    //     break;
+    //   }
+    //   case 1: {
+    //     iconConfig = 'location-on';
+    //     break;
+    //   }
+    //   case 2: {
+    //     iconConfig = 'assessment';
+    //     break;
+    //   }
+    //   case 3: {
+    //     iconConfig = 'payment';
+    //     break;
+    //   }
+    //   default: {
+    //     break;
+    //   }
+    // }
+    // return iconConfig;
     if (stepStatus == 'finished') {
       return imagePath.tick;
     }

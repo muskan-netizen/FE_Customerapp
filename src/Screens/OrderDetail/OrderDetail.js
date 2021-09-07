@@ -241,6 +241,7 @@ export default function OrderDetail({navigation, route}) {
                                     i?.image_path?.image_path,
                                     '300/300',
                                   ),
+                                  priority: FastImage.priority.high,
                                 }
                               : ''
                           }

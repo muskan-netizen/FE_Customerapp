@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Animated, Image, Text, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
+import {
+  Animated,
+  Image,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 import FastImage from 'react-native-fast-image';
@@ -23,6 +30,8 @@ import DashedLine from 'react-native-dashed-line';
 import imagePath from '../constants/imagePath';
 import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../styles/theme';
+import AddonModal from '../Screens/ProductDetail/AddonModal';
+import Modal from 'react-native-modal';
 
 export default function ProductCard3({
   data = {},
@@ -34,11 +43,20 @@ export default function ProductCard3({
   activeOpacity = 1,
   bottomText = strings.BUY_NOW,
   index,
+  onIncrement,
+  onDecrement,
+  selectedCartItem
 }) {
-  const [selectedIndex, setSelectedIndex] = useState(-1);
-  const [selectedCart, setSelectedCart] = useState(null)
+    // data['qty'] = 1
+  const [state, setState] = useState({
+    selectedIndex: -1,
+    selectedIndexForCartIcon: -1
+  });
+  const { selectedIndex, selectedIndexForCartIcon } = state
 
-  const [selectedIndexForCartIcon, setSelectedIndexForCartIcon] = useState(-1);
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+
+
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const isDarkMode = theme;
@@ -63,15 +81,16 @@ export default function ProductCard3({
 
   const changePosition = () => {
     let i = selectedIndex == -1 ? index : -1;
-    setSelectedIndex(i);
+    updateState({ selectedIndex: i })
   };
 
   const changePositionForCartIcon = () => {
     let i = selectedIndexForCartIcon == -1 ? index : -1;
-    setSelectedIndexForCartIcon(i);
+    updateState({ selectedIndexForCartIcon: i });
   };
 
   let htmlText = data?.translation[0]?.body_html || null;
+
 
   return (
     <Animatable.View
@@ -125,7 +144,10 @@ export default function ProductCard3({
           }}>
           <Animatable.View
             key={selectedIndex}
-            style={{ flex: 1 }}
+            style={{
+              flex: 1,
+              marginTop: selectedIndex == index ? moderateScaleVertical(8) : 0,
+            }}
           // animation={selectedIndex == index ? 'fadeInDown' : 'fadeInLeft'}
           >
             {/* Title View */}
@@ -221,10 +243,10 @@ export default function ProductCard3({
             </View>
           </Animatable.View>
 
-          <View style={{}}>
-            {!!selectedCart && selectedCart?.id == data.id ? null :
+          <View style={{ marginTop: selectedIndex == index ? moderateScaleVertical(8) : 0, }}>
+            {!!data?.qty  ? null :
               <TouchableOpacity
-                onPress={() => setSelectedCart(data)}
+                onPress={addToCart}
                 style={{
                   borderWidth: 1,
                   padding: 6,
@@ -243,21 +265,20 @@ export default function ProductCard3({
 
             }
 
-            {!!selectedCart && selectedCart?.id == data.id && <View
+            {!!data?.qty && (<View
               style={{
                 borderRadius: moderateScale(5),
                 backgroundColor: themeColors.primary_color,
                 paddingHorizontal: moderateScale(6),
-                paddingVertical:moderateScaleVertical(2),
+                paddingVertical: moderateScaleVertical(2),
                 borderRadius: moderateScale(4),
                 alignItems: 'center',
-                marginTop: selectedIndex == index ? moderateScaleVertical(20) : 0,
                 flexDirection: 'row'
               }}
             >
               <TouchableOpacity
                 style={{ alignItems: 'center' }}
-                // onPress={() => productIncrDecreamentForCart(2)}
+                onPress={onDecrement}
                 activeOpacity={0.8}
                 hitSlop={hitSlopProp}
               >
@@ -274,14 +295,14 @@ export default function ProductCard3({
                   color: colors.white,
                   marginHorizontal: 16
                 }}>
-                  1
+                  {data?.qty}
                 </Text>
               </View>
               <TouchableOpacity
                 style={{ alignItems: 'center' }}
                 activeOpacity={0.8}
                 hitSlop={hitSlopProp}
-              // onPress={() => productIncrDecreamentForCart(1)}
+                onPress={onIncrement}
               >
                 <Text style={{
                   fontFamily: fontFamily.bold,
@@ -289,10 +310,11 @@ export default function ProductCard3({
                   color: colors.white,
                 }}>+</Text>
               </TouchableOpacity>
-            </View>}
+            </View>)}
           </View>
         </View>
       </TouchableOpacity>
+
     </Animatable.View>
   );
 }

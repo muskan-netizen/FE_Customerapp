@@ -58,6 +58,7 @@ export default function HomeCategoryCard2({
               style={{height: moderateScale(50), width: moderateScale(50)}}
               source={{
                 uri: imageURI,
+                priority: FastImage.priority.high,
               }}
             />
           </View>

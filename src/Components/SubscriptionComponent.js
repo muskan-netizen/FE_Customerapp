@@ -1,16 +1,7 @@
 import moment from 'moment';
 import React from 'react';
-import {
-  Animated,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Image,
-} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
-import {transparentProductImage} from '../constants/constants';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -21,16 +12,12 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
+import {MyDarkTheme} from '../styles/theme';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
-  getScaleTransformationStyle,
-  pressInAnimation,
-  pressOutAnimation,
 } from '../utils/helperFunctions';
 import GradientButton from './GradientButton';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
 
 export default function SubscriptionComponent({
   data = {},

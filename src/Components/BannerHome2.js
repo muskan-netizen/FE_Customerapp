@@ -42,7 +42,11 @@ const BannerHome2 = ({
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const renderCarousel = (image) => (
-    <FastImage style={{flex: 1}} resizeMode="contain" source={{uri: image}} />
+    <FastImage
+      style={{flex: 1}}
+      resizeMode="contain"
+      source={{uri: image, priority: FastImage.priority.high}}
+    />
   );
   const _onPress = () => {
     updateState({showLightboxView: true});
