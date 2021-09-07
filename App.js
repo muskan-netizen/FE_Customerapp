@@ -24,7 +24,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from './src/styles/theme';
 import colors from './src/styles/colors';
 import {Linking} from 'react-native';
-import {navigate} from './src/navigation/NavigationService';
+import * as NavigationService from './src/navigation/NavigationService';
 import {getParameterByName, getUrlRoutes} from './src/utils/helperFunctions';
 import navigationStrings from './src/navigation/navigationStrings';
 
@@ -34,18 +34,29 @@ const App = () => {
   // deep linking
 
   // async function handleDynamicLink(deepLinkUrl) {
+  //   console.log(deepLinkUrl, 'deepLinkUrl');
   //   if (deepLinkUrl != null) {
   //     setItem('deepLinkUrl', deepLinkUrl);
   //     let id = getParameterByName('id', deepLinkUrl);
+  //     let name = getParameterByName('name', deepLinkUrl);
   //     let routeName = getUrlRoutes(deepLinkUrl, 1);
   //     if (routeName === 'vendor') {
-  //       const item = {};
-  //       item['id'] = id;
-  //       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, item)();
+  //       const data = {};
+  //       data['id'] = id;
+  //       data['name'] = name;
 
   //       setTimeout(() => {
-  //         navigate(navigationStrings.VENDOR_DETAIL, item);
-  //       }, 2000);
+  //         // console.log(deepLinkUrl, 'deepLinkUrl');
+  //         NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+  //           screen: navigationStrings.HOMESTACK,
+  //           params: {
+  //             screen: navigationStrings.VENDOR_DETAIL,
+  //             params: {
+  //               data,
+  //             },
+  //           },
+  //         });
+  //       }, 3000);
   //     }
   //   }
   // }
@@ -53,11 +64,13 @@ const App = () => {
   // useEffect(() => {
   //   Linking.getInitialURL().then((link) => handleDynamicLink(link));
 
-  //   Linking.addEventListener('url', handleDynamicLink);
+  //   Linking.addEventListener('url', (event) => handleDynamicLink(event.url));
   //   return () => {
-  //     Linking.removeEventListener('url', handleDynamicLink);
+  //     Linking.removeEventListener('url', (event) =>
+  //       handleDynamicLink(event.url),
+  //     );
   //   };
-  // }, []);
+  // }, [handleDynamicLink]);
 
   const isDarkMode = useDarkMode();
   useEffect(() => {

@@ -417,6 +417,7 @@ export default function DashBoardHeaderFive({
                   {tabs.map((item, indx) => {
                     return (
                       <TouchableOpacity
+                        key={indx}
                         style={{
                           borderColor: item.isActive
                             ? themeColors.primary_color
