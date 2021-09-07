@@ -82,11 +82,14 @@ export default function ThreeColumnCard2({
       </View>
 
       <Text
+        numberOfLines={1}
         style={{
+          width: moderateScale(100),
           fontFamily: fontFamily.medium,
           fontSize: textScale(15),
           color: colors.black,
           marginVertical: 10,
+          textAlign: 'center',
         }}>
         {data?.name}
       </Text>

@@ -1952,6 +1952,11 @@ export default function Cart({navigation, route}) {
         type={type}
         passLocation={(data) => addUpdateLocation(data)}
       />
+      <View
+        style={{
+          height: moderateScaleVertical(65),
+          backgroundColor: colors.transparent,
+        }}></View>
 
       {/* Date time modal */}
       <Modal
