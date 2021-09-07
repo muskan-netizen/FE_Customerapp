@@ -217,6 +217,23 @@ export default function Settings({route, navigation}) {
 
       <View style={{...commonStyles.headerTopLine}} />
       {/* <KeyboardAwareScrollView bounces={false}> */}
+      <View
+        style={{
+          marginHorizontal: moderateScale(20),
+          marginTop: moderateScaleVertical(20),
+        }}>
+        <Text
+          style={
+            isDarkMode
+              ? [
+                  styles.darkAppearanceTextStyle,
+                  {color: MyDarkTheme.colors.text},
+                ]
+              : styles.darkAppearanceTextStyle
+          }>
+          {strings.APPEARANCE}
+        </Text>
+      </View>
 
       <View
         style={{
@@ -227,7 +244,6 @@ export default function Settings({route, navigation}) {
           justifyContent: 'space-around',
           paddingVertical: moderateScaleVertical(10),
           paddingHorizontal: moderateScale(20),
-          height: moderateScaleVertical(height - height + 60),
           marginVertical: moderateScaleVertical(20),
         }}>
         {selectedThemeOptions.map((i, inx) => {
@@ -262,7 +278,6 @@ export default function Settings({route, navigation}) {
         style={{
           flexDirection: 'row',
           marginHorizontal: moderateScale(20),
-          marginTop: moderateScaleVertical(95),
 
           justifyContent: 'space-between',
           ...commonStyles.shadowStyle,
@@ -281,7 +296,7 @@ export default function Settings({route, navigation}) {
                 ]
               : styles.darkAppearanceTextStyle
           }>
-          {strings.DARK_APPEARANCE}
+          {strings.AUTOMATIC}
         </Text>
         <ToggleSwitch
           isOn={isOn}

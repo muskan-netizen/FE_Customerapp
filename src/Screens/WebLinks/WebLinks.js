@@ -54,8 +54,14 @@ export default function WebLinks({navigation, route}) {
   const [state, setState] = useState({
     isLoading: false,
     htmlContent: null,
-    callingCode: '91',
-    cca2: appData?.profile?.country?.code
+    callingCode: userData?.dial_code
+      ? userData?.dial_code
+      : appData?.profile?.country?.phonecode
+      ? appData?.profile?.country?.phonecode
+      : '91',
+    cca2: userData?.cca2
+      ? userData?.cca2
+      : appData?.profile?.country?.code
       ? appData?.profile?.country?.code
       : 'IN',
     phoneNumber: '',
@@ -98,7 +104,7 @@ export default function WebLinks({navigation, route}) {
     getCmsPageDetail();
   }, []);
 
-  //Get list of all payment method
+  // //Get list of all payment method
   const getCmsPageDetail = () => {
     let data = {};
     data['page_id'] = paramData && paramData?.id;
@@ -271,7 +277,7 @@ export default function WebLinks({navigation, route}) {
         type: res[0]?.type,
         uri: res[0]?.uri,
       };
-      console.log(file, 'file');
+
       updateState({imageArray: [...imageArray, file]});
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
@@ -284,12 +290,11 @@ export default function WebLinks({navigation, route}) {
   };
   // upload FSSAI License function
   const fssaiuploadFile = async () => {
-    console.log('dffdffdf');
     try {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.images || DocumentPicker.types.doc],
       });
-      console.log(res, 'response');
+
       let file = {
         image_id: Math.random(),
         name: res[0]?.name,
@@ -309,7 +314,6 @@ export default function WebLinks({navigation, route}) {
   };
   // upload SFC License function
   const sfcuploadFile = async () => {
-    console.log('dffdffdf');
     try {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.images || DocumentPicker.types.doc],
@@ -479,12 +483,7 @@ export default function WebLinks({navigation, route}) {
                           style={styles.imageOrderStyle}
                           imageStyle={styles.imageOrderStyle}>
                           <View style={styles.viewOverImage}>
-                            <View
-                              style={{
-                                position: 'absolute',
-                                top: -10,
-                                right: 30,
-                              }}>
+                            <View style={styles.crossIconStyle}>
                               <TouchableOpacity
                                 onPress={() => _removeImageFromList(i)}>
                                 <Image source={imagePath.icRemoveIcon} />
@@ -495,16 +494,7 @@ export default function WebLinks({navigation, route}) {
                       );
                     })
                   ) : (
-                    <View
-                      style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderWidth: 1,
-                        height: height / 10,
-                        marginHorizontal: moderateScale(12),
-                        borderColor: colors.borderLight,
-                        borderRadius: moderateScale(5),
-                      }}>
+                    <View style={styles.imageView}>
                       <TouchableOpacity
                         onPress={uploadLogo}
                         style={[
@@ -543,12 +533,7 @@ export default function WebLinks({navigation, route}) {
                           style={styles.imageOrderStyle}
                           imageStyle={styles.imageStyle}>
                           <View style={styles.viewOverImage}>
-                            <View
-                              style={{
-                                position: 'absolute',
-                                top: -10,
-                                right: 30,
-                              }}>
+                            <View style={styles.crossIconStyle}>
                               <TouchableOpacity
                                 onPress={() => _removeBannerFromList(i)}>
                                 <Image source={imagePath.icRemoveIcon} />
@@ -559,16 +544,7 @@ export default function WebLinks({navigation, route}) {
                       );
                     })
                   ) : (
-                    <View
-                      style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderWidth: 1,
-                        height: height / 10,
-                        marginHorizontal: moderateScale(12),
-                        borderColor: colors.borderLight,
-                        borderRadius: moderateScale(5),
-                      }}>
+                    <View style={styles.imageView}>
                       <TouchableOpacity
                         onPress={uploadFile}
                         style={[
@@ -695,12 +671,7 @@ export default function WebLinks({navigation, route}) {
                           style={styles.imageOrderStyle}
                           imageStyle={styles.imageOrderStyle}>
                           <View style={styles.viewOverImage}>
-                            <View
-                              style={{
-                                position: 'absolute',
-                                top: -10,
-                                right: 30,
-                              }}>
+                            <View style={styles.crossIconStyle}>
                               <TouchableOpacity
                                 onPress={() => _removeFssaiLicence(i)}>
                                 <Image source={imagePath.icRemoveIcon} />
@@ -711,16 +682,7 @@ export default function WebLinks({navigation, route}) {
                       );
                     })
                   ) : (
-                    <View
-                      style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderWidth: 1,
-                        height: height / 10,
-                        marginHorizontal: moderateScale(12),
-                        borderColor: colors.borderLight,
-                        borderRadius: moderateScale(5),
-                      }}>
+                    <View style={styles.imageView}>
                       <TouchableOpacity
                         onPress={fssaiuploadFile}
                         style={[
@@ -759,12 +721,7 @@ export default function WebLinks({navigation, route}) {
                           style={styles.imageOrderStyle}
                           imageStyle={styles.imageStyle}>
                           <View style={styles.viewOverImage}>
-                            <View
-                              style={{
-                                position: 'absolute',
-                                top: -10,
-                                right: 30,
-                              }}>
+                            <View style={styles.crossIconStyle}>
                               <TouchableOpacity
                                 onPress={() => _removeSfcLicence(i)}>
                                 <Image source={imagePath.icRemoveIcon} />
@@ -775,16 +732,7 @@ export default function WebLinks({navigation, route}) {
                       );
                     })
                   ) : (
-                    <View
-                      style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderWidth: 1,
-                        height: height / 10,
-                        marginHorizontal: moderateScale(12),
-                        borderColor: colors.borderLight,
-                        borderRadius: moderateScale(5),
-                      }}>
+                    <View style={styles.imageView}>
                       <TouchableOpacity
                         onPress={sfcuploadFile}
                         style={[
