@@ -76,6 +76,8 @@ const shortCodes = {
   survuhs: 'ac8cda',
   igolux: 'd190a2',
   toda: '1a6236',
+  mobi: '096939',
+  yourlaundryapp: '03467c',
 };
 
 const appIds = {
@@ -378,6 +380,14 @@ const appIds = {
   toda: Platform.select({
     ios: 'com.toda.orders',
     android: 'com.toda',
+  }),
+  mobi: Platform.select({
+    ios: 'com.mobi.customer',
+    android: 'com.mobi',
+  }),
+  yourlaundryapp: Platform.select({
+    ios: 'com.yourlaundryapp',
+    android: 'com.yourlaundryapp',
   }),
 };
 
