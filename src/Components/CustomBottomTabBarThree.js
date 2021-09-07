@@ -120,6 +120,7 @@ export default function CustomBottomTabBarThree({
                 item.image.image_path,
                 '600/360',
               ),
+              priority: FastImage.priority.high,
             }}
           />
         </View>
@@ -165,7 +166,6 @@ export default function CustomBottomTabBarThree({
         <View
           style={{
             flexDirection: 'row',
-            alignItems: 'flex-end',
             paddingHorizontal: moderateScale(15),
           }}>
           {state.routes.map((route, index) => {
@@ -199,6 +199,7 @@ export default function CustomBottomTabBarThree({
                   onPress={onPress}
                   style={{
                     flex: 1,
+                    height: height * 0.095,
                     alignItems: 'center',
                   }}>
                   {minHeight > height * 0.095

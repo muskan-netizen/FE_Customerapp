@@ -102,6 +102,7 @@ export default function MarketCard2({
             data.banner.image_path || data.image.image_path,
             '800/400',
           ),
+          priority: FastImage.priority.high,
         }}
       />
     </TouchableOpacity>

@@ -553,6 +553,7 @@ export default function MyOrders({navigation}) {
                                         item?.image?.image_path,
                                         '300/300',
                                       ),
+                                      priority: FastImage.priority.high,
                                     }
                                   : imagePath.patternOne
                               }

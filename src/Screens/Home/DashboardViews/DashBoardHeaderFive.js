@@ -18,6 +18,7 @@ import {RadioButton} from 'react-native-paper';
 
 import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
 import {MyDarkTheme} from '../../../styles/theme';
+import strings from '../../../constants/lang';
 
 export default function DashBoardHeaderFive({
   navigation = {},
@@ -132,6 +133,13 @@ export default function DashBoardHeaderFive({
     });
   };
 
+  const setUserSelectedTab = (label, value) => {
+    selcetedToggle(value);
+    updateState({
+      checked: label,
+    });
+  };
+
   const userSelectedtab = () => {
     if (dine_In_Type === 'delivery') {
       if (
@@ -139,33 +147,21 @@ export default function DashBoardHeaderFive({
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        selcetedToggle('dine_in');
-        updateState({
-          checked: 'Dine-In',
-        });
+        setUserSelectedTab('Dine-In', 'dine_in');
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        selcetedToggle('takeaway');
-        updateState({
-          checked: 'Takeaway',
-        });
+        setUserSelectedTab('Takeaway', 'takeaway');
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        selcetedToggle('dine_in');
-        updateState({
-          checked: 'Dine-In',
-        });
+        setUserSelectedTab('Dine-In', 'dine_in');
       } else {
-        selcetedToggle('delivery');
-        updateState({
-          checked: 'Delivery',
-        });
+        setUserSelectedTab('Delivery', 'delivery');
       }
     } else if (dine_In_Type === 'dine_in') {
       if (
@@ -173,60 +169,39 @@ export default function DashBoardHeaderFive({
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        selcetedToggle('dine_in');
-        updateState({
-          checked: 'Dine-In',
-        });
+        setUserSelectedTab('Dine-In', 'dine_in');
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        selcetedToggle('takeaway');
-        updateState({
-          checked: 'Takeaway',
-        });
+        setUserSelectedTab('Takeaway', 'takeaway');
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        selcetedToggle('dine_in');
-        updateState({
-          checked: 'Dine-In',
-        });
+        setUserSelectedTab('Dine-In', 'dine_in');
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        selcetedToggle('delivery');
-        updateState({
-          checked: 'Delivery',
-        });
+        setUserSelectedTab('Delivery', 'delivery');
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        selcetedToggle('delivery');
-        updateState({
-          checked: 'Delivery',
-        });
+        setUserSelectedTab('Delivery', 'delivery');
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        selcetedToggle('delivery');
-        updateState({
-          checked: 'Delivery',
-        });
+        setUserSelectedTab('Delivery', 'delivery');
       } else {
-        selcetedToggle('dine_in');
-        updateState({
-          checked: 'Dine-In',
-        });
+        setUserSelectedTab('Dine-In', 'dine_in');
       }
     } else {
       if (
@@ -234,76 +209,51 @@ export default function DashBoardHeaderFive({
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        selcetedToggle('takeaway');
-        updateState({
-          checked: 'Takeaway',
-        });
+        setUserSelectedTab('Takeaway', 'takeaway');
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        selcetedToggle('takeaway');
-        updateState({
-          checked: 'Takeaway',
-        });
+        setUserSelectedTab('Takeaway', 'takeaway');
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        selcetedToggle('takeaway');
-        updateState({
-          checked: 'Takeaway',
-        });
+        setUserSelectedTab('Takeaway', 'takeaway');
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        selcetedToggle('dine_in');
-        updateState({
-          checked: 'Dine-In',
-        });
+        setUserSelectedTab('Dine-In', 'dine_in');
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        selcetedToggle('delivery');
-        updateState({
-          checked: 'Delivery',
-        });
+        setUserSelectedTab('Delivery', 'delivery');
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        selcetedToggle('delivery');
-        updateState({
-          checked: 'Delivery',
-        });
+        setUserSelectedTab('Delivery', 'delivery');
       } else {
-        selcetedToggle('takeaway');
-        updateState({
-          checked: 'Takeaway',
-        });
+        setUserSelectedTab('Takeaway', 'takeaway');
       }
     }
   };
 
   const dineInFunction = () => {
-    Alert.alert(
-      '',
-      'This Change Will Remove Your Cart Products. Do you Really Want To Continue?',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-        },
-        {text: 'Clear Cart', onPress: clearCart},
-      ],
-    );
+    Alert.alert('', strings.REMOVE_CART_MSG, [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+      },
+      {text: 'Clear Cart', onPress: clearCart},
+    ]);
   };
 
   const clearCart = () => {

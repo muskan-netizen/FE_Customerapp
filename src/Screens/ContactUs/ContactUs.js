@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
@@ -26,15 +26,21 @@ import {MyDarkTheme} from '../../styles/theme';
 
 export default function ContactUs({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-
+  const {appData, currencies, languages, themeColors, appStyle} = useSelector(
+    (state) => state?.initBoot,
+  );
   const isDarkMode = theme;
   const currentTheme = useSelector((state) => state.appTheme);
   const userData = useSelector((state) => state?.auth?.userData);
   console.log(userData, 'userData>>>userData');
-
+  console.log(appData, 'appDataa');
   const [state, setState] = useState({
-    callingCode: userData && userData?.dial_code ? userData?.dial_code : '1',
-    cca2: userData && userData?.cca2 ? userData?.cca2 : 'US',
+    callingCode: appData?.profile?.country?.phonecode
+      ? appData?.profile?.country?.phonecode
+      : '91',
+    cca2: appData?.profile?.country?.code
+      ? appData?.profile?.country?.code
+      : 'IN',
     name: userData && userData?.name ? userData?.name : '',
     email: userData && userData?.email ? userData?.email : '',
     phoneNumber:
@@ -42,16 +48,24 @@ export default function ContactUs({navigation}) {
     message: '',
     isLoading: false,
   });
+
   const {message, phoneNumber, cca2, name, email, isLoading} = state;
-  const {appData, currencies, languages, themeColors, appStyle} = useSelector(
-    (state) => state?.initBoot,
-  );
+
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily});
   const commonStyles = commonStylesFun({fontFamily});
   //Update states
   const updateState = (data) => setState((state) => ({...state, ...data}));
-
+  useEffect(() => {
+    updateState({
+      cca2: appData?.profile?.country?.code
+        ? appData?.profile?.country?.code
+        : 'IN',
+      callingCode: appData?.profile?.country?.phonecode
+        ? appData?.profile?.country?.phonecode
+        : '91',
+    });
+  }, [appData]);
   //select the country
   const _onCountryChange = (data) => {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});

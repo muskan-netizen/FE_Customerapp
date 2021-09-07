@@ -26,6 +26,7 @@ import {MyDarkTheme} from '../../styles/theme';
 import ToggleSwitch from 'toggle-switch-react-native';
 import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
 import navigationStrings from '../../navigation/navigationStrings';
+import {color} from 'react-native-elements/dist/helpers';
 
 export default function Settings({route, navigation}) {
   // const appData = useSelector(state => state?.initBoot?.appData);
@@ -217,6 +218,23 @@ export default function Settings({route, navigation}) {
 
       <View style={{...commonStyles.headerTopLine}} />
       {/* <KeyboardAwareScrollView bounces={false}> */}
+      <View
+        style={{
+          marginHorizontal: moderateScale(20),
+          marginTop: moderateScaleVertical(20),
+        }}>
+        <Text
+          style={
+            isDarkMode
+              ? [
+                  styles.darkAppearanceTextStyle,
+                  {color: MyDarkTheme.colors.text},
+                ]
+              : styles.darkAppearanceTextStyle
+          }>
+          {strings.APPEARANCE}
+        </Text>
+      </View>
 
       <View
         style={{
@@ -227,7 +245,6 @@ export default function Settings({route, navigation}) {
           justifyContent: 'space-around',
           paddingVertical: moderateScaleVertical(10),
           paddingHorizontal: moderateScale(20),
-          height: moderateScaleVertical(height - height + 60),
           marginVertical: moderateScaleVertical(20),
         }}>
         {selectedThemeOptions.map((i, inx) => {
@@ -262,7 +279,6 @@ export default function Settings({route, navigation}) {
         style={{
           flexDirection: 'row',
           marginHorizontal: moderateScale(20),
-          marginTop: moderateScaleVertical(95),
 
           justifyContent: 'space-between',
           ...commonStyles.shadowStyle,
@@ -281,7 +297,7 @@ export default function Settings({route, navigation}) {
                 ]
               : styles.darkAppearanceTextStyle
           }>
-          {strings.DARK_APPEARANCE}
+          {strings.AUTOMATIC}
         </Text>
         <ToggleSwitch
           isOn={isOn}
@@ -322,7 +338,9 @@ export default function Settings({route, navigation}) {
           flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
         }}
         labelStyle={
-          isDarkMode ? {color: MyDarkTheme.colors.text} : {color: null}
+          isDarkMode
+            ? {color: MyDarkTheme.colors.text}
+            : {color: colors.textGrey}
         }
         itemStyle={{
           justifyContent: 'flex-start',
@@ -381,7 +399,9 @@ export default function Settings({route, navigation}) {
           textAlign: I18nManager.isRTL ? 'right' : 'left',
         }}
         labelStyle={
-          isDarkMode ? {color: MyDarkTheme.colors.text} : {color: null}
+          isDarkMode
+            ? {color: MyDarkTheme.colors.text}
+            : {color: colors.textGrey}
         }
         zIndex={4000}
         dropDownStyle={{

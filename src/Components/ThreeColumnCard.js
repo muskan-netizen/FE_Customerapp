@@ -16,9 +16,9 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-import {Image} from 'react-native-elements';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import FastImage from 'react-native-fast-image';
 
 export default function ThreeColumnCard({
   data = {},
@@ -51,25 +51,14 @@ export default function ThreeColumnCard({
         {...getScaleTransformationStyle(scaleInAnimated)},
       ]}>
       <Animated.View>
-        <Image
-          PlaceholderContent={
-            <Image
-              source={{
-                uri: getImageUrl(
-                  data?.avatar?.proxy_url || data?.image?.proxy_url,
-                  data?.avatar?.image_path || data?.image?.image_path,
-                  `13/14`,
-                ),
-              }}
-              style={{width: cardWidth, height: moderateScaleVertical(128)}}
-            />
-          }
+        <FastImage
           source={{
             uri: getImageUrl(
               data?.avatar?.proxy_url || data?.image?.proxy_url,
               data?.avatar?.image_path || data?.image?.image_path,
               `130/140`,
             ),
+            priority: FastImage.priority.high,
           }}
           style={{width: cardWidth, height: moderateScaleVertical(128)}}
         />

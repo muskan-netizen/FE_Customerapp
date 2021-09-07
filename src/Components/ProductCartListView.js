@@ -67,7 +67,10 @@ export default function ProductCartListView({
       <View style={{flexDirection: 'row'}}>
         <View style={{flex: 0.3}}>
           <FastImage
-            source={{uri: url1 && url2 ? getImage : ''}}
+            source={{
+              uri: url1 && url2 ? getImage : '',
+              priority: FastImage.priority.high,
+            }}
             style={{
               height: cardWidthNew / 5,
               width: cardWidthNew / 5,
