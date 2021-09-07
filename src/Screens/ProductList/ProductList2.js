@@ -728,9 +728,9 @@ export default function Products({route, navigation}) {
         }
         onEndReached={onEndReachedDelayed}
         onEndReachedThreshold={0.5}
-        ListFooterComponent={() => <View style={{height: 20}} />}
         ListEmptyComponent={<EmptyListLoader />}
       />
+      <View style={{height: moderateScaleVertical(65)}}></View>
     </WrapperContainer>
   );
 }

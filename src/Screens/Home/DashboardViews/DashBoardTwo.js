@@ -67,6 +67,7 @@ export default function DashBoardTwo({
                   item.icon.image_path,
                   '600/360',
                 ),
+                priority: FastImage.priority.high,
               }}
             />
             <Text style={styles.categoryText}>{item.name}</Text>

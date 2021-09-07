@@ -749,6 +749,7 @@ export default function Cart({navigation, route}) {
                                   i?.cartImg?.path?.image_path,
                                   '300/300',
                                 ),
+                                priority: FastImage.priority.high,
                               }
                             : imagePath.patternOne
                         }
@@ -1578,6 +1579,11 @@ export default function Cart({navigation, route}) {
             />
           </View>
         )}
+        <View
+          style={{
+            height: moderateScaleVertical(65),
+            backgroundColor: colors.transparent,
+          }}></View>
       </>
     );
   };
@@ -1664,7 +1670,7 @@ export default function Cart({navigation, route}) {
                   labelStyle={
                     isDarkMode
                       ? {color: MyDarkTheme.colors.text}
-                      : {color: null}
+                      : {color: colors.textGrey}
                   }
                   itemStyle={{
                     justifyContent: 'flex-start',
@@ -1911,7 +1917,7 @@ export default function Cart({navigation, route}) {
                   width: moderateScale(100),
                 }}
               />
-               <Text style={styles.textStyle}>{strings.NOPRODUCTCART}</Text>
+              <Text style={styles.textStyle}>{strings.NOPRODUCTCART}</Text>
             </View>
           )}
           style={{flex: 1}}

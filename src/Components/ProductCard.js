@@ -63,7 +63,10 @@ export default function ProductCard({
       ]}>
       <Animated.View>
         <FastImage
-          source={{uri: url1 && url2 ? getImage : ''}}
+          source={{
+            uri: url1 && url2 ? getImage : '',
+            priority: FastImage.priority.high,
+          }}
           style={{
             height: cardWidthNew,
             width: cardWidthNew,

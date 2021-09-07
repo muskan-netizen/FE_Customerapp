@@ -42,6 +42,7 @@ export default function MarketCard3({
             data.banner.image_path || data.image.image_path,
             '800/400',
           ),
+          priority: FastImage.priority.high,
         }}
       />
       <View style={styles.descView}>

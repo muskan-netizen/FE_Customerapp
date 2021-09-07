@@ -79,6 +79,7 @@ export default function ListEmptyVendors({
           height: moderateScaleVertical(width / 2),
           width: moderateScale(width / 2),
         }}
+        
       />
       <Text style={styles.textStyle}>{emptyText}</Text>
     </View>

@@ -343,7 +343,7 @@ export default function MyProfile({route, navigation}) {
   // this funtion use for camera handle
   const cameraHandle = async (index) => {
     const permissionStatus = await androidCameraPermission();
-    console.log(permissionStatus, 'permissionStatus');
+
     if (permissionStatus) {
       if (index == 0 || index == 1) {
         cameraHandler(index, {
@@ -803,6 +803,7 @@ export default function MyProfile({route, navigation}) {
                         userData?.source?.image_path,
                         '200/200',
                       ),
+                      priority: FastImage.priority.high,
                     }
                   : userData?.source
               }

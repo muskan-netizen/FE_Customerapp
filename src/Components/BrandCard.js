@@ -49,6 +49,7 @@ export default function BrandCard({data = {}, onPress = () => {}}) {
             data.image.image_path,
             '1000/1000',
           ),
+          priority: FastImage.priority.high,
         }}
         style={{height: moderateScale(50), width: moderateScale(50)}}
         resizeMode="contain"

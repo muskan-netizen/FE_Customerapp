@@ -104,7 +104,10 @@ export default function VendorList({navigation, route}) {
                       alignItems: 'center',
                     }}>
                     <FastImage
-                      source={{uri: imageurl}}
+                      source={{
+                        uri: imageurl,
+                        priority: FastImage.priority.high,
+                      }}
                       style={{
                         height: moderateScale(48),
                         width: moderateScale(48),

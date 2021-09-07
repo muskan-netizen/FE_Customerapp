@@ -1,14 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import Elevations from 'react-native-elevation';
+import {SvgUri} from 'react-native-svg';
 import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 import {moderateScale, textScale} from '../styles/responsiveSize';
-import {getImageUrl} from '../utils/helperFunctions';
-import {SvgUri} from 'react-native-svg';
-import Elevations from 'react-native-elevation';
-import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import {getImageUrl} from '../utils/helperFunctions';
 
 export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);

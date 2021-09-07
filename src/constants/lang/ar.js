@@ -354,7 +354,8 @@ export default {
   OPEN: 'Open',
   SEARCH_HERE: 'Whar are you looking for?',
   NOVARIANTPRODUCTAVAILABLE: 'This option is currenty not available',
-  NOVARIANTPRODUCTAVAILABLE:'This option is currenty not available',
-  WAITINGTOACCEPT:'Waiting for order to be accepted'
-
+  NOVARIANTPRODUCTAVAILABLE: 'This option is currenty not available',
+  WAITINGTOACCEPT: 'Waiting for order to be accepted',
+  REMOVE_CART_MSG:
+    'This Change Will Remove Your Cart Products. Do you Really Want To Continue?',
 };
