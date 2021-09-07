@@ -72,7 +72,7 @@ export default function ProductCard3({
   };
   return (
     <TouchableOpacity
-      disabled
+      // disabled
       activeOpacity={0.6}
       onPress={onPress}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
@@ -193,13 +193,15 @@ export default function ProductCard3({
         </Animatable.View>
 
         <View>
-          {!!selectedCart && selectedCart?.id == data.id ? null : <TouchableOpacity
-            onPress={() => setSelectedCart(data)}
+          {!!selectedCart && selectedCart?.id == data.id ? null : 
+          <TouchableOpacity
+            // onPress={() => setSelectedCart(data)}
+            onPress={onPress}
           >
             <Image source={imagePath.greyRoundPlus} />
           </TouchableOpacity>}
 
-          {!!selectedCart && selectedCart?.id == data.id && <View
+          {/* {!!selectedCart && selectedCart?.id == data.id && <View
             style={{
               borderRadius: moderateScale(5),
               backgroundColor: themeColors.primary_color,
@@ -242,7 +244,7 @@ export default function ProductCard3({
                 color: colors.white,
               }}>+</Text>
             </TouchableOpacity>
-          </View>}
+          </View>} */}
         </View>
       </View>
     </TouchableOpacity>
