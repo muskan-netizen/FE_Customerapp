@@ -552,6 +552,7 @@ export default function Home({route, navigation}) {
               toggleData={appData}
               isLoading={isLoading}
             />
+
             <DashBoardFive
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}

@@ -1906,19 +1906,27 @@ export default function Cart({navigation, route}) {
           keyExtractor={(item, index) => String(index)}
           renderItem={_renderItem}
           ListEmptyComponent={() => (
-            <View
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <LottieView
-                source={loaderSix}
-                autoPlay
-                loop
-                style={{
-                  height: moderateScaleVertical(100),
-                  width: moderateScale(100),
-                }}
-              />
-              <Text style={styles.textStyle}>{strings.NOPRODUCTCART}</Text>
-            </View>
+            <>
+              {!isLoadingB && (
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <LottieView
+                    source={loaderSix}
+                    autoPlay
+                    loop
+                    style={{
+                      height: moderateScaleVertical(100),
+                      width: moderateScale(100),
+                    }}
+                  />
+                  <Text style={styles.textStyle}>{strings.NOPRODUCTCART}</Text>
+                </View>
+              )}
+            </>
           )}
           style={{flex: 1}}
           refreshControl={
