@@ -910,6 +910,15 @@ android {
             applicationId 'com.yourlaundryapp'
             resValue "string", "app_name", "Your Laundry App"
          }
+         hemptyfy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.hemptyfy'
+            resValue "string", "app_name", "Hempty Fy"
+         }
     }
 }
 

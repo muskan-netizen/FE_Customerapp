@@ -78,6 +78,7 @@ const shortCodes = {
   toda: '1a6236',
   mobi: '096939',
   yourlaundryapp: '03467c',
+  hemptyfy: '1a7e89',
 };
 
 const appIds = {
@@ -388,6 +389,10 @@ const appIds = {
   yourlaundryapp: Platform.select({
     ios: 'com.yourlaundryapp',
     android: 'com.yourlaundryapp',
+  }),
+  hemptyfy: Platform.select({
+    ios: 'com.hemptyfy',
+    android: 'com.hemptyfy',
   }),
 };
 
