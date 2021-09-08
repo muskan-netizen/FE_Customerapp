@@ -864,7 +864,11 @@ export default function Products({route, navigation}) {
                 activeOpacity={0.8}
                 onPress={() => navigation.goBack()}>
                 <Image
-                  style={{tintColor: colors.black}}
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
                   source={imagePath.icBackb}
                 />
               </TouchableOpacity>
@@ -922,12 +926,24 @@ export default function Products({route, navigation}) {
                   navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
                 }>
                 <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
                   source={!!data?.showAddToCart ? false : imagePath.icSearchb}
                 />
               </TouchableOpacity>
               <View style={{marginHorizontal: moderateScale(8)}} />
               <TouchableOpacity activeOpacity={0.8}>
-                <Image source={imagePath.icShareb} />
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
+                  source={imagePath.icShareb}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -967,6 +983,11 @@ export default function Products({route, navigation}) {
             ListEmptyComponent={
               !isLoading && (
                 <LottieLoader
+                  textStyle={
+                    isDarkMode
+                      ? {color: MyDarkTheme.colors.text}
+                      : {color: colors.blackB}
+                  }
                   containerStyle={{flex: 0}}
                   noDataFound={noDataFound}
                   emptyText="No Data Found"

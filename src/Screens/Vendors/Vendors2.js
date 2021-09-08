@@ -21,6 +21,8 @@ import {
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from './ListEmptyVendors';
 import ProductLoader2 from '../../Components/Loaders/ProductLoader2';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function Vendors2({route, navigation}) {
   const [state, setState] = useState({
@@ -31,7 +33,10 @@ export default function Vendors2({route, navigation}) {
   });
   const {appData, themeColors, themeLayouts, currencies, languages} =
     useSelector((state) => state.initBoot);
-
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const categoryData = useSelector((state) => state?.vendor?.categoryData);
   const {isLoading, pageNo, isRefreshing, limit} = state;
   const {data} = route.params;
@@ -126,7 +131,9 @@ export default function Vendors2({route, navigation}) {
 
   return (
     <WrapperContainer
-      bgColor={colors.backgroundGrey}
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
       statusBarColor={colors.backgroundGrey}>
       <Header2
         leftIcon={imagePath.backArrow}

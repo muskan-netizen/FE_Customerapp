@@ -35,6 +35,7 @@ const openCamera = (options) => {
     cropperCircleOverlay: options.cropperCircleOverlay,
   })
     .then((image) => {
+      console.log(image, 'Image from camera');
       return image;
     })
     .catch((err) => {
