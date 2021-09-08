@@ -315,12 +315,10 @@ export default function Products({route, navigation}) {
       });
       // updateState({allFilters: [...allFilters,...filterDataNew]});
     }
-
     updateState({
       allFilters: [...brandDatas, ...sortFilters, ...filterDataNew],
     });
   };
-
   const getProductBasedOnFilter = (
     minimumPrice,
     maximumPrice,
