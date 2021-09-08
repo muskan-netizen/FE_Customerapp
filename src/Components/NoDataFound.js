@@ -7,6 +7,7 @@ import commonStylesFunc from '../styles/commonStyles';
 import {textScale} from '../styles/responsiveSize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import colors from '../styles/colors';
 
 export default function NoDataFound({
   isLoading = false,

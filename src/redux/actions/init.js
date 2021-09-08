@@ -14,12 +14,12 @@ import types from '../types';
 const {dispatch} = store;
 
 export function initApp(data = {}, headers = {}, reload = false) {
+  console.log(store, 'storestorestore');
   return new Promise((resolve, reject) => {
     apiPost(APP_INITIAL_SETTINGS, data, headers)
       .then(async (res) => {
         let data = res?.data;
 
-        console.log(data, 'data>>>>>>><<<<<<');
         const currencies = data?.currencies
           ? data.currencies.map((x) => {
               return {
