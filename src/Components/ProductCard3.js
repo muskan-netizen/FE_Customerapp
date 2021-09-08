@@ -265,7 +265,7 @@ export default function ProductCard3({
                   fontFamily: fontFamily.bold,
                   fontSize: moderateScale(20),
                   color: colors.white,
-                }}>-</Text>
+                }}>- </Text>
               </TouchableOpacity>
               <View style={{ alignItems: 'center' }}>
                 <Text style={{
