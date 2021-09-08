@@ -13,6 +13,8 @@ import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import {moderateScale, textScale, width} from '../styles/responsiveSize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function PhoneNumberInput({
   cca2 = '',
@@ -24,6 +26,10 @@ export default function PhoneNumberInput({
   containerStyle,
   color,
 }) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     countryPickerModalVisible: false,
   });
@@ -49,7 +55,7 @@ export default function PhoneNumberInput({
         flexDirection: 'row',
         borderWidth: 1,
         borderRadius: 13,
-        borderColor: color ? color : colors.borderLight,
+        borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.borderLight,
         height: moderateScale(49),
         ...containerStyle,
       }}>
@@ -64,7 +70,9 @@ export default function PhoneNumberInput({
         <Text
           style={{
             fontFamily: fontFamily.medium,
-            color: color ? color : colors.textGreyOpcaity7,
+            color: isDarkMode
+              ? MyDarkTheme.colors.text
+              : colors.textGreyOpcaity7,
             marginStart: 2,
           }}>
           +{callingCode}
@@ -81,14 +89,16 @@ export default function PhoneNumberInput({
         placeholder={placeholder}
         keyboardType="numeric"
         value={phoneNumber}
-        placeholderTextColor={color ? color : colors.textGreyOpcaity7}
+        placeholderTextColor={
+          isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7
+        }
         onChangeText={onChangePhone}
         style={{
           // flex: 1,
           width: width / 1.57,
           borderLeftWidth: 1,
           fontFamily: fontFamily.medium,
-          color: color ? color : colors.textGrey,
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
           fontSize: textScale(14),
           borderLeftColor: colors.borderLight,
           opacity: 0.7,
