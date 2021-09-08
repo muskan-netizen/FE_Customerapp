@@ -994,6 +994,9 @@ export default function Cart2({navigation, route}) {
             multiline={true}
             numberOfLines={4}
             style={styles.instructionView}
+            placeholderTextColor={
+              isDarkMode ? colors.textGreyB : colors.textGreyB
+            }
             placeholder={
               ' Any restaurant requests? We’ll try our best to convey it '
             }></TextInput>

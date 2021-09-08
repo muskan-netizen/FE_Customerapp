@@ -12,8 +12,9 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
+import {MyDarkTheme} from '../styles/theme';
 import {getImageUrl} from '../utils/helperFunctions';
-
+import {useDarkMode} from 'react-native-dark-mode';
 export default function ThreeColumnCard2({
   data = {},
   cardIndex,
@@ -30,6 +31,11 @@ export default function ThreeColumnCard2({
   const scaleInAnimated = new Animated.Value(0);
   const commonStyles = commonStylesFunc({fontFamily});
   let celebDimension = width / 3;
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  // alert("312")
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   console.log(data, 'datadatadatadatadata');
   return (
@@ -42,7 +48,9 @@ export default function ThreeColumnCard2({
       style={{
         flexDirection: 'column',
         alignItems: 'center',
-        backgroundColor: colors.white,
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.lightDark
+          : colors.white,
         borderRadius: moderateScale(10),
         elevation: 5,
         borderWidth: 0.5,
@@ -87,7 +95,7 @@ export default function ThreeColumnCard2({
           width: moderateScale(100),
           fontFamily: fontFamily.medium,
           fontSize: textScale(15),
-          color: colors.black,
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
           marginVertical: 10,
           textAlign: 'center',
         }}>

@@ -385,13 +385,17 @@ export default function DashBoardHeaderFive({
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => updateState({isModalVisible: false})}>
-              <Image
-                source={imagePath.crossC}
-                style={styles.crossIcon}
-                resizeMode="contain"
-              />
+              <Image source={imagePath.crossC} resizeMode="contain" />
             </TouchableOpacity>
-            <View style={styles.modalMainViewContainer}>
+            <View
+              style={[
+                styles.modalMainViewContainer,
+                {
+                  backgroundColor: isDarkMode
+                    ? MyDarkTheme.colors.background
+                    : colors.white,
+                },
+              ]}>
               <View style={{padding: moderateScale(10)}}>
                 {tabs.map((item, indx) => {
                   return (
@@ -439,7 +443,12 @@ export default function DashBoardHeaderFive({
                         <Text
                           style={{
                             fontFamily: fontFamily.medium,
-                            color: colors.black,
+                            color:
+                              isDarkMode && item.isActive
+                                ? themeColors.primary_color
+                                : isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.black,
                             fontSize: textScale(12),
                             marginHorizontal: moderateScale(10),
                           }}>
@@ -451,9 +460,12 @@ export default function DashBoardHeaderFive({
                         style={{
                           height: moderateScale(22),
                           width: moderateScale(22),
-                          tintColor: item.isActive
-                            ? themeColors.primary_color
-                            : colors.black,
+                          tintColor:
+                            isDarkMode && item.isActive
+                              ? themeColors.primary_color
+                              : isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
                           alignSelf: 'flex-end',
                         }}
                         resizeMode="contain"

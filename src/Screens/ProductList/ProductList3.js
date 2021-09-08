@@ -315,12 +315,10 @@ export default function Products({route, navigation}) {
       });
       // updateState({allFilters: [...allFilters,...filterDataNew]});
     }
-
     updateState({
       allFilters: [...brandDatas, ...sortFilters, ...filterDataNew],
     });
   };
-
   const getProductBasedOnFilter = (
     minimumPrice,
     maximumPrice,
@@ -859,7 +857,11 @@ export default function Products({route, navigation}) {
                 activeOpacity={0.8}
                 onPress={() => navigation.goBack()}>
                 <Image
-                  style={{tintColor: colors.black}}
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
                   source={imagePath.icBackb}
                 />
               </TouchableOpacity>
@@ -917,12 +919,24 @@ export default function Products({route, navigation}) {
                   navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
                 }>
                 <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
                   source={!!data?.showAddToCart ? false : imagePath.icSearchb}
                 />
               </TouchableOpacity>
               <View style={{marginHorizontal: moderateScale(8)}} />
               <TouchableOpacity activeOpacity={0.8}>
-                <Image source={imagePath.icShareb} />
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
+                  source={imagePath.icShareb}
+                />
               </TouchableOpacity>
             </View>
           </View>

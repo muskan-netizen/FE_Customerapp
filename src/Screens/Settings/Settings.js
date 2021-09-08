@@ -31,10 +31,6 @@ import stylesFunc from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import ToggleSwitch from 'toggle-switch-react-native';
-import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
-import navigationStrings from '../../navigation/navigationStrings';
-import {color} from 'react-native-elements/dist/helpers';
-import SwitchToggle from 'react-native-switch-toggle';
 
 export default function Settings({route, navigation}) {
   // const appData = useSelector(state => state?.initBoot?.appData);
@@ -281,7 +277,10 @@ export default function Settings({route, navigation}) {
         }}>
         {selectedThemeOptions.map((i, inx) => {
           return (
-            <TouchableOpacity onPress={() => _setApperance(i)}>
+            <TouchableOpacity
+              onPress={() => {
+                _setApperance(i);
+              }}>
               <Image source={i.image} />
               <Text
                 style={{

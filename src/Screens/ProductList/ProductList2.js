@@ -680,7 +680,9 @@ export default function Products({route, navigation}) {
         centerTitle={data?.name || data?.translation[0]?.name}
         // hideRight={true}
         textStyle={
-          isDarkMode ? {color: MyDarkTheme.colors.text} : {color: null}
+          isDarkMode
+            ? {color: MyDarkTheme.colors.text}
+            : {color: colors.textGrey}
         }
         leftIcon={imagePath.backArrow}
         onPressRight={() =>

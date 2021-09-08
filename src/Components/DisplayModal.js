@@ -19,6 +19,9 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
+
 const DisplayModal = ({
   bottomButtonClick,
   closeModal,
@@ -29,22 +32,42 @@ const DisplayModal = ({
   isSortEnabled,
   headerTitle = '',
 }) => {
-  const {appStyle} = useSelector((state) => state?.initBoot);
-
+  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
 
   return (
     <Modal animationType={'none'} visible={ShowModal} transparent>
       <View style={styles.modalMainView}>
-        <View style={styles.optionModalBgView}>
+        <View
+          style={[
+            styles.optionModalBgView,
+            {
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.white,
+            },
+          ]}>
           <View style={styles.modalHeaderView}>
-            <Text style={styles.modalHeaderText}>{headerTitle}</Text>
+            <Text
+              style={[
+                styles.modalHeaderText,
+                {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+              ]}>
+              {headerTitle}
+            </Text>
             <TouchableOpacity
               onPress={() => closeModal()}
               style={styles.closeButtonView}>
               {/* <Text>Close</Text> */}
-              <Image source={imagePath.crossBlue} />
+              <Image
+                style={{tintColor: themeColors.primary_color}}
+                source={imagePath.crossBlue}
+              />
             </TouchableOpacity>
           </View>
           <View style={{height: 1, backgroundColor: colors.borderLight}} />
@@ -69,7 +92,17 @@ const DisplayModal = ({
                       />
                     )}
                     {/* {item?.isIcon && <Image source={item.iconName} />} */}
-                    <Text style={styles.optionRowText}>{item.label}</Text>
+                    <Text
+                      style={[
+                        styles.optionRowText,
+                        {
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.textGrey,
+                        },
+                      ]}>
+                      {item.label}
+                    </Text>
                   </TouchableOpacity>
                 );
               })
@@ -86,7 +119,7 @@ const DisplayModal = ({
                 borderRadius={moderateScale(13)}
                 marginTop={moderateScaleVertical(8)}
                 containerStyle={{
-                  backgroundColor: colors.themeColor,
+                  backgroundColor: themeColors.primary_color,
                   width: width / 1.1,
                 }}
                 onPress={bottomButtonClick}

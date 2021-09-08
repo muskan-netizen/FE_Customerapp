@@ -29,6 +29,8 @@ import {useNavigation} from '@react-navigation/native';
 import navigationStrings from '../../navigation/navigationStrings';
 import stylesFunc from './styles';
 import HTMLView from 'react-native-htmlview';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 
 export default function AddonModal({
   productdetail = {},
@@ -48,7 +50,10 @@ export default function AddonModal({
   });
   const {addonSetData, viewHeight, maxLimitAddon} = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
-
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -78,7 +83,7 @@ export default function AddonModal({
                   }
                 });
                 console.log(incrementedValue, 'incrementedValue');
-                if ((incrementedValue == vi?.max_select) && !j.value) {
+                if (incrementedValue == vi?.max_select && !j.value) {
                   return {
                     ...j,
                   };
@@ -116,6 +121,7 @@ export default function AddonModal({
     });
   };
 
+  let plainHtml = productdetail?.translation[0]?.body_html || null;
   const checkBoxButtonViewAddons = ({setoptions}) => {
     return (
       <View>
@@ -134,7 +140,15 @@ export default function AddonModal({
                 marginBottom: moderateScaleVertical(10),
               }}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={styles.variantValue}>
+                <Text
+                  style={[
+                    styles.variantValue,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    },
+                  ]}>
                   {i?.title
                     ? i.title.charAt(0).toUpperCase() + i.title.slice(1)
                     : ''}
@@ -142,7 +156,15 @@ export default function AddonModal({
               </View>
 
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={styles.variantValue}>
+                <Text
+                  style={[
+                    styles.variantValue,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    },
+                  ]}>
                   {`${currencies?.primary_currency?.symbol}${(
                     Number(i?.multiplier) * Number(i?.price)
                   ).toFixed(2)}`}
@@ -176,8 +198,23 @@ export default function AddonModal({
                   marginVertical: moderateScaleVertical(5),
                 }}>
                 <Text
-                  style={[styles.variantLable]}>{`Choice of ${i?.title}`}</Text>
-                <Text style={styles.chooseOption}>
+                  style={[
+                    styles.variantLable,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGrey,
+                    },
+                  ]}>{`Choice of ${i?.title}`}</Text>
+                <Text
+                  style={[
+                    styles.chooseOption,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyF,
+                    },
+                  ]}>
                   {strings.PLS_SELECT_ONE}
                 </Text>
                 {i?.setoptions ? checkBoxButtonViewAddons(i) : null}
@@ -200,7 +237,7 @@ export default function AddonModal({
     navigation.navigate(navigationStrings.PRODUCTDETAIL, {
       data: {
         addonSetData: addonSetData,
-        randomValue:Math.random()
+        randomValue: Math.random(),
       },
     });
   };
@@ -220,8 +257,23 @@ export default function AddonModal({
       <ScrollView
         showsVerticalScrollIndicator={false}
         bounces={false}
-        style={styles.modalMainViewContainer}>
-        <View style={styles.modalMainViewContainer}>
+        style={[
+          styles.modalMainViewContainer,
+          {
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : colors.white,
+          },
+        ]}>
+        <View
+          style={[
+            styles.modalMainViewContainer,
+            {
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.white,
+            },
+          ]}>
           <Image
             source={{
               uri: getImageUrl(
@@ -235,19 +287,33 @@ export default function AddonModal({
           />
           <View style={styles.mainView}>
             <View>
-              <Text numberOfLines={1} style={styles.productName}>
+              <Text
+                numberOfLines={1}
+                style={[
+                  styles.productName,
+                  {
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGrey,
+                  },
+                ]}>
                 {productdetail?.translation[0]?.title}
               </Text>
             </View>
 
-            {productdetail?.translation[0]?.body_html != null ? (
+            {plainHtml ? (
               <View
                 style={{
                   flexDirection: 'row',
                 }}>
-                <Text style={styles.description}>
-                  <HTMLView value={productdetail?.translation[0]?.body_html} />
-                </Text>
+                <HTMLView
+                  value={
+                    plainHtml.startsWith('<p>')
+                      ? plainHtml
+                      : '<p>' + plainHtml + '</p>'
+                  }
+                  stylesheet={{p: styles.descriptionStyle}}
+                />
               </View>
             ) : null}
 

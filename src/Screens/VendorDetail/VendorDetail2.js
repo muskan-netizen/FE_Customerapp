@@ -204,7 +204,7 @@ export default function VendorDetail2({navigation, route}) {
                   opacity: 1,
                   marginTop: moderateScaleVertical(20),
                   fontSize: textScale(18),
-                  color: colors.black,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 },
               ]}>
               {vendorParams?.item?.name}
@@ -215,7 +215,7 @@ export default function VendorDetail2({navigation, route}) {
                   marginTop: moderateScaleVertical(13),
                   fontFamily: fontFamily.regular,
                   marginBottom: moderateScale(7),
-                  color: colors.textGrey,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
                 }}>
                 {vendorParams?.item?.desc}
               </Text>
@@ -240,7 +240,7 @@ export default function VendorDetail2({navigation, route}) {
                     <Image
                       source={imagePath.starWhite}
                       style={{
-                        tintColor: colors.black,
+                        tintColor: isDarkMode ? colors.yellowB : colors.black,
                         height: 10,
                         width: 10,
                         marginRight: moderateScale(5),
@@ -249,7 +249,9 @@ export default function VendorDetail2({navigation, route}) {
 
                     <Text
                       style={{
-                        color: colors.blackC,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.blackC,
                         fontSize: textScale(11),
                         fontFamily: fontFamily.medium,
                         marginHorizontal: moderateScale(5),
