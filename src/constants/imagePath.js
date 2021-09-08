@@ -1,4 +1,4 @@
-import { requireNativeComponent } from 'react-native';
+import {requireNativeComponent} from 'react-native';
 
 export default {
   dropdownTriangle: require('../assets/images/ic_dropdown.png'),
@@ -261,7 +261,18 @@ export default {
 
   //gif images
   search_gif: require('../assets/images/gif/search.gif'),
-  cart_gif:require('../assets/images/gif/emptycart.gif'),
+  cart_gif: require('../assets/images/gif/emptycart.gif'),
 
-  
+  //Tracking images
+  acceptActive: require('../assets/images/TrackOrderImages/ic_accepted1.png'),
+  acceptInactive: require('../assets/images/TrackOrderImages/ic_accepted2.png'),
+
+  deliverActive: require('../assets/images/TrackOrderImages/ic_delivered1.png'),
+  deliverInactive: require('../assets/images/TrackOrderImages/ic_delivered2.png'),
+
+  onmywayActive: require('../assets/images/TrackOrderImages/ic_onway1.png'),
+  onmywayInactive: require('../assets/images/TrackOrderImages/ic_onway2.png'),
+
+  processingActive: require('../assets/images/TrackOrderImages/ic_processing1.png'),
+  processingInactive: require('../assets/images/TrackOrderImages/ic_processing2.png'),
 };
