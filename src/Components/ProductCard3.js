@@ -172,7 +172,7 @@ export default function ProductCard3({
                 numberOfLines={1}
                 style={{
                   ...commonStyles.mediumFont14,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  color: isDarkMode ? themeColors.primary_color : colors.black,
                   fontSize: textScale(12),
                   fontFamily: fontFamily.regular,
                 }}>
@@ -221,7 +221,9 @@ export default function ProductCard3({
                   }}
                   stylesheet={{
                     p: {
-                      color: colors.blackOpacity43,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.blackOpacity43,
                       fontFamily: fontFamily.regular,
                       textAlign: 'left',
                     },
