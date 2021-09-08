@@ -71,7 +71,6 @@ export default function TabRoutes(props) {
       />
     );
   }
-
   if (appStyle?.tabBarLayout !== 5) {
     if (checkForBrand) {
       brandTab = (
@@ -84,17 +83,10 @@ export default function TabRoutes(props) {
               <Image
                 style={[
                   {tintColor: tintColor},
-                  appStyle?.tabBarLayout === 2 && {height: 20, width: 20},
+                  appStyle?.tabBarLayout === 2 ||
+                    (appStyle?.tabBarLayout === 4 && {height: 20, width: 20}),
                 ]}
-                source={
-                  appStyle?.tabBarLayout === 4
-                    ? focused
-                      ? imagePath.ordersRedActive
-                      : imagePath.ordersRedInActive
-                    : focused
-                    ? imagePath.tabCActive
-                    : imagePath.tabCInActive
-                }
+                source={focused ? imagePath.tabCActive : imagePath.tabCInActive}
               />
             ),
             //  unmountOnBlur: true,

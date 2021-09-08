@@ -1,63 +1,67 @@
 import Clipboard from '@react-native-community/clipboard';
+import NetInfo from '@react-native-community/netinfo';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import React, {useEffect, useState} from 'react';
+import {Linking} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import FlashMessage from 'react-native-flash-message';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Provider, useSelector} from 'react-redux';
+import SplashScreen from 'react-native-splash-screen';
+import {Provider} from 'react-redux';
+import NoInternetModal from './src/Components/NoInternetModal';
 import strings from './src/constants/lang';
+import Container from './src/library/toastify-react-native';
+import * as NavigationService from './src/navigation/NavigationService';
+import navigationStrings from './src/navigation/navigationStrings';
 import Routes from './src/navigation/Routes';
+import {updateInternetConnection} from './src/redux/actions/auth';
 import store from './src/redux/store';
 import types from './src/redux/types';
-import {getItem, getUserData, setItem} from './src/utils/utils';
-import {
-  GoogleSignin,
-  statusCodes,
-} from '@react-native-google-signin/google-signin';
-import NetInfo from '@react-native-community/netinfo';
-import {updateInternetConnection} from './src/redux/actions/auth';
-import NoInternetModal from './src/Components/NoInternetModal';
-import SplashScreen from 'react-native-splash-screen';
-import Container from './src/library/toastify-react-native';
 import {moderateScaleVertical, width} from './src/styles/responsiveSize';
-import fontFamily from './src/styles/fontFamily';
-import {RFPercentage} from 'react-native-responsive-fontsize';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from './src/styles/theme';
-import colors from './src/styles/colors';
-import {Linking} from 'react-native';
-import {navigate} from './src/navigation/NavigationService';
 import {getParameterByName, getUrlRoutes} from './src/utils/helperFunctions';
-import navigationStrings from './src/navigation/navigationStrings';
+import {getItem, getUserData, setItem} from './src/utils/utils';
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
 
   // deep linking
 
-  // async function handleDynamicLink(deepLinkUrl) {
-  //   if (deepLinkUrl != null) {
-  //     setItem('deepLinkUrl', deepLinkUrl);
-  //     let id = getParameterByName('id', deepLinkUrl);
-  //     let routeName = getUrlRoutes(deepLinkUrl, 1);
-  //     if (routeName === 'vendor') {
-  //       const item = {};
-  //       item['id'] = id;
-  //       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, item)();
+  async function handleDynamicLink(deepLinkUrl) {
+    console.log(deepLinkUrl, 'deepLinkUrl');
+    if (deepLinkUrl != null) {
+      setItem('deepLinkUrl', deepLinkUrl);
+      let id = getParameterByName('id', deepLinkUrl);
+      let name = getParameterByName('name', deepLinkUrl);
+      let routeName = getUrlRoutes(deepLinkUrl, 1);
+      if (routeName === 'vendor') {
+        const data = {};
+        data['id'] = id;
+        data['name'] = name;
 
-  //       setTimeout(() => {
-  //         navigate(navigationStrings.VENDOR_DETAIL, item);
-  //       }, 2000);
-  //     }
-  //   }
-  // }
+        setTimeout(() => {
+          NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+            screen: navigationStrings.HOMESTACK,
+            params: {
+              screen: navigationStrings.VENDOR_DETAIL,
+              params: {
+                data,
+              },
+            },
+          });
+        }, 3000);
+      }
+    }
+  }
 
-  // useEffect(() => {
-  //   Linking.getInitialURL().then((link) => handleDynamicLink(link));
-
-  //   Linking.addEventListener('url', handleDynamicLink);
-  //   return () => {
-  //     Linking.removeEventListener('url', handleDynamicLink);
-  //   };
-  // }, []);
+  useEffect(() => {
+    Linking.getInitialURL().then((link) => handleDynamicLink(link));
+    Linking.addEventListener('url', (event) => handleDynamicLink(event.url));
+    return () => {
+      Linking.removeEventListener('url', (event) =>
+        handleDynamicLink(event.url),
+      );
+    };
+  }, [handleDynamicLink]);
 
   const isDarkMode = useDarkMode();
   useEffect(() => {
@@ -199,15 +203,8 @@ const App = () => {
       </Provider>
       <Container
         width={width - 20}
-        //height={moderateScaleVertical(40)}
         position="top"
         duration={2000}
-        // textStyle={{
-        //   fontFamily: fontFamily.circularMedium,
-        //   marginLeft: RFPercentage(2),
-        //   marginRight: RFPercentage(2),
-        //   fontSize: RFPercentage(2.5),
-        // }}
         positionValue={moderateScaleVertical(20)}
       />
       <FlashMessage position="top" />
