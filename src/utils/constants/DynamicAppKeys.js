@@ -79,6 +79,7 @@ const shortCodes = {
   mobi: '096939',
   yourlaundryapp: '03467c',
   hemptyfy: '1a7e89',
+  sharu: '443e7e',
 };
 
 const appIds = {
@@ -393,6 +394,10 @@ const appIds = {
   hemptyfy: Platform.select({
     ios: 'com.hemptyfy',
     android: 'com.hemptyfy',
+  }),
+  sharu: Platform.select({
+    ios: 'com.sharu',
+    android: 'com.sharu',
   }),
 };
 

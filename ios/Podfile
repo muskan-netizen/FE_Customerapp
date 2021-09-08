@@ -940,8 +940,8 @@ target 'MOBI' do
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
   
 end
-#HemptyFy Target
-target 'HemptyFy' do
+#HemptiFy Target
+target 'HemptiFy' do
   permissions_path = '../node_modules/react-native-permissions/ios'
   config = use_native_modules!
   use_react_native!(:path => config["reactNativePath"])

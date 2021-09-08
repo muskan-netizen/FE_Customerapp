@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "846926C426E79A1600E28501"
-               BuildableName = "HemptyFy.app"
-               BlueprintName = "HemptyFy"
+               BlueprintIdentifier = "84A855F926E88F4C004CA54F"
+               BuildableName = "HemptiFy.app"
+               BlueprintName = "HemptiFy"
                ReferencedContainer = "container:Runrun.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,9 +44,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "846926C426E79A1600E28501"
-            BuildableName = "HemptyFy.app"
-            BlueprintName = "HemptyFy"
+            BlueprintIdentifier = "84A855F926E88F4C004CA54F"
+            BuildableName = "HemptiFy.app"
+            BlueprintName = "HemptiFy"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -61,9 +61,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "846926C426E79A1600E28501"
-            BuildableName = "HemptyFy.app"
-            BlueprintName = "HemptyFy"
+            BlueprintIdentifier = "84A855F926E88F4C004CA54F"
+            BuildableName = "HemptiFy.app"
+            BlueprintName = "HemptiFy"
             ReferencedContainer = "container:Runrun.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

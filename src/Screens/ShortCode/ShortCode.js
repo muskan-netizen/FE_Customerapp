@@ -557,6 +557,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.sharu:
+          updateState({
+            shortCode: shortCodes.sharu,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
