@@ -357,4 +357,5 @@ export default {
   NOVARIANTPRODUCTAVAILABLE: 'Bu seçenek şu anda kullanılamıyor',
   REMOVE_CART_MSG:
     'This Change Will Remove Your Cart Products. Do you Really Want To Continue?',
+    ADD_ITEM:"Add item"
 };

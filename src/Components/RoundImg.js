@@ -5,7 +5,9 @@ import colors from '../styles/colors'
 const RoundImg = ({
     imgStyle = {},
     img= {},
-    size= 76
+    size= 76,
+    isDarkMode,
+    MyDarkTheme
 }) => {
     return (
         <Image
@@ -13,7 +15,7 @@ const RoundImg = ({
                 width: moderateScale(size),
                 height: moderateScale(size),
                 borderRadius: moderateScale(size / 2),
-                backgroundColor: colors.blackOpacity10,
+                backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
                  ...imgStyle 
                 }}
             source={{ uri: img }}

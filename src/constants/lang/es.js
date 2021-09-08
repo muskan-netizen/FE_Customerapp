@@ -360,4 +360,5 @@ export default {
   NOVARIANTPRODUCTAVAILABLE: 'Esta opción no está disponible actualmente ',
   REMOVE_CART_MSG:
     'This Change Will Remove Your Cart Products. Do you Really Want To Continue?',
+    ADD_ITEM:"Add item"
 };

@@ -376,4 +376,5 @@ export default {
     'This Change Will Remove Your Cart Products. Do you Really Want To Continue?',
   AUTOMATIC: 'Automatic',
   APPEARANCE: 'APPEARANCE',
+  ADD_ITEM:"Add item",
 };

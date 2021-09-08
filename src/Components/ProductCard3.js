@@ -33,6 +33,7 @@ import { MyDarkTheme } from '../styles/theme';
 import AddonModal from '../Screens/ProductDetail/AddonModal';
 import Modal from 'react-native-modal';
 import StarRating from 'react-native-star-rating';
+import HtmlViewComp from './HtmlViewComp';
 
 export default function ProductCard3({
   data = {},
@@ -99,7 +100,7 @@ export default function ProductCard3({
       delay={index > 8 ? 1 * 100 : index * 10}
     >
       <TouchableOpacity
-        disabled
+        // disabled
         activeOpacity={0.6}
         onPress={onPress}
         onPressIn={() => pressInAnimation(scaleInAnimated)}
@@ -129,7 +130,7 @@ export default function ProductCard3({
                 borderRadius: moderateScale(15),
 
               }}
-              resizeMode={selectedIndex == index ? "contain" : 'stretch'}
+              resizeMode={selectedIndex == index ? "cover" : 'contain'}
             />
           </TouchableOpacity>
         </Animatable.View>
@@ -201,11 +202,11 @@ export default function ProductCard3({
             {/* rating View */}
             {!!data?.averageRating && (
               <View style={{
-                borderWidth: 1,
-                alignSelf:'flex-start',
+                borderWidth: 0.5,
+                alignSelf: 'flex-start',
                 padding: 2,
                 borderRadius: 2,
-                marginBottom:moderateScaleVertical(12),
+                marginBottom: moderateScaleVertical(12),
                 borderColor: colors.yellowB,
                 backgroundColor: colors.yellowOpacity10
               }}>
@@ -214,29 +215,19 @@ export default function ProductCard3({
                   maxStars={5}
                   rating={Number(data?.averageRating).toFixed(1)}
                   fullStarColor={colors.yellowB}
-                  starSize={12}
-                 containerStyle={{width:width/5}}
+                  starSize={8}
+                  containerStyle={{ width: width / 9 }}
                 />
               </View>
             )}
             <View style={{ width: width / 2 }}>
-              {!!htmlText && <HTMLView
-                value={
-                  htmlText.startsWith('<p>')
-                    ? htmlText
-                    : '<p>' + htmlText + '</p>'
-                }
+
+              {!!htmlText && (<HtmlViewComp
+                plainHtml={htmlText}
                 nodeComponentProps={{
-                  numberOfLines: 2,
+                  numberOfLines: 2
                 }}
-                stylesheet={{
-                  p: {
-                    color: colors.blackOpacity43,
-                    fontFamily: fontFamily.regular,
-                    textAlign: 'left'
-                  }
-                }}
-              />}
+              />)}
             </View>
           </Animatable.View>
 

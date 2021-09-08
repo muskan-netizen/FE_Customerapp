@@ -13,7 +13,8 @@ import {
   View,
   Animated,
   SafeAreaView,
-  Platform
+  Platform,
+  Modal
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import EmptyListLoader from '../../Components/EmptyListLoader';
@@ -48,6 +49,8 @@ import CircularLoader from '../../Components/Loaders/CircularLoader';
 import LottieLoader from '../../Components/LottieLoader';
 import { noDataFound } from '../../Components/Loaders/AnimatedLoaderFiles';
 import staticStrings from '../../constants/staticStrings';
+import AddonModal from '../ProductDetail/AddonModal';
+import VariantAddons from '../../Components/VariantAddons';
 
 export default function Products({ route, navigation }) {
   const { data } = route.params;
@@ -71,6 +74,7 @@ export default function Products({ route, navigation }) {
     filterData: [],
     brandData: [],
     allFilters: [],
+    isVisibleModal: false,
     sortFilters: [
       {
         id: -2,
@@ -154,7 +158,8 @@ export default function Products({ route, navigation }) {
     checkForMaximumPriceChange,
     showFilterSlectedIcon,
     AnimatedHeaderValue,
-    selectedCartItem
+    selectedCartItem,
+    isVisibleModal
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -363,7 +368,7 @@ export default function Products({ route, navigation }) {
         },
       )
       .then((res) => {
-        console.log(res, 'res vendor products+++');
+        console.log(res, 'res vendor filters');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -551,7 +556,8 @@ export default function Products({ route, navigation }) {
 
   //Add product to cart
   const _addToCart = (item) => {
-
+    updateState({ isVisibleModal: true, selectedCartItem: item })
+    return;
     let updateArray = productListData.map((val, i) => {
       if (val.id == item.id) {
         return { ...val, qty: 1 }
@@ -639,6 +645,7 @@ export default function Products({ route, navigation }) {
     index,
   });
 
+  console.log("category info", categoryInfo)
   //To remove flickering of icon and image we are creating the header child seperately
   const listHeaderComponent = () => {
     return (
@@ -787,7 +794,7 @@ export default function Products({ route, navigation }) {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, backgroundColor: colors.white }}>
+      <View style={{ flex: 1,  backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff', }}>
         <SafeAreaView>
           <View style={styles.loaderHeader}>
             <CardLoader
@@ -833,7 +840,7 @@ export default function Products({ route, navigation }) {
             <View style={{ marginBottom: moderateScaleVertical(12) }} />
             <ProductDetailLoader />
             <View style={{ marginBottom: moderateScaleVertical(12) }} />
-            
+
           </View>
         </SafeAreaView>
       </View>
@@ -841,6 +848,9 @@ export default function Products({ route, navigation }) {
   }
 
   const onScroll = ({ nativeEvent }) => {
+    if (productListData.length < 6) {
+      return;
+    }
     let offset = nativeEvent.contentOffset.y;
     let index = parseInt(offset / 10);   // your cell height
     console.log("now index is " + index)
@@ -857,15 +867,6 @@ export default function Products({ route, navigation }) {
       }
       return;
     }
-    // let position = nativeEvent.contentOffset
-    // // console.log("positon", position)
-    // if (position.y > 20) {
-    //   updateState({ AnimatedHeaderValue: true })
-    //   return;
-    // }
-    // if (position < 4) {
-    //   updateState({ AnimatedHeaderValue: false })
-
   }
 
   return (
@@ -901,7 +902,11 @@ export default function Products({ route, navigation }) {
                 activeOpacity={0.8}
                 onPress={() => navigation.goBack()}
               >
-                <Image style={{ tintColor: colors.black }} source={imagePath.icBackb} />
+                <Image style={{
+                  tintColor: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.black
+                }} source={imagePath.icBackb} />
               </TouchableOpacity>
               {AnimatedHeaderValue && !!productListData && productListData.length > 0 &&
                 (<Animatable.View
@@ -913,7 +918,9 @@ export default function Products({ route, navigation }) {
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <RoundImg
                       img={getImageUrl(categoryInfo?.logo?.image_fit, categoryInfo?.logo?.image_path, '400/400')}
-                      size={30}
+                      size={20}
+                      isDarkMode={isDarkMode}
+                      MyDarkTheme={MyDarkTheme}
                     />
                     <View style={{ marginLeft: moderateScale(8) }}>
                       <Text
@@ -950,6 +957,11 @@ export default function Products({ route, navigation }) {
                 })}
               >
                 <Image
+              style={{
+                tintColor: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.black
+              }} 
                   source={
                     !!data?.showAddToCart ? false : imagePath.icSearchb
                   }
@@ -960,7 +972,13 @@ export default function Products({ route, navigation }) {
                 activeOpacity={0.8}
 
               >
-                <Image source={imagePath.icShareb} />
+                <Image  
+                style={{
+                  tintColor: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.black
+                }} 
+                source={imagePath.icShareb} />
               </TouchableOpacity>
             </View>
           </View>
@@ -1005,6 +1023,12 @@ export default function Products({ route, navigation }) {
           />
           {/* <View style={{ height: moderateScale(height * 0.070) }} /> */}
         </View>
+        <VariantAddons
+          addonSet={[]}
+          isVisible={isVisibleModal}
+          productdetail={selectedCartItem}
+          onClose={() => updateState({ isVisibleModal: false })}
+        />
       </SafeAreaView>
     </View>
   );

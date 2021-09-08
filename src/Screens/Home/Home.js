@@ -423,6 +423,7 @@ export default function Home({route, navigation}) {
         updateState({isRefreshing: false});
       })
       .catch((error) => {
+        console.log("im error+++",error)
         updateState({isRefreshing: false});
       });
   };
