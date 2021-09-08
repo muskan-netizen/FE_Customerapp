@@ -171,7 +171,6 @@
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/netinfo": "^6.0.0",
     "@react-native-firebase/app": "^12.3.0",
-    "@react-native-firebase/dynamic-links": "^12.3.0",
     "@react-native-google-signin/google-signin": "^6.0.0",
     "@react-native-picker/picker": "^1.16.7",
     "@react-navigation/bottom-tabs": "^5.11.7",
@@ -230,9 +229,8 @@
     "react-native-google-places": "^3.1.2",
     "react-native-google-places-autocomplete": "^2.2.0",
     "react-native-htmlview": "^0.16.0",
-  
-    "react-native-image-header-scroll-view": "^0.10.3",
     "react-native-image-crop-picker": "^0.36.2",
+    "react-native-image-header-scroll-view": "^0.10.3",
     "react-native-indicators": "^0.17.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
     "react-native-lightbox": "^0.8.1",
