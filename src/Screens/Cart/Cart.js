@@ -81,7 +81,7 @@ export default function Cart({navigation, route}) {
     selectedAddress: null,
     selectedPayment: {
       id: 1,
-      title: 'Select Payment Method',
+      title: strings.SELECT_PAYMENT_METHOD,
       off_site: 0,
     },
     // selectedPayment: null,
@@ -94,8 +94,8 @@ export default function Cart({navigation, route}) {
     defaultSelectedTable: '',
     deepLinkUrl: null,
     selectedTimeOptions: [
-      {id: 1, title: 'Now', type: 'now'},
-      {id: 2, title: 'Schedule Order', type: 'schedule'},
+      {id: 1, title: strings.NOW, type: 'now'},
+      {id: 2, title: strings.SCHEDULE_ORDER, type: 'schedule'},
     ],
     selectedTimeOption: null,
     sheduledorderdate: null,

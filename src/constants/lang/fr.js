@@ -381,4 +381,6 @@ export default {
   DINE_IN: 'Dîner dans',
   DELIVERY: 'Livraison',
   TAKEAWAY: 'Emporter',
+  NOW: 'Maintenant',
+  SCHEDULE_ORDER:"ordre de programme"
 };
