@@ -28,7 +28,7 @@ export default {
   PRODUCT_WEIGHT: ' Poids du produit ',
   YOUR_PHONE_NUMBER: 'Votre numéro de téléphone ',
   ENTER_PASSWORD: 'Entrez le mot de passe',
-  WISHLIST: 'Wishlist',
+
   SIGNUP_AN_ACCOUNT: ' « ACCES HAUT COMPTE »',
   OTP_VERIFICATION: ' Vérification OTP ',
   ENTER_OTP_SENT:
@@ -376,4 +376,13 @@ export default {
   DINE_IN: 'Dîner dans',
   DELIVERY: 'Livraison',
   TAKEAWAY: 'Emporter',
+  Home: 'Accueil',
+  Cart: 'Chariot',
+  Wishlist: 'Liste de souhaits',
+  Light: 'Légère',
+  Dark: 'Sombre',
+  ENTER_CONFIRM_PASSWORD: 'CONFIRMER LE NOUVEAU MOT DE PASSE',
+  ENTER_NEW_PASSWORD: 'NOUVEAU MOT DE PASSE',
+  ENTER_CURRENT_PASSWORD: 'MOT DE PASSE ACTUEL',
+  SAVED_LOCATIONS: ' Emplacements enregistrés',
 };

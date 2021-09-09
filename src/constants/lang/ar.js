@@ -364,4 +364,10 @@ export default {
   DINE_IN: 'تناول الطعام في',
   DELIVERY: 'توصيل',
   TAKEAWAY: 'يبعد',
+  HOME: 'الصفحة الرئيسية',
+  CART: 'عربة التسوق',
+  WISHLIST: 'قائمة الرغبات',
+  LIGHT: 'ضوء',
+  DARK: 'داكن',
+  NO_DATA_FOUND: 'لاتوجد بيانات',
 };

@@ -197,8 +197,7 @@ export default function Cart({navigation, route}) {
     }
     if (selectedAddress && allAddresss.length) {
       // let find2=
-      console.log(allAddresss, 'allAddresss');
-      console.log(selectedAddress, 'selectedAddress');
+
       let find = allAddresss.find(
         (x) =>
           x.id == selectedAddress.id &&
@@ -229,7 +228,6 @@ export default function Cart({navigation, route}) {
             isLoadingB: false,
           });
           if (res.data) {
-            console.log(res.data, 'saveAllUserAddress >>data');
             actions.saveAllUserAddress(res.data);
           }
         })
