@@ -341,6 +341,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.martinionwheels'
             resValue "string", "app_name", "Martini on wheels"
+             resValue "string", "host_name", ""
         }
         blip{
             dimension "appType"
@@ -411,6 +412,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.gajamove'
             resValue "string", "app_name", "GajaMove"
+             resValue "string", "host_name", ""
         }
         getme{
             dimension "appType"
@@ -450,6 +452,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.specialhalal'
             resValue "string", "app_name", "Special halal"
+             resValue "string", "host_name", ""
         }
         thehouse{
             dimension "appType"
@@ -469,6 +472,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.tasmeem'
             resValue "string", "app_name", "Tasmeem"
+             resValue "string", "host_name", ""
         }
          klickmat{
             dimension "appType"
@@ -602,6 +606,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.travo'
             resValue "string", "app_name", "Travo"
+             resValue "string", "host_name", ""
 
          }
          cabdelivr{
@@ -673,6 +678,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.jet'
             resValue "string", "app_name", "Jet"
+             resValue "string", "host_name", ""
          }
          africanize{
             dimension "appType"
@@ -724,6 +730,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.mstechy'
             resValue "string", "app_name", "MsTechy"
+             resValue "string", "host_name", ""
          }
          senshive{
             dimension "appType"
@@ -733,6 +740,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.senshive'
             resValue "string", "app_name", "Senshive"
+             resValue "string", "host_name", ""
          }
 
           ridemate{
@@ -887,6 +895,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.menus'
             resValue "string", "app_name", "Menus@"
+             resValue "string", "host_name", ""
          }
          doorstep{
             dimension "appType"
@@ -926,6 +935,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.wegotit'
             resValue "string", "app_name", "WeGotit"
+             resValue "string", "host_name", ""
          }
          survuhs{
             dimension "appType"
@@ -935,6 +945,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.survuhs'
             resValue "string", "app_name", "Sur-vuhs"
+             resValue "string", "host_name", ""
          }
          igolux{
             dimension "appType"
@@ -964,6 +975,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.mobi'
             resValue "string", "app_name", "MOBI"
+             resValue "string", "host_name", ""
          }
           yourlaundryapp{
             dimension "appType"
@@ -1003,6 +1015,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.smcompany'
             resValue "string", "app_name", "SMCompany"
+            resValue "string", "host_name", ""
          }
     }
 }
