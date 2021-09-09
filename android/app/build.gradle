@@ -928,6 +928,15 @@ android {
             applicationId 'com.sharu'
             resValue "string", "app_name", "Sharu"
          }
+          smcompany{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.smcompany'
+            resValue "string", "app_name", "SMCompany"
+         }
     }
 }
 

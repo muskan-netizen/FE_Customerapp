@@ -80,6 +80,7 @@ const shortCodes = {
   yourlaundryapp: '03467c',
   hemptyfy: '1a7e89',
   sharu: '443e7e',
+  smcompany: '69502d',
 };
 
 const appIds = {
@@ -398,6 +399,10 @@ const appIds = {
   sharu: Platform.select({
     ios: 'com.sharu',
     android: 'com.sharu',
+  }),
+  smcompany: Platform.select({
+    ios: 'com.smcompany',
+    android: 'com.smcompany',
   }),
 };
 

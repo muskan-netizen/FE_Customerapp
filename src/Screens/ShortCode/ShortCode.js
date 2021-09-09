@@ -563,6 +563,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.smcompany:
+          updateState({
+            shortCode: shortCodes.smcompany,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
