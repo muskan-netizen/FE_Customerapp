@@ -373,4 +373,9 @@ export default {
   AUTOMATIC: 'AUTOMATIQUE',
   APPEARANCE: 'APPARENCE',
   ADD_ITEM: 'Add item',
+  HOME: ' Accueil',
+  CART: 'Chariot',
+  WISHLIST: 'Liste de souhaits',
+  LIGHT: 'Légère',
+  DARK: 'Sombre',
 };

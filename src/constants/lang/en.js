@@ -380,4 +380,6 @@ export default {
   DELIVERY: 'Delivery',
   TAKEAWAY: 'Takeaway',
   ADD_ITEM: 'Add item',
+  LIGHT: 'Light',
+  DARK: 'Dark',
 };

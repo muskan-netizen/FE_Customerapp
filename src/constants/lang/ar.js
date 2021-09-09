@@ -361,4 +361,9 @@ export default {
   AUTOMATIC: 'تلقائي',
   APPEARANCE: 'مظهر خارجي',
   ADD_ITEM: 'Add item',
+  HOME: ' الصفحة الرئيسية',
+  CART: 'عربة التسوق',
+  WISHLIST: 'قائمة الرغبات',
+  LIGHT: 'ضوء',
+  DARK: 'داكن',
 };
