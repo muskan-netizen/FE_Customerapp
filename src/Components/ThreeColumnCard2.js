@@ -6,6 +6,7 @@ import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
+
 import {
   moderateScale,
   moderateScaleVertical,
@@ -15,6 +16,7 @@ import {
 import {MyDarkTheme} from '../styles/theme';
 import {getImageUrl} from '../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
+import FastImage from 'react-native-fast-image';
 export default function ThreeColumnCard2({
   data = {},
   cardIndex,
@@ -65,23 +67,14 @@ export default function ThreeColumnCard2({
           borderTopRightRadius: moderateScale(10),
           overflow: 'hidden',
         }}>
-        <Image
-          PlaceholderContent={
-            <Image
-              source={{
-                uri: getImageUrl(
-                  data?.avatar?.proxy_url || data?.image?.proxy_url,
-                  data?.avatar?.image_path || data?.image?.image_path,
-                  `13/14`,
-                ),
-              }}
-              style={{
-                width: '100%',
-                height: moderateScaleVertical(128),
-              }}
-            />
-          }
-          source={imagePath.nature}
+        <FastImage
+          source={{
+            uri: getImageUrl(
+              data?.avatar?.proxy_url || data?.image?.proxy_url,
+              data?.avatar?.image_path || data?.image?.image_path,
+              `130/140`,
+            ),
+          }}
           style={{
             width: '100%',
             height: '100%',
