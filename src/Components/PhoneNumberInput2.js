@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {I18nManager, Image, TouchableOpacity, View} from 'react-native';
+import {I18nManager, Image, TouchableOpacity, View, Text} from 'react-native';
 import CountryPicker, {Flag} from 'react-native-country-picker-modal';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
@@ -58,7 +58,7 @@ export default function PhoneNumberInput2({
         <Text
           style={{
             fontFamily: fontFamily.medium,
-            color: color ? color : colors.textGreyOpcaity7,
+            color: colors.textGreyOpcaity7,
             marginStart: 2,
           }}>
           +{callingCode}

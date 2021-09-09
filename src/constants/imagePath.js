@@ -275,4 +275,10 @@ export default {
 
   processingActive: require('../assets/images/TrackOrderImages/ic_processing1.png'),
   processingInactive: require('../assets/images/TrackOrderImages/ic_processing2.png'),
+
+  //royoorder new images
+  wishlist: require('../assets/images/RoyoorderNewImages/ic_wishlist.png'),
+  share1: require('../assets/images/RoyoorderNewImages/ic_share.png'),
+  contactUs: require('../assets/images/RoyoorderNewImages/ic_contact.png'),
+  settings: require('../assets/images/RoyoorderNewImages/ic_settings.png'),
 };

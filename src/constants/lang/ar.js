@@ -360,5 +360,8 @@ export default {
     'سيؤدي هذا التغيير إلى إزالة منتجات سلة التسوق الخاصة بك. هل تريد حقًا الاستمرار؟',
   AUTOMATIC: 'تلقائي',
   APPEARANCE: 'مظهر خارجي',
-  ADD_ITEM: 'Add item',
+  ADD_ITEM: 'اضافة عنصر',
+  DINE_IN: 'تناول الطعام في',
+  DELIVERY: 'توصيل',
+  TAKEAWAY: 'يبعد',
 };

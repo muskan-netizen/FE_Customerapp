@@ -372,5 +372,8 @@ export default {
     'Ce changement supprimera les produits de votre panier. Voulez-vous vraiment continuer ?',
   AUTOMATIC: 'AUTOMATIQUE',
   APPEARANCE: 'APPARENCE',
-  ADD_ITEM: 'Add item',
+  ADD_ITEM: 'Ajouter un item',
+  DINE_IN: 'Dîner dans',
+  DELIVERY: 'Livraison',
+  TAKEAWAY: 'Emporter',
 };
