@@ -62,6 +62,7 @@ export {default as WebviewScreen} from './WebviewScreen/WebviewScreen';
 export {default as Subscriptions} from './Subscriptions/Subscriptions';
 export {default as Loyalty} from './Loyalty/Loyalty';
 export {default as Cart2} from './Cart/Cart2';
+export {default as Cart3} from './Cart/Cart3';
 export {default as Vendors2} from './Vendors/Vendors2';
 export {default as ProductDetail2} from './ProductDetail/ProductDetail2';
 export {default as VendorDetail2} from './VendorDetail/VendorDetail2';
