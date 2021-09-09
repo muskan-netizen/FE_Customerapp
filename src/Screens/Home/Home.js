@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Alert, BackHandler, View} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {useSelector} from 'react-redux';
-import {useDeepLinkURL} from '../../Components/DeepLinkHook';
+
 import WrapperContainer from '../../Components/WrapperContainer';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
@@ -37,7 +37,6 @@ export default function Home({route, navigation}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {linkedURL, resetURL} = useDeepLinkURL();
 
   const location = useSelector((state) => state?.home?.location);
   const [state, setState] = useState({

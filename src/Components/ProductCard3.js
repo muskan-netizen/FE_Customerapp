@@ -30,6 +30,10 @@ import DashedLine from 'react-native-dashed-line';
 import imagePath from '../constants/imagePath';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import AddonModal from '../Screens/ProductDetail/AddonModal';
+import Modal from 'react-native-modal';
+import StarRating from 'react-native-star-rating';
+import HtmlViewComp from './HtmlViewComp';
 
 export default function ProductCard3({
   data = {},
@@ -41,16 +45,22 @@ export default function ProductCard3({
   activeOpacity = 1,
   bottomText = strings.BUY_NOW,
   index,
+  onIncrement,
+  onDecrement,
+  selectedCartItem,
 }) {
-  const [selectedIndex, setSelectedIndex] = useState(-1);
-  const [selectedCart, setSelectedCart] = useState(null);
+  // data['qty'] = 1
+  const [state, setState] = useState({
+    selectedIndex: -1,
+    selectedIndexForCartIcon: -1,
+  });
+  const {selectedIndex, selectedIndexForCartIcon} = state;
 
-  const [selectedIndexForCartIcon, setSelectedIndexForCartIcon] = useState(-1);
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const isDarkMode = theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
@@ -72,12 +82,12 @@ export default function ProductCard3({
 
   const changePosition = () => {
     let i = selectedIndex == -1 ? index : -1;
-    setSelectedIndex(i);
+    updateState({selectedIndex: i});
   };
 
   const changePositionForCartIcon = () => {
     let i = selectedIndexForCartIcon == -1 ? index : -1;
-    setSelectedIndexForCartIcon(i);
+    updateState({selectedIndexForCartIcon: i});
   };
 
   let htmlText = data?.translation[0]?.body_html || null;
@@ -87,7 +97,7 @@ export default function ProductCard3({
       animation={index > 8 ? '' : 'fadeInUp'}
       delay={index > 8 ? 1 * 100 : index * 10}>
       <TouchableOpacity
-        disabled
+        // disabled
         activeOpacity={0.6}
         onPress={onPress}
         onPressIn={() => pressInAnimation(scaleInAnimated)}
@@ -112,12 +122,12 @@ export default function ProductCard3({
               style={{
                 height:
                   selectedIndex == index
-                    ? moderateScale(150)
+                    ? moderateScale(200)
                     : moderateScale(100),
                 width: selectedIndex == index ? '100%' : moderateScale(100),
                 borderRadius: moderateScale(15),
               }}
-              resizeMode={selectedIndex == index ? 'cover' : 'stretch'}
+              resizeMode={selectedIndex == index ? 'cover' : 'contain'}
             />
           </TouchableOpacity>
         </Animatable.View>
@@ -133,7 +143,10 @@ export default function ProductCard3({
           }}>
           <Animatable.View
             key={selectedIndex}
-            style={{flex: 1}}
+            style={{
+              flex: 1,
+              marginTop: selectedIndex == index ? moderateScaleVertical(8) : 0,
+            }}
             // animation={selectedIndex == index ? 'fadeInDown' : 'fadeInLeft'}
           >
             {/* Title View */}
@@ -172,7 +185,7 @@ export default function ProductCard3({
                 numberOfLines={1}
                 style={{
                   ...commonStyles.mediumFont14,
-                  color: isDarkMode ? themeColors.primary_color : colors.black,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   fontSize: textScale(12),
                   fontFamily: fontFamily.regular,
                 }}>
@@ -184,59 +197,46 @@ export default function ProductCard3({
             </View>
 
             {/* rating View */}
-            {!!Number(data?.averageRating) && (
+            {!!data?.averageRating && (
               <View
                 style={{
-                  flexDirection: 'row',
-                  // height: 30,
-                  alignItems: 'center',
-                  paddingBottom: moderateScale(5),
+                  borderWidth: 0.5,
+                  alignSelf: 'flex-start',
+                  padding: 2,
+                  borderRadius: 2,
+                  marginBottom: moderateScaleVertical(12),
+                  borderColor: colors.yellowB,
+                  backgroundColor: colors.yellowOpacity10,
                 }}>
-                <Image source={imagePath.startwo} />
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    color: colors.yellowB,
-                    paddingLeft: 5,
-                    fontFamily: fontFamily?.bold,
-                    opacity: 1,
-                    fontSize: textScale(12),
-                  }}>
-                  {data?.averageRating
-                    ? Number(data?.averageRating).toFixed(1)
-                    : 0}
-                </Text>
+                <StarRating
+                  disabled={false}
+                  maxStars={5}
+                  rating={Number(data?.averageRating).toFixed(1)}
+                  fullStarColor={colors.yellowB}
+                  starSize={8}
+                  containerStyle={{width: width / 9}}
+                />
               </View>
             )}
             <View style={{width: width / 2}}>
               {!!htmlText && (
-                <HTMLView
-                  value={
-                    htmlText.startsWith('<p>')
-                      ? htmlText
-                      : '<p>' + htmlText + '</p>'
-                  }
+                <HtmlViewComp
+                  plainHtml={htmlText}
                   nodeComponentProps={{
                     numberOfLines: 2,
-                  }}
-                  stylesheet={{
-                    p: {
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.blackOpacity43,
-                      fontFamily: fontFamily.regular,
-                      textAlign: 'left',
-                    },
                   }}
                 />
               )}
             </View>
           </Animatable.View>
 
-          <View style={{}}>
-            {!!selectedCart && selectedCart?.id == data.id ? null : (
+          <View
+            style={{
+              marginTop: selectedIndex == index ? moderateScaleVertical(8) : 0,
+            }}>
+            {!!data?.qty ? null : (
               <TouchableOpacity
-                onPress={() => setSelectedCart(data)}
+                onPress={addToCart}
                 style={{
                   borderWidth: 1,
                   padding: 6,
@@ -257,7 +257,7 @@ export default function ProductCard3({
               </TouchableOpacity>
             )}
 
-            {!!selectedCart && selectedCart?.id == data.id && (
+            {!!data?.qty && (
               <View
                 style={{
                   borderRadius: moderateScale(5),
@@ -266,13 +266,11 @@ export default function ProductCard3({
                   paddingVertical: moderateScaleVertical(2),
                   borderRadius: moderateScale(4),
                   alignItems: 'center',
-                  marginTop:
-                    selectedIndex == index ? moderateScaleVertical(20) : 0,
                   flexDirection: 'row',
                 }}>
                 <TouchableOpacity
                   style={{alignItems: 'center'}}
-                  // onPress={() => productIncrDecreamentForCart(2)}
+                  onPress={onDecrement}
                   activeOpacity={0.8}
                   hitSlop={hitSlopProp}>
                   <Text
@@ -292,15 +290,14 @@ export default function ProductCard3({
                       color: colors.white,
                       marginHorizontal: 16,
                     }}>
-                    1
+                    {data?.qty}
                   </Text>
                 </View>
                 <TouchableOpacity
                   style={{alignItems: 'center'}}
                   activeOpacity={0.8}
                   hitSlop={hitSlopProp}
-                  // onPress={() => productIncrDecreamentForCart(1)}
-                >
+                  onPress={onIncrement}>
                   <Text
                     style={{
                       fontFamily: fontFamily.bold,
