@@ -280,5 +280,5 @@ export default {
   wishlist: require('../assets/images/RoyoorderNewImages/ic_wishlist.png'),
   share1: require('../assets/images/RoyoorderNewImages/ic_share.png'),
   contactUs: require('../assets/images/RoyoorderNewImages/ic_contact.png'),
-  settings: require('../assets/images/RoyoorderNewImages/ic_settings.png'),
+  settings1: require('../assets/images/RoyoorderNewImages/ic_settings.png'),
 };

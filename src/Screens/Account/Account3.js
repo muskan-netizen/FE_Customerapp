@@ -362,7 +362,7 @@ export default function Account3({navigation}) {
           centerContainerStyle={{flexDirection: 'row'}}
           leftIconStyle={{flex: 0.1, alignItems: 'center'}}
           onPress={moveToNewScreen(navigationStrings.SETTIGS)}
-          iconLeft={imagePath.settings}
+          iconLeft={imagePath.settings1}
           centerHeading={strings.SETTINGS}
           containerStyle={styles.containerStyle2}
           centerHeadingStyle={{
