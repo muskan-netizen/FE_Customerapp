@@ -24,7 +24,9 @@ export default function Header2({
 }) {
   const {appStyle} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
   const navigation = useNavigation();
@@ -65,6 +67,7 @@ export default function Header2({
           style={{
             ...styles.textStyle,
             ...textStyle,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black2Color,
           }}>
           {centerTitle}
         </Text>
@@ -75,7 +78,10 @@ export default function Header2({
         <Image
           source={rightIcon}
           resizeMode="contain"
-          style={styles.rightIcon}
+          style={[
+            styles.rightIcon,
+            {tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+          ]}
         />
       </TouchableOpacity>
     </View>

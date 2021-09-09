@@ -2,7 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
-import {loaderOne, searchLoader} from '../../Components/Loaders/AnimatedLoaderFiles';
+import {
+  loaderOne,
+  searchLoader,
+} from '../../Components/Loaders/AnimatedLoaderFiles';
 import SearchBar from '../../Components/SearchBar';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -29,7 +32,9 @@ export default function SearchProductVendorItem({navigation, route}) {
     showRightIcon: false,
   });
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {isLoading, searchInput, searchData, showRightIcon} = state;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
@@ -205,14 +210,14 @@ export default function SearchProductVendorItem({navigation, route}) {
     return (
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
         <LottieView
-                source={searchLoader}
-                autoPlay
-                loop
-                style={{
-                  height: moderateScaleVertical(200),
-                  width: moderateScale(200),
-                }}
-              />
+          source={searchLoader}
+          autoPlay
+          loop
+          style={{
+            height: moderateScaleVertical(200),
+            width: moderateScale(200),
+          }}
+        />
         {/* <Image source={imagePath.search_gif} /> */}
       </View>
     );

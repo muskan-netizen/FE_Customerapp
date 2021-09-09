@@ -364,6 +364,8 @@ export default {
   NOOFFERS: 'Keine Angebote',
   NOVARIANTPRODUCTAVAILABLE: 'Diese Option ist derzeit nicht verfügbar',
   REMOVE_CART_MSG:
-    'This Change Will Remove Your Cart Products. Do you Really Want To Continue?',
-    ADD_ITEM:"Add item",
+    'Durch diese Änderung werden Ihre Warenkorbprodukte entfernt. Möchten Sie wirklich fortfahren?',
+  AUTOMATIC: 'AUTOMATIK',
+  APPEARANCE: 'AUSSEHEN',
+  ADD_ITEM: 'Add item',
 };

@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "245131153817",
+    "project_id": "sharu-cb8b9",
+    "storage_bucket": "sharu-cb8b9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245131153817:android:3c0e1ff8dbdd8c54e58308",
+        "android_client_info": {
+          "package_name": "com.sharu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245131153817-92f9e2k9a7u943i523qj5ljc2g0e05ie.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sharu",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "245131153817-gpb3brdi93jd1tt833at4hbe9kva44j3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sharu",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "245131153817-p8lmh5f8dpr2d5ugggr0dms7d13f93kk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sharu",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "245131153817-9o04jkuvph0qp4iak2km0se8u2m2fesd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYH3iq5b0jyIIiaVGVOKD4F2tCWk2JnAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245131153817-9o04jkuvph0qp4iak2km0se8u2m2fesd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "245131153817-ngmarr6dpo6onqf4j2bufmd9i7edk2c6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sharu"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

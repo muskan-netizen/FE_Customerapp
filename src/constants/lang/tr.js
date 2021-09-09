@@ -356,6 +356,8 @@ export default {
   NOOFFERS: 'Teklif Yok',
   NOVARIANTPRODUCTAVAILABLE: 'Bu seçenek şu anda kullanılamıyor',
   REMOVE_CART_MSG:
-    'This Change Will Remove Your Cart Products. Do you Really Want To Continue?',
-    ADD_ITEM:"Add item"
+    'Bu Değişiklik Sepet Ürünlerinizi Kaldıracaktır. Gerçekten Devam Etmek İstiyor musunuz?',
+  AUTOMATIC: 'OTOMATİK',
+  APPEARANCE: 'DIŞ GÖRÜNÜ',
+  ADD_ITEM: 'Add item',
 };

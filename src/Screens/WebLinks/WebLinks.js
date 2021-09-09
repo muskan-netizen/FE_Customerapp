@@ -45,7 +45,9 @@ import {MyDarkTheme} from '../../styles/theme';
 
 export default function WebLinks({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   console.log(route, 'route>>>');
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
@@ -212,6 +214,7 @@ export default function WebLinks({navigation, route}) {
       });
     }
   };
+
   /// remove sfcLicence
 
   const _removeSfcLicence = (selectdImage) => {
@@ -396,13 +399,7 @@ export default function WebLinks({navigation, route}) {
               marginHorizontal: moderateScale(24),
             }}>
             <View style={{marginBottom: moderateScaleVertical(12)}}>
-              <Text
-                style={{
-                  fontSize: textScale(18),
-                  fontFamily: fontFamily.medium,
-                }}>
-                {strings.PERSONAL_DETAILS}
-              </Text>
+              <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
             </View>
             <BorderTextInput
               placeholder={strings.YOUR_NAME}
@@ -448,13 +445,7 @@ export default function WebLinks({navigation, route}) {
               containerStyle={styles.containerStyle}
             />
             <View style={{marginTop: moderateScaleVertical(10)}}>
-              <Text
-                style={{
-                  fontSize: textScale(18),
-                  fontFamily: fontFamily.medium,
-                }}>
-                {strings.STORE_DETAILS}
-              </Text>
+              <Text style={styles.detailStyle}>{strings.STORE_DETAILS}</Text>
             </View>
 
             <View style={{marginVertical: moderateScaleVertical(20)}}>
@@ -463,16 +454,7 @@ export default function WebLinks({navigation, route}) {
                   style={{
                     width: width / 2 - moderateScale(22),
                   }}>
-                  <Text
-                    style={{
-                      justifyContent: 'center',
-                      alignSelf: 'center',
-                      marginBottom: moderateScaleVertical(12),
-                      fontFamily: fontFamily.medium,
-                      color: colors.textGreyOpcaity7,
-                    }}>
-                    {strings.UPLOAD_LOGO}
-                  </Text>
+                  <Text style={styles.uploadText}>{strings.UPLOAD_LOGO}</Text>
                   {imageArray && imageArray.length ? (
                     imageArray.map((i, inx) => {
                       return (
@@ -503,7 +485,7 @@ export default function WebLinks({navigation, route}) {
                         ]}>
                         <Image
                           source={imagePath.icCamIcon}
-                          style={{tintColor: colors.themeColor}}
+                          style={{tintColor: themeColors.primary_color}}
                         />
                       </TouchableOpacity>
                     </View>
@@ -513,16 +495,7 @@ export default function WebLinks({navigation, route}) {
                   style={{
                     width: width / 2 - moderateScale(22),
                   }}>
-                  <Text
-                    style={{
-                      justifyContent: 'center',
-                      alignSelf: 'center',
-                      marginBottom: moderateScaleVertical(12),
-                      fontFamily: fontFamily.medium,
-                      color: colors.textGreyOpcaity7,
-                    }}>
-                    {strings.UPLOAD_BANNER}
-                  </Text>
+                  <Text style={styles.uploadText}>{strings.UPLOAD_BANNER}</Text>
                   {imageArrayBanner && imageArrayBanner.length ? (
                     imageArrayBanner.map((i, inx) => {
                       return (
@@ -553,7 +526,7 @@ export default function WebLinks({navigation, route}) {
                         ]}>
                         <Image
                           source={imagePath.icCamIcon}
-                          style={{tintColor: colors.themeColor}}
+                          style={{tintColor: themeColors.primary_color}}
                         />
                       </TouchableOpacity>
                     </View>
@@ -598,14 +571,18 @@ export default function WebLinks({navigation, route}) {
                   style={{
                     marginBottom: moderateScaleVertical(8),
                     fontFamily: fontFamily.medium,
-                    color: colors.textGreyOpcaity7,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
                   }}>
-                  Dine In
+                  {strings.DINE_IN}
                 </Text>
                 <ToggleSwitch
                   isOn={isDineIn}
-                  onColor={colors.themeColor}
-                  offColor={colors.borderLight}
+                  onColor={themeColors.primary_color}
+                  offColor={
+                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                  }
                   size="small"
                   onToggle={() => updateState({isDineIn: !isDineIn})}
                 />
@@ -615,14 +592,18 @@ export default function WebLinks({navigation, route}) {
                   style={{
                     marginBottom: moderateScaleVertical(8),
                     fontFamily: fontFamily.medium,
-                    color: colors.textGreyOpcaity7,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
                   }}>
-                  Takeaway
+                  {strings.TAKEAWAY}
                 </Text>
                 <ToggleSwitch
                   isOn={isTakeaway}
-                  onColor={colors.themeColor}
-                  offColor={colors.borderLight}
+                  onColor={themeColors.primary_color}
+                  offColor={
+                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                  }
                   size="small"
                   onToggle={() => updateState({isTakeaway: !isTakeaway})}
                 />
@@ -632,14 +613,18 @@ export default function WebLinks({navigation, route}) {
                   style={{
                     marginBottom: moderateScaleVertical(8),
                     fontFamily: fontFamily.medium,
-                    color: colors.textGreyOpcaity7,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
                   }}>
-                  Delivery
+                  {strings.DELIVERY}
                 </Text>
                 <ToggleSwitch
                   isOn={isDelivery}
-                  onColor={colors.themeColor}
-                  offColor={colors.borderLight}
+                  onColor={themeColors.primary_color}
+                  offColor={
+                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                  }
                   size="small"
                   onToggle={() => updateState({isDelivery: !isDelivery})}
                 />
@@ -651,16 +636,7 @@ export default function WebLinks({navigation, route}) {
                   style={{
                     width: width / 2 - moderateScale(22),
                   }}>
-                  <Text
-                    style={{
-                      justifyContent: 'center',
-                      alignSelf: 'center',
-                      marginBottom: moderateScaleVertical(12),
-                      fontFamily: fontFamily.medium,
-                      color: colors.textGreyOpcaity7,
-                    }}>
-                    {strings.FSSAI_LICENSE}
-                  </Text>
+                  <Text style={styles.uploadText}>{strings.FSSAI_LICENSE}</Text>
                   {fssaiLicense && fssaiLicense.length ? (
                     fssaiLicense.map((i, inx) => {
                       return (
@@ -691,7 +667,7 @@ export default function WebLinks({navigation, route}) {
                         ]}>
                         <Image
                           source={imagePath.icCamIcon}
-                          style={{tintColor: colors.themeColor}}
+                          style={{tintColor: themeColors.primary_color}}
                         />
                       </TouchableOpacity>
                     </View>
@@ -701,16 +677,7 @@ export default function WebLinks({navigation, route}) {
                   style={{
                     width: width / 2 - moderateScale(22),
                   }}>
-                  <Text
-                    style={{
-                      justifyContent: 'center',
-                      alignSelf: 'center',
-                      marginBottom: moderateScaleVertical(12),
-                      fontFamily: fontFamily.medium,
-                      color: colors.textGreyOpcaity7,
-                    }}>
-                    {strings.SFC_LICENSE}
-                  </Text>
+                  <Text style={styles.uploadText}>{strings.SFC_LICENSE}</Text>
                   {sfcLicense && sfcLicense.length ? (
                     sfcLicense.map((i, inx) => {
                       return (
@@ -741,7 +708,7 @@ export default function WebLinks({navigation, route}) {
                         ]}>
                         <Image
                           source={imagePath.icCamIcon}
-                          style={{tintColor: colors.themeColor}}
+                          style={{tintColor: themeColors.primary_color}}
                         />
                       </TouchableOpacity>
                     </View>
@@ -756,7 +723,7 @@ export default function WebLinks({navigation, route}) {
             />
             <View
               style={{
-                height: moderateScaleVertical(20),
+                height: moderateScaleVertical(24),
                 marginBottom: moderateScaleVertical(44),
               }}
             />

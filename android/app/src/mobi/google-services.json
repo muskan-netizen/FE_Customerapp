@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "763429017448",
+    "project_id": "mobi-fb1d7",
+    "storage_bucket": "mobi-fb1d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763429017448:android:200e6192a9d3701b3f68dd",
+        "android_client_info": {
+          "package_name": "com.mobi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "763429017448-a1u736oqu6h9m11osgt93lsap56bs6m4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobi",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "763429017448-q4c6thrhj559r9c2covbtaca4nnpk8ad.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobi",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "763429017448-qb3jdgvbco5qpkckeka73be35c16ls5j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobi",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "763429017448-nd8utmp09ao71r50dcve56hfj4kestei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsxHvr_mLd7iUScfyP4meDZxTt_cR_550"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763429017448-nd8utmp09ao71r50dcve56hfj4kestei.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "763429017448-i6ukob3tui5q8ph8tglg03623m2o7vba.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mobi"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

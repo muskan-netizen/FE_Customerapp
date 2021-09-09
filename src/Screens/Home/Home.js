@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Alert, BackHandler, View} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {useSelector} from 'react-redux';
-import {useDeepLinkURL} from '../../Components/DeepLinkHook';
+
 import WrapperContainer from '../../Components/WrapperContainer';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
@@ -34,8 +34,9 @@ navigator.geolocation = require('react-native-geolocation-service');
 export default function Home({route, navigation}) {
   const paramData = route?.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
-  const {linkedURL, resetURL} = useDeepLinkURL();
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const location = useSelector((state) => state?.home?.location);
   const [state, setState] = useState({
@@ -553,6 +554,7 @@ export default function Home({route, navigation}) {
               toggleData={appData}
               isLoading={isLoading}
             />
+
             <DashBoardFive
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}

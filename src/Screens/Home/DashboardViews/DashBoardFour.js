@@ -41,7 +41,9 @@ export default function DashBoardFour({
   toggleData,
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
@@ -112,10 +114,20 @@ export default function DashBoardFour({
       <ToggleTabBar toggleData={toggleData} selcetedToggle={selcetedToggle} />
       {userData?.auth_token && (
         <>
-          <Text style={styles.heyMsg}>
+          <Text
+            style={[
+              styles.heyMsg,
+              {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+            ]}>
             {strings.HEY_MSG} {userData.name},
           </Text>
-          <Text style={styles.greetingMsg}>{strings.GREETING_MSG}</Text>
+          <Text
+            style={[
+              styles.greetingMsg,
+              {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+            ]}>
+            {strings.GREETING_MSG}
+          </Text>
         </>
       )}
       {isLoading && (

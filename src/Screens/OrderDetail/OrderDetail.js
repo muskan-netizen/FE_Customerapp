@@ -48,7 +48,9 @@ const {height, width} = Dimensions.get('window');
 
 export default function OrderDetail({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
 
   const [state, setState] = useState({

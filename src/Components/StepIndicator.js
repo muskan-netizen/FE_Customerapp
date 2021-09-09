@@ -19,8 +19,8 @@ export default function StepIndicators({
   const fontFamily = appStyle?.fontSizeData;
 
   const thirdIndicatorStyles = {
-    stepIndicatorSize: 24,
-    currentStepIndicatorSize: 24,
+    stepIndicatorSize: 30,
+    currentStepIndicatorSize: 30,
     separatorStrokeWidth: 2,
     currentStepStrokeWidth: 0,
     stepStrokeCurrentColor: '#7eaec4',
@@ -38,38 +38,52 @@ export default function StepIndicators({
     stepIndicatorLabelFinishedColor: 'transparent',
     stepIndicatorLabelUnFinishedColor: 'transparent',
     labelColor: colors.lightGreyBgColor,
-    labelSize: 12,
+    labelSize: 13,
     currentStepLabelColor: themeColor.primary_color,
     labelFontFamily: fontFamily.regular,
   };
 
   const getSourceImage = ({position, stepStatus}) => {
-    // let iconConfig = null;
-    // switch (position) {
-    //   case 0: {
-    //     iconConfig = 'shopping-cart';
-    //     break;
-    //   }
-    //   case 1: {
-    //     iconConfig = 'location-on';
-    //     break;
-    //   }
-    //   case 2: {
-    //     iconConfig = 'assessment';
-    //     break;
-    //   }
-    //   case 3: {
-    //     iconConfig = 'payment';
-    //     break;
-    //   }
-    //   default: {
-    //     break;
-    //   }
-    // }
-    // return iconConfig;
-    if (stepStatus == 'finished') {
-      return imagePath.tick;
+    console.log(position,"position");
+    console.log(stepStatus,"stepStatus");
+    let iconConfig = null;
+    switch (position) {
+      case 0: {
+        iconConfig =
+          stepStatus == 'finished'
+            ? imagePath.acceptActive
+            : imagePath.acceptInactive;
+        break;
+      }
+      case 1: {
+        iconConfig =
+          stepStatus == 'finished'
+            ? imagePath.deliverActive
+            : imagePath.deliverInactive;
+        break;
+      }
+      case 2: {
+        iconConfig =
+          stepStatus == 'finished'
+            ? imagePath.onmywayActive
+            : imagePath.onmywayInactive;
+        break;
+      }
+      case 3: {
+        iconConfig =
+          stepStatus == 'finished'
+            ? imagePath.processingActive
+            : imagePath.processingInactive;
+        break;
+      }
+      default: {
+        break;
+      }
     }
+    return iconConfig;
+    // if (stepStatus == 'finished') {
+    //   return imagePath.tick;
+    // }
   };
 
   const renderStepIndicator = ({position, stepStatus}) => {

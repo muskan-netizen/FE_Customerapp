@@ -19,7 +19,9 @@ import ListEmptyVendors from './ListEmptyVendors';
 
 export default function Vendors3({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isLoading: true,
     pageNo: 1,

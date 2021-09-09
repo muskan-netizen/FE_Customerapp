@@ -37,7 +37,9 @@ export default function Products({route, navigation}) {
   const {data} = route.params;
   console.log(data, 'data listing >>>>>');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isVisibleModal: false,
     isOffline: false,
@@ -678,7 +680,9 @@ export default function Products({route, navigation}) {
         centerTitle={data?.name || data?.translation[0]?.name}
         // hideRight={true}
         textStyle={
-          isDarkMode ? {color: MyDarkTheme.colors.text} : {color: null}
+          isDarkMode
+            ? {color: MyDarkTheme.colors.text}
+            : {color: colors.textGrey}
         }
         leftIcon={imagePath.backArrow}
         onPressRight={() =>

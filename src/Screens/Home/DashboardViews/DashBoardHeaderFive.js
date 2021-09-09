@@ -17,6 +17,7 @@ import stylesFunc from '../styles';
 import {RadioButton} from 'react-native-paper';
 
 import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
+import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
 
@@ -30,8 +31,8 @@ export default function DashBoardHeaderFive({
   const pickerRef = createRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-
-  const isDarkMode = theme;
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
@@ -384,13 +385,17 @@ export default function DashBoardHeaderFive({
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => updateState({isModalVisible: false})}>
-              <Image
-                source={imagePath.crossC}
-                style={styles.crossIcon}
-                resizeMode="contain"
-              />
+              <Image source={imagePath.crossC} resizeMode="contain" />
             </TouchableOpacity>
-            <View style={styles.modalMainViewContainer}>
+            <View
+              style={[
+                styles.modalMainViewContainer,
+                {
+                  backgroundColor: isDarkMode
+                    ? MyDarkTheme.colors.background
+                    : colors.white,
+                },
+              ]}>
               <View style={{padding: moderateScale(10)}}>
                 {tabs.map((item, indx) => {
                   return (
@@ -438,7 +443,12 @@ export default function DashBoardHeaderFive({
                         <Text
                           style={{
                             fontFamily: fontFamily.medium,
-                            color: colors.black,
+                            color:
+                              isDarkMode && item.isActive
+                                ? themeColors.primary_color
+                                : isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.black,
                             fontSize: textScale(12),
                             marginHorizontal: moderateScale(10),
                           }}>
@@ -450,9 +460,12 @@ export default function DashBoardHeaderFive({
                         style={{
                           height: moderateScale(22),
                           width: moderateScale(22),
-                          tintColor: item.isActive
-                            ? themeColors.primary_color
-                            : colors.black,
+                          tintColor:
+                            isDarkMode && item.isActive
+                              ? themeColors.primary_color
+                              : isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
                           alignSelf: 'flex-end',
                         }}
                         resizeMode="contain"

@@ -892,6 +892,42 @@ android {
             applicationId 'com.toda'
             resValue "string", "app_name", "Toda"
          }
+         mobi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.mobi'
+            resValue "string", "app_name", "MOBI"
+         }
+          yourlaundryapp{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.yourlaundryapp'
+            resValue "string", "app_name", "Your Laundry App"
+         }
+         hemptyfy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.hemptyfy'
+            resValue "string", "app_name", "Hempti Fy"
+         }
+          sharu{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.sharu'
+            resValue "string", "app_name", "Sharu"
+         }
     }
 }
 

@@ -25,7 +25,6 @@ import ButtonComponent from '../../Components/ButtonComponent';
 import ChooseAddressModal from '../../Components/ChooseAddressModal';
 import ConfirmationModal from '../../Components/ConfirmationModal';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -39,6 +38,7 @@ import {
   textScale,
   width,
   height,
+  StatusBarHeight,
 } from '../../styles/responsiveSize';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
@@ -53,10 +53,18 @@ import DatePicker from 'react-native-date-picker';
 import GradientButton from '../../Components/GradientButton';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
+import LottieView from 'lottie-react-native';
+import {
+  loaderOne,
+  loaderSix,
+} from '../../Components/Loaders/AnimatedLoaderFiles';
+
 export default function Cart2({navigation, route}) {
   let paramsData = route?.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isLoading: true,
     isVisible: false,
@@ -992,6 +1000,9 @@ export default function Cart2({navigation, route}) {
             multiline={true}
             numberOfLines={4}
             style={styles.instructionView}
+            placeholderTextColor={
+              isDarkMode ? colors.textGreyB : colors.textGreyB
+            }
             placeholder={
               ' Any restaurant requests? We’ll try our best to convey it '
             }></TextInput>
@@ -1535,7 +1546,29 @@ export default function Cart2({navigation, route}) {
           }}
           keyExtractor={(item, index) => String(index)}
           renderItem={_renderItem}
-          ListEmptyComponent={<ListEmptyCart isLoading={isLoadingB} />}
+          ListEmptyComponent={() => (
+            <>
+              {!isLoadingB && (
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <LottieView
+                    source={loaderSix}
+                    autoPlay
+                    loop
+                    style={{
+                      height: moderateScaleVertical(100),
+                      width: moderateScale(100),
+                    }}
+                  />
+                  <Text style={styles.textStyle}>{strings.NOPRODUCTCART}</Text>
+                </View>
+              )}
+            </>
+          )}
           // style={{flex: 1}}
           refreshControl={
             <RefreshControl
@@ -1975,6 +2008,12 @@ export function stylesFunc({fontFamily, themeColors}) {
       left: 0,
       right: 0,
       bottom: 0,
+    },
+    mainComponent: {
+      flex: 1,
+      backgroundColor: colors.backgroundGrey,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
     },
   });
   return styles;

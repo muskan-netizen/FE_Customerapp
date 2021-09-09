@@ -1,6 +1,6 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { cloneDeep, debounce } from 'lodash';
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import {cloneDeep, debounce} from 'lodash';
+import React, {Fragment, useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -14,9 +14,9 @@ import {
   Animated,
   SafeAreaView,
   Platform,
-  Modal
+  Modal,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import EmptyListLoader from '../../Components/EmptyListLoader';
 import ProductCard3 from '../../Components/ProductCard3';
 import imagePath from '../../constants/imagePath';
@@ -32,14 +32,16 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { getImageUrl, showError, showSuccess } from '../../utils/helperFunctions';
+import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
 import stylesFunc from './styles';
 import LinearGradient from 'react-native-linear-gradient';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../styles/theme';
-import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
+import HeaderImageScrollView, {
+  TriggeringView,
+} from 'react-native-image-header-scroll-view';
 import CardLoader from '../../Components/Loaders/CardLoader';
 import ProductDetailLoader from '../../Components/Loaders/ProductDetailLoader';
 import * as Animatable from 'react-native-animatable';
@@ -47,13 +49,13 @@ import RoundImg from '../../Components/RoundImg';
 import WrapperContainer from '../../Components/WrapperContainer';
 import CircularLoader from '../../Components/Loaders/CircularLoader';
 import LottieLoader from '../../Components/LottieLoader';
-import { noDataFound } from '../../Components/Loaders/AnimatedLoaderFiles';
+import {noDataFound} from '../../Components/Loaders/AnimatedLoaderFiles';
 import staticStrings from '../../constants/staticStrings';
 import AddonModal from '../ProductDetail/AddonModal';
 import VariantAddons from '../../Components/VariantAddons';
 
-export default function Products({ route, navigation }) {
-  const { data } = route.params;
+export default function Products({route, navigation}) {
+  const {data} = route.params;
   console.log(data, 'Datais ');
   console.log(data, 'data params >>>>>');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -119,7 +121,7 @@ export default function Products({ route, navigation }) {
     isLoadingC: false,
     selectedCategory: null,
     AnimatedHeaderValue: false,
-    selectedCartItem: null
+    selectedCartItem: null,
   });
 
   const {
@@ -159,12 +161,12 @@ export default function Products({ route, navigation }) {
     showFilterSlectedIcon,
     AnimatedHeaderValue,
     selectedCartItem,
-    isVisibleModal
+    isVisibleModal,
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFunc({ fontFamily });
-  const styles = stylesFunc({ themeColors, fontFamily });
+  const commonStyles = commonStylesFunc({fontFamily});
+  const styles = stylesFunc({themeColors, fontFamily});
 
   //Saving the initial state
   const initialState = cloneDeep(state);
@@ -176,11 +178,11 @@ export default function Products({ route, navigation }) {
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   // useFocusEffect(
   //   React.useCallback(() => {
@@ -191,7 +193,7 @@ export default function Products({ route, navigation }) {
   // );
 
   useEffect(() => {
-    updateState({ pageNo: 1 });
+    updateState({pageNo: 1});
     getAllListItems();
   }, [languages, currencies]);
 
@@ -226,8 +228,8 @@ export default function Products({ route, navigation }) {
     console.log(filterExist, 'filterExist');
     {
       filterExist
-        ? updateState({ showFilterSlectedIcon: true })
-        : updateState({ showFilterSlectedIcon: false });
+        ? updateState({showFilterSlectedIcon: true})
+        : updateState({showFilterSlectedIcon: false});
     }
 
     if (data?.vendor) {
@@ -235,8 +237,8 @@ export default function Products({ route, navigation }) {
         filterExist
           ? getAllProductsVendorFilter()
           : data?.vendorData
-            ? getAllProductsByVendorCategory()
-            : getAllProductsByVendor();
+          ? getAllProductsByVendorCategory()
+          : getAllProductsByVendor();
       }
     } else {
       {
@@ -448,7 +450,8 @@ export default function Products({ route, navigation }) {
   const getAllProducts = () => {
     actions
       .getProductByCategoryId(
-        `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${data?.rootProducts ? true : false
+        `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${
+          data?.rootProducts ? true : false
         }`,
         {},
         {
@@ -473,16 +476,16 @@ export default function Products({ route, navigation }) {
         });
         {
           pageNo == 1 &&
-            res?.data?.listData?.data.length == 0 &&
-            res?.data?.category &&
-            res?.data?.category?.childs.length
+          res?.data?.listData?.data.length == 0 &&
+          res?.data?.category &&
+          res?.data?.category?.childs.length
             ? updateState({
-              selectedCategory: res.data.category.childs[0],
-              productListId: res.data.category.childs[0],
-              pageNo: 1,
-              limit: 12,
-              isLoadingC: true,
-            })
+                selectedCategory: res.data.category.childs[0],
+                productListId: res.data.category.childs[0],
+                pageNo: 1,
+                limit: 12,
+                isLoadingC: true,
+              })
             : null;
         }
         updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
@@ -494,7 +497,7 @@ export default function Products({ route, navigation }) {
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
     if (!!userData?.auth_token) {
-      updateState({ isLoadingB: true });
+      updateState({isLoadingB: true});
       actions
         .updateProductWishListData(
           `/${item.id}`,
@@ -512,7 +515,7 @@ export default function Products({ route, navigation }) {
         .catch(errorMethod);
     } else {
       showError(strings.UNAUTHORIZED_MESSAGE);
-      updateState({ isLoadingB: false });
+      updateState({isLoadingB: false});
     }
   };
 
@@ -523,30 +526,30 @@ export default function Products({ route, navigation }) {
       if (i.id == item.id) {
         if (item.inwishlist) {
           i.inwishlist = null;
-          return { ...i, inwishlist: null };
+          return {...i, inwishlist: null};
         } else {
-          return { ...i, inwishlist: { product_id: i.id } };
+          return {...i, inwishlist: {product_id: i.id}};
         }
       } else {
         return i;
       }
     });
-    updateState({ productListData: newArray, isLoadingB: false });
+    updateState({productListData: newArray, isLoadingB: false});
   };
 
   const errorMethod = (error) => {
-    updateState({ isLoading: false, isRefreshing: false, isLoadingB: false });
+    updateState({isLoading: false, isRefreshing: false, isLoadingB: false});
     showError(error?.message || error?.error);
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({ pageNo: 1, isRefreshing: true });
+    updateState({pageNo: 1, isRefreshing: true});
   };
 
   //pagination of data
-  const onEndReached = ({ distanceFromEnd }) => {
-    updateState({ pageNo: pageNo + 1 });
+  const onEndReached = ({distanceFromEnd}) => {
+    updateState({pageNo: pageNo + 1});
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -556,27 +559,27 @@ export default function Products({ route, navigation }) {
 
   //Add product to cart
   const _addToCart = (item) => {
-    updateState({ isVisibleModal: true, selectedCartItem: item })
+    updateState({isVisibleModal: true, selectedCartItem: item});
     return;
     let updateArray = productListData.map((val, i) => {
       if (val.id == item.id) {
-        return { ...val, qty: 1 }
+        return {...val, qty: 1};
       }
-      return val
-    })
-    updateState({ productListData: updateArray, selectedCartItem: item })
+      return val;
+    });
+    updateState({productListData: updateArray, selectedCartItem: item});
     // moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
   };
 
   const onIncrement = (item) => {
     let updateArray = productListData.map((val, i) => {
       if (val.id == item.id) {
-        return { ...val, qty: item.qty + 1 }
+        return {...val, qty: item.qty + 1};
       }
-      return val
-    })
-    updateState({ productListData: updateArray })
-  }
+      return val;
+    });
+    updateState({productListData: updateArray});
+  };
 
   const onDecrement = (item) => {
     // if (item.qty == 1) {
@@ -585,15 +588,15 @@ export default function Products({ route, navigation }) {
     // }
     let updateArray = productListData.map((val, i) => {
       if (val.id == item.id) {
-        return { ...val, qty: item.qty == 1 ? null : item.qty - 1 }
+        return {...val, qty: item.qty == 1 ? null : item.qty - 1};
       }
-      return val
-    })
-    updateState({ productListData: updateArray })
-  }
+      return val;
+    });
+    updateState({productListData: updateArray});
+  };
 
-  const renderProduct = ({ item, index }) => {
-    const { isSelectItem } = state;
+  const renderProduct = ({item, index}) => {
+    const {isSelectItem} = state;
     return (
       <ProductCard3
         data={item}
@@ -611,10 +614,10 @@ export default function Products({ route, navigation }) {
   console.log(productListData, 'productListDataproductListDataproductListData');
 
   const openModal = () => {
-    updateState({ isVisibleModal: true });
+    updateState({isVisibleModal: true});
   };
   const closeModal = () => {
-    updateState({ isVisibleModal: false });
+    updateState({isVisibleModal: false});
   };
 
   const onPressChildCards = (item) => {
@@ -645,47 +648,68 @@ export default function Products({ route, navigation }) {
     index,
   });
 
-  console.log("category info", categoryInfo)
+  console.log('category info', categoryInfo);
   //To remove flickering of icon and image we are creating the header child seperately
   const listHeaderComponent = () => {
     return (
       <Fragment>
-        <View style={{ marginVertical: moderateScaleVertical(12) }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-            <View style={{ marginLeft: moderateScaleVertical(12), flex: 0.6 }}>
-              <View style={{ flexDirection: "row" }}>
+        <View style={{marginVertical: moderateScaleVertical(12)}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <View style={{marginLeft: moderateScaleVertical(12), flex: 0.6}}>
+              <View style={{flexDirection: 'row'}}>
                 <View style={{}}>
                   <RoundImg
-                    img={getImageUrl(categoryInfo?.logo?.image_fit, categoryInfo?.logo?.image_path, '400/400')}
-
+                    img={getImageUrl(
+                      categoryInfo?.logo?.image_fit,
+                      categoryInfo?.logo?.image_path,
+                      '400/400',
+                    )}
                   />
                 </View>
-                <View style={{ marginLeft: moderateScale(12) }}>
+                <View style={{marginLeft: moderateScale(12)}}>
                   <Text
                     animation="fadeIn"
                     style={{
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
                       fontSize: moderateScale(16),
                       fontFamily: fontFamily.medium,
                     }}>
                     {data?.categoryInfo?.name || data?.name}
                   </Text>
-                  {!!categoryInfo?.desc && (<Text
-                    numberOfLines={2}
-                    style={{
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity86,
-                      fontSize: moderateScale(12),
-                      fontFamily: fontFamily.regular,
-
-                    }}>{categoryInfo?.desc}</Text>)}
-                  {!!categoryInfo?.address && (<Text
-                    numberOfLines={2}
-                    style={{
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity43,
-                      fontSize: moderateScale(11),
-                      fontFamily: fontFamily.regular,
-                      marginVertical: moderateScaleVertical(6),
-                    }}>{categoryInfo?.address}</Text>)}
+                  {!!categoryInfo?.desc && (
+                    <Text
+                      numberOfLines={2}
+                      style={{
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.blackOpacity86,
+                        fontSize: moderateScale(12),
+                        fontFamily: fontFamily.regular,
+                      }}>
+                      {categoryInfo?.desc}
+                    </Text>
+                  )}
+                  {!!categoryInfo?.address && (
+                    <Text
+                      numberOfLines={2}
+                      style={{
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.blackOpacity43,
+                        fontSize: moderateScale(11),
+                        fontFamily: fontFamily.regular,
+                        marginVertical: moderateScaleVertical(6),
+                      }}>
+                      {categoryInfo?.address}
+                    </Text>
+                  )}
                 </View>
               </View>
             </View>
@@ -693,29 +717,33 @@ export default function Products({ route, navigation }) {
             <View style={{}}>
               <View style={styles.rateViewStyle}>
                 <View>
-                  <Text style={{ color: colors.white }}>{'4.5 '}
+                  <Text style={{color: colors.white}}>
+                    {'4.5 '}
                     <Image
                       source={imagePath.star}
-                      style={{ tintColor: colors.white }}
-                    /></Text>
-                  <Text style={{
-                    color: colors.white,
-                    fontSize: moderateScale(8),
-                    fontFamily: fontFamily.medium,
-                  }}>{'DELIVERY'}</Text>
+                      style={{tintColor: colors.white}}
+                    />
+                  </Text>
+                  <Text
+                    style={{
+                      color: colors.white,
+                      fontSize: moderateScale(8),
+                      fontFamily: fontFamily.medium,
+                    }}>
+                    {'DELIVERY'}
+                  </Text>
                 </View>
-
               </View>
-              <View style={{ marginTop: moderateScaleVertical(4) }}>
+              <View style={{marginTop: moderateScaleVertical(4)}}>
                 <ImageBackground
                   source={{
                     uri: getImageUrl(
                       data?.categoryInfo?.image?.proxy_url ||
-                      data?.image?.proxy_url ||
-                      categoryInfo?.banner?.proxy_url,
+                        data?.image?.proxy_url ||
+                        categoryInfo?.banner?.proxy_url,
                       data?.categoryInfo?.image?.image_path ||
-                      data?.image?.image_path ||
-                      categoryInfo?.banner?.image_path,
+                        data?.image?.image_path ||
+                        categoryInfo?.banner?.image_path,
                       '200/200',
                     ),
                   }}
@@ -727,10 +755,7 @@ export default function Products({ route, navigation }) {
                     borderTopLeftRadius: 5,
                     borderBottomLeftRadius: 5,
                   }}
-                  resizeMode="stretch"
-                >
-
-                </ImageBackground>
+                  resizeMode="stretch"></ImageBackground>
               </View>
             </View>
           </View>
@@ -784,90 +809,83 @@ export default function Products({ route, navigation }) {
             </ScrollView>
           </View>
         ) : null}
-        <View style={{ marginTop: moderateScaleVertical(20) }} />
+        <View style={{marginTop: moderateScaleVertical(20)}} />
       </Fragment>
     );
   };
 
-
-  const headerTextRef = useRef(null)
+  const headerTextRef = useRef(null);
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1,  backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff', }}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
+        }}>
         <SafeAreaView>
           <View style={styles.loaderHeader}>
-            <CardLoader
-              cardWidth={20}
-              height={20}
-            />
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <CardLoader
-                cardWidth={20}
-                height={20}
-              />
-              <View style={{ marginHorizontal: moderateScale(6) }} />
-              <CardLoader
-                cardWidth={20}
-                height={20}
-              />
+            <CardLoader cardWidth={20} height={20} />
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <CardLoader cardWidth={20} height={20} />
+              <View style={{marginHorizontal: moderateScale(6)}} />
+              <CardLoader cardWidth={20} height={20} />
             </View>
           </View>
 
-          <View style={{ marginVertical: moderateScaleVertical(16), marginBottom: moderateScaleVertical(24), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <View
+            style={{
+              marginVertical: moderateScaleVertical(16),
+              marginBottom: moderateScaleVertical(24),
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
             <CircularLoader />
             <View>
-              <CardLoader
-                cardWidth={40}
-                height={20}
-              />
-              <CardLoader
-                cardWidth={40}
-                height={20}
-              />
+              <CardLoader cardWidth={40} height={20} />
+              <CardLoader cardWidth={40} height={20} />
             </View>
           </View>
 
-          <View style={{ marginHorizontal: moderateScale(16) }}>
-
+          <View style={{marginHorizontal: moderateScale(16)}}>
             <ProductDetailLoader />
-            <View style={{ marginBottom: moderateScaleVertical(12) }} />
+            <View style={{marginBottom: moderateScaleVertical(12)}} />
             <ProductDetailLoader />
-            <View style={{ marginBottom: moderateScaleVertical(12) }} />
+            <View style={{marginBottom: moderateScaleVertical(12)}} />
             <ProductDetailLoader />
-            <View style={{ marginBottom: moderateScaleVertical(12) }} />
+            <View style={{marginBottom: moderateScaleVertical(12)}} />
             <ProductDetailLoader />
-            <View style={{ marginBottom: moderateScaleVertical(12) }} />
+            <View style={{marginBottom: moderateScaleVertical(12)}} />
             <ProductDetailLoader />
-            <View style={{ marginBottom: moderateScaleVertical(12) }} />
-
+            <View style={{marginBottom: moderateScaleVertical(12)}} />
           </View>
         </SafeAreaView>
       </View>
-    )
+    );
   }
 
-  const onScroll = ({ nativeEvent }) => {
+  const onScroll = ({nativeEvent}) => {
     if (productListData.length < 6) {
       return;
     }
     let offset = nativeEvent.contentOffset.y;
-    let index = parseInt(offset / 10);   // your cell height
-    console.log("now index is " + index)
+    let index = parseInt(offset / 10); // your cell height
+    console.log('now index is ' + index);
     if (index > 1) {
       if (!AnimatedHeaderValue) {
-        updateState({ AnimatedHeaderValue: true })
+        updateState({AnimatedHeaderValue: true});
       }
       return;
     }
     if (index < 1) {
       if (AnimatedHeaderValue) {
-        updateState({ AnimatedHeaderValue: false })
+        updateState({AnimatedHeaderValue: false});
         return;
       }
       return;
     }
-  }
+  };
 
   return (
     <View
@@ -894,97 +912,107 @@ export default function Products({ route, navigation }) {
         ]}
         visible={isLoadingC}
       />
-      <SafeAreaView style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
+      <SafeAreaView style={{flex: 1}}>
+        <View style={{flex: 1}}>
           <View style={styles.headerStyle}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.goBack()}
-              >
-                <Image style={{
-                  tintColor: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.black
-                }} source={imagePath.icBackb} />
-              </TouchableOpacity>
-              {AnimatedHeaderValue && !!productListData && productListData.length > 0 &&
-                (<Animatable.View
-                  // key={AnimatedHeaderValue}
-                  // duration={10}
-                  // animation={AnimatedHeaderValue ? 'fadeIn' : 'fadeOut'}
-                  style={{ marginLeft: moderateScale(8), flex: 0.7 }}
-                >
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <RoundImg
-                      img={getImageUrl(categoryInfo?.logo?.image_fit, categoryInfo?.logo?.image_path, '400/400')}
-                      size={20}
-                      isDarkMode={isDarkMode}
-                      MyDarkTheme={MyDarkTheme}
-                    />
-                    <View style={{ marginLeft: moderateScale(8) }}>
-                      <Text
-                        numberOfLines={1}
-                        style={{
-                          color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity86,
-                          fontSize: moderateScale(12),
-                          fontFamily: fontFamily.regular,
-                        }}>
-                        {data?.categoryInfo?.name || data?.name}
-                      </Text>
-                      <Text
-                        numberOfLines={1}
-                        style={{
-                          color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                          fontSize: moderateScale(12),
-                          fontFamily: fontFamily.medium,
-                          marginTop: moderateScaleVertical(2)
-                        }}>{categoryInfo?.address}</Text>
-                    </View>
-                  </View>
-                </Animatable.View>)
-              }
-            </View>
-
-            <View style={{ flexDirection: "row", alignItems: 'center' }}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={moveToNewScreen(navigationStrings.SEARCHPRODUCTOVENDOR, {
-                  type: data?.vendor
-                    ? staticStrings.VENDOR
-                    : staticStrings.CATEGORY,
-                  id: data?.vendor ? data?.id : productListId?.id,
-                })}
-              >
+                onPress={() => navigation.goBack()}>
                 <Image
-              style={{
-                tintColor: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.black
-              }} 
-                  source={
-                    !!data?.showAddToCart ? false : imagePath.icSearchb
-                  }
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
+                  source={imagePath.icBackb}
                 />
               </TouchableOpacity>
-              <View style={{ marginHorizontal: moderateScale(8) }} />
+              {AnimatedHeaderValue &&
+                !!productListData &&
+                productListData.length > 0 && (
+                  <Animatable.View
+                    // key={AnimatedHeaderValue}
+                    // duration={10}
+                    // animation={AnimatedHeaderValue ? 'fadeIn' : 'fadeOut'}
+                    style={{marginLeft: moderateScale(8), flex: 0.7}}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <RoundImg
+                        img={getImageUrl(
+                          categoryInfo?.logo?.image_fit,
+                          categoryInfo?.logo?.image_path,
+                          '400/400',
+                        )}
+                        size={20}
+                        isDarkMode={isDarkMode}
+                        MyDarkTheme={MyDarkTheme}
+                      />
+                      <View style={{marginLeft: moderateScale(8)}}>
+                        <Text
+                          numberOfLines={1}
+                          style={{
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.blackOpacity86,
+                            fontSize: moderateScale(12),
+                            fontFamily: fontFamily.regular,
+                          }}>
+                          {data?.categoryInfo?.name || data?.name}
+                        </Text>
+                        <Text
+                          numberOfLines={1}
+                          style={{
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
+                            fontSize: moderateScale(12),
+                            fontFamily: fontFamily.medium,
+                            marginTop: moderateScaleVertical(2),
+                          }}>
+                          {categoryInfo?.address}
+                        </Text>
+                      </View>
+                    </View>
+                  </Animatable.View>
+                )}
+            </View>
+
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <TouchableOpacity
                 activeOpacity={0.8}
-
-              >
-                <Image  
-                style={{
-                  tintColor: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.black
-                }} 
-                source={imagePath.icShareb} />
+                onPress={moveToNewScreen(
+                  navigationStrings.SEARCHPRODUCTOVENDOR,
+                  {
+                    type: data?.vendor
+                      ? staticStrings.VENDOR
+                      : staticStrings.CATEGORY,
+                    id: data?.vendor ? data?.id : productListId?.id,
+                  },
+                )}>
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
+                  source={!!data?.showAddToCart ? false : imagePath.icSearchb}
+                />
+              </TouchableOpacity>
+              <View style={{marginHorizontal: moderateScale(8)}} />
+              <TouchableOpacity activeOpacity={0.8}>
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
+                  source={imagePath.icShareb}
+                />
               </TouchableOpacity>
             </View>
           </View>
-          <View>
-          </View>
-          <View style={{ height: moderateScale(10) }} />
+          <View></View>
+          <View style={{height: moderateScale(10)}} />
           <FlatList
             onScroll={onScroll}
             disableScrollViewPanResponder
@@ -1005,7 +1033,7 @@ export default function Products({ route, navigation }) {
               // backgroundColor:'red',
               // marginTop: width * 0.1,
             }}
-            ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+            ItemSeparatorComponent={() => <View style={{height: 10}} />}
             refreshing={isRefreshing}
             // initialNumToRender={12}
             // maxToRenderPerBatch={10}
@@ -1019,7 +1047,15 @@ export default function Products({ route, navigation }) {
             }
             onEndReached={onEndReachedDelayed}
             onEndReachedThreshold={0.5}
-            ListEmptyComponent={!isLoading && <LottieLoader containerStyle={{ flex: 0 }} noDataFound={noDataFound} emptyText="No Data Found" />}
+            ListEmptyComponent={
+              !isLoading && (
+                <LottieLoader
+                  containerStyle={{flex: 0}}
+                  noDataFound={noDataFound}
+                  emptyText="No Data Found"
+                />
+              )
+            }
           />
           {/* <View style={{ height: moderateScale(height * 0.070) }} /> */}
         </View>
@@ -1027,12 +1063,9 @@ export default function Products({ route, navigation }) {
           addonSet={[]}
           isVisible={isVisibleModal}
           productdetail={selectedCartItem}
-          onClose={() => updateState({ isVisibleModal: false })}
+          onClose={() => updateState({isVisibleModal: false})}
         />
       </SafeAreaView>
     </View>
   );
-};
-
-
-
+}

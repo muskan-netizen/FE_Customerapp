@@ -7,8 +7,15 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
+import {useSelector} from 'react-redux';
 
 export default ({fontFamily}) => {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const styles = StyleSheet.create({
     addMoneyTopCon: {
       paddingHorizontal: moderateScaleVertical(15),
@@ -79,7 +86,7 @@ export default ({fontFamily}) => {
       justifyContent: 'center',
       alignItems: 'center',
       borderWidth: 1,
-      borderColor: colors.borderLight,
+      borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.borderLight,
       marginHorizontal: moderateScale(12),
       height: height / 6,
     },
@@ -88,7 +95,7 @@ export default ({fontFamily}) => {
       alignItems: 'center',
       borderWidth: 1,
       resizeMode: 'contain',
-      borderColor: colors.borderLight,
+      borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.borderLight,
     },
     viewOverImage: {
       height: width / 5,
@@ -102,12 +109,25 @@ export default ({fontFamily}) => {
       borderWidth: 1,
       height: height / 6,
       marginHorizontal: moderateScale(12),
-      borderColor: colors.borderLight,
+
+      borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.borderLight,
     },
     crossIconStyle: {
       position: 'absolute',
       top: 25,
       right: 30,
+    },
+    detailStyle: {
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+      fontSize: textScale(18),
+      fontFamily: fontFamily.medium,
+    },
+    uploadText: {
+      justifyContent: 'center',
+      alignSelf: 'center',
+      marginBottom: moderateScaleVertical(12),
+      fontFamily: fontFamily.medium,
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7,
     },
   });
   return styles;

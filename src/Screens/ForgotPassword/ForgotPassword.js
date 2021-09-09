@@ -22,7 +22,9 @@ import {MyDarkTheme} from '../../styles/theme';
 
 export default function ForgotPassword({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isLoading: false,
     callingCode: '1',

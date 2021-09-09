@@ -507,7 +507,7 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          break;
+
         case appIds.autotek:
           updateState({
             shortCode: shortCodes.autotek,
@@ -532,10 +532,34 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          break;
+
         case appIds.toda:
           updateState({
             shortCode: shortCodes.toda,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mobi:
+          updateState({
+            shortCode: shortCodes.mobi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.yourlaundryapp:
+          updateState({
+            shortCode: shortCodes.yourlaundryapp,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hemptyfy:
+          updateState({
+            shortCode: shortCodes.hemptyfy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sharu:
+          updateState({
+            shortCode: shortCodes.sharu,
             isShortcodePrefilled: true,
           });
           break;

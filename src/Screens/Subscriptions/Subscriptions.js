@@ -38,7 +38,9 @@ export default function Subscriptions({navigation, route}) {
   //   console.log(route, 'route>>>');
   const paramData = route?.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isLoading: false,
     isLoadingB: false,

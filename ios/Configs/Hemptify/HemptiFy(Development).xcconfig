@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-HemptiFy/Pods-HemptiFy.debug.xcconfig"
+
+PROJECT_APPLE_ID = 1584812722
+PROJECT_BUNDLE_ID = com.hemptyfy
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 2
+PROJECT_APP_NAME =Hempti Fy
+PROJECT_GOOGLE_CLIENT_ID =1001809572790-0ph7deekqqflqtcfpfbem8gs4lcpj04i.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.1001809572790-0ph7deekqqflqtcfpfbem8gs4lcpj04i
+PROJECT_FACEBOOK_ID = 549884089674283
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST = HemptyFyInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

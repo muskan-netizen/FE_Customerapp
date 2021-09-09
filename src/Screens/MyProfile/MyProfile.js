@@ -49,7 +49,9 @@ import {androidCameraPermission} from '../../utils/permissions';
 
 export default function MyProfile({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state?.initBoot);
 
   const {themeColors, themeLayouts, appStyle} = currentTheme;
@@ -343,7 +345,6 @@ export default function MyProfile({route, navigation}) {
   // this funtion use for camera handle
   const cameraHandle = async (index) => {
     const permissionStatus = await androidCameraPermission();
-
     if (permissionStatus) {
       if (index == 0 || index == 1) {
         cameraHandler(index, {

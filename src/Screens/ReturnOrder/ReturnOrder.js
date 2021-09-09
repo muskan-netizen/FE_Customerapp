@@ -39,7 +39,9 @@ import {MyDarkTheme} from '../../styles/theme';
 
 export default function ReturnOrder({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const ratingData = route?.params?.item?.product_rating;
   const selectProductForRetrun = route?.params?.selectProductForRetrun;
   const selectedOrderForReturn = route?.params?.selectedOrderForReturn;

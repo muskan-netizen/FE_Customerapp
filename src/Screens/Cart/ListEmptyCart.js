@@ -6,7 +6,7 @@ import strings from '../../constants/lang';
 import colors from '../../styles/colors';
 import {MyDarkTheme} from '../../styles/theme';
 import stylesFun from './styles';
-
+import {useDarkMode} from 'react-native-dark-mode';
 export default function ListEmptyCart({
   isLoading = false,
   containerStyle = {},
@@ -16,6 +16,9 @@ export default function ListEmptyCart({
 }) {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
   if (!isLoading) {

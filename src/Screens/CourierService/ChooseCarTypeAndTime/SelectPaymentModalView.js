@@ -33,7 +33,9 @@ export default function SelectPaymentModalView({
   loyalityAmount = 0,
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   console.log(selectedCarOption, 'selectedCarOption');
   console.log(slectedDate, 'slectedDate');
   console.log(updatedPrice, 'updatedPrice');

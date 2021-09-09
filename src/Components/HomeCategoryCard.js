@@ -7,12 +7,12 @@ import colors from '../styles/colors';
 import {moderateScale, textScale} from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
 import {getImageUrl} from '../utils/helperFunctions';
-
+import {useDarkMode} from 'react-native-dark-mode';
 export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-
-  const isDarkMode = theme;
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const imageURI = getImageUrl(

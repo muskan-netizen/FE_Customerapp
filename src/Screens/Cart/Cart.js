@@ -63,7 +63,9 @@ import LottieView from 'lottie-react-native';
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   let paramsData = route?.params;
   const [state, setState] = useState({
     isLoading: true,
@@ -262,7 +264,7 @@ export default function Cart({navigation, route}) {
               ? {id: 1, title: 'Now', type: 'now'}
               : res?.data?.schedule_type == 'schedule'
               ? {id: 2, title: 'Schedule Order', type: 'schedule'}
-              : null,
+              : {id: 1, title: 'Now', type: 'now'},
         });
         if (res && res.data) {
           if (res.data.vendor_details.vendor_tables) {
@@ -502,7 +504,6 @@ export default function Cart({navigation, route}) {
   };
 
   const setDateAndTimeSchedule = () => {
-    console.log(scheduleType, 'scheduleType>>>updated');
     let data = {};
     data['task_type'] = scheduleType;
     data['schedule_dt'] =
@@ -1917,7 +1918,17 @@ export default function Cart({navigation, route}) {
                   width: moderateScale(100),
                 }}
               />
-              <Text style={styles.textStyle}>{strings.NOPRODUCTCART}</Text>
+              <Text
+                style={[
+                  styles.textStyle,
+                  {
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGrey,
+                  },
+                ]}>
+                {strings.NOPRODUCTCART}
+              </Text>
             </View>
           )}
           style={{flex: 1}}
