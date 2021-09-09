@@ -36,12 +36,15 @@ import * as Animatable from 'react-native-animatable';
 export default function VariantAddons({
     productdetail = {},
     addonSet = [],
+    varientData = [],
     isVisible = false,
     onClose,
     onPress,
     resizeMode = 'contain',
     imagestyle = {},
 }) {
+
+    console.log("add on set+++", addonSet)
 
     const navigation = useNavigation();
     const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -55,10 +58,16 @@ export default function VariantAddons({
 
     const [state, setState] = useState({
         addonSetData: addonSet,
+        variantSet: varientData,
         viewHeight: 0,
         maxLimitAddon: 0,
     });
-    const { addonSetData, viewHeight, maxLimitAddon } = state;
+
+    useEffect(() => {
+        updateState({ addonSetData: addonSet, variantSet: varientData })
+    }, [addonSet, variantSet])
+
+    const { addonSetData, viewHeight, maxLimitAddon, variantSet } = state;
     const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
     let productImage = productdetail?.media[0];
@@ -123,6 +132,7 @@ export default function VariantAddons({
         });
     };
 
+
     const checkBoxButtonViewAddons = ({ setoptions }) => {
         return (
             <View>
@@ -164,6 +174,120 @@ export default function VariantAddons({
                     );
                 })}
             </View>
+        );
+    };
+
+    const variantSetValue = ({ options, type }) => {
+        console.log("variant optionss", options)
+        return;
+        if (type == 1) {
+            return <>{radioButtonView(options)}</>;
+        }
+        return <>{circularView(options)}</>;
+    };
+
+    const radioButtonView = (options) => {
+        return (
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                {options.map((i, inx) => {
+                    return (
+                        <TouchableOpacity
+                            disabled={options && options.length == 1 ? true : false}
+                            // onPress={() => selectSpecificOptions(options, i, inx)}
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                marginRight: moderateScale(5),
+                                marginBottom: moderateScaleVertical(10),
+                            }}>
+                            <Image source={i?.value ? imagePath.check : imagePath.unCheck} />
+                            <Text
+                                style={
+                                    isDarkMode
+                                        ? [styles.variantValue, { color: MyDarkTheme.colors.text }]
+                                        : styles.variantValue
+                                }>
+                                {i.title}
+                            </Text>
+                        </TouchableOpacity>
+                    );
+                })}
+            </View>
+        );
+    };
+
+    const circularView = (options) => {
+        return (
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                {options.map((i, inx) => {
+                    return (
+                        <TouchableOpacity
+                            disabled={options && options.length == 1 ? true : false}
+                            // onPress={() => selectSpecificOptions(options, i, inx)}
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                marginRight: moderateScale(5),
+                                marginBottom: moderateScaleVertical(10),
+                            }}>
+                            <View
+                                style={[
+                                    styles.variantSizeViewTwo,
+                                    {
+                                        backgroundColor: colors.white,
+                                        borderWidth: i?.value ? 1 : 0,
+
+                                        borderColor:
+                                            i?.value &&
+                                                (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
+                                                ? colors.textGrey
+                                                : i.hexacode,
+                                    },
+                                ]}>
+                                <View
+                                    style={[
+                                        styles.variantSizeViewOne,
+                                        {
+                                            backgroundColor: i.hexacode,
+                                            borderWidth:
+                                                i.hexacode == '#FFFFFF' || i.hexacode == '#FFF'
+                                                    ? StyleSheet.hairlineWidth
+                                                    : 0,
+                                        },
+                                    ]}></View>
+                            </View>
+                        </TouchableOpacity>
+                    );
+                })}
+            </View>
+        );
+    };
+
+    const showAllVariants = () => {
+        let variantSetData = cloneDeep(variantSet);
+        return (
+            <>
+
+                <View style={{ marginHorizontal: moderateScale(20), marginVertical: 10 }}>
+                    {variantSetData.map((i, inx) => {
+                        return (
+                            <View
+                                key={inx}
+                                style={{
+                                    rtical: moderateScaleVertical(5),
+                                }}>
+                                <Text
+                                    style={[
+                                        styles.variantLable,
+                                        { marginBottom: moderateScale(5) },
+                                        isDarkMode ? { color: MyDarkTheme.colors.text } : null,
+                                    ]}>{`${i?.title}`}</Text>
+                                {i?.options ? variantSetValue(i) : null}
+                            </View>
+                        );
+                    })}
+                </View>
+            </>
         );
     };
 
@@ -270,8 +394,20 @@ export default function VariantAddons({
                             }}
                         />
                         {/* ********Addon set View*******  */}
-                        {/* {addonSetData && addonSetData.length ? showAllAddons() : null} */}
+                        {addonSetData && addonSetData.length ? showAllAddons() : null}
+
+                        <View
+                            style={{
+                                ...commonStyles.headerTopLine,
+                                marginVertical: moderateScaleVertical(10),
+                            }}
+                        />
+                        {/* ********Addon set View*******  */}
+                        {variantSet && variantSet.length ? showAllVariants() : null}
                     </Animatable.View>
+
+
+
 
                 </ScrollView>
 
@@ -309,9 +445,9 @@ export default function VariantAddons({
                             <Text style={{
                                 ...commonStyles.mediumFont14,
                                 color: isDarkMode
-                                ? MyDarkTheme.colors.text
-                                : colors.black
-                                }}>1</Text>
+                                    ? MyDarkTheme.colors.text
+                                    : colors.black
+                            }}>1</Text>
                             <TouchableOpacity>
                                 <Text style={{
                                     ...commonStyles.mediumFont14,

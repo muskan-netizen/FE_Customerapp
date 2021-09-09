@@ -55,7 +55,7 @@ export default ({fontFamily, themeColors}) => {
       // backgroundColor: colors.white,
       alignItems: 'center',
       paddingHorizontal: moderateScale(10),
-      borderBottomWidth: moderateScaleVertical(0.5),
+      // borderBottomWidth: moderateScaleVertical(0.5),
       borderBottomColor: colors.borderLight,
     },
     clearCart: {
@@ -124,9 +124,8 @@ export default ({fontFamily, themeColors}) => {
       fontSize: textScale(10),
     },
     priceItemLabel2: {
-      color: colors.textGrey,
-      fontFamily: fontFamily.bold,
-      fontSize: textScale(14),
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(15),
     },
     addInstruction: {
       color: colors.textGreyB,
@@ -353,6 +352,13 @@ export default ({fontFamily, themeColors}) => {
       width: width - 20,
       height: height / 3.5,
     },
+    swipeView: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: moderateScale(20),
+      borderRadius: moderateScale(8),
+      width: moderateScale(42)
+    }
   });
   return styles;
 };

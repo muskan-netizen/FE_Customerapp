@@ -15,6 +15,7 @@ import {
   getCurrentLocation,
   getParameterByName,
   getUrlRoutes,
+  showError,
 } from '../../utils/helperFunctions';
 import {chekLocationPermission} from '../../utils/permissions';
 import {setItem} from '../../utils/utils';
@@ -267,6 +268,7 @@ export default function Home({route, navigation}) {
               },
             )
             .then((res) => {
+              console.log("Home data++++++",res)
               if (
                 appData?.profile?.preferences?.is_hyperlocal &&
                 location?.latitude == '' &&
