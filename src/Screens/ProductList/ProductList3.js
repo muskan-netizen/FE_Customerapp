@@ -14,6 +14,7 @@ import {
   Animated,
   SafeAreaView,
   Platform,
+  Modal,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import EmptyListLoader from '../../Components/EmptyListLoader';
@@ -49,15 +50,16 @@ import WrapperContainer from '../../Components/WrapperContainer';
 import CircularLoader from '../../Components/Loaders/CircularLoader';
 import LottieLoader from '../../Components/LottieLoader';
 import {noDataFound} from '../../Components/Loaders/AnimatedLoaderFiles';
+import staticStrings from '../../constants/staticStrings';
+import AddonModal from '../ProductDetail/AddonModal';
+import VariantAddons from '../../Components/VariantAddons';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
   console.log(data, 'Datais ');
   console.log(data, 'data params >>>>>');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const isDarkMode = theme;
   const [state, setState] = useState({
     isVisibleModal: false,
     isOffline: false,
@@ -74,6 +76,7 @@ export default function Products({route, navigation}) {
     filterData: [],
     brandData: [],
     allFilters: [],
+    isVisibleModal: false,
     sortFilters: [
       {
         id: -2,
@@ -118,6 +121,7 @@ export default function Products({route, navigation}) {
     isLoadingC: false,
     selectedCategory: null,
     AnimatedHeaderValue: false,
+    selectedCartItem: null,
   });
 
   const {
@@ -156,6 +160,8 @@ export default function Products({route, navigation}) {
     checkForMaximumPriceChange,
     showFilterSlectedIcon,
     AnimatedHeaderValue,
+    selectedCartItem,
+    isVisibleModal,
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -315,10 +321,12 @@ export default function Products({route, navigation}) {
       });
       // updateState({allFilters: [...allFilters,...filterDataNew]});
     }
+
     updateState({
       allFilters: [...brandDatas, ...sortFilters, ...filterDataNew],
     });
   };
+
   const getProductBasedOnFilter = (
     minimumPrice,
     maximumPrice,
@@ -362,7 +370,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'res vendor products+++');
+        console.log(res, 'res vendor filters');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -551,7 +559,40 @@ export default function Products({route, navigation}) {
 
   //Add product to cart
   const _addToCart = (item) => {
-    moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
+    updateState({isVisibleModal: true, selectedCartItem: item});
+    return;
+    let updateArray = productListData.map((val, i) => {
+      if (val.id == item.id) {
+        return {...val, qty: 1};
+      }
+      return val;
+    });
+    updateState({productListData: updateArray, selectedCartItem: item});
+    // moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
+  };
+
+  const onIncrement = (item) => {
+    let updateArray = productListData.map((val, i) => {
+      if (val.id == item.id) {
+        return {...val, qty: item.qty + 1};
+      }
+      return val;
+    });
+    updateState({productListData: updateArray});
+  };
+
+  const onDecrement = (item) => {
+    // if (item.qty == 1) {
+    //   updateState({ selectedCartItem: null })
+    //   return;
+    // }
+    let updateArray = productListData.map((val, i) => {
+      if (val.id == item.id) {
+        return {...val, qty: item.qty == 1 ? null : item.qty - 1};
+      }
+      return val;
+    });
+    updateState({productListData: updateArray});
   };
 
   const renderProduct = ({item, index}) => {
@@ -563,6 +604,9 @@ export default function Products({route, navigation}) {
         onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
         onAddtoWishlist={() => _onAddtoWishlist(item)}
         addToCart={() => _addToCart(item)}
+        onIncrement={() => onIncrement(item)}
+        onDecrement={() => onDecrement(item)}
+        selectedCartItem={selectedCartItem}
       />
     );
   };
@@ -604,6 +648,7 @@ export default function Products({route, navigation}) {
     index,
   });
 
+  console.log('category info', categoryInfo);
   //To remove flickering of icon and image we are creating the header child seperately
   const listHeaderComponent = () => {
     return (
@@ -773,7 +818,11 @@ export default function Products({route, navigation}) {
 
   if (isLoading) {
     return (
-      <View style={{flex: 1, backgroundColor: colors.white}}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
+        }}>
         <SafeAreaView>
           <View style={styles.loaderHeader}>
             <CardLoader cardWidth={20} height={20} />
@@ -808,6 +857,8 @@ export default function Products({route, navigation}) {
             <View style={{marginBottom: moderateScaleVertical(12)}} />
             <ProductDetailLoader />
             <View style={{marginBottom: moderateScaleVertical(12)}} />
+            <ProductDetailLoader />
+            <View style={{marginBottom: moderateScaleVertical(12)}} />
           </View>
         </SafeAreaView>
       </View>
@@ -815,13 +866,25 @@ export default function Products({route, navigation}) {
   }
 
   const onScroll = ({nativeEvent}) => {
-    let position = nativeEvent.contentOffset;
-    console.log('positon', position);
-    if (position.y > 20) {
-      updateState({AnimatedHeaderValue: true});
+    if (productListData.length < 6) {
       return;
     }
-    updateState({AnimatedHeaderValue: false});
+    let offset = nativeEvent.contentOffset.y;
+    let index = parseInt(offset / 10); // your cell height
+    console.log('now index is ' + index);
+    if (index > 1) {
+      if (!AnimatedHeaderValue) {
+        updateState({AnimatedHeaderValue: true});
+      }
+      return;
+    }
+    if (index < 1) {
+      if (AnimatedHeaderValue) {
+        updateState({AnimatedHeaderValue: false});
+        return;
+      }
+      return;
+    }
   };
 
   return (
@@ -857,7 +920,11 @@ export default function Products({route, navigation}) {
                 activeOpacity={0.8}
                 onPress={() => navigation.goBack()}>
                 <Image
-                  style={{tintColor: colors.black}}
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
                   source={imagePath.icBackb}
                 />
               </TouchableOpacity>
@@ -876,7 +943,9 @@ export default function Products({route, navigation}) {
                           categoryInfo?.logo?.image_path,
                           '400/400',
                         )}
-                        size={30}
+                        size={20}
+                        isDarkMode={isDarkMode}
+                        MyDarkTheme={MyDarkTheme}
                       />
                       <View style={{marginLeft: moderateScale(8)}}>
                         <Text
@@ -911,16 +980,34 @@ export default function Products({route, navigation}) {
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() =>
-                  navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-                }>
+                onPress={moveToNewScreen(
+                  navigationStrings.SEARCHPRODUCTOVENDOR,
+                  {
+                    type: data?.vendor
+                      ? staticStrings.VENDOR
+                      : staticStrings.CATEGORY,
+                    id: data?.vendor ? data?.id : productListId?.id,
+                  },
+                )}>
                 <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
                   source={!!data?.showAddToCart ? false : imagePath.icSearchb}
                 />
               </TouchableOpacity>
               <View style={{marginHorizontal: moderateScale(8)}} />
               <TouchableOpacity activeOpacity={0.8}>
-                <Image source={imagePath.icShareb} />
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
+                  source={imagePath.icShareb}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -928,6 +1015,10 @@ export default function Products({route, navigation}) {
           <View style={{height: moderateScale(10)}} />
           <FlatList
             onScroll={onScroll}
+            disableScrollViewPanResponder
+            // scrollEventThrottle={e => console.log("eeee1", e)}
+            // initialScrollIndex={e => console.log("eeee2", e)}
+            // overScrollMode={e => console.log("eeee3", e)}
             showsVerticalScrollIndicator={false}
             data={(!isLoading && productListData) || []}
             renderItem={renderProduct}
@@ -968,6 +1059,12 @@ export default function Products({route, navigation}) {
           />
           {/* <View style={{ height: moderateScale(height * 0.070) }} /> */}
         </View>
+        <VariantAddons
+          addonSet={[]}
+          isVisible={isVisibleModal}
+          productdetail={selectedCartItem}
+          onClose={() => updateState({isVisibleModal: false})}
+        />
       </SafeAreaView>
     </View>
   );
