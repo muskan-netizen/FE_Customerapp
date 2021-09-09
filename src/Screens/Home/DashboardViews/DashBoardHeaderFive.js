@@ -20,6 +20,7 @@ import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
+import {string} from 'prop-types';
 
 export default function DashBoardHeaderFive({
   navigation = {},
@@ -87,7 +88,7 @@ export default function DashBoardHeaderFive({
 
     if (toggleData?.profile?.preferences?.delivery_check == 1) {
       localTabsArray.push({
-        value: 'Delivery',
+        value: strings.DELIVERY,
         label: 'delivery',
         icon: imagePath.delivery,
         iconInActive: imagePath.deliveryInActive,
@@ -102,7 +103,7 @@ export default function DashBoardHeaderFive({
     }
     if (toggleData?.profile?.preferences?.dinein_check == 1) {
       localTabsArray.push({
-        value: 'Dine-In',
+        value: strings.DINE_IN,
         label: 'dine_in',
         icon: imagePath.dineIn,
         isActive: false,
@@ -116,7 +117,7 @@ export default function DashBoardHeaderFive({
     }
     if (toggleData?.profile?.preferences?.takeaway_check == 1) {
       localTabsArray.push({
-        value: 'Takeaway',
+        value: strings.TAKEAWAY,
         label: 'takeaway',
         icon: imagePath.takeaway,
         isActive: false,

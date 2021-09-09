@@ -6,7 +6,7 @@ export default {
   VERIFY_NUMBER: ' Vérification du numéro de téléphone ',
   JOIN_US: 'Créez un compte gratuit et rejoignez- nous !',
   CREATE_AN_ACCOUNT: 'CRÉER UN NOUVEAU COMPTE',
-  GUEST_LOGIN: 'GUEST LOGIN',
+  GUEST_LOGIN: 'CONNEXION INVITÉ',
   OR_SIGNUP_WITH: 'Ou inscrivez-vous avec',
   OR_LOGIN_WITH: 'Ou connectez-vous avec',
   ALREADY_HAVE_AN_ACCOUNT: '« Vous avez déjà un compte ? » ',
@@ -378,4 +378,7 @@ export default {
   WISHLIST: 'Liste de souhaits',
   LIGHT: 'Légère',
   DARK: 'Sombre',
+  DINE_IN: 'Dîner dans',
+  DELIVERY: 'Livraison',
+  TAKEAWAY: 'Emporter',
 };

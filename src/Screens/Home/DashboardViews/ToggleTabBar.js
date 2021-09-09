@@ -13,6 +13,7 @@ import actions from '../../../redux/actions';
 import {showError, showSuccess} from '../../../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
+import strings from '../../../constants/lang';
 
 export default function ToggleTabBar({
   selcetedToggle,
@@ -153,7 +154,7 @@ export default function ToggleTabBar({
     const localTabsArray = [];
     userSelectedtab();
     if (toggleData?.profile?.preferences?.delivery_check == 1) {
-      localTabsArray.push('Delivery');
+      localTabsArray.push(strings.DELIVERY);
       if (
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
@@ -162,7 +163,7 @@ export default function ToggleTabBar({
       }
     }
     if (toggleData?.profile?.preferences?.dinein_check == 1) {
-      localTabsArray.push('Dine-In');
+      localTabsArray.push(strings.DINE_IN);
       if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
@@ -171,7 +172,7 @@ export default function ToggleTabBar({
       }
     }
     if (toggleData?.profile?.preferences?.takeaway_check == 1) {
-      localTabsArray.push('Takeaway');
+      localTabsArray.push(strings.TAKEAWAY);
       if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 0
