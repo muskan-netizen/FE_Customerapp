@@ -202,6 +202,7 @@ android {
             // applicationIdSuffix ".royoorder"
             applicationId 'com.codebrew.royoorder'
             resValue "string", "app_name", "RoyoOrder"
+            resValue "string", "host_name", "sales.alerthire.com"
         }
         runrun {
             dimension "appType"
@@ -212,6 +213,7 @@ android {
             // applicationIdSuffix ".runrun"
             applicationId 'com.codebrew.runrun'
             resValue "string", "app_name", "Runrun"
+            resValue "string", "host_name", ""
         }
         tranzit {
             dimension "appType"
@@ -222,6 +224,7 @@ android {
             // applicationIdSuffix ".tranzit"
              applicationId 'com.tranzit'
             resValue "string", "app_name", "Tranzit Delivery"
+            resValue "string", "host_name", ""
         }
          hmoobhub {
             dimension "appType"
@@ -232,6 +235,7 @@ android {
             // applicationIdSuffix ".hmoobhhub"
              applicationId 'com.codebrew.hmoobhub'
             resValue "string", "app_name", "Hmoob Hub"
+            resValue "string", "host_name", ""
         }
          capcorp {
             dimension "appType"
@@ -240,8 +244,9 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             // applicationIdSuffix ".hmoobhhub"
-             applicationId 'com.capcorpapp'
+            applicationId 'com.capcorpapp'
             resValue "string", "app_name", "Capcorp"
+            resValue "string", "host_name", ""
         }
         masa{
             dimension "appType"
@@ -252,6 +257,7 @@ android {
             // applicationIdSuffix ".hmoobhhub"
             applicationId 'com.app.masa'
             resValue "string", "app_name", "Masa"
+            resValue "string", "host_name", ""
         }
 
         yogofood{
@@ -263,6 +269,7 @@ android {
             // applicationIdSuffix ".hmoobhhub"
             applicationId 'com.yogofood'
             resValue "string", "app_name", "Yogo Food"
+            resValue "string", "host_name", "yogofood.royoorders.com"
         }
         spidbi{
             dimension "appType"
@@ -273,6 +280,7 @@ android {
             // applicationIdSuffix ".hmoobhhub"
             applicationId 'com.user.spidbi'
             resValue "string", "app_name", "Spidbi"
+            resValue "string", "host_name", ""
         }
         clicktoeat{
             dimension "appType"
@@ -282,6 +290,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.clicktoeat'
             resValue "string", "app_name", "Click Eat"
+            resValue "string", "host_name", ""
         } 
         instamobile{
             dimension "appType"
@@ -291,6 +300,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.instamobile'
             resValue "string", "app_name", "InstaMobile"
+            resValue "string", "host_name", ""
         } 
         africanvillagemarket{
             dimension "appType"
@@ -300,6 +310,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.africanvillagemarket'
             resValue "string", "app_name", "African village Market"
+            resValue "string", "host_name", ""
         }
 
         bottomsup{
@@ -310,6 +321,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.bottomsup'
             resValue "string", "app_name", "Bottoms Up"
+            resValue "string", "host_name", ""
         }
          ufood{
             dimension "appType"
@@ -319,6 +331,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.ufood'
             resValue "string", "app_name", "UFood"
+            resValue "string", "host_name", ""
         }
         martinionwheels{
             dimension "appType"
@@ -337,6 +350,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.blip'
             resValue "string", "app_name", "BLIP"
+            resValue "string", "host_name", ""
         }
         helpnowrightnow{
             dimension "appType"
@@ -346,6 +360,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.helpnowrightnow'
             resValue "string", "app_name", "Help Now Right Now"
+            resValue "string", "host_name", ""
         }
         cannabus{
             dimension "appType"
@@ -355,6 +370,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.cannabus'
             resValue "string", "app_name", "Cannabus"
+            resValue "string", "host_name", ""
         }
         govachow{
             dimension "appType"
@@ -364,6 +380,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.govachow'
             resValue "string", "app_name", "GovaChow"
+            resValue "string", "host_name", ""
         }
          bustanfakieh{
             dimension "appType"
@@ -373,6 +390,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.bustan'
             resValue "string", "app_name", "Bustan Fakieh"
+            resValue "string", "host_name", ""
            
         }
          shariff{
@@ -383,6 +401,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.shariff'
             resValue "string", "app_name", "Shariff"
+            resValue "string", "host_name", ""
         }
         gajamove{
             dimension "appType"
@@ -401,6 +420,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.getme'
             resValue "string", "app_name", "Getme"
+            resValue "string", "host_name", ""
         }
         orbit{
             dimension "appType"
@@ -410,6 +430,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.orbit'
             resValue "string", "app_name", "Orbit"
+            resValue "string", "host_name", ""
         }
         carlitoo{
             dimension "appType"
@@ -419,6 +440,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.carlitoo'
             resValue "string", "app_name", "Carlitoo"
+            resValue "string", "host_name", ""
         }
         specialhalal{
             dimension "appType"
@@ -437,6 +459,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.thehouse'
             resValue "string", "app_name", "The House"
+            resValue "string", "host_name", ""
         }
          tasmeem{
             dimension "appType"
@@ -455,6 +478,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.klickmat'
             resValue "string", "app_name", "Klickmat"
+            resValue "string", "host_name", ""
         }
         lastminutedress{
             dimension "appType"
@@ -464,6 +488,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrewLab.lastminutedress'
             resValue "string", "app_name", "Last Minute Dress"
+            resValue "string", "host_name", ""
         }
         rerak{
             dimension "appType"
@@ -473,6 +498,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.rerak'
             resValue "string", "app_name", "Rerak"
+            resValue "string", "host_name", ""
         }
         yummiidash{
             dimension "appType"
@@ -482,6 +508,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.yummiidash'
             resValue "string", "app_name", "Yummiidash"
+            resValue "string", "host_name", ""
         }
          yoho{
             dimension "appType"
@@ -491,6 +518,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.yoho'
             resValue "string", "app_name", "Yoho"
+            resValue "string", "host_name", ""
         }
         glamsouq{
             dimension "appType"
@@ -500,6 +528,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.glamsouq'
             resValue "string", "app_name", "Glamsouq"
+            resValue "string", "host_name", ""
         }
         doctatransportation{
             dimension "appType"
@@ -509,6 +538,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.doctatransportation'
             resValue "string", "app_name", "Docta Transportation"
+            resValue "string", "host_name", ""
         }
 
         washvalley{
@@ -519,6 +549,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.washvalley'
             resValue "string", "app_name", "WashValley"
+            resValue "string", "host_name", ""
         }
          equamd{
             dimension "appType"
@@ -528,6 +559,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.equamd'
             resValue "string", "app_name", "EquaMD"
+            resValue "string", "host_name", ""
         }
         hellodeliver{
             dimension "appType"
@@ -537,6 +569,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.hellodeliver'
             resValue "string", "app_name", "Hello Deliver"
+            resValue "string", "host_name", ""
         }
          hoganchef{
             dimension "appType"
@@ -546,6 +579,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.hoganchef'
             resValue "string", "app_name", "Hogan Chef"
+            resValue "string", "host_name", ""
 
         }
           servze{
@@ -556,6 +590,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.servze'
             resValue "string", "app_name", "Servze"
+            resValue "string", "host_name", ""
 
          }
 
@@ -577,6 +612,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.cabdelivr'
             resValue "string", "app_name", "Cabdelivr"
+            resValue "string", "host_name", ""
          }
         drus{
             dimension "appType"
@@ -586,6 +622,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.app.drus'
             resValue "string", "app_name", "Drus"
+            resValue "string", "host_name", ""
 
          }
         arenagrub{
@@ -596,6 +633,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.arenagrub'
             resValue "string", "app_name", "ArenaGrub" 
+            resValue "string", "host_name", ""
          }
           yahu{
             dimension "appType"
@@ -605,6 +643,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.yahu'
             resValue "string", "app_name", "Yahu" 
+            resValue "string", "host_name", ""
          }
         zuzuclean{
             dimension "appType"
@@ -614,6 +653,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.zuzuclean'
             resValue "string", "app_name", "Zuzu Clean"
+            resValue "string", "host_name", ""
          }
         towtrek{
             dimension "appType"
@@ -623,6 +663,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.app.towtrek'
             resValue "string", "app_name", "TowTrek"
+            resValue "string", "host_name", ""
          }
           jet{
             dimension "appType"
@@ -641,6 +682,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.africanize'
             resValue "string", "app_name", "Africanize"
+            resValue "string", "host_name", ""
          }
 
           markita{
@@ -651,6 +693,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.markita'
             resValue "string", "app_name", "Markita"
+            resValue "string", "host_name", ""
          }
           sirvu{
             dimension "appType"
@@ -660,6 +703,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.sirvu'
             resValue "string", "app_name", "SirVU"
+            resValue "string", "host_name", ""
          }
 
          ublue{
@@ -670,6 +714,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.ublue'
             resValue "string", "app_name", "Ublue"
+            resValue "string", "host_name", ""
          }
           mstechy{
             dimension "appType"
@@ -698,6 +743,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.ridemate'
             resValue "string", "app_name", "Ridemate"
+            resValue "string", "host_name", ""
          }
           codiner{
             dimension "appType"
@@ -707,6 +753,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codiner'
             resValue "string", "app_name", "Codiner"
+            resValue "string", "host_name", ""
          }
          housekeeper{
             dimension "appType"
@@ -716,6 +763,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.housekeeper'
             resValue "string", "app_name", "Housekeeper 4 Hire"
+            resValue "string", "host_name", ""
          }
           hairstonexpress{
             dimension "appType"
@@ -725,6 +773,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.hairstonexpress'
             resValue "string", "app_name", "Hairston Express"
+            resValue "string", "host_name", ""
          }
 
          diamonddashers{
@@ -735,6 +784,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.diamonddashers'
             resValue "string", "app_name", "Diamond Dashers"
+            resValue "string", "host_name", ""
          }
 
          destinationOps{
@@ -745,6 +795,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.destinationOps'
             resValue "string", "app_name", "Destination Ops"
+            resValue "string", "host_name", ""
          }
           loopwhole{
             dimension "appType"
@@ -754,6 +805,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.loopwhole'
             resValue "string", "app_name", "LoopWhole"
+            resValue "string", "host_name", ""
          }
          vici{
             dimension "appType"
@@ -763,6 +815,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.vici'
             resValue "string", "app_name", "VICI"
+            resValue "string", "host_name", ""
          }
          carhop{
             dimension "appType"
@@ -772,6 +825,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.carhop'
             resValue "string", "app_name", "Car Hop"
+            resValue "string", "host_name", ""
          }
 
          yogolift{
@@ -782,6 +836,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.yogolift'
             resValue "string", "app_name", "Yogo Lift"
+            resValue "string", "host_name", ""
          }
 
          fleety{
@@ -792,6 +847,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.fleety'
             resValue "string", "app_name", "Fleety"
+            resValue "string", "host_name", ""
          }
          flyinghorse{
             dimension "appType"
@@ -801,6 +857,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.flyinghorse'
             resValue "string", "app_name", "Flying Horse"
+            resValue "string", "host_name", ""
          }
          errand{
             dimension "appType"
@@ -810,6 +867,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.errand'
             resValue "string", "app_name", "Errand"
+            resValue "string", "host_name", ""
          }
           partnerproject{
             dimension "appType"
@@ -819,6 +877,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.partnerproject'
             resValue "string", "app_name", "Partner Project"
+            resValue "string", "host_name", ""
          }
           menus{
             dimension "appType"
@@ -837,6 +896,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.doorstep'
             resValue "string", "app_name", "DoorStep"
+            resValue "string", "host_name", ""
          }
           sunshinerideshare{
             dimension "appType"
@@ -846,6 +906,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.sunshinerideshare'
             resValue "string", "app_name", "Sunshine Rideshare"
+            resValue "string", "host_name", ""
          }
          autotek{
             dimension "appType"
@@ -855,6 +916,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.autotek'
             resValue "string", "app_name", "Autotek"
+            resValue "string", "host_name", ""
          }
          wegotit{
             dimension "appType"
@@ -882,6 +944,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.igolux'
             resValue "string", "app_name", "iGoLux"
+            resValue "string", "host_name", ""
          }
          toda{
             dimension "appType"
@@ -891,6 +954,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.toda'
             resValue "string", "app_name", "Toda"
+            resValue "string", "host_name", ""
          }
          mobi{
             dimension "appType"
@@ -909,6 +973,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.yourlaundryapp'
             resValue "string", "app_name", "Your Laundry App"
+            resValue "string", "host_name", ""
          }
          hemptyfy{
             dimension "appType"
@@ -918,6 +983,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.hemptyfy'
             resValue "string", "app_name", "Hempti Fy"
+            resValue "string", "host_name", ""
          }
           sharu{
             dimension "appType"
@@ -927,6 +993,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.sharu'
             resValue "string", "app_name", "Sharu"
+            resValue "string", "host_name", ""
          }
           smcompany{
             dimension "appType"

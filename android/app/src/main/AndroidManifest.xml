@@ -45,8 +45,8 @@
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="http" android:host="sales.alerthire.com" />  
-            <data android:scheme="https" android:host="sales.alerthire.com" />
+            <data android:scheme="http" android:host="@string/host_name" />  
+            <data android:scheme="https" android:host="@string/host_name" />
        </intent-filter>
 
       
