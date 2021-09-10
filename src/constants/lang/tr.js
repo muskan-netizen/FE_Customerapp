@@ -164,7 +164,7 @@ export default {
   CASH_ON_DELIVERY: 'Teslimatta ödeme ',
   SELECT_PAYMENT_METHOD: 'ÖDEME TÜRÜNÜ SEÇİN',
   CLEAR: 'TEMİZ',
-  SEARCH_PRODUCT_VENDOR_ITEM: 'Ürün,satıcı, öğe ara',
+  SEARCH_PRODUCT_VENDOR_ITEM: 'Ürün, satıcı, öğe ara',
   ADD_INSTRUCTIONS: 'Talimat ekle',
   SORT_BY: 'Sıralama ölçütü',
   LOW_TO_HIGH: 'Düşükten yükseğe ',

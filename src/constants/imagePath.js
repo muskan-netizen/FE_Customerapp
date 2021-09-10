@@ -1,4 +1,4 @@
-import {requireNativeComponent} from 'react-native';
+import { requireNativeComponent } from 'react-native';
 
 export default {
   dropdownTriangle: require('../assets/images/ic_dropdown.png'),
@@ -281,4 +281,8 @@ export default {
   share1: require('../assets/images/RoyoorderNewImages/ic_share.png'),
   contactUs: require('../assets/images/RoyoorderNewImages/ic_contact.png'),
   settings1: require('../assets/images/RoyoorderNewImages/ic_settings.png'),
-};
+  icBrandActive: require('../assets/images/RoyoorderNewImages/ic_tag2.png'),
+  icBrandInActive: require('../assets/images/RoyoorderNewImages/ic_tag.png'),
+  icCelebActive: require('../assets/images/RoyoorderNewImages/ic_celeb2.png'),
+  icCelebInActive: require('../assets/images/RoyoorderNewImages/ic_celeb1.png'),
+}

@@ -1,8 +1,8 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {Image, StyleSheet, Text} from 'react-native';
-import {View} from 'react-native-animatable';
-import {useSelector} from 'react-redux';
+import { Image, StyleSheet, Text } from 'react-native';
+import { View } from 'react-native-animatable';
+import { useSelector } from 'react-redux';
 import CustomBottomTabBar from '../Components/CustomBottomTabBar';
 import CustomBottomTabBarFive from '../Components/CustomBottomTabBarFive';
 import CustomBottomTabBarFour from '../Components/CustomBottomTabBarFour';
@@ -12,8 +12,8 @@ import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import staticStrings from '../constants/staticStrings';
 import colors from '../styles/colors';
-import {moderateScale, textScale} from '../styles/responsiveSize';
-import {shortCodes} from '../utils/constants/DynamicAppKeys';
+import { moderateScale, textScale } from '../styles/responsiveSize';
+import { shortCodes } from '../utils/constants/DynamicAppKeys';
 import AccountStack from './AccountStack';
 import BrandStack from './BrandStack';
 import CartStack from './CartStack';
@@ -26,7 +26,7 @@ const Tab = createBottomTabNavigator();
 export default function TabRoutes(props) {
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  const {appStyle, appData} = useSelector((state) => state?.initBoot);
+  const { appStyle, appData } = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesData();
 
@@ -49,20 +49,18 @@ export default function TabRoutes(props) {
         name={navigationStrings.CELEBRITY}
         options={{
           tabBarLabel: strings.CELEBRITY,
-          tabBarIcon: ({focused, tintColor}) => (
+          tabBarIcon: ({ focused, tintColor }) => (
             <Image
               style={[
-                {tintColor: tintColor},
-                appStyle?.tabBarLayout === 2 && {height: 23, width: 23},
+                { tintColor: tintColor },
+                appStyle?.tabBarLayout === 3 && { height: 26, width: 26 },
               ]}
               source={
-                focused
-                  ? appStyle?.tabBarLayout === 2
-                    ? imagePath.celebActive
-                    : imagePath.tabDActive
-                  : appStyle?.tabBarLayout === 2
-                  ? imagePath.celebInActive
-                  : imagePath.tabDInActive
+
+                appStyle?.tabBarLayout === 4 ? focused ? imagePath.celebActive : imagePath.celebInActive
+                  : focused ? imagePath.tabDActive : imagePath.tabDInActive
+
+
               }
             />
           ),
@@ -79,14 +77,23 @@ export default function TabRoutes(props) {
           name={navigationStrings.BRANDS}
           options={{
             tabBarLabel: strings.BRANDS,
-            tabBarIcon: ({focused, tintColor}) => (
+            tabBarIcon: ({ focused, tintColor }) => (
               <Image
                 style={[
-                  {tintColor: tintColor},
+                  { tintColor: tintColor },
                   appStyle?.tabBarLayout === 2 ||
-                    (appStyle?.tabBarLayout === 4 && {height: 20, width: 20}),
+                  (appStyle?.tabBarLayout === 4 && { height: 20, width: 20 }),
                 ]}
-                source={focused ? imagePath.tabCActive : imagePath.tabCInActive}
+                source={
+                  appStyle?.tabBarLayout === 4
+                    ? focused
+                      ? imagePath.icBrandActive
+                      : imagePath.icBrandInActive
+                    : focused
+                      ? imagePath.tabCActive
+                      : imagePath.tabCInActive
+                }
+              // source={focused ? imagePath.tabCActive : imagePath.tabCInActive}
               />
             ),
             //  unmountOnBlur: true,
@@ -128,11 +135,11 @@ export default function TabRoutes(props) {
         name={navigationStrings.HOMESTACK}
         options={{
           tabBarLabel: strings.HOME,
-          tabBarIcon: ({focused, tintColor}) => (
+          tabBarIcon: ({ focused, tintColor }) => (
             <Image
               style={[
-                {tintColor: tintColor},
-                appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
+                { tintColor: tintColor },
+                appStyle?.tabBarLayout === 2 && { height: 25, width: 25 },
               ]}
               source={
                 appStyle?.tabBarLayout === 5
@@ -140,12 +147,12 @@ export default function TabRoutes(props) {
                     ? imagePath.homeActive
                     : imagePath.homeInActive
                   : appStyle?.tabBarLayout === 4
-                  ? focused
-                    ? imagePath.homeRedActive
-                    : imagePath.homeRedInActive
-                  : focused
-                  ? imagePath.tabAActive
-                  : imagePath.tabAInActive
+                    ? focused
+                      ? imagePath.homeRedActive
+                      : imagePath.homeRedInActive
+                    : focused
+                      ? imagePath.tabAActive
+                      : imagePath.tabAInActive
               }
             />
           ),
@@ -157,8 +164,8 @@ export default function TabRoutes(props) {
         name={navigationStrings.CART}
         options={{
           tabBarLabel: strings.CART,
-          tabBarIcon: ({focused, tintColor}) => (
-            <View style={{alignItems: 'center'}}>
+          tabBarIcon: ({ focused, tintColor }) => (
+            <View style={{ alignItems: 'center' }}>
               {cartItemCount?.data?.item_count ? (
                 <View style={[styles.cartItemCountView]}>
                   <Text style={styles.cartItemCountNumber}>
@@ -168,8 +175,8 @@ export default function TabRoutes(props) {
               ) : null}
               <Image
                 style={[
-                  {tintColor: tintColor},
-                  appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
+                  { tintColor: tintColor },
+                  appStyle?.tabBarLayout === 2 && { height: 25, width: 25 },
                 ]}
                 source={
                   appStyle?.tabBarLayout === 5
@@ -177,12 +184,12 @@ export default function TabRoutes(props) {
                       ? imagePath.ordersActive
                       : imagePath.ordersInActive
                     : appStyle?.tabBarLayout === 4
-                    ? focused
-                      ? imagePath.cartRedActive
-                      : imagePath.cartRedInActive
-                    : focused
-                    ? imagePath.cartActive
-                    : imagePath.cartInActive
+                      ? focused
+                        ? imagePath.cartRedActive
+                        : imagePath.cartRedInActive
+                      : focused
+                        ? imagePath.cartActive
+                        : imagePath.cartInActive
                 }
               />
             </View>
@@ -197,11 +204,11 @@ export default function TabRoutes(props) {
         name={navigationStrings.ACCOUNTS}
         options={{
           tabBarLabel: strings.ACCOUNTS,
-          tabBarIcon: ({focused, tintColor}) => (
+          tabBarIcon: ({ focused, tintColor }) => (
             <Image
               style={[
-                {tintColor: tintColor},
-                appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
+                { tintColor: tintColor },
+                appStyle?.tabBarLayout === 2 && { height: 25, width: 25 },
               ]}
               source={
                 appStyle?.tabBarLayout === 5
@@ -209,12 +216,12 @@ export default function TabRoutes(props) {
                     ? imagePath.profileActive
                     : imagePath.profileInActive
                   : appStyle?.tabBarLayout === 4
-                  ? focused
-                    ? imagePath.accountRedActive
-                    : imagePath.accountRedInActive
-                  : focused
-                  ? imagePath.tabEActive
-                  : imagePath.tabEInActive
+                    ? focused
+                      ? imagePath.accountRedActive
+                      : imagePath.accountRedInActive
+                    : focused
+                      ? imagePath.tabEActive
+                      : imagePath.tabEInActive
               }
             />
           ),
@@ -226,7 +233,7 @@ export default function TabRoutes(props) {
 }
 
 export function stylesData(params) {
-  const {themeColors, appStyle} = useSelector((state) => state.initBoot);
+  const { themeColors, appStyle } = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
 
   const styles = StyleSheet.create({

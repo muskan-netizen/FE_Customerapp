@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, View} from 'react-native';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { FlatList, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import VendorDetailLoader from '../../Components/Loaders/VendorDetailLoader';
 import ThreeColumnCard from '../../Components/ThreeColumnCard';
@@ -16,12 +16,12 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {showError} from '../../utils/helperFunctions';
+import { showError } from '../../utils/helperFunctions';
 import ListEmptyVendors from '../Vendors/ListEmptyVendors';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../styles/theme';
 
-export default function VendorDetail({navigation, route}) {
+export default function VendorDetail({ navigation, route }) {
   let vendorParams = route?.params?.data;
   console.log(vendorParams, 'vendorParams>>>>>>>');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -37,7 +37,7 @@ export default function VendorDetail({navigation, route}) {
     limit: 12,
     pageNo: 1,
   });
-  const {vendorId, vendorData, isLoading, limit, pageNo, vendordName} = state;
+  const { vendorId, vendorData, isLoading, limit, pageNo, vendordName } = state;
   useEffect(() => {
     if (
       vendorParams &&
@@ -70,20 +70,20 @@ export default function VendorDetail({navigation, route}) {
     convertLocalDateToUTCDate('2021-09-28T00:00', true);
   }, []);
 
-  const {appData, appStyle, currencies, languages} = useSelector(
+  const { appData, appStyle, currencies, languages } = useSelector(
     (state) => state.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({fontFamily});
+  const commonStyles = commonStylesFun({ fontFamily });
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   /***********GET SUBCATEGORY  DETAIL DATA******** */
 
@@ -101,9 +101,9 @@ export default function VendorDetail({navigation, route}) {
       )
       .then((res) => {
         console.log(res, 'res>>>category data');
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         if (res && res.data) {
-          updateState({vendorData: res.data.listData});
+          updateState({ vendorData: res.data.listData });
         }
       })
       .catch(errorMethod);
@@ -122,7 +122,7 @@ export default function VendorDetail({navigation, route}) {
         language: languages.primary_language.id,
       })
       .then((res) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         if (res && res.data) {
           console.log(res, 'res>>res');
           let newArray = res.data;
@@ -133,7 +133,7 @@ export default function VendorDetail({navigation, route}) {
           //   // );
           //   newArray= newArray.filter((x) => x?.id != vendorParams?.categoryData?.id)
           // }
-          updateState({vendorData: newArray});
+          updateState({ vendorData: newArray });
         }
       })
       .catch(errorMethod);
@@ -142,11 +142,11 @@ export default function VendorDetail({navigation, route}) {
   /********* */
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+    updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
     showError(error?.message || error?.error);
   };
 
-  const _renderItem = ({item, index}) => {
+  const _renderItem = ({ item, index }) => {
     return (
       <ThreeColumnCard
         onPress={moveToNewScreen(navigationStrings.PRODUCT_LIST, {
@@ -175,28 +175,28 @@ export default function VendorDetail({navigation, route}) {
       {/* <Header centerTitle={vendorParams?.item?.name} hideRight={false} /> */}
 
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back}
         centerTitle={vendorParams?.item?.name || vendordName}
-        rightIcon={imagePath.search}
+        rightIcon={appStyle?.homePageLayout === 3 ? imagePath.icSearchb : imagePath.search}
         onPressRight={() =>
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }
       />
 
-      <View style={{...commonStyles.headerTopLine}} />
+      <View style={{ ...commonStyles.headerTopLine }} />
       {isLoading ? (
         <View>
-          <View style={{height: 10}} />
+          <View style={{ height: 10 }} />
           <VendorDetailLoader listSize={5} isRow />
         </View>
       ) : (
         <FlatList
           data={vendorData}
           numColumns={3}
-          ListHeaderComponent={<View style={{height: 10}} />}
+          ListHeaderComponent={<View style={{ height: 10 }} />}
           // columnWrapperStyle={{justifyContent: 'space-between'}}
-          contentContainerStyle={{marginHorizontal: moderateScale(16)}}
-          ItemSeparatorComponent={() => <View style={{height: 10}} />}
+          contentContainerStyle={{ marginHorizontal: moderateScale(16) }}
+          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
           renderItem={_renderItem}
           ListEmptyComponent={
             !isLoading && (
