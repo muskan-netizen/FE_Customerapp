@@ -164,7 +164,7 @@ export default {
   REORDER: 'Re- Commander',
   RATE_ORDER: 'Évaluer la commande',
   BUY_NOW: 'Acheter maintenant',
-  DESCRIPTION: 'Description',
+  DESCRIPTION: 'La description',
   BRANDS: 'Marques',
   CELEBRITIES: 'Célébrités',
   CASH_ON_DELIVERY: 'Paiement à la livraison',
@@ -435,4 +435,9 @@ export default {
   CLOSE: 'proche',
   CONFIRM: 'Confirmer',
   NO_DATA_FOUND: 'Aucune donnée disponible',
+  THIS_CHANGE_WILL_REMOVE_YOUR_CART:
+    'TCe changement supprimera les produits de votre panier. Voulez-vous vraiment continuer ?',
+  CLEAR_CART2: 'Vider le panier',
+  ENTER_CUSTOM_AMOUNT: 'Entrez le montant personnalisé',
+  TAX_AMOUNT: 'Impôts',
 };

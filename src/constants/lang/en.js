@@ -426,4 +426,8 @@ export default {
   Close: 'Close',
   CONFIRM: 'Confirm',
   NO_DATA_FOUND: 'No Data Found',
+  THIS_CHANGE_WILL_REMOVE_YOUR_CART:
+    'This Change Will Remove Your Cart Products. Do you Really Want To Continue?',
+  CLEAR_CART2: 'Clear Cart',
+  ENTER_CUSTOM_AMOUNT: 'Enter Custom Amount',
 };

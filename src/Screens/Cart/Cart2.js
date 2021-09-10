@@ -1268,7 +1268,7 @@ export default function Cart2({navigation, route}) {
                       maxLength={5}
                       returnKeyType={'done'}
                       keyboardType={'number-pad'}
-                      placeholder={'Enter Custom Amount'}
+                      placeholder={strings.ENTER_CUSTOM_AMOUNT}
                       placeholderTextColor={
                         isDarkMode ? MyDarkTheme.colors.text : colors.black
                       }

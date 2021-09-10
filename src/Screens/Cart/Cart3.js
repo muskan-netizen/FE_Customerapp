@@ -1423,7 +1423,7 @@ export default function Cart({navigation, route}) {
                                   : colors.black,
                             }
                       }>
-                      {'Custom'}
+                      {strings.CUSTOM}
                     </Text>
                     <Text
                       style={
@@ -1441,7 +1441,7 @@ export default function Cart({navigation, route}) {
                                   : colors.black,
                             }
                       }>
-                      {'Amount'}
+                      {strings.AMOUNT}
                     </Text>
                   </TouchableOpacity>
                 </ScrollView>
@@ -1470,7 +1470,7 @@ export default function Cart({navigation, route}) {
                       maxLength={5}
                       returnKeyType={'done'}
                       keyboardType={'number-pad'}
-                      placeholder={'Enter Custom Amount'}
+                      placeholder={strings.ENTER_CUSTOM_AMOUNT}
                       placeholderTextColor={
                         isDarkMode
                           ? MyDarkTheme.colors.text
