@@ -82,6 +82,8 @@ const shortCodes = {
   sharu: '443e7e',
   smcompany: '69502d',
   totum4U: '04e60d',
+  hmc: 'fa3fcd',
+  groupy: 'd4f312',
 };
 
 const appIds = {
@@ -408,6 +410,14 @@ const appIds = {
   totum4U: Platform.select({
     ios: 'com.totum4U',
     android: 'com.totum4U',
+  }),
+  hmc: Platform.select({
+    ios: 'com.hmc.customer',
+    android: 'com.hmc',
+  }),
+  groupy: Platform.select({
+    ios: 'com.groupy',
+    android: 'com.groupy',
   }),
 };
 

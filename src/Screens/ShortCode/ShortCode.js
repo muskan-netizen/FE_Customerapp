@@ -575,6 +575,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.hmc:
+          updateState({
+            shortCode: shortCodes.hmc,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.groupy:
+          updateState({
+            shortCode: shortCodes.groupy,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

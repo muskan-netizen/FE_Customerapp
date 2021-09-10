@@ -1027,6 +1027,26 @@ android {
             resValue "string", "app_name", "Totum4U"
             resValue "string", "host_name", ""
          }
+         hmc{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.hmc'
+            resValue "string", "app_name", "HMC"
+            resValue "string", "host_name", ""
+         }
+          groupy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.groupy'
+            resValue "string", "app_name", "Groupy"
+            resValue "string", "host_name", ""
+         }
     }
 }
 
