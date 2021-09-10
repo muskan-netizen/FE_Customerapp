@@ -367,5 +367,8 @@ export default {
     'Durch diese Änderung werden Ihre Warenkorbprodukte entfernt. Möchten Sie wirklich fortfahren?',
   AUTOMATIC: 'AUTOMATIK',
   APPEARANCE: 'AUSSEHEN',
-  ADD_ITEM: 'Add item',
+  ADD_ITEM: 'Artikel hinzufügen',
+  DINE_IN: 'Speisen in',
+  DELIVERY: 'Lieferung',
+  TAKEAWAY: 'Wegbringen',
 };

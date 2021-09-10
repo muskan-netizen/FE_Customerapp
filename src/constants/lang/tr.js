@@ -359,5 +359,8 @@ export default {
     'Bu Değişiklik Sepet Ürünlerinizi Kaldıracaktır. Gerçekten Devam Etmek İstiyor musunuz?',
   AUTOMATIC: 'OTOMATİK',
   APPEARANCE: 'DIŞ GÖRÜNÜ',
-  ADD_ITEM: 'Add item',
+  ADD_ITEM: 'Öğe eklemek',
+  DINE_IN: 'Yemek',
+  DELIVERY: 'Teslimat',
+  TAKEAWAY: 'Götürmek',
 };

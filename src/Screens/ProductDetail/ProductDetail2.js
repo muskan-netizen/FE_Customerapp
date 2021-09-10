@@ -917,7 +917,17 @@ export default function ProductDetail2({route, navigation}) {
                 marginHorizontal: moderateScale(20),
                 flexDirection: 'row',
               }}>
-              <Text style={styles.relatedProducts}>{strings.YOUMAYALSO}</Text>
+              <Text
+                style={[
+                  styles.relatedProducts,
+                  {
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGrey,
+                  },
+                ]}>
+                {strings.YOUMAYALSO}
+              </Text>
             </View>
           )}
 

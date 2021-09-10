@@ -29,6 +29,7 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -46,6 +47,12 @@ import stylesFunc from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import {androidCameraPermission} from '../../utils/permissions';
+import AutoUpLabelTxtInput from '../../Components/AutoUpLabelTxtInput';
+import PhoneNumberInput2 from '../../Components/PhoneNumberInput2';
+import PhoneNumberInputWithUnderline from '../../Components/PhoneNumberInputWithUnderline';
+import BorderTextInputWithLable from '../../Components/BorderTextInputWithLable';
+import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
+import {string} from 'is_js';
 
 export default function MyProfile({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -457,11 +464,14 @@ export default function MyProfile({route, navigation}) {
   // Basic information tab
   const basicInfoView = () => {
     return (
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView
+        style={{height: height / 2}}
+        enableAutomaticScroll={true}>
         <View
           style={{
             marginVertical: moderateScaleVertical(30),
             marginHorizontal: moderateScale(24),
+            height: height / 1.5,
           }}>
           {userData?.refferal_code && userData?.refferal_code != '' ? (
             <View
@@ -504,6 +514,18 @@ export default function MyProfile({route, navigation}) {
             </View>
           ) : null}
 
+          {/* <TextInputWithUnderlineAndLabel
+            onChangeText={_onChangeText('name')}
+            value={name}
+            label={'NAME'}
+            autoCapitalize={'none'}
+            containerStyle={{marginVertical: moderateScaleVertical(10)}}
+            undnerlinecolor={colors.textGreyB}
+            txtInputStyle={{fontFamily: fontFamily.regular}}
+            labelStyle={{color: colors.textGreyB}}
+          />
+          */}
+
           <BorderTextInput
             onChangeText={_onChangeText('name')}
             placeholder={strings.YOUR_NAME}
@@ -514,6 +536,17 @@ export default function MyProfile({route, navigation}) {
             placeholder={strings.YOUR_EMAIL}
             value={email}
           />
+          {/* <TextInputWithUnderlineAndLabel
+            onChangeText={_onChangeText('email')}
+            value={email}
+            label={'EMAIL ID'}
+            autoCapitalize={'none'}
+            containerStyle={{marginVertical: moderateScaleVertical(10)}}
+            txtInputStyle={{fontFamily: fontFamily.regular}}
+            undnerlinecolor={colors.textGreyB}
+            labelStyle={{color: colors.textGreyB}}
+          /> */}
+
           <PhoneNumberInput
             onCountryChange={_onCountryChange}
             placeholder={strings.YOUR_PHONE_NUMBER}
@@ -525,6 +558,19 @@ export default function MyProfile({route, navigation}) {
             callingCode={state.callingCode}
             color={isDarkMode ? MyDarkTheme.colors.text : null}
           />
+
+          {/* <PhoneNumberInputWithUnderline
+            onCountryChange={_onCountryChange}
+            placeholder={'PHONE NUMBER'}
+            onChangePhone={(phoneNumber) =>
+              updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
+            }
+            cca2={cca2}
+            phoneNumber={phoneNumber}
+            callingCode={state.callingCode}
+            undnerlineColor={colors.textGreyB}
+          /> */}
+
           <View style={{height: moderateScaleVertical(20)}} />
 
           <GradientButton
@@ -539,16 +585,29 @@ export default function MyProfile({route, navigation}) {
       </KeyboardAwareScrollView>
     );
   };
-
+  console.log(fontFamily, 'fontFamily');
   //Change password info tab
   const changePasswordView = () => {
     return (
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView
+        style={{height: height / 2}}
+        enableAutomaticScroll={true}>
         <View
           style={{
-            marginVertical: moderateScaleVertical(30),
+            height: height / 1.7,
+            marginVertical: moderateScaleVertical(50),
             marginHorizontal: moderateScale(24),
           }}>
+          {/* <TextInputWithUnderlineAndLabel
+            onChangeText={_onChangeText('currentpassword')}
+            label={strings.ENTER_CURRENT_PASSWORD}
+            value={currentpassword}
+            secureTextEntry={true}
+            containerStyle={{marginVertical: moderateScaleVertical(10)}}
+            undnerlinecolor={colors.textGreyB}
+            labelStyle={{color: colors.textGreyB}}
+            secureTextEntry={true}
+          /> */}
           <BorderTextInput
             onChangeText={_onChangeText('currentpassword')}
             placeholder={strings.ENTER_CURRENT_PASS}
@@ -561,6 +620,15 @@ export default function MyProfile({route, navigation}) {
             value={newPassword}
             secureTextEntry={true}
           />
+          {/* <TextInputWithUnderlineAndLabel
+            onChangeText={_onChangeText('newPassword')}
+            value={newPassword}
+            label={strings.ENTER_NEW_PASSWORD}
+            undnerlinecolor={colors.textGreyB}
+            labelStyle={{color: colors.textGreyB}}
+            secureTextEntry={true}
+            containerStyle={{marginVertical: moderateScaleVertical(10)}}
+          /> */}
 
           <BorderTextInput
             onChangeText={_onChangeText('confirmPassword')}
@@ -569,7 +637,18 @@ export default function MyProfile({route, navigation}) {
             secureTextEntry={true}
           />
 
+          {/* <TextInputWithUnderlineAndLabel
+            onChangeText={_onChangeText('confirmPassword')}
+            value={confirmPassword}
+            label={strings.ENTER_CONFIRM_PASSWORD}
+            undnerlinecolor={colors.textGreyB}
+            labelStyle={{color: colors.textGreyB}}
+            secureTextEntry={true}
+            containerStyle={{marginVertical: moderateScaleVertical(10)}}
+          /> */}
+
           <GradientButton
+            btnStyle={{marginTop: moderateScaleVertical(57)}}
             colorsArray={[themeColors.primary_color, themeColors.primary_color]}
             textStyle={styles.textStyle}
             onPress={changePassword}
@@ -592,19 +671,33 @@ export default function MyProfile({route, navigation}) {
           // borderBottomWidth:moderateScaleVertical(1)
           // profileAddress?.address && userData?.auth_token?
         }}>
-        <TransparentButtonWithTxtAndIcon
-          btnText={strings.ADD_NEW_ADDRESS}
-          icon={imagePath.add}
-          onPress={() => setModalVisible(true, 'addAddress')}
-          textStyle={
-            isDarkMode
-              ? {marginLeft: 10, color: MyDarkTheme.colors.text}
-              : {marginLeft: 10}
-          }
-          borderRadius={moderateScale(13)}
-          containerStyle={{marginHorizontal: 20}}
-          marginBottom={moderateScaleVertical(20)}
-        />
+        <View
+          style={{
+            flexDirection: 'row',
+            marginHorizontal: moderateScale(20),
+            justifyContent: 'space-between',
+          }}>
+          <Text
+            style={{
+              fontSize: textScale(16),
+              fontFamily: fontFamily.medium,
+              color: isDarkMode
+                ? MyDarkTheme.colors.text
+                : getColorCodeWithOpactiyNumber(colors.black.substr(1), 60),
+            }}>
+            {strings.SAVED_LOCATIONS}
+          </Text>
+          <TouchableOpacity onPress={() => setModalVisible(true, 'addAddress')}>
+            <Text
+              style={{
+                fontSize: textScale(12),
+                fontFamily: fontFamily.medium,
+                color: themeColors.primary_color,
+              }}>
+              {strings.ADD_NEW_ADDRESS}
+            </Text>
+          </TouchableOpacity>
+        </View>
         {address &&
           address.map((itm, inx) => {
             // if (profileAddress?.address && userData?.auth_token) {
@@ -614,8 +707,6 @@ export default function MyProfile({route, navigation}) {
                 style={{
                   borderBottomColor: colors.lightGreyBorder,
                   borderBottomWidth: moderateScaleVertical(1),
-                  borderTopWidth: moderateScaleVertical(1),
-                  borderTopColor: colors.lightGreyBorder,
                 }}>
                 <TouchableOpacity onPress={() => setPrimaryLocation(itm.id)}>
                   <View

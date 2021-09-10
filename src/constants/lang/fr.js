@@ -28,7 +28,7 @@ export default {
   PRODUCT_WEIGHT: ' Poids du produit ',
   YOUR_PHONE_NUMBER: 'Votre numéro de téléphone ',
   ENTER_PASSWORD: 'Entrez le mot de passe',
-  WISHLIST: 'Wishlist',
+
   SIGNUP_AN_ACCOUNT: ' « ACCES HAUT COMPTE »',
   OTP_VERIFICATION: ' Vérification OTP ',
   ENTER_OTP_SENT:
@@ -372,7 +372,6 @@ export default {
     'Ce changement supprimera les produits de votre panier. Voulez-vous vraiment continuer ?',
   AUTOMATIC: 'AUTOMATIQUE',
   APPEARANCE: 'APPARENCE',
-  ADD_ITEM: 'Add item',
   HOME: ' Accueil',
   CART: 'Chariot',
   WISHLIST: 'Liste de souhaits',
@@ -382,5 +381,5 @@ export default {
   DELIVERY: 'Livraison',
   TAKEAWAY: 'Emporter',
   NOW: 'Maintenant',
-  SCHEDULE_ORDER:"ordre de programme"
+  SCHEDULE_ORDER: 'ordre de programme',
 };

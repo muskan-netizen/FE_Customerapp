@@ -376,7 +376,7 @@ export default {
     'This Change Will Remove Your Cart Products. Do you Really Want To Continue?',
   AUTOMATIC: 'Automatic',
   APPEARANCE: 'APPEARANCE',
-  DINE_IN: 'Dine In',
+  DINE_IN: 'Dine-In',
   DELIVERY: 'Delivery',
   TAKEAWAY: 'Takeaway',
   ADD_ITEM: 'Add item',
@@ -384,4 +384,8 @@ export default {
   DARK: 'Dark',
   NOW: 'Now',
   SCHEDULE_ORDER: 'Schedule Order',
+  ENTER_CONFIRM_PASSWORD: 'CONFIRM NEW PASSWORD',
+  ENTER_NEW_PASSWORD: 'NEW PASSWORD',
+  ENTER_CURRENT_PASSWORD: 'CURRENT PASSWORD',
+  SAVED_LOCATIONS: ' Saved Locations',
 };

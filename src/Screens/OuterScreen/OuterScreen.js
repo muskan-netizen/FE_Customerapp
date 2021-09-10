@@ -384,7 +384,6 @@ export default function OuterScreen({navigation}) {
                   // lineHeight:24,
                   fontFamily: fontFamily.bold,
                 }}>
-                {' '}
                 {strings.LOGIN}
               </Text>
             </TouchableOpacity>
