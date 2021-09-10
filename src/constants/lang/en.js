@@ -382,4 +382,6 @@ export default {
   ADD_ITEM: 'Add item',
   LIGHT: 'Light',
   DARK: 'Dark',
+  NOW: 'Now',
+  SCHEDULE_ORDER: 'Schedule Order',
 };
