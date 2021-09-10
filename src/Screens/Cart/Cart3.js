@@ -261,10 +261,10 @@ export default function Cart({navigation, route}) {
           scheduleType: res?.data?.schedule_type,
           selectedTimeOption:
             res?.data?.schedule_type == 'now'
-              ? {id: 1, title: 'Now', type: 'now'}
+              ? {id: 1, title: strings.NOW, type: 'now'}
               : res?.data?.schedule_type == 'schedule'
-              ? {id: 2, title: 'Schedule Order', type: 'schedule'}
-              : {id: 1, title: 'Now', type: 'now'},
+              ? {id: 2, title: strings.SCHEDULE_ORDER, type: 'schedule'}
+              : {id: 1, title: strings.NOW, type: 'now'},
         });
         if (res && res.data) {
           if (res.data.vendor_details.vendor_tables) {

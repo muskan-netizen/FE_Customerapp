@@ -239,7 +239,7 @@ export default function Account3({navigation}) {
             centerHeading={strings.MY_ORDERS}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
-              fontSize: textScale(18),
+              fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
             // iconRight={imagePath.goRight}
@@ -256,7 +256,7 @@ export default function Account3({navigation}) {
             centerHeading={strings.SUBSCRIPTION}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
-              fontSize: textScale(18),
+              fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
             // iconRight={imagePath.goRight}
@@ -273,7 +273,7 @@ export default function Account3({navigation}) {
             centerHeading={strings.LOYALTYPOINTS}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
-              fontSize: textScale(18),
+              fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
             // iconRight={imagePath.goRight}
@@ -303,7 +303,7 @@ export default function Account3({navigation}) {
             centerHeading={strings.WALLET}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
-              fontSize: textScale(18),
+              fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
             // iconRight={imagePath.goRight}
@@ -319,7 +319,7 @@ export default function Account3({navigation}) {
             centerHeading={strings.FAVOURITE}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
-              fontSize: textScale(18),
+              fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
             // iconRight={imagePath.goRight}
@@ -335,7 +335,7 @@ export default function Account3({navigation}) {
           centerHeading={strings.LINKS}
           containerStyle={styles.containerStyle2}
           centerHeadingStyle={{
-            fontSize: textScale(18),
+            fontSize: textScale(14),
             fontFamily: fontFamily.regular,
           }}
           // iconRight={imagePath.goRight}
@@ -350,7 +350,7 @@ export default function Account3({navigation}) {
             centerHeading={strings.SHARE_APP}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
-              fontSize: textScale(18),
+              fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
             // iconRight={imagePath.goRight}
@@ -366,7 +366,7 @@ export default function Account3({navigation}) {
           centerHeading={strings.SETTINGS}
           containerStyle={styles.containerStyle2}
           centerHeadingStyle={{
-            fontSize: textScale(18),
+            fontSize: textScale(14),
             fontFamily: fontFamily.regular,
           }}
           // iconRight={imagePath.goRight}
@@ -392,7 +392,7 @@ export default function Account3({navigation}) {
           centerHeading={strings.CONTACT_US}
           containerStyle={styles.containerStyle2}
           centerHeadingStyle={{
-            fontSize: textScale(18),
+            fontSize: textScale(14),
             fontFamily: fontFamily.regular,
           }}
           // iconRight={imagePath.goRight}
@@ -408,7 +408,7 @@ export default function Account3({navigation}) {
             centerHeading={strings.MYSTORES}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
-              fontSize: textScale(18),
+              fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
             // iconRight={imagePath.goRight}

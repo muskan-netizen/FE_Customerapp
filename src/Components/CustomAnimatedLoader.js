@@ -118,7 +118,9 @@ export default class CustomAnimatedLoader extends React.PureComponent {
               alignItems: 'center',
             }}>
             {this._renderLottie()}
-            <Text style={{color: loadercolor}}>{loaderTitle}</Text>
+            <Text style={{color: loadercolor, textAlign: 'center'}}>
+              {loaderTitle}
+            </Text>
           </View>
           {this.props.children}
         </View>

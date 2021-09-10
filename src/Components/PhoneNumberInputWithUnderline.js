@@ -122,7 +122,7 @@ export default function PhoneNumberInputWithUnderline({
               ? MyDarkTheme.colors.lightDark
               : colors.textGreyK,
             ...textInputStyle,
-            height: moderateScaleVertical(43),
+            height: moderateScaleVertical(40),
             marginTop: moderateScaleVertical(15),
           }}
         />

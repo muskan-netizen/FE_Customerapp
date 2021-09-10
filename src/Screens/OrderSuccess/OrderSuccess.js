@@ -76,7 +76,7 @@ export default function OrderSuccess({navigation, route}) {
                 ? [styles.requestSubmitText, {color: MyDarkTheme.colors.text}]
                 : styles.requestSubmitText
             }>
-            {'Your order has been submitted!'}
+            {strings.YOUR_ORDER_HAS_BEEN_SUBMITTED}
           </Text>
           <Text
             style={
@@ -84,7 +84,7 @@ export default function OrderSuccess({navigation, route}) {
                 ? [styles.successfully, {color: MyDarkTheme.colors.text}]
                 : styles.successfully
             }>
-            successfully!
+            {strings.SUCCESSFULLY}
           </Text>
         </View>
         <View
@@ -98,7 +98,7 @@ export default function OrderSuccess({navigation, route}) {
                 ? [styles.yourAWBText, {color: MyDarkTheme.colors.text}]
                 : styles.yourAWBText
             }>
-            {`Your order number is ${
+            {`${strings.YOUR_ORDER_NUMBER} ${
               paramData && paramData?.orderDetail
                 ? paramData?.orderDetail?.order_number
                 : ''

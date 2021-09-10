@@ -293,7 +293,7 @@ export default function Account2({navigation}) {
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={moveToNewScreen(navigationStrings.WISHLIST)}
             iconLeft={imagePath.fav}
-            centerHeading={strings.FAVOURITE}
+            centerHeading={strings.WISHLIST}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{fontSize: textScale(15)}}
             // iconRight={imagePath.goRight}

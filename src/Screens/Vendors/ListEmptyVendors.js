@@ -13,6 +13,7 @@ import LottieView from 'lottie-react-native';
 import {noDataFound} from '../../Components/Loaders/AnimatedLoaderFiles';
 import {useSelector} from 'react-redux';
 import commonStylesFunc from '../../styles/commonStyles';
+import strings from '../../constants/lang';
 
 export default function ListEmptyVendors({
   isLoading = false,
@@ -79,9 +80,8 @@ export default function ListEmptyVendors({
           height: moderateScaleVertical(width / 2),
           width: moderateScale(width / 2),
         }}
-        
       />
-      <Text style={styles.textStyle}>{emptyText}</Text>
+      <Text style={styles.textStyle}>{strings.NO_DATA_FOUND}</Text>
     </View>
     // <View>
     //   <Image source={imagePath.}/>

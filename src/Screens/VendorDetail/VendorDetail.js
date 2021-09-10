@@ -20,6 +20,7 @@ import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from '../Vendors/ListEmptyVendors';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import strings from '../../constants/lang';
 
 export default function VendorDetail({navigation, route}) {
   let vendorParams = route?.params?.data;
@@ -209,7 +210,7 @@ export default function VendorDetail({navigation, route}) {
                 }}>
                 <ListEmptyVendors
                   isLoading={isLoading}
-                  emptyText={'No data found'}
+                  emptyText={strings.NO_DATA_FOUND}
                 />
               </View>
             )

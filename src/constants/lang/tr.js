@@ -363,4 +363,9 @@ export default {
   DINE_IN: 'Yemek',
   DELIVERY: 'Teslimat',
   TAKEAWAY: 'Götürmek',
+  ENTER_CONFIRM_PASSWORD: 'YENİ ŞİFREYİ ONAYLA',
+  ENTER_NEW_PASSWORD: 'YENİ ŞİFRE',
+  ENTER_CURRENT_PASSWORD: 'ŞİMDİKİ ŞİFRE',
+  SAVED_LOCATIONS: ' Kaydedilen Konumlar',
+  NOW: 'Now',
 };
