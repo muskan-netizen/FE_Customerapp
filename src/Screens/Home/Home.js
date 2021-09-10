@@ -575,7 +575,7 @@ export default function Home({route, navigation}) {
         );
     }
   };
-  console.log(appMainData, 'appMainData');
+  // console.log(appMainData, 'appMainData');
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
