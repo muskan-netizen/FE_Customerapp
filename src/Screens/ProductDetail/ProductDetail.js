@@ -515,7 +515,6 @@ export default function ProductDetail({route, navigation}) {
   const _finalAddToCart = (addonSet = addonSet) => {
     const addon_ids = [];
     const addon_options = [];
-
     addonSet.map((i, inx) => {
       i.setoptions.map((j, jnx) => {
         console.log(j, 'J');

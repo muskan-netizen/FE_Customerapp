@@ -25,6 +25,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
+import DeviceInfo from 'react-native-device-info';
 import {
   height,
   moderateScale,
@@ -59,6 +60,9 @@ export default function Products({ route, navigation }) {
   console.log(data, 'Datais ');
   console.log(data, 'data params >>>>>');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
+  const dineInType = useSelector((state) => state?.home?.dineInType);
+
   const isDarkMode = theme;
   const [state, setState] = useState({
     isVisibleModal: false,
@@ -77,6 +81,7 @@ export default function Products({ route, navigation }) {
     brandData: [],
     allFilters: [],
     isVisibleModal: false,
+    updateQtyLoader: false,
     sortFilters: [
       {
         id: -2,
@@ -162,6 +167,7 @@ export default function Products({ route, navigation }) {
     AnimatedHeaderValue,
     selectedCartItem,
     isVisibleModal,
+    updateQtyLoader
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -557,9 +563,9 @@ export default function Products({ route, navigation }) {
   });
 
   //Add product to cart
-  const _addToCart = (item) => {
-    moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
-    return;
+  const _addToCart = async (item) => {
+    // moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
+    // return;
     if (item.add_on.length !== 0 || item.variantSet.length !== 0) {
       updateState({ isVisibleModal: true, selectedCartItem: item });
       return;
@@ -570,19 +576,156 @@ export default function Products({ route, navigation }) {
       }
       return val;
     });
-    updateState({ productListData: updateArray, selectedCartItem: item });
+    updateState({ updateQtyLoader: true })
+    await _finalAddToCart(item, 1)
+    updateState({ productListData: updateArray, selectedCartItem: item, updateQtyLoader: false });
 
   };
 
-  const onIncrement = (item) => {
+
+  const addDeleteCartItems = (item, type) => {
+    moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
+    return;
+    if (item.add_on.length !== 0 || item.variantSet.length !== 0) {
+      updateState({ isVisibleModal: true, selectedCartItem: item });
+      return;
+    }
+
+    let qtyValue = !!item?.variant[0] && item?.variant[0]?.check_if_in_cart[0]?.quantity || 1
+
+    console.log("addd delete item", item)
+
+    return;
+
+    let quanitity = null;
+    let itemToUpdate = cloneDeep(item);
+    if (type == 1) {
+      quanitity = Number(qtyValue) + 1;
+    } else {
+      quanitity = Number(qtyValue) - 1;
+    }
+    if (quanitity) {
+      updateState({ isLoadingB: true });
+      let data = {};
+      data['cart_id'] = itemToUpdate?.cart_id;
+      data['quantity'] = quanitity;
+      data['cart_product_id'] = itemToUpdate?.id;
+      data['type'] = dineInType;
+
+      actions
+        .increaseDecreaseItemQty(data, {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        })
+        .then((res) => {
+          actions.cartItemQty(res);
+          updateState({
+            cartItems: res.data.products,
+            cartData: res.data,
+            isLoadingB: false,
+          });
+        })
+        .catch(errorMethod);
+    } else {
+      updateState({ isLoadingB: true });
+      removeItem('selectedTable');
+      removeProductFromCart(itemToUpdate);
+    }
+  };
+
+  const _finalAddToCart = async (item, qty) => {
+    console.log("im item", item)
+    updateState({ updateQtyLoader: true })
+    // return;
+    let data = {};
+    data['sku'] = item.sku;
+    data['quantity'] = qty;
+    data['product_variant_id'] = item.variant[0].id;
+    data['type'] = dine_In_Type;
+
+    console.log(data, 'data for cart');
+    actions
+      .addProductsToCart(data, {
+        code: appData.profile.code,
+        currency: currencies.primary_currency.id,
+        language: languages.primary_language.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res, 'res.data');
+        actions.cartItemQty(res);
+        // showSuccess('Product successfully added');
+        updateState({ updateQtyLoader: false });
+        // navigation.goBack();
+      })
+      .catch((error) => errorMethodSecond(error, addonSet));
+  };
+
+  const errorMethodSecond = (error, addonSet) => {
+    console.log(error.message.alert, 'Error>>>>>');
+
+    if (error?.message?.alert == 1) {
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
+      // showError(error?.message?.error || error?.error);
+      Alert.alert('', error?.message?.error, [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          // style: 'destructive',
+        },
+        { text: 'Clear Cart', onPress: () => clearCart(addonSet) },
+      ]);
+    } else {
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
+      showError(error?.message || error?.error);
+    }
+  };
+
+  const clearCart = (addonSet = []) => {
+    actions
+      .clearCart(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        actions.cartItemQty(res);
+        if (addonSet) {
+          _finalAddToCart(addonSet);
+        } else {
+          addToCart();
+        }
+        // _finalAddToCart(addonSet);
+        showSuccess(res?.message);
+      })
+      .catch(errorMethod);
+  };
+
+
+
+  const onIncrement = async (item, type) => {
+    if (item.add_on.length !== 0 || item.variantSet.length !== 0) {
+      updateState({ isVisibleModal: true, selectedCartItem: item });
+      return;
+    }
+
     let updateArray = productListData.map((val, i) => {
       if (val.id == item.id) {
-        return { ...val, qty: item.qty + 1 };
+        return { ...val, qty: !!item?.qty ? item.qty + 1 : 1 };
       }
       return val;
     });
-    updateState({ productListData: updateArray });
+    await _finalAddToCart(item, 1)
+    updateState({ productListData: updateArray, selectedCartItem: item, updateQtyLoader: false });
   };
+
+
 
   const onDecrement = (item) => {
     // if (item.qty == 1) {
@@ -606,9 +749,9 @@ export default function Products({ route, navigation }) {
         index={index}
         onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
         onAddtoWishlist={() => _onAddtoWishlist(item)}
-        addToCart={() => _addToCart(item)}
-        onIncrement={() => onIncrement(item)}
-        onDecrement={() => onDecrement(item)}
+        addToCart={() => addDeleteCartItems(item, 1)}
+        onIncrement={() => addDeleteCartItems(item, 1)}
+        onDecrement={() => addDeleteCartItems(item, 2)}
         selectedCartItem={selectedCartItem}
       />
     );
@@ -913,7 +1056,7 @@ export default function Products({ route, navigation }) {
             width: moderateScale(40),
           },
         ]}
-        visible={isLoadingC}
+        visible={updateQtyLoader}
       />
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
@@ -1062,12 +1205,13 @@ export default function Products({ route, navigation }) {
           />
           {/* <View style={{ height: moderateScale(height * 0.070) }} /> */}
         </View>
-        {/* <VariantAddons
+        {/* {<VariantAddons
           addonSet={selectedCartItem?.add_on}
+          variantData={selectedCartItem?.variantSet}
           isVisible={isVisibleModal}
           productdetail={selectedCartItem}
           onClose={() => updateState({ isVisibleModal: false })}
-        /> */}
+        />} */}
       </SafeAreaView>
     </View>
   );

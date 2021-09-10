@@ -324,6 +324,8 @@ export default function Cart({navigation, route}) {
   const addDeleteCartItems = (item, index, type) => {
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
+    console.log("item",item)
+    // return;
     if (type == 1) {
       quanitity = Number(itemToUpdate.quantity) + 1;
     } else {

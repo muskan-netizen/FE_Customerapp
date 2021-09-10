@@ -110,9 +110,6 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
       height: moderateScale(30),
       width: moderateScale(30),
       borderRadius: moderateScale(30 / 2),
-
-      // borderColor: i?.value ? 'red' : 'transparent',
-
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -120,9 +117,6 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
       height: moderateScale(40),
       width: moderateScale(40),
       borderRadius: moderateScale(40 / 2),
-
-      // borderColor: i?.value ? 'red' : 'transparent',
-
       alignItems: 'center',
       justifyContent: 'center',
     },
