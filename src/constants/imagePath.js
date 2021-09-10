@@ -287,4 +287,6 @@ export default {
   wallet3: require('../assets/images/RoyoorderNewImages/ic_wallet.png'),
   mystores2: require('../assets/images/RoyoorderNewImages/ic_stores.png'),
   subscription: require('../assets/images/RoyoorderNewImages/ic_sub.png'),
+  recently_search: require('../assets/images/RoyoorderNewImages/ic_recent.png'),
+  trending: require('../assets/images/RoyoorderNewImages/ic_trending.png'),
 };

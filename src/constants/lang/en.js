@@ -430,4 +430,6 @@ export default {
     'This Change Will Remove Your Cart Products. Do you Really Want To Continue?',
   CLEAR_CART2: 'Clear Cart',
   ENTER_CUSTOM_AMOUNT: 'Enter Custom Amount',
+  RECENTLY_SEARCH: 'Recently Searched',
+  CLEAR: 'Clear',
 };

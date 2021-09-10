@@ -18,6 +18,7 @@ import commonStylesFunc from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
   width,
 } from '../../styles/responsiveSize';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
@@ -31,12 +32,20 @@ export default function SearchProductVendorItem2({navigation, route}) {
     searchInput: '',
     searchData: [],
     showRightIcon: false,
+    recentlySearched: [
+      {id: 1, image: imagePath.recently_search, title: 'KFC'},
+      {id: 2, image: imagePath.recently_search, title: 'Subway'},
+      {id: 3, image: imagePath.recently_search, title: 'Carpet cleaning'},
+      {id: 4, image: imagePath.recently_search, title: 'Carpet cleaning'},
+      {id: 5, image: imagePath.recently_search, title: 'Subway'},
+    ],
   });
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {isLoading, searchInput, searchData, showRightIcon} = state;
+  const {isLoading, searchInput, searchData, showRightIcon, recentlySearched} =
+    state;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
 
@@ -207,25 +216,99 @@ export default function SearchProductVendorItem2({navigation, route}) {
     );
   };
 
+  const renderProductForRecentSearch = ({item}) => {
+    return (
+      <TouchableOpacity
+        onPress={() => _onclickSearchItem(item)}
+        style={{
+          flexDirection: 'row',
+          borderColor: colors.textGreyB,
+          borderWidth: 0.5,
+          borderRadius: 4,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginHorizontal: moderateScale(5),
+          paddingHorizontal: moderateScale(5),
+          paddingVertical: moderateScaleVertical(5),
+        }}>
+        <View>
+          <Image
+            style={
+              isDarkMode
+                ? {
+                    tintColor: MyDarkTheme.colors.text,
+                    opacity: 0.7,
+                    marginHorizontal: moderateScale(5),
+                  }
+                : {opacity: 0.7, marginHorizontal: moderateScale(5)}
+            }
+            source={item.image}
+          />
+        </View>
+        <View>
+          <Text
+            style={{
+              fontSize: 15,
+              fontFamily: fontFamily.medium,
+              color: colors.greyLight,
+            }}>
+            {item.title}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   const _listEmptyComponent = () => {
     return (
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
-        <LottieView
-          source={searchLoader}
-          autoPlay
-          loop
+      <View>
+        <View
           style={{
-            height: moderateScaleVertical(200),
-            width: moderateScale(200),
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingHorizontal: 20,
+            width: width - 16,
+          }}>
+          <Text
+            style={{
+              fontSize: textScale(16),
+              fontFamily: fontFamily.medium,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}>
+            {strings.RECENTLY_SEARCH}
+          </Text>
+          <Text
+            style={{
+              fontSize: textScale(12),
+              fontFamily: fontFamily.regular,
+              color: themeColors.primary_color,
+            }}>
+            {strings.CLEAR}
+          </Text>
+        </View>
+        <FlatList
+          numColumns={3}
+          data={recentlySearched}
+          renderItem={renderProductForRecentSearch}
+          keyExtractor={(item, index) => String(index)}
+          keyboardShouldPersistTaps="always"
+          showsVerticalScrollIndicator={false}
+          style={{
+            // flex: 1,
+            marginVertical: moderateScaleVertical(10),
+            marginHorizontal: moderateScale(20),
+            // backgroundColor: 'red',
+            // backgroundColor: 'black',
           }}
+          ListEmptyComponent={_listEmptyComponent}
+          ItemSeparatorComponent={() => <View style={{height: 10}} />}
         />
-        {/* <Image source={imagePath.search_gif} /> */}
       </View>
     );
   };
   return (
     <WrapperContainer
-      statusBarColor={colors.backgroundGrey}
+      statusBarColor={colors.white}
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
@@ -234,21 +317,37 @@ export default function SearchProductVendorItem2({navigation, route}) {
           flex: 1,
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.background
-            : colors.greySearchBackground,
+            : colors.white,
         }}>
         <View
           style={{
-            flex: 0.15,
+            flex: 0.1,
             flexDirection: 'row',
-            justifyContent: 'center',
-            // backgroundColor:'red'
+            justifyContent: 'flex-end',
           }}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            background={colors.green}
+            onPress={() => navigation.goBack()}
+            style={{
+              backgroundColor: colors.greyColor,
+              height: moderateScaleVertical(37),
+              width: moderateScale(45),
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: moderateScale(11),
+              elevation: 2,
+            }}>
+            <Image source={imagePath.backArrow} />
+          </TouchableOpacity>
+
           <SearchBar
             containerStyle={{
-              marginHorizontal: moderateScale(10),
+              marginHorizontal: moderateScale(18),
               borderRadius: 8,
               width: width / 1.3,
               backgroundColor: colors.greyColor,
+              height: moderateScaleVertical(37),
             }}
             searchValue={searchInput}
             placeholder={strings.SEARCH_PRODUCT_VENDOR_ITEM}
@@ -269,7 +368,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
           style={{
             flex: 1,
             marginVertical: moderateScaleVertical(10),
-            marginHorizontal: moderateScale(20),
+
             // backgroundColor: 'black',
           }}
           ListEmptyComponent={_listEmptyComponent}
