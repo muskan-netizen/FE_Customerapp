@@ -15,6 +15,7 @@ import {
   SafeAreaView,
   Platform,
   Modal,
+  Share
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import EmptyListLoader from '../../Components/EmptyListLoader';
@@ -583,6 +584,33 @@ export default function Products({ route, navigation }) {
   };
 
 
+  const onShare = async (item) => {
+    const params = new URLSearchParams()
+    let convertJson = JSON.stringify(data);
+    let shareLink = `${item.share_link}?${convertJson}`
+    params.append(shareLink.toString())
+    console.log("vendor link+++",params.toString())
+
+    // var response =  shareLink?.split('?').pop();
+    // console.log("res==>>>>>",JSON.parse(response))
+
+    return;
+    try {
+      const result = await Share.share({
+        url: shareLink,
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+        } else {
+        }
+      } else if (result.action === Share.dismissedAction) {
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   const addDeleteCartItems = (item, type) => {
     moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
     return;
@@ -1145,7 +1173,10 @@ export default function Products({ route, navigation }) {
                 />
               </TouchableOpacity>
               <View style={{ marginHorizontal: moderateScale(8) }} />
-              <TouchableOpacity activeOpacity={0.8}>
+              <TouchableOpacity
+                onPress={() => onShare(categoryInfo)}
+                activeOpacity={0.8}
+              >
                 <Image
                   style={{
                     tintColor: isDarkMode
