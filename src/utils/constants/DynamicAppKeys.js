@@ -81,6 +81,7 @@ const shortCodes = {
   hemptyfy: '1a7e89',
   sharu: '443e7e',
   smcompany: '69502d',
+  totum4U: '04e60d',
 };
 
 const appIds = {
@@ -403,6 +404,10 @@ const appIds = {
   smcompany: Platform.select({
     ios: 'com.smcompany',
     android: 'com.smcompany',
+  }),
+  totum4U: Platform.select({
+    ios: 'com.totum4U',
+    android: 'com.totum4U',
   }),
 };
 
