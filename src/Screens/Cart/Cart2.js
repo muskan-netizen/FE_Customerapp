@@ -78,7 +78,7 @@ export default function Cart2({navigation, route}) {
     selectedAddress: null,
     selectedPayment: {
       id: 1,
-      title: 'Cash on Delivery',
+      title: strings.SELECT_PAYMENT_METHOD,
       off_site: 0,
     },
     // selectedPayment: null,
@@ -86,8 +86,8 @@ export default function Cart2({navigation, route}) {
     selectedTipvalue: null,
     selectedTipAmount: null,
     selectedTimeOptions: [
-      {id: 1, title: 'Now', type: 'now'},
-      {id: 2, title: 'Schedule Order', type: 'schedule'},
+      {id: 1, title: strings.NOW, type: 'now'},
+      {id: 2, title: strings.SCHEDULE_ORDER, type: 'schedule'},
     ],
     selectedTimeOption: null,
     sheduledorderdate: null,
@@ -226,6 +226,12 @@ export default function Cart2({navigation, route}) {
           updateState({
             cartItems: res.data.products,
             cartData: res.data,
+            selectedTimeOption:
+              res?.data?.schedule_type == 'now'
+                ? {id: 1, title: strings.NOW, type: 'now'}
+                : res?.data?.schedule_type == 'schedule'
+                ? {id: 2, title: strings.SCHEDULE_ORDER, type: 'schedule'}
+                : {id: 1, title: strings.NOW, type: 'now'},
           });
         }
       })
@@ -1003,9 +1009,7 @@ export default function Cart2({navigation, route}) {
             placeholderTextColor={
               isDarkMode ? colors.textGreyB : colors.textGreyB
             }
-            placeholder={
-              ' Any restaurant requests? We’ll try our best to convey it '
-            }></TextInput>
+            placeholder={strings.ANY_RESTAURANT_REQUESTS}></TextInput>
           <Text
             style={{
               fontFamily: fontFamily.bold,
@@ -1013,7 +1017,7 @@ export default function Cart2({navigation, route}) {
               marginVertical: moderateScale(20),
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
-            Order details
+            {strings.ORDER_DETAIL}
           </Text>
           <View style={[styles.bottomTabLableValue]}>
             <Text
@@ -1215,7 +1219,7 @@ export default function Cart2({navigation, route}) {
                                   : colors.black,
                             }
                       }>
-                      {'Custom'}
+                      {strings.CUSTOM}
                     </Text>
                     <Text
                       style={
@@ -1233,7 +1237,7 @@ export default function Cart2({navigation, route}) {
                                   : colors.black,
                             }
                       }>
-                      {'Amount'}
+                      {strings.AMOUNT}
                     </Text>
                   </TouchableOpacity>
                 </KeyboardAwareScrollView>
@@ -1264,7 +1268,7 @@ export default function Cart2({navigation, route}) {
                       maxLength={5}
                       returnKeyType={'done'}
                       keyboardType={'number-pad'}
-                      placeholder={'Enter Custom Amount'}
+                      placeholder={strings.ENTER_CUSTOM_AMOUNT}
                       placeholderTextColor={
                         isDarkMode ? MyDarkTheme.colors.text : colors.black
                       }

@@ -1,4 +1,4 @@
-import { requireNativeComponent } from 'react-native';
+import {requireNativeComponent} from 'react-native';
 
 export default {
   dropdownTriangle: require('../assets/images/ic_dropdown.png'),
@@ -285,4 +285,13 @@ export default {
   icBrandInActive: require('../assets/images/RoyoorderNewImages/ic_tag.png'),
   icCelebActive: require('../assets/images/RoyoorderNewImages/ic_celeb2.png'),
   icCelebInActive: require('../assets/images/RoyoorderNewImages/ic_celeb1.png'),
-}
+
+  links: require('../assets/images/RoyoorderNewImages/ic_links.png'),
+  myOrder2: require('../assets/images/RoyoorderNewImages/ic_orders.png'),
+  loyalty: require('../assets/images/RoyoorderNewImages/ic_loyalty.png'),
+  wallet3: require('../assets/images/RoyoorderNewImages/ic_wallet.png'),
+  mystores2: require('../assets/images/RoyoorderNewImages/ic_stores.png'),
+  subscription: require('../assets/images/RoyoorderNewImages/ic_sub.png'),
+  recently_search: require('../assets/images/RoyoorderNewImages/ic_recent.png'),
+  trending: require('../assets/images/RoyoorderNewImages/ic_trending.png'),
+};

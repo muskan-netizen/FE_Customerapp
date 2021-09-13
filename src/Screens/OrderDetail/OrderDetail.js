@@ -58,7 +58,12 @@ export default function OrderDetail({navigation, route}) {
     cartItems: [],
     cartData: {},
     selectedPayment: null,
-    labels: ['Accepted', 'Processing', 'Out For Delivery', 'Delivered'],
+    labels: [
+      strings.ACCEPTED,
+      strings.PROCESSING,
+      strings.OUT_FOR_DELIVERY,
+      strings.DELIVERED,
+    ],
     // labels: [
     //   {lable: 'Accepted', orderDate: '12/12/1233'},
     //   {lable: 'Processing', orderDate: ''},

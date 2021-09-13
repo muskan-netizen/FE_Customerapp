@@ -375,4 +375,5 @@ export default {
   ENTER_NEW_PASSWORD: 'NUEVA CONTRASEÑA',
   ENTER_CURRENT_PASSWORD: 'CONTRASEÑA ACTUAL',
   SAVED_LOCATIONS: ' Ubicaciones guardadas',
+  NOW: 'Now',
 };

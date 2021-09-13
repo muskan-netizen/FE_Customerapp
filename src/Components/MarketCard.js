@@ -30,6 +30,8 @@ import {
 } from '../utils/helperFunctions';
 import IconTextRow from './IconTextRow';
 import {useDarkMode} from 'react-native-dark-mode';
+import strings from '../constants/lang';
+import {string} from 'prop-types';
 
 export default function MarketCard({
   data = {},
@@ -161,10 +163,10 @@ export default function MarketCard({
                       : colors.redB,
                   }}>
                   {data?.show_slot
-                    ? 'Open'
+                    ? strings.OPEN
                     : data?.slot && data?.slot.length
-                    ? 'Open'
-                    : 'Close'}
+                    ? strings.OPEN
+                    : strings.CLOSE}
                 </Text>
               </TouchableOpacity>
             </View>

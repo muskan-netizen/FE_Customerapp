@@ -284,7 +284,7 @@ export default function Settings({route, navigation}) {
               <Image source={i.image} />
               <Text
                 style={{
-                  marginHorizontal: moderateScale(12),
+                  marginHorizontal: moderateScale(10),
                   marginVertical: moderateScaleVertical(5),
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 }}>
