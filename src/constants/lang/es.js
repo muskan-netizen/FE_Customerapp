@@ -379,4 +379,5 @@ export default {
   YOUR_LOCATION: 'Your Location',
   COMPLETE_ADDRESS: 'Complete Address',
   PRODUCT_ADDED_SUCCESS: 'Product successfully added',
+  NOW: 'Now',
 };

@@ -268,7 +268,7 @@ export default function Home({route, navigation}) {
               },
             )
             .then((res) => {
-              console.log("Home data++++++",res)
+              console.log('Home data++++++', res);
               if (
                 appData?.profile?.preferences?.is_hyperlocal &&
                 location?.latitude == '' &&
@@ -426,7 +426,7 @@ export default function Home({route, navigation}) {
         updateState({isRefreshing: false});
       })
       .catch((error) => {
-        console.log("im error+++",error)
+        console.log('im error+++', error);
         updateState({isRefreshing: false});
       });
   };

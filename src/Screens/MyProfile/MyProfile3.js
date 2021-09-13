@@ -54,7 +54,7 @@ import BorderTextInputWithLable from '../../Components/BorderTextInputWithLable'
 import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
 import {string} from 'is_js';
 
-export default function MyProfile({route, navigation}) {
+export default function MyProfile3({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -514,7 +514,7 @@ export default function MyProfile({route, navigation}) {
             </View>
           ) : null}
 
-          {/* <TextInputWithUnderlineAndLabel
+          <TextInputWithUnderlineAndLabel
             onChangeText={_onChangeText('name')}
             value={name}
             label={'NAME'}
@@ -524,19 +524,8 @@ export default function MyProfile({route, navigation}) {
             txtInputStyle={{fontFamily: fontFamily.regular}}
             labelStyle={{color: colors.textGreyB}}
           />
-          */}
 
-          <BorderTextInput
-            onChangeText={_onChangeText('name')}
-            placeholder={strings.YOUR_NAME}
-            value={name}
-          />
-          <BorderTextInput
-            onChangeText={_onChangeText('email')}
-            placeholder={strings.YOUR_EMAIL}
-            value={email}
-          />
-          {/* <TextInputWithUnderlineAndLabel
+          <TextInputWithUnderlineAndLabel
             onChangeText={_onChangeText('email')}
             value={email}
             label={'EMAIL ID'}
@@ -545,21 +534,9 @@ export default function MyProfile({route, navigation}) {
             txtInputStyle={{fontFamily: fontFamily.regular}}
             undnerlinecolor={colors.textGreyB}
             labelStyle={{color: colors.textGreyB}}
-          /> */}
-
-          <PhoneNumberInput
-            onCountryChange={_onCountryChange}
-            placeholder={strings.YOUR_PHONE_NUMBER}
-            onChangePhone={(phoneNumber) =>
-              updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
-            }
-            cca2={cca2}
-            phoneNumber={phoneNumber}
-            callingCode={state.callingCode}
-            color={isDarkMode ? MyDarkTheme.colors.text : null}
           />
 
-          {/* <PhoneNumberInputWithUnderline
+          <PhoneNumberInputWithUnderline
             onCountryChange={_onCountryChange}
             placeholder={'PHONE NUMBER'}
             onChangePhone={(phoneNumber) =>
@@ -569,7 +546,7 @@ export default function MyProfile({route, navigation}) {
             phoneNumber={phoneNumber}
             callingCode={state.callingCode}
             undnerlineColor={colors.textGreyB}
-          /> */}
+          />
 
           <View style={{height: moderateScaleVertical(20)}} />
 
@@ -598,7 +575,7 @@ export default function MyProfile({route, navigation}) {
             marginVertical: moderateScaleVertical(50),
             marginHorizontal: moderateScale(24),
           }}>
-          {/* <TextInputWithUnderlineAndLabel
+          <TextInputWithUnderlineAndLabel
             onChangeText={_onChangeText('currentpassword')}
             label={strings.ENTER_CURRENT_PASSWORD}
             value={currentpassword}
@@ -607,20 +584,9 @@ export default function MyProfile({route, navigation}) {
             undnerlinecolor={colors.textGreyB}
             labelStyle={{color: colors.textGreyB}}
             secureTextEntry={true}
-          /> */}
-          <BorderTextInput
-            onChangeText={_onChangeText('currentpassword')}
-            placeholder={strings.ENTER_CURRENT_PASS}
-            value={currentpassword}
-            secureTextEntry={true}
           />
-          <BorderTextInput
-            onChangeText={_onChangeText('newPassword')}
-            placeholder={strings.ENTER_NEW_PASS}
-            value={newPassword}
-            secureTextEntry={true}
-          />
-          {/* <TextInputWithUnderlineAndLabel
+
+          <TextInputWithUnderlineAndLabel
             onChangeText={_onChangeText('newPassword')}
             value={newPassword}
             label={strings.ENTER_NEW_PASSWORD}
@@ -628,16 +594,8 @@ export default function MyProfile({route, navigation}) {
             labelStyle={{color: colors.textGreyB}}
             secureTextEntry={true}
             containerStyle={{marginVertical: moderateScaleVertical(10)}}
-          /> */}
-
-          <BorderTextInput
-            onChangeText={_onChangeText('confirmPassword')}
-            placeholder={strings.ENTER_CONFIRM_PASS}
-            value={confirmPassword}
-            secureTextEntry={true}
           />
-
-          {/* <TextInputWithUnderlineAndLabel
+          <TextInputWithUnderlineAndLabel
             onChangeText={_onChangeText('confirmPassword')}
             value={confirmPassword}
             label={strings.ENTER_CONFIRM_PASSWORD}
@@ -645,8 +603,7 @@ export default function MyProfile({route, navigation}) {
             labelStyle={{color: colors.textGreyB}}
             secureTextEntry={true}
             containerStyle={{marginVertical: moderateScaleVertical(10)}}
-          /> */}
-
+          />
           <GradientButton
             btnStyle={{marginTop: moderateScaleVertical(57)}}
             colorsArray={[themeColors.primary_color, themeColors.primary_color]}
@@ -885,7 +842,17 @@ export default function MyProfile({route, navigation}) {
             : styles.topSection
         }>
         <TouchableWithoutFeedback onPress={showActionSheet}>
-          <View style={styles.userProfileView}>
+          <View
+            style={{
+              backgroundColor: colors.backgroundGrey,
+              alignSelf: 'center',
+              height: moderateScale(90),
+              width: moderateScale(90),
+              borderRadius: moderateScale(12),
+              borderWidth: moderateScale(5),
+              borderColor: colors.white,
+              marginTop: moderateScale(20),
+            }}>
             <FastImage
               source={
                 userData?.source?.image_path
@@ -899,10 +866,17 @@ export default function MyProfile({route, navigation}) {
                     }
                   : userData?.source
               }
-              style={styles.profileImage}
+              style={{
+                height: moderateScale(80),
+                width: moderateScale(80),
+                borderRadius: moderateScale(12),
+              }}
             />
-            <View style={styles.cameraView}>
-              <Image source={imagePath?.camera} />
+            <View style={{position: 'absolute', right: -15}}>
+              <Image
+                style={{height: 30, width: 30}}
+                source={imagePath?.camera}
+              />
             </View>
           </View>
         </TouchableWithoutFeedback>

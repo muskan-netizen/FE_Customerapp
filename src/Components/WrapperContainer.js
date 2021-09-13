@@ -8,6 +8,7 @@ import {useSelector} from 'react-redux';
 import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import strings from '../constants/lang';
 
 const WrapperContainer = ({
   children,
@@ -48,7 +49,7 @@ const WrapperContainer = ({
       <Loader isLoading={isLoading} withModal={withModal} />
       <CustomAnimatedLoader
         source={source}
-        loaderTitle="Loading"
+        loaderTitle={strings.LOADING}
         containerColor={
           isDarkMode ? MyDarkTheme.colors.lightDark : colors.white
         }

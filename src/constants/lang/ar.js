@@ -374,4 +374,9 @@ export default {
   YOUR_LOCATION: 'Your Location',
   COMPLETE_ADDRESS: 'Complete Address',
   PRODUCT_ADDED_SUCCESS: 'Product successfully added',
+  ENTER_CONFIRM_PASSWORD: 'تأكيد كلمة المرور الجديدة',
+  ENTER_NEW_PASSWORD: 'كلمة مرور جديدة',
+  ENTER_CURRENT_PASSWORD: 'كلمة المرور الحالي',
+  SAVED_LOCATIONS: ' المواقع المحفوظة',
+  NOW: 'Now',
 };

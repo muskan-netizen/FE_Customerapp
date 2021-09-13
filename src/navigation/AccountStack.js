@@ -16,6 +16,7 @@ import {
   MyOrders,
   MyProfile,
   MyProfile2,
+  MyProfile3,
   Notifications,
   OrderDetail,
   PickupOrderDetail,

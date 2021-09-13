@@ -375,4 +375,9 @@ export default {
   YOUR_LOCATION: 'Your Location',
   COMPLETE_ADDRESS: 'Complete Address',
   PRODUCT_ADDED_SUCCESS: 'Product successfully added',
+  ENTER_CONFIRM_PASSWORD: 'BESTÄTIGE NEUES PASSWORT',
+  ENTER_NEW_PASSWORD: 'NEUES KENNWORT',
+  ENTER_CURRENT_PASSWORD: 'AKTUELLES PASSWORT',
+  SAVED_LOCATIONS: ' Gespeicherte Standorte',
+  NOW: 'Now',
 };

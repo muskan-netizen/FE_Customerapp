@@ -235,11 +235,11 @@ export default function Account3({navigation}) {
             centerContainerStyle={{flexDirection: 'row'}}
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={moveToNewScreen(navigationStrings.MY_ORDERS)}
-            iconLeft={imagePath.myOrder}
+            iconLeft={imagePath.myOrder2}
             centerHeading={strings.MY_ORDERS}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
-              fontSize: textScale(18),
+              fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
             // iconRight={imagePath.goRight}
@@ -252,11 +252,11 @@ export default function Account3({navigation}) {
             centerContainerStyle={{flexDirection: 'row'}}
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
-            iconLeft={imagePath.myOrder}
+            iconLeft={imagePath.subscription}
             centerHeading={strings.SUBSCRIPTION}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
-              fontSize: textScale(18),
+              fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
             // iconRight={imagePath.goRight}
@@ -269,11 +269,11 @@ export default function Account3({navigation}) {
             centerContainerStyle={{flexDirection: 'row'}}
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={moveToNewScreen(navigationStrings.LOYALTY)}
-            iconLeft={imagePath.myOrder}
+            iconLeft={imagePath.loyalty}
             centerHeading={strings.LOYALTYPOINTS}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
-              fontSize: textScale(18),
+              fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
             // iconRight={imagePath.goRight}
@@ -299,11 +299,11 @@ export default function Account3({navigation}) {
             centerContainerStyle={{flexDirection: 'row'}}
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={moveToNewScreen(navigationStrings.WALLET)}
-            iconLeft={imagePath.wallet}
+            iconLeft={imagePath.wallet3}
             centerHeading={strings.WALLET}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
-              fontSize: textScale(18),
+              fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
             // iconRight={imagePath.goRight}
@@ -319,7 +319,7 @@ export default function Account3({navigation}) {
             centerHeading={strings.FAVOURITE}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
-              fontSize: textScale(18),
+              fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
             // iconRight={imagePath.goRight}
@@ -331,11 +331,11 @@ export default function Account3({navigation}) {
           centerContainerStyle={{flexDirection: 'row'}}
           leftIconStyle={{flex: 0.1, alignItems: 'center'}}
           onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
-          iconLeft={imagePath.about}
+          iconLeft={imagePath.links}
           centerHeading={strings.LINKS}
           containerStyle={styles.containerStyle2}
           centerHeadingStyle={{
-            fontSize: textScale(18),
+            fontSize: textScale(14),
             fontFamily: fontFamily.regular,
           }}
           // iconRight={imagePath.goRight}
@@ -350,7 +350,7 @@ export default function Account3({navigation}) {
             centerHeading={strings.SHARE_APP}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
-              fontSize: textScale(18),
+              fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
             // iconRight={imagePath.goRight}
@@ -366,7 +366,7 @@ export default function Account3({navigation}) {
           centerHeading={strings.SETTINGS}
           containerStyle={styles.containerStyle2}
           centerHeadingStyle={{
-            fontSize: textScale(18),
+            fontSize: textScale(14),
             fontFamily: fontFamily.regular,
           }}
           // iconRight={imagePath.goRight}
@@ -392,7 +392,7 @@ export default function Account3({navigation}) {
           centerHeading={strings.CONTACT_US}
           containerStyle={styles.containerStyle2}
           centerHeadingStyle={{
-            fontSize: textScale(18),
+            fontSize: textScale(14),
             fontFamily: fontFamily.regular,
           }}
           // iconRight={imagePath.goRight}
@@ -404,11 +404,11 @@ export default function Account3({navigation}) {
             centerContainerStyle={{flexDirection: 'row'}}
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
-            iconLeft={imagePath.myStoreIcon}
+            iconLeft={imagePath.mystores2}
             centerHeading={strings.MYSTORES}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
-              fontSize: textScale(18),
+              fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
             // iconRight={imagePath.goRight}

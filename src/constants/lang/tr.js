@@ -366,4 +366,9 @@ export default {
   YOUR_LOCATION: 'Your Location',
   COMPLETE_ADDRESS: 'Complete Address',
   PRODUCT_ADDED_SUCCESS: 'Product successfully added',
+  ENTER_CONFIRM_PASSWORD: 'YENİ ŞİFREYİ ONAYLA',
+  ENTER_NEW_PASSWORD: 'YENİ ŞİFRE',
+  ENTER_CURRENT_PASSWORD: 'ŞİMDİKİ ŞİFRE',
+  SAVED_LOCATIONS: ' Kaydedilen Konumlar',
+  NOW: 'Now',
 };

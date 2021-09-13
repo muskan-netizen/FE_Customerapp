@@ -86,5 +86,6 @@ export default {
   greenA: '#71C94B',
   greyColor: '#D8D8D8',
   iconGrey: '#A5A5A5',
-  yellowOpacity10: 'rgba(247,215,123,0.1)'
+  yellowOpacity10: 'rgba(247,215,123,0.1)',
+  greyColor: '#F1F1F1',
 };
