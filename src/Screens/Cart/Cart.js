@@ -151,6 +151,8 @@ export default function Cart({navigation, route}) {
       navigation.navigate(screenName, {data});
     };
 
+    console.log("cart itemss",cartItems)
+
   // styles funcation
   // const fontFamily = appStyle?.fontSizeData;
   // const styles = stylesFun({fontFamily, themeColors});
@@ -338,7 +340,8 @@ export default function Cart({navigation, route}) {
       data['quantity'] = quanitity;
       data['cart_product_id'] = itemToUpdate?.id;
       data['type'] = dineInType;
-
+      console.log('sendng api data',data)
+      
       actions
         .increaseDecreaseItemQty(data, {
           code: appData?.profile?.code,
