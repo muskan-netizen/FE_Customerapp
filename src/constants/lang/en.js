@@ -358,7 +358,7 @@ export default {
   SELECT_CATEGORY: 'Select Category',
   EXPLORE_STORES: 'Explore Stores',
   OPEN: 'Open',
-  SEARCH_HERE: 'Whar are you looking for?',
+  SEARCH_HERE: 'What are you looking for?',
   NOOFFERS: 'No Offers',
   NOVARIANTPRODUCTAVAILABLE: 'This option is currenty not available',
   PERSONAL_DETAILS: 'Personal Details',
@@ -430,6 +430,8 @@ export default {
     'This Change Will Remove Your Cart Products. Do you Really Want To Continue?',
   CLEAR_CART2: 'Clear Cart',
   ENTER_CUSTOM_AMOUNT: 'Enter Custom Amount',
-  RECENTLY_SEARCH: 'Recently Searched',
+  RECENTLY_SEARCH: 'Recently searched',
   CLEAR: 'Clear',
+  TRENDING_NEAR_YOU: 'Trending near you',
+  RECOMMENDED_FOR_YOU: 'Recommended for you',
 };
