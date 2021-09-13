@@ -170,7 +170,7 @@ export default {
   CASH_ON_DELIVERY: 'Nachnahme',
   SELECT_PAYMENT_METHOD: 'Zahlung auswählen ',
   CLEAR: 'KLAR',
-  SEARCH_PRODUCT_VENDOR_ITEM: 'Produkt,Lieferant, Artikel suchen',
+  SEARCH_PRODUCT_VENDOR_ITEM: 'Produkt, Lieferant, Artikel suchen',
   ADD_INSTRUCTIONS: 'Anweisungen hinzufügen ',
   SORT_BY: 'Sortieren nach',
   LOW_TO_HIGH: 'Niedrig zu Hoch',

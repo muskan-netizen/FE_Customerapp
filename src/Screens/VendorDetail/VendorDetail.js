@@ -176,9 +176,15 @@ export default function VendorDetail({navigation, route}) {
       {/* <Header centerTitle={vendorParams?.item?.name} hideRight={false} /> */}
 
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+        }
         centerTitle={vendorParams?.item?.name || vendordName}
-        rightIcon={imagePath.search}
+        rightIcon={
+          appStyle?.homePageLayout === 3
+            ? imagePath.icSearchb
+            : imagePath.search
+        }
         onPressRight={() =>
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }

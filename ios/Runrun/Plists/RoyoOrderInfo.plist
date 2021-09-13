@@ -56,11 +56,9 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>$(PROJECT_DEEPLINK)</string>
+			<string></string>
 			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>$(PROJECT_DEEPLINK)</string>
-			</array>
+			<array/>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>

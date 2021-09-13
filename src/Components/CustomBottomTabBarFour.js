@@ -112,6 +112,7 @@ export function stylesData({fontFamily}) {
     labelStyle: {
       fontFamily: fontFamily.medium,
       fontSize: textScale(9),
+      marginTop: moderateScaleVertical(4)
     },
   });
   return styles;

@@ -166,7 +166,7 @@ export default {
   CASH_ON_DELIVERY: 'Cash on delivery',
   SELECT_PAYMENT_METHOD: 'Select payment',
   CLEAR: 'CLEAR',
-  SEARCH_PRODUCT_VENDOR_ITEM: 'Search product,vendor, item',
+  SEARCH_PRODUCT_VENDOR_ITEM: 'Search product, vendor, item',
   ADD_INSTRUCTIONS: 'Add instructions',
   SORT_BY: 'Sort by',
   LOW_TO_HIGH: 'Low to High',

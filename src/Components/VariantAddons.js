@@ -1,5 +1,5 @@
-import {cloneDeep} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Image,
   Keyboard,
@@ -9,9 +9,10 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
+  TouchableNativeFeedback,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import GradientButton from '../Components/GradientButton';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
@@ -29,11 +30,11 @@ import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../utils/helperFunctions';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import navigationStrings from '../navigation/navigationStrings';
 import HTMLView from 'react-native-htmlview';
 import HtmlViewComp from './HtmlViewComp';
-import {MyDarkTheme} from '../styles/theme';
+import { MyDarkTheme } from '../styles/theme';
 import * as Animatable from 'react-native-animatable';
 
 export default function VariantAddons({
@@ -44,26 +45,40 @@ export default function VariantAddons({
   onPress,
   resizeMode = 'contain',
   imagestyle = {},
+  variantData = []
 }) {
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = theme;
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
+  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;
 
-  const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
+  const commonStyles = commonStylesFun({ fontFamily, buttonTextColor });
 
   const [state, setState] = useState({
     addonSetData: addonSet,
     viewHeight: 0,
     maxLimitAddon: 0,
+    allVariants: []
   });
-  const {addonSetData, viewHeight, maxLimitAddon} = state;
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const { addonSetData, allVariants, viewHeight, maxLimitAddon } = state;
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+
+  useEffect(() => {
+    if (addonSet && variantData && isVisible) {
+      updateState({
+        addonSetData: addonSet,
+        allVariants: variantData
+      })
+    }
+
+  }, [addonSet, variantData, isVisible])
 
   let productImage = productdetail?.media[0];
+
+  console.log(variantData, 'variant data');
 
   const selectSpecificOptionsForAddions = (options, i, inx) => {
     let newArray = cloneDeep(options);
@@ -125,7 +140,7 @@ export default function VariantAddons({
     });
   };
 
-  const checkBoxButtonViewAddons = ({setoptions}) => {
+  const checkBoxButtonViewAddons = ({ setoptions }) => {
     return (
       <View>
         {setoptions.map((i, inx) => {
@@ -142,7 +157,7 @@ export default function VariantAddons({
 
                 marginBottom: moderateScaleVertical(10),
               }}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={styles.variantValue}>
                   {i?.title
                     ? i.title.charAt(0).toUpperCase() + i.title.slice(1)
@@ -150,13 +165,13 @@ export default function VariantAddons({
                 </Text>
               </View>
 
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={styles.variantValue}>
                   {`${currencies?.primary_currency?.symbol}${(
                     Number(i?.multiplier) * Number(i?.price)
                   ).toFixed(2)}`}
                 </Text>
-                <View style={{paddingLeft: moderateScale(5)}}>
+                <View style={{ paddingLeft: moderateScale(5) }}>
                   <Image
                     source={i?.value ? imagePath.check : imagePath.unCheck}
                   />
@@ -175,7 +190,7 @@ export default function VariantAddons({
       <>
         <View
           style={{
-            marginVertical: moderateScaleVertical(5),
+            marginTop: moderateScaleVertical(5),
           }}>
           {variantSetData.map((i, inx) => {
             return (
@@ -204,9 +219,159 @@ export default function VariantAddons({
     );
   };
 
-  const addToCart = () => {};
 
-  const onScroll = ({nativeEvent}) => {
+
+  const selectSpecificOptions = (options, i, inx) => {
+    console.log("im allVariants", allVariants)
+    console.log("im iiiiii", i)
+    console.log("im options iiiiii", options)
+
+    // return;
+    let newArray = cloneDeep(options);
+
+    let modifyVariants = allVariants.map((vi, vnx) => {
+      if (vi.variant_type_id == i.variant_id) {
+        return {
+          ...vi,
+          options: newArray.map((j, jnx) => {
+            if (j.id == i.id) {
+              
+              return {
+                ...j,
+                value: i?.value ? false : true,
+              };
+            }
+            return {
+              ...j,
+              value: false,
+            };
+          }),
+        };
+      } else {
+        return vi;
+      }
+    })
+
+    updateState({ allVariants: modifyVariants });
+
+    console.log(modifyVariants, 'im newArray>>>>>');
+  };
+
+  const variantSetValue = ({ options, type }) => {
+    if (type == 1) {
+      return <>{radioButtonView(options)}</>;
+    }
+    return <>{circularView(options)}</>;
+  };
+
+
+
+  const radioButtonView = (options) => {
+    return (
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+        {options.map((i, inx) => {
+          return (
+            <TouchableOpacity
+              disabled={options && options.length == 1 ? true : false}
+              onPress={() => selectSpecificOptions(options, i, inx)}
+            >
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginRight: moderateScale(5),
+                  marginBottom: moderateScaleVertical(10),
+                }}
+              >
+
+                <Text style={styles.variantValue}>{i?.title}</Text>
+                <Image source={i?.value ? imagePath.check : imagePath.unCheck} />
+              </View>
+            </TouchableOpacity>
+
+          );
+        })}
+      </View>
+    );
+  };
+
+  const circularView = (options) => {
+    console.log("circular view",options)
+    return (
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+        {options.map((i, inx) => {
+          return (
+            <TouchableNativeFeedback
+              disabled={options && options.length == 1 ? true : false}
+              onPress={() => selectSpecificOptions(options, i, inx)}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginRight: moderateScale(5),
+                marginBottom: moderateScaleVertical(10),
+              }}>
+              <View
+                style={[
+                  styles.variantSizeViewTwo,
+                  {
+                    backgroundColor: colors.white,
+                    borderWidth: i?.value ? 1 : 0,
+
+                    borderColor:
+                      i?.value &&
+                        (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
+                        ? colors.textGrey
+                        : i.hexacode,
+                  },
+                ]}>
+                <View
+                  style={[
+                    styles.variantSizeViewOne,
+                    {
+                      backgroundColor: i.hexacode,
+                      borderWidth:
+                        i.hexacode == '#FFFFFF' || i.hexacode == '#FFF'
+                          ? StyleSheet.hairlineWidth
+                          : 0,
+                    },
+                  ]}></View>
+              </View>
+            </TouchableNativeFeedback>
+          );
+        })}
+      </View>
+    );
+  };
+
+
+  const showAllVariants = () => {
+    let variantSetData = cloneDeep(allVariants);
+    return (
+      <View
+        style={{ marginBottom: 10, paddingHorizontal: moderateScale(15) }}>
+        {variantSetData.map((i, inx) => {
+          return (
+            <View
+              key={inx}
+              style={{
+                marginVertical: moderateScaleVertical(5),
+              }}>
+              <Text
+                style={[
+                  styles.variantLable,
+                  { marginBottom: moderateScale(5) },
+                ]}>{`${i?.title}`}</Text>
+              {i?.options ? variantSetValue(i) : null}
+            </View>
+          );
+        })}
+      </View>
+    );
+  };
+
+  const addToCart = () => { };
+
+  const onScroll = ({ nativeEvent }) => {
     let preHeight = height / 3.8 - 10;
     let offset = nativeEvent.contentOffset.y;
     let index = parseInt(offset / preHeight);
@@ -219,12 +384,12 @@ export default function VariantAddons({
       animationType={'none'}
       style={styles.modalContainer}
       onLayout={(event) => {
-        updateState({viewHeight: event.nativeEvent.layout.height});
+        updateState({ viewHeight: event.nativeEvent.layout.height });
       }}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Image source={imagePath.crossC} />
       </TouchableOpacity>
-      <Animatable.View style={{flex: 1}}>
+      <Animatable.View style={{ flex: 1 }}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           bounces={false}
@@ -271,7 +436,10 @@ export default function VariantAddons({
               }}
             />
             {/* ********Addon set View*******  */}
-            {/* {addonSetData && addonSetData.length ? showAllAddons() : null} */}
+            {!!addonSetData && addonSetData?.length ? showAllAddons() : null}
+
+            {!!allVariants && allVariants?.length ? showAllVariants() : null}
+
           </Animatable.View>
         </ScrollView>
 
@@ -286,7 +454,7 @@ export default function VariantAddons({
               ? MyDarkTheme.colors.background
               : '#fff',
           }}>
-          <View style={{flex: 0.25}}>
+          <View style={{ flex: 0.25 }}>
             <View
               style={{
                 ...commonStyles.buttonRect,
@@ -297,7 +465,7 @@ export default function VariantAddons({
                 ),
                 borderColor: themeColors?.primary_color,
               }}
-              // onPress={onPress}
+            // onPress={onPress}
             >
               <TouchableOpacity>
                 <Text
@@ -328,8 +496,8 @@ export default function VariantAddons({
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{marginHorizontal: 8}} />
-          <View style={{flex: 0.75}}>
+          <View style={{ marginHorizontal: 8 }} />
+          <View style={{ flex: 0.75 }}>
             <GradientButton
               colorsArray={[
                 themeColors.primary_color,
@@ -340,12 +508,11 @@ export default function VariantAddons({
                 textTransform: 'capitalize',
               }}
               onPress={addToCart}
-              btnText={`${strings.ADD_ITEM} - ${
-                currencies?.primary_currency?.symbol
-              }${(
-                Number(productdetail?.variant[0]?.multiplier) *
-                Number(productdetail?.variant[0]?.price)
-              ).toFixed(2)}`}
+              btnText={`${strings.ADD_ITEM} - ${currencies?.primary_currency?.symbol
+                }${(
+                  Number(productdetail?.variant[0]?.multiplier) *
+                  Number(productdetail?.variant[0]?.price)
+                ).toFixed(2)}`}
               btnStyle={{
                 borderRadius: moderateScale(4),
                 height: moderateScale(38),
@@ -460,5 +627,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: moderateScale(12),
+  },
+  variantSizeViewOne: {
+    height: moderateScale(30),
+    width: moderateScale(30),
+    borderRadius: moderateScale(30 / 2),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  variantSizeViewTwo: {
+    height: moderateScale(40),
+    width: moderateScale(40),
+    borderRadius: moderateScale(40 / 2),
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

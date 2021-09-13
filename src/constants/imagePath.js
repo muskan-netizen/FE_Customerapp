@@ -289,4 +289,9 @@ export default {
   subscription: require('../assets/images/RoyoorderNewImages/ic_sub.png'),
   recently_search: require('../assets/images/RoyoorderNewImages/ic_recent.png'),
   trending: require('../assets/images/RoyoorderNewImages/ic_trending.png'),
+
+  icBrandActive: require('../assets/images/RoyoorderNewImages/ic_tag2.png'),
+  icBrandInActive: require('../assets/images/RoyoorderNewImages/ic_tag.png'),
+  icCelebActive: require('../assets/images/RoyoorderNewImages/ic_celeb2.png'),
+  icCelebInActive: require('../assets/images/RoyoorderNewImages/ic_celeb1.png'),
 };

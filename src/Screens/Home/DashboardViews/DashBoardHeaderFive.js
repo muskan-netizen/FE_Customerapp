@@ -381,7 +381,9 @@ export default function DashBoardHeaderFive({
           transparent={true}
           isVisible={isModalVisible}
           testID={'modal'}
-          style={{justifyContent: 'flex-end', margin: 0}}>
+          style={{justifyContent: 'flex-end', margin: 0}}
+          onBackdropPress={() => updateState({isModalVisible: false})}
+          >
           <>
             <TouchableOpacity
               style={styles.closeButton}
