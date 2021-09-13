@@ -569,6 +569,24 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.totum4U:
+          updateState({
+            shortCode: shortCodes.totum4U,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hmc:
+          updateState({
+            shortCode: shortCodes.hmc,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.groupy:
+          updateState({
+            shortCode: shortCodes.groupy,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
