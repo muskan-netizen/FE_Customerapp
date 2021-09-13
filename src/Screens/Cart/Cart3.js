@@ -614,12 +614,12 @@ export default function Cart({navigation, route}) {
           ),
           marginBottom: moderateScaleVertical(12),
         }}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{justifyContent: 'center'}}
           // onPress={openDeleteView}
         >
           <Image source={imagePath.deleteRed} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </Animated.View>
     );
   };
@@ -778,7 +778,10 @@ export default function Cart({navigation, route}) {
                 <Swipeable
                   ref={swipeRef}
                   friction={1}
-                  renderRightActions={swipeBtns}>
+                  renderRightActions={swipeBtns}
+                  onSwipeableRightOpen={() => openDeleteView(i)}
+                  rightThreshold={width / 1.4}
+                  overshootFriction={8}>
                   <View
                     style={{
                       backgroundColor: isDarkMode
