@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "943338871565",
+    "project_id": "groupy-94eb8",
+    "storage_bucket": "groupy-94eb8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943338871565:android:27d2fd033b793dd16bee44",
+        "android_client_info": {
+          "package_name": "com.groupy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943338871565-0b956u8liidmb8ajtn9gbhd4bfsll9s4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.groupy",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "943338871565-a4l56pcfeg3nn96p55vtjis5l08mbdk4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.groupy",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "943338871565-q6k3ohac9vavh2n6vv1pk9ff7gbon3or.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.groupy",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "943338871565-uodg7hl9bm04mvp9hlg2quj3gimtptsn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaeJWnAno3UDmA0EixSoXte5qXqRyvqbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943338871565-uodg7hl9bm04mvp9hlg2quj3gimtptsn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "943338871565-94kfndcrdpspt1fkhve683khk9g87kld.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.groupy"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
