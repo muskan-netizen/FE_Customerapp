@@ -42,6 +42,8 @@ export default function BorderTextInputWithLable({
   sublabelStyle,
   mainStyle,
   onPress = () => {},
+  borderWidth = 1,
+  marginBottomTxt = 10,
   ...props
 }) {
   const inputRef = useRef();
@@ -65,18 +67,27 @@ export default function BorderTextInputWithLable({
       disabled={disabled}
       onPress={onPress}
       style={mainStyle}>
-      <View style={{marginBottom: 10, flexDirection: 'row', ...lableViewStyle}}>
-        <Text style={[styles.labelStyle, labelStyle]}>{label}</Text>
-        {subLabel && (
-          <Text style={[styles.sublabelStyle, sublabelStyle]}>{subLabel}</Text>
-        )}
-      </View>
+      {!!label && (
+        <View
+          style={{
+            marginBottom: marginBottomTxt,
+            flexDirection: 'row',
+            ...lableViewStyle,
+          }}>
+          <Text style={[styles.labelStyle, labelStyle]}>{label}</Text>
+          {subLabel && (
+            <Text style={[styles.sublabelStyle, sublabelStyle]}>
+              {subLabel}
+            </Text>
+          )}
+        </View>
+      )}
       <View
         style={{
           flexDirection: 'row',
           height: moderateScaleVertical(49),
           color: colors.white,
-          borderWidth: 1,
+          borderWidth: borderWidth,
           borderRadius: 13,
           borderColor: colors.borderLight,
           marginBottom,

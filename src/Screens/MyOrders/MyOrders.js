@@ -13,7 +13,7 @@ import {useSelector} from 'react-redux';
 import CustomTopTabBar from '../../Components/CustomTopTabBar';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import OrderCardVendorComponent from '../../Components/OrderCardVendorComponent';
+import OrderCardVendorComponent2 from '../../Components/OrderCardVendorComponent2';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
@@ -228,7 +228,7 @@ export default function MyOrders({navigation}) {
   const renderOrders = ({item, index}) => {
     // console.log(item,"item>>item")
     return (
-      <OrderCardVendorComponent
+      <OrderCardVendorComponent2
         data={item}
         selectedTab={selectedTab}
         onPress={() => onPressViewEditAndReplace(item)}

@@ -30,7 +30,7 @@ import {
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 
-export default function OrderCardVendorComponent({
+export default function OrderCardVendorComponent2({
   data = {},
   titlestyle,
   selectedTab,
@@ -41,6 +41,7 @@ export default function OrderCardVendorComponent({
   onPressReturnOrder,
 }) {
   let cardWidth = width - 21.5;
+
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -71,40 +72,63 @@ export default function OrderCardVendorComponent({
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View
           style={{
-            flex: 0.7,
+            flex: 1,
+
             flexDirection: 'row',
             alignItems: 'center',
-            padding: moderateScale(10),
+            justifyContent: 'space-between',
           }}>
-          {/* <Image
-            source={{uri: imageUrl}}
+          <View
             style={{
-              height: moderateScale(40),
-              width: moderateScale(40),
-              borderRadius: moderateScale(40 / 2),
-            }}
-          /> */}
+              flexDirection: 'row',
+              alignItems: 'center',
+              padding: moderateScale(10),
+            }}>
+            <Image
+              source={{uri: imageUrl}}
+              style={{
+                height: moderateScale(35),
+                width: moderateScale(35),
+                borderRadius: moderateScale(40 / 2),
+              }}
+            />
+            <View>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.userName, {color: MyDarkTheme.colors.text}]
+                    : styles.userName
+                }>
+                {data?.user_name || ''}
+              </Text>
+            </View>
+          </View>
+
           <View>
-            <Text
-              style={
-                isDarkMode
-                  ? [styles.userName, {color: MyDarkTheme.colors.text}]
-                  : styles.userName
-              }>
-              {data?.user_name || ''}
-            </Text>
             <View style={{flexWrap: 'wrap'}}>
               <Text
                 style={
                   isDarkMode
                     ? [styles.orderLableStyle, {color: MyDarkTheme.colors.text}]
                     : styles.orderLableStyle
-                }>{`#${data?.order_number}`}</Text>
+                }>{`Order ID:#${data?.order_number}`}</Text>
               <Text
                 style={
                   isDarkMode
-                    ? [styles.orderLableStyle, {color: MyDarkTheme.colors.text}]
-                    : styles.orderLableStyle
+                    ? [
+                        styles.orderLableStyle,
+                        {
+                          color: MyDarkTheme.colors.text,
+                          marginVertical: moderateScaleVertical(5),
+                        },
+                      ]
+                    : [
+                        styles.orderLableStyle,
+                        {
+                          marginVertical: moderateScaleVertical(5),
+                          color: colors.black,
+                        },
+                      ]
                 }>{`${moment(data?.date_time).format('DD MMM,YYYY')} ${moment(
                 data?.date_time,
               ).format('LT')} `}</Text>
@@ -112,7 +136,7 @@ export default function OrderCardVendorComponent({
           </View>
         </View>
 
-        <View
+        {/* <View
           style={{flex: 0.3, alignItems: 'center', padding: moderateScale(10)}}>
           <Text
             style={
@@ -123,42 +147,67 @@ export default function OrderCardVendorComponent({
             // Number(i?.pvariant?.multiplier) *
             Number(data?.payable_amount).toFixed(2)
           }`}</Text>
-        </View>
+        </View> */}
       </View>
-
+      <View
+        style={[
+          styles.borderStyle,
+          {marginHorizontal: moderateScale(10)},
+        ]}></View>
       <View
         style={{
           borderColor: colors.borderColorB,
           padding: moderateScale(10),
         }}>
-        <ScrollView
-          bounces={true}
-          horizontal
-          contentContainerStyle={styles.scrollableContainer}>
+        <Text
+          style={{
+            fontFamily: fontFamily.semiBold,
+            fontSize: textScale(14),
+            marginVertical: moderateScaleVertical(10),
+          }}>
+          {`Total Items: ${data?.product_details?.length}`}
+        </Text>
+        <ScrollView bounces={true}>
           {data?.product_details.map((i, inx) => {
             return (
-              <ImageBackground
-                source={{
-                  uri: getImageUrl(
-                    i?.image_path?.image_fit,
-                    i?.image_path?.image_path,
-                    '500/500',
-                  ),
-                }}
-                style={styles.imageCardStyle}
-                imageStyle={styles.imageCardStyle}>
-                <View style={styles.circularQuantityView}>
-                  <Text
-                    style={
-                      isDarkMode
-                        ? [
-                            styles.qunatityText,
-                            {color: MyDarkTheme.colors.text},
-                          ]
-                        : styles.qunatityText
-                    }>{`x${i.qty}`}</Text>
+              <View>
+                <View
+                  style={{
+                    marginVertical: moderateScaleVertical(10),
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <View>
+                    <Text
+                      style={
+                        isDarkMode
+                          ? [
+                              styles.orderLableStyle,
+                              {color: MyDarkTheme.colors.text},
+                            ]
+                          : styles.orderLableStyle
+                      }>
+                      {i?.title || ''}
+                    </Text>
+                  </View>
+                  <View>
+                    <Text
+                      style={
+                        isDarkMode
+                          ? [
+                              styles.userName,
+                              {
+                                color: MyDarkTheme.colors.text,
+                                fontSize: textScale(10),
+                              },
+                            ]
+                          : [styles.userName, {fontSize: textScale(10)}]
+                      }>
+                      {`x ${i?.qty || ''}`}
+                    </Text>
+                  </View>
                 </View>
-              </ImageBackground>
+              </View>
             );
           })}
         </ScrollView>
@@ -168,30 +217,48 @@ export default function OrderCardVendorComponent({
             flexDirection: 'row',
             marginBottom: moderateScaleVertical(10),
             alignItems: 'center',
+            justifyContent: 'space-between',
           }}>
-          <Image
-            source={imagePath.iconPayments}
-            style={{tintColor: colors.textGreyB}}
-          />
-          <Text
-            style={
-              isDarkMode
-                ? [
-                    styles.lableOrders,
-                    {
-                      paddingLeft: moderateScale(5),
-                      color: MyDarkTheme.colors.text,
-                    },
-                  ]
-                : [styles.lableOrders, {paddingLeft: moderateScale(5)}]
-            }>
-            {`${strings.PAYMENT} : `}
-            <Text style={styles.valueOrders}>{data?.payment_option_title}</Text>
-          </Text>
-          {/* <Image source={imagePath.card} /> */}
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={imagePath.iconPayments}
+              style={{tintColor: colors.textGreyB}}
+            />
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.lableOrders,
+                      {
+                        paddingLeft: moderateScale(5),
+                        color: MyDarkTheme.colors.text,
+                      },
+                    ]
+                  : [styles.lableOrders, {paddingLeft: moderateScale(5)}]
+              }>
+              {`${strings.PAYMENT} : `}
+              <Text style={styles.valueOrders}>
+                {data?.payment_option_title}
+              </Text>
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={{
+                color: themeColors.primary_color,
+                marginHorizontal: moderateScale(10),
+              }}>{`${currencies?.primary_currency?.symbol}${
+              // Number(i?.pvariant?.multiplier) *
+              Number(data?.payable_amount).toFixed(2)
+            }`}</Text>
+          </View>
         </View>
 
-        <View style={styles.borderStyle}></View>
+        <View style={[styles.borderStyle, {marginHorizontal: -15}]}></View>
 
         {selectedTab && selectedTab == strings.PAST_ORDERS ? (
           <View
@@ -255,9 +322,7 @@ export default function OrderCardVendorComponent({
                   justifyContent: 'center',
                 }}>
                 <View style={styles.trackStatusView}>
-                  <Text style={styles.trackOrderTextStyle}>
-                    {strings.TRACK_ORDER2}
-                  </Text>
+                  <Text style={styles.trackOrderTextStyle}>Track Order</Text>
                 </View>
               </TouchableOpacity>
             ) : null}
@@ -320,7 +385,7 @@ export function stylesFunc({fontFamily, themeColors}) {
       padding: moderateScaleVertical(5),
       backgroundColor: colors.white,
       borderWidth: 1,
-      borderColor: 'rgba(201,215,225,0.19)',
+      borderColor: colors.borderColorB,
       borderRadius: moderateScale(6),
     },
     lableOrders: {
@@ -328,14 +393,14 @@ export function stylesFunc({fontFamily, themeColors}) {
       color: colors.buyBgDark,
       lineHeight: moderateScaleVertical(19),
       fontFamily: fontFamily.medium,
-      fontSize: textScale(12),
+      fontSize: textScale(10),
     },
     valueOrders: {
       color: colors.textGreyB,
       fontFamily: fontFamily.medium,
-      fontSize: textScale(14),
+      fontSize: textScale(10),
       // opacity: 0.6,
-      fontSize: textScale(13),
+
       lineHeight: moderateScaleVertical(16),
     },
     orderAddEditViews: {
@@ -353,10 +418,11 @@ export function stylesFunc({fontFamily, themeColors}) {
     orderLableStyle: {
       color: colors.textGreyI,
       fontFamily: fontFamily.regular,
-      fontSize: textScale(12),
+      fontSize: textScale(10),
       opacity: 0.4,
     },
     userName: {
+      marginHorizontal: moderateScale(20),
       color: colors.textGreyI,
       fontFamily: fontFamily.medium,
       fontSize: textScale(14),
@@ -368,9 +434,9 @@ export function stylesFunc({fontFamily, themeColors}) {
       borderColor: colors.lightGreyBgColor,
     },
     orderStatusStyle: {
-      color: colors.statusColor,
-      fontFamily: fontFamily.regular,
-      fontSize: textScale(10),
+      color: colors.black,
+      fontFamily: fontFamily.semiBold,
+      fontSize: textScale(12),
     },
     trackOrderTextStyle: {
       color: themeColors.secondary_color,
@@ -441,14 +507,12 @@ export function stylesFunc({fontFamily, themeColors}) {
       paddingVertical: moderateScale(10),
     },
     currentStatusView: {
-      backgroundColor: getColorCodeWithOpactiyNumber('FF972E', 10),
       paddingHorizontal: moderateScale(10),
       paddingVertical: moderateScale(2),
       borderRadius: moderateScale(8.5),
       alignItems: 'center',
     },
     trackStatusView: {
-      backgroundColor: getColorCodeWithOpactiyNumber('FF972E', 10),
       paddingHorizontal: moderateScale(20),
       paddingVertical: moderateScale(8),
       borderRadius: moderateScale(8.5),

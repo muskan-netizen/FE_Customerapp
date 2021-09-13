@@ -32,6 +32,8 @@ export default function BorderTextInput({
   onPressRight = () => {},
   withRef = false,
   secureTextEntry = false,
+  borderWidth = 1,
+  borderRadius = 13,
   ...props
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -58,8 +60,8 @@ export default function BorderTextInput({
         flexDirection: 'row',
         height: moderateScaleVertical(49),
         color: colors.white,
-        borderWidth: 1,
-        borderRadius: 13,
+        borderWidth: borderWidth,
+        borderRadius: borderRadius,
         borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.borderLight,
         marginBottom,
         overflow: 'hidden',

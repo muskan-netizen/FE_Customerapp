@@ -41,6 +41,7 @@ import {
   Wishlist,
   ReturnOrder,
 } from '../Screens';
+import StaticTrackOrder from '../Screens/WebviewScreen/StaticTrackOrder';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
@@ -209,7 +210,8 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.WEBVIEWSCREEN}
-        component={WebviewScreen}
+        // component={WebviewScreen}
+        component={StaticTrackOrder}
         options={{headerShown: false}}
       />
       <Stack.Screen

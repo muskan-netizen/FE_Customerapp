@@ -146,7 +146,7 @@ export default function OrderCardComponent({
           }}>
           <Text style={styles.lableOrders}>
             {`${strings.PAYMENT} : `}
-            <Text style={styles.valueOrders}>{strings.CASE_ON_DELIVERY}</Text>
+            <Text style={styles.valueOrders}>{strings.CASH_ON_DELIVERY}</Text>
           </Text>
           {/* <Image source={imagePath.card} /> */}
         </View>
