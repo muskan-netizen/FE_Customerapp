@@ -15,6 +15,7 @@ import {getAddressComponent} from '../utils/helperFunctions';
 navigator.geolocation = require('react-native-geolocation-service');
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import strings from '../constants/lang';
 
 export default function GooglePlaceInput({
   type,
@@ -135,7 +136,7 @@ export default function GooglePlaceInput({
   return (
     <View>
       <GooglePlacesAutocomplete
-        placeholder={placeholder ? placeholder : 'Search location'}
+        placeholder={placeholder ? placeholder : strings.SEARCH_LOCATION}
         textInputProps={{
           placeholderTextColor: placeholderTextColor,
           autoFocus: autoFocus,

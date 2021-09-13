@@ -79,7 +79,7 @@ export default function AddressModal({
         lable: strings.HOME,
         icon: imagePath.home,
       },
-      {id: 2, lable: 'Work', icon: imagePath.workInActive},
+      {id: 2, lable: strings.WORK, icon: imagePath.workInActive},
     ],
     address_type: 1,
     country_code: '',

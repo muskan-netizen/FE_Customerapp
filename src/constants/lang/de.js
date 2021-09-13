@@ -371,4 +371,9 @@ export default {
   DINE_IN: 'Speisen in',
   DELIVERY: 'Lieferung',
   TAKEAWAY: 'Wegbringen',
+  ENTER_CONFIRM_PASSWORD: 'BESTÄTIGE NEUES PASSWORT',
+  ENTER_NEW_PASSWORD: 'NEUES KENNWORT',
+  ENTER_CURRENT_PASSWORD: 'AKTUELLES PASSWORT',
+  SAVED_LOCATIONS: ' Gespeicherte Standorte',
+  NOW: 'Now',
 };

@@ -460,7 +460,7 @@ export default function AddMoney({navigation}) {
                 value={`${state.amount}`}
                 onChangeText={_onChangeText('amount')}
                 keyboardType={'numeric'}
-                placeholder={'Enter amount'}
+                placeholder={strings.ENTER_AMOUNT}
                 placeholderTextColor={
                   isDarkMode ? MyDarkTheme.colors.background : colors.textGrey
                 }
@@ -514,7 +514,7 @@ export default function AddMoney({navigation}) {
                 renderItem={_renderItemPayments}
                 ListEmptyComponent={() => (
                   <Text style={{textAlign: 'center'}}>
-                    {'No Payment method found'}
+                    {strings.NO_PAYMENT_METHOD}
                   </Text>
                 )}
               />

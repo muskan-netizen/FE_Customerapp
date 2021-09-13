@@ -235,18 +235,14 @@ export default function ToggleTabBar({
     }
   };
   const dineInFunction = () => {
-    Alert.alert(
-      '',
-      'This Change Will Remove Your Cart Products. Do you Really Want To Continue?',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          // style: 'destructive',
-        },
-        {text: 'Clear Cart', onPress: () => clearCart2()},
-      ],
-    );
+    Alert.alert('', `${strings.THIS_CHANGE_WILL_REMOVE_YOUR_CART}`, [
+      {
+        text: strings.CANCEL,
+        onPress: () => console.log('Cancel Pressed'),
+        // style: 'destructive',
+      },
+      {text: strings.CLEAR_CART2, onPress: () => clearCart2()},
+    ]);
   };
 
   const clearCart2 = () => {

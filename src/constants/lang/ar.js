@@ -370,4 +370,9 @@ export default {
   LIGHT: 'ضوء',
   DARK: 'داكن',
   NO_DATA_FOUND: 'لاتوجد بيانات',
+  ENTER_CONFIRM_PASSWORD: 'تأكيد كلمة المرور الجديدة',
+  ENTER_NEW_PASSWORD: 'كلمة مرور جديدة',
+  ENTER_CURRENT_PASSWORD: 'كلمة المرور الحالي',
+  SAVED_LOCATIONS: ' المواقع المحفوظة',
+  NOW: 'Now',
 };

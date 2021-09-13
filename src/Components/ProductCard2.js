@@ -159,7 +159,7 @@ export default function ProductCard2({
           style={{
             backgroundColor: colors.white,
             position: 'absolute',
-            paddingHorizontal: moderateScale(25),
+            paddingHorizontal: moderateScale(10),
             paddingVertical: moderateScaleVertical(5),
             borderRadius: moderateScale(10),
             bottom: 0,
@@ -168,13 +168,14 @@ export default function ProductCard2({
             elevation: 5,
           }}>
           <Text
+            numberOfLines={1}
             onPress={addToCart}
             style={{
               ...commonStyles.mediumFont14,
               opacity: 1,
               color: themeColors.primary_color,
             }}>
-            {'Add'}
+            {strings.ADD}
           </Text>
         </TouchableOpacity>
         {/* {data?.is_wishlist ? (

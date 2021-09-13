@@ -82,12 +82,12 @@ export default function Account({navigation}) {
     if (!!userData?.auth_token) {
       Alert.alert('', strings.LOGOUT_SURE_MSG, [
         {
-          text: 'Cancel',
+          text: strings.CANCEL,
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
         {
-          text: 'Confirm',
+          text: strings.CONFIRM,
           onPress: () => {
             actions.userLogout();
             actions.cartItemQty('');
@@ -249,7 +249,7 @@ export default function Account({navigation}) {
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={moveToNewScreen(navigationStrings.WISHLIST)}
             iconLeft={imagePath.fav}
-            centerHeading={strings.FAVOURITE}
+            centerHeading={strings.WISHLIST}
             containerStyle={styles.containerStyle}
             centerHeadingStyle={
               isDarkMode

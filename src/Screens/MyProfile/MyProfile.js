@@ -810,7 +810,7 @@ export default function MyProfile({route, navigation}) {
                           fontSize: textScale(12),
                           paddingLeft: moderateScale(5),
                         }}>
-                        Edit
+                        {strings.EDIT}
                       </Text>
                     </TouchableOpacity>
                     <View style={{flex: 0.05}} />
@@ -838,7 +838,7 @@ export default function MyProfile({route, navigation}) {
                           fontSize: textScale(12),
                           paddingLeft: moderateScale(5),
                         }}>
-                        Delete
+                        {strings.DELETE}
                       </Text>
                     </TouchableOpacity>
                   </View>

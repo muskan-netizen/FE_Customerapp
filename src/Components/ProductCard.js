@@ -65,7 +65,10 @@ export default function ProductCard({
       ]}>
       <Animated.View>
         <FastImage
-          source={{uri: url1 && url2 ? getImage : '', priority: FastImage.priority.high}}
+          source={{
+            uri: url1 && url2 ? getImage : '',
+            priority: FastImage.priority.high,
+          }}
           style={{
             height: cardWidthNew,
             width: cardWidthNew,
@@ -136,6 +139,7 @@ export default function ProductCard({
               }}>
               <Text
                 onPress={addToCart}
+                numberOfLines={1}
                 style={{
                   ...commonStyles.mediumFont14,
                   opacity: 1,

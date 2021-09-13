@@ -134,13 +134,12 @@ export default function Cart({navigation, route}) {
     useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
-
   const selectedAddressData = useSelector(
     (state) => state?.cart?.selectedAddress,
   );
 
   const dineInType = useSelector((state) => state?.home?.dineInType);
-
+  const selectedLanguage = languages?.primary_language?.sort_code;
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -261,10 +260,10 @@ export default function Cart({navigation, route}) {
           scheduleType: res?.data?.schedule_type,
           selectedTimeOption:
             res?.data?.schedule_type == 'now'
-              ? {id: 1, title: 'Now', type: 'now'}
+              ? {id: 1, title: strings.NOW, type: 'now'}
               : res?.data?.schedule_type == 'schedule'
               ? {id: 2, title: 'Schedule Order', type: 'schedule'}
-              : {id: 1, title: 'Now', type: 'now'},
+              : {id: 1, title: strings.NOW, type: 'now'},
         });
         if (res && res.data) {
           if (res.data.vendor_details.vendor_tables) {
@@ -1344,7 +1343,7 @@ export default function Cart({navigation, route}) {
                                   : colors.black,
                             }
                       }>
-                      {'Custom'}
+                      {strings.CUSTOM}
                     </Text>
                     <Text
                       style={
@@ -1362,7 +1361,7 @@ export default function Cart({navigation, route}) {
                                   : colors.black,
                             }
                       }>
-                      {'Amount'}
+                      {strings.AMOUNT}
                     </Text>
                   </TouchableOpacity>
                 </ScrollView>
@@ -1391,7 +1390,7 @@ export default function Cart({navigation, route}) {
                       maxLength={5}
                       returnKeyType={'done'}
                       keyboardType={'number-pad'}
-                      placeholder={'Enter Custom Amount'}
+                      placeholder={strings.ENTER_CUSTOM_AMOUNT}
                       placeholderTextColor={
                         isDarkMode
                           ? MyDarkTheme.colors.text
@@ -1458,7 +1457,9 @@ export default function Cart({navigation, route}) {
         <TouchableOpacity
           onPress={() =>
             !!userData?.auth_token
-              ? moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
+              ? moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS, {
+                  screenName: strings.PAYMENT,
+                })()
               : showError(strings.UNAUTHORIZED_MESSAGE)
           }
           style={
@@ -1754,11 +1755,11 @@ export default function Cart({navigation, route}) {
   const openClearCartModal = () => {
     Alert.alert('', strings.AREYOUSURE, [
       {
-        text: 'Cancel',
+        text: strings.CANCEL,
         onPress: () => {},
         // style: 'destructive',
       },
-      {text: 'Confirm', onPress: () => bottomButtonClick()},
+      {text: strings.CONFIRM, onPress: () => bottomButtonClick()},
     ]);
   };
   //SelectAddress
@@ -2035,6 +2036,7 @@ export default function Cart({navigation, route}) {
                 height: height / 3.5,
               }}>
               <DatePicker
+                locale={selectedLanguage}
                 date={
                   sheduledorderdate ? new Date(sheduledorderdate) : new Date()
                 }

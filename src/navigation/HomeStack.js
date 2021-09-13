@@ -28,6 +28,7 @@ import {
   Vendors,
   Vendors2,
   Vendors3,
+  SearchProductVendorItem2,
 } from '../Screens';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
