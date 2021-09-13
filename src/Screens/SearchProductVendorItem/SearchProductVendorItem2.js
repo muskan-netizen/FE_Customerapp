@@ -25,6 +25,8 @@ import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import LottieView from 'lottie-react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import MarketCard3 from '../../Components/MarketCard3';
 
 export default function SearchProductVendorItem2({navigation, route}) {
   const [state, setState] = useState({
@@ -33,24 +35,47 @@ export default function SearchProductVendorItem2({navigation, route}) {
     searchData: [],
     showRightIcon: false,
     recentlySearched: [
-      {id: 1, image: imagePath.recently_search, title: 'KFC'},
+      {
+        id: 1,
+        image: imagePath.recently_search,
+        title: 'KFC',
+      },
       {id: 2, image: imagePath.recently_search, title: 'Subway'},
       {id: 3, image: imagePath.recently_search, title: 'Carpet cleaning'},
       {id: 4, image: imagePath.recently_search, title: 'Carpet cleaning'},
-      {id: 5, image: imagePath.recently_search, title: 'Subway'},
+      {id: 5, image: imagePath.recently_search, title: 'Walmart'},
+    ],
+    trendingNearYou: [
+      {
+        id: 1,
+        image: imagePath.trending,
+        title: 'KFC',
+      },
+      {id: 2, image: imagePath.trending, title: 'Subway'},
+      {id: 3, image: imagePath.trending, title: 'Carpet cleaning'},
+      {id: 4, image: imagePath.trending, title: 'Carpet cleaning'},
+      {id: 5, image: imagePath.trending, title: 'Walmart'},
     ],
   });
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {isLoading, searchInput, searchData, showRightIcon, recentlySearched} =
-    state;
+  const {
+    isLoading,
+    searchInput,
+    searchData,
+    showRightIcon,
+    recentlySearched,
+    trendingNearYou,
+  } = state;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
 
   //route params
   const paramData = route?.params?.data;
+  const appMainData = useSelector((state) => state?.home?.appMainData);
+  const recommendedVendorsdata = appMainData?.vendors;
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
 
@@ -70,7 +95,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
       isLoading: false,
     });
   };
-
+  console.log(paramData, 'paramData');
   //Global searching of data
   const globalSearch = () => {
     let data = {};
@@ -109,32 +134,6 @@ export default function SearchProductVendorItem2({navigation, route}) {
         });
       });
   };
-
-  // //Search data by category id
-  // const searchByCategory = () => {
-  //   let data = {};
-  //   data['keyword'] = searchInput;
-  //   actions
-  //     .onGlobalSearch(data, {
-  //       code: appData?.profile?.code,
-  //       currency: currencies?.primary_currency?.id,
-  //       language: languages?.primary_language?.id,
-  //     })
-  //     .then((response) => {
-  //       console.log(response, 'THIS IS DATA');
-  //       // updateState({
-  //       //   searchData: response.data,
-  //       //   isLoading: false,
-  //       // });
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       // updateState({
-  //       //   searchData: [],
-  //       //   isLoading: false,
-  //       // });
-  //     });
-  // };
 
   useEffect(() => {
     if (searchInput != '') {
@@ -187,6 +186,92 @@ export default function SearchProductVendorItem2({navigation, route}) {
     }
   };
 
+  const onPressRecommendedVendors = (item) => {
+    if (!item.is_show_category || item.is_show_category) {
+      item?.is_show_category
+        ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
+            item,
+            rootProducts: true,
+            // categoryData: data,
+          })()
+        : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+            id: item?.id,
+            vendor: true,
+            name: item?.name,
+          })();
+
+      // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+    }
+  };
+
+  const recentlyData = (data) => {
+    return (
+      <View
+        style={{
+          marginVertical: moderateScaleVertical(10),
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            // justifyContent: 'space-between',
+          }}>
+          {data && data.length
+            ? data.map((item, index) => {
+                return (
+                  <View>
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: 'row',
+                        borderColor: colors.textGreyB,
+                        borderWidth: 0.5,
+                        borderRadius: 4,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginHorizontal: moderateScale(5),
+                        paddingHorizontal: moderateScale(5),
+                        paddingVertical: moderateScaleVertical(7),
+                        marginVertical: moderateScaleVertical(5),
+                      }}
+                      key={index}>
+                      <View>
+                        <Image
+                          style={
+                            isDarkMode
+                              ? {
+                                  tintColor: MyDarkTheme.colors.text,
+                                  opacity: 0.7,
+                                  marginHorizontal: moderateScale(5),
+                                }
+                              : {
+                                  opacity: 0.7,
+                                  marginHorizontal: moderateScale(5),
+                                }
+                          }
+                          source={item.image}
+                        />
+                      </View>
+                      <View>
+                        <Text
+                          style={{
+                            fontSize: 15,
+                            fontFamily: fontFamily.medium,
+                            color: colors.greyLight,
+                          }}>
+                          {item.title}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                );
+              })
+            : null}
+        </View>
+      </View>
+    );
+  };
+
   const renderProduct = ({item}) => {
     return (
       <TouchableOpacity
@@ -216,46 +301,23 @@ export default function SearchProductVendorItem2({navigation, route}) {
     );
   };
 
-  const renderProductForRecentSearch = ({item}) => {
+  const renderRecommendedVendors = ({item}) => {
     return (
-      <TouchableOpacity
-        onPress={() => _onclickSearchItem(item)}
+      <View
         style={{
-          flexDirection: 'row',
-          borderColor: colors.textGreyB,
-          borderWidth: 0.5,
-          borderRadius: 4,
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginHorizontal: moderateScale(5),
-          paddingHorizontal: moderateScale(5),
-          paddingVertical: moderateScaleVertical(5),
+          width: moderateScale(width / 2),
+          marginHorizontal: moderateScale(10),
         }}>
-        <View>
-          <Image
-            style={
-              isDarkMode
-                ? {
-                    tintColor: MyDarkTheme.colors.text,
-                    opacity: 0.7,
-                    marginHorizontal: moderateScale(5),
-                  }
-                : {opacity: 0.7, marginHorizontal: moderateScale(5)}
-            }
-            source={item.image}
-          />
-        </View>
-        <View>
-          <Text
-            style={{
-              fontSize: 15,
-              fontFamily: fontFamily.medium,
-              color: colors.greyLight,
-            }}>
-            {item.title}
-          </Text>
-        </View>
-      </TouchableOpacity>
+        <MarketCard3
+          data={item}
+          onPress={() => onPressCategory(item)}
+          fastImageStyle={{
+            height: moderateScaleVertical(110),
+          }}
+          imageResizeMode="contain"
+          onPress={() => onPressRecommendedVendors(item)}
+        />
+      </View>
     );
   };
 
@@ -266,7 +328,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
-            paddingHorizontal: 20,
+
             width: width - 16,
           }}>
           <Text
@@ -279,6 +341,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
           </Text>
           <Text
             style={{
+              paddingHorizontal: moderateScale(30),
               fontSize: textScale(12),
               fontFamily: fontFamily.regular,
               color: themeColors.primary_color,
@@ -286,23 +349,49 @@ export default function SearchProductVendorItem2({navigation, route}) {
             {strings.CLEAR}
           </Text>
         </View>
-        <FlatList
-          numColumns={3}
-          data={recentlySearched}
-          renderItem={renderProductForRecentSearch}
-          keyExtractor={(item, index) => String(index)}
-          keyboardShouldPersistTaps="always"
-          showsVerticalScrollIndicator={false}
+        <View>{recentlyData(recentlySearched)}</View>
+
+        <View
           style={{
-            // flex: 1,
-            marginVertical: moderateScaleVertical(10),
-            marginHorizontal: moderateScale(20),
-            // backgroundColor: 'red',
-            // backgroundColor: 'black',
-          }}
-          ListEmptyComponent={_listEmptyComponent}
-          ItemSeparatorComponent={() => <View style={{height: 10}} />}
-        />
+            marginVertical: moderateScaleVertical(20),
+          }}>
+          <Text
+            style={{
+              fontSize: textScale(16),
+              fontFamily: fontFamily.medium,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}>
+            {strings.TRENDING_NEAR_YOU}
+          </Text>
+
+          <View>{recentlyData(trendingNearYou)}</View>
+        </View>
+        <View>
+          <Text
+            style={{
+              fontSize: textScale(16),
+              fontFamily: fontFamily.medium,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}>
+            {strings.RECOMMENDED_FOR_YOU}
+          </Text>
+          <FlatList
+            horizontal
+            data={recommendedVendorsdata}
+            renderItem={renderRecommendedVendors}
+            keyExtractor={(item, index) => String(index)}
+            keyboardShouldPersistTaps="always"
+            showsHorizontalScrollIndicator={false}
+            style={{
+              flex: 1,
+              marginVertical: moderateScaleVertical(10),
+
+              // backgroundColor: 'black',
+            }}
+            ListEmptyComponent={_listEmptyComponent}
+            ItemSeparatorComponent={() => <View style={{height: 30}} />}
+          />
+        </View>
       </View>
     );
   };
@@ -368,7 +457,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
           style={{
             flex: 1,
             marginVertical: moderateScaleVertical(10),
-
+            marginHorizontal: moderateScale(20),
             // backgroundColor: 'black',
           }}
           ListEmptyComponent={_listEmptyComponent}

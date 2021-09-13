@@ -20,6 +20,8 @@ export default function MarketCard3({
   data = {},
   onPress = () => {},
   extraStyles = {},
+  fastImageStyle = {},
+  imageResizeMode = 'cover',
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -35,7 +37,8 @@ export default function MarketCard3({
       onPress={onPress}
       style={styles.mainTouchContainer}>
       <FastImage
-        style={styles.mainImage}
+        style={[styles.mainImage, {...fastImageStyle}]}
+        resizeMode={imageResizeMode}
         source={{
           uri: getImageUrl(
             data.banner.proxy_url || data.image.proxy_url,
@@ -121,7 +124,6 @@ export function stylesFunc({fontFamily, extraStyles}) {
       height: moderateScaleVertical(140),
       width: '100%',
       borderRadius: moderateScale(10),
-      resizeMode: 'cover',
     },
     descView: {
       marginTop: moderateScale(8),
