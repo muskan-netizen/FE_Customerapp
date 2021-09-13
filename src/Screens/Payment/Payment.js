@@ -130,7 +130,7 @@ export default function BuyProduct({navigation, route}) {
                     }
                   />
                   <Text style={styles.caseOnDeliveryText}>
-                    {strings.CASE_ON_DELIVERY}
+                    {strings.CASH_ON_DELIVERY}
                   </Text>
                 </TouchableOpacity>
               );

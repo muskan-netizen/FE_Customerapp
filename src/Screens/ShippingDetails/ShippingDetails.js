@@ -58,13 +58,13 @@ export default function ShippingDetails({navigation, route}) {
     availablePayments: [
       {
         id: 1,
-        title: 'Cash on Delivery',
+        title: strings.CASH_ON_DELIVERY,
         off_site: 0,
       },
     ],
     selectedPayment: {
       id: 1,
-      title: 'Cash on Delivery',
+      title:  strings.CASH_ON_DELIVERY,
       off_site: 0,
     },
 
@@ -746,7 +746,7 @@ export default function ShippingDetails({navigation, route}) {
                     }
                   />
                   <Text style={styles.caseOnDeliveryText}>
-                    {strings.CASE_ON_DELIVERY}
+                    {strings.CASH_ON_DELIVERY}
                   </Text>
                 </TouchableOpacity>
               );

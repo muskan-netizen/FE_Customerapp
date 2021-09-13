@@ -1,4 +1,4 @@
-import { requireNativeComponent } from 'react-native';
+import {requireNativeComponent} from 'react-native';
 
 export default {
   dropdownTriangle: require('../assets/images/ic_dropdown.png'),
@@ -285,4 +285,10 @@ export default {
   icBrandInActive: require('../assets/images/RoyoorderNewImages/ic_tag.png'),
   icCelebActive: require('../assets/images/RoyoorderNewImages/ic_celeb2.png'),
   icCelebInActive: require('../assets/images/RoyoorderNewImages/ic_celeb1.png'),
-}
+  icRedPhone: require('../assets/images/RoyoorderNewImages/Group24.png'),
+  icLocation1: require('../assets/images/RoyoorderNewImages/ic_location1.png'),
+  icRedOval: require('../assets/images/RoyoorderNewImages/ic_oval2.png'),
+  icRedChecked: require('../assets/images/RoyoorderNewImages/ic_checked.png'),
+  icUnChecked: require('../assets/images/RoyoorderNewImages/ic_unchecked.png'),
+  currentLocation: require('../assets/images/RoyoorderNewImages/ic_current.png'),
+};

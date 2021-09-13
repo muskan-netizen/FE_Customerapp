@@ -382,8 +382,7 @@ export default function DashBoardHeaderFive({
           isVisible={isModalVisible}
           testID={'modal'}
           style={{justifyContent: 'flex-end', margin: 0}}
-          onBackdropPress={() => updateState({isModalVisible: false})}
-          >
+          onBackdropPress={() => updateState({isModalVisible: false})}>
           <>
             <TouchableOpacity
               style={styles.closeButton}
@@ -403,6 +402,7 @@ export default function DashBoardHeaderFive({
                 {tabs.map((item, indx) => {
                   return (
                     <TouchableOpacity
+                      key={indx}
                       style={{
                         borderColor: item.isActive
                           ? themeColors.primary_color

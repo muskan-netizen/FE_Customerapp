@@ -207,7 +207,6 @@ export default {
   CONTINUE_TO_PAYMENT: 'Weiter zur Zahlung',
   TOTAL_PAYABLE: 'Gesamtzahlbare Zahlungen',
   INCLUDED_ALL_TAXES: 'alle Steuern enthalten',
-  CASE_ON_DELIVERY: ' Nachnahme ',
   USE_A_NEW_CARD: '+ Benutze eine neue Karte',
   PAY_AND_SUBMIT_REQUEST: 'Anfrage bezahlen und senden',
   SHIPPING_DETAILS: ' Versanddetails ',
@@ -371,4 +370,9 @@ export default {
   DINE_IN: 'Speisen in',
   DELIVERY: 'Lieferung',
   TAKEAWAY: 'Wegbringen',
+  TRACK_ORDER2: 'Track Order',
+  ADD_ADDRESS1: 'ADD ADDRESS',
+  YOUR_LOCATION: 'Your Location',
+  COMPLETE_ADDRESS: 'Complete Address',
+  PRODUCT_ADDED_SUCCESS: 'Product successfully added',
 };

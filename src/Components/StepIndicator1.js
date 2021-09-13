@@ -5,7 +5,7 @@ import imagePath from '../constants/imagePath';
 import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 
-export default function StepIndicators({
+export default function StepIndicators1({
   containerStyle = {},
   placeholder = '',
   labels = [],
@@ -52,29 +52,29 @@ export default function StepIndicators({
       case 0: {
         iconConfig =
           stepStatus == 'finished'
-            ? imagePath.acceptActive
-            : imagePath.acceptInactive;
+            ? imagePath.icUnChecked
+            : imagePath.icRedChecked;
         break;
       }
       case 1: {
         iconConfig =
           stepStatus == 'finished'
-            ? imagePath.deliverActive
-            : imagePath.deliverInactive;
+            ? imagePath.icRedChecked
+            : imagePath.icUnChecked;
         break;
       }
       case 2: {
         iconConfig =
           stepStatus == 'finished'
-            ? imagePath.onmywayActive
-            : imagePath.onmywayInactive;
+            ? imagePath.icRedChecked
+            : imagePath.icUnChecked;
         break;
       }
       case 3: {
         iconConfig =
           stepStatus == 'finished'
-            ? imagePath.processingActive
-            : imagePath.processingInactive;
+            ? imagePath.icRedChecked
+            : imagePath.icUnChecked;
         break;
       }
       default: {

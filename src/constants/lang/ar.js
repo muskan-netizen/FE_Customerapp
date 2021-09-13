@@ -203,7 +203,6 @@ export default {
   CONTINUE_TO_PAYMENT: 'الاستمرار في الدفع',
   TOTAL_PAYABLE: 'إجمالي المستحق',
   INCLUDED_ALL_TAXES: 'تشمل جميع الضرائب',
-  CASE_ON_DELIVERY: 'النقدية عند التسليم',
   USE_A_NEW_CARD: '+ استخدام بطاقة جديدة',
   PAY_AND_SUBMIT_REQUEST: 'الدفع وتقديم الطلب',
   SHIPPING_DETAILS: 'تفاصيل الشحن',
@@ -370,4 +369,9 @@ export default {
   LIGHT: 'ضوء',
   DARK: 'داكن',
   NO_DATA_FOUND: 'لاتوجد بيانات',
+  TRACK_ORDER2: 'Track Order',
+  ADD_ADDRESS1: 'ADD ADDRESS',
+  YOUR_LOCATION: 'Your Location',
+  COMPLETE_ADDRESS: 'Complete Address',
+  PRODUCT_ADDED_SUCCESS: 'Product successfully added',
 };

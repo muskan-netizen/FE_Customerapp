@@ -208,7 +208,6 @@ export default {
   CONTINUE_TO_PAYMENT: 'Continuer au paiement',
   TOTAL_PAYABLE: 'Total à payer',
   INCLUDED_ALL_TAXES: ' toutes taxes comprises ',
-  CASE_ON_DELIVERY: 'Paiement à la livraison',
   USE_A_NEW_CARD: ' + Utiliser une nouvelle carte',
   PAY_AND_SUBMIT_REQUEST: 'Payer et envoyer la demande',
   SHIPPING_DETAILS: 'Détails dexpédition',
@@ -382,4 +381,9 @@ export default {
   TAKEAWAY: 'Emporter',
   NOW: 'Maintenant',
   SCHEDULE_ORDER: 'ordre de programme',
+  PRODUCT_ADDED_SUCCESS: 'produit ajouté avec succès',
+  TRACK_ORDER2: 'Track Order',
+  ADD_ADDRESS1: 'ADD ADDRESS',
+  YOUR_LOCATION: 'Your Location',
+  COMPLETE_ADDRESS: 'Complete Address',
 };

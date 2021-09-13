@@ -201,7 +201,6 @@ export default {
   CONTINUE_TO_PAYMENT: 'Ödemeye devam et',
   TOTAL_PAYABLE: 'Toplam Borç',
   INCLUDED_ALL_TAXES: 'tüm vergiler dahil',
-  CASE_ON_DELIVERY: 'Teslimde Nakit',
   USE_A_NEW_CARD: '+ Yeni bir kart kullan',
   PAY_AND_SUBMIT_REQUEST: 'Öde ve Gönder isteği',
   SHIPPING_DETAILS: 'Gönderim ayrıntıları',
@@ -363,4 +362,8 @@ export default {
   DINE_IN: 'Yemek',
   DELIVERY: 'Teslimat',
   TAKEAWAY: 'Götürmek',
+  ADD_ADDRESS1: 'ADD ADDRESS',
+  YOUR_LOCATION: 'Your Location',
+  COMPLETE_ADDRESS: 'Complete Address',
+  PRODUCT_ADDED_SUCCESS: 'Product successfully added',
 };

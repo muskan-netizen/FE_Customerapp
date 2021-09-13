@@ -61,6 +61,7 @@ import * as RNLocalize from 'react-native-localize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
 import LottieView from 'lottie-react-native';
+import AddressModal3 from '../../Components/AddressModal3';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -420,6 +421,7 @@ export default function Cart({navigation, route}) {
           isLoadingB: false,
         });
         showSuccess(res?.message);
+        console.log(res?.message, 'resmessage');
       })
       .catch(errorMethod);
   };
@@ -1813,7 +1815,7 @@ export default function Cart({navigation, route}) {
                 <Text numberOfLines={1} style={styles.address}>
                   {selectedAddressData
                     ? selectedAddressData?.address
-                    : 'Add Address'}
+                    : strings.ADD_ADDRESS}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -2035,7 +2037,7 @@ export default function Cart({navigation, route}) {
         selectAddress={(data) => selectAddress(data)}
         selectedAddress={selectedAddressData}
       />
-      <AddressModal
+      <AddressModal3
         isVisible={isVisibleAddressModal}
         onClose={() => setModalVisibleForAddessModal(false)}
         type={type}

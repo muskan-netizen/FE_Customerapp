@@ -78,7 +78,7 @@ export default function Cart2({navigation, route}) {
     selectedAddress: null,
     selectedPayment: {
       id: 1,
-      title: 'Cash on Delivery',
+      title: strings.CASH_ON_DELIVERY,
       off_site: 0,
     },
     // selectedPayment: null,
@@ -1452,7 +1452,7 @@ export default function Cart2({navigation, route}) {
             <Text numberOfLines={1} style={styles.address}>
               {selectedAddressData
                 ? selectedAddressData?.address
-                : 'Add Address'}
+                : strings.ADD_ADDRESS}
             </Text>
           </TouchableOpacity>
         </View>

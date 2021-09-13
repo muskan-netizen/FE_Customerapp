@@ -204,7 +204,6 @@ export default {
   CONTINUE_TO_PAYMENT: 'Continuar con el pago',
   TOTAL_PAYABLE: 'Total a pagar',
   INCLUDED_ALL_TAXES: 'incluidos todos los impuestos',
-  CASE_ON_DELIVERY: ' Pago contra reembolso ',
   USE_A_NEW_CARD: '+ Usar una nueva tarjeta',
   PAY_AND_SUBMIT_REQUEST: 'Pagar y enviar solicitud',
   SHIPPING_DETAILS: 'Detalles de envío',
@@ -375,4 +374,9 @@ export default {
   ENTER_NEW_PASSWORD: 'NUEVA CONTRASEÑA',
   ENTER_CURRENT_PASSWORD: 'CONTRASEÑA ACTUAL',
   SAVED_LOCATIONS: ' Ubicaciones guardadas',
+  TRACK_ORDER2: 'Track Order',
+  ADD_ADDRESS1: 'ADD ADDRESS',
+  YOUR_LOCATION: 'Your Location',
+  COMPLETE_ADDRESS: 'Complete Address',
+  PRODUCT_ADDED_SUCCESS: 'Product successfully added',
 };
