@@ -84,6 +84,7 @@ const shortCodes = {
   totum4U: '04e60d',
   hmc: 'fa3fcd',
   groupy: 'd4f312',
+  weeat: '03cff2',
 };
 
 const appIds = {
@@ -418,6 +419,10 @@ const appIds = {
   groupy: Platform.select({
     ios: 'com.groupy',
     android: 'com.groupy',
+  }),
+  weeat: Platform.select({
+    ios: 'com.weeat.customer',
+    android: 'com.weeat',
   }),
 };
 

@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "670051101955",
+    "project_id": "weeat-a6896",
+    "storage_bucket": "weeat-a6896.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670051101955:android:11c401739406ec6f17cd36",
+        "android_client_info": {
+          "package_name": "com.weeat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "670051101955-1jq6d747llats6besmm17oj6iu8ipj8f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.weeat",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "670051101955-dro6val22dce55v7fpdgeogb2cipv43s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.weeat",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "670051101955-vmabi37g86t9o82vrr6ag30tnsli484v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.weeat",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "670051101955-dkj9o0k0m44utfp0hu94e7vbgb5hfdna.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_cVOTnW6G6bIUsH2IB0G3aAdMf02ej4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "670051101955-dkj9o0k0m44utfp0hu94e7vbgb5hfdna.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "670051101955-9vugros039bfrf6705d9sh8c7pb4bds0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.weeat"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

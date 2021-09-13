@@ -587,6 +587,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.weeat:
+          updateState({
+            shortCode: shortCodes.weeat,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
