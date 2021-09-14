@@ -454,6 +454,6 @@ export default {
   SEND_REFFERAL: 'أرسل الإحالة',
   SAVE_AS: 'حفظ باسم',
   COUPON: 'قسيمة',
-  AVAILABLE_PROMO_CODE: 'Available Promo codes',
-  EXPIRES: 'Expires',
+  AVAILABLE_PROMO_CODE: 'الرموز الترويجية المتاحة',
+  EXPIRES: 'تنتهي',
 };
