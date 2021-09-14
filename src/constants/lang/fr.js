@@ -477,6 +477,6 @@ export default {
   SEND_REFFERAL: 'Envoyer une référence',
   SAVE_AS: 'Enregistrer sous',
   COUPON: 'COUPON',
-  AVAILABLE_PROMO_CODE: 'Available Promo codes',
-  EXPIRES: 'Expires',
+  AVAILABLE_PROMO_CODE: 'Codes promotionnels disponibles',
+  EXPIRES: 'Expire',
 };
