@@ -23,7 +23,7 @@ export default function () {
     <Stack.Navigator>
       <Stack.Screen
         name={navigationStrings.CART}
-        component={appStyle?.homePageLayout === 2 ? Cart2 : Cart}
+        component={appStyle?.homePageLayout === 2 ? Cart2 : Cart3}
         options={{headerShown: false}}
       />
 

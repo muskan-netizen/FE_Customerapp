@@ -119,7 +119,7 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
-        component={SearchProductVendorItem}
+        component={SearchProductVendorItem2}
         options={{headerShown: false}}
       />
 
