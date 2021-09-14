@@ -13,6 +13,7 @@ import {
   ProductList,
   ProductList2,
   SearchProductVendorItem,
+  SearchProductVendorItem2,
   SendProduct,
   Vendors,
   Vendors2,

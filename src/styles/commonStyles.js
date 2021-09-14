@@ -130,6 +130,11 @@ export default ({fontFamily, buttonTextColor}) => {
       backgroundColor: colors.lightGreyBgColor,
       opacity: 0.26,
     },
+    mediumTxtGreyD14: {
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(14),
+      color: colors.textGreyD,
+    },
   });
   return styles;
 };

@@ -22,9 +22,6 @@ import {showError} from '../../utils/helperFunctions';
 import {getItem} from '../../utils/utils';
 import styles from './styles';
 
-import {bottomsUpConfig, iosConfig} from '../../utils/constants/FirebaseConfig';
-import firebase from '@react-native-firebase/app';
-
 export default function ShortCode({route, navigation}) {
   const shortCodeParam = route?.params?.shortCodeParam;
   // alert(shortCodeParam)
