@@ -10,6 +10,7 @@ import {
   View,
   ImageBackground,
   TouchableNativeFeedback,
+  Alert,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
@@ -17,8 +18,10 @@ import GradientButton from '../Components/GradientButton';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import commonStylesFun from '../styles/commonStyles';
+import commonStylesFun, { hitSlopProp } from '../styles/commonStyles';
 import fontFamily from '../styles/fontFamily';
+import Banner from '../Components/Banner';
+import DeviceInfo from 'react-native-device-info';
 import {
   height,
   moderateScale,
@@ -29,67 +32,245 @@ import {
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
+  showError,
+  showSuccess,
 } from '../utils/helperFunctions';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import navigationStrings from '../navigation/navigationStrings';
 import HTMLView from 'react-native-htmlview';
 import HtmlViewComp from './HtmlViewComp';
 import { MyDarkTheme } from '../styles/theme';
 import * as Animatable from 'react-native-animatable';
+import actions from '../redux/actions';
+import { Pagination } from 'react-native-snap-carousel';
+import CardLoader from './Loaders/CardLoader';
 
 export default function VariantAddons({
   productdetail = {},
-  addonSet = [],
   isVisible = false,
   onClose,
-  onPress,
   resizeMode = 'contain',
   imagestyle = {},
-  variantData = []
+  showShimmer,
+  shimmerClose = () => { },
+  updateCartItems
 }) {
-  const navigation = useNavigation();
+
+  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
+
+  const [state, setState] = useState({
+    slider1ActiveSlide: 0,
+    productId: productdetail?.id,
+    productDetailData: null,
+    productPriceData: null,
+    variantSet: [],
+    addonSet: [],
+    relatedProducts: [],
+    showListOfAddons: false,
+    venderDetail: null,
+    productTotalQuantity: 0,
+    productSku: null,
+    productVariantId: null,
+    isVisibleAddonModal: false,
+    lightBox: false,
+    productQuantityForCart: 1,
+    showErrorMessageTitle: false,
+    btnLoader: false,
+  });
+
+  const {
+    variantSet,
+    addonSet,
+    productDetailData,
+    showErrorMessageTitle,
+    productPriceData,
+    productTotalQuantity,
+    productSku,
+    productVariantId,
+    productQuantityForCart,
+    btnLoader
+  } = state
+
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = theme;
   const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;
-
   const commonStyles = commonStylesFun({ fontFamily, buttonTextColor });
 
-  const [state, setState] = useState({
-    addonSetData: addonSet,
-    viewHeight: 0,
-    maxLimitAddon: 0,
-    allVariants: []
-  });
-  const { addonSetData, allVariants, viewHeight, maxLimitAddon } = state;
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
-  useEffect(() => {
-    if (addonSet && variantData && isVisible) {
-      updateState({
-        addonSetData: addonSet,
-        allVariants: variantData
-      })
-    }
 
-  }, [addonSet, variantData, isVisible])
+  useFocusEffect(
+    React.useCallback(() => {
+      if (variantSet.length) {
+        let variantSetData = variantSet
+          .map((i, inx) => {
+            let find = i.options.filter((x) => x.value);
+            if (find.length) {
+              return {
+                variant_id: find[0].variant_id,
+                optionId: find[0].id,
+              };
+            }
+          })
+          .filter((x) => x != undefined);
+        console.log(variantSetData, 'variantSetData callback');
+        if (variantSetData.length) {
+          getProductDetailBasedOnFilter(variantSetData);
+        } else {
+          getProductDetail();
+
+        }
+      }
+    }, [variantSet, productdetail, isVisible]),
+  );
+
+
+
+
+  const getProductDetailBasedOnFilter = (variantSetData) => {
+    updateState({ isLoadingC: true });
+    let data = {};
+    data['variants'] = variantSetData.map((i) => i.variant_id);
+    data['options'] = variantSetData.map((i) => i.optionId);
+    actions
+      .getProductDetailByVariants(`/${productDetailData.sku}`, data, {
+        code: appData.profile.code,
+        currency: currencies.primary_currency.id,
+        language: languages.primary_language.id,
+      })
+      .then((res) => {
+        console.log(res.data, 'res.data by vendor id ');
+        updateState({
+          productDetailData: res.data,
+          productPriceData: {
+            multiplier: res.data.multiplier,
+            price: res.data.price,
+          },
+          productSku: res.data.sku,
+          productVariantId: res.data.id,
+          showErrorMessageTitle: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+
+  const errorMethod = (error) => {
+    console.log(error, 'Error>>>>>');
+
+    if (error?.message?.alert == 1) {
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
+      // showError(error?.message?.error || error?.error);
+      Alert.alert('', error?.message?.error, [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          // style: 'destructive',
+        },
+        { text: 'Clear Cart', onPress: () => clearCart() },
+      ]);
+    } else {
+      if (error?.data?.variant_empty) {
+        updateState({
+          isLoading: false,
+          showErrorMessageTitle: true,
+          isLoadingB: false,
+          isLoadingC: false,
+        });
+      } else {
+        updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
+        showError(error?.message || error?.error);
+      }
+    }
+  };
+
+  console.log("showErrorMessageTitle", showErrorMessageTitle)
+
+  const clearCart = (addonSet) => {
+    // actions
+    //   .clearCart(
+    //     {},
+    //     {
+    //       code: appData?.profile?.code,
+    //       currency: currencies?.primary_currency?.id,
+    //       language: languages?.primary_language?.id,
+    //       systemuser: DeviceInfo.getUniqueId(),
+    //     },
+    //   )
+    //   .then((res) => {
+    //     actions.cartItemQty(res);
+    //     // updateState({
+    //     //   cartItems: [],
+    //     //   cartData: {},
+    //     //   isLoadingB: false,
+    //     // });
+    //     // addToCart();
+    //     if (addonSet) {
+    //       // _finalAddToCart(addonSet);
+    //     } else {
+    //       addToCart();
+    //     }
+    //     // _finalAddToCart(addonSet);
+    //     showSuccess(res?.message);
+    //   })
+    //   .catch(errorMethod);
+  };
+
+  console.log("shimmer value", showShimmer)
+
+  useEffect(() => {
+    getProductDetail()
+  }, [productdetail, isVisible])
+
+
+  const getProductDetail = () => {
+    actions
+      .getProductDetailByProductId(
+        `/${productdetail?.id}`,
+        {},
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+        },
+      )
+      .then((res) => {
+        console.log(res.data, 'res.data++ prodcut detail');
+        updateState({
+          productDetailData: res.data.products,
+          relatedProducts: res.data.relatedProducts,
+          productPriceData: res.data.products.variant[0],
+          addonSet: res.data.products.add_on,
+          venderDetail: res.data.products.vendor,
+          productTotalQuantity: res.data.products.variant[0].quantity,
+          productVariantId: res.data.products.variant[0].id,
+          productSku: res.data.products.sku,
+          variantSet: res.data.products.variant_set,
+        });
+        shimmerClose(false)
+      })
+      .catch((error) => {
+        console.log("error raised", error)
+
+      });
+  };
+
 
   let productImage = productdetail?.media[0];
 
-  console.log(variantData, 'variant data');
 
   const selectSpecificOptionsForAddions = (options, i, inx) => {
     let newArray = cloneDeep(options);
     console.log(i, 'i>>>i');
     console.log(newArray, 'newArray>>>newArray');
-    console.log(addonSetData, 'addonSetData>>>addonSetData');
-    let find = addonSetData.find((x) => x?.addon_id == i?.addon_id);
+    console.log(addonSet, 'add on set');
+    let find = addonSet.find((x) => x?.addon_id == i?.addon_id);
     console.log(find, 'find>>>find');
 
     updateState({
-      addonSetData: addonSetData.map((vi, vnx) => {
+      addonSet: addonSet.map((vi, vnx) => {
         if (vi.addon_id == i.addon_id) {
           return {
             ...vi,
@@ -185,7 +366,7 @@ export default function VariantAddons({
   };
 
   const showAllAddons = () => {
-    let variantSetData = cloneDeep(addonSetData);
+    let variantSetData = cloneDeep(addonSet);
     return (
       <>
         <View
@@ -200,8 +381,14 @@ export default function VariantAddons({
                   marginVertical: moderateScaleVertical(5),
                 }}>
                 <Text
-                  style={[styles.variantLable]}>{`Choice of ${i?.title}`}</Text>
-                <Text style={styles.chooseOption}>
+                  style={{
+                    ...styles.variantLable,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+                  }}>{`Choice of ${i?.title}`}</Text>
+                <Text style={{
+                  ...styles.chooseOption,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyF,
+                }}>
                   {strings.PLS_SELECT_ONE}
                 </Text>
                 {i?.setoptions ? checkBoxButtonViewAddons(i) : null}
@@ -222,20 +409,20 @@ export default function VariantAddons({
 
 
   const selectSpecificOptions = (options, i, inx) => {
-    console.log("im allVariants", allVariants)
-    console.log("im iiiiii", i)
-    console.log("im options iiiiii", options)
+    // console.log("im allVariants", allVariants)
+    console.log("im iiiiii+++", i)
+    // console.log("im options iiiiii", options)
 
     // return;
     let newArray = cloneDeep(options);
 
-    let modifyVariants = allVariants.map((vi, vnx) => {
+    let modifyVariants = variantSet.map((vi, vnx) => {
       if (vi.variant_type_id == i.variant_id) {
         return {
           ...vi,
           options: newArray.map((j, jnx) => {
             if (j.id == i.id) {
-              
+
               return {
                 ...j,
                 value: i?.value ? false : true,
@@ -252,9 +439,9 @@ export default function VariantAddons({
       }
     })
 
-    updateState({ allVariants: modifyVariants });
+    updateState({ variantSet: modifyVariants });
 
-    console.log(modifyVariants, 'im newArray>>>>>');
+    // console.log(modifyVariants, 'im newArray>>>>>');
   };
 
   const variantSetValue = ({ options, type }) => {
@@ -272,7 +459,7 @@ export default function VariantAddons({
         {options.map((i, inx) => {
           return (
             <TouchableOpacity
-              disabled={options && options.length == 1 ? true : false}
+              // disabled={options && options.length == 1 ? true : false}
               onPress={() => selectSpecificOptions(options, i, inx)}
             >
               <View
@@ -284,7 +471,10 @@ export default function VariantAddons({
                 }}
               >
 
-                <Text style={styles.variantValue}>{i?.title}</Text>
+                <Text style={{
+                  ...styles.variantValue,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>{i?.title}</Text>
                 <Image source={i?.value ? imagePath.check : imagePath.unCheck} />
               </View>
             </TouchableOpacity>
@@ -296,13 +486,13 @@ export default function VariantAddons({
   };
 
   const circularView = (options) => {
-    console.log("circular view",options)
+    console.log("circular view", options)
     return (
       <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         {options.map((i, inx) => {
           return (
             <TouchableNativeFeedback
-              disabled={options && options.length == 1 ? true : false}
+              // disabled={options && options.length == 1 ? true : false}
               onPress={() => selectSpecificOptions(options, i, inx)}
               style={{
                 flexDirection: 'row',
@@ -344,8 +534,10 @@ export default function VariantAddons({
   };
 
 
+  const { bannerRef } = useRef();
+
   const showAllVariants = () => {
-    let variantSetData = cloneDeep(allVariants);
+    let variantSetData = cloneDeep(variantSet);
     return (
       <View
         style={{ marginBottom: 10, paddingHorizontal: moderateScale(15) }}>
@@ -357,10 +549,12 @@ export default function VariantAddons({
                 marginVertical: moderateScaleVertical(5),
               }}>
               <Text
-                style={[
-                  styles.variantLable,
-                  { marginBottom: moderateScale(5) },
-                ]}>{`${i?.title}`}</Text>
+                style={{
+                  ...styles.variantLable,
+                  marginBottom: moderateScale(5),
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}
+              >{`${i?.title}`}</Text>
               {i?.options ? variantSetValue(i) : null}
             </View>
           );
@@ -369,14 +563,178 @@ export default function VariantAddons({
     );
   };
 
-  const addToCart = () => { };
 
-  const onScroll = ({ nativeEvent }) => {
-    let preHeight = height / 3.8 - 10;
-    let offset = nativeEvent.contentOffset.y;
-    let index = parseInt(offset / preHeight);
-    console.log('index+++', index);
+
+
+  const addToCart = (addonSet) => {
+    console.log("add on set", addonSet)
+    const addon_ids = [];
+    const addon_options = [];
+    addonSet.map((i, inx) => {
+      i.setoptions.map((j, jnx) => {
+        console.log(j, 'J');
+        if (j?.value == true) {
+          addon_ids.push(j?.addon_id);
+          addon_options.push(j?.id);
+        }
+      });
+    });
+    let data = {};
+    data['sku'] = productSku;
+    data['quantity'] = productQuantityForCart;
+    data['product_variant_id'] = productVariantId;
+    data['type'] = dine_In_Type;
+
+    if (addonSet && addonSet.length) {
+      // console.log(addonSetData, 'addonSetData');
+      data['addon_ids'] = addon_ids;
+      data['addon_options'] = addon_options;
+    }
+    console.log(data, 'data for cart');
+    updateState({ btnLoader: true })
+    actions
+      .addProductsToCart(data, {
+        code: appData.profile.code,
+        currency: currencies.primary_currency.id,
+        language: languages.primary_language.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res, 'add item cart res');
+        actions.cartItemQty(res);
+        // showSuccess('Product successfully added');
+        updateState({ isLoadingC: false, btnLoader: false });
+        updateCartItems(
+          productdetail,
+          productQuantityForCart,
+          res.data.cart_product_id,
+          res.data.id
+        )
+        onClose()
+      })
+      .catch((error) => errorMethodSecond(error, addonSet));
   };
+
+  const errorMethodSecond = (error, addonSet) => {
+    console.log(error.message.alert, 'Error>>>>>');
+
+    if (error?.message?.alert == 1) {
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false, btnLoader });
+      // showError(error?.message?.error || error?.error);
+      // Alert.alert('', error?.message?.error, [
+      //   {
+      //     text: 'Cancel',
+      //     onPress: () => console.log('Cancel Pressed'),
+      //     // style: 'destructive',
+      //   },
+      //   { text: 'Clear Cart', onPress: () => clearCart(addonSet) },
+      // ]);
+    } else {
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false, btnLoader: false });
+      showError(error?.message || error?.error);
+    }
+  };
+
+
+  const shimmerShow = () => {
+    return (
+      <View style={{
+        flex: 1,
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.background
+          : '#fff',
+        borderTopLeftRadius: 0,
+        borderTopStartRadius: 0
+      }}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          bounces={false}
+          // onScroll={onScroll}
+          style={{
+            ...styles.modalMainViewContainer,
+            borderTopLeftRadius: 0,
+            borderTopStartRadius: 0,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : '#fff',
+          }}>
+          <CardLoader cardWidth={width} height={width * 0.6} />
+          <View style={{ marginHorizontal: moderateScale(12) }}>
+            <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'center' }}>
+              <CardLoader cardWidth={10} height={10} />
+              <View style={{ marginHorizontal: moderateScale(6) }} />
+              <CardLoader cardWidth={10} height={10} />
+              <View style={{ marginHorizontal: moderateScale(6) }} />
+              <CardLoader cardWidth={10} height={10} />
+            </View>
+            <CardLoader cardWidth={80} height={10} />
+            <CardLoader cardWidth={60} height={10} />
+            <View style={{ marginTop: moderateScaleVertical(0) }} />
+            <CardLoader cardWidth={'100%'} height={2} />
+            <CardLoader cardWidth={40} height={8} />
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <CardLoader cardWidth={60} height={10} />
+              <View style={{ marginHorizontal: 8 }} />
+              <CardLoader cardWidth={60} height={10} />
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <CardLoader cardWidth={60} height={10} />
+              <View style={{ marginHorizontal: 8 }} />
+              <CardLoader cardWidth={60} height={10} />
+            </View>
+            <CardLoader cardWidth={40} height={8} />
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <CardLoader cardWidth={60} height={10} />
+              <View style={{ marginHorizontal: 8 }} />
+              <CardLoader cardWidth={60} height={10} />
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <CardLoader cardWidth={60} height={10} />
+              <View style={{ marginHorizontal: 8 }} />
+              <CardLoader cardWidth={60} height={10} />
+            </View>
+          </View>
+        </ScrollView>
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginHorizontal: moderateScale(16),
+          paddingBottom: moderateScaleVertical(10),
+        }}>
+          <View style={{ flex: 0.25 }}>
+            <CardLoader cardWidth={'100%'} height={38} />
+          </View>
+          <View style={{ marginHorizontal: moderateScale(8) }} />
+          <View style={{ flex: 0.75 }}>
+            {/* <View style={{ marginHorizontal: 8 }} /> */}
+            <CardLoader cardWidth={'100%'} height={38} />
+          </View>
+        </View>
+      </View>
+    )
+  }
+
+
+  const productIncrDecreamentForCart = (type) => {
+    if (type == 2) {
+      if (productQuantityForCart <= 1) {
+        onClose()
+      } else {
+        updateState({
+          productQuantityForCart: productQuantityForCart - 1,
+        });
+      }
+    } else if (type == 1) {
+      if (productQuantityForCart == productTotalQuantity) {
+        showError('Maximum Limit Reached');
+      } else {
+        updateState({
+          productQuantityForCart: productQuantityForCart + 1,
+        });
+      }
+    }
+  };
+
   return (
     <Modal
       transparent={false}
@@ -389,7 +747,7 @@ export default function VariantAddons({
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Image source={imagePath.crossC} />
       </TouchableOpacity>
-      <Animatable.View style={{ flex: 1 }}>
+      {showShimmer ? shimmerShow() : <Animatable.View style={{ flex: 1 }}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           bounces={false}
@@ -400,7 +758,34 @@ export default function VariantAddons({
               ? MyDarkTheme.colors.background
               : '#fff',
           }}>
-          <ImageBackground
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <Banner
+              bannerRef={bannerRef}
+              bannerData={productDetailData?.product_media}
+              sliderWidth={width}
+              itemWidth={width}
+              pagination={false}
+              setActiveState={(index) =>
+                updateState({ slider1ActiveSlide: index })
+              }
+              showLightbox={true}
+              cardViewStyle={styles.cardViewStyle}
+              resizeMode="contain"
+            
+            />
+            <View style={{ paddingTop: 5 }}>
+              <Pagination
+                dotsLength={productDetailData?.product_media?.length}
+                activeDotIndex={state.slider1ActiveSlide}
+                dotColor={'grey'}
+                dotStyle={[styles.dotStyle]}
+                inactiveDotColor={'black'}
+                inactiveDotOpacity={0.4}
+                inactiveDotScale={0.8}
+              />
+            </View>
+          </View>
+          {/* <ImageBackground
             source={{
               uri: getImageUrl(
                 productImage?.image?.path?.image_fit,
@@ -410,7 +795,7 @@ export default function VariantAddons({
             }}
             style={[styles.cardView, imagestyle]}
             resizeMode={resizeMode}
-          />
+          /> */}
           <Animatable.View animation="fadeInUp" style={styles.mainView}>
             <View>
               <Text
@@ -420,6 +805,22 @@ export default function VariantAddons({
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 }}>
                 {productdetail?.translation[0]?.title}
+              </Text>
+            </View>
+            <View style={{ justifyContent: 'center' }}>
+              <Text
+                style={{
+                  color:
+                    productTotalQuantity && productTotalQuantity != 0
+                      ? colors.green
+                      : colors.orangeB,
+                  fontSize: textScale(10),
+                  lineHeight: 20,
+                  fontFamily: fontFamily.medium,
+                }}>
+                {productTotalQuantity && productTotalQuantity != 0
+                  ? ''
+                  : strings.OUT_OF_STOCK}
               </Text>
             </View>
 
@@ -436,19 +837,34 @@ export default function VariantAddons({
               }}
             />
             {/* ********Addon set View*******  */}
-            {!!addonSetData && addonSetData?.length ? showAllAddons() : null}
+            {!!addonSet && addonSet?.length ? showAllAddons() : null}
 
-            {!!allVariants && allVariants?.length ? showAllVariants() : null}
+            {!!variantSet && variantSet?.length ? showAllVariants() : null}
 
           </Animatable.View>
+          {showErrorMessageTitle ? (
+            <Text
+              style={{
+                fontSize: textScale(14),
+                marginHorizontal: moderateScale(20),
+                color: colors.redB,
+                fontFamily: fontFamily.medium,
+                marginBottom: moderateScaleVertical(20)
+              }}>
+              {strings.NOVARIANTPRODUCTAVAILABLE}
+            </Text>
+          ) : null}
         </ScrollView>
 
-        <View
+
+
+
+        {!showErrorMessageTitle && productTotalQuantity != 0 && <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            paddingHorizontal: 16,
+            paddingHorizontal: moderateScale(16),
             paddingBottom: moderateScaleVertical(10),
             backgroundColor: isDarkMode
               ? MyDarkTheme.colors.background
@@ -467,7 +883,10 @@ export default function VariantAddons({
               }}
             // onPress={onPress}
             >
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => productIncrDecreamentForCart(2)}
+                hitSlop={hitSlopProp}
+              >
                 <Text
                   style={{
                     ...commonStyles.mediumFont14,
@@ -482,9 +901,12 @@ export default function VariantAddons({
                   ...commonStyles.mediumFont14,
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 }}>
-                1
+                {productQuantityForCart}
               </Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => productIncrDecreamentForCart(1)}
+                hitSlop={hitSlopProp}
+              >
                 <Text
                   style={{
                     ...commonStyles.mediumFont14,
@@ -496,9 +918,12 @@ export default function VariantAddons({
               </TouchableOpacity>
             </View>
           </View>
+
           <View style={{ marginHorizontal: 8 }} />
           <View style={{ flex: 0.75 }}>
             <GradientButton
+              indicator={btnLoader}
+              indicatorColor={colors.white}
               colorsArray={[
                 themeColors.primary_color,
                 themeColors.primary_color,
@@ -507,11 +932,11 @@ export default function VariantAddons({
                 fontFamily: fontFamily.medium,
                 textTransform: 'capitalize',
               }}
-              onPress={addToCart}
+              onPress={() => addToCart(addonSet)}
               btnText={`${strings.ADD_ITEM} - ${currencies?.primary_currency?.symbol
                 }${(
-                  Number(productdetail?.variant[0]?.multiplier) *
-                  Number(productdetail?.variant[0]?.price)
+                  Number(productPriceData?.multiplier) *
+                  Number(productPriceData?.price)
                 ).toFixed(2)}`}
               btnStyle={{
                 borderRadius: moderateScale(4),
@@ -519,8 +944,8 @@ export default function VariantAddons({
               }}
             />
           </View>
-        </View>
-      </Animatable.View>
+        </View>}
+      </Animatable.View>}
     </Modal>
   );
 }
@@ -594,7 +1019,7 @@ const styles = StyleSheet.create({
   },
   mainView: {
     marginVertical: moderateScaleVertical(15),
-    paddingHorizontal: moderateScale(15),
+    paddingHorizontal: moderateScale(12),
   },
   description: {
     color: colors.textGreyB,
@@ -641,5 +1066,18 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(40 / 2),
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  cardViewStyle: {
+    alignItems: 'center',
+    height: width * 0.7,
+    width: width,
+    // marginRight: 20
+  },
+  dotStyle: { height: 12, width: 12, borderRadius: 12 / 2 },
+  ratingColor: {
+    color: colors.backgroundGrey,
+    paddingLeft: 5,
+    fontSize: textScale(12),
+    fontFamily: fontFamily.medium,
   },
 });

@@ -783,11 +783,11 @@ export default function Cart({navigation, route}) {
                     style={{
                       backgroundColor: isDarkMode
                         ? MyDarkTheme.colors.background
-                        : '#fff',
+                        : '#F8F8F8',
                       marginBottom: moderateScaleVertical(12),
                       marginRight: moderateScale(8),
                       borderRadius: moderateScale(10),
-                      backgroundColor: '#F8F8F8',
+                  
                     }}
                     key={inx}>
                     <View style={[styles.cartItemMainContainer]}>

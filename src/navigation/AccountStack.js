@@ -40,6 +40,7 @@ import {
   WebviewScreen,
   Wishlist,
   ReturnOrder,
+  OrderDetail2
 } from '../Screens';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
@@ -50,13 +51,13 @@ export default function () {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        component={appStyle?.homePageLayout === 2 ? Account2 : Account}
+        component={appStyle?.homePageLayout === 2 ? Account2 : Account3}
         name={navigationStrings.ACCOUNTS}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.MY_PROFILE}
-        component={appStyle?.homePageLayout === 2 ? MyProfile2 : MyProfile}
+        component={appStyle?.homePageLayout === 2 ? MyProfile2 : MyProfile3}
         options={{headerShown: false}}
       />
 
@@ -68,6 +69,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.ORDER_DETAIL}
         component={OrderDetail}
+        options={{headerShown: false}}
+      />
+        <Stack.Screen
+        name={navigationStrings.ORDER_DETAIL2}
+        component={OrderDetail2}
         options={{headerShown: false}}
       />
       <Stack.Screen
