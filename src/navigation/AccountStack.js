@@ -50,13 +50,13 @@ export default function () {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        component={appStyle?.homePageLayout === 2 ? Account2 : Account}
+        component={appStyle?.homePageLayout === 2 ? Account2 : Account3}
         name={navigationStrings.ACCOUNTS}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.MY_PROFILE}
-        component={appStyle?.homePageLayout === 2 ? MyProfile2 : MyProfile}
+        component={appStyle?.homePageLayout === 2 ? MyProfile2 : MyProfile3}
         options={{headerShown: false}}
       />
 
