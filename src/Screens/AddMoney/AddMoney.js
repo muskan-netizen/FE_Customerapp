@@ -213,7 +213,7 @@ export default function AddMoney({navigation}) {
                       : colors.textGreyJ,
                 },
               ]}>
-              {item.title}
+              {item?.title_lng ? item?.title_lng : item?.title}
             </Text>
           </View>
         </TouchableOpacity>
@@ -344,9 +344,9 @@ export default function AddMoney({navigation}) {
                 if (res && res?.status == 'Success' && res?.data) {
                   // updateState({allAvailAblePaymentMethods: res?.data});
                   // alert('Payment successfull');
-                  Alert.alert('', 'Payment successful', [
+                  Alert.alert('', strings.PAYMENT_SUCCESS, [
                     {
-                      text: 'Cancel',
+                      text: strings.CANCEL,
                       onPress: () => console.log('Cancel Pressed'),
                       // style: 'destructive',
                     },

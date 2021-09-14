@@ -1838,11 +1838,11 @@ export default function Cart({navigation, route}) {
   const openClearCartModal = () => {
     Alert.alert('', strings.AREYOUSURE, [
       {
-        text: 'Cancel',
+        text: strings.CANCEL,
         onPress: () => {},
         // style: 'destructive',
       },
-      {text: 'Confirm', onPress: () => bottomButtonClick()},
+      {text: strings.CONFIRM, onPress: () => bottomButtonClick()},
     ]);
   };
   //SelectAddress

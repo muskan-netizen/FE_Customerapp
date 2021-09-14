@@ -1488,11 +1488,11 @@ export default function Cart2({navigation, route}) {
   const openClearCartModal = () => {
     Alert.alert('', strings.AREYOUSURE, [
       {
-        text: 'Cancel',
+        text: strings.CANCEL,
         onPress: () => console.log('Cancel Pressed'),
         // style: 'destructive',
       },
-      {text: 'Confirm', onPress: () => bottomButtonClick()},
+      {text: strings.CONFIRM, onPress: () => bottomButtonClick()},
     ]);
   };
   //SelectAddress

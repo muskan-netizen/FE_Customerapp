@@ -53,6 +53,7 @@ import PhoneNumberInputWithUnderline from '../../Components/PhoneNumberInputWith
 import BorderTextInputWithLable from '../../Components/BorderTextInputWithLable';
 import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
 import {string} from 'is_js';
+import AddressModal3 from '../../Components/AddressModal3';
 
 export default function MyProfile3({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -491,7 +492,7 @@ export default function MyProfile3({route, navigation}) {
                     isDarkMode
                       ? [styles.referralCode, {color: MyDarkTheme.colors.text}]
                       : styles.referralCode
-                  }>{`Your refferal code: ${userData?.refferal_code}`}</Text>
+                  }>{`${strings.YOUR_REFFERAL_CODE} ${userData?.refferal_code}`}</Text>
               </View>
               <View
                 style={{
@@ -508,7 +509,7 @@ export default function MyProfile3({route, navigation}) {
                       fontFamily: fontFamily.bold,
                     },
                   ]}>
-                  {'Send Refferal'}
+                  {strings.SEND_REFFERAL}
                 </Text>
               </View>
             </View>
@@ -947,7 +948,7 @@ export default function MyProfile3({route, navigation}) {
         onPress={(index) => cameraHandle(index)}
       />
 
-      <AddressModal
+      <AddressModal3
         navigation={navigation}
         updateData={updateData}
         isVisible={isVisible}

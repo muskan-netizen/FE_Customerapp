@@ -251,10 +251,10 @@ export default function DashBoardHeaderFive({
   const dineInFunction = () => {
     Alert.alert('', strings.REMOVE_CART_MSG, [
       {
-        text: 'Cancel',
+        text: strings.CANCEL,
         onPress: () => console.log('Cancel Pressed'),
       },
-      {text: 'Clear Cart', onPress: clearCart},
+      {text: strings.CLEAR_CART2, onPress: clearCart},
     ]);
   };
 

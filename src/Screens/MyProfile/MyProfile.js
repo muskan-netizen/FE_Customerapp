@@ -491,7 +491,7 @@ export default function MyProfile({route, navigation}) {
                     isDarkMode
                       ? [styles.referralCode, {color: MyDarkTheme.colors.text}]
                       : styles.referralCode
-                  }>{`Your refferal code: ${userData?.refferal_code}`}</Text>
+                  }>{`${strings.YOUR_REFFERAL_CODE} ${userData?.refferal_code}`}</Text>
               </View>
               <View
                 style={{
@@ -508,7 +508,7 @@ export default function MyProfile({route, navigation}) {
                       fontFamily: fontFamily.bold,
                     },
                   ]}>
-                  {'Send Refferal'}
+                  {strings.SEND_REFFERAL}
                 </Text>
               </View>
             </View>

@@ -260,7 +260,7 @@ export const sessionHandler = (error) => {
   NavigationService.navigate(navigationStrings.OUTER_SCREEN, {}),
     Alert.alert(error, '', [
       {
-        text: 'Ok',
+        text: strings.OK,
         // cancelable: false,
         onPress: () => console.log('okay Pressed'),
         //   onPress: () =>
