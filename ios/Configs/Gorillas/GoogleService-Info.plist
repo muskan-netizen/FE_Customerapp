@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>697473093779-jn30moeflmh6cp0g7mh2bnuqfi90q8kb.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.697473093779-jn30moeflmh6cp0g7mh2bnuqfi90q8kb</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>697473093779-f51uava29djfb0c0ja6ql17mdp1b1uhb.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDgzL1SB_-gcAKwwUwjJ6sq2rp_UV-ltao</string>
+	<key>GCM_SENDER_ID</key>
+	<string>697473093779</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.gorillas</string>
+	<key>PROJECT_ID</key>
+	<string>gorillas-f5b0a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gorillas-f5b0a.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:697473093779:ios:18b10cabf19d30ee333d66</string>
+</dict>
+</plist>
