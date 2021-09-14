@@ -56,9 +56,11 @@ const BannerHome2 = ({
       ? getImageUrl(
           item.image.path.proxy_url,
           item.image.path.image_path,
-          '1500/600',
+          '1400/600',
         )
       : getImageUrl(item.image.proxy_url, item.image.image_path, '1500/600');
+
+    console.log(imageUrl, 'imageUrl');
 
     return (
       <>

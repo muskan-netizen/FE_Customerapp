@@ -28,7 +28,6 @@ export default {
   PRODUCT_WEIGHT: ' Poids du produit ',
   YOUR_PHONE_NUMBER: 'Votre numéro de téléphone ',
   ENTER_PASSWORD: 'Entrez le mot de passe',
-
   SIGNUP_AN_ACCOUNT: ' « ACCES HAUT COMPTE »',
   OTP_VERIFICATION: ' Vérification OTP ',
   ENTER_OTP_SENT:
