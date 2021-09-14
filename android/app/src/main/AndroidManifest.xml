@@ -34,6 +34,7 @@
         android:launchMode="singleTask"
         android:exported="true"
         android:windowSoftInputMode="stateAlwaysHidden|adjustPan|adjustResize"
+        android:screenOrientation="portrait"
         >
         <!-- <intent-filter>
             <action android:name="android.intent.action.MAIN" />

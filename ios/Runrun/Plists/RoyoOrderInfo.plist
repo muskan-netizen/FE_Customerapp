@@ -138,6 +138,9 @@
 		<string>Eina02-Regular.ttf</string>
 		<string>Eina02-Bold.ttf</string>
 		<string>Eina02-SemiBold.ttf</string>
+        <string>Metropolis-Bold.otf</string>
+        <string>Metropolis-Regular.otf</string>
+        <string>Metropolis-SemiBold.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
