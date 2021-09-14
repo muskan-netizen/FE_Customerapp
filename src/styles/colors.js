@@ -88,4 +88,8 @@ export default {
   iconGrey: '#A5A5A5',
   yellowOpacity10: 'rgba(247,215,123,0.1)',
   greyColor: '#F1F1F1',
+  redOpacity12: 'rgba(236,88,55,0.12)',
+  redC: '#EC5837',
+  borderColorNew: '#EAEAEA',
+  textGreyNew: '#1E2E4D',
 };

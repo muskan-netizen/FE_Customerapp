@@ -440,4 +440,6 @@ export default {
   SEND_REFFERAL: 'Send Refferal',
   SAVE_AS: 'Save as',
   COUPON: 'COUPON',
+  AVAILABLE_PROMO_CODE: 'Available Promo codes',
+  EXPIRES: 'Expires',
 };

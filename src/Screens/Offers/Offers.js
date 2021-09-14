@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, Image, TouchableOpacity, View} from 'react-native';
+import {FlatList, Image, TouchableOpacity, View, Text} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
@@ -16,6 +16,13 @@ import {showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptyOffers from './ListEmptyOffers';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import OffersCard2 from '../../Components/OffersCard2';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  textScale,
+} from '../../styles/responsiveSize';
+import fontFamily from '../../styles/fontFamily';
 
 export default function Offer({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -184,7 +191,7 @@ export default function Offer({route, navigation}) {
 
   const _renderItem = ({item, index}) => {
     return (
-      <OffersCard
+      <OffersCard2
         data={item}
         onPress={() =>
           vendorInfo?.cabOrder
@@ -211,6 +218,19 @@ export default function Offer({route, navigation}) {
         }
       />
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
+      <View
+        style={{
+          marginHorizontal: moderateScale(16),
+          marginTop: moderateScaleVertical(18),
+        }}>
+        <Text
+          style={{
+            fontSize: textScale(14),
+            fontFamily: fontFamily.medium,
+          }}>
+          {strings.AVAILABLE_PROMO_CODE}
+        </Text>
+      </View>
       <View style={{flex: 1}}>
         <FlatList
           data={isLoading ? [] : allAvailableCoupons}
