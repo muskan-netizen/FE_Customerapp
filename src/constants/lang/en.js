@@ -136,7 +136,6 @@ export default {
   DELIVERYAT: 'Delivery at:',
   DELIVERYTIME: 'Delivery in ',
   CLEARCART: 'Clear Cart',
-  OFFERS: 'Offers',
   EMAIL: 'Email',
   PHONE_NUMBER: 'Phone Number',
   SELECT_PROMO_CODE: 'Select promo code',
@@ -152,7 +151,6 @@ export default {
   CATEGORY: 'Category',
   UNAUTHORIZED_MESSAGE: 'Please login to access this feature',
   LOGOUT: 'Logout',
-  CANCEL: 'CANCEL',
   APPLY: 'APPLY',
   ALLPRODUCT: 'All Product',
   SORT: 'Sort',
@@ -427,7 +425,6 @@ export default {
   ENTER_AMOUNT: 'Enter amount',
   NO_PAYMENT_METHOD: 'No Payment method found',
   OPEN: 'Open',
-  Close: 'Close',
   CONFIRM: 'Confirm',
   NO_DATA_FOUND: 'No Data Found',
   THIS_CHANGE_WILL_REMOVE_YOUR_CART:
@@ -438,4 +435,14 @@ export default {
   CLEAR: 'Clear',
   TRENDING_NEAR_YOU: 'Trending near you',
   RECOMMENDED_FOR_YOU: 'Recommended for you',
+  PAYMENT_SUCCESS: 'Payment successful',
+  THIS_WILL_REMOVE_CART:
+    'This will remove your cart. Are your sure you want to remove the cart?',
+  OK: 'Okay',
+  ALERT: 'Alert',
+  CAMERA_PERMISSION_DENIED_MSG: "Don't have permission to open camera",
+  YOUR_REFFERAL_CODE: 'Your refferal code: ',
+  SEND_REFFERAL: 'Send Refferal',
+  SAVE_AS: 'Save as',
+  COUPON: 'COUPON',
 };

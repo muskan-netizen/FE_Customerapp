@@ -23,9 +23,9 @@ export const androidCameraPermission = () =>
           granted['android.permission.READ_EXTERNAL_STORAGE'] !== 'granted'
         ) {
           Alert.alert(
-            'Alert',
-            "Don't have permission to open camera",
-            [{text: 'Okay'}],
+            strings.ALERT,
+            strings.CAMERA_PERMISSION_DENIED_MSG,
+            [{text: strings.OK}],
             {cancelable: true},
           );
           return resolve(false);
@@ -121,11 +121,11 @@ export const chekLocationPermission = () =>
             case RESULTS.BLOCKED:
               Alert.alert('', strings.LOCATION_DISABLED_MSG, [
                 {
-                  text: 'Cancel',
+                  text: strings.CANCEL,
                   onPress: () => resolve('goback'),
                 },
                 {
-                  text: 'Confirm',
+                  text: strings.CONFIRM,
                   onPress: () => {
                     const locationPath = 'LOCATION_SERVICES';
                     openAppSetting(locationPath);

@@ -215,7 +215,7 @@ export default function AllPaymentMethods({navigation, route}) {
                 ? [styles.caseOnDeliveryText, {color: MyDarkTheme.colors.text}]
                 : styles.caseOnDeliveryText
             }>
-            {item.title}
+            {item?.title_lng ? item?.title_lng : item?.title}
           </Text>
         </TouchableOpacity>
         {!!(

@@ -85,6 +85,7 @@ const shortCodes = {
   hmc: 'fa3fcd',
   groupy: 'd4f312',
   weeat: '03cff2',
+  gorillas: 'd22ad9',
 };
 
 const appIds = {
@@ -423,6 +424,10 @@ const appIds = {
   weeat: Platform.select({
     ios: 'com.weeat.customer',
     android: 'com.weeat',
+  }),
+  gorillas: Platform.select({
+    ios: 'com.gorillas',
+    android: 'com.gorillas',
   }),
 };
 

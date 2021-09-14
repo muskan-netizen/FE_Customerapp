@@ -590,6 +590,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.gorillas:
+          updateState({
+            shortCode: shortCodes.gorillas,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
