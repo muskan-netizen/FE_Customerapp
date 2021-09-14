@@ -300,4 +300,5 @@ export default {
   icRedChecked: require('../assets/images/RoyoorderNewImages/ic_checked.png'),
   icUnChecked: require('../assets/images/RoyoorderNewImages/ic_unchecked.png'),
   currentLocation: require('../assets/images/RoyoorderNewImages/ic_current.png'),
+  icMap: require('../assets/images/RoyoorderNewImages/ic_map.png'),
 };

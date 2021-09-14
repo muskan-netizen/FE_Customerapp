@@ -19,6 +19,7 @@ export default {
   MY_PROFILE: 'myProfile',
   MY_ORDERS: 'myOrders',
   ORDER_DETAIL: 'orderDetail',
+  ORDER_DETAIL2: 'orderDetail2',
   NOTIFICATION: 'notification',
   ABOUT_US: 'aboutus',
   CONTACT_US: 'contactus',

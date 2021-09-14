@@ -1,5 +1,6 @@
 import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
 import types from '../types';
+import _ from 'lodash';
 
 const initial_state = {
   themeColors: {
@@ -30,6 +31,7 @@ const initial_state = {
   },
   themeColor: false,
   themeToggle: false,
+  searchText: [],
   //internetConnection: false,
 };
 
@@ -141,6 +143,33 @@ export default function (state = initial_state, action) {
         ...state,
         themeToggle: data,
       };
+    }
+    case types.ADD_SEARCH_TEXT: {
+      let searchRes = state.searchText;
+
+      if (state.searchText.length == 10) {
+        //store values only 15
+        searchRes.shift(); //remove first exist item from array
+      }
+      let res = [...searchRes, action.payload]; //merge previous value into exist array
+
+      return {...state, searchText: res};
+    }
+
+    case types.ALL_RECENT_SEARCH: {
+      return {
+        ...state,
+        searchText: action.payload,
+      };
+    }
+    case types.DELETE_SEARCH_TEXT: {
+      return {
+        ...state,
+        searchText: [],
+      };
+    }
+    case types.DIRECT_SET_SEARCH_TEXT: {
+      return {searchText: action.payload};
     }
 
     default: {

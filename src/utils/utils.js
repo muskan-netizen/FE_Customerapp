@@ -93,7 +93,7 @@ export async function apiReq(
   headers,
   requestOptions = {},
 ) {
-  console.log(endPoint,"endPoint");
+  console.log(endPoint, 'endPoint');
 
   return new Promise(async (res, rej) => {
     const getTokenHeader = await getHeaders();
@@ -103,7 +103,7 @@ export async function apiReq(
       ...headers,
     };
     // console.log(headers,"headers");
-    
+
     if (method === 'get' || method === 'delete') {
       data = {
         ...requestOptions,
@@ -123,7 +123,6 @@ export async function apiReq(
         return res(data);
       })
       .catch((error) => {
-        
         if (error && error.response && error.response.status === 401) {
           sessionHandler(error.response.data.message);
           return rej(error);

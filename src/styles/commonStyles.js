@@ -26,6 +26,7 @@ export default ({fontFamily, buttonTextColor}) => {
       color: colors.textGrey,
       fontFamily: fontFamily?.medium,
       opacity: 0.7,
+      textAlign: 'left'
     },
     mediumFont14: {
       // fontSize:RFValue(14,height),
@@ -33,32 +34,40 @@ export default ({fontFamily, buttonTextColor}) => {
       color: colors.textGrey,
       fontFamily: fontFamily?.medium,
       opacity: 0.7,
+      textAlign: 'left'
     },
     mediumFont14Normal: {
       fontSize: textScale(14),
       color: colors.textGrey,
       fontFamily: fontFamily?.medium,
       opacity: 1,
+      textAlign: 'left'
     },
     mediumFont16: {
       fontSize: textScale(14),
       color: colors.textGrey,
       fontFamily: fontFamily?.medium,
+      textAlign: 'left'
+
     },
     futuraBtHeavyFont16: {
       fontSize: textScale(16),
       color: colors.black,
       fontFamily: fontFamily?.bold,
+      textAlign: 'left'
+      
     },
     futuraBtHeavyFont14: {
       fontSize: textScale(14),
       color: colors.black,
       fontFamily: fontFamily?.bold,
+      textAlign: 'left'
     },
     futuraHeavyBt: {
       fontSize: textScale(16),
       color: colors.black,
       fontFamily: fontFamily?.bold,
+      textAlign: 'left'
     },
     buttonRect: {
       height: moderateScaleVertical(46),

@@ -104,6 +104,7 @@ export default ({themeColors, fontFamily}) => {
       fontFamily: fontFamily.medium,
       color: colors.lightGreyBgColor,
       fontSize: textScale(10),
+      textAlign:'left'
     },
 
     mainView: {
@@ -169,6 +170,7 @@ export default ({themeColors, fontFamily}) => {
     categoryText: {
       color: colors.textGreyH,
       fontSize: textScale(9),
+      textAlign:'left'
     },
     circularListImage: {height: moderateScale(40), width: moderateScale(40)},
     applyPromoBtn: {
@@ -205,6 +207,7 @@ export default ({themeColors, fontFamily}) => {
       fontSize: textScale(17),
       marginTop: moderateScale(15),
       marginHorizontal: moderateScale(6),
+      textAlign:'left'
     },
     modalMainViewContainer: {
       backgroundColor: colors.white,
@@ -233,6 +236,7 @@ export default ({themeColors, fontFamily}) => {
       fontFamily: fontFamily.regular,
       color: colors.textGrey,
       fontSize: textScale(10),
+      textAlign:'left'
     },
     deliveryIcon: {
       width: moderateScale(18),
@@ -243,6 +247,7 @@ export default ({themeColors, fontFamily}) => {
       fontFamily: fontFamily.regular,
       color: themeColors.primary_color,
       marginHorizontal: moderateScale(3),
+      textAlign:'left'
     },
     customDropDownIcon: {
       width: moderateScale(8),
@@ -274,6 +279,7 @@ export default ({themeColors, fontFamily}) => {
       fontFamily: fontFamily.regular,
       fontSize: textScale(16),
       marginBottom: moderateScale(10),
+      textAlign:'left'
     },
   });
 
