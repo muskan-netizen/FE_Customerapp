@@ -105,13 +105,13 @@ export default function OrderCardVendorComponent2({
           </View>
 
           <View>
-            <View style={{flexWrap: 'wrap'}}>
+            <View style={{width: moderateScale(150)}}>
               <Text
                 style={
                   isDarkMode
                     ? [styles.orderLableStyle, {color: MyDarkTheme.colors.text}]
                     : styles.orderLableStyle
-                }>{`Order ID:#${data?.order_number}`}</Text>
+                }>{`${strings.ORDER_ID}:#${data?.order_number}`}</Text>
               <Text
                 style={
                   isDarkMode
@@ -165,7 +165,7 @@ export default function OrderCardVendorComponent2({
             fontSize: textScale(14),
             marginVertical: moderateScaleVertical(10),
           }}>
-          {`Total Items: ${data?.product_details?.length}`}
+          {`${strings.TOTAL_ITEMS}: ${data?.product_details?.length}`}
         </Text>
         <ScrollView bounces={true}>
           {data?.product_details.map((i, inx) => {

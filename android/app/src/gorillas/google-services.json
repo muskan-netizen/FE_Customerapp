@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "697473093779",
+    "project_id": "gorillas-f5b0a",
+    "storage_bucket": "gorillas-f5b0a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:697473093779:android:d9d1f22d60992219333d66",
+        "android_client_info": {
+          "package_name": "com.gorillas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "697473093779-f51uava29djfb0c0ja6ql17mdp1b1uhb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gorillas",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "697473093779-iafmam0a2ekff2ksls0df0vkob5e9ok8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gorillas",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "697473093779-sshl29uuhi6418694g0c3b81jqk7r1u5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gorillas",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "697473093779-7ubfb7hcvartn3bbdf39kdigoor4lu1u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6F2veu0AgBEmYiHXTdaUH2CiRVqRF_2s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "697473093779-7ubfb7hcvartn3bbdf39kdigoor4lu1u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

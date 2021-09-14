@@ -241,11 +241,11 @@ export default function ProductDetail2({route, navigation}) {
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
-          text: 'Cancel',
+          text: strings.CANCEL,
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        {text: 'Clear Cart', onPress: () => clearCart()},
+        {text: strings.CLEAR_CART2, onPress: () => clearCart()},
       ]);
     } else {
       updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
@@ -259,11 +259,11 @@ export default function ProductDetail2({route, navigation}) {
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
-          text: 'Cancel',
+          text: strings.CANCEL,
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        {text: 'Clear Cart', onPress: () => clearCart(addonSet)},
+        {text: strings.CLEAR_CART2, onPress: () => clearCart(addonSet)},
       ]);
     } else {
       updateState({isLoading: false, isLoadingB: false, isLoadingC: false});

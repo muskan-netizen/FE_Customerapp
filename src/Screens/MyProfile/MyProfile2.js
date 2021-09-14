@@ -45,6 +45,7 @@ import validations from '../../utils/validations';
 import stylesFunc from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import {string} from 'is_js';
 
 export default function MyProfile({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -475,7 +476,7 @@ export default function MyProfile({route, navigation}) {
                 <Text
                   style={
                     styles.referralCode
-                  }>{`Your refferal code: ${userData?.refferal_code}`}</Text>
+                  }>{`${strings.YOUR_REFFERAL_CODE} ${userData?.refferal_code}`}</Text>
               </View>
               <View
                 style={{
@@ -492,7 +493,7 @@ export default function MyProfile({route, navigation}) {
                       fontFamily: fontFamily.bold,
                     },
                   ]}>
-                  {'Send Refferal'}
+                  {strings.SEND_REFFERAL}
                 </Text>
               </View>
             </View>

@@ -85,12 +85,12 @@ export default function Account2({navigation}) {
     if (!!userData?.auth_token) {
       Alert.alert('', strings.LOGOUT_SURE_MSG, [
         {
-          text: 'Cancel',
+          text: strings.CANCEL,
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
         {
-          text: 'Confirm',
+          text: strings.CONFIRM,
           onPress: () => {
             actions.userLogout();
             actions.cartItemQty('');

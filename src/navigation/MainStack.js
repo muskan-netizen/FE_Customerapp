@@ -11,6 +11,7 @@ import {
   MyOrders,
   MyProfile,
   MyProfile2,
+  MyProfile3,
   Notifications,
   OrderDetail,
   ProductDetail,
@@ -68,7 +69,13 @@ export default function (Stack) {
       />
       <Stack.Screen
         name={navigationStrings.MY_PROFILE}
-        component={appStyle?.homePageLayout === 2 ? MyProfile2 : MyProfile}
+        component={
+          appStyle?.homePageLayout === 2
+            ? MyProfile2
+            : appStyle?.homePageLayout === 3
+            ? MyProfile3
+            : MyProfile
+        }
         options={{headerShown: false}}
       />
 

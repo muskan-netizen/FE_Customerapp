@@ -154,7 +154,6 @@ export default ({themeColors, fontFamily}) => {
       position: 'absolute',
     },
 
-    //////ye alg h
     container1: {
       justifyContent: 'center',
       alignItems: 'center',
@@ -277,7 +276,6 @@ export default ({themeColors, fontFamily}) => {
       marginVertical: moderateScale(13),
     },
     exploreStoresTxt: {
-      color: colors.textGreyB,
       fontFamily: fontFamily.regular,
       fontSize: textScale(16),
       marginBottom: moderateScale(10),

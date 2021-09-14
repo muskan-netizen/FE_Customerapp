@@ -251,10 +251,10 @@ export default function DashBoardHeaderFive({
   const dineInFunction = () => {
     Alert.alert('', strings.REMOVE_CART_MSG, [
       {
-        text: 'Cancel',
+        text: strings.CANCEL,
         onPress: () => console.log('Cancel Pressed'),
       },
-      {text: 'Clear Cart', onPress: clearCart},
+      {text: strings.CLEAR_CART2, onPress: clearCart},
     ]);
   };
 
@@ -349,34 +349,36 @@ export default function DashBoardHeaderFive({
             </TouchableOpacity>
           )}
         </View>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={{
-            paddingVertical: moderateScaleVertical(5),
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-          onPress={_onTableLabel}>
-          <Image
-            source={
-              checked === 'Delivery'
-                ? imagePath.delivery
-                : checked === 'Dine-In'
-                ? imagePath.dineIn
-                : imagePath.takeaway
-            }
-            style={styles.deliveryIcon}
-            resizeMode="contain"
-          />
+        {tabs.length > 1 && (
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={{
+              paddingVertical: moderateScaleVertical(5),
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+            onPress={_onTableLabel}>
+            <Image
+              source={
+                checked === 'Delivery'
+                  ? imagePath.delivery
+                  : checked === 'Dine-In'
+                  ? imagePath.dineIn
+                  : imagePath.takeaway
+              }
+              style={styles.deliveryIcon}
+              resizeMode="contain"
+            />
 
-          <Text style={styles.checkedTxt}>{checked}</Text>
+            <Text style={styles.checkedTxt}>{checked}</Text>
 
-          <Image
-            source={imagePath.dropDownNew}
-            style={styles.customDropDownIcon}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
+            <Image
+              source={imagePath.dropDownNew}
+              style={styles.customDropDownIcon}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        )}
         <Modal
           transparent={true}
           isVisible={isModalVisible}

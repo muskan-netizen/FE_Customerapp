@@ -29,6 +29,7 @@ import {
 import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
 import {useDarkMode} from 'react-native-dark-mode';
 import Geocoder from 'react-native-geocoding';
+import strings from '../../constants/lang';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -123,18 +124,14 @@ export default function Home({route, navigation}) {
   }, [paramData?.details]);
 
   const checkCartWithLatLang = (res) => {
-    Alert.alert(
-      '',
-      'This will remove your cart.Are your sure you want to remove the cart?',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          // style: 'destructive',
-        },
-        {text: 'Clear Cart', onPress: () => clearCart(res)},
-      ],
-    );
+    Alert.alert('', strings.THIS_WILL_REMOVE_CART, [
+      {
+        text: strings.CANCEL,
+        onPress: () => console.log('Cancel Pressed'),
+        // style: 'destructive',
+      },
+      {text: strings.CLEAR_CART2, onPress: () => clearCart(res)},
+    ]);
   };
 
   const clearCart = (location) => {

@@ -53,6 +53,7 @@ import PhoneNumberInputWithUnderline from '../../Components/PhoneNumberInputWith
 import BorderTextInputWithLable from '../../Components/BorderTextInputWithLable';
 import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
 import {string} from 'is_js';
+import AddressModal3 from '../../Components/AddressModal3';
 
 export default function MyProfile3({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -250,6 +251,8 @@ export default function MyProfile3({route, navigation}) {
         .then((res) => {
           updateState({del: del ? false : true});
           showSuccess(res.message);
+          console.log(res.message, 'jsdkfjhsdjfhkjsdfh');
+
           // setTimeout(() => {
           //   getAllAddress();
           // }, 1000);
@@ -449,6 +452,7 @@ export default function MyProfile3({route, navigation}) {
       })
       .then((res) => {
         updateState({del: del ? false : true});
+
         showSuccess(res.message);
       })
       .catch((error) => {
@@ -491,7 +495,7 @@ export default function MyProfile3({route, navigation}) {
                     isDarkMode
                       ? [styles.referralCode, {color: MyDarkTheme.colors.text}]
                       : styles.referralCode
-                  }>{`Your refferal code: ${userData?.refferal_code}`}</Text>
+                  }>{`${strings.YOUR_REFFERAL_CODE} ${userData?.refferal_code}`}</Text>
               </View>
               <View
                 style={{
@@ -508,7 +512,7 @@ export default function MyProfile3({route, navigation}) {
                       fontFamily: fontFamily.bold,
                     },
                   ]}>
-                  {'Send Refferal'}
+                  {strings.SEND_REFFERAL}
                 </Text>
               </View>
             </View>
@@ -517,7 +521,7 @@ export default function MyProfile3({route, navigation}) {
           <TextInputWithUnderlineAndLabel
             onChangeText={_onChangeText('name')}
             value={name}
-            label={'NAME'}
+            label={strings.YOUR_NAME}
             autoCapitalize={'none'}
             containerStyle={{marginVertical: moderateScaleVertical(10)}}
             undnerlinecolor={colors.textGreyB}
@@ -528,7 +532,7 @@ export default function MyProfile3({route, navigation}) {
           <TextInputWithUnderlineAndLabel
             onChangeText={_onChangeText('email')}
             value={email}
-            label={'EMAIL ID'}
+            label={strings.EMAIL}
             autoCapitalize={'none'}
             containerStyle={{marginVertical: moderateScaleVertical(10)}}
             txtInputStyle={{fontFamily: fontFamily.regular}}
@@ -538,7 +542,7 @@ export default function MyProfile3({route, navigation}) {
 
           <PhoneNumberInputWithUnderline
             onCountryChange={_onCountryChange}
-            placeholder={'PHONE NUMBER'}
+            placeholder={strings.PHONE_NUMBER}
             onChangePhone={(phoneNumber) =>
               updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
             }
@@ -635,9 +639,11 @@ export default function MyProfile3({route, navigation}) {
             justifyContent: 'space-between',
           }}>
           <Text
+            numberOfLines={1}
             style={{
               fontSize: textScale(16),
               fontFamily: fontFamily.medium,
+              width: moderateScale(180),
               color: isDarkMode
                 ? MyDarkTheme.colors.text
                 : getColorCodeWithOpactiyNumber(colors.black.substr(1), 60),
@@ -947,7 +953,7 @@ export default function MyProfile3({route, navigation}) {
         onPress={(index) => cameraHandle(index)}
       />
 
-      <AddressModal
+      <AddressModal3
         navigation={navigation}
         updateData={updateData}
         isVisible={isVisible}

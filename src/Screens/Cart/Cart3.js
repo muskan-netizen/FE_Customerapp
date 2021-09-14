@@ -14,6 +14,7 @@ import {
   ScrollView,
   TextInput,
   Animated,
+  Dimensions,
 } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import DeviceInfo from 'react-native-device-info';
@@ -62,6 +63,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
 import LottieView from 'lottie-react-native';
 import AddressModal3 from '../../Components/AddressModal3';
+import {SwipeListView} from 'react-native-swipe-list-view';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -101,6 +103,7 @@ export default function Cart({navigation, route}) {
     selectedTimeOption: null,
     sheduledorderdate: null,
     scheduleType: null,
+    swipeKey: 'randomStrings',
   });
   const {
     viewHeight,
@@ -127,6 +130,7 @@ export default function Cart({navigation, route}) {
     selectedTimeOption,
     sheduledorderdate,
     scheduleType,
+    swipeKey,
   } = state;
 
   //Redux store data
@@ -594,7 +598,7 @@ export default function Cart({navigation, route}) {
 
   const swipeRef = useRef(null);
 
-  const openDeleteView = (item) => {
+  const openDeleteView = async (item) => {
     updateState({isLoadingB: true});
     let itemToUpdate = cloneDeep(item);
     removeItem('selectedTable');
@@ -605,9 +609,10 @@ export default function Cart({navigation, route}) {
     // }
   };
 
-  const swipeBtns = () => {
+  const swipeBtns = (progress, dragX) => {
     return (
       <Animated.View
+        key={String(cartItems.length)}
         style={{
           ...styles.swipeView,
           backgroundColor: getColorCodeWithOpactiyNumber(
@@ -618,8 +623,7 @@ export default function Cart({navigation, route}) {
         }}>
         {/* <TouchableOpacity
           style={{justifyContent: 'center'}}
-          // onPress={openDeleteView}
-        >
+          onPress={openDeleteView}>
           <Image source={imagePath.deleteRed} />
         </TouchableOpacity> */}
       </Animated.View>
@@ -752,10 +756,39 @@ export default function Cart({navigation, route}) {
     setDateAndTimeSchedule();
   };
 
+  function makeid(length) {
+    var result = '';
+    var characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
+  const deleteItem = async (i, index) => {
+    updateState({swipeKey: makeid(5)});
+    openDeleteView(i);
+    console.log('swipe ref', swipeRef);
+    swipeRef.current.close();
+    // return;
+
+    // Animated.timing(height, {
+    //   toValue: 0,
+    //   duration: 350,
+    //   useNativeDriver: false,
+    // }).start(() => openDeleteView(i));
+  };
+
   const _renderItem = ({item, index}) => {
     console.log('Item++++', item);
+
+    console.log('swip key', swipeKey);
+
     return (
       <View
+        key={swipeKey}
         style={{
           backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
           paddingHorizontal: moderateScale(10),
@@ -779,12 +812,13 @@ export default function Cart({navigation, route}) {
               return (
                 <Swipeable
                   ref={swipeRef}
-                  friction={1}
+                  key={swipeKey}
                   renderRightActions={swipeBtns}
-                  onSwipeableRightOpen={() => openDeleteView(i)}
+                  onSwipeableOpen={() => deleteItem(i, index)}
                   rightThreshold={width / 1.4}
-                  overshootFriction={8}>
-                  <View
+                  // overshootFriction={8}
+                >
+                  <Animated.View
                     style={{
                       backgroundColor: isDarkMode
                         ? MyDarkTheme.colors.background
@@ -792,7 +826,8 @@ export default function Cart({navigation, route}) {
                       marginBottom: moderateScaleVertical(12),
                       marginRight: moderateScale(8),
                       borderRadius: moderateScale(10),
-                  
+                      backgroundColor: '#F8F8F8',
+                      transform: [],
                     }}
                     key={inx}>
                     <View style={[styles.cartItemMainContainer]}>
@@ -1021,7 +1056,7 @@ export default function Cart({navigation, route}) {
                     </View>
 
                     {/* <View style={styles.dashedLine} /> */}
-                  </View>
+                  </Animated.View>
                 </Swipeable>
               );
             })
@@ -1838,11 +1873,11 @@ export default function Cart({navigation, route}) {
   const openClearCartModal = () => {
     Alert.alert('', strings.AREYOUSURE, [
       {
-        text: 'Cancel',
+        text: strings.CANCEL,
         onPress: () => {},
         // style: 'destructive',
       },
-      {text: 'Confirm', onPress: () => bottomButtonClick()},
+      {text: strings.CONFIRM, onPress: () => bottomButtonClick()},
     ]);
   };
   //SelectAddress
@@ -1964,6 +1999,30 @@ export default function Cart({navigation, route}) {
       });
   };
 
+  const renderSwipeView = (data) => (
+    <Animated.View>
+      <TouchableOpacity
+        onPress={() => console.log('You touched me')}
+        style={{
+          height: 200,
+          backgroundColor: 'red',
+        }}
+        underlayColor={'#AAA'}>
+        <View>
+          <Text>I am in a SwipeListView</Text>
+        </View>
+      </TouchableOpacity>
+    </Animated.View>
+  );
+
+  const renderHiddenItem = () => (
+    <View style={styles.rowBack}>
+      <View style={{}}>
+        <Text style={styles.backTextWhite}>Delete</Text>
+      </View>
+    </View>
+  );
+
   return (
     <WrapperContainer
       bgColor={
@@ -1984,7 +2043,17 @@ export default function Cart({navigation, route}) {
               ]
             : styles.mainComponent
         }>
+        {/* <SwipeListView
+          disableRightSwipe
+          data={cartItems}
+          renderItem={_renderItem}
+          renderHiddenItem={renderHiddenItem}
+          rightOpenValue={width}
+          // onSwipeValueChange={onSwipeValueChange}
+          useNativeDriver={false}
+        /> */}
         <FlatList
+          key={swipeKey}
           data={cartItems}
           extraData={cartItems}
           ListHeaderComponent={cartItems?.length ? getHeader() : null}
@@ -1993,21 +2062,27 @@ export default function Cart({navigation, route}) {
           style={{backgroundColor: colors.backgroundGrey}}
           keyExtractor={(item, index) => String(index)}
           renderItem={_renderItem}
-          ListEmptyComponent={() => (
-            <View
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <LottieView
-                source={loaderSix}
-                autoPlay
-                loop
+          ListEmptyComponent={() =>
+            isLoading && (
+              <View
                 style={{
-                  height: moderateScaleVertical(100),
-                  width: moderateScale(100),
-                }}
-              />
-              <Text style={styles.textStyle}>{strings.NOPRODUCTCART}</Text>
-            </View>
-          )}
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <LottieView
+                  source={loaderSix}
+                  autoPlay
+                  loop
+                  style={{
+                    height: moderateScaleVertical(100),
+                    width: moderateScale(100),
+                  }}
+                />
+                <Text style={styles.textStyle}>{strings.NOPRODUCTCART}</Text>
+              </View>
+            )
+          }
           style={{flex: 1}}
           refreshControl={
             <RefreshControl

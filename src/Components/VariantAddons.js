@@ -1,5 +1,5 @@
-import { cloneDeep } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import {cloneDeep} from 'lodash';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Image,
   Keyboard,
@@ -13,12 +13,12 @@ import {
   Alert,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import GradientButton from '../Components/GradientButton';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import commonStylesFun, { hitSlopProp } from '../styles/commonStyles';
+import commonStylesFun, {hitSlopProp} from '../styles/commonStyles';
 import fontFamily from '../styles/fontFamily';
 import Banner from '../Components/Banner';
 import DeviceInfo from 'react-native-device-info';
@@ -35,14 +35,14 @@ import {
   showError,
   showSuccess,
 } from '../utils/helperFunctions';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import navigationStrings from '../navigation/navigationStrings';
 import HTMLView from 'react-native-htmlview';
 import HtmlViewComp from './HtmlViewComp';
-import { MyDarkTheme } from '../styles/theme';
+import {MyDarkTheme} from '../styles/theme';
 import * as Animatable from 'react-native-animatable';
 import actions from '../redux/actions';
-import { Pagination } from 'react-native-snap-carousel';
+import {Pagination} from 'react-native-snap-carousel';
 import CardLoader from './Loaders/CardLoader';
 
 export default function VariantAddons({
@@ -52,10 +52,9 @@ export default function VariantAddons({
   resizeMode = 'contain',
   imagestyle = {},
   showShimmer,
-  shimmerClose = () => { },
-  updateCartItems
+  shimmerClose = () => {},
+  updateCartItems,
 }) {
-
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
 
   const [state, setState] = useState({
@@ -88,19 +87,18 @@ export default function VariantAddons({
     productSku,
     productVariantId,
     productQuantityForCart,
-    btnLoader
-  } = state
+    btnLoader,
+  } = state;
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = theme;
-  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
+  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;
-  const commonStyles = commonStylesFun({ fontFamily, buttonTextColor });
+  const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
-
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   useFocusEffect(
     React.useCallback(() => {
@@ -121,17 +119,13 @@ export default function VariantAddons({
           getProductDetailBasedOnFilter(variantSetData);
         } else {
           getProductDetail();
-
         }
       }
     }, [variantSet, productdetail, isVisible]),
   );
 
-
-
-
   const getProductDetailBasedOnFilter = (variantSetData) => {
-    updateState({ isLoadingC: true });
+    updateState({isLoadingC: true});
     let data = {};
     data['variants'] = variantSetData.map((i) => i.variant_id);
     data['options'] = variantSetData.map((i) => i.optionId);
@@ -161,7 +155,7 @@ export default function VariantAddons({
     console.log(error, 'Error>>>>>');
 
     if (error?.message?.alert == 1) {
-      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
+      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
@@ -169,7 +163,7 @@ export default function VariantAddons({
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        { text: 'Clear Cart', onPress: () => clearCart() },
+        {text: 'Clear Cart', onPress: () => clearCart()},
       ]);
     } else {
       if (error?.data?.variant_empty) {
@@ -180,13 +174,13 @@ export default function VariantAddons({
           isLoadingC: false,
         });
       } else {
-        updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
+        updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
         showError(error?.message || error?.error);
       }
     }
   };
 
-  console.log("showErrorMessageTitle", showErrorMessageTitle)
+  console.log('showErrorMessageTitle', showErrorMessageTitle);
 
   const clearCart = (addonSet) => {
     // actions
@@ -218,12 +212,11 @@ export default function VariantAddons({
     //   .catch(errorMethod);
   };
 
-  console.log("shimmer value", showShimmer)
+  console.log('shimmer value', showShimmer);
 
   useEffect(() => {
-    getProductDetail()
-  }, [productdetail, isVisible])
-
+    getProductDetail();
+  }, [productdetail, isVisible]);
 
   const getProductDetail = () => {
     actions
@@ -249,17 +242,14 @@ export default function VariantAddons({
           productSku: res.data.products.sku,
           variantSet: res.data.products.variant_set,
         });
-        shimmerClose(false)
+        shimmerClose(false);
       })
       .catch((error) => {
-        console.log("error raised", error)
-
+        console.log('error raised', error);
       });
   };
 
-
   let productImage = productdetail?.media[0];
-
 
   const selectSpecificOptionsForAddions = (options, i, inx) => {
     let newArray = cloneDeep(options);
@@ -321,7 +311,7 @@ export default function VariantAddons({
     });
   };
 
-  const checkBoxButtonViewAddons = ({ setoptions }) => {
+  const checkBoxButtonViewAddons = ({setoptions}) => {
     return (
       <View>
         {setoptions.map((i, inx) => {
@@ -338,7 +328,7 @@ export default function VariantAddons({
 
                 marginBottom: moderateScaleVertical(10),
               }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={styles.variantValue}>
                   {i?.title
                     ? i.title.charAt(0).toUpperCase() + i.title.slice(1)
@@ -346,13 +336,13 @@ export default function VariantAddons({
                 </Text>
               </View>
 
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={styles.variantValue}>
                   {`${currencies?.primary_currency?.symbol}${(
                     Number(i?.multiplier) * Number(i?.price)
                   ).toFixed(2)}`}
                 </Text>
-                <View style={{ paddingLeft: moderateScale(5) }}>
+                <View style={{paddingLeft: moderateScale(5)}}>
                   <Image
                     source={i?.value ? imagePath.check : imagePath.unCheck}
                   />
@@ -383,12 +373,17 @@ export default function VariantAddons({
                 <Text
                   style={{
                     ...styles.variantLable,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGrey,
                   }}>{`Choice of ${i?.title}`}</Text>
-                <Text style={{
-                  ...styles.chooseOption,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyF,
-                }}>
+                <Text
+                  style={{
+                    ...styles.chooseOption,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyF,
+                  }}>
                   {strings.PLS_SELECT_ONE}
                 </Text>
                 {i?.setoptions ? checkBoxButtonViewAddons(i) : null}
@@ -406,11 +401,9 @@ export default function VariantAddons({
     );
   };
 
-
-
   const selectSpecificOptions = (options, i, inx) => {
     // console.log("im allVariants", allVariants)
-    console.log("im iiiiii+++", i)
+    console.log('im iiiiii+++', i);
     // console.log("im options iiiiii", options)
 
     // return;
@@ -422,7 +415,6 @@ export default function VariantAddons({
           ...vi,
           options: newArray.map((j, jnx) => {
             if (j.id == i.id) {
-
               return {
                 ...j,
                 value: i?.value ? false : true,
@@ -437,48 +429,47 @@ export default function VariantAddons({
       } else {
         return vi;
       }
-    })
+    });
 
-    updateState({ variantSet: modifyVariants });
+    updateState({variantSet: modifyVariants});
 
     // console.log(modifyVariants, 'im newArray>>>>>');
   };
 
-  const variantSetValue = ({ options, type }) => {
+  const variantSetValue = ({options, type}) => {
     if (type == 1) {
       return <>{radioButtonView(options)}</>;
     }
     return <>{circularView(options)}</>;
   };
 
-
-
   const radioButtonView = (options) => {
     return (
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         {options.map((i, inx) => {
           return (
             <TouchableOpacity
               // disabled={options && options.length == 1 ? true : false}
-              onPress={() => selectSpecificOptions(options, i, inx)}
-            >
+              onPress={() => selectSpecificOptions(options, i, inx)}>
               <View
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
                   marginRight: moderateScale(5),
                   marginBottom: moderateScaleVertical(10),
-                }}
-              >
-
-                <Text style={{
-                  ...styles.variantValue,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>{i?.title}</Text>
-                <Image source={i?.value ? imagePath.check : imagePath.unCheck} />
+                }}>
+                <Text
+                  style={{
+                    ...styles.variantValue,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  }}>
+                  {i?.title}
+                </Text>
+                <Image
+                  source={i?.value ? imagePath.check : imagePath.unCheck}
+                />
               </View>
             </TouchableOpacity>
-
           );
         })}
       </View>
@@ -486,9 +477,9 @@ export default function VariantAddons({
   };
 
   const circularView = (options) => {
-    console.log("circular view", options)
+    console.log('circular view', options);
     return (
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         {options.map((i, inx) => {
           return (
             <TouchableNativeFeedback
@@ -509,7 +500,7 @@ export default function VariantAddons({
 
                     borderColor:
                       i?.value &&
-                        (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
+                      (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
                         ? colors.textGrey
                         : i.hexacode,
                   },
@@ -533,14 +524,12 @@ export default function VariantAddons({
     );
   };
 
-
-  const { bannerRef } = useRef();
+  const {bannerRef} = useRef();
 
   const showAllVariants = () => {
     let variantSetData = cloneDeep(variantSet);
     return (
-      <View
-        style={{ marginBottom: 10, paddingHorizontal: moderateScale(15) }}>
+      <View style={{marginBottom: 10, paddingHorizontal: moderateScale(15)}}>
         {variantSetData.map((i, inx) => {
           return (
             <View
@@ -553,8 +542,7 @@ export default function VariantAddons({
                   ...styles.variantLable,
                   marginBottom: moderateScale(5),
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}
-              >{`${i?.title}`}</Text>
+                }}>{`${i?.title}`}</Text>
               {i?.options ? variantSetValue(i) : null}
             </View>
           );
@@ -563,11 +551,8 @@ export default function VariantAddons({
     );
   };
 
-
-
-
   const addToCart = (addonSet) => {
-    console.log("add on set", addonSet)
+    console.log('add on set', addonSet);
     const addon_ids = [];
     const addon_options = [];
     addonSet.map((i, inx) => {
@@ -591,7 +576,7 @@ export default function VariantAddons({
       data['addon_options'] = addon_options;
     }
     console.log(data, 'data for cart');
-    updateState({ btnLoader: true })
+    updateState({btnLoader: true});
     actions
       .addProductsToCart(data, {
         code: appData.profile.code,
@@ -603,14 +588,14 @@ export default function VariantAddons({
         console.log(res, 'add item cart res');
         actions.cartItemQty(res);
         // showSuccess('Product successfully added');
-        updateState({ isLoadingC: false, btnLoader: false });
+        updateState({isLoadingC: false, btnLoader: false});
         updateCartItems(
           productdetail,
           productQuantityForCart,
           res.data.cart_product_id,
-          res.data.id
-        )
-        onClose()
+          res.data.id,
+        );
+        onClose();
       })
       .catch((error) => errorMethodSecond(error, addonSet));
   };
@@ -619,7 +604,12 @@ export default function VariantAddons({
     console.log(error.message.alert, 'Error>>>>>');
 
     if (error?.message?.alert == 1) {
-      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false, btnLoader });
+      updateState({
+        isLoading: false,
+        isLoadingB: false,
+        isLoadingC: false,
+        btnLoader,
+      });
       // showError(error?.message?.error || error?.error);
       // Alert.alert('', error?.message?.error, [
       //   {
@@ -630,22 +620,25 @@ export default function VariantAddons({
       //   { text: 'Clear Cart', onPress: () => clearCart(addonSet) },
       // ]);
     } else {
-      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false, btnLoader: false });
+      updateState({
+        isLoading: false,
+        isLoadingB: false,
+        isLoadingC: false,
+        btnLoader: false,
+      });
       showError(error?.message || error?.error);
     }
   };
 
-
   const shimmerShow = () => {
     return (
-      <View style={{
-        flex: 1,
-        backgroundColor: isDarkMode
-          ? MyDarkTheme.colors.background
-          : '#fff',
-        borderTopLeftRadius: 0,
-        borderTopStartRadius: 0
-      }}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
+          borderTopLeftRadius: 0,
+          borderTopStartRadius: 0,
+        }}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           bounces={false}
@@ -659,66 +652,71 @@ export default function VariantAddons({
               : '#fff',
           }}>
           <CardLoader cardWidth={width} height={width * 0.6} />
-          <View style={{ marginHorizontal: moderateScale(12) }}>
-            <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{marginHorizontal: moderateScale(12)}}>
+            <View
+              style={{
+                alignSelf: 'center',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
               <CardLoader cardWidth={10} height={10} />
-              <View style={{ marginHorizontal: moderateScale(6) }} />
+              <View style={{marginHorizontal: moderateScale(6)}} />
               <CardLoader cardWidth={10} height={10} />
-              <View style={{ marginHorizontal: moderateScale(6) }} />
+              <View style={{marginHorizontal: moderateScale(6)}} />
               <CardLoader cardWidth={10} height={10} />
             </View>
             <CardLoader cardWidth={80} height={10} />
             <CardLoader cardWidth={60} height={10} />
-            <View style={{ marginTop: moderateScaleVertical(0) }} />
+            <View style={{marginTop: moderateScaleVertical(0)}} />
             <CardLoader cardWidth={'100%'} height={2} />
             <CardLoader cardWidth={40} height={8} />
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <CardLoader cardWidth={60} height={10} />
-              <View style={{ marginHorizontal: 8 }} />
+              <View style={{marginHorizontal: 8}} />
               <CardLoader cardWidth={60} height={10} />
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <CardLoader cardWidth={60} height={10} />
-              <View style={{ marginHorizontal: 8 }} />
+              <View style={{marginHorizontal: 8}} />
               <CardLoader cardWidth={60} height={10} />
             </View>
             <CardLoader cardWidth={40} height={8} />
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <CardLoader cardWidth={60} height={10} />
-              <View style={{ marginHorizontal: 8 }} />
+              <View style={{marginHorizontal: 8}} />
               <CardLoader cardWidth={60} height={10} />
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <CardLoader cardWidth={60} height={10} />
-              <View style={{ marginHorizontal: 8 }} />
+              <View style={{marginHorizontal: 8}} />
               <CardLoader cardWidth={60} height={10} />
             </View>
           </View>
         </ScrollView>
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginHorizontal: moderateScale(16),
-          paddingBottom: moderateScaleVertical(10),
-        }}>
-          <View style={{ flex: 0.25 }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginHorizontal: moderateScale(16),
+            paddingBottom: moderateScaleVertical(10),
+          }}>
+          <View style={{flex: 0.25}}>
             <CardLoader cardWidth={'100%'} height={38} />
           </View>
-          <View style={{ marginHorizontal: moderateScale(8) }} />
-          <View style={{ flex: 0.75 }}>
+          <View style={{marginHorizontal: moderateScale(8)}} />
+          <View style={{flex: 0.75}}>
             {/* <View style={{ marginHorizontal: 8 }} /> */}
             <CardLoader cardWidth={'100%'} height={38} />
           </View>
         </View>
       </View>
-    )
-  }
-
+    );
+  };
 
   const productIncrDecreamentForCart = (type) => {
     if (type == 2) {
       if (productQuantityForCart <= 1) {
-        onClose()
+        onClose();
       } else {
         updateState({
           productQuantityForCart: productQuantityForCart - 1,
@@ -742,50 +740,52 @@ export default function VariantAddons({
       animationType={'none'}
       style={styles.modalContainer}
       onLayout={(event) => {
-        updateState({ viewHeight: event.nativeEvent.layout.height });
+        updateState({viewHeight: event.nativeEvent.layout.height});
       }}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Image source={imagePath.crossC} />
       </TouchableOpacity>
-      {showShimmer ? shimmerShow() : <Animatable.View style={{ flex: 1 }}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          bounces={false}
-          // onScroll={onScroll}
-          style={{
-            ...styles.modalMainViewContainer,
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.background
-              : '#fff',
-          }}>
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <Banner
-              bannerRef={bannerRef}
-              bannerData={productDetailData?.product_media}
-              sliderWidth={width}
-              itemWidth={width}
-              pagination={false}
-              setActiveState={(index) =>
-                updateState({ slider1ActiveSlide: index })
-              }
-              showLightbox={true}
-              cardViewStyle={styles.cardViewStyle}
-              resizeMode="contain"
-            
-            />
-            <View style={{ paddingTop: 5 }}>
-              <Pagination
-                dotsLength={productDetailData?.product_media?.length}
-                activeDotIndex={state.slider1ActiveSlide}
-                dotColor={'grey'}
-                dotStyle={[styles.dotStyle]}
-                inactiveDotColor={'black'}
-                inactiveDotOpacity={0.4}
-                inactiveDotScale={0.8}
+      {showShimmer ? (
+        shimmerShow()
+      ) : (
+        <Animatable.View style={{flex: 1}}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            bounces={false}
+            // onScroll={onScroll}
+            style={{
+              ...styles.modalMainViewContainer,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.background
+                : '#fff',
+            }}>
+            <View style={{flex: 1, alignItems: 'center'}}>
+              <Banner
+                bannerRef={bannerRef}
+                bannerData={productDetailData?.product_media}
+                sliderWidth={width}
+                itemWidth={width}
+                pagination={false}
+                setActiveState={(index) =>
+                  updateState({slider1ActiveSlide: index})
+                }
+                showLightbox={true}
+                cardViewStyle={styles.cardViewStyle}
+                resizeMode="contain"
               />
+              <View style={{paddingTop: 5}}>
+                <Pagination
+                  dotsLength={productDetailData?.product_media?.length}
+                  activeDotIndex={state.slider1ActiveSlide}
+                  dotColor={'grey'}
+                  dotStyle={[styles.dotStyle]}
+                  inactiveDotColor={'black'}
+                  inactiveDotOpacity={0.4}
+                  inactiveDotScale={0.8}
+                />
+              </View>
             </View>
-          </View>
-          {/* <ImageBackground
+            {/* <ImageBackground
             source={{
               uri: getImageUrl(
                 productImage?.image?.path?.image_fit,
@@ -796,156 +796,156 @@ export default function VariantAddons({
             style={[styles.cardView, imagestyle]}
             resizeMode={resizeMode}
           /> */}
-          <Animatable.View animation="fadeInUp" style={styles.mainView}>
-            <View>
-              <Text
-                numberOfLines={1}
-                style={{
-                  ...styles.productName,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                {productdetail?.translation[0]?.title}
-              </Text>
-            </View>
-            <View style={{ justifyContent: 'center' }}>
-              <Text
-                style={{
-                  color:
-                    productTotalQuantity && productTotalQuantity != 0
-                      ? colors.green
-                      : colors.orangeB,
-                  fontSize: textScale(10),
-                  lineHeight: 20,
-                  fontFamily: fontFamily.medium,
-                }}>
-                {productTotalQuantity && productTotalQuantity != 0
-                  ? ''
-                  : strings.OUT_OF_STOCK}
-              </Text>
-            </View>
+            <Animatable.View animation="fadeInUp" style={styles.mainView}>
+              <View>
+                <Text
+                  numberOfLines={1}
+                  style={{
+                    ...styles.productName,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  }}>
+                  {productdetail?.translation[0]?.title}
+                </Text>
+              </View>
+              <View style={{justifyContent: 'center'}}>
+                <Text
+                  style={{
+                    color:
+                      productTotalQuantity && productTotalQuantity != 0
+                        ? colors.green
+                        : colors.orangeB,
+                    fontSize: textScale(10),
+                    lineHeight: 20,
+                    fontFamily: fontFamily.medium,
+                  }}>
+                  {productTotalQuantity && productTotalQuantity != 0
+                    ? ''
+                    : strings.OUT_OF_STOCK}
+                </Text>
+              </View>
 
-            {productdetail?.translation[0]?.body_html != null && (
-              <HtmlViewComp
-                plainHtml={productdetail?.translation[0]?.body_html}
+              {productdetail?.translation[0]?.body_html != null && (
+                <HtmlViewComp
+                  plainHtml={productdetail?.translation[0]?.body_html}
+                />
+              )}
+
+              <View
+                style={{
+                  ...commonStyles.headerTopLine,
+                  marginVertical: moderateScaleVertical(10),
+                }}
               />
-            )}
+              {/* ********Addon set View*******  */}
+              {!!addonSet && addonSet?.length ? showAllAddons() : null}
 
-            <View
-              style={{
-                ...commonStyles.headerTopLine,
-                marginVertical: moderateScaleVertical(10),
-              }}
-            />
-            {/* ********Addon set View*******  */}
-            {!!addonSet && addonSet?.length ? showAllAddons() : null}
-
-            {!!variantSet && variantSet?.length ? showAllVariants() : null}
-
-          </Animatable.View>
-          {showErrorMessageTitle ? (
-            <Text
-              style={{
-                fontSize: textScale(14),
-                marginHorizontal: moderateScale(20),
-                color: colors.redB,
-                fontFamily: fontFamily.medium,
-                marginBottom: moderateScaleVertical(20)
-              }}>
-              {strings.NOVARIANTPRODUCTAVAILABLE}
-            </Text>
-          ) : null}
-        </ScrollView>
-
-
-
-
-        {!showErrorMessageTitle && productTotalQuantity != 0 && <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            paddingHorizontal: moderateScale(16),
-            paddingBottom: moderateScaleVertical(10),
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.background
-              : '#fff',
-          }}>
-          <View style={{ flex: 0.25 }}>
-            <View
-              style={{
-                ...commonStyles.buttonRect,
-                ...styles.incDecBtnStyle,
-                backgroundColor: getColorCodeWithOpactiyNumber(
-                  themeColors.primary_color.substr(1),
-                  15,
-                ),
-                borderColor: themeColors?.primary_color,
-              }}
-            // onPress={onPress}
-            >
-              <TouchableOpacity
-                onPress={() => productIncrDecreamentForCart(2)}
-                hitSlop={hitSlopProp}
-              >
-                <Text
-                  style={{
-                    ...commonStyles.mediumFont14,
-                    color: themeColors?.primary_color,
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  -
-                </Text>
-              </TouchableOpacity>
+              {!!variantSet && variantSet?.length ? showAllVariants() : null}
+            </Animatable.View>
+            {showErrorMessageTitle ? (
               <Text
                 style={{
-                  ...commonStyles.mediumFont14,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  fontSize: textScale(14),
+                  marginHorizontal: moderateScale(20),
+                  color: colors.redB,
+                  fontFamily: fontFamily.medium,
+                  marginBottom: moderateScaleVertical(20),
                 }}>
-                {productQuantityForCart}
+                {strings.NOVARIANTPRODUCTAVAILABLE}
               </Text>
-              <TouchableOpacity
-                onPress={() => productIncrDecreamentForCart(1)}
-                hitSlop={hitSlopProp}
-              >
-                <Text
-                  style={{
-                    ...commonStyles.mediumFont14,
-                    color: themeColors?.primary_color,
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  +
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+            ) : null}
+          </ScrollView>
 
-          <View style={{ marginHorizontal: 8 }} />
-          <View style={{ flex: 0.75 }}>
-            <GradientButton
-              indicator={btnLoader}
-              indicatorColor={colors.white}
-              colorsArray={[
-                themeColors.primary_color,
-                themeColors.primary_color,
-              ]}
-              textStyle={{
-                fontFamily: fontFamily.medium,
-                textTransform: 'capitalize',
-              }}
-              onPress={() => addToCart(addonSet)}
-              btnText={`${strings.ADD_ITEM} - ${currencies?.primary_currency?.symbol
-                }${(
-                  Number(productPriceData?.multiplier) *
-                  Number(productPriceData?.price)
-                ).toFixed(2)}`}
-              btnStyle={{
-                borderRadius: moderateScale(4),
-                height: moderateScale(38),
-              }}
-            />
-          </View>
-        </View>}
-      </Animatable.View>}
+          {!showErrorMessageTitle && productTotalQuantity != 0 && (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingHorizontal: moderateScale(16),
+                paddingBottom: moderateScaleVertical(10),
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.background
+                  : '#fff',
+              }}>
+              <View style={{flex: 0.25}}>
+                <View
+                  style={{
+                    ...commonStyles.buttonRect,
+                    ...styles.incDecBtnStyle,
+                    backgroundColor: getColorCodeWithOpactiyNumber(
+                      themeColors.primary_color.substr(1),
+                      15,
+                    ),
+                    borderColor: themeColors?.primary_color,
+                  }}
+                  // onPress={onPress}
+                >
+                  <TouchableOpacity
+                    onPress={() => productIncrDecreamentForCart(2)}
+                    hitSlop={hitSlopProp}>
+                    <Text
+                      style={{
+                        ...commonStyles.mediumFont14,
+                        color: themeColors?.primary_color,
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      -
+                    </Text>
+                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      ...commonStyles.mediumFont14,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
+                    {productQuantityForCart}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => productIncrDecreamentForCart(1)}
+                    hitSlop={hitSlopProp}>
+                    <Text
+                      style={{
+                        ...commonStyles.mediumFont14,
+                        color: themeColors?.primary_color,
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      +
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <View style={{marginHorizontal: 8}} />
+              <View style={{flex: 0.75}}>
+                <GradientButton
+                  indicator={btnLoader}
+                  indicatorColor={colors.white}
+                  colorsArray={[
+                    themeColors.primary_color,
+                    themeColors.primary_color,
+                  ]}
+                  textStyle={{
+                    fontFamily: fontFamily.medium,
+                    textTransform: 'capitalize',
+                  }}
+                  onPress={() => addToCart(addonSet)}
+                  btnText={`${strings.ADD_ITEM} - ${
+                    currencies?.primary_currency?.symbol
+                  }${(
+                    Number(productPriceData?.multiplier) *
+                    Number(productPriceData?.price)
+                  ).toFixed(2)}`}
+                  btnStyle={{
+                    borderRadius: moderateScale(4),
+                    height: moderateScale(38),
+                  }}
+                />
+              </View>
+            </View>
+          )}
+        </Animatable.View>
+      )}
     </Modal>
   );
 }
@@ -1073,7 +1073,7 @@ const styles = StyleSheet.create({
     width: width,
     // marginRight: 20
   },
-  dotStyle: { height: 12, width: 12, borderRadius: 12 / 2 },
+  dotStyle: {height: 12, width: 12, borderRadius: 12 / 2},
   ratingColor: {
     color: colors.backgroundGrey,
     paddingLeft: 5,

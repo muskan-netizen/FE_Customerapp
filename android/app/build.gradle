@@ -1057,6 +1057,16 @@ android {
             resValue "string", "app_name", "WeEat"
             resValue "string", "host_name", ""
          }
+        gorillas{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.gorillas'
+            resValue "string", "app_name", "Gorillas"
+            resValue "string", "host_name", ""
+         }
     }
 }
 
