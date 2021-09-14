@@ -40,7 +40,11 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
-        component={SearchProductVendorItem}
+        component={
+          appStyle?.homePageLayout === 3
+            ? SearchProductVendorItem2
+            : SearchProductVendorItem
+        }
         options={{headerShown: false}}
       />
 

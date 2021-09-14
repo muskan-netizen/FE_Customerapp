@@ -40,7 +40,7 @@ import {
   WebviewScreen,
   Wishlist,
   ReturnOrder,
-  OrderDetail2
+  OrderDetail2,
 } from '../Screens';
 import StaticTrackOrder from '../Screens/WebviewScreen/StaticTrackOrder';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
@@ -84,7 +84,7 @@ export default function () {
         component={OrderDetail}
         options={{headerShown: false}}
       />
-        <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.ORDER_DETAIL2}
         component={OrderDetail2}
         options={{headerShown: false}}
@@ -148,7 +148,11 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
-        component={SearchProductVendorItem}
+        component={
+          appStyle?.homePageLayout === 3
+            ? SearchProductVendorItem2
+            : SearchProductVendorItem
+        }
         options={{headerShown: false}}
       />
 
