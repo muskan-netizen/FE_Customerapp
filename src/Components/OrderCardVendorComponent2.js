@@ -50,10 +50,10 @@ export default function OrderCardVendorComponent2({
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const imageUrl =
-    data && data.user_image
+    data && data.vendor
       ? getImageUrl(
-          data.user_image.image_fit,
-          data.user_image.image_path,
+          data.vendor.logo.image_fit,
+          data.vendor.logo.image_path,
           '200/200',
         )
       : dummyUser;
@@ -99,7 +99,7 @@ export default function OrderCardVendorComponent2({
                     ? [styles.userName, {color: MyDarkTheme.colors.text}]
                     : styles.userName
                 }>
-                {data?.user_name || ''}
+                {data?.vendor?.name || ''}
               </Text>
             </View>
           </View>

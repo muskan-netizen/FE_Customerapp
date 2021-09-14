@@ -3,6 +3,7 @@ import {
   apiGet,
   apiPost,
   getItem,
+  removeItem,
   saveShortCodeData,
   saveUserAddress,
   setAppData,
@@ -228,3 +229,17 @@ export function setToggle(res) {
     payload: res,
   });
 }
+
+export const addSearchResults = (txt) => {
+  dispatch({
+    type: types.ADD_SEARCH_TEXT,
+    payload: txt,
+  });
+};
+export const deleteSearchResults = () => {
+  removeItem('searchResult');
+  dispatch({
+    type: types.DELETE_SEARCH_TEXT,
+    payload: {},
+  });
+};
