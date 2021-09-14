@@ -1735,7 +1735,7 @@ export default function Cart({navigation, route}) {
                 <Text numberOfLines={1} style={styles.address}>
                   {selectedAddressData
                     ? selectedAddressData?.address
-                    : 'Add Address'}
+                    : strings.ADD_ADDRESS}
                 </Text>
               </TouchableOpacity>
             </View>

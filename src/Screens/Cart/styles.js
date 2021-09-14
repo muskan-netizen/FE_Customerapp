@@ -357,8 +357,8 @@ export default ({fontFamily, themeColors}) => {
       alignItems: 'center',
       paddingHorizontal: moderateScale(20),
       borderRadius: moderateScale(8),
-      width: moderateScale(42)
-    }
+      width: width,
+    },
   });
   return styles;
 };

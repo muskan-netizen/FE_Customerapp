@@ -12,6 +12,7 @@ export default function StepIndicators({
   currentPosition,
   themeColor,
   stepCount = 4,
+  labelSize = 13,
 }) {
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
@@ -38,14 +39,14 @@ export default function StepIndicators({
     stepIndicatorLabelFinishedColor: 'transparent',
     stepIndicatorLabelUnFinishedColor: 'transparent',
     labelColor: colors.lightGreyBgColor,
-    labelSize: 13,
+    labelSize: labelSize,
     currentStepLabelColor: themeColor.primary_color,
     labelFontFamily: fontFamily.regular,
   };
 
   const getSourceImage = ({position, stepStatus}) => {
-    console.log(position,"position");
-    console.log(stepStatus,"stepStatus");
+    console.log(position, 'position');
+    console.log(stepStatus, 'stepStatus');
     let iconConfig = null;
     switch (position) {
       case 0: {

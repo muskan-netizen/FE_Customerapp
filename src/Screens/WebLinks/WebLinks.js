@@ -110,6 +110,7 @@ export default function WebLinks({navigation, route}) {
   const getCmsPageDetail = () => {
     let data = {};
     data['page_id'] = paramData && paramData?.id;
+    console.log(paramData?.id);
     actions
       .getCmsPageDetail(data, {
         code: appData?.profile?.code,
@@ -393,341 +394,349 @@ export default function WebLinks({navigation, route}) {
               />
             )}
           </View>
-          <View
-            style={{
-              marginTop: moderateScaleVertical(30),
-              marginHorizontal: moderateScale(24),
-            }}>
-            <View style={{marginBottom: moderateScaleVertical(12)}}>
-              <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
-            </View>
-            <BorderTextInput
-              placeholder={strings.YOUR_NAME}
-              onChangeText={_onChangeText('fullname')}
-              containerStyle={styles.containerStyle}
-            />
-
-            <BorderTextInput
-              placeholder={strings.YOUR_EMAIL}
-              onChangeText={_onChangeText('email')}
-              containerStyle={styles.containerStyle}
-            />
-            <PhoneNumberInput
-              onCountryChange={_onCountryChange}
-              onChangePhone={(phoneNumber) =>
-                updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
-              }
-              cca2={cca2}
-              phoneNumber={phoneNumber}
-              callingCode={state.callingCode}
-              placeholder={strings.YOUR_PHONE_NUMBER}
-              keyboardType={'phone-pad'}
-              containerStyle={styles.containerStyle}
-            />
-
-            <BorderTextInput
-              placeholder={strings.ENTER_TITLE}
-              label={'Title'}
-              onChangeText={_onChangeText('title')}
-              containerStyle={styles.containerStyle}
-            />
-
-            <BorderTextInput
-              secureTextEntry={true}
-              placeholder={strings.ENTER_PASSWORD}
-              onChangeText={_onChangeText('password')}
-              containerStyle={styles.containerStyle}
-            />
-            <BorderTextInput
-              secureTextEntry={true}
-              placeholder={strings.CONFIRM_PASSWORD}
-              onChangeText={_onChangeText('confirm_password')}
-              containerStyle={styles.containerStyle}
-            />
-            <View style={{marginTop: moderateScaleVertical(10)}}>
-              <Text style={styles.detailStyle}>{strings.STORE_DETAILS}</Text>
-            </View>
-
-            <View style={{marginVertical: moderateScaleVertical(20)}}>
-              <View style={{flexDirection: 'row'}}>
-                <View
-                  style={{
-                    width: width / 2 - moderateScale(22),
-                  }}>
-                  <Text style={styles.uploadText}>{strings.UPLOAD_LOGO}</Text>
-                  {imageArray && imageArray.length ? (
-                    imageArray.map((i, inx) => {
-                      return (
-                        <ImageBackground
-                          source={{
-                            uri: i.uri,
-                          }}
-                          style={styles.imageOrderStyle}
-                          imageStyle={styles.imageOrderStyle}>
-                          <View style={styles.viewOverImage}>
-                            <View style={styles.crossIconStyle}>
-                              <TouchableOpacity
-                                onPress={() => _removeImageFromList(i)}>
-                                <Image source={imagePath.icRemoveIcon} />
-                              </TouchableOpacity>
-                            </View>
-                          </View>
-                        </ImageBackground>
-                      );
-                    })
-                  ) : (
-                    <View style={styles.imageView}>
-                      <TouchableOpacity
-                        onPress={uploadLogo}
-                        style={[
-                          styles.viewOverImage2,
-                          {borderStyle: 'dashed'},
-                        ]}>
-                        <Image
-                          source={imagePath.icCamIcon}
-                          style={{tintColor: themeColors.primary_color}}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  )}
-                </View>
-                <View
-                  style={{
-                    width: width / 2 - moderateScale(22),
-                  }}>
-                  <Text style={styles.uploadText}>{strings.UPLOAD_BANNER}</Text>
-                  {imageArrayBanner && imageArrayBanner.length ? (
-                    imageArrayBanner.map((i, inx) => {
-                      return (
-                        <ImageBackground
-                          source={{
-                            uri: i.uri,
-                          }}
-                          style={styles.imageOrderStyle}
-                          imageStyle={styles.imageStyle}>
-                          <View style={styles.viewOverImage}>
-                            <View style={styles.crossIconStyle}>
-                              <TouchableOpacity
-                                onPress={() => _removeBannerFromList(i)}>
-                                <Image source={imagePath.icRemoveIcon} />
-                              </TouchableOpacity>
-                            </View>
-                          </View>
-                        </ImageBackground>
-                      );
-                    })
-                  ) : (
-                    <View style={styles.imageView}>
-                      <TouchableOpacity
-                        onPress={uploadFile}
-                        style={[
-                          styles.viewOverImage2,
-                          {borderStyle: 'dashed'},
-                        ]}>
-                        <Image
-                          source={imagePath.icCamIcon}
-                          style={{tintColor: themeColors.primary_color}}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  )}
-                </View>
-              </View>
-            </View>
-            <BorderTextInput
-              placeholder={strings.VENDOR_NAME}
-              onChangeText={_onChangeText('vendor_name')}
-              containerStyle={styles.containerStyle}
-            />
-            <BorderTextInput
-              placeholder={strings.DESCRIPTION}
-              onChangeText={_onChangeText('description')}
-              containerStyle={styles.containerStyle}
-            />
-            <BorderTextInput
-              placeholder={strings.ADDRESS}
-              onChangeText={_onChangeText('address')}
-              containerStyle={styles.containerStyle}
-            />
-            <BorderTextInput
-              placeholder={strings.WEBSITE}
-              onChangeText={_onChangeText('website')}
-              containerStyle={styles.containerStyle}
-            />
+          {paramData?.slug === 'vendor-registration' && (
             <View
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-
-                marginHorizontal: moderateScale(10),
-                marginVertical: moderateScaleVertical(16),
+                marginTop: moderateScaleVertical(30),
+                marginHorizontal: moderateScale(24),
               }}>
+              <View style={{marginBottom: moderateScaleVertical(12)}}>
+                <Text style={styles.detailStyle}>
+                  {strings.PERSONAL_DETAILS}
+                </Text>
+              </View>
+              <BorderTextInput
+                placeholder={strings.YOUR_NAME}
+                onChangeText={_onChangeText('fullname')}
+                containerStyle={styles.containerStyle}
+              />
+
+              <BorderTextInput
+                placeholder={strings.YOUR_EMAIL}
+                onChangeText={_onChangeText('email')}
+                containerStyle={styles.containerStyle}
+              />
+              <PhoneNumberInput
+                onCountryChange={_onCountryChange}
+                onChangePhone={(phoneNumber) =>
+                  updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
+                }
+                cca2={cca2}
+                phoneNumber={phoneNumber}
+                callingCode={state.callingCode}
+                placeholder={strings.YOUR_PHONE_NUMBER}
+                keyboardType={'phone-pad'}
+                containerStyle={styles.containerStyle}
+              />
+
+              <BorderTextInput
+                placeholder={strings.ENTER_TITLE}
+                label={'Title'}
+                onChangeText={_onChangeText('title')}
+                containerStyle={styles.containerStyle}
+              />
+
+              <BorderTextInput
+                secureTextEntry={true}
+                placeholder={strings.ENTER_PASSWORD}
+                onChangeText={_onChangeText('password')}
+                containerStyle={styles.containerStyle}
+              />
+              <BorderTextInput
+                secureTextEntry={true}
+                placeholder={strings.CONFIRM_PASSWORD}
+                onChangeText={_onChangeText('confirm_password')}
+                containerStyle={styles.containerStyle}
+              />
+              <View style={{marginTop: moderateScaleVertical(10)}}>
+                <Text style={styles.detailStyle}>{strings.STORE_DETAILS}</Text>
+              </View>
+
+              <View style={{marginVertical: moderateScaleVertical(20)}}>
+                <View style={{flexDirection: 'row'}}>
+                  <View
+                    style={{
+                      width: width / 2 - moderateScale(22),
+                    }}>
+                    <Text style={styles.uploadText}>{strings.UPLOAD_LOGO}</Text>
+                    {imageArray && imageArray.length ? (
+                      imageArray.map((i, inx) => {
+                        return (
+                          <ImageBackground
+                            source={{
+                              uri: i.uri,
+                            }}
+                            style={styles.imageOrderStyle}
+                            imageStyle={styles.imageOrderStyle}>
+                            <View style={styles.viewOverImage}>
+                              <View style={styles.crossIconStyle}>
+                                <TouchableOpacity
+                                  onPress={() => _removeImageFromList(i)}>
+                                  <Image source={imagePath.icRemoveIcon} />
+                                </TouchableOpacity>
+                              </View>
+                            </View>
+                          </ImageBackground>
+                        );
+                      })
+                    ) : (
+                      <View style={styles.imageView}>
+                        <TouchableOpacity
+                          onPress={uploadLogo}
+                          style={[
+                            styles.viewOverImage2,
+                            {borderStyle: 'dashed'},
+                          ]}>
+                          <Image
+                            source={imagePath.icCamIcon}
+                            style={{tintColor: themeColors.primary_color}}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    )}
+                  </View>
+                  <View
+                    style={{
+                      width: width / 2 - moderateScale(22),
+                    }}>
+                    <Text style={styles.uploadText}>
+                      {strings.UPLOAD_BANNER}
+                    </Text>
+                    {imageArrayBanner && imageArrayBanner.length ? (
+                      imageArrayBanner.map((i, inx) => {
+                        return (
+                          <ImageBackground
+                            source={{
+                              uri: i.uri,
+                            }}
+                            style={styles.imageOrderStyle}
+                            imageStyle={styles.imageStyle}>
+                            <View style={styles.viewOverImage}>
+                              <View style={styles.crossIconStyle}>
+                                <TouchableOpacity
+                                  onPress={() => _removeBannerFromList(i)}>
+                                  <Image source={imagePath.icRemoveIcon} />
+                                </TouchableOpacity>
+                              </View>
+                            </View>
+                          </ImageBackground>
+                        );
+                      })
+                    ) : (
+                      <View style={styles.imageView}>
+                        <TouchableOpacity
+                          onPress={uploadFile}
+                          style={[
+                            styles.viewOverImage2,
+                            {borderStyle: 'dashed'},
+                          ]}>
+                          <Image
+                            source={imagePath.icCamIcon}
+                            style={{tintColor: themeColors.primary_color}}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    )}
+                  </View>
+                </View>
+              </View>
+              <BorderTextInput
+                placeholder={strings.VENDOR_NAME}
+                onChangeText={_onChangeText('vendor_name')}
+                containerStyle={styles.containerStyle}
+              />
+              <BorderTextInput
+                placeholder={strings.DESCRIPTION}
+                onChangeText={_onChangeText('description')}
+                containerStyle={styles.containerStyle}
+              />
+              <BorderTextInput
+                placeholder={strings.ADDRESS}
+                onChangeText={_onChangeText('address')}
+                containerStyle={styles.containerStyle}
+              />
+              <BorderTextInput
+                placeholder={strings.WEBSITE}
+                onChangeText={_onChangeText('website')}
+                containerStyle={styles.containerStyle}
+              />
               <View
                 style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text
-                  style={{
-                    marginBottom: moderateScaleVertical(8),
-                    fontFamily: fontFamily.medium,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7,
-                  }}>
-                  {strings.DINE_IN}
-                </Text>
-                <ToggleSwitch
-                  isOn={isDineIn}
-                  onColor={themeColors.primary_color}
-                  offColor={
-                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
-                  }
-                  size="small"
-                  onToggle={() => updateState({isDineIn: !isDineIn})}
-                />
-              </View>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Text
-                  style={{
-                    marginBottom: moderateScaleVertical(8),
-                    fontFamily: fontFamily.medium,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7,
-                  }}>
-                  {strings.TAKEAWAY}
-                </Text>
-                <ToggleSwitch
-                  isOn={isTakeaway}
-                  onColor={themeColors.primary_color}
-                  offColor={
-                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
-                  }
-                  size="small"
-                  onToggle={() => updateState({isTakeaway: !isTakeaway})}
-                />
-              </View>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Text
-                  style={{
-                    marginBottom: moderateScaleVertical(8),
-                    fontFamily: fontFamily.medium,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7,
-                  }}>
-                  {strings.DELIVERY}
-                </Text>
-                <ToggleSwitch
-                  isOn={isDelivery}
-                  onColor={themeColors.primary_color}
-                  offColor={
-                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
-                  }
-                  size="small"
-                  onToggle={() => updateState({isDelivery: !isDelivery})}
-                />
-              </View>
-            </View>
-            <View style={{marginVertical: moderateScaleVertical(20)}}>
-              <View style={{flexDirection: 'row'}}>
-                <View
-                  style={{
-                    width: width / 2 - moderateScale(22),
-                  }}>
-                  <Text style={styles.uploadText}>{strings.FSSAI_LICENSE}</Text>
-                  {fssaiLicense && fssaiLicense.length ? (
-                    fssaiLicense.map((i, inx) => {
-                      return (
-                        <ImageBackground
-                          source={{
-                            uri: i.uri,
-                          }}
-                          style={styles.imageOrderStyle}
-                          imageStyle={styles.imageOrderStyle}>
-                          <View style={styles.viewOverImage}>
-                            <View style={styles.crossIconStyle}>
-                              <TouchableOpacity
-                                onPress={() => _removeFssaiLicence(i)}>
-                                <Image source={imagePath.icRemoveIcon} />
-                              </TouchableOpacity>
-                            </View>
-                          </View>
-                        </ImageBackground>
-                      );
-                    })
-                  ) : (
-                    <View style={styles.imageView}>
-                      <TouchableOpacity
-                        onPress={fssaiuploadFile}
-                        style={[
-                          styles.viewOverImage2,
-                          {borderStyle: 'dashed'},
-                        ]}>
-                        <Image
-                          source={imagePath.icCamIcon}
-                          style={{tintColor: themeColors.primary_color}}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  )}
-                </View>
-                <View
-                  style={{
-                    width: width / 2 - moderateScale(22),
-                  }}>
-                  <Text style={styles.uploadText}>{strings.SFC_LICENSE}</Text>
-                  {sfcLicense && sfcLicense.length ? (
-                    sfcLicense.map((i, inx) => {
-                      return (
-                        <ImageBackground
-                          source={{
-                            uri: i.uri,
-                          }}
-                          style={styles.imageOrderStyle}
-                          imageStyle={styles.imageStyle}>
-                          <View style={styles.viewOverImage}>
-                            <View style={styles.crossIconStyle}>
-                              <TouchableOpacity
-                                onPress={() => _removeSfcLicence(i)}>
-                                <Image source={imagePath.icRemoveIcon} />
-                              </TouchableOpacity>
-                            </View>
-                          </View>
-                        </ImageBackground>
-                      );
-                    })
-                  ) : (
-                    <View style={styles.imageView}>
-                      <TouchableOpacity
-                        onPress={sfcuploadFile}
-                        style={[
-                          styles.viewOverImage2,
-                          {borderStyle: 'dashed'},
-                        ]}>
-                        <Image
-                          source={imagePath.icCamIcon}
-                          style={{tintColor: themeColors.primary_color}}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  )}
-                </View>
-              </View>
-            </View>
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
 
-            <GradientButton
-              marginTop={moderateScaleVertical(10)}
-              btnText={strings.SUBMIT}
-            />
-            <View
-              style={{
-                height: moderateScaleVertical(24),
-                marginBottom: moderateScaleVertical(44),
-              }}
-            />
-          </View>
+                  marginHorizontal: moderateScale(10),
+                  marginVertical: moderateScaleVertical(16),
+                }}>
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      marginBottom: moderateScaleVertical(8),
+                      fontFamily: fontFamily.medium,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyOpcaity7,
+                    }}>
+                    {strings.DINE_IN}
+                  </Text>
+                  <ToggleSwitch
+                    isOn={isDineIn}
+                    onColor={themeColors.primary_color}
+                    offColor={
+                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                    }
+                    size="small"
+                    onToggle={() => updateState({isDineIn: !isDineIn})}
+                  />
+                </View>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <Text
+                    style={{
+                      marginBottom: moderateScaleVertical(8),
+                      fontFamily: fontFamily.medium,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyOpcaity7,
+                    }}>
+                    {strings.TAKEAWAY}
+                  </Text>
+                  <ToggleSwitch
+                    isOn={isTakeaway}
+                    onColor={themeColors.primary_color}
+                    offColor={
+                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                    }
+                    size="small"
+                    onToggle={() => updateState({isTakeaway: !isTakeaway})}
+                  />
+                </View>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <Text
+                    style={{
+                      marginBottom: moderateScaleVertical(8),
+                      fontFamily: fontFamily.medium,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyOpcaity7,
+                    }}>
+                    {strings.DELIVERY}
+                  </Text>
+                  <ToggleSwitch
+                    isOn={isDelivery}
+                    onColor={themeColors.primary_color}
+                    offColor={
+                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                    }
+                    size="small"
+                    onToggle={() => updateState({isDelivery: !isDelivery})}
+                  />
+                </View>
+              </View>
+              <View style={{marginVertical: moderateScaleVertical(20)}}>
+                <View style={{flexDirection: 'row'}}>
+                  <View
+                    style={{
+                      width: width / 2 - moderateScale(22),
+                    }}>
+                    <Text style={styles.uploadText}>
+                      {strings.FSSAI_LICENSE}
+                    </Text>
+                    {fssaiLicense && fssaiLicense.length ? (
+                      fssaiLicense.map((i, inx) => {
+                        return (
+                          <ImageBackground
+                            source={{
+                              uri: i.uri,
+                            }}
+                            style={styles.imageOrderStyle}
+                            imageStyle={styles.imageOrderStyle}>
+                            <View style={styles.viewOverImage}>
+                              <View style={styles.crossIconStyle}>
+                                <TouchableOpacity
+                                  onPress={() => _removeFssaiLicence(i)}>
+                                  <Image source={imagePath.icRemoveIcon} />
+                                </TouchableOpacity>
+                              </View>
+                            </View>
+                          </ImageBackground>
+                        );
+                      })
+                    ) : (
+                      <View style={styles.imageView}>
+                        <TouchableOpacity
+                          onPress={fssaiuploadFile}
+                          style={[
+                            styles.viewOverImage2,
+                            {borderStyle: 'dashed'},
+                          ]}>
+                          <Image
+                            source={imagePath.icCamIcon}
+                            style={{tintColor: themeColors.primary_color}}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    )}
+                  </View>
+                  <View
+                    style={{
+                      width: width / 2 - moderateScale(22),
+                    }}>
+                    <Text style={styles.uploadText}>{strings.SFC_LICENSE}</Text>
+                    {sfcLicense && sfcLicense.length ? (
+                      sfcLicense.map((i, inx) => {
+                        return (
+                          <ImageBackground
+                            source={{
+                              uri: i.uri,
+                            }}
+                            style={styles.imageOrderStyle}
+                            imageStyle={styles.imageStyle}>
+                            <View style={styles.viewOverImage}>
+                              <View style={styles.crossIconStyle}>
+                                <TouchableOpacity
+                                  onPress={() => _removeSfcLicence(i)}>
+                                  <Image source={imagePath.icRemoveIcon} />
+                                </TouchableOpacity>
+                              </View>
+                            </View>
+                          </ImageBackground>
+                        );
+                      })
+                    ) : (
+                      <View style={styles.imageView}>
+                        <TouchableOpacity
+                          onPress={sfcuploadFile}
+                          style={[
+                            styles.viewOverImage2,
+                            {borderStyle: 'dashed'},
+                          ]}>
+                          <Image
+                            source={imagePath.icCamIcon}
+                            style={{tintColor: themeColors.primary_color}}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    )}
+                  </View>
+                </View>
+              </View>
+
+              <GradientButton
+                marginTop={moderateScaleVertical(10)}
+                btnText={strings.SUBMIT}
+              />
+              <View
+                style={{
+                  height: moderateScaleVertical(24),
+                  marginBottom: moderateScaleVertical(44),
+                }}
+              />
+            </View>
+          )}
         </View>
       </KeyboardAwareScrollView>
     </WrapperContainer>

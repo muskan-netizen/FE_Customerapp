@@ -27,6 +27,7 @@ import {MyDarkTheme} from '../../styles/theme';
 import LottieView from 'lottie-react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import MarketCard3 from '../../Components/MarketCard3';
+import {setItem} from '../../utils/utils';
 
 export default function SearchProductVendorItem2({navigation, route}) {
   const [state, setState] = useState({
@@ -34,31 +35,11 @@ export default function SearchProductVendorItem2({navigation, route}) {
     searchInput: '',
     searchData: [],
     showRightIcon: false,
-    recentlySearched: [
-      {
-        id: 1,
-        image: imagePath.recently_search,
-        title: 'KFC',
-      },
-      {id: 2, image: imagePath.recently_search, title: 'Subway'},
-      {id: 3, image: imagePath.recently_search, title: 'Carpet cleaning'},
-      {id: 4, image: imagePath.recently_search, title: 'Carpet cleaning'},
-      {id: 5, image: imagePath.recently_search, title: 'Walmart'},
-    ],
-    trendingNearYou: [
-      {
-        id: 1,
-        image: imagePath.trending,
-        title: 'KFC',
-      },
-      {id: 2, image: imagePath.trending, title: 'Subway'},
-      {id: 3, image: imagePath.trending, title: 'Carpet cleaning'},
-      {id: 4, image: imagePath.trending, title: 'Carpet cleaning'},
-      {id: 5, image: imagePath.trending, title: 'Walmart'},
-    ],
   });
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const previousSearches = useSelector((state) => state?.initBoot?.searchText);
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {
@@ -120,7 +101,6 @@ export default function SearchProductVendorItem2({navigation, route}) {
       language: languages?.primary_language?.id,
     })
       .then((response) => {
-        console.log(response.data);
         updateState({
           searchData: response.data,
           isLoading: false,
@@ -145,6 +125,16 @@ export default function SearchProductVendorItem2({navigation, route}) {
   }, [searchInput]);
 
   const _onclickSearchItem = (item) => {
+    const searchResultExists = previousSearches?.some(
+      (recent) => recent.id === item.id,
+    );
+    if (searchResultExists) {
+    } else {
+      actions.addSearchResults(item);
+      const lastSearch = [...previousSearches, item];
+      setItem('searchResult', lastSearch);
+    }
+
     if (item.response_type == 'category') {
       if (item?.type?.redirect_to == staticStrings.VENDOR) {
         navigation.push(navigationStrings.VENDOR, {
@@ -204,7 +194,12 @@ export default function SearchProductVendorItem2({navigation, route}) {
     }
   };
 
+  const _clearRecentSearches = () => {
+    actions.deleteSearchResults();
+  };
+
   const recentlyData = (data) => {
+    // console.log(data, 'data');
     return (
       <View
         style={{
@@ -219,6 +214,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
           }}>
           {data && data.length
             ? data.map((item, index) => {
+                console.log(item, 'itemitem');
                 return (
                   <View>
                     <TouchableOpacity
@@ -234,6 +230,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
                         paddingVertical: moderateScaleVertical(7),
                         marginVertical: moderateScaleVertical(5),
                       }}
+                      onPress={() => _onclickSearchItem(item)}
                       key={index}>
                       <View>
                         <Image
@@ -249,7 +246,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
                                   marginHorizontal: moderateScale(5),
                                 }
                           }
-                          source={item.image}
+                          source={imagePath.recently_search}
                         />
                       </View>
                       <View>
@@ -259,7 +256,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
                             fontFamily: fontFamily.medium,
                             color: colors.greyLight,
                           }}>
-                          {item.title}
+                          {item.dataname}
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -273,6 +270,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
   };
 
   const renderProduct = ({item}) => {
+    console.log(item, 'itemitem');
     return (
       <TouchableOpacity
         onPress={() => _onclickSearchItem(item)}
@@ -324,74 +322,75 @@ export default function SearchProductVendorItem2({navigation, route}) {
   const _listEmptyComponent = () => {
     return (
       <View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
+        {searchInput ? null : (
+          <>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
 
-            width: width - 16,
-          }}>
-          <Text
-            style={{
-              fontSize: textScale(16),
-              fontFamily: fontFamily.medium,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            }}>
-            {strings.RECENTLY_SEARCH}
-          </Text>
-          <Text
-            style={{
-              paddingHorizontal: moderateScale(30),
-              fontSize: textScale(12),
-              fontFamily: fontFamily.regular,
-              color: themeColors.primary_color,
-            }}>
-            {strings.CLEAR}
-          </Text>
-        </View>
-        <View>{recentlyData(recentlySearched)}</View>
+                width: width - 16,
+              }}>
+              {previousSearches?.length > 0 ? (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    width: width - 16,
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: textScale(16),
+                      fontFamily: fontFamily.medium,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
+                    {strings.RECENTLY_SEARCH}
+                  </Text>
+                  <TouchableOpacity onPress={() => _clearRecentSearches()}>
+                    <Text
+                      style={{
+                        paddingHorizontal: moderateScale(30),
+                        fontSize: textScale(12),
+                        fontFamily: fontFamily.regular,
+                        color: themeColors.primary_color,
+                      }}>
+                      {strings.CLEAR}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              ) : null}
+            </View>
+            <View>{recentlyData(previousSearches)}</View>
+            <View>
+              <Text
+                style={{
+                  fontSize: textScale(16),
+                  fontFamily: fontFamily.medium,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
+                {strings.RECOMMENDED_FOR_YOU}
+              </Text>
+              <FlatList
+                horizontal
+                data={recommendedVendorsdata}
+                renderItem={renderRecommendedVendors}
+                keyExtractor={(item, index) => String(index)}
+                keyboardShouldPersistTaps="always"
+                showsHorizontalScrollIndicator={false}
+                style={{
+                  flex: 1,
+                  marginVertical: moderateScaleVertical(10),
 
-        <View
-          style={{
-            marginVertical: moderateScaleVertical(20),
-          }}>
-          <Text
-            style={{
-              fontSize: textScale(16),
-              fontFamily: fontFamily.medium,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            }}>
-            {strings.TRENDING_NEAR_YOU}
-          </Text>
-
-          <View>{recentlyData(trendingNearYou)}</View>
-        </View>
-        <View>
-          <Text
-            style={{
-              fontSize: textScale(16),
-              fontFamily: fontFamily.medium,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            }}>
-            {strings.RECOMMENDED_FOR_YOU}
-          </Text>
-          <FlatList
-            horizontal
-            data={recommendedVendorsdata}
-            renderItem={renderRecommendedVendors}
-            keyExtractor={(item, index) => String(index)}
-            keyboardShouldPersistTaps="always"
-            showsHorizontalScrollIndicator={false}
-            style={{
-              flex: 1,
-              marginVertical: moderateScaleVertical(10),
-
-              // backgroundColor: 'black',
-            }}
-            ListEmptyComponent={_listEmptyComponent}
-            ItemSeparatorComponent={() => <View style={{height: 30}} />}
-          />
-        </View>
+                  // backgroundColor: 'black',
+                }}
+                ListEmptyComponent={_listEmptyComponent}
+                ItemSeparatorComponent={() => <View style={{height: 30}} />}
+              />
+            </View>
+          </>
+        )}
       </View>
     );
   };
