@@ -162,14 +162,14 @@ export default function ProductCard3({
                       color: MyDarkTheme.colors.text,
                       fontFamily: fontFamily.regular,
                       fontSize: textScale(12),
-                      width: moderateScale(140)
+                      width: width/3
                     }
                     : {
                       ...commonStyles.futuraBtHeavyFont14,
                       width: moderateScaleVertical(220),
                       fontFamily: fontFamily.regular,
                       fontSize: textScale(12),
-                      width: moderateScale(140)
+                      width: width/3
                       // fontFamily: 'Eina02-SemiBold',
                     }
                 }>
@@ -232,38 +232,12 @@ export default function ProductCard3({
             </View>
           </Animatable.View>
 
-
           <View
             style={{
               marginTop: selectedIndex == index ? moderateScaleVertical(8) : 0,
               alignItems: 'center',
             }}>
-            {true && (
-              <TouchableOpacity
-                onPress={addToCart}
-                style={{
-                  borderWidth: 1,
-                  padding: 6,
-                  borderRadius: 8,
-                  borderColor: themeColors.primary_color,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: 80,
-                }}
-              // onPress={onPress}
-              >
-                <Text
-                  style={{
-                    fontSize: textScale(10),
-                    color: themeColors.primary_color,
-                    fontFamily: fontFamily.bold,
-                  }}>
-                  ADD
-                </Text>
-                {/* <Image source={imagePath.greyRoundPlus} /> */}
-              </TouchableOpacity>
-            )}
-            {/* {!!data?.qty && (
+            {!!data?.variant[0]?.check_if_in_cart && data?.variant[0]?.check_if_in_cart.length > 0 || !!data?.qty ?
               <View
                 style={{
                   borderRadius: moderateScale(5),
@@ -296,7 +270,7 @@ export default function ProductCard3({
                       color: colors.white,
                       marginHorizontal: 16,
                     }}>
-                    {data?.qty}
+                    {data?.qty || data?.variant[0].check_if_in_cart[0].quantity}
                   </Text>
                 </View>
                 <TouchableOpacity
@@ -314,9 +288,33 @@ export default function ProductCard3({
                   </Text>
                 </TouchableOpacity>
               </View>
-            )} */}
-            {/* {(data?.add_on && data?.add_on.length !== 0) ||
-              (data?.variantSet && data?.variantSet.length !== 0) ? (
+              :
+              <TouchableOpacity
+                onPress={addToCart}
+                style={{
+                  borderWidth: 1,
+                  padding: 6,
+                  borderRadius: 8,
+                  borderColor: themeColors.primary_color,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 80,
+                }}
+              // onPress={onPress}
+              >
+                <Text
+                  style={{
+                    fontSize: textScale(10),
+                    color: themeColors.primary_color,
+                    fontFamily: fontFamily.bold,
+                  }}>
+                  ADD
+                </Text>
+                {/* <Image source={imagePath.greyRoundPlus} /> */}
+              </TouchableOpacity>
+            }
+            {(!!data?.add_on && data?.add_on.length !== 0) ||
+              (!!data?.variantSet && data?.variantSet.length !== 0) ? (
               <Text
                 style={{
                   fontSize: textScale(8),
@@ -327,7 +325,7 @@ export default function ProductCard3({
                 }}>
                 Customisable
               </Text>
-            ) : null} */}
+            ) : null}
           </View>
         </View>
       </TouchableOpacity>
