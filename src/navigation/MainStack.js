@@ -19,6 +19,7 @@ import {
   ProductList,
   ProductList2,
   SearchProductVendorItem,
+  SearchProductVendorItem2,
   SendProduct,
   Settings,
   SuperMarket,
@@ -145,7 +146,11 @@ export default function (Stack) {
 
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
-        component={SearchProductVendorItem}
+        component={
+          appStyle?.homePageLayout === 3
+            ? SearchProductVendorItem2
+            : SearchProductVendorItem
+        }
         options={{headerShown: false}}
       />
 
