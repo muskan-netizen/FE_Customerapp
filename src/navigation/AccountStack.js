@@ -40,6 +40,7 @@ import {
   WebviewScreen,
   Wishlist,
   ReturnOrder,
+  OrderDetail2
 } from '../Screens';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
@@ -68,6 +69,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.ORDER_DETAIL}
         component={OrderDetail}
+        options={{headerShown: false}}
+      />
+        <Stack.Screen
+        name={navigationStrings.ORDER_DETAIL2}
+        component={OrderDetail2}
         options={{headerShown: false}}
       />
       <Stack.Screen

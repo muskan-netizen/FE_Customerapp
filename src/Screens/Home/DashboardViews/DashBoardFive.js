@@ -79,7 +79,9 @@ export default function DashBoardFive({
   );
 
   const _renderVendors = ({item}) => (
+
     <MarketCard3 data={item} onPress={() => onPressCategory(item)} />
+
   );
   const _changeVendorListStyle = () =>
     updateState({isVendorColumnList: !isVendorColumnList});
@@ -111,7 +113,7 @@ export default function DashBoardFive({
         showsVerticalScrollIndicator={false}
         style={{
           flex: 1,
-          paddingHorizontal: moderateScale(15),
+          marginHorizontal: moderateScale(15),
         }}>
         {isLoading ? (
           <View style={{marginTop: moderateScale(5)}}>

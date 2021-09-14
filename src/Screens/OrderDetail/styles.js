@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
 import {
@@ -8,8 +8,8 @@ import {
   width,
 } from '../../styles/responsiveSize';
 
-export default ({fontFamily}) => {
-  const commonStyles = commonStylesFunc({fontFamily});
+export default ({ fontFamily }) => {
+  const commonStyles = commonStylesFunc({ fontFamily });
   const styles = StyleSheet.create({
     scrollviewHorizontal: {
       borderTopWidth: 1,
@@ -63,10 +63,10 @@ export default ({fontFamily}) => {
     vendorView: {
       flexDirection: 'row',
       height: moderateScaleVertical(35),
-      backgroundColor: colors.white,
+      // backgroundColor: colors.white,
       alignItems: 'center',
       paddingHorizontal: moderateScale(10),
-      borderBottomWidth: moderateScaleVertical(0.5),
+      // borderBottomWidth: moderateScaleVertical(0.5),
       borderBottomColor: colors.borderLight,
     },
     clearCart: {
@@ -157,6 +157,7 @@ export default ({fontFamily}) => {
       paddingVertical: moderateScaleVertical(10),
       paddingHorizontal: moderateScale(10),
       backgroundColor: colors.white,
+      borderRadius: moderateScale(10)
     },
     cartItemImage: {
       height: width / 4.5,
@@ -284,11 +285,12 @@ export default ({fontFamily}) => {
       color: colors.lightGreyBgColor,
       fontSize: textScale(10),
     },
-    imageStyle: {height: width / 4.5, width: width / 4.5},
+    imageStyle: { height: width / 4.5, width: width / 4.5 },
     writeAReview: {
       fontFamily: fontFamily.bold,
       color: colors.lightGreyBgColor,
       fontSize: textScale(10),
+      textAlign: 'left'
     },
     containerStyle: {
       flex: 1,
@@ -299,14 +301,28 @@ export default ({fontFamily}) => {
     textStyle: {
       ...commonStyles.mediumFont16,
       fontSize: textScale(18),
+      textAlign: 'left'
     },
-    waitToAccept:{
+    waitToAccept: {
       fontFamily: fontFamily.regular,
       color: colors.black,
       fontSize: textScale(14),
-      lineHeight:19,
-      opacity:0.7,
-      paddingVertical:10
+      lineHeight: 19,
+      opacity: 0.7,
+      paddingVertical: 10
+    },
+    summaryText: {
+      fontSize: textScale(18),
+      fontFamily: fontFamily.medium,
+      textAlign: 'left',
+      marginBottom: moderateScaleVertical(12),
+    },
+    dottedLine: {
+      borderWidth: 1,
+      height: 1,
+      borderStyle: 'dotted',
+      borderColor: '#979797',
+      marginBottom: moderateScaleVertical(12)
     }
   });
   return styles;

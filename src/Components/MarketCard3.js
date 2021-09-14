@@ -82,6 +82,7 @@ export default function MarketCard3({
               fontSize: textScale(11),
               fontFamily: fontFamily.medium,
               marginHorizontal: moderateScale(5),
+              textAlign:'left'
             }}>
             0.2 km | 30 mins
           </Text>
@@ -91,6 +92,7 @@ export default function MarketCard3({
           style={{
             ...commonStyles.mediumFont14Normal,
             fontSize: textScale(12),
+            textAlign:'left',
             color: data?.show_slot
               ? colors.green
               : data?.slot && data?.slot.length
@@ -119,6 +121,7 @@ export function stylesFunc({fontFamily, extraStyles}) {
       color: colors.black,
       fontFamily: fontFamily.medium,
       width: '85%',
+      textAlign:'left'
     },
     mainImage: {
       height: moderateScaleVertical(140),
@@ -134,6 +137,7 @@ export function stylesFunc({fontFamily, extraStyles}) {
       color: colors.yellowC,
       fontSize: textScale(11),
       fontFamily: fontFamily.medium,
+      textAlign:'left'
     },
     distanceView: {
       marginTop: moderateScale(5),

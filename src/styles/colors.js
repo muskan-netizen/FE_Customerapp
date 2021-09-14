@@ -24,6 +24,7 @@ export default {
   blackOpacity0: 'rgba(0,0,0,0)',
   blackOpacity43: 'rgba(0,0,0,0.43)',
   blackOpacity86: 'rgba(0,0,0,0.86)',
+  blackOpacity66: 'rgba(0,0,0,0.66)',
   green: '#3B9D38',
   orange: '#E9610B',
   orangeB: '#F44746',

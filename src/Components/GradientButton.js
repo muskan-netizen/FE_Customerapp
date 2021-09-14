@@ -16,6 +16,7 @@ const GradientButton = ({
   textStyle = {},
   indicator = false,
   colorsArray = null,
+  indicatorColor = "#0000ff",
 }) => {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -47,7 +48,7 @@ const GradientButton = ({
             : [themeColors?.primary_color, themeColors?.primary_color]
         }>
         {!!indicator ? (
-          <ActivityIndicator size="small" color="#0000ff" />
+          <ActivityIndicator size="small" color={indicatorColor} />
         ) : (
           <Text style={{...commonStyles.buttonTextWhite, ...textStyle}}>
             {btnText}

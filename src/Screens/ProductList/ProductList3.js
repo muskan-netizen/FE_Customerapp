@@ -16,6 +16,7 @@ import {
   Platform,
   Modal,
   Alert,
+  I18nManager,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import EmptyListLoader from '../../Components/EmptyListLoader';
@@ -84,6 +85,7 @@ export default function Products({ route, navigation }) {
     allFilters: [],
     isVisibleModal: false,
     updateQtyLoader: false,
+    showShimmer: true,
     sortFilters: [
       {
         id: -2,
@@ -171,7 +173,8 @@ export default function Products({ route, navigation }) {
     selectedCartItem,
     isVisibleModal,
     updateQtyLoader,
-    cartId
+    cartId,
+    showShimmer
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -644,6 +647,7 @@ export default function Products({ route, navigation }) {
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
     //!!data?.variant[0]?.check_if_in_cart && data?.variant[0]?.check_if_in_cart.length > 0 || !!data?.qty ?
+    console.log("check if in cart", itemToUpdate?.variant[0]?.check_if_in_cart)
     let isExistqty = itemToUpdate?.qty ? itemToUpdate?.qty : !!itemToUpdate?.variant[0]?.check_if_in_cart && itemToUpdate.variant[0]?.check_if_in_cart[0].quantity
     let isExistproductId = !!itemToUpdate?.variant[0]?.check_if_in_cart && itemToUpdate.variant[0]?.check_if_in_cart.length ? itemToUpdate.variant[0]?.check_if_in_cart[0].id : itemToUpdate?.cart_product_id
     let isExistCartId = !!itemToUpdate?.variant[0]?.check_if_in_cart && itemToUpdate.variant[0]?.check_if_in_cart.length ? itemToUpdate.variant[0]?.check_if_in_cart[0].cart_id : cartId
@@ -822,6 +826,25 @@ export default function Products({ route, navigation }) {
 
     // navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
   };
+
+  const updateCartItems = (item, quanitity, productId, cartID) => {
+    console.log("cart+++ item", item)
+    console.log("cart++ quanitify", quanitity)
+    console.log("cart++ product id", productId)
+    console.log("cart++ idd", cartID)
+    let updateArray = productListData.map((val, i) => {
+      if (val.id == item.id) {
+        return {
+          ...val,
+          qty: quanitity,
+          cart_product_id: productId,
+          isRemove: false
+        };
+      }
+      return val;
+    });
+    updateState({ cartId: cartID, productListData: updateArray })
+  }
 
   useEffect(() => {
     if (isLoadingC) {
@@ -1141,6 +1164,7 @@ export default function Products({ route, navigation }) {
                     tintColor: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.black,
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
                   }}
                   source={imagePath.icBackb}
                 />
@@ -1211,6 +1235,7 @@ export default function Products({ route, navigation }) {
                     tintColor: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.black,
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
                   }}
                   source={!!data?.showAddToCart ? false : imagePath.icSearchb}
                 />
@@ -1222,6 +1247,7 @@ export default function Products({ route, navigation }) {
                     tintColor: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.black,
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
                   }}
                   source={imagePath.icShareb}
                 />
@@ -1276,13 +1302,16 @@ export default function Products({ route, navigation }) {
           />
           {/* <View style={{ height: moderateScale(height * 0.070) }} /> */}
         </View>
-        {<VariantAddons
+        {isVisibleModal && (<VariantAddons
           addonSet={selectedCartItem?.add_on}
           variantData={selectedCartItem?.variantSet}
           isVisible={isVisibleModal}
           productdetail={selectedCartItem}
-          onClose={() => updateState({ isVisibleModal: false })}
-        />}
+          onClose={() => updateState({ isVisibleModal: false, showShimmer: true, })}
+          showShimmer={showShimmer}
+          shimmerClose={(val) => updateState({ showShimmer: val })}
+          updateCartItems={updateCartItems}
+        />)}
       </SafeAreaView>
     </View>
   );

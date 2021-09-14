@@ -294,4 +294,5 @@ export default {
   icBrandInActive: require('../assets/images/RoyoorderNewImages/ic_tag.png'),
   icCelebActive: require('../assets/images/RoyoorderNewImages/ic_celeb2.png'),
   icCelebInActive: require('../assets/images/RoyoorderNewImages/ic_celeb1.png'),
+  icMap: require('../assets/images/RoyoorderNewImages/ic_map.png')
 };
