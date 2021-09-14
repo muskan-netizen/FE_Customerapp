@@ -106,7 +106,7 @@ export default function Account3({navigation}) {
     }
   };
   const _scrollRef = useRef();
-  console.log(fontFamily, 'fontFamily.bold');
+  console.log(userData?.source, 'userData?.source');
   return (
     <WrapperContainer
       bgColor={null}
