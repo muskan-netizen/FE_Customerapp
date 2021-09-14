@@ -55,7 +55,7 @@ export default function OffersCard({data = {}, onPress = () => {}}) {
             opacity: 0.5,
             marginTop: moderateScaleVertical(5),
           }}>
-          {`COUPON ${data?.name}`}
+          {`${strings.COUPON} ${data?.name}`}
         </Text>
         <View
           style={{

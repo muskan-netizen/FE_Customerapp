@@ -443,4 +443,6 @@ export default {
   CAMERA_PERMISSION_DENIED_MSG: "Don't have permission to open camera",
   YOUR_REFFERAL_CODE: 'Your refferal code: ',
   SEND_REFFERAL: 'Send Refferal',
+  SAVE_AS: 'Save as',
+  COUPON: 'COUPON',
 };

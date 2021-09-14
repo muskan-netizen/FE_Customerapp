@@ -445,4 +445,6 @@ export default {
   SUBSCRIPTION2: 'Subscription',
   YOUR_REFFERAL_CODE: 'Your refferal code: ',
   SEND_REFFERAL: 'Send Refferal',
+  SAVE_AS: 'Save as',
+  COUPON: 'COUPON',
 };

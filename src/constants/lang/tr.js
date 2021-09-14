@@ -445,4 +445,6 @@ export default {
   ENTER_CUSTOM_AMOUNT: 'Enter Custom Amount',
   YOUR_REFFERAL_CODE: 'Your refferal code: ',
   SEND_REFFERAL: 'Send Refferal',
+  SAVE_AS: 'Save as',
+  COUPON: 'COUPON',
 };

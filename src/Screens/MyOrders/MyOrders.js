@@ -432,7 +432,7 @@ export default function MyOrders({navigation}) {
         onEndReached={onEndReachedDelayed}
         onEndReachedThreshold={0.5}
         ItemSeparatorComponent={() => <View style={{height: 20}} />}
-        ListFooterComponent={() => <View style={{height: 20}} />}
+        ListFooterComponent={() => <View style={{height: 90}} />}
         // ListEmptyComponent={<ListEmptyProduct />}
       />
 

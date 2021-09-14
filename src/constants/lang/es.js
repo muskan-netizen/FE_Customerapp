@@ -444,4 +444,6 @@ export default {
     'The specific items are not deliverable to this address. Please remove the items or change the address ',
   YOUR_REFFERAL_CODE: 'Your refferal code: ',
   SEND_REFFERAL: 'Send Refferal',
+  SAVE_AS: 'Save as',
+  COUPON: 'COUPON',
 };

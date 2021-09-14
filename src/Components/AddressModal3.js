@@ -578,7 +578,7 @@ export default function AddressModal3({
             />
           </View>
           <Text style={{fontFamily: fontFamily.bold, fontSize: textScale(14)}}>
-            Save as
+            {strings.SAVE_AS}
           </Text>
 
           <View style={styles.addressTypeView}>
