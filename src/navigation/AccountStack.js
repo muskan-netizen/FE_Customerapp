@@ -41,6 +41,7 @@ import {
   Wishlist,
   ReturnOrder,
   OrderDetail2,
+  SearchProductVendorItem2,
 } from '../Screens';
 import StaticTrackOrder from '../Screens/WebviewScreen/StaticTrackOrder';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
