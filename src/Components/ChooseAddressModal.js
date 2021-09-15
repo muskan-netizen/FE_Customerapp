@@ -61,7 +61,6 @@ export default function ChooseAddressModal({
   useFocusEffect(
     React.useCallback(() => {
       if (!!userData?.auth_token && isVisible) {
-        console.log('comes here');
         getAllAddress();
       }
     }, [isVisible]),

@@ -64,11 +64,11 @@ export default function Account3({navigation}) {
 
   console.log(userData, 'userData');
 
-  useFocusEffect(
-    React.useCallback(() => {
-      _scrollRef.current.scrollTo(0);
-    }, []),
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     _scrollRef.current.scrollTo(0);
+  //   }, []),
+  // );
 
   //Share your app
   const onShare = async () => {
@@ -110,21 +110,28 @@ export default function Account3({navigation}) {
     }
   };
 
-  undefined;
-  const _scrollRef = useRef();
+  //const _scrollRef = useRef();
   const usernameFirstlater = !!userData?.name && userData?.name?.charAt(0);
+
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: isDarkMode
           ? MyDarkTheme.colors.background
-          : getColorCodeWithOpactiyNumber(
-              themeColors.primary_color.substr(1),
-              20,
-            ),
+          : colors.white,
       }}>
-      <StatusBar
+      <SafeAreaView
+        style={{
+          flex: 1,
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : getColorCodeWithOpactiyNumber(
+                themeColors.primary_color.substr(1),
+                20,
+              ),
+        }}>
+        {/* <StatusBar
         backgroundColor={
           isDarkMode
             ? MyDarkTheme.colors.background
@@ -134,143 +141,143 @@ export default function Account3({navigation}) {
               )
         }
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-      />
-      {shortCodeStatus ? (
-        <Header
-          noLeftIcon={false}
-          customLeft={() => (
-            <Text
-              onPress={() =>
-                navigation.push(navigationStrings.SHORT_CODE, {
-                  shortCodeParam: true,
-                })
-              }
-              style={{
-                color: themeColors.primary_color,
-                fontFamily: fontFamily.bold,
-              }}>
-              {strings.EDITCODE}
-            </Text>
-          )}
-          // rightIcon={imagePath.cartShop}
-          //   centerTitle={strings.MY_ACCOUNT}
-        />
-      ) : (
-        <Header centerTitle={strings.MY_ACCOUNT} noLeftIcon={true} />
-      )}
+      /> */}
+        {shortCodeStatus ? (
+          <Header
+            noLeftIcon={false}
+            customLeft={() => (
+              <Text
+                onPress={() =>
+                  navigation.push(navigationStrings.SHORT_CODE, {
+                    shortCodeParam: true,
+                  })
+                }
+                style={{
+                  color: themeColors.primary_color,
+                  fontFamily: fontFamily.bold,
+                }}>
+                {strings.EDITCODE}
+              </Text>
+            )}
+            // rightIcon={imagePath.cartShop}
+            //   centerTitle={strings.MY_ACCOUNT}
+          />
+        ) : (
+          <Header centerTitle={strings.MY_ACCOUNT} noLeftIcon={true} />
+        )}
 
-      {/* <View style={{...commonStyles.headerTopLine}} /> */}
+        {/* <View style={{...commonStyles.headerTopLine}} /> */}
 
-      <ScrollView style={{flex: 1}} ref={_scrollRef}>
-        {!!userData?.auth_token && (
-          <>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={moveToNewScreen(navigationStrings.MY_PROFILE)}
-              style={{
-                marginHorizontal: moderateScale(24),
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginTop: moderateScaleVertical(35),
-                backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.lightDark
-                  : colors.white,
-                paddingVertical: moderateScaleVertical(12),
-                borderRadius: 12,
-              }}>
-              {userData?.source ? (
-                <FastImage
-                  source={
-                    userData?.source?.image_path
-                      ? {
-                          uri: getImageUrl(
-                            userData?.source?.proxy_url,
-                            userData?.source?.image_path,
-                            '200/200',
-                          ),
-                        }
-                      : userData?.source
-                  }
-                  style={{
-                    height: moderateScale(46),
-                    width: moderateScale(46),
-                    borderRadius: moderateScale(12),
-                    marginHorizontal: moderateScale(15),
-                    backgroundColor: colors.blackOpacity10,
-                  }}
-                />
-              ) : (
+        <ScrollView style={{flex: 1}}>
+          {!!userData?.auth_token && (
+            <>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={moveToNewScreen(navigationStrings.MY_PROFILE)}
+                style={{
+                  marginHorizontal: moderateScale(24),
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginTop: moderateScaleVertical(35),
+                  backgroundColor: isDarkMode
+                    ? MyDarkTheme.colors.lightDark
+                    : colors.white,
+                  paddingVertical: moderateScaleVertical(12),
+                  borderRadius: 12,
+                }}>
+                {userData?.source ? (
+                  <FastImage
+                    source={
+                      userData?.source?.image_path
+                        ? {
+                            uri: getImageUrl(
+                              userData?.source?.proxy_url,
+                              userData?.source?.image_path,
+                              '200/200',
+                            ),
+                          }
+                        : userData?.source
+                    }
+                    style={{
+                      height: moderateScale(46),
+                      width: moderateScale(46),
+                      borderRadius: moderateScale(12),
+                      marginHorizontal: moderateScale(15),
+                      backgroundColor: colors.blackOpacity10,
+                    }}
+                  />
+                ) : (
+                  <View
+                    style={{
+                      backgroundColor: getColorCodeWithOpactiyNumber(
+                        themeColors.primary_color.substr(1),
+                        20,
+                      ),
+                      height: moderateScale(46),
+                      width: moderateScale(46),
+                      borderRadius: moderateScale(12),
+                      marginHorizontal: moderateScale(15),
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: textScale(20),
+                        textTransform: 'uppercase',
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.blackB,
+                      }}>
+                      {usernameFirstlater}
+                    </Text>
+                  </View>
+                )}
                 <View
                   style={{
-                    backgroundColor: getColorCodeWithOpactiyNumber(
-                      themeColors.primary_color.substr(1),
-                      20,
-                    ),
-                    height: moderateScale(46),
-                    width: moderateScale(46),
-                    borderRadius: moderateScale(12),
-                    marginHorizontal: moderateScale(15),
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    flexDirection: 'column',
+                    marginHorizontal: moderateScale(25),
                   }}>
                   <Text
                     style={{
-                      fontSize: textScale(20),
-                      textTransform: 'uppercase',
                       color: isDarkMode
                         ? MyDarkTheme.colors.text
-                        : colors.blackB,
+                        : colors.textGreyJ,
+                      fontFamily: fontFamily.medium,
+                      fontSize: textScale(14),
                     }}>
-                    {usernameFirstlater}
+                    {userData?.name}
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: fontFamily.regular,
+                      fontSize: textScale(14),
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyJ,
+                      marginTop: moderateScaleVertical(5),
+                    }}>
+                    {userData?.email}
                   </Text>
                 </View>
-              )}
+              </TouchableOpacity>
               <View
                 style={{
-                  flexDirection: 'column',
-                  marginHorizontal: moderateScale(25),
-                }}>
-                <Text
-                  style={{
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyJ,
-                    fontFamily: fontFamily.medium,
-                    fontSize: textScale(14),
-                  }}>
-                  {userData?.name}
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: fontFamily.regular,
-                    fontSize: textScale(14),
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyJ,
-                    marginTop: moderateScaleVertical(5),
-                  }}>
-                  {userData?.email}
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <View
-              style={{
-                marginTop: moderateScale(30),
-              }}></View>
-          </>
-          // <ListItemHorizontal
-          //   centerContainerStyle={{flexDirection: 'row'}}
-          //   leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-          //   onPress={moveToNewScreen(navigationStrings.MY_PROFILE)}
-          //   iconLeft={imagePath.icProfile}
-          //   centerHeading={strings.MY_PROFILE}
-          //   containerStyle={styles.containerStyle}
-          //   iconRight={imagePath.goRight}
-          //   rightIconStyle={{tintColor: colors.textGreyLight}}
-          //   centerHeadingStyle={{fontSize: textScale(15)}}
-          // />
-        )}
-        {/* {!!userData?.auth_token && (
+                  marginTop: moderateScale(30),
+                }}></View>
+            </>
+            // <ListItemHorizontal
+            //   centerContainerStyle={{flexDirection: 'row'}}
+            //   leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+            //   onPress={moveToNewScreen(navigationStrings.MY_PROFILE)}
+            //   iconLeft={imagePath.icProfile}
+            //   centerHeading={strings.MY_PROFILE}
+            //   containerStyle={styles.containerStyle}
+            //   iconRight={imagePath.goRight}
+            //   rightIconStyle={{tintColor: colors.textGreyLight}}
+            //   centerHeadingStyle={{fontSize: textScale(15)}}
+            // />
+          )}
+          {/* {!!userData?.auth_token && (
           <TouchableOpacity style={{flex: 0.1}}>
             <Image
               source={imagePath.myOrder}
@@ -278,58 +285,58 @@ export default function Account3({navigation}) {
             />
           </TouchableOpacity>
         )} */}
-        {!!userData?.auth_token && (
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.MY_ORDERS)}
-            iconLeft={imagePath.myOrder2}
-            centerHeading={strings.MY_ORDERS}
-            containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{
-              fontSize: textScale(14),
-              fontFamily: fontFamily.regular,
-            }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )}
+          {!!userData?.auth_token && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.MY_ORDERS)}
+              iconLeft={imagePath.myOrder2}
+              centerHeading={strings.MY_ORDERS}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
 
-        {!!userData?.auth_token && (
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
-            iconLeft={imagePath.subscription}
-            centerHeading={strings.SUBSCRIPTION}
-            containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{
-              fontSize: textScale(14),
-              fontFamily: fontFamily.regular,
-            }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )}
+          {!!userData?.auth_token && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
+              iconLeft={imagePath.subscription}
+              centerHeading={strings.SUBSCRIPTION}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
 
-        {!!userData?.auth_token && (
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.LOYALTY)}
-            iconLeft={imagePath.loyalty}
-            centerHeading={strings.LOYALTYPOINTS}
-            containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{
-              fontSize: textScale(14),
-              fontFamily: fontFamily.regular,
-            }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )}
+          {!!userData?.auth_token && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.LOYALTY)}
+              iconLeft={imagePath.loyalty}
+              centerHeading={strings.LOYALTYPOINTS}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
 
-        {/* {!!userData?.auth_token && (
+          {/* {!!userData?.auth_token && (
           <ListItemHorizontal
             centerContainerStyle={{flexDirection: 'row'}}
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -342,60 +349,45 @@ export default function Account3({navigation}) {
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )} */}
-        {!!userData?.auth_token && (
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.WALLET)}
-            iconLeft={imagePath.wallet3}
-            centerHeading={strings.WALLET}
-            containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{
-              fontSize: textScale(14),
-              fontFamily: fontFamily.regular,
-            }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )}
-        {!!userData?.auth_token && (
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.WISHLIST)}
-            iconLeft={imagePath.wishlist}
-            centerHeading={strings.FAVOURITE}
-            containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{
-              fontSize: textScale(14),
-              fontFamily: fontFamily.regular,
-            }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )}
+          {!!userData?.auth_token && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.WALLET)}
+              iconLeft={imagePath.wallet3}
+              centerHeading={strings.WALLET}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
+          {!!userData?.auth_token && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.WISHLIST)}
+              iconLeft={imagePath.wishlist}
+              centerHeading={strings.FAVOURITE}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
 
-        <ListItemHorizontal
-          centerContainerStyle={{flexDirection: 'row'}}
-          leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-          onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
-          iconLeft={imagePath.links}
-          centerHeading={strings.LINKS}
-          containerStyle={styles.containerStyle2}
-          centerHeadingStyle={{
-            fontSize: textScale(14),
-            fontFamily: fontFamily.regular,
-          }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
-        />
-        {!!userData?.auth_token && (
           <ListItemHorizontal
             centerContainerStyle={{flexDirection: 'row'}}
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={onShare}
-            iconLeft={imagePath.share1}
-            centerHeading={strings.SHARE_APP}
+            onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
+            iconLeft={imagePath.links}
+            centerHeading={strings.LINKS}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
               fontSize: textScale(14),
@@ -404,23 +396,38 @@ export default function Account3({navigation}) {
             // iconRight={imagePath.goRight}
             // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
-        )}
+          {!!userData?.auth_token && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={onShare}
+              iconLeft={imagePath.share1}
+              centerHeading={strings.SHARE_APP}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
 
-        <ListItemHorizontal
-          centerContainerStyle={{flexDirection: 'row'}}
-          leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-          onPress={moveToNewScreen(navigationStrings.SETTIGS)}
-          iconLeft={imagePath.settings1}
-          centerHeading={strings.SETTINGS}
-          containerStyle={styles.containerStyle2}
-          centerHeadingStyle={{
-            fontSize: textScale(14),
-            fontFamily: fontFamily.regular,
-          }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
-        />
-        {/* {!!userData?.auth_token && (
+          <ListItemHorizontal
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+            onPress={moveToNewScreen(navigationStrings.SETTIGS)}
+            iconLeft={imagePath.settings1}
+            centerHeading={strings.SETTINGS}
+            containerStyle={styles.containerStyle2}
+            centerHeadingStyle={{
+              fontSize: textScale(14),
+              fontFamily: fontFamily.regular,
+            }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+          />
+          {/* {!!userData?.auth_token && (
           <ListItemHorizontal
             centerContainerStyle={{flexDirection: 'row'}}
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -432,28 +439,12 @@ export default function Account3({navigation}) {
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )} */}
-        <ListItemHorizontal
-          centerContainerStyle={{flexDirection: 'row'}}
-          leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-          onPress={moveToNewScreen(navigationStrings.CONTACT_US)}
-          iconLeft={imagePath.contactUs}
-          centerHeading={strings.CONTACT_US}
-          containerStyle={styles.containerStyle2}
-          centerHeadingStyle={{
-            fontSize: textScale(14),
-            fontFamily: fontFamily.regular,
-          }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
-        />
-
-        {!!userData?.auth_token && !!appMainData?.is_admin && (
           <ListItemHorizontal
             centerContainerStyle={{flexDirection: 'row'}}
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
-            iconLeft={imagePath.mystores2}
-            centerHeading={strings.MYSTORES}
+            onPress={moveToNewScreen(navigationStrings.CONTACT_US)}
+            iconLeft={imagePath.contactUs}
+            centerHeading={strings.CONTACT_US}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
               fontSize: textScale(14),
@@ -462,23 +453,40 @@ export default function Account3({navigation}) {
             // iconRight={imagePath.goRight}
             // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
-        )}
 
-        <View style={styles.loginView}>
-          <TouchableOpacity
-            onPress={userlogout}
-            style={styles.touchAbleLoginVIew}>
-            <Text style={styles.loginLogoutText}>
-              {!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
-            </Text>
-            <Image
-              source={imagePath.rightBlue}
-              style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+          {!!userData?.auth_token && !!appMainData?.is_admin && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
+              iconLeft={imagePath.mystores2}
+              centerHeading={strings.MYSTORES}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
-          </TouchableOpacity>
-        </View>
-        <View style={{height: 100}} />
-      </ScrollView>
-    </SafeAreaView>
+          )}
+
+          <View style={styles.loginView}>
+            <TouchableOpacity
+              onPress={userlogout}
+              style={styles.touchAbleLoginVIew}>
+              <Text style={styles.loginLogoutText}>
+                {!!userData?.auth_token ? strings.LOGOUT : strings.LOGIN}
+              </Text>
+              <Image
+                source={imagePath.rightBlue}
+                style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{height: 100}} />
+        </ScrollView>
+      </SafeAreaView>
+    </View>
   );
 }
