@@ -312,7 +312,7 @@ export default ({ fontFamily }) => {
       paddingVertical: 10
     },
     summaryText: {
-      fontSize: textScale(18),
+      fontSize: textScale(16),
       fontFamily: fontFamily.medium,
       textAlign: 'left',
       marginBottom: moderateScaleVertical(12),

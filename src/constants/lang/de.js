@@ -465,4 +465,13 @@ export default {
   IMAGE_ALREADY_UPLOADED: 'Image is already uploaded',
   PLEASE_SELECT_DROP_LOCATION: 'Please select the drop off location',
   COULD_NOT_LOAD_PAGE: 'Could not load page',
+  ORDER_DETAILS: 'Order details',
+  ORDER_NUMBER: 'Order Number',
+  PAYMENT_METHOD: 'Payment Method',
+  PLACED_ON: 'Placed On',
+  PAYMENT_SUMMARY: 'Payment Summary',
+  SUBTOTAL: 'Subtotal',
+  DISCOUNT: 'Discount',
+  TOTAL: 'Total',
+  NO_ORDERS_FOUND: 'No Orders Found',
 };

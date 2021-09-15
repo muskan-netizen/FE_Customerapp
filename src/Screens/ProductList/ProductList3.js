@@ -609,14 +609,15 @@ export default function Products({route, navigation}) {
   };
 
   const addSingleItem = async (item) => {
-    if (item.add_on.length !== 0 || item.variantSet.length !== 0) {
+    if (item?.add_on?.length !== 0 || item?.variantSet?.length !== 0) {
       updateState({isVisibleModal: true, selectedCartItem: item});
       return;
     }
+ 
     let data = {};
     data['sku'] = item.sku;
     data['quantity'] = 1;
-    data['product_variant_id'] = item.variant[0].id;
+    data['product_variant_id'] = item?.variant[0]?.id;
     data['type'] = dine_In_Type;
     updateState({updateQtyLoader: true});
     actions
@@ -648,7 +649,7 @@ export default function Products({route, navigation}) {
           updateQtyLoader: false,
         });
       })
-      .catch((error) => errorMethodSecond(error, addonSet));
+      .catch((error) => errorMethodSecond(error));
   };
 
   const addDeleteCartItems = (item, type) => {
@@ -769,7 +770,7 @@ export default function Products({route, navigation}) {
       .catch(errorMethod);
   };
 
-  const errorMethodSecond = (error, addonSet) => {
+  const errorMethodSecond = (error, addonSet=[]) => {
     console.log(error.message.alert, 'Error>>>>>');
     updateState({updateQtyLoader: false});
     if (error?.message?.alert == 1) {

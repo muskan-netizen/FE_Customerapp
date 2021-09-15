@@ -495,4 +495,13 @@ export default {
   IMAGE_ALREADY_UPLOADED: "L'image est déjà téléchargée",
   PLEASE_SELECT_DROP_LOCATION: 'Veuillez sélectionner le lieu de dépôt',
   COULD_NOT_LOAD_PAGE: 'Impossible de charger la page',
+  ORDER_DETAILS: 'Order details',
+  ORDER_NUMBER: 'Order Number',
+  PAYMENT_METHOD: 'Payment Method',
+  PLACED_ON: 'Placed On',
+  PAYMENT_SUMMARY: 'Payment Summary',
+  SUBTOTAL: 'Subtotal',
+  DISCOUNT: 'Discount',
+  TOTAL: 'Total',
+  NO_ORDERS_FOUND: 'No Orders Found',
 };

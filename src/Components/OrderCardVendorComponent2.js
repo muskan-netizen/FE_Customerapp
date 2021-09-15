@@ -29,6 +29,7 @@ import {
 } from '../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import {color} from 'react-native-reanimated';
 
 export default function OrderCardVendorComponent2({
   data = {},
@@ -165,6 +166,7 @@ export default function OrderCardVendorComponent2({
             fontFamily: fontFamily.semiBold,
             fontSize: textScale(14),
             marginVertical: moderateScaleVertical(10),
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           }}>
           {`${strings.TOTAL_ITEMS}: ${data?.product_details?.length}`}
         </Text>
@@ -196,13 +198,13 @@ export default function OrderCardVendorComponent2({
                       style={
                         isDarkMode
                           ? [
-                              styles.userName,
+                              styles.qtyViewStyle,
                               {
                                 color: MyDarkTheme.colors.text,
                                 fontSize: textScale(10),
                               },
                             ]
-                          : [styles.userName, {fontSize: textScale(10)}]
+                          : [styles.qtyViewStyle, {fontSize: textScale(10)}]
                       }>
                       {`x ${i?.qty || ''}`}
                     </Text>
@@ -271,7 +273,15 @@ export default function OrderCardVendorComponent2({
             }}>
             <View style={styles.bottomFirstHalf}>
               <View style={styles.currentStatusView}>
-                <Text style={styles.orderStatusStyle}>
+                <Text
+                  style={[
+                    styles.orderStatusStyle,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    },
+                  ]}>
                   {data?.order_status?.current_status?.title}
                 </Text>
               </View>
@@ -299,7 +309,15 @@ export default function OrderCardVendorComponent2({
             }}>
             <View style={styles.bottomFirstHalf}>
               <View style={styles.currentStatusView}>
-                <Text style={styles.orderStatusStyle}>
+                <Text
+                  style={[
+                    styles.orderStatusStyle,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    },
+                  ]}>
                   {data?.order_status?.current_status?.title}
                 </Text>
               </View>
@@ -420,13 +438,20 @@ export function stylesFunc({fontFamily, themeColors}) {
       color: colors.textGreyI,
       fontFamily: fontFamily.regular,
       fontSize: textScale(10),
-      opacity: 0.4,
+      opacity: 0.6,
     },
     userName: {
-      marginHorizontal: moderateScale(20),
+      marginHorizontal: moderateScale(15),
       color: colors.textGreyI,
       fontFamily: fontFamily.medium,
       fontSize: textScale(14),
+    },
+    qtyViewStyle: {
+      marginHorizontal: moderateScale(15),
+      color: colors.textGreyI,
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(14),
+      opacity: 0.6,
     },
     borderStyle: {
       borderWidth: 0.3,

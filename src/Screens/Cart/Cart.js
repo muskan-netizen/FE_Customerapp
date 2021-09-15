@@ -740,7 +740,15 @@ export default function Cart({navigation, route}) {
               return (
                 <View key={inx}>
                   <View style={[styles.cartItemMainContainer]}>
-                    <View style={styles.cartItemImage}>
+                    <View
+                      style={[
+                        styles.cartItemImage,
+                        {
+                          backgroundColor: isDarkMode
+                            ? MyDarkTheme.colors.lightDark
+                            : colors.white,
+                        },
+                      ]}>
                       <FastImage
                         source={
                           i?.cartImg != '' && i?.cartImg != null

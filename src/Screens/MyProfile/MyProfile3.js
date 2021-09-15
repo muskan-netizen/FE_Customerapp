@@ -935,6 +935,9 @@ export default function MyProfile3({route, navigation}) {
             // alignSelf:'center'
             // justifyContent: 'center',
           }}
+          textStyle={{
+            fontSize: textScale(13),
+          }}
         />
 
         {selectedTab && selectedTab == strings.BASIC_INFO && basicInfoView()}

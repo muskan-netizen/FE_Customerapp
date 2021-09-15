@@ -67,8 +67,9 @@ import {SwipeListView} from 'react-native-swipe-list-view';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   let paramsData = route?.params;
   const [state, setState] = useState({
     isLoading: true,
@@ -84,8 +85,9 @@ export default function Cart({navigation, route}) {
     selectedAddress: null,
     selectedPayment: {
       id: 1,
-      title: strings.SELECT_PAYMENT_METHOD,
       off_site: 0,
+      title: 'Cash On Delivery',
+      title_lng: 'Cash On Delivery',
     },
     // selectedPayment: null,
     isRefreshing: false,
@@ -137,7 +139,7 @@ export default function Cart({navigation, route}) {
   const userData = useSelector((state) => state?.auth?.userData);
   const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
-    const selectedLanguage = languages?.primary_language?.sort_code;
+  const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
 
@@ -557,8 +559,8 @@ export default function Cart({navigation, route}) {
       if (!selectedAddressData) {
         // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
-      } else if (!paramsData?.selectedMethod) {
-        showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
+      } else if (!selectedPayment) {
+        showError('Please select a payment method');
       }
       // else if (!(sheduledorderdate && selectedTimeOption)) {
       //   showError(strings.PLEASE_SELECT_ORDER_TYPE);
@@ -820,17 +822,25 @@ export default function Cart({navigation, route}) {
                   <Animated.View
                     style={{
                       backgroundColor: isDarkMode
-                        ? MyDarkTheme.colors.background
+                        ? MyDarkTheme.colors.lightDark
                         : '#F8F8F8',
                       marginBottom: moderateScaleVertical(12),
                       marginRight: moderateScale(8),
                       borderRadius: moderateScale(10),
-                      backgroundColor: '#F8F8F8',
+
                       transform: [],
                     }}
                     key={inx}>
                     <View style={[styles.cartItemMainContainer]}>
-                      <View style={styles.cartItemImage}>
+                      <View
+                        style={[
+                          styles.cartItemImage,
+                          {
+                            backgroundColor: isDarkMode
+                              ? MyDarkTheme.colors.lightDark
+                              : colors.white,
+                          },
+                        ]}>
                         <FastImage
                           source={
                             i?.cartImg != '' && i?.cartImg != null
@@ -2078,7 +2088,17 @@ export default function Cart({navigation, route}) {
                     width: moderateScale(100),
                   }}
                 />
-                <Text style={styles.textStyle}>{strings.NOPRODUCTCART}</Text>
+                <Text
+                  style={[
+                    styles.textStyle,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    },
+                  ]}>
+                  {strings.NOPRODUCTCART}
+                </Text>
               </View>
             )
           }
@@ -2183,8 +2203,7 @@ export default function Cart({navigation, route}) {
                 height: height / 3.5,
               }}>
               <DatePicker
-                              locale={selectedLanguage}
-
+                locale={selectedLanguage}
                 date={
                   sheduledorderdate ? new Date(sheduledorderdate) : new Date()
                 }
