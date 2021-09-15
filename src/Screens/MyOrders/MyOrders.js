@@ -14,6 +14,8 @@ import CustomTopTabBar from '../../Components/CustomTopTabBar';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import OrderCardVendorComponent2 from '../../Components/OrderCardVendorComponent2';
+import OrderCardVendorComponent from '../../Components/OrderCardVendorComponent';
+
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';

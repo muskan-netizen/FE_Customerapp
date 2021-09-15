@@ -33,7 +33,7 @@ import stylesFunc from './styles';
 
 export default function RateOrder({navigation, route}) {
   const ratingData = route?.params?.item?.product_rating;
-  
+
   const [state, setState] = useState({
     isLoading: false,
     rating: 0,
@@ -68,17 +68,13 @@ export default function RateOrder({navigation, route}) {
     updateState({rating: rating});
   };
 
-  useEffect(() => {
-    
-  }, [remove_image_ids]);
+  useEffect(() => {}, [remove_image_ids]);
 
   /***********Remove Image from rating */
   const _removeImageFromList = (selectdImage) => {
-    
     if (selectdImage?.id) {
-      
       let copyArrayImages = cloneDeep(imageArray);
-      
+
       copyArrayImages = copyArrayImages.filter(
         (x) => x?.id !== selectdImage?.id,
       );
@@ -103,7 +99,7 @@ export default function RateOrder({navigation, route}) {
     {
       !!userData?.auth_token
         ? imageArray.length == 5
-          ? showError('Maximum photo selection limit reached')
+          ? showError(strings.MAXIMUM_PHOTO_SELECTION_LIMIT_REACHED)
           : actionSheet.current.show()
         : null;
     }
@@ -121,9 +117,7 @@ export default function RateOrder({navigation, route}) {
         mediaType: 'photo',
       })
         .then((res) => {
-          
           if (res && (res?.sourceURL || res?.path)) {
-            
             let file = {
               image_id: Math.random(),
               name: res?.filename,
@@ -132,7 +126,7 @@ export default function RateOrder({navigation, route}) {
             };
             let find = imageArray.find((x) => x?.name == res?.filename);
             if (find) {
-              showError('Image is already uploaded');
+              showError(strings.IMAGE_ALREADY_UPLOADED);
             } else {
               updateState({imageArray: [...imageArray, file]});
             }
@@ -144,7 +138,7 @@ export default function RateOrder({navigation, route}) {
 
   const _giveRatingToProduct = () => {
     updateState({isLoading: true});
-    
+
     let data = {};
     let formdata = new FormData();
     formdata.append(
@@ -159,14 +153,12 @@ export default function RateOrder({navigation, route}) {
     if (imageArray.length) {
       imageArray.forEach((element) => {
         if (element?.id) {
-          
         } else {
           formdata.append('file[]', {
             name: element.name,
             type: element.type,
             uri: element.uri,
           });
-          
         }
       });
     }
@@ -177,7 +169,6 @@ export default function RateOrder({navigation, route}) {
       });
     }
 
-    
     actions
       .giveRating(formdata, {
         code: appData?.profile?.code,
@@ -186,7 +177,6 @@ export default function RateOrder({navigation, route}) {
         // 'Content-Type': 'multipart/form-data',
       })
       .then((res) => {
-        
         updateState({isLoading: false});
         navigation.goBack();
       })
@@ -229,7 +219,6 @@ export default function RateOrder({navigation, route}) {
             }),
           });
         }
-        
       })
       .catch((error) => {
         updateState({
@@ -246,7 +235,6 @@ export default function RateOrder({navigation, route}) {
   }, []);
 
   const errorMethod = (error) => {
-    
     updateState({isLoading: false});
     showError(error?.message || error?.error);
   };

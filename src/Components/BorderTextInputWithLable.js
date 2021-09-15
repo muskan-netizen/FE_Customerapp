@@ -17,6 +17,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 // import styles from '../Screens/Tracking/styles';
 
 export default function BorderTextInputWithLable({
@@ -49,6 +51,11 @@ export default function BorderTextInputWithLable({
   const inputRef = useRef();
   const {appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  // const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const styles = stylesData({fontFamily});
 
   useEffect(() => {
@@ -74,7 +81,18 @@ export default function BorderTextInputWithLable({
             flexDirection: 'row',
             ...lableViewStyle,
           }}>
-          <Text style={[styles.labelStyle, labelStyle]}>{label}</Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.labelStyle,
+                    labelStyle,
+                    {color: MyDarkTheme.colors.text},
+                  ]
+                : [styles.labelStyle, labelStyle]
+            }>
+            {label}
+          </Text>
           {subLabel && (
             <Text style={[styles.sublabelStyle, sublabelStyle]}>
               {subLabel}
@@ -92,6 +110,9 @@ export default function BorderTextInputWithLable({
           borderColor: colors.borderLight,
           marginBottom,
           ...containerStyle,
+          borderBottomColor: isDarkMode
+            ? MyDarkTheme.colors.text
+            : colors.lightGreyBorder,
         }}>
         {leftIcon && (
           <View style={{justifyContent: 'center', marginLeft: 10}}>
@@ -114,13 +135,13 @@ export default function BorderTextInputWithLable({
           </Text>
         ) : (
           <TextInput
-            selectionColor={colors.black}
+            selectionColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
             placeholder={placeholder}
-            placeholderTextColor={color}
+            placeholderTextColor={isDarkMode ? MyDarkTheme.colors.text : color}
             style={{
               flex: 1,
               opacity: 0.7,
-              color,
+              color: isDarkMode ? MyDarkTheme.colors.text : color,
               fontFamily: fontFamily.medium,
               fontSize: textScale(14),
               paddingHorizontal: 10,

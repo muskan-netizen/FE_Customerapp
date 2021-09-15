@@ -328,9 +328,9 @@ export default function SendProduct({navigation, route}) {
 
   const saveAddressAndRedirect = () => {
     if (!pickUpLocationLatLng) {
-      showError('Please select the pickup location');
+      showError(strings.PLEASE_SELECT_PICKUP_LOCATION);
     } else if (!dropOffLocationLatLng && !dropOffLocationTwoLatLng) {
-      showError('Please select the drop off location');
+      showError(strings.PLEASE_SELECT_DROP_LOCATION);
     } else {
       let location = [];
       let addressData = [];
@@ -353,7 +353,7 @@ export default function SendProduct({navigation, route}) {
         tasks: addressData,
         cabVendors: pickUpVendors,
         selectedDateAndTime: `${slectedDateSave} ${selectedTimeSave}`,
-        pickUpTimeType:pickUpTimeType
+        pickUpTimeType: pickUpTimeType,
       });
     }
   };
@@ -578,7 +578,9 @@ export default function SendProduct({navigation, route}) {
               tintColor={colors.blackB}
             />
           </>
-        ) :  <View style={{height:220}}/>}
+        ) : (
+          <View style={{height: 220}} />
+        )}
 
         {/* <BorderTextInput
             onChangeText={_onChangeText('message')}

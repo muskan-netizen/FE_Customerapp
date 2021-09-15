@@ -26,7 +26,7 @@ export function dialCall(phoneNumber) {
 
 export function openBrowser(url) {
   Linking.openURL(url).catch((error) => {
-    showError('Could not load page');
+    showError(strings.COULD_NOT_LOAD_PAGE);
   });
 }
 

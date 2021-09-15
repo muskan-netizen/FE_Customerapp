@@ -150,7 +150,7 @@ export default function Cart({navigation, route}) {
       navigation.navigate(screenName, {data});
     };
 
-    console.log("cart itemss",cartItems)
+  console.log('cart itemss', cartItems);
 
   // styles funcation
   // const fontFamily = appStyle?.fontSizeData;
@@ -325,7 +325,7 @@ export default function Cart({navigation, route}) {
   const addDeleteCartItems = (item, index, type) => {
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
-    console.log("item",item)
+    console.log('item', item);
     // return;
     if (type == 1) {
       quanitity = Number(itemToUpdate.quantity) + 1;
@@ -339,8 +339,8 @@ export default function Cart({navigation, route}) {
       data['quantity'] = quanitity;
       data['cart_product_id'] = itemToUpdate?.id;
       data['type'] = dineInType;
-      console.log('sendng api data',data)
-      
+      console.log('sendng api data', data);
+
       actions
         .increaseDecreaseItemQty(data, {
           code: appData?.profile?.code,
@@ -549,20 +549,20 @@ export default function Cart({navigation, route}) {
     console.log(d1);
     if (!!userData?.auth_token) {
       if (!selectedAddressData) {
-        // showError('Please select address');
+        // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
       } else if (!paramsData?.selectedMethod) {
-        showError('Please select a payment method');
+        showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
       }
       // else if (!(sheduledorderdate && selectedTimeOption)) {
-      //   showError('Please select a Order type');
+      //   showError(strings.PLEASE_SELECT_ORDER_TYPE);
       // } else if (d1.getTime() >= d2.getTime()) {
-      //   showError('Invalid  Scheduled Date');
+      //   showError(strings.INVALID_SCHEDULED_DATE);
       // }
       else if (!(sheduledorderdate && selectedTimeOption)) {
-        showError('Please select a Order type');
+        showError(strings.PLEASE_SELECT_ORDER_TYPE);
       } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
-        showError('Invalid  Scheduled Date');
+        showError(strings.INVALID_SCHEDULED_DATE);
       } else {
         if (!!userData) {
           !!userData?.client_preference?.verify_email ||
@@ -675,9 +675,7 @@ export default function Cart({navigation, route}) {
         })
         .catch(errorMethod);
     } else {
-      showError(
-        'You have not added the cart detail for the selected payment method',
-      );
+      showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
   };
 

@@ -448,4 +448,20 @@ export default {
   COUPON: 'COUPON',
   AVAILABLE_PROMO_CODE: 'Available Promo codes',
   EXPIRES: 'Expires',
+  MAXIMUM_LIMIT_REACHED: 'Maximum Limit Reached',
+  PLEASE_SELECT_ORDER_TYPE: 'Please select a Order type',
+  INVALID_SCHEDULED_DATE: 'Invalid  Scheduled Date',
+  NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD:
+    'You have not added the cart detail for the selected payment method',
+  PLEASE_SELECT_ADDRESS: 'Please select address',
+  PLEASE_SELECT_OPTION: 'Please select an option',
+  PLEASE_SELECT_CAR: 'Please select a car',
+  PLEASE_SELECT_PICKUP_LOCATION: 'Please select the pickup location',
+  PLEASE_SELECT_DROP_OFF_LOCATION:
+    'Please select atleast one drop off location',
+  MAXIMUM_PHOTO_SELECTION_LIMIT_REACHED:
+    'Maximum photo selection limit reached',
+  IMAGE_ALREADY_UPLOADED: 'Image is already uploaded',
+  PLEASE_SELECT_DROP_LOCATION: 'Please select the drop off location',
+  COULD_NOT_LOAD_PAGE: 'Could not load page',
 };

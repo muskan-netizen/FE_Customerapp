@@ -137,6 +137,7 @@ export default function Cart({navigation, route}) {
   const userData = useSelector((state) => state?.auth?.userData);
   const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
+    const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
 
@@ -554,20 +555,20 @@ export default function Cart({navigation, route}) {
     console.log(d1);
     if (!!userData?.auth_token) {
       if (!selectedAddressData) {
-        // showError('Please select address');
+        // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
       } else if (!paramsData?.selectedMethod) {
-        showError('Please select a payment method');
+        showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
       }
       // else if (!(sheduledorderdate && selectedTimeOption)) {
-      //   showError('Please select a Order type');
+      //   showError(strings.PLEASE_SELECT_ORDER_TYPE);
       // } else if (d1.getTime() >= d2.getTime()) {
-      //   showError('Invalid  Scheduled Date');
+      //   showError(strings.INVALID_SCHEDULED_DATE);
       // }
       else if (!(sheduledorderdate && selectedTimeOption)) {
-        showError('Please select a Order type');
+        showError(strings.PLEASE_SELECT_ORDER_TYPE);
       } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
-        showError('Invalid  Scheduled Date');
+        showError(strings.INVALID_SCHEDULED_DATE);
       } else {
         if (!!userData) {
           !!userData?.client_preference?.verify_email ||
@@ -714,9 +715,7 @@ export default function Cart({navigation, route}) {
         })
         .catch(errorMethod);
     } else {
-      showError(
-        'You have not added the cart detail for the selected payment method',
-      );
+      showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
   };
 
@@ -2184,6 +2183,8 @@ export default function Cart({navigation, route}) {
                 height: height / 3.5,
               }}>
               <DatePicker
+                              locale={selectedLanguage}
+
                 date={
                   sheduledorderdate ? new Date(sheduledorderdate) : new Date()
                 }

@@ -23,6 +23,7 @@ import stylesFun from './styles';
 import * as RNLocalize from 'react-native-localize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
+import strings from '../../../constants/lang';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -360,7 +361,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         _select={() => {
           selectedVendorOption
             ? _getAllCarAndPrices()
-            : showError('Please select an option');
+            : showError(strings.PLEASE_SELECT_OPTION);
         }}
         // isLoading={isLoading}
         availableVendors={availableVendors}
@@ -391,7 +392,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
                 redirectFromNow: true,
                 showCarModal: false,
               })
-            : showError('Please select a car');
+            : showError(strings.PLEASE_SELECT_CAR);
         }}
         isLoading={isLoading}
         onPressPickUplater={() => {
@@ -402,7 +403,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
                 redirectFromNow: false,
                 showCarModal: false,
               })
-            : showError('Please select a car');
+            : showError(strings.PLEASE_SELECT_CAR);
         }}
         availableCarList={availableCarList}
         onPressAvailableVendor={(item) => onPressAvailableVendor(item)}
@@ -410,7 +411,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         _select={() => {
           selectedVendorOption
             ? _getAllCarAndPrices()
-            : showError('Please select an option');
+            : showError(strings.PLEASE_SELECT_OPTION);
         }}
         // isLoading={isLoading}
         availableVendors={availableVendors}

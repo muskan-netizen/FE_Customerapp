@@ -121,6 +121,8 @@ export default function Cart2({navigation, route}) {
   const dineInType = useSelector((state) => state?.home?.dineInType);
   const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
+  const selectedLanguage = languages?.primary_language?.sort_code;
+
   const fontFamily = appStyle?.fontSizeData;
   // const styles = stylesFun({fontFamily, themeColors});
   const styles = stylesFunc({fontFamily, themeColors});
@@ -418,10 +420,10 @@ export default function Cart2({navigation, route}) {
   const placeOrder = () => {
     if (!!userData?.auth_token) {
       if (!selectedAddressData) {
-        // showError('Please select address');
+        // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
       } else if (!selectedPayment) {
-        showError('Please select a payment method');
+        showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
       } else {
         if (selectedPayment?.id == 1 && selectedPayment?.off_site == 0) {
           updateState({isLoadingB: true});
@@ -1641,6 +1643,7 @@ export default function Cart2({navigation, route}) {
 
             <View style={{alignItems: 'center', height: height / 3.5}}>
               <DatePicker
+                locale={selectedLanguage}
                 date={
                   sheduledorderdate ? new Date(sheduledorderdate) : new Date()
                 }

@@ -60,6 +60,7 @@ export default function OrderCardVendorComponent2({
   const fontFamily = appStyle?.fontSizeData;
 
   const styles = stylesFunc({fontFamily, themeColors});
+
   return (
     <TouchableOpacity
       onPress={onPress}

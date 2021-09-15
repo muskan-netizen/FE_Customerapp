@@ -552,7 +552,7 @@ export default function ProductDetail2({route, navigation}) {
       }
     } else if (type == 1) {
       if (productQuantityForCart == productTotalQuantity) {
-        showError('Maximum Limit Reached');
+        showError(strings.MAXIMUM_LIMIT_REACHED);
       } else {
         updateState({
           productQuantityForCart: productQuantityForCart + 1,

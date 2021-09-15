@@ -114,7 +114,7 @@ export default function ReturnOrder({navigation, route}) {
     {
       !!userData?.auth_token
         ? imageArray.length == 5
-          ? showError('Maximum photo selection limit reached')
+          ? showError(strings.MAXIMUM_PHOTO_SELECTION_LIMIT_REACHED)
           : actionSheet.current.show()
         : null;
     }
