@@ -76,6 +76,7 @@ export default function Signup({navigation}) {
       password: password,
       name: name,
       phoneNumber: phoneNumber,
+      callingCode: callingCode,
     });
     if (error) {
       showError(error);
@@ -266,7 +267,6 @@ export default function Signup({navigation}) {
                   color: themeColors.primary_color,
                   fontFamily: fontFamily.futuraBtHeavy,
                 }}>
-                {' '}
                 {strings.LOGIN}
               </Text>
             </Text>

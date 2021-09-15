@@ -1,5 +1,6 @@
 import validator from 'is_js';
 import strings from '../constants/lang';
+import {parsePhoneNumber, isValidPhoneNumber} from 'libphonenumber-js';
 const checkEmpty = (val, key) => {
   if (validator.empty(val.trim())) {
     return `${strings.PLEASE_ENTER} ${key}`;
@@ -34,6 +35,7 @@ export default function (data) {
     pincode,
     states,
     country,
+    callingCode,
   } = data;
   console.log(message, 'message');
   if (username !== undefined) {
@@ -142,12 +144,23 @@ export default function (data) {
   }
 
   if (phoneNumber !== undefined) {
-    let emptyValidationText = checkEmpty(phoneNumber, strings.PHONE_NUMBER);
-    if (emptyValidationText !== '') {
-      return emptyValidationText;
+    // let emptyValidationText = checkEmpty(phoneNumber, strings.PHONE_NUMBER);
+    // if (emptyValidationText !== '') {
+    //   return emptyValidationText;
+    // }
+    // if (!/^[0][1-9]$|^[1-9]\d{8,14}$/.test(phoneNumber)) {
+    //   return strings.PLEASE_ENTER_VALID_PHONE_NUMBER;
+    // }
+
+    let isTrue = isValidPhoneNumber(`+${callingCode}${phoneNumber}`);
+    console.log(callingCode, 'callingCode');
+    console.log(isTrue, 'isTrue');
+    if (phoneNumber == '') {
+      return 'Please enter your phone number';
     }
-    if (!/^[0][1-9]$|^[1-9]\d{8,14}$/.test(phoneNumber)) {
-      return strings.PLEASE_ENTER_VALID_PHONE_NUMBER;
+    if (isTrue) {
+    } else {
+      return 'Phone number is not valid, Please check the number & try again';
     }
   }
 
