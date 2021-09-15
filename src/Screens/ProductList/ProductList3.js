@@ -288,6 +288,7 @@ export default function Products({route, navigation}) {
           code: appData.profile.code,
           currency: currencies.primary_currency.id,
           language: languages.primary_language.id,
+          systemuser: DeviceInfo.getUniqueId(),
         },
       )
       .then((res) => {
@@ -393,6 +394,7 @@ export default function Products({route, navigation}) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
         },
       )
       .then((res) => {
@@ -426,6 +428,7 @@ export default function Products({route, navigation}) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
         },
       )
       .then((res) => {
@@ -453,6 +456,7 @@ export default function Products({route, navigation}) {
           code: appData.profile.code,
           currency: currencies.primary_currency.id,
           language: languages.primary_language.id,
+          systemuser: DeviceInfo.getUniqueId(),
         },
       )
       .then((res) => {
@@ -484,6 +488,7 @@ export default function Products({route, navigation}) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
         },
       )
       .then((res) => {
