@@ -78,7 +78,7 @@ export default {
   CONTACT_USS: 'Contáctenos',
   BASIC_INFO: 'Información básica',
   CHANGE_PASS: 'Cambiar contraseña',
-  DIRECCIÓN: 'Dirección',
+  DIRECTION: 'Dirección',
   SAVE_CHANGES: 'SAVE CHANGES ',
   ENTER_CURRENT_PASS: 'Ingrese la contraseña actual *',
   ENTER_NEW_PASS: 'Ingrese nueva contraseña *',
