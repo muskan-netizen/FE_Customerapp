@@ -456,4 +456,5 @@ export default {
   COUPON: 'قسيمة',
   AVAILABLE_PROMO_CODE: 'الرموز الترويجية المتاحة',
   EXPIRES: 'تنتهي',
+  NO_ORDERS_FOUND: 'No Orders Found',
 };

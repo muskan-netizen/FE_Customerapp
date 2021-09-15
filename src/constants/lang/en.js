@@ -398,9 +398,9 @@ export default {
   PLEASE_ENTER: 'Please Enter',
   PLEASE_ENTER_VALID: 'Please enter valid',
   NAME: 'Name',
-  EMAIL: 'email',
+  EMAIL: 'Email',
   PLEASE_ENTER_VALID_EMAIL: 'Please enter valid email',
-  PHONE_NUMBER: 'phone number',
+  PHONE_NUMBER: 'Phone number',
   PLEASE_ENTER_VALID_PHONE_NUMBER: 'Please enter valid mobile number',
   OTP: 'otp',
   PASSWORD: 'Password',
@@ -447,4 +447,5 @@ export default {
   COUPON: 'COUPON',
   AVAILABLE_PROMO_CODE: 'Available Promo codes',
   EXPIRES: 'Expires',
+  NO_ORDERS_FOUND: 'No Orders Found',
 };
