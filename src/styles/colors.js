@@ -94,4 +94,5 @@ export default {
   borderColorNew: '#EAEAEA',
   textGreyNew: '#1E2E4D',
   greyColor1: '#fafafa',
+  greyColor2: '#EEEEEE',
 };

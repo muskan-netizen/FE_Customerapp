@@ -8,6 +8,7 @@ import colors from '../../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
 } from '../../../styles/responsiveSize';
 import actions from '../../../redux/actions';
 import {showError, showSuccess} from '../../../utils/helperFunctions';
@@ -286,14 +287,17 @@ export default function ToggleTabBar({
                 ? setSelectedTab
                 : dineInFunction
             }
-            barHeight={38}
+            barHeight={moderateScaleVertical(42)}
             indicatorColor={themeColors.primary_color}
             activeTextColor={themeColors.primary_color}
-            barColor={isDarkMode ? MyDarkTheme.colors.lightDark : '#EEEEEE'}
+            barColor={
+              isDarkMode ? MyDarkTheme.colors.lightDark : colors.greyColor2
+            }
             inactiveTextColor={
               isDarkMode ? MyDarkTheme.colors.text : colors.textGreyF
             }
             indicatorHeight={3}
+            textStyle={{fontSize: textScale(10)}}
           />
         </View>
       ) : null}
