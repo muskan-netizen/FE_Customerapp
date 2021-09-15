@@ -109,8 +109,10 @@ export default function Account3({navigation}) {
       moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     }
   };
+
+  undefined;
   const _scrollRef = useRef();
-  const usernameFirstlater = userData?.name.charAt(0);
+  const usernameFirstlater = !!userData?.name && userData?.name?.charAt(0);
   return (
     <SafeAreaView
       style={{
