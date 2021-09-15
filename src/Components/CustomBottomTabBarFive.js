@@ -10,7 +10,8 @@ import {
 } from '../styles/responsiveSize';
 import Elevations from 'react-native-elevation';
 import {BlurView} from '@react-native-community/blur';
-
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 export default function CustomBottomTabBarFive({
   state,
   descriptors,
@@ -26,9 +27,18 @@ export default function CustomBottomTabBarFive({
   const fontFamily = appStyle?.fontSizeData;
 
   const styles = stylesData({fontFamily});
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   return (
-    <View style={{backgroundColor: colors.backgroundGrey}}>
+    <View
+      style={{
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.background
+          : colors.backgroundGrey,
+      }}>
       <View style={[styles.tabBarStyle]}>
         {state.routes.map((route, index) => {
           const {options} = descriptors[route.key];
