@@ -814,12 +814,16 @@ export default function MyProfile({route, navigation}) {
           tabBarItems={tabBarData}
           onPress={(tabData) => changeTab(tabData)}
           numberOfLines={1}
+          textTabWidth={width / 2.8}
           // containerStyle={{  width: width / 3}}
           customTextContainerStyle={{
             width: width / 2.8,
             // flexWrap: 'wrap',
             // alignSelf:'center'
             // justifyContent: 'center',
+          }}
+          textStyle={{
+            fontSize: textScale(13),
           }}
         />
 

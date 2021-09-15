@@ -149,9 +149,7 @@ export default function AllPaymentMethods({navigation, route}) {
             });
         } else {
           updateState({isLoading: false});
-          showError(
-            'You have not added the cart detail for the selected payment method',
-          );
+          showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
         }
       } else {
         setTimeout(() => {

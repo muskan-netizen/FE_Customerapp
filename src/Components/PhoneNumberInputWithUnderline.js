@@ -112,7 +112,7 @@ export default function PhoneNumberInputWithUnderline({
         }}>
         <TextInput
           underlineColor={undnerlineColor}
-          selectionColor={colors.black}
+          selectionColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
           onChangeText={onChangePhone}
           value={phoneNumber}
           theme={{colors: {primary: undnerlineColor}}}
@@ -124,6 +124,7 @@ export default function PhoneNumberInputWithUnderline({
             ...textInputStyle,
             height: moderateScaleVertical(40),
             marginTop: moderateScaleVertical(15),
+            color: 'red',
           }}
         />
       </View>

@@ -452,9 +452,9 @@ export default function MultipleDropOffSelection({navigation, route}) {
 
   const saveAddressAndRedirect = () => {
     if (!pickUpLocationLatLng) {
-      showError('Please select the pickup location');
+      showError(strings.PLEASE_SELECT_PICKUP_LOCATION);
     } else if (!dropOffLocationLatLng && !dropOffLocationTwoLatLng) {
-      showError('Please select atleast one drop off location');
+      showError(strings.MAXIMUM_PHOTO_SELECTION_LIMIT_REACHED);
     } else {
       let location = [];
       let addressData = [];

@@ -412,7 +412,13 @@ export default function AddressModal3({
           </Text>
         </View>
 
-        <Text style={styles.yourLocationTxt}>{strings.YOUR_LOCATION}</Text>
+        <Text
+          style={[
+            styles.yourLocationTxt,
+            {color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyD},
+          ]}>
+          {strings.YOUR_LOCATION}
+        </Text>
 
         <View
           style={{
@@ -421,7 +427,9 @@ export default function AddressModal3({
             alignItems: 'center',
             marginBottom: 20,
             borderBottomWidth: 1,
-            borderColor: colors.borderLight,
+            borderColor: isDarkMode
+              ? MyDarkTheme.colors.text
+              : colors.borderLight,
             marginTop: moderateScale(7),
             marginHorizontal: moderateScale(7),
           }}>
@@ -435,9 +443,21 @@ export default function AddressModal3({
             googleApiKey={profile?.preferences?.map_key}
             textInputContainer={styles.textGoogleInputContainerAddress}
             listView={styles.listView}
-            textInput={styles.textInput2}
+            textInput={{
+              height: moderateScaleVertical(35),
+              borderRadius: 13,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.white,
+              color: isDarkMode
+                ? MyDarkTheme.colors.text
+                : colors.textGreyOpcaity7,
+            }}
             addressHelper={(results) => addressHelper(results)}
             handleAddressOnKeyUp={(text) => handleAddressOnKeyUp(text)}
+            placeholderTextColor={
+              isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7
+            }
           />
         </View>
 
@@ -577,7 +597,12 @@ export default function AddressModal3({
               borderRadius={0}
             />
           </View>
-          <Text style={{fontFamily: fontFamily.bold, fontSize: textScale(14)}}>
+          <Text
+            style={{
+              color: colors.textGrey,
+              fontFamily: fontFamily.medium,
+              fontSize: textScale(14),
+            }}>
             {strings.SAVE_AS}
           </Text>
 
@@ -587,7 +612,14 @@ export default function AddressModal3({
                 <>
                   <TouchableOpacity
                     onPress={() => updateState({address_type: item.id})}
-                    style={styles.addressHomeOrOfficeView}>
+                    style={[
+                      styles.addressHomeOrOfficeView,
+                      {
+                        backgroundColor: isDarkMode
+                          ? MyDarkTheme.colors.background
+                          : colors.white,
+                      },
+                    ]}>
                     {/* <Image
                     source={item.icon}
                     style={{
@@ -601,7 +633,9 @@ export default function AddressModal3({
                     <Text
                       style={[
                         {
-                          color: colors.textGreyB,
+                          color: isDarkMode
+                            ? themeColors.primary_color
+                            : colors.textGreyB,
                           fontFamily: fontFamily.bold,
                         },
                       ]}>

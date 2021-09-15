@@ -27,6 +27,7 @@ import fontFamily from '../../styles/fontFamily';
 export default function Offer({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
@@ -190,25 +191,55 @@ export default function Offer({route, navigation}) {
   };
 
   const _renderItem = ({item, index}) => {
-    return (
-      <OffersCard2
-        data={item}
-        onPress={() =>
-          vendorInfo?.cabOrder
-            ? _verifyPromoCodeForCab(item)
-            : _verifyPromoCode(item)
-        }
-      />
-    );
+    {
+      return appStyle?.homePageLayout === 3 ? (
+        <OffersCard2
+          data={item}
+          onPress={() =>
+            vendorInfo?.cabOrder
+              ? _verifyPromoCodeForCab(item)
+              : _verifyPromoCode(item)
+          }
+        />
+      ) : (
+        <OffersCard
+          data={item}
+          onPress={() =>
+            vendorInfo?.cabOrder
+              ? _verifyPromoCodeForCab(item)
+              : _verifyPromoCode(item)
+          }
+        />
+      );
+    }
   };
-
+  const _headerComponent = () => {
+    {
+      return appStyle?.homePageLayout === 3 ? (
+        <View
+          style={{
+            marginHorizontal: moderateScale(16),
+            marginVertical: moderateScaleVertical(16),
+          }}>
+          <Text
+            style={{
+              fontSize: textScale(14),
+              fontFamily: fontFamily.medium,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}>
+            {strings.AVAILABLE_PROMO_CODE}
+          </Text>
+        </View>
+      ) : (
+        <View style={{height: 20}} />
+      );
+    }
+  };
   const {isLoading, allAvailableCoupons, isLoadingB} = state;
   return (
     <WrapperContainer
-      bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-      }
-      statusBarColor={colors.backgroundGrey}
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
+      statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoadingB}>
       <Header
@@ -218,24 +249,12 @@ export default function Offer({route, navigation}) {
         }
       />
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
-      <View
-        style={{
-          marginHorizontal: moderateScale(16),
-          marginTop: moderateScaleVertical(18),
-        }}>
-        <Text
-          style={{
-            fontSize: textScale(14),
-            fontFamily: fontFamily.medium,
-          }}>
-          {strings.AVAILABLE_PROMO_CODE}
-        </Text>
-      </View>
+
       <View style={{flex: 1}}>
         <FlatList
           data={isLoading ? [] : allAvailableCoupons}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={<View style={{height: 20}} />}
+          ListHeaderComponent={_headerComponent}
           ItemSeparatorComponent={() => <View style={{height: 8}} />}
           keyExtractor={(item, index) => String(index)}
           ListEmptyComponent={<ListEmptyOffers isLoading={isLoading} />}

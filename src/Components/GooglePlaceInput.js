@@ -54,6 +54,11 @@ export default function GooglePlaceInput({
   // console.log(addressType, 'addressType>>>');
   const {isLoading, getDefaultText, currentLang, currentLat} = state;
   const {appData, appStyle} = useSelector((state) => state?.initBoot);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  // const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {profile} = appData;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
@@ -138,7 +143,7 @@ export default function GooglePlaceInput({
       <GooglePlacesAutocomplete
         placeholder={placeholder ? placeholder : strings.SEARCH_LOCATION}
         textInputProps={{
-          placeholderTextColor: placeholderTextColor,
+          placeholderTextColor,
           autoFocus: autoFocus,
           value: getDefaultValue,
           onChangeText: (text) => {
@@ -232,7 +237,7 @@ export default function GooglePlaceInput({
             ...textInputContainer,
           },
           predefinedPlacesDescription: styles.predefinedPlacesDescription,
-          textInput: {...styles.textInput, ...textInput},
+          textInput: [{...styles.textInput}, {...textInput}],
         }}
         ListFooterComponent={() => <View style={{height: height / 6}} />}
         renderHeaderComponent={ListHeaderComponent}
@@ -268,7 +273,6 @@ export function stylesFunc({fontFamily}) {
       color: colors.themeColor,
     },
     textInput: {
-      color: '#5d5d5d',
       fontSize: 16,
       fontFamily: fontFamily.medium,
       color: colors.textGreyOpcaity7,

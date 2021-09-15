@@ -44,6 +44,7 @@ import {
   SearchProductVendorItem2,
 } from '../Screens';
 import StaticTrackOrder from '../Screens/WebviewScreen/StaticTrackOrder';
+
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
@@ -234,7 +235,9 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.WEBVIEWSCREEN}
         // component={WebviewScreen}
-        component={StaticTrackOrder}
+        component={
+          appStyle?.homePageLayout === 3 ? StaticTrackOrder : WebviewScreen
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen

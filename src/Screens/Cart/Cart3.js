@@ -67,8 +67,9 @@ import {SwipeListView} from 'react-native-swipe-list-view';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-
-  const isDarkMode = theme;
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   let paramsData = route?.params;
   const [state, setState] = useState({
     isLoading: true,
@@ -85,8 +86,8 @@ export default function Cart({navigation, route}) {
     selectedPayment: {
       id: 1,
       off_site: 0,
-      title: "Cash On Delivery",
-      title_lng: "Cash On Delivery"
+      title: 'Cash On Delivery',
+      title_lng: 'Cash On Delivery',
     },
     // selectedPayment: null,
     isRefreshing: false,
@@ -138,6 +139,7 @@ export default function Cart({navigation, route}) {
   const userData = useSelector((state) => state?.auth?.userData);
   const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
+  const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
 
@@ -555,20 +557,20 @@ export default function Cart({navigation, route}) {
     console.log(d1);
     if (!!userData?.auth_token) {
       if (!selectedAddressData) {
-        // showError('Please select address');
+        // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
       } else if (!selectedPayment) {
         showError('Please select a payment method');
       }
       // else if (!(sheduledorderdate && selectedTimeOption)) {
-      //   showError('Please select a Order type');
+      //   showError(strings.PLEASE_SELECT_ORDER_TYPE);
       // } else if (d1.getTime() >= d2.getTime()) {
-      //   showError('Invalid  Scheduled Date');
+      //   showError(strings.INVALID_SCHEDULED_DATE);
       // }
       else if (!(sheduledorderdate && selectedTimeOption)) {
-        showError('Please select a Order type');
+        showError(strings.PLEASE_SELECT_ORDER_TYPE);
       } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
-        showError('Invalid  Scheduled Date');
+        showError(strings.INVALID_SCHEDULED_DATE);
       } else {
         if (!!userData) {
           !!userData?.client_preference?.verify_email ||
@@ -715,9 +717,7 @@ export default function Cart({navigation, route}) {
         })
         .catch(errorMethod);
     } else {
-      showError(
-        'You have not added the cart detail for the selected payment method',
-      );
+      showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
   };
 
@@ -822,17 +822,25 @@ export default function Cart({navigation, route}) {
                   <Animated.View
                     style={{
                       backgroundColor: isDarkMode
-                        ? MyDarkTheme.colors.background
+                        ? MyDarkTheme.colors.lightDark
                         : '#F8F8F8',
                       marginBottom: moderateScaleVertical(12),
                       marginRight: moderateScale(8),
                       borderRadius: moderateScale(10),
-                      backgroundColor: '#F8F8F8',
+
                       transform: [],
                     }}
                     key={inx}>
                     <View style={[styles.cartItemMainContainer]}>
-                      <View style={styles.cartItemImage}>
+                      <View
+                        style={[
+                          styles.cartItemImage,
+                          {
+                            backgroundColor: isDarkMode
+                              ? MyDarkTheme.colors.lightDark
+                              : colors.white,
+                          },
+                        ]}>
                         <FastImage
                           source={
                             i?.cartImg != '' && i?.cartImg != null
@@ -2080,7 +2088,17 @@ export default function Cart({navigation, route}) {
                     width: moderateScale(100),
                   }}
                 />
-                <Text style={styles.textStyle}>{strings.NOPRODUCTCART}</Text>
+                <Text
+                  style={[
+                    styles.textStyle,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    },
+                  ]}>
+                  {strings.NOPRODUCTCART}
+                </Text>
               </View>
             )
           }
@@ -2185,6 +2203,7 @@ export default function Cart({navigation, route}) {
                 height: height / 3.5,
               }}>
               <DatePicker
+                locale={selectedLanguage}
                 date={
                   sheduledorderdate ? new Date(sheduledorderdate) : new Date()
                 }
