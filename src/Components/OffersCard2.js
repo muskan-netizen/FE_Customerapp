@@ -5,6 +5,8 @@ import {useSelector} from 'react-redux';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
+import {useDarkMode} from 'react-native-dark-mode';
+
 import {
   moderateScale,
   moderateScaleVertical,
@@ -13,12 +15,18 @@ import {
 import {getImageUrl} from '../utils/helperFunctions';
 import ProgressiveImage from './ProgressiveImage';
 import moment from 'moment';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function OffersCard2({data = {}, onPress = () => {}}) {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   console.log(data, 'dataaa');
   return (
     <TouchableOpacity
@@ -28,7 +36,12 @@ export default function OffersCard2({data = {}, onPress = () => {}}) {
         marginHorizontal: moderateScale(16),
         borderRadius: 3,
         borderWidth: 1.4,
-        borderColor: colors.borderColorNew,
+        borderColor: isDarkMode
+          ? MyDarkTheme.colors.lightDark
+          : colors.borderColorNew,
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.lightDark
+          : colors.white,
       }}>
       {/* <ProgressiveImage
         source={{
@@ -99,6 +112,7 @@ export default function OffersCard2({data = {}, onPress = () => {}}) {
             ...commonStyles.futuraHeavyBt,
             fontSize: textScale(16),
             fontFamily: fontFamily.medium,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           }}>
           {data?.title}
         </Text>
@@ -106,7 +120,8 @@ export default function OffersCard2({data = {}, onPress = () => {}}) {
           style={{
             marginVertical: moderateScaleVertical(16),
             fontSize: textScale(10),
-            color: colors.textGreyNew,
+
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyNew,
           }}>
           {strings.EXPIRES}
           {'  '}

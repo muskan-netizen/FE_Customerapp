@@ -14,13 +14,24 @@ import store from '../store';
 import types from '../types';
 const {dispatch} = store;
 
-export function initApp(data = {}, headers = {}, reload = false) {
-  console.log(store, 'storestorestore');
+export function initApp(
+  data = {},
+  headers = {},
+  reload = false,
+  primary_curreny,
+  primary_language,
+) {
   return new Promise((resolve, reject) => {
     apiPost(APP_INITIAL_SETTINGS, data, headers)
       .then(async (res) => {
         let data = res?.data;
-
+        console.log(primary_curreny, 'primary_curreny>>>>>>><<<<<<');
+        console.log(primary_language, 'primary_language>>>>>>><<<<<<');
+        console.log(
+          data?.languages.find((x) => x?.language?.id == primary_language?.id),
+          'data?.languages.find((x) => x?.id == primary_language?.id)',
+        );
+        console.log(data, 'data>>>>>>><<<<<<');
         const currencies = data?.currencies
           ? data.currencies.map((x) => {
               return {
@@ -67,15 +78,25 @@ export function initApp(data = {}, headers = {}, reload = false) {
 
         let currenciesData = {};
         currenciesData['all_currencies'] = currencies;
-        currenciesData['primary_currency'] = data?.currencies
-          ? data.currencies.filter((x) => x.is_primary)[0].currency
-          : {};
+        currenciesData['primary_currency'] =
+          reload &&
+          primary_curreny?.id &&
+          data?.currencies.find((x) => x?.currency?.id == primary_curreny?.id)
+            ? primary_curreny
+            : data?.currencies
+            ? data.currencies.filter((x) => x.is_primary)[0].currency
+            : {};
 
         let languagesData = {};
         languagesData['all_languages'] = languages;
-        languagesData['primary_language'] = data?.languages
-          ? data.languages.filter((x) => x.is_primary)[0].language
-          : {};
+        languagesData['primary_language'] =
+          reload &&
+          primary_language?.id &&
+          data?.languages.find((x) => x?.language?.id == primary_language?.id)
+            ? primary_language
+            : data?.languages
+            ? data.languages.filter((x) => x.is_primary)[0].language
+            : {};
 
         let appData = {
           appData: data,
@@ -103,6 +124,7 @@ export function initApp(data = {}, headers = {}, reload = false) {
         if (reload) {
           setItem('setPrimaryLanguage', languagesData);
           setLanguage(languagesData);
+          // refreshScreen(languagesData?.primary_language?.sort_code);
         } else {
           const getPrimaryLanguage = await getItem('setPrimaryLanguage');
           if (getPrimaryLanguage) {

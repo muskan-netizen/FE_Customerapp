@@ -450,11 +450,13 @@ export default {
   AVAILABLE_PROMO_CODE: 'Available Promo codes',
   EXPIRES: 'Expires',
   ORDER_DETAILS: 'Order details',
-  ORDER_NUMBER:"Order Number",
-  PAYMENT_METHOD:"Payment Method",
-  PLACED_ON:"Placed On",
-  PAYMENT_SUMMARY:"Payment Summary",
-  SUBTOTAL:"Subtotal",
-  DISCOUNT:"Discount",
-  TOTAL:"Total"
+  ORDER_NUMBER: 'Order Number',
+  PAYMENT_METHOD: 'Payment Method',
+  PLACED_ON: 'Placed On',
+  PAYMENT_SUMMARY: 'Payment Summary',
+  SUBTOTAL: 'Subtotal',
+  DISCOUNT: 'Discount',
+  TOTAL: 'Total',
+
+  NO_ORDERS_FOUND: 'No Orders Found',
 };
