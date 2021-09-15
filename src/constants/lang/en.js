@@ -418,7 +418,8 @@ export default {
   ANY_RESTAURANT_REQUESTS:
     'Any restaurant requests? We’ll try our best to convey it ',
   TRACK_ORDER: 'Track Order',
-  CUSTOM: 'Custom',
+  CUSTOM: `Custom 
+Amount`,
   ADD: 'Add',
   EDIT: 'Edit',
   DELETE: 'Delete',

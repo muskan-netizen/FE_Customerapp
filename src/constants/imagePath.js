@@ -301,4 +301,6 @@ export default {
   icUnChecked: require('../assets/images/RoyoorderNewImages/ic_unchecked.png'),
   currentLocation: require('../assets/images/RoyoorderNewImages/ic_current.png'),
   icMap: require('../assets/images/RoyoorderNewImages/ic_map.png'),
+  icCelebActive1: require('../assets/images/ic_celeb3.png'),
+  icCelebInActive1: require('../assets/images/ic_celebGrey1.png'),
 };

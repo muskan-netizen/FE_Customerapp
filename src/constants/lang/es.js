@@ -432,7 +432,8 @@ export default {
   YOUR_ORDER_NUMBER: 'tu numero de orden es',
   ANY_RESTAURANT_REQUESTS:
     '¿Alguna solicitud de restaurante? Haremos todo lo posible para transmitirlo. ',
-  CUSTOM: 'Personalizada',
+  CUSTOM: `Monto
+personalizado`,
   EDIT: 'Editar',
   DELETE: 'Borrar',
   NO_PAYMENT_METHOD: 'No se encontró ningún método de pago',
