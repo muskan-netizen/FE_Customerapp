@@ -84,8 +84,9 @@ export default function Cart({navigation, route}) {
     selectedAddress: null,
     selectedPayment: {
       id: 1,
-      title: strings.SELECT_PAYMENT_METHOD,
       off_site: 0,
+      title: "Cash On Delivery",
+      title_lng: "Cash On Delivery"
     },
     // selectedPayment: null,
     isRefreshing: false,
@@ -556,7 +557,7 @@ export default function Cart({navigation, route}) {
       if (!selectedAddressData) {
         // showError('Please select address');
         setModalVisible(true);
-      } else if (!paramsData?.selectedMethod) {
+      } else if (!selectedPayment) {
         showError('Please select a payment method');
       }
       // else if (!(sheduledorderdate && selectedTimeOption)) {
