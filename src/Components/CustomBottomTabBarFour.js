@@ -8,6 +8,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function CustomBottomTabBarFour({
   state,
@@ -20,6 +22,10 @@ export default function CustomBottomTabBarFour({
   const insets = useSafeAreaInsets();
 
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const fontFamily = appStyle?.fontSizeData;
 
@@ -61,6 +67,7 @@ export default function CustomBottomTabBarFour({
                 flex: 1,
                 alignItems: 'center',
                 justifyContent: 'space-between',
+
                 // height: 49,
 
                 // marginBottom:20
@@ -112,7 +119,7 @@ export function stylesData({fontFamily}) {
     labelStyle: {
       fontFamily: fontFamily.medium,
       fontSize: textScale(9),
-      marginTop: moderateScaleVertical(4)
+      marginTop: moderateScaleVertical(4),
     },
   });
   return styles;
