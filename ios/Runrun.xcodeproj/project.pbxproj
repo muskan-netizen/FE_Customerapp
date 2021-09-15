@@ -1610,6 +1610,264 @@
 		8493F65326CB861E006AD6AD /* Yummiidash(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8493F65226CB861E006AD6AD /* Yummiidash(Production).xcconfig */; };
 		8493F68926CB863D006AD6AD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8493F68826CB863D006AD6AD /* Images.xcassets */; };
 		8493F6BF26CB874D006AD6AD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8493F6BE26CB874C006AD6AD /* GoogleService-Info.plist */; };
+		8496BC0826F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC0926F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC0A26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC0B26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC0C26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC0D26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC0E26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC0F26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC1026F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC1126F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC1226F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC1326F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC1426F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC1526F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC1626F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC1726F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC1826F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC1926F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC1A26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC1B26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC1C26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC1D26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC1E26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC1F26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC2026F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC2126F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC2226F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC2326F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC2426F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC2526F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC2626F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC2726F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC2826F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC2926F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC2A26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC2B26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC2C26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC2D26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC2E26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC2F26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC3026F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC3126F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC3226F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC3326F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC3426F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC3526F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC3626F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC3726F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC3826F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC3926F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC3A26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC3B26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC3C26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC3D26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC3E26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC3F26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC4026F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC4126F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC4226F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC4326F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC4426F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC4526F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC4626F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC4726F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC4826F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC4926F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC4A26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC4B26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC4C26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC4D26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC4E26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC4F26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC5026F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC5126F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC5226F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC5326F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC5426F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC5526F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC5626F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC5726F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC5826F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC5926F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC5A26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC5B26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC5C26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC5D26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		8496BC5E26F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC5F26F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC6026F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC6126F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC6226F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC6326F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC6426F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC6526F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC6626F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC6726F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC6826F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC6926F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC6A26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC6B26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC6C26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC6D26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC6E26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC6F26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC7026F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC7126F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC7226F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC7326F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC7426F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC7526F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC7626F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC7726F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC7826F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC7926F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC7A26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC7B26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC7C26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC7D26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC7E26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC7F26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC8026F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC8126F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC8226F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC8326F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC8426F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC8526F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC8626F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC8726F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC8826F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC8926F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC8A26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC8B26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC8C26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC8D26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC8E26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC8F26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC9026F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC9126F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC9226F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC9326F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC9426F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC9526F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC9626F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC9726F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC9826F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC9926F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC9A26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC9B26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC9C26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC9D26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC9E26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BC9F26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCA026F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCA126F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCA226F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCA326F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCA426F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCA526F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCA626F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCA726F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCA826F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCA926F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCAA26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCAB26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCAC26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCAD26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCAE26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCAF26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCB026F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCB126F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCB226F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCB326F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		8496BCB426F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCB526F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCB626F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCB726F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCB826F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCB926F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCBA26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCBB26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCBC26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCBD26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCBE26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCBF26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCC026F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCC126F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCC226F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCC326F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCC426F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCC526F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCC626F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCC726F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCC826F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCC926F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCCA26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCCB26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCCC26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCCD26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCCE26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCCF26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCD026F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCD126F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCD226F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCD326F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCD426F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCD526F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCD626F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCD726F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCD826F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCD926F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCDA26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCDB26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCDC26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCDD26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCDE26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCDF26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCE026F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCE126F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCE226F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCE326F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCE426F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCE526F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCE626F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCE726F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCE826F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCE926F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCEA26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCEB26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCEC26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCED26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCEE26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCEF26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCF026F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCF126F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCF226F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCF326F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCF426F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCF526F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCF626F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCF726F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCF826F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCF926F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCFA26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCFB26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCFC26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCFD26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCFE26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BCFF26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BD0026F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BD0126F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BD0226F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BD0326F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BD0426F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BD0526F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BD0626F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BD0726F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BD0826F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		8496BD0926F1B863001AAB4C /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
 		849A371426D7C48600A1D9AA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849A371326D7C48500A1D9AA /* GoogleService-Info.plist */; };
 		849AE06A26C5245800B6C20D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		849AE06B26C5245800B6C20D /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -3007,6 +3265,9 @@
 		8493F68826CB863D006AD6AD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8493F6BE26CB874C006AD6AD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8493F7C426CB8BB0006AD6AD /* Yummiidash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Yummiidash.entitlements; sourceTree = "<group>"; };
+		8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Metropolis-Regular.otf"; sourceTree = "<group>"; };
+		8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Metropolis-SemiBold.otf"; sourceTree = "<group>"; };
+		8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Metropolis-Bold.otf"; sourceTree = "<group>"; };
 		849A371326D7C48500A1D9AA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		849AE09326C5245800B6C20D /* Travo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Travo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		849AE16D26C5263300B6C20D /* Travo(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Travo(Development).xcconfig"; sourceTree = "<group>"; };
@@ -3198,9 +3459,6 @@
 		84ECE2B526A7FB1E009A0F8C /* InstaMobile(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "InstaMobile(Production).xcconfig"; sourceTree = "<group>"; };
 		84ECE2E926A7FD83009A0F8C /* InstaMobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InstaMobile.entitlements; sourceTree = "<group>"; };
 		84ECE3BC26A80385009A0F8C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		84EEE8DE26F0E7360022413D /* Metropolis-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Metropolis-SemiBold.otf"; sourceTree = "<group>"; };
-		84EEE8DF26F0E7360022413D /* Metropolis-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Metropolis-Regular.otf"; sourceTree = "<group>"; };
-		84EEE8E026F0E7370022413D /* Metropolis-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Metropolis-Bold.otf"; sourceTree = "<group>"; };
 		84F4650626A6F14700D378D5 /* BottomsUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BottomsUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F4652126A6F1BD00D378D5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84F4653B26A6F20F00D378D5 /* BottomsUp(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BottomsUp(Development).xcconfig"; sourceTree = "<group>"; };
@@ -5208,9 +5466,9 @@
 		844FDD0F267397EF00C16835 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				84EEE8E026F0E7370022413D /* Metropolis-Bold.otf */,
-				84EEE8DF26F0E7360022413D /* Metropolis-Regular.otf */,
-				84EEE8DE26F0E7360022413D /* Metropolis-SemiBold.otf */,
+				8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */,
+				8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */,
+				8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */,
 				8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */,
 				8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */,
 				8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */,
@@ -8424,6 +8682,7 @@
 				846DA7992681E47100CC5BA2 /* SFProDisplay-Regular.ttf in Resources */,
 				846DA7A92681E47100CC5BA2 /* Futura-Medium.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				8496BCB426F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				844FDD272673989300C16835 /* CircularStd-Book.otf in Resources */,
 				846DA7A12681E47100CC5BA2 /* Futura Hv BT.ttf in Resources */,
 				846DA79D2681E47100CC5BA2 /* SFProText-Regular.ttf in Resources */,
@@ -8437,7 +8696,9 @@
 				846DA7B12681E47100CC5BA2 /* Futura-Normal.ttf in Resources */,
 				846DA7B52681E47100CC5BA2 /* Futura-Book.ttf in Resources */,
 				844804C82653D04F0050AA67 /* Images.xcassets in Resources */,
+				8496BC5E26F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846DA7952681E47100CC5BA2 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC0826F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				844FDD1F2673989300C16835 /* CircularStd-Bold.ttf in Resources */,
 				767C68602655481D00AA80AD /* GoogleService-Info.plist in Resources */,
 				846DA7AD2681E47100CC5BA2 /* SFProText-Bold.ttf in Resources */,
@@ -8465,6 +8726,7 @@
 				76693A63269D9B87000F83B2 /* SFProDisplay-Regular.ttf in Resources */,
 				76693A64269D9B87000F83B2 /* Futura-Medium.ttf in Resources */,
 				76693A65269D9B87000F83B2 /* LaunchScreen.storyboard in Resources */,
+				8496BCB826F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				76693A66269D9B87000F83B2 /* CircularStd-Book.otf in Resources */,
 				76693A67269D9B87000F83B2 /* Futura Hv BT.ttf in Resources */,
 				76693A68269D9B87000F83B2 /* SFProText-Regular.ttf in Resources */,
@@ -8478,7 +8740,9 @@
 				76693A6D269D9B87000F83B2 /* Futura-Normal.ttf in Resources */,
 				76693A6E269D9B87000F83B2 /* Futura-Book.ttf in Resources */,
 				76693A6F269D9B87000F83B2 /* CircularStd-Medium.otf in Resources */,
+				8496BC6226F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				76693A70269D9B87000F83B2 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC0C26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				76693A71269D9B87000F83B2 /* CircularStd-Bold.ttf in Resources */,
 				76693A73269D9B87000F83B2 /* SFProText-Bold.ttf in Resources */,
 				76693AAB269D9EF4000F83B2 /* GoogleService-Info.plist in Resources */,
@@ -8494,6 +8758,7 @@
 				8412E15926CA27D2007B8D4F /* Futura-Medium.ttf in Resources */,
 				84DD314E26CA298700F02437 /* Jet(Production).xcconfig in Resources */,
 				8412E15A26CA27D2007B8D4F /* LaunchScreen.storyboard in Resources */,
+				8496BCE226F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				8412E15B26CA27D2007B8D4F /* CircularStd-Book.otf in Resources */,
 				8412E15C26CA27D2007B8D4F /* Futura Hv BT.ttf in Resources */,
 				84DD318226CA29B000F02437 /* Jet(Development).xcconfig in Resources */,
@@ -8505,8 +8770,10 @@
 				8455CA6726DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8412E16226CA27D2007B8D4F /* Plists in Resources */,
 				8412E16326CA27D2007B8D4F /* Futura-Normal.ttf in Resources */,
+				8496BC8C26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8412E16426CA27D2007B8D4F /* Futura-Book.ttf in Resources */,
 				8412E16526CA27D2007B8D4F /* CircularStd-Medium.otf in Resources */,
+				8496BC3626F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8412E16626CA27D2007B8D4F /* FuturaBT-Heavy.ttf in Resources */,
 				8412E16726CA27D2007B8D4F /* CircularStd-Bold.ttf in Resources */,
 				8412E16A26CA27D2007B8D4F /* SFProText-Bold.ttf in Resources */,
@@ -8523,6 +8790,7 @@
 				8413659D26BBE9AC00008438 /* Images.xcassets in Resources */,
 				8413650026BBE43300008438 /* SFProDisplay-Regular.ttf in Resources */,
 				8413654E26BBE87200008438 /* Shariff(Development).xcconfig in Resources */,
+				8496BCC926F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				8413650126BBE43300008438 /* Futura-Medium.ttf in Resources */,
 				8413650226BBE43300008438 /* LaunchScreen.storyboard in Resources */,
 				8413650326BBE43300008438 /* CircularStd-Book.otf in Resources */,
@@ -8534,8 +8802,10 @@
 				8455CA4E26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8413650A26BBE43300008438 /* Futura-Normal.ttf in Resources */,
 				8413650B26BBE43300008438 /* Futura-Book.ttf in Resources */,
+				8496BC7326F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8413650C26BBE43300008438 /* CircularStd-Medium.otf in Resources */,
 				8413650D26BBE43300008438 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC1D26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8413650E26BBE43300008438 /* CircularStd-Bold.ttf in Resources */,
 				8413651026BBE43300008438 /* SFProText-Bold.ttf in Resources */,
 				8413660526BBEC3300008438 /* GoogleService-Info.plist in Resources */,
@@ -8552,6 +8822,7 @@
 				841597F426B416FB00FF20F4 /* Images.xcassets in Resources */,
 				8415976C26B4169D00FF20F4 /* Futura-Medium.ttf in Resources */,
 				841597DD26B416E500FF20F4 /* GovaChow(Production).xcconfig in Resources */,
+				8496BCC526F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				8415976D26B4169D00FF20F4 /* LaunchScreen.storyboard in Resources */,
 				8415976E26B4169D00FF20F4 /* CircularStd-Book.otf in Resources */,
 				8415976F26B4169D00FF20F4 /* Futura Hv BT.ttf in Resources */,
@@ -8563,8 +8834,10 @@
 				8455CA4A26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8415977526B4169D00FF20F4 /* Futura-Normal.ttf in Resources */,
 				8415977626B4169D00FF20F4 /* Futura-Book.ttf in Resources */,
+				8496BC6F26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8415977726B4169D00FF20F4 /* CircularStd-Medium.otf in Resources */,
 				8415977826B4169D00FF20F4 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC1926F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8415977926B4169D00FF20F4 /* CircularStd-Bold.ttf in Resources */,
 				8415977B26B4169D00FF20F4 /* SFProText-Bold.ttf in Resources */,
 				8415980B26B417FA00FF20F4 /* GoogleService-Info.plist in Resources */,
@@ -8581,6 +8854,7 @@
 				8416E60A26CD1FF600D9B686 /* Futura-Medium.ttf in Resources */,
 				8416E60B26CD1FF600D9B686 /* LaunchScreen.storyboard in Resources */,
 				8416E60C26CD1FF600D9B686 /* CircularStd-Book.otf in Resources */,
+				8496BCEA26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				8416E60D26CD1FF600D9B686 /* Futura Hv BT.ttf in Resources */,
 				8416E60E26CD1FF600D9B686 /* SFProText-Regular.ttf in Resources */,
 				8416E60F26CD1FF600D9B686 /* SFProText-SemiBold.ttf in Resources */,
@@ -8592,8 +8866,10 @@
 				8455CA6F26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8416E61626CD1FF600D9B686 /* CircularStd-Medium.otf in Resources */,
 				8416E74926CD235600D9B686 /* Ridemate(Development).xcconfig in Resources */,
+				8496BC9426F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8416E61726CD1FF600D9B686 /* FuturaBT-Heavy.ttf in Resources */,
 				8416E87226CD263500D9B686 /* Images.xcassets in Resources */,
+				8496BC3E26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8416E78526CD238300D9B686 /* Ridemate(Production).xcconfig in Resources */,
 				8416E61826CD1FF600D9B686 /* CircularStd-Bold.ttf in Resources */,
 				8416E61B26CD1FF600D9B686 /* SFProText-Bold.ttf in Resources */,
@@ -8610,6 +8886,7 @@
 				8416EBAF26CD339500D9B686 /* Futura-Medium.ttf in Resources */,
 				8416EBB026CD339500D9B686 /* LaunchScreen.storyboard in Resources */,
 				8416EBB126CD339500D9B686 /* CircularStd-Book.otf in Resources */,
+				8496BCEB26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				8416ECF526CD34CF00D9B686 /* Codiner(Production).xcconfig in Resources */,
 				8416EBB226CD339500D9B686 /* Futura Hv BT.ttf in Resources */,
 				8416EBB326CD339500D9B686 /* SFProText-Regular.ttf in Resources */,
@@ -8621,8 +8898,10 @@
 				8455CA7026DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8416EBBA26CD339500D9B686 /* Futura-Book.ttf in Resources */,
 				8416ED3226CD34E700D9B686 /* Images.xcassets in Resources */,
+				8496BC9526F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8416EBBB26CD339500D9B686 /* CircularStd-Medium.otf in Resources */,
 				8416EBBC26CD339500D9B686 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC3F26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8416EBBD26CD339500D9B686 /* CircularStd-Bold.ttf in Resources */,
 				8416ED6F26CD363100D9B686 /* GoogleService-Info.plist in Resources */,
 				8416EBC026CD339500D9B686 /* SFProText-Bold.ttf in Resources */,
@@ -8639,6 +8918,7 @@
 				84243C3D26AE9410000754C2 /* Images.xcassets in Resources */,
 				84243BA526AE9349000754C2 /* Futura-Medium.ttf in Resources */,
 				84243BA626AE9349000754C2 /* LaunchScreen.storyboard in Resources */,
+				8496BCBF26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84243BA726AE9349000754C2 /* CircularStd-Book.otf in Resources */,
 				84243BA826AE9349000754C2 /* Futura Hv BT.ttf in Resources */,
 				84243BA926AE9349000754C2 /* SFProText-Regular.ttf in Resources */,
@@ -8650,8 +8930,10 @@
 				8455CA4426DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84243BAF26AE9349000754C2 /* Futura-Book.ttf in Resources */,
 				84243BB026AE9349000754C2 /* CircularStd-Medium.otf in Resources */,
+				8496BC6926F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84243BB126AE9349000754C2 /* FuturaBT-Heavy.ttf in Resources */,
 				84243BB226AE9349000754C2 /* CircularStd-Bold.ttf in Resources */,
+				8496BC1326F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84243BB426AE9349000754C2 /* SFProText-Bold.ttf in Resources */,
 				84243BDD26AE9387000754C2 /* BLIP(Development).xcconfig in Resources */,
 				84243C4E26AE9435000754C2 /* GoogleService-Info.plist in Resources */,
@@ -8668,6 +8950,7 @@
 				84348D2B26CCC9D200DB8C18 /* Futura-Medium.ttf in Resources */,
 				84348D2C26CCC9D200DB8C18 /* LaunchScreen.storyboard in Resources */,
 				84348D2D26CCC9D200DB8C18 /* CircularStd-Book.otf in Resources */,
+				8496BCE626F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84348D2E26CCC9D200DB8C18 /* Futura Hv BT.ttf in Resources */,
 				84348EC426CCCB7600DB8C18 /* SirVU(Production).xcconfig in Resources */,
 				84348D2F26CCC9D200DB8C18 /* SFProText-Regular.ttf in Resources */,
@@ -8679,8 +8962,10 @@
 				8455CA6B26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84348D3426CCC9D200DB8C18 /* Plists in Resources */,
 				84348D3526CCC9D200DB8C18 /* Futura-Normal.ttf in Resources */,
+				8496BC9026F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84348D3626CCC9D200DB8C18 /* Futura-Book.ttf in Resources */,
 				84348D3726CCC9D200DB8C18 /* CircularStd-Medium.otf in Resources */,
+				8496BC3A26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84348D3826CCC9D200DB8C18 /* FuturaBT-Heavy.ttf in Resources */,
 				84348D3926CCC9D200DB8C18 /* CircularStd-Bold.ttf in Resources */,
 				84348D3C26CCC9D200DB8C18 /* SFProText-Bold.ttf in Resources */,
@@ -8697,6 +8982,7 @@
 				8434920826CCDA3900DB8C18 /* Futura-Medium.ttf in Resources */,
 				8434920926CCDA3900DB8C18 /* LaunchScreen.storyboard in Resources */,
 				8434920A26CCDA3900DB8C18 /* CircularStd-Book.otf in Resources */,
+				8496BCE726F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				8434920B26CCDA3900DB8C18 /* Futura Hv BT.ttf in Resources */,
 				8434920C26CCDA3900DB8C18 /* SFProText-Regular.ttf in Resources */,
 				8434920D26CCDA3900DB8C18 /* SFProText-SemiBold.ttf in Resources */,
@@ -8708,8 +8994,10 @@
 				8455CA6C26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8434921226CCDA3900DB8C18 /* Futura-Normal.ttf in Resources */,
 				8434921326CCDA3900DB8C18 /* Futura-Book.ttf in Resources */,
+				8496BC9126F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8434933826CCDD4D00DB8C18 /* Ublue(Development).xcconfig in Resources */,
 				8434921426CCDA3900DB8C18 /* CircularStd-Medium.otf in Resources */,
+				8496BC3B26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8434921526CCDA3900DB8C18 /* FuturaBT-Heavy.ttf in Resources */,
 				8434921626CCDA3900DB8C18 /* CircularStd-Bold.ttf in Resources */,
 				8434921926CCDA3900DB8C18 /* SFProText-Bold.ttf in Resources */,
@@ -8726,6 +9014,7 @@
 				8434973126CCEB5000DB8C18 /* Futura-Medium.ttf in Resources */,
 				8434973226CCEB5000DB8C18 /* LaunchScreen.storyboard in Resources */,
 				843498A026CCECA500DB8C18 /* MsTechy(Production).xcconfig in Resources */,
+				8496BCE826F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				8434973326CCEB5000DB8C18 /* CircularStd-Book.otf in Resources */,
 				8434973426CCEB5000DB8C18 /* Futura Hv BT.ttf in Resources */,
 				8434973526CCEB5000DB8C18 /* SFProText-Regular.ttf in Resources */,
@@ -8737,8 +9026,10 @@
 				8455CA6D26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8434973B26CCEB5000DB8C18 /* Futura-Normal.ttf in Resources */,
 				8434973C26CCEB5000DB8C18 /* Futura-Book.ttf in Resources */,
+				8496BC9226F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8434973D26CCEB5000DB8C18 /* CircularStd-Medium.otf in Resources */,
 				8434973E26CCEB5000DB8C18 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC3C26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8434986626CCEC7C00DB8C18 /* MsTechy(Development).xcconfig in Resources */,
 				8434973F26CCEB5000DB8C18 /* CircularStd-Bold.ttf in Resources */,
 				8434974226CCEB5000DB8C18 /* SFProText-Bold.ttf in Resources */,
@@ -8755,6 +9046,7 @@
 				84349BC826CD057C00DB8C18 /* Futura-Medium.ttf in Resources */,
 				84349BC926CD057C00DB8C18 /* LaunchScreen.storyboard in Resources */,
 				84349BCA26CD057C00DB8C18 /* CircularStd-Book.otf in Resources */,
+				8496BCE926F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84349BCB26CD057C00DB8C18 /* Futura Hv BT.ttf in Resources */,
 				84349BCC26CD057C00DB8C18 /* SFProText-Regular.ttf in Resources */,
 				84349C9026CD074400DB8C18 /* Senshive(Development).xcconfig in Resources */,
@@ -8766,8 +9058,10 @@
 				8455CA6E26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84349BD126CD057C00DB8C18 /* Plists in Resources */,
 				84349BD226CD057C00DB8C18 /* Futura-Normal.ttf in Resources */,
+				8496BC9326F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84349BD326CD057C00DB8C18 /* Futura-Book.ttf in Resources */,
 				84349BD426CD057C00DB8C18 /* CircularStd-Medium.otf in Resources */,
+				8496BC3D26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84349BD526CD057C00DB8C18 /* FuturaBT-Heavy.ttf in Resources */,
 				84349BD626CD057C00DB8C18 /* CircularStd-Bold.ttf in Resources */,
 				84349BD926CD057C00DB8C18 /* SFProText-Bold.ttf in Resources */,
@@ -8784,6 +9078,7 @@
 				843BA51A26D63B1A0033721D /* Futura-Medium.ttf in Resources */,
 				843BA51B26D63B1A0033721D /* LaunchScreen.storyboard in Resources */,
 				843BA51C26D63B1A0033721D /* CircularStd-Book.otf in Resources */,
+				8496BCF026F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				843BA51D26D63B1A0033721D /* Futura Hv BT.ttf in Resources */,
 				843BA51E26D63B1A0033721D /* SFProText-Regular.ttf in Resources */,
 				843BA51F26D63B1A0033721D /* SFProText-SemiBold.ttf in Resources */,
@@ -8795,8 +9090,10 @@
 				8455CA7526DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				843BA52426D63B1A0033721D /* Futura-Normal.ttf in Resources */,
 				843BA52526D63B1A0033721D /* Futura-Book.ttf in Resources */,
+				8496BC9A26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				843BA52626D63B1A0033721D /* CircularStd-Medium.otf in Resources */,
 				84FFEF3C26D63DB600F2B059 /* CarHop(Development).xcconfig in Resources */,
+				8496BC4426F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				843BA52726D63B1A0033721D /* FuturaBT-Heavy.ttf in Resources */,
 				843BA52826D63B1A0033721D /* CircularStd-Bold.ttf in Resources */,
 				843BA52B26D63B1A0033721D /* SFProText-Bold.ttf in Resources */,
@@ -8813,6 +9110,7 @@
 				843DF02C26BA99A3008210BD /* SFProDisplay-Regular.ttf in Resources */,
 				843DF02D26BA99A3008210BD /* Futura-Medium.ttf in Resources */,
 				843DF02E26BA99A3008210BD /* LaunchScreen.storyboard in Resources */,
+				8496BCC726F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				843DF02F26BA99A3008210BD /* CircularStd-Book.otf in Resources */,
 				843DF03026BA99A3008210BD /* Futura Hv BT.ttf in Resources */,
 				843DF03126BA99A3008210BD /* SFProText-Regular.ttf in Resources */,
@@ -8824,8 +9122,10 @@
 				8455CA4C26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				843DF03826BA99A3008210BD /* CircularStd-Medium.otf in Resources */,
 				843DF03926BA99A3008210BD /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC7126F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				843DF0D626BA9C56008210BD /* Images.xcassets in Resources */,
 				843DF0A626BA9A79008210BD /* BustanFakieh(Production).xcconfig in Resources */,
+				8496BC1B26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				843DF0EF26BA9F02008210BD /* GoogleService-Info.plist in Resources */,
 				843DF03A26BA99A3008210BD /* CircularStd-Bold.ttf in Resources */,
 				843DF03C26BA99A3008210BD /* SFProText-Bold.ttf in Resources */,
@@ -8840,6 +9140,7 @@
 				846DA79B2681E47100CC5BA2 /* SFProDisplay-Regular.ttf in Resources */,
 				846DA7AB2681E47100CC5BA2 /* Futura-Medium.ttf in Resources */,
 				8442C9F9265D1A7A00EDB001 /* LaunchScreen.storyboard in Resources */,
+				8496BCB626F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				844FDD292673989300C16835 /* CircularStd-Book.otf in Resources */,
 				846DA7A32681E47100CC5BA2 /* Futura Hv BT.ttf in Resources */,
 				846DA79F2681E47100CC5BA2 /* SFProText-Regular.ttf in Resources */,
@@ -8853,7 +9154,9 @@
 				846DA7B32681E47100CC5BA2 /* Futura-Normal.ttf in Resources */,
 				846DA7B72681E47100CC5BA2 /* Futura-Book.ttf in Resources */,
 				844FDD252673989300C16835 /* CircularStd-Medium.otf in Resources */,
+				8496BC6026F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846DA7972681E47100CC5BA2 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC0A26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				844FDD212673989300C16835 /* CircularStd-Bold.ttf in Resources */,
 				8442CAA2265D257700EDB001 /* GoogleService-Info.plist in Resources */,
 				846DA7AF2681E47100CC5BA2 /* SFProText-Bold.ttf in Resources */,
@@ -8874,14 +9177,17 @@
 				8447E37B26DF950500A23425 /* SFProText-Regular.ttf in Resources */,
 				8447E37C26DF950500A23425 /* SFProText-SemiBold.ttf in Resources */,
 				8447E4BC26DF96C200A23425 /* Images.xcassets in Resources */,
+				8496BC4D26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8447E37D26DF950500A23425 /* SFProText-Medium.ttf in Resources */,
 				8447E59C26DF988100A23425 /* GoogleService-Info.plist in Resources */,
 				8447E38026DF950500A23425 /* Plists in Resources */,
 				8447E38126DF950500A23425 /* Futura-Normal.ttf in Resources */,
 				8447E38226DF950500A23425 /* Futura-Book.ttf in Resources */,
+				8496BCA326F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8447E38326DF950500A23425 /* CircularStd-Medium.otf in Resources */,
 				8447E38426DF950500A23425 /* FuturaBT-Heavy.ttf in Resources */,
 				8447E38526DF950500A23425 /* CircularStd-Bold.ttf in Resources */,
+				8496BCF926F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				8447E38826DF950500A23425 /* SFProText-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8895,6 +9201,7 @@
 				8449625826DD0567001401BF /* Futura-Medium.ttf in Resources */,
 				8449625926DD0567001401BF /* LaunchScreen.storyboard in Resources */,
 				8449625A26DD0567001401BF /* CircularStd-Book.otf in Resources */,
+				8496BCF626F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				8449625B26DD0567001401BF /* Futura Hv BT.ttf in Resources */,
 				8449625C26DD0567001401BF /* SFProText-Regular.ttf in Resources */,
 				8449625D26DD0567001401BF /* SFProText-SemiBold.ttf in Resources */,
@@ -8906,8 +9213,10 @@
 				8455CA7B26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8449626226DD0567001401BF /* Futura-Normal.ttf in Resources */,
 				8449626326DD0567001401BF /* Futura-Book.ttf in Resources */,
+				8496BCA026F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8449634726DD06FE001401BF /* Errand(Development).xcconfig in Resources */,
 				8449626426DD0567001401BF /* CircularStd-Medium.otf in Resources */,
+				8496BC4A26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8449626526DD0567001401BF /* FuturaBT-Heavy.ttf in Resources */,
 				8449626626DD0567001401BF /* CircularStd-Bold.ttf in Resources */,
 				8449626926DD0567001401BF /* SFProText-Bold.ttf in Resources */,
@@ -8924,6 +9233,7 @@
 				844F28CF26CBC57C00A7708F /* Markita(Development).xcconfig in Resources */,
 				844F281326CBC42100A7708F /* Futura-Medium.ttf in Resources */,
 				844F281426CBC42100A7708F /* LaunchScreen.storyboard in Resources */,
+				8496BCE526F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				844F281526CBC42100A7708F /* CircularStd-Book.otf in Resources */,
 				844F281626CBC42100A7708F /* Futura Hv BT.ttf in Resources */,
 				844F281726CBC42100A7708F /* SFProText-Regular.ttf in Resources */,
@@ -8935,8 +9245,10 @@
 				8455CA6A26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				844F293B26CBC59E00A7708F /* Markita(Production).xcconfig in Resources */,
 				844F281E26CBC42100A7708F /* Futura-Book.ttf in Resources */,
+				8496BC8F26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				844F297226CBC5BF00A7708F /* Images.xcassets in Resources */,
 				844F281F26CBC42100A7708F /* CircularStd-Medium.otf in Resources */,
+				8496BC3926F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				844F282026CBC42100A7708F /* FuturaBT-Heavy.ttf in Resources */,
 				844F282126CBC42100A7708F /* CircularStd-Bold.ttf in Resources */,
 				844F282426CBC42100A7708F /* SFProText-Bold.ttf in Resources */,
@@ -8953,6 +9265,7 @@
 				84534BF226733AA50006EEB3 /* Hmoobhub(Development).xcconfig in Resources */,
 				846DA7B82681E47100CC5BA2 /* Futura-Book.ttf in Resources */,
 				846DA7AC2681E47100CC5BA2 /* Futura-Medium.ttf in Resources */,
+				8496BCB726F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84534BAB2673363C0006EEB3 /* Plists in Resources */,
 				846DA79C2681E47100CC5BA2 /* SFProDisplay-Regular.ttf in Resources */,
 				846DA7982681E47100CC5BA2 /* FuturaBT-Heavy.ttf in Resources */,
@@ -8964,8 +9277,10 @@
 				8455CA3C26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84534BE926733A850006EEB3 /* Hmoobhub(Production).xcconfig in Resources */,
 				84468BF526734BFC00AEA0F1 /* GoogleService-Info.plist in Resources */,
+				8496BC6126F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846DA7B42681E47100CC5BA2 /* Futura-Normal.ttf in Resources */,
 				844FDD262673989300C16835 /* CircularStd-Medium.otf in Resources */,
+				8496BC0B26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				844FDD2A2673989300C16835 /* CircularStd-Book.otf in Resources */,
 				846DA7A42681E47100CC5BA2 /* Futura Hv BT.ttf in Resources */,
 				844FDD222673989300C16835 /* CircularStd-Bold.ttf in Resources */,
@@ -8982,6 +9297,7 @@
 				846DA7AA2681E47100CC5BA2 /* Futura-Medium.ttf in Resources */,
 				845AEADA265504520075224A /* LaunchScreen.storyboard in Resources */,
 				844FDD282673989300C16835 /* CircularStd-Book.otf in Resources */,
+				8496BCB526F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				846DA7A22681E47100CC5BA2 /* Futura Hv BT.ttf in Resources */,
 				846DA79E2681E47100CC5BA2 /* SFProText-Regular.ttf in Resources */,
 				846DA7A62681E47100CC5BA2 /* SFProText-SemiBold.ttf in Resources */,
@@ -8993,8 +9309,10 @@
 				8455CA3A26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846DA7B62681E47100CC5BA2 /* Futura-Book.ttf in Resources */,
 				844FDD242673989300C16835 /* CircularStd-Medium.otf in Resources */,
+				8496BC5F26F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846DA7962681E47100CC5BA2 /* FuturaBT-Heavy.ttf in Resources */,
 				844FDD202673989300C16835 /* CircularStd-Bold.ttf in Resources */,
+				8496BC0926F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84E1762626C6522C00E71F11 /* RoyoOrder(Development).xcconfig in Resources */,
 				767C68672655484700AA80AD /* GoogleService-Info.plist in Resources */,
 				846DA7AE2681E47100CC5BA2 /* SFProText-Bold.ttf in Resources */,
@@ -9011,6 +9329,7 @@
 				8461E23526E2259D00E94D55 /* SFProDisplay-Regular.ttf in Resources */,
 				8461E23626E2259D00E94D55 /* Futura-Medium.ttf in Resources */,
 				8461E23726E2259D00E94D55 /* LaunchScreen.storyboard in Resources */,
+				8496BCFC26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				8461E23826E2259D00E94D55 /* CircularStd-Book.otf in Resources */,
 				8461E23926E2259D00E94D55 /* Futura Hv BT.ttf in Resources */,
 				8461E23A26E2259D00E94D55 /* SFProText-Regular.ttf in Resources */,
@@ -9022,8 +9341,10 @@
 				8461E24026E2259D00E94D55 /* Futura-Normal.ttf in Resources */,
 				8461E24126E2259D00E94D55 /* Eina02-Bold.ttf in Resources */,
 				8461E24226E2259D00E94D55 /* Futura-Book.ttf in Resources */,
+				8496BCA626F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8461E24326E2259D00E94D55 /* CircularStd-Medium.otf in Resources */,
 				8461E24426E2259D00E94D55 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC5026F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8461E24526E2259D00E94D55 /* CircularStd-Bold.ttf in Resources */,
 				8461E46F26E228CE00E94D55 /* GoogleService-Info.plist in Resources */,
 				8461E24826E2259D00E94D55 /* SFProText-Bold.ttf in Resources */,
@@ -9040,6 +9361,7 @@
 				8461E8F926E23FF000E94D55 /* SFProDisplay-Regular.ttf in Resources */,
 				8461E8FA26E23FF000E94D55 /* Futura-Medium.ttf in Resources */,
 				8461E8FB26E23FF000E94D55 /* LaunchScreen.storyboard in Resources */,
+				8496BCFD26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				8461E8FC26E23FF000E94D55 /* CircularStd-Book.otf in Resources */,
 				8461E8FD26E23FF000E94D55 /* Futura Hv BT.ttf in Resources */,
 				8461E8FE26E23FF000E94D55 /* SFProText-Regular.ttf in Resources */,
@@ -9051,8 +9373,10 @@
 				8461E90526E23FF000E94D55 /* Eina02-Bold.ttf in Resources */,
 				8461E90626E23FF000E94D55 /* Futura-Book.ttf in Resources */,
 				8461E90726E23FF000E94D55 /* CircularStd-Medium.otf in Resources */,
+				8496BCA726F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8461E90826E23FF000E94D55 /* FuturaBT-Heavy.ttf in Resources */,
 				8461E90926E23FF000E94D55 /* CircularStd-Bold.ttf in Resources */,
+				8496BC5126F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8461E90C26E23FF000E94D55 /* SFProText-Bold.ttf in Resources */,
 				8461EB3A26E241B200E94D55 /* GoogleService-Info.plist in Resources */,
 				8461E90D26E23FF000E94D55 /* Eina02-SemiBold.ttf in Resources */,
@@ -9069,6 +9393,7 @@
 				8461EF1F26E2509100E94D55 /* SFProDisplay-Regular.ttf in Resources */,
 				8461EF2026E2509100E94D55 /* Futura-Medium.ttf in Resources */,
 				8461EF2126E2509100E94D55 /* LaunchScreen.storyboard in Resources */,
+				8496BCFE26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				8461EF2226E2509100E94D55 /* CircularStd-Book.otf in Resources */,
 				8461F11526E2519300E94D55 /* IGoLux(Production).xcconfig in Resources */,
 				8461EF2326E2509100E94D55 /* Futura Hv BT.ttf in Resources */,
@@ -9080,8 +9405,10 @@
 				8461EF2A26E2509100E94D55 /* Futura-Normal.ttf in Resources */,
 				8461EF2B26E2509100E94D55 /* Eina02-Bold.ttf in Resources */,
 				8461EF2C26E2509100E94D55 /* Futura-Book.ttf in Resources */,
+				8496BCA826F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8461EF2D26E2509100E94D55 /* CircularStd-Medium.otf in Resources */,
 				8461EF2E26E2509100E94D55 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC5226F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8461EF2F26E2509100E94D55 /* CircularStd-Bold.ttf in Resources */,
 				8461F1B526E2522A00E94D55 /* GoogleService-Info.plist in Resources */,
 				8461EF3226E2509100E94D55 /* SFProText-Bold.ttf in Resources */,
@@ -9103,14 +9430,17 @@
 				846856DE26E0CDD800F7063A /* SFProText-SemiBold.ttf in Resources */,
 				846856DF26E0CDD800F7063A /* SFProText-Medium.ttf in Resources */,
 				8468586C26E0CEFD00F7063A /* Images.xcassets in Resources */,
+				8496BC4E26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				846856E226E0CDD800F7063A /* Plists in Resources */,
 				846858B826E0D0DF00F7063A /* GoogleService-Info.plist in Resources */,
 				846856E326E0CDD800F7063A /* Futura-Normal.ttf in Resources */,
 				846856E426E0CDD800F7063A /* Futura-Book.ttf in Resources */,
 				846856E526E0CDD800F7063A /* CircularStd-Medium.otf in Resources */,
+				8496BCA426F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846856E626E0CDD800F7063A /* FuturaBT-Heavy.ttf in Resources */,
 				846856E726E0CDD800F7063A /* CircularStd-Bold.ttf in Resources */,
 				8468581E26E0CEC200F7063A /* SunshineRideshare(Development).xcconfig in Resources */,
+				8496BCFA26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				846856EA26E0CDD800F7063A /* SFProText-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -9129,14 +9459,17 @@
 				84685DC026E0ED2E00F7063A /* SFProText-Medium.ttf in Resources */,
 				84685DC326E0ED2E00F7063A /* Plists in Resources */,
 				8468603326E0EF6500F7063A /* Images.xcassets in Resources */,
+				8496BC4F26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84685DC426E0ED2E00F7063A /* Futura-Normal.ttf in Resources */,
 				8468608026E0F01800F7063A /* GoogleService-Info.plist in Resources */,
 				84685DC526E0ED2E00F7063A /* Futura-Book.ttf in Resources */,
 				84685DC626E0ED2E00F7063A /* CircularStd-Medium.otf in Resources */,
 				84685FE626E0EF4500F7063A /* Autotek(Production).xcconfig in Resources */,
+				8496BCA526F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84685DC726E0ED2E00F7063A /* FuturaBT-Heavy.ttf in Resources */,
 				84685F4E26E0EF0100F7063A /* Autotek(Development).xcconfig in Resources */,
 				84685DC826E0ED2E00F7063A /* CircularStd-Bold.ttf in Resources */,
+				8496BCFB26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84685DCB26E0ED2E00F7063A /* SFProText-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -9150,6 +9483,7 @@
 				8468FF5426A82EFE0076EBC5 /* Images.xcassets in Resources */,
 				8468FE7626A82E960076EBC5 /* Futura-Medium.ttf in Resources */,
 				8468FE7726A82E960076EBC5 /* LaunchScreen.storyboard in Resources */,
+				8496BCBD26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				8468FE7826A82E960076EBC5 /* CircularStd-Book.otf in Resources */,
 				8468FE7926A82E960076EBC5 /* Futura Hv BT.ttf in Resources */,
 				8468FE7A26A82E960076EBC5 /* SFProText-Regular.ttf in Resources */,
@@ -9161,8 +9495,10 @@
 				8455CA4226DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8468FE8026A82E960076EBC5 /* Futura-Book.ttf in Resources */,
 				8468FE8126A82E960076EBC5 /* CircularStd-Medium.otf in Resources */,
+				8496BC6726F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8468FE8226A82E960076EBC5 /* FuturaBT-Heavy.ttf in Resources */,
 				8468FF3626A82ED90076EBC5 /* Spidbi(Development).xcconfig in Resources */,
+				8496BC1126F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8468FE8326A82E960076EBC5 /* CircularStd-Bold.ttf in Resources */,
 				8468FE8526A82E960076EBC5 /* SFProText-Bold.ttf in Resources */,
 				8468FF4526A82EEE0076EBC5 /* Spidbi(Production).xcconfig in Resources */,
@@ -9179,6 +9515,7 @@
 				846918CE26E76E2100E28501 /* SFProDisplay-Regular.ttf in Resources */,
 				846918CF26E76E2100E28501 /* Futura-Medium.ttf in Resources */,
 				846918D026E76E2100E28501 /* LaunchScreen.storyboard in Resources */,
+				8496BD0026F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				846918D126E76E2100E28501 /* CircularStd-Book.otf in Resources */,
 				846918D226E76E2100E28501 /* Futura Hv BT.ttf in Resources */,
 				846918D326E76E2100E28501 /* SFProText-Regular.ttf in Resources */,
@@ -9190,8 +9527,10 @@
 				846918DA26E76E2100E28501 /* Eina02-Bold.ttf in Resources */,
 				846918DB26E76E2100E28501 /* Futura-Book.ttf in Resources */,
 				846918DC26E76E2100E28501 /* CircularStd-Medium.otf in Resources */,
+				8496BCAA26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846918DD26E76E2100E28501 /* FuturaBT-Heavy.ttf in Resources */,
 				846918DE26E76E2100E28501 /* CircularStd-Bold.ttf in Resources */,
+				8496BC5426F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				846918E126E76E2100E28501 /* SFProText-Bold.ttf in Resources */,
 				84691C1426E76FDC00E28501 /* GoogleService-Info.plist in Resources */,
 				846918E226E76E2100E28501 /* Eina02-SemiBold.ttf in Resources */,
@@ -9208,6 +9547,7 @@
 				84691F7D26E7859200E28501 /* SFProDisplay-Regular.ttf in Resources */,
 				84691F7E26E7859200E28501 /* Futura-Medium.ttf in Resources */,
 				8469214626E7869300E28501 /* YourLaundryApp(Development).xcconfig in Resources */,
+				8496BD0126F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84691F7F26E7859200E28501 /* LaunchScreen.storyboard in Resources */,
 				84691F8026E7859200E28501 /* CircularStd-Book.otf in Resources */,
 				84691F8126E7859200E28501 /* Futura Hv BT.ttf in Resources */,
@@ -9219,8 +9559,10 @@
 				84691F8726E7859200E28501 /* Plists in Resources */,
 				84691F8826E7859200E28501 /* Futura-Normal.ttf in Resources */,
 				84691F8926E7859200E28501 /* Eina02-Bold.ttf in Resources */,
+				8496BCAB26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84691F8A26E7859200E28501 /* Futura-Book.ttf in Resources */,
 				84691F8B26E7859200E28501 /* CircularStd-Medium.otf in Resources */,
+				8496BC5526F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84691F8C26E7859200E28501 /* FuturaBT-Heavy.ttf in Resources */,
 				84691F8D26E7859200E28501 /* CircularStd-Bold.ttf in Resources */,
 				84691F9026E7859200E28501 /* SFProText-Bold.ttf in Resources */,
@@ -9237,6 +9579,7 @@
 				846C585226B4043900C646F6 /* Images.xcassets in Resources */,
 				846C57F726B403AB00C646F6 /* Futura-Medium.ttf in Resources */,
 				846C583C26B4042A00C646F6 /* AfricanVillageMarket(Production).xcconfig in Resources */,
+				8496BCC426F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				846C57F826B403AB00C646F6 /* LaunchScreen.storyboard in Resources */,
 				846C57F926B403AB00C646F6 /* CircularStd-Book.otf in Resources */,
 				846C57FA26B403AB00C646F6 /* Futura Hv BT.ttf in Resources */,
@@ -9248,8 +9591,10 @@
 				8455CA4926DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846C580126B403AB00C646F6 /* Futura-Book.ttf in Resources */,
 				846C580226B403AB00C646F6 /* CircularStd-Medium.otf in Resources */,
+				8496BC6E26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846C580326B403AB00C646F6 /* FuturaBT-Heavy.ttf in Resources */,
 				846C580426B403AB00C646F6 /* CircularStd-Bold.ttf in Resources */,
+				8496BC1826F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				846C580626B403AB00C646F6 /* SFProText-Bold.ttf in Resources */,
 				846C582626B4040E00C646F6 /* AfricanVillageMarket(Development).xcconfig in Resources */,
 				846C586826B4048600C646F6 /* GoogleService-Info.plist in Resources */,
@@ -9266,6 +9611,7 @@
 				846E6CF726C66EC300C7A2C5 /* Futura-Medium.ttf in Resources */,
 				846E6CF826C66EC300C7A2C5 /* LaunchScreen.storyboard in Resources */,
 				846E6CF926C66EC300C7A2C5 /* CircularStd-Book.otf in Resources */,
+				8496BCDE26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				846E6CFA26C66EC300C7A2C5 /* Futura Hv BT.ttf in Resources */,
 				846E6CFB26C66EC300C7A2C5 /* SFProText-Regular.ttf in Resources */,
 				846E6CFC26C66EC300C7A2C5 /* SFProText-SemiBold.ttf in Resources */,
@@ -9277,8 +9623,10 @@
 				8455CA6326DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846E6D0226C66EC300C7A2C5 /* Futura-Book.ttf in Resources */,
 				846E6D0326C66EC300C7A2C5 /* CircularStd-Medium.otf in Resources */,
+				8496BC8826F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846E6E5A26C66FCA00C7A2C5 /* Images.xcassets in Resources */,
 				846E6D0426C66EC300C7A2C5 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC3226F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				846E6D0526C66EC300C7A2C5 /* CircularStd-Bold.ttf in Resources */,
 				846E6D0826C66EC300C7A2C5 /* SFProText-Bold.ttf in Resources */,
 				846E6E2A26C66FB000C7A2C5 /* Yahu(Production).xcconfig in Resources */,
@@ -9295,6 +9643,7 @@
 				846E710326C67AD200C7A2C5 /* Futura-Medium.ttf in Resources */,
 				846E710426C67AD200C7A2C5 /* LaunchScreen.storyboard in Resources */,
 				846E710526C67AD200C7A2C5 /* CircularStd-Book.otf in Resources */,
+				8496BCDF26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				846E710626C67AD200C7A2C5 /* Futura Hv BT.ttf in Resources */,
 				846E710726C67AD200C7A2C5 /* SFProText-Regular.ttf in Resources */,
 				846E710826C67AD200C7A2C5 /* SFProText-SemiBold.ttf in Resources */,
@@ -9306,8 +9655,10 @@
 				8455CA6426DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846E710F26C67AD200C7A2C5 /* CircularStd-Medium.otf in Resources */,
 				846E723E26C67C2900C7A2C5 /* Images.xcassets in Resources */,
+				8496BC8926F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846E71AD26C67BE500C7A2C5 /* ZuzuClean(Production).xcconfig in Resources */,
 				846E711026C67AD200C7A2C5 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC3326F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				846E711126C67AD200C7A2C5 /* CircularStd-Bold.ttf in Resources */,
 				846E726F26C67C5200C7A2C5 /* GoogleService-Info.plist in Resources */,
 				846E711426C67AD200C7A2C5 /* SFProText-Bold.ttf in Resources */,
@@ -9324,6 +9675,7 @@
 				846E761126C689C600C7A2C5 /* SFProDisplay-Regular.ttf in Resources */,
 				846E761226C689C600C7A2C5 /* Futura-Medium.ttf in Resources */,
 				846E761326C689C600C7A2C5 /* LaunchScreen.storyboard in Resources */,
+				8496BCE026F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				846E761426C689C600C7A2C5 /* CircularStd-Book.otf in Resources */,
 				846E761526C689C600C7A2C5 /* Futura Hv BT.ttf in Resources */,
 				846E761626C689C600C7A2C5 /* SFProText-Regular.ttf in Resources */,
@@ -9335,8 +9687,10 @@
 				8455CA6526DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846E761C26C689C600C7A2C5 /* Futura-Normal.ttf in Resources */,
 				846E761D26C689C600C7A2C5 /* Futura-Book.ttf in Resources */,
+				8496BC8A26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846E761E26C689C600C7A2C5 /* CircularStd-Medium.otf in Resources */,
 				846E761F26C689C600C7A2C5 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC3426F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				849A371426D7C48600A1D9AA /* GoogleService-Info.plist in Resources */,
 				846E762026C689C600C7A2C5 /* CircularStd-Bold.ttf in Resources */,
 				846E762326C689C600C7A2C5 /* SFProText-Bold.ttf in Resources */,
@@ -9353,6 +9707,7 @@
 				846E7A4426C6943B00C7A2C5 /* Futura-Medium.ttf in Resources */,
 				846E7A4526C6943B00C7A2C5 /* LaunchScreen.storyboard in Resources */,
 				846E7B8926C695D600C7A2C5 /* ArenaGrub(Production).xcconfig in Resources */,
+				8496BCE126F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				846E7A4626C6943B00C7A2C5 /* CircularStd-Book.otf in Resources */,
 				846E7A4726C6943B00C7A2C5 /* Futura Hv BT.ttf in Resources */,
 				846E7A4826C6943B00C7A2C5 /* SFProText-Regular.ttf in Resources */,
@@ -9364,8 +9719,10 @@
 				8455CA6626DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846E7B2526C695A700C7A2C5 /* ArenaGrub(Development).xcconfig in Resources */,
 				846E7A4E26C6943B00C7A2C5 /* Futura-Normal.ttf in Resources */,
+				8496BC8B26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846E7A4F26C6943B00C7A2C5 /* Futura-Book.ttf in Resources */,
 				846E7A5026C6943B00C7A2C5 /* CircularStd-Medium.otf in Resources */,
+				8496BC3526F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				846E7A5126C6943B00C7A2C5 /* FuturaBT-Heavy.ttf in Resources */,
 				846E7A5226C6943B00C7A2C5 /* CircularStd-Bold.ttf in Resources */,
 				846E7A5526C6943B00C7A2C5 /* SFProText-Bold.ttf in Resources */,
@@ -9382,6 +9739,7 @@
 				846EA87826A93B79000073CE /* Images.xcassets in Resources */,
 				846EA85A26A93B05000073CE /* UFood(Production).xcconfig in Resources */,
 				846EA80526A939B6000073CE /* Futura-Medium.ttf in Resources */,
+				8496BCBE26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				846EA80626A939B6000073CE /* LaunchScreen.storyboard in Resources */,
 				846EA80726A939B6000073CE /* CircularStd-Book.otf in Resources */,
 				846EA83C26A93A86000073CE /* UFood(Development).xcconfig in Resources */,
@@ -9393,8 +9751,10 @@
 				8455CA4326DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846EA80D26A939B6000073CE /* Plists in Resources */,
 				846EA80E26A939B6000073CE /* Futura-Normal.ttf in Resources */,
+				8496BC6826F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846EA80F26A939B6000073CE /* Futura-Book.ttf in Resources */,
 				846EA81026A939B6000073CE /* CircularStd-Medium.otf in Resources */,
+				8496BC1226F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				846EA81126A939B6000073CE /* FuturaBT-Heavy.ttf in Resources */,
 				846EA81226A939B6000073CE /* CircularStd-Bold.ttf in Resources */,
 				846EA81426A939B6000073CE /* SFProText-Bold.ttf in Resources */,
@@ -9411,6 +9771,7 @@
 				846EB0FA26CE39CD004CA92B /* Futura-Medium.ttf in Resources */,
 				846EB0FB26CE39CD004CA92B /* LaunchScreen.storyboard in Resources */,
 				846EB0FC26CE39CD004CA92B /* CircularStd-Book.otf in Resources */,
+				8496BCED26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				846EB0FD26CE39CD004CA92B /* Futura Hv BT.ttf in Resources */,
 				846EB0FE26CE39CD004CA92B /* SFProText-Regular.ttf in Resources */,
 				846EB0FF26CE39CD004CA92B /* SFProText-SemiBold.ttf in Resources */,
@@ -9422,8 +9783,10 @@
 				8455CA7226DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846EB24826CE3AA6004CA92B /* HairstonExpress(Development).xcconfig in Resources */,
 				846EB10526CE39CD004CA92B /* Futura-Book.ttf in Resources */,
+				8496BC9726F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846EB10626CE39CD004CA92B /* CircularStd-Medium.otf in Resources */,
 				846EB10726CE39CD004CA92B /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC4126F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				846EB28726CE3ACC004CA92B /* HairstonExpress(Production).xcconfig in Resources */,
 				846EB10826CE39CD004CA92B /* CircularStd-Bold.ttf in Resources */,
 				846EB10B26CE39CD004CA92B /* SFProText-Bold.ttf in Resources */,
@@ -9440,6 +9803,7 @@
 				846EB57426CE5143004CA92B /* Futura-Medium.ttf in Resources */,
 				846EB57526CE5143004CA92B /* LaunchScreen.storyboard in Resources */,
 				846EB57626CE5143004CA92B /* CircularStd-Book.otf in Resources */,
+				8496BCEE26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				846EB57726CE5143004CA92B /* Futura Hv BT.ttf in Resources */,
 				846EB57826CE5143004CA92B /* SFProText-Regular.ttf in Resources */,
 				846EB57926CE5143004CA92B /* SFProText-SemiBold.ttf in Resources */,
@@ -9451,8 +9815,10 @@
 				8455CA7326DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846EB57F26CE5143004CA92B /* Futura-Book.ttf in Resources */,
 				846EB58026CE5143004CA92B /* CircularStd-Medium.otf in Resources */,
+				8496BC9826F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846EB78526CE528E004CA92B /* Images.xcassets in Resources */,
 				846EB58126CE5143004CA92B /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC4226F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				846EB7C526CE5395004CA92B /* GoogleService-Info.plist in Resources */,
 				846EB58226CE5143004CA92B /* CircularStd-Bold.ttf in Resources */,
 				846EB58526CE5143004CA92B /* SFProText-Bold.ttf in Resources */,
@@ -9469,6 +9835,7 @@
 				846EBAB926CE67AF004CA92B /* Futura-Medium.ttf in Resources */,
 				846EBABA26CE67AF004CA92B /* LaunchScreen.storyboard in Resources */,
 				846EBABB26CE67AF004CA92B /* CircularStd-Book.otf in Resources */,
+				8496BCEF26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				846EBABC26CE67AF004CA92B /* Futura Hv BT.ttf in Resources */,
 				846EBABD26CE67AF004CA92B /* SFProText-Regular.ttf in Resources */,
 				846EBABE26CE67AF004CA92B /* SFProText-SemiBold.ttf in Resources */,
@@ -9480,8 +9847,10 @@
 				8455CA7426DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846EBAC426CE67AF004CA92B /* Futura-Book.ttf in Resources */,
 				846EBBD226CE686C004CA92B /* DestinationOps(Development).xcconfig in Resources */,
+				8496BC9926F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846EBAC526CE67AF004CA92B /* CircularStd-Medium.otf in Resources */,
 				846EBAC626CE67AF004CA92B /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC4326F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				846EBAC726CE67AF004CA92B /* CircularStd-Bold.ttf in Resources */,
 				846EBACA26CE67AF004CA92B /* SFProText-Bold.ttf in Resources */,
 				846EBC5226CE688F004CA92B /* DestinationOps(Production).xcconfig in Resources */,
@@ -9498,6 +9867,7 @@
 				846ECC9C26AFD60B00EED0B4 /* Images.xcassets in Resources */,
 				846ECC6726AFD5CC00EED0B4 /* HelpNowRightNow(Development).xcconfig in Resources */,
 				846ECC8A26AFD5F900EED0B4 /* HelpNowRigthNow(Production).xcconfig in Resources */,
+				8496BCC026F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				846ECC0D26AFD59000EED0B4 /* Futura-Medium.ttf in Resources */,
 				846ECC0E26AFD59000EED0B4 /* LaunchScreen.storyboard in Resources */,
 				846ECC0F26AFD59000EED0B4 /* CircularStd-Book.otf in Resources */,
@@ -9509,8 +9879,10 @@
 				8455CA4526DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846ECC1626AFD59000EED0B4 /* Futura-Normal.ttf in Resources */,
 				846ECC1726AFD59000EED0B4 /* Futura-Book.ttf in Resources */,
+				8496BC6A26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846ECC1826AFD59000EED0B4 /* CircularStd-Medium.otf in Resources */,
 				846ECC1926AFD59000EED0B4 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC1426F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				846ECCBE26AFD69600EED0B4 /* GoogleService-Info.plist in Resources */,
 				846ECC1A26AFD59000EED0B4 /* CircularStd-Bold.ttf in Resources */,
 				846ECC1C26AFD59000EED0B4 /* SFProText-Bold.ttf in Resources */,
@@ -9527,6 +9899,7 @@
 				846ECE8926B0016900EED0B4 /* Images.xcassets in Resources */,
 				846ECE1626B000B600EED0B4 /* Futura-Medium.ttf in Resources */,
 				846ECE5226B0010F00EED0B4 /* MartiniOnWheels(Development).xcconfig in Resources */,
+				8496BCC126F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				846ECE1726B000B600EED0B4 /* LaunchScreen.storyboard in Resources */,
 				846ECE1826B000B600EED0B4 /* CircularStd-Book.otf in Resources */,
 				846ECE1926B000B600EED0B4 /* Futura Hv BT.ttf in Resources */,
@@ -9538,8 +9911,10 @@
 				8455CA4626DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846ECE1E26B000B600EED0B4 /* Plists in Resources */,
 				846ECE1F26B000B600EED0B4 /* Futura-Normal.ttf in Resources */,
+				8496BC6B26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846ECE2026B000B600EED0B4 /* Futura-Book.ttf in Resources */,
 				846ECE2126B000B600EED0B4 /* CircularStd-Medium.otf in Resources */,
+				8496BC1526F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				846ECE2226B000B600EED0B4 /* FuturaBT-Heavy.ttf in Resources */,
 				846ECE2326B000B600EED0B4 /* CircularStd-Bold.ttf in Resources */,
 				846ECE2526B000B600EED0B4 /* SFProText-Bold.ttf in Resources */,
@@ -9556,6 +9931,7 @@
 				846ED15526B01F0D00EED0B4 /* Images.xcassets in Resources */,
 				846ED0DD26B01EAB00EED0B4 /* Futura-Medium.ttf in Resources */,
 				846ED12D26B01EE200EED0B4 /* Cannabus(Development).xcconfig in Resources */,
+				8496BCC226F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				846ED14126B01F0000EED0B4 /* Cannabus(Production).xcconfig in Resources */,
 				846ED0DE26B01EAB00EED0B4 /* LaunchScreen.storyboard in Resources */,
 				846ED0DF26B01EAB00EED0B4 /* CircularStd-Book.otf in Resources */,
@@ -9567,8 +9943,10 @@
 				8455CA4726DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				846ED0E526B01EAB00EED0B4 /* Plists in Resources */,
 				846ED0E626B01EAB00EED0B4 /* Futura-Normal.ttf in Resources */,
+				8496BC6C26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				846ED0E726B01EAB00EED0B4 /* Futura-Book.ttf in Resources */,
 				846ED0E826B01EAB00EED0B4 /* CircularStd-Medium.otf in Resources */,
+				8496BC1626F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				846ED0E926B01EAB00EED0B4 /* FuturaBT-Heavy.ttf in Resources */,
 				846ED0EA26B01EAB00EED0B4 /* CircularStd-Bold.ttf in Resources */,
 				846ED0EC26B01EAB00EED0B4 /* SFProText-Bold.ttf in Resources */,
@@ -9585,6 +9963,7 @@
 				84B0CBD526B975B400515D81 /* Images.xcassets in Resources */,
 				8479705926B96C1600B8D286 /* GajaMove(Development).xcconfig in Resources */,
 				84796FFC26B96BB000B8D286 /* Futura-Medium.ttf in Resources */,
+				8496BCC626F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				8479708726B96C3400B8D286 /* GajaMove(Production).xcconfig in Resources */,
 				84796FFD26B96BB000B8D286 /* LaunchScreen.storyboard in Resources */,
 				84796FFE26B96BB000B8D286 /* CircularStd-Book.otf in Resources */,
@@ -9596,8 +9975,10 @@
 				8455CA4B26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8479700526B96BB000B8D286 /* Futura-Normal.ttf in Resources */,
 				8479700626B96BB000B8D286 /* Futura-Book.ttf in Resources */,
+				8496BC7026F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8479700726B96BB000B8D286 /* CircularStd-Medium.otf in Resources */,
 				8479700826B96BB000B8D286 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC1A26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8479700926B96BB000B8D286 /* CircularStd-Bold.ttf in Resources */,
 				8479700B26B96BB000B8D286 /* SFProText-Bold.ttf in Resources */,
 				847970B726B96C7C00B8D286 /* GoogleService-Info.plist in Resources */,
@@ -9614,6 +9995,7 @@
 				847E8D0926DCB1DE0054CD42 /* SFProDisplay-Regular.ttf in Resources */,
 				847E8D0A26DCB1DE0054CD42 /* Futura-Medium.ttf in Resources */,
 				847E8D0B26DCB1DE0054CD42 /* LaunchScreen.storyboard in Resources */,
+				8496BCF426F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				847E8D0C26DCB1DE0054CD42 /* CircularStd-Book.otf in Resources */,
 				847E8D0D26DCB1DE0054CD42 /* Futura Hv BT.ttf in Resources */,
 				847E8D0E26DCB1DE0054CD42 /* SFProText-Regular.ttf in Resources */,
@@ -9625,8 +10007,10 @@
 				8455CA7926DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				847E8D1326DCB1DE0054CD42 /* Plists in Resources */,
 				847E8D1426DCB1DE0054CD42 /* Futura-Normal.ttf in Resources */,
+				8496BC9E26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				847E8D1526DCB1DE0054CD42 /* Futura-Book.ttf in Resources */,
 				847E8D1626DCB1DE0054CD42 /* CircularStd-Medium.otf in Resources */,
+				8496BC4826F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				847E8D1726DCB1DE0054CD42 /* FuturaBT-Heavy.ttf in Resources */,
 				847E8D1826DCB1DE0054CD42 /* CircularStd-Bold.ttf in Resources */,
 				847E8D1B26DCB1DE0054CD42 /* SFProText-Bold.ttf in Resources */,
@@ -9643,6 +10027,7 @@
 				848007C926CE260D0014F500 /* Futura-Medium.ttf in Resources */,
 				848007CA26CE260D0014F500 /* LaunchScreen.storyboard in Resources */,
 				848007CB26CE260D0014F500 /* CircularStd-Book.otf in Resources */,
+				8496BCEC26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				848007CC26CE260D0014F500 /* Futura Hv BT.ttf in Resources */,
 				84800B9026CE2B330014F500 /* Housekeeper4Hire(Development).xcconfig in Resources */,
 				848007CD26CE260D0014F500 /* SFProText-Regular.ttf in Resources */,
@@ -9654,8 +10039,10 @@
 				8455CA7126DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				848007D226CE260D0014F500 /* Plists in Resources */,
 				848007D326CE260D0014F500 /* Futura-Normal.ttf in Resources */,
+				8496BC9626F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				848007D426CE260D0014F500 /* Futura-Book.ttf in Resources */,
 				848007D526CE260D0014F500 /* CircularStd-Medium.otf in Resources */,
+				8496BC4026F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				848007D626CE260D0014F500 /* FuturaBT-Heavy.ttf in Resources */,
 				848007D726CE260D0014F500 /* CircularStd-Bold.ttf in Resources */,
 				848007DA26CE260D0014F500 /* SFProText-Bold.ttf in Resources */,
@@ -9672,6 +10059,7 @@
 				84854E2126C4ED7E00BFFD11 /* Futura-Medium.ttf in Resources */,
 				84854E2226C4ED7E00BFFD11 /* LaunchScreen.storyboard in Resources */,
 				84854E2326C4ED7E00BFFD11 /* CircularStd-Book.otf in Resources */,
+				8496BCDA26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84854E2426C4ED7E00BFFD11 /* Futura Hv BT.ttf in Resources */,
 				84854E2526C4ED7E00BFFD11 /* SFProText-Regular.ttf in Resources */,
 				84854E2626C4ED7E00BFFD11 /* SFProText-SemiBold.ttf in Resources */,
@@ -9683,8 +10071,10 @@
 				8455CA5F26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84854E2B26C4ED7E00BFFD11 /* Futura-Book.ttf in Resources */,
 				84854F1026C4EEB500BFFD11 /* Servze(Production).xcconfig in Resources */,
+				8496BC8426F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84854E2C26C4ED7E00BFFD11 /* CircularStd-Medium.otf in Resources */,
 				84854E2D26C4ED7E00BFFD11 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC2E26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84854E2E26C4ED7E00BFFD11 /* CircularStd-Bold.ttf in Resources */,
 				84854EBA26C4EE9000BFFD11 /* Servze(Development).xcconfig in Resources */,
 				84854E3026C4ED7E00BFFD11 /* SFProText-Bold.ttf in Resources */,
@@ -9701,6 +10091,7 @@
 				848F9F2226E8B5A7008116B5 /* Futura-Medium.ttf in Resources */,
 				848F9F2326E8B5A7008116B5 /* LaunchScreen.storyboard in Resources */,
 				848FA18826E8B800008116B5 /* Sharu(Production).xcconfig in Resources */,
+				8496BD0326F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				848F9F2426E8B5A7008116B5 /* CircularStd-Book.otf in Resources */,
 				848F9F2526E8B5A7008116B5 /* Futura Hv BT.ttf in Resources */,
 				848F9F2626E8B5A7008116B5 /* SFProText-Regular.ttf in Resources */,
@@ -9712,8 +10103,10 @@
 				848F9F2D26E8B5A7008116B5 /* Eina02-Bold.ttf in Resources */,
 				848F9F2E26E8B5A7008116B5 /* Futura-Book.ttf in Resources */,
 				848FA13326E8B7C5008116B5 /* Sharu(Development).xcconfig in Resources */,
+				8496BCAD26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				848F9F2F26E8B5A7008116B5 /* CircularStd-Medium.otf in Resources */,
 				848F9F3026E8B5A7008116B5 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC5726F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				848F9F3126E8B5A7008116B5 /* CircularStd-Bold.ttf in Resources */,
 				848FA18C26E8B902008116B5 /* GoogleService-Info.plist in Resources */,
 				848F9F3426E8B5A7008116B5 /* SFProText-Bold.ttf in Resources */,
@@ -9730,6 +10123,7 @@
 				848FA4D426E9E50A008116B5 /* Futura-Medium.ttf in Resources */,
 				848FA4D526E9E50A008116B5 /* LaunchScreen.storyboard in Resources */,
 				848FA4D626E9E50A008116B5 /* CircularStd-Book.otf in Resources */,
+				8496BD0426F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				848FA4D726E9E50A008116B5 /* Futura Hv BT.ttf in Resources */,
 				848FA4D826E9E50A008116B5 /* SFProText-Regular.ttf in Resources */,
 				848FA4D926E9E50A008116B5 /* SFProText-SemiBold.ttf in Resources */,
@@ -9741,8 +10135,10 @@
 				848FA4E026E9E50A008116B5 /* Futura-Book.ttf in Resources */,
 				848FA4E126E9E50A008116B5 /* CircularStd-Medium.otf in Resources */,
 				848FA4E226E9E50A008116B5 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BCAE26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				848FA70026E9ECB7008116B5 /* SMCompany(Development).xcconfig in Resources */,
 				848FA70226E9ECD1008116B5 /* SMCompany(Production).xcconfig in Resources */,
+				8496BC5826F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				848FA4E326E9E50A008116B5 /* CircularStd-Bold.ttf in Resources */,
 				848FA7AE26E9EDBE008116B5 /* GoogleService-Info.plist in Resources */,
 				848FA4E626E9E50A008116B5 /* SFProText-Bold.ttf in Resources */,
@@ -9759,6 +10155,7 @@
 				848FAB3D26EB31CE008116B5 /* Futura-Medium.ttf in Resources */,
 				848FAE1226EB32F7008116B5 /* Totum4U(Development).xcconfig in Resources */,
 				848FAB3E26EB31CE008116B5 /* LaunchScreen.storyboard in Resources */,
+				8496BD0526F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				848FAB3F26EB31CE008116B5 /* CircularStd-Book.otf in Resources */,
 				848FAB4026EB31CE008116B5 /* Futura Hv BT.ttf in Resources */,
 				848FAB4126EB31CE008116B5 /* SFProText-Regular.ttf in Resources */,
@@ -9770,8 +10167,10 @@
 				848FAB4726EB31CE008116B5 /* Futura-Normal.ttf in Resources */,
 				848FAB4826EB31CE008116B5 /* Eina02-Bold.ttf in Resources */,
 				848FAB4926EB31CE008116B5 /* Futura-Book.ttf in Resources */,
+				8496BCAF26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				848FAB4A26EB31CE008116B5 /* CircularStd-Medium.otf in Resources */,
 				848FAB4B26EB31CE008116B5 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC5926F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				848FAB4C26EB31CE008116B5 /* CircularStd-Bold.ttf in Resources */,
 				848FAF1726EB33C3008116B5 /* GoogleService-Info.plist in Resources */,
 				848FAB4F26EB31CE008116B5 /* SFProText-Bold.ttf in Resources */,
@@ -9788,6 +10187,7 @@
 				849032C526EB749E00E4AE5A /* Futura-Medium.ttf in Resources */,
 				849032C626EB749E00E4AE5A /* LaunchScreen.storyboard in Resources */,
 				849032C726EB749E00E4AE5A /* CircularStd-Book.otf in Resources */,
+				8496BD0626F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				8490339026EB761000E4AE5A /* HMC(Development).xcconfig in Resources */,
 				849032C826EB749E00E4AE5A /* Futura Hv BT.ttf in Resources */,
 				849032C926EB749E00E4AE5A /* SFProText-Regular.ttf in Resources */,
@@ -9799,8 +10199,10 @@
 				849032D026EB749E00E4AE5A /* Eina02-Bold.ttf in Resources */,
 				849032D126EB749E00E4AE5A /* Futura-Book.ttf in Resources */,
 				849032D226EB749E00E4AE5A /* CircularStd-Medium.otf in Resources */,
+				8496BCB026F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8490343E26EB762D00E4AE5A /* HMC(Production).xcconfig in Resources */,
 				849032D326EB749E00E4AE5A /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC5A26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				849032D426EB749E00E4AE5A /* CircularStd-Bold.ttf in Resources */,
 				8490354726EB7A0500E4AE5A /* GoogleService-Info.plist in Resources */,
 				849032D726EB749E00E4AE5A /* SFProText-Bold.ttf in Resources */,
@@ -9817,6 +10219,7 @@
 				849036E526EB855500E4AE5A /* Futura-Medium.ttf in Resources */,
 				849036E626EB855500E4AE5A /* LaunchScreen.storyboard in Resources */,
 				849036E726EB855500E4AE5A /* CircularStd-Book.otf in Resources */,
+				8496BD0726F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				849036E826EB855500E4AE5A /* Futura Hv BT.ttf in Resources */,
 				849036E926EB855500E4AE5A /* SFProText-Regular.ttf in Resources */,
 				849036EA26EB855500E4AE5A /* SFProText-SemiBold.ttf in Resources */,
@@ -9828,8 +10231,10 @@
 				8490391026EB865C00E4AE5A /* Groupy(Production).xcconfig in Resources */,
 				8490386026EB863C00E4AE5A /* Groupy(Development).xcconfig in Resources */,
 				849036F126EB855500E4AE5A /* Futura-Book.ttf in Resources */,
+				8496BCB126F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				849036F226EB855500E4AE5A /* CircularStd-Medium.otf in Resources */,
 				849036F326EB855500E4AE5A /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC5B26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				849036F426EB855500E4AE5A /* CircularStd-Bold.ttf in Resources */,
 				849039C226EB86AF00E4AE5A /* GoogleService-Info.plist in Resources */,
 				849036F726EB855500E4AE5A /* SFProText-Bold.ttf in Resources */,
@@ -9846,6 +10251,7 @@
 				8491385126CB837E00AD4105 /* Futura-Medium.ttf in Resources */,
 				8491385226CB837E00AD4105 /* LaunchScreen.storyboard in Resources */,
 				8491385326CB837E00AD4105 /* CircularStd-Book.otf in Resources */,
+				8496BCE426F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				8491385426CB837E00AD4105 /* Futura Hv BT.ttf in Resources */,
 				8491385526CB837E00AD4105 /* SFProText-Regular.ttf in Resources */,
 				8491385626CB837E00AD4105 /* SFProText-SemiBold.ttf in Resources */,
@@ -9857,8 +10263,10 @@
 				8455CA6926DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8491385B26CB837E00AD4105 /* Futura-Normal.ttf in Resources */,
 				8493F5E926CB85F3006AD6AD /* Yummiidash(Development).xcconfig in Resources */,
+				8496BC8E26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8491385C26CB837E00AD4105 /* Futura-Book.ttf in Resources */,
 				8491385D26CB837E00AD4105 /* CircularStd-Medium.otf in Resources */,
+				8496BC3826F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8491385E26CB837E00AD4105 /* FuturaBT-Heavy.ttf in Resources */,
 				8491385F26CB837E00AD4105 /* CircularStd-Bold.ttf in Resources */,
 				8491386226CB837E00AD4105 /* SFProText-Bold.ttf in Resources */,
@@ -9875,6 +10283,7 @@
 				849AE07C26C5245800B6C20D /* Futura-Medium.ttf in Resources */,
 				849AE07D26C5245800B6C20D /* LaunchScreen.storyboard in Resources */,
 				849AE07E26C5245800B6C20D /* CircularStd-Book.otf in Resources */,
+				8496BCDB26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				849AE07F26C5245800B6C20D /* Futura Hv BT.ttf in Resources */,
 				849AE08026C5245800B6C20D /* SFProText-Regular.ttf in Resources */,
 				849AE08126C5245800B6C20D /* SFProText-SemiBold.ttf in Resources */,
@@ -9886,8 +10295,10 @@
 				8455CA6026DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				849AE1C626C5264A00B6C20D /* Travo(Production).xcconfig in Resources */,
 				849AE16E26C5263300B6C20D /* Travo(Development).xcconfig in Resources */,
+				8496BC8526F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				849AE08626C5245800B6C20D /* Futura-Book.ttf in Resources */,
 				849AE08726C5245800B6C20D /* CircularStd-Medium.otf in Resources */,
+				8496BC2F26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				849AE08826C5245800B6C20D /* FuturaBT-Heavy.ttf in Resources */,
 				849AE08926C5245800B6C20D /* CircularStd-Bold.ttf in Resources */,
 				849AE08B26C5245800B6C20D /* SFProText-Bold.ttf in Resources */,
@@ -9904,6 +10315,7 @@
 				849AE64A26C53C0B00B6C20D /* Images.xcassets in Resources */,
 				849AE4F426C53A3F00B6C20D /* SFProDisplay-Regular.ttf in Resources */,
 				849AE4F526C53A3F00B6C20D /* Futura-Medium.ttf in Resources */,
+				8496BCDC26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				849AE4F626C53A3F00B6C20D /* LaunchScreen.storyboard in Resources */,
 				849AE4F726C53A3F00B6C20D /* CircularStd-Book.otf in Resources */,
 				849AE4F826C53A3F00B6C20D /* Futura Hv BT.ttf in Resources */,
@@ -9915,8 +10327,10 @@
 				8455CA6126DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				849AE4FD26C53A3F00B6C20D /* Plists in Resources */,
 				849AE4FE26C53A3F00B6C20D /* Futura-Normal.ttf in Resources */,
+				8496BC8626F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				849AE4FF26C53A3F00B6C20D /* Futura-Book.ttf in Resources */,
 				849AE50026C53A3F00B6C20D /* CircularStd-Medium.otf in Resources */,
+				8496BC3026F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				849AE50126C53A3F00B6C20D /* FuturaBT-Heavy.ttf in Resources */,
 				849AE50226C53A3F00B6C20D /* CircularStd-Bold.ttf in Resources */,
 				849AE50426C53A3F00B6C20D /* SFProText-Bold.ttf in Resources */,
@@ -9938,14 +10352,17 @@
 				849D7D1426DE3B4C00347B00 /* SFProText-SemiBold.ttf in Resources */,
 				849D7D1526DE3B4C00347B00 /* SFProText-Medium.ttf in Resources */,
 				849D7F2126DE3CA200347B00 /* Images.xcassets in Resources */,
+				8496BC4B26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				849D7D1826DE3B4C00347B00 /* Plists in Resources */,
 				849D7F6A26DE3D6700347B00 /* GoogleService-Info.plist in Resources */,
 				849D7D1926DE3B4C00347B00 /* Futura-Normal.ttf in Resources */,
 				849D7E8F26DE3C5A00347B00 /* PartnerProject(Development).xcconfig in Resources */,
 				849D7D1A26DE3B4C00347B00 /* Futura-Book.ttf in Resources */,
+				8496BCA126F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				849D7D1B26DE3B4C00347B00 /* CircularStd-Medium.otf in Resources */,
 				849D7D1C26DE3B4C00347B00 /* FuturaBT-Heavy.ttf in Resources */,
 				849D7D1D26DE3B4C00347B00 /* CircularStd-Bold.ttf in Resources */,
+				8496BCF726F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				849D7D2026DE3B4C00347B00 /* SFProText-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -9964,14 +10381,17 @@
 				849D82C326DF59FD00347B00 /* SFProText-SemiBold.ttf in Resources */,
 				849D82C426DF59FD00347B00 /* SFProText-Medium.ttf in Resources */,
 				849D848F26DF5BA400347B00 /* Images.xcassets in Resources */,
+				8496BC4C26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				849D82C726DF59FD00347B00 /* Plists in Resources */,
 				849D84D926DF5FD400347B00 /* GoogleService-Info.plist in Resources */,
 				849D82C826DF59FD00347B00 /* Futura-Normal.ttf in Resources */,
 				849D82C926DF59FD00347B00 /* Futura-Book.ttf in Resources */,
 				849D82CA26DF59FD00347B00 /* CircularStd-Medium.otf in Resources */,
+				8496BCA226F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				849D82CB26DF59FD00347B00 /* FuturaBT-Heavy.ttf in Resources */,
 				849D848D26DF5B9000347B00 /* Menus(Production).xcconfig in Resources */,
 				849D82CC26DF59FD00347B00 /* CircularStd-Bold.ttf in Resources */,
+				8496BCF826F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				849D82CF26DF59FD00347B00 /* SFProText-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -9990,6 +10410,7 @@
 				84A1A247269EE69D00A83511 /* SFProDisplay-Regular.ttf in Resources */,
 				84A1A248269EE69D00A83511 /* FuturaBT-Heavy.ttf in Resources */,
 				84A1A249269EE69D00A83511 /* SFProText-SemiBold.ttf in Resources */,
+				8496BC6326F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84A1A24A269EE69D00A83511 /* SFProText-Bold.ttf in Resources */,
 				84A1A24B269EE69D00A83511 /* SFProText-Medium.ttf in Resources */,
 				84A1A24C269EE69D00A83511 /* SFProText-Regular.ttf in Resources */,
@@ -10000,7 +10421,9 @@
 				8455CA3E26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84A1A252269EE69D00A83511 /* CircularStd-Book.otf in Resources */,
 				84A1A253269EE69D00A83511 /* Futura Hv BT.ttf in Resources */,
+				8496BC0D26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8455CAC426DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
+				8496BCB926F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84A1A27D269EE7F500A83511 /* Masa(Production).xcconfig in Resources */,
 				84A1A254269EE69D00A83511 /* CircularStd-Bold.ttf in Resources */,
 				849FC00926B17BAE006C8D91 /* GoogleService-Info.plist in Resources */,
@@ -10016,6 +10439,7 @@
 				84A8033026C3994000F35132 /* Images.xcassets in Resources */,
 				84A8020726C3982E00F35132 /* Futura-Medium.ttf in Resources */,
 				84A8030826C3992B00F35132 /* WashValley(Production).xcconfig in Resources */,
+				8496BCD626F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84A8020826C3982E00F35132 /* LaunchScreen.storyboard in Resources */,
 				84A8020926C3982E00F35132 /* CircularStd-Book.otf in Resources */,
 				84A8020A26C3982E00F35132 /* Futura Hv BT.ttf in Resources */,
@@ -10027,8 +10451,10 @@
 				8455CA5B26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84A8021026C3982E00F35132 /* Futura-Normal.ttf in Resources */,
 				84A8021126C3982E00F35132 /* Futura-Book.ttf in Resources */,
+				8496BC8026F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84A8021226C3982E00F35132 /* CircularStd-Medium.otf in Resources */,
 				84A8021326C3982E00F35132 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC2A26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84A8021426C3982E00F35132 /* CircularStd-Bold.ttf in Resources */,
 				84A8021626C3982E00F35132 /* SFProText-Bold.ttf in Resources */,
 				84A8035826C3997C00F35132 /* GoogleService-Info.plist in Resources */,
@@ -10045,6 +10471,7 @@
 				84A8081526C3D31100F35132 /* Images.xcassets in Resources */,
 				84A8070B26C3D23700F35132 /* SFProDisplay-Regular.ttf in Resources */,
 				84A8070C26C3D23700F35132 /* Futura-Medium.ttf in Resources */,
+				8496BCD726F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84A8070D26C3D23700F35132 /* LaunchScreen.storyboard in Resources */,
 				84A8070E26C3D23700F35132 /* CircularStd-Book.otf in Resources */,
 				84A8070F26C3D23700F35132 /* Futura Hv BT.ttf in Resources */,
@@ -10056,8 +10483,10 @@
 				8455CA5C26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84A8071526C3D23700F35132 /* Futura-Normal.ttf in Resources */,
 				84A8071626C3D23700F35132 /* Futura-Book.ttf in Resources */,
+				8496BC8126F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84A8071726C3D23700F35132 /* CircularStd-Medium.otf in Resources */,
 				84A8071826C3D23700F35132 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC2B26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84A8071926C3D23700F35132 /* CircularStd-Bold.ttf in Resources */,
 				84A8071B26C3D23700F35132 /* SFProText-Bold.ttf in Resources */,
 				84A8083E26C3D47800F35132 /* GoogleService-Info.plist in Resources */,
@@ -10074,6 +10503,7 @@
 				84A80AFD26C3DD4B00F35132 /* Images.xcassets in Resources */,
 				84A80AD326C3DD2300F35132 /* HelloDeliver(Production).xcconfig in Resources */,
 				84A80A1626C3DAA200F35132 /* Futura-Medium.ttf in Resources */,
+				8496BCD826F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84A80A1726C3DAA200F35132 /* LaunchScreen.storyboard in Resources */,
 				84A80A1826C3DAA200F35132 /* CircularStd-Book.otf in Resources */,
 				84A80A1926C3DAA200F35132 /* Futura Hv BT.ttf in Resources */,
@@ -10085,8 +10515,10 @@
 				8455CA5D26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84A80A2026C3DAA200F35132 /* Futura-Book.ttf in Resources */,
 				84A80A2126C3DAA200F35132 /* CircularStd-Medium.otf in Resources */,
+				8496BC8226F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84A80A2226C3DAA200F35132 /* FuturaBT-Heavy.ttf in Resources */,
 				84A80A8126C3DB6B00F35132 /* HelloDeliver(Development).xcconfig in Resources */,
+				8496BC2C26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84A80A2326C3DAA200F35132 /* CircularStd-Bold.ttf in Resources */,
 				84A80A2526C3DAA200F35132 /* SFProText-Bold.ttf in Resources */,
 				84A80B2726C3E0D700F35132 /* GoogleService-Info.plist in Resources */,
@@ -10103,6 +10535,7 @@
 				84A80F9326C3FAF400F35132 /* Images.xcassets in Resources */,
 				84A80F1426C3FABC00F35132 /* HoganChef(Development).xcconfig in Resources */,
 				84A80ED026C3FA0B00F35132 /* Futura-Medium.ttf in Resources */,
+				8496BCD926F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84A80ED126C3FA0B00F35132 /* LaunchScreen.storyboard in Resources */,
 				84A80ED226C3FA0B00F35132 /* CircularStd-Book.otf in Resources */,
 				84A80ED326C3FA0B00F35132 /* Futura Hv BT.ttf in Resources */,
@@ -10114,8 +10547,10 @@
 				8455CA5E26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84A80ED926C3FA0B00F35132 /* Futura-Normal.ttf in Resources */,
 				84A80EDA26C3FA0B00F35132 /* Futura-Book.ttf in Resources */,
+				8496BC8326F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84A80EDB26C3FA0B00F35132 /* CircularStd-Medium.otf in Resources */,
 				84A80EDC26C3FA0B00F35132 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC2D26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84A80EDD26C3FA0B00F35132 /* CircularStd-Bold.ttf in Resources */,
 				84A80F6826C3FAE100F35132 /* HoganChef(Production).xcconfig in Resources */,
 				84A80EDF26C3FA0B00F35132 /* SFProText-Bold.ttf in Resources */,
@@ -10132,6 +10567,7 @@
 				84A8562C26E88F4C004CA54F /* Futura-Medium.ttf in Resources */,
 				84A8579326E8900B004CA54F /* HemptiFy(Development).xcconfig in Resources */,
 				84A8562D26E88F4C004CA54F /* LaunchScreen.storyboard in Resources */,
+				8496BD0226F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84A8562E26E88F4C004CA54F /* CircularStd-Book.otf in Resources */,
 				84A8562F26E88F4C004CA54F /* Futura Hv BT.ttf in Resources */,
 				84A8563026E88F4C004CA54F /* SFProText-Regular.ttf in Resources */,
@@ -10143,8 +10579,10 @@
 				84A8563726E88F4C004CA54F /* Eina02-Bold.ttf in Resources */,
 				84A8563826E88F4C004CA54F /* Futura-Book.ttf in Resources */,
 				84A857E726E89036004CA54F /* HemptiFy(Production).xcconfig in Resources */,
+				8496BCAC26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84A8563926E88F4C004CA54F /* CircularStd-Medium.otf in Resources */,
 				84A8563A26E88F4C004CA54F /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC5626F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84A8563B26E88F4C004CA54F /* CircularStd-Bold.ttf in Resources */,
 				84A8583D26E89133004CA54F /* GoogleService-Info.plist in Resources */,
 				84A8563E26E88F4C004CA54F /* SFProText-Bold.ttf in Resources */,
@@ -10161,6 +10599,7 @@
 				84ABE4B826C241DE00658CE6 /* Images.xcassets in Resources */,
 				84ABE3F826C2411C00658CE6 /* SFProDisplay-Regular.ttf in Resources */,
 				84ABE3F926C2411C00658CE6 /* Futura-Medium.ttf in Resources */,
+				8496BCD026F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84ABE3FA26C2411C00658CE6 /* LaunchScreen.storyboard in Resources */,
 				84ABE3FB26C2411C00658CE6 /* CircularStd-Book.otf in Resources */,
 				84ABE3FC26C2411C00658CE6 /* Futura Hv BT.ttf in Resources */,
@@ -10172,8 +10611,10 @@
 				8455CA5526DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84ABE40226C2411C00658CE6 /* Futura-Normal.ttf in Resources */,
 				84ABE40326C2411C00658CE6 /* Futura-Book.ttf in Resources */,
+				8496BC7A26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84ABE40426C2411C00658CE6 /* CircularStd-Medium.otf in Resources */,
 				84ABE40526C2411C00658CE6 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC2426F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84ABE40626C2411C00658CE6 /* CircularStd-Bold.ttf in Resources */,
 				84ABE40826C2411C00658CE6 /* SFProText-Bold.ttf in Resources */,
 				84ABE45426C241B000658CE6 /* Klickmat(Development).xcconfig in Resources */,
@@ -10189,6 +10630,8 @@
 				8455CA9926DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 				8455CADC26DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
 				84ABE6EB26C24ADF00658CE6 /* Futura-Medium.ttf in Resources */,
+				8496BC2526F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
+				8496BCD126F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84ABE6EC26C24ADF00658CE6 /* LaunchScreen.storyboard in Resources */,
 				84ABE6ED26C24ADF00658CE6 /* CircularStd-Book.otf in Resources */,
 				84ABE6EE26C24ADF00658CE6 /* Futura Hv BT.ttf in Resources */,
@@ -10200,6 +10643,7 @@
 				84ABE6F426C24ADF00658CE6 /* Futura-Normal.ttf in Resources */,
 				84ABE6F526C24ADF00658CE6 /* Futura-Book.ttf in Resources */,
 				84ABE6F626C24ADF00658CE6 /* CircularStd-Medium.otf in Resources */,
+				8496BC7B26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84ABE6F726C24ADF00658CE6 /* FuturaBT-Heavy.ttf in Resources */,
 				84ABE6F826C24ADF00658CE6 /* CircularStd-Bold.ttf in Resources */,
 				84ABE6FA26C24ADF00658CE6 /* SFProText-Bold.ttf in Resources */,
@@ -10215,6 +10659,7 @@
 				84ABEA3426C2577500658CE6 /* Images.xcassets in Resources */,
 				84ABE9AF26C256AB00658CE6 /* Futura-Medium.ttf in Resources */,
 				84ABE9B026C256AB00658CE6 /* LaunchScreen.storyboard in Resources */,
+				8496BCD226F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84ABE9B126C256AB00658CE6 /* CircularStd-Book.otf in Resources */,
 				84ABE9B226C256AB00658CE6 /* Futura Hv BT.ttf in Resources */,
 				84ABE9B326C256AB00658CE6 /* SFProText-Regular.ttf in Resources */,
@@ -10226,8 +10671,10 @@
 				8455CA5726DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84ABE9BA26C256AB00658CE6 /* CircularStd-Medium.otf in Resources */,
 				84ABE9BB26C256AB00658CE6 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC7C26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84ABE9BC26C256AB00658CE6 /* CircularStd-Bold.ttf in Resources */,
 				84ABE9BE26C256AB00658CE6 /* SFProText-Bold.ttf in Resources */,
+				8496BC2626F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84ABE9CA26C2573300658CE6 /* Rerak(Development).xcconfig in Resources */,
 				84ABEA1026C2575E00658CE6 /* Rerak(Production).xcconfig in Resources */,
 				84B06FAA26C25989006C0FC7 /* GoogleService-Info.plist in Resources */,
@@ -10244,6 +10691,7 @@
 				84AE317326BACC02005257F6 /* Futura-Medium.ttf in Resources */,
 				84AE317426BACC02005257F6 /* LaunchScreen.storyboard in Resources */,
 				84AE317526BACC02005257F6 /* CircularStd-Book.otf in Resources */,
+				8496BCC826F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84AE317626BACC02005257F6 /* Futura Hv BT.ttf in Resources */,
 				84AE317726BACC02005257F6 /* SFProText-Regular.ttf in Resources */,
 				84AE317826BACC02005257F6 /* SFProText-SemiBold.ttf in Resources */,
@@ -10255,8 +10703,10 @@
 				8455CA4D26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84AE317D26BACC02005257F6 /* Futura-Book.ttf in Resources */,
 				84AE317E26BACC02005257F6 /* CircularStd-Medium.otf in Resources */,
+				8496BC7226F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84AE317F26BACC02005257F6 /* FuturaBT-Heavy.ttf in Resources */,
 				84AE320826BACF99005257F6 /* Getme(Production).xcconfig in Resources */,
+				8496BC1C26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84AE318026BACC02005257F6 /* CircularStd-Bold.ttf in Resources */,
 				84AE322226BAD02A005257F6 /* GoogleService-Info.plist in Resources */,
 				84AE318226BACC02005257F6 /* SFProText-Bold.ttf in Resources */,
@@ -10273,6 +10723,7 @@
 				84B1189026E61A5700497B86 /* SFProDisplay-Regular.ttf in Resources */,
 				84B1189126E61A5700497B86 /* Futura-Medium.ttf in Resources */,
 				84B1189226E61A5700497B86 /* LaunchScreen.storyboard in Resources */,
+				8496BCFF26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84B11A8A26E61E9B00497B86 /* Toda(Development).xcconfig in Resources */,
 				84B1189326E61A5700497B86 /* CircularStd-Book.otf in Resources */,
 				84B1189426E61A5700497B86 /* Futura Hv BT.ttf in Resources */,
@@ -10284,8 +10735,10 @@
 				84B1189B26E61A5700497B86 /* Futura-Normal.ttf in Resources */,
 				84B1189C26E61A5700497B86 /* Eina02-Bold.ttf in Resources */,
 				84B1189D26E61A5700497B86 /* Futura-Book.ttf in Resources */,
+				8496BCA926F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84B1189E26E61A5700497B86 /* CircularStd-Medium.otf in Resources */,
 				84B1189F26E61A5700497B86 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC5326F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84B118A026E61A5700497B86 /* CircularStd-Bold.ttf in Resources */,
 				84B11B7D26E61F8900497B86 /* GoogleService-Info.plist in Resources */,
 				84B118A326E61A5700497B86 /* SFProText-Bold.ttf in Resources */,
@@ -10302,6 +10755,7 @@
 				84B3695626C2759600DF67B0 /* Images.xcassets in Resources */,
 				84B367BD26C264CF00DF67B0 /* Futura-Medium.ttf in Resources */,
 				84B367BE26C264CF00DF67B0 /* LaunchScreen.storyboard in Resources */,
+				8496BCD326F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84B367BF26C264CF00DF67B0 /* CircularStd-Book.otf in Resources */,
 				84B367C026C264CF00DF67B0 /* Futura Hv BT.ttf in Resources */,
 				84B367C126C264CF00DF67B0 /* SFProText-Regular.ttf in Resources */,
@@ -10313,8 +10767,10 @@
 				8455CA5826DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84B367C626C264CF00DF67B0 /* Futura-Normal.ttf in Resources */,
 				84B367C726C264CF00DF67B0 /* Futura-Book.ttf in Resources */,
+				8496BC7D26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84B367C826C264CF00DF67B0 /* CircularStd-Medium.otf in Resources */,
 				84B367C926C264CF00DF67B0 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC2726F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84B367CA26C264CF00DF67B0 /* CircularStd-Bold.ttf in Resources */,
 				84B367CC26C264CF00DF67B0 /* SFProText-Bold.ttf in Resources */,
 				84B3693126C2757E00DF67B0 /* Yoho(Production).xcconfig in Resources */,
@@ -10331,6 +10787,7 @@
 				84B36E1F26C28C6700DF67B0 /* Images.xcassets in Resources */,
 				84B36D0426C28AED00DF67B0 /* Futura-Medium.ttf in Resources */,
 				84B36D0526C28AED00DF67B0 /* LaunchScreen.storyboard in Resources */,
+				8496BCD426F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84B36D0626C28AED00DF67B0 /* CircularStd-Book.otf in Resources */,
 				84B36D0726C28AED00DF67B0 /* Futura Hv BT.ttf in Resources */,
 				84B36D0826C28AED00DF67B0 /* SFProText-Regular.ttf in Resources */,
@@ -10342,8 +10799,10 @@
 				8455CA5926DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84B36D0C26C28AED00DF67B0 /* Plists in Resources */,
 				84B36D0D26C28AED00DF67B0 /* Futura-Normal.ttf in Resources */,
+				8496BC7E26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84B36D0E26C28AED00DF67B0 /* Futura-Book.ttf in Resources */,
 				84B36D0F26C28AED00DF67B0 /* CircularStd-Medium.otf in Resources */,
+				8496BC2826F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84B36D1026C28AED00DF67B0 /* FuturaBT-Heavy.ttf in Resources */,
 				84B36D1126C28AED00DF67B0 /* CircularStd-Bold.ttf in Resources */,
 				84B36D1326C28AED00DF67B0 /* SFProText-Bold.ttf in Resources */,
@@ -10360,6 +10819,7 @@
 				84B370B126C2954400DF67B0 /* Images.xcassets in Resources */,
 				84B3703E26C2951500DF67B0 /* DoctaTransportation(Development).xcconfig in Resources */,
 				84B36FFE26C2930300DF67B0 /* Futura-Medium.ttf in Resources */,
+				8496BCD526F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84B36FFF26C2930300DF67B0 /* LaunchScreen.storyboard in Resources */,
 				84B3700026C2930300DF67B0 /* CircularStd-Book.otf in Resources */,
 				84B3700126C2930300DF67B0 /* Futura Hv BT.ttf in Resources */,
@@ -10371,8 +10831,10 @@
 				8455CA5A26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84B3700726C2930300DF67B0 /* Futura-Normal.ttf in Resources */,
 				84B3700826C2930300DF67B0 /* Futura-Book.ttf in Resources */,
+				8496BC7F26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84B3700926C2930300DF67B0 /* CircularStd-Medium.otf in Resources */,
 				84B3700A26C2930300DF67B0 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC2926F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84B3700B26C2930300DF67B0 /* CircularStd-Bold.ttf in Resources */,
 				84B3708A26C2953000DF67B0 /* DoctaTransportation(Production).xcconfig in Resources */,
 				84B3700D26C2930300DF67B0 /* SFProText-Bold.ttf in Resources */,
@@ -10389,6 +10851,7 @@
 				84B8D13E26F0D8050099E3A0 /* GoogleService-Info.plist in Resources */,
 				84B8CE4D26F0D4940099E3A0 /* SFProDisplay-Regular.ttf in Resources */,
 				84B8D0DF26F0D5EB0099E3A0 /* Gorillas(Development).xcconfig in Resources */,
+				8496BD0926F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84B8CE4E26F0D4940099E3A0 /* Futura-Medium.ttf in Resources */,
 				84B8CE5026F0D4940099E3A0 /* LaunchScreen.storyboard in Resources */,
 				84B8CE5126F0D4940099E3A0 /* CircularStd-Book.otf in Resources */,
@@ -10400,8 +10863,10 @@
 				84B8CE5826F0D4940099E3A0 /* Plists in Resources */,
 				84B8CE5926F0D4940099E3A0 /* Futura-Normal.ttf in Resources */,
 				84B8CE5A26F0D4940099E3A0 /* Eina02-Bold.ttf in Resources */,
+				8496BCB326F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84B8CE5B26F0D4940099E3A0 /* Futura-Book.ttf in Resources */,
 				84B8CE5D26F0D4940099E3A0 /* CircularStd-Medium.otf in Resources */,
+				8496BC5D26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84B8CE5E26F0D4940099E3A0 /* FuturaBT-Heavy.ttf in Resources */,
 				84B8CE5F26F0D4940099E3A0 /* CircularStd-Bold.ttf in Resources */,
 				84B8CE6326F0D4940099E3A0 /* SFProText-Bold.ttf in Resources */,
@@ -10418,6 +10883,7 @@
 				84BEA2B426DCECE300390501 /* Futura-Medium.ttf in Resources */,
 				84BEA2B526DCECE300390501 /* LaunchScreen.storyboard in Resources */,
 				84BEA2B626DCECE300390501 /* CircularStd-Book.otf in Resources */,
+				8496BCF526F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84BEA2B726DCECE300390501 /* Futura Hv BT.ttf in Resources */,
 				84BEA2B826DCECE300390501 /* SFProText-Regular.ttf in Resources */,
 				84BEA2B926DCECE300390501 /* SFProText-SemiBold.ttf in Resources */,
@@ -10429,8 +10895,10 @@
 				8455CA7A26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84BEA2BE26DCECE300390501 /* Futura-Normal.ttf in Resources */,
 				84BEA46F26DCEE2100390501 /* FlyingHorse(Development).xcconfig in Resources */,
+				8496BC9F26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84BEA2BF26DCECE300390501 /* Futura-Book.ttf in Resources */,
 				84BEA2C026DCECE300390501 /* CircularStd-Medium.otf in Resources */,
+				8496BC4926F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84BEA2C126DCECE300390501 /* FuturaBT-Heavy.ttf in Resources */,
 				84BEA2C226DCECE300390501 /* CircularStd-Bold.ttf in Resources */,
 				84BEA2C526DCECE300390501 /* SFProText-Bold.ttf in Resources */,
@@ -10447,6 +10915,7 @@
 				84C0679526B2A4EA0096845B /* Images.xcassets in Resources */,
 				84C0673F26B2A4AC0096845B /* Futura-Medium.ttf in Resources */,
 				84C0674026B2A4AC0096845B /* LaunchScreen.storyboard in Resources */,
+				8496BCC326F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84C0674126B2A4AC0096845B /* CircularStd-Book.otf in Resources */,
 				84C0674226B2A4AC0096845B /* Futura Hv BT.ttf in Resources */,
 				84C0674326B2A4AC0096845B /* SFProText-Regular.ttf in Resources */,
@@ -10458,8 +10927,10 @@
 				8455CA4826DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84C0674826B2A4AC0096845B /* Futura-Normal.ttf in Resources */,
 				84C0674926B2A4AC0096845B /* Futura-Book.ttf in Resources */,
+				8496BC6D26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84C0674A26B2A4AC0096845B /* CircularStd-Medium.otf in Resources */,
 				84C0674B26B2A4AC0096845B /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC1726F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84C0674C26B2A4AC0096845B /* CircularStd-Bold.ttf in Resources */,
 				84C0678026B2A4D50096845B /* ClickEat(Production).xcconfig in Resources */,
 				84C0674E26B2A4AC0096845B /* SFProText-Bold.ttf in Resources */,
@@ -10476,6 +10947,7 @@
 				84CDD8A226BC0BF9001FE3EE /* Images.xcassets in Resources */,
 				84CDD80026BC0A9A001FE3EE /* SFProDisplay-Regular.ttf in Resources */,
 				84CDD80126BC0A9A001FE3EE /* Futura-Medium.ttf in Resources */,
+				8496BCCA26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84CDD80226BC0A9A001FE3EE /* LaunchScreen.storyboard in Resources */,
 				84CDD80326BC0A9A001FE3EE /* CircularStd-Book.otf in Resources */,
 				84CDD80426BC0A9A001FE3EE /* Futura Hv BT.ttf in Resources */,
@@ -10487,8 +10959,10 @@
 				8455CA4F26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84CDD80A26BC0A9A001FE3EE /* Futura-Normal.ttf in Resources */,
 				84CDD80B26BC0A9A001FE3EE /* Futura-Book.ttf in Resources */,
+				8496BC7426F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84CDD80C26BC0A9A001FE3EE /* CircularStd-Medium.otf in Resources */,
 				84CDD80D26BC0A9A001FE3EE /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC1E26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84CDD80E26BC0A9A001FE3EE /* CircularStd-Bold.ttf in Resources */,
 				84CDD8BE26BC0D1E001FE3EE /* GoogleService-Info.plist in Resources */,
 				84CDD81026BC0A9A001FE3EE /* SFProText-Bold.ttf in Resources */,
@@ -10505,6 +10979,7 @@
 				84D1F10326BD735900530751 /* Images.xcassets in Resources */,
 				84D1F02726BD700000530751 /* Futura-Medium.ttf in Resources */,
 				84D1F02826BD700000530751 /* LaunchScreen.storyboard in Resources */,
+				8496BCCB26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84D1F02926BD700000530751 /* CircularStd-Book.otf in Resources */,
 				84D1F02A26BD700000530751 /* Futura Hv BT.ttf in Resources */,
 				84D1F09326BD72F800530751 /* Carlitoo(Development).xcconfig in Resources */,
@@ -10516,8 +10991,10 @@
 				8455CA5026DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84D1F03126BD700000530751 /* Futura-Book.ttf in Resources */,
 				84D1F0CB26BD732000530751 /* Carlitoo(Production).xcconfig in Resources */,
+				8496BC7526F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84D1F03226BD700000530751 /* CircularStd-Medium.otf in Resources */,
 				84D1F03326BD700000530751 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC1F26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84D1F03426BD700000530751 /* CircularStd-Bold.ttf in Resources */,
 				84D1F13B26BD74EA00530751 /* GoogleService-Info.plist in Resources */,
 				84D1F03626BD700000530751 /* SFProText-Bold.ttf in Resources */,
@@ -10534,6 +11011,7 @@
 				84D47CEE26C1349700EE9EB5 /* Futura-Medium.ttf in Resources */,
 				84D47CEF26C1349700EE9EB5 /* LaunchScreen.storyboard in Resources */,
 				84D47CF026C1349700EE9EB5 /* CircularStd-Book.otf in Resources */,
+				8496BCCC26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84D47CF126C1349700EE9EB5 /* Futura Hv BT.ttf in Resources */,
 				84D47CF226C1349700EE9EB5 /* SFProText-Regular.ttf in Resources */,
 				84D47D7B26C1363900EE9EB5 /* Tasmeem(Production).xcconfig in Resources */,
@@ -10545,8 +11023,10 @@
 				8455CA5126DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84D47CF726C1349700EE9EB5 /* Futura-Normal.ttf in Resources */,
 				84D47CF826C1349700EE9EB5 /* Futura-Book.ttf in Resources */,
+				8496BC7626F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84D47CF926C1349700EE9EB5 /* CircularStd-Medium.otf in Resources */,
 				84D47D4126C135CB00EE9EB5 /* Tasmeem(Development).xcconfig in Resources */,
+				8496BC2026F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84D47CFA26C1349700EE9EB5 /* FuturaBT-Heavy.ttf in Resources */,
 				84D47CFB26C1349700EE9EB5 /* CircularStd-Bold.ttf in Resources */,
 				84D47CFD26C1349700EE9EB5 /* SFProText-Bold.ttf in Resources */,
@@ -10563,6 +11043,7 @@
 				84D4808E26C142D300EE9EB5 /* TheHouse(Production).xcconfig in Resources */,
 				84D47FC326C1416800EE9EB5 /* Futura-Medium.ttf in Resources */,
 				84D47FC426C1416800EE9EB5 /* LaunchScreen.storyboard in Resources */,
+				8496BCCD26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84D47FC526C1416800EE9EB5 /* CircularStd-Book.otf in Resources */,
 				84D47FC626C1416800EE9EB5 /* Futura Hv BT.ttf in Resources */,
 				84D4805226C142B000EE9EB5 /* TheHouse(Development).xcconfig in Resources */,
@@ -10574,8 +11055,10 @@
 				8455CA5226DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84D47FCB26C1416800EE9EB5 /* Plists in Resources */,
 				84D47FCC26C1416800EE9EB5 /* Futura-Normal.ttf in Resources */,
+				8496BC7726F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84D47FCD26C1416800EE9EB5 /* Futura-Book.ttf in Resources */,
 				84D47FCE26C1416800EE9EB5 /* CircularStd-Medium.otf in Resources */,
+				8496BC2126F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84D47FCF26C1416800EE9EB5 /* FuturaBT-Heavy.ttf in Resources */,
 				84D47FD026C1416800EE9EB5 /* CircularStd-Bold.ttf in Resources */,
 				84D47FD226C1416800EE9EB5 /* SFProText-Bold.ttf in Resources */,
@@ -10592,6 +11075,7 @@
 				84D4832826C150F200EE9EB5 /* Images.xcassets in Resources */,
 				84D4829126C14F5800EE9EB5 /* Futura-Medium.ttf in Resources */,
 				84D4829226C14F5800EE9EB5 /* LaunchScreen.storyboard in Resources */,
+				8496BCCE26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84D482CA26C1508A00EE9EB5 /* LastMinuteDress(Development).xcconfig in Resources */,
 				84D4829326C14F5800EE9EB5 /* CircularStd-Book.otf in Resources */,
 				84D4829426C14F5800EE9EB5 /* Futura Hv BT.ttf in Resources */,
@@ -10603,8 +11087,10 @@
 				8455CA5326DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84D4829A26C14F5800EE9EB5 /* Futura-Normal.ttf in Resources */,
 				84D4829B26C14F5800EE9EB5 /* Futura-Book.ttf in Resources */,
+				8496BC7826F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84D4829C26C14F5800EE9EB5 /* CircularStd-Medium.otf in Resources */,
 				84D4829D26C14F5800EE9EB5 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC2226F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84D4829E26C14F5800EE9EB5 /* CircularStd-Bold.ttf in Resources */,
 				84D484D826C1566500EE9EB5 /* LastMinuteDress(Production).xcconfig in Resources */,
 				84D482A026C14F5800EE9EB5 /* SFProText-Bold.ttf in Resources */,
@@ -10621,6 +11107,7 @@
 				84D4870026C161C800EE9EB5 /* Futura-Medium.ttf in Resources */,
 				84D4870126C161C800EE9EB5 /* LaunchScreen.storyboard in Resources */,
 				84D4870226C161C800EE9EB5 /* CircularStd-Book.otf in Resources */,
+				8496BCCF26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84D4870326C161C800EE9EB5 /* Futura Hv BT.ttf in Resources */,
 				84D4870426C161C800EE9EB5 /* SFProText-Regular.ttf in Resources */,
 				84D4870526C161C800EE9EB5 /* SFProText-SemiBold.ttf in Resources */,
@@ -10632,8 +11119,10 @@
 				8455CA5426DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84D4870926C161C800EE9EB5 /* Futura-Normal.ttf in Resources */,
 				84D4870A26C161C800EE9EB5 /* Futura-Book.ttf in Resources */,
+				8496BC7926F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84D4870B26C161C800EE9EB5 /* CircularStd-Medium.otf in Resources */,
 				84D487BC26C1633700EE9EB5 /* Images.xcassets in Resources */,
+				8496BC2326F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84D4870C26C161C800EE9EB5 /* FuturaBT-Heavy.ttf in Resources */,
 				84D4870D26C161C800EE9EB5 /* CircularStd-Bold.ttf in Resources */,
 				84D4870F26C161C800EE9EB5 /* SFProText-Bold.ttf in Resources */,
@@ -10650,6 +11139,7 @@
 				84D8C365269F03220020B09A /* Futura-Medium.ttf in Resources */,
 				84D8C366269F03220020B09A /* LaunchScreen.storyboard in Resources */,
 				84D8C367269F03220020B09A /* CircularStd-Book.otf in Resources */,
+				8496BCBA26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84D8C368269F03220020B09A /* Futura Hv BT.ttf in Resources */,
 				84D8C369269F03220020B09A /* SFProText-Regular.ttf in Resources */,
 				84D8C36A269F03220020B09A /* SFProText-SemiBold.ttf in Resources */,
@@ -10661,8 +11151,10 @@
 				8455CA3F26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84D8C371269F03220020B09A /* FuturaBT-Heavy.ttf in Resources */,
 				84D8C3CB269F04A70020B09A /* YogoFood(Production).xcconfig in Resources */,
+				8496BC6426F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84D8C3CC269F04A70020B09A /* Images.xcassets in Resources */,
 				84D8C372269F03220020B09A /* CircularStd-Bold.ttf in Resources */,
+				8496BC0E26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84D8C374269F03220020B09A /* SFProText-Bold.ttf in Resources */,
 				84D8C3CD269F04A70020B09A /* YogoFood(Development).xcconfig in Resources */,
 				84D8C3E3269F06AA0020B09A /* GoogleService-Info.plist in Resources */,
@@ -10679,6 +11171,7 @@
 				84DD35EF26CA43E100F02437 /* Futura-Medium.ttf in Resources */,
 				84DD35F026CA43E100F02437 /* LaunchScreen.storyboard in Resources */,
 				84DD35F126CA43E100F02437 /* CircularStd-Book.otf in Resources */,
+				8496BCE326F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84DD35F226CA43E100F02437 /* Futura Hv BT.ttf in Resources */,
 				84DD35F326CA43E100F02437 /* SFProText-Regular.ttf in Resources */,
 				84DD35F426CA43E100F02437 /* SFProText-SemiBold.ttf in Resources */,
@@ -10690,8 +11183,10 @@
 				8455CA6826DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84DD35F926CA43E100F02437 /* Futura-Normal.ttf in Resources */,
 				84DD35FA26CA43E100F02437 /* Futura-Book.ttf in Resources */,
+				8496BC8D26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84DD35FB26CA43E100F02437 /* CircularStd-Medium.otf in Resources */,
 				84DD35FC26CA43E100F02437 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC3726F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84DD35FD26CA43E100F02437 /* CircularStd-Bold.ttf in Resources */,
 				84DD36D826CA44E800F02437 /* Africanize(Development).xcconfig in Resources */,
 				84DD360026CA43E100F02437 /* SFProText-Bold.ttf in Resources */,
@@ -10704,7 +11199,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				84E175DF26C651E000E71F11 /* SFProDisplay-Regular.ttf in Resources */,
+				8496BC8726F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				8455CAE826DFBC2300C27F72 /* Eina02-Regular.ttf in Resources */,
+				8496BC3126F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
+				8496BCDD26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84E175E026C651E000E71F11 /* Futura-Medium.ttf in Resources */,
 				84E175E126C651E000E71F11 /* LaunchScreen.storyboard in Resources */,
 				84E175E226C651E000E71F11 /* CircularStd-Book.otf in Resources */,
@@ -10738,6 +11236,7 @@
 				84ECE26A26A7FA8F009A0F8C /* Futura-Medium.ttf in Resources */,
 				84ECE26B26A7FA8F009A0F8C /* LaunchScreen.storyboard in Resources */,
 				84ECE26C26A7FA8F009A0F8C /* CircularStd-Book.otf in Resources */,
+				8496BCBC26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84ECE29C26A7FADD009A0F8C /* InstaMobile(Development).xcconfig in Resources */,
 				84ECE26D26A7FA8F009A0F8C /* Futura Hv BT.ttf in Resources */,
 				84ECE26E26A7FA8F009A0F8C /* SFProText-Regular.ttf in Resources */,
@@ -10749,8 +11248,10 @@
 				8455CA4126DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84ECE27426A7FA8F009A0F8C /* Futura-Book.ttf in Resources */,
 				84ECE27526A7FA8F009A0F8C /* CircularStd-Medium.otf in Resources */,
+				8496BC6626F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84ECE27626A7FA8F009A0F8C /* FuturaBT-Heavy.ttf in Resources */,
 				846EA7E626A9393C000073CE /* Images.xcassets in Resources */,
+				8496BC1026F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84ECE27726A7FA8F009A0F8C /* CircularStd-Bold.ttf in Resources */,
 				84ECE27926A7FA8F009A0F8C /* SFProText-Bold.ttf in Resources */,
 				84ECE3BD26A80385009A0F8C /* GoogleService-Info.plist in Resources */,
@@ -10767,6 +11268,7 @@
 				84F464EF26A6F14700D378D5 /* SFProDisplay-Regular.ttf in Resources */,
 				84F464F026A6F14700D378D5 /* Futura-Medium.ttf in Resources */,
 				84F464F126A6F14700D378D5 /* LaunchScreen.storyboard in Resources */,
+				8496BCBB26F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84F464F226A6F14700D378D5 /* CircularStd-Book.otf in Resources */,
 				84F464F326A6F14700D378D5 /* Futura Hv BT.ttf in Resources */,
 				84F464F426A6F14700D378D5 /* SFProText-Regular.ttf in Resources */,
@@ -10778,8 +11280,10 @@
 				8455CA4026DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84F464F926A6F14700D378D5 /* Futura-Normal.ttf in Resources */,
 				84F464FA26A6F14700D378D5 /* Futura-Book.ttf in Resources */,
+				8496BC6526F1B862001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84F464FB26A6F14700D378D5 /* CircularStd-Medium.otf in Resources */,
 				84F464FC26A6F14700D378D5 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC0F26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84F4660526A6F98200D378D5 /* GoogleService-Info.plist in Resources */,
 				84F464FD26A6F14700D378D5 /* CircularStd-Bold.ttf in Resources */,
 				84F464FF26A6F14700D378D5 /* SFProText-Bold.ttf in Resources */,
@@ -10796,6 +11300,7 @@
 				84FE246026EF515D00849F64 /* Futura-Medium.ttf in Resources */,
 				84FE246126EF515D00849F64 /* LaunchScreen.storyboard in Resources */,
 				84FE246226EF515D00849F64 /* CircularStd-Book.otf in Resources */,
+				8496BD0826F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84FE246326EF515D00849F64 /* Futura Hv BT.ttf in Resources */,
 				84FE246426EF515D00849F64 /* SFProText-Regular.ttf in Resources */,
 				84FE263926EF528200849F64 /* WeEat(Production).xcconfig in Resources */,
@@ -10807,8 +11312,10 @@
 				84FE246A26EF515D00849F64 /* Futura-Normal.ttf in Resources */,
 				84FE246B26EF515D00849F64 /* Eina02-Bold.ttf in Resources */,
 				84FE246C26EF515D00849F64 /* Futura-Book.ttf in Resources */,
+				8496BCB226F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84FE246D26EF515D00849F64 /* CircularStd-Medium.otf in Resources */,
 				84FE246E26EF515D00849F64 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC5C26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84FE246F26EF515D00849F64 /* CircularStd-Bold.ttf in Resources */,
 				84FE269526EF533300849F64 /* GoogleService-Info.plist in Resources */,
 				84FE247226EF515D00849F64 /* SFProText-Bold.ttf in Resources */,
@@ -10825,6 +11332,7 @@
 				84FFF3ED26D6520700F2B059 /* Futura-Medium.ttf in Resources */,
 				84FFF3EE26D6520700F2B059 /* LaunchScreen.storyboard in Resources */,
 				84FFF3EF26D6520700F2B059 /* CircularStd-Book.otf in Resources */,
+				8496BCF126F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84FFF3F026D6520700F2B059 /* Futura Hv BT.ttf in Resources */,
 				84FFF3F126D6520700F2B059 /* SFProText-Regular.ttf in Resources */,
 				84FFF3F226D6520700F2B059 /* SFProText-SemiBold.ttf in Resources */,
@@ -10836,8 +11344,10 @@
 				8455CA7626DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84FFF3F626D6520700F2B059 /* Plists in Resources */,
 				84FFF3F726D6520700F2B059 /* Futura-Normal.ttf in Resources */,
+				8496BC9B26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84FFF3F826D6520700F2B059 /* Futura-Book.ttf in Resources */,
 				84FFF3F926D6520700F2B059 /* CircularStd-Medium.otf in Resources */,
+				8496BC4526F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84FFF3FA26D6520700F2B059 /* FuturaBT-Heavy.ttf in Resources */,
 				84FFF3FB26D6520700F2B059 /* CircularStd-Bold.ttf in Resources */,
 				84FFF3FE26D6520700F2B059 /* SFProText-Bold.ttf in Resources */,
@@ -10854,6 +11364,7 @@
 				84FFF96B26D6652C00F2B059 /* Futura-Medium.ttf in Resources */,
 				84FFF96C26D6652C00F2B059 /* LaunchScreen.storyboard in Resources */,
 				84FFFB5826D666C300F2B059 /* LoopWhole(Production).xcconfig in Resources */,
+				8496BCF226F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84FFF96D26D6652C00F2B059 /* CircularStd-Book.otf in Resources */,
 				84FFF96E26D6652C00F2B059 /* Futura Hv BT.ttf in Resources */,
 				84FFF96F26D6652C00F2B059 /* SFProText-Regular.ttf in Resources */,
@@ -10865,8 +11376,10 @@
 				8455CA7726DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84FFF97526D6652C00F2B059 /* Futura-Normal.ttf in Resources */,
 				84FFF97626D6652C00F2B059 /* Futura-Book.ttf in Resources */,
+				8496BC9C26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84FFFAD226D6669D00F2B059 /* LoopWhole(Development).xcconfig in Resources */,
 				84FFF97726D6652C00F2B059 /* CircularStd-Medium.otf in Resources */,
+				8496BC4626F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84FFF97826D6652C00F2B059 /* FuturaBT-Heavy.ttf in Resources */,
 				84FFF97926D6652C00F2B059 /* CircularStd-Bold.ttf in Resources */,
 				84FFF97C26D6652C00F2B059 /* SFProText-Bold.ttf in Resources */,
@@ -10883,6 +11396,7 @@
 				84FFFF3F26D672E600F2B059 /* Futura-Medium.ttf in Resources */,
 				84FFFF4026D672E600F2B059 /* LaunchScreen.storyboard in Resources */,
 				84FFFF4126D672E600F2B059 /* CircularStd-Book.otf in Resources */,
+				8496BCF326F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				84FFFF4226D672E600F2B059 /* Futura Hv BT.ttf in Resources */,
 				84FFFF4326D672E600F2B059 /* SFProText-Regular.ttf in Resources */,
 				84FFFF4426D672E600F2B059 /* SFProText-SemiBold.ttf in Resources */,
@@ -10894,8 +11408,10 @@
 				8455CA7826DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84FFFF4926D672E600F2B059 /* Futura-Normal.ttf in Resources */,
 				84FFFF4A26D672E600F2B059 /* Futura-Book.ttf in Resources */,
+				8496BC9D26F1B863001AAB4C /* Metropolis-SemiBold.otf in Resources */,
 				84FFFF4B26D672E600F2B059 /* CircularStd-Medium.otf in Resources */,
 				84FFFF4C26D672E600F2B059 /* FuturaBT-Heavy.ttf in Resources */,
+				8496BC4726F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				84FFFF4D26D672E600F2B059 /* CircularStd-Bold.ttf in Resources */,
 				84FFFF9F26D6742D00F2B059 /* YogoLift(Development).xcconfig in Resources */,
 				84FFFF5026D672E600F2B059 /* SFProText-Bold.ttf in Resources */,
