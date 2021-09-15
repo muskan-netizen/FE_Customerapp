@@ -479,4 +479,5 @@ export default {
   COUPON: 'COUPON',
   AVAILABLE_PROMO_CODE: 'Codes promotionnels disponibles',
   EXPIRES: 'Expire',
+  NO_ORDERS_FOUND: 'No Orders Found',
 };

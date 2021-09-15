@@ -418,12 +418,13 @@ export default function Home({route, navigation}) {
           code: appData?.profile?.code,
         },
         true,
+        currencies?.primary_currency,
+        languages?.primary_language,
       )
       .then((res) => {
         updateState({isRefreshing: false});
       })
       .catch((error) => {
-        console.log('im error+++', error);
         updateState({isRefreshing: false});
       });
   };

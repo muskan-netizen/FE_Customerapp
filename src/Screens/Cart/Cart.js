@@ -150,7 +150,7 @@ export default function Cart({navigation, route}) {
       navigation.navigate(screenName, {data});
     };
 
-    console.log("cart itemss",cartItems)
+  console.log('cart itemss', cartItems);
 
   // styles funcation
   // const fontFamily = appStyle?.fontSizeData;
@@ -325,7 +325,7 @@ export default function Cart({navigation, route}) {
   const addDeleteCartItems = (item, index, type) => {
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
-    console.log("item",item)
+    console.log('item', item);
     // return;
     if (type == 1) {
       quanitity = Number(itemToUpdate.quantity) + 1;
@@ -339,8 +339,8 @@ export default function Cart({navigation, route}) {
       data['quantity'] = quanitity;
       data['cart_product_id'] = itemToUpdate?.id;
       data['type'] = dineInType;
-      console.log('sendng api data',data)
-      
+      console.log('sendng api data', data);
+
       actions
         .increaseDecreaseItemQty(data, {
           code: appData?.profile?.code,
@@ -742,7 +742,15 @@ export default function Cart({navigation, route}) {
               return (
                 <View key={inx}>
                   <View style={[styles.cartItemMainContainer]}>
-                    <View style={styles.cartItemImage}>
+                    <View
+                      style={[
+                        styles.cartItemImage,
+                        {
+                          backgroundColor: isDarkMode
+                            ? MyDarkTheme.colors.lightDark
+                            : colors.white,
+                        },
+                      ]}>
                       <FastImage
                         source={
                           i?.cartImg != '' && i?.cartImg != null

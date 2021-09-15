@@ -329,7 +329,15 @@ export default function VariantAddons({
                 marginBottom: moderateScaleVertical(10),
               }}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={styles.variantValue}>
+                <Text
+                  style={[
+                    styles.variantValue,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    },
+                  ]}>
                   {i?.title
                     ? i.title.charAt(0).toUpperCase() + i.title.slice(1)
                     : ''}
@@ -337,7 +345,15 @@ export default function VariantAddons({
               </View>
 
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={styles.variantValue}>
+                <Text
+                  style={[
+                    styles.variantValue,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    },
+                  ]}>
                   {`${currencies?.primary_currency?.symbol}${(
                     Number(i?.multiplier) * Number(i?.price)
                   ).toFixed(2)}`}

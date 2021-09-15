@@ -12,7 +12,10 @@ import {
 import {useSelector} from 'react-redux';
 import CustomTopTabBar from '../../Components/CustomTopTabBar';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import {
+  loaderOne,
+  loaderSix,
+} from '../../Components/Loaders/AnimatedLoaderFiles';
 import OrderCardVendorComponent2 from '../../Components/OrderCardVendorComponent2';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -38,6 +41,7 @@ import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import * as RNLocalize from 'react-native-localize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import LottieView from 'lottie-react-native';
 
 export default function MyOrders({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -433,7 +437,29 @@ export default function MyOrders({navigation}) {
         onEndReachedThreshold={0.5}
         ItemSeparatorComponent={() => <View style={{height: 20}} />}
         ListFooterComponent={() => <View style={{height: 90}} />}
-        // ListEmptyComponent={<ListEmptyProduct />}
+        ListEmptyComponent={() => (
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <LottieView
+              source={loaderSix}
+              autoPlay
+              loop
+              style={{
+                height: moderateScaleVertical(100),
+                width: moderateScale(100),
+              }}
+            />
+            <Text
+              style={[
+                styles.textStyle,
+                {
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+                },
+              ]}>
+              {strings.NO_ORDERS_FOUND}
+            </Text>
+          </View>
+        )}
       />
 
       <Modal
