@@ -50,7 +50,7 @@ export default function Signup({navigation}) {
   const [state, setState] = useState({
     isLoading: false,
     callingCode: appData?.profile.country?.phonecode
-      ? appData?.profile.country?.phonecode
+      ? appData?.profile?.country?.phonecode
       : '91',
     cca2: appData?.profile?.country?.code
       ? appData?.profile?.country?.code

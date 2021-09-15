@@ -175,7 +175,14 @@ export default function ChooseAddressModal({
       transparent={true}
       isVisible={isVisible}
       animationType={'none'}
-      style={styles.modalContainer}
+      style={[
+        styles.modalContainer,
+        {
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.lightDark
+            : colors.white,
+        },
+      ]}
       onLayout={(event) => {
         updateState({viewHeight: event.nativeEvent.layout.height});
       }}>
@@ -193,7 +200,14 @@ export default function ChooseAddressModal({
       <ScrollView
         showsVerticalScrollIndicator={false}
         bounces={false}
-        style={[styles.modalMainViewContainer]}>
+        style={[
+          styles.modalMainViewContainer,
+          {
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : colors.white,
+          },
+        ]}>
         <View
           style={
             isDarkMode
