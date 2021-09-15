@@ -107,7 +107,7 @@ export function stylesData({fontFamily}) {
       backgroundColor: colors.white,
       borderTopLeftRadius: moderateScale(35.5),
       borderTopRightRadius: moderateScale(35.5),
-      paddingVertical: moderateScaleVertical(16),
+      paddingVertical: moderateScaleVertical(20),
 
       ...Elevations[15],
     },

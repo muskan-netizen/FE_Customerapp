@@ -93,4 +93,5 @@ export default {
   redC: '#EC5837',
   borderColorNew: '#EAEAEA',
   textGreyNew: '#1E2E4D',
+  greyColor1: '#fafafa',
 };

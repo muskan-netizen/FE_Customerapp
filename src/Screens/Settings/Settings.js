@@ -145,7 +145,7 @@ export default function Settings({route, navigation}) {
         primary_language: data,
       };
 
-      updateState({isLoading: true});
+      // updateState({isLoading: true});
       setItem('setPrimaryLanguage', languagesData);
       setTimeout(() => {
         updateState({isLoading: false});
@@ -415,7 +415,10 @@ export default function Settings({route, navigation}) {
           appLanguages?.primary_language?.label ||
           ''
         }
-        containerStyle={{height: 40, marginTop: moderateScaleVertical(5)}}
+        containerStyle={{
+          height: 40,
+          marginTop: moderateScaleVertical(5),
+        }}
         style={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.lightDark
@@ -440,8 +443,10 @@ export default function Settings({route, navigation}) {
         dropDownStyle={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.lightDark
-            : '#fafafa',
-          height: 120,
+            : colors.grey,
+          minHeight: moderateScaleVertical(40),
+          maxHeight: moderateScaleVertical(145),
+
           width: width - moderateScale(40),
           alignSelf: 'center',
         }}
