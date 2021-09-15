@@ -303,4 +303,6 @@ export default {
   icMap: require('../assets/images/RoyoorderNewImages/ic_map.png'),
   icCelebActive1: require('../assets/images/ic_celeb3.png'),
   icCelebInActive1: require('../assets/images/ic_celebGrey1.png'),
+  brandsActive1: require('../assets/images/ic_tag1.png'),
+  brandsInActive1: require('../assets/images/ic_tagGrey1.png'),
 };

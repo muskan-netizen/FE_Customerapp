@@ -373,7 +373,7 @@ export default {
   WISHLIST: 'Liste de souhaits',
   LIGHT: 'Clair',
   DARK: 'Sombre',
-  DINE_IN: 'Dîner Réserver une table',
+  DINE_IN: `Dîner Réserver une table`,
   DELIVERY: 'Livraison',
   TAKEAWAY: 'Emporter',
   NOW: 'Maintenant',

@@ -75,38 +75,40 @@ export default function TabRoutes(props) {
       />
     );
   }
-  if (appStyle?.tabBarLayout !== 5) {
-    if (checkForBrand) {
-      brandTab = (
-        <Tab.Screen
-          component={BrandStack}
-          name={navigationStrings.BRANDS}
-          options={{
-            tabBarLabel: strings.BRANDS,
-            tabBarIcon: ({focused, tintColor}) => (
-              <Image
-                style={[
-                  {tintColor: tintColor},
-                  appStyle?.tabBarLayout === 2 ||
-                    (appStyle?.tabBarLayout === 4 && {height: 20, width: 20}),
-                ]}
-                source={
-                  appStyle?.tabBarLayout === 4
-                    ? focused
-                      ? imagePath.icBrandActive
-                      : imagePath.icBrandInActive
-                    : focused
-                    ? imagePath.tabCActive
-                    : imagePath.tabCInActive
-                }
-                // source={focused ? imagePath.tabCActive : imagePath.tabCInActive}
-              />
-            ),
-            //  unmountOnBlur: true,
-          }}
-        />
-      );
-    }
+  if (checkForBrand) {
+    brandTab = (
+      <Tab.Screen
+        component={BrandStack}
+        name={navigationStrings.BRANDS}
+        options={{
+          tabBarLabel: strings.BRANDS,
+          tabBarIcon: ({focused, tintColor}) => (
+            <Image
+              style={[
+                {tintColor: tintColor},
+                appStyle?.tabBarLayout === 2 ||
+                  (appStyle?.tabBarLayout === 4 && {height: 20, width: 20}),
+              ]}
+              source={
+                appStyle?.tabBarLayout === 4
+                  ? focused
+                    ? imagePath.icBrandActive
+                    : imagePath.icBrandInActive
+                  : appStyle?.tabBarLayout === 5
+                  ? focused
+                    ? imagePath.brandsActive1
+                    : imagePath.brandsInActive1
+                  : focused
+                  ? imagePath.tabCActive
+                  : imagePath.tabCInActive
+              }
+              // source={focused ? imagePath.tabCActive : imagePath.tabCInActive}
+            />
+          ),
+          //  unmountOnBlur: true,
+        }}
+      />
+    );
   }
 
   return (
