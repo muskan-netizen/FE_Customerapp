@@ -425,7 +425,8 @@ export default {
     'Des demandes de restauration ? Nous ferons de notre mieux pour le transmettre',
   TRACK_ORDER: 'Suivi de commande',
   LOADING: 'CHARGEMENT EN COURS',
-  CUSTOM: 'personnalisé',
+  CUSTOM: `Montant
+personnalisé`,
   AMOUNT: 'Montant',
   ADD: 'Ajouter',
   EDIT: 'Éditer',

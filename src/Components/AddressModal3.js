@@ -423,13 +423,7 @@ export default function AddressModal3({
         <View
           style={{
             flexDirection: 'row',
-            width: '100%',
             alignItems: 'center',
-            marginBottom: 20,
-            borderBottomWidth: 1,
-            borderColor: isDarkMode
-              ? MyDarkTheme.colors.text
-              : colors.borderLight,
             marginTop: moderateScale(7),
             marginHorizontal: moderateScale(7),
           }}>
@@ -460,6 +454,14 @@ export default function AddressModal3({
             }
           />
         </View>
+        <View
+          style={{
+            marginBottom: 20,
+            borderBottomWidth: 1,
+            borderColor: isDarkMode
+              ? MyDarkTheme.colors.text
+              : colors.borderLight,
+          }}></View>
 
         {/* <View style={styles.textInputContainerAddress}>
             <TextInput

@@ -422,7 +422,7 @@ export default {
   YOUR_ORDER_NUMBER: 'رقم الطلب الخاص بك هو',
   ANY_RESTAURANT_REQUESTS: 'لديك أي طلبات مطعم؟ سنبذل قصارى جهدنا لتوصيلها',
   TRACK_ORDER: 'تتبع الطلب',
-  CUSTOM: 'مخصص',
+  CUSTOM: 'المبلغ المخصص',
   ADD: 'إضافة',
   EDIT: 'تعديل',
   DELETE: 'حذف',
