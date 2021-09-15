@@ -197,6 +197,8 @@ export default function Products({route, navigation}) {
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
+  console.log("device info+++",DeviceInfo.getUniqueId())
+
   // useFocusEffect(
   //   React.useCallback(() => {
   //     console.log('one');
