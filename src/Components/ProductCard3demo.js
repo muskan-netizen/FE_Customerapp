@@ -237,7 +237,7 @@ export default function ProductCard3({
               marginTop: selectedIndex == index ? moderateScaleVertical(8) : 0,
               alignItems: 'center',
             }}>
-            {!!data?.variant[0]?.check_if_in_cart && data?.variant[0]?.check_if_in_cart.length > 0 || !!data?.qty ?
+            {!!data?.variant[0]?.check_if_in_cart_app && data?.variant[0]?.check_if_in_cart_app.length > 0 || !!data?.qty ?
               <View
                 style={{
                   borderRadius: moderateScale(5),
@@ -270,7 +270,7 @@ export default function ProductCard3({
                       color: colors.white,
                       marginHorizontal: 16,
                     }}>
-                    {data?.qty || data?.variant[0].check_if_in_cart[0].quantity}
+                    {data?.qty || data?.variant[0].check_if_in_cart_app[0].quantity}
                   </Text>
                 </View>
                 <TouchableOpacity

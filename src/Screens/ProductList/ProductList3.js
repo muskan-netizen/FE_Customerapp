@@ -655,21 +655,21 @@ export default function Products({route, navigation}) {
   const addDeleteCartItems = (item, type) => {
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
-    //!!data?.variant[0]?.check_if_in_cart && data?.variant[0]?.check_if_in_cart.length > 0 || !!data?.qty ?
-    console.log('check if in cart', itemToUpdate?.variant[0]?.check_if_in_cart);
+    //!!data?.variant[0]?.check_if_in_cart_app && data?.variant[0]?.check_if_in_cart_app.length > 0 || !!data?.qty ?
+    console.log('check if in cart', itemToUpdate?.variant[0]?.check_if_in_cart_app);
     let isExistqty = itemToUpdate?.qty
       ? itemToUpdate?.qty
-      : !!itemToUpdate?.variant[0]?.check_if_in_cart &&
-        itemToUpdate.variant[0]?.check_if_in_cart[0].quantity;
+      : !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
+        itemToUpdate.variant[0]?.check_if_in_cart_app[0].quantity;
     let isExistproductId =
-      !!itemToUpdate?.variant[0]?.check_if_in_cart &&
-      itemToUpdate.variant[0]?.check_if_in_cart.length
-        ? itemToUpdate.variant[0]?.check_if_in_cart[0].id
+      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
+      itemToUpdate.variant[0]?.check_if_in_cart_app.length
+        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].id
         : itemToUpdate?.cart_product_id;
     let isExistCartId =
-      !!itemToUpdate?.variant[0]?.check_if_in_cart &&
-      itemToUpdate.variant[0]?.check_if_in_cart.length
-        ? itemToUpdate.variant[0]?.check_if_in_cart[0].cart_id
+      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
+      itemToUpdate.variant[0]?.check_if_in_cart_app.length
+        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
         : cartId;
 
     console.log('item', item);
@@ -727,14 +727,14 @@ export default function Products({route, navigation}) {
   const removeProductFromCart = (itemToUpdate) => {
     let data = {};
     let isExistproductId =
-      !!itemToUpdate?.variant[0]?.check_if_in_cart &&
-      itemToUpdate.variant[0]?.check_if_in_cart.length > 0
-        ? itemToUpdate.variant[0]?.check_if_in_cart[0].id
+      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
+      itemToUpdate.variant[0]?.check_if_in_cart_app.length > 0
+        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].id
         : itemToUpdate?.cart_product_id;
     let isExistCartId =
-      !!itemToUpdate?.variant[0]?.check_if_in_cart &&
-      itemToUpdate.variant[0]?.check_if_in_cart.length > 0
-        ? itemToUpdate.variant[0]?.check_if_in_cart[0].cart_id
+      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
+      itemToUpdate.variant[0]?.check_if_in_cart_app.length > 0
+        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
         : cartId;
     console.log('item', itemToUpdate);
 
@@ -758,7 +758,7 @@ export default function Products({route, navigation}) {
               qty: null,
               cart_product_id: res.data.cart_product_id,
               variant: itemToUpdate?.variant.map((val, i) => {
-                return {...val, check_if_in_cart: []};
+                return {...val, check_if_in_cart_app: []};
               }),
             };
           }
