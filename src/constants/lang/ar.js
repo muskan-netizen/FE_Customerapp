@@ -456,4 +456,12 @@ export default {
   COUPON: 'قسيمة',
   AVAILABLE_PROMO_CODE: 'الرموز الترويجية المتاحة',
   EXPIRES: 'تنتهي',
+  ORDER_DETAILS: 'Order details',
+  ORDER_NUMBER:"Order Number",
+  PAYMENT_METHOD:"Payment Method",
+  PLACED_ON:"Placed On",
+  PAYMENT_SUMMARY:"Payment Summary",
+  SUBTOTAL:"Subtotal",
+  DISCOUNT:"Discount",
+  TOTAL:"Total"
 };

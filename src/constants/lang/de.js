@@ -449,4 +449,12 @@ export default {
   COUPON: 'COUPON',
   AVAILABLE_PROMO_CODE: 'Available Promo codes',
   EXPIRES: 'Expires',
+  ORDER_DETAILS: 'Order details',
+  ORDER_NUMBER:"Order Number",
+  PAYMENT_METHOD:"Payment Method",
+  PLACED_ON:"Placed On",
+  PAYMENT_SUMMARY:"Payment Summary",
+  SUBTOTAL:"Subtotal",
+  DISCOUNT:"Discount",
+  TOTAL:"Total"
 };
