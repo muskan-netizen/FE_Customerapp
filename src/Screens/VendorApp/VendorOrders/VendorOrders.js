@@ -26,6 +26,7 @@ export default function VendorOrders({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route.params;
+  const {storeSelectedVendor} = useSelector((state) => state?.order);
   console.log(paramData, 'paramData');
   const [state, setState] = useState({
     tabBarData: [
@@ -65,6 +66,7 @@ export default function VendorOrders({navigation, route}) {
   const {appData, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
+
   const {themeColors, themeLayouts} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
@@ -209,6 +211,8 @@ export default function VendorOrders({navigation, route}) {
     });
   };
   useEffect(() => {
+    actions.savedSelectedVendor(paramData?.selectedVendorFrom);
+
     updateState({
       selectedVendor: paramData?.selectedVendorFrom,
       isLoading: true,
@@ -225,8 +229,11 @@ export default function VendorOrders({navigation, route}) {
       source={loaderOne}
       isLoadingB={isLoading || isLoadingB}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+        }
         centerTitle={selectedVendor?.name || ''}
+        showImageAlongwithTitle={true}
         showImageAlongwithTitle={true}
         // rightIcon={imagePath.cartShop}
         onPressCenterTitle={() => _reDirectToVendorList()}

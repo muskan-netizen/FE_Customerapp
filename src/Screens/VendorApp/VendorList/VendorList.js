@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
 import Header from '../../../Components/Header';
@@ -18,6 +25,7 @@ import {
 import {getImageUrl} from '../../../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
+import strings from '../../../constants/lang';
 
 // import OrderCardComponent from './OrderCardComponent';
 
@@ -67,8 +75,11 @@ export default function VendorList({navigation, route}) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
-        leftIcon={imagePath.back}
-        centerTitle={'Available Stores'}
+        leftIcon={
+          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+        }
+        centerTitle={strings.AVAILABLE_STORE}
+        textStyle={{fontSize: textScale(13), fontFamily: fontFamily.medium}}
         headerStyle={
           isDarkMode
             ? {backgroundColor: MyDarkTheme.colors.background}
@@ -77,10 +88,12 @@ export default function VendorList({navigation, route}) {
       />
       <View style={{...commonStyles.headerTopLine}} />
 
-      <View
-        style={{
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
           marginTop: moderateScaleVertical(20),
           marginHorizontal: moderateScale(10),
+          paddingBottom: moderateScaleVertical(30),
         }}>
         {allVendors && allVendors.length
           ? allVendors.map((i, inx) => {
@@ -146,7 +159,7 @@ export default function VendorList({navigation, route}) {
               );
             })
           : null}
-      </View>
+      </ScrollView>
     </WrapperContainer>
   );
 }
@@ -171,7 +184,7 @@ export function stylesData({fontFamily}) {
     vendorTitleStyle: {
       marginLeft: moderateScale(10),
       color: colors.textGreyI,
-      fontFamily: fontFamily.bold,
+      fontFamily: fontFamily.medium,
       fontSize: textScale(12),
     },
   });

@@ -49,11 +49,7 @@ export default function AutoUpLabelTxtInput({
           // borderBottomWidth: StyleSheet.hairlineWidth,
           ...txtInputStyle,
         }}
-        theme={
-          undnerlinecolor
-            ? {colors: {primary: undnerlinecolor}}
-            : {colors: {primary: themeColors.primary_color}}
-        }
+        theme={{colors: {primary: themeColors.primary_color}}}
         onChangeText={onChangeText}></TextInput>
     </View>
   );

@@ -52,28 +52,28 @@ export default function StepIndicators({
       case 0: {
         iconConfig =
           stepStatus == 'finished'
-            ? imagePath.acceptActive
+            ? imagePath.acceptInactive
             : imagePath.acceptInactive;
         break;
       }
       case 1: {
         iconConfig =
           stepStatus == 'finished'
-            ? imagePath.deliverActive
+            ? imagePath.deliverInactive
             : imagePath.deliverInactive;
         break;
       }
       case 2: {
         iconConfig =
           stepStatus == 'finished'
-            ? imagePath.onmywayActive
+            ? imagePath.onmywayInactive
             : imagePath.onmywayInactive;
         break;
       }
       case 3: {
         iconConfig =
           stepStatus == 'finished'
-            ? imagePath.processingActive
+            ? imagePath.processingInactive
             : imagePath.processingInactive;
         break;
       }

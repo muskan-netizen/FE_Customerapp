@@ -44,7 +44,7 @@ const Header3 = ({
   onPressCenterTitle,
   leftIconStyle,
 }) => {
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle, appData} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -66,32 +66,34 @@ const Header3 = ({
         }}>
         <Image source={leftIcon} />
       </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginLeft: moderateScale(15),
-        }}
-        onPress={() =>
-          navigation.navigate(navigationStrings.LOCATION, {
-            type: 'Home1',
-          })
-        }>
-        <Image source={imagePath.redLocation} />
-        <Text
-          numberOfLines={1}
+      {!!appData?.profile?.preferences?.is_hyperlocal && (
+        <TouchableOpacity
           style={{
-            paddingLeft: 5,
-            // height:20,
-            lineHeight: 20,
-            fontFamily: fontFamily.regular,
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
-            fontSize: textScale(10),
-            width: '70%',
-          }}>
-          {location?.address}
-        </Text>
-      </TouchableOpacity>
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginLeft: moderateScale(15),
+          }}
+          onPress={() =>
+            navigation.navigate(navigationStrings.LOCATION, {
+              type: 'Home1',
+            })
+          }>
+          <Image source={imagePath.redLocation} />
+          <Text
+            numberOfLines={1}
+            style={{
+              paddingLeft: 5,
+              // height:20,
+              lineHeight: 20,
+              fontFamily: fontFamily.regular,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+              fontSize: textScale(10),
+              width: '70%',
+            }}>
+            {location?.address}
+          </Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
