@@ -19,6 +19,7 @@ import validations from '../../utils/validations';
 import stylesFunc from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import colors from '../../styles/colors';
 
 export default function ForgotPassword({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
