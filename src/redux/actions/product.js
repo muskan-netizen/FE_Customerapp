@@ -11,6 +11,7 @@ import {
   ADD_PRODUCT_TO_CART,
   GET_ALL_PRODUCTSBY_STORE_ID,
   MY_WALLET,
+  CHECK_VENDORS,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -210,3 +211,17 @@ export function getProductBySpecificId(query = '', data = {}, headers = {}) {
       });
   });
 }
+
+
+export function checkSingleVendor(data = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(CHECK_VENDORS, data)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
