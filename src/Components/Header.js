@@ -174,10 +174,10 @@ export function stylesFunc({fontFamily}) {
 
     textStyle: {
       color: colors.black2Color,
-      fontSize: textScale(17),
+      fontSize: textScale(16),
       lineHeight: textScale(28),
       textAlign: 'center',
-      fontFamily: fontFamily.bold,
+      fontFamily: fontFamily.medium,
     },
   });
   return styles;

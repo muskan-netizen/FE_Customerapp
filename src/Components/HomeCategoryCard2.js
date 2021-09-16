@@ -68,9 +68,9 @@ export default function HomeCategoryCard2({
         <Text
           numberOfLines={1}
           style={{
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             fontFamily: fontFamily.regular,
-            fontSize: textScale(10),
+            fontSize: textScale(12),
           }}>
           {data.name}
         </Text>

@@ -79,9 +79,7 @@ export default function DashBoardFive({
   );
 
   const _renderVendors = ({item}) => (
-
     <MarketCard3 data={item} onPress={() => onPressCategory(item)} />
-
   );
   const _changeVendorListStyle = () =>
     updateState({isVendorColumnList: !isVendorColumnList});
@@ -221,9 +219,7 @@ export default function DashBoardFive({
               style={[
                 styles.exploreStoresTxt,
                 {
-                  color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.textGreyB,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 },
               ]}>
               {strings.EXPLORE_STORES}

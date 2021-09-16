@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {colors} from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
 import Carousel from 'react-native-snap-carousel';
 import {moderateScale, width} from '../styles/responsiveSize';
@@ -126,6 +127,7 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(15),
     overflow: 'hidden',
     marginRight: moderateScale(10),
+
     // height: width * 0.4,
     // width: width - 20,
   },

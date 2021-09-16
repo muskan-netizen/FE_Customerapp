@@ -38,6 +38,7 @@ export default ({fontFamily, themeColors}) => {
     deliveryLocationAndTime: {
       ...commonStyles.mediumFont14,
       color: colors.textGreyB,
+      fontSize: textScale(12),
     },
     clearCartView: {
       height: moderateScaleVertical(30),
@@ -70,6 +71,7 @@ export default ({fontFamily, themeColors}) => {
       marginRight: moderateScale(20),
       color: colors.blackB,
       opacity: 1,
+      fontFamily: fontFamily.medium,
     },
     offersView: {
       backgroundColor: colors.lightGreyBgB,
@@ -279,7 +281,7 @@ export default ({fontFamily, themeColors}) => {
     address: {
       fontFamily: fontFamily.medium,
       color: colors.lightGreyBgColor,
-      fontSize: textScale(10),
+      fontSize: textScale(12),
       marginHorizontal: moderateScale(10),
     },
     imageStyle: {height: width / 4.5, width: width / 4.5},
