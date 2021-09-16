@@ -424,9 +424,11 @@ export default function Filter({route, navigation}) {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Image
                 source={
-                  appStyle?.homePageLayout === 2
-                    ? imagePath.backArrow
-                    : imagePath.back
+                  appStyle?.homePageLayout === 2 ? 
+                  imagePath.backArrow:
+                  appStyle?.homePageLayout === 3?
+                  imagePath.icBackb :
+                   imagePath.back
                 }
                 style={
                   isDarkMode

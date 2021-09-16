@@ -68,7 +68,12 @@ const Header = ({
               customLeft()
             ) : (
               <TouchableOpacity
-                hitSlop={hitSlopProp}
+                hitSlop={{
+                  top: 50,
+                  right: 50,
+                  left: 50,
+                  bottom: 50,
+                }}
                 activeOpacity={0.7}
                 onPress={
                   !!onPressLeft

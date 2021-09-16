@@ -282,7 +282,7 @@ export default ({fontFamily, themeColors}) => {
       fontFamily: fontFamily.medium,
       color: colors.lightGreyBgColor,
       fontSize: textScale(12),
-      marginHorizontal: moderateScale(10),
+      marginHorizontal: moderateScale(2),
     },
     imageStyle: {height: width / 4.5, width: width / 4.5},
 

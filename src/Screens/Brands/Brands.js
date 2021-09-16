@@ -62,7 +62,11 @@ export default function Brand({navigation}) {
       <Header
         centerTitle={strings.BRANDS}
         leftIcon={
-          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
+         appStyle?.homePageLayout === 2 ? 
+          imagePath.backArrow
+          :appStyle?.homePageLayout === 3?
+          imagePath.icBackb :
+           imagePath.back
         }
         rightIcon={imagePath.search}
         onPressRight={() =>

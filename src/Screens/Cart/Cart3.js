@@ -1569,7 +1569,7 @@ export default function Cart({navigation, route}) {
           onPress={() =>
             !!userData?.auth_token
               ? moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
-              : showError(strings.UNAUTHORIZED_MESSAGE)
+              : navigation.navigate(navigationStrings.OUTER_SCREEN, {})
           }
           style={
             isDarkMode
@@ -1809,7 +1809,7 @@ export default function Cart({navigation, route}) {
             <View style={[styles.topLable, {marginTop: moderateScale(20)}]}>
               <View
                 style={{
-                  flex: 0.35,
+                  flex: 0.3,
                   flexDirection: 'row',
                   alignItems: 'center',
                 }}>
@@ -1837,7 +1837,7 @@ export default function Cart({navigation, route}) {
 
               <TouchableOpacity
                 style={{
-                  flex: 0.7,
+                  flex: 0.8,
                   // flexWrap: 'wrap',
                   flexDirection: 'row',
                   alignItems: 'center',

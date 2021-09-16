@@ -426,7 +426,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
               borderRadius: moderateScale(11),
               elevation: 2,
             }}>
-            <Image source={imagePath.backArrow} />
+            <Image source={imagePath.icBackb} />
           </TouchableOpacity>
 
           <SearchBar

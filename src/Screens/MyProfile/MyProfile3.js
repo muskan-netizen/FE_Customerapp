@@ -864,7 +864,7 @@ export default function MyProfile3({route, navigation}) {
       statusBarColor={colors.backgroundGreyC}
       source={loaderOne}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={imagePath.icBackb}
         centerTitle={strings.MY_PROFILE}
         headerStyle={{
           backgroundColor: isDarkMode
