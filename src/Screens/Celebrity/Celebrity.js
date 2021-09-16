@@ -157,12 +157,17 @@ export default function Celebrity({navigation}) {
       <Header
         centerTitle={strings.CELEBRITIES}
         leftIcon={
-        appStyle?.homePageLayout === 2 ? 
-          imagePath.backArrow:appStyle?.homePageLayout === 3?
-          imagePath.icBackb :
-           imagePath.back
+          appStyle?.homePageLayout === 2
+            ? imagePath.backArrow
+            : appStyle?.homePageLayout === 3
+            ? imagePath.icBackb
+            : imagePath.back
         }
-        rightIcon={imagePath.search}
+        rightIcon={
+          appStyle?.homePageLayout === 3
+            ? imagePath.icSearchb
+            : imagePath.search
+        }
         onPressRight={() =>
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }

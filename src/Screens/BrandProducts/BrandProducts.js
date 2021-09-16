@@ -481,10 +481,11 @@ export default function BrandProducts({route, navigation}) {
       source={loaderOne}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 2 ? 
-          imagePath.backArrow:appStyle?.homePageLayout === 3?
-          imagePath.icBackb :
-           imagePath.back
+          appStyle?.homePageLayout === 2
+            ? imagePath.backArrow
+            : appStyle?.homePageLayout === 3
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={brand.name || brand.translation[0].title}
         headerStyle={
@@ -492,7 +493,11 @@ export default function BrandProducts({route, navigation}) {
             ? {backgroundColor: MyDarkTheme.colors.background}
             : {backgroundColor: colors.white}
         }
-        rightIcon={imagePath.search}
+        rightIcon={
+          appStyle?.homePageLayout === 3
+            ? imagePath.icSearchb
+            : imagePath.search
+        }
         onPressRight={() =>
           moveToNewScreen(navigationStrings.SEARCHPRODUCTOVENDOR, {
             type: staticStrings.BRAND,

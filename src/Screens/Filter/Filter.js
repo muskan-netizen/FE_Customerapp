@@ -412,7 +412,6 @@ export default function Filter({route, navigation}) {
       statusBarColor={colors.white}
       isLoadingB={isLoading}
       source={loaderOne}>
-   
       <Header
         customLeft={() => (
           <View
@@ -424,11 +423,11 @@ export default function Filter({route, navigation}) {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Image
                 source={
-                  appStyle?.homePageLayout === 2 ? 
-                  imagePath.backArrow:
-                  appStyle?.homePageLayout === 3?
-                  imagePath.icBackb :
-                   imagePath.back
+                  appStyle?.homePageLayout === 2
+                    ? imagePath.backArrow
+                    : appStyle?.homePageLayout === 3
+                    ? imagePath.icBackb
+                    : imagePath.back
                 }
                 style={
                   isDarkMode
@@ -480,7 +479,11 @@ export default function Filter({route, navigation}) {
           onPress={moveToNewScreen(navigationStrings.SEARCHPRODUCTOVENDOR)}>
           <Image
             style={isDarkMode ? {tintColor: MyDarkTheme.colors.text} : null}
-            source={imagePath.search}
+            source={
+              appStyle?.homePageLayout === 3
+                ? imagePath.icSearchb
+                : imagePath.search
+            }
           />
         </TouchableOpacity>
       </View>

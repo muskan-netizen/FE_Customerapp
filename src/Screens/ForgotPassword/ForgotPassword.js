@@ -103,7 +103,11 @@ export default function ForgotPassword({navigation}) {
           onPress={() => navigation.goBack(null)}
           style={{alignSelf: 'flex-start'}}>
           <Image
-            source={imagePath.back}
+            source={
+              appStyle?.homePageLayout === 3
+                ? imagePath.icBackb
+                : imagePath.back
+            }
             style={
               isDarkMode
                 ? {

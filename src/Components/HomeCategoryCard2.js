@@ -70,7 +70,7 @@ export default function HomeCategoryCard2({
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             fontFamily: fontFamily.regular,
-            fontSize: textScale(12),
+            fontSize: textScale(11),
           }}>
           {data.name}
         </Text>
