@@ -84,7 +84,7 @@ export default function MarketCard3({
               marginHorizontal: moderateScale(5),
               textAlign:'left'
             }}>
-            0.2 km | 30 mins
+            0.2 KM | 30 mins
           </Text>
         </View>
 

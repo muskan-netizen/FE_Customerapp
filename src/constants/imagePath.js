@@ -305,4 +305,8 @@ export default {
   icCelebInActive1: require('../assets/images/ic_celebGrey1.png'),
   brandsActive1: require('../assets/images/ic_tag1.png'),
   brandsInActive1: require('../assets/images/ic_tagGrey1.png'),
+  taxiUserAccount: require('../assets/images/TAXIAPPIMAGES/ic_account.png'),
+  savedLocationImage: require('../assets/images/TAXIAPPIMAGES/ic_fav.png'),
+  RecentLocationImage: require('../assets/images/TAXIAPPIMAGES/ic_saved.png'),
+  mapNavigation: require('../assets/images/TAXIAPPIMAGES/ic_nav.png'),
 };

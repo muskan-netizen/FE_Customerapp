@@ -987,12 +987,13 @@ export default function Products({route, navigation}) {
                 </View>
                 <View style={{marginLeft: moderateScale(12)}}>
                   <Text
+                  numberOfLines={2}
                     animation="fadeIn"
                     style={{
                       color: isDarkMode
                         ? MyDarkTheme.colors.text
                         : colors.black,
-                      fontSize: moderateScale(16),
+                      fontSize: moderateScale(20),
                       fontFamily: fontFamily.medium,
                     }}>
                     {data?.categoryInfo?.name || data?.name}
@@ -1016,7 +1017,7 @@ export default function Products({route, navigation}) {
                       style={{
                         color: isDarkMode
                           ? MyDarkTheme.colors.text
-                          : colors.blackOpacity43,
+                          : colors.blackOpacity66,
                         fontSize: moderateScale(11),
                         fontFamily: fontFamily.regular,
                         marginVertical: moderateScaleVertical(6),

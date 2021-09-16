@@ -2,6 +2,24 @@ require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
 platform :ios, '11.0'
+#
+#
+#
+
+
+#RoyoOrder Target
+target 'RoyoOrder' do
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  config = use_native_modules!
+  use_react_native!(:path => config["reactNativePath"])
+  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  pod 'Stripe', '~> 21.7.0'
+  pod 'GoogleMaps', '~> 3.1.0'
+
+end
 
 
 
@@ -15,6 +33,8 @@ target 'RoyoOrder' do
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
   pod 'Stripe', '~> 21.7.0'
+  pod 'react-native-google-maps', :path => '../node_modules/react-native-maps'
+
 end
 
 #Runrun Target
@@ -335,7 +355,7 @@ target 'LastMinuteDress' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Specialhalal Target
@@ -347,7 +367,7 @@ target 'Specialhalal' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Klickmat Target
@@ -359,7 +379,7 @@ target 'Klickmat' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 
@@ -373,7 +393,7 @@ target 'Rerak' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Yoho Target
@@ -385,7 +405,7 @@ target 'Yoho' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Glamsouq Target
@@ -397,7 +417,7 @@ target 'Glamsouq' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #DoctaTransportation Target
@@ -409,7 +429,7 @@ target 'DoctaTransportation' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #WashValley Target
@@ -421,7 +441,7 @@ target 'WashValley' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #EquaMD Target
@@ -433,7 +453,7 @@ target 'EquaMD' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #HelloDeliver Target
@@ -445,7 +465,7 @@ target 'HelloDeliver' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 
@@ -459,7 +479,7 @@ target 'HoganChef' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 
@@ -472,7 +492,7 @@ target 'Servze' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Travo Target
@@ -484,7 +504,7 @@ target 'Travo' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Cabdelivr Target
@@ -496,7 +516,7 @@ target 'Cabdelivr' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Drus Target
@@ -508,7 +528,7 @@ target 'Drus' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Yahu Target
@@ -520,7 +540,7 @@ target 'Yahu' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #ZuzuClean Target
@@ -532,7 +552,7 @@ target 'ZuzuClean' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 
@@ -545,7 +565,7 @@ target 'TowTrek' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #ArenaGrub Target
@@ -557,7 +577,7 @@ target 'ArenaGrub' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Jet Target
@@ -569,7 +589,7 @@ target 'Jet' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Africanize Target
@@ -581,7 +601,7 @@ target 'Africanize' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Yummiidash Target
@@ -593,7 +613,7 @@ target 'Yummiidash' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Markita Target
@@ -605,7 +625,7 @@ target 'Markita' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #SirVU Target
@@ -617,7 +637,7 @@ target 'SirVU' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Ublue Target
@@ -629,7 +649,7 @@ target 'Ublue' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #MsTechy Target
@@ -641,7 +661,7 @@ target 'MsTechy' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Senshive Target
@@ -653,7 +673,7 @@ target 'Senshive' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Ridemate Target
@@ -665,7 +685,7 @@ target 'Ridemate' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Codiner Target
@@ -677,7 +697,7 @@ target 'Codiner' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Housekeeper4Hire Target
@@ -689,7 +709,7 @@ target 'Housekeeper4Hire' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #HairstonExpress Target
@@ -701,7 +721,7 @@ target 'HairstonExpress' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #DiamondDashers Target
@@ -713,7 +733,7 @@ target 'DiamondDashers' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #DestinationOps Target
@@ -725,7 +745,7 @@ target 'DestinationOps' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #CarHop Target
@@ -737,7 +757,7 @@ target 'CarHop' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Vici Target
@@ -749,7 +769,7 @@ target 'Vici' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #LoopWhole Target
@@ -761,7 +781,7 @@ target 'LoopWhole' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #YogoLift Target
@@ -773,7 +793,7 @@ target 'YogoLift' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Fleety Target
@@ -785,7 +805,7 @@ target 'Fleety' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #FlyingHorse Target
@@ -797,7 +817,7 @@ target 'FlyingHorse' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Errand Target
@@ -809,7 +829,7 @@ target 'Errand' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #PartnerProject Target
@@ -821,7 +841,7 @@ target 'PartnerProject' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Menus Target
@@ -833,7 +853,7 @@ target 'Menus' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 #DoorStep Target
 target 'DoorStep' do
@@ -844,7 +864,7 @@ target 'DoorStep' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #SunshineRideshare Target
@@ -856,7 +876,7 @@ target 'SunshineRideshare' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Autotek Target
@@ -868,7 +888,7 @@ target 'Autotek' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #WeGotit Target
@@ -880,7 +900,7 @@ target 'WeGotit' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 #Survuhs Target
 target 'Survuhs' do
@@ -891,7 +911,7 @@ target 'Survuhs' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #IGoLux Target
@@ -903,7 +923,7 @@ target 'IGoLux' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Toda Target
@@ -915,7 +935,7 @@ target 'Toda' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 #YourLaundryApp Target
 target 'YourLaundryApp' do
@@ -926,7 +946,7 @@ target 'YourLaundryApp' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #MOBI Target
@@ -938,7 +958,7 @@ target 'MOBI' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 #HemptiFy Target
 target 'HemptiFy' do
@@ -949,7 +969,7 @@ target 'HemptiFy' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Sharu Target
@@ -961,7 +981,7 @@ target 'Sharu' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 #SMCompany Target
 target 'SMCompany' do
@@ -972,7 +992,7 @@ target 'SMCompany' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Totum4U Target
@@ -984,7 +1004,7 @@ target 'Totum4U' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #HMC Target
@@ -996,7 +1016,7 @@ target 'HMC' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Groupy Target
@@ -1008,7 +1028,7 @@ target 'Groupy' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #WeEat Target
@@ -1020,7 +1040,7 @@ target 'WeEat' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 
 #Gorillas Target
@@ -1032,7 +1052,7 @@ target 'Gorillas' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  
+
 end
 post_install do |installer|
 

@@ -18,6 +18,7 @@ import TabRoutesVendor from './TabRoutesVendor';
 import {AppearanceProvider, useColorScheme} from 'react-native-appearance';
 import UserInterfaceStyle from 'react-native-user-interface-style';
 import colors from '../styles/colors';
+import TaxiAppStack from './TaxiAppStack';
 
 const Stack = createStackNavigator();
 
@@ -61,6 +62,7 @@ export default function Routes() {
           {shortCode(Stack)}
           {AuthStack(Stack)}
           {CourierStack(Stack)}
+          {TaxiAppStack(Stack)}
 
           <Stack.Screen
             name={navigationStrings.DRAWER_ROUTES}

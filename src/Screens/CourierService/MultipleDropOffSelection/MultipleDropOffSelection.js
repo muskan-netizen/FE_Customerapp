@@ -454,7 +454,7 @@ export default function MultipleDropOffSelection({navigation, route}) {
     if (!pickUpLocationLatLng) {
       showError(strings.PLEASE_SELECT_PICKUP_LOCATION);
     } else if (!dropOffLocationLatLng && !dropOffLocationTwoLatLng) {
-      showError(strings.MAXIMUM_PHOTO_SELECTION_LIMIT_REACHED);
+      showError(strings.PLEASE_SELECT_DROP_OFF_LOCATION);
     } else {
       let location = [];
       let addressData = [];

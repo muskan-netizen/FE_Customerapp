@@ -1224,24 +1224,6 @@ export default function Cart2({navigation, route}) {
                       }>
                       {strings.CUSTOM}
                     </Text>
-                    <Text
-                      style={
-                        isDarkMode
-                          ? {
-                              color:
-                                selectedTipvalue == 'custom'
-                                  ? colors.white
-                                  : MyDarkTheme.colors.text,
-                            }
-                          : {
-                              color:
-                                selectedTipvalue == 'custom'
-                                  ? colors.white
-                                  : colors.black,
-                            }
-                      }>
-                      {strings.AMOUNT}
-                    </Text>
                   </TouchableOpacity>
                 </KeyboardAwareScrollView>
 
