@@ -208,7 +208,13 @@ export default function OuterScreen({navigation}) {
       source={loaderOne}>
       {shortCodeStatus && (
         <Header
-          leftIcon={imagePath.back}
+          leftIcon={
+            appStyle?.homePageLayout === 2
+              ? imagePath.backArrow
+              : appStyle?.homePageLayout === 3
+              ? imagePath.icBackb
+              : imagePath.back
+          }
           onPressLeft={() =>
             // navigation.push(navigationStrings.SHORT_CODE, {
             //   shortCodeParam: true,

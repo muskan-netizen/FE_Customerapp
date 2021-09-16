@@ -35,17 +35,17 @@ export default ({fontFamily}) => {
       right: -20,
     },
     userName: {
-      fontSize: textScale(14),
-      color: colors.textGrey,
-      fontFamily: fontFamily.bold,
+      fontSize: textScale(13),
+      color: colors.textGreyI,
+      fontFamily: fontFamily.medium,
     },
     userEmail: {
       marginTop: moderateScaleVertical(5),
-      fontSize: textScale(14),
-      color: colors.textGrey,
+      fontSize: textScale(12),
+      color: colors.textGreyI,
       fontFamily: fontFamily.regular,
-      opacity: 0.5,
-      marginBottom: moderateScaleVertical(20),
+      opacity: 1,
+      marginBottom: moderateScaleVertical(14),
     },
     borderRoundBotton: {
       borderBottomLeftRadius: 20,
@@ -61,7 +61,7 @@ export default ({fontFamily}) => {
       zIndex: 1000,
     },
     bottomSection: {
-      flex: 0.7,
+      flex: 0.8,
       backgroundColor: colors.backgroundGrey,
       zIndex: -10,
     },

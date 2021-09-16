@@ -169,10 +169,18 @@ export default function Wishlist({navigation}) {
       statusBarColor={colors.backgroundGrey}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
+          appStyle?.homePageLayout === 2
+            ? imagePath.backArrow
+            : appStyle?.homePageLayout === 3
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={strings.WISHLIST}
-        rightIcon={imagePath.search}
+        rightIcon={
+          appStyle?.homePageLayout === 3
+            ? imagePath.icSearchb
+            : imagePath.search
+        }
         onPressRight={() =>
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }

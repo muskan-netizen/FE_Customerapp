@@ -6,6 +6,8 @@ import strings from '../constants/lang';
 import navigationStrings from '../navigation/navigationStrings';
 import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
 import colors from '../styles/colors';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function SearchBar2({
   navigation,
@@ -14,11 +16,18 @@ export default function SearchBar2({
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      style={styles.mainContainer}
+      style={{
+        ...styles.mainContainer,
+        backgroundColor: isDarkMode ? 'rgba(255,255,255,0.15)' : colors.greyNew,
+      }}
       onPress={() =>
         navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
       }>
@@ -35,7 +44,7 @@ export function stylesFunc({fontFamily}) {
     mainContainer: {
       flexDirection: 'row',
       height: moderateScaleVertical(50),
-      backgroundColor: colors.greyNew,
+      backgroundColor: colors.grey2,
       borderRadius: moderateScale(15),
       paddingHorizontal: moderateScale(15),
       alignItems: 'center',

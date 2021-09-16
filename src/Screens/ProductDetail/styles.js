@@ -25,9 +25,9 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
     },
     productName: {
       color: colors.textGrey,
-      fontSize: textScale(18),
+      fontSize: textScale(16),
       lineHeight: 28,
-      fontFamily: fontFamily.bold,
+      fontFamily: fontFamily.medium,
     },
     productTypeAndBrand: {
       color: colors.textGrey,
@@ -154,12 +154,12 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
     },
-    productName: {
-      color: colors.textGrey,
-      fontSize: textScale(16),
-      lineHeight: 28,
-      fontFamily: fontFamily.bold,
-    },
+    // productName: {
+    //   color: colors.textGrey,
+    //   fontSize: textScale(16),
+    //   lineHeight: 28,
+    //   fontFamily: fontFamily.bold,
+    // },
     mainView: {
       marginVertical: moderateScaleVertical(15),
       paddingHorizontal: moderateScale(15),

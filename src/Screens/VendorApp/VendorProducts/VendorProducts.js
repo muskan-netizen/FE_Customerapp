@@ -28,10 +28,11 @@ import {MyDarkTheme} from '../../../styles/theme';
 export default function VendorProducts({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const {storeSelectedVendor} = useSelector((state) => state?.order);
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route.params;
-  console.log(paramData, 'paramData');
 
   const [state, setState] = useState({
     vendor_list: [],
@@ -92,22 +93,12 @@ export default function VendorProducts({route, navigation}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   useEffect(() => {
-    updateState({pageNo: 1});
     getAllListItems();
   }, [languages, currencies, isRefreshing, isLoading]);
 
   useEffect(() => {
-    // do something
     getAllListItems();
   }, [pageNo]);
-
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     console.log("comes here");
-  //     updateState({pageNo: 1});
-  //     getAllListItems();
-  //   }, []),
-  // );
 
   const getAllListItems = () => {
     getAllProducts();
@@ -206,7 +197,6 @@ export default function VendorProducts({route, navigation}) {
 
   // changeTab function
   const changeTab = (tabData) => {
-    console.log('Selected tabbar', tabData);
     let clonedArray = cloneDeep(category_list);
     let upDatedTabBar = cloneDeep(tabData);
     upDatedTabBar.is_selected = true;
@@ -277,7 +267,9 @@ export default function VendorProducts({route, navigation}) {
       {/* {<Loader isLoading={isLoadingB} withModal={true} />} */}
 
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+        }
         centerTitle={selectedVendor?.name || ''}
         showImageAlongwithTitle={true}
         hideRight={true}

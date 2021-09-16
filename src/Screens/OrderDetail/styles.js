@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
 import {
@@ -8,8 +8,8 @@ import {
   width,
 } from '../../styles/responsiveSize';
 
-export default ({ fontFamily }) => {
-  const commonStyles = commonStylesFunc({ fontFamily });
+export default ({fontFamily}) => {
+  const commonStyles = commonStylesFunc({fontFamily});
   const styles = StyleSheet.create({
     scrollviewHorizontal: {
       borderTopWidth: 1,
@@ -26,8 +26,8 @@ export default ({ fontFamily }) => {
     mainComponent: {
       flex: 1,
       backgroundColor: colors.backgroundGrey,
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
+      // borderTopLeftRadius: 20,
+      // borderTopRightRadius: 20,
       marginBottom: moderateScale(5),
       // justifyContent: 'flex-end',
 
@@ -157,7 +157,7 @@ export default ({ fontFamily }) => {
       paddingVertical: moderateScaleVertical(10),
       paddingHorizontal: moderateScale(10),
       backgroundColor: colors.white,
-      borderRadius: moderateScale(10)
+      borderRadius: moderateScale(10),
     },
     cartItemImage: {
       height: width / 4.5,
@@ -285,12 +285,12 @@ export default ({ fontFamily }) => {
       color: colors.lightGreyBgColor,
       fontSize: textScale(10),
     },
-    imageStyle: { height: width / 4.5, width: width / 4.5 },
+    imageStyle: {height: width / 4.5, width: width / 4.5},
     writeAReview: {
       fontFamily: fontFamily.bold,
       color: colors.lightGreyBgColor,
       fontSize: textScale(10),
-      textAlign: 'left'
+      textAlign: 'left',
     },
     containerStyle: {
       flex: 1,
@@ -301,7 +301,7 @@ export default ({ fontFamily }) => {
     textStyle: {
       ...commonStyles.mediumFont16,
       fontSize: textScale(18),
-      textAlign: 'left'
+      textAlign: 'left',
     },
     waitToAccept: {
       fontFamily: fontFamily.regular,
@@ -309,7 +309,7 @@ export default ({ fontFamily }) => {
       fontSize: textScale(14),
       lineHeight: 19,
       opacity: 0.7,
-      paddingVertical: 10
+      paddingVertical: 10,
     },
     summaryText: {
       fontSize: textScale(16),
@@ -322,8 +322,8 @@ export default ({ fontFamily }) => {
       height: 1,
       borderStyle: 'dotted',
       borderColor: '#979797',
-      marginBottom: moderateScaleVertical(12)
-    }
+      marginBottom: moderateScaleVertical(12),
+    },
   });
   return styles;
 };

@@ -415,10 +415,9 @@ export default function SearchProductVendorItem2({navigation, route}) {
           }}>
           <TouchableOpacity
             activeOpacity={0.8}
-            background={colors.green}
             onPress={() => navigation.goBack()}
             style={{
-              backgroundColor: colors.greyColor,
+              // backgroundColor: colors.greyColor,
               height: moderateScaleVertical(37),
               width: moderateScale(45),
               alignItems: 'center',
@@ -426,7 +425,16 @@ export default function SearchProductVendorItem2({navigation, route}) {
               borderRadius: moderateScale(11),
               elevation: 2,
             }}>
-            <Image source={imagePath.backArrow} />
+            <Image
+              source={
+                appStyle?.homePageLayout === 3
+                  ? imagePath.icBackb
+                  : imagePath.back
+              }
+              style={{
+                tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}
+            />
           </TouchableOpacity>
 
           <SearchBar
@@ -434,7 +442,9 @@ export default function SearchProductVendorItem2({navigation, route}) {
               marginHorizontal: moderateScale(18),
               borderRadius: 8,
               width: width / 1.3,
-              backgroundColor: colors.greyColor,
+              backgroundColor: isDarkMode
+                ? 'rgba(255,255,255,0.15)'
+                : colors.greyColor,
               height: moderateScaleVertical(37),
             }}
             searchValue={searchInput}
