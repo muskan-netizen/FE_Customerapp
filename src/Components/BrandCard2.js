@@ -20,7 +20,7 @@ import {
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 
-export default function BrandCard({data = {}, onPress = () => {}}) {
+export default function BrandCard2({data = {}, onPress = () => {}}) {
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -32,6 +32,8 @@ export default function BrandCard({data = {}, onPress = () => {}}) {
   const {appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
+
+  console.log(data, 'daaghghgjhg');
   return (
     <View style={styles.imgContainer}>
       <TouchableOpacity
@@ -40,7 +42,7 @@ export default function BrandCard({data = {}, onPress = () => {}}) {
         onPressIn={() => pressInAnimation(scaleInAnimated)}
         onPressOut={() => pressOutAnimation(scaleInAnimated)}
         style={{
-          backgroundColor: colors.greySearchBackground,
+          backgroundColor: colors.borderColorNew,
           paddingVertical: moderateScaleVertical(30),
           borderRadius: moderateScale(10),
           alignItems: 'center',
@@ -48,11 +50,17 @@ export default function BrandCard({data = {}, onPress = () => {}}) {
         }}>
         <FastImage
           source={{
-            uri: getImageUrl(
-              data.image.image_fit,
-              data.image.image_path,
-              '1000/1000',
-            ),
+            uri: data.icon
+              ? getImageUrl(
+                  data.icon.image_fit,
+                  data.icon.image_path,
+                  '1000/1000',
+                )
+              : getImageUrl(
+                  data.image.image_fit,
+                  data.image.image_path,
+                  '1000/1000',
+                ),
             priority: FastImage.priority.high,
           }}
           style={{height: moderateScale(50), width: '100%'}}
@@ -64,10 +72,11 @@ export default function BrandCard({data = {}, onPress = () => {}}) {
         style={{
           fontSize: textScale(11),
           fontFamily: fontFamily.regular,
-          alignSelf: 'center',
           marginVertical: moderateScaleVertical(10),
+          textAlign: 'center',
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
         }}>
-        {data?.translation[0]?.title}
+        {data?.name ? data?.name : data?.translation[0]?.title}
       </Text>
     </View>
   );
