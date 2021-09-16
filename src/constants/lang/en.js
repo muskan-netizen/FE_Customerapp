@@ -311,7 +311,7 @@ export default {
   DONE: 'Done',
   SELECT: 'Select',
   DEBIT_FROM: 'Debit from',
-  ADD: 'Add',
+  ADD: 'ADD',
   PLEASE_ENTER_OR_SELECT_AMOUNT: 'Please select or enter a specific amount',
   PLEASE_SELECT_PAYMENT_METHOD: 'Please select a payment method',
   LINKS: 'Links',
@@ -420,7 +420,7 @@ export default {
   TRACK_ORDER: 'Track Order',
   CUSTOM: `Custom 
 Amount`,
-  ADD: 'Add',
+  ADD: 'ADD',
   EDIT: 'Edit',
   DELETE: 'Delete',
   ENTER_AMOUNT: 'Enter amount',

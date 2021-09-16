@@ -12,6 +12,17 @@ import {MyDarkTheme} from '../../styles/theme';
 
 export default ({themeColors, fontFamily}) => {
   const styles = StyleSheet.create({
+     absolute: {
+      position: 'absolute',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: moderateScaleVertical(30),
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      borderRadius: moderateScaleVertical(15),
+    },
     topLogo: {
       justifyContent: 'center',
       alignItems: 'flex-start',

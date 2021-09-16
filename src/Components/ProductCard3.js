@@ -167,29 +167,55 @@ export default function ProductCard3({
             <View>
               <Text
                 numberOfLines={1}
-                style={
-                  isDarkMode
-                    ? {
-                      ...commonStyles.futuraBtHeavyFont14,
-                      width: moderateScaleVertical(220),
-                      // fontFamily: 'Eina02-SemiBold',
-                      color: MyDarkTheme.colors.text,
-                      fontFamily: fontFamily.regular,
-                      fontSize: textScale(12),
-                      width: width / 3,
-                    }
-                    : {
-                      ...commonStyles.futuraBtHeavyFont14,
-                      width: moderateScaleVertical(220),
-                      fontFamily: fontFamily.regular,
-                      fontSize: textScale(12),
-                      width: width / 3
-                      // fontFamily: 'Eina02-SemiBold',
-                    }
-                }>
+                style={{
+                  ...commonStyles.futuraBtHeavyFont14,
+                  width: moderateScaleVertical(220),
+                  // fontFamily: 'Eina02-SemiBold',
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  fontFamily: fontFamily.medium,
+                  fontSize: textScale(12),
+                  width: width / 3,
+                }}>
                 {data?.translation[0]?.title}
               </Text>
+              {!!data?.category?.category_detail?.translation && (<Text
+                numberOfLines={1}
+                style={{
+                  width: moderateScaleVertical(220),
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity40,
+                  fontFamily: fontFamily.regular,
+                  fontSize: textScale(9),
+                  width: width / 3,
+                  textAlign: 'left',
+                  marginTop: moderateScaleVertical(6),
+                  marginBottom: moderateScaleVertical(4)
+                }}>
+                In {data?.category?.category_detail?.translation[0]?.name}
+              </Text>)}
             </View>
+
+            {/* rating View */}
+            {!!data?.averageRating && (
+              <View
+                style={{
+                  borderWidth: 0.5,
+                  alignSelf: 'flex-start',
+                  padding: 2,
+                  borderRadius: 2,
+                  marginVertical: moderateScaleVertical(4),
+                  borderColor: colors.yellowB,
+                  backgroundColor: colors.yellowOpacity10,
+                }}>
+                <StarRating
+                  disabled={false}
+                  maxStars={5}
+                  rating={Number(data?.averageRating).toFixed(1)}
+                  fullStarColor={colors.yellowB}
+                  starSize={8}
+                  containerStyle={{ width: width / 9 }}
+                />
+              </View>
+            )}
 
             {/* Price view */}
             <View
@@ -211,29 +237,6 @@ export default function ProductCard3({
                 ).toFixed(2)}`}
               </Text>
             </View>
-
-            {/* rating View */}
-            {!!data?.averageRating && (
-              <View
-                style={{
-                  borderWidth: 0.5,
-                  alignSelf: 'flex-start',
-                  padding: 2,
-                  borderRadius: 2,
-                  marginBottom: moderateScaleVertical(12),
-                  borderColor: colors.yellowB,
-                  backgroundColor: colors.yellowOpacity10,
-                }}>
-                <StarRating
-                  disabled={false}
-                  maxStars={5}
-                  rating={Number(data?.averageRating).toFixed(1)}
-                  fullStarColor={colors.yellowB}
-                  starSize={8}
-                  containerStyle={{ width: width / 9 }}
-                />
-              </View>
-            )}
             <View style={{ width: width / 2 }}>
               {!!htmlText && (
                 <HtmlViewComp
@@ -254,41 +257,42 @@ export default function ProductCard3({
             {!!data?.variant[0]?.check_if_in_cart_app && data?.variant[0]?.check_if_in_cart_app.length > 0 || !!data?.qty ?
               <View
                 style={{
-                  borderRadius: moderateScale(5),
+                  ...styles.addBtnStyle,
+                  paddingVertical: 0,
                   backgroundColor: themeColors.primary_color,
-                  paddingHorizontal: moderateScale(6),
-                  paddingVertical: moderateScaleVertical(2),
-                  borderRadius: moderateScale(4),
                   alignItems: 'center',
                   flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  borderRadius: moderateScale(8),
+                  paddingHorizontal: moderateScale(8)
                 }}>
                 <TouchableOpacity
-                  style={{ alignItems: 'center' }}
+                  style={{}}
                   onPress={onDecrement}
                   activeOpacity={0.8}
                   hitSlop={hitSlopProp}>
                   <Text
                     style={{
                       fontFamily: fontFamily.bold,
-                      fontSize: moderateScale(20),
+                      fontSize: moderateScale(16),
                       color: colors.white,
                     }}>
                     -
                   </Text>
                 </TouchableOpacity>
-                <View style={{ alignItems: 'center' }}>
+                <View style={{}}>
                   <Text
                     style={{
                       fontFamily: fontFamily.bold,
                       fontSize: moderateScale(16),
                       color: colors.white,
-                      marginHorizontal: 16,
+
                     }}>
-                    {data?.qty || data?.variant[0].check_if_in_cart_app[0].quantity}
+                    {data?.qty || data?.variant[0]?.check_if_in_cart_app[0]?.quantity}
                   </Text>
                 </View>
                 <TouchableOpacity
-                  style={{ alignItems: 'center' }}
+
                   activeOpacity={0.8}
                   hitSlop={hitSlopProp}
                   onPress={onIncrement}>
@@ -312,15 +316,19 @@ export default function ProductCard3({
                 <Text style={{
                   ...styles.addStyleText,
                   position: 'absolute',
-                  top: 0,
-                  right: moderateScale(4)
+                  top: 2,
+                  right: moderateScale(8)
                 }}>{'+'}</Text>
                 {/* <Image source={imagePath.greyRoundPlus} /> */}
               </TouchableOpacity>
             }
             {(!!data?.add_on && data?.add_on.length !== 0) ||
               (!!data?.variantSet && data?.variantSet.length !== 0) ? (
-              <Text style={styles.customTextStyle}>{strings.CUSTOMISABLE}</Text>
+              <Text style={{
+                ...styles.customTextStyle,
+                textTransform: 'lowercase',
+                color: colors.blackOpacity40
+              }}>{strings.CUSTOMISABLE}</Text>
             ) : null}
           </View> :
             <Text style={styles.outOfStock}>{strings.OUT_OF_STOCK}</Text>
@@ -353,13 +361,14 @@ function styleData({ themeColors, fontFamily }) {
       fontFamily: fontFamily.bold,
     },
     addBtnStyle: {
-      borderWidth: 1,
+      borderWidth: StyleSheet.hairlineWidth,
       paddingVertical: moderateScaleVertical(6),
       borderRadius: moderateScale(8),
       borderColor: themeColors.primary_color,
       justifyContent: 'center',
       alignItems: 'center',
-      paddingHorizontal: moderateScale(16),
+      width: 80,
+      height: 35
       // flexDirection:"row"
       // width: moderateScale(80),
     }
