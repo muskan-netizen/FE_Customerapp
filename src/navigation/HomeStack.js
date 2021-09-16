@@ -29,6 +29,7 @@ import {
   Vendors2,
   Vendors3,
   SearchProductVendorItem2,
+  VendorDetail3,
 } from '../Screens';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
@@ -68,7 +69,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.VENDOR_DETAIL}
         component={
-          appStyle?.homePageLayout === 2 ? VendorDetail2 : VendorDetail
+          appStyle?.homePageLayout === 2
+            ? VendorDetail2
+            : appStyle?.homePageLayout === 3
+            ? VendorDetail3
+            : VendorDetail
         }
         options={{headerShown: false}}
       />

@@ -341,7 +341,9 @@ export default function OrderCardVendorComponent2({
                   justifyContent: 'center',
                 }}>
                 <View style={styles.trackStatusView}>
-                  <Text style={styles.trackOrderTextStyle}>Track Order</Text>
+                  <Text style={styles.trackOrderTextStyle}>
+                    {strings.TRACK_ORDER}
+                  </Text>
                 </View>
               </TouchableOpacity>
             ) : null}

@@ -42,6 +42,7 @@ import {
   ReturnOrder,
   OrderDetail2,
   SearchProductVendorItem2,
+  Subscriptions2,
 } from '../Screens';
 import StaticTrackOrder from '../Screens/WebviewScreen/StaticTrackOrder';
 
@@ -242,7 +243,9 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.SUBSCRIPTION}
-        component={Subscriptions}
+        component={
+          appStyle?.homePageLayout === 3 ? Subscriptions2 : Subscriptions
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen

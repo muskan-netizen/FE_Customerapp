@@ -64,7 +64,12 @@ const Header3 = ({
         onPress={() => {
           navigation.goBack();
         }}>
-        <Image source={leftIcon} />
+        <Image
+          source={leftIcon}
+          style={{
+            tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          }}
+        />
       </TouchableOpacity>
       {!!appData?.profile?.preferences?.is_hyperlocal && (
         <TouchableOpacity
