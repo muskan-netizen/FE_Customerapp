@@ -81,3 +81,4 @@ export {default as ProductList3} from './ProductList/ProductList3';
 export {default as SearchProductVendorItem2} from './SearchProductVendorItem/SearchProductVendorItem2';
 export {default as OrderDetail2} from './OrderDetail/OrderDetail2';
 export {default as Brands2} from './Brands/Brands2';
+export {default as BrandProducts2} from './BrandProducts/BrandProducts2';

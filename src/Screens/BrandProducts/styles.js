@@ -101,13 +101,25 @@ export default ({themeColors, fontFamily}) => {
       borderColor: getColorCodeWithOpactiyNumber('C9CCD0', 50),
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginTop:moderateScaleVertical(10)
+      marginTop: moderateScaleVertical(10),
+    },
+    sortFilterTabView2: {
+      marginHorizontal: moderateScale(16),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginVertical: moderateScaleVertical(18),
     },
     tabLable: {
       alignItems: 'center',
       justifyContent: 'center',
       flex: 0.5,
       flexDirection: 'row',
+    },
+    tabLable2: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'row',
+      marginHorizontal: moderateScale(6),
     },
     sortFilter: {
       color: colors.textGrey,
@@ -116,6 +128,14 @@ export default ({themeColors, fontFamily}) => {
       fontFamily: fontFamily.medium,
       alignSelf: 'center',
       paddingLeft: moderateScale(10),
+    },
+    sortFilter2: {
+      color: colors.textGrey,
+
+      fontFamily: fontFamily.reguler,
+      alignSelf: 'center',
+      fontSize: moderateScale(14),
+      marginHorizontal: moderateScale(4),
     },
   });
   return styles;

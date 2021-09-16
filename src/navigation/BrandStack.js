@@ -17,6 +17,7 @@ import {
   Vendors,
   Vendors2,
   Brands2,
+  BrandProducts2,
 } from '../Screens';
 
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
@@ -34,7 +35,9 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.BRANDDETAIL}
-        component={BrandProducts}
+        component={
+          appStyle?.homePageLayout === 3 ? BrandProducts2 : BrandProducts
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen
