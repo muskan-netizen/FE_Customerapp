@@ -95,6 +95,7 @@ export default function Home({route, navigation}) {
 
   useEffect(() => {
     updateState({updatedData: appMainData?.categories});
+    console.log(appMainData, 'appMainData');
   }, [appMainData]);
 
   useEffect(() => {
@@ -248,6 +249,14 @@ export default function Home({route, navigation}) {
           : location?.longitude,
       };
     }
+
+    console.log(
+      {
+        type: dine_In_Type ? dine_In_Type : dine_In_Type,
+        ...latlongObj,
+      },
+      'latlongObj>>Data',
+    );
 
     {
       selectedTabType
@@ -422,6 +431,7 @@ export default function Home({route, navigation}) {
         languages?.primary_language,
       )
       .then((res) => {
+        console.log(res, 'initApp');
         updateState({isRefreshing: false});
       })
       .catch((error) => {

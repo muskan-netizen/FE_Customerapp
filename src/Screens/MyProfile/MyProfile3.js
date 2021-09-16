@@ -187,6 +187,7 @@ export default function MyProfile3({route, navigation}) {
       email: email,
       name: name,
       phoneNumber: phoneNumber,
+      callingCode:callingCode
     });
     if (error) {
       showError(error);

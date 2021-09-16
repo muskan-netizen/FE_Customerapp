@@ -53,12 +53,31 @@ export default function StaticTrackOrder({navigation, route}) {
   const renderDotContainer = () => {
     return (
       <>
-        <View style={{height: 55, overflow: 'hidden', alignItems: 'center'}}>
+        <View style={{marginLeft: moderateScale(7)}}>
           {[1, 2, 3, 4, 5, 6, 7].map((item, index) => {
             return <View style={styles.dots}></View>;
           })}
         </View>
-        <Image source={imagePath.icRedOval} />
+        <View
+          style={{flexDirection: 'row', alignItems: 'center', marginTop: -5}}>
+          <Image source={imagePath.icRedOval} />
+          <View
+            style={{flexDirection: 'column', marginLeft: moderateScale(15)}}>
+            <Text
+              style={{
+                fontFamily: fontFamily.bold,
+                fontSize: textScale(12),
+              }}>
+              Foodie’s Hub
+            </Text>
+            <Text
+              style={{
+                fontFamily: fontFamily.regular,
+              }}>
+              Sector 27, Chandigarh
+            </Text>
+          </View>
+        </View>
       </>
     );
   };
@@ -263,41 +282,26 @@ export default function StaticTrackOrder({navigation, route}) {
                 alignItems: 'flex-start',
                 paddingHorizontal: moderateScale(35),
               }}>
-              <View style={{flexDirection: 'row'}}>
-                <View>
+              <View>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Image source={imagePath.icLocation1} />
-                  {renderDotContainer()}
+                  <View style={{marginStart: moderateScale(15)}}>
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                        fontSize: textScale(12),
+                      }}>
+                      Home
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.regular,
+                      }}>
+                      CDCL, Sector 28b, Chandigarh
+                    </Text>
+                  </View>
                 </View>
-                <View style={{marginStart: moderateScale(15)}}>
-                  <Text
-                    style={{
-                      fontFamily: fontFamily.bold,
-                      fontSize: textScale(12),
-                    }}>
-                    Home
-                  </Text>
-                  <Text
-                    style={{
-                      fontFamily: fontFamily.regular,
-                    }}>
-                    CDCL, Sector 28b, Chandigarh
-                  </Text>
-
-                  <Text
-                    style={{
-                      fontFamily: fontFamily.bold,
-                      marginTop: moderateScaleVertical(30),
-                      fontSize: textScale(12),
-                    }}>
-                    Foodie’s Hub
-                  </Text>
-                  <Text
-                    style={{
-                      fontFamily: fontFamily.regular,
-                    }}>
-                    Sector 27, Chandigarh
-                  </Text>
-                </View>
+                {renderDotContainer()}
               </View>
             </View>
 

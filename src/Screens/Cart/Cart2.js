@@ -78,8 +78,9 @@ export default function Cart2({navigation, route}) {
     selectedAddress: null,
     selectedPayment: {
       id: 1,
-      title: strings.SELECT_PAYMENT_METHOD,
       off_site: 0,
+      title: 'Cash On Delivery',
+      title_lng: strings.CASH_ON_DELIVERY,
     },
     // selectedPayment: null,
     isRefreshing: false,
@@ -1333,7 +1334,9 @@ export default function Cart2({navigation, route}) {
                 styles.selectedMethod,
                 {color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey},
               ]}>
-              {selectedPayment
+              {selectedPayment.title_lng
+                ? selectedPayment.title_lng
+                : selectedPayment.title
                 ? selectedPayment.title
                 : strings.SELECT_PAYMENT_METHOD}
             </Text>
