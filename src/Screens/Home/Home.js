@@ -356,6 +356,7 @@ export default function Home({route, navigation}) {
             moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
           } else {
             moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
+            //moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
           }
         }
       } else {

@@ -62,7 +62,12 @@ const Header = ({
           alignItems: 'center',
           justifyContent: 'space-between',
         }}>
-        <View style={{alignItems: 'flex-start', flex: 0.2, ...rightViewStyle}}>
+        <View
+          style={{
+            alignItems: 'flex-start',
+            flex: 0.2,
+            ...rightViewStyle,
+          }}>
           {!noLeftIcon &&
             (customLeft ? (
               customLeft()

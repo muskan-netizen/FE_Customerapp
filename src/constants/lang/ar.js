@@ -481,4 +481,5 @@ export default {
   DISCOUNT: 'Discount',
   TOTAL: 'Total',
   NO_ORDERS_FOUND: 'No Orders Found',
+  PICKUP: 'PICKUP',
 };

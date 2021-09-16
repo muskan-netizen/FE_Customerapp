@@ -77,5 +77,7 @@ export default {
   SUBSCRIPTION: 'subscriptions',
   LOYALTY: 'loyalty',
   CART2: 'orders',
-  RETURNORDER:'returnOrder'
+  RETURNORDER: 'returnOrder',
+  HOMESCREENTAXI: 'homeScreenTaxi',
+  ADDADDRESS: 'addAddress',
 };

@@ -31,10 +31,6 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 
 export default function VendorRevenue({navigation, route}) {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route.params;
   // console.log(paramData, 'paramData');
 
@@ -42,6 +38,10 @@ export default function VendorRevenue({navigation, route}) {
   const {appData, currencies, languages} = useSelector(
     (state) => state.initBoot,
   );
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {themeColors, themeLayouts} = currentTheme;
   const [state, setState] = useState({
     tabBarData: [
@@ -472,7 +472,8 @@ export default function VendorRevenue({navigation, route}) {
           }}
         />
       ) : (
-        <NoDataFound isLoading={isLoading} containerStyle={{flex: 0.6}} />
+        // <NoDataFound isLoading={isLoading} containerStyle={{flex: 0.6}} />
+        <></>
       )}
     </WrapperContainer>
   );

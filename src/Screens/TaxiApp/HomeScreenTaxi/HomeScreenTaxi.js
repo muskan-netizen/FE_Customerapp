@@ -1,0 +1,457 @@
+import React, {useState, useRef, useEffect} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  FlatList,
+} from 'react-native';
+import WrapperContainer from '../../../Components/WrapperContainer';
+import stylesFun from './styles';
+import {useSelector} from 'react-redux';
+import MapView, {
+  AnimatedRegion,
+  Marker,
+  PROVIDER_GOOGLE,
+} from 'react-native-maps';
+import Geocoder from 'react-native-geocoding';
+import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
+import {
+  height,
+  moderateScale,
+  moderateScaleVertical,
+  StatusBarHeightSecond,
+  textScale,
+  width,
+} from '../../../styles/responsiveSize';
+import colors from '../../../styles/colors';
+import AutoUpLabelTxtInput from '../../../Components/AutoUpLabelTxtInput';
+import {BlurView} from '@react-native-community/blur';
+import {mapStyleGrey} from '../../../utils/constants/MapStyle';
+import navigationStrings from '../../../navigation/navigationStrings';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
+import Geolocation from 'react-native-geolocation-service';
+import {chekLocationPermission} from '../../../utils/permissions';
+import {getCurrentLocation} from '../../../utils/helperFunctions';
+
+export default function HomeScreenTaxi({navigation, route}) {
+  const mapRef = React.createRef();
+  const paramData = route?.params;
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const [state, setState] = useState({
+    region: {
+      latitude: 30.7191,
+      longitude: 76.8107,
+      latitudeDelta: 0.015,
+      longitudeDelta: 0.0121,
+    },
+    coordinate: {
+      latitude: 30.7191,
+      longitude: 76.8107,
+      latitudeDelta: 0.015,
+      longitudeDelta: 0.0121,
+    },
+    isLoading: false,
+    details: {},
+    addressLabel: 'Glenpark',
+    formattedAddress: '8502 Preston Rd. Inglewood, Maine 98380',
+    locationListData: [
+      {id: 1, location: 'ISBT,Sector43'},
+      {id: 1, location: 'Shukna Lake'},
+      {id: 1, location: 'Green View Tower'},
+      {id: 1, location: 'Sector 28'},
+    ],
+    userCurrentLongitude: null,
+    userCurrentLatitude: null,
+  });
+
+  const {
+    isLoading,
+    addressLabel,
+    details,
+    formattedAddress,
+    region,
+    coordinate,
+    locationListData,
+    userCurrentLongitude,
+    userCurrentLatitude,
+  } = state;
+
+  const {appData, themeColors, appStyle} = useSelector(
+    (state) => state?.initBoot,
+  );
+
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+
+  const fontFamily = appStyle?.fontSizeData;
+  const styles = stylesFun({fontFamily, themeColors});
+
+  const _onRegionChange = (region) => {
+    updateState({region: region});
+    _getAddressBasedOnCoordinates(region);
+    // animate(region);
+  };
+
+  const _getAddressBasedOnCoordinates = (region) => {
+    Geocoder.from({
+      latitude: region.latitude,
+      longitude: region.longitude,
+    })
+      .then((json) => {
+        // console.log(json, 'json');
+        updateState({
+          formattedAddress: json.results[0].formatted_address,
+        });
+        let detail = {};
+        detail = {
+          formatted_address: json.results[0].formatted_address,
+          geometry: {
+            location: {
+              lat: region.latitude,
+              lng: region.longitude,
+            },
+          },
+          address_components: json.results[0].address_components,
+        };
+        updateState({
+          details: detail,
+        });
+      })
+      .catch((error) => console.log(error, 'errro geocode'));
+  };
+
+  useEffect(() => {
+    chekLocationPermission()
+      .then((result) => {
+        if (result !== 'goback') {
+          getCurrentLocation('home')
+            .then((res) => {
+              Geolocation.getCurrentPosition(
+                //Will give you the current location
+                (position) => {
+                  //getting the Longitude from the location json
+                  const currentLongitude = JSON.stringify(
+                    position.coords.longitude,
+                  );
+
+                  //getting the Latitude from the location json
+                  const currentLatitude = JSON.stringify(
+                    position.coords.latitude,
+                  );
+                  updateState({
+                    userCurrentLongitude: currentLongitude,
+                    userCurrentLatitude: currentLatitude,
+                  });
+                },
+                (error) => alert(error.message),
+                {
+                  enableHighAccuracy: true,
+                  timeout: 20000,
+                  maximumAge: 1000,
+                },
+              );
+            })
+            .catch((err) => {});
+        }
+      })
+      .catch((error) => console.log('error while accessing location', error));
+  }, []);
+
+  //Animating the marker
+  const animate = (region) => {
+    const {coordinate} = state;
+    const newCoordinate = {
+      ...region,
+    };
+    if (Platform.OS === 'android') {
+      if (markerRef.current) {
+        markerRef.current._component.animateMarkerToCoordinate(
+          newCoordinate,
+          500,
+        );
+      }
+      updateState({region: new AnimatedRegion(region)});
+      _getAddressBasedOnCoordinates(region);
+    } else {
+      coordinate.timing(newCoordinate).start();
+      updateState({region: new AnimatedRegion(region)});
+      _getAddressBasedOnCoordinates(region);
+    }
+  };
+
+  //On Dragging the marker
+  const _onDragEnd = (e) => {
+    console.log('onDragEnd', e.nativeEvent);
+    updateState({
+      coordinate: new AnimatedRegion({
+        ...e.nativeEvent.coordinate,
+        latitudeDelta: 0.015,
+        longitudeDelta: 0.0121,
+      }),
+      region: {
+        ...region,
+        ...e.nativeEvent.coordinate,
+      },
+    });
+    _getAddressBasedOnCoordinates({
+      ...e.nativeEvent.coordinate,
+      latitudeDelta: 0.015,
+      longitudeDelta: 0.0121,
+    });
+  };
+
+  const _onDrag = (e) => {};
+
+  //   const _confirmAddress = () => {
+  //     // navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIME);
+  //     navigation.navigate(navigationStrings.MULTISELECTCATEGORY, {
+  //       details: details,
+  //       type: paramData?.type,
+  //       addressType: paramData?.addressType,
+  //     });
+  //   };
+
+  const _modeToNextScreen = () => {
+    navigation.navigate(navigationStrings.ADDADDRESS, paramData);
+  };
+
+  const markerRef = useRef();
+
+  const currentLocationOnMap = () => {
+    mapRef.current.animateToRegion({
+      latitude: userCurrentLatitude,
+      longitude: userCurrentLongitude,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    });
+  };
+
+  const renderDotContainer = () => {
+    return (
+      <>
+        <View style={{marginLeft: moderateScale(7)}}>
+          {[1, 2, 3, 4, 5, 6, 7].map((item, index) => {
+            return <View style={styles.dots}></View>;
+          })}
+        </View>
+        <View
+          style={{flexDirection: 'row', alignItems: 'center', marginTop: -5}}>
+          <Image source={imagePath.icLocation1} />
+          <View
+            style={{
+              flexDirection: 'column',
+              marginLeft: moderateScale(15),
+            }}></View>
+        </View>
+      </>
+    );
+  };
+
+  const renderRecommandedLocations = ({item, index}) => {
+    return (
+      <View
+        style={{
+          backgroundColor: colors.white,
+          paddingHorizontal: moderateScale(10),
+          paddingVertical: moderateScaleVertical(7),
+          borderRadius: 15,
+        }}>
+        <Text>{item.location}</Text>
+      </View>
+    );
+  };
+
+  const _renderBottomComponent = () => {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          borderTopStartRadius: 24,
+          borderTopRightRadius: 24,
+          flex: 1,
+        }}>
+        <View
+          style={{
+            height: height / 2.8,
+            borderTopLeftRadius: moderateScale(30),
+            borderTopRightRadius: moderateScale(30),
+            width: width,
+          }}>
+          <BlurView
+            reducedTransparencyFallbackColor="white"
+            style={styles.absolute}
+            blurType={Platform.OS === 'ios' ? 'xlight' : 'light'}
+            blurAmount={50}
+          />
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{
+              paddingBottom:
+                Platform.OS === 'ios'
+                  ? moderateScaleVertical(50)
+                  : moderateScaleVertical(80),
+            }}>
+            <View
+              style={{
+                alignItems: 'flex-start',
+                paddingHorizontal: moderateScale(35),
+                flexDirection: 'column',
+              }}>
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                  }}>
+                  <View
+                    style={{
+                      flexDirection: 'column',
+                      marginVertical: moderateScaleVertical(40),
+                    }}>
+                    <View>
+                      <Image source={imagePath.icRedOval} />
+                    </View>
+                    <View>{renderDotContainer()}</View>
+                  </View>
+
+                  <View
+                    style={{
+                      marginStart: moderateScale(15),
+                      width: moderateScale(width / 1.5),
+                      flexDirection: 'column',
+                    }}>
+                    <View
+                      style={{
+                        marginTop: moderateScaleVertical(40),
+                        flexDirection: 'column',
+                      }}>
+                      <Text style={{color: colors.textGreyLight}}>PICKUP</Text>
+                      <TouchableOpacity onPress={() => _modeToNextScreen()}>
+                        <Text
+                          style={{marginVertical: moderateScaleVertical(10)}}>
+                          My Current Location
+                        </Text>
+                      </TouchableOpacity>
+                      <View
+                        style={{
+                          height: 0.5,
+                          backgroundColor: colors.textGreyLight,
+                          marginTop: moderateScaleVertical(5),
+                        }}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        marginTop: moderateScaleVertical(20),
+                        flexDirection: 'column',
+                      }}>
+                      <Text style={{color: colors.textGreyLight}}>
+                        DROP-OFF
+                      </Text>
+                      <Text style={{marginVertical: moderateScaleVertical(10)}}>
+                        CDCL,sector 28b, Chandigarh
+                      </Text>
+                      <View
+                        style={{
+                          height: 0.5,
+                          backgroundColor: colors.textGreyLight,
+                          marginTop: moderateScaleVertical(5),
+                        }}
+                      />
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View
+              style={{flex: 0.2, marginVertical: moderateScaleVertical(20)}}>
+              <FlatList
+                showsHorizontalScrollIndicator={false}
+                data={(!isLoading && locationListData) || []}
+                renderItem={renderRecommandedLocations}
+                horizontal
+                ItemSeparatorComponent={() => (
+                  <View style={{height: 20, width: 20}} />
+                )}
+              />
+            </View>
+          </ScrollView>
+        </View>
+      </View>
+    );
+  };
+
+  return (
+    <>
+      <MapView
+        ref={mapRef}
+        //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+        style={styles.map}
+        region={region}
+        initialRegion={region}
+        customMapStyle={mapStyleGrey}
+        // pointerEvents={'none'}
+        onRegionChangeComplete={_onRegionChange}>
+        {/* <Marker
+            ref={markerRef}
+            // pointerEvents={'none'}
+            coordinate={coordinate}
+            image={imagePath.mapPin2}
+            // onDrag={(e) => _onDrag(e)}
+            // onDragEnd={(e) => _onDragEnd(e)}
+            // onPress={(e) => console.log('onPress', e)}
+            // draggable
+          /> */}
+      </MapView>
+
+      <View style={styles.userAccountImageStyle}>
+        <Image source={imagePath.taxiUserAccount} />
+      </View>
+
+      <View
+        style={{
+          position: 'absolute',
+          top: height / 2 - StatusBarHeightSecond,
+          right: width / 2,
+          left: width / 2,
+          bottom: height / 2,
+          alignItems: 'center',
+          justifyContent: 'center',
+          // marginTop: height / 2,
+        }}>
+        <Image source={imagePath.mapPin2} />
+      </View>
+
+      <TouchableOpacity onPress={() => currentLocationOnMap()}>
+        <View
+          style={{
+            position: 'absolute',
+            top: height / 1.6 - StatusBarHeightSecond,
+            right: 20,
+            left: width / 2,
+            alignItems: 'flex-end',
+
+            // marginTop: height / 2,
+          }}>
+          <Image source={imagePath.mapNavigation} />
+        </View>
+      </TouchableOpacity>
+      <View
+        style={{
+          flex: 0.3,
+          position: 'absolute',
+          height: height / 3.5,
+          width: width,
+          bottom: 0,
+        }}>
+        {_renderBottomComponent()}
+      </View>
+    </>
+  );
+}

@@ -164,7 +164,7 @@ export default function Cart({navigation, route}) {
   // const styles = stylesFun({fontFamily, themeColors});
 
   //On focus fucntion
-  console.log(RNLocalize.getTimeZone(), 'timezone');
+
   useFocusEffect(
     React.useCallback(() => {
       if (paramsData && paramsData?.selectedMethod) {
