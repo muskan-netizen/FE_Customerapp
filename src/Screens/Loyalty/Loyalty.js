@@ -155,7 +155,10 @@ export default function Loyalty({navigation}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
+           appStyle?.homePageLayout === 2 ? 
+          imagePath.backArrow:appStyle?.homePageLayout === 3?
+          imagePath.icBackb :
+           imagePath.back
         }
         centerTitle={strings.LOYALTYPOINTS}
         headerStyle={

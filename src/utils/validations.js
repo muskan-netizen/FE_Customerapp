@@ -156,11 +156,11 @@ export default function (data) {
     console.log(callingCode, 'callingCode');
     console.log(isTrue, 'isTrue');
     if (phoneNumber == '') {
-      return 'Please enter your phone number';
+      return strings.PLEASE_ENTER_YOUR_PHONE_NUMBER;
     }
     if (isTrue) {
     } else {
-      return 'Phone number is not valid, Please check the number & try again';
+      return strings.PHONE_NUMBER_NOT_VALID;
     }
   }
 

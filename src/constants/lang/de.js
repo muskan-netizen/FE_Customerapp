@@ -475,4 +475,8 @@ export default {
   TOTAL: 'Total',
   NO_ORDERS_FOUND: 'No Orders Found',
   PICKUP: 'PICKUP',
+  PLEASE_ENTER_YOUR_PHONE_NUMBER: 'Please enter your phone number',
+  PHONE_NUMBER_NOT_VALID: 'Phone number is not valid',
+  CUSTOMISABLE: 'Customisable',
+  AVAILABLE_STORE: 'Available Stores',
 };

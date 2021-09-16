@@ -7,7 +7,7 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 
 //export const API_BASE_URL = 'http://192.168.99.149:8005/api/v1';
 
-//export const API_BASE_URL = 'http://192.168.98.193:8005/api/v1';
+//export const API_BASE_URL =  'http://192.168.98.193:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.99.149:8005/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
@@ -22,6 +22,7 @@ export const GET_DATA_BY_CATEGORY = getApiUrl('/category');
 export const GET_PRODUCT_DATA_BY_PRODUCTID = getApiUrl('/product');
 export const GET_PRODUCT_DATA_BY_VENDORID = getApiUrl('/vendor');
 export const GET_PRODUTC_DATA_BY_BRANDID = getApiUrl('/brand');
+export const CHECK_VENDORS = getApiUrl('/checkIsolateSingleVendor');
 export const GET_WISHLIST_PRODUCT = getApiUrl('/wishlists');
 export const ADD_REMOVE_TO_WISHLIST = getApiUrl('/wishlist/update');
 export const PROFILE_BASIC_INFO = getApiUrl('/update/profile');

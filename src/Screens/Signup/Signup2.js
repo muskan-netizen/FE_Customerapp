@@ -78,6 +78,7 @@ export default function Signup2({navigation}) {
       password: password,
       name: name,
       phoneNumber: phoneNumber,
+      callingCode: callingCode,
     });
     if (error) {
       showError(error);

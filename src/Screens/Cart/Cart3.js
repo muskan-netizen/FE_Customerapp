@@ -87,7 +87,7 @@ export default function Cart({navigation, route}) {
       id: 1,
       off_site: 0,
       title: 'Cash On Delivery',
-      title_lng: 'Cash On Delivery',
+      title_lng: strings.CASH_ON_DELIVERY,
     },
     // selectedPayment: null,
     isRefreshing: false,
@@ -1569,7 +1569,7 @@ export default function Cart({navigation, route}) {
           onPress={() =>
             !!userData?.auth_token
               ? moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
-              : showError(strings.UNAUTHORIZED_MESSAGE)
+              : navigation.navigate(navigationStrings.OUTER_SCREEN, {})
           }
           style={
             isDarkMode
@@ -1597,7 +1597,9 @@ export default function Cart({navigation, route}) {
                   ? [styles.selectedMethod, {color: MyDarkTheme.colors.text}]
                   : styles.selectedMethod
               }>
-              {selectedPayment
+              {selectedPayment.title_lng
+                ? selectedPayment.title_lng
+                : selectedPayment.title
                 ? selectedPayment.title
                 : strings.SELECT_PAYMENT_METHOD}
             </Text>
@@ -1807,7 +1809,7 @@ export default function Cart({navigation, route}) {
             <View style={[styles.topLable, {marginTop: moderateScale(20)}]}>
               <View
                 style={{
-                  flex: 0.35,
+                  flex: 0.3,
                   flexDirection: 'row',
                   alignItems: 'center',
                 }}>
@@ -1835,7 +1837,7 @@ export default function Cart({navigation, route}) {
 
               <TouchableOpacity
                 style={{
-                  flex: 0.7,
+                  flex: 0.8,
                   // flexWrap: 'wrap',
                   flexDirection: 'row',
                   alignItems: 'center',

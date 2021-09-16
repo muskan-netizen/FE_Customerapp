@@ -12,6 +12,17 @@ import {MyDarkTheme} from '../../styles/theme';
 
 export default ({themeColors, fontFamily}) => {
   const styles = StyleSheet.create({
+     absolute: {
+      position: 'absolute',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: moderateScaleVertical(30),
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      borderRadius: moderateScaleVertical(15),
+    },
     topLogo: {
       justifyContent: 'center',
       alignItems: 'flex-start',
@@ -104,7 +115,7 @@ export default ({themeColors, fontFamily}) => {
       fontFamily: fontFamily.medium,
       color: colors.lightGreyBgColor,
       fontSize: textScale(10),
-      textAlign:'left'
+      textAlign: 'left',
     },
 
     mainView: {
@@ -170,7 +181,7 @@ export default ({themeColors, fontFamily}) => {
     categoryText: {
       color: colors.textGreyH,
       fontSize: textScale(9),
-      textAlign:'left'
+      textAlign: 'left',
     },
     circularListImage: {height: moderateScale(40), width: moderateScale(40)},
     applyPromoBtn: {
@@ -207,7 +218,7 @@ export default ({themeColors, fontFamily}) => {
       fontSize: textScale(17),
       marginTop: moderateScale(15),
       marginHorizontal: moderateScale(6),
-      textAlign:'left'
+      textAlign: 'left',
     },
     modalMainViewContainer: {
       backgroundColor: colors.white,
@@ -236,7 +247,7 @@ export default ({themeColors, fontFamily}) => {
       fontFamily: fontFamily.regular,
       color: colors.textGrey,
       fontSize: textScale(10),
-      textAlign:'left'
+      textAlign: 'left',
     },
     deliveryIcon: {
       width: moderateScale(18),
@@ -247,7 +258,7 @@ export default ({themeColors, fontFamily}) => {
       fontFamily: fontFamily.regular,
       color: themeColors.primary_color,
       marginHorizontal: moderateScale(3),
-      textAlign:'left'
+      textAlign: 'left',
     },
     customDropDownIcon: {
       width: moderateScale(8),
@@ -276,10 +287,11 @@ export default ({themeColors, fontFamily}) => {
       marginVertical: moderateScale(13),
     },
     exploreStoresTxt: {
-      fontFamily: fontFamily.regular,
-      fontSize: textScale(16),
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(18),
       marginBottom: moderateScale(10),
-      textAlign:'left'
+      textAlign: 'left',
+      marginTop: moderateScale(-36),
     },
   });
 

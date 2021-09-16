@@ -75,8 +75,8 @@ export default function TextInputWithUnderlineAndLabel({
       <View style={{flexDirection: 'row', ...lableViewStyle}}>
         <Text
           style={{
-            ...labelStyle,
             color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
+            ...labelStyle,
           }}>
           {label}
         </Text>

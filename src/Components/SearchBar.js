@@ -39,7 +39,12 @@ export default function SearchBar({
         alignItems: 'center',
         ...containerStyle,
       }}>
-      <Image style={{tintColor: colors.blackLight}} source={imagePath.search} />
+      <Image
+        style={{
+          tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.blackLight,
+        }}
+        source={imagePath.icSearchb}
+      />
       <View style={{flex: 1, marginLeft: 10}}>
         <TextInput
           style={{

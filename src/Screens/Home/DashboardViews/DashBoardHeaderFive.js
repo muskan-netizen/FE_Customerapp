@@ -1,4 +1,4 @@
-import React, {createRef, useEffect, useState} from 'react';
+import React, {createRef, useEffect, useRef, useState} from 'react';
 import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 import deviceInfoModule from 'react-native-device-info';
 import Modal from 'react-native-modal';
@@ -21,6 +21,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
 import {string} from 'prop-types';
+import { BlurView } from '@react-native-community/blur';
 
 export default function DashBoardHeaderFive({
   navigation = {},
@@ -305,6 +306,9 @@ export default function DashBoardHeaderFive({
     updateState({isModalVisible: true});
   };
 
+  const viewRef2 = useRef();
+
+
   return (
     <>
       <View style={styles.headerContainer}>
@@ -383,7 +387,7 @@ export default function DashBoardHeaderFive({
           testID={'modal'}
           style={{justifyContent: 'flex-end', margin: 0}}
           onBackdropPress={() => updateState({isModalVisible: false})}>
-          <>
+          <View>
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => updateState({isModalVisible: false})}>
@@ -477,8 +481,17 @@ export default function DashBoardHeaderFive({
                   );
                 })}
               </View>
+             
             </View>
-          </>
+            <BlurView
+            style={styles.absolute}
+            viewRef={viewRef2}
+            blurType="light"
+            blurAmount={20}
+            blurRadius={20}
+          />
+         </View>
+       
         </Modal>
       </View>
     </>

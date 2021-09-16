@@ -1,5 +1,5 @@
-import {cloneDeep} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Image,
   Keyboard,
@@ -13,12 +13,12 @@ import {
   Alert,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import GradientButton from '../Components/GradientButton';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import commonStylesFun, {hitSlopProp} from '../styles/commonStyles';
+import commonStylesFun, { hitSlopProp } from '../styles/commonStyles';
 import fontFamily from '../styles/fontFamily';
 import Banner from '../Components/Banner';
 import DeviceInfo from 'react-native-device-info';
@@ -35,14 +35,14 @@ import {
   showError,
   showSuccess,
 } from '../utils/helperFunctions';
-import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import navigationStrings from '../navigation/navigationStrings';
 import HTMLView from 'react-native-htmlview';
 import HtmlViewComp from './HtmlViewComp';
-import {MyDarkTheme} from '../styles/theme';
+import { MyDarkTheme } from '../styles/theme';
 import * as Animatable from 'react-native-animatable';
 import actions from '../redux/actions';
-import {Pagination} from 'react-native-snap-carousel';
+import { Pagination } from 'react-native-snap-carousel';
 import CardLoader from './Loaders/CardLoader';
 
 export default function VariantAddons({
@@ -52,7 +52,7 @@ export default function VariantAddons({
   resizeMode = 'contain',
   imagestyle = {},
   showShimmer,
-  shimmerClose = () => {},
+  shimmerClose = () => { },
   updateCartItems,
 }) {
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
@@ -92,13 +92,13 @@ export default function VariantAddons({
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = theme;
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
+  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;
-  const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
+  const commonStyles = commonStylesFun({ fontFamily, buttonTextColor });
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useFocusEffect(
     React.useCallback(() => {
@@ -125,7 +125,7 @@ export default function VariantAddons({
   );
 
   const getProductDetailBasedOnFilter = (variantSetData) => {
-    updateState({isLoadingC: true});
+    updateState({ isLoadingC: true });
     let data = {};
     data['variants'] = variantSetData.map((i) => i.variant_id);
     data['options'] = variantSetData.map((i) => i.optionId);
@@ -155,7 +155,7 @@ export default function VariantAddons({
     console.log(error, 'Error>>>>>');
 
     if (error?.message?.alert == 1) {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
@@ -163,7 +163,7 @@ export default function VariantAddons({
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        {text: 'Clear Cart', onPress: () => clearCart()},
+        { text: 'Clear Cart', onPress: () => clearCart() },
       ]);
     } else {
       if (error?.data?.variant_empty) {
@@ -174,7 +174,7 @@ export default function VariantAddons({
           isLoadingC: false,
         });
       } else {
-        updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+        updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
         showError(error?.message || error?.error);
       }
     }
@@ -311,7 +311,7 @@ export default function VariantAddons({
     });
   };
 
-  const checkBoxButtonViewAddons = ({setoptions}) => {
+  const checkBoxButtonViewAddons = ({ setoptions }) => {
     return (
       <View>
         {setoptions.map((i, inx) => {
@@ -325,10 +325,9 @@ export default function VariantAddons({
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-
                 marginBottom: moderateScaleVertical(10),
               }}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text
                   style={[
                     styles.variantValue,
@@ -344,7 +343,7 @@ export default function VariantAddons({
                 </Text>
               </View>
 
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text
                   style={[
                     styles.variantValue,
@@ -358,7 +357,7 @@ export default function VariantAddons({
                     Number(i?.multiplier) * Number(i?.price)
                   ).toFixed(2)}`}
                 </Text>
-                <View style={{paddingLeft: moderateScale(5)}}>
+                <View style={{ paddingLeft: moderateScale(5) }}>
                   <Image
                     source={i?.value ? imagePath.check : imagePath.unCheck}
                   />
@@ -447,12 +446,12 @@ export default function VariantAddons({
       }
     });
 
-    updateState({variantSet: modifyVariants});
+    updateState({ variantSet: modifyVariants });
 
     // console.log(modifyVariants, 'im newArray>>>>>');
   };
 
-  const variantSetValue = ({options, type}) => {
+  const variantSetValue = ({ options, type }) => {
     if (type == 1) {
       return <>{radioButtonView(options)}</>;
     }
@@ -461,30 +460,30 @@ export default function VariantAddons({
 
   const radioButtonView = (options) => {
     return (
-      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         {options.map((i, inx) => {
           return (
             <TouchableOpacity
               // disabled={options && options.length == 1 ? true : false}
-              onPress={() => selectSpecificOptions(options, i, inx)}>
-              <View
+              onPress={() => selectSpecificOptions(options, i, inx)}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginRight: moderateScale(16),
+                marginBottom: moderateScaleVertical(10),
+              }}
+            >
+              <Text
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginRight: moderateScale(5),
-                  marginBottom: moderateScaleVertical(10),
+                  ...styles.variantValue,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 }}>
-                <Text
-                  style={{
-                    ...styles.variantValue,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}>
-                  {i?.title}
-                </Text>
-                <Image
-                  source={i?.value ? imagePath.check : imagePath.unCheck}
-                />
-              </View>
+                {i?.title}
+              </Text>
+              <Image
+                source={i?.value ? imagePath.check : imagePath.unCheck}
+              />
+
             </TouchableOpacity>
           );
         })}
@@ -495,7 +494,7 @@ export default function VariantAddons({
   const circularView = (options) => {
     console.log('circular view', options);
     return (
-      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         {options.map((i, inx) => {
           return (
             <TouchableNativeFeedback
@@ -516,7 +515,7 @@ export default function VariantAddons({
 
                     borderColor:
                       i?.value &&
-                      (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
+                        (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
                         ? colors.textGrey
                         : i.hexacode,
                   },
@@ -540,12 +539,12 @@ export default function VariantAddons({
     );
   };
 
-  const {bannerRef} = useRef();
+  const { bannerRef } = useRef();
 
   const showAllVariants = () => {
     let variantSetData = cloneDeep(variantSet);
     return (
-      <View style={{marginBottom: 10, paddingHorizontal: moderateScale(15)}}>
+      <View style={{ marginBottom: 10, paddingHorizontal: moderateScale(0) }}>
         {variantSetData.map((i, inx) => {
           return (
             <View
@@ -592,7 +591,7 @@ export default function VariantAddons({
       data['addon_options'] = addon_options;
     }
     console.log(data, 'data for cart');
-    updateState({btnLoader: true});
+    updateState({ btnLoader: true });
     actions
       .addProductsToCart(data, {
         code: appData.profile.code,
@@ -604,7 +603,7 @@ export default function VariantAddons({
         console.log(res, 'add item cart res');
         actions.cartItemQty(res);
         // showSuccess('Product successfully added');
-        updateState({isLoadingC: false, btnLoader: false});
+        updateState({ isLoadingC: false, btnLoader: false });
         updateCartItems(
           productdetail,
           productQuantityForCart,
@@ -668,7 +667,7 @@ export default function VariantAddons({
               : '#fff',
           }}>
           <CardLoader cardWidth={width} height={width * 0.6} />
-          <View style={{marginHorizontal: moderateScale(12)}}>
+          <View style={{ marginHorizontal: moderateScale(12) }}>
             <View
               style={{
                 alignSelf: 'center',
@@ -676,35 +675,35 @@ export default function VariantAddons({
                 alignItems: 'center',
               }}>
               <CardLoader cardWidth={10} height={10} />
-              <View style={{marginHorizontal: moderateScale(6)}} />
+              <View style={{ marginHorizontal: moderateScale(6) }} />
               <CardLoader cardWidth={10} height={10} />
-              <View style={{marginHorizontal: moderateScale(6)}} />
+              <View style={{ marginHorizontal: moderateScale(6) }} />
               <CardLoader cardWidth={10} height={10} />
             </View>
             <CardLoader cardWidth={80} height={10} />
             <CardLoader cardWidth={60} height={10} />
-            <View style={{marginTop: moderateScaleVertical(0)}} />
+            <View style={{ marginTop: moderateScaleVertical(0) }} />
             <CardLoader cardWidth={'100%'} height={2} />
             <CardLoader cardWidth={40} height={8} />
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <CardLoader cardWidth={60} height={10} />
-              <View style={{marginHorizontal: 8}} />
+              <View style={{ marginHorizontal: 8 }} />
               <CardLoader cardWidth={60} height={10} />
             </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <CardLoader cardWidth={60} height={10} />
-              <View style={{marginHorizontal: 8}} />
+              <View style={{ marginHorizontal: 8 }} />
               <CardLoader cardWidth={60} height={10} />
             </View>
             <CardLoader cardWidth={40} height={8} />
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <CardLoader cardWidth={60} height={10} />
-              <View style={{marginHorizontal: 8}} />
+              <View style={{ marginHorizontal: 8 }} />
               <CardLoader cardWidth={60} height={10} />
             </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <CardLoader cardWidth={60} height={10} />
-              <View style={{marginHorizontal: 8}} />
+              <View style={{ marginHorizontal: 8 }} />
               <CardLoader cardWidth={60} height={10} />
             </View>
           </View>
@@ -716,11 +715,11 @@ export default function VariantAddons({
             marginHorizontal: moderateScale(16),
             paddingBottom: moderateScaleVertical(10),
           }}>
-          <View style={{flex: 0.25}}>
+          <View style={{ flex: 0.25 }}>
             <CardLoader cardWidth={'100%'} height={38} />
           </View>
-          <View style={{marginHorizontal: moderateScale(8)}} />
-          <View style={{flex: 0.75}}>
+          <View style={{ marginHorizontal: moderateScale(8) }} />
+          <View style={{ flex: 0.75 }}>
             {/* <View style={{ marginHorizontal: 8 }} /> */}
             <CardLoader cardWidth={'100%'} height={38} />
           </View>
@@ -756,7 +755,7 @@ export default function VariantAddons({
       animationType={'none'}
       style={styles.modalContainer}
       onLayout={(event) => {
-        updateState({viewHeight: event.nativeEvent.layout.height});
+        updateState({ viewHeight: event.nativeEvent.layout.height });
       }}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Image source={imagePath.crossC} />
@@ -764,7 +763,7 @@ export default function VariantAddons({
       {showShimmer ? (
         shimmerShow()
       ) : (
-        <Animatable.View style={{flex: 1}}>
+        <Animatable.View style={{ flex: 1 }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             bounces={false}
@@ -775,7 +774,7 @@ export default function VariantAddons({
                 ? MyDarkTheme.colors.background
                 : '#fff',
             }}>
-            <View style={{flex: 1, alignItems: 'center'}}>
+            <View style={{ flex: 1, alignItems: 'center' }}>
               <Banner
                 bannerRef={bannerRef}
                 bannerData={productDetailData?.product_media}
@@ -783,13 +782,13 @@ export default function VariantAddons({
                 itemWidth={width}
                 pagination={false}
                 setActiveState={(index) =>
-                  updateState({slider1ActiveSlide: index})
+                  updateState({ slider1ActiveSlide: index })
                 }
                 showLightbox={true}
                 cardViewStyle={styles.cardViewStyle}
                 resizeMode="contain"
               />
-              <View style={{paddingTop: 5}}>
+              <View style={{ paddingTop: 5 }}>
                 <Pagination
                   dotsLength={productDetailData?.product_media?.length}
                   activeDotIndex={state.slider1ActiveSlide}
@@ -823,7 +822,7 @@ export default function VariantAddons({
                   {productdetail?.translation[0]?.title}
                 </Text>
               </View>
-              <View style={{justifyContent: 'center'}}>
+              <View style={{ justifyContent: 'center' }}>
                 <Text
                   style={{
                     color:
@@ -831,7 +830,6 @@ export default function VariantAddons({
                         ? colors.green
                         : colors.orangeB,
                     fontSize: textScale(10),
-                    lineHeight: 20,
                     fontFamily: fontFamily.medium,
                   }}>
                   {productTotalQuantity && productTotalQuantity != 0
@@ -841,15 +839,18 @@ export default function VariantAddons({
               </View>
 
               {productdetail?.translation[0]?.body_html != null && (
-                <HtmlViewComp
-                  plainHtml={productdetail?.translation[0]?.body_html}
-                />
+                <View>
+                  <HtmlViewComp
+                    plainHtml={productdetail?.translation[0]?.body_html}
+                  />
+                  <View style={{ marginBottom: 10 }} />
+                </View>
               )}
 
               <View
                 style={{
                   ...commonStyles.headerTopLine,
-                  marginVertical: moderateScaleVertical(10),
+                  // marginVertical: moderateScaleVertical(10),
                 }}
               />
               {/* ********Addon set View*******  */}
@@ -883,7 +884,7 @@ export default function VariantAddons({
                   ? MyDarkTheme.colors.background
                   : '#fff',
               }}>
-              <View style={{flex: 0.25}}>
+              <View style={{ flex: 0.25 }}>
                 <View
                   style={{
                     ...commonStyles.buttonRect,
@@ -894,7 +895,7 @@ export default function VariantAddons({
                     ),
                     borderColor: themeColors?.primary_color,
                   }}
-                  // onPress={onPress}
+                // onPress={onPress}
                 >
                   <TouchableOpacity
                     onPress={() => productIncrDecreamentForCart(2)}
@@ -932,8 +933,8 @@ export default function VariantAddons({
                 </View>
               </View>
 
-              <View style={{marginHorizontal: 8}} />
-              <View style={{flex: 0.75}}>
+              <View style={{ marginHorizontal: 8 }} />
+              <View style={{ flex: 0.75 }}>
                 <GradientButton
                   indicator={btnLoader}
                   indicatorColor={colors.white}
@@ -946,12 +947,11 @@ export default function VariantAddons({
                     textTransform: 'capitalize',
                   }}
                   onPress={() => addToCart(addonSet)}
-                  btnText={`${strings.ADD_ITEM} - ${
-                    currencies?.primary_currency?.symbol
-                  }${(
-                    Number(productPriceData?.multiplier) *
-                    Number(productPriceData?.price)
-                  ).toFixed(2)}`}
+                  btnText={`${strings.ADD_ITEM} - ${currencies?.primary_currency?.symbol
+                    }${(
+                      Number(productPriceData?.multiplier) *
+                      Number(productPriceData?.price)
+                    ).toFixed(2)}`}
                   btnStyle={{
                     borderRadius: moderateScale(4),
                     height: moderateScale(38),
@@ -971,7 +971,7 @@ const styles = StyleSheet.create({
     color: colors.textGrey,
     fontSize: textScale(18),
     lineHeight: 28,
-    fontFamily: fontFamily.bold,
+    fontFamily: fontFamily.medium,
   },
   description: {
     color: colors.textGreyB,
@@ -983,15 +983,15 @@ const styles = StyleSheet.create({
     color: colors.textGrey,
     fontSize: textScale(18),
     lineHeight: 28,
-    fontFamily: fontFamily.bold,
+    fontFamily: fontFamily.medium,
     marginVertical: moderateScaleVertical(10),
   },
 
   variantLable: {
     color: colors.textGrey,
-    fontSize: textScale(14),
-    lineHeight: 22,
-    fontFamily: fontFamily.bold,
+    fontSize: textScale(12),
+    // lineHeight: 22,
+    fontFamily: fontFamily.medium,
   },
 
   modalMainViewContainer: {
@@ -1030,8 +1030,8 @@ const styles = StyleSheet.create({
   productName: {
     color: colors.textGrey,
     fontSize: textScale(14),
-    lineHeight: 28,
-    fontFamily: fontFamily.medium,
+    // lineHeight: 28,
+    fontFamily: fontFamily.regular,
   },
   mainView: {
     marginVertical: moderateScaleVertical(15),
@@ -1046,17 +1046,15 @@ const styles = StyleSheet.create({
   },
   variantValue: {
     color: colors.black,
-    fontSize: textScale(14),
+    fontSize: textScale(10),
     lineHeight: 22,
-    fontFamily: fontFamily.medium,
-    paddingLeft: moderateScale(5),
-    paddingRight: moderateScale(20),
+    fontFamily: fontFamily.regular,
+    paddingRight: moderateScale(4),
   },
 
   chooseOption: {
     marginBottom: moderateScale(2),
     color: colors.textGreyF,
-    fontWeight: '600',
     fontSize: textScale(10),
     lineHeight: 22,
     fontFamily: fontFamily.regular,
@@ -1089,7 +1087,7 @@ const styles = StyleSheet.create({
     width: width,
     // marginRight: 20
   },
-  dotStyle: {height: 12, width: 12, borderRadius: 12 / 2},
+  dotStyle: { height: 12, width: 12, borderRadius: 12 / 2 },
   ratingColor: {
     color: colors.backgroundGrey,
     paddingLeft: 5,

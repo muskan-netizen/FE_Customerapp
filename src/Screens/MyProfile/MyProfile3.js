@@ -187,6 +187,7 @@ export default function MyProfile3({route, navigation}) {
       email: email,
       name: name,
       phoneNumber: phoneNumber,
+      callingCode: callingCode,
     });
     if (error) {
       showError(error);
@@ -525,8 +526,15 @@ export default function MyProfile3({route, navigation}) {
             autoCapitalize={'none'}
             containerStyle={{marginVertical: moderateScaleVertical(10)}}
             undnerlinecolor={colors.textGreyB}
-            txtInputStyle={{fontFamily: fontFamily.regular}}
-            labelStyle={{color: colors.textGreyB}}
+            txtInputStyle={{
+              fontFamily: fontFamily.regular,
+              color: colors.black,
+            }}
+            labelStyle={{
+              color: colors.textGreyB,
+              textTransform: 'uppercase',
+              fontSize: textScale(12),
+            }}
           />
 
           <TextInputWithUnderlineAndLabel
@@ -535,9 +543,16 @@ export default function MyProfile3({route, navigation}) {
             label={strings.EMAIL}
             autoCapitalize={'none'}
             containerStyle={{marginVertical: moderateScaleVertical(10)}}
-            txtInputStyle={{fontFamily: fontFamily.regular}}
+            txtInputStyle={{
+              fontFamily: fontFamily.regular,
+              color: colors.black,
+            }}
             undnerlinecolor={colors.textGreyB}
-            labelStyle={{color: colors.textGreyB}}
+            labelStyle={{
+              color: colors.textGreyB,
+              textTransform: 'uppercase',
+              fontSize: textScale(12),
+            }}
           />
 
           <PhoneNumberInputWithUnderline
@@ -550,6 +565,16 @@ export default function MyProfile3({route, navigation}) {
             phoneNumber={phoneNumber}
             callingCode={state.callingCode}
             undnerlineColor={colors.textGreyB}
+            textInputStyle={{
+              fontFamily: fontFamily.regular,
+              color: colors.black,
+              fontSize: textScale(14),
+            }}
+            labelStyle={{
+              color: colors.textGreyB,
+              textTransform: 'uppercase',
+              fontSize: textScale(12),
+            }}
           />
 
           <View style={{height: moderateScaleVertical(20)}} />
@@ -586,7 +611,11 @@ export default function MyProfile3({route, navigation}) {
             secureTextEntry={true}
             containerStyle={{marginVertical: moderateScaleVertical(10)}}
             undnerlinecolor={colors.textGreyB}
-            labelStyle={{color: colors.textGreyB}}
+            labelStyle={{
+              color: colors.textGreyB,
+              textTransform: 'uppercase',
+              fontSize: textScale(12),
+            }}
             secureTextEntry={true}
           />
 
@@ -595,7 +624,11 @@ export default function MyProfile3({route, navigation}) {
             value={newPassword}
             label={strings.ENTER_NEW_PASSWORD}
             undnerlinecolor={colors.textGreyB}
-            labelStyle={{color: colors.textGreyB}}
+            labelStyle={{
+              color: colors.textGreyB,
+              textTransform: 'uppercase',
+              fontSize: textScale(12),
+            }}
             secureTextEntry={true}
             containerStyle={{marginVertical: moderateScaleVertical(10)}}
           />
@@ -604,7 +637,11 @@ export default function MyProfile3({route, navigation}) {
             value={confirmPassword}
             label={strings.ENTER_CONFIRM_PASSWORD}
             undnerlinecolor={colors.textGreyB}
-            labelStyle={{color: colors.textGreyB}}
+            labelStyle={{
+              color: colors.textGreyB,
+              textTransform: 'uppercase',
+              fontSize: textScale(12),
+            }}
             secureTextEntry={true}
             containerStyle={{marginVertical: moderateScaleVertical(10)}}
           />
@@ -827,7 +864,7 @@ export default function MyProfile3({route, navigation}) {
       statusBarColor={colors.backgroundGreyC}
       source={loaderOne}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={imagePath.icBackb}
         centerTitle={strings.MY_PROFILE}
         headerStyle={{
           backgroundColor: isDarkMode

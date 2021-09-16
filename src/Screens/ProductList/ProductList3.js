@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, debounce} from 'lodash';
+import {assign, cloneDeep, debounce} from 'lodash';
 import React, {Fragment, useEffect, useRef, useState} from 'react';
 import {
   FlatList,
@@ -197,7 +197,7 @@ export default function Products({route, navigation}) {
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
-  console.log("device info+++",DeviceInfo.getUniqueId())
+  console.log('device info+++', DeviceInfo.getUniqueId());
 
   // useFocusEffect(
   //   React.useCallback(() => {
@@ -615,12 +615,80 @@ export default function Products({route, navigation}) {
     });
   };
 
+  const checkSingleVendor = async () => {
+    let vendorData = {vendor_id: categoryInfo?.id};
+    updateState({updateQtyLoader: true});
+    return new Promise((resolve, reject) => {
+      actions
+        .checkSingleVendor(vendorData, {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        })
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+
+  const clearCartAndAddProduct = async (item) => {
+    updateState({updateQtyLoader: true});
+    actions
+      .clearCart(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        actions.cartItemQty(res);
+        addSingleItem(item);
+        // showSuccess(res?.message);
+      })
+      .catch(errorMethod);
+  };
+
   const addSingleItem = async (item) => {
-    if (item?.add_on?.length !== 0 || item?.variantSet?.length !== 0) {
-      updateState({isVisibleModal: true, selectedCartItem: item});
+    let isSingleVendor = await checkSingleVendor();
+    console.log('is single vendor', isSingleVendor);
+    if (
+      isSingleVendor.isSingleVendorEnabled !== 0 &&
+      isSingleVendor.otherVendorExists !== 0
+    ) {
+      updateState({updateQtyLoader: false});
+      Alert.alert(
+        '',
+        'Your already have items in your cart. Do you want to discard them?',
+        [
+          {
+            text: strings.CANCEL,
+            onPress: () => {},
+            // style: 'destructive',
+          },
+          {text: strings.CONFIRM, onPress: () => clearCartAndAddProduct(item)},
+        ],
+      );
       return;
     }
- 
+
+    // return;
+
+    if (item?.add_on?.length !== 0 || item?.variantSet?.length !== 0) {
+      updateState({
+        updateQtyLoader: false,
+        isVisibleModal: true,
+        selectedCartItem: item,
+      });
+      return;
+    }
+
     let data = {};
     data['sku'] = item.sku;
     data['quantity'] = 1;
@@ -663,7 +731,10 @@ export default function Products({route, navigation}) {
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
     //!!data?.variant[0]?.check_if_in_cart_app && data?.variant[0]?.check_if_in_cart_app.length > 0 || !!data?.qty ?
-    console.log('check if in cart', itemToUpdate?.variant[0]?.check_if_in_cart_app);
+    console.log(
+      'check if in cart',
+      itemToUpdate?.variant[0]?.check_if_in_cart_app,
+    );
     let isExistqty = itemToUpdate?.qty
       ? itemToUpdate?.qty
       : !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
@@ -777,7 +848,7 @@ export default function Products({route, navigation}) {
       .catch(errorMethod);
   };
 
-  const errorMethodSecond = (error, addonSet=[]) => {
+  const errorMethodSecond = (error, addonSet = []) => {
     console.log(error.message.alert, 'Error>>>>>');
     updateState({updateQtyLoader: false});
     if (error?.message?.alert == 1) {
@@ -797,7 +868,7 @@ export default function Products({route, navigation}) {
     }
   };
 
-  const clearCart = (addonSet = []) => {
+  const clearCart = async (addonSet = []) => {
     actions
       .clearCart(
         {},
@@ -916,12 +987,13 @@ export default function Products({route, navigation}) {
                 </View>
                 <View style={{marginLeft: moderateScale(12)}}>
                   <Text
+                  numberOfLines={2}
                     animation="fadeIn"
                     style={{
                       color: isDarkMode
                         ? MyDarkTheme.colors.text
                         : colors.black,
-                      fontSize: moderateScale(16),
+                      fontSize: moderateScale(20),
                       fontFamily: fontFamily.medium,
                     }}>
                     {data?.categoryInfo?.name || data?.name}
@@ -945,7 +1017,7 @@ export default function Products({route, navigation}) {
                       style={{
                         color: isDarkMode
                           ? MyDarkTheme.colors.text
-                          : colors.blackOpacity43,
+                          : colors.blackOpacity66,
                         fontSize: moderateScale(11),
                         fontFamily: fontFamily.regular,
                         marginVertical: moderateScaleVertical(6),
@@ -1188,7 +1260,8 @@ export default function Products({route, navigation}) {
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.goBack()}>
+                onPress={() => navigation.goBack()}
+                hitSlop={styles.hitSlopProp}>
                 <Image
                   style={{
                     tintColor: isDarkMode
@@ -1320,6 +1393,9 @@ export default function Products({route, navigation}) {
             }
             onEndReached={onEndReachedDelayed}
             onEndReachedThreshold={0.5}
+            ListFooterComponent={() => (
+              <View style={{height: moderateScale(50)}} />
+            )}
             ListEmptyComponent={
               !isLoading && (
                 <LottieLoader

@@ -245,7 +245,11 @@ export default function Offer({route, navigation}) {
       <Header
         centerTitle={strings.OFFERS}
         leftIcon={
-          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
+          appStyle?.homePageLayout === 2
+            ? imagePath.backArrow
+            : appStyle?.homePageLayout === 3
+            ? imagePath.icBackb
+            : imagePath.back
         }
       />
       <View style={{height: 1, backgroundColor: colors.borderLight}} />

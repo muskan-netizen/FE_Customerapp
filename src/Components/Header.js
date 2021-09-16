@@ -23,7 +23,7 @@ import {MyDarkTheme} from '../styles/theme';
 const Header = ({
   leftIcon = imagePath.back,
   centerTitle,
-  textStyle,
+  textStyle = {},
   horizontLine = true,
   rightIcon = '',
   onPressLeft,
@@ -73,7 +73,12 @@ const Header = ({
               customLeft()
             ) : (
               <TouchableOpacity
-                hitSlop={hitSlopProp}
+                hitSlop={{
+                  top: 50,
+                  right: 50,
+                  left: 50,
+                  bottom: 50,
+                }}
                 activeOpacity={0.7}
                 onPress={
                   !!onPressLeft
@@ -179,10 +184,10 @@ export function stylesFunc({fontFamily}) {
 
     textStyle: {
       color: colors.black2Color,
-      fontSize: textScale(17),
+      fontSize: textScale(16),
       lineHeight: textScale(28),
       textAlign: 'center',
-      fontFamily: fontFamily.bold,
+      fontFamily: fontFamily.medium,
     },
   });
   return styles;

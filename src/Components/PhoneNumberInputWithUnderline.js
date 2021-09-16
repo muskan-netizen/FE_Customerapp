@@ -30,6 +30,7 @@ export default function PhoneNumberInputWithUnderline({
   placeholder,
   textInputStyle = {},
   undnerlineColor = colors.transparent,
+  labelStyle = {},
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -70,6 +71,7 @@ export default function PhoneNumberInputWithUnderline({
         <Text
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
+            ...labelStyle,
           }}>
           {placeholder}
         </Text>
@@ -112,12 +114,15 @@ export default function PhoneNumberInputWithUnderline({
         }}>
         <TextInput
           underlineColor={undnerlineColor}
-          selectionColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
+          selectionColor={
+            isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB
+          }
           onChangeText={onChangePhone}
           value={phoneNumber}
           theme={{colors: {primary: undnerlineColor}}}
           keyboardType="numeric"
           style={{
+            opacity: 0.7,
             backgroundColor: isDarkMode
               ? MyDarkTheme.colors.lightDark
               : colors.textGreyK,

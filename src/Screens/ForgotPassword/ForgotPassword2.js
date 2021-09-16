@@ -12,6 +12,7 @@ import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
+import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,

@@ -560,7 +560,7 @@ export default function ProductDetail2({route, navigation}) {
       }
     }
   };
-
+ 
   const renderProduct = ({item, index}) => {
     item.showAddToCart = true;
     return (

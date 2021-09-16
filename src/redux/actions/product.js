@@ -11,11 +11,12 @@ import {
   ADD_PRODUCT_TO_CART,
   GET_ALL_PRODUCTSBY_STORE_ID,
   MY_WALLET,
+  CHECK_VENDORS,
 } from '../../config/urls';
-import {apiGet, apiPost} from '../../utils/utils';
+import { apiGet, apiPost } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
-const {dispatch} = store;
+const { dispatch } = store;
 
 // save vendor listing and category data
 export function saveProductListingAndCategoryInfo(data) {
@@ -185,9 +186,9 @@ export function updateProductWishListData(query = '', data = {}, headers = {}) {
   });
 }
 
-export function walletHistory(query='',data = {}, headers = {}) {
+export function walletHistory(query = '', data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
-    apiGet(MY_WALLET+query, data, headers)
+    apiGet(MY_WALLET + query, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -200,6 +201,7 @@ export function walletHistory(query='',data = {}, headers = {}) {
 
 //Get Product by category id for specific store
 export function getProductBySpecificId(query = '', data = {}, headers = {}) {
+
   return new Promise((resolve, reject) => {
     apiGet(GET_ALL_PRODUCTSBY_STORE_ID + query, data, headers)
       .then((res) => {
@@ -210,3 +212,19 @@ export function getProductBySpecificId(query = '', data = {}, headers = {}) {
       });
   });
 }
+
+
+export function checkSingleVendor(data = {}, header = {}) {
+  console.log("Sending data",data )
+  console.log("header==>>>",header)
+  return new Promise((resolve, reject) => {
+    apiPost(CHECK_VENDORS, data, header)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
