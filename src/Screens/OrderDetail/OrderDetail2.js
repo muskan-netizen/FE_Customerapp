@@ -772,6 +772,7 @@ export default function OrderDetail({navigation, route}) {
       </View>
     );
   };
+
   const getFooter = () => {
     return (
       <>
@@ -821,6 +822,7 @@ export default function OrderDetail({navigation, route}) {
             </Text>
           </View>
         </TouchableOpacity>
+        <View style={{height: moderateScaleVertical(40)}}></View>
       </>
     );
   };

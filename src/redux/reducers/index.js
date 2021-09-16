@@ -8,6 +8,7 @@ import initBoot from './initBoot';
 import product from './product';
 import vendor from './vendor';
 import pickupdelivery from './pickupdelivery';
+import order from './order';
 
 const appReducer = combineReducers({
   auth,
@@ -17,7 +18,8 @@ const appReducer = combineReducers({
   vendor,
   product,
   cart,
-  pickupdelivery
+  pickupdelivery,
+  order,
 });
 
 const rootReducer = (state, action) => {

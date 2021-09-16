@@ -9,10 +9,11 @@ import {
   GET_RETURN_ORDER_DETAIL,
   GET_RETURN_PRODUCT_DETAIL,
   UPLOAD_PRODUCT_IMAGE,
-  SUBMIT_RETURN_ORDER
+  SUBMIT_RETURN_ORDER,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
+import types from '../types';
 const {dispatch} = store;
 
 //Get Cart Detail
@@ -42,6 +43,15 @@ export const getOrderListing = (query = '', data, headers = {}) => {
 };
 
 ///VENDOR ORDERS ACTIONS
+
+//SAVE USER'S LAST SELECTED VENDOR
+
+export const savedSelectedVendor = (data) => {
+  dispatch({
+    type: types.STORE_SELECTED_VENDOR,
+    payload: data,
+  });
+};
 
 //get all orders of specific vendor
 export const _getListOfVendorOrders = (query = '', data, headers = {}) => {
@@ -150,11 +160,10 @@ export function getReturnProductrDetailData(url = '', data = {}, headers = {}) {
   });
 }
 
-
 //Upload return order image
-export function uploadReturnOrderImage( data = {}, headers = {}) {
+export function uploadReturnOrderImage(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
-    apiPost(UPLOAD_PRODUCT_IMAGE , data, headers)
+    apiPost(UPLOAD_PRODUCT_IMAGE, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -163,12 +172,11 @@ export function uploadReturnOrderImage( data = {}, headers = {}) {
       });
   });
 }
-
 
 //Submit return order
-export function submitReturnOrder( data = {}, headers = {}) {
+export function submitReturnOrder(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
-    apiPost(SUBMIT_RETURN_ORDER , data, headers)
+    apiPost(SUBMIT_RETURN_ORDER, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -177,5 +185,3 @@ export function submitReturnOrder( data = {}, headers = {}) {
       });
   });
 }
-
-

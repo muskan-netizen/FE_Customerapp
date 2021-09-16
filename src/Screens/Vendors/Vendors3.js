@@ -142,17 +142,17 @@ export default function Vendors3({route, navigation}) {
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }
       />
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <SearchBar2 navigation={navigation} />
-        <Image
+      {/* <View style={{flexDirection: 'row', alignItems: 'center'}}> */}
+      <SearchBar2 navigation={navigation} />
+      {/* <Image
           style={
             isDarkMode
               ? {tintColor: MyDarkTheme.colors.text}
               : {tintColor: null}
           }
           source={imagePath.filter1}
-        />
-      </View>
+        /> */}
+      {/* </View> */}
       <FlatList
         showsVerticalScrollIndicator={false}
         data={(!isLoading && categoryData?.listData) || []}

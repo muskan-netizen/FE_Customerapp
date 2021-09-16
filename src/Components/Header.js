@@ -23,7 +23,7 @@ import {MyDarkTheme} from '../styles/theme';
 const Header = ({
   leftIcon = imagePath.back,
   centerTitle,
-  textStyle,
+  textStyle = {},
   horizontLine = true,
   rightIcon = '',
   onPressLeft,
