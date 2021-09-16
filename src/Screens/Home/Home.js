@@ -331,7 +331,7 @@ export default function Home({ route, navigation }) {
         navigation.navigate(screenName, { data });
       };
 
-  //Component reference
+
   const { viewRef2, viewRef3, bannerRef } = useRef();
 
   //onPress Category
