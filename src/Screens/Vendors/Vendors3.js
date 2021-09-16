@@ -134,7 +134,7 @@ export default function Vendors3({route, navigation}) {
       }
       statusBarColor={colors.backgroundGrey}>
       <Header3
-        leftIcon={imagePath.backArrow1}
+        leftIcon={imagePath.icBackb}
         centerTitle={data?.name}
         rightIcon={imagePath.search}
         location={location}
