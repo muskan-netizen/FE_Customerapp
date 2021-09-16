@@ -104,5 +104,11 @@ export default ({ themeColors, fontFamily }) =>
       alignItems: 'center', 
       justifyContent: 'space-between', 
       height: moderateScale(42)
+    },
+    hitSlopProp: {
+      top: 50,
+      right: 50,
+      left: 50,
+      bottom: 50,
     }
   });

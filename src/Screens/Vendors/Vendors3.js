@@ -60,6 +60,7 @@ export default function Vendors3({route, navigation}) {
         {code: appData.profile.code},
       )
       .then((res) => {
+        console.log("vendor data",res)
         updateState({isLoading: false, isRefreshing: false});
         const vendorData = {
           category: res.data.category,

@@ -1,5 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
-import { cloneDeep, debounce } from 'lodash';
+import { assign, cloneDeep, debounce } from 'lodash';
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
@@ -615,20 +615,66 @@ export default function Products({ route, navigation }) {
   };
 
 
+  const checkSingleVendor = async () => {
+    let vendorData = { vendor_id: categoryInfo?.id }
+    updateState({ updateQtyLoader: true })
+    return new Promise((resolve, reject) => {
+      actions.checkSingleVendor(vendorData, {
+        code: appData.profile.code,
+        currency: currencies.primary_currency.id,
+        language: languages.primary_language.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      }).then((res) => {
+        resolve(res);
+      })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+
+  const clearCartAndAddProduct = async (item) => {
+    updateState({updateQtyLoader: true})
+    actions
+      .clearCart(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        actions.cartItemQty(res);
+        addSingleItem(item)
+        // showSuccess(res?.message);
+      }).catch(errorMethod);
+  }
+
   const addSingleItem = async (item) => {
-    // actions.checkSingleVendor({
-    //   vendor_id: data?.id
-    // }).then((res) => {
-    //   console.log("res====>>>", res)
-    // }).catch((error) => {
-    //   console.log("error raised", error)
-    // })
+    let isSingleVendor = await checkSingleVendor()
+    console.log("is single vendor", isSingleVendor)
+    if (isSingleVendor.isSingleVendorEnabled !== 0 && isSingleVendor.otherVendorExists !== 0) {
+      updateState({ updateQtyLoader: false })
+      Alert.alert('', 'Dummy data', [
+        {
+          text: strings.CANCEL,
+          onPress: () => { },
+          // style: 'destructive',
+        },
+        { text: strings.CONFIRM, onPress: () => clearCartAndAddProduct(item) },
+      ]);
+      return;
+    }
+
+
+
     // return;
 
-
-
     if (item?.add_on?.length !== 0 || item?.variantSet?.length !== 0) {
-      updateState({ isVisibleModal: true, selectedCartItem: item });
+      updateState({ updateQtyLoader: false, isVisibleModal: true, selectedCartItem: item });
       return;
     }
 
@@ -808,7 +854,7 @@ export default function Products({ route, navigation }) {
     }
   };
 
-  const clearCart = (addonSet = []) => {
+  const clearCart = async (addonSet = []) => {
     actions
       .clearCart(
         {},
@@ -1199,7 +1245,9 @@ export default function Products({ route, navigation }) {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.goBack()}>
+                onPress={() => navigation.goBack()}
+                hitSlop={styles.hitSlopProp}
+                >
                 <Image
                   style={{
                     tintColor: isDarkMode
