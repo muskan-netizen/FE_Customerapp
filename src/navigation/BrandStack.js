@@ -16,7 +16,9 @@ import {
   SendProduct,
   Vendors,
   Vendors2,
+  Brands2,
 } from '../Screens';
+
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
@@ -26,7 +28,7 @@ export default function () {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        component={Brands}
+        component={appStyle?.homePageLayout === 3 ? Brands2 : Brands}
         name={navigationStrings.BRANDS}
         options={{headerShown: false}}
       />
