@@ -15,7 +15,7 @@ const RoundImg = ({
                 width: moderateScale(size),
                 height: moderateScale(size),
                 borderRadius: moderateScale(size / 2),
-                backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
+                backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.blackOpacity10,
                  ...imgStyle 
                 }}
             source={{ uri: img }}

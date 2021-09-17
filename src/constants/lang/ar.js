@@ -488,5 +488,7 @@ export default {
   AVAILABLE_STORE: 'Available Stores',
   SPENDABLE_POINTS:'Spendable points',
   POINTS_EARNED:'Points Earned',
-  UPCOMING:"Upcoming"
+  UPCOMING:"Upcoming",
+  CARD_EARNED:'Card Earned',
+  ADDITIONAL_POINTS_REQUIRED_FOR:'Additional points required for',
 };

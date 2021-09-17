@@ -100,7 +100,7 @@ export default function ProductCard3({
       animation={index > 8 ? '' : 'fadeInUp'}
       delay={index > 8 ? 1 * 100 : index * 10}>
       <TouchableOpacity
-        // disabled
+        disabled
         activeOpacity={0.6}
         onPress={onPress}
         onPressIn={() => pressInAnimation(scaleInAnimated)}
