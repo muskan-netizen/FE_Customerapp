@@ -279,7 +279,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
         style={{ flex: 1, flexDirection: 'row', alignItems:'center' }}>
 
         <RoundImg
-          img={'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg'}
+          img={'https://image.freepik.com/free-vector/burger-logo_18228-1173.jpg'}
           size={35}
           isDarkMode={isDarkMode}
           MyDarkTheme={MyDarkTheme}

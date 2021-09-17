@@ -166,7 +166,7 @@ export default function ProductCard3({
             {/* Title View */}
             <View>
               <Text
-                numberOfLines={1}
+                // numberOfLines={1}
                 style={{
                   ...commonStyles.futuraBtHeavyFont14,
                   width: moderateScaleVertical(220),
@@ -174,9 +174,10 @@ export default function ProductCard3({
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   fontFamily: fontFamily.medium,
                   fontSize: textScale(12),
-                  width: width / 3,
+                  width: width / 2.5,
+                  // flex:1
                 }}>
-                {data?.translation[0]?.title}
+                {data?.translation[0]?.title}sd fsdf dsfds fd fd dsfdf
               </Text>
               {!!data?.category?.category_detail?.translation && (<Text
                 numberOfLines={1}
