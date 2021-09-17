@@ -510,4 +510,7 @@ personnalisé`,
   CUSTOMISABLE: 'Customisable',
   AVAILABLE_STORE: 'Magasins disponibles',
   PICKUP: 'PICKUP',
+  SPENDABLE_POINTS:'Spendable points',
+  POINTS_EARNED:'Points Earned',
+  UPCOMING:"Upcoming"
 };
