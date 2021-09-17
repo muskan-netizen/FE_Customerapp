@@ -9,7 +9,6 @@ import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import * as NavigationService from '../navigation/NavigationService';
 import {Toast} from '../library/toastify-react-native';
-import * as NewToast from 'react-native-simple-toast';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {

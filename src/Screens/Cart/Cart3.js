@@ -2,7 +2,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
 import {cloneDeep, forEach} from 'lodash';
 import React, {useEffect, useState, useRef} from 'react';
-import Toast from 'react-native-simple-toast';
+
 import {
   Alert,
   FlatList,
