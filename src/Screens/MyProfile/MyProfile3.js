@@ -197,7 +197,6 @@ export default function MyProfile3({route, navigation}) {
   };
   const saveUserInfo = () => {
     if (!!userData?.auth_token) {
-      let {callingCode} = state;
       const checkValid = isValidDataOfBasicInfo();
       if (!checkValid) {
         return;
@@ -208,6 +207,7 @@ export default function MyProfile3({route, navigation}) {
         // phone_number: '+' + callingCode + phoneNumber,
         phone_number: phoneNumber,
         country_code: cca2,
+        callingCode: callingCode,
       };
       updateState({isLoading: true});
       actions
@@ -220,6 +220,7 @@ export default function MyProfile3({route, navigation}) {
           obj['email'] = res.data.email;
           obj['phone_number'] = res.data.phone_number;
           obj['cca2'] = res.data.cca2;
+          obj['dial_code'] = res.data.callingCode || callingCode;
           actions.updateProfile({...userData, ...obj});
           updateState({isLoading: false});
           // navigation.goBack()
@@ -528,7 +529,7 @@ export default function MyProfile3({route, navigation}) {
             undnerlinecolor={colors.textGreyB}
             txtInputStyle={{
               fontFamily: fontFamily.regular,
-              color: colors.black,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}
             labelStyle={{
               color: colors.textGreyB,
@@ -545,7 +546,7 @@ export default function MyProfile3({route, navigation}) {
             containerStyle={{marginVertical: moderateScaleVertical(10)}}
             txtInputStyle={{
               fontFamily: fontFamily.regular,
-              color: colors.black,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}
             undnerlinecolor={colors.textGreyB}
             labelStyle={{
@@ -563,11 +564,11 @@ export default function MyProfile3({route, navigation}) {
             }
             cca2={cca2}
             phoneNumber={phoneNumber}
-            callingCode={state.callingCode}
+            callingCode={callingCode}
             undnerlineColor={colors.textGreyB}
             textInputStyle={{
               fontFamily: fontFamily.regular,
-              color: colors.black,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               fontSize: textScale(14),
             }}
             labelStyle={{

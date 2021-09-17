@@ -85,6 +85,7 @@ export default function OrderCardVendorComponent2({
               flexDirection: 'row',
               alignItems: 'center',
               padding: moderateScale(10),
+              flex: 1,
             }}>
             <Image
               source={{uri: imageUrl}}
@@ -94,16 +95,15 @@ export default function OrderCardVendorComponent2({
                 borderRadius: moderateScale(40 / 2),
               }}
             />
-            <View>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.userName, {color: MyDarkTheme.colors.text}]
-                    : styles.userName
-                }>
-                {data?.vendor?.name || ''}
-              </Text>
-            </View>
+
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.userName, {color: MyDarkTheme.colors.text}]
+                  : styles.userName
+              }>
+              {data?.vendor?.name || ''}
+            </Text>
           </View>
 
           <View>
@@ -113,7 +113,9 @@ export default function OrderCardVendorComponent2({
                   isDarkMode
                     ? [styles.orderLableStyle, {color: MyDarkTheme.colors.text}]
                     : styles.orderLableStyle
-                }>{`${strings.ORDER_ID}:#${data?.order_number}`}</Text>
+                }>
+                {`${strings.ORDER_ID}:#${data?.order_number}`}
+              </Text>
               <Text
                 style={
                   isDarkMode

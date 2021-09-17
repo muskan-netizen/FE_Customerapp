@@ -155,10 +155,11 @@ export default function Loyalty({navigation}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-           appStyle?.homePageLayout === 2 ? 
-          imagePath.backArrow:appStyle?.homePageLayout === 3?
-          imagePath.icBackb :
-           imagePath.back
+          appStyle?.homePageLayout === 2
+            ? imagePath.backArrow
+            : appStyle?.homePageLayout === 3
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={strings.LOYALTYPOINTS}
         headerStyle={
@@ -279,7 +280,13 @@ export default function Loyalty({navigation}) {
       <View style={{marginHorizontal: moderateScale(20), flex: 1}}>
         {upcomingLoyalty?.length ? (
           <View style={{marginBottom: 20}}>
-            <Text style={styles.upcoming}>{'Upcoming'}</Text>
+            <Text
+              style={[
+                styles.upcoming,
+                {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+              ]}>
+              {strings.UPCOMING}
+            </Text>
           </View>
         ) : null}
 
@@ -287,9 +294,16 @@ export default function Loyalty({navigation}) {
           data={upcomingLoyalty}
           extraData={upcomingLoyalty}
           numColumns={2}
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={{flexGrow: 1}}
           keyExtractor={(item, index) => String(index)}
           renderItem={renderProduct}
+          ItemSeparatorComponent={() => (
+            <View style={{height: moderateScale(17)}} />
+          )}
+          ListFooterComponent={() => (
+            <View style={{height: moderateScale(70)}} />
+          )}
         />
       </View>
     </WrapperContainer>

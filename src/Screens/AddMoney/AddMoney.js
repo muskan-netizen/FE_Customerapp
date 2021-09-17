@@ -209,7 +209,9 @@ export default function AddMoney({navigation}) {
                   color:
                     selectedPaymentMethod &&
                     selectedPaymentMethod?.id == item.id
-                      ? colors.blackC
+                      ? isDarkMode
+                        ? colors.white
+                        : colors.blackC
                       : colors.textGreyJ,
                 },
               ]}>
@@ -435,6 +437,10 @@ export default function AddMoney({navigation}) {
                 flexDirection: 'row',
                 alignItems: 'center',
                 paddingHorizontal: moderateScale(3),
+                borderBottomWidth: 0.5,
+                borderBottomColor: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.textGreyJ,
               }}>
               <Text
                 style={
@@ -450,9 +456,9 @@ export default function AddMoney({navigation}) {
                     ? [
                         styles.addMoneyInputField,
                         {
-                          backgroundColor: MyDarkTheme.colors.text,
                           marginLeft: moderateScale(10),
                           width: width - 50,
+                          color: MyDarkTheme.colors.text,
                         },
                       ]
                     : styles.addMoneyInputField
@@ -462,7 +468,7 @@ export default function AddMoney({navigation}) {
                 keyboardType={'numeric'}
                 placeholder={strings.ENTER_AMOUNT}
                 placeholderTextColor={
-                  isDarkMode ? MyDarkTheme.colors.background : colors.textGrey
+                  isDarkMode ? MyDarkTheme.colors.text : colors.textGreyJ
                 }
               />
             </View>
@@ -546,7 +552,11 @@ export default function AddMoney({navigation}) {
       source={loaderOne}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
+          appStyle?.homePageLayout === 2
+            ? imagePath.backArrow
+            : appStyle?.homePageLayout === 3
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={strings.ADD_MONEY}
         headerStyle={

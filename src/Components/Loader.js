@@ -2,6 +2,7 @@ import React from 'react';
 import {Modal, View} from 'react-native';
 import {BarIndicator} from 'react-native-indicators';
 import {useSelector} from 'react-redux';
+import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 
 const LoadingComponent = () => {
@@ -14,7 +15,7 @@ const LoadingComponent = () => {
     <View
       style={{
         ...commonStyles.loader,
-        backgroundColor: 'rgba(255,255,255,0.5)',
+        backgroundColor: colors.whiteOpacity5,
         elevation: 5,
       }}>
       <BarIndicator size={25} color={themeColors.primary_color} />

@@ -632,13 +632,20 @@ export default function ShortCode({route, navigation}) {
   };
 
   const initApiHit = () => {
+    let header = {};
+    if (languages?.primary_language?.id) {
+      header = {
+        code: appData?.profile?.code,
+        language: languages?.primary_language?.id,
+      };
+    } else {
+      header = {
+        code: shortCode,
+      };
+    }
+
     actions
-      .initApp(
-        {},
-        {
-          code: shortCode,
-        },
-      )
+      .initApp({}, header)
       .then((res) => {
         updateState({changeInShortCode: false});
         if (getBundleId() == appIds.royoorder) {

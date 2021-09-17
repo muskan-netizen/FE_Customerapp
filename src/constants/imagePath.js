@@ -311,4 +311,5 @@ export default {
   mapNavigation: require('../assets/images/TAXIAPPIMAGES/ic_nav.png'),
   newfilter: require('../assets/images/RoyoorderNewImages/ic_filter.png'),
   newsort: require('../assets/images/RoyoorderNewImages/sort.png'),
+  icBagA: require('../assets/images/RoyoorderNewImages/ic_bag2.png'),
 };
