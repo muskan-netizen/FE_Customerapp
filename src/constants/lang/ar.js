@@ -486,4 +486,7 @@ export default {
   PHONE_NUMBER_NOT_VALID: 'Phone number is not valid',
   CUSTOMISABLE: 'Customisable',
   AVAILABLE_STORE: 'Available Stores',
+  SPENDABLE_POINTS:'Spendable points',
+  POINTS_EARNED:'Points Earned',
+  UPCOMING:"Upcoming"
 };
