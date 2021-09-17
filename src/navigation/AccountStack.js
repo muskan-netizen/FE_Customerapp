@@ -237,7 +237,8 @@ export default function () {
         name={navigationStrings.WEBVIEWSCREEN}
         // component={WebviewScreen}
         component={
-          appStyle?.homePageLayout === 3 ? StaticTrackOrder : WebviewScreen
+          WebviewScreen
+          // appStyle?.homePageLayout === 3 ? StaticTrackOrder :
         }
         options={{headerShown: false}}
       />
@@ -245,6 +246,7 @@ export default function () {
         name={navigationStrings.SUBSCRIPTION}
         component={
           appStyle?.homePageLayout === 3 ? Subscriptions2 : Subscriptions
+          // Subscriptions
         }
         options={{headerShown: false}}
       />

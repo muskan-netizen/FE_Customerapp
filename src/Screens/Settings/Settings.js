@@ -233,10 +233,11 @@ export default function Settings({route, navigation}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 2 ? 
-          imagePath.backArrow:appStyle?.homePageLayout === 3?
-          imagePath.icBackb :
-           imagePath.back
+          appStyle?.homePageLayout === 2
+            ? imagePath.backArrow
+            : appStyle?.homePageLayout === 3
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={strings.SETTINGS}
         // rightIcon={imagePath.cartShop}
@@ -368,7 +369,7 @@ export default function Settings({route, navigation}) {
         style={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.lightDark
-            : '#fafafa',
+            : colors.greyColor1,
           zIndex: 5000,
           marginHorizontal: moderateScale(20),
           flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
@@ -386,11 +387,12 @@ export default function Settings({route, navigation}) {
         dropDownStyle={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.lightDark
-            : '#fafafa',
+            : colors.greyColor1,
           height: 120,
           width: width - moderateScale(40),
           alignSelf: 'center',
         }}
+        arrowColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
         onChangeItem={(item) => updateCurrency(item)}
       />
 
@@ -425,7 +427,7 @@ export default function Settings({route, navigation}) {
         style={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.lightDark
-            : '#fafafa',
+            : colors.greyColor1,
           zIndex: 4000,
           marginHorizontal: moderateScale(20),
           flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
@@ -453,6 +455,7 @@ export default function Settings({route, navigation}) {
           width: width - moderateScale(40),
           alignSelf: 'center',
         }}
+        arrowColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
         onChangeItem={(item) => updateLanguage(item)}
       />
 

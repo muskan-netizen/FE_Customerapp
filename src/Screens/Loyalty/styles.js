@@ -44,33 +44,34 @@ export default ({fontFamily}) => {
       fontSize: textScale(32),
       // opacity: 0.9,
     },
-    imageStyle:{
+    imageStyle: {
       height: height / 7,
       width: width / 2,
       borderRadius: 8,
     },
-    loyaltyPointsEarned:{
+    loyaltyPointsEarned: {
       color: colors.white,
       fontFamily: fontFamily.medium,
       fontSize: textScale(24),
     },
-    loyaltyPointsUsed:{
+    loyaltyPointsUsed: {
       color: colors.white,
       fontFamily: fontFamily.medium,
       fontSize: textScale(12),
     },
-    upcoming:{
+    upcoming: {
       color: colors.black,
       fontFamily: fontFamily.medium,
       fontSize: textScale(14),
-      opacity:0.5
+      opacity: 0.5,
+      textAlign: 'left',
     },
-    descriptionLoyalty:{
+    descriptionLoyalty: {
       color: colors.black,
       fontFamily: fontFamily.medium,
       fontSize: textScale(12),
-      opacity:0.8
-    }
+      opacity: 0.8,
+    },
   });
   return styles;
 };

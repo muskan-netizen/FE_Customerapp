@@ -309,4 +309,5 @@ export default {
   savedLocationImage: require('../assets/images/TAXIAPPIMAGES/ic_fav.png'),
   RecentLocationImage: require('../assets/images/TAXIAPPIMAGES/ic_saved.png'),
   mapNavigation: require('../assets/images/TAXIAPPIMAGES/ic_nav.png'),
+  icBagA: require('../assets/images/RoyoorderNewImages/ic_bag2.png'),
 };

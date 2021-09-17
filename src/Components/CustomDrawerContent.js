@@ -74,7 +74,7 @@ export default function CustomDrawerContent({
                   fontSize: textScale(14),
                   fontFamily: fontFamily?.bold,
                   ...props.labelStyle,
-                  color: isFocused ? colors.white : 'rgba(255,255,255,.5)',
+                  color: isFocused ? colors.white : colors.whiteOpacity5,
                 }}>
                 {label}
               </Text>

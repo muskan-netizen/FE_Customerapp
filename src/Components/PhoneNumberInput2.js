@@ -4,7 +4,12 @@ import CountryPicker, {Flag} from 'react-native-country-picker-modal';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
-import {moderateScale, textScale, width} from '../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  textScale,
+  width,
+} from '../styles/responsiveSize';
 import {TextInput} from 'react-native-paper';
 
 export default function PhoneNumberInput2({
@@ -52,17 +57,24 @@ export default function PhoneNumberInput2({
           alignItems: 'center',
           width: moderateScale(88),
           backgroundColor: colors.textGreyK,
+          marginTop: moderateScaleVertical(8),
           ...textInputStyle,
         }}
         onPress={_openCountryPicker}>
-        <Text
+        <View
           style={{
-            fontFamily: fontFamily.medium,
-            color: colors.textGreyOpcaity7,
-            marginStart: 2,
+            flexDirection: 'row',
+            alignItems: 'center',
           }}>
-          +{callingCode}
-        </Text>
+          <Text>+</Text>
+          <Text
+            style={{
+              fontFamily: fontFamily.medium,
+              color: colors.textGreyOpcaity7,
+            }}>
+            {callingCode}
+          </Text>
+        </View>
 
         <View style={{marginRight: moderateScale(-10)}}>
           <Flag countryCode={cca2} />
@@ -111,6 +123,7 @@ export default function PhoneNumberInput2({
       {countryPickerModalVisible && (
         <CountryPicker
           cca2={cca2}
+          withCallingCode={callingCode}
           visible={countryPickerModalVisible}
           withFlagButton={false}
           withFilter

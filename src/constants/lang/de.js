@@ -479,4 +479,11 @@ export default {
   PHONE_NUMBER_NOT_VALID: 'Phone number is not valid',
   CUSTOMISABLE: 'Customisable',
   AVAILABLE_STORE: 'Available Stores',
+  IN: 'In',
+  UPCOMING_BILLING_DATE: 'Upcoming Billing Date',
+  EXPIRED_ON: 'Expired on',
+  CANCELLED_AT: 'Cancelled at',
+  CANCELS_AT: 'Cancels at',
+  FREE_DELIVERY: 'Free Delivery',
+  UPCOMING: 'Upcoming',
 };

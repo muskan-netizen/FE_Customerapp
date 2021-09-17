@@ -186,6 +186,7 @@ export default function MyProfile({route, navigation}) {
       email: email,
       name: name,
       phoneNumber: phoneNumber,
+      callingCode: callingCode,
     });
     if (error) {
       showError(error);
@@ -206,6 +207,7 @@ export default function MyProfile({route, navigation}) {
         // phone_number: '+' + callingCode + phoneNumber,
         phone_number: phoneNumber,
         country_code: cca2,
+        callingCode: callingCode,
       };
       updateState({isLoading: true});
       actions
@@ -218,6 +220,7 @@ export default function MyProfile({route, navigation}) {
           obj['email'] = res.data.email;
           obj['phone_number'] = res.data.phone_number;
           obj['cca2'] = res.data.cca2;
+          obj['dial_code'] = res.data.callingCode || callingCode;
           actions.updateProfile({...userData, ...obj});
           updateState({isLoading: false});
           // navigation.goBack()

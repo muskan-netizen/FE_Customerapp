@@ -204,33 +204,19 @@ export default function Subscriptions2({navigation, route}) {
   const renderProduct = ({item, index}) => {
     const {isSelectItem} = state;
     return (
-      <>
-        {!!allSubscriptions.length && index == 0 && (
-          <View
-            style={{
-              marginTop: currentSubscription ? moderateScale(40) : null,
-              marginBottom: moderateScale(20),
-            }}>
-            <Text style={styles.subscriptionTitle}>
-              {currentSubscription
-                ? strings.OTHERSUBSCRIPTION
-                : strings.ALLSUBSCRIPTION}
-            </Text>
-          </View>
-        )}
-        <SubscriptionComponent2
-          data={item}
-          clientCurrency={clientCurrency}
-          onPress={(item) => selectSpecificSubscriptionPlan(item)}
-          payNowUpcoming={() =>
-            selectSpecificSubscriptionPlan(currentSubscription?.plan)
-          }
-          // cancelSubscription={()=>cancelSubscription(item)}
-          // onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-          // onAddtoWishlist={() => _onAddtoWishlist(item)}
-          // addToCart={() => _addToCart(item)}
-        />
-      </>
+      <SubscriptionComponent2
+        data={item}
+        clientCurrency={clientCurrency}
+        onPress={(item) => selectSpecificSubscriptionPlan(item)}
+        payNowUpcoming={() =>
+          selectSpecificSubscriptionPlan(currentSubscription?.plan)
+        }
+
+        // cancelSubscription={()=>cancelSubscription(item)}
+        // onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+        // onAddtoWishlist={() => _onAddtoWishlist(item)}
+        // addToCart={() => _addToCart(item)}
+      />
     );
   };
 
@@ -622,40 +608,36 @@ export default function Subscriptions2({navigation, route}) {
         textStyle={{fontSize: textScale(14)}}
       />
 
-      <View style={{flex: 1}}>
-        <View
-          style={{
-            marginTop: moderateScaleVertical(20),
-            marginHorizontal: moderateScale(10),
-          }}>
-          <FlatList
-            data={(!isLoadingB && allSubscriptions) || []}
-            renderItem={renderProduct}
-            ListHeaderComponent={listHeaderComponent()}
-            keyExtractor={(item, index) => String(index)}
-            keyboardShouldPersistTaps="always"
-            showsVerticalScrollIndicator={false}
-            ItemSeparatorComponent={() => <View style={{height: 10}} />}
-            refreshing={isRefreshing}
-            //   getItemLayout={getItemLayout}
-            // style={{flex:1}}
-            contentContainerStyle={{flexGrow: 1}}
-            initialNumToRender={12}
-            maxToRenderPerBatch={10}
-            windowSize={10}
-            refreshControl={
-              <RefreshControl
-                refreshing={isRefreshing}
-                onRefresh={handleRefresh}
-                tintColor={themeColors.primary_color}
-              />
-            }
-            ListFooterComponent={() => <View style={{height: 20}} />}
-            ListEmptyComponent={
-              <ListEmptySubscriptions isLoading={isLoadingB} />
-            }
-          />
-        </View>
+      <View
+        style={{
+          flex: 1,
+          marginHorizontal: moderateScale(10),
+        }}>
+        <FlatList
+          data={(!isLoadingB && allSubscriptions) || []}
+          renderItem={renderProduct}
+          ListHeaderComponent={listHeaderComponent()}
+          keyExtractor={(item, index) => String(index)}
+          keyboardShouldPersistTaps="always"
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={{height: 7}} />}
+          refreshing={isRefreshing}
+          //   getItemLayout={getItemLayout}
+          // style={{flex:1}}
+          contentContainerStyle={{flexGrow: 1}}
+          initialNumToRender={12}
+          maxToRenderPerBatch={10}
+          windowSize={10}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              tintColor={themeColors.primary_color}
+            />
+          }
+          ListFooterComponent={() => <View style={{height: 40}} />}
+          ListEmptyComponent={<ListEmptySubscriptions isLoading={isLoadingB} />}
+        />
       </View>
 
       <ModalView

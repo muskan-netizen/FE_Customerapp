@@ -89,7 +89,30 @@ export default function PhoneNumberInputWithUnderline({
             marginTop: moderateScaleVertical(10),
           }}
           onPress={_openCountryPicker}>
-          <View style={{marginRight: moderateScale(-10), marginBottom: 10}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginBottom: 7,
+              marginRight: 3,
+            }}>
+            <Text>+</Text>
+            <Text
+              style={{
+                marginRight: -5,
+                fontFamily: fontFamily.regular,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {callingCode}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              marginRight: moderateScale(-16),
+              marginBottom: 10,
+              flexDirection: 'row',
+            }}>
             <Flag countryCode={cca2} />
           </View>
           <Image
@@ -126,10 +149,9 @@ export default function PhoneNumberInputWithUnderline({
             backgroundColor: isDarkMode
               ? MyDarkTheme.colors.lightDark
               : colors.textGreyK,
-            ...textInputStyle,
             height: moderateScaleVertical(40),
             marginTop: moderateScaleVertical(15),
-            color: 'red',
+            ...textInputStyle,
           }}
         />
       </View>
@@ -151,6 +173,7 @@ export default function PhoneNumberInputWithUnderline({
       /> */}
       {countryPickerModalVisible && (
         <CountryPicker
+          withCallingCode={callingCode}
           cca2={cca2}
           visible={countryPickerModalVisible}
           withFlagButton={false}
