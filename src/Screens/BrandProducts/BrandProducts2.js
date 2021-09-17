@@ -567,13 +567,13 @@ export default function BrandProducts2({route, navigation}) {
                   style={[styles.tabLable2]}>
                   <Image
                     style={{
-                      tintColor: isDarkMode ? MyDarkTheme.colors.text : null,
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : showSortSelectedicon
+                        ? themeColors.primary_color
+                        : colors.black,
                     }}
-                    source={
-                      showSortSelectedicon
-                        ? imagePath.sortSelected
-                        : imagePath.newsort
-                    }
+                    source={imagePath.newsort}
                   />
                   <Text
                     style={[
@@ -632,13 +632,13 @@ export default function BrandProducts2({route, navigation}) {
                   style={styles.tabLable2}>
                   <Image
                     style={{
-                      tintColor: isDarkMode ? MyDarkTheme.colors.text : null,
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : showFilterSlectedIcon
+                        ? themeColors.primary_color
+                        : colors.black,
                     }}
-                    source={
-                      showFilterSlectedIcon
-                        ? imagePath.filterSelected
-                        : imagePath.newfilter
-                    }
+                    source={imagePath.newfilter}
                   />
                   <Text
                     style={[

@@ -57,6 +57,7 @@ import staticStrings from '../../constants/staticStrings';
 import AddonModal from '../ProductDetail/AddonModal';
 import VariantAddons from '../../Components/VariantAddons';
 import {removeItem} from '../../utils/utils';
+import NoDataFound from '../../Components/NoDataFound';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
@@ -987,7 +988,7 @@ export default function Products({route, navigation}) {
                 </View>
                 <View style={{marginLeft: moderateScale(12)}}>
                   <Text
-                  numberOfLines={2}
+                    numberOfLines={2}
                     animation="fadeIn"
                     style={{
                       color: isDarkMode
@@ -1397,13 +1398,7 @@ export default function Products({route, navigation}) {
               <View style={{height: moderateScale(50)}} />
             )}
             ListEmptyComponent={
-              !isLoading && (
-                <LottieLoader
-                  containerStyle={{flex: 0}}
-                  noDataFound={noDataFound}
-                  emptyText="No Data Found"
-                />
-              )
+              <NoDataFound isLoading={state.isLoading} containerStyle={{}} />
             }
           />
           {/* <View style={{ height: moderateScale(height * 0.070) }} /> */}

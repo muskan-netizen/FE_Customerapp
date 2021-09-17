@@ -501,10 +501,28 @@ export default function CelebrityProduct2({route, navigation}) {
             {/* Brand Banner View */}
             <View
               style={{
-                marginHorizontal: moderateScale(20),
+                marginHorizontal: moderateScale(16),
                 alignItems: 'center',
+                backgroundColor: colors.greySearchBackground,
+                borderRadius: moderateScale(8),
               }}>
               {celebrityDetail?.avatar && (
+                <Image
+                  style={{
+                    width: width - moderateScale(24),
+                    height: moderateScaleVertical(width / 2.3),
+                  }}
+                  resizeMode="contain"
+                  source={{
+                    uri: getImageUrl(
+                      celebrityDetail?.avatar?.image_fit,
+                      celebrityDetail?.avatar?.image_path,
+                      '1000/1000',
+                    ),
+                  }}
+                />
+              )}
+              {/* {celebrityDetail?.avatar && (
                 <ImageBackground
                   style={{
                     width: width - moderateScale(20),
@@ -550,7 +568,7 @@ export default function CelebrityProduct2({route, navigation}) {
                     </View>
                   </View>
                 </ImageBackground>
-              )}
+              )} */}
             </View>
             <View style={styles.sortFilterTabView2}>
               <View
@@ -579,13 +597,13 @@ export default function CelebrityProduct2({route, navigation}) {
                   style={[styles.tabLable2]}>
                   <Image
                     style={{
-                      tintColor: isDarkMode ? MyDarkTheme.colors.text : null,
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : showSortSelectedicon
+                        ? themeColors.primary_color
+                        : null,
                     }}
-                    source={
-                      showSortSelectedicon
-                        ? imagePath.sortSelected
-                        : imagePath.newsort
-                    }
+                    source={imagePath.newsort}
                   />
                   <Text
                     style={[
@@ -644,13 +662,13 @@ export default function CelebrityProduct2({route, navigation}) {
                   style={styles.tabLable2}>
                   <Image
                     style={{
-                      tintColor: isDarkMode ? MyDarkTheme.colors.text : null,
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : showFilterSlectedIcon
+                        ? themeColors.primary_color
+                        : colors.black,
                     }}
-                    source={
-                      showFilterSlectedIcon
-                        ? imagePath.filterSelected
-                        : imagePath.newfilter
-                    }
+                    source={imagePath.newfilter}
                   />
                   <Text
                     style={[

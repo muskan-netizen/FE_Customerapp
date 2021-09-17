@@ -3,6 +3,9 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
+
 import {
   moderateScale,
   moderateScaleVertical,
@@ -84,13 +87,18 @@ export default function CustomBottomTabBarTwo({
 }
 
 export function stylesData({fontFamily, themeColors}) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const styles = StyleSheet.create({
     tabBarStyle: {
       // height: Platform.OS === 'ios' ? 60 + insets.bottom : 70 + insets.bottom,
       flexDirection: 'row',
       paddingHorizontal: moderateScale(5),
       paddingVertical: moderateScaleVertical(8),
-      backgroundColor: colors.white,
+
       position: 'absolute',
       left: moderateScale(25),
       right: moderateScale(25),
@@ -101,7 +109,9 @@ export function stylesData({fontFamily, themeColors}) {
       shadowOpacity: 0.1,
       shadowRadius: 2,
       elevation: 2,
-      backgroundColor: themeColors.primary_color,
+      backgroundColor: isDarkMode
+        ? MyDarkTheme.colors.lightDark
+        : themeColors.primary_color,
     },
     labelStyle: {
       fontFamily: fontFamily.medium,

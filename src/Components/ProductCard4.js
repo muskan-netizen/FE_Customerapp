@@ -88,12 +88,13 @@ export default function ProductCard4({
               // height: 30,
               marginHorizontal: moderateScale(16),
               marginTop: moderateScale(6),
+              width: width - moderateScale(180),
             }}>
             <Text
               numberOfLines={1}
               style={{
                 ...commonStyles.futuraBtHeavyFont16,
-                textAlign: 'center',
+                textAlign: 'left',
                 // marginTop: moderateScaleVertical(10),
                 color: isDarkMode ? MyDarkTheme.colors.text : '#2A2E36',
                 fontFamily: fontFamily.medium,

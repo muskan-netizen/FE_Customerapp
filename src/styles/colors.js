@@ -98,4 +98,5 @@ export default {
   textGreyNew: '#1E2E4D',
   greyColor1: '#fafafa',
   greyColor2: '#EEEEEE',
+  blackOpacity15: 'rgba(255,255,255,0.15)',
 };
