@@ -1,9 +1,11 @@
+import {BlurView} from '@react-native-community/blur';
 import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep, debounce} from 'lodash';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   Image,
+  ImageBackground,
   RefreshControl,
   Text,
   TouchableOpacity,
@@ -14,12 +16,10 @@ import {useSelector} from 'react-redux';
 import DisplayModal from '../../Components/DisplayModal';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import NoDataFound from '../../Components/NoDataFound';
 import ProductCard4 from '../../Components/ProductCard4';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
-import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
@@ -40,7 +40,8 @@ import stylesFunc from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 
-export default function BrandProducts2({route, navigation}) {
+export default function CelebrityProduct2({route, navigation}) {
+  //Route data / params coming from some screen
   const {data} = route.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
@@ -51,11 +52,11 @@ export default function BrandProducts2({route, navigation}) {
     slider1ActiveSlide: 0,
     isLoading: true,
     isLoadingB: false,
-    brand: data,
-    brandData: [],
+    celebrity: data,
+    celebrityData: [],
     pageNo: 1,
     limit: 12,
-    brandDetail: null,
+    celebrityDetail: null,
     allFilters: [],
     sleectdBrands: [],
     selectedVariants: [],
@@ -104,14 +105,13 @@ export default function BrandProducts2({route, navigation}) {
     sortFilterMap: [],
   });
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
   const {
-    brand,
-    brandData,
+    celebrity,
+    celebrityData,
     isLoadingB,
     limit,
     pageNo,
-    brandDetail,
+    celebrityDetail,
     allFilters,
     sleectdBrands,
     selectedVariants,
@@ -129,13 +129,14 @@ export default function BrandProducts2({route, navigation}) {
     sortFilterMap,
   } = state;
 
-  //Redux Store data
+  //Upadte state in screen
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+
+  //Redux store data
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state?.auth?.userData);
   const fontFamily = appStyle?.fontSizeData;
-
-  //Screen styling
   const styles = stylesFunc({themeColors, fontFamily});
 
   //Naviagtion to specific screen
@@ -144,28 +145,29 @@ export default function BrandProducts2({route, navigation}) {
     () => {
       navigation.navigate(screenName, {data});
     };
+
   useEffect(() => {
     updateState({
       sortFilterMap: sortFilters[0].value,
     });
   }, []);
 
-  //Get brand Products data based on change with brand
+  //List of celebrity products based on
   useEffect(() => {
-    getListOfBrandProducts();
-  }, [state.brand, state.isLoadingB]);
+    getListOfCelebrityProducts();
+  }, [state.celebrity, state.isLoadingB]);
 
-  //Get brand Products based on change with language and currencies
+  //List of celebrity products based on language and currency
   useEffect(() => {
     updateState({pageNo: 1});
-    getListOfBrandProducts();
+    getListOfCelebrityProducts();
   }, [languages, currencies]);
 
-  //On focus changes
+  //on focus screen fucntions
   useFocusEffect(
     React.useCallback(() => {
       updateState({pageNo: 1});
-      getListOfBrandProducts();
+      getListOfCelebrityProducts();
     }, [
       sleectdBrands,
       selectedOptions,
@@ -175,12 +177,12 @@ export default function BrandProducts2({route, navigation}) {
     ]),
   );
 
-  //Get brand Products data based on change with page number and pull to refresh
+  //List of celebrity products based on page number change  and pull to refress
   useEffect(() => {
-    getListOfBrandProducts();
+    getListOfCelebrityProducts();
   }, [state.pageNo, state.isRefreshing]);
 
-  const getListOfBrandProducts = () => {
+  const getListOfCelebrityProducts = () => {
     let filterExist =
       sleectdBrands.length ||
       selectedVariants.length ||
@@ -203,13 +205,13 @@ export default function BrandProducts2({route, navigation}) {
     }
     {
       !!filterExist || !!sortExist
-        ? getBrandProductsFilterBased()
-        : getBrandProducts();
+        ? getCelebrityProductsFilterBased()
+        : getCelebrityProducts();
     }
   };
 
-  //Get Brand products based on filter
-  const getBrandProductsFilterBased = () => {
+  //Get list of celebrity product based on celebrity filters
+  const getCelebrityProductsFilterBased = () => {
     let data = {};
     data['variants'] = selectedVariants;
     data['options'] = selectedOptions;
@@ -217,8 +219,8 @@ export default function BrandProducts2({route, navigation}) {
     data['order_type'] = slectedSortBy.length ? slectedSortBy[0] : '';
     data['range'] = `${minimumPrice};${maximumPrice}`;
     actions
-      .getBrandProductsByFilters(
-        `/${brand.id}?limit=${limit}&page=${pageNo}`,
+      .getCelebrityProductsByFilters(
+        `/${celebrity.id}?limit=${limit}&page=${pageNo}`,
         data,
         {
           code: appData?.profile?.code,
@@ -230,18 +232,18 @@ export default function BrandProducts2({route, navigation}) {
         updateState({
           isLoading: false,
           isLoadingB: false,
-          brandData:
-            pageNo == 1 ? res.data.data : [...brandData, ...res.data.data],
+          celebrityData:
+            pageNo == 1 ? res.data.data : [...celebrityData, ...res.data.data],
         });
       })
       .catch(errorMethod);
   };
 
-  //Get Brand products based on brand id
-  const getBrandProducts = () => {
+  //Get list of celebrity products based on celebrity id
+  const getCelebrityProducts = () => {
     actions
-      .getBrandProductsByBrandId(
-        `/${brand.id}?limit=${limit}&page=${pageNo}`,
+      .getCelebrityProductsByCelebrityId(
+        `/${celebrity.id}?limit=${limit}&page=${pageNo}`,
         {},
         {
           code: appData?.profile?.code,
@@ -254,24 +256,22 @@ export default function BrandProducts2({route, navigation}) {
           isLoading: false,
           isLoadingB: false,
           isRefreshing: false,
-          brandDetail: res.data.brand,
-          brandData:
+          celebrityDetail: res.data.celebrity[0],
+          celebrityData:
             pageNo == 1
               ? res.data.products.data
-              : [...brandData, ...res.data.products.data],
+              : [...celebrityData, ...res.data.products.data],
         });
         updateBrandAndCategoryFilter(res.data.filterVariant);
       })
       .catch(errorMethod);
   };
-
-  //Handing error coming from API
+  //Error handling of apis
   const errorMethod = (error) => {
     updateState({isLoading: false, isRefreshing: false, isLoadingB: false});
     showError(error?.message || error?.error);
   };
 
-  // Update the brand and category filter
   const updateBrandAndCategoryFilter = (filterData) => {
     var filterDataNew = [];
 
@@ -296,8 +296,6 @@ export default function BrandProducts2({route, navigation}) {
       allFilters: [...filterDataNew],
     });
   };
-
-  //Update State based on filter coming from filter screen
   const getProductBasedOnFilter = (
     minimumPrice,
     maximumPrice,
@@ -318,6 +316,7 @@ export default function BrandProducts2({route, navigation}) {
       sleectdBrands: sleectdBrands,
       selectedVariants: selectedVariants,
       selectedOptions: selectedOptions,
+      // slectedSortBy: slectedSortBy,
     });
   };
 
@@ -325,8 +324,7 @@ export default function BrandProducts2({route, navigation}) {
   const _addToCart = (item) => {
     moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
   };
-
-  //render Products list based on brand ID
+  //render product list view
   const renderProduct = ({item, index}) => {
     return (
       <ProductCard4
@@ -341,7 +339,6 @@ export default function BrandProducts2({route, navigation}) {
   /* ADD-REMOVE ITEM TO WISHLIST FUNCTION  */
   const _onAddtoWishlist = (item) => {
     if (!!userData?.auth_token) {
-      // updateState({isLoadingB: true});
       actions
         .updateProductWishListData(
           `/${item.id}`,
@@ -359,13 +356,12 @@ export default function BrandProducts2({route, navigation}) {
         .catch(errorMethod);
     } else {
       showError(strings.UNAUTHORIZED_MESSAGE);
-      // updateState({isLoadingB: false});
     }
   };
 
   /*******Upadte products in wishlist>*********/
   const updateProductList = (item) => {
-    let newArray = cloneDeep(brandData);
+    let newArray = cloneDeep(celebrityData);
     newArray = newArray.map((i, inx) => {
       if (i.id == item.id) {
         if (item.inwishlist) {
@@ -378,9 +374,8 @@ export default function BrandProducts2({route, navigation}) {
         return i;
       }
     });
-    updateState({brandData: newArray});
+    updateState({celebrityData: newArray});
   };
-
   //pagination of data
   const onEndReached = ({distanceFromEnd}) => {
     updateState({pageNo: pageNo + 1});
@@ -402,8 +397,6 @@ export default function BrandProducts2({route, navigation}) {
   const closeOptionModal = () => {
     updateState({isSortEnabled: false});
   };
-
-  //Update short filter status
   const updateStatus = (item) => {
     let allFilterData = cloneDeep(sortFilters);
 
@@ -449,9 +442,9 @@ export default function BrandProducts2({route, navigation}) {
     });
   };
 
-  //Submit shot button
-  const _sortingSubmitButton = () => {
+  const bottomButtonClick = () => {
     var sortbyIds = [];
+
     sortbyIds = sortFilters
       .filter((i) => i?.id == -2)[0]
       .value.filter((itm) => itm?.value?.selected == true)
@@ -466,17 +459,12 @@ export default function BrandProducts2({route, navigation}) {
     });
   };
 
-  // we set the height of item is fixed
-  const getItemLayout = (data, index) => ({
-    length: width * 0.5 - 21.5,
-    offset: (width * 0.5 - 21.5) * index,
-    index,
-  });
+  const {imageRef} = useRef();
 
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
-      statusBarColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
+      statusBarColor={colors.white}
       isLoadingB={isLoadingB}
       source={loaderOne}>
       <Header
@@ -487,24 +475,22 @@ export default function BrandProducts2({route, navigation}) {
             ? imagePath.icBackb
             : imagePath.back
         }
-        centerTitle={brand.name || brand.translation[0].title}
-        headerStyle={
-          isDarkMode
-            ? {backgroundColor: MyDarkTheme.colors.background}
-            : {backgroundColor: colors.white}
-        }
+        centerTitle={celebrity.name || celebrity.translation[0].title}
         rightIcon={
           appStyle?.homePageLayout === 3
             ? imagePath.icSearchb
             : imagePath.search
         }
         onPressRight={() =>
-          moveToNewScreen(navigationStrings.SEARCHPRODUCTOVENDOR, {
-            type: staticStrings.BRAND,
-            id: brand?.id,
-          })()
+          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+        }
+        headerStyle={
+          isDarkMode
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
         }
       />
+
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
       <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
         {state.isLoading && <ListEmptyProduct isLoading={state.isLoading} />}
@@ -513,33 +499,59 @@ export default function BrandProducts2({route, navigation}) {
             {/* //Top section slider */}
             <View style={{marginTop: 20}} />
             {/* Brand Banner View */}
-
             <View
               style={{
-                marginHorizontal: moderateScale(16),
+                marginHorizontal: moderateScale(20),
                 alignItems: 'center',
-                backgroundColor: colors.greySearchBackground,
-                borderRadius: moderateScale(8),
               }}>
-              {brandDetail?.image && (
-                <Image
+              {celebrityDetail?.avatar && (
+                <ImageBackground
                   style={{
-                    width: width - moderateScale(24),
-                    height: moderateScaleVertical(width / 2.3),
+                    width: width - moderateScale(20),
+                    height: moderateScaleVertical(width / 2),
                   }}
-                  resizeMode="contain"
+                  // source={{uri: rectImage}}
                   source={{
                     uri: getImageUrl(
-                      brandDetail.image.image_fit,
-                      brandDetail.image.image_path,
-                      '1000/1000',
+                      celebrityDetail?.avatar?.image_fit,
+                      celebrityDetail?.avatar?.image_path,
+                      '600/150',
                     ),
-                  }}
-                />
+                  }}>
+                  <View
+                    ref={imageRef}
+                    style={{
+                      flex: 1,
+                      backgroundColor: 'rgba(0,0,0,0.6)',
+                      justifyContent: 'center',
+                    }}>
+                    <BlurView
+                      style={styles.absolute}
+                      viewRef={imageRef}
+                      blurType="light"
+                      blurAmount={20}
+                      blurRadius={20}
+                    />
+                    <View style={{alignItems: 'center'}}>
+                      <Image
+                        source={{
+                          uri: getImageUrl(
+                            celebrityDetail?.avatar?.image_fit,
+                            celebrityDetail?.avatar?.image_path,
+                            '500/500',
+                          ),
+                        }}
+                        style={{
+                          width: moderateScaleVertical(width / 2.1),
+                          height: moderateScaleVertical(width / 2.1),
+                          borderRadius: moderateScaleVertical(width / 2.1 / 2),
+                        }}
+                      />
+                    </View>
+                  </View>
+                </ImageBackground>
               )}
-              {/* <Text style={styles.addProduct}>{strings.ALLPRODUCT}</Text> */}
             </View>
-            {/* {!!brandData && !!brandData.length && ( */}
             <View style={styles.sortFilterTabView2}>
               <View
                 style={{
@@ -654,21 +666,20 @@ export default function BrandProducts2({route, navigation}) {
                 </TouchableOpacity>
               </View>
             </View>
-            {/* )} */}
 
             <FlatList
-              data={(!state.isLoading && brandData) || []}
+              bounces={false}
+              data={(!state.isLoading && celebrityData) || []}
               renderItem={renderProduct}
-              extraData={brandData}
+              extraData={celebrityData}
               keyExtractor={(item, index) => String(index)}
               keyboardShouldPersistTaps="always"
               showsVerticalScrollIndicator={false}
-              style={{flex: 1, marginTop: moderateScale(10)}}
+              style={{flex: 1}}
               contentContainerStyle={{
                 flexGrow: 1,
               }}
-              ItemSeparatorComponent={() => <View style={{height: 18}} />}
-              getItemLayout={getItemLayout}
+              ItemSeparatorComponent={() => <View style={{height: 16}} />}
               initialNumToRender={12}
               maxToRenderPerBatch={10}
               windowSize={10}
@@ -682,12 +693,6 @@ export default function BrandProducts2({route, navigation}) {
               }
               onEndReached={onEndReachedDelayed}
               onEndReachedThreshold={0.5}
-              ListEmptyComponent={
-                <NoDataFound
-                  isLoading={state.isLoading}
-                  containerStyle={{marginTop: moderateScaleVertical(width / 8)}}
-                />
-              }
               ListFooterComponent={() => <View style={{height: 20}} />}
             />
             <View>
@@ -699,7 +704,7 @@ export default function BrandProducts2({route, navigation}) {
                   dataArray={sortFilterMap}
                   isSortEnabled={isSortEnabled}
                   headerTitle={strings.SORT_MODAL_TITLE}
-                  bottomButtonClick={_sortingSubmitButton}
+                  bottomButtonClick={bottomButtonClick}
                   updateStatus={(item) => updateStatus(item)}
                 />
               )}

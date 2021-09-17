@@ -73,7 +73,7 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
           fontSize: textScale(11),
           fontFamily: fontFamily.regular,
           marginVertical: moderateScaleVertical(10),
-          textAlign: 'center',
+          alignSelf: 'center',
           color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
         }}>
         {data?.name ? data?.name : data?.translation[0]?.title}
