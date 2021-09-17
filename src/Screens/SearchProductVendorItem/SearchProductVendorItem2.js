@@ -14,7 +14,7 @@ import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import commonStylesFunc from '../../styles/commonStyles';
+import commonStylesFunc, { hitSlopProp } from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -409,22 +409,18 @@ export default function SearchProductVendorItem2({ navigation, route }) {
         }}>
         <View
           style={{
-            flex: 0.1,
             flexDirection: 'row',
-            justifyContent: 'flex-end',
+            alignItems: 'center',
+            marginHorizontal: moderateScale(8),
           }}>
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => navigation.goBack()}
             style={{
-              // backgroundColor: colors.greyColor,
-              height: moderateScaleVertical(37),
-              width: moderateScale(45),
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: moderateScale(11),
-              elevation: 2,
-            }}>
+              flex: 0.1,
+            }}
+            hitSlop={hitSlopProp}
+          >
             <Image
               source={
                 appStyle?.homePageLayout === 3
@@ -437,24 +433,24 @@ export default function SearchProductVendorItem2({ navigation, route }) {
             />
           </TouchableOpacity>
 
-          <SearchBar
-            containerStyle={{
-              marginHorizontal: moderateScale(18),
-              borderRadius: 8,
-              width: width / 1.2,
-              backgroundColor: isDarkMode
-                ? 'rgba(255,255,255,0.15)'
-                : colors.greyColor,
-              height: moderateScaleVertical(37),
-            }}
-            searchValue={searchInput}
-            placeholder={strings.SEARCH_PRODUCT_VENDOR_ITEM}
-            onChangeText={(value) => onChangeText(value)}
-            showRightIcon={showRightIcon}
-            rightIconPress={() =>
-              updateState({ searchInput: '', isLoading: false })
-            }
-          />
+          <View style={{ flex: 0.85 }}>
+            <SearchBar
+              containerStyle={{
+                borderRadius: 8,
+                backgroundColor: isDarkMode
+                  ? 'rgba(255,255,255,0.15)'
+                  : colors.greyColor,
+                height: moderateScaleVertical(37),
+              }}
+              searchValue={searchInput}
+              placeholder={strings.SEARCH_PRODUCT_VENDOR_ITEM}
+              onChangeText={(value) => onChangeText(value)}
+              showRightIcon={showRightIcon}
+              rightIconPress={() =>
+                updateState({ searchInput: '', isLoading: false })
+              }
+            />
+          </View>
         </View>
 
         <FlatList

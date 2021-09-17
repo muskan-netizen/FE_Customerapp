@@ -93,10 +93,12 @@ export default {
   yellowOpacity10: 'rgba(247,215,123,0.1)',
   greyColor: '#F1F1F1',
   redOpacity12: 'rgba(236,88,55,0.12)',
+  redOpacity52: 'rgba(250,215,208,0.52)',
   redC: '#EC5837',
   borderColorNew: '#EAEAEA',
   textGreyNew: '#1E2E4D',
   greyColor1: '#fafafa',
   greyColor2: '#EEEEEE',
   blackOpacity15: 'rgba(255,255,255,0.15)',
+  grayOpacity51: 'rgba(42,46,54,0.51)',
 };
