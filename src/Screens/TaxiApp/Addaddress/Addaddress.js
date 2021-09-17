@@ -336,6 +336,10 @@ export default function Addaddress({navigation, route}) {
     );
   }, [paramData?.type]);
 
+  const _moveToNextScreen = () => {
+    navigation.navigate(navigationStrings.PINADDRESSONMAP);
+  };
+
   const renderDotContainer = () => {
     return (
       <>
@@ -458,7 +462,8 @@ export default function Addaddress({navigation, route}) {
           }}
         />
         <TouchableOpacity
-          onPress={() => addRemoveAddress(type)}
+          //  onPress={() => addRemoveAddress(type)}
+          onPress={() => _moveToNextScreen()}
           style={{
             height: moderateScale(48),
             alignItems: 'center',
@@ -474,7 +479,7 @@ export default function Addaddress({navigation, route}) {
                   }
                 : {height: 25, width: 25, tintColor: colors.blackB}
             }
-            source={getImageAndFunctionality(type)}
+            source={imagePath.locationPin}
           />
         </TouchableOpacity>
       </>
@@ -721,6 +726,7 @@ export default function Addaddress({navigation, route}) {
                 }}
               />
             </View>
+
             <View style={{height: 5}}></View>
             <View
               style={{
@@ -895,6 +901,11 @@ export default function Addaddress({navigation, route}) {
             {renderCross('dropOffLocation')}
             {showDropOfTwo ? renderCross('dropOffLocationTwo') : null}
             {/* {showDropOfThree ? renderCross('dropOffLocationThree') : null} */}
+          </View>
+          <View style={{position: 'absolute', end: 35, top: 27}}>
+            <TouchableOpacity onPress={() => _moveToNextScreen()}>
+              <Image source={imagePath.locationPin} />
+            </TouchableOpacity>
           </View>
         </View>
 

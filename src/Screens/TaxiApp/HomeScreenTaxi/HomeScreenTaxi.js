@@ -283,13 +283,14 @@ export default function HomeScreenTaxi({navigation, route}) {
             borderTopLeftRadius: moderateScale(30),
             borderTopRightRadius: moderateScale(30),
             width: width,
+            backgroundColor: colors.white,
           }}>
-          <BlurView
+          {/* <BlurView
             reducedTransparencyFallbackColor="white"
             style={styles.absolute}
             blurType={Platform.OS === 'ios' ? 'xlight' : 'light'}
-            blurAmount={50}
-          />
+            blurAmount={80}
+          /> */}
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{

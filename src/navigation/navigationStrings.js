@@ -80,4 +80,5 @@ export default {
   RETURNORDER: 'returnOrder',
   HOMESCREENTAXI: 'homeScreenTaxi',
   ADDADDRESS: 'addAddress',
+  PINADDRESSONMAP: 'pinAddressOnMap',
 };

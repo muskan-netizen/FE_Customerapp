@@ -309,4 +309,7 @@ export default {
   savedLocationImage: require('../assets/images/TAXIAPPIMAGES/ic_fav.png'),
   RecentLocationImage: require('../assets/images/TAXIAPPIMAGES/ic_saved.png'),
   mapNavigation: require('../assets/images/TAXIAPPIMAGES/ic_nav.png'),
+  locationPin: require('../assets/images/TAXIAPPIMAGES/ic_pin.png'),
+  soptLight: require('../assets/images/TAXIAPPIMAGES/ic_soptlight.png'),
+  markerPin2: require('../assets/images/TAXIAPPIMAGES/ic_pin4.png'),
 };

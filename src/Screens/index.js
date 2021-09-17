@@ -86,3 +86,4 @@ export {default as VendorDetail3} from './VendorDetail/VendorDetail3';
 export {default as Subscriptions2} from './Subscriptions/Subscriptions2';
 export {default as HomeScreenTaxi} from './TaxiApp/HomeScreenTaxi/HomeScreenTaxi';
 export {default as Addaddress} from './TaxiApp/Addaddress/Addaddress';
+export {default as PinAddressOnMap} from './TaxiApp/PinAddressOnMap/PinAddressOnMap';
