@@ -484,4 +484,13 @@ export default {
   UPCOMING:"Upcoming",
   CARD_EARNED:'Card Earned',
   ADDITIONAL_POINTS_REQUIRED_FOR:'Additional points required for',
+  SPENDABLE_POINTS: 'Spendable points',
+  POINTS_EARNED: 'Points Earned',
+  IN: 'In',
+  UPCOMING_BILLING_DATE: 'Upcoming Billing Date',
+  EXPIRED_ON: 'Expired on',
+  CANCELLED_AT: 'Cancelled at',
+  CANCELS_AT: 'Cancels at',
+  FREE_DELIVERY: 'Free Delivery',
+  UPCOMING: 'Upcoming',
 };

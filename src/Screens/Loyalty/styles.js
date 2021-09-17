@@ -15,87 +15,86 @@ export default ({fontFamily, isDarkMode, MyDarkTheme}) => {
       fontSize: moderateScale(16),
       color: colors.blackC,
       opacity: 0.5,
-      textAlign:'left'
+      textAlign: 'left',
     },
     subscription2: {
       fontFamily: fontFamily.bold,
       fontSize: moderateScale(16),
       color: colors.blackC,
-      textAlign:'left'
+      textAlign: 'left',
       // opacity: 0.5,
     },
     title: {
       color: colors.black,
       fontFamily: fontFamily.medium,
       fontSize: textScale(12),
-      textAlign:'left'
+      textAlign: 'left',
     },
     title2: {
       color: colors.black,
       fontFamily: fontFamily.medium,
       fontSize: textScale(12),
       opacity: 0.5,
-      textAlign:'left'
+      textAlign: 'left',
     },
     youareat: {
       color: colors.black,
       fontFamily: fontFamily.medium,
       fontSize: textScale(14),
       opacity: 0.8,
-      textAlign:'left'
+      textAlign: 'left',
     },
     currentLoyaltyColor: {
       color: isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51,
       fontFamily: fontFamily.medium,
       fontSize: textScale(32),
-      textAlign:'left'
+      textAlign: 'left',
       // opacity: 0.9,
     },
-    imageStyle:{
+    imageStyle: {
       height: height / 7,
       width: width / 2,
       borderRadius: 8,
-      textAlign:'left'
+      textAlign: 'left',
     },
-    loyaltyPointsEarned:{
+    loyaltyPointsEarned: {
       color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyI,
       fontFamily: fontFamily.medium,
       fontSize: textScale(24),
-      textAlign:'left'
+      textAlign: 'left',
     },
-    loyaltyPointsUsed:{
+    loyaltyPointsUsed: {
       color: isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51,
       fontFamily: fontFamily.medium,
       fontSize: textScale(12),
-      textAlign:'left'
+      textAlign: 'left',
     },
-    upcoming:{
+    upcoming: {
       color: colors.black,
       fontFamily: fontFamily.medium,
       fontSize: textScale(14),
-      opacity:0.5,
-      textAlign:'left'
+      opacity: 0.5,
+      textAlign: 'left',
     },
-    descriptionLoyalty:{
+    descriptionLoyalty: {
       color: colors.black,
       fontFamily: fontFamily.medium,
       fontSize: textScale(12),
-      opacity:0.8,
-      textAlign:'left'
+      opacity: 0.8,
+      textAlign: 'left',
     },
     commTextStyle: {
-
       color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyI,
       fontFamily: fontFamily.medium,
       fontSize: textScale(12),
       marginTop: moderateScaleVertical(8),
-      textAlign:'left'
+      textAlign: 'left',
     },
     rowStyle: {
-      flexDirection:'row',
-      alignItems:'center',
-      justifyContent:'space-between',  
-   }
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
   });
   return styles;
 };

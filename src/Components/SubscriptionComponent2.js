@@ -1,12 +1,20 @@
 import moment from 'moment';
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ImageBackground,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -76,283 +84,215 @@ export default function SubscriptionComponent2({
     <TouchableOpacity
       activeOpacity={activeOpacity}
       // onPress={onPress}
-      style={
-        isDarkMode
-          ? [
-              {width: cardWidthNew},
-              {
-                ...commonStyles.shadowStyle,
-                backgroundColor: MyDarkTheme.colors.lightDark,
-              },
-              {...cardStyle},
-              {borderRadius: 10, justifyContent: 'center'},
-            ]
-          : [
-              {width: cardWidthNew},
-              {...commonStyles.shadowStyle},
-              {...cardStyle},
-              {borderRadius: 10, justifyContent: 'center'},
-            ]
-      }>
-      <View>
-        <View style={{padding: 10}}>
+    >
+      <ImageBackground
+        source={getImage ? {uri: getImage} : ''}
+        style={styles.imageBackground}
+        resizeMode="contain">
+        <View style={styles.titleBagView}>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.title, {color: MyDarkTheme.colors.text}]
+                : styles.title
+            }>
+            {data?.title}
+          </Text>
           <Image
-            source={getImage ? {uri: getImage} : ''}
-            // resizeMode={'contain'}
-            style={{
-              justifyContent: 'center',
-              width: width - 40,
-              height: width / 2,
-            }}
+            source={imagePath.icBagA}
+            style={{height: moderateScale(30), width: moderateScale(30)}}
           />
         </View>
-      </View>
+        <View style={styles.descriptionView}>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.subtitle, {color: MyDarkTheme.colors.text}]
+                : [styles.subtitle]
+            }>
+            {(subscriptionData && subscriptionData?.plan?.description) ||
+              data?.description}
+          </Text>
+        </View>
 
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginHorizontal: moderateScale(10),
-          // backgroundColor:'red',
-          alignItems: 'center',
-        }}>
-        <Text
-          style={
-            isDarkMode
-              ? [styles.title, {color: MyDarkTheme.colors.text}]
-              : styles.title
-          }>
-          {data?.title}
-        </Text>
-        <Text
-          style={
-            isDarkMode
-              ? [styles.title, {color: MyDarkTheme.colors.text}]
-              : styles.title
-          }>
-          {currentSubscription
-            ? `${subscriptionData?.subscription_amount}/${subscriptionData?.frequency}`
-            : `${data?.price}/${data?.frequency}`}
-        </Text>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          marginHorizontal: moderateScale(10),
-          marginTop: moderateScale(10),
-        }}>
-        <Text
-          style={
-            isDarkMode
-              ? [styles.subtitle, {color: MyDarkTheme.colors.text}]
-              : [styles.subtitle]
-          }>
-          {(subscriptionData && subscriptionData?.plan?.description) ||
-            data?.description}
-        </Text>
-      </View>
-
-      {currentSubscription ? (
-        <View>
-          {subscriptionData?.cancelled_at ? (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginHorizontal: moderateScale(10),
-                  marginTop: moderateScale(10),
-                  marginBottom: moderateScaleVertical(10),
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  backgroundColor: 'grey',
-                  width: width / 2,
-                  justifyContent: 'center',
-                  padding: 5,
-                }}>
-                <Text
-                  style={[
-                    styles.updateBilling,
-                    {color: colors.white, fontSize: textScale(12)},
-                  ]}>
-                  {currentDateValue == subscriptionDateValue ||
-                  currentTimeValue > subscriptionTimeValue
-                    ? `Cancelled at ${moment(subscriptionData?.end_date).format(
-                        'LL',
-                      )}`
-                    : `Cancels at ${moment(subscriptionData?.end_date).format(
-                        'LL',
-                      )}`}
-                </Text>
-              </View>
-              {allSubscriptions && allSubscriptions.length ? (
-                <GradientButton
-                  colorsArray={[
-                    themeColors.primary_color,
-                    themeColors.primary_color,
-                  ]}
-                  textStyle={styles.textStyle}
-                  // onPress={() => onPress(data)}
-                  marginTop={moderateScaleVertical(10)}
-                  marginBottom={moderateScaleVertical(10)}
-                  borderRadius={moderateScale(5)}
-                  containerStyle={{
-                    marginHorizontal: moderateScale(10),
-                    width: width / 3,
-                    backgroundColor: 'white',
-                  }}
-                  onPress={payNowUpcoming}
-                  btnText={
-                    currentDateValue == subscriptionDateValue ||
-                    currentTimeValue > subscriptionTimeValue
-                      ? `${strings.RENEW}(${data?.price})`
-                      : `${strings.PAY}(${data?.price})`
-                  }
-                />
-              ) : null}
-            </View>
-          ) : currentDateValue == subscriptionEndDateValue ||
-            currentTimeValue > subscriptionEndTimeValue ? (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginHorizontal: moderateScale(10),
-                  marginTop: moderateScale(10),
-                  marginBottom: moderateScaleVertical(10),
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  backgroundColor: 'grey',
-                  width: width / 2,
-                  justifyContent: 'center',
-                  padding: 5,
-                }}>
-                <Text
-                  style={[
-                    styles.updateBilling,
-                    {color: colors.white, fontSize: textScale(12)},
-                  ]}>
-                  {`Expired on ${moment(subscriptionData?.end_date).format(
-                    'LL',
-                  )}`}
-                </Text>
-              </View>
-              {allSubscriptions && allSubscriptions.length ? (
-                <GradientButton
-                  colorsArray={[
-                    themeColors.primary_color,
-                    themeColors.primary_color,
-                  ]}
-                  textStyle={styles.textStyle}
-                  // onPress={() => onPress(data)}
-                  marginTop={moderateScaleVertical(10)}
-                  marginBottom={moderateScaleVertical(10)}
-                  borderRadius={moderateScale(5)}
-                  containerStyle={{
-                    marginHorizontal: moderateScale(10),
-                    width: width / 3,
-                    backgroundColor: 'white',
-                  }}
-                  onPress={payNowUpcoming}
-                  btnText={
-                    currentDateValue == subscriptionDateValue ||
-                    currentTimeValue > subscriptionTimeValue
-                      ? `${strings.RENEW}(${data?.price})`
-                      : `${strings.PAY}(${data?.price})`
-                  }
-                />
-              ) : null}
-            </View>
-          ) : (
-            <View
-              style={{
-                flexDirection: 'row',
-                marginHorizontal: moderateScale(10),
-                marginTop: moderateScale(10),
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
-              <Text style={styles.updateBilling}>
-                {'Upcoming Billing Date'}
+        <View style={styles.subscriptionView}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={styles.title}>
+                {`${currencies?.primary_currency?.symbol} `}
               </Text>
-              <Text>{moment(subscriptionData?.end_date).format('LL')}</Text>
+              <Text style={styles.title}>
+                {currentSubscription
+                  ? `${Number(subscriptionData?.subscription_amount)}`
+                  : `${Number(data?.price)}`}
+              </Text>
             </View>
-          )}
 
-          {!currentSubscription ? null : (
-            <>
-              {subscriptionData?.cancelled_at ||
-              currentDateValue == subscriptionEndDateValue ||
-              currentTimeValue > subscriptionEndTimeValue ? null : (
+            {currentSubscription ? (
+              subscriptionData?.cancelled_at &&
+              allSubscriptions &&
+              allSubscriptions.length && (
+                <GradientButton
+                  colorsArray={[colors.white, colors.white]}
+                  textStyle={{
+                    fontFamily: fontFamily.medium,
+                    fontSize: textScale(10),
+                    color: themeColors.primary_color,
+                  }}
+                  // onPress={() => onPress(data)}
+
+                  containerStyle={{
+                    height: moderateScaleVertical(29),
+                    backgroundColor: colors.white,
+                    paddingHorizontal: moderateScale(20),
+                    borderRadius: moderateScale(7),
+                  }}
+                  onPress={payNowUpcoming}
+                  btnText={
+                    currentDateValue == subscriptionDateValue ||
+                    currentTimeValue > subscriptionTimeValue
+                      ? `${strings.RENEW} (${currencies?.primary_currency?.symbol}${data?.price})`
+                      : `${strings.PAY} (${currencies?.primary_currency?.symbol}${data?.price})`
+                  }
+                />
+              )
+            ) : (
+              <GradientButton
+                colorsArray={[colors.white, colors.white]}
+                textStyle={{
+                  fontFamily: fontFamily.medium,
+                  fontSize: textScale(10),
+                  color: themeColors.primary_color,
+                }}
+                onPress={() => onPress(data)}
+                containerStyle={styles.subscribeBtn}
+                btnText={strings.SUBSCRIBE}
+              />
+            )}
+          </View>
+
+          {currentSubscription && (
+            <View>
+              {subscriptionData?.cancelled_at ? (
                 <View
-                  style={{marginTop: moderateScale(10), flexDirection: 'row'}}>
-                  <GradientButton
-                    colorsArray={[
-                      themeColors.primary_color,
-                      themeColors.primary_color,
-                    ]}
-                    textStyle={styles.textStyle}
-                    onPress={() => onPress(data)}
-                    marginTop={moderateScaleVertical(10)}
-                    marginBottom={moderateScaleVertical(10)}
-                    borderRadius={moderateScale(5)}
-                    containerStyle={{
-                      marginHorizontal: moderateScale(10),
-                      width: width / 2,
-                    }}
-                    onPress={payNowUpcoming}
-                    btnText={`${strings.PAYNOW} (${data?.price})`}
-                  />
-                  <GradientButton
-                    colorsArray={[
-                      getColorCodeWithOpactiyNumber(
-                        themeColors?.primary_color.substr(1),
-                        20,
-                      ),
-                      getColorCodeWithOpactiyNumber(
-                        themeColors?.primary_color.substr(1),
-                        20,
-                      ),
-                    ]}
-                    textStyle={styles.textStyle2}
-                    onPress={() => onPress(data)}
-                    marginTop={moderateScaleVertical(10)}
-                    marginBottom={moderateScaleVertical(10)}
-                    borderRadius={moderateScale(5)}
-                    containerStyle={{
-                      marginHorizontal: moderateScale(10),
-                      width: width / 3,
-                      backgroundColor: 'white',
-                    }}
-                    onPress={cancelSubscription}
-                    btnText={`${strings.CANCEL}`}
-                  />
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: moderateScaleVertical(8),
+                  }}>
+                  <Text
+                    style={[
+                      styles.updateBilling,
+                      {color: colors.white, fontSize: textScale(12)},
+                    ]}>
+                    {currentDateValue == subscriptionDateValue ||
+                    currentTimeValue > subscriptionTimeValue
+                      ? strings.CANCELLED_AT
+                      : strings.CANCELS_AT}
+                  </Text>
+                  <Text style={styles.updateBilling}>
+                    {currentDateValue == subscriptionDateValue ||
+                    currentTimeValue > subscriptionTimeValue
+                      ? moment(subscriptionData?.end_date).format('LL')
+                      : moment(subscriptionData?.end_date).format('LL')}
+                  </Text>
+                </View>
+              ) : currentDateValue !== subscriptionEndDateValue ||
+                currentTimeValue > subscriptionEndTimeValue ? (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: moderateScaleVertical(8),
+                  }}>
+                  <Text
+                    style={[
+                      styles.updateBilling,
+                      {color: colors.white, fontSize: textScale(12)},
+                    ]}>
+                    {`${strings.EXPIRED_ON}`}
+                  </Text>
+                  <Text style={styles.updateBilling}>
+                    {moment(subscriptionData?.end_date).format('LL')}
+                  </Text>
+                </View>
+              ) : (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: moderateScaleVertical(8),
+                  }}>
+                  <Text style={[styles.updateBilling, {flex: 1}]}>
+                    {strings.UPCOMING_BILLING_DATE}
+                  </Text>
+                  <Text style={styles.updateBilling}>
+                    {moment(subscriptionData?.end_date).format('LL')}
+                  </Text>
                 </View>
               )}
-            </>
+
+              {/* {
+                // !currentSubscription ? null : (
+                <>
+                  {subscriptionData?.cancelled_at ||
+                  currentDateValue == subscriptionEndDateValue ||
+                  currentTimeValue > subscriptionEndTimeValue ? null : (
+                  <View
+                    style={{
+                      marginTop: moderateScale(10),
+                      flexDirection: 'row',
+                    }}>
+                    <GradientButton
+                      colorsArray={[
+                        themeColors.primary_color,
+                        themeColors.primary_color,
+                      ]}
+                      textStyle={styles.textStyle}
+                      onPress={() => onPress(data)}
+                      marginTop={moderateScaleVertical(10)}
+                      marginBottom={moderateScaleVertical(10)}
+                      borderRadius={moderateScale(5)}
+                      containerStyle={{
+                        marginHorizontal: moderateScale(10),
+                        width: width / 2,
+                      }}
+                      onPress={payNowUpcoming}
+                      btnText={`${strings.PAYNOW} (${data?.price})`}
+                    />
+                    <GradientButton
+                      colorsArray={[
+                        getColorCodeWithOpactiyNumber(
+                          themeColors?.primary_color.substr(1),
+                          20,
+                        ),
+                        getColorCodeWithOpactiyNumber(
+                          themeColors?.primary_color.substr(1),
+                          20,
+                        ),
+                      ]}
+                      textStyle={styles.textStyle2}
+                      onPress={() => onPress(data)}
+                      marginTop={moderateScaleVertical(10)}
+                      marginBottom={moderateScaleVertical(10)}
+                      borderRadius={moderateScale(5)}
+                      containerStyle={{
+                        marginHorizontal: moderateScale(10),
+                        width: width / 3,
+                        backgroundColor: 'white',
+                      }}
+                      onPress={cancelSubscription}
+                      btnText={strings.CANCEL}
+                    />
+                  </View>
+                 )} 
+                </>
+                // )
+              } */}
+            </View>
           )}
         </View>
-      ) : (
-        <GradientButton
-          colorsArray={[themeColors.primary_color, themeColors.primary_color]}
-          textStyle={styles.textStyle}
-          onPress={() => onPress(data)}
-          marginTop={moderateScaleVertical(10)}
-          marginBottom={moderateScaleVertical(10)}
-          borderRadius={moderateScale(5)}
-          containerStyle={{marginHorizontal: moderateScale(10)}}
-          btnText={strings.SUBSCRIBE}
-        />
-      )}
+      </ImageBackground>
     </TouchableOpacity>
   );
 }
@@ -360,15 +300,16 @@ export default function SubscriptionComponent2({
 export function stylesFunc({fontFamily, themeColors}) {
   const styles = StyleSheet.create({
     title: {
-      color: colors.black,
-      fontFamily: fontFamily.medium,
-      fontSize: textScale(14),
+      color: colors.white,
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(15),
+      textAlign: 'left',
     },
     subtitle: {
-      color: colors.black,
+      color: colors.white,
       fontFamily: fontFamily.regular,
-      fontSize: textScale(12),
-      opacity: 0.5,
+      fontSize: textScale(13),
+      textAlign: 'left',
     },
     freeDelivery: {
       color: colors.black,
@@ -387,12 +328,7 @@ export function stylesFunc({fontFamily, themeColors}) {
       right: 0,
       borderRadius: moderateScaleVertical(5),
     },
-    textStyle: {
-      color: colors.white,
-      fontFamily: fontFamily.medium,
-      fontSize: textScale(12),
-      // opacity: 0.6,
-    },
+
     textStyle2: {
       color: themeColors?.primary_color,
       fontFamily: fontFamily.medium,
@@ -400,10 +336,38 @@ export function stylesFunc({fontFamily, themeColors}) {
       // opacity: 0.6,
     },
     updateBilling: {
-      color: colors.black,
-      fontFamily: fontFamily.medium,
-      fontSize: textScale(14),
-      opacity: 0.98,
+      color: colors.white,
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(12),
+      textAlign: 'left',
+    },
+    imageBackground: {
+      width: '100%',
+      height: moderateScaleVertical(170),
+      borderRadius: moderateScale(15),
+    },
+    titleBagView: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginHorizontal: moderateScale(10),
+      alignItems: 'center',
+      marginTop: moderateScaleVertical(17),
+    },
+    descriptionView: {
+      flexDirection: 'row',
+      marginHorizontal: moderateScale(10),
+      marginTop: moderateScale(10),
+    },
+    subscriptionView: {
+      marginTop: 'auto',
+      marginHorizontal: moderateScale(10),
+      marginVertical: moderateScaleVertical(15),
+    },
+    subscribeBtn: {
+      height: moderateScaleVertical(29),
+      backgroundColor: colors.white,
+      paddingHorizontal: moderateScale(20),
+      borderRadius: moderateScale(7),
     },
   });
   return styles;

@@ -321,4 +321,7 @@ export default {
   icInActiveRadio: require('../assets/images/RoyoorderNewImages/ic_radio1.png'),
   icCheckBoxActive: require('../assets/images/RoyoorderNewImages/ic_checked2.png'),
   icCheckBoxInactive: require('../assets/images/RoyoorderNewImages/ic_unchecked2.png'),
+  newfilter: require('../assets/images/RoyoorderNewImages/ic_filter.png'),
+  newsort: require('../assets/images/RoyoorderNewImages/sort.png'),
+  icBagA: require('../assets/images/RoyoorderNewImages/ic_bag2.png'),
 };

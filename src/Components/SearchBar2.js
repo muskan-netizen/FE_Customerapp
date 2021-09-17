@@ -26,12 +26,12 @@ export default function SearchBar2({
       activeOpacity={0.8}
       style={{
         ...styles.mainContainer,
-        backgroundColor: isDarkMode ? 'rgba(255,255,255,0.15)' : colors.greyNew,
+        backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
       }}
       onPress={() =>
         navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
       }>
-      <View style={{width: '80%'}}>
+      <View style={{flex: 1}}>
         <Text style={styles.placeHolderTxt}>{placeHolderTxt}</Text>
       </View>
       <Image source={imagePath.search1} />
@@ -43,16 +43,18 @@ export function stylesFunc({fontFamily}) {
   const styles = StyleSheet.create({
     mainContainer: {
       flexDirection: 'row',
-      height: moderateScaleVertical(50),
       backgroundColor: colors.grey2,
       borderRadius: moderateScale(15),
       paddingHorizontal: moderateScale(15),
-      alignItems: 'center',
-      justifyContent: 'space-between',
       marginHorizontal: moderateScale(15),
       marginVertical: moderateScale(13),
+      paddingVertical: moderateScaleVertical(15),
     },
-    placeHolderTxt: {fontFamily: fontFamily.regular, color: colors.textGreyB},
+    placeHolderTxt: {
+      fontFamily: fontFamily.regular,
+      color: colors.textGreyB,
+      textAlign: 'left',
+    },
   });
   return styles;
 }

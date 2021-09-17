@@ -86,6 +86,7 @@ const shortCodes = {
   groupy: 'd4f312',
   weeat: '03cff2',
   gorillas: 'd22ad9',
+  baytukom: 'd0a898',
 };
 
 const appIds = {
@@ -428,6 +429,10 @@ const appIds = {
   gorillas: Platform.select({
     ios: 'com.gorillas',
     android: 'com.gorillas',
+  }),
+  baytukom: Platform.select({
+    ios: 'com.baytukom',
+    android: 'com.baytukom',
   }),
 };
 

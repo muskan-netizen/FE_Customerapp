@@ -103,24 +103,14 @@ export default ({themeColors, fontFamily}) => {
       justifyContent: 'space-between',
       marginTop: moderateScaleVertical(10),
     },
-    sortFilterTabView2: {
-      marginHorizontal: moderateScale(16),
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginVertical: moderateScaleVertical(18),
-    },
+
     tabLable: {
       alignItems: 'center',
       justifyContent: 'center',
       flex: 0.5,
       flexDirection: 'row',
     },
-    tabLable2: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'row',
-      marginHorizontal: moderateScale(6),
-    },
+
     sortFilter: {
       color: colors.textGrey,
       fontSize: textScale(14),
@@ -135,7 +125,20 @@ export default ({themeColors, fontFamily}) => {
       fontFamily: fontFamily.reguler,
       alignSelf: 'center',
       fontSize: moderateScale(14),
-      marginHorizontal: moderateScale(4),
+      marginStart: moderateScale(6),
+    },
+    tabLable2: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'row',
+      marginHorizontal: moderateScale(6),
+      marginRight: moderateScale(10),
+    },
+    sortFilterTabView2: {
+      marginHorizontal: moderateScale(16),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginVertical: moderateScaleVertical(18),
     },
   });
   return styles;

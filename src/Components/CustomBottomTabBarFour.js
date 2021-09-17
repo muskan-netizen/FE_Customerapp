@@ -74,13 +74,22 @@ export default function CustomBottomTabBarFour({
               }}>
               {options.tabBarIcon({
                 focused: isFocused,
-                tintColor: isFocused ? themeColors.primary_color : colors.black,
+                tintColor: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : isFocused
+                  ? themeColors.primary_color
+                  : colors.black,
               })}
               <Text
                 style={{
                   ...props.labelStyle,
                   ...styles.labelStyle,
-                  color: isFocused ? themeColors.primary_color : colors.black,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : isFocused
+                    ? themeColors.primary_color
+                    : colors.black,
+                  // color: isFocused ? themeColors.primary_color : colors.black,
                   opacity: isFocused ? 1 : 0.6,
                 }}>
                 {label}
@@ -96,7 +105,11 @@ export default function CustomBottomTabBarFour({
 export function stylesData({fontFamily}) {
   const currentTheme = useSelector((state) => state.initBoot);
   const {themeColors} = currentTheme;
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const styles = StyleSheet.create({
     tabBarStyle: {
       // height: Platform.OS === 'ios' ? 60 + insets.bottom : 70 + insets.bottom,
@@ -114,7 +127,7 @@ export function stylesData({fontFamily}) {
       shadowOpacity: 0.1,
       shadowRadius: 2,
       elevation: 2,
-      backgroundColor: colors.white,
+      backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white,
     },
     labelStyle: {
       fontFamily: fontFamily.medium,
