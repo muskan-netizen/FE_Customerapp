@@ -7,19 +7,6 @@ platform :ios, '11.0'
 #
 
 
-#RoyoOrder Target
-target 'RoyoOrder' do
-  permissions_path = '../node_modules/react-native-permissions/ios'
-  config = use_native_modules!
-  use_react_native!(:path => config["reactNativePath"])
-  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
-  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
-  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
-  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'Stripe', '~> 21.7.0'
-  pod 'GoogleMaps', '~> 3.1.0'
-
-end
 
 
 
@@ -33,7 +20,7 @@ target 'RoyoOrder' do
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
   pod 'Stripe', '~> 21.7.0'
-  pod 'react-native-google-maps', :path => '../node_modules/react-native-maps'
+  
 
 end
 
@@ -1045,6 +1032,17 @@ end
 
 #Gorillas Target
 target 'Gorillas' do
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  config = use_native_modules!
+  use_react_native!(:path => config["reactNativePath"])
+  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+
+end
+#Baytukom Target
+target 'Baytukom' do
   permissions_path = '../node_modules/react-native-permissions/ios'
   config = use_native_modules!
   use_react_native!(:path => config["reactNativePath"])
