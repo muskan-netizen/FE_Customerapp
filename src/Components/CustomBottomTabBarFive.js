@@ -83,7 +83,13 @@ export default function CustomBottomTabBarFive({
                   style={{
                     ...props.labelStyle,
                     ...styles.labelStyle,
-                    color: isFocused ? colors.black : colors.textGrey,
+                    color: isDarkMode
+                      ? isFocused
+                        ? MyDarkTheme.colors.text
+                        : MyDarkTheme.colors.text
+                      : isFocused
+                      ? colors.black
+                      : colors.textGrey,
                     opacity: isFocused ? 1 : 0.6,
                   }}>
                   {label}
@@ -100,11 +106,15 @@ export default function CustomBottomTabBarFive({
 export function stylesData({fontFamily}) {
   const currentTheme = useSelector((state) => state.initBoot);
   const {themeColors} = currentTheme;
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const styles = StyleSheet.create({
     tabBarStyle: {
       flexDirection: 'row',
-      backgroundColor: colors.white,
+      backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white,
       borderTopLeftRadius: moderateScale(35.5),
       borderTopRightRadius: moderateScale(35.5),
       paddingVertical: moderateScaleVertical(20),

@@ -21,7 +21,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
 import {string} from 'prop-types';
-import { BlurView } from '@react-native-community/blur';
+import {BlurView} from '@react-native-community/blur';
 
 export default function DashBoardHeaderFive({
   navigation = {},
@@ -308,7 +308,6 @@ export default function DashBoardHeaderFive({
 
   const viewRef2 = useRef();
 
-
   return (
     <>
       <View style={styles.headerContainer}>
@@ -481,17 +480,8 @@ export default function DashBoardHeaderFive({
                   );
                 })}
               </View>
-             
             </View>
-            <BlurView
-            style={styles.absolute}
-            viewRef={viewRef2}
-            blurType="light"
-            blurAmount={20}
-            blurRadius={20}
-          />
-         </View>
-       
+          </View>
         </Modal>
       </View>
     </>

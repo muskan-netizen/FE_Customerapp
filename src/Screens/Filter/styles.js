@@ -59,6 +59,7 @@ export default ({fontFamily, themeColors}) => {
       borderRadius: moderateScale(13),
       alignItems: 'center',
       justifyContent: 'center',
+      marginBottom: moderateScaleVertical(40),
     },
     priceMinrange: {
       color: colors.textGrey,

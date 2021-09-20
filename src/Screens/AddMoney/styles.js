@@ -14,7 +14,6 @@ export default ({fontFamily}) => {
       backgroundColor: colors.white,
     },
     addMoneyInputField: {
-      borderBottomWidth: 0.5,
       width: width,
       paddingLeft: moderateScaleVertical(14),
       paddingVertical: moderateScaleVertical(8),
@@ -48,11 +47,13 @@ export default ({fontFamily}) => {
       fontSize: moderateScale(16),
       color: colors.textGreyJ,
       paddingLeft: moderateScale(10),
+      textAlign: 'left',
     },
     debitFrom: {
       fontFamily: fontFamily.bold,
       fontSize: moderateScale(16),
       color: colors.blackC,
+      textAlign: 'left',
     },
     bottomButtonStyle: {
       position: 'absolute',

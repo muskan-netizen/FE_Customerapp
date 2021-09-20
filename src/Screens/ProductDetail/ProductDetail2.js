@@ -952,6 +952,7 @@ export default function ProductDetail2({route, navigation}) {
             addonSet={addonSet}
             // onPress={currentLocation}
           />
+         
         </ScrollView>
       </View>
     </View>

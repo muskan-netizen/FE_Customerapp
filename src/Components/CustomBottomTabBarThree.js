@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, {Fragment, useState} from 'react';
 import {
   Animated,
   FlatList,
@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import staticStrings from '../constants/staticStrings';
 import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
@@ -21,7 +21,9 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import { getImageUrl } from '../utils/helperFunctions';
+import {getImageUrl} from '../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function CustomBottomTabBarThree({
   state,
@@ -31,11 +33,16 @@ export default function CustomBottomTabBarThree({
 
   ...props
 }) {
-  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
+  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state?.auth?.userData);
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ fontFamily, themeColors });
+  const styles = stylesFunc({fontFamily, themeColors});
 
   const [tabThreeStyle, settabThreeStyle] = useState({
     minHeight: height * 0.095,
@@ -46,13 +53,13 @@ export default function CustomBottomTabBarThree({
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
 
-  const { minHeight, minWidth, deviceHeight } = tabThreeStyle;
+  const {minHeight, minWidth, deviceHeight} = tabThreeStyle;
   const updateState = (data) =>
-    settabThreeStyle((tabThreeStyle) => ({ ...tabThreeStyle, ...data }));
+    settabThreeStyle((tabThreeStyle) => ({...tabThreeStyle, ...data}));
 
   const _panResponder = PanResponder.create({
-    // onMoveShouldSetResponderCapture: () => true,
-    // onMoveShouldSetPanResponderCapture: () => true,
+    onMoveShouldSetResponderCapture: () => true,
+    onMoveShouldSetPanResponderCapture: () => true,
     onStartShouldSetPanResponder: () => false,
     onMoveShouldSetPanResponder: () => true,
 
@@ -65,9 +72,9 @@ export default function CustomBottomTabBarThree({
   });
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   const onPressCategory = (item) => {
     updateState({
@@ -80,7 +87,7 @@ export default function CustomBottomTabBarThree({
       item.redirect_to == staticStrings.PRODUCT ||
       item.redirect_to == staticStrings.CATEGORY
     ) {
-      navigation.push(navigationStrings.PRODUCT_LIST, { data: item });
+      navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
@@ -101,17 +108,17 @@ export default function CustomBottomTabBarThree({
       moveToNewScreen(navigationStrings.BRANDS)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { item })();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
 
-  _renderItem = ({ item }) => {
+  const _renderItem = ({item}) => {
     return (
       <TouchableOpacity
         activeOpacity={0.5}
         onPress={() => onPressCategory(item)}
-        style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <View style={{ marginHorizontal: moderateScale(10) }}>
+        style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{marginHorizontal: moderateScale(10)}}>
           <FastImage
             style={styles.itemImage}
             source={{
@@ -124,7 +131,14 @@ export default function CustomBottomTabBarThree({
             }}
           />
         </View>
-        <Text>{item.name}</Text>
+        <Text
+          style={{
+            fontFamily: fontFamily.medium,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            opacity: 0.6,
+          }}>
+          {item.name}
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -134,7 +148,14 @@ export default function CustomBottomTabBarThree({
       style={[
         // styles.resizableTabBar,
         minHeight > height * 0.095
-          ? styles.resizedTabBar
+          ? [
+              styles.resizedTabBar,
+              {
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.lightDark
+                  : colors.backgroundGreyC,
+              },
+            ]
           : styles.resizableTabBar,
         {
           height: minHeight,
@@ -148,7 +169,11 @@ export default function CustomBottomTabBarThree({
           height: height * 0.095,
           backgroundColor:
             minHeight > height * 0.095
-              ? colors.backgroundGreyC
+              ? isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.backgroundGreyC
+              : isDarkMode
+              ? MyDarkTheme.colors.lightDark
               : themeColors.primary_color,
         }}
         {..._panResponder.panHandlers}>
@@ -169,14 +194,14 @@ export default function CustomBottomTabBarThree({
             paddingHorizontal: moderateScale(15),
           }}>
           {state.routes.map((route, index) => {
-            const { options } = descriptors[route.key];
+            const {options} = descriptors[route.key];
             const isFocused = state.index === index;
             const label =
               options.tabBarLabel !== undefined
                 ? options.tabBarLabel
                 : options.title !== undefined
-                  ? options.title
-                  : route.name;
+                ? options.title
+                : route.name;
             const onPress = () => {
               const event = navigation.emit({
                 type: 'tabPress',
@@ -204,33 +229,34 @@ export default function CustomBottomTabBarThree({
                   }}>
                   {minHeight > height * 0.095
                     ? options.tabBarIcon({
-                      focused: isFocused,
-                      tintColor: colors.black,
-                    })
+                        focused: isFocused,
+                        tintColor: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                      })
                     : options.tabBarIcon({
-                      tintColor: colors.whiteOpacity77,
-                      focused: isFocused,
-                    })}
+                        tintColor: colors.whiteOpacity77,
+                        focused: isFocused,
+                      })}
                   <Text
                     style={
                       minHeight > height * 0.095
                         ? {
-                          ...props.labelStyle,
-                          // ...styles.labelStyle,
-                          color: colors.black,
-                          opacity: 0.6,
-                          marginTop: moderateScaleVertical(4)
-                        }
+                            ...props.labelStyle,
+                            // ...styles.labelStyle,
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
+                            opacity: 0.6,
+                            fontSize: textScale(11),
+                          }
                         : {
-                          ...props.labelStyle,
-                          // ...styles.labelStyle,
-                          color: isFocused
-                            ? colors.white
-                            : colors.whiteOpacity5,
-                          opacity: isFocused ? 1 : 0.6,
-                          marginTop: moderateScaleVertical(4)
-
-                        }
+                            ...props.labelStyle,
+                            // ...styles.labelStyle,
+                            color: colors.white,
+                            opacity: isFocused ? 1 : 0.6,
+                            fontSize: textScale(11),
+                          }
                     }>
                     {label}
                   </Text>
@@ -258,7 +284,7 @@ export default function CustomBottomTabBarThree({
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.id.toString()}
             ItemSeparatorComponent={() => {
-              return <View style={{ height: moderateScaleVertical(20) }}></View>;
+              return <View style={{height: moderateScaleVertical(20)}}></View>;
             }}
             renderItem={_renderItem}
           />
@@ -268,7 +294,7 @@ export default function CustomBottomTabBarThree({
   );
 }
 
-export function stylesFunc({ fontFamily, themeColors }) {
+export function stylesFunc({fontFamily, themeColors}) {
   const styles = StyleSheet.create({
     resizableTabBar: {
       minHeight: height * 0.095,

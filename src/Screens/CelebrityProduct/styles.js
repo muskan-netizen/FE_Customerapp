@@ -124,4 +124,25 @@ export default ({themeColors, fontFamily}) =>
       bottom: 0,
       right: 0,
     },
+    sortFilter2: {
+      color: colors.textGrey,
+
+      fontFamily: fontFamily.reguler,
+      alignSelf: 'center',
+      fontSize: moderateScale(14),
+      marginStart: moderateScale(6),
+    },
+    tabLable2: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'row',
+      marginHorizontal: moderateScale(6),
+      marginRight: moderateScale(10),
+    },
+    sortFilterTabView2: {
+      marginHorizontal: moderateScale(16),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginVertical: moderateScaleVertical(18),
+    },
   });

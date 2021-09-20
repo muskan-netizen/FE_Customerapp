@@ -67,16 +67,18 @@ export default function PhoneNumberInput({
           width: moderateScale(88),
         }}
         onPress={_openCountryPicker}>
-        <Text
-          style={{
-            fontFamily: fontFamily.medium,
-            color: isDarkMode
-              ? MyDarkTheme.colors.text
-              : colors.textGreyOpcaity7,
-            marginStart: 2,
-          }}>
-          +{callingCode}
-        </Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text> +</Text>
+          <Text
+            style={{
+              fontFamily: fontFamily.medium,
+              color: isDarkMode
+                ? MyDarkTheme.colors.text
+                : colors.textGreyOpcaity7,
+            }}>
+            {callingCode}
+          </Text>
+        </View>
 
         <View style={{marginRight: moderateScale(-10)}}>
           <Flag countryCode={cca2} />

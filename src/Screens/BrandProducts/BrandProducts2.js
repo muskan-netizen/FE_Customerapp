@@ -15,7 +15,7 @@ import DisplayModal from '../../Components/DisplayModal';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import NoDataFound from '../../Components/NoDataFound';
-import ProductCard from '../../Components/ProductCard';
+import ProductCard4 from '../../Components/ProductCard4';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -329,7 +329,7 @@ export default function BrandProducts2({route, navigation}) {
   //render Products list based on brand ID
   const renderProduct = ({item, index}) => {
     return (
-      <ProductCard
+      <ProductCard4
         data={item}
         onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
         onAddtoWishlist={() => _onAddtoWishlist(item)}
@@ -550,6 +550,8 @@ export default function BrandProducts2({route, navigation}) {
                   style={{
                     fontSize: moderateScale(16),
                     fontFamily: fontFamily.medium,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    textAlign: 'left',
                   }}>
                   {strings.PRODUCTS}
                 </Text>
@@ -565,13 +567,13 @@ export default function BrandProducts2({route, navigation}) {
                   style={[styles.tabLable2]}>
                   <Image
                     style={{
-                      tintColor: isDarkMode ? MyDarkTheme.colors.text : null,
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : showSortSelectedicon
+                        ? themeColors.primary_color
+                        : colors.black,
                     }}
-                    source={
-                      showSortSelectedicon
-                        ? imagePath.sortSelected
-                        : imagePath.sort
-                    }
+                    source={imagePath.newsort}
                   />
                   <Text
                     style={[
@@ -630,13 +632,13 @@ export default function BrandProducts2({route, navigation}) {
                   style={styles.tabLable2}>
                   <Image
                     style={{
-                      tintColor: isDarkMode ? MyDarkTheme.colors.text : null,
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : showFilterSlectedIcon
+                        ? themeColors.primary_color
+                        : colors.black,
                     }}
-                    source={
-                      showFilterSlectedIcon
-                        ? imagePath.filterSelected
-                        : imagePath.filter
-                    }
+                    source={imagePath.newfilter}
                   />
                   <Text
                     style={[
@@ -660,17 +662,12 @@ export default function BrandProducts2({route, navigation}) {
               extraData={brandData}
               keyExtractor={(item, index) => String(index)}
               keyboardShouldPersistTaps="always"
-              numColumns={2}
               showsVerticalScrollIndicator={false}
-              style={{flex: 1, marginTop: moderateScale(20)}}
+              style={{flex: 1, marginTop: moderateScale(10)}}
               contentContainerStyle={{
                 flexGrow: 1,
               }}
-              ItemSeparatorComponent={() => <View style={{height: 20}} />}
-              columnWrapperStyle={{
-                justifyContent: 'space-between',
-                marginHorizontal: moderateScale(14),
-              }}
+              ItemSeparatorComponent={() => <View style={{height: 18}} />}
               getItemLayout={getItemLayout}
               initialNumToRender={12}
               maxToRenderPerBatch={10}
