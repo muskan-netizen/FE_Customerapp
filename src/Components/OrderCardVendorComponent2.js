@@ -107,7 +107,7 @@ export default function OrderCardVendorComponent2({
           </View>
 
           <View>
-            <View style={{width: moderateScale(150)}}>
+            <View style={{width: moderateScale(130)}}>
               <Text
                 style={
                   isDarkMode
