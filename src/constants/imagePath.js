@@ -324,4 +324,8 @@ export default {
   newfilter: require('../assets/images/RoyoorderNewImages/ic_filter.png'),
   newsort: require('../assets/images/RoyoorderNewImages/sort.png'),
   icBagA: require('../assets/images/RoyoorderNewImages/ic_bag2.png'),
+  cash: require('../assets/images/TAXIAPPIMAGES/ic_cash.png'),
+  card: require('../assets/images/TAXIAPPIMAGES/ic_card.png'),
+  upi: require('../assets/images/TAXIAPPIMAGES/ic_upi.png'),
+  close2: require('../assets/images/TAXIAPPIMAGES/ic_close1.png'),
 };
