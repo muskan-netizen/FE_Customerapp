@@ -13,8 +13,10 @@ import GradientButton from '../../../Components/GradientButton';
 import {width} from '../../../styles/responsiveSize';
 import imagePath from '../../../constants/imagePath';
 import {colors} from 'react-native-elements';
+import navigationStrings from '../../../navigation/navigationStrings';
 
-export default function PinAddressOnMap() {
+export default function PinAddressOnMap(props) {
+  const {navigation} = props;
   const mapRef = React.createRef();
   const [state, setState] = useState({
     region: {
@@ -45,6 +47,14 @@ export default function PinAddressOnMap() {
     markers: [],
     formattedAddress1: null,
     formattedAddress2: null,
+    pickuplocationlat: null,
+    pickuplocationlong: null,
+    pickuplocationshortname: null,
+    droplocationshortname: null,
+    pickup_post_code: null,
+    drop_post_code: null,
+    task_type_id: null,
+    task_type_id1: null,
   });
 
   const {
@@ -61,6 +71,16 @@ export default function PinAddressOnMap() {
     markers,
     formattedAddress1,
     formattedAddress2,
+    pickuplocationlat,
+    pickuplocationlong,
+    droplocationlat,
+    droplocationlong,
+    pickuplocationshortname,
+    droplocationshortname,
+    pickup_post_code,
+    drop_post_code,
+    task_type_id,
+    task_type_id1,
   } = state;
 
   const {appData, themeColors, appStyle} = useSelector(
@@ -81,12 +101,25 @@ export default function PinAddressOnMap() {
       })
         .then((json) => {
           console.log(
-            json.results[0].formatted_address,
-            'json.results[0].formatted_address',
+            json.results[0].address_components[
+              json.results[0].address_components.length - 3
+            ],
+            'json.results[0]',
           );
           // console.log(json, 'json');
           updateState({
-            formattedAddress1: json.results[0].formatted_address,
+            formattedAddress1: json.results[0]?.formatted_address,
+            pickuplocationlat: region.latitude,
+            pickuplocationlong: region.longitude,
+            pickuplocationshortname:
+              json.results[0]?.address_components[
+                json.results[0]?.address_components.length - 3
+              ]?.short_name,
+            pickup_post_code:
+              json.results[0]?.address_components[
+                json.results[0]?.address_components.length - 1
+              ].short_name,
+            task_type_id: id,
           });
           let detail = {};
           detail = {
@@ -110,13 +143,21 @@ export default function PinAddressOnMap() {
         longitude: region.longitude,
       })
         .then((json) => {
-          console.log(
-            json.results[0].formatted_address,
-            'json.results[0].formatted_address',
-          );
+          console.log(json.results[0], 'json.results[0]1');
           // console.log(json, 'json');
           updateState({
             formattedAddress2: json.results[0].formatted_address,
+            droplocationlat: region.latitude,
+            droplocationlong: region.longitude,
+            droplocationshortname:
+              json.results[0]?.address_components[
+                json.results[0]?.address_components.length - 3
+              ]?.short_name,
+            drop_post_code:
+              json.results[0]?.address_components[
+                json.results[0]?.address_components.length - 1
+              ].short_name,
+            task_type_id1: id,
           });
           let detail = {};
           detail = {
@@ -172,7 +213,7 @@ export default function PinAddressOnMap() {
                           lng: currentLongitude,
                         },
                         draggable: true,
-                        markerImage: imagePath.soptLight,
+                        markerColor: 'green',
                         formattedAddress: formattedAddress1,
                       },
                       {
@@ -183,7 +224,7 @@ export default function PinAddressOnMap() {
                           lng: currentLongitude,
                         },
                         draggable: true,
-                        markerImage: imagePath.markerPin2,
+                        markerColor: 'red',
                         formattedAddress: formattedAddress2,
                       },
                     ],
@@ -191,7 +232,7 @@ export default function PinAddressOnMap() {
                     // formattedAddress2: formattedAddress2,
                   });
                 },
-                (error) => alert(error.message),
+                (error) => console.log(error.message),
                 {
                   enableHighAccuracy: true,
                   timeout: 20000,
@@ -227,7 +268,7 @@ export default function PinAddressOnMap() {
                 lng: currentLongitude,
               },
               draggable: true,
-              markerImage: imagePath.soptLight,
+              markerColor: 'green',
               formattedAddress: formattedAddress1,
             },
             {
@@ -238,15 +279,13 @@ export default function PinAddressOnMap() {
                 lng: currentLongitude,
               },
               draggable: true,
-              markerImage: imagePath.markerPin2,
+              markerColor: 'red',
               formattedAddress: formattedAddress2,
             },
           ],
-          // formattedAddress1: formattedAddress1,
-          // formattedAddress2: formattedAddress2,
         });
       },
-      (error) => alert(error.message),
+      (error) => console.log(error.message),
       {
         enableHighAccuracy: true,
         timeout: 20000,
@@ -255,8 +294,6 @@ export default function PinAddressOnMap() {
     );
   }, [formattedAddress1, formattedAddress2]);
   const onMarkerDragEnd = (coordinate, id) => {
-    console.log(id, coordinate, 'coordinate,id');
-
     if (id == 1) {
       _getAddressBasedOnCoordinates(coordinate, id);
       Geolocation.getCurrentPosition(
@@ -280,7 +317,7 @@ export default function PinAddressOnMap() {
                   lng: currentLongitude,
                 },
                 draggable: true,
-                markerImage: imagePath.soptLight,
+                markerColor: 'green',
                 formattedAddress: formattedAddress1,
               },
               {
@@ -291,7 +328,7 @@ export default function PinAddressOnMap() {
                   lng: currentLongitude,
                 },
                 draggable: true,
-                markerImage: imagePath.markerPin2,
+                markerColor: 'red',
                 formattedAddress: formattedAddress2,
               },
             ],
@@ -299,7 +336,7 @@ export default function PinAddressOnMap() {
             // formattedAddress2: formattedAddress2,
           });
         },
-        (error) => alert(error.message),
+        (error) => console.log(error),
         {
           enableHighAccuracy: true,
           timeout: 20000,
@@ -329,7 +366,7 @@ export default function PinAddressOnMap() {
                   lng: currentLongitude,
                 },
                 draggable: true,
-                markerImage: imagePath.soptLight,
+                markerColor: 'green',
                 formattedAddress: formattedAddress1,
               },
               {
@@ -340,7 +377,7 @@ export default function PinAddressOnMap() {
                   lng: currentLongitude,
                 },
                 draggable: true,
-                markerImage: imagePath.markerPin2,
+                markerColor: 'red',
                 formattedAddress: formattedAddress2,
               },
             ],
@@ -348,7 +385,7 @@ export default function PinAddressOnMap() {
             // formattedAddress2: formattedAddress2,
           });
         },
-        (error) => alert(error.message),
+        (error) => console.log(error),
         {
           enableHighAccuracy: true,
           timeout: 20000,
@@ -357,7 +394,65 @@ export default function PinAddressOnMap() {
       );
     }
   };
-  console.log(markers, 'markersmarkersmarkersmarkers');
+  const _modeToNextScreen = () => {
+    Geocoder.from({
+      latitude: userCurrentLatitude,
+      longitude: userCurrentLongitude,
+    })
+      .then((json) => {
+        const pickuplocationAllData = [
+          {
+            longitude: pickuplocationlong
+              ? pickuplocationlong
+              : Number(userCurrentLongitude),
+            latitude: pickuplocationlat
+              ? pickuplocationlat
+              : Number(userCurrentLatitude),
+            address: formattedAddress1
+              ? formattedAddress1
+              : json.results[0].formatted_address,
+            short_name: pickuplocationshortname
+              ? pickuplocationshortname
+              : json.results[0]?.address_components[
+                  json.results[0]?.address_components.length - 3
+                ]?.short_name,
+            post_code: pickup_post_code
+              ? pickup_post_code
+              : json.results[0]?.address_components[
+                  json.results[0]?.address_components.length - 1
+                ].short_name,
+            task_type_id: task_type_id ? task_type_id : 1,
+          },
+          {
+            longitude: droplocationlong
+              ? droplocationlong
+              : Number(userCurrentLongitude),
+            latitude: droplocationlat
+              ? droplocationlat
+              : Number(userCurrentLatitude),
+            address: formattedAddress2
+              ? formattedAddress2
+              : json.results[0].formatted_address,
+            short_name: droplocationshortname
+              ? droplocationshortname
+              : json.results[0]?.address_components[
+                  json.results[0]?.address_components.length - 3
+                ]?.short_name,
+            post_code: drop_post_code
+              ? drop_post_code
+              : json.results[0]?.address_components[
+                  json.results[0]?.address_components.length - 1
+                ].short_name,
+            task_type_id: task_type_id1 ? task_type_id1 : 2,
+          },
+        ];
+        console.log(pickuplocationAllData, 'pickuplocationAllData');
+        navigation.navigate(navigationStrings.ADDADDRESS, {
+          data: pickuplocationAllData,
+        });
+      })
+      .catch((error) => console.log(error, 'errro geocode'));
+  };
 
   return (
     <>
@@ -382,8 +477,7 @@ export default function PinAddressOnMap() {
             }
             title={marker?.title}
             description={marker?.formattedAddress}
-            pinColor={themeColors.primary_color}
-            image={marker?.markerImage}></MapView.Marker>
+            pinColor={marker?.markerColor}></MapView.Marker>
         ))}
       </MapView>
 
@@ -403,7 +497,7 @@ export default function PinAddressOnMap() {
           }}>
           Place the pin on Map to mark exact location
         </Text>
-        <GradientButton btnText={'Done'} />
+        <GradientButton btnText={'Done'} onPress={() => _modeToNextScreen()} />
       </View>
     </>
   );
