@@ -176,7 +176,7 @@ export default function ProductCard3({
                   width: width / 2.5,
                   // flex:1
                 }}>
-                {data?.translation[0]?.title}sd fsdf dsfds fd fd dsfdf
+                {data?.translation[0]?.title}
               </Text>
               {!!data?.category?.category_detail?.translation && (
                 <Text

@@ -1168,7 +1168,7 @@ export default function Products({ route, navigation }) {
     // return;
     const params = new URLSearchParams();
     let convertJson = JSON.stringify(data);
-    let shareLink = `${categoryInfo.share_link}?${convertJson}`;
+    let shareLink = `${categoryInfo.share_link}${convertJson}`;
     // params.append(shareLink.toString());
     console.log('vendor link+++', shareLink);
     // var response =  shareLink?.split('?').pop();
@@ -1303,7 +1303,7 @@ export default function Products({ route, navigation }) {
                   </Animatable.View>
                 )}
             </View>
-            {isSearch ?
+            {false ?
               <Animatable.View
                 animation="fadeIn"
               >
@@ -1318,7 +1318,7 @@ export default function Products({ route, navigation }) {
                     height: moderateScaleVertical(37),
                   }}
                   searchValue={searchInput}
-                  placeholder={strings.SEARCH_PRODUCT_VENDOR_ITEM}
+                  placeholder={strings.SEARCH_ITEM}
                   // onChangeText={(value) => onChangeText(value)}
                   showRightIcon
                   rightIconPress={() =>
@@ -1330,16 +1330,16 @@ export default function Products({ route, navigation }) {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={() => updateState({ isSearch: true })}
-                // onPress={moveToNewScreen(
-                //   navigationStrings.SEARCHPRODUCTOVENDOR,
-                //   {
-                //     type: data?.vendor
-                //       ? staticStrings.VENDOR
-                //       : staticStrings.CATEGORY,
-                //     id: data?.vendor ? data?.id : productListId?.id,
-                //   },
-                // )}
+                  // onPress={() => updateState({ isSearch: true })}
+                onPress={moveToNewScreen(
+                  navigationStrings.SEARCHPRODUCTOVENDOR,
+                  {
+                    type: data?.vendor
+                      ? staticStrings.VENDOR
+                      : staticStrings.CATEGORY,
+                    id: data?.vendor ? data?.id : productListId?.id,
+                  },
+                )}
                 >
                   <Image
                     style={{

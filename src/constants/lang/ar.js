@@ -498,4 +498,6 @@ export default {
   CANCELLED_AT: 'Cancelled at',
   CANCELS_AT: 'Cancels at',
   FREE_DELIVERY: 'Free Delivery',
+  SEARCH_ITEM:"Search Item",
+  SEARCH_PRODUCT:"Search Product",
 };

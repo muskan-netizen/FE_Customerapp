@@ -524,4 +524,6 @@ personnalisé`,
   CANCELS_AT: 'Cancels at',
   FREE_DELIVERY: 'Free Delivery',
   UPCOMING: 'Upcoming',
+  SEARCH_ITEM:"Search Item",
+  SEARCH_PRODUCT:"Search Product",
 };
