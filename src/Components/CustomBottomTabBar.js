@@ -4,6 +4,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function CustomBottomTabBar({
   state,
@@ -16,6 +18,11 @@ export default function CustomBottomTabBar({
   const insets = useSafeAreaInsets();
   const currentTheme = useSelector((state) => state.initBoot);
   const {themeColors, themeLayouts} = currentTheme;
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   return (
     <LinearGradient
       start={{x: 0, y: 1}}
@@ -29,7 +36,11 @@ export default function CustomBottomTabBar({
         paddingTop: 10,
         // style={{marginBottom:Platform.OS === 'ios'?30:10}}
       }}
-      colors={[themeColors.primary_color, themeColors.primary_color]}>
+      colors={
+        isDarkMode
+          ? [MyDarkTheme.colors.lightDark, MyDarkTheme.colors.lightDark]
+          : [themeColors.primary_color, themeColors.primary_color]
+      }>
       {state.routes.map((route, index) => {
         // console.log(route, 'routesssssss');
         const {options} = descriptors[route.key];

@@ -2,6 +2,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
 import {cloneDeep, forEach} from 'lodash';
 import React, {useEffect, useState, useRef} from 'react';
+
 import {
   Alert,
   FlatList,
@@ -975,7 +976,8 @@ export default function Cart({navigation, route}) {
                             bottom: 10,
                             right: 20,
                           }}
-                          onPress={() => openDeleteView(i)}>
+                          onPress={() => openDeleteView(i)}
+                          >
                           <Image source={imagePath.deleteRed} />
                         </TouchableOpacity>
                         <View

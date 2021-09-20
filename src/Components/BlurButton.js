@@ -1,6 +1,8 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
+import strings from '../constants/lang';
+import colors from '../styles/colors';
 
 export default function BlurButton({con}) {
   const {appStyle, themeColors} = useSelector((state) => state.initBoot);
@@ -15,7 +17,7 @@ export default function BlurButton({con}) {
         alignItems: 'center',
         justifyContent: 'center',
         right: moderateScale(24),
-        backgroundColor: 'rgba(255,255,255,.4)',
+        backgroundColor: colors.whiteOpacity4,
         borderRadius: 40,
         height: moderateScaleVertical(30),
       }}>
@@ -24,7 +26,7 @@ export default function BlurButton({con}) {
           color: colors.white,
           fontFamily: fontFamily.bold,
         }}>
-        Delivery
+        {strings.DELIVERY}
       </Text>
     </View>
   );

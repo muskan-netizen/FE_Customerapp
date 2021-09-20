@@ -430,12 +430,23 @@ export default function Home({route, navigation}) {
 
   //Reloads the screen
   const initApiHit = () => {
+    let header = {};
+    // console.log(languages?.primary_language?.id, 'languageID');
+    if (languages?.primary_language?.id) {
+      header = {
+        code: appData?.profile?.code,
+        language: languages?.primary_language?.id,
+      };
+    } else {
+      header = {
+        code: appData?.profile?.code,
+      };
+    }
+
     actions
       .initApp(
         {},
-        {
-          code: appData?.profile?.code,
-        },
+        header,
         true,
         currencies?.primary_currency,
         languages?.primary_language,

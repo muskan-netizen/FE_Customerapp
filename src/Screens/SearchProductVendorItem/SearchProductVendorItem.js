@@ -44,6 +44,7 @@ export default function SearchProductVendorItem({navigation, route}) {
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
 
+  console.log("param data",paramData)
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 

@@ -5,7 +5,9 @@ import {
   BrandProducts,
   BuyProduct,
   Celebrity,
+  Celebrity2,
   CelebrityProduct,
+  CelebrityProduct2,
   Delivery,
   Filter,
   ProductDetail,
@@ -29,12 +31,14 @@ export default function () {
     <Stack.Navigator>
       <Stack.Screen
         name={navigationStrings.CELEBRITY}
-        component={Celebrity}
+        component={appStyle?.homePageLayout === 3 ? Celebrity2 : Celebrity}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.CELEBRITYDETAIL}
-        component={CelebrityProduct}
+        component={
+          appStyle?.homePageLayout === 3 ? CelebrityProduct2 : CelebrityProduct
+        }
         options={{headerShown: false}}
       />
 

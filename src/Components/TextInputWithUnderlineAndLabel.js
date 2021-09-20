@@ -19,6 +19,7 @@ import {
 } from '../styles/responsiveSize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import imagePath from '../constants/imagePath';
 
 // import styles from '../Screens/Tracking/styles';
 
@@ -45,6 +46,10 @@ export default function TextInputWithUnderlineAndLabel({
   sublabelStyle,
   mainStyle,
   onPress = () => {},
+  isLableIcon = true,
+  labelIconPath = '',
+  labelIconStyle = {},
+  onPressLabel = () => {},
   ...props
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -80,6 +85,11 @@ export default function TextInputWithUnderlineAndLabel({
           }}>
           {label}
         </Text>
+        {isLableIcon && (
+          <TouchableOpacity activeOpacity={0.8} onPress={onPressLabel}>
+            <Image source={labelIconPath} style={labelIconStyle} />
+          </TouchableOpacity>
+        )}
       </View>
       <View
         style={{
