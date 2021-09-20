@@ -1168,11 +1168,15 @@ export default function Products({ route, navigation }) {
     // return;
     const params = new URLSearchParams();
     let convertJson = JSON.stringify(data);
-    let shareLink = `${categoryInfo.share_link}${convertJson}`;
+    // let removeBrackets = convertJson.replace(/[{}]/g,'')
+    let shareLink = `${categoryInfo.share_link + `?data=${convertJson}`}`;
+
     // params.append(shareLink.toString());
     console.log('vendor link+++', shareLink);
-    // var response =  shareLink?.split('?').pop();
-    // console.log("res==>>>>>",JSON.parse(response))
+
+    // var response =  shareLink?.split('=').pop();
+    // let obj = eval('({' + response + '})');
+    // console.log("res==>>>>>",obj)
     // return;
     try {
       const result = await Share.share({
@@ -1331,15 +1335,15 @@ export default function Products({ route, navigation }) {
                 <TouchableOpacity
                   activeOpacity={0.8}
                   // onPress={() => updateState({ isSearch: true })}
-                onPress={moveToNewScreen(
-                  navigationStrings.SEARCHPRODUCTOVENDOR,
-                  {
-                    type: data?.vendor
-                      ? staticStrings.VENDOR
-                      : staticStrings.CATEGORY,
-                    id: data?.vendor ? data?.id : productListId?.id,
-                  },
-                )}
+                  onPress={moveToNewScreen(
+                    navigationStrings.SEARCHPRODUCTOVENDOR,
+                    {
+                      type: data?.vendor
+                        ? staticStrings.VENDOR
+                        : staticStrings.CATEGORY,
+                      id: data?.vendor ? data?.id : productListId?.id,
+                    },
+                  )}
                 >
                   <Image
                     style={{

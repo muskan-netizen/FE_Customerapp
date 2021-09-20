@@ -289,7 +289,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
           <Text
             style={{
               fontSize: textScale(10),
-              fontFamily: fontFamily.regular,
+              fontFamily: fontFamily.medium,
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
             {item.dataname || item.title}
