@@ -615,6 +615,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       {!!showCarModal && _selectCarModalView()}
       {!!showTimeModal && _selectTimeView()}
       {!!showPaymentModal && _selectPaymentView()}
+
       <PaymentProcessingModal
         isModalVisible={isModalVisible}
         updateModalState={_updateState}
