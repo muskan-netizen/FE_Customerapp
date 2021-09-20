@@ -507,9 +507,10 @@ export default function Addaddress({navigation, route}) {
   };
 
   const saveAddressAndRedirect = () => {
-    if (!pickUpLocationLatLng) {
+    console.log(pickUpLocationLatLng.latitude, dropOffLocationLatLng);
+    if (pickUpLocationLatLng?.latitude == undefined) {
       showError(strings.PLEASE_SELECT_PICKUP_LOCATION);
-    } else if (!dropOffLocationLatLng && !dropOffLocationTwoLatLng) {
+    } else if (dropOffLocationLatLng?.latitude == undefined) {
       showError(strings.PLEASE_SELECT_DROP_OFF_LOCATION);
     } else {
       let location = [];
