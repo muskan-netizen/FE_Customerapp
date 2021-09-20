@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, {useState} from 'react';
 import {
   Image,
@@ -48,9 +49,10 @@ export default function SelectTimeModalView({
 
   const [state, setState] = useState({
     isTimerPickerModal: false,
+    formatedTime: '',
   });
 
-  const {isTimerPickerModal} = state;
+  const {isTimerPickerModal, formatedTime} = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});
@@ -58,8 +60,10 @@ export default function SelectTimeModalView({
   const {profile} = appData;
 
   const onDateChange = (value) => {
-    console.log(value, 'value');
     _onDateChange(value);
+    updateState({
+      formatedTime: moment(value).format('LT'),
+    });
   };
 
   const openCalenderPicker = (value) => {
@@ -183,10 +187,21 @@ export default function SelectTimeModalView({
               <View
                 style={{
                   backgroundColor: themeColors.primary_color,
-                  paddingTop: moderateScaleVertical(45),
+                  paddingTop: moderateScaleVertical(20),
                   overflow: 'hidden',
                   borderRadius: 12,
                 }}>
+                <View style={{marginBottom: moderateScaleVertical(20)}}>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      fontSize: textScale(18),
+                      color: colors.white,
+                    }}>
+                    {formatedTime}
+                  </Text>
+                </View>
+
                 <DatePicker
                   date={date}
                   mode="time"
@@ -204,11 +219,32 @@ export default function SelectTimeModalView({
                 <View
                   style={{
                     backgroundColor: colors.white,
-                    paddingBottom: moderateScaleVertical(45),
+                    paddingBottom: moderateScaleVertical(20),
                     overflow: 'hidden',
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
                   }}>
-                  <Text>Cancel</Text>
-                  <View></View>
+                  <Text
+                    style={{
+                      marginHorizontal: moderateScale(18),
+                      fontSize: textScale(14),
+                    }}>
+                    CANCEL
+                  </Text>
+                  <View
+                    style={{
+                      paddingHorizontal: moderateScale(20),
+                      paddingVertical: moderateScaleVertical(10),
+                      backgroundColor: themeColors.primary_color,
+                      marginHorizontal: moderateScale(20),
+                      borderRadius: 4,
+                    }}>
+                    <Text
+                      style={{color: colors.white, fontSize: textScale(14)}}>
+                      OK
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
