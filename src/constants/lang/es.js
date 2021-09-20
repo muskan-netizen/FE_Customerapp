@@ -501,4 +501,6 @@ personalizado`,
   SCHEDULE: 'SCHEDULE',
   PICKUP_DATE: 'Pickup Date',
   PICKUP_TIME: 'Pickup Time',
+  SCHEDULE_RIDE_FOR: 'Schedule Ride for ',
+  ESTIMATION_ONLY: 'This is an estimation only, price may vary.',
 };

@@ -335,4 +335,6 @@ export default {
   calendarB: require('../assets/images/TAXIAPPIMAGES/ic_calendar.png'),
   calendarB: require('../assets/images/TAXIAPPIMAGES/ic_calendar.png'),
   icTime: require('../assets/images/TAXIAPPIMAGES/ic_time.png'),
+  discount2: require('../assets/images/TAXIAPPIMAGES/ic_discount.png'),
+  icgo2: require('../assets/images/TAXIAPPIMAGES/ic_go2.png'),
 };

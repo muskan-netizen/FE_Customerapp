@@ -11,11 +11,14 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  height,
 } from '../../../styles/responsiveSize';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import stylesFun from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
+import moment from 'moment';
+import {string} from 'prop-types';
 
 export default function SelectPaymentModalView({
   isLoading = false,
@@ -72,11 +75,179 @@ export default function SelectPaymentModalView({
         isDarkMode
           ? [
               styles.bottomView,
-              {backgroundColor: MyDarkTheme.colors.background},
+              {
+                backgroundColor: MyDarkTheme.colors.background,
+              },
             ]
           : styles.bottomView
       }>
-      <ScrollView bounces={false}>
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderColor: colors.grayOpacity51,
+          borderBottomWidth: 0.5,
+        }}>
+        <View
+          style={{
+            width: moderateScale(35),
+            backgroundColor: colors.grayOpacity51,
+            height: moderateScale(2),
+            marginTop: moderateScale(10),
+          }}
+        />
+        <Text
+          style={{
+            fontSize: textScale(26),
+            fontFamily: fontFamily.medium,
+            marginVertical: moderateScale(10),
+          }}>
+          {selectedCarOption
+            ? `${currencies?.primary_currency?.symbol}${(
+                Number(selectedCarOption?.variant[0]?.multiplier) *
+                Number(selectedCarOption?.variant[0]?.price)
+              ).toFixed(2)}`
+            : ''}
+        </Text>
+        <Text
+          style={{
+            fontFamily: fontFamily.reguler,
+            opacity: 0.5,
+            marginBottom: moderateScale(20),
+          }}>
+          {strings.ESTIMATION_ONLY}
+        </Text>
+      </View>
+      <View
+        style={{
+          paddingHorizontal: moderateScale(20),
+          paddingVertical: moderateScale(20),
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
+        <View style={{flex: 0.3, justifyContent: 'center'}}>
+          <View
+            style={{
+              height: moderateScale(28),
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+            }}>
+            <Image
+              style={{height: 40, width: 100}}
+              source={
+                selectedCarOption?.media.length &&
+                selectedCarOption?.media[0]?.image?.path
+                  ? {
+                      uri: getImageUrl(
+                        selectedCarOption?.media[0]?.image?.path?.image_fit,
+                        selectedCarOption?.media[0]?.image?.path?.image_path,
+                        '500/500',
+                      ),
+                    }
+                  : imagePath.user
+              }
+            />
+          </View>
+        </View>
+        <View
+          style={{
+            flex: 0.65,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          <View style={{justifyContent: 'center'}}>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                      styles.distanceDurationDeliveryValue,
+                      {color: MyDarkTheme.colors.text},
+                    ]
+                  : styles.distanceDurationDeliveryValue
+              }>
+              {selectedCarOption?.translation.length
+                ? selectedCarOption?.translation[0].title
+                : ''}
+            </Text>
+            <Text
+              style={
+                (isDarkMode
+                  ? [
+                      styles.distanceDurationDeliveryLable,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        marginTop: moderateScale(5),
+                      },
+                    ]
+                  : styles.distanceDurationDeliveryLable,
+                {
+                  marginTop: moderateScale(5),
+                  color: '#ACB1C0',
+                })
+              }>
+              {totalDuration < 60
+                ? `${totalDuration} mins`
+                : `${(totalDuration / 60).toFixed(2)} hrs`}
+            </Text>
+          </View>
+        </View>
+      </View>
+      {!!loyalityAmount && (
+        <View
+          style={{
+            flexDirection: 'row',
+            marginHorizontal: moderateScale(20),
+            justifyContent: 'space-between',
+            marginVertical: moderateScale(16),
+          }}>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.distanceDurationDeliveryLable,
+                    {color: MyDarkTheme.colors.text},
+                  ]
+                : styles.distanceDurationDeliveryLable
+            }>
+            {'Loyalty'}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [
+                    styles.distanceDurationDeliveryValue,
+                    {color: MyDarkTheme.colors.text},
+                  ]
+                : styles.distanceDurationDeliveryValue
+            }>{`-${currencies?.primary_currency?.symbol}${(
+            Number(selectedCarOption?.variant[0]?.multiplier) *
+            Number(loyalityAmount)
+          ).toFixed(2)}`}</Text>
+        </View>
+      )}
+      <View
+        style={{
+          flexDirection: 'row',
+          marginHorizontal: moderateScale(18),
+          justifyContent: 'space-between',
+          marginVertical: moderateScale(8),
+        }}>
+        <View style={{flexDirection: 'row'}}>
+          <Image source={imagePath.cash} />
+          <Text style={{alignSelf: 'center', marginStart: moderateScale(12)}}>
+            Cash
+          </Text>
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <Image source={imagePath.discount2} style={{alignSelf: 'center'}} />
+          <Image
+            source={imagePath.icgo2}
+            style={{alignSelf: 'center', marginStart: moderateScale(18)}}
+          />
+        </View>
+      </View>
+
+      {/* <ScrollView bounces={false}>
         <View
           style={{
             paddingHorizontal: moderateScale(20),
@@ -84,16 +255,6 @@ export default function SelectPaymentModalView({
             flexDirection: 'row',
             justifyContent: 'space-between',
           }}>
-          <TouchableOpacity style={{flex: 0.2}} onPress={onPressBack}>
-            <Image
-              style={
-                isDarkMode
-                  ? {tintColor: MyDarkTheme.colors.text}
-                  : {tintColor: null}
-              }
-              source={imagePath.backArrowCourier}
-            />
-          </TouchableOpacity>
           <View
             style={{
               flex: 0.6,
@@ -236,10 +397,6 @@ export default function SelectPaymentModalView({
                   }`}
                 </Text>
               )}
-              {/* <TouchableOpacity
-                style={{marginLeft: 10, justifyContent: 'center'}}>
-                <Image source={imagePath.toolTip} />
-              </TouchableOpacity> */}
             </View>
           </View>
         </View>
@@ -254,9 +411,6 @@ export default function SelectPaymentModalView({
           <View style={{flex: 0.3, justifyContent: 'center'}}>
             <View
               style={{
-                // borderRadius: moderateScale(28 / 2),
-                // backgroundColor: colors.textGreyK,
-                // width: 60,
                 height: moderateScale(28),
                 justifyContent: 'space-between',
                 flexDirection: 'row',
@@ -276,17 +430,6 @@ export default function SelectPaymentModalView({
                     : imagePath.user
                 }
               />
-              {/* <View
-                style={{
-                  backgroundColor: themeColors.primary_color,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: moderateScale(28),
-                  width: moderateScale(28),
-                  borderRadius: moderateScale(28 / 2),
-                }}>
-                <Image source={imagePath.briefcase} />
-              </View> */}
             </View>
           </View>
           <View
@@ -323,10 +466,6 @@ export default function SelectPaymentModalView({
                   : `${(totalDuration / 60).toFixed(2)} hrs`}
               </Text>
             </View>
-
-            {/* <TouchableOpacity style={{justifyContent: 'center'}}>
-              <Image source={imagePath.chev_down} />
-            </TouchableOpacity> */}
           </View>
         </View>
         {!!loyalityAmount && (
@@ -363,7 +502,6 @@ export default function SelectPaymentModalView({
         )}
 
         <TouchableOpacity
-          // disabled={item?.couponData ? true : false}
           onPress={() => _getAllOffers(selectedCarOption, '')}
           style={styles.offersViewB}>
           {couponInfo ? (
@@ -382,7 +520,6 @@ export default function SelectPaymentModalView({
                 </Text>
               </View>
               <View style={{flex: 0.3, alignItems: 'flex-end'}}>
-                {/* <Image source={imagePath.crossBlueB}  /> */}
                 <Text
                   onPress={removeCoupon}
                   style={[styles.removeCoupon, {color: colors.cartItemPrice}]}>
@@ -403,32 +540,27 @@ export default function SelectPaymentModalView({
             </View>
           )}
         </TouchableOpacity>
-      </ScrollView>
+      </ScrollView> */}
 
       <View
         style={{
-          marginVertical: moderateScaleVertical(10),
+          marginTop: moderateScale(26),
           marginHorizontal: moderateScale(20),
         }}>
         <GradientButton
           colorsArray={[themeColors.primary_color, themeColors.primary_color]}
-          textStyle={{textTransform: 'none', fontSize: textScale(16)}}
+          textStyle={{textTransform: 'none', fontSize: textScale(12)}}
           onPress={_confirmAndPay}
           // marginTop={moderateScaleVertical(10)}
-          marginBottom={moderateScaleVertical(5)}
-          btnText={strings.CONFRIMANDPAY}
+          // marginBottom={moderateScaleVertical(5)}
+          // btnText={`${slectedDate}  -  ${selectedTime}`}
+          btnText={
+            strings.SCHEDULE_RIDE_FOR +
+            `${moment(slectedDate).format('DD MMM')} ${moment(
+              slectedDate,
+            ).format('LT')} `
+          }
         />
-        <View>
-          <Text style={styles.bottomAcceptanceText}>
-            {strings.BYCONFIRMING}
-          </Text>
-          <Text style={styles.bottomAcceptanceText}>
-            {strings.DOESNTCONTAIN}
-            <Text style={{color: themeColors.primary_color}}>
-              {strings.ILLEGAL_ITESM}
-            </Text>
-          </Text>
-        </View>
       </View>
     </View>
   );
