@@ -324,4 +324,8 @@ export default {
   newfilter: require('../assets/images/RoyoorderNewImages/ic_filter.png'),
   newsort: require('../assets/images/RoyoorderNewImages/sort.png'),
   icBagA: require('../assets/images/RoyoorderNewImages/ic_bag2.png'),
+  calendarA: require('../assets/images/TAXIAPPIMAGES/ic_calendar2.png'),
+  calendarB: require('../assets/images/TAXIAPPIMAGES/ic_calendar.png'),
+  calendarB: require('../assets/images/TAXIAPPIMAGES/ic_calendar.png'),
+  icTime: require('../assets/images/TAXIAPPIMAGES/ic_time.png'),
 };
