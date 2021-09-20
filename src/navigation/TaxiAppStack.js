@@ -1,8 +1,14 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {Addaddress, HomeScreenTaxi, PaymentOptions} from '../Screens';
+import {
+  Addaddress,
+  ChooseCarTypeAndTimeTaxi,
+  HomeScreenTaxi,
+  PaymentOptions,
+} from '../Screens';
 import VerifyAccountSecond from '../Screens/VerifyAccountSecond/VerifyAccount';
 import navigationStrings from './navigationStrings';
+ChooseCarTypeAndTimeTaxi;
 
 export default function (Stack) {
   return (
@@ -20,6 +26,11 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.PAYMENT_OPTIONS}
         component={PaymentOptions}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.CHOOSECARTYPEANDTIMETAXI}
+        component={ChooseCarTypeAndTimeTaxi}
         options={{headerShown: false}}
       />
     </>

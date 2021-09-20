@@ -101,6 +101,5 @@ export default {
   greyColor2: '#EEEEEE',
   grayOpacity51: 'rgba(42,46,54,0.51)',
   whiteOpacity4: 'rgba(255,255,255,0.4)',
-  whiteOpacity5: '255,255,255,0.5',
   whiteOpacity15: 'rgba(255,255,255,0.15)',
 };

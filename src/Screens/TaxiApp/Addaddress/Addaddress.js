@@ -500,7 +500,7 @@ export default function Addaddress({navigation, route}) {
         addressData.push(dropOffLocationTwoAddressData);
       }
 
-      navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIME, {
+      navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
         location: location,
         id: paramData?.data?.id,
         tasks: addressData,

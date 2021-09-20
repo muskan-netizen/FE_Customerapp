@@ -328,4 +328,8 @@ export default {
   card: require('../assets/images/TAXIAPPIMAGES/ic_card.png'),
   upi: require('../assets/images/TAXIAPPIMAGES/ic_upi.png'),
   close2: require('../assets/images/TAXIAPPIMAGES/ic_close1.png'),
+  calendarA: require('../assets/images/TAXIAPPIMAGES/ic_calendar2.png'),
+  calendarB: require('../assets/images/TAXIAPPIMAGES/ic_calendar.png'),
+  calendarB: require('../assets/images/TAXIAPPIMAGES/ic_calendar.png'),
+  icTime: require('../assets/images/TAXIAPPIMAGES/ic_time.png'),
 };

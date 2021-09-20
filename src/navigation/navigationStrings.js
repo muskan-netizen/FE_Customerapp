@@ -81,4 +81,5 @@ export default {
   HOMESCREENTAXI: 'homeScreenTaxi',
   ADDADDRESS: 'addAddress',
   PAYMENT_OPTIONS: 'paymentoptions',
+  CHOOSECARTYPEANDTIMETAXI: 'ChooseCarTypeAndTimeTaxi',
 };
