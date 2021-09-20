@@ -67,6 +67,8 @@ export default function SelectCarModalView({
         activeOpacity={1}
         onPress={() => onPressAvailableCar(item)}>
         <LinearGradient
+          end={{x: 0.0, y: 0.25}}
+          start={{x: 0.5, y: 2.0}}
           style={{
             borderWidth: 1,
 
@@ -94,6 +96,26 @@ export default function SelectCarModalView({
                 : MyDarkTheme.colors.lightDark
               : selectedCarOption?.id == item?.id
               ? themeColors.primary_color
+              : colors.white,
+            isDarkMode
+              ? selectedCarOption?.id == item?.id
+                ? themeColors.primary_color
+                : MyDarkTheme.colors.lightDark
+              : selectedCarOption?.id == item?.id
+              ? getColorCodeWithOpactiyNumber(
+                  themeColors.primary_color.substr(1),
+                  70,
+                )
+              : colors.white,
+            isDarkMode
+              ? selectedCarOption?.id == item?.id
+                ? themeColors.primary_color
+                : MyDarkTheme.colors.lightDark
+              : selectedCarOption?.id == item?.id
+              ? getColorCodeWithOpactiyNumber(
+                  themeColors.primary_color.substr(1),
+                  70,
+                )
               : colors.white,
           ]}>
           <View style={{flexDirection: 'row'}}>
@@ -306,8 +328,18 @@ export default function SelectCarModalView({
         {availableCarList.length ? (
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <GradientButton
+              // endcolor={{x: 0.0, y: 0.25}}
+              // startcolor={{x: 0.0, y: 0.0}}
               colorsArray={[
                 themeColors.primary_color,
+                getColorCodeWithOpactiyNumber(
+                  themeColors.primary_color.substr(1),
+                  70,
+                ),
+                getColorCodeWithOpactiyNumber(
+                  themeColors.primary_color.substr(1),
+                  70,
+                ),
                 themeColors.primary_color,
               ]}
               textStyle={{textTransform: 'none', fontSize: textScale(14)}}

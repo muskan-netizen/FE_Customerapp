@@ -15,13 +15,15 @@ const GradientButton = ({
   marginBottom = 0,
   textStyle = {},
   indicator = false,
+  endcolor = {},
+  startcolor = {},
   colorsArray = null,
-  indicatorColor = "#0000ff",
+  indicatorColor = '#0000ff',
 }) => {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;
-
+  console.log(endcolor, startcolor, 'start and end color');
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
   return (
     <TouchableOpacity
@@ -34,6 +36,9 @@ const GradientButton = ({
       }}
       onPress={onPress}>
       <LinearGradient
+        start={{x: 0.0, y: -1.5}}
+        end={{x: 0.5, y: 1.0}}
+        // end={endcolor}
         style={{
           height: '100%',
           alignItems: 'center',

@@ -1,5 +1,12 @@
-import React from 'react';
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
+import {
+  Image,
+  Modal,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import {useSelector} from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
@@ -18,6 +25,7 @@ import stylesFun from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
+import {getColorCodeWithOpactiyNumber} from '../../../utils/helperFunctions';
 
 export default function SelectTimeModalView({
   isLoading = false,
@@ -38,6 +46,12 @@ export default function SelectTimeModalView({
   );
   const fontFamily = appStyle?.fontSizeData;
 
+  const [state, setState] = useState({
+    isTimerPickerModal: false,
+  });
+
+  const {isTimerPickerModal} = state;
+
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});
   const commonStyles = commonStylesFun({fontFamily});
@@ -53,6 +67,9 @@ export default function SelectTimeModalView({
   };
 
   const openTimePicker = (value) => {
+    updateState({
+      isTimerPickerModal: true,
+    });
     // _openTimePicker(value);
   };
 
@@ -144,15 +161,58 @@ export default function SelectTimeModalView({
             labelIconStyle={{tintColor: themeColors.primary_color}}
             onPressLabel={openTimePicker}
           />
-          {/* <DatePicker
-            date={date}
-            mode="datetime"
-            textColor={isDarkMode ? '#fff' : colors.blackB}
-            minimumDate={new Date()}
-            style={{width: width - 20, height: height / 3.5}}
-            // onDateChange={setDate}
-            onDateChange={(value) => onDateChange(value)}
-          /> */}
+
+          <Modal
+            transparent={true}
+            isVisible={isTimerPickerModal}
+            animationType={'none'}
+            style={styles.modalContainer}
+            onLayout={(event) => {
+              updateState({viewHeight: event.nativeEvent.layout.height});
+            }}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: getColorCodeWithOpactiyNumber(
+                  colors.black.substr(1),
+                  50,
+                ),
+              }}>
+              <View
+                style={{
+                  backgroundColor: themeColors.primary_color,
+                  paddingTop: moderateScaleVertical(45),
+                  overflow: 'hidden',
+                  borderRadius: 12,
+                }}>
+                <DatePicker
+                  date={date}
+                  mode="time"
+                  textColor={isDarkMode ? '#fff' : colors.blackB}
+                  minimumDate={new Date()}
+                  style={{
+                    width: width / 1.5,
+                    height: height / 3.2,
+                    backgroundColor: colors.white,
+                    alignSelf: 'center',
+                  }}
+                  // onDateChange={setDate}
+                  onDateChange={(value) => onDateChange(value)}
+                />
+                <View
+                  style={{
+                    backgroundColor: colors.white,
+                    paddingBottom: moderateScaleVertical(45),
+                    overflow: 'hidden',
+                  }}>
+                  <Text>Cancel</Text>
+                  <View></View>
+                </View>
+              </View>
+            </View>
+          </Modal>
         </View>
         <View
           style={{

@@ -164,7 +164,7 @@ export default ({fontFamily, themeColors}) => {
       paddingTop: StatusBarHeightSecond,
       height: '100%',
       overflow: 'hidden',
-      backgroundColor: 'white',
+      backgroundColor: 'red',
     },
     status: {
       textAlign: 'left',
