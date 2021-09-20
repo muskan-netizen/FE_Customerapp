@@ -27,7 +27,9 @@ import {MyDarkTheme} from '../../styles/theme';
 import LottieView from 'lottie-react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import MarketCard3 from '../../Components/MarketCard3';
-import {setItem} from '../../utils/utils';
+import { setItem } from '../../utils/utils';
+import RoundImg from '../../Components/RoundImg';
+
 
 export default function SearchProductVendorItem2({navigation, route}) {
   const [state, setState] = useState({
@@ -55,6 +57,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
 
   //route params
   const paramData = route?.params?.data;
+  console.log("param data", paramData)
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const recommendedVendorsdata = appMainData?.vendors;
   const fontFamily = appStyle?.fontSizeData;
@@ -274,26 +277,32 @@ export default function SearchProductVendorItem2({navigation, route}) {
     return (
       <TouchableOpacity
         onPress={() => _onclickSearchItem(item)}
-        style={{flex: 1, flexDirection: 'row'}}>
-        <View style={{flex: 0.9}}>
+        style={{ flex: 1, flexDirection: 'row', alignItems:'center' }}>
+
+        <RoundImg
+          img={'https://image.freepik.com/free-vector/burger-logo_18228-1173.jpg'}
+          size={35}
+          isDarkMode={isDarkMode}
+          MyDarkTheme={MyDarkTheme}
+        />
+        <View style={{ marginLeft: moderateScale(12) }}>
           <Text
             style={{
-              fontSize: 15,
-              fontFamily: fontFamily.medium,
-              color: colors.greyLight,
+              fontSize: textScale(10),
+              fontFamily: fontFamily.regular,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
             {item.dataname || item.title}
           </Text>
-        </View>
-        <View style={{flex: 0.1}}>
-          <Image
-            style={
-              isDarkMode
-                ? {tintColor: MyDarkTheme.colors.text, opacity: 0.7}
-                : {opacity: 0.7}
-            }
-            source={imagePath.sideUpwordArrow}
-          />
+          <Text
+            style={{
+              fontSize: textScale(9),
+              fontFamily: fontFamily.regular,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51,
+              marginTop:moderateScaleVertical(5)
+            }}>
+            Dish
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -372,6 +381,8 @@ export default function SearchProductVendorItem2({navigation, route}) {
                 }}>
                 {strings.RECOMMENDED_FOR_YOU}
               </Text>
+
+
               <FlatList
                 horizontal
                 data={recommendedVendorsdata}
@@ -386,7 +397,8 @@ export default function SearchProductVendorItem2({navigation, route}) {
                   // backgroundColor: 'black',
                 }}
                 ListEmptyComponent={_listEmptyComponent}
-                ItemSeparatorComponent={() => <View style={{height: 30}} />}
+                ItemSeparatorComponent={() => <View style={{ height: 30 }} />}
+
               />
             </View>
           </>
@@ -465,7 +477,8 @@ export default function SearchProductVendorItem2({navigation, route}) {
             // backgroundColor: 'black',
           }}
           ListEmptyComponent={_listEmptyComponent}
-          ItemSeparatorComponent={() => <View style={{height: 30}} />}
+          ItemSeparatorComponent={() => <View style={{ height: 30 }} />}
+          ListHeaderComponent={() => <View style={{ height: moderateScale(16) }} />}
         />
       </View>
     </WrapperContainer>

@@ -44,6 +44,7 @@ import * as Animatable from 'react-native-animatable';
 import actions from '../redux/actions';
 import { Pagination } from 'react-native-snap-carousel';
 import CardLoader from './Loaders/CardLoader';
+import StarRating from 'react-native-star-rating';
 
 export default function VariantAddons({
   productdetail = {},
@@ -359,7 +360,8 @@ export default function VariantAddons({
                 </Text>
                 <View style={{ paddingLeft: moderateScale(5) }}>
                   <Image
-                    source={i?.value ? imagePath.check : imagePath.unCheck}
+                    source={i?.value ? imagePath.icCheckBoxActive : imagePath.icCheckBoxInactive}
+
                   />
                 </View>
               </View>
@@ -397,7 +399,7 @@ export default function VariantAddons({
                     ...styles.chooseOption,
                     color: isDarkMode
                       ? MyDarkTheme.colors.text
-                      : colors.textGreyF,
+                      : colors.grayOpacity51,
                   }}>
                   {strings.PLS_SELECT_ONE}
                 </Text>
@@ -481,7 +483,7 @@ export default function VariantAddons({
                 {i?.title}
               </Text>
               <Image
-                source={i?.value ? imagePath.check : imagePath.unCheck}
+                source={i?.value ? imagePath.icActiveRadio : imagePath.icInActiveRadio}
               />
 
             </TouchableOpacity>
@@ -811,16 +813,49 @@ export default function VariantAddons({
             style={[styles.cardView, imagestyle]}
             resizeMode={resizeMode}
           /> */}
-            <Animatable.View animation="fadeInUp" style={styles.mainView}>
+            <Animatable.View delay={1} animation="fadeInUp" style={styles.mainView}>
               <View>
                 <Text
                   numberOfLines={1}
                   style={{
                     ...styles.productName,
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    fontFamily: fontFamily.bold,
+
                   }}>
                   {productdetail?.translation[0]?.title}
                 </Text>
+                <Text style={{
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity40,
+                  fontFamily: fontFamily.regular,
+                  fontSize: textScale(9),
+                  textAlign: 'left',
+                  marginBottom: moderateScaleVertical(4),
+                  marginTop:moderateScaleVertical(6)
+                }}>In Category_name</Text>
+
+                {/* rating View */}
+                {true && (
+                  <View
+                    style={{
+                      borderWidth: 0.5,
+                      alignSelf: 'flex-start',
+                      padding: 2,
+                      borderRadius: 2,
+                      marginVertical: moderateScaleVertical(4),
+                      borderColor: colors.yellowB,
+                      backgroundColor: colors.yellowOpacity10,
+                    }}>
+                    <StarRating
+                      disabled={false}
+                      maxStars={5}
+                      rating={3}
+                      fullStarColor={colors.yellowB}
+                      starSize={8}
+                      containerStyle={{ width: width / 9 }}
+                    />
+                  </View>
+                )}
               </View>
               <View style={{ justifyContent: 'center' }}>
                 <Text
@@ -879,7 +914,7 @@ export default function VariantAddons({
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 paddingHorizontal: moderateScale(16),
-                paddingBottom: moderateScaleVertical(10),
+                paddingBottom: moderateScaleVertical(16),
                 backgroundColor: isDarkMode
                   ? MyDarkTheme.colors.background
                   : '#fff',
@@ -894,6 +929,7 @@ export default function VariantAddons({
                       15,
                     ),
                     borderColor: themeColors?.primary_color,
+                    height: moderateScale(38)
                   }}
                 // onPress={onPress}
                 >
@@ -954,7 +990,7 @@ export default function VariantAddons({
                     ).toFixed(2)}`}
                   btnStyle={{
                     borderRadius: moderateScale(4),
-                    height: moderateScale(38),
+                    height: moderateScale(38)
                   }}
                 />
               </View>
@@ -1055,7 +1091,7 @@ const styles = StyleSheet.create({
   chooseOption: {
     marginBottom: moderateScale(2),
     color: colors.textGreyF,
-    fontSize: textScale(10),
+    fontSize: textScale(9),
     lineHeight: 22,
     fontFamily: fontFamily.regular,
   },

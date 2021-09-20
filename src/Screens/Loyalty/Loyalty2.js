@@ -26,6 +26,7 @@ import {
 import { shortCodes } from '../../utils/constants/DynamicAppKeys';
 import {
     getColorCodeWithOpactiyNumber,
+    getImageUrl,
     showError,
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
@@ -73,11 +74,14 @@ export default function Loyalty({ navigation }) {
         navigation.navigate(screenName, { data });
     };
 
+
+
     //Give Rating
 
     useEffect(() => {
         getUserLoyaltyInfo();
     }, []);
+
     const getUserLoyaltyInfo = () => {
         updateState({ isLoading: true });
         actions
@@ -127,6 +131,26 @@ export default function Loyalty({ navigation }) {
         )
     };
 
+    const existCard = (type) => {
+        switch (type) {
+            case 'Bronze':
+                return imagePath.icBronze1
+            case 'Gold':
+                return imagePath.icBronze1
+            case 'Bronze':
+                return imagePath.icBronze1
+            case 'Bronze':
+                return imagePath.icBronze1
+            default:
+                break;
+        }
+    }
+
+    const imageUrl = getImageUrl(
+        currentLoyalty?.image?.image_fit,
+        currentLoyalty?.image?.image_path,
+        '1000/1000',
+    )
     return (
         <WrapperContainer
             bgColor={
@@ -210,47 +234,40 @@ export default function Loyalty({ navigation }) {
                     marginHorizontal: moderateScale(16),
                 }}>
                     {!!currentLoyalty && (
-                        <View style={{}}>
-
+                        <View style={{ marginTop: moderateScaleVertical(34), marginBottom: moderateScaleVertical(16) }}>
                             <View
                                 style={{
-                                    width: '100%', height: 150,
+                                    width: '100%',
                                     position: 'relative',
                                     zIndex: 3,
-                                    bottom: 14,
+                                    bottom: 60,
                                     opacity: 1,
                                     transform: [{ scale: 0.70 }],
-
-                                }} >
+                                }}>
                                 <Image
-                                    source={imagePath.platinum}
-                                    style={{ height: moderateScale(200), width: '100%', marginBottom: moderateScaleVertical(18) }}
+                                    source={imagePath.icBronze1}
+                                    style={{ width: '100%' }}
                                     resizeMode="stretch"
                                 />
-
                             </View>
-
                             <View
                                 style={{
-                                    width: '100%', height: 150,
+                                    width: '100%',
                                     position: 'absolute',
                                     zIndex: 3,
                                     bottom: 40,
                                     opacity: 1,
                                     transform: [{ scale: 0.80 }],
-
                                 }} >
                                 <Image
-                                    source={imagePath.platinum}
-                                    style={{ height: moderateScale(200), width: '100%', marginBottom: moderateScaleVertical(18) }}
+                                    source={imagePath.icPlatinum1}
+                                    style={{ width: '100%' }}
                                     resizeMode="stretch"
                                 />
-
                             </View>
-
                             <View    // frontmost card
                                 style={{
-                                    width: '100%', height: 150,
+                                    width: '100%',
                                     position: 'absolute',
                                     zIndex: 3,
                                     bottom: 20,
@@ -259,56 +276,56 @@ export default function Loyalty({ navigation }) {
 
                                 }} >
                                 <Image
-                                    source={imagePath.silver}
-                                    style={{ height: moderateScale(200), width: '100%', marginBottom: moderateScaleVertical(18) }}
+                                    source={imagePath.icSilver1}
+                                    style={{ width: '100%' }}
                                     resizeMode="stretch"
                                 />
-
                             </View>
-                            <View    // frontmost card
+
+                            <View    //first card
                                 style={{
-                                    width: '100%', height: 150,
+                                    width: '100%',
                                     position: 'absolute',
                                     zIndex: 3,
                                     bottom: 0,
                                     opacity: 1,
                                     transform: [{ scale: 1.0 }],
-
-                                }} >
+                                }}>
                                 <Image
-                                    source={imagePath.gold}
-                                    style={{ height: moderateScale(200), width: '100%', marginBottom: moderateScaleVertical(18) }}
+                                    source={{ uri: imageUrl }}
+                                    style={{ width: '100%', height: moderateScale(160) }}
                                     resizeMode="stretch"
                                 />
-
                             </View>
-
-                            <Text
-                                style={{
-                                    ...styles.currentLoyaltyColor,
-                                    fontSize: textScale(12),
-                                }}>
-                                {'Card Earned'}
-                            </Text>
-                            <Text
-                                style={{
-                                    ...styles.commTextStyle,
-                                    fontSize: textScale(16),
-                                    marginTop: moderateScaleVertical(8)
-                                }}>
-                                {currentLoyalty?.name}
-                            </Text>
                         </View>
                     )}
 
-                    <View style={{ marginTop: moderateScaleVertical(76) }}>
+                    <Text
+                        style={{
+                            ...styles.currentLoyaltyColor,
+                            fontSize: textScale(12),
+                            textTransform: 'uppercase',
+                            marginTop: moderateScaleVertical(6)
+                        }}>
+                        {strings.CARD_EARNED}
+                    </Text>
+                    <Text
+                        style={{
+                            ...styles.commTextStyle,
+                            fontSize: textScale(16),
+                            marginTop: moderateScaleVertical(8)
+                        }}>
+                        {currentLoyalty?.name}
+                    </Text>
+
+                    <View style={{ marginTop: moderateScaleVertical(6) }}>
                         <Text style={{
                             ...styles.commTextStyle,
                             marginTop: moderateScaleVertical(8),
                             textTransform: 'uppercase',
                             color: isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51,
-                            marginBottom: moderateScaleVertical(16)
-                        }}>Additional points required for</Text>
+                            marginBottom: moderateScaleVertical(4)
+                        }}>{strings.ADDITIONAL_POINTS_REQUIRED_FOR}</Text>
                     </View>
 
 

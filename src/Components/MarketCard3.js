@@ -1,8 +1,8 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import DashedLine from 'react-native-dashed-line';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -12,13 +12,13 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {getImageUrl} from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
+import { getImageUrl } from '../utils/helperFunctions';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../styles/theme';
 
 export default function MarketCard3({
   data = {},
-  onPress = () => {},
+  onPress = () => { },
   extraStyles = {},
   fastImageStyle = {},
   imageResizeMode = 'cover',
@@ -27,17 +27,17 @@ export default function MarketCard3({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, extraStyles});
+  const styles = stylesFunc({ fontFamily, extraStyles });
   return (
     <TouchableOpacity
       activeOpacity={0.5}
       onPress={onPress}
       style={styles.mainTouchContainer}>
       <FastImage
-        style={[styles.mainImage, {...fastImageStyle}]}
+        style={[styles.mainImage, { ...fastImageStyle }]}
         resizeMode={imageResizeMode}
         source={{
           uri: getImageUrl(
@@ -53,36 +53,38 @@ export default function MarketCard3({
           numberOfLines={1}
           style={
             isDarkMode
-              ? [styles.categoryText, {color: MyDarkTheme.colors.text}]
+              ? [styles.categoryText, { color: MyDarkTheme.colors.text }]
               : styles.categoryText
           }>
           {data.name}
         </Text>
         {data?.product_avg_average_rating && (
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Image
-              style={{tintColor: colors.yellowC}}
-              source={imagePath.star}
-            />
-            <Text style={styles.ratingTxt}>
+          <View style={styles.ratingView}>
+
+            <Text style={{ ...styles.ratingTxt, color: colors.white, fontSize: textScale(9) }}>
               {Number(data?.product_avg_average_rating).toFixed(1)}
             </Text>
+            <Image
+              style={{ tintColor: colors.white, marginLeft: 2, width: 9, height: 9 }}
+              source={imagePath.star}
+              resizeMode="contain"
+            />
           </View>
         )}
       </View>
       <View style={styles.distanceView}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Image
-            style={{tintColor: themeColors.primary_color}}
+            style={{ tintColor: themeColors.primary_color }}
             source={imagePath.location2}
           />
           <Text
             style={{
               color: colors.greyLight,
-              fontSize: textScale(11),
-              fontFamily: fontFamily.medium,
+              fontSize: textScale(10),
+              fontFamily: fontFamily.regular,
               marginHorizontal: moderateScale(5),
-              textAlign:'left'
+              textAlign: 'left'
             }}>
             0.2 KM | 30 mins
           </Text>
@@ -92,25 +94,25 @@ export default function MarketCard3({
           style={{
             ...commonStyles.mediumFont14Normal,
             fontSize: textScale(12),
-            textAlign:'left',
+            textAlign: 'left',
             color: data?.show_slot
               ? colors.green
               : data?.slot && data?.slot.length
-              ? colors.green
-              : colors.redB,
+                ? colors.green
+                : colors.redB,
           }}>
           {data?.show_slot
             ? 'Open'
             : data?.slot && data?.slot.length
-            ? 'Open'
-            : 'Close'}
+              ? 'Open'
+              : 'Close'}
         </Text>
       </View>
     </TouchableOpacity>
   );
 }
 
-export function stylesFunc({fontFamily, extraStyles}) {
+export function stylesFunc({ fontFamily, extraStyles }) {
   const styles = StyleSheet.create({
     mainTouchContainer: {
       marginTop: moderateScale(15),
@@ -121,7 +123,7 @@ export function stylesFunc({fontFamily, extraStyles}) {
       color: colors.black,
       fontFamily: fontFamily.medium,
       width: '85%',
-      textAlign:'left'
+      textAlign: 'left'
     },
     mainImage: {
       height: moderateScaleVertical(140),
@@ -137,13 +139,20 @@ export function stylesFunc({fontFamily, extraStyles}) {
       color: colors.yellowC,
       fontSize: textScale(11),
       fontFamily: fontFamily.medium,
-      textAlign:'left'
+      textAlign: 'left'
+    },
+    ratingView: {
+      flexDirection: 'row', alignItems: 'center',
+      backgroundColor: colors.green,
+      borderRadius: moderateScale(4),
+      paddingVertical: moderateScale(2),
+      paddingHorizontal: moderateScale(4)
     },
     distanceView: {
       marginTop: moderateScale(5),
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginHorizontal: moderateScale(3),
+   
     },
   });
   return styles;
