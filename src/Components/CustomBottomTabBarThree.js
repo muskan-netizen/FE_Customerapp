@@ -58,8 +58,8 @@ export default function CustomBottomTabBarThree({
     settabThreeStyle((tabThreeStyle) => ({...tabThreeStyle, ...data}));
 
   const _panResponder = PanResponder.create({
-    // onMoveShouldSetResponderCapture: () => true,
-    // onMoveShouldSetPanResponderCapture: () => true,
+    onMoveShouldSetResponderCapture: () => true,
+    onMoveShouldSetPanResponderCapture: () => true,
     onStartShouldSetPanResponder: () => false,
     onMoveShouldSetPanResponder: () => true,
 
@@ -112,7 +112,7 @@ export default function CustomBottomTabBarThree({
     }
   };
 
-  _renderItem = ({item}) => {
+  const _renderItem = ({item}) => {
     return (
       <TouchableOpacity
         activeOpacity={0.5}
@@ -131,7 +131,14 @@ export default function CustomBottomTabBarThree({
             }}
           />
         </View>
-        <Text>{item.name}</Text>
+        <Text
+          style={{
+            fontFamily: fontFamily.medium,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            opacity: 0.6,
+          }}>
+          {item.name}
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -141,7 +148,14 @@ export default function CustomBottomTabBarThree({
       style={[
         // styles.resizableTabBar,
         minHeight > height * 0.095
-          ? styles.resizedTabBar
+          ? [
+              styles.resizedTabBar,
+              {
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.lightDark
+                  : colors.backgroundGreyC,
+              },
+            ]
           : styles.resizableTabBar,
         {
           height: minHeight,
@@ -155,7 +169,9 @@ export default function CustomBottomTabBarThree({
           height: height * 0.095,
           backgroundColor:
             minHeight > height * 0.095
-              ? colors.backgroundGreyC
+              ? isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.backgroundGreyC
               : isDarkMode
               ? MyDarkTheme.colors.lightDark
               : themeColors.primary_color,
@@ -214,7 +230,9 @@ export default function CustomBottomTabBarThree({
                   {minHeight > height * 0.095
                     ? options.tabBarIcon({
                         focused: isFocused,
-                        tintColor: colors.black,
+                        tintColor: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
                       })
                     : options.tabBarIcon({
                         tintColor: colors.whiteOpacity77,
@@ -226,14 +244,16 @@ export default function CustomBottomTabBarThree({
                         ? {
                             ...props.labelStyle,
                             // ...styles.labelStyle,
-                            color: colors.black,
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
                             opacity: 0.6,
                             fontSize: textScale(11),
                           }
                         : {
                             ...props.labelStyle,
                             // ...styles.labelStyle,
-                            color: isFocused ? colors.white : colors.white,
+                            color: colors.white,
                             opacity: isFocused ? 1 : 0.6,
                             fontSize: textScale(11),
                           }
