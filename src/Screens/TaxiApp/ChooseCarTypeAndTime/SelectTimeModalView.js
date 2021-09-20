@@ -47,6 +47,15 @@ export default function SelectTimeModalView({
     console.log(value, 'value');
     _onDateChange(value);
   };
+
+  const openCalenderPicker = (value) => {
+    // _openCalenderPicker(value);
+  };
+
+  const openTimePicker = (value) => {
+    // _openTimePicker(value);
+  };
+
   return (
     <View
       style={
@@ -114,6 +123,7 @@ export default function SelectTimeModalView({
             isLableIcon={true}
             labelIconPath={imagePath.calendarB}
             labelIconStyle={{tintColor: themeColors.primary_color}}
+            onPressLabel={openCalenderPicker}
           />
           <TextInputWithUnderlineAndLabel
             // onChangeText={_onChangeText('')}
@@ -132,6 +142,7 @@ export default function SelectTimeModalView({
             isLableIcon={true}
             labelIconPath={imagePath.icTime}
             labelIconStyle={{tintColor: themeColors.primary_color}}
+            onPressLabel={openTimePicker}
           />
           {/* <DatePicker
             date={date}

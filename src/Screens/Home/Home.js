@@ -354,9 +354,8 @@ export default function Home({route, navigation}) {
           if (item?.template_type_id == 1) {
             moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
           } else {
-            // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
+            //moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
             moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
-            // moveToNewScreen(navigationStrings.PAYMENT_OPTIONS, item)();
           }
         }
       } else {

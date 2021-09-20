@@ -5,6 +5,7 @@ import {
   ChooseCarTypeAndTimeTaxi,
   HomeScreenTaxi,
   PaymentOptions,
+  PinAddressOnMap,
 } from '../Screens';
 import VerifyAccountSecond from '../Screens/VerifyAccountSecond/VerifyAccount';
 import navigationStrings from './navigationStrings';
@@ -24,8 +25,15 @@ export default function (Stack) {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name={navigationStrings.PINADDRESSONMAP}
+        component={PinAddressOnMap}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
         name={navigationStrings.PAYMENT_OPTIONS}
         component={PaymentOptions}
+        options={{headerShown: false}}
       />
 
       <Stack.Screen

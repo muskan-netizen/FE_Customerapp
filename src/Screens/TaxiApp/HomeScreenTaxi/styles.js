@@ -42,6 +42,7 @@ export default ({fontFamily}) => {
       borderRadius: moderateScaleVertical(15),
       borderTopStartRadius: 24,
       borderTopRightRadius: 24,
+      backgroundColor: colors.white,
     },
   });
   return styles;

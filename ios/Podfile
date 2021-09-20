@@ -6,7 +6,6 @@ platform :ios, '11.0'
 #
 #
 
-
 #RoyoOrder Target
 target 'RoyoOrder' do
   permissions_path = '../node_modules/react-native-permissions/ios'
@@ -17,7 +16,6 @@ target 'RoyoOrder' do
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
   pod 'Stripe', '~> 21.7.0'
-  
 end
 
 #Runrun Target
@@ -352,7 +350,6 @@ target 'Klickmat' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-
 end
 
 

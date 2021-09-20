@@ -38,7 +38,7 @@ import {MyDarkTheme} from '../../../styles/theme';
 
 export default function Addaddress({navigation, route}) {
   const paramData = route?.params;
-  console.log(paramData, 'paramData');
+
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -113,9 +113,30 @@ export default function Addaddress({navigation, route}) {
   useFocusEffect(
     React.useCallback(() => {
       getAllAddress();
-      // console.log(height*.25,"sadasdasdasd")
     }, []),
   );
+  console.log(
+    // paramData,
+    paramData?.data[0],
+    'currentLocationData',
+  );
+
+  useEffect(() => {
+    updateState({
+      pickUpLocation: paramData?.data[0]?.address,
+      dropOffLocation: paramData?.data[1]?.address,
+      pickUpLocationLatLng: {
+        latitude: paramData?.data[0]?.latitude,
+        longitude: paramData?.data[0]?.longitude,
+      },
+      dropOffLocationLatLng: {
+        latitude: paramData?.data[1]?.latitude,
+        longitude: paramData?.data[1]?.longitude,
+      },
+      pickUpLocationAddressData: paramData?.data[0],
+      dropOffLocationAddressData: paramData?.data[1],
+    });
+  }, [paramData]);
 
   //get All address
   const getAllAddress = () => {
@@ -190,7 +211,6 @@ export default function Addaddress({navigation, route}) {
   };
 
   const errorMethod = (error) => {
-    alert('');
     updateState({isLoading: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
@@ -336,6 +356,10 @@ export default function Addaddress({navigation, route}) {
     );
   }, [paramData?.type]);
 
+  const _moveToNextScreen = () => {
+    navigation.navigate(navigationStrings.PINADDRESSONMAP);
+  };
+
   const renderDotContainer = () => {
     return (
       <>
@@ -458,7 +482,8 @@ export default function Addaddress({navigation, route}) {
           }}
         />
         <TouchableOpacity
-          onPress={() => addRemoveAddress(type)}
+          //  onPress={() => addRemoveAddress(type)}
+          onPress={() => _moveToNextScreen()}
           style={{
             height: moderateScale(48),
             alignItems: 'center',
@@ -474,7 +499,7 @@ export default function Addaddress({navigation, route}) {
                   }
                 : {height: 25, width: 25, tintColor: colors.blackB}
             }
-            source={getImageAndFunctionality(type)}
+            source={imagePath.locationPin}
           />
         </TouchableOpacity>
       </>
@@ -490,15 +515,16 @@ export default function Addaddress({navigation, route}) {
       let location = [];
       let addressData = [];
       location.push(pickUpLocationLatLng);
+
       addressData.push(pickUpLocationAddressData);
       if (dropOffLocationLatLng) {
         location.push(dropOffLocationLatLng);
         addressData.push(dropOffLocationAddressData);
       }
-      if (dropOffLocationTwoLatLng) {
-        location.push(dropOffLocationTwoLatLng);
-        addressData.push(dropOffLocationTwoAddressData);
-      }
+      // if (dropOffLocationTwoLatLng) {
+      //   location.push(dropOffLocationTwoLatLng);
+      //   addressData.push(dropOffLocationTwoAddressData);
+      // }
 
       navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
         location: location,
@@ -721,6 +747,7 @@ export default function Addaddress({navigation, route}) {
                 }}
               />
             </View>
+
             <View style={{height: 5}}></View>
             <View
               style={{
@@ -895,6 +922,11 @@ export default function Addaddress({navigation, route}) {
             {renderCross('dropOffLocation')}
             {showDropOfTwo ? renderCross('dropOffLocationTwo') : null}
             {/* {showDropOfThree ? renderCross('dropOffLocationThree') : null} */}
+          </View>
+          <View style={{position: 'absolute', end: 35, top: 27}}>
+            <TouchableOpacity onPress={() => _moveToNextScreen()}>
+              <Image source={imagePath.locationPin} />
+            </TouchableOpacity>
           </View>
         </View>
 
