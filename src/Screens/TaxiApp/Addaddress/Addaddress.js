@@ -38,7 +38,7 @@ import {MyDarkTheme} from '../../../styles/theme';
 
 export default function Addaddress({navigation, route}) {
   const paramData = route?.params;
-
+  console.log(paramData?.data?.id, 'taxi categ');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();

@@ -62,9 +62,11 @@ export default function SelectPaymentModalView({
 
   //Get list of all offers
   const _getAllOffers = (vendor, cartData) => {
-    moveToNewScreen(navigationStrings.OFFERS, {
+    moveToNewScreen(navigationStrings.OFFERS2, {
       vendor: vendor,
       cabOrder: true,
+      isTaxi: true,
+
       // cartId: cartData.id,
     })();
   };
@@ -225,7 +227,44 @@ export default function SelectPaymentModalView({
           ).toFixed(2)}`}</Text>
         </View>
       )}
-      <View
+      <TouchableOpacity
+        onPress={() => _getAllOffers(selectedCarOption, '')}
+        style={styles.offersViewB}>
+        {couponInfo ? (
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View
+              style={{flex: 0.7, flexDirection: 'row', alignItems: 'center'}}>
+              <Image
+                style={{tintColor: themeColors.primary_color}}
+                source={imagePath.percent}
+              />
+              <Text
+                numberOfLines={1}
+                style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
+                {`${strings.CODE} ${couponInfo?.name} ${strings.APPLYED}`}
+              </Text>
+            </View>
+            <View style={{flex: 0.3, alignItems: 'flex-end'}}>
+              <Text
+                onPress={removeCoupon}
+                style={[styles.removeCoupon, {color: colors.cartItemPrice}]}>
+                {strings.REMOVE}
+              </Text>
+            </View>
+          </View>
+        ) : (
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Image
+              style={{tintColor: themeColors.primary_color}}
+              source={imagePath.percent}
+            />
+            <Text style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
+              {strings.APPLY_PROMO_CODE}
+            </Text>
+          </View>
+        )}
+      </TouchableOpacity>
+      {/* <View
         style={{
           flexDirection: 'row',
           marginHorizontal: moderateScale(18),
@@ -245,7 +284,7 @@ export default function SelectPaymentModalView({
             style={{alignSelf: 'center', marginStart: moderateScale(18)}}
           />
         </View>
-      </View>
+      </View> */}
 
       {/* <ScrollView bounces={false}>
         <View
@@ -555,10 +594,11 @@ export default function SelectPaymentModalView({
           // marginBottom={moderateScaleVertical(5)}
           // btnText={`${slectedDate}  -  ${selectedTime}`}
           btnText={
-            strings.SCHEDULE_RIDE_FOR +
-            `${moment(slectedDate).format('DD MMM')} ${moment(
-              slectedDate,
-            ).format('LT')} `
+            strings.CONFRIMANDPAY
+            // strings.SCHEDULE_RIDE_FOR +
+            // `${moment(slectedDate).format('DD MMM')} ${moment(
+            //   slectedDate,
+            // ).format('LT')} `
           }
         />
       </View>
