@@ -86,37 +86,63 @@ export default function SelectPaymentModalView({
       <ScrollView>
         <View
           style={{
-            justifyContent: 'center',
-            alignItems: 'center',
+            width: moderateScale(35),
+            backgroundColor: colors.grayOpacity51,
+            height: moderateScale(2),
+            marginTop: moderateScale(10),
+            alignSelf: 'center',
+          }}
+        />
+        <View
+          style={{
+            // justifyContent: 'center',
+            // alignItems: 'center',
             borderColor: colors.grayOpacity51,
             borderBottomWidth: 0.5,
           }}>
           <View
             style={{
-              width: moderateScale(35),
-              backgroundColor: colors.grayOpacity51,
-              height: moderateScale(2),
-              marginTop: moderateScale(10),
-            }}
-          />
-          <Text
-            style={{
-              fontSize: textScale(26),
-              fontFamily: fontFamily.medium,
-              marginVertical: moderateScale(10),
+              flexDirection: 'row',
             }}>
-            {selectedCarOption
-              ? `${currencies?.primary_currency?.symbol}${(
-                  Number(selectedCarOption?.variant[0]?.multiplier) *
-                  Number(selectedCarOption?.variant[0]?.price)
-                ).toFixed(2)}`
-              : ''}
-          </Text>
+            <TouchableOpacity
+              style={{flex: 0.2, marginStart: moderateScale(18)}}
+              onPress={onPressBack}>
+              <Image
+                style={
+                  isDarkMode
+                    ? {tintColor: MyDarkTheme.colors.text}
+                    : {tintColor: null}
+                }
+                source={imagePath.backArrow1}
+              />
+            </TouchableOpacity>
+            <View
+              style={{
+                flex: 0.6,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text
+                style={{
+                  fontSize: textScale(26),
+                  fontFamily: fontFamily.medium,
+                  marginVertical: moderateScale(10),
+                }}>
+                {selectedCarOption
+                  ? `${currencies?.primary_currency?.symbol}${(
+                      Number(selectedCarOption?.variant[0]?.multiplier) *
+                      Number(selectedCarOption?.variant[0]?.price)
+                    ).toFixed(2)}`
+                  : ''}
+              </Text>
+            </View>
+          </View>
           <Text
             style={{
               fontFamily: fontFamily.reguler,
               opacity: 0.5,
               marginBottom: moderateScale(20),
+              alignSelf: 'center',
             }}>
             {strings.ESTIMATION_ONLY}
           </Text>
