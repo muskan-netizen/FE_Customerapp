@@ -746,21 +746,17 @@ export default function SelectPaymentModalView({
           style={{
             marginTop: moderateScale(26),
             marginHorizontal: moderateScale(20),
-            marginBottom: moderateScale(20),
           }}>
           <GradientButton
             colorsArray={[themeColors.primary_color, themeColors.primary_color]}
-            textStyle={{textTransform: 'none', fontSize: textScale(14)}}
+            textStyle={{textTransform: 'none', fontSize: textScale(12)}}
             onPress={_confirmAndPay}
             // marginTop={moderateScaleVertical(10)}
             // marginBottom={moderateScaleVertical(5)}
             // btnText={`${slectedDate}  -  ${selectedTime}`}
             btnText={
-              strings.CONFRIMANDPAY
-              // strings.SCHEDULE_RIDE_FOR +
-              // `${moment(slectedDate).format('DD MMM')} ${moment(
-              //   slectedDate,
-              // ).format('LT')} `
+              strings.SCHEDULE_RIDE_FOR +
+              `${moment(slectedDate).format('DD MMM')} ${selectedTime} `
             }
           />
         </View>

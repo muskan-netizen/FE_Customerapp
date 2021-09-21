@@ -48,6 +48,9 @@ export default function MarketCard3({
           priority: FastImage.priority.high,
         }}
       />
+      <View style={{
+          padding: 8,
+      }}>
       <View style={styles.descView}>
         <Text
           numberOfLines={1}
@@ -58,6 +61,7 @@ export default function MarketCard3({
           }>
           {data.name}
         </Text>
+   
         {data?.product_avg_average_rating && (
           <View style={styles.ratingView}>
 
@@ -72,6 +76,15 @@ export default function MarketCard3({
           </View>
         )}
       </View>
+      <Text numberOfLines={1} style={{
+         color: colors.greyLight,
+         fontSize: textScale(10),
+         fontFamily: fontFamily.regular,
+         textAlign: 'left',
+         marginVertical:moderateScaleVertical(4),
+         marginTop:moderateScaleVertical(6)
+      }}>{data?.categoriesList}</Text>
+      <View style={{height: 1, borderWidth: 0.5, borderColor: 'rgba(1,1,1,0.05)',marginTop:moderateScaleVertical(2)}} />
       <View style={styles.distanceView}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Image
@@ -86,7 +99,7 @@ export default function MarketCard3({
               marginHorizontal: moderateScale(5),
               textAlign: 'left'
             }}>
-            0.2 KM | 30 mins
+            {data?.lineOfSightDistance} miles | {data?.timeofLineOfSightDistance} mins
           </Text>
         </View>
 
@@ -108,6 +121,7 @@ export default function MarketCard3({
               : 'Close'}
         </Text>
       </View>
+      </View>
     </TouchableOpacity>
   );
 }
@@ -116,19 +130,27 @@ export function stylesFunc({ fontFamily, extraStyles }) {
   const styles = StyleSheet.create({
     mainTouchContainer: {
       marginTop: moderateScale(15),
+      backgroundColor: colors.white,
+      borderRadius: 10,
+      shadowColor: '#000',
+      shadowOffset: {width: 0, height: 1},
+      shadowOpacity: 0.1,
+      shadowRadius: 2,
+      elevation: 2,
       ...extraStyles,
     },
     categoryText: {
-      fontSize: textScale(13),
+      fontSize: textScale(14),
       color: colors.black,
       fontFamily: fontFamily.medium,
       width: '85%',
       textAlign: 'left'
     },
     mainImage: {
-      height: moderateScaleVertical(140),
+      height: moderateScaleVertical(190),
       width: '100%',
-      borderRadius: moderateScale(10),
+      borderTopRightRadius: moderateScale(10),
+      borderTopLeftRadius: moderateScale(10),
     },
     descView: {
       marginTop: moderateScale(8),
@@ -152,7 +174,7 @@ export function stylesFunc({ fontFamily, extraStyles }) {
       marginTop: moderateScale(5),
       flexDirection: 'row',
       justifyContent: 'space-between',
-   
+
     },
   });
   return styles;

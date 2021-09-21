@@ -40,6 +40,7 @@ import Header2 from '../../Components/Header2';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
+import AsyncStorage from '@react-native-community/async-storage';
 export default function OuterScreen2({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -73,7 +74,8 @@ export default function OuterScreen2({navigation}) {
     };
 
   //Saving login user to backend
-  const _saveSocailLogin = (socialLoginData, type) => {
+  const _saveSocailLogin = async(socialLoginData, type) => {
+    let fcmToken = await AsyncStorage.getItem('fcmToken')
     let data = {};
     data['name'] = socialLoginData?.name || socialLoginData?.userName;
     data['auth_id'] = socialLoginData?.id || socialLoginData?.userID;
@@ -81,6 +83,7 @@ export default function OuterScreen2({navigation}) {
     data['email'] = socialLoginData?.email;
     data['device_type'] = Platform.OS;
     data['device_token'] = DeviceInfo.getUniqueId();
+    data['fcm_token'] = !!fcmToken ? fcmToken : DeviceInfo.getUniqueId()
 
     let query = '';
     if (type == 'facebook' || type == 'twitter' || type == 'google') {

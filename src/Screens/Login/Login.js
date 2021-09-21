@@ -36,6 +36,7 @@ import stylesFunc from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Login({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -90,7 +91,8 @@ export default function Login({navigation}) {
   };
 
   //Login api fucntion
-  const _onLogin = () => {
+  const _onLogin = async() => {
+    let fcmToken = await AsyncStorage.getItem('fcmToken')
     const checkValid = isValidData();
     if (!checkValid) {
       return;
@@ -100,6 +102,7 @@ export default function Login({navigation}) {
       password: password,
       device_type: Platform.OS,
       device_token: DeviceInfo.getUniqueId(),
+      fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId()
     };
     updateState({isLoading: true});
     actions
@@ -150,7 +153,8 @@ export default function Login({navigation}) {
   };
 
   //Saving login user to backend
-  const _saveSocailLogin = (socialLoginData, type) => {
+  const _saveSocailLogin = async(socialLoginData, type) => {
+    let fcmToken = await AsyncStorage.getItem('fcmToken')
     let data = {};
     data['name'] =
       socialLoginData?.name ||
@@ -164,6 +168,7 @@ export default function Login({navigation}) {
     data['email'] = socialLoginData?.email;
     data['device_type'] = Platform.OS;
     data['device_token'] = DeviceInfo.getUniqueId();
+    data['fcm_token'] = !!fcmToken ? fcmToken : DeviceInfo.getUniqueId()
 
     let query = '';
     if (
