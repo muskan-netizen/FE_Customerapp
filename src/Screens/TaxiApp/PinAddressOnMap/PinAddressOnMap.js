@@ -213,7 +213,7 @@ export default function PinAddressOnMap(props) {
                           lng: currentLongitude,
                         },
                         draggable: true,
-                        markerColor: 'green',
+                        markerImage: imagePath.locationpinGreen,
                         formattedAddress: formattedAddress1,
                       },
                       {
@@ -224,7 +224,7 @@ export default function PinAddressOnMap(props) {
                           lng: currentLongitude,
                         },
                         draggable: true,
-                        markerColor: 'red',
+                        markerImage: imagePath.locationpin3,
                         formattedAddress: formattedAddress2,
                       },
                     ],
@@ -268,7 +268,8 @@ export default function PinAddressOnMap(props) {
                 lng: currentLongitude,
               },
               draggable: true,
-              markerColor: 'green',
+
+              markerImage: imagePath.locationpinGreen,
               formattedAddress: formattedAddress1,
             },
             {
@@ -279,7 +280,7 @@ export default function PinAddressOnMap(props) {
                 lng: currentLongitude,
               },
               draggable: true,
-              markerColor: 'red',
+              markerImage: imagePath.locationpin3,
               formattedAddress: formattedAddress2,
             },
           ],
@@ -317,7 +318,7 @@ export default function PinAddressOnMap(props) {
                   lng: currentLongitude,
                 },
                 draggable: true,
-                markerColor: 'green',
+                markerImage: imagePath.locationpinGreen,
                 formattedAddress: formattedAddress1,
               },
               {
@@ -328,7 +329,7 @@ export default function PinAddressOnMap(props) {
                   lng: currentLongitude,
                 },
                 draggable: true,
-                markerColor: 'red',
+                markerImage: imagePath.locationpin3,
                 formattedAddress: formattedAddress2,
               },
             ],
@@ -366,7 +367,7 @@ export default function PinAddressOnMap(props) {
                   lng: currentLongitude,
                 },
                 draggable: true,
-                markerColor: 'green',
+                markerImage: imagePath.locationpinGreen,
                 formattedAddress: formattedAddress1,
               },
               {
@@ -377,7 +378,7 @@ export default function PinAddressOnMap(props) {
                   lng: currentLongitude,
                 },
                 draggable: true,
-                markerColor: 'red',
+                markerImage: imagePath.locationpin3,
                 formattedAddress: formattedAddress2,
               },
             ],
@@ -394,6 +395,7 @@ export default function PinAddressOnMap(props) {
       );
     }
   };
+
   const _modeToNextScreen = () => {
     Geocoder.from({
       latitude: userCurrentLatitude,
@@ -477,7 +479,7 @@ export default function PinAddressOnMap(props) {
             }
             title={marker?.title}
             description={marker?.formattedAddress}
-            pinColor={marker?.markerColor}></MapView.Marker>
+            image={marker?.markerImage}></MapView.Marker>
         ))}
       </MapView>
 
