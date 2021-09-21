@@ -4,9 +4,11 @@ import {
   Addaddress,
   ChooseCarTypeAndTimeTaxi,
   HomeScreenTaxi,
+  Offers,
   PaymentOptions,
   PinAddressOnMap,
 } from '../Screens';
+
 import VerifyAccountSecond from '../Screens/VerifyAccountSecond/VerifyAccount';
 import navigationStrings from './navigationStrings';
 ChooseCarTypeAndTimeTaxi;
@@ -39,6 +41,11 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.CHOOSECARTYPEANDTIMETAXI}
         component={ChooseCarTypeAndTimeTaxi}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.OFFERS2}
+        component={Offers}
         options={{headerShown: false}}
       />
     </>

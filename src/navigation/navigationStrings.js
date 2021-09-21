@@ -83,4 +83,5 @@ export default {
   PINADDRESSONMAP: 'pinAddressOnMap',
   PAYMENT_OPTIONS: 'paymentoptions',
   CHOOSECARTYPEANDTIMETAXI: 'ChooseCarTypeAndTimeTaxi',
+  OFFERS2: 'OFFERS2',
 };
