@@ -36,7 +36,6 @@ export default ({fontFamily}) => {
     container: {
       flex: 1,
       justifyContent: 'flex-end',
-      //   alignItems: 'center',
     },
     userName: {
       color: colors.textGreyI,
@@ -198,8 +197,8 @@ export default ({fontFamily}) => {
     },
     bottomView: {
       backgroundColor: colors.white,
-      borderRadius: moderateScale(25),
-
+      borderTopLeftRadius: moderateScale(18),
+      borderTopRightRadius: moderateScale(18),
       overflow: 'hidden',
       height: height / 3.5,
       // maxHeight: height / 2,

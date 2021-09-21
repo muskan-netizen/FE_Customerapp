@@ -107,8 +107,7 @@ export default function ({
             style={{
               width: width - 40,
               justifyContent: 'space-between',
-
-              height: '100%',
+              height: '80%',
               paddingVertical: moderateScaleVertical(30),
             }}>
             <View
@@ -137,14 +136,11 @@ export default function ({
                         ? [styles.lable1, {color: MyDarkTheme.colors.text}]
                         : styles.lable1
                     }>
-                    {!!agent_location
-                      ? orderDetail?.name || ''
-                      : 'Pavan Sharma'}
+                    {!!agent_location ? orderDetail?.name || '' : ''}
                   </Text>
                   <View
                     style={{
                       flexDirection: 'row',
-
                       alignItems: 'center',
                       marginVertical: moderateScaleVertical(10),
                       marginHorizontal: moderateScale(20),
@@ -164,7 +160,6 @@ export default function ({
                   <View
                     style={{
                       flexDirection: 'row',
-
                       alignItems: 'center',
                       marginHorizontal: moderateScale(20),
                     }}>
@@ -204,8 +199,6 @@ export default function ({
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   marginVertical: moderateScaleVertical(10),
-
-                  // backgroundColor:'red'
                 }}>
                 <GradientButton
                   colorsArray={[
@@ -214,8 +207,8 @@ export default function ({
                   ]}
                   textStyle={{textTransform: 'none', fontSize: textScale(16)}}
                   onPress={() => onPressChat(orderDetail)}
-                  marginTop={moderateScaleVertical(10)}
-                  marginBottom={moderateScaleVertical(10)}
+                  marginTop={moderateScaleVertical(20)}
+                  //marginBottom={moderateScaleVertical(10)}
                   btnText={strings.MESSAGE}
                   containerStyle={{width: width / 2}}
                 />
@@ -227,8 +220,8 @@ export default function ({
                     width: width / 3,
                   }}
                   onPress={() => onPressCall(orderDetail)}
-                  marginBottom={moderateScaleVertical(10)}
-                  marginTop={moderateScaleVertical(10)}
+                  //marginBottom={moderateScaleVertical(10)}
+                  marginTop={moderateScaleVertical(20)}
                   textStyle={{
                     color: themeColors.primary_color,
                     textTransform: 'none',
