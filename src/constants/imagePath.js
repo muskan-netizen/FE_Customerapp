@@ -342,4 +342,6 @@ export default {
   icgo3: require('../assets/images/TAXIAPPIMAGES/ic_go.png'),
   icEmptyCart: require('../assets/images/RoyoorderNewImages/ic_emptycart2.png'),
   icEmptyCartA: require('../assets/images/RoyoorderNewImages/ic_emptycart3.png'),
+  icEmptyCartB: require('../assets/images/RoyoorderNewImages/ic_emptygrey.png'),
+  icEmptyCartC: require('../assets/images/RoyoorderNewImages/Group8.png'),
 };

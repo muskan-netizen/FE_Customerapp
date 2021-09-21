@@ -45,13 +45,10 @@ export default function SelectTimeModalView({
   pickedUpTime,
   selectedDate,
   pickedUpDate,
-  _openTimePicker = () => {},
-  _openCalendarPicker = () => {},
-  _onCalendarPickerCancel = () => {},
-  _openTimePickerCancel = () => {},
+  _pickerOpen = () => {},
+  _modalOkPress = () => {},
+  _pickerCancel = () => {},
   _onDayPress = () => {},
-  _calendarPickerOkPress = () => {},
-  _datePickerOkPress = () => {},
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -89,19 +86,12 @@ export default function SelectTimeModalView({
     _onDateChange(value);
   };
 
-  const openCalenderPicker = (value) => {
-    _openCalendarPicker(value);
-  };
-  const onCalendarCancel = (value) => {
-    _onCalendarPickerCancel(value);
+  const pickerOpen = (value) => {
+    _pickerOpen(value);
   };
 
-  const openTimePickerCancel = (value) => {
-    _openTimePickerCancel(value);
-  };
-
-  const openTimePicker = (value) => {
-    _openTimePicker(value);
+  const pickerCancel = (value) => {
+    _pickerCancel(value);
   };
 
   const _renderArrow = (direction) => {
@@ -131,11 +121,8 @@ export default function SelectTimeModalView({
     _onDayPress(value);
   };
 
-  const calendarPickerOkPress = (value) => {
-    _calendarPickerOkPress(value);
-  };
-  const datePickerOkPress = (value) => {
-    _datePickerOkPress(value);
+  const modalOkPress = (value1, value2) => {
+    _modalOkPress(value1, value2);
   };
 
   const _calendarModalMainView = () => (
@@ -186,7 +173,7 @@ export default function SelectTimeModalView({
           justifyContent: 'flex-end',
           alignItems: 'center',
         }}>
-        <TouchableOpacity onPress={onCalendarCancel}>
+        <TouchableOpacity onPress={() => pickerCancel('isDatePickerModal')}>
           <Text
             style={{
               marginHorizontal: moderateScale(20),
@@ -196,7 +183,7 @@ export default function SelectTimeModalView({
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={calendarPickerOkPress}
+          onPress={() => modalOkPress('isDatePickerModal', 'pickedUpDate')}
           style={{
             paddingHorizontal: moderateScale(23),
             paddingVertical: moderateScaleVertical(10),
@@ -265,7 +252,7 @@ export default function SelectTimeModalView({
             justifyContent: 'flex-end',
             alignItems: 'center',
           }}>
-          <TouchableOpacity onPress={openTimePickerCancel}>
+          <TouchableOpacity onPress={() => pickerCancel('isTimerPickerModal')}>
             <Text
               style={{
                 marginHorizontal: moderateScale(20),
@@ -276,7 +263,7 @@ export default function SelectTimeModalView({
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={datePickerOkPress}
+            onPress={() => modalOkPress('isTimerPickerModal', 'pickedUpTime')}
             style={{
               paddingHorizontal: moderateScale(23),
               paddingVertical: moderateScaleVertical(10),
@@ -365,7 +352,7 @@ export default function SelectTimeModalView({
             isLableIcon={true}
             labelIconPath={imagePath.calendarB}
             labelIconStyle={{tintColor: themeColors.primary_color}}
-            onPressLabel={openCalenderPicker}
+            onPressLabel={() => pickerOpen('isDatePickerModal')}
           />
           <TextInputWithUnderlineAndLabel
             value={pickedUpTime}
@@ -389,7 +376,7 @@ export default function SelectTimeModalView({
             isLableIcon={true}
             labelIconPath={imagePath.icTime}
             labelIconStyle={{tintColor: themeColors.primary_color}}
-            onPressLabel={openTimePicker}
+            onPressLabel={() => pickerOpen('isTimerPickerModal')}
           />
         </View>
         <View
