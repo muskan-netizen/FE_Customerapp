@@ -87,7 +87,9 @@ export default function SelectPaymentModalView({
         <View
           style={{
             width: moderateScale(35),
-            backgroundColor: colors.grayOpacity51,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.text
+              : colors.grayOpacity51,
             height: moderateScale(2),
             marginTop: moderateScale(10),
             alignSelf: 'center',
@@ -97,7 +99,9 @@ export default function SelectPaymentModalView({
           style={{
             // justifyContent: 'center',
             // alignItems: 'center',
-            borderColor: colors.grayOpacity51,
+            borderColor: isDarkMode
+              ? MyDarkTheme.colors.text
+              : colors.grayOpacity51,
             borderBottomWidth: 0.5,
           }}>
           <View
@@ -113,7 +117,7 @@ export default function SelectPaymentModalView({
                     ? {tintColor: MyDarkTheme.colors.text}
                     : {tintColor: null}
                 }
-                source={imagePath.backArrow1}
+                source={imagePath.backArrowCourier}
               />
             </TouchableOpacity>
             <View
@@ -127,6 +131,7 @@ export default function SelectPaymentModalView({
                   fontSize: textScale(26),
                   fontFamily: fontFamily.medium,
                   marginVertical: moderateScale(10),
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 }}>
                 {selectedCarOption
                   ? `${currencies?.primary_currency?.symbol}${(
@@ -137,15 +142,16 @@ export default function SelectPaymentModalView({
               </Text>
             </View>
           </View>
-          <Text
+          {/* <Text
             style={{
               fontFamily: fontFamily.reguler,
               opacity: 0.5,
               marginBottom: moderateScale(20),
               alignSelf: 'center',
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
             {strings.ESTIMATION_ONLY}
-          </Text>
+          </Text> */}
         </View>
         <View
           style={{
@@ -169,15 +175,10 @@ export default function SelectPaymentModalView({
               {strings.DISTANCE}
             </Text>
             <Text
-              style={
-                (isDarkMode
-                  ? [
-                      styles.distanceDurationDeliveryLable,
-                      {color: MyDarkTheme.colors.text, fontSize: textScale(12)},
-                    ]
-                  : styles.distanceDurationDeliveryValue,
-                {fontSize: textScale(12)})
-              }>
+              style={[
+                styles.distanceDurationDeliveryLable,
+                {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+              ]}>
               {`${totalDistance} kms`}
             </Text>
           </View>
@@ -194,15 +195,10 @@ export default function SelectPaymentModalView({
               {strings.DURATION}
             </Text>
             <Text
-              style={
-                (isDarkMode
-                  ? [
-                      styles.distanceDurationDeliveryLable,
-                      {color: MyDarkTheme.colors.text, fontSize: textScale(12)},
-                    ]
-                  : styles.distanceDurationDeliveryValue,
-                {fontSize: textScale(12)})
-              }>
+              style={[
+                styles.distanceDurationDeliveryLable,
+                {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+              ]}>
               {totalDuration < 60
                 ? `${totalDuration} mins`
                 : `${(totalDuration / 60).toFixed(2)} hrs`}
