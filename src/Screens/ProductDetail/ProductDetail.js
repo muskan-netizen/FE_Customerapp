@@ -26,19 +26,22 @@ import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import commonStylesFunc from '../../styles/commonStyles';
+import commonStylesFunc, { hitSlopProp } from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { showError, showSuccess } from '../../utils/helperFunctions';
+import { getColorCodeWithOpactiyNumber, showError, showSuccess } from '../../utils/helperFunctions';
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
 import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../../styles/theme';
+import HorizontalLine from '../../Components/HorizontalLine';
+import StarRating from 'react-native-star-rating';
+import Banner2 from '../../Components/Banner2';
 
 export default function ProductDetail({ route, navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -383,25 +386,31 @@ export default function ProductDetail({ route, navigation }) {
       <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         {options.map((i, inx) => {
           return (
-            <TouchableOpacity
-              disabled={options && options.length == 1 ? true : false}
-              onPress={() => selectSpecificOptions(options, i, inx)}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginRight: moderateScale(5),
-                marginBottom: moderateScaleVertical(10),
-              }}>
-              <Image source={i?.value ? imagePath.check : imagePath.unCheck} />
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.variantValue, { color: MyDarkTheme.colors.text }]
-                    : styles.variantValue
-                }>
-                {i.title}
-              </Text>
-            </TouchableOpacity>
+            <View>
+              <TouchableOpacity
+                disabled={options && options.length == 1 ? true : false}
+                onPress={() => selectSpecificOptions(options, i, inx)}
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginRight: moderateScale(5),
+                  marginBottom: moderateScaleVertical(10),
+                  backgroundColor: i?.value ? themeColors?.primary_color : '#D8D8D8',
+                  width: 24,
+                  height: 24,
+                  borderRadius: 2
+                }}>
+                {/* <Image source={i?.value ? imagePath.check : imagePath.unCheck} /> */}
+                <Text
+                  style={{
+                    ...styles.variantValue,
+                    color: i?.value ? colors.white : isDarkMode ? MyDarkTheme.colors.text : colors.textGrey
+                  }}>
+                  {i.title}
+                </Text>
+              </TouchableOpacity>
+
+            </View>
           );
         })}
       </View>
@@ -464,42 +473,28 @@ export default function ProductDetail({ route, navigation }) {
   const showAllVariants = () => {
     let variantSetData = cloneDeep(variantSet);
     return (
-      <>
-        {/* <View
-          style={{
-            marginHorizontal: moderateScale(20),
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <Text
-            style={[
-              styles.addonLable,
-              {marginBottom: moderateScale(5), marginVertical: 10},
-            ]}>
-            {'Product Variant'}
-          </Text>
-        </View> */}
-        <View style={{ marginHorizontal: moderateScale(20), marginVertical: 10 }}>
-          {variantSetData.map((i, inx) => {
-            return (
-              <View
-                key={inx}
+      <View style={{}}>
+        {variantSetData.map((i, inx) => {
+          return (
+            <View
+              key={inx}
+              style={{
+                vertical: moderateScaleVertical(5),
+              }}>
+              <Text
                 style={{
-                  rtical: moderateScaleVertical(5),
-                }}>
-                <Text
-                  style={[
-                    styles.variantLable,
-                    { marginBottom: moderateScale(5) },
-                    isDarkMode ? { color: MyDarkTheme.colors.text } : null,
-                  ]}>{`${i?.title}`}</Text>
-                {i?.options ? variantSetValue(i) : null}
-              </View>
-            );
-          })}
-        </View>
-      </>
+                  ...styles.descriptiontitle,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+                  marginBottom: moderateScaleVertical(8)
+                }}
+              >{`${i?.title}`}</Text>
+              {i?.options ? variantSetValue(i) : null}
+              <HorizontalLine lineStyle={{ marginVertical: moderateScaleVertical(8) }} />
+            </View>
+          );
+        })}
+
+      </View>
     );
   };
 
@@ -628,6 +623,7 @@ export default function ProductDetail({ route, navigation }) {
           appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
         }
         centerTitle={productDetailData?.translation[0]?.title}
+        textStyle={{ fontSize: textScale(14) }}
         rightIcon={
           !!data?.showAddToCart
             ? false
@@ -644,46 +640,44 @@ export default function ProductDetail({ route, navigation }) {
             : colors.white,
         }}
       />
-      <View style={{ ...commonStyles.headerTopLine }} />
+      <View style={{ marginHorizontal: moderateScale(16) }}>
 
-      <KeyboardAwareScrollView ref={myRef} showsVerticalScrollIndicator={false}>
-        {state.isLoading && <ListEmptyProduct isLoading={state.isLoading} />}
+        <KeyboardAwareScrollView ref={myRef} showsVerticalScrollIndicator={false}>
+          {state.isLoading && <ListEmptyProduct isLoading={state.isLoading} />}
 
-        {!state.isLoading && (
-          <>
-            {/* //Top section slider */}
+          {!state.isLoading && (
+            <>
+              {/* //Top section slider */}
 
-            <View
-              style={{
-                flexDirection: 'row',
-                marginHorizontal: 20,
-                marginTop: moderateScaleVertical(20),
-                justifyContent: 'space-between',
-              }}>
-              {/* <View style={{ flex: 0.2 }}><Image source={imagePath.fav} /></View> */}
-              <View style={{ flex: 1, alignItems: 'center' }}>
-                <Banner
-                  bannerRef={bannerRef}
-                  bannerData={productDetailData?.product_media}
-                  sliderWidth={width}
-                  itemWidth={width}
-                  pagination={false}
-                  setActiveState={(index) =>
-                    updateState({ slider1ActiveSlide: index })
-                  }
-                  showLightbox={true}
-                  cardViewStyle={styles.cardViewStyle}
-                  childView={
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        padding: 10,
-                      }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginTop: moderateScaleVertical(20),
+                  justifyContent: 'space-between',
+                }}>
+                {/* <View style={{ flex: 0.2 }}><Image source={imagePath.fav} /></View> */}
+                <View style={{ flex: 1, alignItems: 'center' }}>
+                  <Banner2
+                    // resizeMode="contain"
+                    bannerRef={bannerRef}
+                    bannerData={productDetailData?.product_media}
+                    sliderWidth={width}
+                    itemWidth={width / 1.1}
+                    pagination={false}
+                    setActiveState={(index) =>
+                      updateState({ slider1ActiveSlide: index })
+                    }
+                    imagestyle={{
+                      borderRadius: 8
+                    }}
+                    showLightbox={true}
+                    cardViewStyle={styles.cardViewStyle}
+                    childView={
                       <TouchableOpacity
-                        onPress={() => _onAddtoWishlist(productDetailData)}>
+                        onPress={() => _onAddtoWishlist(productDetailData)}
+                      >
                         {productDetailData?.is_wishlist ? (
-                          <View>
+                          <View style={{ alignSelf: 'flex-end', padding: 8 }}>
                             {!!productDetailData?.inwishlist ? (
                               <Image
                                 style={
@@ -691,7 +685,7 @@ export default function ProductDetail({ route, navigation }) {
                                     ? { tintColor: MyDarkTheme.colors.text }
                                     : null
                                 }
-                                source={imagePath.blackFilledHeart}
+                                source={imagePath.icMark1}
                               />
                             ) : (
                               <Image
@@ -700,110 +694,110 @@ export default function ProductDetail({ route, navigation }) {
                                     ? { tintColor: MyDarkTheme.colors.text }
                                     : null
                                 }
-                                source={imagePath.fav}
+                                source={imagePath.icMark2}
                               />
                             )}
                           </View>
                         ) : null}
                       </TouchableOpacity>
-                      {productDetailData?.averageRating !== null && (
-                        <View style={{ alignItems: 'flex-end' }}>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              borderRadius: 18,
-                              paddingHorizontal: 12,
-                              backgroundColor: colors.orange,
-                              padding: 10,
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                            }}>
-                            <Image source={imagePath.starWhite} />
-                            <Text style={styles.ratingColor}>
-                              {productDetailData?.averageRating !== null
-                                ? Number(
-                                  productDetailData?.averageRating,
-                                ).toFixed(1)
-                                : ''}
-                            </Text>
-                          </View>
-                        </View>
-                      )}
-                    </View>
-                  }
-                />
-                <View style={{ paddingTop: 5 }}>
-                  <Pagination
-                    dotsLength={productDetailData?.product_media?.length}
-                    activeDotIndex={state.slider1ActiveSlide}
-                    dotColor={'grey'}
-                    dotStyle={[styles.dotStyle]}
-                    inactiveDotColor={'black'}
-                    inactiveDotOpacity={0.4}
-                    inactiveDotScale={0.8}
+                    }
                   />
+
+                  <View style={{ paddingTop: 5 }}>
+                    <Pagination
+                      dotsLength={productDetailData?.product_media?.length}
+                      activeDotIndex={state.slider1ActiveSlide}
+                      dotColor={'grey'}
+                      dotStyle={[styles.dotStyle]}
+                      inactiveDotColor={'black'}
+                      inactiveDotOpacity={0.4}
+                      inactiveDotScale={0.8}
+                    />
+                  </View>
                 </View>
               </View>
-            </View>
 
-            {/* Product Name and Branc detail */}
+              {/* Product Name and Branc detail */}
 
-            <View
-              style={{
-                marginHorizontal: moderateScale(20),
-                marginVertical: moderateScaleVertical(10),
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}>
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: 'flex-start',
-                    justifyContent: 'center',
-                  }}>
-                  <Text
-                    numberOfLines={2}
-                    style={
-                      isDarkMode
-                        ? [styles.productName, { color: MyDarkTheme.colors.text }]
-                        : styles.productName
-                    }>
-                    {productDetailData?.translation[0]?.title}
-                  </Text>
-                </View>
+              <View style={{ marginTop: moderateScaleVertical(10) }}>
 
-                {/* Product Price View */}
-                {/* <View
-                  style={{
-                    // marginHorizontal: 20,
-                    flex: 0.35,
-                    alignItems: 'flex-end',
-                    justifyContent: 'center',
-                  }}>
-                  <Text style={styles.productPrice}>{`${
-                    currencies?.primary_currency.symbol
-                  }${(
-                    Number(productPriceData?.multiplier) *
-                    Number(productPriceData?.price)
-                  ).toFixed(2)}`}</Text>
-                </View> */}
-              </View>
-
-              <View>
                 <View
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    // alignItems: 'center',
+                    alignItems: 'center',
                   }}>
-                  {/* Product Price View */}
                   <View
                     style={{
-                      // marginHorizontal: 20,
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between'
+                    }}>
+                    <Text
+                      numberOfLines={2}
+                      style={
+                        isDarkMode
+                          ? [styles.productName, { color: MyDarkTheme.colors.text }]
+                          : styles.productName
+                      }>
+                      {productDetailData?.translation[0]?.title}
+                    </Text>
+                    <Text style={styles.productPrice}>{`${currencies?.primary_currency.symbol
+                      }${(
+                        Number(productPriceData?.multiplier) *
+                        Number(productPriceData?.price)
+                      ).toFixed(2)}`}</Text>
+                  </View>
+                </View>
+
+                <View style={styles.flexView}>
+                  <Text style={{
+                    ...commonStyles.mediumFont12,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity43,
+                  }}>In Nike</Text>
+
+                  {productDetailData?.averageRating !== null && (
+                    <View
+                      style={{
+                        borderWidth: 0.5,
+                        alignSelf: 'flex-start',
+                        padding: 2,
+                        borderRadius: 2,
+                        marginVertical: moderateScaleVertical(4),
+                        borderColor: colors.yellowB,
+                        backgroundColor: colors.yellowOpacity10,
+                      }}>
+
+                      <StarRating
+                        disabled={false}
+                        maxStars={5}
+                        rating={Number(productDetailData?.averageRating).toFixed(1)}
+                        fullStarColor={colors.yellowB}
+                        starSize={8}
+                        containerStyle={{ width: width / 9 }}
+                      />
+                    </View>
+                  )}
+
+                </View>
+
+
+
+
+
+
+
+                {/* <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+           
+                  }}>
+             
+                  <View
+                    style={{
+            
                       flex: 0.35,
                       alignItems: 'flex-start',
                       justifyContent: 'center',
@@ -838,10 +832,10 @@ export default function ProductDetail({ route, navigation }) {
                       </View>
                     ))}
                 </View>
-              </View>
+              </View> */}
 
-              <View>
-                <View style={{ justifyContent: 'center' }}>
+
+                {productTotalQuantity == 0 && (<View style={{ justifyContent: 'center' }}>
                   <Text
                     style={
                       stylesFunc({
@@ -854,170 +848,217 @@ export default function ProductDetail({ route, navigation }) {
                       ? ''
                       : strings.OUT_OF_STOCK}
                   </Text>
-                </View>
+                </View>)}
+
               </View>
 
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: moderateScaleVertical(10),
-                  justifyContent: 'space-between',
-                }}>
-                <View style={{ maxWidth: width / 2 }}>
-                  {/* <View style={styles.boxOne}>
-                    <Text numberOfLines={1} style={styles.productTypeAndBrand}>
-                      {venderDetail?.name}
-                    </Text>
-                  </View> */}
-                </View>
 
-                {/* <View style={{justifyContent: 'center'}}>
-                  <Text
-                    style={
-                      stylesFunc({themeColors, productTotalQuantity})
-                        .productTypeAndBrandValue
-                    }>
-                    {productTotalQuantity && productTotalQuantity != 0
-                      ? ''
-                      : 'Out of stock'}
-                  </Text>
-                </View> */}
-              </View>
-            </View>
-            {/* seperator */}
-            <View
-              style={{
-                height: 2,
-                backgroundColor: colors.lightGreyBorder,
-                // marginTop: moderateScaleVertical(20),
-              }}
-            />
+              <HorizontalLine lineStyle={{ marginVertical: moderateScaleVertical(16) }} />
 
-            {/* Product description */}
+              {/* Product description */}
 
-            {plainHtml != null ? (
-              <>
+              {plainHtml != null ? (
+                <>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                    }}>
+                    <View>
+                      <Text
+                        style={
+                          isDarkMode
+                            ? [
+                              styles.descriptiontitle,
+                              { color: MyDarkTheme.colors.text },
+                            ]
+                            : styles.descriptiontitle
+                        }>
+                        {strings.DESCRIPTION}
+                      </Text>
+
+
+                      <HTMLView
+                        value={
+                          plainHtml.startsWith('<p>')
+                            ? plainHtml
+                            : '<p>' + plainHtml + '</p>'
+                        }
+                        stylesheet={{ p: styles.descriptionStyle }}
+                      />
+                    </View>
+                  </View>
+                  <HorizontalLine lineStyle={{ marginVertical: moderateScaleVertical(14) }} />
+                </>
+              ) : null}
+
+              {/* // Product variants */}
+              {variantSet && variantSet.length ? showAllVariants() : null}
+              {/* {addonSet && addonSet.length ? showAllAddons() : null} */}
+
+              {showErrorMessageTitle ? (
+                <Text
+                  style={{
+                    fontSize: textScale(14),
+                    color: colors.redB,
+                    fontFamily: fontFamily.medium,
+                    marginBottom: moderateScaleVertical(16)
+                  }}>
+                  {strings.NOVARIANTPRODUCTAVAILABLE}
+                </Text>
+              ) : null}
+              {/* Add to Cart button */}
+              {!!productTotalQuantity &&
+                !!productTotalQuantity != 0 &&
+                (!!data?.showAddToCart ? null : showErrorMessageTitle ? null : (
+                  <View
+                    style={{
+                      marginBottom: moderateScaleVertical(25),
+                    }}>
+
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+
+                        paddingBottom: moderateScaleVertical(16),
+                        backgroundColor: isDarkMode
+                          ? MyDarkTheme.colors.background
+                          : '#fff',
+                      }}>
+                      <View style={{ flex: 0.25 }}>
+                        <View
+                          style={{
+                            ...commonStyles.buttonRect,
+                            ...styles.incDecBtnStyle,
+                            backgroundColor: getColorCodeWithOpactiyNumber(
+                              themeColors.primary_color.substr(1),
+                              15,
+                            ),
+                            borderColor: themeColors?.primary_color,
+                            height: moderateScale(38)
+                          }}
+                        // onPress={onPress}
+                        >
+                          <TouchableOpacity
+                            onPress={() => productIncrDecreamentForCart(2)}
+                            hitSlop={hitSlopProp}>
+                            <Text
+                              style={{
+                                ...commonStyles.mediumFont14,
+                                color: themeColors?.primary_color,
+                                fontFamily: fontFamily.bold,
+                              }}>
+                              -
+                            </Text>
+                          </TouchableOpacity>
+                          <Text
+                            style={{
+                              ...commonStyles.mediumFont14,
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.black,
+                            }}>
+                            {productQuantityForCart}
+                          </Text>
+                          <TouchableOpacity
+                            onPress={() => productIncrDecreamentForCart(1)}
+                            hitSlop={hitSlopProp}>
+                            <Text
+                              style={{
+                                ...commonStyles.mediumFont14,
+                                color: themeColors?.primary_color,
+                                fontFamily: fontFamily.bold,
+                              }}>
+                              +
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+
+                      <View style={{ marginHorizontal: 8 }} />
+                      <View style={{ flex: 0.75 }}>
+                        <GradientButton
+                          // indicator={btnLoader}
+                          indicatorColor={colors.white}
+                          colorsArray={[
+                            themeColors.primary_color,
+                            themeColors.primary_color,
+                          ]}
+                          textStyle={{
+                            fontFamily: fontFamily.medium,
+                            textTransform: 'capitalize',
+                          }}
+                          onPress={addToCart}
+                          btnText={`${strings.ADD} - ${currencies?.primary_currency?.symbol
+                            }${(
+                              Number(productPriceData?.multiplier) *
+                              Number(productPriceData?.price)
+                            ).toFixed(2)}`}
+
+                          btnStyle={{
+                            borderRadius: moderateScale(4),
+                            height: moderateScale(38)
+                          }}
+                        />
+                      </View>
+                    </View>
+                    {/* <GradientButton
+                      colorsArray={[
+                        themeColors.primary_color,
+                        themeColors.primary_color,
+                      ]}
+                      textStyle={styles.textStyle}
+                      onPress={addToCart}
+                      marginTop={moderateScaleVertical(10)}
+                      marginBottom={moderateScaleVertical(10)}
+                      btnText={strings.ADDTOCART}
+                    /> */}
+                  </View>
+                ))}
+
+              {/* related product */}
+              {!!relatedProducts && !!relatedProducts.length && (
                 <View
                   style={{
-                    marginHorizontal: moderateScale(20),
                     flexDirection: 'row',
                   }}>
-                  <View>
-                    <Text
-                      style={
-                        isDarkMode
-                          ? [
-                            styles.descriptiontitle,
-                            { color: MyDarkTheme.colors.text },
-                          ]
-                          : styles.descriptiontitle
-                      }>
-                      {strings.DESCRIPTION}
-                    </Text>
-                    {/* <Text style={styles.description}>
-                  {productDetailData?.translation[0]?.body_html}
-                </Text> */}
-
-                    <HTMLView
-                      value={
-                        plainHtml.startsWith('<p>')
-                          ? plainHtml
-                          : '<p>' + plainHtml + '</p>'
-                      }
-                      stylesheet={{ p: styles.descriptionStyle }}
-                    />
-                  </View>
+                  <Text
+                    style={isDarkMode
+                      ? [styles.productName, { color: MyDarkTheme.colors.text }]
+                      : styles.productName
+                    }>
+                    {strings.YOUMAYALSO}
+                  </Text>
                 </View>
-                <View
-                  style={{
-                    height: 2,
-                    backgroundColor: colors.lightGreyBorder,
-                    marginTop: moderateScaleVertical(20),
-                  }}
-                />
-              </>
-            ) : null}
+              )}
 
-            {/* // Product variants */}
-            {variantSet && variantSet.length ? showAllVariants() : null}
-            {/* {addonSet && addonSet.length ? showAllAddons() : null} */}
-
-            {showErrorMessageTitle ? (
-              <Text
-                style={{
-                  fontSize: textScale(14),
-                  marginHorizontal: moderateScale(20),
-                  color: colors.redB,
-                  fontFamily: fontFamily.medium,
-                }}>
-                {strings.NOVARIANTPRODUCTAVAILABLE}
-              </Text>
-            ) : null}
-            {/* Add to Cart button */}
-            {!!productTotalQuantity &&
-              !!productTotalQuantity != 0 &&
-              (!!data?.showAddToCart ? null : showErrorMessageTitle ? null : (
-                <View
-                  style={{
-                    marginHorizontal: moderateScale(20),
-                    marginBottom: moderateScaleVertical(25),
-                  }}>
-                  <GradientButton
-                    colorsArray={[
-                      themeColors.primary_color,
-                      themeColors.primary_color,
-                    ]}
-                    textStyle={styles.textStyle}
-                    onPress={addToCart}
-                    marginTop={moderateScaleVertical(10)}
-                    marginBottom={moderateScaleVertical(10)}
-                    btnText={strings.ADDTOCART}
-                  />
-                </View>
-              ))}
-
-            {/* related product */}
-            {!!relatedProducts && !!relatedProducts.length && (
-              <View
-                style={{
-                  marginHorizontal: moderateScale(20),
-                  flexDirection: 'row',
-                }}>
-                <Text
-                  style={isDarkMode
-                    ? [styles.productName, { color: MyDarkTheme.colors.text }]
-                    : styles.productName
-                  }>
-                  {strings.YOUMAYALSO}
-                </Text>
-              </View>
-            )}
-
-            <FlatList
-              data={(!state.isLoading && relatedProducts) || []}
-              renderItem={renderProduct}
-              keyExtractor={(item, index) => String(index)}
-              keyboardShouldPersistTaps="always"
-              showsHorizontalScrollIndicator={false}
-              style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
-              contentContainerStyle={{ flexGrow: 1 }}
-              horizontal
-              ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-              ListFooterComponent={() => <View style={{ height: 20 }} />}
-            // ListEmptyComponent={<ListEmptyProduct isLoading={state.isLoading}/>}
-            />
-            <AddonModal
-              productdetail={productDetailData}
-              isVisible={isVisibleAddonModal}
-              onClose={() => setModalVisibleForAddonModal(false)}
-              // onPress={(data) => alert('123')}
-              addonSet={addonSet}
-            // onPress={currentLocation}
-            />
-          </>
-        )}
-        <View style={{ height: moderateScale(42) }} />
-      </KeyboardAwareScrollView>
+              <FlatList
+                data={(!state.isLoading && relatedProducts) || []}
+                renderItem={renderProduct}
+                keyExtractor={(item, index) => String(index)}
+                keyboardShouldPersistTaps="always"
+                showsHorizontalScrollIndicator={false}
+                style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
+                contentContainerStyle={{ flexGrow: 1 }}
+                horizontal
+                ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+                ListFooterComponent={() => <View style={{ height: 20 }} />}
+              // ListEmptyComponent={<ListEmptyProduct isLoading={state.isLoading}/>}
+              />
+              <AddonModal
+                productdetail={productDetailData}
+                isVisible={isVisibleAddonModal}
+                onClose={() => setModalVisibleForAddonModal(false)}
+                // onPress={(data) => alert('123')}
+                addonSet={addonSet}
+              // onPress={currentLocation}
+              />
+            </>
+          )}
+          <View style={{ marginBottom: moderateScale(120) }} />
+        </KeyboardAwareScrollView>
+      </View>
     </WrapperContainer>
   );
 }
