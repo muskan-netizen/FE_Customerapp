@@ -170,12 +170,13 @@ export default function SelectPaymentModalView({
             </Text>
             <Text
               style={
-                isDarkMode
+                (isDarkMode
                   ? [
                       styles.distanceDurationDeliveryLable,
-                      {color: MyDarkTheme.colors.text},
+                      {color: MyDarkTheme.colors.text, fontSize: textScale(12)},
                     ]
-                  : styles.distanceDurationDeliveryValue
+                  : styles.distanceDurationDeliveryValue,
+                {fontSize: textScale(12)})
               }>
               {`${totalDistance} kms`}
             </Text>
@@ -194,12 +195,13 @@ export default function SelectPaymentModalView({
             </Text>
             <Text
               style={
-                isDarkMode
+                (isDarkMode
                   ? [
                       styles.distanceDurationDeliveryLable,
-                      {color: MyDarkTheme.colors.text},
+                      {color: MyDarkTheme.colors.text, fontSize: textScale(12)},
                     ]
-                  : styles.distanceDurationDeliveryValue
+                  : styles.distanceDurationDeliveryValue,
+                {fontSize: textScale(12)})
               }>
               {totalDuration < 60
                 ? `${totalDuration} mins`
@@ -231,6 +233,7 @@ export default function SelectPaymentModalView({
                             : 'none',
                           opacity: updatedPrice ? 0.5 : 1,
                           color: MyDarkTheme.colors.text,
+                          fontSize: textScale(12),
                         },
                       ]
                     : [
@@ -240,6 +243,7 @@ export default function SelectPaymentModalView({
                             ? 'line-through'
                             : 'none',
                           opacity: updatedPrice ? 0.5 : 1,
+                          fontSize: textScale(12),
                         },
                       ]
                 }>
@@ -253,12 +257,16 @@ export default function SelectPaymentModalView({
               {updatedPrice && (
                 <Text
                   style={
-                    isDarkMode
+                    (isDarkMode
                       ? [
                           styles.distanceDurationDeliveryValue,
-                          {color: MyDarkTheme.colors.text},
+                          {
+                            color: MyDarkTheme.colors.text,
+                            fontSize: textScale(12),
+                          },
                         ]
-                      : styles.distanceDurationDeliveryValue
+                      : styles.distanceDurationDeliveryValue,
+                    {fontSize: textScale(12)})
                   }>
                   {`${currencies?.primary_currency?.symbol}${
                     Number(selectedCarOption.tags_price) -
