@@ -410,6 +410,19 @@ export default function HomeScreenTaxi({navigation, route}) {
             // draggable
           /> */}
       </MapView>
+      <View style={styles.backbutton}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <View
+            style={{
+              paddingHorizontal: moderateScale(15),
+              paddingVertical: moderateScaleVertical(15),
+              borderRadius: 15,
+              backgroundColor: colors.greyColor,
+            }}>
+            <Image source={imagePath.backArrow} />
+          </View>
+        </TouchableOpacity>
+      </View>
 
       <View style={styles.userAccountImageStyle}>
         <Image source={imagePath.taxiUserAccount} />

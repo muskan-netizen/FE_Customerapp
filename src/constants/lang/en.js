@@ -503,4 +503,5 @@ Amount`,
   PICKUP_TIME: 'Pickup Time',
   SCHEDULE_RIDE_FOR: 'Schedule ride for ',
   ESTIMATION_ONLY: 'This is an estimation only, price may vary.',
+  PLACE_PIN_ON_MAP: 'Place the pin on Map to mark exact location',
 };

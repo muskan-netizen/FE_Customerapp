@@ -47,7 +47,7 @@ export default function Addaddress({navigation, route}) {
   const {appData, allAddresss, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(allAddresss, 'allAddresss');
+  console.log(paramData, 'paramData');
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
     pickUpLocation: '',
@@ -78,6 +78,7 @@ export default function Addaddress({navigation, route}) {
     selectedAddress: null,
     savedAddressViewHeight: 0,
     avalibleValueInTextInput: false,
+    vendorId: null,
   });
   const {
     pickUpLocationAddressData,
@@ -122,20 +123,22 @@ export default function Addaddress({navigation, route}) {
   );
 
   useEffect(() => {
-    updateState({
-      pickUpLocation: paramData?.data[0]?.address,
-      dropOffLocation: paramData?.data[1]?.address,
-      pickUpLocationLatLng: {
-        latitude: paramData?.data[0]?.latitude,
-        longitude: paramData?.data[0]?.longitude,
-      },
-      dropOffLocationLatLng: {
-        latitude: paramData?.data[1]?.latitude,
-        longitude: paramData?.data[1]?.longitude,
-      },
-      pickUpLocationAddressData: paramData?.data[0],
-      dropOffLocationAddressData: paramData?.data[1],
-    });
+    if (paramData?.data?.pickuplocationAllData != undefined) {
+      updateState({
+        pickUpLocation: paramData?.data.pickuplocationAllData[0]?.address,
+        dropOffLocation: paramData?.data.pickuplocationAllData[1]?.address,
+        pickUpLocationLatLng: {
+          latitude: paramData?.data.pickuplocationAllData[0]?.latitude,
+          longitude: paramData?.data.pickuplocationAllData[0]?.longitude,
+        },
+        dropOffLocationLatLng: {
+          latitude: paramData?.data.pickuplocationAllData[1]?.latitude,
+          longitude: paramData?.data.pickuplocationAllData[1]?.longitude,
+        },
+        pickUpLocationAddressData: paramData?.data.pickuplocationAllData[0],
+        dropOffLocationAddressData: paramData?.data.pickuplocationAllData[1],
+      });
+    }
   }, [paramData]);
 
   //get All address
@@ -357,7 +360,7 @@ export default function Addaddress({navigation, route}) {
   }, [paramData?.type]);
 
   const _moveToNextScreen = () => {
-    navigation.navigate(navigationStrings.PINADDRESSONMAP);
+    navigation.navigate(navigationStrings.PINADDRESSONMAP, paramData);
   };
 
   const renderDotContainer = () => {

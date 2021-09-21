@@ -22,6 +22,12 @@ export default ({fontFamily}) => {
       marginHorizontal: moderateScale(30),
       marginVertical: moderateScaleVertical(50),
     },
+    backbutton: {
+      position: 'absolute',
+      left: 0,
+      marginHorizontal: moderateScale(30),
+      marginVertical: moderateScaleVertical(50),
+    },
     dots: {
       width: 2,
       height: 5,

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import stylesFun from './styles';
 import {useSelector} from 'react-redux';
@@ -10,13 +10,20 @@ import Geocoder from 'react-native-geocoding';
 import {chekLocationPermission} from '../../../utils/permissions';
 import {getCurrentLocation} from '../../../utils/helperFunctions';
 import GradientButton from '../../../Components/GradientButton';
-import {width} from '../../../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  width,
+} from '../../../styles/responsiveSize';
 import imagePath from '../../../constants/imagePath';
 import {colors} from 'react-native-elements';
 import navigationStrings from '../../../navigation/navigationStrings';
+import strings from '../../../constants/lang';
 
 export default function PinAddressOnMap(props) {
-  const {navigation} = props;
+  const {navigation, route} = props;
+
+  const paramData = route?.params;
   const mapRef = React.createRef();
   const [state, setState] = useState({
     region: {
@@ -450,7 +457,7 @@ export default function PinAddressOnMap(props) {
         ];
         console.log(pickuplocationAllData, 'pickuplocationAllData');
         navigation.navigate(navigationStrings.ADDADDRESS, {
-          data: pickuplocationAllData,
+          data: {pickuplocationAllData, id: paramData?.data?.id},
         });
       })
       .catch((error) => console.log(error, 'errro geocode'));
@@ -497,7 +504,7 @@ export default function PinAddressOnMap(props) {
             color: colors.black,
             fontFamily: fontFamily.medium,
           }}>
-          Place the pin on Map to mark exact location
+          {strings.PLACE_PIN_ON_MAP}
         </Text>
         <GradientButton btnText={'Done'} onPress={() => _modeToNextScreen()} />
       </View>
