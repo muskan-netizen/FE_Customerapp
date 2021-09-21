@@ -2,36 +2,39 @@ import {useFocusEffect} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
 import {Dimensions, View, Text, TouchableOpacity, Image} from 'react-native';
 import {useSelector} from 'react-redux';
-import HeaderWithFilters from '../../Components/HeaderWithFilters';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import WrapperContainer from '../../Components/WrapperContainer';
-import imagePath from '../../constants/imagePath';
-import strings from '../../constants/lang';
-import actions from '../../redux/actions';
-import colors from '../../styles/colors';
-import {showError} from '../../utils/helperFunctions';
+import HeaderWithFilters from '../../../Components/HeaderWithFilters';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import WrapperContainer from '../../../Components/WrapperContainer';
+import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
+import actions from '../../../redux/actions';
+import colors from '../../../styles/colors';
+import {showError} from '../../../utils/helperFunctions';
 import stylesFunc from './styles';
 const {height, width} = Dimensions.get('window');
 import MapViewDirections from 'react-native-maps-directions';
 import Geocoder from 'react-native-geocoding';
 import MapView, {Marker, Callout} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import {useIsFocused} from '@react-navigation/native';
-import OrderDetailView from './OrderDetailView';
+
 import Communications from 'react-native-communications';
-import navigationStrings from '../../navigation/navigationStrings';
+import navigationStrings from '../../../navigation/navigationStrings';
 import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import {MyDarkTheme} from '../../../styles/theme';
+import TaxiOrderDetailView from './TaxiOrderDetailView';
+import SearchingForDriverView from './SearchingForDriverView';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-export default function PickupOrderDetail({navigation, route}) {
+export default function PickupTaxiOrderDetail({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
+  console.log(paramData, 'paramData');
   const [state, setState] = useState({
     isLoading: true,
     region: {
@@ -81,6 +84,11 @@ export default function PickupOrderDetail({navigation, route}) {
         '/order-details/',
       )
     : null;
+
+  console.log(
+    paramData?.selectedCarOption,
+    'selectedCarOptionselectedCarOption',
+  );
 
   useFocusEffect(
     React.useCallback(() => {
@@ -141,6 +149,8 @@ export default function PickupOrderDetail({navigation, route}) {
       })
       .catch(errorMethod);
   };
+
+  console.log(agent_location, 'agent_locationagent_location');
 
   /*********Get order detail screen********* */
   const _getOrderDetailScreen = (url) => {
@@ -212,7 +222,7 @@ export default function PickupOrderDetail({navigation, route}) {
   //order detail View
   const _selectOrderDetailView = () => {
     return (
-      <OrderDetailView
+      <TaxiOrderDetailView
         orderDetail={orderDetail}
         isLoading={isLoading}
         agent_image={agent_image}
@@ -220,6 +230,22 @@ export default function PickupOrderDetail({navigation, route}) {
         productDetail={paramData?.orderDetail}
         onPressCall={(orderDetail) => _onPressCall(orderDetail)}
         onPressChat={(orderDetail) => _onPressChat(orderDetail)}
+      />
+    );
+  };
+
+  const _selectTexiOrderDetailView = () => {
+    return (
+      <SearchingForDriverView
+        orderDetail={orderDetail}
+        isLoading={isLoading}
+        agent_image={agent_image}
+        agent_location={agent_location}
+        productDetail={paramData?.orderDetail}
+        onPressCall={(orderDetail) => _onPressCall(orderDetail)}
+        onPressChat={(orderDetail) => _onPressChat(orderDetail)}
+        totalDuration={paramData?.totalDuration}
+        selectedCarOption={paramData?.selectedCarOption}
       />
     );
   };
@@ -329,7 +355,8 @@ export default function PickupOrderDetail({navigation, route}) {
                 <Image source={imagePath.backArrowCourier} />
               </TouchableOpacity>
             </View>
-            {_selectOrderDetailView()}
+            {/* {_selectOrderDetailView()} */}
+            {_selectTexiOrderDetailView()}
           </>
         )}
       </View>

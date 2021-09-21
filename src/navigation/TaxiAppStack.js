@@ -6,6 +6,7 @@ import {
   HomeScreenTaxi,
   Offers,
   PaymentOptions,
+  PickupTaxiOrderDetail,
   PinAddressOnMap,
 } from '../Screens';
 
@@ -46,6 +47,11 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.OFFERS2}
         component={Offers}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.PICKUPTAXIORDERDETAILS}
+        component={PickupTaxiOrderDetail}
         options={{headerShown: false}}
       />
     </>

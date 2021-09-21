@@ -273,12 +273,14 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           //   orderDetail: res?.data,
           //   selectedCarOption: selectedCarOption,
           // });
-          navigation.navigate(navigationStrings.PICKUPORDERDETAIL, {
+          navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
             orderId: res?.data?.id,
             fromVendorApp: true,
             selectedVendor: {id: selectedCarOption?.vendor_id},
             orderDetail: res?.data,
             fromCab: true,
+            totalDuration: totalDuration,
+            selectedCarOption: selectedCarOption?.sku,
           });
         } else {
           updateState({
@@ -332,6 +334,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       _finalPayment();
     }
   };
+
+  console.log(selectedCarOption, 'selectedCarOption');
 
   const _selectTimeView = () => {
     return (

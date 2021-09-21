@@ -339,4 +339,6 @@ export default {
   icgo2: require('../assets/images/TAXIAPPIMAGES/ic_go2.png'),
   locationpin3: require('../assets/images/TAXIAPPIMAGES/ic_pin3.png'),
   locationpinGreen: require('../assets/images/TAXIAPPIMAGES/ic_pingreen.png'),
+  locationpinGreen: require('../assets/images/TAXIAPPIMAGES/ic_pingreen.png'),
+  car3: require('../assets/images/TAXIAPPIMAGES/ic_car3.png'),
 };

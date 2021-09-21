@@ -84,4 +84,5 @@ export default {
   PAYMENT_OPTIONS: 'paymentoptions',
   CHOOSECARTYPEANDTIMETAXI: 'ChooseCarTypeAndTimeTaxi',
   OFFERS2: 'OFFERS2',
+  PICKUPTAXIORDERDETAILS: 'PickupTaxiOrderDetails',
 };
