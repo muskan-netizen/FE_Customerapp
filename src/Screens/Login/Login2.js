@@ -37,6 +37,7 @@ import stylesFunc from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Login2({navigation}) {
   var clonedState = {};
@@ -92,7 +93,8 @@ export default function Login2({navigation}) {
   };
 
   //Login api fucntion
-  const _onLogin = () => {
+  const _onLogin = async() => {
+    let fcmToken = await AsyncStorage.getItem('fcmToken')
     const checkValid = isValidData();
     if (!checkValid) {
       return;
@@ -102,6 +104,7 @@ export default function Login2({navigation}) {
       password: password,
       device_type: Platform.OS,
       device_token: DeviceInfo.getUniqueId(),
+      fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId()
     };
     updateState({isLoading: true});
     actions
@@ -151,7 +154,7 @@ export default function Login2({navigation}) {
   };
 
   //Saving login user to backend
-  const _saveSocailLogin = (socialLoginData, type) => {
+  const _saveSocailLogin = async(socialLoginData, type) => {
     console.log(socialLoginData, 'socialLoginData>>>');
     let data = {};
     data['name'] = socialLoginData?.name || socialLoginData?.userName;
@@ -160,6 +163,7 @@ export default function Login2({navigation}) {
     data['email'] = socialLoginData?.email;
     data['device_type'] = Platform.OS;
     data['device_token'] = 'sadassa';
+    data['fcm_token'] = !!fcmToken ? fcmToken : DeviceInfo.getUniqueId()
     let query = '';
     if (type == 'facebook' || type == 'twitter' || type == 'google') {
       query = type;

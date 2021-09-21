@@ -503,4 +503,7 @@ Amount`,
   PICKUP_TIME: 'Pickup Time',
   SCHEDULE_RIDE_FOR: 'Schedule ride for ',
   ESTIMATION_ONLY: 'This is an estimation only, price may vary.',
+  SEARCH_ITEM:"Search Item",
+  SEARCH_PRODUCT:"Search Product",
+
 };
