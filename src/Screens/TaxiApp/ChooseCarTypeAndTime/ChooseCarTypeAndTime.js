@@ -168,7 +168,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   const _confirmAddress = (addressType) => {};
   const _onRegionChange = (region) => {
-    console.log(region, 'region>>region>regionregion');
     updateState({region: region});
     _getAddressBasedOnCoordinates(region);
     // animate(region);
@@ -183,7 +182,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     };
 
   useEffect(() => {
-    console.log(selectedVendorOption, 'selectedVendorOption');
     {
       !!selectedVendorOption && _getAllCarAndPrices();
     }
@@ -213,7 +211,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res, 'res>>>');
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(2)
@@ -235,7 +232,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   //error handling of api
   const errorMethod = (error) => {
-    console.log(error, 'error>>>');
     updateState({
       isLoading: false,
       isLoadingB: false,
@@ -260,7 +256,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   };
 
   const _selectTime = () => {
-    console.log('here');
     updateState({showTimeModal: false, showPaymentModal: true});
   };
 
@@ -275,7 +270,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res, '_confirmAndPay res>>>');
         if (res && res?.status == 200) {
           updateState({
             isModalVisible: false,
