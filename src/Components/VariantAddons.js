@@ -125,6 +125,8 @@ export default function VariantAddons({
     }, [variantSet, productdetail, isVisible]),
   );
 
+  console.log("product detail",productDetailData)
+
   const getProductDetailBasedOnFilter = (variantSetData) => {
     updateState({ isLoadingC: true });
     let data = {};
@@ -835,7 +837,7 @@ export default function VariantAddons({
                 }}>In Category_name</Text>
 
                 {/* rating View */}
-                {true && (
+                {productDetailData?.averageRating !== null&& (
                   <View
                     style={{
                       borderWidth: 0.5,
@@ -849,7 +851,7 @@ export default function VariantAddons({
                     <StarRating
                       disabled={false}
                       maxStars={5}
-                      rating={3}
+                      rating={Number(productDetailData?.averageRating).toFixed(1)}
                       fullStarColor={colors.yellowB}
                       starSize={8}
                       containerStyle={{ width: width / 9 }}

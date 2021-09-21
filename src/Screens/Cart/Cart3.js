@@ -976,8 +976,7 @@ export default function Cart({navigation, route}) {
                             bottom: 10,
                             right: 20,
                           }}
-                          onPress={() => openDeleteView(i)}
-                          >
+                          onPress={() => openDeleteView(i)}>
                           <Image source={imagePath.deleteRed} />
                         </TouchableOpacity>
                         <View
@@ -2064,7 +2063,13 @@ export default function Cart({navigation, route}) {
                   flex: 1,
                   justifyContent: 'center',
                   alignItems: 'center',
+                  // backgroundColor: '#fff',
                 }}>
+                {/* <Image
+                  source={imagePath.icEmptyCartC}
+                  style={{height: 250, width: 250}}
+                  resizeMode="contain"
+                /> */}
                 <LottieView
                   source={loaderSix}
                   autoPlay

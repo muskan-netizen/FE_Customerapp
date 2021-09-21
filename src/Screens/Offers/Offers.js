@@ -37,7 +37,8 @@ export default function Offer({route, navigation}) {
   });
 
   const vendorInfo = route?.params?.data;
-  const isTaxi = route?.params?.data;
+  const {isTaxi} = vendorInfo;
+  console.log(isTaxi, 'isTaxiiii');
   console.log(vendorInfo, '>>>>>>>>>>>>>>>>>>>');
   const {appData, appStyle, themeColors, themeLayouts, currencies, languages} =
     useSelector((state) => state.initBoot);
@@ -161,7 +162,7 @@ export default function Offer({route, navigation}) {
             });
           } else {
             navigation.navigate(
-              isTaxi
+              !!isTaxi
                 ? navigationStrings.CHOOSECARTYPEANDTIMETAXI
                 : navigationStrings.CHOOSECARTYPEANDTIME,
               {

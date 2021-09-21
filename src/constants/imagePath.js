@@ -339,6 +339,10 @@ export default {
   icgo2: require('../assets/images/TAXIAPPIMAGES/ic_go2.png'),
   locationpin3: require('../assets/images/TAXIAPPIMAGES/ic_pin3.png'),
   locationpinGreen: require('../assets/images/TAXIAPPIMAGES/ic_pingreen.png'),
-  locationpinGreen: require('../assets/images/TAXIAPPIMAGES/ic_pingreen.png'),
+  icgo3: require('../assets/images/TAXIAPPIMAGES/ic_go.png'),
+  icEmptyCart: require('../assets/images/RoyoorderNewImages/ic_emptycart2.png'),
+  icEmptyCartA: require('../assets/images/RoyoorderNewImages/ic_emptycart3.png'),
+  icEmptyCartB: require('../assets/images/RoyoorderNewImages/ic_emptygrey.png'),
+  icEmptyCartC: require('../assets/images/RoyoorderNewImages/Group8.png'),
   car3: require('../assets/images/TAXIAPPIMAGES/ic_car3.png'),
 };

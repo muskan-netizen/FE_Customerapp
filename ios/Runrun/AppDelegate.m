@@ -7,6 +7,7 @@
 #import <TwitterKit/TWTRKit.h>
 #import "RNSplashScreen.h"  // here
 #import <React/RCTLinkingManager.h> //deeplinking
+#import <Firebase.h>
 @import GooglePlaces;
 @import GoogleMaps;
 // AppDelegate.m
@@ -15,6 +16,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  if ([FIRApp defaultApp] == nil) {
+     [FIRApp configure];
+   }
   //Pick xconfig values into Objective C files
   NSString *googlePlacesKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"PROJECT_GOOGLE_PLACE_KEY"];
   [GMSPlacesClient provideAPIKey:googlePlacesKey];

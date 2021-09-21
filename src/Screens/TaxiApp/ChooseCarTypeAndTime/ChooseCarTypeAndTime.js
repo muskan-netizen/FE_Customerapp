@@ -111,6 +111,12 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     updatedAmount: null,
     couponInfo: null,
     loyalityAmount: null,
+    isTimerPickerModal: false,
+    formatedTime: moment().format('hh:mm A'),
+    isDatePickerModal: false,
+    pickedUpTime: moment().format('hh:mm A'),
+    selectedDate: moment().format('YYY-MM-DD'),
+    pickedUpDate: moment().format('YYYY-MM-DD'),
   });
   const {
     couponInfo,
@@ -143,6 +149,12 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     limit,
     isLoadingB,
     loyalityAmount,
+    isTimerPickerModal,
+    formatedTime,
+    isDatePickerModal,
+    pickedUpTime,
+    selectedDate,
+    pickedUpDate,
   } = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -155,7 +167,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   const _confirmAddress = (addressType) => {};
   const _onRegionChange = (region) => {
-    console.log(region, 'region>>region>regionregion');
     updateState({region: region});
     _getAddressBasedOnCoordinates(region);
     // animate(region);
@@ -170,7 +181,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     };
 
   useEffect(() => {
-    console.log(selectedVendorOption, 'selectedVendorOption');
     {
       !!selectedVendorOption && _getAllCarAndPrices();
     }
@@ -200,7 +210,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res, 'res>>>');
         updateState({
           loyalityAmount: res?.data?.loyalty_amount_saved
             ? Number(res?.data?.loyalty_amount_saved).toFixed(2)
@@ -222,7 +231,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   //error handling of api
   const errorMethod = (error) => {
-    console.log(error, 'error>>>');
     updateState({
       isLoading: false,
       isLoadingB: false,
@@ -247,7 +255,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   };
 
   const _selectTime = () => {
-    console.log('here');
     updateState({showTimeModal: false, showPaymentModal: true});
   };
 
@@ -262,7 +269,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
-        console.log(res, '_confirmAndPay res>>>');
         if (res && res?.status == 200) {
           updateState({
             isModalVisible: false,
@@ -344,7 +350,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         onPressBack={() =>
           updateState({showTimeModal: false, showCarModal: true})
         }
-        _onDateChange={(date) => _onDateChange(date)}
+        _onDateChange={_onNewDateChange}
         availAbleTimes={availAbleTimes}
         selectedAvailableTimeOption={selectedAvailableTimeOption}
         selectAvailAbleTime={(i) =>
@@ -352,6 +358,16 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         }
         _selectTime={_selectTime}
         navigation={navigation}
+        isTimerPickerModal={isTimerPickerModal}
+        formatedTime={formatedTime}
+        isDatePickerModal={isDatePickerModal}
+        pickedUpTime={pickedUpTime}
+        selectedDate={selectedDate}
+        pickedUpDate={pickedUpDate}
+        _pickerOpen={_pickerOpen}
+        _pickerCancel={_pickerCancel}
+        _onDayPress={_onDayPress}
+        _modalOkPress={_modalOkPress}
       />
     );
   };
@@ -430,9 +446,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     return (
       <SelectPaymentModalView
         _confirmAndPay={_confirmAndPay}
-        slectedDate={slectedDate}
+        slectedDate={pickedUpDate}
         isModalVisible={isModalVisible}
-        selectedTime={selectedTime}
+        selectedTime={pickedUpTime}
         navigation={navigation}
         date={date}
         onPressBack={() =>
@@ -472,6 +488,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       slectedDate: dateSelectd,
       selectedTime: moment(date).format('LT'),
       date: date,
+      formatedTime: moment(value).format('LT'),
     });
   };
 
@@ -485,6 +502,29 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     updateState({
       locations: [...locations, e.nativeEvent.coordinate],
     });
+  };
+
+  const _pickerOpen = (value) => {
+    updateState({[value]: true});
+  };
+
+  const _pickerCancel = (value) => {
+    updateState({[value]: false});
+  };
+
+  const _onDayPress = (value) => {
+    updateState({selectedDate: value.dateString});
+  };
+
+  const _modalOkPress = (value1, value2) => {
+    updateState({
+      [value1]: false,
+      [value2]: value2 === 'pickedUpTime' ? formatedTime : selectedDate,
+    });
+  };
+
+  const _onNewDateChange = (value) => {
+    updateState({formatedTime: moment(value).format('LT')});
   };
 
   return (
