@@ -411,7 +411,7 @@ export default function HomeScreenTaxi({navigation, route}) {
             // draggable
           /> */}
       </MapView>
-      <View style={styles.backbutton}>
+      <View style={[styles.backbutton, {marginHorizontal: moderateScale(15)}]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <View
             style={{

@@ -2063,7 +2063,7 @@ export default function Cart({navigation, route}) {
                   flex: 1,
                   justifyContent: 'center',
                   alignItems: 'center',
-                  backgroundColor: '#fff',
+                  // backgroundColor: '#fff',
                 }}>
                 {/* <Image
                   source={imagePath.icEmptyCartA}

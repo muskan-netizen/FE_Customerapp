@@ -355,7 +355,9 @@ export default function SelectTimeModalView({
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}
             undnerlinecolor={colors.textGreyB}
-            labelStyle={{color: colors.textGrey}}
+            labelStyle={{
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+            }}
             lableViewStyle={{
               justifyContent: 'space-between',
               alignItems: 'center',
@@ -376,7 +378,9 @@ export default function SelectTimeModalView({
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}
             undnerlinecolor={colors.textGreyB}
-            labelStyle={{color: colors.textGrey}}
+            labelStyle={{
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+            }}
             mainStyle={{marginTop: moderateScaleVertical(30)}}
             lableViewStyle={{
               justifyContent: 'space-between',
