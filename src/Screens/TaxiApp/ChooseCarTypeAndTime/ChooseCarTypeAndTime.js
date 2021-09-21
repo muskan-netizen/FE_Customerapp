@@ -524,7 +524,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   };
 
   const _onNewDateChange = (value) => {
-    updateState({formatedTime: moment(value).format('LT')});
+    updateState({formatedTime: moment(value).format('hh:mm A')});
   };
 
   return (
