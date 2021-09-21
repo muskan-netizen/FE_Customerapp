@@ -159,12 +159,10 @@ export default ({fontFamily, themeColors}) => {
     },
     modalContainer: {
       marginHorizontal: 0,
-      marginBottom: 0,
-      marginTop: 0,
-      paddingTop: StatusBarHeightSecond,
-      height: '100%',
-      overflow: 'hidden',
-      backgroundColor: 'red',
+      marginVertical: 0,
+      // backgroundColor: colors.white,
+      borderRadius: 0,
+      // backgroundColor: 'red',
     },
     status: {
       textAlign: 'left',
@@ -233,6 +231,14 @@ export default ({fontFamily, themeColors}) => {
       alignItems: 'center',
       justifyContent: 'center',
       marginTop: moderateScaleVertical(20),
+    },
+    mainViewStyle: {
+      height: height / 1.9,
+      alignSelf: 'center',
+      width: width - moderateScale(40),
+      borderRadius: 15,
+      overflow: 'hidden',
+      paddingTop: 0,
     },
   });
   return styles;

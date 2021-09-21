@@ -10,6 +10,7 @@
 	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
+		<string>applinks:sales.royoorders.com</string>
 		<string>applinks:sales.alerthire.com</string>
 	</array>
 </dict>

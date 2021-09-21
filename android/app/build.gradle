@@ -202,7 +202,7 @@ android {
             // applicationIdSuffix ".royoorder"
             applicationId 'com.codebrew.royoorder'
             resValue "string", "app_name", "RoyoOrder"
-            resValue "string", "host_name", "sales.alerthire.com"
+            resValue "string", "host_name", "sales.royoorders.com"
         }
         runrun {
             dimension "appType"

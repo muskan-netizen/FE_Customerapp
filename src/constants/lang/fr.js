@@ -533,4 +533,6 @@ personnalisé`,
   PICKUP_TIME: 'Pickup Time',
   SCHEDULE_RIDE_FOR: 'Schedule Ride for ',
   ESTIMATION_ONLY: 'This is an estimation only, price may vary.',
+  SEARCH_ITEM:"Search Item",
+  SEARCH_PRODUCT:"Search Product",
 };
