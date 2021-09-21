@@ -439,7 +439,7 @@ Amount`,
   PAYMENT_SUCCESS: 'Payment successful',
   THIS_WILL_REMOVE_CART:
     'This will remove your cart. Are your sure you want to remove the cart?',
-  OK: 'Okay',
+  OK: 'Ok',
   ALERT: 'Alert',
   CAMERA_PERMISSION_DENIED_MSG: "Don't have permission to open camera",
   YOUR_REFFERAL_CODE: 'Your refferal code: ',

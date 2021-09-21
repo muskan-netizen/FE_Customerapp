@@ -556,9 +556,7 @@ export default function SelectPaymentModalView({
           // btnText={`${slectedDate}  -  ${selectedTime}`}
           btnText={
             strings.SCHEDULE_RIDE_FOR +
-            `${moment(slectedDate).format('DD MMM')} ${moment(
-              slectedDate,
-            ).format('LT')} `
+            `${moment(slectedDate).format('DD MMM')} ${selectedTime} `
           }
         />
       </View>

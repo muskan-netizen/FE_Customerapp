@@ -337,4 +337,6 @@ export default {
   icTime: require('../assets/images/TAXIAPPIMAGES/ic_time.png'),
   discount2: require('../assets/images/TAXIAPPIMAGES/ic_discount.png'),
   icgo2: require('../assets/images/TAXIAPPIMAGES/ic_go2.png'),
+  icgo3: require('../assets/images/TAXIAPPIMAGES/ic_go.png'),
+  icEmptyCart: require('../assets/images/RoyoorderNewImages/ic_emptycart2.png'),
 };

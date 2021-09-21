@@ -2,11 +2,11 @@ import moment from 'moment';
 import React, {useState} from 'react';
 import {
   Image,
-  Modal,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
+  Modal,
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import {useSelector} from 'react-redux';
@@ -27,6 +27,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import {getColorCodeWithOpactiyNumber} from '../../../utils/helperFunctions';
+import ModalView from '../../../Components/Modal';
+import {CalendarList} from 'react-native-calendars';
 
 export default function SelectTimeModalView({
   isLoading = false,
@@ -37,6 +39,19 @@ export default function SelectTimeModalView({
   selectAvailAbleTime,
   _selectTime,
   _onDateChange,
+  isTimerPickerModal,
+  formatedTime,
+  isDatePickerModal,
+  pickedUpTime,
+  selectedDate,
+  pickedUpDate,
+  _openTimePicker = () => {},
+  _openCalendarPicker = () => {},
+  _onCalendarPickerCancel = () => {},
+  _openTimePickerCancel = () => {},
+  _onDayPress = () => {},
+  _calendarPickerOkPress = () => {},
+  _datePickerOkPress = () => {},
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -47,12 +62,23 @@ export default function SelectTimeModalView({
   );
   const fontFamily = appStyle?.fontSizeData;
 
-  const [state, setState] = useState({
-    isTimerPickerModal: false,
-    formatedTime: '',
-  });
+  // const [state, setState] = useState({
+  //   isTimerPickerModal: false,
+  //   formatedTime: moment().format('HH:mm A'),
+  //   isDatePickerModal: false,
+  //   pickedUpTime: moment().format('HH:mm A'),
+  //   selectedDate: moment().format('YYY-MM-DD'),
+  //   pickedUpDate: moment().format('YYYY-MM-DD'),
+  // });
 
-  const {isTimerPickerModal, formatedTime} = state;
+  // const {
+  //   isTimerPickerModal,
+  //   formatedTime,
+  //   isDatePickerModal,
+  //   pickedUpTime,
+  //   selectedDate,
+  //   pickedUpDate,
+  // } = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});
@@ -61,21 +87,211 @@ export default function SelectTimeModalView({
 
   const onDateChange = (value) => {
     _onDateChange(value);
-    updateState({
-      formatedTime: moment(value).format('LT'),
-    });
   };
 
   const openCalenderPicker = (value) => {
-    // _openCalenderPicker(value);
+    _openCalendarPicker(value);
+  };
+  const onCalendarCancel = (value) => {
+    _onCalendarPickerCancel(value);
+  };
+
+  const openTimePickerCancel = (value) => {
+    _openTimePickerCancel(value);
   };
 
   const openTimePicker = (value) => {
-    updateState({
-      isTimerPickerModal: true,
-    });
-    // _openTimePicker(value);
+    _openTimePicker(value);
   };
+
+  const _renderArrow = (direction) => {
+    if (direction == 'left') {
+      return (
+        <Image
+          source={imagePath.icgo3}
+          style={{
+            height: 25,
+            width: 25,
+            tintColor: themeColors.primary_color,
+            transform: [{scaleX: -1}],
+          }}
+        />
+      );
+    } else {
+      return (
+        <Image
+          source={imagePath.icgo3}
+          style={{height: 25, width: 25, tintColor: themeColors.primary_color}}
+        />
+      );
+    }
+  };
+
+  const onDayPress = (value) => {
+    _onDayPress(value);
+  };
+
+  const calendarPickerOkPress = (value) => {
+    _calendarPickerOkPress(value);
+  };
+  const datePickerOkPress = (value) => {
+    _datePickerOkPress(value);
+  };
+
+  const _calendarModalMainView = () => (
+    <View
+      style={{
+        flex: 1,
+      }}>
+      <View
+        style={{
+          backgroundColor: themeColors.primary_color,
+          paddingVertical: moderateScaleVertical(17),
+        }}>
+        <Text
+          style={{
+            textAlign: 'left',
+            fontSize: textScale(18),
+            color: colors.white,
+            marginHorizontal: moderateScale(25),
+          }}>
+          {`${moment(selectedDate).format('ddd')} ${moment(selectedDate).format(
+            'DD',
+          )} ${moment(selectedDate).format('MMM')}`}
+        </Text>
+      </View>
+
+      <CalendarList
+        horizontal={true}
+        pagingEnabled={true}
+        calendarWidth={width - moderateScale(40)}
+        calendarHeight={height / 2.6}
+        renderArrow={_renderArrow}
+        hideArrows={false}
+        onDayPress={(value) => onDayPress(value)}
+        minDate={new Date()}
+        style={{marginTop: moderateScale(10)}}
+        markedDates={{
+          [selectedDate]: {
+            selected: true,
+            selectedColor: themeColors.primary_color,
+          },
+        }}
+      />
+      <View
+        style={{
+          backgroundColor: colors.white,
+          overflow: 'hidden',
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+        }}>
+        <TouchableOpacity onPress={onCalendarCancel}>
+          <Text
+            style={{
+              marginHorizontal: moderateScale(20),
+              fontSize: textScale(14),
+            }}>
+            {strings.CANCEL}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={calendarPickerOkPress}
+          style={{
+            paddingHorizontal: moderateScale(23),
+            paddingVertical: moderateScaleVertical(10),
+            backgroundColor: themeColors.primary_color,
+            marginHorizontal: moderateScale(20),
+            borderRadius: 4,
+          }}>
+          <Text style={{color: colors.white, fontSize: textScale(14)}}>
+            {strings.OK}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+
+  const _timeModalMainView = () => (
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 20,
+        backgroundColor: getColorCodeWithOpactiyNumber(
+          colors.black.substr(1),
+          50,
+        ),
+      }}>
+      <View
+        style={{
+          backgroundColor: themeColors.primary_color,
+          paddingTop: moderateScaleVertical(20),
+          overflow: 'hidden',
+          borderRadius: 12,
+        }}>
+        <View style={{marginBottom: moderateScaleVertical(20)}}>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: textScale(18),
+              color: colors.white,
+            }}>
+            {formatedTime}
+          </Text>
+        </View>
+
+        <DatePicker
+          date={date}
+          mode="time"
+          textColor={isDarkMode ? '#fff' : colors.blackB}
+          minimumDate={new Date()}
+          style={{
+            width: width / 1.1,
+            height: height / 2.6,
+            backgroundColor: colors.white,
+            alignSelf: 'center',
+          }}
+          // onDateChange={setDate}
+          onDateChange={(value) => onDateChange(value)}
+        />
+        <View
+          style={{
+            backgroundColor: colors.white,
+            paddingBottom: moderateScaleVertical(20),
+            overflow: 'hidden',
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+          }}>
+          <TouchableOpacity onPress={openTimePickerCancel}>
+            <Text
+              style={{
+                marginHorizontal: moderateScale(20),
+                fontSize: textScale(14),
+              }}>
+              {strings.CANCEL}
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={datePickerOkPress}
+            style={{
+              paddingHorizontal: moderateScale(23),
+              paddingVertical: moderateScaleVertical(10),
+              backgroundColor: themeColors.primary_color,
+              marginHorizontal: moderateScale(20),
+              borderRadius: 4,
+            }}>
+            <Text style={{color: colors.white, fontSize: textScale(14)}}>
+              {strings.OK}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
 
   return (
     <View
@@ -129,12 +345,15 @@ export default function SelectTimeModalView({
             paddingTop: moderateScaleVertical(50),
           }}>
           <TextInputWithUnderlineAndLabel
-            // onChangeText={_onChangeText('')}
-            // value={email}
+            value={pickedUpDate}
             label={strings.PICKUP_DATE}
             autoCapitalize={'none'}
             containerStyle={{marginVertical: moderateScaleVertical(10)}}
-            txtInputStyle={{fontFamily: fontFamily.regular}}
+            txtInputStyle={{
+              fontFamily: fontFamily.regular,
+              opacity: 1,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}
             undnerlinecolor={colors.textGreyB}
             labelStyle={{color: colors.textGrey}}
             lableViewStyle={{
@@ -147,12 +366,15 @@ export default function SelectTimeModalView({
             onPressLabel={openCalenderPicker}
           />
           <TextInputWithUnderlineAndLabel
-            // onChangeText={_onChangeText('')}
-            // value={email}
+            value={pickedUpTime}
             label={strings.PICKUP_TIME}
             autoCapitalize={'none'}
             containerStyle={{marginVertical: moderateScaleVertical(10)}}
-            txtInputStyle={{fontFamily: fontFamily.regular}}
+            txtInputStyle={{
+              fontFamily: fontFamily.regular,
+              opacity: 1,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}
             undnerlinecolor={colors.textGreyB}
             labelStyle={{color: colors.textGrey}}
             mainStyle={{marginTop: moderateScaleVertical(30)}}
@@ -165,90 +387,6 @@ export default function SelectTimeModalView({
             labelIconStyle={{tintColor: themeColors.primary_color}}
             onPressLabel={openTimePicker}
           />
-
-          <Modal
-            transparent={true}
-            isVisible={isTimerPickerModal}
-            animationType={'none'}
-            style={styles.modalContainer}
-            onLayout={(event) => {
-              updateState({viewHeight: event.nativeEvent.layout.height});
-            }}>
-            <View
-              style={{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: getColorCodeWithOpactiyNumber(
-                  colors.black.substr(1),
-                  50,
-                ),
-              }}>
-              <View
-                style={{
-                  backgroundColor: themeColors.primary_color,
-                  paddingTop: moderateScaleVertical(20),
-                  overflow: 'hidden',
-                  borderRadius: 12,
-                }}>
-                <View style={{marginBottom: moderateScaleVertical(20)}}>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      fontSize: textScale(18),
-                      color: colors.white,
-                    }}>
-                    {formatedTime}
-                  </Text>
-                </View>
-
-                <DatePicker
-                  date={date}
-                  mode="time"
-                  textColor={isDarkMode ? '#fff' : colors.blackB}
-                  minimumDate={new Date()}
-                  style={{
-                    width: width / 1.5,
-                    height: height / 3.2,
-                    backgroundColor: colors.white,
-                    alignSelf: 'center',
-                  }}
-                  // onDateChange={setDate}
-                  onDateChange={(value) => onDateChange(value)}
-                />
-                <View
-                  style={{
-                    backgroundColor: colors.white,
-                    paddingBottom: moderateScaleVertical(20),
-                    overflow: 'hidden',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      marginHorizontal: moderateScale(18),
-                      fontSize: textScale(14),
-                    }}>
-                    CANCEL
-                  </Text>
-                  <View
-                    style={{
-                      paddingHorizontal: moderateScale(20),
-                      paddingVertical: moderateScaleVertical(10),
-                      backgroundColor: themeColors.primary_color,
-                      marginHorizontal: moderateScale(20),
-                      borderRadius: 4,
-                    }}>
-                    <Text
-                      style={{color: colors.white, fontSize: textScale(14)}}>
-                      OK
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </Modal>
         </View>
         <View
           style={{
@@ -265,6 +403,20 @@ export default function SelectTimeModalView({
           />
         </View>
       </View>
+      <ModalView
+        transparent={true}
+        isVisible={isDatePickerModal}
+        modalStyle={styles.modalContainer}
+        mainViewStyle={styles.mainViewStyle}
+        modalMainContent={_calendarModalMainView}
+      />
+      <ModalView
+        transparent={true}
+        isVisible={isTimerPickerModal}
+        modalStyle={styles.modalContainer}
+        mainViewStyle={styles.mainViewStyle}
+        modalMainContent={_timeModalMainView}
+      />
     </View>
   );
 }
