@@ -415,7 +415,7 @@ export default function DashBoardHeaderFive({
                         borderColor: item.isActive
                           ? themeColors.primary_color
                           : colors.transparent,
-                        borderWidth: 1,
+                        borderWidth: 0.7,
                         flexDirection: 'row',
                         paddingVertical: moderateScaleVertical(15),
                         margin: moderateScale(5),
