@@ -7,6 +7,7 @@ import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStyles from '../styles/commonStyles';
+
 import {
   moderateScale,
   moderateScaleVertical,
@@ -15,6 +16,7 @@ import {
 import { getImageUrl } from '../utils/helperFunctions';
 import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../styles/theme';
+import BlurImages from './BlurImages';
 
 export default function MarketCard3({
   data = {},
@@ -36,7 +38,20 @@ export default function MarketCard3({
       activeOpacity={0.5}
       onPress={onPress}
       style={styles.mainTouchContainer}>
-      <FastImage
+      <BlurImages
+        themeColor={themeColors.primary_color}
+        data={data}
+        source={{
+          uri: getImageUrl(
+            data.banner.proxy_url || data.image.proxy_url,
+            data.banner.image_path || data.image.image_path,
+            '800/400',
+          )
+        }}
+        style={[styles.mainImage, { ...fastImageStyle }]}
+
+      />
+      {/* <FastImage
         style={[styles.mainImage, { ...fastImageStyle }]}
         resizeMode={imageResizeMode}
         source={{
@@ -47,80 +62,81 @@ export default function MarketCard3({
           ),
           priority: FastImage.priority.high,
         }}
-      />
+      
+      /> */}
       <View style={{
-          padding: 8,
+        padding: 8,
       }}>
-      <View style={styles.descView}>
-        <Text
-          numberOfLines={1}
-          style={
-            isDarkMode
-              ? [styles.categoryText, { color: MyDarkTheme.colors.text }]
-              : styles.categoryText
-          }>
-          {data.name}
-        </Text>
-   
-        {data?.product_avg_average_rating && (
-          <View style={styles.ratingView}>
+        <View style={styles.descView}>
+          <Text
+            numberOfLines={1}
+            style={
+              isDarkMode
+                ? [styles.categoryText, { color: MyDarkTheme.colors.text }]
+                : styles.categoryText
+            }>
+            {data.name}
+          </Text>
 
-            <Text style={{ ...styles.ratingTxt, color: colors.white, fontSize: textScale(9) }}>
-              {Number(data?.product_avg_average_rating).toFixed(1)}
+          {data?.product_avg_average_rating && (
+            <View style={styles.ratingView}>
+
+              <Text style={{ ...styles.ratingTxt, color: colors.white, fontSize: textScale(9) }}>
+                {Number(data?.product_avg_average_rating).toFixed(1)}
+              </Text>
+              <Image
+                style={{ tintColor: colors.white, marginLeft: 2, width: 9, height: 9 }}
+                source={imagePath.star}
+                resizeMode="contain"
+              />
+            </View>
+          )}
+        </View>
+        <Text numberOfLines={1} style={{
+          color: colors.greyLight,
+          fontSize: textScale(10),
+          fontFamily: fontFamily.regular,
+          textAlign: 'left',
+          marginVertical: moderateScaleVertical(4),
+          marginTop: moderateScaleVertical(6)
+        }}>{data?.categoriesList}</Text>
+        <View style={{ height: 1, borderWidth: 0.5, borderColor: 'rgba(1,1,1,0.05)', marginTop: moderateScaleVertical(2) }} />
+        <View style={styles.distanceView}>
+          {<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {data?.lineOfSightDistance && (<Image
+              style={{ tintColor: themeColors.primary_color }}
+              source={imagePath.location2}
+            />)}
+            <Text
+              style={{
+                color: colors.greyLight,
+                fontSize: textScale(10),
+                fontFamily: fontFamily.regular,
+                marginHorizontal: moderateScale(5),
+                textAlign: 'left'
+              }}>
+              {data?.lineOfSightDistance} {!!data?.lineOfSightDistance ? 'miles' : ''} {!!data?.lineOfSightDistance && !!data?.timeofLineOfSightDistance ? '|' : ''} {data?.timeofLineOfSightDistance} {!!data?.timeofLineOfSightDistance ? 'mins' : ''}
             </Text>
-            <Image
-              style={{ tintColor: colors.white, marginLeft: 2, width: 9, height: 9 }}
-              source={imagePath.star}
-              resizeMode="contain"
-            />
-          </View>
-        )}
-      </View>
-      <Text numberOfLines={1} style={{
-         color: colors.greyLight,
-         fontSize: textScale(10),
-         fontFamily: fontFamily.regular,
-         textAlign: 'left',
-         marginVertical:moderateScaleVertical(4),
-         marginTop:moderateScaleVertical(6)
-      }}>{data?.categoriesList}</Text>
-      <View style={{height: 1, borderWidth: 0.5, borderColor: 'rgba(1,1,1,0.05)',marginTop:moderateScaleVertical(2)}} />
-      <View style={styles.distanceView}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Image
-            style={{ tintColor: themeColors.primary_color }}
-            source={imagePath.location2}
-          />
+          </View>}
+
           <Text
             style={{
-              color: colors.greyLight,
-              fontSize: textScale(10),
-              fontFamily: fontFamily.regular,
-              marginHorizontal: moderateScale(5),
-              textAlign: 'left'
+              ...commonStyles.mediumFont14Normal,
+              fontSize: textScale(12),
+              textAlign: 'left',
+              color: data?.show_slot
+                ? colors.green
+                : data?.slot && data?.slot.length
+                  ? colors.green
+                  : colors.redB,
             }}>
-            {data?.lineOfSightDistance} miles | {data?.timeofLineOfSightDistance} mins
+            {data?.show_slot
+              ? 'Open'
+              : data?.slot && data?.slot.length
+                ? 'Open'
+                : 'Close'}
           </Text>
         </View>
-
-        <Text
-          style={{
-            ...commonStyles.mediumFont14Normal,
-            fontSize: textScale(12),
-            textAlign: 'left',
-            color: data?.show_slot
-              ? colors.green
-              : data?.slot && data?.slot.length
-                ? colors.green
-                : colors.redB,
-          }}>
-          {data?.show_slot
-            ? 'Open'
-            : data?.slot && data?.slot.length
-              ? 'Open'
-              : 'Close'}
-        </Text>
-      </View>
       </View>
     </TouchableOpacity>
   );
@@ -133,7 +149,7 @@ export function stylesFunc({ fontFamily, extraStyles }) {
       backgroundColor: colors.white,
       borderRadius: 10,
       shadowColor: '#000',
-      shadowOffset: {width: 0, height: 1},
+      shadowOffset: { width: 0, height: 1 },
       shadowOpacity: 0.1,
       shadowRadius: 2,
       elevation: 2,

@@ -603,6 +603,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.eboyo:
+          updateState({
+            shortCode: shortCodes.eboyo,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
