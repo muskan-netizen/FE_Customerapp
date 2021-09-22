@@ -87,6 +87,7 @@ const shortCodes = {
   weeat: '03cff2',
   gorillas: 'd22ad9',
   baytukom: 'd0a898',
+  eboyo: '1d0fd3',
 };
 
 const appIds = {
@@ -433,6 +434,10 @@ const appIds = {
   baytukom: Platform.select({
     ios: 'com.baytukom',
     android: 'com.baytukom',
+  }),
+  eboyo: Platform.select({
+    ios: 'com.eboyo',
+    android: 'com.eboyo',
   }),
 };
 

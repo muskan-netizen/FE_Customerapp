@@ -33,7 +33,7 @@ import {CalendarList} from 'react-native-calendars';
 export default function SelectTimeModalView({
   isLoading = false,
   availAbleTimes = [],
-  date = moment().format('hh:mm A'),
+  date,
   onPressBack,
   selectedAvailableTimeOption = null,
   selectAvailAbleTime,
@@ -106,6 +106,8 @@ export default function SelectTimeModalView({
   const modalOkPress = (value1, value2) => {
     _modalOkPress(value1, value2);
   };
+
+  // console.log(moment().format('hh:mm A'), formatedTime, 'kdjhfjkhdsjh');
 
   const _calendarModalMainView = () => (
     <View
@@ -225,7 +227,6 @@ export default function SelectTimeModalView({
         </View>
 
         <DatePicker
-          date={date}
           mode="time"
           textColor={isDarkMode ? colors.white : colors.blackB}
           minimumDate={new Date()}

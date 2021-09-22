@@ -1,9 +1,10 @@
-import { debounce } from 'lodash';
-import React, { useEffect, useState } from 'react';
-import { FlatList, Image, RefreshControl, View } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
-import { useSelector } from 'react-redux';
+import {debounce} from 'lodash';
+import React, {useEffect, useState} from 'react';
+import {FlatList, Image, RefreshControl, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import {useSelector} from 'react-redux';
 import Header3 from '../../Components/Header3';
+import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import MarketCard3 from '../../Components/MarketCard3';
 import SearchBar2 from '../../Components/SearchBar2';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -12,12 +13,16 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import { moderateScale, width } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
-import { showError } from '../../utils/helperFunctions';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  width,
+} from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
+import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from './ListEmptyVendors';
 
-export default function Vendors3({ route, navigation }) {
+export default function Vendors3({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -28,7 +33,7 @@ export default function Vendors3({ route, navigation }) {
     limit: 5,
     isRefreshing: false,
   });
-  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
+  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state.initBoot);
 
   const categoryData = useSelector((state) => state?.vendor?.categoryData);
@@ -37,36 +42,35 @@ export default function Vendors3({ route, navigation }) {
   // alert(dine_In_Type);
   const location = useSelector((state) => state?.home?.location);
 
-  const { isLoading, pageNo, isRefreshing, limit } = state;
-  const { data } = route.params;
+  const {isLoading, pageNo, isRefreshing, limit} = state;
+  const {data} = route.params;
   //update state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({ fontFamily });
-
+  const commonStyles = commonStylesFun({fontFamily});
 
   useEffect(() => {
     actions
       .getDataByCategoryId(
         `/${data.id}?limit=${limit}&page=${pageNo}&type=${dine_In_Type}`,
         {},
-        { 
+        {
           code: appData.profile.code,
           latitude: '30.733351',
-          longitude: '76.779037' 
+          longitude: '76.779037',
         },
       )
       .then((res) => {
-        console.log("vendor data", res)
-        updateState({ isLoading: false, isRefreshing: false });
+        console.log('vendor data', res);
+        updateState({isLoading: false, isRefreshing: false});
         const vendorData = {
           category: res.data.category,
           listData:
@@ -80,18 +84,18 @@ export default function Vendors3({ route, navigation }) {
   }, [pageNo, isRefreshing]);
 
   const errorMethod = (error) => {
-    updateState({ isLoading: false, isRefreshing: false });
+    updateState({isLoading: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({ pageNo: 1, isRefreshing: true });
+    updateState({pageNo: 1, isRefreshing: true});
   };
 
   //pagination of data
-  const onEndReached = ({ distanceFromEnd }) => {
-    updateState({ pageNo: pageNo + 1 });
+  const onEndReached = ({distanceFromEnd}) => {
+    updateState({pageNo: pageNo + 1});
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -104,23 +108,23 @@ export default function Vendors3({ route, navigation }) {
     {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-          item,
-          rootProducts: true,
-          categoryData: data,
-        })()
+            item,
+            rootProducts: true,
+            categoryData: data,
+          })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-          id: item.id,
-          vendor: true,
-          name: item.name,
-        })();
+            id: item.id,
+            vendor: true,
+            name: item.name,
+          })();
     }
   };
 
   /**********/
 
-  const _renderItem = ({ item, index }) => {
+  const _renderItem = ({item, index}) => {
     return (
-      <View style={{ marginHorizontal: moderateScale(15) }}>
+      <View style={{marginHorizontal: moderateScale(15)}}>
         <MarketCard3 onPress={() => _checkRedirectScreen(item)} data={item} />
       </View>
     );
@@ -149,7 +153,14 @@ export default function Vendors3({ route, navigation }) {
         }
       />
       {/* <View style={{flexDirection: 'row', alignItems: 'center'}}> */}
-      <SearchBar2 navigation={navigation} />
+      {isLoading ? (
+        <HeaderLoader
+          viewStyles={{marginVertical: moderateScaleVertical(15)}}
+          isRight
+        />
+      ) : (
+        <SearchBar2 navigation={navigation} />
+      )}
       {/* <Image
           style={
             isDarkMode
@@ -162,7 +173,7 @@ export default function Vendors3({ route, navigation }) {
       <FlatList
         showsVerticalScrollIndicator={false}
         data={(!isLoading && categoryData?.listData) || []}
-        ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+        ItemSeparatorComponent={() => <View style={{height: 8}} />}
         keyExtractor={(item, index) => String(index)}
         renderItem={_renderItem}
         refreshing={isRefreshing}
@@ -171,7 +182,7 @@ export default function Vendors3({ route, navigation }) {
             refreshing={isRefreshing}
             onRefresh={handleRefresh}
             tintColor={themeColors.primary_color}
-          // titleColor="#fff"
+            // titleColor="#fff"
           />
         }
         getItemLayout={getItemLayout}
@@ -187,10 +198,10 @@ export default function Vendors3({ route, navigation }) {
             emptyText={'No data found'}
             pRows={2}
             pWidth={'100%'}
-            rowContainerstyle={{ marginBottom: moderateScale(25) }}
+            rowContainerstyle={{marginBottom: moderateScale(25)}}
           />
         }
-        ListFooterComponent={() => <View style={{ height: 100 }} />}
+        ListFooterComponent={() => <View style={{height: 100}} />}
       />
     </WrapperContainer>
 

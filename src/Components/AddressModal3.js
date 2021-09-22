@@ -298,6 +298,10 @@ export default function AddressModal3({
       clearState();
       passLocation(data);
       // clearState();
+    } else {
+      onClose();
+      clearState();
+      passLocation(data);
     }
   };
   const currentLocation = () => {

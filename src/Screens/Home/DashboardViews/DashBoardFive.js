@@ -35,6 +35,11 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import {SearchBar} from 'react-native-elements/dist/searchbar/SearchBar';
 import SearchBar2 from '../../../Components/SearchBar2';
+import HomeLoader from '../../../Components/Loaders/HomeLoader';
+import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import SearchLoader from '../../../Components/Loaders/SearchLoader';
+import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
+import BannerLoader from '../../../Components/Loaders/BannerLoader';
 
 export default function DashBoardFive({
   handleRefresh = () => {},
@@ -86,18 +91,57 @@ export default function DashBoardFive({
 
   // console.log(appMainData, 'appMainData');
 
-  return (
-    <>
-      {isLoading ? (
-        <ListEmptyVendors
-          isLoading={isLoading}
-          listSize={1}
-          height={moderateScaleVertical(40)}
-          vendorContainerStyle={{marginVertical: moderateScale(15)}}
+  if (isLoading) {
+    return (
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{flexGrow: 1}}>
+        <SearchLoader viewStyles={{marginTop: moderateScale(15)}} />
+        <CategoryLoader2 viewStyles={{marginTop: moderateScale(25)}} />
+        <CategoryLoader2 viewStyles={{marginTop: moderateScale(25)}} />
+        <BannerLoader
+          isBannerDots
+          viewStyles={{
+            marginTop: moderateScale(35),
+          }}
         />
-      ) : (
-        <SearchBar2 navigation={navigation} />
-      )}
+
+        <HeaderLoader
+          viewStyles={{marginVertical: 20}}
+          widthLeft={moderateScale(150)}
+          rectWidthLeft={moderateScale(150)}
+          heightLeft={moderateScaleVertical(30)}
+          rectHeightLeft={moderateScaleVertical(30)}
+          isRight={false}
+          rx={20}
+          ry={20}
+        />
+        <BannerLoader
+          isVendorLoader
+          viewStyles={{
+            marginTop: moderateScale(20),
+          }}
+        />
+        <BannerLoader
+          isVendorLoader
+          viewStyles={{
+            marginTop: moderateScale(25),
+          }}
+        />
+        <BannerLoader
+          isVendorLoader
+          viewStyles={{
+            marginTop: moderateScale(25),
+          }}
+        />
+        {/* <HomeLoader /> */}
+      </ScrollView>
+    );
+  }
+
+  return (
+    <View style={{flex: 1}}>
+      <SearchBar2 navigation={navigation} />
       <ScrollView
         refreshing={isRefreshing}
         refreshControl={
@@ -113,29 +157,9 @@ export default function DashBoardFive({
           flex: 1,
           marginHorizontal: moderateScale(15),
         }}>
-        {isLoading ? (
-          <View style={{marginTop: moderateScale(5)}}>
-            <CategoryLoader
-              listSize={2}
-              isRow
-              cardWidth={80}
-              pRows={1}
-              height={moderateScale(70)}
-              containerStyle={{marginVertical: moderateScale(5)}}
-            />
-          </View>
-        ) : appMainData &&
+        {appMainData &&
           appMainData?.categories &&
-          appMainData?.categories.length ? (
-          <View style={{width: '100%'}}>
-            {/* <Text
-              style={{
-                fontFamily: fontFamily.regular,
-                fontSize: textScale(16),
-                marginVertical: moderateScale(15),
-              }}>
-              {strings.SELECT_CATEGORY}
-            </Text> */}
+          appMainData?.categories.length && (
             <FlatList
               numColumns={4}
               data={appMainData?.categories}
@@ -146,19 +170,9 @@ export default function DashBoardFive({
                 <View style={{height: moderateScale(10)}} />
               )}
             />
-          </View>
-        ) : null}
+          )}
         <View style={{marginVertical: moderateScale(30)}}>
-          {isLoading ? (
-            <ListEmptyVendors
-              isLoading={isLoading}
-              emptyText={'No data found'}
-              listSize={1}
-              dotsLength={true}
-              height={moderateScaleVertical(130)}
-              vendorContainerStyle={{marginLeft: 0}}
-            />
-          ) : appData?.banners?.length ? (
+          {appData?.banners?.length && (
             <>
               <BannerHome2
                 bannerRef={bannerRef}
@@ -200,20 +214,9 @@ export default function DashBoardFive({
                 }}
               />
             </>
-          ) : null}
+          )}
         </View>
-        {isLoading ? (
-          <ListEmptyVendors
-            isLoading={isLoading}
-            emptyText={'No data found'}
-            listSize={3}
-            pRows={2}
-            pWidth={'100%'}
-            rowContainerstyle={{marginBottom: moderateScale(25)}}
-            height={moderateScaleVertical(130)}
-            vendorContainerStyle={{marginLeft: 0}}
-          />
-        ) : appMainData?.vendors && appMainData?.vendors?.length ? (
+        {appMainData?.vendors && appMainData?.vendors?.length && (
           <View>
             <Text
               style={[
@@ -234,7 +237,7 @@ export default function DashBoardFive({
               )}
             />
           </View>
-        ) : null}
+        )}
         <View
           style={{
             height:
@@ -244,6 +247,6 @@ export default function DashBoardFive({
           }}
         />
       </ScrollView>
-    </>
+    </View>
   );
 }

@@ -170,10 +170,11 @@ export default function Wallet({navigation}) {
       statusBarColor={colors.white}>
       <Header
         leftIcon={
-           appStyle?.homePageLayout === 2 ? 
-          imagePath.backArrow:appStyle?.homePageLayout === 3?
-          imagePath.icBackb :
-           imagePath.back
+          appStyle?.homePageLayout === 2
+            ? imagePath.backArrow
+            : appStyle?.homePageLayout === 3
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={strings.WALLET}
         headerStyle={
@@ -260,7 +261,10 @@ export default function Wallet({navigation}) {
         style={{
           backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
           flex: 1,
-          paddingBottom: moderateScaleVertical(80),
+          paddingBottom:
+            appStyle?.tabBarLayout == 3
+              ? moderateScaleVertical(80)
+              : moderateScaleVertical(5),
         }}>
         <FlatList
           data={walletHistory}

@@ -16,6 +16,12 @@ export default ({fontFamily}) => {
     map: {
       ...StyleSheet.absoluteFillObject,
     },
+    backbutton: {
+      position: 'absolute',
+      left: 0,
+      marginHorizontal: moderateScale(30),
+      marginVertical: moderateScaleVertical(50),
+    },
   });
   return styles;
 };
