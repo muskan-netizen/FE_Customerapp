@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8416EB8F26CD339500D9B686"
+               BlueprintIdentifier = "84314CC926FB576C005E3FC1"
                BuildableName = "Codiner.app"
                BlueprintName = "Codiner"
                ReferencedContainer = "container:Runrun.xcodeproj">
@@ -44,7 +44,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8416EB8F26CD339500D9B686"
+            BlueprintIdentifier = "84314CC926FB576C005E3FC1"
             BuildableName = "Codiner.app"
             BlueprintName = "Codiner"
             ReferencedContainer = "container:Runrun.xcodeproj">
@@ -61,7 +61,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8416EB8F26CD339500D9B686"
+            BlueprintIdentifier = "84314CC926FB576C005E3FC1"
             BuildableName = "Codiner.app"
             BlueprintName = "Codiner"
             ReferencedContainer = "container:Runrun.xcodeproj">
