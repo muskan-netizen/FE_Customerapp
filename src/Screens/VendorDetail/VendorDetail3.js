@@ -23,6 +23,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import strings from '../../constants/lang';
 import BrandCard2 from '../../Components/BrandCard2';
+import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
+import {trim} from 'lodash';
 
 export default function VendorDetail3({navigation, route}) {
   let vendorParams = route?.params?.data;
@@ -171,6 +173,62 @@ export default function VendorDetail3({navigation, route}) {
     );
   };
 
+  if (isLoading) {
+    return (
+      <WrapperContainer
+        statusBarColor={colors.backgroundGrey}
+        bgColor={
+          isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+        }>
+        <CategoryLoader2
+          viewStyles={{marginTop: moderateScale(50)}}
+          isFourthItem={false}
+          widthTop={(width - moderateScale(50)) / 3}
+          rectWidthTop={(width - moderateScale(50)) / 3}
+          heightTop={moderateScaleVertical(90)}
+          rectHeightTop={moderateScaleVertical(90)}
+          isSubCategory
+        />
+        <CategoryLoader2
+          viewStyles={{marginTop: moderateScale(25)}}
+          isFourthItem={false}
+          widthTop={(width - moderateScale(50)) / 3}
+          rectWidthTop={(width - moderateScale(50)) / 3}
+          heightTop={moderateScaleVertical(90)}
+          rectHeightTop={moderateScaleVertical(90)}
+          isSubCategory
+        />
+        <CategoryLoader2
+          viewStyles={{marginTop: moderateScale(25)}}
+          isFourthItem={false}
+          widthTop={(width - moderateScale(50)) / 3}
+          rectWidthTop={(width - moderateScale(50)) / 3}
+          heightTop={moderateScaleVertical(90)}
+          rectHeightTop={moderateScaleVertical(90)}
+          isSubCategory
+        />
+        <CategoryLoader2
+          viewStyles={{marginTop: moderateScale(25)}}
+          isFourthItem={false}
+          widthTop={(width - moderateScale(50)) / 3}
+          rectWidthTop={(width - moderateScale(50)) / 3}
+          heightTop={moderateScaleVertical(90)}
+          rectHeightTop={moderateScaleVertical(90)}
+          isSubCategory
+        />
+        <CategoryLoader2
+          viewStyles={{marginTop: moderateScale(25)}}
+          isFourthItem={false}
+          widthTop={(width - moderateScale(50)) / 3}
+          rectWidthTop={(width - moderateScale(50)) / 3}
+          heightTop={moderateScaleVertical(90)}
+          rectHeightTop={moderateScaleVertical(90)}
+          isSubCategory
+        />
+      </WrapperContainer>
+    );
+  }
+
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
@@ -194,39 +252,31 @@ export default function VendorDetail3({navigation, route}) {
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }
       />
-
-      {isLoading ? (
-        <View>
-          <View style={{height: 10}} />
-          <VendorDetailLoader listSize={5} isRow />
-        </View>
-      ) : (
-        <FlatList
-          data={vendorData}
-          numColumns={3}
-          ListHeaderComponent={<View style={{height: 10}} />}
-          // columnWrapperStyle={{justifyContent: 'space-between'}}
-          ItemSeparatorComponent={() => <View style={{height: 10}} />}
-          renderItem={_renderItem}
-          ListEmptyComponent={
-            !isLoading && (
-              <View
-                style={{
-                  flex: 1,
-                  marginTop: moderateScaleVertical(width / 2),
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <ListEmptyVendors
-                  isLoading={isLoading}
-                  emptyText={strings.NO_DATA_FOUND}
-                />
-              </View>
-            )
-          }
-          keyExtractor={(item, index) => String(index)}
-        />
-      )}
+      <FlatList
+        data={vendorData}
+        numColumns={3}
+        ListHeaderComponent={<View style={{height: 10}} />}
+        // columnWrapperStyle={{justifyContent: 'space-between'}}
+        ItemSeparatorComponent={() => <View style={{height: 10}} />}
+        renderItem={_renderItem}
+        ListEmptyComponent={
+          !isLoading && (
+            <View
+              style={{
+                flex: 1,
+                marginTop: moderateScaleVertical(width / 2),
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <ListEmptyVendors
+                isLoading={isLoading}
+                emptyText={strings.NO_DATA_FOUND}
+              />
+            </View>
+          )
+        }
+        keyExtractor={(item, index) => String(index)}
+      />
     </WrapperContainer>
   );
 }

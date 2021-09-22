@@ -4,6 +4,7 @@ import {FlatList, Image, RefreshControl, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
 import Header3 from '../../Components/Header3';
+import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import MarketCard3 from '../../Components/MarketCard3';
 import SearchBar2 from '../../Components/SearchBar2';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -12,7 +13,11 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import {moderateScale, width} from '../../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  width,
+} from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from './ListEmptyVendors';
@@ -60,7 +65,7 @@ export default function Vendors3({route, navigation}) {
         {code: appData.profile.code},
       )
       .then((res) => {
-        console.log("vendor data",res)
+        console.log('vendor data', res);
         updateState({isLoading: false, isRefreshing: false});
         const vendorData = {
           category: res.data.category,
@@ -144,7 +149,14 @@ export default function Vendors3({route, navigation}) {
         }
       />
       {/* <View style={{flexDirection: 'row', alignItems: 'center'}}> */}
-      <SearchBar2 navigation={navigation} />
+      {isLoading ? (
+        <HeaderLoader
+          viewStyles={{marginVertical: moderateScaleVertical(15)}}
+          isRight
+        />
+      ) : (
+        <SearchBar2 navigation={navigation} />
+      )}
       {/* <Image
           style={
             isDarkMode
