@@ -289,6 +289,8 @@ export default {
   subscription: require('../assets/images/RoyoorderNewImages/ic_sub.png'),
   recently_search: require('../assets/images/RoyoorderNewImages/ic_recent.png'),
   trending: require('../assets/images/RoyoorderNewImages/ic_trending.png'),
+  icMark1: require('../assets/images/RoyoorderNewImages/ic_mark1.png'),
+  icMark2: require('../assets/images/RoyoorderNewImages/ic_mark2.png'),
 
   icBrandActive: require('../assets/images/RoyoorderNewImages/ic_tag2.png'),
   icBrandInActive: require('../assets/images/RoyoorderNewImages/ic_tag.png'),

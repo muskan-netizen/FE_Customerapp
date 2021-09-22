@@ -51,6 +51,7 @@ export default function ProductCard3({
   selectedCartItem,
 }) {
   // data['qty'] = 1
+  console.log("data++==>>>>>",data)
   const [state, setState] = useState({
     selectedIndex: -1,
     selectedIndexForCartIcon: -1,
@@ -71,7 +72,7 @@ export default function ProductCard3({
 
   const { themeLayouts } = currentTheme;
   const commonStyles = commonStylesFunc({ fontFamily });
-  const cardWidthNew = cardWidth ? cardWidth : width * 0.5 - 21.5;
+
 
   const url1 = data?.media[0]?.image?.path.proxy_url;
   const url2 = data?.media[0]?.image?.path.image_path;
@@ -100,7 +101,7 @@ export default function ProductCard3({
       animation={index > 8 ? '' : 'fadeInUp'}
       delay={index > 8 ? 1 * 100 : index * 10}>
       <TouchableOpacity
-        disabled
+        // disabled
         activeOpacity={0.6}
         onPress={onPress}
         onPressIn={() => pressInAnimation(scaleInAnimated)}

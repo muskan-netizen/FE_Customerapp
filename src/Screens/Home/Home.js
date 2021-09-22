@@ -307,7 +307,9 @@ export default function Home({route, navigation}) {
                   actions.locationData(data);
                 }
               }
-              updateState({isLoading: false});
+              setTimeout(() => {
+                updateState({isLoading: false});
+              }, 3000);
             })
             .catch(errorMethod)
         : null;

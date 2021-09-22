@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import colors from '../../styles/colors';
 import {
   height,
@@ -8,15 +8,16 @@ import {
   width,
 } from '../../styles/responsiveSize';
 
-export default ({themeColors, fontFamily, productTotalQuantity}) =>
+export default ({ themeColors, fontFamily, productTotalQuantity }) =>
   StyleSheet.create({
     cardViewStyle: {
       alignItems: 'center',
-      height: width * 0.7,
-      width: width,
+      height: moderateScale(180),
+      width: '100%',
+
       // marginRight: 20
     },
-    dotStyle: {height: 12, width: 12, borderRadius: 12 / 2},
+    dotStyle: { height: 12, width: 12, borderRadius: 12 / 2 },
     ratingColor: {
       color: colors.backgroundGrey,
       paddingLeft: 5,
@@ -25,8 +26,8 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
     },
     productName: {
       color: colors.textGrey,
-      fontSize: textScale(16),
-      lineHeight: 28,
+      fontSize: textScale(14),
+      lineHeight: 18,
       fontFamily: fontFamily.medium,
     },
     productTypeAndBrand: {
@@ -61,9 +62,9 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
     },
     productPrice: {
       color: colors.orangeB,
-      fontSize: textScale(18),
-      lineHeight: 28,
+      fontSize: textScale(14),
       fontFamily: fontFamily.bold,
+      textAlign: 'left'
     },
     productPrice2: {
       color: colors.orangeB,
@@ -71,19 +72,23 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
       lineHeight: 28,
       fontFamily: fontFamily.bold,
       textAlign: 'center',
+      textAlign: 'left'
     },
     descriptiontitle: {
       color: colors.textGrey,
-      fontSize: textScale(16),
-      lineHeight: 28,
+      fontSize: textScale(12),
       fontFamily: fontFamily.medium,
-      marginVertical: moderateScaleVertical(10),
+      // marginVertical: moderateScaleVertical(10),
+      textAlign: 'left',
+      marginBottom: moderateScaleVertical(4)
     },
     description: {
       color: colors.textGreyB,
       fontSize: textScale(14),
       lineHeight: 22,
       fontFamily: fontFamily.medium,
+      textAlign: 'left',
+
     },
     relatedProducts: {
       color: colors.textGrey,
@@ -91,6 +96,7 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
       lineHeight: 28,
       fontFamily: fontFamily.bold,
       marginVertical: moderateScaleVertical(10),
+      textAlign: 'left'
     },
 
     addonLable: {
@@ -98,6 +104,7 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
       fontSize: textScale(16),
       lineHeight: 22,
       fontFamily: fontFamily.bold,
+      textAlign: 'left'
     },
 
     variantLable: {
@@ -105,20 +112,22 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
       fontSize: textScale(14),
       lineHeight: 22,
       fontFamily: fontFamily.bold,
+      textAlign: 'left'
     },
     variantSizeViewOne: {
-      height: moderateScale(30),
-      width: moderateScale(30),
-      borderRadius: moderateScale(30 / 2),
+      height: moderateScale(23),
+      width: moderateScale(23),
+      borderRadius: 2,
       alignItems: 'center',
       justifyContent: 'center',
     },
     variantSizeViewTwo: {
-      height: moderateScale(40),
-      width: moderateScale(40),
-      borderRadius: moderateScale(40 / 2),
+      height: moderateScale(28),
+      width: moderateScale(28),
+      borderRadius: 2,
       alignItems: 'center',
       justifyContent: 'center',
+      textAlign: 'left'
     },
 
     modalMainViewContainer: {
@@ -126,6 +135,7 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
       backgroundColor: colors.white,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
+      textAlign: 'left'
       // overflow: 'hidden',
       // paddingHorizontal: moderateScale(24),
     },
@@ -134,6 +144,7 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
       marginBottom: 0,
       marginTop: moderateScaleVertical(height / 10),
       overflow: 'hidden',
+
     },
     closeButton: {
       alignItems: 'center',
@@ -173,11 +184,9 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
     },
     variantValue: {
       color: colors.black,
-      fontSize: textScale(14),
-      lineHeight: 22,
-      fontFamily: fontFamily.medium,
-      paddingLeft: moderateScale(5),
-      paddingRight: moderateScale(20),
+      fontSize: textScale(12),
+      fontFamily: fontFamily.regular,
+      textAlign: 'left',
     },
 
     chooseOption: {
@@ -234,8 +243,22 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
     },
     descriptionStyle: {
       color: colors.textGreyE,
-      fontSize: textScale(14),
+      fontSize: textScale(11),
       fontFamily: fontFamily.regular,
       lineHeight: moderateScale(22),
+    },
+    flexView: {
+      flexDirection: "row",
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginTop: moderateScaleVertical(4)
+    },
+    incDecBtnStyle: {
+      borderWidth: 0.4,
+      borderRadius: moderateScale(4),
+      height: moderateScale(38),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingHorizontal: moderateScale(12),
     },
   });

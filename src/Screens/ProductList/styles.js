@@ -110,5 +110,5 @@ export default ({ themeColors, fontFamily }) =>
       right: 50,
       left: 50,
       bottom: 50,
-    }
+    },
   });
