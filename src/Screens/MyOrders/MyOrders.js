@@ -183,19 +183,12 @@ export default function MyOrders({navigation}) {
 
   const onPressViewEditAndReplace = (item) => {
     item?.product_details[0]?.category_type == staticStrings.PICKUPANDDELIEVRY
-      ? appStyle?.homePageLayout === 3
-        ? navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
-            orderId: item?.order_id,
-            fromVendorApp: true,
-            selectedVendor: {id: item?.vendor_id},
-            orderDetail: item,
-          })
-        : navigation.navigate(navigationStrings.PICKUPORDERDETAIL, {
-            orderId: item?.order_id,
-            fromVendorApp: true,
-            selectedVendor: {id: item?.vendor_id},
-            orderDetail: item,
-          })
+      ? navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
+          orderId: item?.order_id,
+          fromVendorApp: true,
+          selectedVendor: {id: item?.vendor_id},
+          orderDetail: item,
+        })
       : // navigation.navigate(navigationStrings.ACCOUNTS, {
         //   screen: navigationStrings.PICKUPORDERDETAIL,
         //   params: {
