@@ -31,6 +31,7 @@ import commonStylesFun from '../../styles/commonStyles';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Signup({navigation}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -86,7 +87,9 @@ export default function Signup({navigation}) {
   };
 
   /** SIGNUP API FUNCTION **/
-  const onSignup = () => {
+  const onSignup = async() => {
+    let fcmToken = await AsyncStorage.getItem('fcmToken')
+
     let {callingCode} = state;
     const checkValid = isValidData();
     if (!checkValid) {
@@ -104,7 +107,7 @@ export default function Signup({navigation}) {
       device_type: Platform.OS,
       device_token: DeviceInfo.getUniqueId(),
       refferal_code: referralCode,
-
+      fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId()
       // country_id: '1',
     };
     console.log(data, 'signup--data');

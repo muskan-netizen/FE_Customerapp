@@ -17,6 +17,7 @@ import {
   Modal,
   Alert,
   I18nManager,
+  Share,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import EmptyListLoader from '../../Components/EmptyListLoader';
@@ -56,8 +57,9 @@ import { noDataFound } from '../../Components/Loaders/AnimatedLoaderFiles';
 import staticStrings from '../../constants/staticStrings';
 import AddonModal from '../ProductDetail/AddonModal';
 import VariantAddons from '../../Components/VariantAddons';
-import {removeItem} from '../../utils/utils';
+import { removeItem } from '../../utils/utils';
 import NoDataFound from '../../Components/NoDataFound';
+import SearchBar from '../../Components/SearchBar';
 
 export default function Products({ route, navigation }) {
   const { data } = route.params;
@@ -133,6 +135,8 @@ export default function Products({ route, navigation }) {
     AnimatedHeaderValue: false,
     selectedCartItem: null,
     cartId: null,
+    isSearch: false,
+    searchInput: ''
   });
 
   const {
@@ -176,6 +180,8 @@ export default function Products({ route, navigation }) {
     updateQtyLoader,
     cartId,
     showShimmer,
+    isSearch,
+    searchInput
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -970,8 +976,8 @@ export default function Products({ route, navigation }) {
                       color: isDarkMode
                         ? MyDarkTheme.colors.text
                         : colors.black,
-                      fontSize: moderateScale(20),
-                      fontFamily: fontFamily.medium,
+                      fontSize: moderateScale(18),
+                      fontFamily: fontFamily.regular,
                     }}>
                     {data?.categoryInfo?.name || data?.name}
                   </Text>
@@ -1157,17 +1163,21 @@ export default function Products({ route, navigation }) {
     );
   }
 
-  const onShare = async (item) => {
+  const onShare = async () => {
+    // console.log("item==>>>>",categoryInfo)
+    // return;
     const params = new URLSearchParams();
     let convertJson = JSON.stringify(data);
-    let shareLink = `${item.share_link}?${convertJson}`;
-    params.append(shareLink.toString());
-    console.log('vendor link+++', params.toString());
+    // let removeBrackets = convertJson.replace(/[{}]/g,'')
+    let shareLink = `${categoryInfo.share_link + `?data=${convertJson}`}`;
 
-    // var response =  shareLink?.split('?').pop();
-    // console.log("res==>>>>>",JSON.parse(response))
+    // params.append(shareLink.toString());
+    console.log('vendor link+++', shareLink);
 
-    return;
+    // var response =  shareLink?.split('=').pop();
+    // let obj = eval('({' + response + '})');
+    // console.log("res==>>>>>",obj)
+    // return;
     try {
       const result = await Share.share({
         url: shareLink,
@@ -1297,44 +1307,70 @@ export default function Products({ route, navigation }) {
                   </Animatable.View>
                 )}
             </View>
-
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={moveToNewScreen(
-                  navigationStrings.SEARCHPRODUCTOVENDOR,
-                  {
-                    type: data?.vendor
-                      ? staticStrings.VENDOR
-                      : staticStrings.CATEGORY,
-                    id: data?.vendor ? data?.id : productListId?.id,
-                  },
-                )}>
-                <Image
-                  style={{
-                    tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
-                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+            {false ?
+              <Animatable.View
+                animation="fadeIn"
+              >
+                <SearchBar
+                  containerStyle={{
+                    marginHorizontal: moderateScale(18),
+                    borderRadius: 8,
+                    width: width / 1.15,
+                    backgroundColor: isDarkMode
+                      ? colors.whiteOpacity15
+                      : colors.greyColor,
+                    height: moderateScaleVertical(37),
                   }}
-                  source={!!data?.showAddToCart ? false : imagePath.icSearchb}
+                  searchValue={searchInput}
+                  placeholder={strings.SEARCH_ITEM}
+                  // onChangeText={(value) => onChangeText(value)}
+                  showRightIcon
+                  rightIconPress={() =>
+                    updateState({ searchInput: '', isSearch: false, isLoading: false })
+                  }
                 />
-              </TouchableOpacity>
-              <View style={{ marginHorizontal: moderateScale(8) }} />
-              <TouchableOpacity activeOpacity={0.8}>
-                <Image
-                  style={{
-                    tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
-                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
-                  }}
-                  source={imagePath.icShareb}
-                />
-              </TouchableOpacity>
-            </View>
+              </Animatable.View>
+              :
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  // onPress={() => updateState({ isSearch: true })}
+                  onPress={moveToNewScreen(
+                    navigationStrings.SEARCHPRODUCTOVENDOR,
+                    {
+                      type: data?.vendor
+                        ? staticStrings.VENDOR
+                        : staticStrings.CATEGORY,
+                      id: data?.vendor ? data?.id : productListId?.id,
+                    },
+                  )}
+                >
+                  <Image
+                    style={{
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    }}
+                    source={!!data?.showAddToCart ? false : imagePath.icSearchb}
+                  />
+                </TouchableOpacity>
+                <View style={{ marginHorizontal: moderateScale(8) }} />
+                <TouchableOpacity onPress={onShare} activeOpacity={0.8}>
+                  <Image
+                    style={{
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    }}
+                    source={imagePath.icShareb}
+                  />
+                </TouchableOpacity>
+              </View>
+            }
           </View>
-          <View></View>
+
           <View style={{ height: moderateScale(10) }} />
           <FlatList
             onScroll={onScroll}

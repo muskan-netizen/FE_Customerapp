@@ -32,7 +32,6 @@ export default function PickupOrderDetail({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  console.log(paramData, '>>>>paramData>>>>');
   const [state, setState] = useState({
     isLoading: true,
     region: {

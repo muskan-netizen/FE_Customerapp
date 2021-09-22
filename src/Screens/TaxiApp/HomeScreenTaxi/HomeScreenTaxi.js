@@ -40,6 +40,7 @@ import {getCurrentLocation} from '../../../utils/helperFunctions';
 export default function HomeScreenTaxi({navigation, route}) {
   const mapRef = React.createRef();
   const paramData = route?.params;
+
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -283,13 +284,14 @@ export default function HomeScreenTaxi({navigation, route}) {
             borderTopLeftRadius: moderateScale(30),
             borderTopRightRadius: moderateScale(30),
             width: width,
+            backgroundColor: colors.white,
           }}>
-          <BlurView
+          {/* <BlurView
             reducedTransparencyFallbackColor="white"
             style={styles.absolute}
             blurType={Platform.OS === 'ios' ? 'xlight' : 'light'}
-            blurAmount={50}
-          />
+            blurAmount={80}
+          /> */}
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{
@@ -409,6 +411,19 @@ export default function HomeScreenTaxi({navigation, route}) {
             // draggable
           /> */}
       </MapView>
+      <View style={[styles.backbutton, {marginHorizontal: moderateScale(15)}]}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <View
+            style={{
+              paddingHorizontal: moderateScale(15),
+              paddingVertical: moderateScaleVertical(15),
+              borderRadius: 15,
+              backgroundColor: colors.greyColor,
+            }}>
+            <Image source={imagePath.backArrow} />
+          </View>
+        </TouchableOpacity>
+      </View>
 
       <View style={styles.userAccountImageStyle}>
         <Image source={imagePath.taxiUserAccount} />

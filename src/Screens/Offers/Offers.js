@@ -37,12 +37,14 @@ export default function Offer({route, navigation}) {
   });
 
   const vendorInfo = route?.params?.data;
+  const {isTaxi} = vendorInfo;
+  console.log(isTaxi, 'isTaxiiii');
   console.log(vendorInfo, '>>>>>>>>>>>>>>>>>>>');
   const {appData, appStyle, themeColors, themeLayouts, currencies, languages} =
     useSelector((state) => state.initBoot);
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
-
+  console.log(vendorInfo?.cabOrder, 'vendor infoooo');
   useEffect(() => {
     if (vendorInfo?.cabOrder) {
       _getAllPromoCodesForCabs();
@@ -159,12 +161,17 @@ export default function Offer({route, navigation}) {
               },
             });
           } else {
-            navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIME, {
-              promocodeDetail: {
-                couponInfo: res?.data,
-                vendorInfo: vendorInfo,
+            navigation.navigate(
+              !!isTaxi
+                ? navigationStrings.CHOOSECARTYPEANDTIMETAXI
+                : navigationStrings.CHOOSECARTYPEANDTIME,
+              {
+                promocodeDetail: {
+                  couponInfo: res?.data,
+                  vendorInfo: vendorInfo,
+                },
               },
-            });
+            );
           }
         }
       })

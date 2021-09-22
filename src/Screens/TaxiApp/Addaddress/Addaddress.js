@@ -38,7 +38,7 @@ import {MyDarkTheme} from '../../../styles/theme';
 
 export default function Addaddress({navigation, route}) {
   const paramData = route?.params;
-  console.log(paramData, 'paramData');
+  console.log(paramData?.data?.id, 'taxi categ');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -47,7 +47,7 @@ export default function Addaddress({navigation, route}) {
   const {appData, allAddresss, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(allAddresss, 'allAddresss');
+  console.log(paramData, 'paramData');
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
     pickUpLocation: '',
@@ -78,6 +78,7 @@ export default function Addaddress({navigation, route}) {
     selectedAddress: null,
     savedAddressViewHeight: 0,
     avalibleValueInTextInput: false,
+    vendorId: null,
   });
   const {
     pickUpLocationAddressData,
@@ -113,9 +114,32 @@ export default function Addaddress({navigation, route}) {
   useFocusEffect(
     React.useCallback(() => {
       getAllAddress();
-      // console.log(height*.25,"sadasdasdasd")
     }, []),
   );
+  console.log(
+    // paramData,
+    paramData?.data[0],
+    'currentLocationData',
+  );
+
+  useEffect(() => {
+    if (paramData?.data?.pickuplocationAllData != undefined) {
+      updateState({
+        pickUpLocation: paramData?.data.pickuplocationAllData[0]?.address,
+        dropOffLocation: paramData?.data.pickuplocationAllData[1]?.address,
+        pickUpLocationLatLng: {
+          latitude: paramData?.data.pickuplocationAllData[0]?.latitude,
+          longitude: paramData?.data.pickuplocationAllData[0]?.longitude,
+        },
+        dropOffLocationLatLng: {
+          latitude: paramData?.data.pickuplocationAllData[1]?.latitude,
+          longitude: paramData?.data.pickuplocationAllData[1]?.longitude,
+        },
+        pickUpLocationAddressData: paramData?.data.pickuplocationAllData[0],
+        dropOffLocationAddressData: paramData?.data.pickuplocationAllData[1],
+      });
+    }
+  }, [paramData]);
 
   //get All address
   const getAllAddress = () => {
@@ -190,7 +214,6 @@ export default function Addaddress({navigation, route}) {
   };
 
   const errorMethod = (error) => {
-    alert('');
     updateState({isLoading: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
@@ -336,6 +359,10 @@ export default function Addaddress({navigation, route}) {
     );
   }, [paramData?.type]);
 
+  const _moveToNextScreen = () => {
+    navigation.navigate(navigationStrings.PINADDRESSONMAP, paramData);
+  };
+
   const renderDotContainer = () => {
     return (
       <>
@@ -458,7 +485,8 @@ export default function Addaddress({navigation, route}) {
           }}
         />
         <TouchableOpacity
-          onPress={() => addRemoveAddress(type)}
+          //  onPress={() => addRemoveAddress(type)}
+          onPress={() => _moveToNextScreen()}
           style={{
             height: moderateScale(48),
             alignItems: 'center',
@@ -474,7 +502,7 @@ export default function Addaddress({navigation, route}) {
                   }
                 : {height: 25, width: 25, tintColor: colors.blackB}
             }
-            source={getImageAndFunctionality(type)}
+            source={imagePath.locationPin}
           />
         </TouchableOpacity>
       </>
@@ -482,25 +510,27 @@ export default function Addaddress({navigation, route}) {
   };
 
   const saveAddressAndRedirect = () => {
-    if (!pickUpLocationLatLng) {
+    console.log(pickUpLocationLatLng.latitude, dropOffLocationLatLng);
+    if (pickUpLocationLatLng?.latitude == undefined) {
       showError(strings.PLEASE_SELECT_PICKUP_LOCATION);
-    } else if (!dropOffLocationLatLng && !dropOffLocationTwoLatLng) {
+    } else if (dropOffLocationLatLng?.latitude == undefined) {
       showError(strings.PLEASE_SELECT_DROP_OFF_LOCATION);
     } else {
       let location = [];
       let addressData = [];
       location.push(pickUpLocationLatLng);
+
       addressData.push(pickUpLocationAddressData);
       if (dropOffLocationLatLng) {
         location.push(dropOffLocationLatLng);
         addressData.push(dropOffLocationAddressData);
       }
-      if (dropOffLocationTwoLatLng) {
-        location.push(dropOffLocationTwoLatLng);
-        addressData.push(dropOffLocationTwoAddressData);
-      }
+      // if (dropOffLocationTwoLatLng) {
+      //   location.push(dropOffLocationTwoLatLng);
+      //   addressData.push(dropOffLocationTwoAddressData);
+      // }
 
-      navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIME, {
+      navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
         location: location,
         id: paramData?.data?.id,
         tasks: addressData,
@@ -721,6 +751,7 @@ export default function Addaddress({navigation, route}) {
                 }}
               />
             </View>
+
             <View style={{height: 5}}></View>
             <View
               style={{
@@ -895,6 +926,11 @@ export default function Addaddress({navigation, route}) {
             {renderCross('dropOffLocation')}
             {showDropOfTwo ? renderCross('dropOffLocationTwo') : null}
             {/* {showDropOfThree ? renderCross('dropOffLocationThree') : null} */}
+          </View>
+          <View style={{position: 'absolute', end: 35, top: 27}}>
+            <TouchableOpacity onPress={() => _moveToNextScreen()}>
+              <Image source={imagePath.locationPin} />
+            </TouchableOpacity>
           </View>
         </View>
 

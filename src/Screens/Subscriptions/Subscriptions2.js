@@ -21,6 +21,7 @@ import strings from '../../constants/lang';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
+import SubscriptionComponent from '../../Components/SubscriptionComponent';
 import {
   height,
   moderateScale,
@@ -616,7 +617,7 @@ export default function Subscriptions2({navigation, route}) {
         <FlatList
           data={(!isLoadingB && allSubscriptions) || []}
           renderItem={renderProduct}
-          ListHeaderComponent={listHeaderComponent()}
+          // ListHeaderComponent={listHeaderComponent()}
           keyExtractor={(item, index) => String(index)}
           keyboardShouldPersistTaps="always"
           showsVerticalScrollIndicator={false}

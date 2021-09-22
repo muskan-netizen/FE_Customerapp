@@ -1,9 +1,9 @@
-import { useFocusEffect } from '@react-navigation/native';
-import React, { useEffect, useRef, useState } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useEffect, useRef, useState} from 'react';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Geocoder from 'react-native-geocoding';
-import MapView, { AnimatedRegion } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
-import { useSelector } from 'react-redux';
+import MapView, {AnimatedRegion} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import {useSelector} from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
@@ -15,10 +15,9 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
-
   StatusBarHeightSecond,
   textScale,
-  width
+  width,
 } from '../../../styles/responsiveSize';
 import stylesFun from './styles';
 

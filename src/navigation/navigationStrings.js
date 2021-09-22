@@ -80,4 +80,9 @@ export default {
   RETURNORDER: 'returnOrder',
   HOMESCREENTAXI: 'homeScreenTaxi',
   ADDADDRESS: 'addAddress',
+  PINADDRESSONMAP: 'pinAddressOnMap',
+  PAYMENT_OPTIONS: 'paymentoptions',
+  CHOOSECARTYPEANDTIMETAXI: 'ChooseCarTypeAndTimeTaxi',
+  OFFERS2: 'OFFERS2',
+  PICKUPTAXIORDERDETAILS: 'PickupTaxiOrderDetails',
 };

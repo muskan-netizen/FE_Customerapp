@@ -46,6 +46,7 @@ export default function SelectTimeModalView({
     console.log(value, 'value');
     _onDateChange(value);
   };
+
   return (
     <View
       style={
