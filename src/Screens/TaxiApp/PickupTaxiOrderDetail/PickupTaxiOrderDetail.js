@@ -23,6 +23,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import TaxiOrderDetailView from './TaxiOrderDetailView';
 import SearchingForDriverView from './SearchingForDriverView';
+import {color} from 'react-native-reanimated';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -345,14 +346,28 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
 
             <View style={styles.topView}>
               <TouchableOpacity
-                style={styles.backButtonView}
+                style={[
+                  styles.backButtonView,
+                  {
+                    backgroundColor: isDarkMode
+                      ? MyDarkTheme.colors.lightDark
+                      : colors.white,
+                  },
+                ]}
                 onPress={
                   paramData?.fromCab
                     ? () => navigation.navigate(navigationStrings.HOME)
                     : () => navigation.navigate(navigationStrings.MY_ORDERS)
                   // navigation.goBack()
                 }>
-                <Image source={imagePath.backArrowCourier} />
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
+                  source={imagePath.backArrowCourier}
+                />
               </TouchableOpacity>
             </View>
             {/* {_selectOrderDetailView()} */}

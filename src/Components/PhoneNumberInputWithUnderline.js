@@ -142,7 +142,12 @@ export default function PhoneNumberInputWithUnderline({
           }
           onChangeText={onChangePhone}
           value={phoneNumber}
-          theme={{colors: {primary: undnerlineColor}}}
+          theme={{
+            colors: {
+              primary: undnerlineColor,
+              text: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            },
+          }}
           keyboardType="numeric"
           style={{
             opacity: 0.7,

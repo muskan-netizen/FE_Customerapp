@@ -64,16 +64,16 @@ export default function ShippingDetails({navigation, route}) {
     ],
     selectedPayment: {
       id: 1,
-      title:  strings.CASH_ON_DELIVERY,
+      title: strings.CASH_ON_DELIVERY,
       off_site: 0,
     },
 
     selecteddelivery: null,
-    username: 'sandeep',
-    email: 'sandy@yopmail.com',
+    username: '',
+    email: '',
     callingCode: '91',
     cca2: 'IN',
-    phoneNumber: '9870763208',
+    phoneNumber: '',
     selectedVendorOption: paramData?.cabVendors[0]
       ? paramData?.cabVendors[0]
       : null,

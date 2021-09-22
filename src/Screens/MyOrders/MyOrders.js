@@ -183,13 +183,29 @@ export default function MyOrders({navigation}) {
 
   const onPressViewEditAndReplace = (item) => {
     item?.product_details[0]?.category_type == staticStrings.PICKUPANDDELIEVRY
-      ? navigation.navigate(navigationStrings.PICKUPORDERDETAIL, {
-          orderId: item?.order_id,
-          fromVendorApp: true,
-          selectedVendor: {id: item?.vendor_id},
-          orderDetail: item,
-        })
-      : // if (selectedTab == strings.ACTIVE_ORDERS) {
+      ? appStyle?.homePageLayout === 3
+        ? navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
+            orderId: item?.order_id,
+            fromVendorApp: true,
+            selectedVendor: {id: item?.vendor_id},
+            orderDetail: item,
+          })
+        : navigation.navigate(navigationStrings.PICKUPORDERDETAIL, {
+            orderId: item?.order_id,
+            fromVendorApp: true,
+            selectedVendor: {id: item?.vendor_id},
+            orderDetail: item,
+          })
+      : // navigation.navigate(navigationStrings.ACCOUNTS, {
+        //   screen: navigationStrings.PICKUPORDERDETAIL,
+        //   params: {
+        //     orderId: item?.order_id,
+        //     fromVendorApp: true,
+        //     selectedVendor: {id: item?.vendor_id},
+        //     orderDetail: item,
+        //   },
+        // })
+        // if (selectedTab == strings.ACTIVE_ORDERS) {
         navigation.navigate(navigationStrings.ORDER_DETAIL, {
           orderId: item?.order_id,
           fromVendorApp: true,
