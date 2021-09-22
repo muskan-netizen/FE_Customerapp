@@ -225,7 +225,7 @@ export default function SelectTimeModalView({
         </View>
 
         <DatePicker
-          date={date}
+          // date={date}
           mode="time"
           textColor={isDarkMode ? colors.white : colors.blackB}
           minimumDate={new Date()}
