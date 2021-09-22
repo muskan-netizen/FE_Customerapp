@@ -33,7 +33,7 @@ import {CalendarList} from 'react-native-calendars';
 export default function SelectTimeModalView({
   isLoading = false,
   availAbleTimes = [],
-  date = new Date(),
+  date = moment().format('hh:mm A'),
   onPressBack,
   selectedAvailableTimeOption = null,
   selectAvailAbleTime,
@@ -58,31 +58,13 @@ export default function SelectTimeModalView({
     (state) => state?.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
-
-  // const [state, setState] = useState({
-  //   isTimerPickerModal: false,
-  //   formatedTime: moment().format('HH:mm A'),
-  //   isDatePickerModal: false,
-  //   pickedUpTime: moment().format('HH:mm A'),
-  //   selectedDate: moment().format('YYY-MM-DD'),
-  //   pickedUpDate: moment().format('YYYY-MM-DD'),
-  // });
-
-  // const {
-  //   isTimerPickerModal,
-  //   formatedTime,
-  //   isDatePickerModal,
-  //   pickedUpTime,
-  //   selectedDate,
-  //   pickedUpDate,
-  // } = state;
-
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});
   const commonStyles = commonStylesFun({fontFamily});
   const {profile} = appData;
 
   const onDateChange = (value) => {
+    console.log(value, 'OnDate');
     _onDateChange(value);
   };
 
@@ -129,6 +111,9 @@ export default function SelectTimeModalView({
     <View
       style={{
         flex: 1,
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.lightDark
+          : colors.white,
       }}>
       <View
         style={{
@@ -157,17 +142,26 @@ export default function SelectTimeModalView({
         hideArrows={false}
         onDayPress={(value) => onDayPress(value)}
         minDate={new Date()}
-        style={{marginTop: moderateScale(10)}}
         markedDates={{
           [selectedDate]: {
             selected: true,
             selectedColor: themeColors.primary_color,
           },
         }}
+        theme={{
+          calendarBackground: isDarkMode
+            ? MyDarkTheme.colors.lightDark
+            : colors.white,
+          dayTextColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          monthTextColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          textDisabledColor: isDarkMode ? colors.whiteOpacity22 : colors.greyA,
+        }}
       />
       <View
         style={{
-          backgroundColor: colors.white,
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.lightDark
+            : colors.white,
           overflow: 'hidden',
           flexDirection: 'row',
           justifyContent: 'flex-end',
@@ -178,6 +172,7 @@ export default function SelectTimeModalView({
             style={{
               marginHorizontal: moderateScale(20),
               fontSize: textScale(14),
+              color: isDarkMode ? colors.white : colors.black,
             }}>
             {strings.CANCEL}
           </Text>
@@ -232,20 +227,23 @@ export default function SelectTimeModalView({
         <DatePicker
           date={date}
           mode="time"
-          textColor={isDarkMode ? '#fff' : colors.blackB}
+          textColor={isDarkMode ? colors.white : colors.blackB}
           minimumDate={new Date()}
           style={{
             width: width / 1.1,
             height: height / 2.6,
-            backgroundColor: colors.white,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : colors.white,
             alignSelf: 'center',
           }}
-          // onDateChange={setDate}
           onDateChange={(value) => onDateChange(value)}
         />
         <View
           style={{
-            backgroundColor: colors.white,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : colors.white,
             paddingBottom: moderateScaleVertical(20),
             overflow: 'hidden',
             flexDirection: 'row',
@@ -257,6 +255,7 @@ export default function SelectTimeModalView({
               style={{
                 marginHorizontal: moderateScale(20),
                 fontSize: textScale(14),
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
               {strings.CANCEL}
             </Text>
