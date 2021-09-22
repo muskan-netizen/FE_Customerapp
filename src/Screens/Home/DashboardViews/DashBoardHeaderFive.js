@@ -22,6 +22,7 @@ import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
 import {string} from 'prop-types';
 import {BlurView} from '@react-native-community/blur';
+import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 
 export default function DashBoardHeaderFive({
   navigation = {},
@@ -307,6 +308,10 @@ export default function DashBoardHeaderFive({
   };
 
   const viewRef2 = useRef();
+
+  if (isLoading) {
+    return <HeaderLoader isRight />;
+  }
 
   return (
     <>

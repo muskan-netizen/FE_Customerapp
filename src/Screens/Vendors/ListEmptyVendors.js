@@ -14,6 +14,7 @@ import {noDataFound} from '../../Components/Loaders/AnimatedLoaderFiles';
 import {useSelector} from 'react-redux';
 import commonStylesFunc from '../../styles/commonStyles';
 import strings from '../../constants/lang';
+import BannerLoader from '../../Components/Loaders/BannerLoader';
 
 export default function ListEmptyVendors({
   isLoading = false,
@@ -44,29 +45,28 @@ export default function ListEmptyVendors({
   if (isLoading) {
     return (
       <>
-        <CardLoader
-          cardWidth={cardWidth}
-          height={height}
-          listSize={listSize}
-          pRows={pRows}
-          pWidth={pWidth}
-          rowContainerstyle={rowContainerstyle}
-          containerStyle={{
-            marginLeft: moderateScale(16),
-            ...vendorContainerStyle,
+        <BannerLoader
+          isVendorLoader
+          vendorTxtStyles={{marginTop: moderateScale(10)}}
+          viewStyles={{
+            marginTop: moderateScale(30),
           }}
         />
-        {dotsLength && (
-          <View
-            style={{
-              alignSelf: 'center',
-              flexDirection: 'row',
-            }}>
-            {dotsView()}
-            {dotsView()}
-            {dotsView()}
-          </View>
-        )}
+
+        <BannerLoader
+          isVendorLoader
+          vendorTxtStyles={{marginTop: moderateScale(10)}}
+          viewStyles={{
+            marginTop: moderateScale(25),
+          }}
+        />
+        <BannerLoader
+          isVendorLoader
+          vendorTxtStyles={{marginTop: moderateScale(10)}}
+          viewStyles={{
+            marginTop: moderateScale(25),
+          }}
+        />
       </>
     );
   }

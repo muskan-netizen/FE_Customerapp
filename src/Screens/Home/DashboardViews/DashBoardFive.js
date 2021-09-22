@@ -36,6 +36,10 @@ import {MyDarkTheme} from '../../../styles/theme';
 import {SearchBar} from 'react-native-elements/dist/searchbar/SearchBar';
 import SearchBar2 from '../../../Components/SearchBar2';
 import HomeLoader from '../../../Components/Loaders/HomeLoader';
+import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import SearchLoader from '../../../Components/Loaders/SearchLoader';
+import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
+import BannerLoader from '../../../Components/Loaders/BannerLoader';
 
 export default function DashBoardFive({
   handleRefresh = () => {},
@@ -87,11 +91,51 @@ export default function DashBoardFive({
 
   // console.log(appMainData, 'appMainData');
 
-  if (!isLoading) {
+  if (isLoading) {
     return (
-      <View style={{flex: 1}}>
-        <HomeLoader />
-      </View>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{flexGrow: 1}}>
+        <SearchLoader viewStyles={{marginTop: moderateScale(15)}} />
+        <CategoryLoader2 viewStyles={{marginTop: moderateScale(25)}} />
+        <CategoryLoader2 viewStyles={{marginTop: moderateScale(25)}} />
+        <BannerLoader
+          isBannerDots
+          viewStyles={{
+            marginTop: moderateScale(35),
+          }}
+        />
+
+        <HeaderLoader
+          viewStyles={{marginVertical: 20}}
+          widthLeft={moderateScale(150)}
+          rectWidthLeft={moderateScale(150)}
+          heightLeft={moderateScaleVertical(30)}
+          rectHeightLeft={moderateScaleVertical(30)}
+          isRight={false}
+          rx={20}
+          ry={20}
+        />
+        <BannerLoader
+          isVendorLoader
+          viewStyles={{
+            marginTop: moderateScale(20),
+          }}
+        />
+        <BannerLoader
+          isVendorLoader
+          viewStyles={{
+            marginTop: moderateScale(25),
+          }}
+        />
+        <BannerLoader
+          isVendorLoader
+          viewStyles={{
+            marginTop: moderateScale(25),
+          }}
+        />
+        {/* <HomeLoader /> */}
+      </ScrollView>
     );
   }
 
