@@ -30,6 +30,7 @@ export default function ProductCard({
   addToCart = () => {},
   activeOpacity = 1,
   bottomText = strings.BUY_NOW,
+  nameTextStyle,
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
@@ -90,6 +91,7 @@ export default function ProductCard({
             style={{
               ...commonStyles.futuraBtHeavyFont16,
               textAlign: 'center',
+              ...nameTextStyle,
               // marginTop: moderateScaleVertical(10),
             }}>
             {data?.translation[0]?.title}

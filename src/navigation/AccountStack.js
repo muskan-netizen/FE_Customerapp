@@ -39,6 +39,7 @@ import {
   WebPayment,
   WebviewScreen,
   Wishlist,
+  Wishlist2,
   ReturnOrder,
   OrderDetail2,
   SearchProductVendorItem2,
@@ -126,10 +127,9 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.WISHLIST}
-        component={Wishlist}
+        component={appStyle?.homePageLayout === 3 ? Wishlist2 : Wishlist}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
         component={

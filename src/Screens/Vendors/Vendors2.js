@@ -55,6 +55,7 @@ export default function Vendors2({route, navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
 
+
   useEffect(() => {
     actions
       .getDataByCategoryId(

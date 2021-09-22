@@ -10,7 +10,7 @@ import {
 } from '../../styles/responsiveSize';
 import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
 
-export default ({fontFamily, themeColors}) => {
+export default ({fontFamily, themeColors,isDarkMode,MyDarkTheme}) => {
   const commonStyles = commonStylesFun({fontFamily});
   const styles = StyleSheet.create({
     scrollviewHorizontal: {
@@ -292,8 +292,9 @@ export default ({fontFamily, themeColors}) => {
       alignItems: 'center',
     },
     textStyle: {
-      ...commonStyles.mediumFont16,
-      fontSize: textScale(18),
+      ...commonStyles.mediumFont14,
+      fontSize: textScale(13),
+      color: isDarkMode? MyDarkTheme.colors.text: colors.blackOpacity40,
     },
     tipArrayStyle: {
       justifyContent: 'center',
@@ -361,6 +362,14 @@ export default ({fontFamily, themeColors}) => {
       borderRadius: moderateScale(8),
       width: width,
     },
+    commTextStyle: {
+      color: colors.white,
+      fontSize: textScale(14),
+      fontFamily: fontFamily.medium,
+      textAlign: 'left',
+      marginHorizontal: moderateScale(12),
+      marginBottom: moderateScaleVertical(12)
+    }
   });
   return styles;
 };

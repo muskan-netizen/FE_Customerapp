@@ -20,6 +20,7 @@ export default {
   backgroundGreyC: '#EEF2F5',
   whiteOpacity22: 'rgba(255,255,255,0.22)',
   whiteOpacity5: 'rgba(255,255,255,.5)',
+  blackOpacity05: 'rgba(0,0,0,0.05)',
   blackOpacity10: 'rgba(0,0,0,0.1)',
   blackOpacity20: 'rgba(0,0,0,0.2)',
   blackOpacity30: 'rgba(0,0,0,0.3)',

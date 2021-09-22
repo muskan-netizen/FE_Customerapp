@@ -1,6 +1,6 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   AllPaymentMethods,
   Cart,
@@ -8,16 +8,21 @@ import {
   Cart3,
   Offers,
   OrderDetail,
+  ProductList,
+  ProductList2,
+  ProductList3,
   VerifyAccount,
   WebPayment,
+  Wishlist,
+  Wishlist2,
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
-import {shortCodes} from '../utils/constants/DynamicAppKeys';
+import { shortCodes } from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
 export default function () {
-  const {appData, appStyle} = useSelector((state) => state?.initBoot);
+  const { appData, appStyle } = useSelector((state) => state?.initBoot);
 
   return (
     <Stack.Navigator>
@@ -27,42 +32,59 @@ export default function () {
           appStyle?.homePageLayout === 2
             ? Cart2
             : appStyle?.homePageLayout === 3
-            ? Cart3
-            : Cart
+              ? Cart3
+              : Cart
         }
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.OFFERS}
         component={Offers}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.ALL_PAYMENT_METHODS}
         component={AllPaymentMethods}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.ORDERSUCESS}
         component={OrderSuccess}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.ORDER_DETAIL}
         component={OrderDetail}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.WEBPAYMENTS}
         component={WebPayment}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.VERIFY_ACCOUNT}
         component={VerifyAccount}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.WISHLIST}
+        component={appStyle?.homePageLayout === 3 ? Wishlist2 : Wishlist}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={navigationStrings.PRODUCT_LIST}
+        component={
+          appStyle?.homePageLayout === 2
+            ? ProductList2
+            : appStyle?.homePageLayout === 3
+              ? ProductList3
+              : ProductList
+        }
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

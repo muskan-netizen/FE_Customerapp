@@ -309,7 +309,7 @@ export default function Home({route, navigation}) {
               }
               setTimeout(() => {
                 updateState({isLoading: false});
-              }, 3000);
+              }, 1000);
             })
             .catch(errorMethod)
         : null;

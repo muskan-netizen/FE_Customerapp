@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native';
 import DashedLine from 'react-native-dashed-line';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
@@ -13,10 +13,15 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import { getImageUrl } from '../utils/helperFunctions';
 import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../styles/theme';
 import BlurImages from './BlurImages';
+import {
+  getImageUrl,
+  getScaleTransformationStyle,
+  pressInAnimation,
+  pressOutAnimation,
+} from '../utils/helperFunctions';
 
 export default function MarketCard3({
   data = {},
@@ -32,13 +37,20 @@ export default function MarketCard3({
   const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ fontFamily, extraStyles });
+  const styles = stylesFunc({ fontFamily, extraStyles, MyDarkTheme, isDarkMode });
+  const scaleInAnimated = new Animated.Value(0);
   return (
     <TouchableOpacity
       activeOpacity={0.5}
       onPress={onPress}
-      style={styles.mainTouchContainer}>
-      <BlurImages
+      style={{
+        ...styles.mainTouchContainer,
+        ...getScaleTransformationStyle(scaleInAnimated)
+      }}
+      onPressIn={() => pressInAnimation(scaleInAnimated)}
+      onPressOut={() => pressOutAnimation(scaleInAnimated)}
+    >
+      {/* <BlurImages
         themeColor={themeColors.primary_color}
         data={data}
         source={{
@@ -50,8 +62,8 @@ export default function MarketCard3({
         }}
         style={[styles.mainImage, { ...fastImageStyle }]}
 
-      />
-      {/* <FastImage
+      /> */}
+      <FastImage
         style={[styles.mainImage, { ...fastImageStyle }]}
         resizeMode={imageResizeMode}
         source={{
@@ -63,7 +75,7 @@ export default function MarketCard3({
           priority: FastImage.priority.high,
         }}
       
-      /> */}
+      />
       <View style={{
         padding: 8,
       }}>
@@ -142,17 +154,17 @@ export default function MarketCard3({
   );
 }
 
-export function stylesFunc({ fontFamily, extraStyles }) {
+export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme }) {
   const styles = StyleSheet.create({
     mainTouchContainer: {
       marginTop: moderateScale(15),
-      backgroundColor: colors.white,
       borderRadius: 10,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 1 },
       shadowOpacity: 0.1,
       shadowRadius: 2,
       elevation: 2,
+      backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
       ...extraStyles,
     },
     categoryText: {

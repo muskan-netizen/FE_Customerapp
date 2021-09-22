@@ -32,6 +32,7 @@ export {default as VerifyAccount} from './VerifyAccount/VerifyAccount';
 export {default as forgotPassword} from './ForgotPassword/ForgotPassword';
 export {default as Filter} from './Filter/Filter';
 export {default as Wishlist} from './Wishlist/Wishlist';
+export {default as Wishlist2} from './Wishlist/Wishlist2';
 export {default as Wallet} from './Wallet/Wallet';
 export {default as AddMoney} from './AddMoney/AddMoney';
 export {default as ShippingDetails} from './ShippingDetails/ShippingDetails';

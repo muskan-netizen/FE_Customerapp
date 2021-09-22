@@ -1,7 +1,7 @@
-import {useFocusEffect} from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import moment from 'moment';
-import {cloneDeep, forEach} from 'lodash';
-import React, {useEffect, useState, useRef} from 'react';
+import { cloneDeep, forEach } from 'lodash';
+import React, { useEffect, useState, useRef } from 'react';
 
 import {
   Alert,
@@ -18,9 +18,9 @@ import {
   Dimensions,
 } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { isLocationEnabled } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import AddressModal from '../../Components/AddressModal';
 import ButtonComponent from '../../Components/ButtonComponent';
 import ChooseAddressModal from '../../Components/ChooseAddressModal';
@@ -57,21 +57,28 @@ import Modal from 'react-native-modal';
 import GradientButton from '../../Components/GradientButton';
 import DatePicker from 'react-native-date-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {getItem, removeItem, setItem, setUserData} from '../../utils/utils';
+import { getItem, removeItem, setItem, setUserData } from '../../utils/utils';
 import commonStyles from '../../styles/commonStyles';
 import * as RNLocalize from 'react-native-localize';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme, MyDefaultTheme } from '../../styles/theme';
 import LottieView from 'lottie-react-native';
 import AddressModal3 from '../../Components/AddressModal3';
-import {SwipeListView} from 'react-native-swipe-list-view';
+import { SwipeListView } from 'react-native-swipe-list-view';
+import HorizontalLine from '../../Components/HorizontalLine';
+import WishlistCard from '../../Components/WishlistCard';
+import MarketCard3 from '../../Components/MarketCard3';
+import * as Animatable from 'react-native-animatable';
 
-export default function Cart({navigation, route}) {
+export default function Cart({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   let paramsData = route?.params;
+  const appMainData = useSelector((state) => state?.home?.appMainData);
+  const recommendedVendorsdata = appMainData?.vendors;
+
   const [state, setState] = useState({
     isLoading: true,
     isVisibleTimeModal: false,
@@ -100,13 +107,14 @@ export default function Cart({navigation, route}) {
     defaultSelectedTable: '',
     deepLinkUrl: null,
     selectedTimeOptions: [
-      {id: 1, title: strings.NOW, type: 'now'},
-      {id: 2, title: strings.SCHEDULE_ORDER, type: 'schedule'},
+      { id: 1, title: strings.NOW, type: 'now' },
+      { id: 2, title: strings.SCHEDULE_ORDER, type: 'schedule' },
     ],
     selectedTimeOption: null,
     sheduledorderdate: null,
     scheduleType: null,
     swipeKey: 'randomStrings',
+    wishlistArray: []
   });
   const {
     viewHeight,
@@ -134,15 +142,16 @@ export default function Cart({navigation, route}) {
     sheduledorderdate,
     scheduleType,
     swipeKey,
+    wishlistArray
   } = state;
 
   //Redux store data
   const userData = useSelector((state) => state?.auth?.userData);
-  const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
+  const { appData, allAddresss, themeColors, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily, themeColors});
+  const styles = stylesFun({ fontFamily, themeColors, isDarkMode, MyDarkTheme });
 
   const selectedAddressData = useSelector(
     (state) => state?.cart?.selectedAddress,
@@ -151,14 +160,14 @@ export default function Cart({navigation, route}) {
   const dineInType = useSelector((state) => state?.home?.dineInType);
 
   //Update states on screens
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   // styles funcation
   // const fontFamily = appStyle?.fontSizeData;
@@ -169,10 +178,12 @@ export default function Cart({navigation, route}) {
   useFocusEffect(
     React.useCallback(() => {
       if (paramsData && paramsData?.selectedMethod) {
-        updateState({selectedPayment: paramsData?.selectedMethod});
+        updateState({ selectedPayment: paramsData?.selectedMethod });
       }
-      updateState({isLoadingB: true});
+      // alert('run')
+      // updateState({ isLoadingB: true });
       getCartDetail();
+      // getAllWishListData()
     }, [
       currencies,
       languages,
@@ -184,6 +195,7 @@ export default function Cart({navigation, route}) {
     ]),
   );
 
+
   useEffect(() => {
     checkforAddressUpdate();
   }, [selectedAddress, allAddresss]);
@@ -191,14 +203,14 @@ export default function Cart({navigation, route}) {
   //check for addreess Update and change
   const checkforAddressUpdate = () => {
     if (allAddresss.length == 0) {
-      updateState({selectedAddress: null});
+      updateState({ selectedAddress: null });
       actions.saveAddress(null);
     }
     if (!selectedAddress && allAddresss.length) {
       let find = allAddresss.find((x) => x.is_primary);
 
       if (find) {
-        updateState({selectedAddress: find});
+        updateState({ selectedAddress: find });
         actions.saveAddress(find);
       } else {
         selectAddress(allAddresss[0]);
@@ -261,45 +273,39 @@ export default function Cart({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res.data, 'cart detail');
+        console.log(res, 'cart detail');
         actions.cartItemQty(res);
         updateState({
-          isLoadingB: false,
           isRefreshing: false,
+          isLoadingB: false,
           sheduledorderdate: res?.data?.scheduled_date_time,
           scheduleType: res?.data?.schedule_type,
           selectedTimeOption:
             res?.data?.schedule_type == 'now'
-              ? {id: 1, title: strings.NOW, type: 'now'}
+              ? { id: 1, title: strings.NOW, type: 'now' }
               : res?.data?.schedule_type == 'schedule'
-              ? {id: 2, title: strings.SCHEDULE_ORDER, type: 'schedule'}
-              : {id: 1, title: strings.NOW, type: 'now'},
+                ? { id: 2, title: strings.SCHEDULE_ORDER, type: 'schedule' }
+                : { id: 1, title: strings.NOW, type: 'now' },
         });
         if (res && res.data) {
           if (res.data.vendor_details.vendor_tables) {
             res.data.vendor_details.vendor_tables.forEach(
               (item, indx) =>
-                (tableData[indx] = {
-                  id: item.id,
-                  label: `Category: ${
-                    item.category.title ? item.category.title : ''
-                  } | Table: ${
-                    item.table_number ? item.table_number : 0
-                  } | Seat Capacity: ${
-                    item.seating_number ? item.seating_number : 0
+              (tableData[indx] = {
+                id: item.id,
+                label: `Category: ${item.category.title ? item.category.title : ''
+                  } | Table: ${item.table_number ? item.table_number : 0
+                  } | Seat Capacity: ${item.seating_number ? item.seating_number : 0
                   }`,
-                  value: `Category: ${
-                    item.category.title ? item.category.title : ''
-                  } | Table: ${
-                    item.table_number ? item.table_number : 0
-                  } | Seat Capacity: ${
-                    item.seating_number ? item.seating_number : 0
+                value: `Category: ${item.category.title ? item.category.title : ''
+                  } | Table: ${item.table_number ? item.table_number : 0
+                  } | Seat Capacity: ${item.seating_number ? item.seating_number : 0
                   }`,
-                  title: item.category.title,
-                  table_number: item.table_number,
-                  seating_number: item.seating_number,
-                  vendor_id: res.data.vendor_details.vendor_address.id,
-                }),
+                title: item.category.title,
+                table_number: item.table_number,
+                seating_number: item.seating_number,
+                vendor_id: res.data.vendor_details.vendor_address.id,
+              }),
               updateState({
                 tableData: tableData,
               }),
@@ -309,12 +315,14 @@ export default function Cart({navigation, route}) {
             cartItems: res.data.products,
             vendorAddress: res.data.address,
             cartData: res.data,
+            isLoadingB: false,
           });
         } else {
           updateState({
             cartItems: [],
             cartData: {},
             vendorAddress: '',
+            isLoadingB: false,
           });
         }
       })
@@ -331,6 +339,10 @@ export default function Cart({navigation, route}) {
       });
   };
 
+  // useEffect(() => {
+  //   getAllWishListData()
+  // }, [])
+
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     let quanitity = null;
@@ -341,7 +353,7 @@ export default function Cart({navigation, route}) {
       quanitity = Number(itemToUpdate.quantity) - 1;
     }
     if (quanitity) {
-      updateState({isLoadingB: true});
+      updateState({ isLoadingB: true });
       let data = {};
       data['cart_id'] = itemToUpdate?.cart_id;
       data['quantity'] = quanitity;
@@ -365,7 +377,7 @@ export default function Cart({navigation, route}) {
         })
         .catch(errorMethod);
     } else {
-      updateState({isLoadingB: true});
+      updateState({ isLoadingB: true });
       removeItem('selectedTable');
       removeProductFromCart(itemToUpdate);
     }
@@ -398,11 +410,11 @@ export default function Cart({navigation, route}) {
 
   //Close modal for Clear cart
   const closeOptionModal = () => {
-    updateState({isModalVisibleForClearCart: false});
+    updateState({ isModalVisibleForClearCart: false });
   };
 
   const bottomButtonClick = () => {
-    updateState({isLoadingB: true, isModalVisibleForClearCart: false});
+    updateState({ isLoadingB: true, isModalVisibleForClearCart: false });
     removeItem('selectedTable');
     setTimeout(() => {
       clearEntireCart();
@@ -437,7 +449,7 @@ export default function Cart({navigation, route}) {
   //Error handling in screen
   const errorMethod = (error) => {
     console.log(error, 'error');
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({ isLoading: false, isLoadingB: false, isRefreshing: false });
     showError(error?.message || error?.error);
   };
 
@@ -457,7 +469,7 @@ export default function Cart({navigation, route}) {
 
   //Verify your promo code
   const _removeCoupon = (item, cartData) => {
-    updateState({isLoadingB: true});
+    updateState({ isLoadingB: true });
     let data = {};
     data['vendor_id'] = item?.vendor_id;
     data['cart_id'] = cartData?.id;
@@ -475,12 +487,13 @@ export default function Cart({navigation, route}) {
           showSuccess(res?.message || res?.error);
           getCartDetail();
         } else {
-          updateState({isLoadingB: false});
+          updateState({ isLoadingB: false });
         }
       })
       .catch(errorMethod);
   };
 
+  console.log("isloading", isLoading)
   const _directOrderPlace = () => {
     let data = {};
     data['address_id'] =
@@ -540,7 +553,7 @@ export default function Cart({navigation, route}) {
 
   const _finalPayment = () => {
     if (selectedPayment?.id == 1 && selectedPayment?.off_site == 0) {
-      updateState({isLoadingB: true});
+      updateState({ isLoadingB: true });
       _directOrderPlace();
     } else {
       if (selectedPayment?.off_site == 1) {
@@ -575,13 +588,13 @@ export default function Cart({navigation, route}) {
       } else {
         if (!!userData) {
           !!userData?.client_preference?.verify_email ||
-          !!userData?.client_preference?.verify_phone
+            !!userData?.client_preference?.verify_phone
             ? !!userData?.verify_details?.is_email_verified &&
               !!userData?.verify_details?.is_phone_verified
               ? _finalPayment()
               : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
-                  formCart: true,
-                })()
+                formCart: true,
+              })()
             : _finalPayment();
         } else {
           _finalPayment();
@@ -603,7 +616,7 @@ export default function Cart({navigation, route}) {
   const swipeRef = useRef(null);
 
   const openDeleteView = async (item) => {
-    updateState({isLoadingB: true});
+    updateState({ isLoadingB: true });
     let itemToUpdate = cloneDeep(item);
     removeItem('selectedTable');
     removeProductFromCart(itemToUpdate);
@@ -639,17 +652,14 @@ export default function Cart({navigation, route}) {
     let returnUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
     let cancelUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
 
-    updateState({isLoadingB: true});
+    updateState({ isLoadingB: true });
     actions
       .openPaymentWebUrl(
-        `/${selectedMethod}?tip=${
-          selectedTipAmount && selectedTipAmount != ''
-            ? Number(selectedTipAmount)
-            : 0
-        }&amount=${
-          cartData?.total_payable_amount
-        }&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&address_id=${
-          selectedAddressData?.id
+        `/${selectedMethod}?tip=${selectedTipAmount && selectedTipAmount != ''
+          ? Number(selectedTipAmount)
+          : 0
+        }&amount=${cartData?.total_payable_amount
+        }&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&address_id=${selectedAddressData?.id
         }&payment_option_id=${selectedPayment?.id}&action=cart`,
         {},
         {
@@ -659,7 +669,7 @@ export default function Cart({navigation, route}) {
         },
       )
       .then((res) => {
-        updateState({isLoadingB: false, isRefreshing: false});
+        updateState({ isLoadingB: false, isRefreshing: false });
         if (res && res?.status == 'Success' && res?.data) {
           // updateState({allAvailAblePaymentMethods: res?.data});
           navigation.navigate(navigationStrings.WEBPAYMENTS, {
@@ -677,19 +687,16 @@ export default function Cart({navigation, route}) {
   //Offline payments
   const _offineLinePayment = async () => {
     if (paramsData?.tokenInfo) {
-      updateState({isLoadingB: true});
+      updateState({ isLoadingB: true });
       let selectedMethod = selectedPayment.title.toLowerCase();
-      updateState({isLoadingB: true});
+      updateState({ isLoadingB: true });
       actions
         .openPaymentWebUrl(
-          `/${selectedMethod}?tip=${
-            selectedTipAmount && selectedTipAmount != ''
-              ? Number(selectedTipAmount)
-              : 0
-          }&amount=${cartData?.total_payable_amount}&auth_token=${
-            userData?.auth_token
-          }&address_id=${selectedAddressData?.id}&payment_option_id=${
-            selectedPayment?.id
+          `/${selectedMethod}?tip=${selectedTipAmount && selectedTipAmount != ''
+            ? Number(selectedTipAmount)
+            : 0
+          }&amount=${cartData?.total_payable_amount}&auth_token=${userData?.auth_token
+          }&address_id=${selectedAddressData?.id}&payment_option_id=${selectedPayment?.id
           }&action=cart&stripe_token=${paramsData?.tokenInfo}`,
           {},
           {
@@ -699,7 +706,7 @@ export default function Cart({navigation, route}) {
           },
         )
         .then((res) => {
-          updateState({isRefreshing: false});
+          updateState({ isRefreshing: false });
           if (res && res?.status == 'Success' && res?.data) {
             // updateState({allAvailAblePaymentMethods: res?.data});
             actions.cartItemQty({});
@@ -713,7 +720,7 @@ export default function Cart({navigation, route}) {
             })();
             showSuccess(res?.message);
           } else {
-            updateState({isLoadingB: false});
+            updateState({ isLoadingB: false });
           }
         })
         .catch(errorMethod);
@@ -739,14 +746,14 @@ export default function Cart({navigation, route}) {
     {
       selectedTimeOption && selectedTimeOption?.id == item?.id
         ? updateState({
-            isVisibleTimeModal: item?.type === 'schedule' ? true : false,
-            isLoading: true,
-          })
+          isVisibleTimeModal: item?.type === 'schedule' ? true : false,
+          isLoading: true,
+        })
         : updateState({
-            selectedTimeOption: item,
-            isLoading: true,
-            isVisibleTimeModal: item?.type === 'schedule' ? true : false,
-          });
+          selectedTimeOption: item,
+          isLoading: true,
+          isVisibleTimeModal: item?.type === 'schedule' ? true : false,
+        });
     }
   };
 
@@ -770,7 +777,7 @@ export default function Cart({navigation, route}) {
   }
 
   const deleteItem = async (i, index) => {
-    updateState({swipeKey: makeid(5)});
+    updateState({ swipeKey: makeid(5) });
     openDeleteView(i);
     console.log('swipe ref', swipeRef);
     swipeRef.current.close();
@@ -783,11 +790,45 @@ export default function Cart({navigation, route}) {
     // }).start(() => openDeleteView(i));
   };
 
-  const _renderItem = ({item, index}) => {
-    console.log('Item++++', item);
 
-    console.log('swip key', swipeKey);
+  const getAllWishListData = () => {
+    if (!!userData?.auth_token) {
+      getAllWishlistItems();
+    }
+    return;
+  };
+  /*  GET ALL WISHLISTED ITEMS API FUNCTION  */
+  const getAllWishlistItems = () => {
+    // updateState({ isLoadingB: true });
+    actions
+      .getWishlistProducts(
+        `?limit=${40}&page=${1}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'getAllWishListData>>>>>>');
+        let newArray = res.data.data
+        updateState({
+          isLoadingB: false,
+          wishlistArray:
+            newArray && newArray.length
+              ? newArray.map((i, inx) => {
+                i.product.inwishlist = { product_id: i.product_id };
+                return i;
+              })
+              : [],
+        });
+      })
+      .catch(errorMethod);
+  };
 
+  console.log("wishlit data", wishlistArray)
+  const _renderItem = ({ item, index }) => {
     return (
       <View
         key={swipeKey}
@@ -802,7 +843,7 @@ export default function Cart({navigation, route}) {
             numberOfLines={1}
             style={
               isDarkMode
-                ? [styles.vendorText, {color: MyDarkTheme.colors.text}]
+                ? [styles.vendorText, { color: MyDarkTheme.colors.text }]
                 : styles.vendorText
             }>
             {item?.vendor?.name}
@@ -811,269 +852,268 @@ export default function Cart({navigation, route}) {
         {/************ start  render cart items *************/}
         {item?.vendor_products.length
           ? item?.vendor_products.map((i, inx) => {
-              return (
-                <Swipeable
-                  ref={swipeRef}
-                  key={swipeKey}
-                  renderRightActions={swipeBtns}
-                  onSwipeableOpen={() => deleteItem(i, index)}
-                  rightThreshold={width / 1.4}
-                  // overshootFriction={8}
-                >
-                  <Animated.View
-                    style={{
-                      backgroundColor: isDarkMode
-                        ? MyDarkTheme.colors.lightDark
-                        : '#F8F8F8',
-                      marginBottom: moderateScaleVertical(12),
-                      marginRight: moderateScale(8),
-                      borderRadius: moderateScale(10),
+            return (
+              <Swipeable
+                ref={swipeRef}
+                key={swipeKey}
+                renderRightActions={swipeBtns}
+                onSwipeableOpen={() => deleteItem(i, index)}
+                rightThreshold={width / 1.4}
+              // overshootFriction={8}
+              >
+                <Animated.View
+                  style={{
+                    backgroundColor: isDarkMode
+                      ? MyDarkTheme.colors.lightDark
+                      : '#F8F8F8',
+                    marginBottom: moderateScaleVertical(12),
+                    marginRight: moderateScale(8),
+                    borderRadius: moderateScale(10),
 
-                      transform: [],
-                    }}
-                    key={inx}>
-                    <View style={[styles.cartItemMainContainer]}>
+                    transform: [],
+                  }}
+                  key={inx}>
+                  <View style={[styles.cartItemMainContainer]}>
+                    <View
+                      style={[
+                        styles.cartItemImage,
+                        {
+                          backgroundColor: isDarkMode
+                            ? MyDarkTheme.colors.lightDark
+                            : colors.white,
+                        },
+                      ]}>
+                      <FastImage
+                        source={
+                          i?.cartImg != '' && i?.cartImg != null
+                            ? {
+                              uri: getImageUrl(
+                                i?.cartImg?.path?.proxy_url,
+                                i?.cartImg?.path?.image_path,
+                                '300/300',
+                              ),
+                              priority: FastImage.priority.high,
+                            }
+                            : imagePath.patternOne
+                        }
+                        style={styles.imageStyle}
+                      />
+                    </View>
+
+                    <View style={styles.cartItemDetailsCon}>
                       <View
-                        style={[
-                          styles.cartItemImage,
-                          {
-                            backgroundColor: isDarkMode
-                              ? MyDarkTheme.colors.lightDark
-                              : colors.white,
-                          },
-                        ]}>
-                        <FastImage
-                          source={
-                            i?.cartImg != '' && i?.cartImg != null
-                              ? {
-                                  uri: getImageUrl(
-                                    i?.cartImg?.path?.proxy_url,
-                                    i?.cartImg?.path?.image_path,
-                                    '300/300',
-                                  ),
-                                  priority: FastImage.priority.high,
-                                }
-                              : imagePath.patternOne
-                          }
-                          style={styles.imageStyle}
-                        />
-                      </View>
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                        }}>
+                        <View style={{ flex: 0.6 }}>
+                          <Text
+                            numberOfLines={1}
+                            style={{
+                              ...styles.priceItemLabel2,
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.blackOpacity86,
+                              fontSize: textScale(12),
+                              fontFamily: fontFamily.medium,
+                            }}>
+                            {i?.product?.translation[0]?.title},
+                          </Text>
 
-                      <View style={styles.cartItemDetailsCon}>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                          }}>
-                          <View style={{flex: 0.6}}>
-                            <Text
-                              numberOfLines={1}
-                              style={{
-                                ...styles.priceItemLabel2,
-                                color: isDarkMode
-                                  ? MyDarkTheme.colors.text
-                                  : colors.blackOpacity86,
-                                fontSize: textScale(12),
-                                fontFamily: fontFamily.medium,
-                              }}>
-                              {i?.product?.translation[0]?.title},
-                            </Text>
-
+                          <Text
+                            style={{
+                              ...styles.priceItemLabel2,
+                              fontSize: textScale(12),
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : '#B3B3B3',
+                              marginTop: moderateScaleVertical(4),
+                              fontFamily: fontFamily.regular,
+                            }}>
+                            <Text style={{}}>
+                              {`${currencies?.primary_currency?.symbol}${
+                                // Number(i?.pvariant?.multiplier) *
+                                Number(i?.variants?.price).toFixed(2)
+                                }`}
+                            </Text>{' '}
+                            X {i?.quantity} ={' '}
                             <Text
                               style={{
-                                ...styles.priceItemLabel2,
-                                fontSize: textScale(12),
                                 color: isDarkMode
                                   ? MyDarkTheme.colors.text
-                                  : '#B3B3B3',
-                                marginTop: moderateScaleVertical(4),
-                                fontFamily: fontFamily.regular,
+                                  : colors.black,
                               }}>
-                              <Text style={{}}>
-                                {`${currencies?.primary_currency?.symbol}${
-                                  // Number(i?.pvariant?.multiplier) *
-                                  Number(i?.variants?.price).toFixed(2)
+                              {`${currencies?.primary_currency?.symbol}${
+                                // Number(i?.pvariant?.multiplier) *
+                                Number(i?.variants?.quantity_price).toFixed(2)
                                 }`}
-                              </Text>{' '}
-                              X {i?.quantity} ={' '}
-                              <Text
-                                style={{
-                                  color: isDarkMode
-                                    ? MyDarkTheme.colors.text
-                                    : colors.black,
-                                }}>
-                                {`${currencies?.primary_currency?.symbol}${
-                                  // Number(i?.pvariant?.multiplier) *
-                                  Number(i?.variants?.quantity_price).toFixed(2)
-                                }`}
-                              </Text>
                             </Text>
+                          </Text>
 
-                            {i?.variant_options.length
-                              ? i?.variant_options.map((j, jnx) => {
-                                  return (
-                                    <View style={{flexDirection: 'row'}}>
-                                      <Text
-                                        style={
-                                          isDarkMode
-                                            ? [
-                                                styles.cartItemWeight2,
-                                                {
-                                                  color:
-                                                    MyDarkTheme.colors.text,
-                                                },
-                                              ]
-                                            : styles.cartItemWeight2
-                                        }
-                                        numberOfLines={1}>
-                                        {j.title}{' '}
-                                      </Text>
-                                      <Text
-                                        style={
-                                          isDarkMode
-                                            ? [
-                                                styles.cartItemWeight2,
-                                                {
-                                                  color:
-                                                    MyDarkTheme.colors.text,
-                                                },
-                                              ]
-                                            : styles.cartItemWeight2
-                                        }
-                                        numberOfLines={
-                                          1
-                                        }>{`(${j.option})`}</Text>
-                                    </View>
-                                  );
-                                })
-                              : null}
-                          </View>
-
-                          <View
-                            style={{flex: 0.3, paddingRight: moderateScale(8)}}>
-                            <View style={styles.incDecBtnContainer}>
-                              <TouchableOpacity
-                                style={{flex: 0.3, alignItems: 'center'}}
-                                onPress={() => addDeleteCartItems(i, inx, 2)}>
-                                <Text style={styles.cartItemValueBtn}>-</Text>
-                              </TouchableOpacity>
-                              <View style={{flex: 0.4, alignItems: 'center'}}>
-                                <Text style={styles.cartItemValue}>
-                                  {i?.quantity}
-                                </Text>
-                              </View>
-                              <TouchableOpacity
-                                style={{flex: 0.3, alignItems: 'center'}}
-                                onPress={() => addDeleteCartItems(i, inx, 1)}>
-                                <Text style={styles.cartItemValueBtn}>+</Text>
-                              </TouchableOpacity>
-                            </View>
-                          </View>
-                        </View>
-                        <TouchableOpacity
-                          style={{
-                            position: 'absolute',
-                            bottom: 10,
-                            right: 20,
-                          }}
-                          onPress={() => openDeleteView(i)}>
-                          <Image source={imagePath.deleteRed} />
-                        </TouchableOpacity>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                          }}>
-                          <View style={{flex: 0.5, justifyContent: 'center'}}>
-                            {!!i?.product_addons.length && (
-                              <View>
-                                <Text
-                                  style={
-                                    isDarkMode
-                                      ? [
+                          {i?.variant_options.length
+                            ? i?.variant_options.map((j, jnx) => {
+                              return (
+                                <View style={{ flexDirection: 'row' }}>
+                                  <Text
+                                    style={
+                                      isDarkMode
+                                        ? [
                                           styles.cartItemWeight2,
                                           {
-                                            color: MyDarkTheme.colors.text,
+                                            color:
+                                              MyDarkTheme.colors.text,
                                           },
                                         ]
-                                      : styles.cartItemWeight2
-                                  }>
-                                  {strings.EXTRA}
-                                </Text>
-                              </View>
-                            )}
-                            {i?.product_addons.length
-                              ? i?.product_addons.map((j, jnx) => {
-                                  return (
-                                    <View style={{flexDirection: 'row'}}>
-                                      <Text
-                                        style={
-                                          isDarkMode
-                                            ? [
-                                                styles.cartItemWeight2,
-                                                {
-                                                  color:
-                                                    MyDarkTheme.colors.text,
-                                                },
-                                              ]
-                                            : styles.cartItemWeight2
-                                        }
-                                        numberOfLines={1}>
-                                        {j.addon_title}
-                                      </Text>
-                                      <Text
-                                        style={
-                                          isDarkMode
-                                            ? [
-                                                styles.cartItemWeight2,
-                                                {
-                                                  color:
-                                                    MyDarkTheme.colors.text,
-                                                },
-                                              ]
-                                            : styles.cartItemWeight2
-                                        }
-                                        numberOfLines={
-                                          1
-                                        }>{`(${j.option_title})`}</Text>
-                                      <Text
-                                        style={
-                                          isDarkMode
-                                            ? [
-                                                styles.cartItemWeight2,
-                                                {
-                                                  color:
-                                                    MyDarkTheme.colors.text,
-                                                },
-                                              ]
-                                            : [
-                                                styles.cartItemWeight2,
-                                                {color: colors.textGrey},
-                                              ]
-                                        }
-                                        numberOfLines={1}>{` ${
-                                        currencies?.primary_currency?.symbol
+                                        : styles.cartItemWeight2
+                                    }
+                                    numberOfLines={1}>
+                                    {j.title}{' '}
+                                  </Text>
+                                  <Text
+                                    style={
+                                      isDarkMode
+                                        ? [
+                                          styles.cartItemWeight2,
+                                          {
+                                            color:
+                                              MyDarkTheme.colors.text,
+                                          },
+                                        ]
+                                        : styles.cartItemWeight2
+                                    }
+                                    numberOfLines={
+                                      1
+                                    }>{`(${j.option})`}</Text>
+                                </View>
+                              );
+                            })
+                            : null}
+                        </View>
+
+                        <View
+                          style={{ flex: 0.3, paddingRight: moderateScale(8) }}>
+                          <View style={styles.incDecBtnContainer}>
+                            <TouchableOpacity
+                              style={{ flex: 0.3, alignItems: 'center' }}
+                              onPress={() => addDeleteCartItems(i, inx, 2)}>
+                              <Text style={styles.cartItemValueBtn}>-</Text>
+                            </TouchableOpacity>
+                            <View style={{ flex: 0.4, alignItems: 'center' }}>
+                              <Text style={styles.cartItemValue}>
+                                {i?.quantity}
+                              </Text>
+                            </View>
+                            <TouchableOpacity
+                              style={{ flex: 0.3, alignItems: 'center' }}
+                              onPress={() => addDeleteCartItems(i, inx, 1)}>
+                              <Text style={styles.cartItemValueBtn}>+</Text>
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                      </View>
+                      <TouchableOpacity
+                        style={{
+                          position: 'absolute',
+                          bottom: 10,
+                          right: 20,
+                        }}
+                        onPress={() => openDeleteView(i)}>
+                        <Image source={imagePath.deleteRed} />
+                      </TouchableOpacity>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                        }}>
+                        <View style={{ flex: 0.5, justifyContent: 'center' }}>
+                          {!!i?.product_addons.length && (
+                            <View>
+                              <Text
+                                style={
+                                  isDarkMode
+                                    ? [
+                                      styles.cartItemWeight2,
+                                      {
+                                        color: MyDarkTheme.colors.text,
+                                      },
+                                    ]
+                                    : styles.cartItemWeight2
+                                }>
+                                {strings.EXTRA}
+                              </Text>
+                            </View>
+                          )}
+                          {i?.product_addons.length
+                            ? i?.product_addons.map((j, jnx) => {
+                              return (
+                                <View style={{ flexDirection: 'row' }}>
+                                  <Text
+                                    style={
+                                      isDarkMode
+                                        ? [
+                                          styles.cartItemWeight2,
+                                          {
+                                            color:
+                                              MyDarkTheme.colors.text,
+                                          },
+                                        ]
+                                        : styles.cartItemWeight2
+                                    }
+                                    numberOfLines={1}>
+                                    {j.addon_title}
+                                  </Text>
+                                  <Text
+                                    style={
+                                      isDarkMode
+                                        ? [
+                                          styles.cartItemWeight2,
+                                          {
+                                            color:
+                                              MyDarkTheme.colors.text,
+                                          },
+                                        ]
+                                        : styles.cartItemWeight2
+                                    }
+                                    numberOfLines={
+                                      1
+                                    }>{`(${j.option_title})`}</Text>
+                                  <Text
+                                    style={
+                                      isDarkMode
+                                        ? [
+                                          styles.cartItemWeight2,
+                                          {
+                                            color:
+                                              MyDarkTheme.colors.text,
+                                          },
+                                        ]
+                                        : [
+                                          styles.cartItemWeight2,
+                                          { color: colors.textGrey },
+                                        ]
+                                    }
+                                    numberOfLines={1}>{` ${currencies?.primary_currency?.symbol
                                       }${(
                                         Number(j.price) * Number(j.multiplier)
                                       ).toFixed(2)} `}</Text>
-                                    </View>
-                                  );
-                                })
-                              : null}
-                          </View>
+                                </View>
+                              );
+                            })
+                            : null}
                         </View>
                       </View>
                     </View>
+                  </View>
 
-                    {/* <View style={styles.dashedLine} /> */}
-                  </Animated.View>
-                </Swipeable>
-              );
-            })
+                  {/* <View style={styles.dashedLine} /> */}
+                </Animated.View>
+              </Swipeable>
+            );
+          })
           : null}
         {/************ end render cart items *************/}
         {item?.isDeliverable ? null : (
-          <View style={{marginHorizontal: moderateScale(10)}}>
+          <View style={{ marginHorizontal: moderateScale(10) }}>
             <Text
               style={{
                 fontSize: moderateScale(12),
@@ -1092,36 +1132,36 @@ export default function Cart({navigation, route}) {
           style={styles.offersViewB}>
           {item?.couponData ? (
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <View
-                style={{flex: 0.7, flexDirection: 'row', alignItems: 'center'}}>
+                style={{ flex: 0.7, flexDirection: 'row', alignItems: 'center' }}>
                 <Image
-                  style={{tintColor: themeColors.primary_color}}
+                  style={{ tintColor: themeColors.primary_color }}
                   source={imagePath.percent}
                 />
                 <Text
                   numberOfLines={1}
-                  style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
+                  style={[styles.viewOffers, { marginLeft: moderateScale(10) }]}>
                   {`${strings.CODE} ${item?.couponData?.name} ${strings.APPLYED}`}
                 </Text>
               </View>
-              <View style={{flex: 0.3, alignItems: 'flex-end'}}>
+              <View style={{ flex: 0.3, alignItems: 'flex-end' }}>
                 {/* <Image source={imagePath.crossBlueB}  /> */}
                 <Text
                   onPress={() => _removeCoupon(item, cartData)}
-                  style={[styles.removeCoupon, {color: colors.cartItemPrice}]}>
+                  style={[styles.removeCoupon, { color: colors.cartItemPrice }]}>
                   {strings.REMOVE}
                 </Text>
               </View>
             </View>
           ) : (
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Image
-                style={{tintColor: themeColors.primary_color}}
+                style={{ tintColor: themeColors.primary_color }}
                 source={imagePath.percent}
               />
               <Text
-                style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
+                style={[styles.viewOffers, { marginLeft: moderateScale(10) }]}>
                 {strings.APPLY_PROMO_CODE}
               </Text>
             </View>
@@ -1133,11 +1173,11 @@ export default function Cart({navigation, route}) {
               style={
                 isDarkMode
                   ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                      },
-                    ]
+                    styles.priceItemLabel,
+                    {
+                      color: MyDarkTheme.colors.text,
+                    },
+                  ]
                   : styles.priceItemLabel
               }>
               {strings.DISCOUNT}
@@ -1146,15 +1186,15 @@ export default function Cart({navigation, route}) {
               style={
                 isDarkMode
                   ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                      },
-                    ]
+                    styles.priceItemLabel,
+                    {
+                      color: MyDarkTheme.colors.text,
+                    },
+                  ]
                   : styles.priceItemLabel
               }>{`- ${currencies?.primary_currency?.symbol}${Number(
-              item?.discount_amount ? item?.discount_amount : 0,
-            ).toFixed(2)}`}</Text>
+                item?.discount_amount ? item?.discount_amount : 0,
+              ).toFixed(2)}`}</Text>
           </View>
         )}
         {!!item?.deliver_charge && (
@@ -1163,11 +1203,11 @@ export default function Cart({navigation, route}) {
               style={
                 isDarkMode
                   ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                      },
-                    ]
+                    styles.priceItemLabel,
+                    {
+                      color: MyDarkTheme.colors.text,
+                    },
+                  ]
                   : styles.priceItemLabel
               }>
               {strings.DELIVERY_CHARGES}
@@ -1176,15 +1216,15 @@ export default function Cart({navigation, route}) {
               style={
                 isDarkMode
                   ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                      },
-                    ]
+                    styles.priceItemLabel,
+                    {
+                      color: MyDarkTheme.colors.text,
+                    },
+                  ]
                   : styles.priceItemLabel
               }>{`${currencies?.primary_currency?.symbol}${Number(
-              item?.deliver_charge ? item?.deliver_charge : 0,
-            ).toFixed(2)}`}</Text>
+                item?.deliver_charge ? item?.deliver_charge : 0,
+              ).toFixed(2)}`}</Text>
           </View>
         )}
         <View style={styles.itemPriceDiscountTaxView}>
@@ -1192,11 +1232,11 @@ export default function Cart({navigation, route}) {
             style={
               isDarkMode
                 ? [
-                    styles.priceItemLabel2,
-                    {
-                      color: MyDarkTheme.colors.text,
-                    },
-                  ]
+                  styles.priceItemLabel2,
+                  {
+                    color: MyDarkTheme.colors.text,
+                  },
+                ]
                 : styles.priceItemLabel2
             }>
             {strings.AMOUNT}
@@ -1205,15 +1245,15 @@ export default function Cart({navigation, route}) {
             style={
               isDarkMode
                 ? [
-                    styles.priceItemLabel2,
-                    {
-                      color: MyDarkTheme.colors.text,
-                    },
-                  ]
+                  styles.priceItemLabel2,
+                  {
+                    color: MyDarkTheme.colors.text,
+                  },
+                ]
                 : styles.priceItemLabel2
             }>{`${currencies?.primary_currency?.symbol}${Number(
-            item?.payable_amount ? item?.payable_amount : 0,
-          ).toFixed(2)}`}</Text>
+              item?.payable_amount ? item?.payable_amount : 0,
+            ).toFixed(2)}`}</Text>
         </View>
       </View>
     );
@@ -1234,7 +1274,7 @@ export default function Cart({navigation, route}) {
   };
   const setModalVisibleForAddessModal = (visible, type, id, data) => {
     if (!!userData?.auth_token) {
-      updateState({isVisible: false});
+      updateState({ isVisible: false });
       setTimeout(() => {
         updateState({
           updateData: data,
@@ -1251,12 +1291,12 @@ export default function Cart({navigation, route}) {
 
   const selectedTip = (tip) => {
     if (selectedTipvalue == 'custom') {
-      updateState({selectedTipvalue: tip, selectedTipAmount: null});
+      updateState({ selectedTipvalue: tip, selectedTipAmount: null });
     } else {
       if (selectedTipvalue && selectedTipvalue?.value == tip?.value) {
-        updateState({selectedTipvalue: null, selectedTipAmount: null});
+        updateState({ selectedTipvalue: null, selectedTipAmount: null });
       } else {
-        updateState({selectedTipvalue: tip, selectedTipAmount: tip?.value});
+        updateState({ selectedTipvalue: tip, selectedTipAmount: tip?.value });
       }
     }
   };
@@ -1277,7 +1317,7 @@ export default function Cart({navigation, route}) {
             <Text
               style={
                 isDarkMode
-                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                   : styles.priceItemLabel
               }>
               {strings.SUBTOTAL}
@@ -1285,18 +1325,18 @@ export default function Cart({navigation, route}) {
             <Text
               style={
                 isDarkMode
-                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                   : styles.priceItemLabel
               }>{`${currencies?.primary_currency?.symbol}${Number(
-              cartData?.gross_paybale_amount,
-            ).toFixed(2)}`}</Text>
+                cartData?.gross_paybale_amount,
+              ).toFixed(2)}`}</Text>
           </View>
           {!!cartData?.wallet_amount && (
             <View style={styles.bottomTabLableValue}>
               <Text
                 style={
                   isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                     : styles.priceItemLabel
                 }>
                 {strings.WALLET}
@@ -1304,11 +1344,11 @@ export default function Cart({navigation, route}) {
               <Text
                 style={
                   isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                     : styles.priceItemLabel
                 }>{`${currencies?.primary_currency?.symbol}${Number(
-                cartData?.wallet_amount ? cartData?.wallet_amount : 0,
-              ).toFixed(2)}`}</Text>
+                  cartData?.wallet_amount ? cartData?.wallet_amount : 0,
+                ).toFixed(2)}`}</Text>
             </View>
           )}
           {!!cartData?.loyalty_amount && (
@@ -1316,7 +1356,7 @@ export default function Cart({navigation, route}) {
               <Text
                 style={
                   isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                     : styles.priceItemLabel
                 }>
                 {strings.LOYALTY}
@@ -1324,11 +1364,11 @@ export default function Cart({navigation, route}) {
               <Text
                 style={
                   isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                     : styles.priceItemLabel
                 }>{`-${currencies?.primary_currency?.symbol}${Number(
-                cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
-              ).toFixed(2)}`}</Text>
+                  cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
+                ).toFixed(2)}`}</Text>
             </View>
           )}
 
@@ -1337,7 +1377,7 @@ export default function Cart({navigation, route}) {
               <Text
                 style={
                   isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                     : styles.priceItemLabel
                 }>
                 {strings.WALLET}
@@ -1345,11 +1385,11 @@ export default function Cart({navigation, route}) {
               <Text
                 style={
                   isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                     : styles.priceItemLabel
                 }>{`-${currencies?.primary_currency?.symbol}${Number(
-                cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
-              ).toFixed(2)}`}</Text>
+                  cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
+                ).toFixed(2)}`}</Text>
             </View>
           )}
           {!!cartData?.total_subscription_discount && (
@@ -1357,7 +1397,7 @@ export default function Cart({navigation, route}) {
               <Text
                 style={
                   isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                     : styles.priceItemLabel
                 }>
                 {strings.TOTALSUBSCRIPTION}
@@ -1365,11 +1405,11 @@ export default function Cart({navigation, route}) {
               <Text
                 style={
                   isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                     : styles.priceItemLabel
                 }>{`-${currencies?.primary_currency?.symbol}${Number(
-                cartData?.total_subscription_discount,
-              ).toFixed(2)}`}</Text>
+                  cartData?.total_subscription_discount,
+                ).toFixed(2)}`}</Text>
             </View>
           )}
 
@@ -1390,12 +1430,12 @@ export default function Cart({navigation, route}) {
               <View
                 style={[
                   styles.bottomTabLableValue,
-                  {flexDirection: 'column', marginTop: 20},
+                  { flexDirection: 'column', marginTop: 20 },
                 ]}>
                 <Text
                   style={
                     isDarkMode
-                      ? [styles.priceTipLabel, {color: MyDarkTheme.colors.text}]
+                      ? [styles.priceTipLabel, { color: MyDarkTheme.colors.text }]
                       : [styles.priceTipLabel]
                   }>
                   {strings.DOYOUWANTTOGIVEATIP}
@@ -1419,17 +1459,17 @@ export default function Cart({navigation, route}) {
                           style={
                             isDarkMode
                               ? {
-                                  color:
-                                    selectedTipvalue?.value == j?.value
-                                      ? colors.white
-                                      : MyDarkTheme.colors.text,
-                                }
+                                color:
+                                  selectedTipvalue?.value == j?.value
+                                    ? colors.white
+                                    : MyDarkTheme.colors.text,
+                              }
                               : {
-                                  color:
-                                    selectedTipvalue?.value == j?.value
-                                      ? colors.white
-                                      : colors.black,
-                                }
+                                color:
+                                  selectedTipvalue?.value == j?.value
+                                    ? colors.white
+                                    : colors.black,
+                              }
                           }>
                           {`${currencies?.primary_currency?.symbol} ${j.value}`}
                         </Text>
@@ -1461,17 +1501,17 @@ export default function Cart({navigation, route}) {
                       style={
                         isDarkMode
                           ? {
-                              color:
-                                selectedTipvalue == 'custom'
-                                  ? colors.white
-                                  : MyDarkTheme.colors.text,
-                            }
+                            color:
+                              selectedTipvalue == 'custom'
+                                ? colors.white
+                                : MyDarkTheme.colors.text,
+                          }
                           : {
-                              color:
-                                selectedTipvalue == 'custom'
-                                  ? colors.white
-                                  : colors.black,
-                            }
+                            color:
+                              selectedTipvalue == 'custom'
+                                ? colors.white
+                                : colors.black,
+                          }
                       }>
                       {strings.CUSTOM}
                     </Text>
@@ -1489,7 +1529,7 @@ export default function Cart({navigation, route}) {
                     <TextInput
                       value={selectedTipAmount}
                       onChangeText={(text) =>
-                        updateState({selectedTipAmount: text})
+                        updateState({ selectedTipAmount: text })
                       }
                       style={{
                         height: 40,
@@ -1519,7 +1559,7 @@ export default function Cart({navigation, route}) {
               <Text
                 style={
                   isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                     : styles.priceItemLabel
                 }>
                 {strings.TAX_AMOUNT}
@@ -1527,11 +1567,11 @@ export default function Cart({navigation, route}) {
               <Text
                 style={
                   isDarkMode
-                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                     : styles.priceItemLabel
                 }>{`${currencies?.primary_currency?.symbol}${Number(
-                cartData?.total_tax ? cartData?.total_tax : 0,
-              ).toFixed(2)}`}</Text>
+                  cartData?.total_tax ? cartData?.total_tax : 0,
+                ).toFixed(2)}`}</Text>
             </View>
           )}
 
@@ -1539,7 +1579,7 @@ export default function Cart({navigation, route}) {
             <Text
               style={
                 isDarkMode
-                  ? [styles.priceItemLabel2, {color: MyDarkTheme.colors.text}]
+                  ? [styles.priceItemLabel2, { color: MyDarkTheme.colors.text }]
                   : styles.priceItemLabel2
               }>
               {strings.AMOUNT_PAYABLE}
@@ -1547,14 +1587,14 @@ export default function Cart({navigation, route}) {
             <Text
               style={
                 isDarkMode
-                  ? [styles.priceItemLabel2, {color: MyDarkTheme.colors.text}]
+                  ? [styles.priceItemLabel2, { color: MyDarkTheme.colors.text }]
                   : styles.priceItemLabel2
               }>{`${currencies?.primary_currency?.symbol}${(
-              Number(cartData?.total_payable_amount) +
-              (selectedTipAmount != null && selectedTipAmount != ''
-                ? Number(selectedTipAmount)
-                : 0)
-            ).toFixed(2)}`}</Text>
+                Number(cartData?.total_payable_amount) +
+                (selectedTipAmount != null && selectedTipAmount != ''
+                  ? Number(selectedTipAmount)
+                  : 0)
+              ).toFixed(2)}`}</Text>
           </View>
         </View>
 
@@ -1562,9 +1602,9 @@ export default function Cart({navigation, route}) {
         {/* <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Text style={styles.addInstruction}>{strings.ADD_INSTRUCTIONS}</Text>
         </View> */}
-        <View style={{height: moderateScaleVertical(20)}} />
+        <View style={{ height: moderateScaleVertical(20) }} />
 
-        <View style={{height: 2}} />
+        <View style={{ height: 2 }} />
         {/* select payment method */}
         <TouchableOpacity
           onPress={() =>
@@ -1575,34 +1615,34 @@ export default function Cart({navigation, route}) {
           style={
             isDarkMode
               ? [
-                  styles.paymentMainView,
-                  {
-                    justifyContent: 'space-between',
-                    backgroundColor: MyDarkTheme.colors.lightDark,
-                  },
-                ]
-              : [styles.paymentMainView, {justifyContent: 'space-between'}]
+                styles.paymentMainView,
+                {
+                  justifyContent: 'space-between',
+                  backgroundColor: MyDarkTheme.colors.lightDark,
+                },
+              ]
+              : [styles.paymentMainView, { justifyContent: 'space-between' }]
           }>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Image
               style={
                 isDarkMode
-                  ? {tintColor: MyDarkTheme.colors.text}
-                  : {tintColor: null}
+                  ? { tintColor: MyDarkTheme.colors.text }
+                  : { tintColor: null }
               }
               source={imagePath.paymentMethod}
             />
             <Text
               style={
                 isDarkMode
-                  ? [styles.selectedMethod, {color: MyDarkTheme.colors.text}]
+                  ? [styles.selectedMethod, { color: MyDarkTheme.colors.text }]
                   : styles.selectedMethod
               }>
               {selectedPayment.title_lng
                 ? selectedPayment.title_lng
                 : selectedPayment.title
-                ? selectedPayment.title
-                : strings.SELECT_PAYMENT_METHOD}
+                  ? selectedPayment.title
+                  : strings.SELECT_PAYMENT_METHOD}
             </Text>
           </View>
           <View>
@@ -1611,10 +1651,10 @@ export default function Cart({navigation, route}) {
               style={
                 isDarkMode
                   ? {
-                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                      tintColor: MyDarkTheme.colors.text,
-                    }
-                  : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    tintColor: MyDarkTheme.colors.text,
+                  }
+                  : { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }
               }
             />
           </View>
@@ -1639,9 +1679,9 @@ export default function Cart({navigation, route}) {
                       selectedTimeOption && selectedTimeOption?.id == i.id
                         ? themeColors?.primary_color
                         : getColorCodeWithOpactiyNumber(
-                            themeColors.primary_color.substr(1),
-                            20,
-                          ),
+                          themeColors.primary_color.substr(1),
+                          20,
+                        ),
                     borderColor: themeColors.primary_color,
                     borderWidth:
                       selectedTimeOption && selectedTimeOption?.id == i.id
@@ -1671,8 +1711,8 @@ export default function Cart({navigation, route}) {
                 <Text
                   style={
                     isDarkMode
-                      ? {color: MyDarkTheme.colors.text}
-                      : {color: null}
+                      ? { color: MyDarkTheme.colors.text }
+                      : { color: null }
                   }>
                   {sheduledorderdate && scheduleType
                     ? `${moment(sheduledorderdate).format('DD MMM,YYYY HH:mm')}`
@@ -1691,7 +1731,7 @@ export default function Cart({navigation, route}) {
               }}
               btnText={strings.PLACE_ORDER}
               borderRadius={moderateScale(13)}
-              textStyle={{color: '#fff'}}
+              textStyle={{ color: '#fff' }}
               containerStyle={styles.placeOrderButtonStyle}
             />
           </View>
@@ -1726,8 +1766,8 @@ export default function Cart({navigation, route}) {
               <Image
                 style={
                   isDarkMode
-                    ? {tintColor: MyDarkTheme.colors.text}
-                    : {tintColor: colors.black}
+                    ? { tintColor: MyDarkTheme.colors.text }
+                    : { tintColor: colors.black }
                 }
                 source={imagePath.locationGreen}
               />
@@ -1736,9 +1776,9 @@ export default function Cart({navigation, route}) {
                 style={
                   isDarkMode
                     ? [
-                        styles.deliveryLocationAndTime,
-                        {color: MyDarkTheme.colors.text},
-                      ]
+                      styles.deliveryLocationAndTime,
+                      { color: MyDarkTheme.colors.text },
+                    ]
                     : styles.deliveryLocationAndTime
                 }>
                 {strings.ADDRESS}:
@@ -1747,7 +1787,7 @@ export default function Cart({navigation, route}) {
                 numberOfLines={1}
                 style={
                   isDarkMode
-                    ? [styles.address, {color: MyDarkTheme.colors.text}]
+                    ? [styles.address, { color: MyDarkTheme.colors.text }]
                     : styles.address
                 }>
                 {vendorAddress}
@@ -1764,8 +1804,8 @@ export default function Cart({navigation, route}) {
               cartData?.vendor_details?.vendor_tables && (
                 <DropDownPicker
                   items={tableData}
-                  onOpen={() => updateState({isTableDropDown: true})}
-                  onClose={() => updateState({isTableDropDown: false})}
+                  onOpen={() => updateState({ isTableDropDown: true })}
+                  onClose={() => updateState({ isTableDropDown: false })}
                   defaultValue={
                     deepLinkUrl
                       ? deepLinkUrl == 1
@@ -1786,8 +1826,8 @@ export default function Cart({navigation, route}) {
                   }}
                   labelStyle={
                     isDarkMode
-                      ? {color: MyDarkTheme.colors.text}
-                      : {color: colors.textGrey}
+                      ? { color: MyDarkTheme.colors.text }
+                      : { color: colors.textGrey }
                   }
                   itemStyle={{
                     justifyContent: 'flex-start',
@@ -1807,7 +1847,7 @@ export default function Cart({navigation, route}) {
           </View>
         ) : (
           <>
-            <View style={[styles.topLable, {marginTop: moderateScale(20)}]}>
+            <View style={[styles.topLable, { marginTop: moderateScale(20) }]}>
               <View
                 style={{
                   flex: 0.3,
@@ -1817,8 +1857,8 @@ export default function Cart({navigation, route}) {
                 <Image
                   style={
                     isDarkMode
-                      ? {tintColor: MyDarkTheme.colors.text}
-                      : {tintColor: colors.black}
+                      ? { tintColor: MyDarkTheme.colors.text }
+                      : { tintColor: colors.black }
                   }
                   source={imagePath.locationGreen}
                 />
@@ -1827,9 +1867,9 @@ export default function Cart({navigation, route}) {
                   style={
                     isDarkMode
                       ? [
-                          styles.deliveryLocationAndTime,
-                          {color: MyDarkTheme.colors.text},
-                        ]
+                        styles.deliveryLocationAndTime,
+                        { color: MyDarkTheme.colors.text },
+                      ]
                       : styles.deliveryLocationAndTime
                   }>
                   {strings.DELIVERYAT}
@@ -1868,16 +1908,16 @@ export default function Cart({navigation, route}) {
     Alert.alert('', strings.AREYOUSURE, [
       {
         text: strings.CANCEL,
-        onPress: () => {},
+        onPress: () => { },
         // style: 'destructive',
       },
-      {text: strings.CONFIRM, onPress: () => bottomButtonClick()},
+      { text: strings.CONFIRM, onPress: () => bottomButtonClick() },
     ]);
   };
   //SelectAddress
   const selectAddress = (address) => {
     if (!!userData?.auth_token) {
-      updateState({isLoadingB: true});
+      updateState({ isLoadingB: true });
       let data = {};
       let query = `/${address?.id}`;
       actions
@@ -1893,7 +1933,7 @@ export default function Cart({navigation, route}) {
           });
         })
         .catch((error) => {
-          updateState({isLoadingB: false});
+          updateState({ isLoadingB: false });
           showError(error?.message || error?.error);
         });
     }
@@ -1902,7 +1942,7 @@ export default function Cart({navigation, route}) {
   //Add and update the addreess
   const addUpdateLocation = (childData) => {
     // setModalVisible(false);
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     actions
       .addAddress(childData, {
         code: appData?.profile?.code,
@@ -1940,7 +1980,7 @@ export default function Cart({navigation, route}) {
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({pageNo: 1, isRefreshing: true});
+    updateState({ pageNo: 1, isRefreshing: true });
   };
 
   const onClose = () => {
@@ -1963,7 +2003,7 @@ export default function Cart({navigation, route}) {
         if (res) {
           let table_number = getParameterByName('table', res);
           console.log(res, 'table_number');
-          updateState({deepLinkUrl: table_number});
+          updateState({ deepLinkUrl: table_number });
         }
       })
       .catch((error) => {
@@ -2017,6 +2057,111 @@ export default function Cart({navigation, route}) {
     </View>
   );
 
+
+  const onPressRecommendedVendors = (item) => {
+    if (!item.is_show_category || item.is_show_category) {
+      item?.is_show_category
+        ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
+        : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+          id: item?.id,
+          vendor: true,
+          name: item?.name,
+        })();
+
+      // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+    }
+  };
+
+  const renderRecommendedVendors = ({ item }) => {
+    return (
+      <View
+        style={{
+          width: moderateScale(width / 2),
+          marginHorizontal: moderateScale(10),
+        }}>
+        <MarketCard3
+          data={item}
+          fastImageStyle={{
+            height: moderateScaleVertical(110),
+          }}
+          imageResizeMode="contain"
+          onPress={() => onPressRecommendedVendors(item)}
+        />
+      </View>
+    );
+  };
+
+  const ListEmptyComp = () => {
+    console.log("im enter empty comp+++")
+    return (
+      <Animatable.View style={{ flex: 1 }}>
+        <View
+          style={{
+            // flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            // backgroundColor: '#fff',
+          }}>
+          <Image
+            source={imagePath.icEmptyCartC}
+            style={{ height: 250, width: 200 }}
+            resizeMode="contain"
+          />
+          <Text style={{ ...styles.textStyle }}>
+            {'Your cart is empty, add items to shop'}
+          </Text>
+        </View>
+        <HorizontalLine lineStyle={{
+          borderBottomWidth: 1,
+          borderBottomColor: isDarkMode ? colors.whiteOpacity77 : colors.greyA,
+          marginVertical: moderateScaleVertical(16)
+        }} />
+
+        {/* {wishlistArray.length > 0 && (<View>
+          <Text style={{
+            ...styles.commTextStyle,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          }}>Shop from wishlist</Text>
+          {wishlistArray.map((val, i) => {
+            return (
+              <View key={String(i)}>
+                <WishlistCard
+                  data={val.product}
+                  onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, val.product)}
+                />
+              </View>
+            )
+          })}
+        </View>)} */}
+        <View style={{ marginVertical: moderateScaleVertical(8) }} />
+
+        {recommendedVendorsdata.length > 0 && (<View>
+          <Text style={{
+            ...styles.commTextStyle,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            marginBottom: 0
+          }}>{'Recommended vendors'}</Text>
+          <FlatList
+            horizontal
+            data={recommendedVendorsdata}
+            renderItem={renderRecommendedVendors}
+            keyExtractor={(item, index) => item?.id.toString()}
+            keyboardShouldPersistTaps="always"
+            showsHorizontalScrollIndicator={false}
+            ItemSeparatorComponent={() => <View style={{ height: 30 }} />}
+          />
+        </View>)}
+
+        <View style={{ marginBottom: moderateScale(60) }} />
+      </Animatable.View>
+
+    )
+  }
+
   return (
     <WrapperContainer
       bgColor={
@@ -2026,15 +2171,13 @@ export default function Cart({navigation, route}) {
       source={loaderOne}
       isLoadingB={isLoadingB}>
       {<HeaderWithFilters centerTitle={strings.CART} noLeftIcon={true} />}
-
-      <View style={{height: 1, backgroundColor: colors.borderLight}} />
       <View
         style={
           isDarkMode
             ? [
-                styles.mainComponent,
-                {backgroundColor: MyDarkTheme.colors.background},
-              ]
+              styles.mainComponent,
+              { backgroundColor: MyDarkTheme.colors.background },
+            ]
             : styles.mainComponent
         }>
         {/* <SwipeListView
@@ -2053,47 +2196,10 @@ export default function Cart({navigation, route}) {
           ListHeaderComponent={cartItems?.length ? getHeader() : null}
           ListFooterComponent={cartItems?.length ? getFooter() : null}
           showsVerticalScrollIndicator={false}
-          style={{backgroundColor: colors.backgroundGrey}}
+          style={{ backgroundColor: colors.backgroundGrey }}
           keyExtractor={(item, index) => String(index)}
           renderItem={_renderItem}
-          ListEmptyComponent={() =>
-            isLoading && (
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  // backgroundColor: '#fff',
-                }}>
-                {/* <Image
-                  source={imagePath.icEmptyCartC}
-                  style={{height: 250, width: 250}}
-                  resizeMode="contain"
-                /> */}
-                <LottieView
-                  source={loaderSix}
-                  autoPlay
-                  loop
-                  style={{
-                    height: moderateScaleVertical(100),
-                    width: moderateScale(100),
-                  }}
-                />
-                <Text
-                  style={[
-                    styles.textStyle,
-                    {
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    },
-                  ]}>
-                  {strings.NOPRODUCTCART}
-                </Text>
-              </View>
-            )
-          }
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           refreshControl={
             <RefreshControl
               refreshing={isRefreshing}
@@ -2104,7 +2210,9 @@ export default function Cart({navigation, route}) {
           contentContainerStyle={{
             flexGrow: 1,
           }}
+          ListEmptyComponent={() => !isLoadingB && (<ListEmptyComp />)}
         />
+
       </View>
       {!!isModalVisibleForClearCart && (
         <ConfirmationModal
@@ -2139,14 +2247,14 @@ export default function Cart({navigation, route}) {
         animationType={'none'}
         style={styles.modalContainer}
         onLayout={(event) => {
-          updateState({viewHeight: event.nativeEvent.layout.height});
+          updateState({ viewHeight: event.nativeEvent.layout.height });
         }}>
         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
           <Image
             style={
               isDarkMode
-                ? {tintColor: MyDarkTheme.colors.white}
-                : {tintColor: null}
+                ? { tintColor: MyDarkTheme.colors.white }
+                : { tintColor: null }
             }
             source={imagePath.crossB}
           />
@@ -2155,9 +2263,9 @@ export default function Cart({navigation, route}) {
           style={
             isDarkMode
               ? [
-                  styles.modalMainViewContainer,
-                  {backgroundColor: MyDarkTheme.colors.lightDark},
-                ]
+                styles.modalMainViewContainer,
+                { backgroundColor: MyDarkTheme.colors.lightDark },
+              ]
               : styles.modalMainViewContainer
           }>
           <ScrollView
@@ -2166,9 +2274,9 @@ export default function Cart({navigation, route}) {
             style={
               isDarkMode
                 ? [
-                    styles.modalMainViewContainer,
-                    {backgroundColor: MyDarkTheme.colors.lightDark},
-                  ]
+                  styles.modalMainViewContainer,
+                  { backgroundColor: MyDarkTheme.colors.lightDark },
+                ]
                 : styles.modalMainViewContainer
             }>
             <View
@@ -2181,7 +2289,7 @@ export default function Cart({navigation, route}) {
               <Text
                 style={
                   isDarkMode
-                    ? [styles.carType, {color: MyDarkTheme.colors.text}]
+                    ? [styles.carType, { color: MyDarkTheme.colors.text }]
                     : styles.carType
                 }>
                 {strings.SELECTDATEANDTIME}
@@ -2211,7 +2319,7 @@ export default function Cart({navigation, route}) {
           <View
             style={[
               styles.bottomAddToCartView,
-              {top: viewHeight - height / 6},
+              { top: viewHeight - height / 6 },
             ]}>
             <GradientButton
               colorsArray={[

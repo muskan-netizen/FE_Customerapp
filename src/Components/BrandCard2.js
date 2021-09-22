@@ -43,7 +43,7 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
         onPressOut={() => pressOutAnimation(scaleInAnimated)}
         style={{
           backgroundColor: colors.borderColorNew,
-          paddingVertical: moderateScaleVertical(30),
+          // paddingVertical: moderateScaleVertical(30),
           borderRadius: moderateScale(10),
           alignItems: 'center',
           justifyContent: 'center',
@@ -54,17 +54,17 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
               ? getImageUrl(
                   data.icon.image_fit,
                   data.icon.image_path,
-                  '1000/1000',
+                  '400/400',
                 )
               : getImageUrl(
                   data.image.image_fit,
                   data.image.image_path,
-                  '1000/1000',
+                  '400/400',
                 ),
             priority: FastImage.priority.high,
           }}
-          style={{height: moderateScale(50), width: '100%'}}
-          resizeMode="contain"
+          style={{height: moderateScale(100), width: '100%',    borderRadius: moderateScale(10),}}
+          resizeMode="cover"
         />
       </TouchableOpacity>
 

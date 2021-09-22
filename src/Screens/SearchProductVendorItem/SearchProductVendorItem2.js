@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import {
   loaderOne,
@@ -14,24 +14,24 @@ import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import commonStylesFunc, {hitSlopProp} from '../../styles/commonStyles';
+import commonStylesFunc, { hitSlopProp } from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import { shortCodes } from '../../utils/constants/DynamicAppKeys';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../styles/theme';
 import LottieView from 'lottie-react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import MarketCard3 from '../../Components/MarketCard3';
 import { setItem } from '../../utils/utils';
 import RoundImg from '../../Components/RoundImg';
 
 
-export default function SearchProductVendorItem2({navigation, route}) {
+export default function SearchProductVendorItem2({ navigation, route }) {
   const [state, setState] = useState({
     isLoading: true,
     searchInput: '',
@@ -52,7 +52,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
     recentlySearched,
     trendingNearYou,
   } = state;
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
+  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
 
   //route params
@@ -61,17 +61,17 @@ export default function SearchProductVendorItem2({navigation, route}) {
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const recommendedVendorsdata = appMainData?.vendors;
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFunc({fontFamily});
+  const commonStyles = commonStylesFunc({ fontFamily });
 
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   const onChangeText = (value) => {
     updateState({
@@ -120,10 +120,10 @@ export default function SearchProductVendorItem2({navigation, route}) {
 
   useEffect(() => {
     if (searchInput != '') {
-      updateState({showRightIcon: true});
+      updateState({ showRightIcon: true });
       globalSearch();
     } else {
-      updateState({searchData: [], showRightIcon: false, isLoading: false});
+      updateState({ searchData: [], showRightIcon: false, isLoading: false });
     }
   }, [searchInput]);
 
@@ -175,7 +175,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
       });
     }
     if (item.response_type == 'product') {
-      navigation.push(navigationStrings.PRODUCTDETAIL, {data: {id: item.id}});
+      navigation.push(navigationStrings.PRODUCTDETAIL, { data: { id: item.id } });
     }
   };
 
@@ -183,15 +183,15 @@ export default function SearchProductVendorItem2({navigation, route}) {
     if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: item?.id,
-            vendor: true,
-            name: item?.name,
-          })();
+          id: item?.id,
+          vendor: true,
+          name: item?.name,
+        })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
@@ -217,67 +217,67 @@ export default function SearchProductVendorItem2({navigation, route}) {
           }}>
           {data && data.length
             ? data.map((item, index) => {
-                console.log(item, 'itemitem');
-                return (
-                  <View>
-                    <TouchableOpacity
-                      style={{
-                        flexDirection: 'row',
-                        borderColor: colors.textGreyB,
-                        borderWidth: 0.5,
-                        borderRadius: 4,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginHorizontal: moderateScale(5),
-                        paddingHorizontal: moderateScale(5),
-                        paddingVertical: moderateScaleVertical(7),
-                        marginVertical: moderateScaleVertical(5),
-                      }}
-                      onPress={() => _onclickSearchItem(item)}
-                      key={index}>
-                      <View>
-                        <Image
-                          style={
-                            isDarkMode
-                              ? {
-                                  tintColor: MyDarkTheme.colors.text,
-                                  opacity: 0.7,
-                                  marginHorizontal: moderateScale(5),
-                                }
-                              : {
-                                  opacity: 0.7,
-                                  marginHorizontal: moderateScale(5),
-                                }
-                          }
-                          source={imagePath.recently_search}
-                        />
-                      </View>
-                      <View>
-                        <Text
-                          style={{
-                            fontSize: 15,
-                            fontFamily: fontFamily.medium,
-                            color: colors.greyLight,
-                          }}>
-                          {item.dataname}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                );
-              })
+              console.log(item, 'itemitem');
+              return (
+                <View>
+                  <TouchableOpacity
+                    style={{
+                      flexDirection: 'row',
+                      borderColor: colors.textGreyB,
+                      borderWidth: 0.5,
+                      borderRadius: 4,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginHorizontal: moderateScale(5),
+                      paddingHorizontal: moderateScale(5),
+                      paddingVertical: moderateScaleVertical(7),
+                      marginVertical: moderateScaleVertical(5),
+                    }}
+                    onPress={() => _onclickSearchItem(item)}
+                    key={index}>
+                    <View>
+                      <Image
+                        style={
+                          isDarkMode
+                            ? {
+                              tintColor: MyDarkTheme.colors.text,
+                              opacity: 0.7,
+                              marginHorizontal: moderateScale(5),
+                            }
+                            : {
+                              opacity: 0.7,
+                              marginHorizontal: moderateScale(5),
+                            }
+                        }
+                        source={imagePath.recently_search}
+                      />
+                    </View>
+                    <View>
+                      <Text
+                        style={{
+                          fontSize: 15,
+                          fontFamily: fontFamily.medium,
+                          color: colors.greyLight,
+                        }}>
+                        {item.dataname}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              );
+            })
             : null}
         </View>
       </View>
     );
   };
 
-  const renderProduct = ({item}) => {
+  const renderProduct = ({ item }) => {
     console.log(item, 'itemitem');
     return (
       <TouchableOpacity
         onPress={() => _onclickSearchItem(item)}
-        style={{ flex: 1, flexDirection: 'row', alignItems:'center' }}>
+        style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
 
         <RoundImg
           img={'https://image.freepik.com/free-vector/burger-logo_18228-1173.jpg'}
@@ -299,7 +299,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
               fontSize: textScale(9),
               fontFamily: fontFamily.regular,
               color: isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51,
-              marginTop:moderateScaleVertical(5)
+              marginTop: moderateScaleVertical(5)
             }}>
             Dish
           </Text>
@@ -308,7 +308,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
     );
   };
 
-  const renderRecommendedVendors = ({item}) => {
+  const renderRecommendedVendors = ({ item }) => {
     return (
       <View
         style={{
@@ -317,7 +317,6 @@ export default function SearchProductVendorItem2({navigation, route}) {
         }}>
         <MarketCard3
           data={item}
-          onPress={() => onPressCategory(item)}
           fastImageStyle={{
             height: moderateScaleVertical(110),
           }}
@@ -459,7 +458,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
             onChangeText={(value) => onChangeText(value)}
             showRightIcon={showRightIcon}
             rightIconPress={() =>
-              updateState({searchInput: '', isLoading: false})
+              updateState({ searchInput: '', isLoading: false })
             }
           />
         </View>

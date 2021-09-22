@@ -391,14 +391,8 @@ export default function ProductDetail({ route, navigation }) {
                 disabled={options && options.length == 1 ? true : false}
                 onPress={() => selectSpecificOptions(options, i, inx)}
                 style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginRight: moderateScale(5),
-                  marginBottom: moderateScaleVertical(10),
-                  backgroundColor: i?.value ? themeColors?.primary_color : '#D8D8D8',
-                  width: 24,
-                  height: 24,
-                  borderRadius: 2
+                  ...styles.boxView,
+                  backgroundColor: i?.value ? themeColors?.primary_color : isDarkMode ? colors.whiteOpacity15 : '#D8D8D8',
                 }}>
                 {/* <Image source={i?.value ? imagePath.check : imagePath.unCheck} /> */}
                 <Text
@@ -591,11 +585,18 @@ export default function ProductDetail({ route, navigation }) {
         }
         onAddtoWishlist={() => _onAddtoWishlist(item)}
         data={item}
-        cardStyle={{ marginHorizontal: moderateScale(10) }}
+        cardStyle={{
+          backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
+          marginHorizontal: moderateScale(10)
+        }}
         addToCart={() =>
           navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
         }
         bottomText={strings.VIEW_DETAIL}
+        nameTextStyle={{
+          ...styles.productName,
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+        }}
       />
     );
   };
@@ -640,9 +641,10 @@ export default function ProductDetail({ route, navigation }) {
             : colors.white,
         }}
       />
-      <View style={{ marginHorizontal: moderateScale(16) }}>
 
-        <KeyboardAwareScrollView ref={myRef} showsVerticalScrollIndicator={false}>
+
+      <KeyboardAwareScrollView ref={myRef} showsVerticalScrollIndicator={false}>
+        <View style={{ marginHorizontal: moderateScale(16) }}>
           {state.isLoading && <ListEmptyProduct isLoading={state.isLoading} />}
 
           {!state.isLoading && (
@@ -754,7 +756,7 @@ export default function ProductDetail({ route, navigation }) {
                   <Text style={{
                     ...commonStyles.mediumFont12,
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity43,
-                  }}>In Nike</Text>
+                  }}>In {productDetailData?.category?.category_detail?.translation[0]?.name}</Text>
 
                   {productDetailData?.averageRating !== null && (
                     <View
@@ -778,62 +780,7 @@ export default function ProductDetail({ route, navigation }) {
                       />
                     </View>
                   )}
-
                 </View>
-
-
-
-
-
-
-
-                {/* <View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-           
-                  }}>
-             
-                  <View
-                    style={{
-            
-                      flex: 0.35,
-                      alignItems: 'flex-start',
-                      justifyContent: 'center',
-                    }}>
-                    <Text style={styles.productPrice}>{`${currencies?.primary_currency.symbol
-                      }${(
-                        Number(productPriceData?.multiplier) *
-                        Number(productPriceData?.price)
-                      ).toFixed(2)}`}</Text>
-                  </View>
-                  {!!productTotalQuantity &&
-                    !!productTotalQuantity != 0 &&
-                    (!!data?.showAddToCart ? null : (
-                      <View style={{ flex: 0.3, justifyContent: 'center' }}>
-                        <View style={styles.incDecBtnContainer}>
-                          <TouchableOpacity
-                            style={{ flex: 0.3, alignItems: 'center' }}
-                            onPress={() => productIncrDecreamentForCart(2)}>
-                            <Text style={styles.cartItemValueBtn}>-</Text>
-                          </TouchableOpacity>
-                          <View style={{ flex: 0.4, alignItems: 'center' }}>
-                            <Text style={styles.cartItemValue}>
-                              {productQuantityForCart}
-                            </Text>
-                          </View>
-                          <TouchableOpacity
-                            style={{ flex: 0.3, alignItems: 'center' }}
-                            onPress={() => productIncrDecreamentForCart(1)}>
-                            <Text style={styles.cartItemValueBtn}>+</Text>
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                    ))}
-                </View>
-              </View> */}
-
 
                 {productTotalQuantity == 0 && (<View style={{ justifyContent: 'center' }}>
                   <Text
@@ -1003,49 +950,12 @@ export default function ProductDetail({ route, navigation }) {
                         />
                       </View>
                     </View>
-                    {/* <GradientButton
-                      colorsArray={[
-                        themeColors.primary_color,
-                        themeColors.primary_color,
-                      ]}
-                      textStyle={styles.textStyle}
-                      onPress={addToCart}
-                      marginTop={moderateScaleVertical(10)}
-                      marginBottom={moderateScaleVertical(10)}
-                      btnText={strings.ADDTOCART}
-                    /> */}
+
                   </View>
                 ))}
 
-              {/* related product */}
-              {!!relatedProducts && !!relatedProducts.length && (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                  }}>
-                  <Text
-                    style={isDarkMode
-                      ? [styles.productName, { color: MyDarkTheme.colors.text }]
-                      : styles.productName
-                    }>
-                    {strings.YOUMAYALSO}
-                  </Text>
-                </View>
-              )}
 
-              <FlatList
-                data={(!state.isLoading && relatedProducts) || []}
-                renderItem={renderProduct}
-                keyExtractor={(item, index) => String(index)}
-                keyboardShouldPersistTaps="always"
-                showsHorizontalScrollIndicator={false}
-                style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
-                contentContainerStyle={{ flexGrow: 1 }}
-                horizontal
-                ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-                ListFooterComponent={() => <View style={{ height: 20 }} />}
-              // ListEmptyComponent={<ListEmptyProduct isLoading={state.isLoading}/>}
-              />
+
               <AddonModal
                 productdetail={productDetailData}
                 isVisible={isVisibleAddonModal}
@@ -1056,9 +966,38 @@ export default function ProductDetail({ route, navigation }) {
               />
             </>
           )}
-          <View style={{ marginBottom: moderateScale(120) }} />
-        </KeyboardAwareScrollView>
-      </View>
+        </View>
+        {/* related product */}
+
+        <View style={{}}>
+          {!!relatedProducts && !!relatedProducts.length && (
+            <Text
+              style={{
+                ...styles.descriptiontitle,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+                marginLeft: moderateScale(16)
+              }}>
+              {strings.YOUMAYALSO}
+            </Text>
+          )}
+          <FlatList
+            data={(!state.isLoading && relatedProducts) || []}
+            renderItem={renderProduct}
+            keyExtractor={(item, index) => String(index)}
+            keyboardShouldPersistTaps="always"
+            showsHorizontalScrollIndicator={false}
+            style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
+            contentContainerStyle={{ flexGrow: 1 }}
+            horizontal
+            ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+            ListHeaderComponent={() => <View style={{ marginLeft: moderateScale(8) }} />}
+            ListFooterComponent={() => <View style={{ marginLeft: moderateScale(8) }} />}
+          // ListEmptyComponent={<ListEmptyProduct isLoading={state.isLoading}/>}
+          />
+        </View>
+        <View style={{ marginBottom: moderateScale(40) }} />
+      </KeyboardAwareScrollView>
+
     </WrapperContainer>
   );
 }

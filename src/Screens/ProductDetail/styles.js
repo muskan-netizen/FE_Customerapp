@@ -26,7 +26,7 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
     },
     productName: {
       color: colors.textGrey,
-      fontSize: textScale(14),
+      fontSize: textScale(12),
       lineHeight: 18,
       fontFamily: fontFamily.medium,
     },
@@ -261,4 +261,15 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
       justifyContent: 'space-between',
       paddingHorizontal: moderateScale(12),
     },
+    boxView: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: moderateScale(5),
+      marginBottom: moderateScaleVertical(10),
+      // width: 24,
+      // height: 24,
+      borderRadius: 2,
+      paddingHorizontal: 10,
+      paddingVertical: 6
+    }
   });
