@@ -368,6 +368,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         _pickerCancel={_pickerCancel}
         _onDayPress={_onDayPress}
         _modalOkPress={_modalOkPress}
+        date={formatedTime}
       />
     );
   };

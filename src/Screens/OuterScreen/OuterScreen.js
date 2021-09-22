@@ -1,21 +1,28 @@
-import React, { useState } from 'react';
-import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import React, {useState} from 'react';
+import {
+  Image,
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {useSelector} from 'react-redux';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import GradientButton from '../../Components/GradientButton';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import { hitSlopProp } from '../../styles/commonStyles';
+import {hitSlopProp} from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import { showError } from '../../utils/helperFunctions';
+import {showError} from '../../utils/helperFunctions';
 
 import {
   fbLogin,
@@ -26,12 +33,12 @@ import {
 import DeviceInfo from 'react-native-device-info';
 import stylesFunc from './styles';
 import Header from '../../Components/Header';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-community/async-storage';
 
-export default function OuterScreen({ navigation }) {
+export default function OuterScreen({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -50,22 +57,22 @@ export default function OuterScreen({ navigation }) {
   } = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ fontFamily, themeColors });
+  const styles = stylesFunc({fontFamily, themeColors});
 
-  const { getLanguage, isLoading } = state;
-  const { apple_login, fb_login, twitter_login, google_login } =
+  const {getLanguage, isLoading} = state;
+  const {apple_login, fb_login, twitter_login, google_login} =
     appData?.profile?.preferences;
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   //Saving login user to backend
   const _saveSocailLogin = async (socialLoginData, type) => {
-    let fcmToken = await AsyncStorage.getItem('fcmToken')
+    let fcmToken = await AsyncStorage.getItem('fcmToken');
     let data = {};
     data['name'] =
       socialLoginData?.name ||
@@ -79,7 +86,7 @@ export default function OuterScreen({ navigation }) {
     data['email'] = socialLoginData?.email;
     data['device_type'] = Platform.OS;
     data['device_token'] = DeviceInfo.getUniqueId();
-    data['fcm_token'] = !!fcmToken ? fcmToken : DeviceInfo.getUniqueId()
+    data['fcm_token'] = !!fcmToken ? fcmToken : DeviceInfo.getUniqueId();
 
     let query = '';
     if (
@@ -101,14 +108,14 @@ export default function OuterScreen({ navigation }) {
         console.log(res, 'res>>>SOCIAL');
         if (!!res.data) {
           !!res.data?.client_preference?.verify_email ||
-            !!res.data?.client_preference?.verify_phone
+          !!res.data?.client_preference?.verify_phone
             ? !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
               ? navigation.push(navigationStrings.DRAWER_ROUTES)
               : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
             : navigation.push(navigationStrings.DRAWER_ROUTES);
         }
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
         getCartDetail();
       })
       .catch(errorMethod);
@@ -116,7 +123,7 @@ export default function OuterScreen({ navigation }) {
 
   //error handling
   const errorMethod = (error) => {
-    updateState({ isLoading: false });
+    updateState({isLoading: false});
     showError(error?.error || error?.message);
   };
 
@@ -134,47 +141,47 @@ export default function OuterScreen({ navigation }) {
       .then((res) => {
         actions.cartItemQty(res);
       })
-      .catch((error) => { });
+      .catch((error) => {});
   };
 
   //Apple Login Support
   const openAppleLogin = () => {
-    updateState({ isLoading: false });
+    updateState({isLoading: false});
     handleAppleLogin()
       .then((res) => {
         _saveSocailLogin(res, 'apple');
         // updateState({isLoading: false});
       })
       .catch((err) => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
       });
   };
 
   //Gmail Login Support
   const openGmailLogin = () => {
-    updateState({ isLoading: true });
+    updateState({isLoading: true});
     googleLogin()
       .then((res) => {
         if (res?.user) {
           _saveSocailLogin(res.user, 'google');
         } else {
-          updateState({ isLoading: false });
+          updateState({isLoading: false});
         }
       })
       .catch((err) => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
       });
   };
 
   const _responseInfoCallback = (error, result) => {
-    updateState({ isLoading: true });
+    updateState({isLoading: true});
     if (error) {
-      updateState({ isLoading: false });
+      updateState({isLoading: false});
     } else {
       if (result && result?.id) {
         _saveSocailLogin(result, 'facebook');
       } else {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
       }
     }
   };
@@ -191,11 +198,11 @@ export default function OuterScreen({ navigation }) {
         if (res) {
           _saveSocailLogin(res, 'twitter');
         } else {
-          updateState({ isLoading: false });
+          updateState({isLoading: false});
         }
       })
       .catch((err) => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
       });
   };
 
@@ -215,8 +222,8 @@ export default function OuterScreen({ navigation }) {
             appStyle?.homePageLayout === 2
               ? imagePath.backArrow
               : appStyle?.homePageLayout === 3
-                ? imagePath.icBackb
-                : imagePath.back
+              ? imagePath.icBackb
+              : imagePath.back
           }
           onPressLeft={() =>
             // navigation.push(navigationStrings.SHORT_CODE, {
@@ -227,24 +234,29 @@ export default function OuterScreen({ navigation }) {
           // rightIcon={imagePath.cartShop}
           headerStyle={
             isDarkMode
-              ? { backgroundColor: MyDarkTheme.colors.background }
-              : { backgroundColor: colors.white }
+              ? {backgroundColor: MyDarkTheme.colors.background}
+              : {backgroundColor: colors.white}
           }
         />
       )}
 
-      <View style={{ marginTop: moderateScaleVertical(70), flex: 1 }}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingTop: moderateScaleVertical(70),
+          flexGrow: 1,
+        }}>
         <Text
           style={
             isDarkMode
-              ? [styles.header, { color: MyDarkTheme.colors.text }]
+              ? [styles.header, {color: MyDarkTheme.colors.text}]
               : styles.header
           }>
           {strings.CREATE_YOUR_ACCOUNT}
         </Text>
-        <View style={{ marginHorizontal: moderateScale(24) }}>
+        <View style={{marginHorizontal: moderateScale(24)}}>
           {appData?.profile?.preferences?.home_tag_line ? (
-            <View style={{ marginHorizontal: moderateScaleVertical(30) }}>
+            <View style={{marginHorizontal: moderateScaleVertical(30)}}>
               <Text numberOfLines={2} style={styles.txtSmall}>
                 {appData?.profile?.preferences?.home_tag_line
                   ? appData?.profile?.preferences?.home_tag_line
@@ -254,27 +266,27 @@ export default function OuterScreen({ navigation }) {
           ) : null}
 
           <GradientButton
-            containerStyle={{ marginTop: moderateScaleVertical(50) }}
+            containerStyle={{marginTop: moderateScaleVertical(50)}}
             btnText={strings.CREATE_AN_ACCOUNT}
             onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
           />
           <ButtonWithLoader
             btnStyle={styles.guestBtn}
-            btnTextStyle={{ color: themeColors.primary_color }}
+            btnTextStyle={{color: themeColors.primary_color}}
             onPress={() => onGuestLogin()}
             btnText={strings.GUEST_LOGIN}
           />
-          <View style={{ marginTop: moderateScaleVertical(50) }}>
+          <View style={{marginTop: moderateScaleVertical(50)}}>
             {!!google_login ||
-              !!fb_login ||
-              !!twitter_login ||
-              !!apple_login ? (
+            !!fb_login ||
+            !!twitter_login ||
+            !!apple_login ? (
               <View style={styles.socialRow}>
                 <View style={styles.hyphen} />
                 <Text
                   style={
                     isDarkMode
-                      ? [styles.orText, { color: MyDarkTheme.colors.text }]
+                      ? [styles.orText, {color: MyDarkTheme.colors.text}]
                       : styles.orText
                   }>
                   {strings.OR_SIGNUP_WITH}
@@ -288,7 +300,7 @@ export default function OuterScreen({ navigation }) {
                 flexDirection: 'column',
               }}>
               {!!google_login && (
-                <View style={{ marginTop: moderateScaleVertical(15) }}>
+                <View style={{marginTop: moderateScaleVertical(15)}}>
                   <TransparentButtonWithTxtAndIcon
                     icon={imagePath.ic_google2}
                     btnText={strings.CONTINUE_GOOGLE}
@@ -308,7 +320,7 @@ export default function OuterScreen({ navigation }) {
                 </View>
               )}
               {!!fb_login && (
-                <View style={{ marginVertical: moderateScaleVertical(15) }}>
+                <View style={{marginVertical: moderateScaleVertical(15)}}>
                   <TransparentButtonWithTxtAndIcon
                     icon={imagePath.ic_fb2}
                     btnText={strings.CONTINUE_FACEBOOK}
@@ -347,7 +359,7 @@ export default function OuterScreen({ navigation }) {
               )}
 
               {!!apple_login && Platform.OS == 'ios' && (
-                <View style={{ marginVertical: moderateScaleVertical(15) }}>
+                <View style={{marginVertical: moderateScaleVertical(15)}}>
                   <TransparentButtonWithTxtAndIcon
                     icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
                     btnText={strings.CONTINUE_APPLE}
@@ -398,7 +410,7 @@ export default function OuterScreen({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </WrapperContainer>
   );
 }
