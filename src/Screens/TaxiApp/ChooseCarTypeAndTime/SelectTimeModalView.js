@@ -33,7 +33,7 @@ import {CalendarList} from 'react-native-calendars';
 export default function SelectTimeModalView({
   isLoading = false,
   availAbleTimes = [],
-  date = new Date(),
+  date = moment().format('hh:mm A'),
   onPressBack,
   selectedAvailableTimeOption = null,
   selectAvailAbleTime,
@@ -45,13 +45,10 @@ export default function SelectTimeModalView({
   pickedUpTime,
   selectedDate,
   pickedUpDate,
-  _openTimePicker = () => {},
-  _openCalendarPicker = () => {},
-  _onCalendarPickerCancel = () => {},
-  _openTimePickerCancel = () => {},
+  _pickerOpen = () => {},
+  _modalOkPress = () => {},
+  _pickerCancel = () => {},
   _onDayPress = () => {},
-  _calendarPickerOkPress = () => {},
-  _datePickerOkPress = () => {},
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -61,47 +58,22 @@ export default function SelectTimeModalView({
     (state) => state?.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
-
-  // const [state, setState] = useState({
-  //   isTimerPickerModal: false,
-  //   formatedTime: moment().format('HH:mm A'),
-  //   isDatePickerModal: false,
-  //   pickedUpTime: moment().format('HH:mm A'),
-  //   selectedDate: moment().format('YYY-MM-DD'),
-  //   pickedUpDate: moment().format('YYYY-MM-DD'),
-  // });
-
-  // const {
-  //   isTimerPickerModal,
-  //   formatedTime,
-  //   isDatePickerModal,
-  //   pickedUpTime,
-  //   selectedDate,
-  //   pickedUpDate,
-  // } = state;
-
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});
   const commonStyles = commonStylesFun({fontFamily});
   const {profile} = appData;
 
   const onDateChange = (value) => {
+    console.log(value, 'OnDate');
     _onDateChange(value);
   };
 
-  const openCalenderPicker = (value) => {
-    _openCalendarPicker(value);
-  };
-  const onCalendarCancel = (value) => {
-    _onCalendarPickerCancel(value);
+  const pickerOpen = (value) => {
+    _pickerOpen(value);
   };
 
-  const openTimePickerCancel = (value) => {
-    _openTimePickerCancel(value);
-  };
-
-  const openTimePicker = (value) => {
-    _openTimePicker(value);
+  const pickerCancel = (value) => {
+    _pickerCancel(value);
   };
 
   const _renderArrow = (direction) => {
@@ -131,17 +103,17 @@ export default function SelectTimeModalView({
     _onDayPress(value);
   };
 
-  const calendarPickerOkPress = (value) => {
-    _calendarPickerOkPress(value);
-  };
-  const datePickerOkPress = (value) => {
-    _datePickerOkPress(value);
+  const modalOkPress = (value1, value2) => {
+    _modalOkPress(value1, value2);
   };
 
   const _calendarModalMainView = () => (
     <View
       style={{
         flex: 1,
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.lightDark
+          : colors.white,
       }}>
       <View
         style={{
@@ -170,33 +142,43 @@ export default function SelectTimeModalView({
         hideArrows={false}
         onDayPress={(value) => onDayPress(value)}
         minDate={new Date()}
-        style={{marginTop: moderateScale(10)}}
         markedDates={{
           [selectedDate]: {
             selected: true,
             selectedColor: themeColors.primary_color,
           },
         }}
+        theme={{
+          calendarBackground: isDarkMode
+            ? MyDarkTheme.colors.lightDark
+            : colors.white,
+          dayTextColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          monthTextColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          textDisabledColor: isDarkMode ? colors.whiteOpacity22 : colors.greyA,
+        }}
       />
       <View
         style={{
-          backgroundColor: colors.white,
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.lightDark
+            : colors.white,
           overflow: 'hidden',
           flexDirection: 'row',
           justifyContent: 'flex-end',
           alignItems: 'center',
         }}>
-        <TouchableOpacity onPress={onCalendarCancel}>
+        <TouchableOpacity onPress={() => pickerCancel('isDatePickerModal')}>
           <Text
             style={{
               marginHorizontal: moderateScale(20),
               fontSize: textScale(14),
+              color: isDarkMode ? colors.white : colors.black,
             }}>
             {strings.CANCEL}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={calendarPickerOkPress}
+          onPress={() => modalOkPress('isDatePickerModal', 'pickedUpDate')}
           style={{
             paddingHorizontal: moderateScale(23),
             paddingVertical: moderateScaleVertical(10),
@@ -245,38 +227,42 @@ export default function SelectTimeModalView({
         <DatePicker
           date={date}
           mode="time"
-          textColor={isDarkMode ? '#fff' : colors.blackB}
+          textColor={isDarkMode ? colors.white : colors.blackB}
           minimumDate={new Date()}
           style={{
             width: width / 1.1,
             height: height / 2.6,
-            backgroundColor: colors.white,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : colors.white,
             alignSelf: 'center',
           }}
-          // onDateChange={setDate}
           onDateChange={(value) => onDateChange(value)}
         />
         <View
           style={{
-            backgroundColor: colors.white,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : colors.white,
             paddingBottom: moderateScaleVertical(20),
             overflow: 'hidden',
             flexDirection: 'row',
             justifyContent: 'flex-end',
             alignItems: 'center',
           }}>
-          <TouchableOpacity onPress={openTimePickerCancel}>
+          <TouchableOpacity onPress={() => pickerCancel('isTimerPickerModal')}>
             <Text
               style={{
                 marginHorizontal: moderateScale(20),
                 fontSize: textScale(14),
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
               {strings.CANCEL}
             </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={datePickerOkPress}
+            onPress={() => modalOkPress('isTimerPickerModal', 'pickedUpTime')}
             style={{
               paddingHorizontal: moderateScale(23),
               paddingVertical: moderateScaleVertical(10),
@@ -355,7 +341,9 @@ export default function SelectTimeModalView({
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}
             undnerlinecolor={colors.textGreyB}
-            labelStyle={{color: colors.textGrey}}
+            labelStyle={{
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+            }}
             lableViewStyle={{
               justifyContent: 'space-between',
               alignItems: 'center',
@@ -363,7 +351,7 @@ export default function SelectTimeModalView({
             isLableIcon={true}
             labelIconPath={imagePath.calendarB}
             labelIconStyle={{tintColor: themeColors.primary_color}}
-            onPressLabel={openCalenderPicker}
+            onPressLabel={() => pickerOpen('isDatePickerModal')}
           />
           <TextInputWithUnderlineAndLabel
             value={pickedUpTime}
@@ -376,7 +364,9 @@ export default function SelectTimeModalView({
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}
             undnerlinecolor={colors.textGreyB}
-            labelStyle={{color: colors.textGrey}}
+            labelStyle={{
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+            }}
             mainStyle={{marginTop: moderateScaleVertical(30)}}
             lableViewStyle={{
               justifyContent: 'space-between',
@@ -385,7 +375,7 @@ export default function SelectTimeModalView({
             isLableIcon={true}
             labelIconPath={imagePath.icTime}
             labelIconStyle={{tintColor: themeColors.primary_color}}
-            onPressLabel={openTimePicker}
+            onPressLabel={() => pickerOpen('isTimerPickerModal')}
           />
         </View>
         <View

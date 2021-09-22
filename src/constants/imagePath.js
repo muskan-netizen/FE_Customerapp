@@ -289,6 +289,8 @@ export default {
   subscription: require('../assets/images/RoyoorderNewImages/ic_sub.png'),
   recently_search: require('../assets/images/RoyoorderNewImages/ic_recent.png'),
   trending: require('../assets/images/RoyoorderNewImages/ic_trending.png'),
+  icMark1: require('../assets/images/RoyoorderNewImages/ic_mark1.png'),
+  icMark2: require('../assets/images/RoyoorderNewImages/ic_mark2.png'),
 
   icBrandActive: require('../assets/images/RoyoorderNewImages/ic_tag2.png'),
   icBrandInActive: require('../assets/images/RoyoorderNewImages/ic_tag.png'),
@@ -342,4 +344,7 @@ export default {
   icgo3: require('../assets/images/TAXIAPPIMAGES/ic_go.png'),
   icEmptyCart: require('../assets/images/RoyoorderNewImages/ic_emptycart2.png'),
   icEmptyCartA: require('../assets/images/RoyoorderNewImages/ic_emptycart3.png'),
+  icEmptyCartB: require('../assets/images/RoyoorderNewImages/ic_emptygrey.png'),
+  icEmptyCartC: require('../assets/images/RoyoorderNewImages/Group8.png'),
+  car3: require('../assets/images/TAXIAPPIMAGES/ic_car3.png'),
 };

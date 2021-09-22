@@ -92,3 +92,4 @@ export {default as Celebrity2} from './Celebrity/Celebrity2';
 export {default as CelebrityProduct2} from './CelebrityProduct/CelebrityProduct2';
 export {default as PaymentOptions} from './TaxiApp/PaymentOptions/PaymentOptions';
 export {default as ChooseCarTypeAndTimeTaxi} from './TaxiApp/ChooseCarTypeAndTime/ChooseCarTypeAndTime';
+export {default as PickupTaxiOrderDetail} from './TaxiApp/PickupTaxiOrderDetail/PickupTaxiOrderDetail';

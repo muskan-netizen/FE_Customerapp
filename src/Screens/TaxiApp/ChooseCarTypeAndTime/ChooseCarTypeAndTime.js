@@ -112,7 +112,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     couponInfo: null,
     loyalityAmount: null,
     isTimerPickerModal: false,
-    formatedTime: moment().format('HH:mm A'),
+    formatedTime: moment().format('hh:mm A'),
     isDatePickerModal: false,
     pickedUpTime: moment().format('hh:mm A'),
     selectedDate: moment().format('YYY-MM-DD'),
@@ -157,7 +157,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     pickedUpDate,
   } = state;
 
-  console.log(pickedUpDate, pickedUpTime, 'Date & Time');
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});
   const commonStyles = commonStylesFun({fontFamily});
@@ -280,12 +279,14 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           //   orderDetail: res?.data,
           //   selectedCarOption: selectedCarOption,
           // });
-          navigation.navigate(navigationStrings.PICKUPORDERDETAIL, {
+          navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
             orderId: res?.data?.id,
             fromVendorApp: true,
             selectedVendor: {id: selectedCarOption?.vendor_id},
             orderDetail: res?.data,
             fromCab: true,
+            totalDuration: totalDuration,
+            selectedCarOption: selectedCarOption?.sku,
           });
         } else {
           updateState({
@@ -340,6 +341,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     }
   };
 
+  console.log(selectedCarOption, 'selectedCarOption');
+
   const _selectTimeView = () => {
     return (
       <SelectTimeModalView
@@ -361,13 +364,10 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         pickedUpTime={pickedUpTime}
         selectedDate={selectedDate}
         pickedUpDate={pickedUpDate}
-        _openTimePicker={_openTimePicker}
-        _openCalendarPicker={_openCalendarPicker}
-        _onCalendarPickerCancel={_onCalendarPickerCancel}
-        _openTimePickerCancel={_openTimePickerCancel}
+        _pickerOpen={_pickerOpen}
+        _pickerCancel={_pickerCancel}
         _onDayPress={_onDayPress}
-        _calendarPickerOkPress={_calendarPickerOkPress}
-        _datePickerOkPress={_datePickerOkPress}
+        _modalOkPress={_modalOkPress}
       />
     );
   };
@@ -504,41 +504,27 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     });
   };
 
-  const _openTimePicker = () => {
-    updateState({isTimerPickerModal: true});
+  const _pickerOpen = (value) => {
+    updateState({[value]: true});
   };
 
-  const _openCalendarPicker = () => {
-    updateState({
-      isDatePickerModal: true,
-    });
-  };
-
-  const _onCalendarPickerCancel = () => {
-    updateState({isDatePickerModal: false});
-  };
-
-  const _openTimePickerCancel = () => {
-    updateState({isTimerPickerModal: false});
+  const _pickerCancel = (value) => {
+    updateState({[value]: false});
   };
 
   const _onDayPress = (value) => {
     updateState({selectedDate: value.dateString});
   };
 
-  const _datePickerOkPress = () => {
+  const _modalOkPress = (value1, value2) => {
     updateState({
-      isTimerPickerModal: false,
-      pickedUpTime: formatedTime,
+      [value1]: false,
+      [value2]: value2 === 'pickedUpTime' ? formatedTime : selectedDate,
     });
   };
 
-  const _calendarPickerOkPress = () => {
-    updateState({isDatePickerModal: false, pickedUpDate: selectedDate});
-  };
-
   const _onNewDateChange = (value) => {
-    updateState({formatedTime: moment(value).format('LT')});
+    updateState({formatedTime: moment(value).format('hh:mm A')});
   };
 
   return (

@@ -21,6 +21,7 @@ import strings from '../../constants/lang';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
+// import SubscriptionComponent from '../../Components/SubscriptionComponent';
 import {
   height,
   moderateScale,
@@ -34,6 +35,7 @@ import ListEmptySubscriptions from './ListEmptySubscriptions';
 import stylesFun from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import SubscriptionComponent from '../../Components/SubscriptionComponent';
 
 export default function Subscriptions2({navigation, route}) {
   //   console.log(route, 'route>>>');
@@ -211,7 +213,6 @@ export default function Subscriptions2({navigation, route}) {
         payNowUpcoming={() =>
           selectSpecificSubscriptionPlan(currentSubscription?.plan)
         }
-
         // cancelSubscription={()=>cancelSubscription(item)}
         // onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
         // onAddtoWishlist={() => _onAddtoWishlist(item)}
@@ -568,20 +569,6 @@ export default function Subscriptions2({navigation, route}) {
                 {strings.MYSUBSCRIPTION}
               </Text>
             </View>
-            <SubscriptionComponent
-              data={currentSubscription?.plan}
-              subscriptionData={currentSubscription}
-              clientCurrency={clientCurrency}
-              // onPress={(currentSubscription) =>
-              //   selectSpecificSubscriptionPlan(currentSubscription?.plan)
-              // }
-              allSubscriptions={allSubscriptions}
-              currentSubscription={true}
-              payNowUpcoming={() =>
-                selectSpecificSubscriptionPlan(currentSubscription?.plan)
-              }
-              cancelSubscription={() => cancelSubscription(currentSubscription)}
-            />
           </>
         )}
       </>
@@ -616,7 +603,7 @@ export default function Subscriptions2({navigation, route}) {
         <FlatList
           data={(!isLoadingB && allSubscriptions) || []}
           renderItem={renderProduct}
-          ListHeaderComponent={listHeaderComponent()}
+          // ListHeaderComponent={listHeaderComponent()}
           keyExtractor={(item, index) => String(index)}
           keyboardShouldPersistTaps="always"
           showsVerticalScrollIndicator={false}
