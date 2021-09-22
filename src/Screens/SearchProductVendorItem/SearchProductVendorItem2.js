@@ -104,6 +104,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
       language: languages?.primary_language?.id,
     })
       .then((response) => {
+        console.log("res==>>>>++",response)
         updateState({
           searchData: response.data,
           isLoading: false,
