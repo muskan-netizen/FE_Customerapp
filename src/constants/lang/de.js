@@ -513,4 +513,6 @@ export default {
   PICKUP_LOCATION2: 'PICKUP',
   CONNECTING_YOU_TO_NEARBY_DERIVER: 'CONNECTING YOU TO NEARBY DRIVERS',
   YOUR_RIDE_WILL_START_SOON: 'Your ride will start soon',
+  LABEL1: 'Label 1',
+  LABEL2: 'Label 2',
 };
