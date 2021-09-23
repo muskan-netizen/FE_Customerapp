@@ -24,13 +24,12 @@ import {showError} from '../../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
+import {useFocusEffect} from '@react-navigation/native';
 
 export default function VendorProducts({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const {storeSelectedVendor} = useSelector((state) => state?.order);
-
-  console.log(storeSelectedVendor, 'storeSelectedVendor');
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
@@ -106,6 +105,12 @@ export default function VendorProducts({route, navigation}) {
     getAllProducts();
   };
 
+  useFocusEffect(
+    React.useCallback(() => {
+      updateState({pageNo: 1});
+    }, [pageNo]),
+  );
+
   /**********Get all list items by store  id and category id */
   const getAllProducts = () => {
     actions
@@ -123,7 +128,8 @@ export default function VendorProducts({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'res--getproducts');
+        actions.savedSelectedVendor(null);
+        console.log(pageNo, 'pageNo');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -131,7 +137,9 @@ export default function VendorProducts({route, navigation}) {
           selectedTab: selectedTab
             ? selectedTab
             : res.data.category_list.filter((x) => x.is_selected),
-          selectedVendor: selectedVendor
+          selectedVendor: storeSelectedVendor
+            ? storeSelectedVendor
+            : selectedVendor
             ? selectedVendor
             : res.data.vendor_list.find((x) => x.is_selected),
           category_list: res.data.category_list,

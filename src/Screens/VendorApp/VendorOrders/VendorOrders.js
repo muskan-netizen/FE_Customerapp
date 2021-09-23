@@ -95,15 +95,17 @@ export default function VendorOrders({navigation, route}) {
           res.data.vendor_list.find((x) => x.is_selected),
           'slected vendior',
         );
+        actions.savedSelectedVendor(
+          res.data.vendor_list.find((x) => x.is_selected),
+        );
+
         updateState({
           activeOrders:
             pageActive == 1
               ? res.data.order_list.data
               : [...activeOrders, ...res.data.order_list.data],
           vendor_list: res.data.vendor_list,
-          selectedVendor: selectedVendor
-            ? selectedVendor
-            : res.data.vendor_list.find((x) => x.is_selected),
+          selectedVendor: res.data.vendor_list.find((x) => x.is_selected),
           isLoading: false,
           isRefreshing: false,
         });
@@ -113,7 +115,6 @@ export default function VendorOrders({navigation, route}) {
 
   //error handling
   const errorMethod = (error) => {
-    console.log(error, 'error');
     updateState({
       isLoading: false,
       isLoadingB: false,
@@ -211,8 +212,6 @@ export default function VendorOrders({navigation, route}) {
     });
   };
   useEffect(() => {
-    actions.savedSelectedVendor(paramData?.selectedVendorFrom);
-
     updateState({
       selectedVendor: paramData?.selectedVendorFrom,
       isLoading: true,
