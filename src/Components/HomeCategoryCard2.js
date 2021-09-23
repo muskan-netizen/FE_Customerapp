@@ -54,6 +54,7 @@ export default function HomeCategoryCard2({
             style={{
               height: moderateScale(width / 8),
               width: moderateScale(width / 8),
+              borderRadius: moderateScale(10),
               // backgroundColor: 'red',
             }}
             source={{
