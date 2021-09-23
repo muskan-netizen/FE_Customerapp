@@ -506,4 +506,8 @@ Amount`,
   PLACE_PIN_ON_MAP: 'Place the pin on Map to mark exact location',
   SEARCH_ITEM: 'Search Item',
   SEARCH_PRODUCT: 'Search Product',
+  DROPOFFLOCATION: 'Drop-off Location',
+  PICKUP_LOCATION: ' Pickup Location',
+  DROP_OFF: 'DROP-OFF',
+  PICKUP_LOCATION2: 'PICKUP',
 };

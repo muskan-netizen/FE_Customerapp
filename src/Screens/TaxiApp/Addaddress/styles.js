@@ -140,12 +140,10 @@ export default ({
     },
     modalMainViewContainer: {
       position: 'absolute',
-      // backgroundColor:'red',
-      // marginHorizontal: 10,
       marginVertical: 10,
+
       padding: moderateScale(10),
       marginTop: savedAddressViewHeight == 1 ? 48 * 2 : 48 + 5,
-      flexDirection: 'row',
       zIndex: type || avalibleValueInTextInput ? -1000 : 1000,
       top:
         type == 'pickup'
@@ -155,6 +153,10 @@ export default ({
           : type == 'dropOffLocationTwo'
           ? 48
           : 80,
+
+      bottom: 0,
+      left: 0,
+      right: 0,
     },
     savedAddressView: {
       flexDirection: 'row',
