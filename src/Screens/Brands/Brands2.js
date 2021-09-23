@@ -137,9 +137,27 @@ export default function Brand2({navigation}) {
         statusBarColor={
           isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
         }>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{marginTop: moderateScaleVertical(35)}}>
+        <Header
+          centerTitle={strings.BRANDS}
+          leftIcon={
+            appStyle?.homePageLayout === 2
+              ? imagePath.backArrow
+              : appStyle?.homePageLayout === 3
+              ? imagePath.icBackb
+              : imagePath.back
+          }
+          rightIcon={
+            appStyle?.homePageLayout === 3
+              ? imagePath.icSearchb
+              : imagePath.search
+          }
+          onPressRight={() =>
+            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+          }
+        />
+
+        <View style={{height: 1, backgroundColor: colors.borderLight}} />
+        <ScrollView showsVerticalScrollIndicator={false}>
           {[{}, {}, {}, {}, {}, {}].map((val, i) => {
             return (
               <View

@@ -30,10 +30,10 @@ export default function BannerLoader({
   const rendorVendorTxtLoader = () => {
     return (
       <HeaderLoader
-        heightLeft={moderateScaleVertical(20)}
-        rectHeightLeft={moderateScaleVertical(20)}
-        heightRight={moderateScaleVertical(20)}
-        rectHeightRight={moderateScaleVertical(20)}
+        heightLeft={moderateScaleVertical(15)}
+        rectHeightLeft={moderateScaleVertical(15)}
+        heightRight={moderateScaleVertical(15)}
+        rectHeightRight={moderateScaleVertical(15)}
         widthLeft={moderateScale(290)}
         rectWidthLeft={moderateScale(290)}
         widthRight={moderateScale(50)}

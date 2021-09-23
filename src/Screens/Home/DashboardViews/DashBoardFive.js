@@ -110,8 +110,8 @@ export default function DashBoardFive({
           viewStyles={{marginVertical: 20}}
           widthLeft={moderateScale(150)}
           rectWidthLeft={moderateScale(150)}
-          heightLeft={moderateScaleVertical(30)}
-          rectHeightLeft={moderateScaleVertical(30)}
+          heightLeft={moderateScaleVertical(20)}
+          rectHeightLeft={moderateScaleVertical(20)}
           isRight={false}
           rx={20}
           ry={20}
