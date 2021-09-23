@@ -78,17 +78,10 @@ export default ({fontFamily, themeColors}) => {
     },
     bottomView: {
       backgroundColor: colors.white,
-      // position: 'absolute',
-      // left: 0,
-      // right: 0,
-      // bottom: 0,
-      // top: height - height / 3,
-      borderRadius: moderateScale(25),
+      borderTopLeftRadius: moderateScale(25),
+      borderTopRightRadius: moderateScale(25),
       overflow: 'hidden',
-
-      // paddingBottom: moderateScaleVertical(30),
       height: height / 2,
-      // maxHeight: height / 2,
       width: width,
     },
     bottomView3: {
