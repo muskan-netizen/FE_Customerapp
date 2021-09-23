@@ -10,7 +10,7 @@ import {
 } from '../../styles/responsiveSize';
 import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
 
-export default ({fontFamily, themeColors,isDarkMode,MyDarkTheme}) => {
+export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
   const commonStyles = commonStylesFun({fontFamily});
   const styles = StyleSheet.create({
     scrollviewHorizontal: {
@@ -253,7 +253,6 @@ export default ({fontFamily, themeColors,isDarkMode,MyDarkTheme}) => {
       marginVertical: moderateScaleVertical(10),
     },
     paymentView: {
-      alignSelf: 'flex-end',
       marginVertical:
         Platform.OS === 'ios'
           ? moderateScaleVertical(10)
@@ -262,7 +261,6 @@ export default ({fontFamily, themeColors,isDarkMode,MyDarkTheme}) => {
     },
     placeOrderButtonStyle: {
       backgroundColor: themeColors.primary_color,
-      width: width / 2.4,
     },
     sceduleOrderStyle: {
       backgroundColor: getColorCodeWithOpactiyNumber(
@@ -294,12 +292,12 @@ export default ({fontFamily, themeColors,isDarkMode,MyDarkTheme}) => {
     textStyle: {
       ...commonStyles.mediumFont14,
       fontSize: textScale(13),
-      color: isDarkMode? MyDarkTheme.colors.text: colors.blackOpacity40,
+      color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity40,
     },
     tipArrayStyle: {
       justifyContent: 'center',
       alignItems: 'center',
-      borderWidth: 1,
+      borderWidth: 0.7,
       paddingHorizontal: 15,
       paddingVertical: 5,
       borderColor: colors.textGreyB,
@@ -311,7 +309,7 @@ export default ({fontFamily, themeColors,isDarkMode,MyDarkTheme}) => {
     tipArrayStyle2: {
       justifyContent: 'center',
       alignItems: 'center',
-      borderWidth: 1,
+      borderWidth: 0.7,
       paddingHorizontal: 15,
       paddingVertical: 5,
       borderColor: colors.textGreyB,
@@ -368,8 +366,8 @@ export default ({fontFamily, themeColors,isDarkMode,MyDarkTheme}) => {
       fontFamily: fontFamily.medium,
       textAlign: 'left',
       marginHorizontal: moderateScale(12),
-      marginBottom: moderateScaleVertical(12)
-    }
+      marginBottom: moderateScaleVertical(12),
+    },
   });
   return styles;
 };
