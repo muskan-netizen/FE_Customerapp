@@ -168,7 +168,7 @@ export default function Account3({navigation}) {
 
         {/* <View style={{...commonStyles.headerTopLine}} /> */}
 
-        <ScrollView style={{flex: 1}}>
+        <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
           {!!userData?.auth_token && (
             <>
               <TouchableOpacity

@@ -379,7 +379,7 @@ function styleData({themeColors, fontFamily}) {
       borderColor: themeColors.primary_color,
       justifyContent: 'center',
       alignItems: 'center',
-      width: 80,
+      width: 79,
       height: 35,
       // flexDirection:"row"
       // width: moderateScale(80),
