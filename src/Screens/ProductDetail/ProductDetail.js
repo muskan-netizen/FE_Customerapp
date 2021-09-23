@@ -694,9 +694,9 @@ export default function ProductDetail({route, navigation}) {
                                 style={
                                   isDarkMode
                                     ? {tintColor: MyDarkTheme.colors.text}
-                                    : null
+                                    : {tintColor: colors.black}
                                 }
-                                source={imagePath.icMark1}
+                                source={imagePath.heart2}
                               />
                             ) : (
                               <Image
@@ -705,7 +705,7 @@ export default function ProductDetail({route, navigation}) {
                                     ? {tintColor: MyDarkTheme.colors.text}
                                     : null
                                 }
-                                source={imagePath.icMark2}
+                                source={imagePath.whiteFilledHeart}
                               />
                             )}
                           </View>
