@@ -171,7 +171,7 @@ export default function ProductCard3({
                   // fontFamily: 'Eina02-SemiBold',
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   fontFamily: fontFamily.regular,
-                  fontSize: textScale(10),
+                  fontSize: textScale(12),
                   width: width / 2.5,
                   // flex:1
                 }}>
@@ -371,7 +371,7 @@ function styleData({ themeColors, fontFamily }) {
       borderColor: themeColors.primary_color,
       justifyContent: 'center',
       alignItems: 'center',
-      width: 80,
+      width: 79,
       height: 35,
       // flexDirection:"row"
       // width: moderateScale(80),
