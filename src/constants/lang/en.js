@@ -517,4 +517,6 @@ Amount`,
   SHOP_FROM_WISHLIST: 'Shop from wishlist',
   ALREADY_EXIST:
     'Your already have items in your cart. Do you want to discard them?',
+  LABEL1: 'Label 1',
+  LABEL2: 'Label 2',
 };

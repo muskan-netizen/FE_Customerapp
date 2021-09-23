@@ -15,6 +15,7 @@ export default function HomeCategoryCard2({
   onPress = () => {},
   isLoading = false,
 }) {
+  console.log(data, 'data>>>>');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -22,7 +23,7 @@ export default function HomeCategoryCard2({
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const imageURI = getImageUrl(
-    data?.icon?.proxy_url,
+    data?.icon?.image_fit,
     data?.icon?.image_path,
     '400/200',
   );
@@ -49,19 +50,19 @@ export default function HomeCategoryCard2({
             uri={imageURI}
           />
         ) : (
-          <View
+          <Image
             style={{
-              overflow: 'hidden',
-              borderRadius: moderateScale(15),
-            }}>
-            <FastImage
-              style={{height: moderateScale(50), width: moderateScale(50)}}
-              source={{
-                uri: imageURI,
-                priority: FastImage.priority.high,
-              }}
-            />
-          </View>
+              height: moderateScale(width / 8),
+              width: moderateScale(width / 8),
+              borderRadius: moderateScale(10),
+              // backgroundColor: 'red',
+            }}
+            source={{
+              uri: imageURI,
+              // priority: FastImage.priority.high,
+            }}
+            resizeMode="contain"
+          />
         )}
       </View>
       <View style={{flex: 0.2}}>

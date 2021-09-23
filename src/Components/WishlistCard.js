@@ -11,6 +11,7 @@ import fontFamily from '../styles/fontFamily';
 import imagePath from '../constants/imagePath';
 import commonStyles from '../styles/commonStyles';
 import { MyDarkTheme } from '../styles/theme';
+import strings from '../constants/lang';
 
 
 const WishlistCard = ({
@@ -62,15 +63,14 @@ const WishlistCard = ({
                     {data?.translation[0]?.title}
                 </Text>
                 <Text style={{
-                    ...styles.nameText,
+                    ...styles.inTextStyle,
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity43,
-                    fontSize: textScale(11),
-                }}>In {!!data?.category?.category_detail?.translation && data?.category?.category_detail?.translation[0]?.name}</Text>
+                }}>{strings.IN} {!!data?.category?.category_detail?.translation && data?.category?.category_detail?.translation[0]?.name}</Text>
                 <View style={{}}>
                     <View style={{ flex: 1, flexDirection: "row", justifyContent: 'space-between' }}>
                         <Text style={{
                             ...styles.nameText,
-                            color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity43,
+                            color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity86,
                             fontSize: textScale(11),
                         }}>{`${currencies?.primary_currency?.symbol}${(
                             Number(data?.variant[0]?.multiplier) *
@@ -127,7 +127,12 @@ const styles = StyleSheet.create({
         fontSize: textScale(14),
         fontFamily: fontFamily.medium,
         textAlign: 'left'
-    }
+    },
+    inTextStyle: {
+        fontFamily: fontFamily.regular,
+        fontSize: textScale(9),
+        textAlign: 'left',
+      }
 });
 
 //make this component available to the app
