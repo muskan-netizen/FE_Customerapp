@@ -310,7 +310,16 @@ export default function DashBoardHeaderFive({
   const viewRef2 = useRef();
 
   if (isLoading) {
-    return <HeaderLoader isRight />;
+    return (
+      <HeaderLoader
+        rectHeightLeft={moderateScaleVertical(20)}
+        heightLeft={moderateScaleVertical(20)}
+        heightRight={moderateScaleVertical(20)}
+        rectHeightRight={moderateScaleVertical(20)}
+        isRight
+        viewStyles={{marginVertical: moderateScaleVertical(10)}}
+      />
+    );
   }
 
   return (
