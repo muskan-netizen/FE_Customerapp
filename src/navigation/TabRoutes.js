@@ -202,7 +202,8 @@ export default function TabRoutes(props) {
               />
             </View>
           ),
-          unmountOnBlur: cartItemCount?.data?.item_count ? false : true,
+          unmountOnBlur:false
+          // unmountOnBlur: cartItemCount?.data?.item_count ? false : true,
         }}
       />
       {brandTab}

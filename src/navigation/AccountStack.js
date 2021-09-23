@@ -131,7 +131,7 @@ export default function ({navigation}) {
       <Stack.Screen
         name={navigationStrings.WISHLIST}
         component={appStyle?.homePageLayout === 3 ? Wishlist2 : Wishlist}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.PRODUCTDETAIL}
@@ -238,11 +238,7 @@ export default function ({navigation}) {
         component={PickupOrderDetail}
         options={{headerShown: false, tabBarVisible: false}}
       />
-      <Stack.Screen
-        name={navigationStrings.PICKUPTAXIORDERDETAILS}
-        component={PickupTaxiOrderDetail}
-        options={{headerShown: false}}
-      />
+
       <Stack.Screen
         name={navigationStrings.WEBVIEWSCREEN}
         // component={WebviewScreen}

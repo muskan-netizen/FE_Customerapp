@@ -539,4 +539,10 @@ montant`,
   SHOP_FROM_WISHLIST: 'Shop from wishlist',
   ALREADY_EXIST:
     'Vous avez déjà des articles dans votre panier. Voulez-vous les jeter ?',
+  DROPOFFLOCATION: 'Drop-off Location',
+  PICKUP_LOCATION: ' Pickup Location',
+  DROP_OFF: 'DROP-OFF',
+  PICKUP_LOCATION2: 'PICKUP',
+  CONNECTING_YOU_TO_NEARBY_DERIVER: 'CONNECTING YOU TO NEARBY DRIVERS',
+  YOUR_RIDE_WILL_START_SOON: 'Your ride will start soon',
 };

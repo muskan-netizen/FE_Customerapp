@@ -8,6 +8,8 @@ import {
   Cart3,
   Offers,
   OrderDetail,
+  ProductDetail,
+  ProductDetail2,
   ProductList,
   ProductList2,
   ProductList3,
@@ -83,6 +85,13 @@ export default function () {
             : appStyle?.homePageLayout === 3
               ? ProductList3
               : ProductList
+        }
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={navigationStrings.PRODUCTDETAIL}
+        component={
+          appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail
         }
         options={{ headerShown: false }}
       />
