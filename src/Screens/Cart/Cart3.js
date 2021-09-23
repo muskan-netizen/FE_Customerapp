@@ -21,6 +21,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import DeviceInfo, { isLocationEnabled } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
+
 import AddressModal from '../../Components/AddressModal';
 import ButtonComponent from '../../Components/ButtonComponent';
 import ChooseAddressModal from '../../Components/ChooseAddressModal';
@@ -70,6 +71,7 @@ import WishlistCard from '../../Components/WishlistCard';
 import MarketCard3 from '../../Components/MarketCard3';
 import * as Animatable from 'react-native-animatable';
 
+
 export default function Cart({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
@@ -82,12 +84,12 @@ export default function Cart({ navigation, route }) {
 
 
   const [state, setState] = useState({
-    isLoading: true,
+    isLoading: false,
     isVisibleTimeModal: false,
     isVisible: false,
     cartItems: [],
     cartData: {},
-    isLoadingB: false,
+    isLoadingB: true,
     isModalVisibleForClearCart: false,
     isVisibleAddressModal: false,
     type: '',
@@ -155,6 +157,10 @@ export default function Cart({ navigation, route }) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors, isDarkMode, MyDarkTheme });
 
+
+
+  console.log("cart item laoding",isLoadingB)
+
   const selectedAddressData = useSelector(
     (state) => state?.cart?.selectedAddress,
   );
@@ -180,7 +186,7 @@ export default function Cart({ navigation, route }) {
       }
       console.log("check cart item+++ inner", checkCartItem)
       // alert('run')
-      // updateState({ isLoadingB: true });
+      updateState({ isLoadingB: true });
       getCartDetail();
       getAllWishListData();
       // if (!!checkCartItem?.data) {
@@ -188,6 +194,9 @@ export default function Cart({ navigation, route }) {
       // } else {
       //   getAllWishListData();
       // }
+      return () => {
+        // alert('blur')
+      }
     }, [
       currencies,
       languages,
@@ -2133,6 +2142,9 @@ export default function Cart({ navigation, route }) {
       </View>
     );
   };
+
+
+  console.log('is loading ',isLoading)
 
   const ListEmptyComp = () => {
     return (
