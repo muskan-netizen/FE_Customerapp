@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
+import {ScrollView} from 'react-native-collapsible-tab-view';
 import {WebView} from 'react-native-webview';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
@@ -41,7 +42,9 @@ export default function WebviewScreen({navigation, route}) {
         headerStyle={{backgroundColor: Colors.white}}
       />
       <View style={{...commonStyles.headerTopLine}} />
-      <WebView source={{uri: paramData?.url}} />
+      <ScrollView>
+        <WebView source={{uri: paramData?.url}} />
+      </ScrollView>
     </WrapperContainer>
   );
 }

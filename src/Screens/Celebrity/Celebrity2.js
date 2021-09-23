@@ -15,6 +15,7 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
+  width,
 } from '../../styles/responsiveSize';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
@@ -22,6 +23,7 @@ import ListEmptyCleb from './ListEmptyCeleb';
 import stylesFun from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 
 export default function Celebrity2({navigation}) {
   const swiperRef = useRef();
@@ -148,10 +150,118 @@ export default function Celebrity2({navigation}) {
       />
     );
   };
+
+  const celebrityTagLoader = () => {
+    return (
+      <HeaderLoader
+        isRight={false}
+        widthLeft={(width - moderateScale(44)) / 7}
+        rectWidthLeft={(width - moderateScale(44)) / 7}
+        rectHeightLeft={moderateScaleVertical(15)}
+        heightLeft={moderateScaleVertical(15)}
+        viewStyles={{
+          marginHorizontal: 0,
+        }}
+        rx={8}
+        ry={8}
+      />
+    );
+  };
+
+  const celebrityLoader = () => {
+    return (
+      <View>
+        <HeaderLoader
+          isRight={false}
+          widthLeft={(width - moderateScale(44)) / 3}
+          rectWidthLeft={(width - moderateScale(44)) / 3}
+          rectHeightLeft={moderateScaleVertical(110)}
+          heightLeft={moderateScaleVertical(110)}
+          viewStyles={{
+            marginHorizontal: 0,
+            marginTop: moderateScaleVertical(20),
+          }}
+          rx={5}
+          ry={5}
+        />
+        <HeaderLoader
+          isRight={false}
+          widthLeft={(width - moderateScale(44)) / 3.6}
+          rectWidthLeft={(width - moderateScale(44)) / 3.6}
+          rectHeightLeft={moderateScaleVertical(8)}
+          heightLeft={moderateScaleVertical(8)}
+          viewStyles={{
+            marginHorizontal: 0,
+            marginTop: moderateScaleVertical(5),
+            alignSelf: 'center',
+          }}
+          rx={5}
+          ry={5}
+        />
+      </View>
+    );
+  };
+
+  if (isLoading) {
+    return (
+      <WrapperContainer
+        bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
+        statusBarColor={colors.white}>
+        <Header
+          centerTitle={strings.CELEBRITIES}
+          leftIcon={
+            appStyle?.homePageLayout === 2
+              ? imagePath.backArrow
+              : appStyle?.homePageLayout === 3
+              ? imagePath.icBackb
+              : imagePath.back
+          }
+          rightIcon={
+            appStyle?.homePageLayout === 3
+              ? imagePath.icSearchb
+              : imagePath.search
+          }
+          onPressRight={() =>
+            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+          }
+        />
+        <View
+          style={{
+            marginLeft: moderateScale(30),
+            marginRight: moderateScale(15),
+            marginVertical: moderateScaleVertical(15),
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          {[1, 1, 1, 1, 1, 1].map((i) => {
+            return <View>{celebrityTagLoader()}</View>;
+          })}
+        </View>
+        <View
+          style={{
+            height: 0.5,
+            backgroundColor: colors.lightGreyBg,
+            marginHorizontal: moderateScale(15),
+          }}></View>
+        <View
+          style={{
+            marginHorizontal: moderateScale(15),
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+          }}>
+          {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((i) => {
+            return <View>{celebrityLoader()}</View>;
+          })}
+        </View>
+      </WrapperContainer>
+    );
+  }
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
-      statusBarColor={colors.backgroundGrey}>
+      statusBarColor={colors.white}>
       <Header
         centerTitle={strings.CELEBRITIES}
         leftIcon={
@@ -191,18 +301,11 @@ export default function Celebrity2({navigation}) {
               </Text>
             );
           })}
-          {/* headerText */}
         </ScrollView>
       </View>
-      <View style={{height: 2}} />
-      {isLoading ? (
-        <View>
-          <View style={{height: 10}} />
-          <CelebrityLoader listSize={5} isRow />
-        </View>
-      ) : (
-        <View style={{flex: 1}}>{_listOfCelebraties()}</View>
-      )}
+
+      <View style={{flex: 1, marginTop: 3}}>{_listOfCelebraties()}</View>
+
       {/* <View style={{flex: 1}}>{_listOfCelebraties()}</View> */}
 
       {/* <PagerView

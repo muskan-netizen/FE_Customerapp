@@ -26,6 +26,10 @@ export function saveProductListingAndCategoryInfo(data) {
   });
 }
 
+export function storeWishList(data){
+  
+}
+
 //Get all Products by Vendor id
 
 export function getProductByVendorId(query = '', data = {}, headers = {}) {
@@ -158,6 +162,9 @@ export function getProductDetailByProductId(
       });
   });
 }
+
+
+
 
 export function getWishlistProducts(query = '', data = {}, headers = {}) {
   return new Promise((resolve, reject) => {

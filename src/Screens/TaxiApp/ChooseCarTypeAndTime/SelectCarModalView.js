@@ -266,20 +266,23 @@ export default function SelectCarModalView({
                     flexDirection: 'row',
                     paddingVertical: 8,
                     marginTop: 20,
-                    width: availableVendors.length <= 2 ? width / 2 : width / 3,
+                    width:
+                      availableVendors.length <= 2
+                        ? width / 2 - moderateScale(12)
+                        : width / 3 - moderateScale(12),
                     borderBottomColor:
                       selectedVendorOption?.id == i?.id
                         ? themeColors.primary_color
                         : colors.textGreyJ,
                     alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundColor:
-                      selectedVendorOption?.id == i?.id
-                        ? getColorCodeWithOpactiyNumber(
-                            themeColors.primary_color.substr(1),
-                            20,
-                          )
-                        : 'transparent',
+                    // backgroundColor:
+                    //   selectedVendorOption?.id == i?.id
+                    //     ? getColorCodeWithOpactiyNumber(
+                    //         themeColors.primary_color.substr(1),
+                    //         20,
+                    //       )
+                    //     : 'transparent',
                     borderBottomWidth:
                       selectedVendorOption?.id == i?.id ? 3 : 1,
                   }}>
@@ -292,6 +295,7 @@ export default function SelectCarModalView({
                           selectedVendorOption?.id == i?.id
                             ? themeColors.primary_color
                             : colors.textGreyJ,
+                        fontSize: textScale(10),
                       },
                     ]}>
                     {i.name}

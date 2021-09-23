@@ -67,8 +67,8 @@ import ProductListLoader from '../../Components/Loaders/ProductListLoader';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
-  console.log(data, 'Datais ');
   console.log(data, 'data params >>>>>');
+
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const dineInType = useSelector((state) => state?.home?.dineInType);
@@ -263,6 +263,7 @@ export default function Products({route, navigation}) {
   /****Get all list items by vendor id */
   const getAllProductsByVendorCategory = () => {
     // alert("21312")
+    console.log('api hit getAllProductsByVendorCategory');
     console.log(
       `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
       'url',
@@ -298,7 +299,7 @@ export default function Products({route, navigation}) {
   const updateBrandAndCategoryFilter = (filterData, allBrands) => {
     var brandDatas = [];
     var filterDataNew = [];
-    console.log(allBrands, '>allBrands');
+
     if (allBrands.length) {
       brandDatas = [
         {
@@ -367,6 +368,7 @@ export default function Products({route, navigation}) {
 
   /**********Get all list items by category filters */
   const getAllProductsVendorFilter = () => {
+    console.log('api hit getAllProductsVendorFilter');
     let data = {};
     data['variants'] = selectedVariants;
     data['options'] = selectedOptions;
@@ -401,6 +403,7 @@ export default function Products({route, navigation}) {
 
   /**********Get all list items by category filters */
   const getAllProductsCategoryFilter = () => {
+    console.log('api hit getAllProductsCategoryFilter');
     let data = {};
     data['variants'] = selectedVariants;
     data['options'] = selectedOptions;
@@ -419,7 +422,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'comes here');
+        console.log(res, 'comes here++');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -435,6 +438,7 @@ export default function Products({route, navigation}) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendor = () => {
+    console.log('api hit getAllProductsByVendor');
     actions
       .getProductByVendorId(
         `/${productListId.id}?limit=${limit}&page=${pageNo}`,
@@ -465,6 +469,7 @@ export default function Products({route, navigation}) {
 
   /**********Get all list items by category id */
   const getAllProducts = () => {
+    console.log('api hit getAllProducts');
     actions
       .getProductByCategoryId(
         `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${
@@ -479,8 +484,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        // console.log(pageNo, 'pageNO');
-        console.log(res, 'res--getproducts');
+        console.log('getAllProducts res', res);
         updateState({
           isLoading: false,
           isLoadingC: false,
@@ -650,18 +654,14 @@ export default function Products({route, navigation}) {
       isSingleVendor.otherVendorExists !== 0
     ) {
       updateState({updateQtyLoader: false});
-      Alert.alert(
-        '',
-        'Your already have items in your cart. Do you want to discard them?',
-        [
-          {
-            text: strings.CANCEL,
-            onPress: () => {},
-            // style: 'destructive',
-          },
-          {text: strings.CONFIRM, onPress: () => clearCartAndAddProduct(item)},
-        ],
-      );
+      Alert.alert('', strings.ALREADY_EXIST, [
+        {
+          text: strings.CANCEL,
+          onPress: () => {},
+          // style: 'destructive',
+        },
+        {text: strings.CONFIRM, onPress: () => clearCartAndAddProduct(item)},
+      ]);
       return;
     }
 
@@ -690,7 +690,6 @@ export default function Products({route, navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'res single item added');
         actions.cartItemQty(res);
         updateState({cartId: res.data.id});
         // showSuccess('Product successfully added');
@@ -964,28 +963,24 @@ export default function Products({route, navigation}) {
             <View style={{marginLeft: moderateScaleVertical(12), flex: 0.6}}>
               <View style={{flexDirection: 'row'}}>
                 <View style={{}}>
-                  <RoundImg
-                    img={getImageUrl(
-                      categoryInfo?.logo?.image_fit,
-                      categoryInfo?.logo?.image_path,
-                      '400/400',
-                    )}
-                  />
+                  <RoundImg img={getImageUrl(uri1, uri2, '400/400')} />
                 </View>
                 <View style={{marginLeft: moderateScale(12)}}>
-                  <Text
-                    numberOfLines={2}
-                    animation="fadeIn"
-                    style={{
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                      fontSize: moderateScale(18),
-                      fontFamily: fontFamily.regular,
-                    }}>
-                    {data?.categoryInfo?.name || data?.name}
-                  </Text>
-                  {!!categoryInfo?.desc && (
+                  {!!name && (
+                    <Text
+                      numberOfLines={2}
+                      animation="fadeIn"
+                      style={{
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        fontSize: moderateScale(18),
+                        fontFamily: fontFamily.regular,
+                      }}>
+                      {name}
+                    </Text>
+                  )}
+                  {!!desc && (
                     <Text
                       numberOfLines={2}
                       style={{
@@ -995,7 +990,7 @@ export default function Products({route, navigation}) {
                         fontSize: moderateScale(12),
                         fontFamily: fontFamily.regular,
                       }}>
-                      {categoryInfo?.desc}
+                      {desc}
                     </Text>
                   )}
                   {!!categoryInfo?.address && (
@@ -1017,13 +1012,13 @@ export default function Products({route, navigation}) {
             </View>
 
             <View style={{}}>
-              <View style={styles.rateViewStyle}>
+              {/* <View style={styles.rateViewStyle}>
                 <View>
-                  <Text style={{color: colors.white}}>
+                  <Text style={{ color: colors.white }}>
                     {'4.5 '}
                     <Image
                       source={imagePath.star}
-                      style={{tintColor: colors.white}}
+                      style={{ tintColor: colors.white }}
                     />
                   </Text>
                   <Text
@@ -1035,17 +1030,17 @@ export default function Products({route, navigation}) {
                     {'DELIVERY'}
                   </Text>
                 </View>
-              </View>
+              </View> */}
               <View style={{marginTop: moderateScaleVertical(4)}}>
-                <ImageBackground
+                {/* <ImageBackground
                   source={{
                     uri: getImageUrl(
                       data?.categoryInfo?.image?.proxy_url ||
-                        data?.image?.proxy_url ||
-                        categoryInfo?.banner?.proxy_url,
+                      data?.image?.proxy_url ||
+                      categoryInfo?.banner?.proxy_url,
                       data?.categoryInfo?.image?.image_path ||
-                        data?.image?.image_path ||
-                        categoryInfo?.banner?.image_path,
+                      data?.image?.image_path ||
+                      categoryInfo?.banner?.image_path,
                       '200/200',
                     ),
                   }}
@@ -1057,7 +1052,9 @@ export default function Products({route, navigation}) {
                     borderTopLeftRadius: 5,
                     borderBottomLeftRadius: 5,
                   }}
-                  resizeMode="stretch"></ImageBackground>
+                  resizeMode="stretch">
+
+                  </ImageBackground> */}
               </View>
             </View>
           </View>
@@ -1244,20 +1241,10 @@ export default function Products({route, navigation}) {
   }
 
   const onShare = async () => {
-    // console.log("item==>>>>",categoryInfo)
-    // return;
-    const params = new URLSearchParams();
+    console.log('item==>>>>', categoryInfo);
     let convertJson = JSON.stringify(data);
-    // let removeBrackets = convertJson.replace(/[{}]/g,'')
     let shareLink = `${categoryInfo.share_link + `?data=${convertJson}`}`;
-
-    // params.append(shareLink.toString());
     console.log('vendor link+++', shareLink);
-
-    // var response =  shareLink?.split('=').pop();
-    // let obj = eval('({' + response + '})');
-    // console.log("res==>>>>>",obj)
-    // return;
     try {
       const result = await Share.share({
         url: shareLink,
@@ -1295,6 +1282,19 @@ export default function Products({route, navigation}) {
       return;
     }
   };
+
+  console.log('categoryinfo', categoryInfo);
+
+  let uri1 = categoryInfo?.banner?.image_fit || categoryInfo?.icon?.image_fit;
+  let uri2 = categoryInfo?.banner?.image_path || categoryInfo?.icon?.image_path;
+  let name =
+    data?.name ||
+    data?.categoryInfo?.name ||
+    (!!categoryInfo?.translation && categoryInfo?.translation[0]?.name);
+  let desc =
+    categoryInfo?.desc ||
+    (!!categoryInfo?.translation &&
+      categoryInfo?.translation[0]?.meta_description);
 
   return (
     <View
@@ -1349,11 +1349,7 @@ export default function Products({route, navigation}) {
                     style={{marginLeft: moderateScale(8), flex: 0.7}}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                       <RoundImg
-                        img={getImageUrl(
-                          categoryInfo?.logo?.image_fit,
-                          categoryInfo?.logo?.image_path,
-                          '400/400',
-                        )}
+                        img={getImageUrl(uri1, uri2, '400/400')}
                         size={20}
                         isDarkMode={isDarkMode}
                         MyDarkTheme={MyDarkTheme}
@@ -1368,7 +1364,7 @@ export default function Products({route, navigation}) {
                             fontSize: moderateScale(12),
                             fontFamily: fontFamily.regular,
                           }}>
-                          {data?.categoryInfo?.name || data?.name}
+                          {name}
                         </Text>
                         <Text
                           numberOfLines={1}
@@ -1380,14 +1376,14 @@ export default function Products({route, navigation}) {
                             fontFamily: fontFamily.medium,
                             marginTop: moderateScaleVertical(2),
                           }}>
-                          {categoryInfo?.address}
+                          {desc}
                         </Text>
                       </View>
                     </View>
                   </Animatable.View>
                 )}
             </View>
-            {false ? (
+            {isSearch ? (
               <Animatable.View animation="fadeIn">
                 <SearchBar
                   containerStyle={{
@@ -1416,16 +1412,17 @@ export default function Products({route, navigation}) {
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  // onPress={() => updateState({ isSearch: true })}
-                  onPress={moveToNewScreen(
-                    navigationStrings.SEARCHPRODUCTOVENDOR,
-                    {
-                      type: data?.vendor
-                        ? staticStrings.VENDOR
-                        : staticStrings.CATEGORY,
-                      id: data?.vendor ? data?.id : productListId?.id,
-                    },
-                  )}>
+                  onPress={() => updateState({isSearch: true})}
+                  // onPress={moveToNewScreen(
+                  //   navigationStrings.SEARCHPRODUCTOVENDOR,
+                  //   {
+                  //     type: data?.vendor
+                  //       ? staticStrings.VENDOR
+                  //       : staticStrings.CATEGORY,
+                  //     id: data?.vendor ? data?.id : productListId?.id,
+                  //   },
+                  // )}
+                >
                   <Image
                     style={{
                       tintColor: isDarkMode

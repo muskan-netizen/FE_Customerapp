@@ -72,12 +72,14 @@ import * as Animatable from 'react-native-animatable';
 
 export default function Cart({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   let paramsData = route?.params;
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const recommendedVendorsdata = appMainData?.vendors;
+
 
   const [state, setState] = useState({
     isLoading: true,
@@ -114,7 +116,7 @@ export default function Cart({ navigation, route }) {
     sheduledorderdate: null,
     scheduleType: null,
     swipeKey: 'randomStrings',
-    wishlistArray: []
+    wishlistArray: [],
   });
   const {
     viewHeight,
@@ -142,7 +144,7 @@ export default function Cart({ navigation, route }) {
     sheduledorderdate,
     scheduleType,
     swipeKey,
-    wishlistArray
+    wishlistArray,
   } = state;
 
   //Redux store data
@@ -169,21 +171,23 @@ export default function Cart({ navigation, route }) {
         navigation.navigate(screenName, { data });
       };
 
-  // styles funcation
-  // const fontFamily = appStyle?.fontSizeData;
-  // const styles = stylesFun({fontFamily, themeColors});
 
-  //On focus fucntion
 
   useFocusEffect(
     React.useCallback(() => {
       if (paramsData && paramsData?.selectedMethod) {
         updateState({ selectedPayment: paramsData?.selectedMethod });
       }
+      console.log("check cart item+++ inner", checkCartItem)
       // alert('run')
       // updateState({ isLoadingB: true });
       getCartDetail();
-      // getAllWishListData()
+      getAllWishListData();
+      // if (!!checkCartItem?.data) {
+      //   getCartDetail();
+      // } else {
+      //   getAllWishListData();
+      // }
     }, [
       currencies,
       languages,
@@ -195,9 +199,44 @@ export default function Cart({ navigation, route }) {
     ]),
   );
 
+  console.log("check cart item+++ outter", checkCartItem)
+
+
+  // useEffect(() => {
+  //   if (paramsData && paramsData?.selectedMethod) {
+  //     updateState({ selectedPayment: paramsData?.selectedMethod });
+  //   }
+  //   console.log("check cart item+++ inner", cartItems)
+  //   // alert('run')
+  //   // updateState({ isLoadingB: true });
+  //   if (!!cartItems) {
+  //     getCartDetail();
+  //     return
+  //   }
+  //   if (!!userData?.auth_token) {
+  //     getAllWishListData();
+  //     return
+  //   }
+
+  // }, [
+  //   currencies,
+  //   languages,
+  //   route?.params?.promocodeDetail,
+  //   allAddresss,
+  //   selectedAddress,
+  //   paramsData,
+  //   isRefreshing,
+  //   cartItems,
+  // ])
+
+
+
 
   useEffect(() => {
-    checkforAddressUpdate();
+    if (!!checkCartItem?.data) {
+      console.log("<<<<<<<<>>>>>>>>>>");
+      checkforAddressUpdate();
+    }
   }, [selectedAddress, allAddresss]);
 
   //check for addreess Update and change
@@ -260,6 +299,7 @@ export default function Cart({ navigation, route }) {
 
   //get the entire cart detail
   const getCartDetail = () => {
+    // alert("cart detail hit")
     actions
       .getCartDetail(
         `/?type=${dineInType}`,
@@ -316,13 +356,14 @@ export default function Cart({ navigation, route }) {
             vendorAddress: res.data.address,
             cartData: res.data,
             isLoadingB: false,
+            isRefreshing: false
           });
         } else {
           updateState({
-            cartItems: [],
             cartData: {},
             vendorAddress: '',
             isLoadingB: false,
+            isRefreshing: false
           });
         }
       })
@@ -440,6 +481,7 @@ export default function Cart({ navigation, route }) {
           cartData: {},
           isLoadingB: false,
         });
+        getAllWishListData()
         showSuccess(res?.message);
         console.log(res?.message, 'resmessage');
       })
@@ -462,7 +504,7 @@ export default function Cart({ navigation, route }) {
   };
 
   useEffect(() => {
-    if (paramsData?.transactionId) {
+    if (paramsData?.transactionId && !!checkCartItem?.data) {
       _directOrderPlace();
     }
   }, [paramsData?.transactionId]);
@@ -493,7 +535,7 @@ export default function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  console.log("isloading", isLoading)
+  console.log('isloading', isLoading);
   const _directOrderPlace = () => {
     let data = {};
     data['address_id'] =
@@ -608,7 +650,7 @@ export default function Cart({ navigation, route }) {
   };
 
   useEffect(() => {
-    if (paramsData?.redirectFrom) {
+    if (paramsData?.redirectFrom && !!checkCartItem?.data) {
       _directOrderPlace();
     }
   }, [paramsData?.redirectFrom]);
@@ -731,7 +773,7 @@ export default function Cart({ navigation, route }) {
 
   useEffect(() => {
     // console.log(scheduleType, 'scheduleType scheduleType');
-    if (scheduleType != null && scheduleType == 'now') {
+    if (scheduleType != null && scheduleType == 'now' && !!checkCartItem?.data) {
       setDateAndTimeSchedule();
     }
   }, [scheduleType]);
@@ -790,11 +832,12 @@ export default function Cart({ navigation, route }) {
     // }).start(() => openDeleteView(i));
   };
 
-
   const getAllWishListData = () => {
     if (!!userData?.auth_token) {
       getAllWishlistItems();
+      return;
     }
+    updateState({ isRefreshing: false, wishlistArray: [] })
     return;
   };
   /*  GET ALL WISHLISTED ITEMS API FUNCTION  */
@@ -802,7 +845,7 @@ export default function Cart({ navigation, route }) {
     // updateState({ isLoadingB: true });
     actions
       .getWishlistProducts(
-        `?limit=${40}&page=${1}`,
+        `?limit=${10}&page=${1}`,
         {},
         {
           code: appData?.profile?.code,
@@ -812,22 +855,16 @@ export default function Cart({ navigation, route }) {
       )
       .then((res) => {
         console.log(res, 'getAllWishListData>>>>>>');
-        let newArray = res.data.data
         updateState({
           isLoadingB: false,
-          wishlistArray:
-            newArray && newArray.length
-              ? newArray.map((i, inx) => {
-                i.product.inwishlist = { product_id: i.product_id };
-                return i;
-              })
-              : [],
+          wishlistArray: res.data.data,
+          isRefreshing: false
         });
       })
       .catch(errorMethod);
   };
 
-  console.log("wishlit data", wishlistArray)
+  console.log('wishlit data', wishlistArray);
   const _renderItem = ({ item, index }) => {
     return (
       <View
@@ -1998,17 +2035,19 @@ export default function Cart({ navigation, route }) {
   };
 
   useEffect(() => {
-    getItem('deepLinkUrl')
-      .then((res) => {
-        if (res) {
-          let table_number = getParameterByName('table', res);
-          console.log(res, 'table_number');
-          updateState({ deepLinkUrl: table_number });
-        }
-      })
-      .catch((error) => {
-        showError(error.message);
-      });
+    if (!!checkCartItem?.data) {
+      getItem('deepLinkUrl')
+        .then((res) => {
+          if (res) {
+            let table_number = getParameterByName('table', res);
+            console.log(res, 'table_number');
+            updateState({ deepLinkUrl: table_number });
+          }
+        })
+        .catch((error) => {
+          showError(error.message);
+        });
+    }
   }, []);
 
   const _onTableSelection = (item) => {
@@ -2057,7 +2096,6 @@ export default function Cart({ navigation, route }) {
     </View>
   );
 
-
   const onPressRecommendedVendors = (item) => {
     if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category
@@ -2085,10 +2123,11 @@ export default function Cart({ navigation, route }) {
         }}>
         <MarketCard3
           data={item}
+          extraStyles={{ marginTop: 0, marginVertical: moderateScaleVertical(2) }}
           fastImageStyle={{
             height: moderateScaleVertical(110),
           }}
-          imageResizeMode="contain"
+          imageResizeMode="cover"
           onPress={() => onPressRecommendedVendors(item)}
         />
       </View>
@@ -2096,9 +2135,8 @@ export default function Cart({ navigation, route }) {
   };
 
   const ListEmptyComp = () => {
-    console.log("im enter empty comp+++")
     return (
-      <Animatable.View style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <View
           style={{
             // flex: 1,
@@ -2108,59 +2146,75 @@ export default function Cart({ navigation, route }) {
           }}>
           <Image
             source={imagePath.icEmptyCartC}
-            style={{ height: 250, width: 200 }}
-            resizeMode="contain"
+            style={{ marginVertical: moderateScaleVertical(20) }}
+          // resizeMode="contain"s
           />
           <Text style={{ ...styles.textStyle }}>
-            {'Your cart is empty, add items to shop'}
+            {strings.YOUR_CART_EMPTY_ADD_ITEMS}
           </Text>
         </View>
-        <HorizontalLine lineStyle={{
-          borderBottomWidth: 1,
-          borderBottomColor: isDarkMode ? colors.whiteOpacity77 : colors.greyA,
-          marginVertical: moderateScaleVertical(16)
-        }} />
+        <HorizontalLine
+          lineStyle={{
+            borderBottomWidth: 1,
+            borderBottomColor: isDarkMode
+              ? colors.whiteOpacity77
+              : colors.greyA,
+            marginVertical: moderateScaleVertical(16),
+          }}
+        />
 
-        {/* {wishlistArray.length > 0 && (<View>
-          <Text style={{
-            ...styles.commTextStyle,
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-          }}>Shop from wishlist</Text>
-          {wishlistArray.map((val, i) => {
-            return (
-              <View key={String(i)}>
-                <WishlistCard
-                  data={val.product}
-                  onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, val.product)}
-                />
-              </View>
-            )
-          })}
-        </View>)} */}
+        {wishlistArray.length > 0 && (
+          <View>
+            <Text
+              style={{
+                ...styles.commTextStyle,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {strings.SHOP_FROM_WISHLIST}
+            </Text>
+            {wishlistArray.map((val, i) => {
+              return (
+                <View key={String(i)}>
+                  <WishlistCard
+                    data={val.product}
+                    onPress={moveToNewScreen(
+                      navigationStrings.PRODUCTDETAIL,
+                      val.product,
+                    )}
+                  />
+                </View>
+              );
+            })}
+          </View>
+        )}
         <View style={{ marginVertical: moderateScaleVertical(8) }} />
 
-        {recommendedVendorsdata.length > 0 && (<View>
-          <Text style={{
-            ...styles.commTextStyle,
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            marginBottom: 0
-          }}>{'Recommended vendors'}</Text>
-          <FlatList
-            horizontal
-            data={recommendedVendorsdata}
-            renderItem={renderRecommendedVendors}
-            keyExtractor={(item, index) => item?.id.toString()}
-            keyboardShouldPersistTaps="always"
-            showsHorizontalScrollIndicator={false}
-            ItemSeparatorComponent={() => <View style={{ height: 30 }} />}
-          />
-        </View>)}
+        {recommendedVendorsdata.length > 0 && (
+          <View>
+            <Text
+              style={{
+                ...styles.commTextStyle,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                marginBottom: 10,
+              }}>
+              {strings.RECOMMENDED_VENDORS}
+            </Text>
+            <FlatList
+              horizontal
+              data={recommendedVendorsdata}
+              renderItem={renderRecommendedVendors}
+              keyExtractor={(item, index) => item?.id.toString()}
+              keyboardShouldPersistTaps="always"
+              showsHorizontalScrollIndicator={false}
+              ItemSeparatorComponent={() => <View style={{ height: 30 }} />}
+            />
+          </View>
+        )}
 
         <View style={{ marginBottom: moderateScale(60) }} />
-      </Animatable.View>
-
-    )
-  }
+      </View>
+    );
+  };
 
   return (
     <WrapperContainer
@@ -2210,9 +2264,8 @@ export default function Cart({ navigation, route }) {
           contentContainerStyle={{
             flexGrow: 1,
           }}
-          ListEmptyComponent={() => !isLoadingB && (<ListEmptyComp />)}
+          ListEmptyComponent={() => !isLoadingB && <ListEmptyComp />}
         />
-
       </View>
       {!!isModalVisibleForClearCart && (
         <ConfirmationModal
