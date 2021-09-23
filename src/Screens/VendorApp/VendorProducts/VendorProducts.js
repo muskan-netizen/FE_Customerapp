@@ -30,6 +30,8 @@ export default function VendorProducts({route, navigation}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const {storeSelectedVendor} = useSelector((state) => state?.order);
 
+  console.log(storeSelectedVendor, 'storeSelectedVendor');
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route.params;

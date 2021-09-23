@@ -44,6 +44,8 @@ export default function HeaderLoader({
           height={heightRight}
           rectWidth={rectWidthRight}
           rectHeight={rectHeightRight}
+          rx={rx}
+          ry={ry}
         />
       )}
     </View>

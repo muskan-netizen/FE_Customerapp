@@ -290,7 +290,7 @@ export default function SelectTimeModalView({
             ]
           : [styles.bottomView, {width: width}]
       }>
-      <View style={{marginBottom: moderateScale(20)}}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
             paddingHorizontal: moderateScale(20),
@@ -393,7 +393,7 @@ export default function SelectTimeModalView({
             btnText={strings.SCHEDULE}
           />
         </View>
-      </View>
+      </ScrollView>
       <ModalView
         transparent={true}
         isVisible={isDatePickerModal}

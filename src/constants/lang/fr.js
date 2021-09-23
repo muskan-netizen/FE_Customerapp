@@ -535,4 +535,7 @@ personnalisé`,
   ESTIMATION_ONLY: 'This is an estimation only, price may vary.',
   SEARCH_ITEM: 'Search Item',
   SEARCH_PRODUCT: 'Search Product',
+  RECOMMENDED_VENDORS: 'Recommended vendors',
+  YOUR_CART_EMPTY_ADD_ITEMS: 'Your cart is empty, add items to shop',
+  SHOP_FROM_WISHLIST: 'Shop from wishlist',
 };

@@ -351,7 +351,7 @@ export default {
   ITEM_NOT_DELIVERABLE:
     'The specific items are not deliverable to this address. Please remove the items or change the address ',
   VIEW_ALL_VENDORS: 'View all vendors',
-  CLOSE: 'Close',
+  CLOSE: 'Closed',
   SELECT_CATEGORY: 'Select Category',
   EXPLORE_STORES: 'Explore Stores',
   OPEN: 'Open',
@@ -506,4 +506,7 @@ Amount`,
   PLACE_PIN_ON_MAP: 'Place the pin on Map to mark exact location',
   SEARCH_ITEM: 'Search Item',
   SEARCH_PRODUCT: 'Search Product',
+  RECOMMENDED_VENDORS: 'Recommended vendors',
+  YOUR_CART_EMPTY_ADD_ITEMS: 'Your cart is empty, add items to shop',
+  SHOP_FROM_WISHLIST: 'Shop from wishlist',
 };
