@@ -509,4 +509,6 @@ Amount`,
   RECOMMENDED_VENDORS: 'Recommended vendors',
   YOUR_CART_EMPTY_ADD_ITEMS: 'Your cart is empty, add items to shop',
   SHOP_FROM_WISHLIST: 'Shop from wishlist',
+  ALREADY_EXIST:
+    'Your already have items in your cart. Do you want to discard them?',
 };

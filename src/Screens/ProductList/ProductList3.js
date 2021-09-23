@@ -650,18 +650,14 @@ export default function Products({route, navigation}) {
       isSingleVendor.otherVendorExists !== 0
     ) {
       updateState({updateQtyLoader: false});
-      Alert.alert(
-        '',
-        'Your already have items in your cart. Do you want to discard them?',
-        [
-          {
-            text: strings.CANCEL,
-            onPress: () => {},
-            // style: 'destructive',
-          },
-          {text: strings.CONFIRM, onPress: () => clearCartAndAddProduct(item)},
-        ],
-      );
+      Alert.alert('', strings.ALREADY_EXIST, [
+        {
+          text: strings.CANCEL,
+          onPress: () => {},
+          // style: 'destructive',
+        },
+        {text: strings.CONFIRM, onPress: () => clearCartAndAddProduct(item)},
+      ]);
       return;
     }
 

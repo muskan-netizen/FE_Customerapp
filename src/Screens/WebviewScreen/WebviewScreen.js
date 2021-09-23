@@ -42,8 +42,9 @@ export default function WebviewScreen({navigation, route}) {
         headerStyle={{backgroundColor: Colors.white}}
       />
       <View style={{...commonStyles.headerTopLine}} />
-
-      <WebView source={{uri: paramData?.url}} />
+      <ScrollView>
+        <WebView source={{uri: paramData?.url}} />
+      </ScrollView>
     </WrapperContainer>
   );
 }
