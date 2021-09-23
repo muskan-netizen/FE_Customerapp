@@ -19,10 +19,15 @@ import imagePath from '../../../constants/imagePath';
 import {colors} from 'react-native-elements';
 import navigationStrings from '../../../navigation/navigationStrings';
 import strings from '../../../constants/lang';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 
 export default function PinAddressOnMap(props) {
   const {navigation, route} = props;
-
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
   const mapRef = React.createRef();
   const [state, setState] = useState({
@@ -489,6 +494,26 @@ export default function PinAddressOnMap(props) {
             image={marker?.markerImage}></MapView.Marker>
         ))}
       </MapView>
+      <View style={[styles.backbutton, {marginHorizontal: moderateScale(15)}]}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <View
+            style={{
+              paddingHorizontal: moderateScale(15),
+              paddingVertical: moderateScaleVertical(15),
+              borderRadius: 15,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.grey5,
+            }}>
+            <Image
+              style={{
+                tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}
+              source={imagePath.backArrow}
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
 
       <View
         style={{

@@ -30,7 +30,6 @@ import MarketCard3 from '../../Components/MarketCard3';
 import { setItem } from '../../utils/utils';
 import RoundImg from '../../Components/RoundImg';
 
-
 export default function SearchProductVendorItem2({ navigation, route }) {
   const [state, setState] = useState({
     isLoading: true,
@@ -57,7 +56,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
 
   //route params
   const paramData = route?.params?.data;
-  console.log("param data", paramData)
+  console.log('param data', paramData);
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const recommendedVendorsdata = appMainData?.vendors;
   const fontFamily = appStyle?.fontSizeData;
@@ -104,7 +103,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
       language: languages?.primary_language?.id,
     })
       .then((response) => {
-        console.log("res==>>>>++",response)
+        console.log("res==>>>>++", response)
         updateState({
           searchData: response.data,
           isLoading: false,
@@ -129,9 +128,9 @@ export default function SearchProductVendorItem2({ navigation, route }) {
   }, [searchInput]);
 
   const _onclickSearchItem = (item) => {
-    const searchResultExists = previousSearches?.some(
-      (recent) => recent.id === item.id,
-    );
+    console.log("itemm>>>", item)
+    // return;
+    const searchResultExists = previousSearches?.some((recent) => recent.id === item.id);
     if (searchResultExists) {
     } else {
       actions.addSearchResults(item);
@@ -140,14 +139,14 @@ export default function SearchProductVendorItem2({ navigation, route }) {
     }
 
     if (item.response_type == 'category') {
-      if (item?.type?.redirect_to == staticStrings.VENDOR) {
+      if (item?.redirect_to == staticStrings.VENDOR) {
         navigation.push(navigationStrings.VENDOR, {
           data: {
             id: item.id,
             name: item.dataname,
           },
         });
-      } else if (item?.type?.redirect_to == staticStrings.PRODUCT) {
+      } else if (item?.redirect_to == staticStrings.PRODUCT) {
         navigation.push(navigationStrings.PRODUCT_LIST, {
           data: {
             id: item.id,
@@ -155,10 +154,14 @@ export default function SearchProductVendorItem2({ navigation, route }) {
           },
         });
       } else {
-        moveToNewScreen(navigationStrings.DELIVERY, item)();
+        // moveToNewScreen(navigationStrings.DELIVERY, item)();
       }
     }
-    if (item.response_type == 'brand') {
+    if (item.redirect_to == staticStrings.SUBCATEGORY) {
+      // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { item })();
+    }
+    if (item?.response_type == 'brand') {
       navigation.push(navigationStrings.BRANDDETAIL, {
         data: {
           id: item.id,
@@ -166,7 +169,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
         },
       });
     }
-    if (item.response_type == 'vendor') {
+    if (item?.response_type == 'vendor') {
       navigation.push(navigationStrings.PRODUCT_LIST, {
         data: {
           id: item.id,
@@ -175,7 +178,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
         },
       });
     }
-    if (item.response_type == 'product') {
+    if (item?.response_type == 'product') {
       navigation.push(navigationStrings.PRODUCTDETAIL, { data: { id: item.id } });
     }
   };
@@ -260,7 +263,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
                           fontFamily: fontFamily.medium,
                           color: colors.greyLight,
                         }}>
-                        {item.dataname}
+                        {item?.dataname}
                       </Text>
                     </View>
                   </TouchableOpacity>
@@ -279,9 +282,8 @@ export default function SearchProductVendorItem2({ navigation, route }) {
       <TouchableOpacity
         onPress={() => _onclickSearchItem(item)}
         style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-
         <RoundImg
-          img={'https://image.freepik.com/free-vector/burger-logo_18228-1173.jpg'}
+          img={item?.image_url}
           size={35}
           isDarkMode={isDarkMode}
           MyDarkTheme={MyDarkTheme}
@@ -293,17 +295,19 @@ export default function SearchProductVendorItem2({ navigation, route }) {
               fontFamily: fontFamily.medium,
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
-            {item.dataname || item.title}
+            {item?.dataname || item?.title || item?.name}
           </Text>
-          <Text
+          {/* <Text
             style={{
               fontSize: textScale(9),
               fontFamily: fontFamily.regular,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51,
-              marginTop: moderateScaleVertical(5)
+              color: isDarkMode
+                ? MyDarkTheme.colors.text
+                : colors.grayOpacity51,
+              marginTop: moderateScaleVertical(5),
             }}>
             Dish
-          </Text>
+          </Text> */}
         </View>
       </TouchableOpacity>
     );
@@ -315,6 +319,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
         style={{
           width: moderateScale(width / 2),
           marginHorizontal: moderateScale(10),
+          marginBottom: 2,
         }}>
         <MarketCard3
           data={item}
@@ -382,7 +387,6 @@ export default function SearchProductVendorItem2({ navigation, route }) {
                 {strings.RECOMMENDED_FOR_YOU}
               </Text>
 
-
               <FlatList
                 horizontal
                 data={recommendedVendorsdata}
@@ -398,7 +402,6 @@ export default function SearchProductVendorItem2({ navigation, route }) {
                 }}
                 ListEmptyComponent={_listEmptyComponent}
                 ItemSeparatorComponent={() => <View style={{ height: 30 }} />}
-
               />
             </View>
           </>
@@ -478,7 +481,9 @@ export default function SearchProductVendorItem2({ navigation, route }) {
           }}
           ListEmptyComponent={_listEmptyComponent}
           ItemSeparatorComponent={() => <View style={{ height: 30 }} />}
-          ListHeaderComponent={() => <View style={{ height: moderateScale(16) }} />}
+          ListHeaderComponent={() => (
+            <View style={{ height: moderateScale(16) }} />
+          )}
         />
       </View>
     </WrapperContainer>

@@ -60,11 +60,15 @@ import VariantAddons from '../../Components/VariantAddons';
 import { removeItem } from '../../utils/utils';
 import NoDataFound from '../../Components/NoDataFound';
 import SearchBar from '../../Components/SearchBar';
+import HeaderLoader from '../../Components/Loaders/HeaderLoader';
+import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
+import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
+import ProductListLoader from '../../Components/Loaders/ProductListLoader';
 
 export default function Products({ route, navigation }) {
-  const { data } = route.params;
-  console.log(data, 'Datais ');
+  const { data } = route.params;;
   console.log(data, 'data params >>>>>');
+
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const dineInType = useSelector((state) => state?.home?.dineInType);
@@ -136,7 +140,7 @@ export default function Products({ route, navigation }) {
     selectedCartItem: null,
     cartId: null,
     isSearch: false,
-    searchInput: ''
+    searchInput: '',
   });
 
   const {
@@ -181,7 +185,7 @@ export default function Products({ route, navigation }) {
     cartId,
     showShimmer,
     isSearch,
-    searchInput
+    searchInput,
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -224,7 +228,6 @@ export default function Products({ route, navigation }) {
     getAllListItems();
   }, [pageNo, isRefreshing]);
 
-
   const getAllListItems = () => {
     let filterExist =
       sleectdBrands.length ||
@@ -260,6 +263,7 @@ export default function Products({ route, navigation }) {
   /****Get all list items by vendor id */
   const getAllProductsByVendorCategory = () => {
     // alert("21312")
+    console.log('api hit getAllProductsByVendorCategory')
     console.log(
       `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
       'url',
@@ -295,7 +299,7 @@ export default function Products({ route, navigation }) {
   const updateBrandAndCategoryFilter = (filterData, allBrands) => {
     var brandDatas = [];
     var filterDataNew = [];
-    console.log(allBrands, '>allBrands');
+
     if (allBrands.length) {
       brandDatas = [
         {
@@ -364,6 +368,7 @@ export default function Products({ route, navigation }) {
 
   /**********Get all list items by category filters */
   const getAllProductsVendorFilter = () => {
+    console.log('api hit getAllProductsVendorFilter')
     let data = {};
     data['variants'] = selectedVariants;
     data['options'] = selectedOptions;
@@ -398,6 +403,7 @@ export default function Products({ route, navigation }) {
 
   /**********Get all list items by category filters */
   const getAllProductsCategoryFilter = () => {
+    console.log('api hit getAllProductsCategoryFilter')
     let data = {};
     data['variants'] = selectedVariants;
     data['options'] = selectedOptions;
@@ -416,7 +422,7 @@ export default function Products({ route, navigation }) {
         },
       )
       .then((res) => {
-        console.log(res, 'comes here');
+        console.log(res, 'comes here++');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -432,6 +438,7 @@ export default function Products({ route, navigation }) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendor = () => {
+    console.log("api hit getAllProductsByVendor")
     actions
       .getProductByVendorId(
         `/${productListId.id}?limit=${limit}&page=${pageNo}`,
@@ -462,6 +469,7 @@ export default function Products({ route, navigation }) {
 
   /**********Get all list items by category id */
   const getAllProducts = () => {
+    console.log("api hit getAllProducts")
     actions
       .getProductByCategoryId(
         `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${data?.rootProducts ? true : false
@@ -475,8 +483,7 @@ export default function Products({ route, navigation }) {
         },
       )
       .then((res) => {
-        // console.log(pageNo, 'pageNO');
-        console.log(res, 'res--getproducts');
+        console.log('getAllProducts res', res);
         updateState({
           isLoading: false,
           isLoadingC: false,
@@ -686,7 +693,7 @@ export default function Products({ route, navigation }) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'res single item added');
+
         actions.cartItemQty(res);
         updateState({ cartId: res.data.id });
         // showSuccess('Product successfully added');
@@ -962,14 +969,14 @@ export default function Products({ route, navigation }) {
                 <View style={{}}>
                   <RoundImg
                     img={getImageUrl(
-                      categoryInfo?.logo?.image_fit,
-                      categoryInfo?.logo?.image_path,
+                      uri1,
+                      uri2,
                       '400/400',
                     )}
                   />
                 </View>
                 <View style={{ marginLeft: moderateScale(12) }}>
-                  <Text
+                  {!!name && (<Text
                     numberOfLines={2}
                     animation="fadeIn"
                     style={{
@@ -979,9 +986,9 @@ export default function Products({ route, navigation }) {
                       fontSize: moderateScale(18),
                       fontFamily: fontFamily.regular,
                     }}>
-                    {data?.categoryInfo?.name || data?.name}
-                  </Text>
-                  {!!categoryInfo?.desc && (
+                    {name}
+                  </Text>)}
+                  {!!desc && (
                     <Text
                       numberOfLines={2}
                       style={{
@@ -991,7 +998,7 @@ export default function Products({ route, navigation }) {
                         fontSize: moderateScale(12),
                         fontFamily: fontFamily.regular,
                       }}>
-                      {categoryInfo?.desc}
+                      {desc}
                     </Text>
                   )}
                   {!!categoryInfo?.address && (
@@ -1013,7 +1020,7 @@ export default function Products({ route, navigation }) {
             </View>
 
             <View style={{}}>
-              <View style={styles.rateViewStyle}>
+              {/* <View style={styles.rateViewStyle}>
                 <View>
                   <Text style={{ color: colors.white }}>
                     {'4.5 '}
@@ -1031,9 +1038,9 @@ export default function Products({ route, navigation }) {
                     {'DELIVERY'}
                   </Text>
                 </View>
-              </View>
+              </View> */}
               <View style={{ marginTop: moderateScaleVertical(4) }}>
-                <ImageBackground
+                {/* <ImageBackground
                   source={{
                     uri: getImageUrl(
                       data?.categoryInfo?.image?.proxy_url ||
@@ -1053,7 +1060,9 @@ export default function Products({ route, navigation }) {
                     borderTopLeftRadius: 5,
                     borderBottomLeftRadius: 5,
                   }}
-                  resizeMode="stretch"></ImageBackground>
+                  resizeMode="stretch">
+
+                  </ImageBackground> */}
               </View>
             </View>
           </View>
@@ -1114,6 +1123,55 @@ export default function Products({ route, navigation }) {
 
   const headerTextRef = useRef(null);
 
+  // if (isLoading) {
+  //   return (
+  //     <View
+  //       style={{
+  //         flex: 1,
+  //         backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
+  //       }}>
+  //       <SafeAreaView>
+  //         <View style={styles.loaderHeader}>
+  //           <CardLoader cardWidth={20} height={20} />
+  //           <View style={{flexDirection: 'row', alignItems: 'center'}}>
+  //             <CardLoader cardWidth={20} height={20} />
+  //             <View style={{marginHorizontal: moderateScale(6)}} />
+  //             <CardLoader cardWidth={20} height={20} />
+  //           </View>
+  //         </View>
+
+  //         <View
+  //           style={{
+  //             marginVertical: moderateScaleVertical(16),
+  //             marginBottom: moderateScaleVertical(24),
+  //             flexDirection: 'row',
+  //             alignItems: 'center',
+  //             justifyContent: 'space-between',
+  //           }}>
+  //           <CircularLoader />
+  //           <View>
+  //             <CardLoader cardWidth={40} height={20} />
+  //             <CardLoader cardWidth={40} height={20} />
+  //           </View>
+  //         </View>
+
+  //         <View style={{marginHorizontal: moderateScale(16)}}>
+  //           <ProductDetailLoader />
+  //           <View style={{marginBottom: moderateScaleVertical(12)}} />
+  //           <ProductDetailLoader />
+  //           <View style={{marginBottom: moderateScaleVertical(12)}} />
+  //           <ProductDetailLoader />
+  //           <View style={{marginBottom: moderateScaleVertical(12)}} />
+  //           <ProductDetailLoader />
+  //           <View style={{marginBottom: moderateScaleVertical(12)}} />
+  //           <ProductDetailLoader />
+  //           <View style={{marginBottom: moderateScaleVertical(12)}} />
+  //         </View>
+  //       </SafeAreaView>
+  //     </View>
+  //   );
+  // }
+
   if (isLoading) {
     return (
       <View
@@ -1122,40 +1180,67 @@ export default function Products({ route, navigation }) {
           backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
         }}>
         <SafeAreaView>
-          <View style={styles.loaderHeader}>
-            <CardLoader cardWidth={20} height={20} />
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <CardLoader cardWidth={20} height={20} />
-              <View style={{ marginHorizontal: moderateScale(6) }} />
-              <CardLoader cardWidth={20} height={20} />
-            </View>
-          </View>
+          <HeaderLoader
+            widthLeft={20}
+            rectWidthLeft={20}
+            widthRight={20}
+            rectWidthRight={20}
+            heightLeft={20}
+            rectHeightLeft={20}
+            heightRight={20}
+            rectHeightRight={20}
+            rx={5}
+            ry={5}
+            viewStyles={{ marginTop: moderateScale(10) }}
+          />
 
           <View
             style={{
               marginVertical: moderateScaleVertical(16),
               marginBottom: moderateScaleVertical(24),
+              marginLeft: moderateScale(15),
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
             }}>
-            <CircularLoader />
+            <CircularProfileLoader />
             <View>
-              <CardLoader cardWidth={40} height={20} />
-              <CardLoader cardWidth={40} height={20} />
+              <HeaderLoader
+                widthLeft={50}
+                rectWidthLeft={50}
+                heightLeft={20}
+                rectHeightLeft={20}
+                rx={5}
+                ry={5}
+                isRight={false}
+                viewStyles={{ marginHorizontal: 0 }}
+              />
+              <HeaderLoader
+                widthLeft={50}
+                rectWidthLeft={50}
+                heightLeft={20}
+                rectHeightLeft={20}
+                rx={5}
+                ry={5}
+                viewStyles={{
+                  marginTop: moderateScaleVertical(10),
+                  marginHorizontal: 0,
+                }}
+                isRight={false}
+              />
             </View>
           </View>
 
           <View style={{ marginHorizontal: moderateScale(16) }}>
-            <ProductDetailLoader />
+            <ProductListLoader />
             <View style={{ marginBottom: moderateScaleVertical(12) }} />
-            <ProductDetailLoader />
+            <ProductListLoader />
             <View style={{ marginBottom: moderateScaleVertical(12) }} />
-            <ProductDetailLoader />
+            <ProductListLoader />
             <View style={{ marginBottom: moderateScaleVertical(12) }} />
-            <ProductDetailLoader />
+            <ProductListLoader />
             <View style={{ marginBottom: moderateScaleVertical(12) }} />
-            <ProductDetailLoader />
+            <ProductListLoader />
             <View style={{ marginBottom: moderateScaleVertical(12) }} />
           </View>
         </SafeAreaView>
@@ -1164,8 +1249,8 @@ export default function Products({ route, navigation }) {
   }
 
   const onShare = async () => {
-    // console.log("item==>>>>",categoryInfo)
-    // return;
+    console.log("item==>>>>", categoryInfo)
+    return;
     const params = new URLSearchParams();
     let convertJson = JSON.stringify(data);
     // let removeBrackets = convertJson.replace(/[{}]/g,'')
@@ -1216,6 +1301,12 @@ export default function Products({ route, navigation }) {
     }
   };
 
+  console.log("categoryinfo", categoryInfo)
+
+  let uri1 = categoryInfo?.banner?.image_fit || categoryInfo?.icon?.image_fit
+  let uri2 = categoryInfo?.banner?.image_path || categoryInfo?.icon?.image_path
+  let name = data?.categoryInfo?.name || data?.name || categoryInfo?.translation[0]?.name
+  let desc = categoryInfo?.desc || categoryInfo?.translation[0]?.meta_description
   return (
     <View
       style={{
@@ -1270,8 +1361,8 @@ export default function Products({ route, navigation }) {
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                       <RoundImg
                         img={getImageUrl(
-                          categoryInfo?.logo?.image_fit,
-                          categoryInfo?.logo?.image_path,
+                          uri1,
+                          uri2,
                           '400/400',
                         )}
                         size={20}
@@ -1288,7 +1379,7 @@ export default function Products({ route, navigation }) {
                             fontSize: moderateScale(12),
                             fontFamily: fontFamily.regular,
                           }}>
-                          {data?.categoryInfo?.name || data?.name}
+                          {name}
                         </Text>
                         <Text
                           numberOfLines={1}
@@ -1300,17 +1391,15 @@ export default function Products({ route, navigation }) {
                             fontFamily: fontFamily.medium,
                             marginTop: moderateScaleVertical(2),
                           }}>
-                          {categoryInfo?.address}
+                          {desc}
                         </Text>
                       </View>
                     </View>
                   </Animatable.View>
                 )}
             </View>
-            {false ?
-              <Animatable.View
-                animation="fadeIn"
-              >
+            {isSearch ? (
+              <Animatable.View animation="fadeIn">
                 <SearchBar
                   containerStyle={{
                     marginHorizontal: moderateScale(18),
@@ -1326,25 +1415,29 @@ export default function Products({ route, navigation }) {
                   // onChangeText={(value) => onChangeText(value)}
                   showRightIcon
                   rightIconPress={() =>
-                    updateState({ searchInput: '', isSearch: false, isLoading: false })
+                    updateState({
+                      searchInput: '',
+                      isSearch: false,
+                      isLoading: false,
+                    })
                   }
                 />
               </Animatable.View>
-              :
+            ) : (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  // onPress={() => updateState({ isSearch: true })}
-                  onPress={moveToNewScreen(
-                    navigationStrings.SEARCHPRODUCTOVENDOR,
-                    {
-                      type: data?.vendor
-                        ? staticStrings.VENDOR
-                        : staticStrings.CATEGORY,
-                      id: data?.vendor ? data?.id : productListId?.id,
-                    },
-                  )}
-                >
+                  onPress={() => updateState({ isSearch: true })}
+                  // onPress={moveToNewScreen(
+                  //   navigationStrings.SEARCHPRODUCTOVENDOR,
+                  //   {
+                  //     type: data?.vendor
+                  //       ? staticStrings.VENDOR
+                  //       : staticStrings.CATEGORY,
+                  //     id: data?.vendor ? data?.id : productListId?.id,
+                  //   },
+                  // )}
+                  >
                   <Image
                     style={{
                       tintColor: isDarkMode
@@ -1368,7 +1461,7 @@ export default function Products({ route, navigation }) {
                   />
                 </TouchableOpacity>
               </View>
-            }
+            )}
           </View>
 
           <View style={{ height: moderateScale(10) }} />

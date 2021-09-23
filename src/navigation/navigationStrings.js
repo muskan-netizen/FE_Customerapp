@@ -85,4 +85,5 @@ export default {
   CHOOSECARTYPEANDTIMETAXI: 'ChooseCarTypeAndTimeTaxi',
   OFFERS2: 'OFFERS2',
   PICKUPTAXIORDERDETAILS: 'PickupTaxiOrderDetails',
+  PICKUPORDERDETAIL2: 'pickOrderDetail2',
 };

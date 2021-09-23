@@ -238,12 +238,27 @@ export default function HomeScreenTaxi({navigation, route}) {
       <>
         <View style={{marginLeft: moderateScale(7)}}>
           {[1, 2, 3, 4, 5, 6, 7].map((item, index) => {
-            return <View style={styles.dots}></View>;
+            return (
+              <View
+                style={[
+                  styles.dots,
+                  {
+                    backgroundColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  },
+                ]}></View>
+            );
           })}
         </View>
         <View
           style={{flexDirection: 'row', alignItems: 'center', marginTop: -5}}>
-          <Image source={imagePath.icLocation1} />
+          <Image
+            style={{
+              tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}
+            source={imagePath.icLocation1}
+          />
           <View
             style={{
               flexDirection: 'column',
@@ -258,12 +273,17 @@ export default function HomeScreenTaxi({navigation, route}) {
     return (
       <View
         style={{
-          backgroundColor: colors.white,
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.lightDark
+            : colors.white,
           paddingHorizontal: moderateScale(10),
           paddingVertical: moderateScaleVertical(7),
           borderRadius: 15,
         }}>
-        <Text>{item.location}</Text>
+        <Text
+          style={{color: isDarkMode ? MyDarkTheme.colors.text : colors.black}}>
+          {item.location}
+        </Text>
       </View>
     );
   };
@@ -284,7 +304,9 @@ export default function HomeScreenTaxi({navigation, route}) {
             borderTopLeftRadius: moderateScale(30),
             borderTopRightRadius: moderateScale(30),
             width: width,
-            backgroundColor: colors.white,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.white,
           }}>
           {/* <BlurView
             reducedTransparencyFallbackColor="white"
@@ -336,7 +358,12 @@ export default function HomeScreenTaxi({navigation, route}) {
                       <Text style={{color: colors.textGreyLight}}>PICKUP</Text>
                       <TouchableOpacity onPress={() => _modeToNextScreen()}>
                         <Text
-                          style={{marginVertical: moderateScaleVertical(10)}}>
+                          style={{
+                            marginVertical: moderateScaleVertical(10),
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
+                          }}>
                           My Current Location
                         </Text>
                       </TouchableOpacity>
@@ -356,7 +383,13 @@ export default function HomeScreenTaxi({navigation, route}) {
                       <Text style={{color: colors.textGreyLight}}>
                         DROP-OFF
                       </Text>
-                      <Text style={{marginVertical: moderateScaleVertical(10)}}>
+                      <Text
+                        style={{
+                          marginVertical: moderateScaleVertical(10),
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                        }}>
                         CDCL,sector 28b, Chandigarh
                       </Text>
                       <View
@@ -418,9 +451,16 @@ export default function HomeScreenTaxi({navigation, route}) {
               paddingHorizontal: moderateScale(15),
               paddingVertical: moderateScaleVertical(15),
               borderRadius: 15,
-              backgroundColor: colors.greyColor,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.greyColor,
             }}>
-            <Image source={imagePath.backArrow} />
+            <Image
+              style={{
+                tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}
+              source={imagePath.backArrow}
+            />
           </View>
         </TouchableOpacity>
       </View>
@@ -464,6 +504,9 @@ export default function HomeScreenTaxi({navigation, route}) {
           height: height / 3.5,
           width: width,
           bottom: 0,
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.white,
         }}>
         {_renderBottomComponent()}
       </View>

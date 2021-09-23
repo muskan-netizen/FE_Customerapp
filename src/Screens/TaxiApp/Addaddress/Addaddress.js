@@ -929,7 +929,14 @@ export default function Addaddress({navigation, route}) {
           </View>
           <View style={{position: 'absolute', end: 35, top: 27}}>
             <TouchableOpacity onPress={() => _moveToNextScreen()}>
-              <Image source={imagePath.locationPin} />
+              <Image
+                style={{
+                  tintColor: isDarkMode
+                    ? MyDarkTheme.colors.white
+                    : colors.black,
+                }}
+                source={imagePath.locationPin}
+              />
             </TouchableOpacity>
           </View>
         </View>

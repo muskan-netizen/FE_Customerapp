@@ -64,7 +64,6 @@ export default function ({
           marginBottom: -30,
           paddingHorizontal: 10,
           zIndex: 1000,
-
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.background
             : colors.white,
@@ -152,7 +151,9 @@ export default function ({
                     <Text
                       style={{
                         marginHorizontal: moderateScale(5),
-                        color: colors.lightgray,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.lightgray,
                       }}>
                       4.5
                     </Text>
@@ -170,7 +171,9 @@ export default function ({
                     <Text
                       style={{
                         marginHorizontal: moderateScale(5),
-                        color: colors.lightgray,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.lightgray,
                       }}>
                       {totalDuration < 60
                         ? `${totalDuration} mins`
@@ -184,7 +187,9 @@ export default function ({
                 <Text
                   style={{
                     marginHorizontal: moderateScale(5),
-                    color: colors.lightgray,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.lightgray,
                   }}>
                   {selectedCarOption}
                 </Text>
@@ -246,7 +251,11 @@ export default function ({
               />
             </View>
             <Text
-              style={{fontSize: textScale(12), fontFamily: fontFamily.medium}}>
+              style={{
+                fontSize: textScale(12),
+                fontFamily: fontFamily.medium,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
               CONNECTING YOU TO NEARBY DRIVERS
             </Text>
             <Text
@@ -254,6 +263,7 @@ export default function ({
                 fontSize: textScale(12),
                 fontFamily: fontFamily.regular,
                 marginVertical: moderateScaleVertical(20),
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
               Your ride will start soon
             </Text>

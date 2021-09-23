@@ -51,19 +51,19 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.PICKUPORDERDETAIL}
         component={PickupOrderDetail}
-        options={{headerShown: false,gestureEnabled: false}}
+        options={{headerShown: false, gestureEnabled: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.VERIFY_ACCOUNT_SECOND}
         component={VerifyAccountSecond}
         options={{headerShown: false}}
       />
-       {/* <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.MY_ORDERS}
         component={MyOrders}
         options={{headerShown: false}}
-      /> */}
-       <Stack.Screen
+      />
+      <Stack.Screen
         name={navigationStrings.OFFERS}
         component={Offers}
         options={{headerShown: false}}

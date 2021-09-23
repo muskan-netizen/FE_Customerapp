@@ -28,6 +28,8 @@ export default function CardLoader({
         <ContentLoader
           active
           listSize={listSize}
+          // primaryColor="rgba(	223,	223,	223,223)"
+          // secondaryColor="rgba(239,239,239,239)"
           tWidth={cardWidth}
           titleStyles={{marginLeft: 0, paddingLeft: 0}}
           tHeight={height}

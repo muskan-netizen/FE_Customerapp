@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import {Text, View} from 'react-native';
 import CardLoader from '../../Components/Loaders/CardLoader';
+import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import {
   moderateScale,
   moderateScaleVertical,
-  width
+  width,
 } from '../../styles/responsiveSize';
 
 export default function ListEmptyProduct({isLoading = false}) {
@@ -33,6 +34,49 @@ export default function ListEmptyProduct({isLoading = false}) {
       </View>
     );
   }
+  // if (true) {
+  //   return (
+  //     <View
+  //       style={{marginTop: moderateScaleVertical(20), alignItems: 'center'}}>
+  //       <HeaderLoader
+  //         isRight={false}
+  //         widthLeft={width - moderateScale(30)}
+  //         rectWidthLeft={width - moderateScale(30)}
+  //         rectHeightLeft={moderateScaleVertical(135)}
+  //         heightLeft={moderateScaleVertical(135)}
+  //         viewStyles={{marginHorizontal: 0}}
+  //         rx={3}
+  //         ry={3}
+  //       />
+  //       <HeaderLoader
+  //         isRight={false}
+  //         widthLeft={moderateScale(200)}
+  //         rectWidthLeft={moderateScale(200)}
+  //         rectHeightLeft={moderateScaleVertical(25)}
+  //         heightLeft={moderateScaleVertical(25)}
+  //         viewStyles={{
+  //           marginHorizontal: 0,
+  //           marginTop: moderateScaleVertical(10),
+  //         }}
+  //         rx={3}
+  //         ry={3}
+  //       />
+  //       <HeaderLoader
+  //         isRight={false}
+  //         widthLeft={width - moderateScale(30)}
+  //         rectWidthLeft={width - moderateScale(30)}
+  //         rectHeightLeft={moderateScaleVertical(30)}
+  //         heightLeft={moderateScaleVertical(30)}
+  //         viewStyles={{
+  //           marginHorizontal: 0,
+  //           marginTop: moderateScaleVertical(10),
+  //         }}
+  //         rx={3}
+  //         ry={3}
+  //       />
+  //     </View>
+  //   );
+  // }
   return (
     <View>
       <Text></Text>

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -8,9 +8,9 @@ import {
   Text,
   View,
 } from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Pagination} from 'react-native-snap-carousel';
-import {useSelector} from 'react-redux';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Pagination } from 'react-native-snap-carousel';
+import { useSelector } from 'react-redux';
 import BannerHome2 from '../../../Components/BannerHome2';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import CardLoader from '../../../Components/Loaders/CardLoader';
@@ -21,6 +21,7 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
+import { useScrollToTop } from '@react-navigation/native';
 import {
   itemWidth,
   moderateScale,
@@ -31,18 +32,23 @@ import {
 } from '../../../styles/responsiveSize';
 import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
 import stylesFunc from '../styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../../styles/theme';
-import {SearchBar} from 'react-native-elements/dist/searchbar/SearchBar';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../../styles/theme';
+import { SearchBar } from 'react-native-elements/dist/searchbar/SearchBar';
 import SearchBar2 from '../../../Components/SearchBar2';
+import HomeLoader from '../../../Components/Loaders/HomeLoader';
+import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import SearchLoader from '../../../Components/Loaders/SearchLoader';
+import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
+import BannerLoader from '../../../Components/Loaders/BannerLoader';
 
 export default function DashBoardFive({
-  handleRefresh = () => {},
-  bannerPress = () => {},
+  handleRefresh = () => { },
+  bannerPress = () => { },
   //   appMainData = {},
   isLoading = true,
   isRefreshing = false,
-  onPressCategory = () => {},
+  onPressCategory = () => { },
   selcetedToggle,
   toggleData,
   navigation = {},
@@ -57,20 +63,20 @@ export default function DashBoardFive({
     isVendorColumnList: false,
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  const {appData, themeColors, appStyle} = useSelector(
+  const { appData, themeColors, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state?.auth?.userData);
 
   const fontFamily = appStyle?.fontSizeData;
-  const {bannerRef} = useRef();
-  const {slider1ActiveSlide, newCategoryData, isVendorColumnList} = state;
-  const styles = stylesFunc({themeColors, fontFamily});
+  const { bannerRef } = useRef();
+  const { slider1ActiveSlide, newCategoryData, isVendorColumnList } = state;
+  const styles = stylesFunc({ themeColors, fontFamily });
 
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
-  const _renderItem = ({item}) => (
+  const _renderItem = ({ item }) => (
     <HomeCategoryCard2
       data={item}
       onPress={() => onPressCategory(item)}
@@ -78,27 +84,71 @@ export default function DashBoardFive({
     />
   );
 
-  const _renderVendors = ({item}) => (
+  const _renderVendors = ({ item }) => (
     <MarketCard3 data={item} onPress={() => onPressCategory(item)} />
   );
   const _changeVendorListStyle = () =>
-    updateState({isVendorColumnList: !isVendorColumnList});
+    updateState({ isVendorColumnList: !isVendorColumnList });
 
   // console.log(appMainData, 'appMainData');
 
-  return (
-    <>
-      {isLoading ? (
-        <ListEmptyVendors
-          isLoading={isLoading}
-          listSize={1}
-          height={moderateScaleVertical(40)}
-          vendorContainerStyle={{marginVertical: moderateScale(15)}}
-        />
-      ) : (
-        <SearchBar2 navigation={navigation} />
-      )}
+  const ref = React.useRef(null);
+  useScrollToTop(ref); // scroll to top
+
+  if (isLoading) {
+    return (
       <ScrollView
+
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1 }}>
+        <SearchLoader viewStyles={{ marginTop: moderateScale(15) }} />
+        <CategoryLoader2 viewStyles={{ marginTop: moderateScale(25) }} />
+        <CategoryLoader2 viewStyles={{ marginTop: moderateScale(25) }} />
+        <BannerLoader
+          isBannerDots
+          viewStyles={{
+            marginTop: moderateScale(35),
+          }}
+        />
+
+        <HeaderLoader
+          viewStyles={{ marginVertical: 20 }}
+          widthLeft={moderateScale(150)}
+          rectWidthLeft={moderateScale(150)}
+          heightLeft={moderateScaleVertical(30)}
+          rectHeightLeft={moderateScaleVertical(30)}
+          isRight={false}
+          rx={20}
+          ry={20}
+        />
+        <BannerLoader
+          isVendorLoader
+          viewStyles={{
+            marginTop: moderateScale(20),
+          }}
+        />
+        <BannerLoader
+          isVendorLoader
+          viewStyles={{
+            marginTop: moderateScale(25),
+          }}
+        />
+        <BannerLoader
+          isVendorLoader
+          viewStyles={{
+            marginTop: moderateScale(25),
+          }}
+        />
+        {/* <HomeLoader /> */}
+      </ScrollView>
+    );
+  }
+
+  return (
+    <View style={{ flex: 1 }}>
+      <SearchBar2 navigation={navigation} />
+      <ScrollView
+        ref={ref}
         refreshing={isRefreshing}
         refreshControl={
           <RefreshControl
@@ -113,29 +163,9 @@ export default function DashBoardFive({
           flex: 1,
           marginHorizontal: moderateScale(15),
         }}>
-        {isLoading ? (
-          <View style={{marginTop: moderateScale(5)}}>
-            <CategoryLoader
-              listSize={2}
-              isRow
-              cardWidth={80}
-              pRows={1}
-              height={moderateScale(70)}
-              containerStyle={{marginVertical: moderateScale(5)}}
-            />
-          </View>
-        ) : appMainData &&
+        {appMainData &&
           appMainData?.categories &&
-          appMainData?.categories.length ? (
-          <View style={{width: '100%'}}>
-            {/* <Text
-              style={{
-                fontFamily: fontFamily.regular,
-                fontSize: textScale(16),
-                marginVertical: moderateScale(15),
-              }}>
-              {strings.SELECT_CATEGORY}
-            </Text> */}
+          appMainData?.categories.length && (
             <FlatList
               numColumns={4}
               data={appMainData?.categories}
@@ -143,22 +173,12 @@ export default function DashBoardFive({
               showsHorizontalScrollIndicator={false}
               renderItem={_renderItem}
               ItemSeparatorComponent={() => (
-                <View style={{height: moderateScale(10)}} />
+                <View style={{ height: moderateScale(10) }} />
               )}
             />
-          </View>
-        ) : null}
-        <View style={{marginVertical: moderateScale(30)}}>
-          {isLoading ? (
-            <ListEmptyVendors
-              isLoading={isLoading}
-              emptyText={'No data found'}
-              listSize={1}
-              dotsLength={true}
-              height={moderateScaleVertical(130)}
-              vendorContainerStyle={{marginLeft: 0}}
-            />
-          ) : appData?.banners?.length ? (
+          )}
+        <View style={{ marginVertical: moderateScale(30) }}>
+          {appData?.banners?.length && (
             <>
               <BannerHome2
                 bannerRef={bannerRef}
@@ -167,13 +187,13 @@ export default function DashBoardFive({
                 sliderWidth={sliderWidth}
                 itemWidth={itemWidth}
                 onSnapToItem={(index) =>
-                  updateState({slider1ActiveSlide: index})
+                  updateState({ slider1ActiveSlide: index })
                 }
                 setActiveState={(index) =>
-                  updateState({slider1ActiveSlide: index})
+                  updateState({ slider1ActiveSlide: index })
                 }
                 onPress={(item) => bannerPress(item)}
-                carouselViewStyle={{height: width * 0.33}}
+                carouselViewStyle={{ height: width * 0.33 }}
               />
 
               <Pagination
@@ -200,20 +220,9 @@ export default function DashBoardFive({
                 }}
               />
             </>
-          ) : null}
+          )}
         </View>
-        {isLoading ? (
-          <ListEmptyVendors
-            isLoading={isLoading}
-            emptyText={'No data found'}
-            listSize={3}
-            pRows={2}
-            pWidth={'100%'}
-            rowContainerstyle={{marginBottom: moderateScale(25)}}
-            height={moderateScaleVertical(130)}
-            vendorContainerStyle={{marginLeft: 0}}
-          />
-        ) : appMainData?.vendors && appMainData?.vendors?.length ? (
+        {appMainData?.vendors && appMainData?.vendors?.length && (
           <View>
             <Text
               style={[
@@ -230,11 +239,11 @@ export default function DashBoardFive({
               showsHorizontalScrollIndicator={false}
               renderItem={_renderVendors}
               ItemSeparatorComponent={() => (
-                <View style={{height: moderateScale(10)}} />
+                <View style={{ height: moderateScale(10) }} />
               )}
             />
           </View>
-        ) : null}
+        )}
         <View
           style={{
             height:
@@ -244,6 +253,6 @@ export default function DashBoardFive({
           }}
         />
       </ScrollView>
-    </>
+    </View>
   );
 }

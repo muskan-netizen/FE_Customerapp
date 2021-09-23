@@ -282,6 +282,10 @@ export default function AddressModal({
       clearState();
       passLocation(data);
       // clearState();
+    } else {
+      onClose();
+      clearState();
+      passLocation(data);
     }
   };
   const currentLocation = () => {
