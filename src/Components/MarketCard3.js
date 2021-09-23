@@ -1,8 +1,15 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Animated,
+} from 'react-native';
 import DashedLine from 'react-native-dashed-line';
 import FastImage from 'react-native-fast-image';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -13,8 +20,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 import BlurImages from './BlurImages';
 import {
   getImageUrl,
@@ -25,7 +32,7 @@ import {
 
 export default function MarketCard3({
   data = {},
-  onPress = () => { },
+  onPress = () => {},
   extraStyles = {},
   fastImageStyle = {},
   imageResizeMode = 'cover',
@@ -34,10 +41,10 @@ export default function MarketCard3({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
+  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ fontFamily, extraStyles, MyDarkTheme, isDarkMode });
+  const styles = stylesFunc({fontFamily, extraStyles, MyDarkTheme, isDarkMode});
   const scaleInAnimated = new Animated.Value(0);
   return (
     <TouchableOpacity
@@ -45,11 +52,10 @@ export default function MarketCard3({
       onPress={onPress}
       style={{
         ...styles.mainTouchContainer,
-        ...getScaleTransformationStyle(scaleInAnimated)
+        ...getScaleTransformationStyle(scaleInAnimated),
       }}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
-      onPressOut={() => pressOutAnimation(scaleInAnimated)}
-    >
+      onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       {/* <BlurImages
         themeColor={themeColors.primary_color}
         data={data}
@@ -64,7 +70,7 @@ export default function MarketCard3({
 
       /> */}
       <FastImage
-        style={[styles.mainImage, { ...fastImageStyle }]}
+        style={[styles.mainImage, {...fastImageStyle}]}
         resizeMode={imageResizeMode}
         source={{
           uri: getImageUrl(
@@ -74,17 +80,17 @@ export default function MarketCard3({
           ),
           priority: FastImage.priority.high,
         }}
-      
       />
-      <View style={{
-        padding: 8,
-      }}>
+      <View
+        style={{
+          padding: 8,
+        }}>
         <View style={styles.descView}>
           <Text
             numberOfLines={1}
             style={
               isDarkMode
-                ? [styles.categoryText, { color: MyDarkTheme.colors.text }]
+                ? [styles.categoryText, {color: MyDarkTheme.colors.text}]
                 : styles.categoryText
             }>
             {data.name}
@@ -92,44 +98,75 @@ export default function MarketCard3({
 
           {data?.product_avg_average_rating && (
             <View style={styles.ratingView}>
-
-              <Text style={{ ...styles.ratingTxt, color: colors.white, fontSize: textScale(9) }}>
+              <Text
+                style={{
+                  ...styles.ratingTxt,
+                  color: colors.white,
+                  fontSize: textScale(9),
+                }}>
                 {Number(data?.product_avg_average_rating).toFixed(1)}
               </Text>
               <Image
-                style={{ tintColor: colors.white, marginLeft: 2, width: 9, height: 9 }}
+                style={{
+                  tintColor: colors.white,
+                  marginLeft: 2,
+                  width: 9,
+                  height: 9,
+                }}
                 source={imagePath.star}
                 resizeMode="contain"
               />
             </View>
           )}
         </View>
-        <Text numberOfLines={1} style={{
-          color: colors.greyLight,
-          fontSize: textScale(10),
-          fontFamily: fontFamily.regular,
-          textAlign: 'left',
-          marginVertical: moderateScaleVertical(4),
-          marginTop: moderateScaleVertical(6)
-        }}>{data?.categoriesList}</Text>
-        <View style={{ height: 1, borderWidth: 0.5, borderColor: 'rgba(1,1,1,0.05)', marginTop: moderateScaleVertical(2) }} />
+        <Text
+          numberOfLines={1}
+          style={{
+            color: colors.greyLight,
+            fontSize: textScale(10),
+            fontFamily: fontFamily.regular,
+            textAlign: 'left',
+            marginVertical: moderateScaleVertical(4),
+            marginTop: moderateScaleVertical(6),
+          }}>
+          {data?.categoriesList}
+        </Text>
+        <View
+          style={{
+            height: 1,
+            borderWidth: 0.5,
+            borderColor: 'rgba(1,1,1,0.05)',
+            marginTop: moderateScaleVertical(2),
+          }}
+        />
         <View style={styles.distanceView}>
-          {<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {data?.lineOfSightDistance && (<Image
-              style={{ tintColor: themeColors.primary_color }}
-              source={imagePath.location2}
-            />)}
-            <Text
-              style={{
-                color: colors.greyLight,
-                fontSize: textScale(10),
-                fontFamily: fontFamily.regular,
-                marginHorizontal: moderateScale(5),
-                textAlign: 'left'
-              }}>
-              {data?.lineOfSightDistance} {!!data?.lineOfSightDistance ? 'miles' : ''} {!!data?.lineOfSightDistance && !!data?.timeofLineOfSightDistance ? '|' : ''} {data?.timeofLineOfSightDistance} {!!data?.timeofLineOfSightDistance ? 'mins' : ''}
-            </Text>
-          </View>}
+          {
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              {data?.lineOfSightDistance && (
+                <Image
+                  style={{tintColor: themeColors.primary_color}}
+                  source={imagePath.location2}
+                />
+              )}
+              <Text
+                style={{
+                  color: colors.greyLight,
+                  fontSize: textScale(10),
+                  fontFamily: fontFamily.regular,
+                  marginHorizontal: moderateScale(5),
+                  textAlign: 'left',
+                }}>
+                {data?.lineOfSightDistance}{' '}
+                {!!data?.lineOfSightDistance ? 'miles' : ''}{' '}
+                {!!data?.lineOfSightDistance &&
+                !!data?.timeofLineOfSightDistance
+                  ? '|'
+                  : ''}{' '}
+                {data?.timeofLineOfSightDistance}{' '}
+                {!!data?.timeofLineOfSightDistance ? 'mins' : ''}
+              </Text>
+            </View>
+          }
 
           <Text
             style={{
@@ -139,14 +176,14 @@ export default function MarketCard3({
               color: data?.show_slot
                 ? colors.green
                 : data?.slot && data?.slot.length
-                  ? colors.green
-                  : colors.redB,
+                ? colors.green
+                : colors.redB,
             }}>
             {data?.show_slot
-              ? 'Open'
+              ? strings.OPEN
               : data?.slot && data?.slot.length
-                ? 'Open'
-                : 'Close'}
+              ? strings.OPEN
+              : strings.CLOSE}
           </Text>
         </View>
       </View>
@@ -154,17 +191,17 @@ export default function MarketCard3({
   );
 }
 
-export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme }) {
+export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
   const styles = StyleSheet.create({
     mainTouchContainer: {
-      marginTop: moderateScale(15),
-      borderRadius: 10,
+      borderRadius: moderateScale(10),
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 1 },
-      shadowOpacity: 0.1,
-      shadowRadius: 2,
+      shadowOffset: {width: 0, height: 0},
+      shadowOpacity: 0.15,
+      shadowRadius: 3.84,
       elevation: 2,
       backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
+      margin: 6,
       ...extraStyles,
     },
     categoryText: {
@@ -172,13 +209,13 @@ export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme })
       color: colors.black,
       fontFamily: fontFamily.medium,
       width: '85%',
-      textAlign: 'left'
+      textAlign: 'left',
     },
     mainImage: {
       height: moderateScaleVertical(190),
       width: '100%',
-      borderTopRightRadius: moderateScale(10),
-      borderTopLeftRadius: moderateScale(10),
+      borderTopRightRadius: moderateScale(9),
+      borderTopLeftRadius: moderateScale(9),
     },
     descView: {
       marginTop: moderateScale(8),
@@ -189,20 +226,20 @@ export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme })
       color: colors.yellowC,
       fontSize: textScale(11),
       fontFamily: fontFamily.medium,
-      textAlign: 'left'
+      textAlign: 'left',
     },
     ratingView: {
-      flexDirection: 'row', alignItems: 'center',
+      flexDirection: 'row',
+      alignItems: 'center',
       backgroundColor: colors.green,
       borderRadius: moderateScale(4),
       paddingVertical: moderateScale(2),
-      paddingHorizontal: moderateScale(4)
+      paddingHorizontal: moderateScale(4),
     },
     distanceView: {
       marginTop: moderateScale(5),
       flexDirection: 'row',
       justifyContent: 'space-between',
-
     },
   });
   return styles;

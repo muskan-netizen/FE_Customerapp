@@ -316,14 +316,13 @@ export default function SearchProductVendorItem2({navigation, route}) {
         style={{
           width: moderateScale(width / 2),
           marginHorizontal: moderateScale(10),
-          marginBottom: 2,
         }}>
         <MarketCard3
           data={item}
           fastImageStyle={{
             height: moderateScaleVertical(110),
           }}
-          imageResizeMode="contain"
+          imageResizeMode="cover"
           onPress={() => onPressRecommendedVendors(item)}
         />
       </View>
@@ -393,9 +392,8 @@ export default function SearchProductVendorItem2({navigation, route}) {
                 showsHorizontalScrollIndicator={false}
                 style={{
                   flex: 1,
-                  marginVertical: moderateScaleVertical(10),
-
-                  // backgroundColor: 'black',
+                  marginVertical: moderateScaleVertical(5),
+                  paddingVertical: moderateScaleVertical(5),
                 }}
                 ListEmptyComponent={_listEmptyComponent}
                 ItemSeparatorComponent={() => <View style={{height: 30}} />}

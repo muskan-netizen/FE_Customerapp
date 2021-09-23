@@ -173,22 +173,23 @@ export default function Celebrity2({navigation}) {
       <View>
         <HeaderLoader
           isRight={false}
-          widthLeft={(width - moderateScale(44)) / 3.2}
-          rectWidthLeft={(width - moderateScale(44)) / 3.2}
+          widthLeft={(width - moderateScale(44)) / 3}
+          rectWidthLeft={(width - moderateScale(44)) / 3}
           rectHeightLeft={moderateScaleVertical(110)}
           heightLeft={moderateScaleVertical(110)}
           viewStyles={{
             marginHorizontal: 0,
+            marginTop: moderateScaleVertical(20),
           }}
           rx={5}
           ry={5}
         />
         <HeaderLoader
           isRight={false}
-          widthLeft={(width - moderateScale(44)) / 3.9}
-          rectWidthLeft={(width - moderateScale(44)) / 3.9}
-          rectHeightLeft={moderateScaleVertical(15)}
-          heightLeft={moderateScaleVertical(15)}
+          widthLeft={(width - moderateScale(44)) / 3.6}
+          rectWidthLeft={(width - moderateScale(44)) / 3.6}
+          rectHeightLeft={moderateScaleVertical(8)}
+          heightLeft={moderateScaleVertical(8)}
           viewStyles={{
             marginHorizontal: 0,
             marginTop: moderateScaleVertical(5),
@@ -250,11 +251,7 @@ export default function Celebrity2({navigation}) {
             flexWrap: 'wrap',
           }}>
           {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((i) => {
-            return (
-              <View style={{marginVertical: moderateScaleVertical(10)}}>
-                {celebrityLoader()}
-              </View>
-            );
+            return <View>{celebrityLoader()}</View>;
           })}
         </View>
       </WrapperContainer>
