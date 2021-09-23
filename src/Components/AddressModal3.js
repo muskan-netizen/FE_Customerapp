@@ -614,7 +614,7 @@ export default function AddressModal3({
             </View>
             <Text
               style={{
-                color: colors.textGrey,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
                 fontFamily: fontFamily.medium,
                 fontSize: textScale(14),
               }}>

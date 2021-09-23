@@ -130,11 +130,6 @@ export default function Addaddress({navigation, route}) {
       getAllAddress();
     }, []),
   );
-  console.log(
-    // paramData,
-    paramData?.data[0],
-    'currentLocationData',
-  );
 
   useEffect(() => {
     if (paramData?.data?.pickuplocationAllData != undefined) {
@@ -279,10 +274,6 @@ export default function Addaddress({navigation, route}) {
       .then((res) => {
         updateState({del: del ? false : true});
         showSuccess(res.message);
-
-        // setTimeout(() => {
-        //   getAllAddress();
-        // }, 1000);
       })
       .catch((error) => {
         updateState({isLoading: false});

@@ -44,7 +44,7 @@ export default function GooglePlaceInput({
     ? colors.textGreyOpcaity7
     : colors.textGreyOpcaity7,
   getResults = () => {},
-  selectionColor = colors.black,
+  selectionColor = colors.textGreyB,
 }) {
   const [state, setState] = useState({
     isLoading: true,
