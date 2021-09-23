@@ -29,7 +29,7 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
 import stylesFun from './styles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
@@ -42,6 +42,7 @@ import ToggleSwitch from 'toggle-switch-react-native';
 import DocumentPicker from 'react-native-document-picker';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import {getBundleId} from 'react-native-device-info';
 
 export default function WebLinks({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -643,7 +644,9 @@ export default function WebLinks({navigation, route}) {
                       width: width / 2 - moderateScale(22),
                     }}>
                     <Text style={styles.uploadText}>
-                      {strings.FSSAI_LICENSE}
+                      {getBundleId() === appIds.codiner
+                        ? strings.LABEL1
+                        : strings.FSSAI_LICENSE}
                     </Text>
                     {fssaiLicense && fssaiLicense.length ? (
                       fssaiLicense.map((i, inx) => {
@@ -685,7 +688,11 @@ export default function WebLinks({navigation, route}) {
                     style={{
                       width: width / 2 - moderateScale(22),
                     }}>
-                    <Text style={styles.uploadText}>{strings.SFC_LICENSE}</Text>
+                    <Text style={styles.uploadText}>
+                      {getBundleId() === appIds.codiner
+                        ? strings.LABEL2
+                        : strings.SFC_LICENSE}
+                    </Text>
                     {sfcLicense && sfcLicense.length ? (
                       sfcLicense.map((i, inx) => {
                         return (
