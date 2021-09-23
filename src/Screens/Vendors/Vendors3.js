@@ -5,6 +5,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
 import Header3 from '../../Components/Header3';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
+import SearchLoader from '../../Components/Loaders/SearchLoader';
 import MarketCard3 from '../../Components/MarketCard3';
 import SearchBar2 from '../../Components/SearchBar2';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -154,10 +155,7 @@ export default function Vendors3({route, navigation}) {
       />
       {/* <View style={{flexDirection: 'row', alignItems: 'center'}}> */}
       {isLoading ? (
-        <HeaderLoader
-          viewStyles={{marginVertical: moderateScaleVertical(15)}}
-          isRight
-        />
+        <SearchLoader viewStyles={{marginVertical: moderateScale(17)}} />
       ) : (
         <SearchBar2 navigation={navigation} />
       )}

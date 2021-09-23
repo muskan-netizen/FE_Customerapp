@@ -698,6 +698,7 @@ export function stylesData({fontFamily, themeColors}) {
       flexDirection: 'row',
       alignItems: 'center',
       marginTop: moderateScaleVertical(10),
+      paddingHorizontal: moderateScale(3),
       //backgroundColor: 'red',
     },
     closeButton: {

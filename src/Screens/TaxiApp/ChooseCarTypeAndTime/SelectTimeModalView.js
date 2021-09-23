@@ -29,6 +29,7 @@ import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnd
 import {getColorCodeWithOpactiyNumber} from '../../../utils/helperFunctions';
 import ModalView from '../../../Components/Modal';
 import {CalendarList} from 'react-native-calendars';
+import {Platform} from 'react-native';
 
 export default function SelectTimeModalView({
   isLoading = false,
@@ -227,7 +228,7 @@ export default function SelectTimeModalView({
         </View>
 
         <DatePicker
-          date={date ? date : new Date()}
+          date={Platform.OS === 'android' ? (date ? date : new Date()) : null}
           mode="time"
           textColor={isDarkMode ? colors.white : colors.blackB}
           // minimumDate={new Date()}
@@ -291,7 +292,7 @@ export default function SelectTimeModalView({
             ]
           : [styles.bottomView, {width: width}]
       }>
-      <View style={{marginBottom: moderateScale(20)}}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
             paddingHorizontal: moderateScale(20),
@@ -394,7 +395,7 @@ export default function SelectTimeModalView({
             btnText={strings.SCHEDULE}
           />
         </View>
-      </View>
+      </ScrollView>
       <ModalView
         transparent={true}
         isVisible={isDatePickerModal}

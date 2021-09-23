@@ -351,7 +351,7 @@ export default {
   ITEM_NOT_DELIVERABLE:
     'The specific items are not deliverable to this address. Please remove the items or change the address ',
   VIEW_ALL_VENDORS: 'View all vendors',
-  CLOSE: 'Close',
+  CLOSE: 'Closed',
   SELECT_CATEGORY: 'Select Category',
   EXPLORE_STORES: 'Explore Stores',
   OPEN: 'Open',
@@ -512,4 +512,7 @@ Amount`,
   PICKUP_LOCATION2: 'PICKUP',
   CONNECTING_YOU_TO_NEARBY_DERIVER: 'CONNECTING YOU TO NEARBY DRIVERS',
   YOUR_RIDE_WILL_START_SOON: 'Your ride will start soon',
+  RECOMMENDED_VENDORS: 'Recommended vendors',
+  YOUR_CART_EMPTY_ADD_ITEMS: 'Your cart is empty, add items to shop',
+  SHOP_FROM_WISHLIST: 'Shop from wishlist',
 };

@@ -49,7 +49,7 @@ export default function ListEmptyVendors({
           isVendorLoader
           vendorTxtStyles={{marginTop: moderateScale(10)}}
           viewStyles={{
-            marginTop: moderateScale(30),
+            marginTop: moderateScale(25),
           }}
         />
 
