@@ -465,6 +465,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         updatedPrice={updatedAmount}
         loyalityAmount={loyalityAmount}
         removeCoupon={() => removeCoupon()}
+        pickUpTimeType={pickUpTimeType}
       />
     );
   };
@@ -633,7 +634,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             styles.backButtonView,
             {
               backgroundColor: isDarkMode
-                ? MyDarkTheme.colors.lightDark
+                ? MyDarkTheme.colors.background
                 : colors.white,
             },
           ]}
