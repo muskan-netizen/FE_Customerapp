@@ -368,7 +368,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         _pickerCancel={_pickerCancel}
         _onDayPress={_onDayPress}
         _modalOkPress={_modalOkPress}
-        date={formatedTime}
+        // date={formatedTime}
       />
     );
   };
@@ -642,13 +642,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             // navigation.navigate(navigationStrings.PICKUPLOCATION)
             navigation.goBack()
           }>
-          <BlurView
-            style={styles.absolute}
-            viewRef={viewRef2}
-            blurType="light"
-            blurAmount={20}
-            blurRadius={20}
-          />
           <Image
             source={imagePath.backArrowCourier}
             style={{tintColor: isDarkMode ? colors.white : colors.black}}

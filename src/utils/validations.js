@@ -153,8 +153,7 @@ export default function (data) {
     // }
 
     let isTrue = isValidPhoneNumber(`+${callingCode}${phoneNumber}`);
-    console.log(callingCode, 'callingCode');
-    console.log(isTrue, 'isTrue');
+
     if (phoneNumber == '') {
       return strings.PLEASE_ENTER_YOUR_PHONE_NUMBER;
     }

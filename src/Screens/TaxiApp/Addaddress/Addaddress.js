@@ -30,11 +30,16 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {getAddressComponent, showError} from '../../../utils/helperFunctions';
+import {
+  getAddressComponent,
+  showError,
+  showSuccess,
+} from '../../../utils/helperFunctions';
 import {chekLocationPermission} from '../../../utils/permissions';
 import stylesFun from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
+import AddressModal3 from '../../../Components/AddressModal3';
 
 export default function Addaddress({navigation, route}) {
   const paramData = route?.params;
@@ -43,11 +48,10 @@ export default function Addaddress({navigation, route}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-
+  const userData = useSelector((state) => state?.auth?.userData);
   const {appData, allAddresss, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(paramData, 'paramData');
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
     pickUpLocation: '',
@@ -79,6 +83,11 @@ export default function Addaddress({navigation, route}) {
     savedAddressViewHeight: 0,
     avalibleValueInTextInput: false,
     vendorId: null,
+    isVisible: false,
+    updateData: {},
+    indicator: false,
+    type: 'addAddress',
+    del: false,
   });
   const {
     pickUpLocationAddressData,
@@ -109,6 +118,11 @@ export default function Addaddress({navigation, route}) {
     selectedAddress,
     savedAddressViewHeight,
     avalibleValueInTextInput,
+    isVisible,
+    updateData,
+    indicator,
+    type,
+    del,
   } = state;
 
   useFocusEffect(
@@ -153,7 +167,11 @@ export default function Addaddress({navigation, route}) {
       .then((res) => {
         console.log(res, 'all address');
         // actions.saveAllUserAddress(res.data);
-        updateState({allSavedAddress: res.data, isLoading: false});
+        updateState({
+          allSavedAddress: res.data,
+          isLoading: false,
+          indicator: false,
+        });
       })
       .catch((error) => {
         updateState({isLoading: false});
@@ -236,12 +254,46 @@ export default function Addaddress({navigation, route}) {
     }
   };
 
-  const showListOutside = (results, type, dataSource) => {
-    //
-    //
-    // setTimeout(() => {
-    //   updateState({suggestions:dataSource})
-    // }, 100);
+  const setModalVisible = (visible, type, id, data) => {
+    if (!!userData?.auth_token) {
+      updateState({
+        updateData: data,
+        isVisible: visible,
+        type: 'addAddress',
+        selectedId: id,
+      });
+    } else {
+      showError(strings.UNAUTHORIZED_MESSAGE);
+    }
+  };
+
+  const addUpdateLocation = (childData) => {
+    //setModalVisible(false);
+
+    updateState({isLoading: true});
+
+    actions
+      .addAddress(childData, {
+        code: appData?.profile?.code,
+      })
+      .then((res) => {
+        updateState({del: del ? false : true});
+        showSuccess(res.message);
+
+        // setTimeout(() => {
+        //   getAllAddress();
+        // }, 1000);
+      })
+      .catch((error) => {
+        updateState({isLoading: false});
+        showError(error?.message || error?.error);
+      });
+  };
+
+  const _setModalVisiblity = () => {
+    updateState({
+      isVisible: true,
+    });
   };
 
   const _renderBottomComponent = (type, addressType) => {
@@ -439,42 +491,6 @@ export default function Addaddress({navigation, route}) {
     }
   };
 
-  const getImageAndFunctionality = (type) => {
-    if (
-      type == 'dropOffLocation' &&
-      dropOffLocation != '' &&
-      dropOffLocationLatLng
-    ) {
-      if (showDropOfTwo) {
-      } else {
-        return imagePath.ic_add;
-      }
-    } else if (
-      type == 'dropOffLocationTwo' &&
-      dropOffLocationTwo != '' &&
-      dropOffLocationTwoLatLng
-    ) {
-      return imagePath.ic_cross;
-    } else if (
-      type == 'dropOffLocationThree' &&
-      dropOffLocationThree != '' &&
-      dropOffLocationThreeLatLng
-    ) {
-      return imagePath.ic_cross;
-    } else if (type == 'dropOffLocation') {
-      // return imagePath.plus;
-      if (showDropOfTwo) {
-      } else {
-        return imagePath.ic_add;
-      }
-    } else if (type == 'dropOffLocationTwo') {
-      return imagePath.ic_cross;
-    }
-    // else if (type == 'dropOffLocationThree') {
-    //   return imagePath.crossB;
-    // }
-  };
-
   const renderCross = (type) => {
     return (
       <>
@@ -510,7 +526,6 @@ export default function Addaddress({navigation, route}) {
   };
 
   const saveAddressAndRedirect = () => {
-    console.log(pickUpLocationLatLng.latitude, dropOffLocationLatLng);
     if (pickUpLocationLatLng?.latitude == undefined) {
       showError(strings.PLEASE_SELECT_PICKUP_LOCATION);
     } else if (dropOffLocationLatLng?.latitude == undefined) {
@@ -567,10 +582,8 @@ export default function Addaddress({navigation, route}) {
       allSavedAddress.map((itm, inx) => {
         return (
           <ScrollView
-            horizontal
             keyboardShouldPersistTaps={'handled'}
-            showsHorizontalScrollIndicator={false}
-            style={{width: width}}>
+            style={{width: width - 40}}>
             <TouchableOpacity
               key={inx}
               style={{
@@ -599,427 +612,346 @@ export default function Addaddress({navigation, route}) {
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}>
-      <Header
-        rightViewStyle={{
-          backgroundColor: isDarkMode
-            ? MyDarkTheme.colors.lightDark
-            : colors.greyColor,
-          alignItems: 'center',
-          paddingVertical: moderateScaleVertical(8),
-          borderRadius: 14,
-          flex: 0.15,
-        }}
-        leftIcon={imagePath.backArrowCourier}
-        centerTitle={strings.ADD_ADDRESS}
-        // rightIcon={imagePath.cartShop}
-        headerStyle={{
-          backgroundColor: isDarkMode
-            ? MyDarkTheme.colors.background
-            : colors.white,
-          marginVertical: moderateScaleVertical(10),
-          rightViewStyle: {backgroundColor: colors.greyColor},
-        }}
-      />
-      {/* <View style={{flexDirection: 'row'}}>
-        <View
-          style={{
-            backgroundColor: colors.greyColor,
-            width: moderateScale(45),
-            paddingVertical: moderateScaleVertical(10),
-            borderRadius: 15,
-            alignItems: 'center',
-          }}>
-          <Image source={imagePath.backArrowCourier} />
-        </View>
-        <View></View>
-      </View> */}
-
       <View style={{flex: 1}}>
-        <View
-          onLayout={(event) => {
-            updateState({viewHeight: event.nativeEvent.layout.height});
+        <Header
+          rightViewStyle={{
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : colors.greyColor,
+            alignItems: 'center',
+            paddingVertical: moderateScaleVertical(8),
+            borderRadius: 14,
+            flex: 0.15,
           }}
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            // backgroundColor:'red'
-            // alignItems: 'center',
-          }}>
-          <View
-            style={{
-              flex: 0.15,
+          leftIcon={imagePath.backArrowCourier}
+          centerTitle={strings.ADD_ADDRESS}
+          // rightIcon={imagePath.cartShop}
+          headerStyle={{
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.white,
+            marginVertical: moderateScaleVertical(10),
+            rightViewStyle: {backgroundColor: colors.greyColor},
+          }}
+        />
 
-              alignItems: 'center',
-              marginVertical: moderateScaleVertical(30),
-              // justifyContent: 'center',
+        <View style={{flex: 1}}>
+          <View
+            onLayout={(event) => {
+              updateState({viewHeight: event.nativeEvent.layout.height});
+            }}
+            style={{
+              flex: 1,
+              flexDirection: 'row',
             }}>
             <View
               style={{
-                flex: 0.3,
+                flex: 0.15,
+                alignItems: 'center',
+                marginVertical: moderateScaleVertical(30),
+              }}>
+              <View
+                style={{
+                  flex: 0.3,
+                  zIndex: -1000,
+                  // height: getHeight(),
+                }}>
+                <Image source={imagePath.icRedOval} />
+                {renderDotContainer()}
+                {showDropOfTwo ? renderDotContainer() : null}
+              </View>
+            </View>
+            <View
+              style={{
+                flex: 0.7,
                 zIndex: -1000,
-                // height: getHeight(),
+                paddingVertical: 10,
               }}>
-              <Image source={imagePath.icRedOval} />
-              {renderDotContainer()}
-              {showDropOfTwo ? renderDotContainer() : null}
-              {/* {showDropOfThree ? renderDotContainer() : null} */}
-            </View>
-          </View>
-          <View
-            style={{
-              flex: 0.7,
-              zIndex: -1000,
-              paddingVertical: 10,
-            }}>
-            <View
-              style={{
-                height: 48,
-                alignItems: 'center',
-              }}>
-              <GooglePlaceInput
-                autoFocus={pickUpLocationFocus}
-                getDefaultValue={pickUpLocation}
-                type={'Pickup'}
-                navigation={navigation}
-                addressType={'pickup'}
-                googleApiKey={profile?.preferences?.map_key}
-                placeholderTextColor={
-                  isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7
-                }
-                textInputContainer={styles.textGoogleInputContainerAddress}
-                listView={
-                  stylesFun({
-                    fontFamily,
-                    themeColors,
-                    viewHeight: viewHeight,
-                    type: 'pickup',
-                  }).listView
-                }
-                onFocus={() => updateState({pickUpLocationFocus: true})}
-                textInput={
-                  isDarkMode
-                    ? {
-                        height: moderateScaleVertical(30),
-                        borderRadius: 13,
-                        color: colors.white,
-                        backgroundColor: MyDarkTheme.colors.background,
-                      }
-                    : {
-                        height: moderateScaleVertical(30),
-                        borderRadius: 13,
-
-                        backgroundColor: colors.white,
-                      }
-                }
-                addressHelper={(results) => addressHelper(results)}
-                handleAddressOnKeyUp={(text) =>
-                  handleAddressOnKeyUp(text, 'pickUpLocation')
-                }
-                onBlur={() => {
-                  if (pickUpLocation == '') {
-                    updateState({
-                      pickUpLocation: '',
-                      pickUpLocationLatLng: false,
-                      pickUpLocationFocus: false,
-                    });
-                  } else {
-                    updateState({
-                      pickUpLocationFocus: false,
-                    });
-                  }
-                }}
-                showList={true}
-                showListOutside={(results, dataSource) =>
-                  showListOutside(results, 'pickUpLocation', dataSource)
-                }
-                rowStyle={styles.address}
-                renderCustomRow={(itm) => _rendorCustomRow(itm)}
-                updateTheAddress={(details, addressType) =>
-                  updateTheAddress(details, addressType, 'pickUpLocation')
-                }
-                ListHeaderComponent={() =>
-                  _renderBottomComponent('pickUpLocation', 'pickup')
-                }
-              />
               <View
                 style={{
-                  backgroundColor: colors.textGreyLight,
-                  height: 0.5,
-                  width: width - 100,
-                  marginLeft: moderateScale(40),
-                  marginTop: moderateScaleVertical(5),
-                }}
-              />
-            </View>
-
-            <View style={{height: 5}}></View>
-            <View
-              style={{
-                height: 48,
-                alignItems: 'center',
-                marginTop: moderateScaleVertical(10),
-              }}>
-              <GooglePlaceInput
-                autoFocus={dropOffLocationFocus}
-                getDefaultValue={dropOffLocation}
-                type={'Pickup'}
-                navigation={navigation}
-                addressType={'dropoff'}
-                placeholderTextColor={
-                  isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7
-                }
-                placeholder={strings.DROPOFFADDRESS}
-                googleApiKey={profile?.preferences?.map_key}
-                textInputContainer={styles.textGoogleInputContainerAddress}
-                listView={styles.listView}
-                listView={
-                  stylesFun({
-                    fontFamily,
-                    themeColors,
-                    viewHeight: viewHeight,
-                    type: 'dropOffLocation',
-                  }).listView
-                }
-                onFocus={() => updateState({dropOffLocationFocus: true})}
-                onBlur={() => {
-                  if (dropOffLocation == '') {
-                    updateState({
-                      dropOffLocation: '',
-                      dropOffLocationLatLng: false,
-                      dropOffLocationFocus: false,
-                    });
+                  height: 48,
+                  alignItems: 'center',
+                }}>
+                <GooglePlaceInput
+                  selectionColor={themeColors.primary_color}
+                  placeholder={strings.PICKUP_LOCATION}
+                  autoFocus={pickUpLocationFocus}
+                  getDefaultValue={pickUpLocation}
+                  type={'Pickup'}
+                  navigation={navigation}
+                  addressType={'pickup'}
+                  googleApiKey={profile?.preferences?.map_key}
+                  placeholderTextColor={
+                    isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7
                   }
-                }}
-                textInput={
-                  isDarkMode
-                    ? {
-                        height: moderateScaleVertical(30),
-                        borderRadius: 13,
-                        color: MyDarkTheme.colors.text,
-                        backgroundColor: MyDarkTheme.colors.background,
-                      }
-                    : {
-                        height: moderateScaleVertical(30),
-                        borderRadius: 13,
-                        backgroundColor: colors.white,
-                      }
-                }
-                addressHelper={(results) => addressHelper(results)}
-                handleAddressOnKeyUp={(text) =>
-                  handleAddressOnKeyUp(text, 'dropOffLocation')
-                }
-                showList={true}
-                showListOutside={(results, dataSource) =>
-                  showListOutside(results, 'dropOffLocation', dataSource)
-                }
-                rowStyle={styles.address}
-                renderCustomRow={(itm) => _rendorCustomRow(itm)}
-                updateTheAddress={(details, addressType) =>
-                  updateTheAddress(details, addressType, 'dropOffLocation')
-                }
-                ListHeaderComponent={() =>
-                  _renderBottomComponent('dropOffLocation', 'dropoff')
-                }
-              />
-              <View
-                style={{
-                  backgroundColor: colors.textGreyLight,
-                  height: 0.5,
-                  width: width - 100,
-                  marginLeft: moderateScale(40),
-                  marginTop: moderateScaleVertical(5),
-                }}
-              />
-            </View>
+                  textInputContainer={styles.textGoogleInputContainerAddress}
+                  listView={
+                    stylesFun({
+                      fontFamily,
+                      themeColors,
+                      viewHeight: viewHeight,
+                      type: 'pickup',
+                    }).listView
+                  }
+                  onFocus={() => updateState({pickUpLocationFocus: true})}
+                  textInput={
+                    isDarkMode
+                      ? {
+                          height: moderateScaleVertical(30),
+                          borderRadius: 13,
+                          color: colors.white,
+                          backgroundColor: MyDarkTheme.colors.background,
+                        }
+                      : {
+                          height: moderateScaleVertical(30),
+                          borderRadius: 13,
 
-            {showDropOfTwo ? (
-              <>
-                <View style={{height: 5}}></View>
+                          backgroundColor: colors.white,
+                        }
+                  }
+                  addressHelper={(results) => addressHelper(results)}
+                  handleAddressOnKeyUp={(text) =>
+                    handleAddressOnKeyUp(text, 'pickUpLocation')
+                  }
+                  onBlur={() => {
+                    if (pickUpLocation == '') {
+                      updateState({
+                        pickUpLocation: '',
+                        pickUpLocationLatLng: false,
+                        pickUpLocationFocus: false,
+                      });
+                    } else {
+                      updateState({
+                        pickUpLocationFocus: false,
+                      });
+                    }
+                  }}
+                  showList={true}
+                  showListOutside={(results, dataSource) =>
+                    showListOutside(results, 'pickUpLocation', dataSource)
+                  }
+                  rowStyle={styles.address}
+                  renderCustomRow={(itm) => _rendorCustomRow(itm)}
+                  updateTheAddress={(details, addressType) =>
+                    updateTheAddress(details, addressType, 'pickUpLocation')
+                  }
+                  ListHeaderComponent={() =>
+                    _renderBottomComponent('pickUpLocation', 'pickup')
+                  }
+                />
                 <View
                   style={{
-                    height: 48,
-                    alignItems: 'center',
-                    marginTop: moderateScaleVertical(10),
-                  }}>
-                  <GooglePlaceInput
-                    autoFocus={dropOffLocationTwoFocus}
-                    getDefaultValue={dropOffLocationTwo}
-                    type={'Pickup'}
-                    navigation={navigation}
-                    addressType={'dropoff'}
-                    placeholder={strings.DROPOFFADDRESS}
-                    googleApiKey={profile?.preferences?.map_key}
-                    placeholderTextColor={
-                      isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.textGreyOpcaity7
-                    }
-                    textInputContainer={styles.textGoogleInputContainerAddress}
-                    listView={
-                      stylesFun({
-                        fontFamily,
-                        themeColors,
-                        viewHeight: viewHeight,
-                        type: 'dropOffLocationTwo',
-                      }).listView
-                    }
-                    onFocus={() => updateState({dropOffLocationTwoFocus: true})}
-                    onBlur={() => {
-                      if (dropOffLocationTwo == '') {
-                        updateState({
-                          dropOffLocationTwo: '',
-                          dropOffLocationTwoLatLng: false,
-                          dropOffLocationTwoFocus: false,
-                        });
-                      }
-                    }}
-                    textInput={
-                      isDarkMode
-                        ? {
-                            height: moderateScaleVertical(30),
-                            borderRadius: 13,
-                            color: MyDarkTheme.colors.text,
-                            backgroundColor: MyDarkTheme.colors.background,
-                          }
-                        : {
-                            height: moderateScaleVertical(30),
-                            borderRadius: 13,
-                            backgroundColor: colors.white,
-                          }
-                    }
-                    addressHelper={(results) => addressHelper(results)}
-                    handleAddressOnKeyUp={(text) =>
-                      handleAddressOnKeyUp(text, 'dropOffLocationTwo')
-                    }
-                    showList={true}
-                    showListOutside={(results, dataSource) =>
-                      showListOutside(results, 'dropOffLocationTwo', dataSource)
-                    }
-                    rowStyle={styles.address}
-                    renderCustomRow={(itm) => _rendorCustomRow(itm)}
-                    updateTheAddress={(details, addressType) =>
-                      updateTheAddress(
-                        details,
-                        addressType,
-                        'dropOffLocationTwo',
-                      )
-                    }
-                    ListHeaderComponent={() =>
-                      _renderBottomComponent('dropOffLocationTwo', 'dropoff')
-                    }
-                  />
-                  <View
-                    style={{
-                      backgroundColor: colors.textGreyLight,
-                      height: 0.5,
-                      width: width - 100,
-                      marginLeft: moderateScale(40),
-                      marginTop: moderateScaleVertical(5),
-                    }}
-                  />
-                </View>
-              </>
-            ) : null}
-          </View>
-          <View style={{flex: 0.1, zIndex: -1000, paddingVertical: 10}}>
-            <View style={{height: moderateScale(48)}} />
-            {renderCross('dropOffLocation')}
-            {showDropOfTwo ? renderCross('dropOffLocationTwo') : null}
-            {/* {showDropOfThree ? renderCross('dropOffLocationThree') : null} */}
-          </View>
-          <View style={{position: 'absolute', end: 35, top: 27}}>
-            <TouchableOpacity onPress={() => _moveToNextScreen()}>
-              <Image
+                    backgroundColor: colors.textGreyLight,
+                    height: 0.5,
+                    width: width - 100,
+                    marginLeft: moderateScale(40),
+                    marginTop: moderateScaleVertical(5),
+                  }}
+                />
+              </View>
+
+              <View style={{height: 5}}></View>
+              <View
                 style={{
-                  tintColor: isDarkMode
-                    ? MyDarkTheme.colors.white
-                    : colors.black,
-                }}
-                source={imagePath.locationPin}
-              />
-            </TouchableOpacity>
+                  height: 48,
+                  alignItems: 'center',
+                  marginTop: moderateScaleVertical(10),
+                }}>
+                <GooglePlaceInput
+                  selectionColor={themeColors.primary_color}
+                  autoFocus={dropOffLocationFocus}
+                  getDefaultValue={dropOffLocation}
+                  type={'Pickup'}
+                  navigation={navigation}
+                  addressType={'dropoff'}
+                  placeholderTextColor={
+                    isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7
+                  }
+                  placeholder={strings.DROPOFFLOCATION}
+                  googleApiKey={profile?.preferences?.map_key}
+                  textInputContainer={styles.textGoogleInputContainerAddress}
+                  listView={styles.listView}
+                  listView={
+                    stylesFun({
+                      fontFamily,
+                      themeColors,
+                      viewHeight: viewHeight,
+                      type: 'dropOffLocation',
+                    }).listView
+                  }
+                  onFocus={() => updateState({dropOffLocationFocus: true})}
+                  onBlur={() => {
+                    if (dropOffLocation == '') {
+                      updateState({
+                        dropOffLocation: '',
+                        dropOffLocationLatLng: false,
+                        dropOffLocationFocus: false,
+                      });
+                    }
+                  }}
+                  textInput={
+                    isDarkMode
+                      ? {
+                          height: moderateScaleVertical(30),
+                          borderRadius: 13,
+                          color: MyDarkTheme.colors.text,
+                          backgroundColor: MyDarkTheme.colors.background,
+                        }
+                      : {
+                          height: moderateScaleVertical(30),
+                          borderRadius: 13,
+                          backgroundColor: colors.white,
+                        }
+                  }
+                  addressHelper={(results) => addressHelper(results)}
+                  handleAddressOnKeyUp={(text) =>
+                    handleAddressOnKeyUp(text, 'dropOffLocation')
+                  }
+                  showList={true}
+                  showListOutside={(results, dataSource) =>
+                    showListOutside(results, 'dropOffLocation', dataSource)
+                  }
+                  rowStyle={styles.address}
+                  renderCustomRow={(itm) => _rendorCustomRow(itm)}
+                  updateTheAddress={(details, addressType) =>
+                    updateTheAddress(details, addressType, 'dropOffLocation')
+                  }
+                  ListHeaderComponent={() =>
+                    _renderBottomComponent('dropOffLocation', 'dropoff')
+                  }
+                />
+                <View
+                  style={{
+                    backgroundColor: colors.textGreyLight,
+                    height: 0.5,
+                    width: width - 100,
+                    marginLeft: moderateScale(40),
+                    marginTop: moderateScaleVertical(5),
+                  }}
+                />
+              </View>
+            </View>
+            <View style={{flex: 0.1, zIndex: -1000, paddingVertical: 10}}>
+              <View style={{height: moderateScale(48)}} />
+              {renderCross('dropOffLocation')}
+              {showDropOfTwo ? renderCross('dropOffLocationTwo') : null}
+              {/* {showDropOfThree ? renderCross('dropOffLocationThree') : null} */}
+            </View>
+            <View style={{position: 'absolute', end: 28, top: 27}}>
+              <TouchableOpacity onPress={() => _moveToNextScreen()}>
+                <Image
+                  style={
+                    isDarkMode
+                      ? {
+                          height: 25,
+                          width: 25,
+                          tintColor: MyDarkTheme.colors.text,
+                        }
+                      : {height: 25, width: 25, tintColor: colors.blackB}
+                  }
+                  source={imagePath.locationPin}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
+
+          {/* <View style={{flex: 0.7, zIndex: -1000}}> */}
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps={'handled'}
+            style={[styles.modalMainViewContainer]}>
+            {!!(allSavedAddress && allSavedAddress.length) ? (
+              <>
+                <View style={styles.savedAddressView}>
+                  <Text
+                    numberOfLines={1}
+                    style={
+                      isDarkMode
+                        ? [
+                            styles.addresssLableName,
+                            {color: MyDarkTheme.colors.text},
+                          ]
+                        : styles.addresssLableName
+                    }>
+                    {strings.SAVED_LOCATIONS}
+                  </Text>
+                  <TouchableOpacity onPress={() => _setModalVisiblity()}>
+                    <Text numberOfLines={1} style={styles.savedAddressText}>
+                      {strings.SAVED_NEW_PLACE}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+
+                {addressView(imagePath.savedLocationImage)}
+
+                <View style={styles.savedAddressView}>
+                  <Text
+                    numberOfLines={1}
+                    style={
+                      isDarkMode
+                        ? [
+                            styles.addresssLableName,
+                            {color: MyDarkTheme.colors.text},
+                          ]
+                        : styles.addresssLableName
+                    }>
+                    {strings.RECENT_LOCATIONS}
+                  </Text>
+                </View>
+
+                {addressView(imagePath.RecentLocationImage)}
+              </>
+            ) : (
+              <View style={styles.savedAddressView}>
+                <Text
+                  numberOfLines={1}
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.addresssLableName,
+                          {color: MyDarkTheme.colors.text},
+                        ]
+                      : styles.addresssLableName
+                  }>
+                  {/* {strings.SAVED_ADDRESS} */}
+                </Text>
+              </View>
+            )}
+          </ScrollView>
+          {/* </View> */}
         </View>
 
-        {/* <View style={{flex: 0.7, zIndex: -1000}}> */}
-        <ScrollView
-          keyboardShouldPersistTaps={'handled'}
-          style={[styles.modalMainViewContainer]}>
-          {!!(allSavedAddress && allSavedAddress.length) ? (
-            <>
-              <View style={styles.savedAddressView}>
-                <Text
-                  numberOfLines={1}
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.addresssLableName,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.addresssLableName
-                  }>
-                  {strings.SAVED_LOCATIONS}
-                </Text>
-
-                <Text numberOfLines={1} style={styles.savedAddressText}>
-                  {strings.SAVED_NEW_PLACE}
-                </Text>
-              </View>
-
-              {addressView(imagePath.savedLocationImage)}
-
-              <View style={styles.savedAddressView}>
-                <Text
-                  numberOfLines={1}
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.addresssLableName,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.addresssLableName
-                  }>
-                  {strings.RECENT_LOCATIONS}
-                </Text>
-              </View>
-
-              {addressView(imagePath.RecentLocationImage)}
-            </>
-          ) : (
-            <View style={styles.savedAddressView}>
-              <Text
-                numberOfLines={1}
-                style={
-                  isDarkMode
-                    ? [
-                        styles.addresssLableName,
-                        {color: MyDarkTheme.colors.text},
-                      ]
-                    : styles.addresssLableName
-                }>
-                {/* {strings.SAVED_ADDRESS} */}
-              </Text>
-            </View>
-          )}
-        </ScrollView>
-        {/* </View> */}
+        <View
+          style={{
+            marginVertical: moderateScaleVertical(10),
+            marginHorizontal: moderateScale(20),
+            justifyContent: 'flex-end',
+          }}>
+          <GradientButton
+            colorsArray={[themeColors.primary_color, themeColors.primary_color]}
+            textStyle={{textTransform: 'none', fontSize: textScale(16)}}
+            onPress={saveAddressAndRedirect}
+            marginTop={moderateScaleVertical(10)}
+            marginBottom={moderateScaleVertical(10)}
+            btnText={strings.DONE}
+          />
+        </View>
       </View>
 
-      <View
-        style={{
-          marginVertical: moderateScaleVertical(10),
-          marginHorizontal: moderateScale(20),
-          justifyContent: 'flex-end',
-        }}>
-        <GradientButton
-          colorsArray={[themeColors.primary_color, themeColors.primary_color]}
-          textStyle={{textTransform: 'none', fontSize: textScale(16)}}
-          onPress={saveAddressAndRedirect}
-          marginTop={moderateScaleVertical(10)}
-          marginBottom={moderateScaleVertical(10)}
-          btnText={strings.DONE}
-        />
-      </View>
+      <AddressModal3
+        navigation={navigation}
+        updateData={updateData}
+        isVisible={isVisible}
+        indicator={indicator}
+        onClose={() => setModalVisible(false)}
+        type={type}
+        passLocation={(data) => addUpdateLocation(data)}
+        // onPress={currentLocation}
+      />
     </WrapperContainer>
   );
 }

@@ -2569,6 +2569,7 @@
 		928567C9746CD8359F9C4796 /* libPods-GajaMove.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6CC21C1F5859A2A8919498 /* libPods-GajaMove.a */; };
 		9322389440851FAC8A6E24E2 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		95C64DB775FBDC237CBD94AD /* libPods-Markita.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B9E290EFBAE6AE4C2F7455 /* libPods-Markita.a */; };
+		992FFC329D3EB440D41FF2B6 /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B9E4A5EF2C79243C83AE4D0 /* libPods-RoyoOrder.a */; };
 		9CEDBAE82F6CF94CB8CB97A0 /* libPods-EquaMD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39DA79C770FFEF05F13641BE /* libPods-EquaMD.a */; };
 		A07DA7E4A911268765997F58 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		A13AC771C52D3511901448CD /* libPods-Housekeeper4Hire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F6CAD7C182CAA2EA3E8329 /* libPods-Housekeeper4Hire.a */; };

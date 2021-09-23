@@ -44,6 +44,7 @@ export default function GooglePlaceInput({
     ? colors.textGreyOpcaity7
     : colors.textGreyOpcaity7,
   getResults = () => {},
+  selectionColor = colors.black,
 }) {
   const [state, setState] = useState({
     isLoading: true,
@@ -146,6 +147,7 @@ export default function GooglePlaceInput({
           placeholderTextColor,
           autoFocus: autoFocus,
           value: getDefaultValue,
+          selectionColor: selectionColor,
           onChangeText: (text) => {
             handleAddressOnKeyUp(text);
           },
@@ -230,6 +232,7 @@ export default function GooglePlaceInput({
           'locality',
           'administrative_area_level_3',
         ]}
+        //textInputProps={{...textInselectionColor: selectionColor}}
         styles={{
           listView: {...styles.listView, ...listView},
           textInputContainer: {
@@ -237,7 +240,10 @@ export default function GooglePlaceInput({
             ...textInputContainer,
           },
           predefinedPlacesDescription: styles.predefinedPlacesDescription,
-          textInput: [{...styles.textInput}, {...textInput}],
+          textInput: [
+            {...styles.textInput},
+            {...textInput, selectionColor: selectionColor},
+          ],
         }}
         ListFooterComponent={() => <View style={{height: height / 6}} />}
         renderHeaderComponent={ListHeaderComponent}

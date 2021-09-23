@@ -269,25 +269,6 @@ export default function HomeScreenTaxi({navigation, route}) {
     );
   };
 
-  const renderRecommandedLocations = ({item, index}) => {
-    return (
-      <View
-        style={{
-          backgroundColor: isDarkMode
-            ? MyDarkTheme.colors.lightDark
-            : colors.white,
-          paddingHorizontal: moderateScale(10),
-          paddingVertical: moderateScaleVertical(7),
-          borderRadius: 15,
-        }}>
-        <Text
-          style={{color: isDarkMode ? MyDarkTheme.colors.text : colors.black}}>
-          {item.location}
-        </Text>
-      </View>
-    );
-  };
-
   const _renderBottomComponent = () => {
     return (
       <View
@@ -355,7 +336,9 @@ export default function HomeScreenTaxi({navigation, route}) {
                         marginTop: moderateScaleVertical(40),
                         flexDirection: 'column',
                       }}>
-                      <Text style={{color: colors.textGreyLight}}>PICKUP</Text>
+                      <Text style={{color: colors.textGreyLight}}>
+                        {strings.PICKUP_LOCATION2}
+                      </Text>
                       <TouchableOpacity onPress={() => _modeToNextScreen()}>
                         <Text
                           style={{
@@ -363,8 +346,9 @@ export default function HomeScreenTaxi({navigation, route}) {
                             color: isDarkMode
                               ? MyDarkTheme.colors.text
                               : colors.black,
+                            fontFamily: fontFamily.semiBold,
                           }}>
-                          My Current Location
+                          {strings.PICKUP_LOCATION}
                         </Text>
                       </TouchableOpacity>
                       <View
@@ -381,17 +365,20 @@ export default function HomeScreenTaxi({navigation, route}) {
                         flexDirection: 'column',
                       }}>
                       <Text style={{color: colors.textGreyLight}}>
-                        DROP-OFF
+                        {strings.DROP_OFF}
                       </Text>
-                      <Text
-                        style={{
-                          marginVertical: moderateScaleVertical(10),
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.black,
-                        }}>
-                        CDCL,sector 28b, Chandigarh
-                      </Text>
+                      <TouchableOpacity onPress={() => _modeToNextScreen()}>
+                        <Text
+                          style={{
+                            marginVertical: moderateScaleVertical(10),
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
+                            fontFamily: fontFamily.semiBold,
+                          }}>
+                          {strings.DROPOFFLOCATION}
+                        </Text>
+                      </TouchableOpacity>
                       <View
                         style={{
                           height: 0.5,
@@ -403,18 +390,6 @@ export default function HomeScreenTaxi({navigation, route}) {
                   </View>
                 </View>
               </View>
-            </View>
-            <View
-              style={{flex: 0.2, marginVertical: moderateScaleVertical(20)}}>
-              <FlatList
-                showsHorizontalScrollIndicator={false}
-                data={(!isLoading && locationListData) || []}
-                renderItem={renderRecommandedLocations}
-                horizontal
-                ItemSeparatorComponent={() => (
-                  <View style={{height: 20, width: 20}} />
-                )}
-              />
             </View>
           </ScrollView>
         </View>
@@ -501,7 +476,7 @@ export default function HomeScreenTaxi({navigation, route}) {
         style={{
           flex: 0.3,
           position: 'absolute',
-          height: height / 3.5,
+          height: height / 5,
           width: width,
           bottom: 0,
           backgroundColor: isDarkMode

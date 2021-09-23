@@ -64,6 +64,8 @@ export default function ({
           marginBottom: -30,
           paddingHorizontal: 10,
           zIndex: 1000,
+          borderTopLeftRadius: moderateScale(18),
+          borderTopRightRadius: moderateScale(18),
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.background
             : colors.white,
@@ -106,7 +108,7 @@ export default function ({
             style={{
               width: width - 40,
               justifyContent: 'space-between',
-              height: '80%',
+              height: '100%',
               paddingVertical: moderateScaleVertical(30),
             }}>
             <View
@@ -237,7 +239,7 @@ export default function ({
             )}
           </View>
         ) : (
-          <>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <View
               style={{
                 height: moderateScaleVertical(70),
@@ -256,7 +258,7 @@ export default function ({
                 fontFamily: fontFamily.medium,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
-              CONNECTING YOU TO NEARBY DRIVERS
+              {strings.CONNECTING_YOU_TO_NEARBY_DERIVER}
             </Text>
             <Text
               style={{
@@ -265,9 +267,9 @@ export default function ({
                 marginVertical: moderateScaleVertical(20),
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
-              Your ride will start soon
+              {strings.YOUR_RIDE_WILL_START_SOON}
             </Text>
-          </>
+          </View>
         )}
       </View>
     </>

@@ -961,7 +961,7 @@ export default function ProductDetail({route, navigation}) {
                             textTransform: 'capitalize',
                           }}
                           onPress={addToCart}
-                          btnText={`${strings.ADD} - ${
+                          btnText={`${strings.ADD}  ${
                             currencies?.primary_currency?.symbol
                           }${(
                             Number(productPriceData?.multiplier) *
