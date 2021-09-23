@@ -51,7 +51,6 @@ export default function ProductCard3({
   selectedCartItem,
 }) {
   // data['qty'] = 1
-  console.log('data++==>>>>>', data);
   const [state, setState] = useState({
     selectedIndex: -1,
     selectedIndexForCartIcon: -1,
