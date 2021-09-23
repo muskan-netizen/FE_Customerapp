@@ -220,6 +220,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     Communications.text(orderDetail?.phone_number);
   };
 
+  console.log(paramData?.fromCab, 'paramData?.fromCab');
   //order detail View
   const _selectOrderDetailView = () => {
     return (
@@ -357,7 +358,10 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                 onPress={
                   paramData?.fromCab
                     ? () => navigation.navigate(navigationStrings.HOME)
-                    : () => navigation.navigate(navigationStrings.MY_ORDERS)
+                    : () =>
+                        navigation.navigate(navigationStrings.TAB_ROUTES, {
+                          screen: navigationStrings.ACCOUNTS,
+                        })
                   // navigation.goBack()
                 }>
                 <Image

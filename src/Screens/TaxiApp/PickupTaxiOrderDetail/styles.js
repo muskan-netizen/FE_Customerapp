@@ -29,6 +29,7 @@ export default ({fontFamily}) => {
       backgroundColor: colors.backgroundGrey,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
+
       // justifyContent: 'flex-end',
 
       // marginBottom: moderateScaleVertical(20),
@@ -156,7 +157,7 @@ export default ({fontFamily}) => {
     },
     map: {
       ...StyleSheet.absoluteFillObject,
-      height: height - height / 2.5,
+      height: height - height / 3,
     },
     plainView: {
       alignItems: 'center',
@@ -200,7 +201,8 @@ export default ({fontFamily}) => {
       borderTopLeftRadius: moderateScale(18),
       borderTopRightRadius: moderateScale(18),
       overflow: 'hidden',
-      height: height / 3.5,
+      height: height / 2.9,
+
       // maxHeight: height / 2,
       alignItems: 'center',
       justifyContent: 'center',
@@ -349,6 +351,7 @@ export default ({fontFamily}) => {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+
       // marginVertical: moderateScaleVertical(height / 4),
     },
     textStyle: {
