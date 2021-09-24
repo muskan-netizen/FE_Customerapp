@@ -2245,7 +2245,8 @@ export default function Cart({ navigation, route }) {
       }
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
-      isLoadingB={isLoadingB}>
+      isLoadingB={isLoadingB}
+      >
       {<HeaderWithFilters centerTitle={strings.CART} noLeftIcon={true} />}
       <View
         style={
