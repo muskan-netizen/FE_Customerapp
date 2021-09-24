@@ -26,6 +26,7 @@ import {getImageUrl} from '../../../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
+import actions from '../../../redux/actions';
 
 // import OrderCardComponent from './OrderCardComponent';
 
@@ -34,7 +35,6 @@ export default function VendorList({navigation, route}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  console.log(route.params, 'VendorList params');
   const {allVendors, selectedVendor, screenType} = route.params;
   const [state, setState] = useState({
     isLoading: false,
@@ -53,6 +53,7 @@ export default function VendorList({navigation, route}) {
 
   const setStoreAndRedirect = (i) => {
     updateState({selectedVendorInStore: i});
+    actions.savedSelectedVendor(i);
     navigation.navigate(
       screenType == staticStrings.ORDERS
         ? navigationStrings.VENDOR_ORDER

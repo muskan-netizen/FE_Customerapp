@@ -23,7 +23,6 @@ const GradientButton = ({
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;
-  console.log(endcolor, startcolor, 'start and end color');
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
   return (
     <TouchableOpacity

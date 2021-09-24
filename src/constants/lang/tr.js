@@ -515,4 +515,5 @@ export default {
   LABEL1: 'Label 1',
   LABEL2: 'Label 2',
   YOUR_ORDER_WILL_ARRIVE_BY:"Your order will arrive by",
+  CHOICE_OF: 'Choice of',
 };

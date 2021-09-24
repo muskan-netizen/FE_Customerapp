@@ -1,7 +1,7 @@
-import { debounce } from 'lodash';
-import React, { useEffect, useState } from 'react';
-import { FlatList, RefreshControl, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import {debounce} from 'lodash';
+import React, {useEffect, useState} from 'react';
+import {FlatList, RefreshControl, View} from 'react-native';
+import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import ProductCard from '../../Components/ProductCard';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -11,15 +11,15 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import { moderateScale } from '../../styles/responsiveSize';
-import { shortCodes } from '../../utils/constants/DynamicAppKeys';
-import { showError, showSuccess } from '../../utils/helperFunctions';
+import {moderateScale} from '../../styles/responsiveSize';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import {showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 import WishlistCard from '../../Components/WishlistCard';
 
-export default function Wishlist2({ navigation }) {
+export default function Wishlist2({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -31,20 +31,20 @@ export default function Wishlist2({ navigation }) {
     limit: 4,
     pageNo: 1,
   });
-  const { isLoading, limit, pageNo, isRefreshing, wishlistArray } = state;
+  const {isLoading, limit, pageNo, isRefreshing, wishlistArray} = state;
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
   const userData = useSelector((state) => state?.auth?.userData);
 
-  const { appData, appStyle, currencies, languages, themeColors } = useSelector(
+  const {appData, appStyle, currencies, languages, themeColors} = useSelector(
     (state) => state?.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({ fontFamily });
+  const commonStyles = commonStylesFun({fontFamily});
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      updateState({ pageNo: 1, limit: 4 });
+      updateState({pageNo: 1, limit: 4});
       getAllWishListData();
     });
     return unsubscribe;
@@ -64,7 +64,7 @@ export default function Wishlist2({ navigation }) {
 
   /*  GET ALL WISHLISTED ITEMS API FUNCTION  */
   const getAllWishlistItems = () => {
-    updateState({ isLoading: true });
+    updateState({isLoading: true});
     actions
       .getWishlistProducts(
         `?limit=${limit}&page=${pageNo}`,
@@ -86,9 +86,9 @@ export default function Wishlist2({ navigation }) {
           wishlistArray:
             newArray && newArray.length
               ? newArray.map((i, inx) => {
-                i.product.inwishlist = { product_id: i.product_id };
-                return i;
-              })
+                  i.product.inwishlist = {product_id: i.product_id};
+                  return i;
+                })
               : [],
         });
       })
@@ -97,7 +97,7 @@ export default function Wishlist2({ navigation }) {
 
   /* ADD-REMOVE ITEM TO WISHLIST FUNCTION  */
   const _onAddtoWishlist = (item) => {
-    updateState({ isLoading: true });
+    updateState({isLoading: true});
     actions
       .updateProductWishListData(
         `/${item.id}`,
@@ -114,18 +114,18 @@ export default function Wishlist2({ navigation }) {
           (i) => i?.product_id !== item?.id,
         );
 
-        updateState({ wishlistArray: updatedWishlistArray, isLoading: false });
+        updateState({wishlistArray: updatedWishlistArray, isLoading: false});
       })
       .catch((err) => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
       });
   };
 
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   const errorMethod = (error) => {
     updateState({
@@ -138,9 +138,8 @@ export default function Wishlist2({ navigation }) {
   const _addToCart = (item) => {
     moveToNewScreen(navigationStrings.PRODUCTDETAIL, item.product)();
   };
-  const renderProduct = ({ item, index }) => {
+  const renderProduct = ({item, index}) => {
     return (
-
       <WishlistCard
         data={item.product}
         onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item.product)}
@@ -155,11 +154,11 @@ export default function Wishlist2({ navigation }) {
   };
 
   const handleRefresh = () => {
-    updateState({ pageNo: 1, isRefreshing: true, isLoading: false });
+    updateState({pageNo: 1, isRefreshing: true, isLoading: false});
   };
 
-  const onEndReached = ({ distanceFromEnd }) => {
-    updateState({ pageNo: pageNo + 1 });
+  const onEndReached = ({distanceFromEnd}) => {
+    updateState({pageNo: pageNo + 1});
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -178,8 +177,8 @@ export default function Wishlist2({ navigation }) {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3
-              ? imagePath.icBackb
-              : imagePath.back
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={strings.WISHLIST}
         rightIcon={
@@ -191,12 +190,12 @@ export default function Wishlist2({ navigation }) {
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }
       />
-      <View style={{ ...commonStyles.headerTopLine }} />
+      <View style={{...commonStyles.headerTopLine}} />
       <FlatList
         data={wishlistArray}
         renderItem={renderProduct}
         keyExtractor={(item, index) => String(index)}
-        ListHeaderComponent={<View style={{ height: 20 }} />}
+        ListHeaderComponent={<View style={{height: 20}} />}
         keyboardShouldPersistTaps="always"
         // numColumns={2}
         showsVerticalScrollIndicator={false}
@@ -215,12 +214,12 @@ export default function Wishlist2({ navigation }) {
             refreshing={isRefreshing}
             onRefresh={handleRefresh}
             tintColor={themeColors.primary_color}
-          // titleColor="#fff"
+            // titleColor="#fff"
           />
         }
         onEndReached={onEndReachedDelayed}
         onEndReachedThreshold={0.009}
-        ListFooterComponent={() => <View style={{ height: 20 }} />}
+        ListFooterComponent={() => <View style={{height: 20}} />}
         ListEmptyComponent={<ListEmptyProduct isLoading={isLoading} />}
       />
     </WrapperContainer>
