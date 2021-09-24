@@ -441,7 +441,7 @@ export default function Products({route, navigation}) {
     console.log('api hit getAllProductsByVendor');
     actions
       .getProductByVendorId(
-        `/${productListId.id}?limit=${limit}&page=${pageNo}`,
+        `/${productListId?.id}?limit=${limit}&page=${pageNo}`,
         {},
         {
           code: appData.profile.code,

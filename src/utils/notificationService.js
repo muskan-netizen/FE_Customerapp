@@ -25,7 +25,7 @@ const getFcmToken = async () => {
             }
         } catch (error) {
             console.log("error in fcmToken", error)
-            alert(error?.message)
+            // alert(error?.message)
         }
     }
 }
@@ -39,6 +39,11 @@ export const notificationListener = async () => {
         console.log("backgrund state", remoteMessage.notification)
     });
 
+
+    messaging().onMessage(remoteMessage => {
+        console.log("received in foreground", remoteMessage)
+        // alert("Hello")
+    })
     // Check whether an initial notification is available
     messaging()
         .getInitialNotification()

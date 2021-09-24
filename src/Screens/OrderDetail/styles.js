@@ -324,6 +324,13 @@ export default ({fontFamily}) => {
       borderColor: '#979797',
       marginBottom: moderateScaleVertical(12),
     },
+    ariveTextStyle: {
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(11),
+    },
+    ariveView: {
+      padding: moderateScale(6),
+    }
   });
   return styles;
 };

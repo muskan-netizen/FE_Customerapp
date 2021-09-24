@@ -1,7 +1,7 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep } from 'lodash';
 import moment from 'moment';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Dimensions,
   FlatList,
@@ -17,7 +17,7 @@ import {
   UIActivityIndicator,
 } from 'react-native-indicators';
 import StarRating from 'react-native-star-rating';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import HeaderWithFilters from '../../Components/HeaderWithFilters';
 import {
   loaderFive,
@@ -35,19 +35,19 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {getImageUrl, showError} from '../../utils/helperFunctions';
+import { shortCodes } from '../../utils/constants/DynamicAppKeys';
+import { getColorCodeWithOpactiyNumber, getImageUrl, showError } from '../../utils/helperFunctions';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../styles/theme';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
 import LottieView from 'lottie-react-native';
 import LeftRightText from '../../Components/LeftRightText';
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
-export default function OrderDetail({navigation, route}) {
+export default function OrderDetail({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -73,25 +73,25 @@ export default function OrderDetail({navigation, route}) {
     // ],
     currentPosition: null,
   });
-  const {isLoading, cartItems, cartData, labels, currentPosition} = state;
+  const { isLoading, cartItems, cartData, labels, currentPosition } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const { appData, themeColors, currencies, languages, appStyle } = useSelector(
     (state) => state.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily});
+  const styles = stylesFunc({ fontFamily });
 
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   useFocusEffect(
     React.useCallback(() => {
-      updateState({isLoading: true});
+      updateState({ isLoading: true });
       if (!!userData?.auth_token) {
         _getOrderDetailScreen();
       } else {
@@ -109,7 +109,7 @@ export default function OrderDetail({navigation, route}) {
     }
 
     //
-    updateState({isLoading: true});
+    updateState({ isLoading: true });
     actions
       .getOrderDetail(data, {
         code: appData?.profile?.code,
@@ -119,7 +119,7 @@ export default function OrderDetail({navigation, route}) {
       })
       .then((res) => {
         console.log(res, 'resorder detail');
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         if (res?.data) {
           updateState({
             cartItems: res.data.vendors,
@@ -135,7 +135,7 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoading: false, isLoadingC: false});
+    updateState({ isLoading: false, isLoading: false, isLoadingC: false });
     showError(error?.message || error?.error);
   };
 
@@ -183,45 +183,60 @@ export default function OrderDetail({navigation, route}) {
 
   //give review and update the rate
   const rateYourOrder = (item) => {
-    navigation.navigate(navigationStrings.RATEORDER, {item});
+    navigation.navigate(navigationStrings.RATEORDER, { item });
   };
 
-  const _renderItem = ({item, index}) => {
+  const _renderItem = ({ item, index }) => {
     // return <OffersCard />;
-    let {itemCount} = state;
+    let { itemCount } = state;
     return (
       <View
         style={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.background
             : colors.white,
-          paddingHorizontal: moderateScale(10),
           // marginVertical: moderateScale(10),
         }}>
-        <View
+
+        {/* show ETA Time */}
+
+        {!!item?.ETA && (<View
           style={{
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.background
-              : colors.white,
-            marginVertical: moderateScale(10),
+            ...styles.ariveView,
+            backgroundColor: themeColors.primary_color
           }}>
-          <Text
+          <Text style={{
+            ...styles.ariveTextStyle,
+            color: colors.white
+          }}>{strings.YOUR_ORDER_WILL_ARRIVE_BY} {item?.ETA}</Text>
+        </View>)}
+        <View style={{
+          paddingHorizontal: moderateScale(10),
+        }}>
+          <View
             style={{
-              ...styles.summaryText,
-              marginBottom: 0,
-              color: isDarkMode
-                ? MyDarkTheme.colors.text
-                : colors.blackOpacity86,
-
-              fontSize: textScale(13),
-              fontFamily: fontFamily.regular,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.background
+                : colors.white,
+              marginVertical: moderateScale(10),
             }}>
-            {item?.vendor_name}
-          </Text>
-        </View>
+            <Text
+              style={{
+                ...styles.summaryText,
+                marginBottom: 0,
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity86,
 
-        {item?.products.length
-          ? item?.products.map((i, inx) => {
+                fontSize: textScale(13),
+                fontFamily: fontFamily.bold,
+              }}>
+              {item?.vendor_name}
+            </Text>
+          </View>
+
+          {item?.products.length
+            ? item?.products.map((i, inx) => {
               if (item?.vendor_id == i?.vendor_id) {
                 return (
                   <View
@@ -240,13 +255,13 @@ export default function OrderDetail({navigation, route}) {
                         source={
                           i?.image_path
                             ? {
-                                uri: getImageUrl(
-                                  i?.image_path?.image_fit,
-                                  i?.image_path?.image_path,
-                                  '300/300',
-                                ),
-                                priority: FastImage.priority.high,
-                              }
+                              uri: getImageUrl(
+                                i?.image_path?.image_fit,
+                                i?.image_path?.image_path,
+                                '300/300',
+                              ),
+                              priority: FastImage.priority.high,
+                            }
                             : ''
                         }
                         style={styles.imageStyle}
@@ -279,41 +294,41 @@ export default function OrderDetail({navigation, route}) {
 
                             {i?.variant_options.length
                               ? i?.variant_options.map((j, jnx) => {
-                                  return (
-                                    <View style={{flexDirection: 'row'}}>
-                                      <Text
-                                        style={
-                                          isDarkMode
-                                            ? [
-                                                styles.cartItemWeight2,
-                                                {
-                                                  color:
-                                                    MyDarkTheme.colors.text,
-                                                },
-                                              ]
-                                            : styles.cartItemWeight2
-                                        }
-                                        numberOfLines={1}>
-                                        {j.title}{' '}
-                                      </Text>
-                                      <Text
-                                        style={
-                                          isDarkMode
-                                            ? [
-                                                styles.cartItemWeight2,
-                                                {
-                                                  color:
-                                                    MyDarkTheme.colors.text,
-                                                },
-                                              ]
-                                            : styles.cartItemWeight2
-                                        }
-                                        numberOfLines={
-                                          1
-                                        }>{`(${j.option})`}</Text>
-                                    </View>
-                                  );
-                                })
+                                return (
+                                  <View style={{ flexDirection: 'row' }}>
+                                    <Text
+                                      style={
+                                        isDarkMode
+                                          ? [
+                                            styles.cartItemWeight2,
+                                            {
+                                              color:
+                                                MyDarkTheme.colors.text,
+                                            },
+                                          ]
+                                          : styles.cartItemWeight2
+                                      }
+                                      numberOfLines={1}>
+                                      {j.title}{' '}
+                                    </Text>
+                                    <Text
+                                      style={
+                                        isDarkMode
+                                          ? [
+                                            styles.cartItemWeight2,
+                                            {
+                                              color:
+                                                MyDarkTheme.colors.text,
+                                            },
+                                          ]
+                                          : styles.cartItemWeight2
+                                      }
+                                      numberOfLines={
+                                        1
+                                      }>{`(${j.option})`}</Text>
+                                  </View>
+                                );
+                              })
                               : null}
                           </View>
 
@@ -327,7 +342,7 @@ export default function OrderDetail({navigation, route}) {
                               {`${currencies?.primary_currency?.symbol}${
                                 // Number(i?.pvariant?.multiplier) *
                                 Number(i?.price).toFixed(2)
-                              }`}
+                                }`}
                             </Text>
                           </View>
                         </View>
@@ -337,20 +352,20 @@ export default function OrderDetail({navigation, route}) {
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                           }}>
-                          <View style={{flex: 0.5, justifyContent: 'center'}}>
+                          <View style={{ flex: 0.5, justifyContent: 'center' }}>
                             {i?.quantity && (
-                              <View style={{flexDirection: 'row'}}>
+                              <View style={{ flexDirection: 'row' }}>
                                 <Text
                                   style={
                                     isDarkMode
                                       ? {
-                                          color: MyDarkTheme.colors.text,
-                                          fontSize: textScale(14),
-                                        }
+                                        color: MyDarkTheme.colors.text,
+                                        fontSize: textScale(14),
+                                      }
                                       : {
-                                          color: colors.textGrey,
-                                          fontSize: textScale(14),
-                                        }
+                                        color: colors.textGrey,
+                                        fontSize: textScale(14),
+                                      }
                                   }>
                                   {strings.QTY}
                                 </Text>
@@ -368,21 +383,21 @@ export default function OrderDetail({navigation, route}) {
                             )}
                             {i?.product_addons.length
                               ? i?.product_addons.map((j, jnx) => {
-                                  return (
-                                    <View style={{flexDirection: 'row'}}>
-                                      <Text
-                                        style={styles.cartItemWeight2}
-                                        numberOfLines={1}>
-                                        {j.addon_title}{' '}
-                                      </Text>
-                                      <Text
-                                        style={styles.cartItemWeight2}
-                                        numberOfLines={
-                                          1
-                                        }>{`(${j.option_title})`}</Text>
-                                    </View>
-                                  );
-                                })
+                                return (
+                                  <View style={{ flexDirection: 'row' }}>
+                                    <Text
+                                      style={styles.cartItemWeight2}
+                                      numberOfLines={1}>
+                                      {j.addon_title}{' '}
+                                    </Text>
+                                    <Text
+                                      style={styles.cartItemWeight2}
+                                      numberOfLines={
+                                        1
+                                      }>{`(${j.option_title})`}</Text>
+                                  </View>
+                                );
+                              })
                               : null}
                           </View>
                         </View>
@@ -413,7 +428,7 @@ export default function OrderDetail({navigation, route}) {
                               onPress={() => rateYourOrder(i)}
                               style={[
                                 styles.writeAReview,
-                                {color: themeColors.primary_color},
+                                { color: themeColors.primary_color },
                               ]}>
                               {'Write a Review'}
                             </Text>
@@ -427,93 +442,94 @@ export default function OrderDetail({navigation, route}) {
                 null;
               }
             })
-          : null}
+            : null}
 
-        {!!Number(item?.discount_amount) && (
+          {!!Number(item?.discount_amount) && (
+            <View style={styles.itemPriceDiscountTaxView}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        fontSize: textScale(14),
+                      },
+                    ]
+                    : styles.priceItemLabel
+                }>
+                {strings.DISCOUNT}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        fontSize: textScale(14),
+                      },
+                    ]
+                    : styles.priceItemLabel
+                }>{`- ${currencies?.primary_currency?.symbol}${Number(
+                  item?.discount_amount ? item?.discount_amount : 0,
+                ).toFixed(2)}`}</Text>
+            </View>
+          )}
+          {!!Number(item?.delivery_fee) && (
+            <View style={styles.itemPriceDiscountTaxView}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        fontSize: textScale(14),
+                      },
+                    ]
+                    : styles.priceItemLabel
+                }>
+                {strings.DELIVERY_CHARGES}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        fontSize: textScale(14),
+                      },
+                    ]
+                    : styles.priceItemLabel
+                }>{`${currencies?.primary_currency?.symbol}${Number(
+                  item?.delivery_fee ? item?.delivery_fee : 0,
+                ).toFixed(2)}`}</Text>
+            </View>
+          )}
           <View style={styles.itemPriceDiscountTaxView}>
             <Text
-              style={
-                isDarkMode
-                  ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                        fontSize: textScale(14),
-                      },
-                    ]
-                  : styles.priceItemLabel
-              }>
-              {strings.DISCOUNT}
+              style={{
+                ...styles.summaryText,
+                fontSize: textScale(14),
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity86,
+              }}>
+              {strings.AMOUNT}
             </Text>
             <Text
-              style={
-                isDarkMode
-                  ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                        fontSize: textScale(14),
-                      },
-                    ]
-                  : styles.priceItemLabel
-              }>{`- ${currencies?.primary_currency?.symbol}${Number(
-              item?.discount_amount ? item?.discount_amount : 0,
-            ).toFixed(2)}`}</Text>
+              style={{
+                ...styles.summaryText,
+                fontSize: textScale(14),
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity86,
+              }}>{`${currencies?.primary_currency?.symbol}${Number(
+                item?.payable_amount ? item?.payable_amount : 0,
+              ).toFixed(2)}`}</Text>
           </View>
-        )}
-        {!!Number(item?.delivery_fee) && (
-          <View style={styles.itemPriceDiscountTaxView}>
-            <Text
-              style={
-                isDarkMode
-                  ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                        fontSize: textScale(14),
-                      },
-                    ]
-                  : styles.priceItemLabel
-              }>
-              {strings.DELIVERY_CHARGES}
-            </Text>
-            <Text
-              style={
-                isDarkMode
-                  ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                        fontSize: textScale(14),
-                      },
-                    ]
-                  : styles.priceItemLabel
-              }>{`${currencies?.primary_currency?.symbol}${Number(
-              item?.delivery_fee ? item?.delivery_fee : 0,
-            ).toFixed(2)}`}</Text>
-          </View>
-        )}
-        <View style={styles.itemPriceDiscountTaxView}>
-          <Text
-            style={{
-              ...styles.summaryText,
-              fontSize: textScale(14),
-              color: isDarkMode
-                ? MyDarkTheme.colors.text
-                : colors.blackOpacity86,
-            }}>
-            {strings.AMOUNT}
-          </Text>
-          <Text
-            style={{
-              ...styles.summaryText,
-              fontSize: textScale(14),
-              color: isDarkMode
-                ? MyDarkTheme.colors.text
-                : colors.blackOpacity86,
-            }}>{`${currencies?.primary_currency?.symbol}${Number(
-            item?.payable_amount ? item?.payable_amount : 0,
-          ).toFixed(2)}`}</Text>
         </View>
       </View>
     );
@@ -531,12 +547,12 @@ export default function OrderDetail({navigation, route}) {
             style={
               isDarkMode
                 ? [
-                    styles.priceItemLabel,
-                    {
-                      color: MyDarkTheme.colors.text,
-                      fontSize: textScale(14),
-                    },
-                  ]
+                  styles.priceItemLabel,
+                  {
+                    color: MyDarkTheme.colors.text,
+                    fontSize: textScale(14),
+                  },
+                ]
                 : styles.priceItemLabel
             }>
             {strings.SUBTOTAL}
@@ -545,16 +561,16 @@ export default function OrderDetail({navigation, route}) {
             style={
               isDarkMode
                 ? [
-                    styles.priceItemLabel,
-                    {
-                      color: MyDarkTheme.colors.text,
-                      fontSize: textScale(14),
-                    },
-                  ]
+                  styles.priceItemLabel,
+                  {
+                    color: MyDarkTheme.colors.text,
+                    fontSize: textScale(14),
+                  },
+                ]
                 : styles.priceItemLabel
             }>{`${currencies?.primary_currency?.symbol}${Number(
-            cartData?.total_amount,
-          ).toFixed(2)}`}</Text>
+              cartData?.total_amount,
+            ).toFixed(2)}`}</Text>
         </View>
         {!!cartData?.wallet_amount_used && (
           <View style={styles.bottomTabLableValue}>
@@ -562,12 +578,12 @@ export default function OrderDetail({navigation, route}) {
               style={
                 isDarkMode
                   ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                        fontSize: textScale(14),
-                      },
-                    ]
+                    styles.priceItemLabel,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      fontSize: textScale(14),
+                    },
+                  ]
                   : styles.priceItemLabel
               }>
               {strings.WALLET}
@@ -576,16 +592,16 @@ export default function OrderDetail({navigation, route}) {
               style={
                 isDarkMode
                   ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                        fontSize: textScale(14),
-                      },
-                    ]
+                    styles.priceItemLabel,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      fontSize: textScale(14),
+                    },
+                  ]
                   : styles.priceItemLabel
               }>{`-${currencies?.primary_currency?.symbol}${Number(
-              cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
-            ).toFixed(2)}`}</Text>
+                cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
+              ).toFixed(2)}`}</Text>
           </View>
         )}
         {!!cartData?.loyalty_amount_saved && (
@@ -594,12 +610,12 @@ export default function OrderDetail({navigation, route}) {
               style={
                 isDarkMode
                   ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                        fontSize: textScale(14),
-                      },
-                    ]
+                    styles.priceItemLabel,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      fontSize: textScale(14),
+                    },
+                  ]
                   : styles.priceItemLabel
               }>
               {strings.LOYALTY}
@@ -608,18 +624,18 @@ export default function OrderDetail({navigation, route}) {
               style={
                 isDarkMode
                   ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                        fontSize: textScale(14),
-                      },
-                    ]
+                    styles.priceItemLabel,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      fontSize: textScale(14),
+                    },
+                  ]
                   : styles.priceItemLabel
               }>{`-${currencies?.primary_currency?.symbol}${Number(
-              cartData?.loyalty_amount_saved
-                ? cartData?.loyalty_amount_saved
-                : 0,
-            ).toFixed(2)}`}</Text>
+                cartData?.loyalty_amount_saved
+                  ? cartData?.loyalty_amount_saved
+                  : 0,
+              ).toFixed(2)}`}</Text>
           </View>
         )}
 
@@ -629,12 +645,12 @@ export default function OrderDetail({navigation, route}) {
               style={
                 isDarkMode
                   ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                        fontSize: textScale(14),
-                      },
-                    ]
+                    styles.priceItemLabel,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      fontSize: textScale(14),
+                    },
+                  ]
                   : styles.priceItemLabel
               }>
               {strings.TOTAL_DISCOUNT}
@@ -643,16 +659,16 @@ export default function OrderDetail({navigation, route}) {
               style={
                 isDarkMode
                   ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                        fontSize: textScale(14),
-                      },
-                    ]
+                    styles.priceItemLabel,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      fontSize: textScale(14),
+                    },
+                  ]
                   : styles.priceItemLabel
               }>{`-${currencies?.primary_currency?.symbol}${Number(
-              cartData?.total_discount,
-            ).toFixed(2)}`}</Text>
+                cartData?.total_discount,
+              ).toFixed(2)}`}</Text>
           </View>
         )}
         {!!cartData?.taxable_amount && (
@@ -661,12 +677,12 @@ export default function OrderDetail({navigation, route}) {
               style={
                 isDarkMode
                   ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                        fontSize: textScale(14),
-                      },
-                    ]
+                    styles.priceItemLabel,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      fontSize: textScale(14),
+                    },
+                  ]
                   : styles.priceItemLabel
               }>
               {strings.TAX_AMOUNT}
@@ -675,16 +691,16 @@ export default function OrderDetail({navigation, route}) {
               style={
                 isDarkMode
                   ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                        fontSize: textScale(14),
-                      },
-                    ]
+                    styles.priceItemLabel,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      fontSize: textScale(14),
+                    },
+                  ]
                   : styles.priceItemLabel
               }>{`${currencies?.primary_currency?.symbol}${Number(
-              cartData?.taxable_amount ? cartData?.taxable_amount : 0,
-            ).toFixed(2)}`}</Text>
+                cartData?.taxable_amount ? cartData?.taxable_amount : 0,
+              ).toFixed(2)}`}</Text>
           </View>
         )}
 
@@ -693,12 +709,12 @@ export default function OrderDetail({navigation, route}) {
             style={
               isDarkMode
                 ? [
-                    styles.priceItemLabel2,
-                    {
-                      color: MyDarkTheme.colors.text,
-                      fontSize: textScale(14),
-                    },
-                  ]
+                  styles.priceItemLabel2,
+                  {
+                    color: MyDarkTheme.colors.text,
+                    fontSize: textScale(14),
+                  },
+                ]
                 : styles.priceItemLabel2
             }>
             {strings.AMOUNT_PAYABLE}
@@ -707,16 +723,16 @@ export default function OrderDetail({navigation, route}) {
             style={
               isDarkMode
                 ? [
-                    styles.priceItemLabel2,
-                    {
-                      color: MyDarkTheme.colors.text,
-                      fontSize: textScale(14),
-                    },
-                  ]
+                  styles.priceItemLabel2,
+                  {
+                    color: MyDarkTheme.colors.text,
+                    fontSize: textScale(14),
+                  },
+                ]
                 : styles.priceItemLabel2
             }>{`${currencies?.primary_currency?.symbol}${Number(
-            cartData?.payable_amount,
-          ).toFixed(2)}`}</Text>
+              cartData?.payable_amount,
+            ).toFixed(2)}`}</Text>
         </View>
       </View>
     );
@@ -751,7 +767,7 @@ export default function OrderDetail({navigation, route}) {
               marginBottom: moderateScaleVertical(16),
             }}>
             <Image source={imagePath.icMap} />
-            <View style={{marginLeft: moderateScale(12), flex: 1}}>
+            <View style={{ marginLeft: moderateScale(12), flex: 1 }}>
               <Text
                 style={{
                   ...styles.summaryText,
@@ -901,7 +917,7 @@ export default function OrderDetail({navigation, route}) {
                 : colors.blackOpacity86,
             }}
           />
-          <View style={{height: moderateScaleVertical(40)}}></View>
+          <View style={{ height: moderateScaleVertical(40) }}></View>
         </View>
       </View>
     );
@@ -1032,8 +1048,8 @@ export default function OrderDetail({navigation, route}) {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3
-            ? imagePath.icBackb
-            : imagePath.back
+              ? imagePath.icBackb
+              : imagePath.back
         }
         centerTitle={strings.ORDER_DETAILS}
       />
@@ -1058,11 +1074,11 @@ export default function OrderDetail({navigation, route}) {
           ListHeaderComponent={cartItems.length ? getHeader() : null}
           ListFooterComponent={cartItems.length ? getFooter() : null}
           showsVerticalScrollIndicator={false}
-          style={{backgroundColor: colors.backgroundGrey}}
+          style={{ backgroundColor: colors.backgroundGrey }}
           keyExtractor={(item, index) => String(index)}
           renderItem={_renderItem}
           ListEmptyComponent={<ListEmptyCart isLoading={isLoading} />}
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           contentContainerStyle={{
             flexGrow: 1,
           }}
