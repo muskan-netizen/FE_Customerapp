@@ -88,6 +88,7 @@ const shortCodes = {
   gorillas: 'd22ad9',
   baytukom: 'd0a898',
   eboyo: '1d0fd3',
+  share: 'bb8440',
 };
 
 const appIds = {
@@ -438,6 +439,10 @@ const appIds = {
   eboyo: Platform.select({
     ios: 'com.eboyo',
     android: 'com.eboyo',
+  }),
+  share: Platform.select({
+    ios: 'com.share',
+    android: 'com.share',
   }),
 };
 

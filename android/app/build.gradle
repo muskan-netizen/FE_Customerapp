@@ -1087,6 +1087,16 @@ android {
             resValue "string", "app_name", "eBOYO"
             resValue "string", "host_name", ""
          }
+        share{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.share'
+            resValue "string", "app_name", "Share"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

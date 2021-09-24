@@ -609,6 +609,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.share:
+          updateState({
+            shortCode: shortCodes.share,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
