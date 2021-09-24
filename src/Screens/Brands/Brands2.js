@@ -36,7 +36,7 @@ export default function Brand2({navigation}) {
     }, 500);
   }, []);
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  console.log('hiiiiii');
+
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
