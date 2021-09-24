@@ -892,7 +892,6 @@ export default function Products({route, navigation}) {
     );
   };
 
-  console.log(productListData, 'productListDataproductListDataproductListData');
 
   const openModal = () => {
     updateState({isVisibleModal: true});

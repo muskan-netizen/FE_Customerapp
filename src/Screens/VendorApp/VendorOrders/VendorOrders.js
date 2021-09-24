@@ -23,11 +23,12 @@ import {MyDarkTheme} from '../../../styles/theme';
 export default function VendorOrders({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route.params;
   const {storeSelectedVendor} = useSelector((state) => state?.order);
-  console.log(paramData, 'paramData');
+
   const [state, setState] = useState({
     tabBarData: [
       {title: strings.ACTIVE_ORDERS, isActive: true},
@@ -72,15 +73,28 @@ export default function VendorOrders({navigation, route}) {
   const commonStyles = commonStylesFun({fontFamily});
   useEffect(() => {
     // updateState({isLoading: true});
-    _getListOfVendorOrders();
+    if (isLoading) {
+      _getListOfVendorOrders();
+    }
   }, [isLoading]);
 
+  useEffect(() => {
+    updateState({
+      selectedVendor: storeSelectedVendor,
+      isLoading: true,
+      pageActive: 1,
+    });
+  }, [storeSelectedVendor]);
+
   const _getListOfVendorOrders = () => {
+    let vendordId = !!storeSelectedVendor?.id
+      ? storeSelectedVendor?.id
+      : selectedVendor?.id
+      ? selectedVendor?.id
+      : '';
     actions
       ._getListOfVendorOrders(
-        `?limit=${limit}&page=${pageActive}&selected_vendor_id=${
-          selectedVendor?.id || ''
-        }`,
+        `?limit=${limit}&page=${pageActive}&selected_vendor_id=${vendordId}`,
         {},
         {
           code: appData?.profile?.code,
@@ -90,22 +104,15 @@ export default function VendorOrders({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res, 'order listing data res>>>>');
-        console.log(
-          res.data.vendor_list.find((x) => x.is_selected),
-          'slected vendior',
-        );
-        actions.savedSelectedVendor(
-          res.data.vendor_list.find((x) => x.is_selected),
-        );
-
         updateState({
           activeOrders:
             pageActive == 1
               ? res.data.order_list.data
               : [...activeOrders, ...res.data.order_list.data],
           vendor_list: res.data.vendor_list,
-          selectedVendor: res.data.vendor_list.find((x) => x.is_selected),
+          selectedVendor: !!storeSelectedVendor?.id
+            ? storeSelectedVendor
+            : res.data.vendor_list.find((x) => x.is_selected),
           isLoading: false,
           isRefreshing: false,
         });
@@ -211,13 +218,6 @@ export default function VendorOrders({navigation, route}) {
       screenType: staticStrings.ORDERS,
     });
   };
-  useEffect(() => {
-    updateState({
-      selectedVendor: paramData?.selectedVendorFrom,
-      isLoading: true,
-      pageActive: 1,
-    });
-  }, [paramData?.selectedVendorFrom]);
 
   return (
     <WrapperContainer

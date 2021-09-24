@@ -549,4 +549,5 @@ montant`,
   YOUR_RIDE_WILL_START_SOON: 'Votre balade va bientôt commencer',
   LABEL1: 'Label 1',
   LABEL2: 'Label 2',
+  CHOICE_OF: 'Choice of',
 };
