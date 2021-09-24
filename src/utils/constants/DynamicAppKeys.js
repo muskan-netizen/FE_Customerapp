@@ -89,6 +89,7 @@ const shortCodes = {
   baytukom: 'd0a898',
   eboyo: '1d0fd3',
   share: 'bb8440',
+  pickmeup: '87a4de',
 };
 
 const appIds = {
@@ -441,8 +442,12 @@ const appIds = {
     android: 'com.eboyo',
   }),
   share: Platform.select({
-    ios: 'com.share',
+    ios: 'com.share.customer',
     android: 'com.share',
+  }),
+  pickmeup: Platform.select({
+    ios: 'com.pickmeup.customer',
+    android: 'com.pickmeup',
   }),
 };
 

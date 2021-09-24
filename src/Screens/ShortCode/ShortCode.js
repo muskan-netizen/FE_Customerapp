@@ -615,6 +615,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.pickmeup:
+          updateState({
+            shortCode: shortCodes.pickmeup,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
