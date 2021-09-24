@@ -1,37 +1,42 @@
 import {useFocusEffect} from '@react-navigation/native';
+import {cloneDeep} from 'lodash';
 import moment from 'moment';
-import {cloneDeep, forEach} from 'lodash';
-import React, {useEffect, useState, useRef} from 'react';
-
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
+  Animated,
   FlatList,
   I18nManager,
   Image,
   RefreshControl,
+  ScrollView,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
-  ScrollView,
-  TextInput,
-  Animated,
-  Dimensions,
 } from 'react-native';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
-import DeviceInfo, {isLocationEnabled} from 'react-native-device-info';
+import {useDarkMode} from 'react-native-dark-mode';
+import DatePicker from 'react-native-date-picker';
+import DeviceInfo from 'react-native-device-info';
+import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import * as RNLocalize from 'react-native-localize';
+import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
-
-import AddressModal from '../../Components/AddressModal';
+import AddressModal3 from '../../Components/AddressModal3';
 import ButtonComponent from '../../Components/ButtonComponent';
 import ChooseAddressModal from '../../Components/ChooseAddressModal';
 import ConfirmationModal from '../../Components/ConfirmationModal';
-import HeaderWithFilters from '../../Components/HeaderWithFilters';
-import {
-  loaderOne,
-  loaderSix,
-} from '../../Components/Loaders/AnimatedLoaderFiles';
-import TransparentButtonWithTxtAndIcon from '../../Components/TransparentButtonWithTxtAndIcon';
+import GradientButton from '../../Components/GradientButton';
+import Header from '../../Components/Header';
+import HorizontalLine from '../../Components/HorizontalLine';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
+import HeaderLoader from '../../Components/Loaders/HeaderLoader';
+import ProductListLoader from '../../Components/Loaders/ProductListLoader';
+import MarketCard3 from '../../Components/MarketCard3';
+import WishlistCard from '../../Components/WishlistCard';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -45,31 +50,16 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
 import {
-  getParameterByName,
   getColorCodeWithOpactiyNumber,
   getImageUrl,
+  getParameterByName,
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
-import ListEmptyCart from './ListEmptyCart';
+import {getItem, removeItem, setItem} from '../../utils/utils';
 import stylesFun from './styles';
-import Modal from 'react-native-modal';
-import GradientButton from '../../Components/GradientButton';
-import DatePicker from 'react-native-date-picker';
-import DropDownPicker from 'react-native-dropdown-picker';
-import {getItem, removeItem, setItem, setUserData} from '../../utils/utils';
-import commonStyles from '../../styles/commonStyles';
-import * as RNLocalize from 'react-native-localize';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
-import LottieView from 'lottie-react-native';
-import AddressModal3 from '../../Components/AddressModal3';
-import {SwipeListView} from 'react-native-swipe-list-view';
-import HorizontalLine from '../../Components/HorizontalLine';
-import WishlistCard from '../../Components/WishlistCard';
-import MarketCard3 from '../../Components/MarketCard3';
-import * as Animatable from 'react-native-animatable';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -162,6 +152,7 @@ export default function Cart({navigation, route}) {
   );
 
   const dineInType = useSelector((state) => state?.home?.dineInType);
+  console.log(dineInType, 'dineInType');
 
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -178,7 +169,6 @@ export default function Cart({navigation, route}) {
       if (paramsData && paramsData?.selectedMethod) {
         updateState({selectedPayment: paramsData?.selectedMethod});
       }
-      console.log('check cart item+++ inner', checkCartItem);
       // alert('run')
       updateState({isLoadingB: true});
       getCartDetail();
@@ -201,8 +191,6 @@ export default function Cart({navigation, route}) {
       isRefreshing,
     ]),
   );
-
-  console.log('check cart item+++ outter', checkCartItem);
 
   // useEffect(() => {
   //   if (paramsData && paramsData?.selectedMethod) {
@@ -1797,6 +1785,7 @@ export default function Cart({navigation, route}) {
       </>
     );
   };
+  console.log(cartData?.vendor_details?.vendor_tables, 'vendorTables');
 
   //Header section of cart screen
   const getHeader = () => {
@@ -1807,7 +1796,9 @@ export default function Cart({navigation, route}) {
             style={{
               height: isTableDropDown
                 ? moderateScaleVertical(190)
-                : moderateScaleVertical(120),
+                : cartData?.vendor_details?.vendor_tables
+                ? moderateScaleVertical(120)
+                : moderateScaleVertical(70),
             }}>
             <View
               style={{
@@ -1834,7 +1825,7 @@ export default function Cart({navigation, route}) {
                       ]
                     : styles.deliveryLocationAndTime
                 }>
-                {strings.ADDRESS}:
+                {` ${strings.ADDRESS}`}:
               </Text>
               <Text
                 numberOfLines={1}
@@ -1843,7 +1834,7 @@ export default function Cart({navigation, route}) {
                     ? [styles.address, {color: MyDarkTheme.colors.text}]
                     : styles.address
                 }>
-                {vendorAddress}
+                {` ${vendorAddress}`}
               </Text>
             </View>
             <View style={styles.clearCartView}>
@@ -1853,50 +1844,50 @@ export default function Cart({navigation, route}) {
             </View>
 
             {dineInType === 'dine_in' &&
-              userData?.auth_token &&
-              cartData?.vendor_details?.vendor_tables && (
-                <DropDownPicker
-                  items={tableData}
-                  onOpen={() => updateState({isTableDropDown: true})}
-                  onClose={() => updateState({isTableDropDown: false})}
-                  defaultValue={
-                    deepLinkUrl
-                      ? deepLinkUrl == 1
-                        ? tableData[0]?.label
-                        : tableData[1]?.label
-                      : defaultSelectedTable || tableData[0]?.label || ''
-                  }
-                  containerStyle={{
-                    height: 40,
-                    marginTop: moderateScaleVertical(10),
-                  }}
-                  style={{
-                    marginHorizontal: moderateScale(20),
-                    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-                    backgroundColor: isDarkMode
-                      ? MyDarkTheme.colors.lightDark
-                      : '#fafafa',
-                  }}
-                  labelStyle={
-                    isDarkMode
-                      ? {color: MyDarkTheme.colors.text}
-                      : {color: colors.textGrey}
-                  }
-                  itemStyle={{
-                    justifyContent: 'flex-start',
-                    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-                  }}
-                  dropDownStyle={{
-                    backgroundColor: isDarkMode
-                      ? MyDarkTheme.colors.lightDark
-                      : '#fafafa',
-                    height: 80,
-                    width: width - moderateScale(40),
-                    alignSelf: 'center',
-                  }}
-                  onChangeItem={(item) => _onTableSelection(item)}
-                />
-              )}
+            userData?.auth_token &&
+            !!cartData?.vendor_details?.vendor_tables ? (
+              <DropDownPicker
+                items={tableData}
+                onOpen={() => updateState({isTableDropDown: true})}
+                onClose={() => updateState({isTableDropDown: false})}
+                defaultValue={
+                  deepLinkUrl
+                    ? deepLinkUrl == 1
+                      ? tableData[0]?.label
+                      : tableData[1]?.label
+                    : defaultSelectedTable || tableData[0]?.label || ''
+                }
+                containerStyle={{
+                  height: 40,
+                  marginTop: moderateScaleVertical(10),
+                }}
+                style={{
+                  marginHorizontal: moderateScale(20),
+                  flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                  backgroundColor: isDarkMode
+                    ? MyDarkTheme.colors.lightDark
+                    : '#fafafa',
+                }}
+                labelStyle={
+                  isDarkMode
+                    ? {color: MyDarkTheme.colors.text}
+                    : {color: colors.textGrey}
+                }
+                itemStyle={{
+                  justifyContent: 'flex-start',
+                  flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                }}
+                dropDownStyle={{
+                  backgroundColor: isDarkMode
+                    ? MyDarkTheme.colors.lightDark
+                    : '#fafafa',
+                  height: 80,
+                  width: width - moderateScale(40),
+                  alignSelf: 'center',
+                }}
+                onChangeItem={(item) => _onTableSelection(item)}
+              />
+            ) : null}
           </View>
         ) : (
           <>
@@ -2234,6 +2225,235 @@ export default function Cart({navigation, route}) {
       </View>
     );
   };
+  const renderCardItemLoader = () => {
+    return (
+      <View>
+        <HeaderLoader
+          widthLeft={moderateScale(140)}
+          rectWidthLeft={moderateScale(140)}
+          heightLeft={15}
+          rectHeightLeft={15}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            marginTop: moderateScaleVertical(30),
+          }}
+          isRight={false}
+        />
+        <ProductListLoader
+          widthLeft={moderateScale(100)}
+          mainView={{
+            marginHorizontal: moderateScale(15),
+            marginTop: moderateScale(5),
+            alignItems: 'flex-start',
+          }}
+        />
+        <HeaderLoader
+          widthLeft={width - moderateScale(30)}
+          rectWidthLeft={width - moderateScale(30)}
+          heightLeft={moderateScale(35)}
+          rectHeightLeft={moderateScale(35)}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            marginTop: moderateScaleVertical(15),
+          }}
+          isRight={false}
+        />
+        <HeaderLoader
+          widthLeft={moderateScale(90)}
+          rectWidthLeft={moderateScale(90)}
+          heightLeft={moderateScale(15)}
+          rectHeightLeft={moderateScale(15)}
+          rectHeightRight={moderateScale(15)}
+          heightRight={moderateScale(15)}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            marginTop: moderateScaleVertical(15),
+          }}
+        />
+        <HeaderLoader
+          widthLeft={moderateScale(90)}
+          rectWidthLeft={moderateScale(90)}
+          heightLeft={moderateScale(15)}
+          rectHeightLeft={moderateScale(15)}
+          rectHeightRight={moderateScale(15)}
+          heightRight={moderateScale(15)}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            marginTop: moderateScaleVertical(8),
+          }}
+        />
+      </View>
+    );
+  };
+
+  if (isLoadingB) {
+    return (
+      <WrapperContainer
+        bgColor={
+          isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+        }
+        statusBarColor={colors.backgroundGrey}
+        source={loaderOne}
+        // isLoadingB={isLoadingB}
+      >
+        <Header centerTitle={strings.CART} leftIcon={imagePath.icBackb} />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <HeaderLoader
+            widthLeft={width - moderateScale(30)}
+            rectWidthLeft={width - moderateScale(30)}
+            heightLeft={15}
+            rectHeightLeft={15}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              marginTop: moderateScaleVertical(10),
+            }}
+            isRight={false}
+          />
+          <HeaderLoader
+            widthLeft={moderateScale(100)}
+            rectWidthLeft={moderateScale(100)}
+            heightLeft={15}
+            rectHeightLeft={15}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              marginTop: moderateScaleVertical(10),
+              alignSelf: 'center',
+            }}
+            isRight={false}
+          />
+          {renderCardItemLoader()}
+          {renderCardItemLoader()}
+          <HeaderLoader
+            widthLeft={moderateScale(60)}
+            rectWidthLeft={moderateScale(60)}
+            heightLeft={moderateScale(15)}
+            rectHeightLeft={moderateScale(15)}
+            rectHeightRight={moderateScale(15)}
+            heightRight={moderateScale(15)}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              marginTop: moderateScaleVertical(30),
+            }}
+          />
+          <HeaderLoader
+            widthLeft={moderateScale(60)}
+            rectWidthLeft={moderateScale(60)}
+            heightLeft={moderateScale(15)}
+            rectHeightLeft={moderateScale(15)}
+            rectHeightRight={moderateScale(15)}
+            heightRight={moderateScale(15)}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              marginTop: moderateScaleVertical(8),
+            }}
+          />
+          <HeaderLoader
+            widthLeft={width - moderateScale(90)}
+            rectWidthLeft={width - moderateScale(90)}
+            heightLeft={moderateScale(15)}
+            rectHeightLeft={moderateScale(15)}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              marginTop: moderateScaleVertical(20),
+            }}
+            isRight={false}
+          />
+          <View style={{flexDirection: 'row'}}>
+            <HeaderLoader
+              widthLeft={moderateScale(80)}
+              rectWidthLeft={moderateScale(80)}
+              heightLeft={moderateScale(40)}
+              rectHeightLeft={moderateScale(40)}
+              rx={5}
+              ry={5}
+              viewStyles={{
+                marginTop: moderateScaleVertical(10),
+                marginHorizontal: moderateScale(0),
+                marginLeft: moderateScale(15),
+              }}
+              isRight={false}
+            />
+            <HeaderLoader
+              widthLeft={moderateScale(80)}
+              rectWidthLeft={moderateScale(80)}
+              heightLeft={moderateScale(40)}
+              rectHeightLeft={moderateScale(40)}
+              rx={5}
+              ry={5}
+              viewStyles={{
+                marginTop: moderateScaleVertical(10),
+                marginHorizontal: moderateScale(0),
+                marginLeft: moderateScale(8),
+              }}
+              isRight={false}
+            />
+            <HeaderLoader
+              widthLeft={moderateScale(80)}
+              rectWidthLeft={moderateScale(80)}
+              heightLeft={moderateScale(40)}
+              rectHeightLeft={moderateScale(40)}
+              rx={5}
+              ry={5}
+              viewStyles={{
+                marginTop: moderateScaleVertical(10),
+                marginHorizontal: moderateScale(0),
+                marginLeft: moderateScale(8),
+              }}
+              isRight={false}
+            />
+            <HeaderLoader
+              widthLeft={moderateScale(80)}
+              rectWidthLeft={moderateScale(80)}
+              heightLeft={moderateScale(40)}
+              rectHeightLeft={moderateScale(40)}
+              rx={5}
+              ry={5}
+              viewStyles={{
+                marginTop: moderateScaleVertical(10),
+                marginHorizontal: moderateScale(0),
+                marginLeft: moderateScale(8),
+              }}
+              isRight={false}
+            />
+          </View>
+          <HeaderLoader
+            widthLeft={moderateScale(90)}
+            rectWidthLeft={moderateScale(90)}
+            heightLeft={moderateScale(15)}
+            rectHeightLeft={moderateScale(15)}
+            rectHeightRight={moderateScale(15)}
+            heightRight={moderateScale(15)}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              marginTop: moderateScaleVertical(15),
+            }}
+          />
+          <HeaderLoader
+            widthLeft={width - moderateScale(30)}
+            rectWidthLeft={width - moderateScale(30)}
+            heightLeft={moderateScale(40)}
+            rectHeightLeft={moderateScale(40)}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              marginTop: moderateScaleVertical(15),
+            }}
+            isRight={false}
+          />
+        </ScrollView>
+      </WrapperContainer>
+    );
+  }
 
   return (
     <WrapperContainer
@@ -2242,9 +2462,9 @@ export default function Cart({navigation, route}) {
       }
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
-      isLoadingB={isLoadingB}
-      >
-      {<HeaderWithFilters centerTitle={strings.CART} noLeftIcon={true} />}
+      // isLoadingB={isLoadingB}
+    >
+      <Header centerTitle={strings.CART} leftIcon={imagePath.icBackb} />
       <View
         style={
           isDarkMode

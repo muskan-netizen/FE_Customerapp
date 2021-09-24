@@ -16,6 +16,7 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
+
 import {
   height,
   itemWidth,
@@ -29,6 +30,7 @@ import {
 } from '../../../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
+import {useFocusEffect} from '@react-navigation/native';
 
 export default function VendorRevenue({navigation, route}) {
   const paramData = route.params;
@@ -40,6 +42,8 @@ export default function VendorRevenue({navigation, route}) {
   );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const {storeSelectedVendor} = useSelector((state) => state?.order);
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {themeColors, themeLayouts} = currentTheme;
@@ -206,8 +210,10 @@ export default function VendorRevenue({navigation, route}) {
 
   useEffect(() => {
     // updateState({isLoading: true});
-    _getListOfVendorOrders();
-    _getRevnueData();
+    if (isLoading) {
+      _getListOfVendorOrders();
+      _getRevnueData();
+    }
   }, [isLoading]);
 
   useEffect(() => {
@@ -216,12 +222,21 @@ export default function VendorRevenue({navigation, route}) {
     }
   }, [selectedTimeOption, selectedVendor]);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      updateState({pageActive: 1});
+    }, [pageActive]),
+  );
+
   const _getListOfVendorOrders = () => {
+    let vendordId = !!storeSelectedVendor?.id
+      ? storeSelectedVendor?.id
+      : selectedVendor?.id
+      ? selectedVendor?.id
+      : '';
     actions
       ._getListOfVendorOrders(
-        `?limit=${limit}&page=${pageActive}&selected_vendor_id=${
-          selectedVendor?.id || ''
-        }`,
+        `?limit=${limit}&page=${pageActive}&selected_vendor_id=${vendordId}`,
         {},
         {
           code: appData?.profile?.code,
@@ -233,7 +248,9 @@ export default function VendorRevenue({navigation, route}) {
       .then((res) => {
         updateState({
           vendor_list: res.data.vendor_list,
-          selectedVendor: selectedVendor
+          selectedVendor: !!storeSelectedVendor?.id
+            ? storeSelectedVendor
+            : !!selectedVendor
             ? selectedVendor
             : res.data.vendor_list.find((x) => x.is_selected),
           isLoading: false,
@@ -334,11 +351,11 @@ export default function VendorRevenue({navigation, route}) {
   };
   useEffect(() => {
     updateState({
-      selectedVendor: paramData?.selectedVendorFrom,
+      selectedVendor: storeSelectedVendor,
       isLoading: true,
       pageActive: 1,
     });
-  }, [paramData?.selectedVendorFrom]);
+  }, [storeSelectedVendor]);
 
   const setDates = (dates) => {
     updateState({...dates});
