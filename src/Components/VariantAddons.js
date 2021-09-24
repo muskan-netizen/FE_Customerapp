@@ -801,7 +801,7 @@ export default function VariantAddons({
     }
   };
 
-  console.log("product details+++",productdetail)
+  console.log('product details+++', productdetail);
   return (
     <Modal
       transparent={false}
@@ -879,16 +879,6 @@ export default function VariantAddons({
                   }}>
                   {productdetail?.translation[0]?.title}
                 </Text>
-<<<<<<< HEAD
-                <Text style={{
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity40,
-                  fontFamily: fontFamily.regular,
-                  fontSize: textScale(9),
-                  textAlign: 'left',
-                  marginBottom: moderateScaleVertical(4),
-                  marginTop:moderateScaleVertical(6)
-                }}>In {productdetail?.category?.category_detail?.translation[0]?.name}</Text>
-=======
                 <Text
                   style={{
                     color: isDarkMode
@@ -902,7 +892,6 @@ export default function VariantAddons({
                   }}>
                   In Category_name
                 </Text>
->>>>>>> 9b9c49ff3e9c1e0b7d21a1f4ff14671b1a10df6c
 
                 {/* rating View */}
                 {productDetailData?.averageRating !== null && (
