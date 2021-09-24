@@ -20,7 +20,7 @@ import {
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import DeviceInfo, {isLocationEnabled} from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import AddressModal from '../../Components/AddressModal';
 import ButtonComponent from '../../Components/ButtonComponent';
@@ -71,8 +71,7 @@ import WishlistCard from '../../Components/WishlistCard';
 import MarketCard3 from '../../Components/MarketCard3';
 import * as Animatable from 'react-native-animatable';
 
-
-export default function Cart({ navigation, route }) {
+export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -156,9 +155,7 @@ export default function Cart({ navigation, route }) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
 
-
-
-  console.log("cart item laoding",isLoadingB)
+  console.log('cart item laoding', isLoadingB);
 
   const selectedAddressData = useSelector(
     (state) => state?.cart?.selectedAddress,
@@ -183,7 +180,7 @@ export default function Cart({ navigation, route }) {
       }
       console.log('check cart item+++ inner', checkCartItem);
       // alert('run')
-      updateState({ isLoadingB: true });
+      updateState({isLoadingB: true});
       getCartDetail();
       getAllWishListData();
       // if (!!checkCartItem?.data) {
@@ -193,7 +190,7 @@ export default function Cart({ navigation, route }) {
       // }
       return () => {
         // alert('blur')
-      }
+      };
     }, [
       currencies,
       languages,
@@ -2153,9 +2150,6 @@ export default function Cart({ navigation, route }) {
     );
   };
 
-
-  console.log('is loading ',isLoading)
-
   const ListEmptyComp = () => {
     return (
       <View style={{flex: 1}}>
@@ -2166,9 +2160,14 @@ export default function Cart({ navigation, route }) {
             alignItems: 'center',
             // backgroundColor: '#fff',
           }}>
-          <Image
-            source={imagePath.icEmptyCartC}
-            style={{marginVertical: moderateScaleVertical(20)}}
+          <FastImage
+            source={{uri: Image.resolveAssetSource(imagePath.icEmptyCartC).uri}}
+            style={{
+              marginVertical: moderateScaleVertical(20),
+              height: moderateScale(120),
+              width: moderateScale(120),
+            }}
+
             // resizeMode="contain"s
           />
           <Text style={{...styles.textStyle}}>
@@ -2184,7 +2183,6 @@ export default function Cart({ navigation, route }) {
             marginVertical: moderateScaleVertical(16),
           }}
         />
-
         {wishlistArray.length > 0 && (
           <View>
             <Text
@@ -2217,7 +2215,6 @@ export default function Cart({ navigation, route }) {
               style={{
                 ...styles.commTextStyle,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                marginBottom: 10,
               }}>
               {strings.RECOMMENDED_VENDORS}
             </Text>
@@ -2233,7 +2230,7 @@ export default function Cart({ navigation, route }) {
           </View>
         )}
 
-        <View style={{marginBottom: moderateScale(60)}} />
+        <View style={{marginBottom: moderateScale(100)}} />
       </View>
     );
   };

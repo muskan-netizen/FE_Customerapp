@@ -347,4 +347,5 @@ export default {
   icEmptyCartB: require('../assets/images/RoyoorderNewImages/ic_emptygrey.png'),
   icEmptyCartC: require('../assets/images/RoyoorderNewImages/Group8.png'),
   car3: require('../assets/images/TAXIAPPIMAGES/ic_car3.png'),
+  icStar3: require('../assets/images/RoyoorderNewImages/ic_star3.png'),
 };

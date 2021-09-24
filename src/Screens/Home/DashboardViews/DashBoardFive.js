@@ -121,8 +121,8 @@ export default function DashBoardFive({
           heightLeft={moderateScaleVertical(20)}
           rectHeightLeft={moderateScaleVertical(20)}
           isRight={false}
-          rx={20}
-          ry={20}
+          rx={15}
+          ry={15}
         />
         <BannerLoader
           isVendorLoader
