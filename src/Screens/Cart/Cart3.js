@@ -2150,8 +2150,6 @@ export default function Cart({navigation, route}) {
     );
   };
 
-  console.log('is loading ', isLoading);
-
   const ListEmptyComp = () => {
     return (
       <View style={{flex: 1}}>
@@ -2185,54 +2183,54 @@ export default function Cart({navigation, route}) {
             marginVertical: moderateScaleVertical(16),
           }}
         />
-          {wishlistArray.length > 0 && (
-            <View>
-              <Text
-                style={{
-                  ...styles.commTextStyle,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                {strings.SHOP_FROM_WISHLIST}
-              </Text>
-              {wishlistArray.map((val, i) => {
-                return (
-                  <View key={String(i)}>
-                    <WishlistCard
-                      data={val.product}
-                      onPress={moveToNewScreen(
-                        navigationStrings.PRODUCTDETAIL,
-                        val.product,
-                      )}
-                    />
-                  </View>
-                );
-              })}
-            </View>
-          )}
-          <View style={{marginVertical: moderateScaleVertical(8)}} />
+        {wishlistArray.length > 0 && (
+          <View>
+            <Text
+              style={{
+                ...styles.commTextStyle,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {strings.SHOP_FROM_WISHLIST}
+            </Text>
+            {wishlistArray.map((val, i) => {
+              return (
+                <View key={String(i)}>
+                  <WishlistCard
+                    data={val.product}
+                    onPress={moveToNewScreen(
+                      navigationStrings.PRODUCTDETAIL,
+                      val.product,
+                    )}
+                  />
+                </View>
+              );
+            })}
+          </View>
+        )}
+        <View style={{marginVertical: moderateScaleVertical(8)}} />
 
-          {recommendedVendorsdata.length > 0 && (
-            <View>
-              <Text
-                style={{
-                  ...styles.commTextStyle,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                {strings.RECOMMENDED_VENDORS}
-              </Text>
-              <FlatList
-                horizontal
-                data={recommendedVendorsdata}
-                renderItem={renderRecommendedVendors}
-                keyExtractor={(item, index) => item?.id.toString()}
-                keyboardShouldPersistTaps="always"
-                showsHorizontalScrollIndicator={false}
-                ItemSeparatorComponent={() => <View style={{height: 30}} />}
-              />
-            </View>
-          )}
+        {recommendedVendorsdata.length > 0 && (
+          <View>
+            <Text
+              style={{
+                ...styles.commTextStyle,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {strings.RECOMMENDED_VENDORS}
+            </Text>
+            <FlatList
+              horizontal
+              data={recommendedVendorsdata}
+              renderItem={renderRecommendedVendors}
+              keyExtractor={(item, index) => item?.id.toString()}
+              keyboardShouldPersistTaps="always"
+              showsHorizontalScrollIndicator={false}
+              ItemSeparatorComponent={() => <View style={{height: 30}} />}
+            />
+          </View>
+        )}
 
-          <View style={{marginBottom: moderateScale(100)}} />
+        <View style={{marginBottom: moderateScale(100)}} />
       </View>
     );
   };
@@ -2244,7 +2242,8 @@ export default function Cart({navigation, route}) {
       }
       statusBarColor={colors.backgroundGrey}
       source={loaderOne}
-      isLoadingB={isLoadingB}>
+      isLoadingB={isLoadingB}
+      >
       {<HeaderWithFilters centerTitle={strings.CART} noLeftIcon={true} />}
       <View
         style={

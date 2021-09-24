@@ -596,7 +596,7 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          break;
+
         case appIds.baytukom:
           updateState({
             shortCode: shortCodes.baytukom,
@@ -606,6 +606,12 @@ export default function ShortCode({route, navigation}) {
         case appIds.eboyo:
           updateState({
             shortCode: shortCodes.eboyo,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.vecto:
+          updateState({
+            shortCode: shortCodes.vecto,
             isShortcodePrefilled: true,
           });
           break;

@@ -11,16 +11,18 @@ import {
   ImageBackground,
   TouchableNativeFeedback,
   Alert,
+  TextInput,
+  I18nManager,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
-import GradientButton from '../Components/GradientButton';
+import GradientButton from './GradientButton';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStylesFun, {hitSlopProp} from '../styles/commonStyles';
 import fontFamily from '../styles/fontFamily';
-import Banner from '../Components/Banner';
+import Banner from './Banner';
 import DeviceInfo from 'react-native-device-info';
 import {
   height,
@@ -46,7 +48,7 @@ import {Pagination} from 'react-native-snap-carousel';
 import CardLoader from './Loaders/CardLoader';
 import StarRating from 'react-native-star-rating';
 
-export default function VariantAddons({
+export default function HomeServiceVariantAddons({
   productdetail = {},
   isVisible = false,
   onClose,
@@ -76,9 +78,18 @@ export default function VariantAddons({
     productQuantityForCart: 1,
     showErrorMessageTitle: false,
     btnLoader: false,
+    totalItemsPrice: null,
+    inputInstructionText: '',
+    cleaningmaterialArray: [
+      {id: 1, name: 'No i have them'},
+      {id: 2, name: 'yes please'},
+    ],
+    selectedCleaningmaterial: null,
+    totalPriceArray: [],
   });
 
   const {
+    totalItemsPrice,
     variantSet,
     addonSet,
     productDetailData,
@@ -89,6 +100,11 @@ export default function VariantAddons({
     productVariantId,
     productQuantityForCart,
     btnLoader,
+    totalSelectedItemPrice,
+    inputInstructionText,
+    cleaningmaterialArray,
+    selectedCleaningmaterial,
+    totalPriceArray,
   } = state;
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -256,11 +272,8 @@ export default function VariantAddons({
 
   const selectSpecificOptionsForAddions = (options, i, inx) => {
     let newArray = cloneDeep(options);
-    console.log(i, 'i>>>i');
-    console.log(newArray, 'newArray>>>newArray');
-    console.log(addonSet, 'add on set');
+
     let find = addonSet.find((x) => x?.addon_id == i?.addon_id);
-    console.log(find, 'find>>>find');
 
     updateState({
       addonSet: addonSet.map((vi, vnx) => {
@@ -314,10 +327,36 @@ export default function VariantAddons({
     });
   };
 
+  useEffect(() => {
+    {
+      addonSet?.map((i, inx) => {
+        {
+          i?.setoptions?.map((i, inx) => {
+            {
+              if (i?.value) {
+                totalPriceArray.push(i);
+              }
+            }
+          });
+        }
+      });
+      console.log(totalItemsPrice, 'totalItemsPrice');
+      if (totalPriceArray?.length) {
+        totalPriceArray?.map((i, inx) => {
+          updateState({
+            ...totalItemsPrice,
+            totalItemsPrice: totalItemsPrice + Number(i?.price),
+          });
+        });
+      }
+    }
+  }, [totalPriceArray]);
+
   const checkBoxButtonViewAddons = ({setoptions}) => {
     return (
       <View>
         {setoptions.map((i, inx) => {
+          console.log(i?.value, 'i?.value');
           return (
             <TouchableOpacity
               activeOpacity={1}
@@ -370,6 +409,97 @@ export default function VariantAddons({
                   />
                 </View>
               </View>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    );
+  };
+
+  const checkBoxHomeServiceButtonViewAddons = ({setoptions}) => {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          // justifyContent: 'space-between',
+        }}>
+        {setoptions.map((i, inx) => {
+          return (
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => {
+                selectSpecificOptionsForAddions(setoptions, i, inx);
+              }}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+
+                marginBottom: moderateScaleVertical(10),
+                marginHorizontal: moderateScale(10),
+              }}>
+              <View
+                style={
+                  i?.value
+                    ? {
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        borderColor: themeColors.primary_color,
+                        borderWidth: 0.5,
+                        paddingHorizontal: moderateScale(20),
+                        paddingVertical: moderateScaleVertical(6),
+                        borderRadius: 6,
+                      }
+                    : {
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        borderColor: colors.textGreyLight,
+                        borderWidth: 0.5,
+                        paddingHorizontal: moderateScale(20),
+                        paddingVertical: moderateScaleVertical(6),
+                        borderRadius: 6,
+                      }
+                }>
+                <Text
+                  style={[
+                    styles.variantValue,
+                    {
+                      color: i?.value
+                        ? themeColors.primary_color
+                        : colors.textGreyLight,
+                    },
+                  ]}>
+                  {i?.title
+                    ? i.title.charAt(0).toUpperCase() + i.title.slice(1)
+                    : ''}
+                </Text>
+              </View>
+
+              {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text
+                  style={[
+                    styles.variantValue,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    },
+                  ]}>
+                  {`${currencies?.primary_currency?.symbol}${(
+                    Number(i?.multiplier) * Number(i?.price)
+                  ).toFixed(2)}`}
+                </Text>
+                <View style={{paddingLeft: moderateScale(5)}}>
+                  <Image
+                    source={
+                      i?.value
+                        ? imagePath.icCheckBoxActive
+                        : imagePath.icCheckBoxInactive
+                    }
+                  />
+                </View>
+              </View> */}
             </TouchableOpacity>
           );
         })}
@@ -454,7 +584,7 @@ export default function VariantAddons({
                   }}>
                   {strings.PLS_SELECT_ONE}
                 </Text>
-                {i?.setoptions ? checkBoxButtonViewAddons(i) : null}
+                {i?.setoptions ? checkBoxHomeServiceButtonViewAddons(i) : null}
                 <View
                   style={{
                     ...commonStyles.headerTopLine,
@@ -620,7 +750,6 @@ export default function VariantAddons({
   };
 
   const addToCart = (addonSet) => {
-    console.log('add on set', addonSet);
     const addon_ids = [];
     const addon_options = [];
     addonSet.map((i, inx) => {
@@ -801,7 +930,12 @@ export default function VariantAddons({
     }
   };
 
-  console.log('product details+++', productdetail);
+  const _selectedCleaingmaterial = (item) => {
+    updateState({
+      selectedCleaningmaterial: item,
+    });
+  };
+
   return (
     <Modal
       transparent={false}
@@ -890,7 +1024,11 @@ export default function VariantAddons({
                     marginBottom: moderateScaleVertical(4),
                     marginTop: moderateScaleVertical(6),
                   }}>
-                  In Category_name
+                  {strings.IN}{' '}
+                  {
+                    productdetail?.category?.category_detail?.translation[0]
+                      ?.name
+                  }
                 </Text>
 
                 {/* rating View */}
@@ -950,7 +1088,9 @@ export default function VariantAddons({
                 }}
               />
               {/* ********Addon set View*******  */}
-              {!!addonSet && addonSet?.length ? showAllAddons() : null}
+              {/* {!!addonSet && addonSet?.length ? showAllAddons() : null} */}
+
+              {!!addonSet && addonSet?.length ? showhomeServiceAddons() : null}
 
               {!!variantSet && variantSet?.length ? showAllVariants() : null}
             </Animatable.View>
@@ -966,9 +1106,86 @@ export default function VariantAddons({
                 {strings.NOVARIANTPRODUCTAVAILABLE}
               </Text>
             ) : null}
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                // justifyContent: 'space-between',
+              }}>
+              <Text
+                style={{
+                  fontSize: textScale(14),
+                  marginHorizontal: moderateScale(20),
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  fontFamily: fontFamily.regular,
+                }}>
+                Do you require cleaning materials ?
+              </Text>
+              {cleaningmaterialArray.map((item, index) => {
+                console.log(item, 'itemitem');
+                return (
+                  <View style={{marginVertical: moderateScaleVertical(10)}}>
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: 'row',
+                        borderColor:
+                          item?.id === selectedCleaningmaterial?.id
+                            ? themeColors.primary_color
+                            : colors.textGreyB,
+                        borderWidth: 0.5,
+                        borderRadius: 4,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginLeft: moderateScale(20),
+                        paddingHorizontal: moderateScale(5),
+                        paddingVertical: moderateScaleVertical(7),
+                        marginVertical: moderateScaleVertical(5),
+                      }}
+                      onPress={() => _selectedCleaingmaterial(item)}
+                      key={index}>
+                      <View>
+                        <Text
+                          style={{
+                            fontSize: 15,
+                            fontFamily: fontFamily.medium,
+                            color:
+                              item?.id === selectedCleaningmaterial?.id
+                                ? themeColors.primary_color
+                                : colors.textGreyLight,
+                          }}>
+                          {item?.name}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                );
+              })}
+            </View>
+            <Text
+              style={{
+                fontSize: textScale(14),
+                marginHorizontal: moderateScale(20),
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                fontFamily: fontFamily.regular,
+              }}>
+              Do you have any cleaning instructions ?
+            </Text>
+            <TextInput
+              placeholder={'enter instructions here'}
+              multiline={true}
+              value={inputInstructionText}
+              textAlignVertical={'top'}
+              style={[
+                styles.textInputStyle,
+                {color: isDarkMode ? MyDarkTheme.colors.text : colors.black},
+              ]}
+              placeholderTextColor={colors.greyLight}
+              onChangeText={(text) => updateState({inputInstructionText: text})}
+            />
           </ScrollView>
 
-          {!showErrorMessageTitle && productTotalQuantity != 0 && (
+          {/* {!showErrorMessageTitle && productTotalQuantity != 0 && (
             <View
               style={{
                 flexDirection: 'row',
@@ -1050,6 +1267,69 @@ export default function VariantAddons({
                     Number(productPriceData?.multiplier) *
                     Number(productPriceData?.price)
                   ).toFixed(2)}`}
+                  btnStyle={{
+                    borderRadius: moderateScale(4),
+                    height: moderateScale(38),
+                  }}
+                />
+              </View>
+            </View>
+          )} */}
+
+          {!showErrorMessageTitle && productTotalQuantity != 0 && (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingHorizontal: moderateScale(16),
+                paddingBottom: moderateScaleVertical(16),
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.background
+                  : '#fff',
+              }}>
+              <View style={{flex: 0.75}}>
+                {totalItemsPrice ? (
+                  <>
+                    <Text
+                      style={{
+                        fontSize: textScale(12),
+                        fontFamily: fontFamily.regular,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.textGreyLight,
+                      }}>
+                      Service Cost
+                    </Text>
+                    <Text
+                      style={{
+                        marginVertical: moderateScaleVertical(5),
+                        fontSize: textScale(16),
+                        fontFamily: fontFamily.bold,
+                        color: colors.green,
+                      }}>{`${currencies?.primary_currency?.symbol}${(
+                      Number(productPriceData?.multiplier) *
+                      Number(totalItemsPrice)
+                    ).toFixed(2)}`}</Text>
+                  </>
+                ) : null}
+              </View>
+
+              <View style={{marginHorizontal: 8}} />
+              <View style={{flex: 0.25}}>
+                <GradientButton
+                  indicator={btnLoader}
+                  indicatorColor={colors.white}
+                  colorsArray={[
+                    themeColors.primary_color,
+                    themeColors.primary_color,
+                  ]}
+                  textStyle={{
+                    fontFamily: fontFamily.medium,
+                    textTransform: 'capitalize',
+                  }}
+                  onPress={() => addToCart(addonSet)}
+                  btnText={`${strings.ADD_ITEM}`}
                   btnStyle={{
                     borderRadius: moderateScale(4),
                     height: moderateScale(38),
@@ -1191,5 +1471,21 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     fontSize: textScale(12),
     fontFamily: fontFamily.medium,
+  },
+  textInputStyle: {
+    opacity: 0.7,
+    color: colors.black,
+    fontFamily: fontFamily.semiBold,
+    fontSize: textScale(14),
+    paddingHorizontal: 8,
+    paddingTop: 0,
+    paddingBottom: 0,
+    textAlign: I18nManager.isRTL ? 'right' : 'left',
+    marginHorizontal: moderateScale(20),
+    borderColor: colors.textGreyLight,
+    borderWidth: 0.5,
+    height: moderateScaleVertical(width / 3.5),
+    borderRadius: moderateScale(4),
+    marginVertical: moderateScale(10),
   },
 });

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -8,9 +8,9 @@ import {
   Text,
   View,
 } from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Pagination} from 'react-native-snap-carousel';
-import {useSelector} from 'react-redux';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Pagination } from 'react-native-snap-carousel';
+import { useSelector } from 'react-redux';
 import BannerHome2 from '../../../Components/BannerHome2';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import CardLoader from '../../../Components/Loaders/CardLoader';
@@ -21,7 +21,7 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
-import {useScrollToTop} from '@react-navigation/native';
+import { useScrollToTop } from '@react-navigation/native';
 import {
   itemWidth,
   moderateScale,
@@ -32,9 +32,9 @@ import {
 } from '../../../styles/responsiveSize';
 import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
 import stylesFunc from '../styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../../styles/theme';
-import {SearchBar} from 'react-native-elements/dist/searchbar/SearchBar';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../../styles/theme';
+import { SearchBar } from 'react-native-elements/dist/searchbar/SearchBar';
 import SearchBar2 from '../../../Components/SearchBar2';
 import HomeLoader from '../../../Components/Loaders/HomeLoader';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
@@ -43,12 +43,12 @@ import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
 import BannerLoader from '../../../Components/Loaders/BannerLoader';
 
 export default function DashBoardFive({
-  handleRefresh = () => {},
-  bannerPress = () => {},
+  handleRefresh = () => { },
+  bannerPress = () => { },
   //   appMainData = {},
   isLoading = true,
   isRefreshing = false,
-  onPressCategory = () => {},
+  onPressCategory = () => { },
   selcetedToggle,
   toggleData,
   navigation = {},
@@ -63,20 +63,20 @@ export default function DashBoardFive({
     isVendorColumnList: false,
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  const {appData, themeColors, appStyle} = useSelector(
+  const { appData, themeColors, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state?.auth?.userData);
 
   const fontFamily = appStyle?.fontSizeData;
-  const {bannerRef} = useRef();
-  const {slider1ActiveSlide, newCategoryData, isVendorColumnList} = state;
-  const styles = stylesFunc({themeColors, fontFamily});
+  const { bannerRef } = useRef();
+  const { slider1ActiveSlide, newCategoryData, isVendorColumnList } = state;
+  const styles = stylesFunc({ themeColors, fontFamily });
 
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
-  const _renderItem = ({item}) => (
+  const _renderItem = ({ item }) => (
     <HomeCategoryCard2
       data={item}
       onPress={() => onPressCategory(item)}
@@ -84,15 +84,15 @@ export default function DashBoardFive({
     />
   );
 
-  const _renderVendors = ({item}) => (
+  const _renderVendors = ({ item }) => (
     <MarketCard3
       data={item}
       onPress={() => onPressCategory(item)}
-      extraStyles={{margin: 0}}
+      extraStyles={{ margin: 0 }}
     />
   );
   const _changeVendorListStyle = () =>
-    updateState({isVendorColumnList: !isVendorColumnList});
+    updateState({ isVendorColumnList: !isVendorColumnList });
 
   // console.log(appMainData, 'appMainData');
 
@@ -103,10 +103,10 @@ export default function DashBoardFive({
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{flexGrow: 1}}>
-        <SearchLoader viewStyles={{marginTop: moderateScale(15)}} />
-        <CategoryLoader2 viewStyles={{marginTop: moderateScale(25)}} />
-        <CategoryLoader2 viewStyles={{marginTop: moderateScale(25)}} />
+        contentContainerStyle={{ flexGrow: 1 }}>
+        <SearchLoader viewStyles={{ marginTop: moderateScale(15) }} />
+        <CategoryLoader2 viewStyles={{ marginTop: moderateScale(25) }} />
+        <CategoryLoader2 viewStyles={{ marginTop: moderateScale(25) }} />
         <BannerLoader
           isBannerDots
           viewStyles={{
@@ -115,7 +115,7 @@ export default function DashBoardFive({
         />
 
         <HeaderLoader
-          viewStyles={{marginVertical: 20}}
+          viewStyles={{ marginVertical: 20 }}
           widthLeft={moderateScale(150)}
           rectWidthLeft={moderateScale(150)}
           heightLeft={moderateScaleVertical(20)}
@@ -148,7 +148,7 @@ export default function DashBoardFive({
   }
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <SearchBar2 navigation={navigation} />
       <ScrollView
         ref={ref}
@@ -176,11 +176,11 @@ export default function DashBoardFive({
               showsHorizontalScrollIndicator={false}
               renderItem={_renderItem}
               ItemSeparatorComponent={() => (
-                <View style={{height: moderateScale(10)}} />
+                <View style={{ height: moderateScale(10) }} />
               )}
             />
           )}
-        <View style={{marginVertical: moderateScale(30)}}>
+        <View style={{ marginVertical: moderateScale(30) }}>
           {appData?.banners?.length && (
             <>
               <BannerHome2
@@ -190,13 +190,13 @@ export default function DashBoardFive({
                 sliderWidth={sliderWidth}
                 itemWidth={itemWidth}
                 onSnapToItem={(index) =>
-                  updateState({slider1ActiveSlide: index})
+                  updateState({ slider1ActiveSlide: index })
                 }
                 setActiveState={(index) =>
-                  updateState({slider1ActiveSlide: index})
+                  updateState({ slider1ActiveSlide: index })
                 }
                 onPress={(item) => bannerPress(item)}
-                carouselViewStyle={{height: width * 0.33}}
+                carouselViewStyle={{ height: width * 0.33 }}
               />
 
               <Pagination
@@ -242,7 +242,7 @@ export default function DashBoardFive({
               showsHorizontalScrollIndicator={false}
               renderItem={_renderVendors}
               ItemSeparatorComponent={() => (
-                <View style={{height: moderateScale(10)}} />
+                <View style={{ height: moderateScale(10) }} />
               )}
             />
           </View>

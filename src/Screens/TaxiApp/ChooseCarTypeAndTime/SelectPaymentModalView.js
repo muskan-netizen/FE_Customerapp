@@ -137,9 +137,8 @@ export default function SelectPaymentModalView({
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 }}>
                 {selectedCarOption
-                  ? `${currencies?.primary_currency?.symbol}${(
-                      Number(selectedCarOption?.variant[0]?.multiplier) *
-                      Number(selectedCarOption?.variant[0]?.price)
+                  ? `${currencies?.primary_currency?.symbol}${Number(
+                      selectedCarOption?.variant[0]?.price,
                     ).toFixed(2)}`
                   : ''}
               </Text>
@@ -247,9 +246,8 @@ export default function SelectPaymentModalView({
                       ]
                 }>
                 {selectedCarOption
-                  ? `${currencies?.primary_currency?.symbol}${(
-                      Number(selectedCarOption?.variant[0]?.multiplier) *
-                      Number(selectedCarOption?.variant[0]?.price)
+                  ? `${currencies?.primary_currency?.symbol}${Number(
+                      selectedCarOption?.variant[0]?.price,
                     ).toFixed(2)}`
                   : ''}
               </Text>
