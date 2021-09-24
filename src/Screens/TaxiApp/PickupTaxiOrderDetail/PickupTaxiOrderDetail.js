@@ -24,6 +24,7 @@ import {MyDarkTheme} from '../../../styles/theme';
 import TaxiOrderDetailView from './TaxiOrderDetailView';
 import SearchingForDriverView from './SearchingForDriverView';
 import {color} from 'react-native-reanimated';
+import useInterval from '../../../utils/useInterval';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -114,18 +115,29 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   );
   const mapRef = useRef();
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      //assign interval to a variable to clear it.
-
+  useInterval(
+    () => {
       if (urlValue && urlValue.includes('order-details')) {
         _updateDriverLocationLocation(urlValue);
       } else {
         updateState({isLoading: false});
       }
-    }, 3000);
-    return () => clearInterval(intervalId);
-  }, []);
+    },
+    isFocused ? 3000 : null,
+  );
+
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     //assign interval to a variable to clear it.
+
+  //     if (urlValue && urlValue.includes('order-details')) {
+  //       _updateDriverLocationLocation(urlValue);
+  //     } else {
+  //       updateState({isLoading: false});
+  //     }
+  //   }, 3000);
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   /*********Update driver detail screen********* */
   const _updateDriverLocationLocation = (url) => {

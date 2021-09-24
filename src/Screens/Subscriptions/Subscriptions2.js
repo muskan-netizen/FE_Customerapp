@@ -407,7 +407,7 @@ export default function Subscriptions2({navigation, route}) {
               renderItem={_renderItemPayments}
               ListEmptyComponent={() => (
                 <Text style={{textAlign: 'center'}}>
-                  {'No Payment method found'}
+                  {strings.NO_PAYMENT_METHOD}
                 </Text>
               )}
             />
