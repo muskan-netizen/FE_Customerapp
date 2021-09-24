@@ -752,6 +752,7 @@ export default function VariantAddons({
     }
   };
 
+  console.log("product details+++",productdetail)
   return (
     <Modal
       transparent={false}
@@ -834,7 +835,7 @@ export default function VariantAddons({
                   textAlign: 'left',
                   marginBottom: moderateScaleVertical(4),
                   marginTop:moderateScaleVertical(6)
-                }}>In Category_name</Text>
+                }}>In {productdetail?.category?.category_detail?.translation[0]?.name}</Text>
 
                 {/* rating View */}
                 {productDetailData?.averageRating !== null&& (
