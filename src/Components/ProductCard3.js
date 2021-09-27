@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import {
-  Animated,
-  Image,
-  Text,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  View,
-  StyleSheet,
+  Animated, StyleSheet, Text, TouchableOpacity,
+  View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-
-import FastImage from 'react-native-fast-image';
+import { UIActivityIndicator } from 'react-native-indicators';
+import StarRating from 'react-native-star-rating';
 import { useSelector } from 'react-redux';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -19,36 +14,26 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
 import {
   getImageUrl,
   pressInAnimation,
-  pressOutAnimation,
+  pressOutAnimation
 } from '../utils/helperFunctions';
-import HTMLView from 'react-native-htmlview';
-import DashedLine from 'react-native-dashed-line';
-import imagePath from '../constants/imagePath';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../styles/theme';
-import AddonModal from '../Screens/ProductDetail/AddonModal';
-import Modal from 'react-native-modal';
-import StarRating from 'react-native-star-rating';
+import BlurImages from './BlurImages';
 import HtmlViewComp from './HtmlViewComp';
+
 
 export default function ProductCard3({
   data = {},
   onPress = () => { },
-  cardWidth,
-  cardStyle = {},
-  onAddtoWishlist,
   addToCart = () => { },
-  activeOpacity = 1,
-  bottomText = strings.BUY_NOW,
   index,
   onIncrement,
   onDecrement,
-  selectedCartItem,
+  selectedItemID,
 }) {
   // data['qty'] = 1
   const [state, setState] = useState({
@@ -72,7 +57,7 @@ export default function ProductCard3({
   const { themeLayouts } = currentTheme;
   const commonStyles = commonStylesFunc({ fontFamily });
 
-  const url1 = data?.media[0]?.image?.path.proxy_url;
+  const url1 = data?.media[0]?.image?.path.image_fit;
   const url2 = data?.media[0]?.image?.path.image_path;
   const getImage = getImageUrl(
     url1,
@@ -99,7 +84,7 @@ export default function ProductCard3({
       animation={index > 8 ? '' : 'fadeInUp'}
       delay={index > 8 ? 1 * 100 : index * 10}>
       <TouchableOpacity
-        // disabled
+        disabled
         activeOpacity={0.6}
         onPress={onPress}
         onPressIn={() => pressInAnimation(scaleInAnimated)}
@@ -124,7 +109,19 @@ export default function ProductCard3({
               margin: 2,
               borderRadius: moderateScale(15),
             }}>
-            <FastImage
+            <BlurImages
+              isDarkMode={isDarkMode}
+              themeColor={themeColors.primary_color}
+              imageSource={data?.media[0]} // sent image object
+              style={{
+                ...styles.imgStyle,
+                backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyColor,
+              }}
+              thumbnailQuality='20/20'
+              originalQuality='200/200'
+              containerStyle={{ borderRadius: moderateScale(15) }}
+            />
+            {/* <FastImage
               source={{
                 uri: url1 && url2 ? getImage : '',
                 priority: FastImage.priority.high,
@@ -136,11 +133,11 @@ export default function ProductCard3({
                     : moderateScale(100),
                 width: selectedIndex == index ? '100%' : moderateScale(100),
                 borderRadius: moderateScale(15),
-
+                backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyColor,
                 // borderWidth: 1,
               }}
             // resizeMode={selectedIndex == index ? 'stretch' : 'stretch'}
-            />
+            /> */}
           </TouchableOpacity>
         </Animatable.View>
 
@@ -182,7 +179,7 @@ export default function ProductCard3({
                   numberOfLines={1}
                   style={{
                     ...styles.inTextStyle,
-                    color: isDarkMode ? MyDarkTheme.colors.text: colors.blackOpacity40,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity40,
                   }}>
                   {strings.IN}
                   {` ${data?.category?.category_detail?.translation[0]?.name}`}
@@ -267,6 +264,7 @@ export default function ProductCard3({
                     paddingHorizontal: moderateScale(8),
                   }}>
                   <TouchableOpacity
+                    disabled={selectedItemID == data?.id}
                     style={{}}
                     onPress={onDecrement}
                     activeOpacity={0.8}
@@ -281,17 +279,24 @@ export default function ProductCard3({
                     </Text>
                   </TouchableOpacity>
                   <View style={{}}>
-                    <Text
-                      style={{
-                        fontFamily: fontFamily.bold,
-                        fontSize: moderateScale(16),
-                        color: colors.white,
-                      }}>
-                      {data?.qty ||
-                        data?.variant[0]?.check_if_in_cart_app[0]?.quantity}
-                    </Text>
+                    {selectedItemID == data?.id ? <UIActivityIndicator
+                      size={moderateScale(18)}
+                      color={colors.white}
+                    /> :
+                      <Text
+                        style={{
+                          fontFamily: fontFamily.bold,
+                          fontSize: moderateScale(16),
+                          color: colors.white,
+                        }}>
+                        {data?.qty ||
+                          data?.variant[0]?.check_if_in_cart_app[0]?.quantity}
+                      </Text>
+                    }
+
                   </View>
                   <TouchableOpacity
+                    disabled={selectedItemID == data?.id}
                     activeOpacity={0.8}
                     hitSlop={hitSlopProp}
                     onPress={onIncrement}>
@@ -307,19 +312,30 @@ export default function ProductCard3({
                 </View>
               ) : (
                 <TouchableOpacity
+                  disabled={selectedItemID == data?.id}
                   onPress={addToCart}
                   style={styles.addBtnStyle}>
-                  <Text style={styles.addStyleText}>{strings.ADD}</Text>
 
-                  <Text
-                    style={{
-                      ...styles.addStyleText,
-                      position: 'absolute',
-                      top: 2,
-                      right: moderateScale(8),
-                    }}>
-                    {'+'}
-                  </Text>
+                  {selectedItemID == data?.id ? <UIActivityIndicator
+                    size={moderateScale(18)}
+                    color={themeColors.primary_color}
+                  />
+                    :
+                    <View style={{}}>
+                      <Text style={styles.addStyleText}>{strings.ADD}</Text>
+                      {/* <Text
+                        style={{
+                          ...styles.addStyleText,
+                          // position: 'absolute',
+                          top: 2,
+                          right: moderateScale(8),
+                          alignSelf:'flex-end'
+                        }}>
+                        {'+'}
+                      </Text> */}
+                    </View>
+                  }
+
                   {/* <Image source={imagePath.greyRoundPlus} /> */}
                 </TouchableOpacity>
               )}
@@ -384,6 +400,11 @@ function styleData({ themeColors, fontFamily }) {
       textAlign: 'left',
       marginTop: moderateScaleVertical(6),
       marginBottom: moderateScaleVertical(4),
+    },
+    imgStyle: {
+      height: moderateScale(100),
+      width: moderateScale(100),
+      borderRadius: moderateScale(15),
     }
   });
   return styles;

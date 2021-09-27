@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import DashedLine from 'react-native-dashed-line';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -20,8 +20,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../styles/theme';
 import BlurImages from './BlurImages';
 import {
   getImageUrl,
@@ -32,7 +32,7 @@ import {
 
 export default function MarketCard3({
   data = {},
-  onPress = () => {},
+  onPress = () => { },
   extraStyles = {},
   fastImageStyle = {},
   imageResizeMode = 'cover',
@@ -41,10 +41,10 @@ export default function MarketCard3({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, extraStyles, MyDarkTheme, isDarkMode});
+  const styles = stylesFunc({ fontFamily, extraStyles, MyDarkTheme, isDarkMode });
   const scaleInAnimated = new Animated.Value(0);
   return (
     <TouchableOpacity
@@ -56,21 +56,20 @@ export default function MarketCard3({
       }}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
-      {/* <BlurImages
+      <BlurImages
+        isDarkMode={isDarkMode}
         themeColor={themeColors.primary_color}
-        data={data}
-        source={{
-          uri: getImageUrl(
-            data.banner.proxy_url || data.image.proxy_url,
-            data.banner.image_path || data.image.image_path,
-            '800/400',
-          )
-        }}
+        imageSource={data} // sent image object
         style={[styles.mainImage, { ...fastImageStyle }]}
-
-      /> */}
-      <FastImage
-        style={[styles.mainImage, {...fastImageStyle}]}
+        thumbnailQuality='20/20'
+        originalQuality='700/700'
+      />
+      {/* <FastImage
+        style={{
+          ...styles.mainImage,
+          ...fastImageStyle,
+          backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyColor,
+        }}
         resizeMode={imageResizeMode}
         source={{
           uri: getImageUrl(
@@ -80,7 +79,7 @@ export default function MarketCard3({
           ),
           priority: FastImage.priority.high,
         }}
-      />
+      /> */}
       <View
         style={{
           padding: 8,
@@ -90,7 +89,7 @@ export default function MarketCard3({
             numberOfLines={1}
             style={
               isDarkMode
-                ? [styles.categoryText, {color: MyDarkTheme.colors.text}]
+                ? [styles.categoryText, { color: MyDarkTheme.colors.text }]
                 : styles.categoryText
             }>
             {data.name}
@@ -141,10 +140,10 @@ export default function MarketCard3({
         />
         <View style={styles.distanceView}>
           {
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               {data?.lineOfSightDistance && (
                 <Image
-                  style={{tintColor: themeColors.primary_color}}
+                  style={{ tintColor: themeColors.primary_color }}
                   source={imagePath.location2}
                 />
               )}
@@ -159,7 +158,7 @@ export default function MarketCard3({
                 {data?.lineOfSightDistance}{' '}
                 {!!data?.lineOfSightDistance ? 'miles' : ''}{' '}
                 {!!data?.lineOfSightDistance &&
-                !!data?.timeofLineOfSightDistance
+                  !!data?.timeofLineOfSightDistance
                   ? '|'
                   : ''}{' '}
                 {data?.timeofLineOfSightDistance}{' '}
@@ -176,14 +175,14 @@ export default function MarketCard3({
               color: data?.show_slot
                 ? colors.green
                 : data?.slot && data?.slot.length
-                ? colors.green
-                : colors.redB,
+                  ? colors.green
+                  : colors.redB,
             }}>
             {data?.show_slot
               ? strings.OPEN
               : data?.slot && data?.slot.length
-              ? strings.OPEN
-              : strings.CLOSE}
+                ? strings.OPEN
+                : strings.CLOSE}
           </Text>
         </View>
       </View>
@@ -191,12 +190,12 @@ export default function MarketCard3({
   );
 }
 
-export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
+export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme }) {
   const styles = StyleSheet.create({
     mainTouchContainer: {
       borderRadius: moderateScale(10),
       shadowColor: '#000',
-      shadowOffset: {width: 0, height: 0},
+      shadowOffset: { width: 0, height: 0 },
       shadowOpacity: 0.15,
       shadowRadius: 3.84,
       elevation: 2,

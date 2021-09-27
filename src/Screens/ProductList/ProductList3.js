@@ -1,6 +1,6 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {assign, cloneDeep, debounce} from 'lodash';
-import React, {Fragment, useEffect, useRef, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { assign, cloneDeep, debounce } from 'lodash';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -19,7 +19,7 @@ import {
   I18nManager,
   Share,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import EmptyListLoader from '../../Components/EmptyListLoader';
 import ProductCard3 from '../../Components/ProductCard3';
 import imagePath from '../../constants/imagePath';
@@ -36,13 +36,13 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
+import { getImageUrl, showError, showSuccess } from '../../utils/helperFunctions';
 import stylesFunc from './styles';
 import LinearGradient from 'react-native-linear-gradient';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../styles/theme';
 import HeaderImageScrollView, {
   TriggeringView,
 } from 'react-native-image-header-scroll-view';
@@ -53,11 +53,11 @@ import RoundImg from '../../Components/RoundImg';
 import WrapperContainer from '../../Components/WrapperContainer';
 import CircularLoader from '../../Components/Loaders/CircularLoader';
 import LottieLoader from '../../Components/LottieLoader';
-import {noDataFound} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { noDataFound } from '../../Components/Loaders/AnimatedLoaderFiles';
 import staticStrings from '../../constants/staticStrings';
 import AddonModal from '../ProductDetail/AddonModal';
 import VariantAddons from '../../Components/VariantAddons';
-import {removeItem} from '../../utils/utils';
+import { removeItem } from '../../utils/utils';
 import NoDataFound from '../../Components/NoDataFound';
 import SearchBar from '../../Components/SearchBar';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
@@ -65,8 +65,8 @@ import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoade
 import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
 import ProductListLoader from '../../Components/Loaders/ProductListLoader';
 
-export default function Products({route, navigation}) {
-  const {data} = route.params;
+export default function Products({ route, navigation }) {
+  const { data } = route.params;
   console.log(data, 'data params >>>>>');
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -141,6 +141,8 @@ export default function Products({route, navigation}) {
     cartId: null,
     isSearch: false,
     searchInput: '',
+    btnLoader: false,
+    selectedItemID: -1
   });
 
   const {
@@ -186,11 +188,13 @@ export default function Products({route, navigation}) {
     showShimmer,
     isSearch,
     searchInput,
+    btnLoader,
+    selectedItemID
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFunc({fontFamily});
-  const styles = stylesFunc({themeColors, fontFamily});
+  const commonStyles = commonStylesFunc({ fontFamily });
+  const styles = stylesFunc({ themeColors, fontFamily });
 
   //Saving the initial state
   const initialState = cloneDeep(state);
@@ -202,15 +206,15 @@ export default function Products({route, navigation}) {
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      updateState({pageNo: 1});
+      updateState({ pageNo: 1 });
       getAllListItems();
       if (isLoadingC) {
         getAllProducts(true);
@@ -220,7 +224,7 @@ export default function Products({route, navigation}) {
   }, [navigation]);
 
   useEffect(() => {
-    updateState({pageNo: 1});
+    updateState({ pageNo: 1 });
     getAllListItems();
   }, [languages, currencies]);
 
@@ -241,8 +245,8 @@ export default function Products({route, navigation}) {
     console.log(filterExist, 'filterExist');
     {
       filterExist
-        ? updateState({showFilterSlectedIcon: true})
-        : updateState({showFilterSlectedIcon: false});
+        ? updateState({ showFilterSlectedIcon: true })
+        : updateState({ showFilterSlectedIcon: false });
     }
 
     if (data?.vendor) {
@@ -250,8 +254,8 @@ export default function Products({route, navigation}) {
         filterExist
           ? getAllProductsVendorFilter()
           : data?.vendorData
-          ? getAllProductsByVendorCategory()
-          : getAllProductsByVendor();
+            ? getAllProductsByVendorCategory()
+            : getAllProductsByVendor();
       }
     } else {
       {
@@ -472,8 +476,7 @@ export default function Products({route, navigation}) {
     console.log('api hit getAllProducts');
     actions
       .getProductByCategoryId(
-        `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${
-          data?.rootProducts ? true : false
+        `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${data?.rootProducts ? true : false
         }`,
         {},
         {
@@ -498,16 +501,16 @@ export default function Products({route, navigation}) {
         });
         {
           pageNo == 1 &&
-          res?.data?.listData?.data.length == 0 &&
-          res?.data?.category &&
-          res?.data?.category?.childs.length
+            res?.data?.listData?.data.length == 0 &&
+            res?.data?.category &&
+            res?.data?.category?.childs.length
             ? updateState({
-                selectedCategory: res.data.category.childs[0],
-                productListId: res.data.category.childs[0],
-                pageNo: 1,
-                limit: 12,
-                isLoadingC: true,
-              })
+              selectedCategory: res.data.category.childs[0],
+              productListId: res.data.category.childs[0],
+              pageNo: 1,
+              limit: 12,
+              isLoadingC: true,
+            })
             : null;
         }
         updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
@@ -519,7 +522,7 @@ export default function Products({route, navigation}) {
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
     if (!!userData?.auth_token) {
-      updateState({isLoadingB: true});
+      updateState({ isLoadingB: true });
       actions
         .updateProductWishListData(
           `/${item.id}`,
@@ -537,7 +540,7 @@ export default function Products({route, navigation}) {
         .catch(errorMethod);
     } else {
       showError(strings.UNAUTHORIZED_MESSAGE);
-      updateState({isLoadingB: false});
+      updateState({ isLoadingB: false });
     }
   };
 
@@ -548,9 +551,9 @@ export default function Products({route, navigation}) {
       if (i.id == item.id) {
         if (item.inwishlist) {
           i.inwishlist = null;
-          return {...i, inwishlist: null};
+          return { ...i, inwishlist: null };
         } else {
-          return {...i, inwishlist: {product_id: i.id}};
+          return { ...i, inwishlist: { product_id: i.id } };
         }
       } else {
         return i;
@@ -560,22 +563,23 @@ export default function Products({route, navigation}) {
       productListData: newArray,
       isLoadingB: false,
       updateQtyLoader: false,
+      selectedItemID: -1
     });
   };
 
   const errorMethod = (error) => {
-    updateState({updateQtyLoader: false});
+    updateState({ updateQtyLoader: false, selectedItemID: -1 });
     showError(error?.message || error?.error);
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({pageNo: 1, isRefreshing: true});
+    updateState({ pageNo: 1, isRefreshing: true });
   };
 
   //pagination of data
-  const onEndReached = ({distanceFromEnd}) => {
-    updateState({pageNo: pageNo + 1});
+  const onEndReached = ({ distanceFromEnd }) => {
+    updateState({ pageNo: pageNo + 1 });
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -588,16 +592,16 @@ export default function Products({route, navigation}) {
     // moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
     // return;
     if (item.add_on.length !== 0 || item.variantSet.length !== 0) {
-      updateState({isVisibleModal: true, selectedCartItem: item});
+      updateState({ isVisibleModal: true, selectedCartItem: item });
       return;
     }
     let updateArray = productListData.map((val, i) => {
       if (val.id == item.id) {
-        return {...val, qty: 1};
+        return { ...val, qty: 1 };
       }
       return val;
     });
-    updateState({updateQtyLoader: true});
+    updateState({ updateQtyLoader: true });
 
     updateState({
       productListData: updateArray,
@@ -606,9 +610,10 @@ export default function Products({route, navigation}) {
     });
   };
 
-  const checkSingleVendor = async () => {
-    let vendorData = {vendor_id: categoryInfo?.id};
-    updateState({updateQtyLoader: true});
+  const checkSingleVendor = async (id) => {
+    let vendorData = { vendor_id: categoryInfo?.id };
+    console.log("idd", id)
+    updateState({ selectedItemID: id });
     return new Promise((resolve, reject) => {
       actions
         .checkSingleVendor(vendorData, {
@@ -622,12 +627,13 @@ export default function Products({route, navigation}) {
         })
         .catch((error) => {
           reject(error);
+          updateState({ selectedItemID: -1 })
         });
     });
   };
 
   const clearCartAndAddProduct = async (item) => {
-    updateState({updateQtyLoader: true});
+    updateState({ updateQtyLoader: true });
     actions
       .clearCart(
         {},
@@ -647,20 +653,20 @@ export default function Products({route, navigation}) {
   };
 
   const addSingleItem = async (item) => {
-    let isSingleVendor = await checkSingleVendor();
+    let isSingleVendor = await checkSingleVendor(item.id);
     console.log('is single vendor', isSingleVendor);
     if (
       isSingleVendor.isSingleVendorEnabled !== 0 &&
       isSingleVendor.otherVendorExists !== 0
     ) {
-      updateState({updateQtyLoader: false});
+      updateState({ updateQtyLoader: false, selectedItemID: -1 });
       Alert.alert('', strings.ALREADY_EXIST, [
         {
           text: strings.CANCEL,
-          onPress: () => {},
+          onPress: () => { },
           // style: 'destructive',
         },
-        {text: strings.CONFIRM, onPress: () => clearCartAndAddProduct(item)},
+        { text: strings.CONFIRM, onPress: () => clearCartAndAddProduct(item) },
       ]);
       return;
     }
@@ -672,6 +678,7 @@ export default function Products({route, navigation}) {
         updateQtyLoader: false,
         isVisibleModal: true,
         selectedCartItem: item,
+        selectedItemID: -1
       });
       return;
     }
@@ -681,7 +688,7 @@ export default function Products({route, navigation}) {
     data['quantity'] = 1;
     data['product_variant_id'] = item?.variant[0]?.id;
     data['type'] = dine_In_Type;
-    updateState({updateQtyLoader: true});
+    updateState({ selectedItemID: item?.id });
     actions
       .addProductsToCart(data, {
         code: appData.profile.code,
@@ -691,7 +698,7 @@ export default function Products({route, navigation}) {
       })
       .then((res) => {
         actions.cartItemQty(res);
-        updateState({cartId: res.data.id});
+        updateState({ cartId: res.data.id });
         // showSuccess('Product successfully added');
         let updateArray = productListData.map((val, i) => {
           if (val.id == item.id) {
@@ -708,6 +715,7 @@ export default function Products({route, navigation}) {
           productListData: updateArray,
           selectedCartItem: item,
           updateQtyLoader: false,
+          selectedItemID: -1
         });
       })
       .catch((error) => errorMethodSecond(error));
@@ -724,15 +732,15 @@ export default function Products({route, navigation}) {
     let isExistqty = itemToUpdate?.qty
       ? itemToUpdate?.qty
       : !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-        itemToUpdate.variant[0]?.check_if_in_cart_app[0].quantity;
+      itemToUpdate.variant[0]?.check_if_in_cart_app[0].quantity;
     let isExistproductId =
       !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-      itemToUpdate.variant[0]?.check_if_in_cart_app.length
+        itemToUpdate.variant[0]?.check_if_in_cart_app.length
         ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].id
         : itemToUpdate?.cart_product_id;
     let isExistCartId =
       !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-      itemToUpdate.variant[0]?.check_if_in_cart_app.length
+        itemToUpdate.variant[0]?.check_if_in_cart_app.length
         ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
         : cartId;
 
@@ -745,7 +753,7 @@ export default function Products({route, navigation}) {
       quanitity = Number(isExistqty) - 1;
     }
     if (quanitity) {
-      updateState({updateQtyLoader: true});
+      updateState({ selectedItemID: itemToUpdate.id });
       let data = {};
       data['cart_id'] = isExistCartId;
       data['quantity'] = quanitity;
@@ -765,6 +773,7 @@ export default function Products({route, navigation}) {
             cartItems: res.data.products,
             cartData: res.data,
             updateQtyLoader: false,
+            selectedItemID: -1
           });
           let updateArray = productListData.map((val, i) => {
             if (val.id == item.id) {
@@ -777,11 +786,11 @@ export default function Products({route, navigation}) {
             }
             return val;
           });
-          updateState({productListData: updateArray});
+          updateState({ productListData: updateArray, selectedItemID: -1 });
         })
         .catch(errorMethod);
     } else {
-      updateState({updateQtyLoader: true});
+      updateState({ selectedItemID: itemToUpdate?.id });
       removeItem('selectedTable');
       removeProductFromCart(itemToUpdate);
     }
@@ -792,12 +801,12 @@ export default function Products({route, navigation}) {
     let data = {};
     let isExistproductId =
       !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-      itemToUpdate.variant[0]?.check_if_in_cart_app.length > 0
+        itemToUpdate.variant[0]?.check_if_in_cart_app.length > 0
         ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].id
         : itemToUpdate?.cart_product_id;
     let isExistCartId =
       !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-      itemToUpdate.variant[0]?.check_if_in_cart_app.length > 0
+        itemToUpdate.variant[0]?.check_if_in_cart_app.length > 0
         ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
         : cartId;
     console.log('item', itemToUpdate);
@@ -822,13 +831,13 @@ export default function Products({route, navigation}) {
               qty: null,
               cart_product_id: res.data.cart_product_id,
               variant: itemToUpdate?.variant.map((val, i) => {
-                return {...val, check_if_in_cart_app: []};
+                return { ...val, check_if_in_cart_app: [] };
               }),
             };
           }
           return val;
         });
-        updateState({productListData: updateArray, updateQtyLoader: false});
+        updateState({ productListData: updateArray, updateQtyLoader: false, selectedItemID: -1 });
         // showSuccess(res?.message);
       })
       .catch(errorMethod);
@@ -836,9 +845,9 @@ export default function Products({route, navigation}) {
 
   const errorMethodSecond = (error, addonSet = []) => {
     console.log(error.message.alert, 'Error>>>>>');
-    updateState({updateQtyLoader: false});
+    updateState({ updateQtyLoader: false });
     if (error?.message?.alert == 1) {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false, selectedItemID: -1 });
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
@@ -846,10 +855,10 @@ export default function Products({route, navigation}) {
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        {text: 'Clear Cart', onPress: () => clearCart(addonSet)},
+        { text: 'Clear Cart', onPress: () => clearCart(addonSet) },
       ]);
     } else {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false, selectedItemID: -1 });
       showError(error?.message || error?.error);
     }
   };
@@ -876,8 +885,8 @@ export default function Products({route, navigation}) {
       .catch(errorMethod);
   };
 
-  const renderProduct = ({item, index}) => {
-    const {isSelectItem} = state;
+  const renderProduct = ({ item, index }) => {
+    const { isSelectItem } = state;
     return (
       <ProductCard3
         data={item}
@@ -887,17 +896,18 @@ export default function Products({route, navigation}) {
         addToCart={() => addSingleItem(item)}
         onIncrement={() => addDeleteCartItems(item, 1)}
         onDecrement={() => addDeleteCartItems(item, 2)}
-        selectedCartItem={selectedCartItem}
+        selectedItemID={selectedItemID}
+        btnLoader={btnLoader}
       />
     );
   };
 
 
   const openModal = () => {
-    updateState({isVisibleModal: true});
+    updateState({ isVisibleModal: true });
   };
   const closeModal = () => {
-    updateState({isVisibleModal: false});
+    updateState({ isVisibleModal: false });
   };
 
   const onPressChildCards = (item) => {
@@ -931,7 +941,7 @@ export default function Products({route, navigation}) {
       }
       return val;
     });
-    updateState({cartId: cartID, productListData: updateArray});
+    updateState({ cartId: cartID, productListData: updateArray });
   };
 
   useEffect(() => {
@@ -952,19 +962,19 @@ export default function Products({route, navigation}) {
   const listHeaderComponent = () => {
     return (
       <Fragment>
-        <View style={{marginVertical: moderateScaleVertical(12)}}>
+        <View style={{ marginVertical: moderateScaleVertical(12) }}>
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <View style={{marginLeft: moderateScaleVertical(12), flex: 0.6}}>
-              <View style={{flexDirection: 'row'}}>
+            <View style={{ marginLeft: moderateScaleVertical(12), flex: 0.6 }}>
+              <View style={{ flexDirection: 'row' }}>
                 <View style={{}}>
                   <RoundImg img={getImageUrl(uri1, uri2, '400/400')} />
                 </View>
-                <View style={{marginLeft: moderateScale(12)}}>
+                <View style={{ marginLeft: moderateScale(12) }}>
                   {!!name && (
                     <Text
                       numberOfLines={2}
@@ -1030,7 +1040,7 @@ export default function Products({route, navigation}) {
                   </Text>
                 </View>
               </View> */}
-              <View style={{marginTop: moderateScaleVertical(4)}}>
+              <View style={{ marginTop: moderateScaleVertical(4) }}>
                 {/* <ImageBackground
                   source={{
                     uri: getImageUrl(
@@ -1107,61 +1117,10 @@ export default function Products({route, navigation}) {
             </ScrollView>
           </View>
         ) : null}
-        <View style={{marginTop: moderateScaleVertical(20)}} />
+        <View style={{ marginTop: moderateScaleVertical(20) }} />
       </Fragment>
     );
   };
-
-  const headerTextRef = useRef(null);
-
-  // if (isLoading) {
-  //   return (
-  //     <View
-  //       style={{
-  //         flex: 1,
-  //         backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
-  //       }}>
-  //       <SafeAreaView>
-  //         <View style={styles.loaderHeader}>
-  //           <CardLoader cardWidth={20} height={20} />
-  //           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-  //             <CardLoader cardWidth={20} height={20} />
-  //             <View style={{marginHorizontal: moderateScale(6)}} />
-  //             <CardLoader cardWidth={20} height={20} />
-  //           </View>
-  //         </View>
-
-  //         <View
-  //           style={{
-  //             marginVertical: moderateScaleVertical(16),
-  //             marginBottom: moderateScaleVertical(24),
-  //             flexDirection: 'row',
-  //             alignItems: 'center',
-  //             justifyContent: 'space-between',
-  //           }}>
-  //           <CircularLoader />
-  //           <View>
-  //             <CardLoader cardWidth={40} height={20} />
-  //             <CardLoader cardWidth={40} height={20} />
-  //           </View>
-  //         </View>
-
-  //         <View style={{marginHorizontal: moderateScale(16)}}>
-  //           <ProductDetailLoader />
-  //           <View style={{marginBottom: moderateScaleVertical(12)}} />
-  //           <ProductDetailLoader />
-  //           <View style={{marginBottom: moderateScaleVertical(12)}} />
-  //           <ProductDetailLoader />
-  //           <View style={{marginBottom: moderateScaleVertical(12)}} />
-  //           <ProductDetailLoader />
-  //           <View style={{marginBottom: moderateScaleVertical(12)}} />
-  //           <ProductDetailLoader />
-  //           <View style={{marginBottom: moderateScaleVertical(12)}} />
-  //         </View>
-  //       </SafeAreaView>
-  //     </View>
-  //   );
-  // }
 
   if (isLoading) {
     return (
@@ -1182,7 +1141,7 @@ export default function Products({route, navigation}) {
             rectHeightRight={20}
             rx={5}
             ry={5}
-            viewStyles={{marginTop: moderateScale(10)}}
+            viewStyles={{ marginTop: moderateScale(10) }}
           />
 
           <View
@@ -1204,7 +1163,7 @@ export default function Products({route, navigation}) {
                 rx={5}
                 ry={5}
                 isRight={false}
-                viewStyles={{marginHorizontal: 0}}
+                viewStyles={{ marginHorizontal: 0 }}
               />
               <HeaderLoader
                 widthLeft={50}
@@ -1222,17 +1181,17 @@ export default function Products({route, navigation}) {
             </View>
           </View>
 
-          <View style={{marginHorizontal: moderateScale(16)}}>
+          <View style={{ marginHorizontal: moderateScale(16) }}>
             <ProductListLoader />
-            <View style={{marginBottom: moderateScaleVertical(12)}} />
+            <View style={{ marginBottom: moderateScaleVertical(12) }} />
             <ProductListLoader />
-            <View style={{marginBottom: moderateScaleVertical(12)}} />
+            <View style={{ marginBottom: moderateScaleVertical(12) }} />
             <ProductListLoader />
-            <View style={{marginBottom: moderateScaleVertical(12)}} />
+            <View style={{ marginBottom: moderateScaleVertical(12) }} />
             <ProductListLoader />
-            <View style={{marginBottom: moderateScaleVertical(12)}} />
+            <View style={{ marginBottom: moderateScaleVertical(12) }} />
             <ProductListLoader />
-            <View style={{marginBottom: moderateScaleVertical(12)}} />
+            <View style={{ marginBottom: moderateScaleVertical(12) }} />
           </View>
         </SafeAreaView>
       </View>
@@ -1260,7 +1219,7 @@ export default function Products({route, navigation}) {
     }
   };
 
-  const onScroll = ({nativeEvent}) => {
+  const onScroll = ({ nativeEvent }) => {
     if (productListData.length < 6) {
       return;
     }
@@ -1269,13 +1228,13 @@ export default function Products({route, navigation}) {
     console.log('now index is ' + index);
     if (index > 1) {
       if (!AnimatedHeaderValue) {
-        updateState({AnimatedHeaderValue: true});
+        updateState({ AnimatedHeaderValue: true });
       }
       return;
     }
     if (index < 1) {
       if (AnimatedHeaderValue) {
-        updateState({AnimatedHeaderValue: false});
+        updateState({ AnimatedHeaderValue: false });
         return;
       }
       return;
@@ -1320,10 +1279,10 @@ export default function Products({route, navigation}) {
         ]}
         visible={updateQtyLoader}
       />
-      <SafeAreaView style={{flex: 1}}>
-        <View style={{flex: 1}}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
           <View style={styles.headerStyle}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => navigation.goBack()}
@@ -1333,7 +1292,7 @@ export default function Products({route, navigation}) {
                     tintColor: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.black,
-                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                   }}
                   source={imagePath.icBackb}
                 />
@@ -1345,15 +1304,15 @@ export default function Products({route, navigation}) {
                     // key={AnimatedHeaderValue}
                     // duration={10}
                     animation={'fadeIn'}
-                    style={{marginLeft: moderateScale(8), flex: 0.7}}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    style={{ marginLeft: moderateScale(8), flex: 0.7 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                       <RoundImg
                         img={getImageUrl(uri1, uri2, '400/400')}
                         size={20}
                         isDarkMode={isDarkMode}
                         MyDarkTheme={MyDarkTheme}
                       />
-                      <View style={{marginLeft: moderateScale(8)}}>
+                      <View style={{ marginLeft: moderateScale(8) }}>
                         <Text
                           numberOfLines={1}
                           style={{
@@ -1408,38 +1367,38 @@ export default function Products({route, navigation}) {
                 />
               </Animatable.View>
             ) : (
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={() => updateState({isSearch: true})}
-                  // onPress={moveToNewScreen(
-                  //   navigationStrings.SEARCHPRODUCTOVENDOR,
-                  //   {
-                  //     type: data?.vendor
-                  //       ? staticStrings.VENDOR
-                  //       : staticStrings.CATEGORY,
-                  //     id: data?.vendor ? data?.id : productListId?.id,
-                  //   },
-                  // )}
+                // onPress={() => updateState({isSearch: true})}
+                // onPress={moveToNewScreen(
+                //   navigationStrings.SEARCHPRODUCTOVENDOR,
+                //   {
+                //     type: data?.vendor
+                //       ? staticStrings.VENDOR
+                //       : staticStrings.CATEGORY,
+                //     id: data?.vendor ? data?.id : productListId?.id,
+                //   },
+                // )}
                 >
                   <Image
                     style={{
                       tintColor: isDarkMode
                         ? MyDarkTheme.colors.text
                         : colors.black,
-                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                      transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                     }}
                     source={!!data?.showAddToCart ? false : imagePath.icSearchb}
                   />
                 </TouchableOpacity>
-                <View style={{marginHorizontal: moderateScale(8)}} />
+                <View style={{ marginHorizontal: moderateScale(8) }} />
                 <TouchableOpacity onPress={onShare} activeOpacity={0.8}>
                   <Image
                     style={{
                       tintColor: isDarkMode
                         ? MyDarkTheme.colors.text
                         : colors.black,
-                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                      transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
                     }}
                     source={imagePath.icShareb}
                   />
@@ -1448,7 +1407,7 @@ export default function Products({route, navigation}) {
             )}
           </View>
 
-          <View style={{height: moderateScale(10)}} />
+          <View style={{ height: moderateScale(10) }} />
           <FlatList
             onScroll={onScroll}
             disableScrollViewPanResponder
@@ -1469,7 +1428,7 @@ export default function Products({route, navigation}) {
               // backgroundColor:'red',
               // marginTop: width * 0.1,
             }}
-            ItemSeparatorComponent={() => <View style={{height: 10}} />}
+            ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
             refreshing={isRefreshing}
             // initialNumToRender={12}
             // maxToRenderPerBatch={10}
@@ -1484,7 +1443,7 @@ export default function Products({route, navigation}) {
             onEndReached={onEndReachedDelayed}
             onEndReachedThreshold={0.5}
             ListFooterComponent={() => (
-              <View style={{height: moderateScale(50)}} />
+              <View style={{ height: moderateScale(50) }} />
             )}
             ListEmptyComponent={
               <NoDataFound isLoading={state.isLoading} containerStyle={{}} />
@@ -1499,10 +1458,10 @@ export default function Products({route, navigation}) {
             isVisible={isVisibleModal}
             productdetail={selectedCartItem}
             onClose={() =>
-              updateState({isVisibleModal: false, showShimmer: true})
+              updateState({ isVisibleModal: false, showShimmer: true })
             }
             showShimmer={showShimmer}
-            shimmerClose={(val) => updateState({showShimmer: val})}
+            shimmerClose={(val) => updateState({ showShimmer: val })}
             updateCartItems={updateCartItems}
           />
         )}

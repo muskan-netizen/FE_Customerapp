@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, Animated, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Animated} from 'react-native';
 import FastImage from 'react-native-fast-image'
 import { UIActivityIndicator } from 'react-native-indicators';
+import colors from '../styles/colors';
 import { moderateScale } from '../styles/responsiveSize';
 import { getImageUrl } from '../utils/helperFunctions';
 
@@ -56,55 +57,69 @@ class BlurImages extends React.Component {
 
     render() {
         const {
-            thumbnailSource,
-            source,
             style,
             bgStyle = {},
-            data,
             themeColor,
+            isDarkMode,
+            imageSource,
+            thumbnailQuality,
+            originalQuality,
+            containerStyle,
             ...props
         } = this.props;
 
         return (
-            <View style={{ flex: 1 }} >
-
+            <View style={{
+                ...styles.container,
+                backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyColor,
+                ...containerStyle
+            }} >
                 <AnimatedFastImage
                     {...props}
                     source={{
                         uri: getImageUrl(
-                            data?.banner?.image_fit,
-                            data?.banner?.image_path,
-                            '20/20',
+                            imageSource?.banner?.image_fit || imageSource?.image?.path.image_fit,
+                            imageSource?.banner?.image_path || imageSource?.image?.path.image_path,
+                            thumbnailQuality,
                         ),
                         priority: FastImage.priority.high,
                     }}
-                    style={[style, { opacity: this.thumbnailAnimated, alignItems: 'center' }]}
+                    style={[style, {
+                        opacity: this.thumbnailAnimated,
+                        // alignItems: 'center',
+                        backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyColor,
+                    }]}
                     onLoad={this.handleThumbnailLoad}
                 >
-                    {this.state.showIndicator ?
+                    {/* {this.state.showIndicator ?
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                             <UIActivityIndicator size={70} color={themeColor} />
                         </View>
-                        : <View />}
+                        : <View />} */}
                 </AnimatedFastImage>
                 <AnimatedFastImage
                     {...props}
                     source={{
                         uri: getImageUrl(
-                            data?.banner?.image_fit,
-                            data?.banner?.image_path,
-                            '800/800',
+                            imageSource?.banner?.image_fit || imageSource?.image?.path.image_fit,
+                            imageSource?.banner?.image_path || imageSource?.image?.path.image_path,
+                            originalQuality,
                         ),
                         priority: FastImage.priority.low
                     }}
-                    style={[styles.imageOverlay, { opacity: this.imageAnimated, alignItems: 'center' }, style]}
+                    style={[styles.imageOverlay, {
+                        opacity: this.imageAnimated,
+                        // alignItems: 'center',
+                        backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyColor,
+                    },
+                        style]}
                     onLoadEnd={this.onImageLoad}
                 >
-                    {this.state.showIndicator ?
+                    {/* {this.state.showIndicator ?
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                             <UIActivityIndicator size={70} color={themeColor} />
                         </View>
-                        : <View />}
+                        : <View />} */}
 
                 </AnimatedFastImage>
             </View>
@@ -121,8 +136,9 @@ const styles = StyleSheet.create({
         top: 0,
     },
     container: {
-        flex: 1
-        //height: 160,
+        flex: 1,
+        borderTopRightRadius: moderateScale(9),
+        borderTopLeftRadius: moderateScale(9),
     },
 });
 

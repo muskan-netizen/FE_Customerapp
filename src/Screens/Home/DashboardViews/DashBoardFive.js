@@ -6,6 +6,7 @@ import {
   Text,
   View
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import { useDarkMode } from 'react-native-dark-mode';
 import { Pagination } from 'react-native-snap-carousel';
 import { useSelector } from 'react-redux';
@@ -112,6 +113,7 @@ export default function DashBoardFive({
                 }
                 onPress={(item) => bannerPress(item)}
                 carouselViewStyle={{ height: width * 0.33 }}
+                isDarkMode={isDarkMode}
               />
               <Pagination
                 dotsLength={appData.banners.length}
@@ -187,7 +189,10 @@ export default function DashBoardFive({
       <SearchBar2 navigation={navigation} />
       <View style={{ flex: 1, marginHorizontal: moderateScale(15) }}>
         {appMainData?.vendors && !!appMainData?.vendors?.length && (
-          <View>
+          <Animatable.View
+            animation={'fadeInUp'}
+            delay={200}
+          >
             <FlatList
               showsVerticalScrollIndicator={false}
               alwaysBounceVertical={true}
@@ -209,7 +214,7 @@ export default function DashBoardFive({
                 height: Platform.OS == 'ios' ? moderateScale(72) : moderateScale(90)
               }} />}
             />
-          </View>
+          </Animatable.View>
         )}
       </View>
     </View>
