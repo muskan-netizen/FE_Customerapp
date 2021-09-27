@@ -14,4 +14,5 @@ export default {
   SCHEDULE: 'schedule',
   PICKUPANDDELIEVRY: 'Pickup/Delivery',
   RETURNREQUEST: 'Return Request',
+  ONDEMANDSERVICE: 'On Demand Service',
 };

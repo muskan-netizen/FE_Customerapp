@@ -519,4 +519,6 @@ Amount`,
     'Your already have items in your cart. Do you want to discard them?',
   LABEL1: 'Label 1',
   LABEL2: 'Label 2',
+  DOYOUHAVECLEANINGMATERIAL: ' Do you require cleaning materials ?',
+  NOIHAVETHEM: 'No i have them',
 };

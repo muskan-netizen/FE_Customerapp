@@ -81,10 +81,10 @@ export default function HomeServiceVariantAddons({
     totalItemsPrice: null,
     inputInstructionText: '',
     cleaningmaterialArray: [
-      {id: 1, name: 'No i have them'},
+      {id: 1, name: strings.NOIHAVETHEM},
       {id: 2, name: 'yes please'},
     ],
-    selectedCleaningmaterial: null,
+    selectedCleaningmaterial: {id: 1, name: strings.NOIHAVETHEM},
     totalPriceArray: [],
   });
 
@@ -326,31 +326,6 @@ export default function HomeServiceVariantAddons({
       }),
     });
   };
-
-  useEffect(() => {
-    {
-      addonSet?.map((i, inx) => {
-        {
-          i?.setoptions?.map((i, inx) => {
-            {
-              if (i?.value) {
-                totalPriceArray.push(i);
-              }
-            }
-          });
-        }
-      });
-      console.log(totalItemsPrice, 'totalItemsPrice');
-      if (totalPriceArray?.length) {
-        totalPriceArray?.map((i, inx) => {
-          updateState({
-            ...totalItemsPrice,
-            totalItemsPrice: totalItemsPrice + Number(i?.price),
-          });
-        });
-      }
-    }
-  }, [totalPriceArray]);
 
   const checkBoxButtonViewAddons = ({setoptions}) => {
     return (
@@ -1106,63 +1081,8 @@ export default function HomeServiceVariantAddons({
                 {strings.NOVARIANTPRODUCTAVAILABLE}
               </Text>
             ) : null}
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                alignItems: 'center',
-                // justifyContent: 'space-between',
-              }}>
-              <Text
-                style={{
-                  fontSize: textScale(14),
-                  marginHorizontal: moderateScale(20),
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  fontFamily: fontFamily.regular,
-                }}>
-                Do you require cleaning materials ?
-              </Text>
-              {cleaningmaterialArray.map((item, index) => {
-                console.log(item, 'itemitem');
-                return (
-                  <View style={{marginVertical: moderateScaleVertical(10)}}>
-                    <TouchableOpacity
-                      style={{
-                        flexDirection: 'row',
-                        borderColor:
-                          item?.id === selectedCleaningmaterial?.id
-                            ? themeColors.primary_color
-                            : colors.textGreyB,
-                        borderWidth: 0.5,
-                        borderRadius: 4,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginLeft: moderateScale(20),
-                        paddingHorizontal: moderateScale(5),
-                        paddingVertical: moderateScaleVertical(7),
-                        marginVertical: moderateScaleVertical(5),
-                      }}
-                      onPress={() => _selectedCleaingmaterial(item)}
-                      key={index}>
-                      <View>
-                        <Text
-                          style={{
-                            fontSize: 15,
-                            fontFamily: fontFamily.medium,
-                            color:
-                              item?.id === selectedCleaningmaterial?.id
-                                ? themeColors.primary_color
-                                : colors.textGreyLight,
-                          }}>
-                          {item?.name}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                );
-              })}
-            </View>
-            <Text
+
+            {/* <Text
               style={{
                 fontSize: textScale(14),
                 marginHorizontal: moderateScale(20),
@@ -1182,7 +1102,7 @@ export default function HomeServiceVariantAddons({
               ]}
               placeholderTextColor={colors.greyLight}
               onChangeText={(text) => updateState({inputInstructionText: text})}
-            />
+            /> */}
           </ScrollView>
 
           {/* {!showErrorMessageTitle && productTotalQuantity != 0 && (
@@ -1281,42 +1201,14 @@ export default function HomeServiceVariantAddons({
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                justifyContent: 'space-between',
-                paddingHorizontal: moderateScale(16),
+                justifyContent: 'center',
+
                 paddingBottom: moderateScaleVertical(16),
                 backgroundColor: isDarkMode
                   ? MyDarkTheme.colors.background
                   : '#fff',
               }}>
               <View style={{flex: 0.75}}>
-                {totalItemsPrice ? (
-                  <>
-                    <Text
-                      style={{
-                        fontSize: textScale(12),
-                        fontFamily: fontFamily.regular,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.textGreyLight,
-                      }}>
-                      Service Cost
-                    </Text>
-                    <Text
-                      style={{
-                        marginVertical: moderateScaleVertical(5),
-                        fontSize: textScale(16),
-                        fontFamily: fontFamily.bold,
-                        color: colors.green,
-                      }}>{`${currencies?.primary_currency?.symbol}${(
-                      Number(productPriceData?.multiplier) *
-                      Number(totalItemsPrice)
-                    ).toFixed(2)}`}</Text>
-                  </>
-                ) : null}
-              </View>
-
-              <View style={{marginHorizontal: 8}} />
-              <View style={{flex: 0.25}}>
                 <GradientButton
                   indicator={btnLoader}
                   indicatorColor={colors.white}

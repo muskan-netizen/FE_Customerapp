@@ -516,4 +516,5 @@ personalizado`,
   YOUR_RIDE_WILL_START_SOON: 'Your ride will start soon',
   LABEL1: 'Label 1',
   LABEL2: 'Label 2',
+  DOYOUHAVECLEANINGMATERIAL: ' Do you require cleaning materials ?',
 };

@@ -136,12 +136,13 @@ export default function Products({route, navigation}) {
     checkForMaximumPriceChange: false,
     showFilterSlectedIcon: false,
     isLoadingC: false,
-    selectedCategory: null,
+    selectedCategory: data?.children ? data?.children[0] : null,
     AnimatedHeaderValue: false,
     selectedCartItem: null,
     cartId: null,
     isSearch: false,
     searchInput: '',
+    allServicesTabData: data?.children,
   });
 
   const {
@@ -187,12 +188,12 @@ export default function Products({route, navigation}) {
     showShimmer,
     isSearch,
     searchInput,
+    allServicesTabData,
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
   const styles = stylesFunc({themeColors, fontFamily});
-
   //Saving the initial state
   const initialState = cloneDeep(state);
   //Logged in user data
@@ -212,11 +213,15 @@ export default function Products({route, navigation}) {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       updateState({pageNo: 1});
-      getAllListItems();
+      if (!categoryInfo?.type?.id == 8) {
+        getAllListItems();
+      }
+
       if (isLoadingC) {
         getAllProducts(true);
       }
     });
+
     return unsubscribe;
   }, [navigation]);
 
@@ -260,7 +265,6 @@ export default function Products({route, navigation}) {
       }
     }
   };
-
   /****Get all list items by vendor id */
   const getAllProductsByVendorCategory = () => {
     // alert("21312")
@@ -300,7 +304,6 @@ export default function Products({route, navigation}) {
   const updateBrandAndCategoryFilter = (filterData, allBrands) => {
     var brandDatas = [];
     var filterDataNew = [];
-
     if (allBrands.length) {
       brandDatas = [
         {
@@ -315,10 +318,8 @@ export default function Products({route, navigation}) {
           }),
         },
       ];
-
       // updateState({allFilters: [...allFilters,...brandDatas]});
     }
-
     // Price filter
     if (filterData.length) {
       filterDataNew = filterData.map((i, inx) => {
@@ -470,7 +471,6 @@ export default function Products({route, navigation}) {
 
   /**********Get all list items by category id */
   const getAllProducts = () => {
-    console.log('api hit getAllProducts');
     actions
       .getProductByCategoryId(
         `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${
@@ -491,6 +491,7 @@ export default function Products({route, navigation}) {
           isLoadingC: false,
           isRefreshing: false,
           categoryInfo: categoryInfo ? categoryInfo : res.data.category,
+
           filterData: res.data.filterData,
           productListData:
             pageNo == 1
@@ -516,6 +517,7 @@ export default function Products({route, navigation}) {
       .catch(errorMethod);
     // }
   };
+  console.log(categoryInfo, 'categoryInfo');
 
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
@@ -903,8 +905,6 @@ export default function Products({route, navigation}) {
   };
 
   const onPressChildCards = (item) => {
-    console.log(item, 'item upload');
-
     updateState({
       selectedCategory: item,
       // productListData: [],
@@ -949,7 +949,6 @@ export default function Products({route, navigation}) {
     index,
   });
 
-  console.log('category info', categoryInfo);
   //To remove flickering of icon and image we are creating the header child seperately
   const listHeaderComponent = () => {
     return (
@@ -1263,7 +1262,7 @@ export default function Products({route, navigation}) {
   };
 
   const onScroll = ({nativeEvent}) => {
-    if (productListData.length < 6) {
+    if (productListData?.length < 6) {
       return;
     }
     let offset = nativeEvent.contentOffset.y;
@@ -1283,8 +1282,6 @@ export default function Products({route, navigation}) {
       return;
     }
   };
-
-  console.log('categoryinfo', categoryInfo);
 
   let uri1 = categoryInfo?.banner?.image_fit || categoryInfo?.icon?.image_fit;
   let uri2 = categoryInfo?.banner?.image_path || categoryInfo?.icon?.image_path;
@@ -1342,7 +1339,7 @@ export default function Products({route, navigation}) {
               </TouchableOpacity>
               {AnimatedHeaderValue &&
                 !!productListData &&
-                productListData.length > 0 && (
+                productListData?.length > 0 && (
                   <Animatable.View
                     // key={AnimatedHeaderValue}
                     // duration={10}
@@ -1494,7 +1491,21 @@ export default function Products({route, navigation}) {
           />
           {/* <View style={{ height: moderateScale(height * 0.070) }} /> */}
         </View>
-        {isVisibleModal && (
+
+        {categoryInfo.type_id == 8 && isVisibleModal ? (
+          <HomeServiceVariantAddons
+            addonSet={selectedCartItem?.add_on}
+            variantData={selectedCartItem?.variantSet}
+            isVisible={isVisibleModal}
+            productdetail={selectedCartItem}
+            onClose={() =>
+              updateState({isVisibleModal: false, showShimmer: true})
+            }
+            showShimmer={showShimmer}
+            shimmerClose={(val) => updateState({showShimmer: val})}
+            updateCartItems={updateCartItems}
+          />
+        ) : (
           <VariantAddons
             addonSet={selectedCartItem?.add_on}
             variantData={selectedCartItem?.variantSet}
@@ -1507,19 +1518,6 @@ export default function Products({route, navigation}) {
             shimmerClose={(val) => updateState({showShimmer: val})}
             updateCartItems={updateCartItems}
           />
-
-          // <HomeServiceVariantAddons
-          //   addonSet={selectedCartItem?.add_on}
-          //   variantData={selectedCartItem?.variantSet}
-          //   isVisible={isVisibleModal}
-          //   productdetail={selectedCartItem}
-          //   onClose={() =>
-          //     updateState({isVisibleModal: false, showShimmer: true})
-          //   }
-          //   showShimmer={showShimmer}
-          //   shimmerClose={(val) => updateState({showShimmer: val})}
-          //   updateCartItems={updateCartItems}
-          // />
         )}
       </SafeAreaView>
     </View>
