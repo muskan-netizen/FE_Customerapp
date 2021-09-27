@@ -57,7 +57,7 @@ export default function VerifyAccountSecond({navigation, route}) {
 
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
-  // console.log(userData, 'userData>>>>');
+
   const styles = stylesFunc({userData, fontFamily, themeColors});
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {

@@ -59,7 +59,7 @@ export default function Offer({route, navigation}) {
     data['vendor_id'] = vendorInfo?.vendor?.vendor_id;
     data['product_id'] = vendorInfo?.vendor?.id;
     data['amount'] = vendorInfo?.vendor?.tags_price;
-    console.log(data, 'data>>>>>>>>');
+
     actions
       .getAllPromoCodesForCaB(data, {
         code: appData?.profile?.code,

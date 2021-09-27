@@ -15,7 +15,6 @@ export default function HomeCategoryCard2({
   onPress = () => {},
   isLoading = false,
 }) {
-  console.log(data, 'data>>>>');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
