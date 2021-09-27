@@ -190,7 +190,7 @@ export default function ChooseAddressModal({
           style={
             isDarkMode
               ? {tintColor: MyDarkTheme.colors.text}
-              : {tintColor: null}
+              : {tintColor: colors.black}
           }
           source={imagePath.crossB}
         />
