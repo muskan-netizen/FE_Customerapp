@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
-import {ScrollView} from 'react-native-collapsible-tab-view';
+import {View, ScrollView} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
@@ -13,7 +12,6 @@ import stylesFun from './styles';
 
 export default function WebviewScreen({navigation, route}) {
   const paramData = route?.params;
-  console.log(paramData, 'paramData>>>');
   const [state, setState] = useState({});
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -37,12 +35,16 @@ export default function WebviewScreen({navigation, route}) {
       bgColor={colors.backgroundGrey}
       statusBarColor={colors.white}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+        }
         centerTitle={paramData?.title || ''}
-        headerStyle={{backgroundColor: Colors.white}}
+        headerStyle={{backgroundColor: colors.white}}
       />
       <View style={{...commonStyles.headerTopLine}} />
-      <ScrollView>
+      <ScrollView
+        contentContainerStyle={{flexGrow: 1}}
+        showsVerticalScrollIndicator={false}>
         <WebView source={{uri: paramData?.url}} />
       </ScrollView>
     </WrapperContainer>

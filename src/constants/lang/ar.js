@@ -521,4 +521,6 @@ export default {
   LABEL1: 'Label 1',
   LABEL2: 'Label 2',
   CHOICE_OF: 'Choice of',
+  TABLE: 'Table',
+  SEAT_CAPACITY: 'Seat Capacity',
 };

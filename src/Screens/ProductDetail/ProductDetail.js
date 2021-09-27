@@ -720,7 +720,7 @@ export default function ProductDetail({route, navigation}) {
                       activeDotIndex={state.slider1ActiveSlide}
                       dotColor={'grey'}
                       dotStyle={[styles.dotStyle]}
-                      inactiveDotColor={'black'}
+                      inactiveDotColor={colors.black}
                       inactiveDotOpacity={0.4}
                       inactiveDotScale={0.8}
                     />
@@ -895,7 +895,7 @@ export default function ProductDetail({route, navigation}) {
                         paddingBottom: moderateScaleVertical(16),
                         backgroundColor: isDarkMode
                           ? MyDarkTheme.colors.background
-                          : '#fff',
+                          : colors.white,
                       }}>
                       <View style={{flex: 0.25}}>
                         <View

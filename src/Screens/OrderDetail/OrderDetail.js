@@ -100,6 +100,7 @@ export default function OrderDetail({navigation, route}) {
     }, [currencies, languages, paramData]),
   );
 
+
   /*********Get order detail screen********* */
   const _getOrderDetailScreen = () => {
     let data = {};
@@ -118,7 +119,6 @@ export default function OrderDetail({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'resorder detail');
         updateState({isLoading: false});
         if (res?.data) {
           updateState({
@@ -126,7 +126,12 @@ export default function OrderDetail({navigation, route}) {
             cartData: res.data,
             isLoading: false,
             currentPosition: paramData?.orderStatus
-              ? labels.indexOf(paramData?.orderStatus?.current_status?.title)
+              ? labels.indexOf(
+                  paramData?.orderStatus?.current_status?.title
+                    .charAt(0)
+                    .toUpperCase() +
+                    paramData?.orderStatus?.current_status?.title.slice(1),
+                )
               : null,
           });
         }
@@ -914,6 +919,8 @@ export default function OrderDetail({navigation, route}) {
       '500/500',
     );
 
+
+    
     return (
       <>
         {paramData?.orderStatus?.current_status?.title == 'Placed' && (
