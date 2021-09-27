@@ -516,4 +516,5 @@ export default {
   LABEL1: 'Label 1',
   LABEL2: 'Label 2',
   CHOICE_OF: 'Choice of',
+  FEATURED_INCLUDED: 'Featured Included :',
 };

@@ -360,7 +360,7 @@ export default function Subscriptions2({navigation, route}) {
             paddingHorizontal: moderateScale(20),
             marginVertical: moderateScale(10),
           }}>
-          <Text style={styles.title}>{'Featured Included:'}</Text>
+          <Text style={styles.title}>{strings.FEATURED_INCLUDED}</Text>
 
           <View
             style={{
@@ -393,7 +393,7 @@ export default function Subscriptions2({navigation, route}) {
             marginVertical: moderateScale(10),
           }}>
           <View>
-            <Text style={styles.title}>{'Debit From'}</Text>
+            <Text style={styles.title}>{strings.DEBIT_FROM}</Text>
           </View>
           <View>
             <FlatList

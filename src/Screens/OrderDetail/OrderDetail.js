@@ -75,7 +75,7 @@ export default function OrderDetail({navigation, route}) {
   });
   const {isLoading, cartItems, cartData, labels, currentPosition} = state;
   const userData = useSelector((state) => state?.auth?.userData);
-
+  console.log(cartData, 'cartData');
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
@@ -786,7 +786,11 @@ export default function OrderDetail({navigation, route}) {
           />
           <LeftRightText
             leftText={strings.PAYMENT_METHOD}
-            rightText={cartData?.payment_option?.title || ''}
+            rightText={
+              cartData?.payment_option?.title_lng
+                ? cartData?.payment_option?.title_lng
+                : cartData?.payment_option?.title || ''
+            }
             isDarkMode={isDarkMode}
             MyDarkTheme={MyDarkTheme}
             leftTextStyle={{
