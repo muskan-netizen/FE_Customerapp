@@ -1,4 +1,4 @@
-import { useScrollToTop } from '@react-navigation/native'; import React, { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   FlatList, Platform,
   RefreshControl,
@@ -9,6 +9,7 @@ import {
 import * as Animatable from 'react-native-animatable';
 import { useDarkMode } from 'react-native-dark-mode';
 import { Pagination } from 'react-native-snap-carousel';
+import { useScrollToTop } from '@react-navigation/native'; 
 import { useSelector } from 'react-redux';
 import BannerHome2 from '../../../Components/BannerHome2';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
