@@ -293,6 +293,18 @@ export default ({themeColors, fontFamily}) => {
       textAlign: 'left',
       marginTop: moderateScale(-36),
     },
+    dotStyle: {
+      height: 6,
+      width: 18,
+      borderRadius: 12 / 2,
+      marginLeft: -8,
+    },
+    inActiveDotStyle: {
+      height: 8,
+      width: 8,
+      borderRadius: 4,
+      marginLeft: -8,
+    }
   });
 
   return styles;

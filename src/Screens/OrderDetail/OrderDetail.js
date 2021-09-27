@@ -1,27 +1,23 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { cloneDeep } from 'lodash';
+import LottieView from 'lottie-react-native';
 import moment from 'moment';
 import React, { useState } from 'react';
 import {
   Dimensions,
   FlatList,
   Image,
-  Text,
-  TouchableOpacity,
-  View,
+  Text, View
 } from 'react-native';
+import { useDarkMode } from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
-import {
-  BarIndicator,
-  BallIndicator,
-  UIActivityIndicator,
-} from 'react-native-indicators';
 import StarRating from 'react-native-star-rating';
 import { useSelector } from 'react-redux';
 import HeaderWithFilters from '../../Components/HeaderWithFilters';
+import LeftRightText from '../../Components/LeftRightText';
 import {
   loaderFive,
-  loaderOne,
+  loaderOne
 } from '../../Components/Loaders/AnimatedLoaderFiles';
 import StepIndicators from '../../Components/StepIndicator';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -33,17 +29,12 @@ import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale,
+  textScale
 } from '../../styles/responsiveSize';
-import { shortCodes } from '../../utils/constants/DynamicAppKeys';
-import { getColorCodeWithOpactiyNumber, getImageUrl, showError } from '../../utils/helperFunctions';
+import { MyDarkTheme } from '../../styles/theme';
+import { getImageUrl, showError } from '../../utils/helperFunctions';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../styles/theme';
-import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
-import LottieView from 'lottie-react-native';
-import LeftRightText from '../../Components/LeftRightText';
 
 const { height, width } = Dimensions.get('window');
 
@@ -53,7 +44,7 @@ export default function OrderDetail({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-
+console.log("param data",paramData)
   const [state, setState] = useState({
     isLoading: true,
     cartItems: [],
@@ -118,7 +109,7 @@ export default function OrderDetail({ navigation, route }) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'resorder detail');
+        // console.log(res, 'resorder detail');
         updateState({ isLoading: false });
         if (res?.data) {
           updateState({
