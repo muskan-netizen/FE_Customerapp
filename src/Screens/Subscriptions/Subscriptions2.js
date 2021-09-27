@@ -419,8 +419,6 @@ export default function Subscriptions2({navigation, route}) {
 
   const payAmount = () => {
     updateState({isModalVisibleForPayment: false});
-    console.log(selectedPaymentMethod, 'selectedPaymentMethod');
-    console.log(selectedPlan, 'selectedPlan');
     if (selectedPaymentMethod?.code == 'stripe') {
       _offineLinePayment();
     } else {
@@ -433,12 +431,10 @@ export default function Subscriptions2({navigation, route}) {
   //Offline payments
   const _offineLinePayment = async () => {
     if (cardInfo) {
-      console.log(cardInfo, 'cardInfo>cardInfo>cardInfo');
       updateState({isModalVisibleForPayment: false});
 
       await createToken(cardInfo)
         .then((res) => {
-          console.log(res, 'stripe res>>');
           if (res && res?.token && res.token?.id) {
             updateState({isLoading: true});
             let selectedMethod = selectedPaymentMethod.title.toLowerCase();
@@ -458,8 +454,6 @@ export default function Subscriptions2({navigation, route}) {
                 },
               )
               .then((res) => {
-                console.log('Get purchaseSubscriptionPlan data', res);
-
                 getAllSubscriptions(true);
                 updateState({
                   isLoadingB: false,

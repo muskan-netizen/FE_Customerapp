@@ -370,7 +370,6 @@ export default function Settings({route, navigation}) {
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.lightDark
             : colors.greyColor1,
-          zIndex: 5000,
           marginHorizontal: moderateScale(20),
           flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
         }}
@@ -383,7 +382,6 @@ export default function Settings({route, navigation}) {
           justifyContent: 'flex-start',
           flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
         }}
-        zIndex={5000}
         dropDownStyle={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.lightDark
@@ -391,7 +389,9 @@ export default function Settings({route, navigation}) {
           height: 120,
           width: width - moderateScale(40),
           alignSelf: 'center',
+          zIndex: 5000,
         }}
+        zIndex={5000}
         arrowColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
         onChangeItem={(item) => updateCurrency(item)}
       />
@@ -401,8 +401,6 @@ export default function Settings({route, navigation}) {
           flexDirection: 'row',
           marginHorizontal: moderateScale(20),
           marginTop: moderateScaleVertical(10),
-
-          zIndex: 4000,
         }}>
         <Text
           style={
@@ -424,13 +422,14 @@ export default function Settings({route, navigation}) {
           height: 40,
           marginTop: moderateScaleVertical(5),
         }}
+        zIndex={1000}
         style={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.lightDark
             : colors.greyColor1,
-          zIndex: 4000,
           marginHorizontal: moderateScale(20),
           flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+          zIndex: 1000,
         }}
         itemStyle={{
           justifyContent: 'flex-start',
@@ -444,11 +443,10 @@ export default function Settings({route, navigation}) {
             ? {color: MyDarkTheme.colors.text}
             : {color: colors.textGrey}
         }
-        zIndex={4000}
         dropDownStyle={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.lightDark
-            : colors.grey,
+            : colors.greyColor1,
           minHeight: moderateScaleVertical(40),
           maxHeight: moderateScaleVertical(145),
 

@@ -72,7 +72,6 @@ export default function Cart({navigation, route}) {
   const recommendedVendorsdata = appMainData?.vendors;
 
   const [state, setState] = useState({
-    isLoading: false,
     isVisibleTimeModal: false,
     isVisible: false,
     cartItems: [],
@@ -111,7 +110,6 @@ export default function Cart({navigation, route}) {
   const {
     viewHeight,
     isVisibleTimeModal,
-    isLoading,
     cartItems,
     cartData,
     isLoadingB,
@@ -145,14 +143,11 @@ export default function Cart({navigation, route}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
 
-  console.log('cart item laoding', isLoadingB);
-
   const selectedAddressData = useSelector(
     (state) => state?.cart?.selectedAddress,
   );
 
   const dineInType = useSelector((state) => state?.home?.dineInType);
-  console.log(dineInType, 'dineInType');
 
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -196,7 +191,7 @@ export default function Cart({navigation, route}) {
   //   if (paramsData && paramsData?.selectedMethod) {
   //     updateState({ selectedPayment: paramsData?.selectedMethod });
   //   }
-  //   console.log("check cart item+++ inner", cartItems)
+
   //   // alert('run')
   //   // updateState({ isLoadingB: true });
   //   if (!!cartItems) {
@@ -221,7 +216,6 @@ export default function Cart({navigation, route}) {
 
   useEffect(() => {
     if (!!checkCartItem?.data) {
-      console.log('<<<<<<<<>>>>>>>>>>');
       checkforAddressUpdate();
     }
   }, [selectedAddress, allAddresss]);
@@ -243,9 +237,6 @@ export default function Cart({navigation, route}) {
       }
     }
     if (selectedAddress && allAddresss.length) {
-      // let find2=
-      console.log(allAddresss, 'allAddresss');
-      console.log(selectedAddress, 'selectedAddress');
       let find = allAddresss.find(
         (x) =>
           x.id == selectedAddress.id &&
@@ -276,7 +267,6 @@ export default function Cart({navigation, route}) {
             isLoadingB: false,
           });
           if (res.data) {
-            console.log(res.data, 'saveAllUserAddress >>data');
             actions.saveAllUserAddress(res.data);
           }
         })
@@ -300,7 +290,6 @@ export default function Cart({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res, 'cart detail');
         actions.cartItemQty(res);
         updateState({
           isRefreshing: false,
@@ -320,18 +309,18 @@ export default function Cart({navigation, route}) {
               (item, indx) =>
                 (tableData[indx] = {
                   id: item.id,
-                  label: `Category: ${
+                  label: `${strings.CATEGORY}: ${
                     item.category.title ? item.category.title : ''
-                  } | Table: ${
+                  } | ${strings.TABLE}: ${
                     item.table_number ? item.table_number : 0
-                  } | Seat Capacity: ${
+                  } | ${strings.SEAT_CAPACITY}: ${
                     item.seating_number ? item.seating_number : 0
                   }`,
-                  value: `Category: ${
+                  value: `${strings.CATEGORY}: ${
                     item.category.title ? item.category.title : ''
-                  } | Table: ${
+                  } | ${strings.TABLE}: ${
                     item.table_number ? item.table_number : 0
-                  } | Seat Capacity: ${
+                  } | ${strings.SEAT_CAPACITY}: ${
                     item.seating_number ? item.seating_number : 0
                   }`,
                   title: item.category.title,
@@ -476,14 +465,12 @@ export default function Cart({navigation, route}) {
         });
         getAllWishListData();
         showSuccess(res?.message);
-        console.log(res?.message, 'resmessage');
       })
       .catch(errorMethod);
   };
 
   //Error handling in screen
   const errorMethod = (error) => {
-    console.log(error, 'error');
     updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
@@ -528,7 +515,6 @@ export default function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
-  console.log('isloading', isLoading);
   const _directOrderPlace = () => {
     let data = {};
     data['address_id'] =
@@ -562,14 +548,12 @@ export default function Cart({navigation, route}) {
   };
 
   const setDateAndTimeSchedule = () => {
-    console.log(scheduleType, 'scheduleType>>>updated');
     let data = {};
     data['task_type'] = scheduleType;
     data['schedule_dt'] =
       scheduleType != 'now' && sheduledorderdate
         ? new Date(sheduledorderdate).toISOString()
         : null;
-    console.log(data, 'setDateAndTimeSchedule data');
 
     actions
       .scheduledOrder(data, {
@@ -603,7 +587,6 @@ export default function Cart({navigation, route}) {
   const placeOrder = () => {
     var d1 = new Date();
     var d2 = new Date(sheduledorderdate);
-    console.log(d1);
     if (!!userData?.auth_token) {
       if (!selectedAddressData) {
         // showError(strings.PLEASE_SELECT_ADDRESS);
@@ -771,7 +754,6 @@ export default function Cart({navigation, route}) {
   };
 
   useEffect(() => {
-    // console.log(scheduleType, 'scheduleType scheduleType');
     if (
       scheduleType != null &&
       scheduleType == 'now' &&
@@ -782,8 +764,6 @@ export default function Cart({navigation, route}) {
   }, [scheduleType]);
 
   const _selectTime = (item) => {
-    // console.log(item, 'item');
-    // console.log(selectedTimeOption, 'selectedTimeOption selectedTimeOption');
     updateState({
       scheduleType: item?.type,
     });
@@ -824,7 +804,6 @@ export default function Cart({navigation, route}) {
   const deleteItem = async (i, index) => {
     updateState({swipeKey: makeid(5)});
     openDeleteView(i);
-    console.log('swipe ref', swipeRef);
     swipeRef.current.close();
     // return;
 
@@ -857,7 +836,6 @@ export default function Cart({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res, 'getAllWishListData>>>>>>');
         updateState({
           isLoadingB: false,
           wishlistArray: res.data.data,
@@ -867,7 +845,6 @@ export default function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
-  console.log('wishlit data', wishlistArray);
   const _renderItem = ({item, index}) => {
     return (
       <View
@@ -1785,7 +1762,6 @@ export default function Cart({navigation, route}) {
       </>
     );
   };
-  console.log(cartData?.vendor_details?.vendor_tables, 'vendorTables');
 
   //Header section of cart screen
   const getHeader = () => {
@@ -1855,7 +1831,7 @@ export default function Cart({navigation, route}) {
                     ? deepLinkUrl == 1
                       ? tableData[0]?.label
                       : tableData[1]?.label
-                    : defaultSelectedTable || tableData[0]?.label || ''
+                    : tableData[0]?.label || ''
                 }
                 containerStyle={{
                   height: 40,
@@ -2034,8 +2010,6 @@ export default function Cart({navigation, route}) {
   };
 
   const onDateChange = (value) => {
-    // console.log(value, 'value');
-    // _onDateChange(value);
     updateState({
       sheduledorderdate: value,
     });
@@ -2047,7 +2021,6 @@ export default function Cart({navigation, route}) {
         .then((res) => {
           if (res) {
             let table_number = getParameterByName('table', res);
-            console.log(res, 'table_number');
             updateState({deepLinkUrl: table_number});
           }
         })
@@ -2078,30 +2051,6 @@ export default function Cart({navigation, route}) {
         showError(error?.message || error?.error);
       });
   };
-
-  const renderSwipeView = (data) => (
-    <Animated.View>
-      <TouchableOpacity
-        onPress={() => console.log('You touched me')}
-        style={{
-          height: 200,
-          backgroundColor: 'red',
-        }}
-        underlayColor={'#AAA'}>
-        <View>
-          <Text>I am in a SwipeListView</Text>
-        </View>
-      </TouchableOpacity>
-    </Animated.View>
-  );
-
-  const renderHiddenItem = () => (
-    <View style={styles.rowBack}>
-      <View style={{}}>
-        <Text style={styles.backTextWhite}>Delete</Text>
-      </View>
-    </View>
-  );
 
   const onPressRecommendedVendors = (item) => {
     if (!item.is_show_category || item.is_show_category) {
@@ -2504,7 +2453,7 @@ export default function Cart({navigation, route}) {
           contentContainerStyle={{
             flexGrow: 1,
           }}
-          ListEmptyComponent={() => !isLoadingB && <ListEmptyComp />}
+          ListEmptyComponent={() => !isLoadingB ? <ListEmptyComp /> :<></>}
         />
       </View>
       {!!isModalVisibleForClearCart && (

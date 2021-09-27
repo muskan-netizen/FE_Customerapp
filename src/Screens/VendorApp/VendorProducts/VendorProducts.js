@@ -18,6 +18,7 @@ import commonStylesFun from '../../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
   width,
 } from '../../../styles/responsiveSize';
 import {showError} from '../../../utils/helperFunctions';
@@ -98,13 +99,12 @@ export default function VendorProducts({route, navigation}) {
   }, [languages, currencies, isRefreshing, isLoading]);
 
   useEffect(() => {
-    // actions.savedSelectedVendor(paramData?.selectedVendorFrom);
     updateState({
       selectedTab: null,
-      selectedVendor: paramData?.selectedVendorFrom,
+      selectedVendor: storeSelectedVendor,
       isLoading: true,
     });
-  }, [paramData?.selectedVendorFrom]);
+  }, [storeSelectedVendor]);
 
   useEffect(() => {
     getAllListItems();
@@ -250,7 +250,10 @@ export default function VendorProducts({route, navigation}) {
             customTextContainerStyle={{
               width: width / 3,
             }}
-            textStyle={{fontFamily: fontFamily.circularMedium}}
+            textStyle={{
+              fontFamily: fontFamily.medium,
+              fontSize: textScale(12),
+            }}
             topBarMainView={{width: width / 3}}
             textTabBarView={{
               width: moderateScale(width / 3),

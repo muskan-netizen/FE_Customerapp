@@ -222,12 +222,6 @@ export default function VendorRevenue({navigation, route}) {
     }
   }, [selectedTimeOption, selectedVendor]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      updateState({pageActive: 1});
-    }, [pageActive]),
-  );
-
   const _getListOfVendorOrders = () => {
     let vendordId = !!storeSelectedVendor?.id
       ? storeSelectedVendor?.id
@@ -335,7 +329,6 @@ export default function VendorRevenue({navigation, route}) {
 
   //error handling
   const errorMethod = (error) => {
-    console.log(error, 'error');
     updateState({
       isLoading: false,
     });
@@ -359,7 +352,6 @@ export default function VendorRevenue({navigation, route}) {
 
   const setDates = (dates) => {
     updateState({...dates});
-    console.log(dates, 'dates>>>');
   };
 
   const _selectTime = (item) => {
