@@ -13,7 +13,9 @@ export default function CustomTopTabBar({
   scrollEnabled = true,
   activeStyle = {},
   textStyle = {},
-  textTabWidth=null,
+  textTabWidth = null,
+  topBarMainView = {},
+  textTabBarView = {},
   ...props
 }) {
   const insets = useSafeAreaInsets();
@@ -40,7 +42,7 @@ export default function CustomTopTabBar({
         {tabBarItems &&
           tabBarItems.map((i, inx) => {
             return (
-              <View key={inx}>
+              <View key={inx} style={{...topBarMainView}}>
                 <TextTabBar
                   text={i.title || i.name}
                   isActive={i.isActive || i.is_selected}
@@ -49,6 +51,7 @@ export default function CustomTopTabBar({
                   textTabWidth={textTabWidth}
                   activeStyle={activeStyle}
                   textStyle={textStyle}
+                  textTabBarView={textTabBarView}
                 />
               </View>
             );

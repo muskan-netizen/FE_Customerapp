@@ -13,6 +13,8 @@ export default function ProductListLoader({
   viewStyles = {},
   widthTop = moderateScale(95),
   rectWidthBottom = moderateScaleVertical(90),
+  mainView = {},
+  widthLeft = 20,
 }) {
   return (
     <View
@@ -20,6 +22,7 @@ export default function ProductListLoader({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        ...mainView,
       }}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <HomeLoader
@@ -67,8 +70,8 @@ export default function ProductListLoader({
         isRight={false}
         heightLeft={20}
         rectHeightLeft={20}
-        widthLeft={20}
-        rectWidthLeft={20}
+        widthLeft={widthLeft}
+        rectWidthLeft={widthLeft}
         rx={2}
         ry={2}
         viewStyles={{marginHorizontal: 0}}

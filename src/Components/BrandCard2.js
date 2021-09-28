@@ -63,7 +63,11 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
                 ),
             priority: FastImage.priority.high,
           }}
-          style={{height: moderateScale(100), width: '100%',    borderRadius: moderateScale(10),}}
+          style={{
+            height: moderateScale(100),
+            width: '100%',
+            borderRadius: moderateScale(10),
+          }}
           resizeMode="cover"
         />
       </TouchableOpacity>

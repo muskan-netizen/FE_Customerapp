@@ -515,4 +515,11 @@ export default {
   LABEL1: 'Label 1',
   LABEL2: 'Label 2',
   DOYOUHAVECLEANINGMATERIAL: ' Do you require cleaning materials ?',
+  CHOICE_OF: 'Choice of',
+  FEATURED_INCLUDED: 'Featured Included :',
+  SAVED_NEW_PLACE: 'Save new Place',
+  RECENT_LOCATIONS: 'Recent Locations',
+  PLACE_PIN_ON_MAP: 'Place the pin on Map to mark exact location',
+  TABLE: 'Table',
+  SEAT_CAPACITY: 'Seat Capacity',
 };

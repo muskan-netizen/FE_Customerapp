@@ -168,7 +168,7 @@ export default function DashBoardFive({
         }}>
         {appMainData &&
           appMainData?.categories &&
-          appMainData?.categories.length && (
+          !!appMainData?.categories.length && (
             <FlatList
               numColumns={4}
               data={appMainData?.categories}
@@ -181,7 +181,7 @@ export default function DashBoardFive({
             />
           )}
         <View style={{marginVertical: moderateScale(30)}}>
-          {appData?.banners?.length && (
+          {!!appData?.banners?.length && (
             <>
               <BannerHome2
                 bannerRef={bannerRef}
@@ -200,7 +200,7 @@ export default function DashBoardFive({
               />
 
               <Pagination
-                dotsLength={appData.banners.length}
+                dotsLength={appData?.banners?.length}
                 activeDotIndex={slider1ActiveSlide}
                 containerStyle={{
                   marginTop: -15,

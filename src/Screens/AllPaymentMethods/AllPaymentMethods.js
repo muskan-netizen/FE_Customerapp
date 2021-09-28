@@ -309,7 +309,7 @@ export default function AllPaymentMethods({navigation, route}) {
           ListEmptyComponent={() =>
             !isLoading && (
               <Text style={{textAlign: 'center'}}>
-                {'No Payment method found'}
+                {strings.NO_PAYMENT_METHOD}
               </Text>
             )
           }

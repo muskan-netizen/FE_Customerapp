@@ -36,7 +36,7 @@ export default function Brand2({navigation}) {
     }, 500);
   }, []);
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  console.log('hiiiiii');
+
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
@@ -196,7 +196,7 @@ export default function Brand2({navigation}) {
                 <HeaderLoader
                   isRight={false}
                   widthLeft={(width - moderateScale(30)) / 3.25}
-                  rectWidthLeft={width / 3}
+                  rectWidthLeft={(width - moderateScale(30)) / 3.25}
                   rectHeightLeft={moderateScaleVertical(100)}
                   heightLeft={moderateScaleVertical(100)}
                   viewStyles={{
