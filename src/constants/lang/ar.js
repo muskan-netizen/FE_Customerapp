@@ -529,4 +529,5 @@ export default {
   SAVED_NEW_PLACE: 'حفظ مكان جديد',
   RECENT_LOCATIONS: 'المواقع الأخيرة',
   PLACE_PIN_ON_MAP: 'ضع الدبوس على الخريطة لتحديد الموقع الدقيق',
+  WRITE_REVIEW: 'Write a Review',
 };

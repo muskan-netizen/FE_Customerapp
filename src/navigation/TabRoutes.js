@@ -70,7 +70,7 @@ export default function TabRoutes(props) {
               }
             />
           ),
-          unmountOnBlur: true,
+          // unmountOnBlur: true,
         }}
       />
     );
@@ -202,7 +202,7 @@ export default function TabRoutes(props) {
               />
             </View>
           ),
-          unmountOnBlur:false
+          unmountOnBlur: false,
           // unmountOnBlur: cartItemCount?.data?.item_count ? false : true,
         }}
       />
