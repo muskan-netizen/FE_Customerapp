@@ -53,7 +53,6 @@ export default function OrderDetail({navigation, route}) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
 
-
   const [state, setState] = useState({
     isLoading: true,
     cartItems: [],
@@ -801,11 +800,7 @@ export default function OrderDetail({navigation, route}) {
           }>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Image
-              style={
-                isDarkMode
-                  ? {tintColor: MyDarkTheme.colors.text}
-                  : {tintColor: null}
-              }
+              style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
               source={imagePath.paymentMethod}
             />
             <Text

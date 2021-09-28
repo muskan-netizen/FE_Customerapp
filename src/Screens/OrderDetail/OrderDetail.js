@@ -349,19 +349,18 @@ export default function OrderDetail({navigation, route}) {
                             }}>
                             <View style={{flex: 0.5, justifyContent: 'center'}}>
                               {i?.quantity && (
-                                <View style={{flexDirection: 'row'}}>
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                  }}>
                                   <Text
-                                    style={
-                                      isDarkMode
-                                        ? {
-                                            color: MyDarkTheme.colors.text,
-                                            fontSize: textScale(14),
-                                          }
-                                        : {
-                                            color: colors.textGrey,
-                                            fontSize: textScale(14),
-                                          }
-                                    }>
+                                    style={{
+                                      ...styles.quantityStyles,
+                                      color: isDarkMode
+                                        ? MyDarkTheme.colors.text
+                                        : colors.textGrey,
+                                    }}>
                                     {strings.QTY}
                                   </Text>
                                   <Text style={styles.cartItemWeight}>
@@ -425,7 +424,7 @@ export default function OrderDetail({navigation, route}) {
                                   styles.writeAReview,
                                   {color: themeColors.primary_color},
                                 ]}>
-                                {'Write a Review'}
+                                {strings.WRITE_REVIEW}
                               </Text>
                             </View>
                           ) : null}

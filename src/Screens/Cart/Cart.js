@@ -1464,11 +1464,7 @@ export default function Cart({navigation, route}) {
           }>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Image
-              style={
-                isDarkMode
-                  ? {tintColor: MyDarkTheme.colors.text}
-                  : {tintColor: null}
-              }
+              style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
               source={imagePath.paymentMethod}
             />
             <Text
@@ -1547,12 +1543,7 @@ export default function Cart({navigation, route}) {
                 justifyContent: 'center',
               }}>
               {selectedTimeOption?.type === 'now' ? null : (
-                <Text
-                  style={
-                    isDarkMode
-                      ? {color: MyDarkTheme.colors.text}
-                      : {color: null}
-                  }>
+                <Text style={isDarkMode && {color: MyDarkTheme.colors.text}}>
                   {sheduledorderdate && scheduleType
                     ? `${moment(sheduledorderdate).format('DD MMM,YYYY HH:mm')}`
                     : null}
@@ -1976,11 +1967,7 @@ export default function Cart({navigation, route}) {
         }}>
         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
           <Image
-            style={
-              isDarkMode
-                ? {tintColor: MyDarkTheme.colors.white}
-                : {tintColor: null}
-            }
+            style={isDarkMode && {tintColor: MyDarkTheme.colors.white}}
             source={imagePath.crossB}
           />
         </TouchableOpacity>

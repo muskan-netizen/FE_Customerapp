@@ -171,7 +171,9 @@ export default function Cart({navigation, route}) {
         updateState({selectedPayment: paramsData?.selectedMethod});
       }
       // alert('run')
-      updateState({isLoadingB: true});
+      if (!checkCartItem?.data?.item_count) {
+        updateState({isLoadingB: true});
+      }
       getCartDetail();
       getAllWishListData();
       // if (!!checkCartItem?.data) {
@@ -190,6 +192,7 @@ export default function Cart({navigation, route}) {
       selectedAddress,
       paramsData,
       isRefreshing,
+      checkCartItem?.data?.item_count,
     ]),
   );
 
@@ -1671,11 +1674,7 @@ export default function Cart({navigation, route}) {
           }>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Image
-              style={
-                isDarkMode
-                  ? {tintColor: MyDarkTheme.colors.text}
-                  : {tintColor: null}
-              }
+              style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
               source={imagePath.paymentMethod}
             />
             <Text
@@ -1758,7 +1757,7 @@ export default function Cart({navigation, route}) {
                   style={
                     isDarkMode
                       ? {color: MyDarkTheme.colors.text}
-                      : {color: null}
+                      : {color: colors.black}
                   }>
                   {sheduledorderdate && scheduleType
                     ? `${moment(sheduledorderdate).format('DD MMM,YYYY HH:mm')}`
@@ -1770,14 +1769,16 @@ export default function Cart({navigation, route}) {
         ) : null}
 
         {!!cartData?.deliver_status && (
-          <View style={styles.paymentView}>
+          <View
+            pointerEvents={placeLoader ? 'none' : 'auto'}
+            style={styles.paymentView}>
             <ButtonComponent
               onPress={() => {
                 placeOrder();
               }}
               btnText={strings.PLACE_ORDER}
               borderRadius={moderateScale(13)}
-              textStyle={{color: '#fff'}}
+              textStyle={{color: colors.white}}
               containerStyle={styles.placeOrderButtonStyle}
               placeLoader={placeLoader}
             />
@@ -2206,6 +2207,7 @@ export default function Cart({navigation, route}) {
   const renderCardItemLoader = () => {
     return (
       <View>
+             
         <HeaderLoader
           widthLeft={moderateScale(140)}
           rectWidthLeft={moderateScale(140)}
@@ -2279,6 +2281,27 @@ export default function Cart({navigation, route}) {
         // isLoadingB={isLoadingB}
       >
         <Header centerTitle={strings.CART} leftIcon={imagePath.icBackb} />
+        <View
+          style={{
+            // flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            // backgroundColor: '#fff',
+          }}>
+          <FastImage
+            source={{uri: Image.resolveAssetSource(imagePath.icEmptyCartC).uri}}
+            style={{
+              marginVertical: moderateScaleVertical(20),
+              height: moderateScale(120),
+              width: moderateScale(120),
+            }}
+
+            // resizeMode="contain"s
+          />
+          <Text style={{...styles.textStyle}}>
+            {strings.YOUR_CART_EMPTY_ADD_ITEMS}
+          </Text>
+        </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <HeaderLoader
             widthLeft={width - moderateScale(30)}
@@ -2522,11 +2545,7 @@ export default function Cart({navigation, route}) {
         }}>
         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
           <Image
-            style={
-              isDarkMode
-                ? {tintColor: MyDarkTheme.colors.white}
-                : {tintColor: null}
-            }
+            style={isDarkMode && {tintColor: MyDarkTheme.colors.white}}
             source={imagePath.crossB}
           />
         </TouchableOpacity>

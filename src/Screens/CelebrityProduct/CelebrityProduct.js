@@ -469,10 +469,11 @@ export default function CelebrityProduct({route, navigation}) {
       source={loaderOne}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 2 ? 
-          imagePath.backArrow:appStyle?.homePageLayout === 3?
-          imagePath.icBackb :
-           imagePath.back
+          appStyle?.homePageLayout === 2
+            ? imagePath.backArrow
+            : appStyle?.homePageLayout === 3
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={celebrity.name || celebrity.translation[0].title}
         rightIcon={imagePath.search}
@@ -558,11 +559,7 @@ export default function CelebrityProduct({route, navigation}) {
                   },
                 ]}>
                 <Image
-                  style={
-                    isDarkMode
-                      ? {tintColor: MyDarkTheme.colors.text}
-                      : {tintColor: null}
-                  }
+                  style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
                   source={
                     showSortSelectedicon
                       ? imagePath.sortSelected
@@ -615,11 +612,7 @@ export default function CelebrityProduct({route, navigation}) {
                 })}
                 style={styles.tabLable}>
                 <Image
-                  style={
-                    isDarkMode
-                      ? {tintColor: MyDarkTheme.colors.text}
-                      : {tintColor: null}
-                  }
+                  style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
                   source={
                     showFilterSlectedIcon
                       ? imagePath.filterSelected
