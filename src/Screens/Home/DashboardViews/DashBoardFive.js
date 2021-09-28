@@ -100,7 +100,7 @@ export default function DashBoardFive({
             />
           )}
         <View style={{marginTop: moderateScale(30)}}>
-          {appData?.banners?.length && (
+          {!!appData?.banners?.length && (
             <>
               <BannerHome2
                 bannerRef={bannerRef}
