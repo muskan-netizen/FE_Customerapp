@@ -30,6 +30,8 @@ import {
   Vendors3,
   SearchProductVendorItem2,
   VendorDetail3,
+  HomeScreenTaxi,
+  TaxiHomeScreen,
 } from '../Screens';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
@@ -41,10 +43,11 @@ export default function () {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={navigationStrings.HOME}
-        component={Home}
+        name={navigationStrings.TAXIHOMESCREEN}
+        component={TaxiHomeScreen}
         options={{headerShown: false}}
       />
+
       <Stack.Screen
         name={navigationStrings.DELIVERY}
         component={Delivery}

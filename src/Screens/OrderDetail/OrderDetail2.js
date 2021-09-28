@@ -407,9 +407,9 @@ export default function OrderDetail({navigation, route}) {
                           disabled={false}
                           maxStars={5}
                           rating={Number(i?.product_rating?.rating)}
-                          selectedStar={(rating) =>
-                            onStarRatingPress(i, rating)
-                          }
+                          // selectedStar={(rating) =>
+                          //   onStarRatingPress(i, rating)
+                          // }
                           fullStarColor={colors.ORANGE}
                           starSize={15}
                         />
@@ -421,7 +421,7 @@ export default function OrderDetail({navigation, route}) {
                                 styles.writeAReview,
                                 {color: themeColors.primary_color},
                               ]}>
-                              {'Write a Review'}
+                              {strings.WRITE_A_REVIEW}
                             </Text>
                           </View>
                         ) : null}

@@ -896,7 +896,6 @@ export default function Products({route, navigation}) {
     );
   };
 
-
   const openModal = () => {
     updateState({isVisibleModal: true});
   };

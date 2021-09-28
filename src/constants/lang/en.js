@@ -525,4 +525,5 @@ Amount`,
   FEATURED_INCLUDED: 'Featured Included :',
   TABLE: 'Table',
   SEAT_CAPACITY: 'Seat Capacity',
+  WRITE_A_REVIEW: 'Write a Review',
 };

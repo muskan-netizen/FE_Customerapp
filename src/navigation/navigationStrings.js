@@ -86,4 +86,5 @@ export default {
   OFFERS2: 'OFFERS2',
   PICKUPTAXIORDERDETAILS: 'PickupTaxiOrderDetails',
   PICKUPORDERDETAIL2: 'pickOrderDetail2',
+  TAXIHOMESCREEN: 'taxiHomeScreen',
 };

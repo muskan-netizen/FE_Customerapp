@@ -528,4 +528,5 @@ export default {
   SAVED_NEW_PLACE: 'Save new Place',
   RECENT_LOCATIONS: 'Recent Locations',
   PLACE_PIN_ON_MAP: 'Place the pin on Map to mark exact location',
+  WRITE_A_REVIEW: 'Write a Review',
 };

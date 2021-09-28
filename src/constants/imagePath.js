@@ -338,6 +338,7 @@ export default {
   calendarB: require('../assets/images/TAXIAPPIMAGES/ic_calendar.png'),
   icTime: require('../assets/images/TAXIAPPIMAGES/ic_time.png'),
   discount2: require('../assets/images/TAXIAPPIMAGES/ic_discount.png'),
+
   icgo2: require('../assets/images/TAXIAPPIMAGES/ic_go2.png'),
   locationpin3: require('../assets/images/TAXIAPPIMAGES/ic_pin3.png'),
   locationpinGreen: require('../assets/images/TAXIAPPIMAGES/ic_pingreen.png'),
@@ -348,4 +349,5 @@ export default {
   icEmptyCartC: require('../assets/images/RoyoorderNewImages/Group8.png'),
   car3: require('../assets/images/TAXIAPPIMAGES/ic_car3.png'),
   icStar3: require('../assets/images/RoyoorderNewImages/ic_star3.png'),
+  car5: require('../assets/images/TAXIAPPIMAGES/ic_car1.png'),
 };

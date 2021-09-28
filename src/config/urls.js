@@ -8,7 +8,7 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
 
 //export const API_BASE_URL =  'http://192.168.98.193:8005/api/v1';
-// export const API_BASE_URL = 'http://192.168.96.195:8001/api/v1';
+//export const API_BASE_URL = 'http://192.168.96.195:8001/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 

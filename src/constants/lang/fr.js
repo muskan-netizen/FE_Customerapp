@@ -557,4 +557,5 @@ montant`,
   PLACE_PIN_ON_MAP: 'Place the pin on Map to mark exact location',
   TABLE: 'Table',
   SEAT_CAPACITY: 'Seat Capacity',
+  WRITE_A_REVIEW: 'Write a Review',
 };
