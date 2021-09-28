@@ -87,7 +87,10 @@ export default function SubscriptionComponent2({
     >
       <ImageBackground
         source={getImage ? {uri: getImage} : ''}
-        style={styles.imageBackground}
+        style={{
+          ...styles.imageBackground,
+          backgroundColor: MyDarkTheme.colors.lightDark,
+        }}
         resizeMode="contain">
         <View style={styles.titleBagView}>
           <Text
@@ -343,7 +346,7 @@ export function stylesFunc({fontFamily, themeColors}) {
     },
     imageBackground: {
       width: '100%',
-      height: moderateScaleVertical(170),
+      height: moderateScaleVertical(166),
       borderRadius: moderateScale(15),
     },
     titleBagView: {

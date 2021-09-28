@@ -39,6 +39,7 @@ export default function DashBoardFive({
   isRefreshing = false,
   onPressCategory = () => {},
   navigation = {},
+  toggleData = {},
 }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -189,7 +190,13 @@ export default function DashBoardFive({
 
   return (
     <View style={{flex: 1}}>
-      <SearchBar2 navigation={navigation} />
+      <SearchBar2
+        placeHolderTxt={
+          toggleData?.profile?.preferences?.search_nomenclature ||
+          strings.SEARCH_HERE
+        }
+        navigation={navigation}
+      />
       <View style={{flex: 1, marginHorizontal: moderateScale(15)}}>
         {appMainData?.vendors && !!appMainData?.vendors?.length && (
           <Animatable.View animation={'fadeInUp'} delay={200}>

@@ -1,43 +1,59 @@
+import React, {Component} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
 
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-
-import fontFamily from '../styles/fontFamily';
-import { moderateScaleVertical, textScale } from '../styles/responsiveSize';
+import {moderateScaleVertical, textScale} from '../styles/responsiveSize';
 import colors from '../styles/colors';
+import {useSelector} from 'react-redux';
 
 const LeftRightText = ({
-    leftText,
-    rightText,
-    isDarkMode,
-    MyDarkTheme,
-    leftTextStyle,
-    rightTextStyle
+  leftText,
+  rightText,
+  isDarkMode,
+  MyDarkTheme,
+  leftTextStyle,
+  rightTextStyle,
 }) => {
-    return (
-        <View style={{ flexDirection: "row", justifyContent: 'space-between',marginBottom:moderateScaleVertical(12) }}>
-            <Text style={{
-                ...styles.textStyle,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity43,
-                ...leftTextStyle,
-                flex:1
-            }}>{leftText}</Text>
-            <Text style={{
-                ...styles.textStyle,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity43,
-                ...rightTextStyle,
-            }}>{rightText}</Text>
-        </View>
-    );
+  const {appStyle} = useSelector((state) => state.initBoot);
+  const fontFamily = appStyle?.fontSizeData;
+  const styles = stylesFunc({fontFamily});
+
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: moderateScaleVertical(12),
+      }}>
+      <Text
+        style={{
+          ...styles.textStyle,
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity43,
+          ...leftTextStyle,
+          flex: 1,
+        }}>
+        {leftText}
+      </Text>
+      <Text
+        style={{
+          ...styles.textStyle,
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity43,
+          ...rightTextStyle,
+        }}>
+        {rightText}
+      </Text>
+    </View>
+  );
 };
 
-
-const styles = StyleSheet.create({
+export function stylesFunc({fontFamily}) {
+  const styles = StyleSheet.create({
     textStyle: {
-        fontFamily: fontFamily.medium,
-        textAlign: 'left',
-        fontSize: textScale(12)
+      fontFamily: fontFamily.medium,
+      textAlign: 'left',
+      fontSize: textScale(12),
     },
-});
+  });
+  return styles;
+}
 
 export default LeftRightText;

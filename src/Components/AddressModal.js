@@ -346,7 +346,7 @@ export default function AddressModal({
       }}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Image
-          style={isDarkMode ? {tintColor: colors.white} : {tintColor: null}}
+          style={isDarkMode && {tintColor: colors.white}}
           source={imagePath.crossB}
         />
       </TouchableOpacity>

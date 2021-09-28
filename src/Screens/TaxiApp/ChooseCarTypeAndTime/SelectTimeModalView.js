@@ -302,11 +302,7 @@ export default function SelectTimeModalView({
           }}>
           <TouchableOpacity style={{flex: 0.2}} onPress={onPressBack}>
             <Image
-              style={
-                isDarkMode
-                  ? {tintColor: MyDarkTheme.colors.text}
-                  : {tintColor: null}
-              }
+              style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
               source={imagePath.backArrowCourier}
             />
           </TouchableOpacity>
