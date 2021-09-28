@@ -514,7 +514,7 @@ export default {
   YOUR_RIDE_WILL_START_SOON: 'Your ride will start soon',
   LABEL1: 'Label 1',
   LABEL2: 'Label 2',
-  YOUR_ORDER_WILL_ARRIVE_BY:"Your order will arrive by",
+  YOUR_ORDER_WILL_ARRIVE_BY: 'Your order will arrive by',
   CHOICE_OF: 'Choice of',
   FEATURED_INCLUDED: 'Featured Included :',
   SAVED_NEW_PLACE: 'Save new Place',
@@ -522,4 +522,5 @@ export default {
   PLACE_PIN_ON_MAP: 'Place the pin on Map to mark exact location',
   TABLE: 'Table',
   SEAT_CAPACITY: 'Seat Capacity',
+  WRITE_REVIEW: 'Write a Review',
 };

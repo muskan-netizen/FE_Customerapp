@@ -126,9 +126,7 @@ export default function ChooseAddressModal({
                       }}>
                       <Image
                         style={
-                          isDarkMode
-                            ? {tintColor: MyDarkTheme.colors.text}
-                            : {tintColor: null}
+                          isDarkMode && {tintColor: MyDarkTheme.colors.text}
                         }
                         source={imagePath.home}
                       />

@@ -57,11 +57,7 @@ export default function OrderSuccess({navigation, route}) {
             navigation.goBack();
           }}>
           <Image
-            style={
-              isDarkMode
-                ? {tintColor: MyDarkTheme.colors.text}
-                : {tintColor: null}
-            }
+            style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
             source={imagePath.cross}
           />
         </TouchableOpacity>

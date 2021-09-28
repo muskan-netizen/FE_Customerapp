@@ -19,6 +19,7 @@ import {
 } from '../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import BlurImages from './BlurImages';
 
 export default function BrandCard2({data = {}, onPress = () => {}}) {
   const navigation = useNavigation();
@@ -29,11 +30,15 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const scaleInAnimated = new Animated.Value(0);
-  const {appStyle} = useSelector((state) => state.initBoot);
+  const {appStyle, themeColors} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
 
-  console.log(data, 'daaghghgjhg');
+  console.log(
+    getImageUrl(data.image.image_fit, data.image.image_path, '800/400'),
+    'datadatadatadatadata',
+  );
+
   return (
     <View style={styles.imgContainer}>
       <TouchableOpacity
@@ -48,27 +53,30 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <FastImage
-          source={{
-            uri: data.icon
-              ? getImageUrl(
-                  data.icon.image_fit,
-                  data.icon.image_path,
-                  '400/400',
-                )
-              : getImageUrl(
-                  data.image.image_fit,
-                  data.image.image_path,
-                  '400/400',
-                ),
-            priority: FastImage.priority.high,
-          }}
+        <BlurImages
+          isDarkMode={isDarkMode}
+          themeColor={themeColors.primary_color}
           style={{
-            height: moderateScale(100),
-            width: '100%',
-            borderRadius: moderateScale(10),
+            ...styles.imgStyle,
+            backgroundColor: isDarkMode
+              ? colors.whiteOpacity15
+              : colors.greyColor,
           }}
-          resizeMode="cover"
+          thumnailUrl={{
+            uri: getImageUrl(
+              data.image.image_fit,
+              data.image.image_path,
+              '40/40',
+            ),
+          }}
+          originalUrl={{
+            uri: getImageUrl(
+              data.image.image_fit,
+              data.image.image_path,
+              '400/400',
+            ),
+          }}
+          containerStyle={{borderRadius: moderateScale(10), width: '100%'}}
         />
       </TouchableOpacity>
 
@@ -92,5 +100,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginHorizontal: moderateScale(10),
     flexDirection: 'column',
+  },
+  imgStyle: {
+    height: moderateScale(100),
+    width: '100%',
+    borderRadius: moderateScale(10),
   },
 });

@@ -19,6 +19,7 @@ import {
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 import FastImage from 'react-native-fast-image';
+import BlurImages from './BlurImages';
 
 export default function ThreeColumnCard({
   data = {},
@@ -52,18 +53,36 @@ export default function ThreeColumnCard({
         cardIndex % 3 == 1 && {marginHorizontal: moderateScale(8)},
         {...getScaleTransformationStyle(scaleInAnimated)},
       ]}>
-      <Animated.View>
-        <FastImage
-          source={{
+      <View>
+        <BlurImages
+          isDarkMode={isDarkMode}
+          themeColor={themeColors.primary_color}
+          style={{
+            backgroundColor: isDarkMode
+              ? colors.whiteOpacity15
+              : colors.greyColor,
+            height: moderateScale(100),
+            width: '100%',
+            borderRadius: moderateScale(10),
+          }}
+          containerStyle={{borderRadius: moderateScale(15)}}
+          thumnailUrl={{
+            uri: getImageUrl(
+              data?.avatar?.proxy_url || data?.image?.proxy_url,
+              data?.avatar?.image_path || data?.image?.image_path,
+              `30/40`,
+            ),
+          }}
+          originalUrl={{
             uri: getImageUrl(
               data?.avatar?.proxy_url || data?.image?.proxy_url,
               data?.avatar?.image_path || data?.image?.image_path,
               `130/140`,
             ),
-            priority: FastImage.priority.high,
           }}
-          style={{width: cardWidth, height: moderateScaleVertical(128)}}
+          containerStyle={{borderRadius: moderateScale(10), width: '100%'}}
         />
+
         <View
           style={[
             withTextBG && {
@@ -91,7 +110,7 @@ export default function ThreeColumnCard({
             {data?.name}
           </Text>
         </View>
-      </Animated.View>
+      </View>
     </TouchableOpacity>
   );
 }

@@ -115,11 +115,7 @@ export default function SelectPaymentModalView({
               style={{flex: 0.2, marginStart: moderateScale(18)}}
               onPress={onPressBack}>
               <Image
-                style={
-                  isDarkMode
-                    ? {tintColor: MyDarkTheme.colors.text}
-                    : {tintColor: null}
-                }
+                style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
                 source={imagePath.backArrowCourier}
               />
             </TouchableOpacity>
