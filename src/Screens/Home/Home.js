@@ -617,6 +617,7 @@ export default function Home({ route, navigation }) {
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }>
       <View style={{ flex: 1 }}>{renderHomeScreen()}</View>
+      
     </WrapperContainer>
   );
 }
