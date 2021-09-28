@@ -1201,7 +1201,7 @@ export default function HomeServiceVariantAddons({
             </View>
           )} */}
 
-          {!showErrorMessageTitle && productTotalQuantity != 0 && (
+          {!showErrorMessageTitle && (
             <View
               style={{
                 flexDirection: 'row',
