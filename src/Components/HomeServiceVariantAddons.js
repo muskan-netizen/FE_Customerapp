@@ -937,7 +937,12 @@ export default function HomeServiceVariantAddons({
                 ? MyDarkTheme.colors.background
                 : '#fff',
             }}>
-            <View style={{flex: 1, alignItems: 'center'}}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                marginTop: moderateScaleVertical(-20),
+              }}>
               <Banner
                 bannerRef={bannerRef}
                 bannerData={productDetailData?.product_media}
@@ -1031,7 +1036,7 @@ export default function HomeServiceVariantAddons({
                   </View>
                 )}
               </View>
-              <View style={{justifyContent: 'center'}}>
+              {/* <View style={{justifyContent: 'center'}}>
                 <Text
                   style={{
                     color:
@@ -1045,7 +1050,7 @@ export default function HomeServiceVariantAddons({
                     ? ''
                     : strings.OUT_OF_STOCK}
                 </Text>
-              </View>
+              </View> */}
 
               {productdetail?.translation[0]?.body_html != null && (
                 <View>

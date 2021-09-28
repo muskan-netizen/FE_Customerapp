@@ -136,7 +136,7 @@ export default function Products({route, navigation}) {
     checkForMaximumPriceChange: false,
     showFilterSlectedIcon: false,
     isLoadingC: false,
-    selectedCategory: data?.children ? data?.children[0] : null,
+    selectedCategory: null,
     AnimatedHeaderValue: false,
     selectedCartItem: null,
     cartId: null,
@@ -213,9 +213,8 @@ export default function Products({route, navigation}) {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       updateState({pageNo: 1});
-      if (!categoryInfo?.type?.id == 8) {
-        getAllListItems();
-      }
+
+      getAllListItems();
 
       if (isLoadingC) {
         getAllProducts(true);
@@ -678,12 +677,13 @@ export default function Products({route, navigation}) {
       });
       return;
     }
-
+    console.log(item, 'itemitem');
     let data = {};
     data['sku'] = item.sku;
     data['quantity'] = 1;
     data['product_variant_id'] = item?.variant[0]?.id;
     data['type'] = dine_In_Type;
+    console.log(data, 'datadata');
     updateState({updateQtyLoader: true});
     actions
       .addProductsToCart(data, {
@@ -891,6 +891,7 @@ export default function Products({route, navigation}) {
         onIncrement={() => addDeleteCartItems(item, 1)}
         onDecrement={() => addDeleteCartItems(item, 2)}
         selectedCartItem={selectedCartItem}
+        Servicetype={categoryInfo.type_id}
       />
     );
   };
@@ -1011,7 +1012,7 @@ export default function Products({route, navigation}) {
               </View>
             </View>
 
-            <View style={{}}>
+            <View>
               {/* <View style={styles.rateViewStyle}>
                 <View>
                   <Text style={{ color: colors.white }}>

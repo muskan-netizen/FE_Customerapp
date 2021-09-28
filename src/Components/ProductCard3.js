@@ -49,8 +49,10 @@ export default function ProductCard3({
   onIncrement,
   onDecrement,
   selectedCartItem,
+  Servicetype,
 }) {
   // data['qty'] = 1
+
   const [state, setState] = useState({
     selectedIndex: -1,
     selectedIndexForCartIcon: -1,
@@ -101,7 +103,7 @@ export default function ProductCard3({
       <TouchableOpacity
         // disabled
         activeOpacity={0.6}
-        onPress={onPress}
+        onPress={Servicetype === 8 ? null : onPress}
         onPressIn={() => pressInAnimation(scaleInAnimated)}
         onPressOut={() => pressOutAnimation(scaleInAnimated)}
         style={{
@@ -247,7 +249,7 @@ export default function ProductCard3({
             </View>
           </Animatable.View>
 
-          {!!data?.variant[0]?.quantity ? (
+          {!!data?.variant[0]?.quantity || Servicetype === 8 ? (
             <View
               style={{
                 marginTop:
@@ -269,7 +271,7 @@ export default function ProductCard3({
                     paddingHorizontal: moderateScale(8),
                   }}>
                   <TouchableOpacity
-                    style={{}}
+                    // style={{}}
                     onPress={onDecrement}
                     activeOpacity={0.8}
                     hitSlop={hitSlopProp}>

@@ -102,7 +102,7 @@ export async function apiReq(
       ...getTokenHeader,
       ...headers,
     };
-    // console.log(headers,"headers");
+    console.log(headers, 'headers');
 
     if (method === 'get' || method === 'delete') {
       data = {
@@ -124,7 +124,7 @@ export async function apiReq(
       })
       .catch((error) => {
         if (error && error.response && error.response.status === 401) {
-          console.log("erro raised",error)
+          console.log('erro raised', error);
           sessionHandler(error.response.data.message);
           return rej(error);
         }
