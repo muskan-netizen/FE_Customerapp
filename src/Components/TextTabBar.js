@@ -13,6 +13,7 @@ export default function TextTabBar({
   isActive = false,
   activeStyle = {},
   textTabWidth = null,
+  textTabBarView = {},
 }) {
   const currentTheme = useSelector((state) => state.initBoot);
   const {themeColors, themeLayouts, appStyle} = currentTheme;
@@ -51,6 +52,7 @@ export default function TextTabBar({
               width: textTabWidth ? textTabWidth : moderateScale(width / 2),
               borderBottomWidth: 2,
               borderBottomColor: themeColors.primary_color,
+              ...textTabBarView,
             }}
           />
         </View>

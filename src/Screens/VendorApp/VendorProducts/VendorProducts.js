@@ -18,6 +18,7 @@ import commonStylesFun from '../../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
   width,
 } from '../../../styles/responsiveSize';
 import {showError} from '../../../utils/helperFunctions';
@@ -30,7 +31,7 @@ export default function VendorProducts({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const {storeSelectedVendor} = useSelector((state) => state?.order);
-
+  console.log(storeSelectedVendor, 'storeSelectedVendor');
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route.params;
@@ -40,7 +41,6 @@ export default function VendorProducts({route, navigation}) {
     selectedVendor: null,
     isVisibleModal: false,
     isLoading: true,
-    isLoadingB: false,
     pageNo: 1,
     limit: 12,
     isRefreshing: false,
@@ -72,7 +72,6 @@ export default function VendorProducts({route, navigation}) {
     categoryInfo,
     productListData,
     category_list,
-    isLoadingB,
     gridView,
     selectedTab,
   } = state;
@@ -94,8 +93,18 @@ export default function VendorProducts({route, navigation}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   useEffect(() => {
-    getAllListItems();
+    if (isLoading) {
+      getAllListItems();
+    }
   }, [languages, currencies, isRefreshing, isLoading]);
+
+  useEffect(() => {
+    updateState({
+      selectedTab: null,
+      selectedVendor: storeSelectedVendor,
+      isLoading: true,
+    });
+  }, [storeSelectedVendor]);
 
   useEffect(() => {
     getAllListItems();
@@ -128,8 +137,6 @@ export default function VendorProducts({route, navigation}) {
         },
       )
       .then((res) => {
-        actions.savedSelectedVendor(null);
-        console.log(pageNo, 'pageNo');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -137,9 +144,9 @@ export default function VendorProducts({route, navigation}) {
           selectedTab: selectedTab
             ? selectedTab
             : res.data.category_list.filter((x) => x.is_selected),
-          selectedVendor: storeSelectedVendor
+          selectedVendor: !!storeSelectedVendor?.id
             ? storeSelectedVendor
-            : selectedVendor
+            : !!selectedVendor
             ? selectedVendor
             : res.data.vendor_list.find((x) => x.is_selected),
           category_list: res.data.category_list,
@@ -154,7 +161,7 @@ export default function VendorProducts({route, navigation}) {
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isRefreshing: false, isLoadingB: false});
+    updateState({isLoading: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
 
@@ -240,8 +247,18 @@ export default function VendorProducts({route, navigation}) {
                 : {backgroundColor: colors.white}
             }
             onPress={(tabData) => changeTab(tabData)}
-            customTextContainerStyle={{width: width / 3}}
-            textStyle={{fontFamily: fontFamily.circularMedium}}
+            customTextContainerStyle={{
+              width: width / 3,
+            }}
+            textStyle={{
+              fontFamily: fontFamily.medium,
+              fontSize: textScale(12),
+            }}
+            topBarMainView={{width: width / 3}}
+            textTabBarView={{
+              width: moderateScale(width / 3),
+              borderBottomWidth: 1,
+            }}
           />
         ) : null}
 
@@ -258,14 +275,6 @@ export default function VendorProducts({route, navigation}) {
     });
   };
 
-  useEffect(() => {
-    updateState({
-      selectedTab: null,
-      selectedVendor: paramData?.selectedVendorFrom,
-      isLoading: true,
-    });
-  }, [paramData?.selectedVendorFrom]);
-
   return (
     <WrapperContainer
       bgColor={
@@ -274,8 +283,6 @@ export default function VendorProducts({route, navigation}) {
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
-      {/* {<Loader isLoading={isLoadingB} withModal={true} />} */}
-
       <Header
         leftIcon={
           appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
@@ -298,11 +305,9 @@ export default function VendorProducts({route, navigation}) {
       {listHeaderComponent()}
       <View style={{...commonStyles.headerTopLine}} />
 
-      {/* {isLoading && <ProductLoader listSize={4} isRow />} */}
-
       <FlatList
         key={gridView ? '_' : '#'}
-        data={(!isLoading && productListData) || []}
+        data={productListData || []}
         renderItem={renderProduct}
         // ListHeaderComponent={listHeaderComponent()}
         keyExtractor={(item, index) =>

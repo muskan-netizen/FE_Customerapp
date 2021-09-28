@@ -88,7 +88,8 @@ const shortCodes = {
   gorillas: 'd22ad9',
   baytukom: 'd0a898',
   eboyo: '1d0fd3',
-  vecto: '39f6fd',
+  share: 'bb8440',
+  pickmeup: '87a4de',
 };
 
 const appIds = {
@@ -443,6 +444,14 @@ const appIds = {
   vecto: Platform.select({
     ios: 'com.vecto',
     android: 'com.vecto',
+  }),
+  share: Platform.select({
+    ios: 'com.share.customer',
+    android: 'com.share',
+  }),
+  pickmeup: Platform.select({
+    ios: 'com.pickmeup.customer',
+    android: 'com.pickmeup',
   }),
 };
 

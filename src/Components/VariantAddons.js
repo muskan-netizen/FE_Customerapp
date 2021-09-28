@@ -398,7 +398,7 @@ export default function VariantAddons({
                     color: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.textGrey,
-                  }}>{`Choice of ${i?.title}`}</Text>
+                  }}>{`${strings.CHOICE_OF} ${i?.title}`}</Text>
                 <Text
                   style={{
                     ...styles.chooseOption,
@@ -471,7 +471,6 @@ export default function VariantAddons({
 
   const selectSpecificOptions = (options, i, inx) => {
     // console.log("im allVariants", allVariants)
-    console.log('im iiiiii+++', i);
     // console.log("im options iiiiii", options)
 
     // return;
@@ -545,7 +544,6 @@ export default function VariantAddons({
   };
 
   const circularView = (options) => {
-    console.log('circular view', options);
     return (
       <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         {options.map((i, inx) => {

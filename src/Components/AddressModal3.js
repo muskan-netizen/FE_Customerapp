@@ -372,6 +372,7 @@ export default function AddressModal3({
       isVisible={isVisible}
       animationType={'none'}
       style={styles.modalContainer}
+      onBackdropPress={onClose}
       onLayout={(event) => {
         updateState({viewHeight: event.nativeEvent.layout.height});
       }}>

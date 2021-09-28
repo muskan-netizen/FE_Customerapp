@@ -75,7 +75,7 @@ export default function OrderDetail({navigation, route}) {
   });
   const {isLoading, cartItems, cartData, labels, currentPosition} = state;
   const userData = useSelector((state) => state?.auth?.userData);
-
+  console.log(cartData, 'cartData');
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
@@ -100,6 +100,7 @@ export default function OrderDetail({navigation, route}) {
     }, [currencies, languages, paramData]),
   );
 
+
   /*********Get order detail screen********* */
   const _getOrderDetailScreen = () => {
     let data = {};
@@ -118,7 +119,6 @@ export default function OrderDetail({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'resorder detail');
         updateState({isLoading: false});
         if (res?.data) {
           updateState({
@@ -126,7 +126,12 @@ export default function OrderDetail({navigation, route}) {
             cartData: res.data,
             isLoading: false,
             currentPosition: paramData?.orderStatus
-              ? labels.indexOf(paramData?.orderStatus?.current_status?.title)
+              ? labels.indexOf(
+                  paramData?.orderStatus?.current_status?.title
+                    .charAt(0)
+                    .toUpperCase() +
+                    paramData?.orderStatus?.current_status?.title.slice(1),
+                )
               : null,
           });
         }
@@ -786,7 +791,11 @@ export default function OrderDetail({navigation, route}) {
           />
           <LeftRightText
             leftText={strings.PAYMENT_METHOD}
-            rightText={cartData?.payment_option?.title || ''}
+            rightText={
+              cartData?.payment_option?.title_lng
+                ? cartData?.payment_option?.title_lng
+                : cartData?.payment_option?.title || ''
+            }
             isDarkMode={isDarkMode}
             MyDarkTheme={MyDarkTheme}
             leftTextStyle={{
@@ -914,6 +923,8 @@ export default function OrderDetail({navigation, route}) {
       '500/500',
     );
 
+
+    
     return (
       <>
         {paramData?.orderStatus?.current_status?.title == 'Placed' && (

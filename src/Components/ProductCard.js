@@ -30,7 +30,7 @@ export default function ProductCard({
   addToCart = () => {},
   activeOpacity = 1,
   bottomText = strings.BUY_NOW,
-  nameTextStyle,
+  nameTextStyle = {},
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 

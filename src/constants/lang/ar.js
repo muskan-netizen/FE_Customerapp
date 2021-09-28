@@ -520,4 +520,11 @@ export default {
   YOUR_RIDE_WILL_START_SOON: 'Your ride will start soon',
   LABEL1: 'Label 1',
   LABEL2: 'Label 2',
+  CHOICE_OF: 'Choice of',
+  FEATURED_INCLUDED: 'Featured Included :',
+  TABLE: 'Table',
+  SEAT_CAPACITY: 'Seat Capacity',
+  SAVED_NEW_PLACE: 'Save new Place',
+  RECENT_LOCATIONS: 'Recent Locations',
+  PLACE_PIN_ON_MAP: 'Place the pin on Map to mark exact location',
 };

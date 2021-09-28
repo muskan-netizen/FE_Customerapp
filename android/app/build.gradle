@@ -761,7 +761,7 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codiner'
             resValue "string", "app_name", "Codiner"
-            resValue "string", "host_name", ""
+            resValue "string", "host_name", "codiner.royoorders.com"
          }
          housekeeper{
             dimension "appType"
@@ -1095,6 +1095,27 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.vecto'
             resValue "string", "app_name", "Vecto"
+            resValue "string", "host_name", ""
+
+          }
+        share{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.share'
+            resValue "string", "app_name", "Share"
+            resValue "string", "host_name", ""
+         }
+          pickmeup{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.pickmeup'
+            resValue "string", "app_name", "PickMeUp"
             resValue "string", "host_name", ""
          }
     }

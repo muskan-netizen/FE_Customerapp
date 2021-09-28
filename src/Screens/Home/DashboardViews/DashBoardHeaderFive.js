@@ -321,7 +321,6 @@ export default function DashBoardHeaderFive({
       />
     );
   }
-  console.log(location, 'location?.address');
 
   return (
     <>
@@ -376,9 +375,9 @@ export default function DashBoardHeaderFive({
             onPress={_onTableLabel}>
             <Image
               source={
-                checked === 'Delivery'
+                checked === strings.DELIVERY
                   ? imagePath.delivery
-                  : checked === 'Dine-In'
+                  : checked === strings.DINE_IN
                   ? imagePath.dineIn
                   : imagePath.takeaway
               }
