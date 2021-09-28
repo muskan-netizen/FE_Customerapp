@@ -1,6 +1,9 @@
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import { getUserData } from './utils';
+import * as NavigationService from '../navigation/NavigationService';
+import navigationStrings from '../navigation/navigationStrings';
+import { Platform } from 'react-native';
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
   const enabled =
@@ -52,20 +55,25 @@ export const notificationListener = async () => {
     });
 
 
-    messaging().onMessage(remoteMessage => {
-        console.log("received in foreground", remoteMessage)
-        // alert("Hello")
+  messaging().onMessage(async (remoteMessage) => {
+    const userData = await getUserData();
+    if (!!userData && !!userData?.auth_token) {
+      // console.log("received in foreground", JSON.parse(remoteMessage?.data?.data))
+      // NavigationService.navigate(navigationStrings.TABROUTESVENDOR)
+      console.log("user data==>>>", userData)
+    }
+    // alert("Hello")
+  })
+  // Check whether an initial notification is available
+  messaging()
+    .getInitialNotification()
+    .then(remoteMessage => {
+      if (remoteMessage) {
+        console.log(
+          'Notification caused app to open from quit state:',
+          remoteMessage.notification,
+        );
+        console.log("remote message", remoteMessage.notification)
+      }
     })
-    // Check whether an initial notification is available
-    messaging()
-        .getInitialNotification()
-        .then(remoteMessage => {
-            if (remoteMessage) {
-                console.log(
-                    'Notification caused app to open from quit state:',
-                    remoteMessage.notification,
-                );
-                console.log("remote message", remoteMessage.notification)
-            }
-        })
 }
