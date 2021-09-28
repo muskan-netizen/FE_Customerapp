@@ -521,4 +521,7 @@ Amount`,
   LABEL2: 'Label 2',
   YOUR_ORDER_WILL_ARRIVE_BY:"Your order will arrive by",
   CHOICE_OF: 'Choice of',
+  FEATURED_INCLUDED: 'Featured Included :',
+  TABLE: 'Table',
+  SEAT_CAPACITY: 'Seat Capacity',
 };

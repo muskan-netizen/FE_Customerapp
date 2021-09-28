@@ -28,7 +28,6 @@ import {trim} from 'lodash';
 
 export default function VendorDetail3({navigation, route}) {
   let vendorParams = route?.params?.data;
-  console.log(vendorParams, 'vendorParams>>>>>>>');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   // alert("312")
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -54,8 +53,6 @@ export default function VendorDetail3({navigation, route}) {
       getVendorDetailData();
     }
   }, [vendorId]);
-
-  console.log('VendorDetailScreen');
 
   const convertLocalDateToUTCDate = (date, toUTC) => {
     date = new Date(date);

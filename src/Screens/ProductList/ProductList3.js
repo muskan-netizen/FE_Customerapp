@@ -64,6 +64,7 @@ import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
 import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
 import ProductListLoader from '../../Components/Loaders/ProductListLoader';
+import HomeServiceVariantAddons from '../../Components/HomeServiceVariantAddons';
 
 export default function Products({ route, navigation }) {
   const { data } = route.params;
@@ -1464,6 +1465,19 @@ export default function Products({ route, navigation }) {
             shimmerClose={(val) => updateState({ showShimmer: val })}
             updateCartItems={updateCartItems}
           />
+
+          // <HomeServiceVariantAddons
+          //   addonSet={selectedCartItem?.add_on}
+          //   variantData={selectedCartItem?.variantSet}
+          //   isVisible={isVisibleModal}
+          //   productdetail={selectedCartItem}
+          //   onClose={() =>
+          //     updateState({isVisibleModal: false, showShimmer: true})
+          //   }
+          //   showShimmer={showShimmer}
+          //   shimmerClose={(val) => updateState({showShimmer: val})}
+          //   updateCartItems={updateCartItems}
+          // />
         )}
       </SafeAreaView>
     </View>

@@ -12,7 +12,7 @@ import {MyDarkTheme} from '../../styles/theme';
 
 export default ({themeColors, fontFamily}) => {
   const styles = StyleSheet.create({
-     absolute: {
+    absolute: {
       position: 'absolute',
       alignItems: 'center',
       justifyContent: 'center',
@@ -304,7 +304,18 @@ export default ({themeColors, fontFamily}) => {
       width: 8,
       borderRadius: 4,
       marginLeft: -8,
-    }
+    },
+    blurView: {
+      position: 'absolute',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100%',
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      borderRadius: moderateScaleVertical(15),
+    },
   });
 
   return styles;

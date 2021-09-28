@@ -423,6 +423,52 @@ export default function VariantAddons({
     );
   };
 
+  const showhomeServiceAddons = () => {
+    let variantSetData = cloneDeep(addonSet);
+    return (
+      <>
+        <View
+          style={{
+            marginTop: moderateScaleVertical(5),
+          }}>
+          {variantSetData.map((i, inx) => {
+            return (
+              <View
+                key={inx}
+                style={{
+                  marginVertical: moderateScaleVertical(5),
+                }}>
+                <Text
+                  style={{
+                    ...styles.variantLable,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGrey,
+                  }}>{`Choice of ${i?.title}`}</Text>
+                <Text
+                  style={{
+                    ...styles.chooseOption,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.grayOpacity51,
+                  }}>
+                  {strings.PLS_SELECT_ONE}
+                </Text>
+                {i?.setoptions ? checkBoxButtonViewAddons(i) : null}
+                <View
+                  style={{
+                    ...commonStyles.headerTopLine,
+                    marginVertical: moderateScaleVertical(10),
+                  }}
+                />
+              </View>
+            );
+          })}
+        </View>
+      </>
+    );
+  };
+
   const selectSpecificOptions = (options, i, inx) => {
     // console.log("im allVariants", allVariants)
     // console.log("im options iiiiii", options)
@@ -842,11 +888,7 @@ export default function VariantAddons({
                     marginBottom: moderateScaleVertical(4),
                     marginTop: moderateScaleVertical(6),
                   }}>
-                  In{' '}
-                  {
-                    productdetail?.category?.category_detail?.translation[0]
-                      ?.name
-                  }
+                  In Category_name
                 </Text>
 
                 {/* rating View */}

@@ -1,16 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {
-  FlatList, Platform,
+  FlatList,
+  Platform,
   RefreshControl,
   ScrollView,
   Text,
-  View
+  View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { useDarkMode } from 'react-native-dark-mode';
-import { Pagination } from 'react-native-snap-carousel';
-import { useScrollToTop } from '@react-navigation/native'; 
-import { useSelector } from 'react-redux';
+import {useDarkMode} from 'react-native-dark-mode';
+import {Pagination} from 'react-native-snap-carousel';
+import {useScrollToTop} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 import BannerHome2 from '../../../Components/BannerHome2';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import BannerLoader from '../../../Components/Loaders/BannerLoader';
@@ -25,17 +26,18 @@ import {
   itemWidth,
   moderateScale,
   moderateScaleVertical,
-  sliderWidth, width
+  sliderWidth,
+  width,
 } from '../../../styles/responsiveSize';
-import { MyDarkTheme } from '../../../styles/theme';
+import {MyDarkTheme} from '../../../styles/theme';
 import stylesFunc from '../styles';
 
 export default function DashBoardFive({
-  handleRefresh = () => { },
-  bannerPress = () => { },
+  handleRefresh = () => {},
+  bannerPress = () => {},
   isLoading = true,
   isRefreshing = false,
-  onPressCategory = () => { },
+  onPressCategory = () => {},
   navigation = {},
 }) {
   const userData = useSelector((state) => state?.auth?.userData);
@@ -49,18 +51,19 @@ export default function DashBoardFive({
     isVendorColumnList: false,
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  const { appData, themeColors, appStyle } = useSelector((state) => state?.initBoot);
-
+  const {appData, themeColors, appStyle} = useSelector(
+    (state) => state?.initBoot,
+  );
 
   const fontFamily = appStyle?.fontSizeData;
-  const { bannerRef } = useRef();
-  const { slider1ActiveSlide } = state;
-  const styles = stylesFunc({ themeColors, fontFamily });
+  const {bannerRef} = useRef();
+  const {slider1ActiveSlide} = state;
+  const styles = stylesFunc({themeColors, fontFamily});
 
   //update state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
-  const _renderItem = ({ item }) => (
+  const _renderItem = ({item}) => (
     <HomeCategoryCard2
       data={item}
       onPress={() => onPressCategory(item)}
@@ -68,14 +71,13 @@ export default function DashBoardFive({
     />
   );
 
-  const _renderVendors = ({ item }) => (
+  const _renderVendors = ({item}) => (
     <MarketCard3
       data={item}
       onPress={() => onPressCategory(item)}
-      extraStyles={{ margin: 0 }}
+      extraStyles={{margin: 0}}
     />
   );
-
 
   const ref = React.useRef(null);
   useScrollToTop(ref); // scroll to top
@@ -85,7 +87,7 @@ export default function DashBoardFive({
       <View>
         {appMainData &&
           appMainData?.categories &&
-          appMainData?.categories.length && (
+          !!appMainData?.categories.length && (
             <FlatList
               numColumns={4}
               data={appMainData?.categories}
@@ -93,11 +95,11 @@ export default function DashBoardFive({
               showsHorizontalScrollIndicator={false}
               renderItem={_renderItem}
               ItemSeparatorComponent={() => (
-                <View style={{ height: moderateScale(10) }} />
+                <View style={{height: moderateScale(10)}} />
               )}
             />
           )}
-        <View style={{ marginTop: moderateScale(30) }}>
+        <View style={{marginTop: moderateScale(30)}}>
           {appData?.banners?.length && (
             <>
               <BannerHome2
@@ -107,17 +109,17 @@ export default function DashBoardFive({
                 sliderWidth={sliderWidth}
                 itemWidth={itemWidth}
                 onSnapToItem={(index) =>
-                  updateState({ slider1ActiveSlide: index })
+                  updateState({slider1ActiveSlide: index})
                 }
                 setActiveState={(index) =>
-                  updateState({ slider1ActiveSlide: index })
+                  updateState({slider1ActiveSlide: index})
                 }
                 onPress={(item) => bannerPress(item)}
-                carouselViewStyle={{ height: width * 0.33 }}
+                carouselViewStyle={{height: width * 0.33}}
                 isDarkMode={isDarkMode}
               />
               <Pagination
-                dotsLength={appData.banners.length}
+                dotsLength={appData?.banners?.length}
                 activeDotIndex={slider1ActiveSlide}
                 containerStyle={{
                   marginTop: -15,
@@ -136,22 +138,22 @@ export default function DashBoardFive({
           style={{
             ...styles.exploreStoresTxt,
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            marginTop: 0
+            marginTop: 0,
           }}>
           {strings.EXPLORE_STORES}
         </Text>
       </View>
-    )
-  }
+    );
+  };
 
   if (isLoading) {
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1 }}>
-        <SearchLoader viewStyles={{ marginTop: moderateScale(15) }} />
-        <CategoryLoader2 viewStyles={{ marginTop: moderateScale(25) }} />
-        <CategoryLoader2 viewStyles={{ marginTop: moderateScale(25) }} />
+        contentContainerStyle={{flexGrow: 1}}>
+        <SearchLoader viewStyles={{marginTop: moderateScale(15)}} />
+        <CategoryLoader2 viewStyles={{marginTop: moderateScale(25)}} />
+        <CategoryLoader2 viewStyles={{marginTop: moderateScale(25)}} />
         <BannerLoader
           isBannerDots
           viewStyles={{
@@ -159,7 +161,7 @@ export default function DashBoardFive({
           }}
         />
         <HeaderLoader
-          viewStyles={{ marginVertical: 20 }}
+          viewStyles={{marginVertical: 20}}
           widthLeft={moderateScale(150)}
           rectWidthLeft={moderateScale(150)}
           heightLeft={moderateScaleVertical(20)}
@@ -170,15 +172,15 @@ export default function DashBoardFive({
         />
         <BannerLoader
           isVendorLoader
-          viewStyles={{ marginTop: moderateScale(20) }}
+          viewStyles={{marginTop: moderateScale(20)}}
         />
         <BannerLoader
           isVendorLoader
-          viewStyles={{ marginTop: moderateScale(25) }}
+          viewStyles={{marginTop: moderateScale(25)}}
         />
         <BannerLoader
           isVendorLoader
-          viewStyles={{ marginTop: moderateScale(25) }}
+          viewStyles={{marginTop: moderateScale(25)}}
         />
         {/* <HomeLoader /> */}
       </ScrollView>
@@ -186,14 +188,11 @@ export default function DashBoardFive({
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <SearchBar2 navigation={navigation} />
-      <View style={{ flex: 1, marginHorizontal: moderateScale(15) }}>
+      <View style={{flex: 1, marginHorizontal: moderateScale(15)}}>
         {appMainData?.vendors && !!appMainData?.vendors?.length && (
-          <Animatable.View
-            animation={'fadeInUp'}
-            delay={200}
-          >
+          <Animatable.View animation={'fadeInUp'} delay={200}>
             <FlatList
               showsVerticalScrollIndicator={false}
               alwaysBounceVertical={true}
@@ -203,17 +202,26 @@ export default function DashBoardFive({
               keyExtractor={(item) => item.id.toString()}
               showsHorizontalScrollIndicator={false}
               renderItem={_renderVendors}
-              refreshControl={<RefreshControl
-                refreshing={isRefreshing}
-                onRefresh={handleRefresh}
-                tintColor={themeColors.primary_color}
-              />}
+              refreshControl={
+                <RefreshControl
+                  refreshing={isRefreshing}
+                  onRefresh={handleRefresh}
+                  tintColor={themeColors.primary_color}
+                />
+              }
               ItemSeparatorComponent={() => (
-                <View style={{ height: moderateScale(10) }} />
+                <View style={{height: moderateScale(10)}} />
               )}
-              ListFooterComponent={() => <View style={{
-                height: Platform.OS == 'ios' ? moderateScale(72) : moderateScale(90)
-              }} />}
+              ListFooterComponent={() => (
+                <View
+                  style={{
+                    height:
+                      Platform.OS == 'ios'
+                        ? moderateScale(72)
+                        : moderateScale(90),
+                  }}
+                />
+              )}
             />
           </Animatable.View>
         )}

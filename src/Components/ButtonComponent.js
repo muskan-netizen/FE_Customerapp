@@ -1,10 +1,10 @@
 import React from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {colors} from 'react-native-elements';
+import {UIActivityIndicator} from 'react-native-indicators';
 import {useSelector} from 'react-redux';
 import commonStylesFun from '../styles/commonStyles';
-import { moderateScaleVertical } from '../styles/responsiveSize';
-
-
+import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
 
 const TransparentButtonWithTxtAndIcon = ({
   containerStyle,
@@ -16,6 +16,9 @@ const TransparentButtonWithTxtAndIcon = ({
   marginTop = 0,
   marginBottom = 0,
   textStyle = {},
+  placeLoader = false,
+  loaderSize = moderateScale(18),
+  loaderColor = colors.white,
 }) => {
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -27,7 +30,7 @@ const TransparentButtonWithTxtAndIcon = ({
         borderWidth: 0,
         marginTop,
         marginBottom,
-       
+
         ...containerStyle,
       }}
       onPress={onPress}>
@@ -39,13 +42,17 @@ const TransparentButtonWithTxtAndIcon = ({
           width: '100%',
           borderRadius,
           flexDirection: 'row',
-          
+
           ...btnStyle,
         }}>
         {icon && <Image source={icon} />}
-        <Text style={{...commonStyles.buttonTextWhite, ...textStyle}}>
-          {btnText}
-        </Text>
+        {placeLoader ? (
+          <UIActivityIndicator size={loaderSize} color={loaderColor} />
+        ) : (
+          <Text style={{...commonStyles.buttonTextWhite, ...textStyle}}>
+            {btnText}
+          </Text>
+        )}
       </View>
     </TouchableOpacity>
   );

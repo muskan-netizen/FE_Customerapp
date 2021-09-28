@@ -522,4 +522,10 @@ export default {
   LABEL2: 'Label 2',
   YOUR_ORDER_WILL_ARRIVE_BY:"Your order will arrive by",
   CHOICE_OF: 'Choice of',
+  FEATURED_INCLUDED: 'Featured Included :',
+  TABLE: 'Table',
+  SEAT_CAPACITY: 'Seat Capacity',
+  SAVED_NEW_PLACE: 'Save new Place',
+  RECENT_LOCATIONS: 'Recent Locations',
+  PLACE_PIN_ON_MAP: 'Place the pin on Map to mark exact location',
 };

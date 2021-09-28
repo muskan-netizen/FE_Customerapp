@@ -599,7 +599,7 @@ export default function ProductDetail2({route, navigation}) {
       />
       <CustomAnimatedLoader
         source={loaderOne}
-        loaderTitle="Loading"
+        loaderTitle={strings.LOADING}
         containerColor={colors.white}
         loadercolor={themeColors.primary_color}
         animationStyle={[

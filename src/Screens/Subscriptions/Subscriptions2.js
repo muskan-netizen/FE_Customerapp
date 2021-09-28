@@ -360,7 +360,7 @@ export default function Subscriptions2({navigation, route}) {
             paddingHorizontal: moderateScale(20),
             marginVertical: moderateScale(10),
           }}>
-          <Text style={styles.title}>{'Featured Included:'}</Text>
+          <Text style={styles.title}>{strings.FEATURED_INCLUDED}</Text>
 
           <View
             style={{
@@ -393,7 +393,7 @@ export default function Subscriptions2({navigation, route}) {
             marginVertical: moderateScale(10),
           }}>
           <View>
-            <Text style={styles.title}>{'Debit From'}</Text>
+            <Text style={styles.title}>{strings.DEBIT_FROM}</Text>
           </View>
           <View>
             <FlatList
@@ -419,8 +419,6 @@ export default function Subscriptions2({navigation, route}) {
 
   const payAmount = () => {
     updateState({isModalVisibleForPayment: false});
-    console.log(selectedPaymentMethod, 'selectedPaymentMethod');
-    console.log(selectedPlan, 'selectedPlan');
     if (selectedPaymentMethod?.code == 'stripe') {
       _offineLinePayment();
     } else {
@@ -433,12 +431,10 @@ export default function Subscriptions2({navigation, route}) {
   //Offline payments
   const _offineLinePayment = async () => {
     if (cardInfo) {
-      console.log(cardInfo, 'cardInfo>cardInfo>cardInfo');
       updateState({isModalVisibleForPayment: false});
 
       await createToken(cardInfo)
         .then((res) => {
-          console.log(res, 'stripe res>>');
           if (res && res?.token && res.token?.id) {
             updateState({isLoading: true});
             let selectedMethod = selectedPaymentMethod.title.toLowerCase();
@@ -458,8 +454,6 @@ export default function Subscriptions2({navigation, route}) {
                 },
               )
               .then((res) => {
-                console.log('Get purchaseSubscriptionPlan data', res);
-
                 getAllSubscriptions(true);
                 updateState({
                   isLoadingB: false,
