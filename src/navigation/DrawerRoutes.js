@@ -17,6 +17,7 @@ import fontFamily from '../styles/fontFamily';
 import CustomDrawerContent from '../Components/CustomDrawerContent';
 import {View} from 'react-native-animatable';
 import TabRoutes from './TabRoutes';
+import TaxiTabRoutes from './TaxiTabRoutes';
 
 const Drawer = createDrawerNavigator();
 export default function DrawerRoutes(props) {
@@ -86,9 +87,24 @@ export default function DrawerRoutes(props) {
       // hideStatusBar={true}
       drawerStyle={{width: '75%', backgroundColor: colors.blueHeaderColor}}
       drawerContent={(props) => <CustomDrawerContent {...props} />}>
-      <Drawer.Screen
+      {/* <Drawer.Screen
         component={TabRoutes}
         name={navigationStrings.HOMESTACK}
+        options={{
+          gestureEnabled: gestureEnabled,
+          swipeEnabled: swipeEnabled,
+          drawerLabel: strings.HOME,
+          drawerIcon: ({focused}) => (
+            <Image
+              source={focused ? imagePath.tabAActive : imagePath.tabAInActive}
+            />
+          ),
+        }}
+      /> */}
+
+      <Drawer.Screen
+        component={TaxiTabRoutes}
+        name={navigationStrings.TAXITABROUTES}
         options={{
           gestureEnabled: gestureEnabled,
           swipeEnabled: swipeEnabled,

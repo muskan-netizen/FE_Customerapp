@@ -529,4 +529,7 @@ export default {
   RECENT_LOCATIONS: 'Recent Locations',
   PLACE_PIN_ON_MAP: 'Place the pin on Map to mark exact location',
   WRITE_A_REVIEW: 'Write a Review',
+  WHERETO: '  Where to ?',
+  AROUNDYOU: 'Around you',
+  PLEASESELECTONECATEGORY: 'Please Select One Category',
 };

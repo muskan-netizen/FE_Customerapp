@@ -525,4 +525,7 @@ personalizado`,
   TABLE: 'Table',
   SEAT_CAPACITY: 'Seat Capacity',
   WRITE_A_REVIEW: 'Write a Review',
+  WHERETO: '  Where to ?',
+  AROUNDYOU: 'Around you',
+  PLEASESELECTONECATEGORY: 'Please Select One Category',
 };

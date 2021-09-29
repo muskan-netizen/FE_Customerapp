@@ -1,9 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 import {
   FlatList,
   Image,
   RefreshControl,
   ScrollView,
+  StyleSheet,
   Text,
   View,
 } from 'react-native';
@@ -24,12 +26,25 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
+import MapView, {
+  AnimatedRegion,
+  Marker,
+  PROVIDER_GOOGLE,
+} from 'react-native-maps';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 import ToggleTabBar from './ToggleTabBar';
+import {mapStyleGrey} from '../../../utils/constants/MapStyle';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import navigationStrings from '../../../navigation/navigationStrings';
+import {useNavigation} from '@react-navigation/native';
+
+import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
+import actions from '../../../redux/actions';
+import BottomViewModal from '../../../Components/BottomViewModal';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => {},
@@ -42,6 +57,8 @@ export default function TaxiHomeDashbord({
   toggleData,
   isDineInSelected = false,
 }) {
+  const mapRef = React.createRef();
+  const navigation = useNavigation();
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
@@ -51,6 +68,20 @@ export default function TaxiHomeDashbord({
       {id: 3, categoryImage: imagePath.car5, categoryName: 'Rentals'},
       {id: 4, categoryImage: imagePath.car5, categoryName: 'Intercity'},
     ],
+    region: {
+      latitude: 30.7191,
+      longitude: 76.8107,
+      latitudeDelta: 0.015,
+      longitudeDelta: 0.0121,
+    },
+    coordinate: {
+      latitude: 30.7191,
+      longitude: 76.8107,
+      latitudeDelta: 0.015,
+      longitudeDelta: 0.0121,
+    },
+    allSavedAddress: [],
+    isVisible: false,
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const {appData, themeColors, appStyle} = useSelector(
@@ -59,70 +90,135 @@ export default function TaxiHomeDashbord({
 
   const fontFamily = appStyle?.fontSizeData;
   const {bannerRef} = useRef();
-  const {slider1ActiveSlide, newCategoryData, homeCategoryData} = state;
+  const {
+    slider1ActiveSlide,
+    newCategoryData,
+    homeCategoryData,
+    region,
+    coordinate,
+    allSavedAddress,
+    isVisible,
+  } = state;
   const styles = stylesFunc({themeColors, fontFamily});
 
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const newCategoryAry = [...appMainData?.categories];
-  useEffect(() => {
-    gridFn(10, 5);
-  }, [appMainData]);
 
-  let gapper = 0;
-  const gridFn = (setItems, setValue) => {
-    newCategoryAry.forEach((element, index) => {
-      if (index <= setValue + gapper) {
-        element['span'] = 1.5;
-        updateState({newCategoryData: [...newCategoryAry]});
-      } else if (index === setValue + 1 + gapper) {
-        element['span'] = 3;
-        updateState({newCategoryData: [...newCategoryAry]});
-      } else if (
-        index === setValue + 2 + gapper ||
-        index === setValue + 3 + gapper
-      ) {
-        element['span'] = 1.5;
-        element['rowHeight'] = moderateScaleVertical(250);
-        updateState({newCategoryData: [...newCategoryAry]});
-      } else {
-        element['span'] = 3;
-        updateState({newCategoryData: [...newCategoryAry]});
-        gapper += setItems;
-      }
+  console.log(appMainData?.categories, 'appMainData');
+
+  const moveToNewScreen =
+    (screenName, data = {}) =>
+    () => {
+      navigation.navigate(screenName, {data});
+    };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getAllAddress();
+    }, []),
+  );
+
+  const getAllAddress = () => {
+    actions
+      .getAddress(
+        {},
+        {
+          code: appData?.profile?.code,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'all address');
+        // actions.saveAllUserAddress(res.data);
+        updateState({
+          allSavedAddress: res.data,
+          isLoading: false,
+          indicator: false,
+        });
+      })
+      .catch((error) => {
+        updateState({isLoading: false});
+        showError(error?.message || error?.error);
+      });
+  };
+
+  const continueWithNaxtScreen = (item) => {
+    updateState({
+      isVisible: false,
+    });
+    onPressCategory(item);
+  };
+
+  const _ModalClose = () => {
+    updateState({
+      isVisible: false,
     });
   };
 
-  const _renderItem = (item) => {
-    console.log(item.item, 'it3em');
+  const _renderItem = ({item}) => {
     return (
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
-        <View
-          style={{
-            backgroundColor: getColorCodeWithOpactiyNumber(
-              colors.textGreyLight.substr(1),
-              20,
-            ),
-            height: height / 14.5,
-            width: width / 6.5,
-            marginHorizontal: moderateScale(18),
-            borderRadius: 12,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Image
-            resizeMode={'contain'}
-            style={{
-              height: moderateScaleVertical(40),
-              width: moderateScale(40),
-            }}
-            source={item.item?.categoryImage}
-          />
-        </View>
-        <Text style={{marginVertical: moderateScaleVertical(10)}}>
-          {item.item?.categoryName}
-        </Text>
-      </View>
+      <HomeCategoryCard2
+        data={item}
+        onPress={() => continueWithNaxtScreen(item)}
+      />
+    );
+  };
+
+  const _ModalMainView = () => (
+    <View
+      style={{
+        height: height / 5,
+        backgroundColor: colors.white,
+      }}>
+      <Text />
+      <FlatList
+        numColumns={4}
+        data={appMainData?.categories}
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(item) => item.id.toString()}
+        ItemSeparatorComponent={() => {
+          return <View style={{height: moderateScaleVertical(20)}}></View>;
+        }}
+        renderItem={_renderItem}
+      />
+    </View>
+  );
+
+  const addressView = (image) => {
+    return (
+      allSavedAddress &&
+      allSavedAddress.map((itm, inx) => {
+        console.log(itm, 'saved Address');
+        return (
+          <ScrollView
+            keyboardShouldPersistTaps={'handled'}
+            style={{width: width - 40}}>
+            <TouchableOpacity
+              key={inx}
+              style={{
+                marginTop: moderateScaleVertical(10),
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingVertical: 10,
+                marginHorizontal: moderateScale(10),
+              }}
+              onPress={() => {
+                updateState({
+                  isVisible: true,
+                });
+              }}>
+              <View>
+                <Image source={image} />
+              </View>
+              <View style={{marginHorizontal: moderateScale(10)}}>
+                <Text numberOfLines={2} style={[styles.address]}>
+                  {itm?.address}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </ScrollView>
+        );
+      })
     );
   };
 
@@ -155,63 +251,90 @@ export default function TaxiHomeDashbord({
 
       <FlatList
         horizontal
-        data={homeCategoryData}
-        showsVerticalScrollIndicator={false}
+        data={appMainData?.categories}
+        showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
         ItemSeparatorComponent={() => {
           return <View style={{height: moderateScaleVertical(20)}}></View>;
         }}
         renderItem={_renderItem}
       />
+      <TouchableOpacity
+        onPress={moveToNewScreen(navigationStrings.HOMESCREENTAXI)}>
+        <View
+          style={{
+            marginHorizontal: moderateScale(10),
+            height: moderateScaleVertical(40),
+            backgroundColor: getColorCodeWithOpactiyNumber(
+              colors.textGreyLight.substr(1),
+              40,
+            ),
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingHorizontal: moderateScale(10),
+          }}>
+          <Text
+            style={{fontSize: textScale(14), fontFamily: fontFamily.Medium}}>
+            {strings.WHERETO}
+          </Text>
+        </View>
+      </TouchableOpacity>
       <View
         style={{
-          marginHorizontal: moderateScale(10),
-          height: moderateScaleVertical(40),
-          backgroundColor: getColorCodeWithOpactiyNumber(
-            colors.textGreyLight.substr(1),
-            40,
-          ),
-          flexDirection: 'row',
-          alignItems: 'center',
-          paddingHorizontal: moderateScale(10),
-        }}>
-        <Text style={{fontSize: textScale(14), fontFamily: fontFamily.Medium}}>
-          Where to ?
-        </Text>
-      </View>
-
-      <View
-        style={{
-          flexDirection: 'row',
           alignItems: 'center',
           marginHorizontal: moderateScale(20),
-          marginTop: moderateScaleVertical(10),
+          marginVertical: moderateScaleVertical(20),
         }}>
-        <Image
-          style={{tintColor: colors.black}}
-          source={imagePath.locationGreen}
-        />
-        <Text numberOfLines={1} style={{color: colors.black}}>
-          {strings.ADDRESS}:
-        </Text>
+        {addressView(imagePath.savedLocationImage)}
       </View>
-      {/* <ToggleTabBar
-        toggleData={toggleData}
-        selcetedToggle={selcetedToggle}
-        isDineInSelected={isDineInSelected}
-      /> */}
+      <View
+        style={{
+          width: width - 20,
+          height: 0.5,
+          backgroundColor: colors.textGreyOpcaity7,
+          marginHorizontal: moderateScale(50),
+        }}
+      />
 
-      {/*{isLoading && <CardLoader listSize={6} isRow />}
-      {!isLoading &&
-      appMainData &&
-      appMainData?.categories &&
-      appMainData?.categories.length ? (
-        <BrickList
-          data={newCategoryData}
-          renderItem={(prop) => renderView(prop)}
-          columns={3}
-        />
-      ) : null} */}
+      <View style={{marginHorizontal: moderateScale(20)}}>
+        <Text
+          style={{
+            fontSize: textScale(14),
+            marginVertical: moderateScaleVertical(20),
+            fontFamily: fontFamily.medium,
+          }}>
+          {strings.AROUNDYOU}
+        </Text>
+
+        <View
+          style={{
+            height: height / 4,
+            width: width - 50,
+            borderRadius: 12,
+          }}>
+          <MapView
+            ref={mapRef}
+            //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            style={{
+              ...StyleSheet.absoluteFillObject,
+              borderRadius: 12,
+            }}
+            region={region}
+            initialRegion={region}
+            customMapStyle={mapStyleGrey}
+            showsUserLocation={true}
+            showsMyLocationButton={true}
+            // pointerEvents={'none'}
+          ></MapView>
+        </View>
+      </View>
+
+      <BottomViewModal
+        show={isVisible}
+        mainContainView={_ModalMainView}
+        closeModal={_ModalClose}
+      />
+
       <View style={{height: moderateScaleVertical(65)}} />
     </ScrollView>
   );

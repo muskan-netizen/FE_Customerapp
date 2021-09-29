@@ -350,4 +350,6 @@ export default {
   car3: require('../assets/images/TAXIAPPIMAGES/ic_car3.png'),
   icStar3: require('../assets/images/RoyoorderNewImages/ic_star3.png'),
   car5: require('../assets/images/TAXIAPPIMAGES/ic_car1.png'),
+
+  taxiOrders: require('../assets/images/TAXIAPPIMAGES/ic_orders.png'),
 };

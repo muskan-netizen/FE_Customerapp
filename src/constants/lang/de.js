@@ -523,4 +523,6 @@ export default {
   TABLE: 'Table',
   SEAT_CAPACITY: 'Seat Capacity',
   WRITE_A_REVIEW: 'Write a Review',
+  WHERETO: '  Where to ?',
+  PLEASESELECTONECATEGORY: 'Please Select One Category',
 };
