@@ -15,6 +15,7 @@ import {MyOrders} from '../Screens';
 import colors from '../styles/colors';
 import {moderateScale, textScale} from '../styles/responsiveSize';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
+import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
 import AccountStack from './AccountStack';
 import BrandStack from './BrandStack';
 import CartStack from './CartStack';
@@ -101,11 +102,15 @@ export default function TaxiTabRoutes(props) {
         component={MyOrders}
         name={navigationStrings.MY_ORDERS}
         options={{
-          tabBarLabel: strings.MY_ORDERS,
+          tabBarLabel: strings.MYRIDES,
           tabBarIcon: ({focused, tintColor}) => (
             <Image
               style={[
-                {tintColor: tintColor},
+                {
+                  tintColor: focused
+                    ? colors.white
+                    : getColorCodeWithOpactiyNumber(colors.white.substr(1), 50),
+                },
                 appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
               ]}
               source={

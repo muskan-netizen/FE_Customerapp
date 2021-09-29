@@ -285,23 +285,22 @@ export default function Account3({navigation}) {
             />
           </TouchableOpacity>
         )} */}
-          {!!userData?.auth_token ||
-            (false && (
-              <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-                onPress={moveToNewScreen(navigationStrings.MY_ORDERS)}
-                iconLeft={imagePath.myOrder2}
-                centerHeading={strings.MY_ORDERS}
-                containerStyle={styles.containerStyle2}
-                centerHeadingStyle={{
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily.regular,
-                }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
-              />
-            ))}
+          {!!userData?.auth_token && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.MY_ORDERS)}
+              iconLeft={imagePath.myOrder2}
+              centerHeading={strings.MY_ORDERS}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
 
           {!!userData?.auth_token && (
             <ListItemHorizontal
@@ -366,23 +365,22 @@ export default function Account3({navigation}) {
               // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
-          {!!userData?.auth_token ||
-            (false && (
-              <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-                onPress={moveToNewScreen(navigationStrings.WISHLIST)}
-                iconLeft={imagePath.wishlist}
-                centerHeading={strings.FAVOURITE}
-                containerStyle={styles.containerStyle2}
-                centerHeadingStyle={{
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily.regular,
-                }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
-              />
-            ))}
+          {!!userData?.auth_token && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.WISHLIST)}
+              iconLeft={imagePath.wishlist}
+              centerHeading={strings.FAVOURITE}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
 
           <ListItemHorizontal
             centerContainerStyle={{flexDirection: 'row'}}
@@ -456,23 +454,22 @@ export default function Account3({navigation}) {
             // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
 
-          {(!!userData?.auth_token && !!appMainData?.is_admin) ||
-            (false && (
-              <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-                onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
-                iconLeft={imagePath.mystores2}
-                centerHeading={strings.MYSTORES}
-                containerStyle={styles.containerStyle2}
-                centerHeadingStyle={{
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily.regular,
-                }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
-              />
-            ))}
+          {!!userData?.auth_token && !!appMainData?.is_admin && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
+              iconLeft={imagePath.mystores2}
+              centerHeading={strings.MYSTORES}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
 
           <View style={styles.loginView}>
             <TouchableOpacity

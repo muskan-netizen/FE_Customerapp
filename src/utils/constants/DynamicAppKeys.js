@@ -90,6 +90,7 @@ const shortCodes = {
   eboyo: '1d0fd3',
   share: 'bb8440',
   pickmeup: '87a4de',
+  vecto: '39f6fd',
 };
 
 const appIds = {

@@ -528,4 +528,5 @@ personalizado`,
   WHERETO: '  Where to ?',
   AROUNDYOU: 'Around you',
   PLEASESELECTONECATEGORY: 'Please Select One Category',
+  MYRIDES: 'My Rides',
 };

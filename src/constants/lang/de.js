@@ -525,4 +525,5 @@ export default {
   WRITE_A_REVIEW: 'Write a Review',
   WHERETO: '  Where to ?',
   PLEASESELECTONECATEGORY: 'Please Select One Category',
+  MYRIDES: 'My Rides',
 };

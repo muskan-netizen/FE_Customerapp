@@ -1,6 +1,6 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+// import {TouchableOpacity} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
@@ -11,7 +11,11 @@ import {
   width,
 } from '../styles/responsiveSize';
 
-export default function BottomViewModal({show, mainContainView, closeModal}) {
+export default function BottomViewModal({
+  show,
+  mainContainView,
+  closeModal = () => {},
+}) {
   return (
     <Modal isVisible={show} style={styles.modal} animationInTiming={600}>
       <View style={styles.modalContainer}>
@@ -26,7 +30,9 @@ export default function BottomViewModal({show, mainContainView, closeModal}) {
           <Text style={{fontSize: textScale(14)}}>
             {strings.PLEASESELECTONECATEGORY}
           </Text>
-          <TouchableOpacity onPress={() => closeModal()}>
+          <TouchableOpacity
+            // hitSlop={{top: 200, left: 200, right: 200, bottom: 200}}
+            onPress={() => closeModal()}>
             <Image source={imagePath.cross} />
           </TouchableOpacity>
         </View>

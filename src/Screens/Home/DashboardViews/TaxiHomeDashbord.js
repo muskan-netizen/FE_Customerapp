@@ -149,7 +149,7 @@ export default function TaxiHomeDashbord({
     onPressCategory(item);
   };
 
-  const _ModalClose = () => {
+  const _modalClose = () => {
     updateState({
       isVisible: false,
     });
@@ -260,7 +260,11 @@ export default function TaxiHomeDashbord({
         renderItem={_renderItem}
       />
       <TouchableOpacity
-        onPress={moveToNewScreen(navigationStrings.HOMESCREENTAXI)}>
+        onPress={() => {
+          updateState({
+            isVisible: true,
+          });
+        }}>
         <View
           style={{
             marginHorizontal: moderateScale(10),
@@ -332,7 +336,7 @@ export default function TaxiHomeDashbord({
       <BottomViewModal
         show={isVisible}
         mainContainView={_ModalMainView}
-        closeModal={_ModalClose}
+        closeModal={_modalClose}
       />
 
       <View style={{height: moderateScaleVertical(65)}} />
