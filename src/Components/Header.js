@@ -19,6 +19,7 @@ import {
 } from '../styles/responsiveSize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import strings from '../constants/lang';
 
 const Header = ({
   leftIcon = imagePath.back,
@@ -41,8 +42,10 @@ const Header = ({
   onPressImageAlongwithTitle,
   onPressCenterTitle,
   leftIconStyle,
+  isRightText = false,
+  onPressRightTxt = () => {},
 }) => {
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -144,8 +147,19 @@ const Header = ({
           </View>
         </View>
 
-        <View style={{flex: 0.2, alignItems: 'flex-end'}}>
-          {!!rightIcon ? (
+        <View style={{flex: 0.3, alignItems: 'flex-end'}}>
+          {isRightText ? (
+            <TouchableOpacity activeOpacity={0.7} onPress={onPressRightTxt}>
+              <Text
+                style={{
+                  fontFamily: fontFamily.medium,
+                  color: themeColors.primary_color,
+                  fontSize: textScale(12),
+                }}>
+                {strings.CLEAR_CART2}
+              </Text>
+            </TouchableOpacity>
+          ) : !!rightIcon ? (
             <TouchableOpacity onPress={onPressRight}>
               <Image
                 style={

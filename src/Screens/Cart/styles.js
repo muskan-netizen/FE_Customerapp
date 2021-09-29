@@ -30,10 +30,11 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       backgroundColor: colors.backgroundGrey,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
+      zIndex: 2,
     },
     topLable: {
       flexDirection: 'row',
-      paddingHorizontal: moderateScale(10),
+      paddingHorizontal: moderateScale(15),
     },
     deliveryLocationAndTime: {
       ...commonStyles.mediumFont14,
@@ -241,6 +242,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       marginVertical: moderateScaleVertical(10),
       flexDirection: 'row',
       alignItems: 'center',
+      borderRadius: moderateScale(12),
     },
     bottomTabLableValue: {
       flexDirection: 'row',
@@ -255,12 +257,17 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     paymentView: {
       marginVertical:
         Platform.OS === 'ios'
-          ? moderateScaleVertical(10)
+          ? moderateScaleVertical(40)
           : moderateScaleVertical(50),
       marginHorizontal: moderateScale(10),
+      justifyContent: 'space-between',
+      flex: 1,
+      flexDirection: 'row',
     },
     placeOrderButtonStyle: {
       backgroundColor: themeColors.primary_color,
+      flex: 1,
+      marginHorizontal: moderateScale(5),
     },
     sceduleOrderStyle: {
       backgroundColor: getColorCodeWithOpactiyNumber(
@@ -298,7 +305,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       justifyContent: 'center',
       alignItems: 'center',
       borderWidth: 0.7,
-      paddingHorizontal: 15,
+      paddingHorizontal: 10,
       paddingVertical: 5,
       borderColor: colors.textGreyB,
       marginRight: 5,
@@ -313,7 +320,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       paddingHorizontal: 15,
       paddingVertical: 5,
       borderColor: colors.textGreyB,
-      marginRight: 5,
+      marginLeft: 2,
       marginVertical: 20,
       borderRadius: moderateScale(5),
       borderColor: themeColors.primary_color,
@@ -367,6 +374,46 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       textAlign: 'left',
       marginHorizontal: moderateScale(12),
       marginBottom: moderateScaleVertical(12),
+    },
+    addAddressTxt: {
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(12),
+      marginVertical: moderateScale(7),
+      color: colors.black,
+      opacity: 0.6,
+      lineHeight: 20,
+      textAlign: 'left',
+    },
+    addressView: {
+      marginHorizontal: moderateScale(10),
+      marginVertical: moderateScale(4),
+      justifyContent: 'space-between',
+    },
+    homeTxt: {
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(12),
+      textAlign: 'left',
+    },
+    editIcon: {
+      height: 20,
+      width: 20,
+      tintColor: themeColors.primary_color,
+    },
+    dropDownStyle: {
+      width: width - moderateScale(40),
+      alignSelf: 'center',
+      // zIndex: 5000,
+    },
+    dropDownContainerStyle: {
+      height: 40,
+      marginTop: moderateScaleVertical(10),
+      // zIndex: 10,
+    },
+    mainViewRednderItem: {
+      paddingHorizontal: moderateScale(10),
+      marginVertical: moderateScaleVertical(10),
+      marginBottom: moderateScaleVertical(10),
+      zIndex: 1000,
     },
   });
   return styles;
