@@ -110,7 +110,8 @@ export default function MyOrders({navigation}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const _scrollRef = createRef();
   //Reduc store data
-
+  const userData = useSelector((state) => state.auth.userData);
+  console.log(userData, 'userDatauserDatauserData');
   console.log(businessType, 'businessType');
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
@@ -119,7 +120,13 @@ export default function MyOrders({navigation}) {
   //Get list of all orders
   useEffect(() => {
     updateState({isLoading: true});
-    _getListOfOrders();
+    if (userData) {
+      _getListOfOrders();
+    } else {
+      updateState({
+        isLoading: false,
+      });
+    }
   }, [selectedTab]);
 
   console.log('lat lng', location);
@@ -170,29 +177,33 @@ export default function MyOrders({navigation}) {
 
   // changeTab function
   const changeTab = (tabData) => {
-    let clonedArray = cloneDeep(tabBarData);
+    if (userData) {
+      let clonedArray = cloneDeep(tabBarData);
 
-    updateState({
-      tabBarData: clonedArray.map((item) => {
-        if (item.title == tabData.title) {
-          item.isActive = true;
-          return item;
-        } else {
-          item.isActive = false;
-          return item;
-        }
-      }),
-      selectedTab: tabData.title,
-      tabType:
-        tabData.title == strings.ACTIVE_ORDERS
-          ? staticStrings.ACTIVE
-          : tabData.title == strings.PAST_ORDERS
-          ? staticStrings.PAST
-          : staticStrings.SCHEDULE,
-      pageActive: 1,
-      orders: selectedTab != tabData.title ? [] : orders,
-    });
-    _scrollRef.current.scrollToOffset({animated: true, offset: 0});
+      updateState({
+        tabBarData: clonedArray.map((item) => {
+          if (item.title == tabData.title) {
+            item.isActive = true;
+            return item;
+          } else {
+            item.isActive = false;
+            return item;
+          }
+        }),
+        selectedTab: tabData.title,
+        tabType:
+          tabData.title == strings.ACTIVE_ORDERS
+            ? staticStrings.ACTIVE
+            : tabData.title == strings.PAST_ORDERS
+            ? staticStrings.PAST
+            : staticStrings.SCHEDULE,
+        pageActive: 1,
+        orders: selectedTab != tabData.title ? [] : orders,
+      });
+      _scrollRef.current.scrollToOffset({animated: true, offset: 0});
+    } else {
+      navigation.navigate(navigationStrings.LOGIN);
+    }
   };
 
   const onPressViewEditAndReplace = (item) => {
@@ -285,7 +296,13 @@ export default function MyOrders({navigation}) {
 
   //Get list of all orders based on selected tab
   useEffect(() => {
-    _getListOfOrders();
+    if (userData) {
+      _getListOfOrders();
+    } else {
+      updateState({
+        isLoading: false,
+      });
+    }
   }, [pageActive, pagePastOrder, pageScheduleOrder, isRefreshing]);
 
   //Refresh screen

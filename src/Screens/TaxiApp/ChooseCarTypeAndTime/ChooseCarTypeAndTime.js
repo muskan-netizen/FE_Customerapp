@@ -118,12 +118,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     pickedUpTime: moment().format('hh:mm A'),
     selectedDate: moment().format('YYY-MM-DD'),
     pickedUpDate: moment().format('YYYY-MM-DD'),
-    selectedPayment: {
-      id: 1,
-      off_site: 0,
-      title: 'Cash On Delivery',
-      title_lng: strings.CASH_ON_DELIVERY,
-    },
+    selectedPayment: {id: 1, title: 'Cash On Delivery', image: imagePath.cash},
   });
   const {
     selectedPayment,
@@ -178,7 +173,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       // updateState({isLoadingB: true});
     }, [paramData]),
   );
-
+  console.log(selectedPayment, 'selectedPayment');
   useEffect(() => {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
@@ -490,6 +485,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         removeCoupon={() => removeCoupon()}
         pickUpTimeType={pickUpTimeType}
         redirectToPayement={() => _redirectToPayement()}
+        selectedPayment={selectedPayment}
       />
     );
   };

@@ -43,6 +43,7 @@ export default function SelectPaymentModalView({
   loyalityAmount = 0,
   pickUpTimeType = '',
   redirectToPayement,
+  selectedPayment = null,
 }) {
   console.log(pickUpTimeType, 'pickUpTimeType');
   console.log(selectedTime, 'selectedTime');
@@ -418,7 +419,9 @@ export default function SelectPaymentModalView({
                   ? [styles.selectedMethod, {color: MyDarkTheme.colors.text}]
                   : styles.selectedMethod
               }>
-              {strings.SELECT_PAYMENT_METHOD}
+              {selectedPayment
+                ? selectedPayment?.title
+                : strings.SELECT_PAYMENT_METHOD}
             </Text>
           </View>
           <View>

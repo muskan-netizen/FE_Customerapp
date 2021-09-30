@@ -1,34 +1,36 @@
 import Clipboard from '@react-native-community/clipboard';
 import NetInfo from '@react-native-community/netinfo';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import React, { useEffect, useState } from 'react';
-import { Linking } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import React, {useEffect, useState} from 'react';
+import {Linking} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import FlashMessage from 'react-native-flash-message';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
-import { Provider, useSelector } from 'react-redux';
+import {Provider, useSelector} from 'react-redux';
 import NoInternetModal from './src/Components/NoInternetModal';
 import strings from './src/constants/lang';
 import Container from './src/library/toastify-react-native';
 import * as NavigationService from './src/navigation/NavigationService';
 import navigationStrings from './src/navigation/navigationStrings';
 import Routes from './src/navigation/Routes';
-import { updateInternetConnection } from './src/redux/actions/auth';
+import {updateInternetConnection} from './src/redux/actions/auth';
 import store from './src/redux/store';
 import types from './src/redux/types';
-import { moderateScaleVertical, width } from './src/styles/responsiveSize';
-import { getParameterByName, getUrlRoutes } from './src/utils/helperFunctions';
-import { requestUserPermission, notificationListener } from './src/utils/notificationService';
-import { getItem, getUserData, setItem } from './src/utils/utils';
-
+import {moderateScaleVertical, width} from './src/styles/responsiveSize';
+import {getParameterByName, getUrlRoutes} from './src/utils/helperFunctions';
+import {
+  requestUserPermission,
+  notificationListener,
+} from './src/utils/notificationService';
+import {getItem, getUserData, setItem} from './src/utils/utils';
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
   // const appMainData = useSelector((state) => state?.home?.appMainData);
-  const appMainData=store.getState().home
+  const appMainData = store.getState().home;
   // deep linking
-console.log(appMainData,"appMainData+++++++++");
+  console.log(appMainData, 'appMainData+++++++++');
   async function handleDynamicLink(deepLinkUrl) {
     console.log(deepLinkUrl, 'deepLinkUrl');
     if (deepLinkUrl != null) {
@@ -36,8 +38,8 @@ console.log(appMainData,"appMainData+++++++++");
       // let routeName = getUrlRoutes(deepLinkUrl, 1);
       // if (routeName === 'vendor') {
       var data = deepLinkUrl?.split('=').pop();
-      let removePer = decodeURI(data)
-      let sendingData = JSON.parse(removePer)
+      let removePer = decodeURI(data);
+      let sendingData = JSON.parse(removePer);
       console.log(sendingData, 'split url');
       // return;
       setTimeout(() => {
@@ -46,14 +48,13 @@ console.log(appMainData,"appMainData+++++++++");
           params: {
             screen: navigationStrings.PRODUCT_LIST,
             params: {
-              data: sendingData
+              data: sendingData,
             },
           },
         });
       }, 1800);
     }
   }
-
 
   useEffect(() => {
     Linking.getInitialURL().then((link) => handleDynamicLink(link));
@@ -73,19 +74,18 @@ console.log(appMainData,"appMainData+++++++++");
     }, 1500);
   }, []);
 
-
   const notificationConfig = () => {
-    requestUserPermission()
-    console.log("app main data++++", appMainData)
-    notificationListener()
-  }
+    requestUserPermission();
+    console.log('app main data++++', appMainData);
+    notificationListener();
+  };
 
   useEffect(() => {
     (async () => {
       const userData = await getUserData();
-      notificationConfig()
+      notificationConfig();
 
-      const { dispatch } = store;
+      const {dispatch} = store;
       if (userData && !!userData.auth_token) {
         dispatch({
           type: types.LOGIN,
@@ -124,6 +124,14 @@ console.log(appMainData,"appMainData+++++++++");
         dispatch({
           type: types.SAVE_ALL_ADDRESS,
           payload: allUserAddress,
+        });
+      }
+
+      const walletData = await getItem('walletData');
+      if (walletData) {
+        dispatch({
+          type: types.WALLET_DATA,
+          payload: data,
         });
       }
 
@@ -202,7 +210,7 @@ console.log(appMainData,"appMainData+++++++++");
         Clipboard.setString('');
       }
     })();
-    return () => { };
+    return () => {};
   }, []);
 
   //Check internet connection

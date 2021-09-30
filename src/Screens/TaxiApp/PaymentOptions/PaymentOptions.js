@@ -25,8 +25,11 @@ import {
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import OffersCard2 from '../../../Components/OffersCard2';
+import navigationStrings from '../../../navigation/navigationStrings';
+import {showError} from '../../../utils/helperFunctions';
+import actions from '../../../redux/actions';
 
-const PaymentOptions = ({route}) => {
+const PaymentOptions = ({navigation, route}) => {
   const [state, setState] = useState({
     paymentMethods: [
       {id: 1, title: 'Cash', image: imagePath.cash},
@@ -47,11 +50,14 @@ const PaymentOptions = ({route}) => {
         name: '78878',
       },
     ],
+    pageNo: 1,
+    limit: 12,
   });
   const {appData, appStyle, themeColors, themeLayouts, currencies, languages} =
     useSelector((state) => state.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
@@ -64,14 +70,57 @@ const PaymentOptions = ({route}) => {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
 
-  const {paymentMethods, allAvailableCoupons} = state;
+  const {paymentMethods, allAvailableCoupons, pageNo, limit} = state;
 
   const _onPressPaymentOption = (item) => {
     console.log(item, '_onPressPaymentOption');
     if (item?.id == 1) {
+      navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
+        selectedMethod: item,
+      });
       // selectedMethod: selectedPaymentMethod,
     } else {
+      if (walletAmount >= 0) {
+        navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
+          selectedMethod: item,
+        });
+      } else {
+        showError('Please add Money in Your Wallet');
+      }
     }
+  };
+
+  useEffect(() => {
+    getWalletData();
+  }, [pageNo]);
+
+  const getWalletData = () => {
+    actions
+      .walletHistory(
+        `?page=${pageNo}&limit=${limit}`,
+        {},
+        {
+          code: appData?.profile?.code,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'Wallet Responce');
+        updateState({
+          isRefreshing: false,
+          isLoading: false,
+          isLoadingB: false,
+          wallet_amount: res?.data?.wallet_amount,
+          walletHistory:
+            pageNo == 1
+              ? res.data.transactions.data
+              : [...walletHistory, ...res.data.transactions.data],
+        });
+      })
+      .catch(errorMethod);
+  };
+  const errorMethod = (error) => {
+    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    showError(error?.message || error?.error);
   };
   const _renderItem = ({item}) => {
     return (
