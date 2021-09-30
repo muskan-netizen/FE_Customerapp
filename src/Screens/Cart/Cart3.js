@@ -861,7 +861,7 @@ export default function Cart({navigation, route}) {
     return (
       <View>
         {index === 0 && (
-          <View style={Platform.OS==="ios"?{zIndex: 5000}:{}}>
+          <View style={Platform.OS === 'ios' ? {zIndex: 5000} : {}}>
             {dineInType === 'dine_in' &&
               userData?.auth_token &&
               !!cartData?.vendor_details?.vendor_tables && (
@@ -1831,7 +1831,9 @@ export default function Cart({navigation, route}) {
                 onPress={_selectTime}
                 btnText={
                   sheduledorderdate && scheduleType
-                    ? `${moment(sheduledorderdate).format('DD MMM,YYYY HH:mm')}`
+                    ? `${moment(sheduledorderdate).format(
+                        'DD MMM, YYYY HH:mm',
+                      )}`
                     : strings.SCHEDULE_ORDER
                 }
                 borderRadius={moderateScale(13)}
@@ -2006,6 +2008,7 @@ export default function Cart({navigation, route}) {
     if (!!checkCartItem?.data) {
       getItem('deepLinkUrl')
         .then((res) => {
+          console.log(res, 'response is');
           if (res) {
             let table_number = getParameterByName('table', res);
             updateState({deepLinkUrl: table_number});
@@ -2015,7 +2018,8 @@ export default function Cart({navigation, route}) {
           showError(error.message);
         });
     }
-  }, []);
+  }, [deepLinkUrl]);
+  // console.log(deepLinkUrl, 'deepLinkUrlCarts');
 
   const _onTableSelection = (item) => {
     const data = {
@@ -2424,7 +2428,7 @@ export default function Cart({navigation, route}) {
       <Header
         centerTitle={strings.CART}
         leftIcon={imagePath.icBackb}
-        isRightText={!!cartItems.length}
+        isRightText={cartItems && cartItems?.length}
         onPressRightTxt={() => openClearCartModal()}
       />
       <View

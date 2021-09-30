@@ -117,7 +117,9 @@ export default function DashBoardHeaderFive({
     }
     if (toggleData?.profile?.preferences?.takeaway_check == 1) {
       localTabsArray.push({
-        value: strings.TAKEAWAY,
+        value:
+          toggleData?.profile?.preferences?.takeaway_nomenclature ||
+          strings.TAKEAWAY,
         label: 'takeaway',
         icon: imagePath.takeaway,
         isActive: false,
@@ -155,7 +157,11 @@ export default function DashBoardHeaderFive({
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        setUserSelectedTab(strings.TAKEAWAY, 'takeaway');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.takeaway_nomenclature ||
+            strings.TAKEAWAY,
+          'takeaway',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 1 &&
@@ -177,7 +183,11 @@ export default function DashBoardHeaderFive({
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        setUserSelectedTab(strings.TAKEAWAY, 'takeaway');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.takeaway_nomenclature ||
+            strings.TAKEAWAY,
+          'takeaway',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 1 &&
@@ -211,19 +221,31 @@ export default function DashBoardHeaderFive({
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        setUserSelectedTab(strings.TAKEAWAY, 'takeaway');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.takeaway_nomenclature ||
+            strings.TAKEAWAY,
+          'takeaway',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        setUserSelectedTab(strings.TAKEAWAY, 'takeaway');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.takeaway_nomenclature ||
+            strings.TAKEAWAY,
+          'takeaway',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        setUserSelectedTab(strings.TAKEAWAY, 'takeaway');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.takeaway_nomenclature ||
+            strings.TAKEAWAY,
+          'takeaway',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 1 &&
@@ -243,7 +265,11 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(strings.DELIVERY, 'delivery');
       } else {
-        setUserSelectedTab(strings.TAKEAWAY, 'takeaway');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.takeaway_nomenclature ||
+            strings.TAKEAWAY,
+          'takeaway',
+        );
       }
     }
   };

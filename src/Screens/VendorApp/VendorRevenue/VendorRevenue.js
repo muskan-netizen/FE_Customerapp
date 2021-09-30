@@ -258,7 +258,6 @@ export default function VendorRevenue({navigation, route}) {
     data['type'] = selectedTimeOption ? selectedTimeOption?.type : '';
     data['vendor_id'] = selectedVendor ? selectedVendor?.id : '';
 
-    console.log(data, 'datadatadatadatadatadata');
     actions
       .getRevenueData(data, {
         code: appData?.profile?.code,
