@@ -25,6 +25,7 @@ export default function PhoneNumberInput({
   placeholder,
   containerStyle,
   color,
+  autoFocus = false,
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -110,6 +111,7 @@ export default function PhoneNumberInput({
           paddingHorizontal: 10,
           textAlign: I18nManager.isRTL ? 'right' : 'left',
         }}
+        autoFocus={autoFocus}
       />
       {countryPickerModalVisible && (
         <CountryPicker

@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "321994255353",
+    "project_id": "goody-310f4",
+    "storage_bucket": "goody-310f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:321994255353:android:9ac0e112b51f2d6a182b28",
+        "android_client_info": {
+          "package_name": "com.goody"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "321994255353-4cb3hbg7qel1s0ikdirh4vim68ag8aa5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.goody",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "321994255353-j5gdhu4d2vpf3ui9ofusj5lo3b2nqkdb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.goody",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "321994255353-ntudd7pdve5rcb0gmdfjn4bvrp598u6o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.goody",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "321994255353-vsjj7o5t2tq15i1k3dn3scls8a6nt3lj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhG8jEGNPxgSUpxh-k_DiOE7oWsJDbaEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "321994255353-vsjj7o5t2tq15i1k3dn3scls8a6nt3lj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "321994255353-gpshvamrb77k4t9fpc0c4vq11kftlhsj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.goody"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
