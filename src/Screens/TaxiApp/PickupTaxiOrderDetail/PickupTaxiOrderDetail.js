@@ -269,7 +269,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       ? productDetail?.product_rating?.review
       : '';
     // data['vendor_id'] = productDetail.vendor_id;
-
+    console.log(productDetail, 'productDetail');
     actions
       .giveRating(data, {
         code: appData?.profile?.code,
@@ -279,21 +279,17 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       .then((res) => {
         console.log(res, 'resresresresres');
         let cloned_productInfo = cloneDeep(productInfo);
+        console.log(cloned_productInfo, 'cloned_productInfo');
         updateState({
           isLoading: false,
-          productInfo: (cloned_productInfo = cloned_productInfo.map(
-            (itm, inx) => {
-              itm.products.map((j, jnx) => {
-                if (j?.product_id == productDetail?.product_id) {
-                  j.product_rating = res.data;
-                  return j;
-                } else {
-                  return j;
-                }
-              });
+          productInfo: cloned_productInfo.map((itm, inx) => {
+            if (itm?.product_id == productDetail?.product_id) {
+              itm.product_rating = res.data;
               return itm;
-            },
-          )),
+            } else {
+              return itm;
+            }
+          }),
         });
       })
       .catch(errorMethod);
@@ -355,6 +351,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         selectedCarOption={paramData?.selectedCarOption}
         productRatings={productInfo}
         isShowRating={isShowRating}
+        navigation={navigation}
         onStarRatingPress={onStarRatingPress}
       />
     );

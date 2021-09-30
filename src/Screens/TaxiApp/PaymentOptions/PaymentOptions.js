@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, FlatList, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import Header from '../../../Components/Header';
 import {useDarkMode} from 'react-native-dark-mode';
@@ -22,9 +29,9 @@ import OffersCard2 from '../../../Components/OffersCard2';
 const PaymentOptions = ({route}) => {
   const [state, setState] = useState({
     paymentMethods: [
-      {id: 0, title: 'Cash', image: imagePath.cash},
-      {id: 1, title: 'Credit / Debit card', image: imagePath.card},
-      {id: 2, title: 'UPI', image: imagePath.upi},
+      {id: 1, title: 'Cash', image: imagePath.cash},
+      {id: 2, title: 'Wallet', image: imagePath.card},
+      // {id: 2, title: 'UPI', image: imagePath.upi},
     ],
     allAvailableCoupons: [
       {
@@ -48,6 +55,10 @@ const PaymentOptions = ({route}) => {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
+  const walletAmount = useSelector(
+    (state) => state?.product?.walletData?.wallet_amount,
+  );
+  console.log(walletAmount, 'walletAmount');
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const vendorInfo = route?.params?.data;
   const fontFamily = appStyle?.fontSizeData;
@@ -55,13 +66,22 @@ const PaymentOptions = ({route}) => {
 
   const {paymentMethods, allAvailableCoupons} = state;
 
+  const _onPressPaymentOption = (item) => {
+    console.log(item, '_onPressPaymentOption');
+    if (item?.id == 1) {
+      // selectedMethod: selectedPaymentMethod,
+    } else {
+    }
+  };
   const _renderItem = ({item}) => {
     return (
-      <View style={styles.renderItemStyle}>
+      <TouchableOpacity
+        onPress={() => _onPressPaymentOption(item)}
+        style={styles.renderItemStyle}>
         <View
           style={{
             flexDirection: 'row',
-            marginVertical: moderateScale(18),
+            marginBottom: moderateScale(20),
           }}>
           <Image source={item.image} style={styles.imageStyle} />
           <Text
@@ -72,7 +92,7 @@ const PaymentOptions = ({route}) => {
             {item.title}
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
   const _headerComponent = () => {
@@ -85,6 +105,7 @@ const PaymentOptions = ({route}) => {
             fontFamily: fontFamily.reguler,
             fontSize: textScale(12),
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            marginBottom: moderateScaleVertical(20),
           }}>
           {strings.PAYMENT_METHOD}
         </Text>
@@ -158,14 +179,14 @@ const PaymentOptions = ({route}) => {
             ListHeaderComponent={_headerComponent}
           />
         </View>
-        <View style={{marginTop: moderateScale(28)}}>
+        {/* <View style={{marginTop: moderateScale(28)}}>
           <FlatList
             data={allAvailableCoupons}
             ListHeaderComponent={_headerVouchers}
             renderItem={_renderPromoCodes}
             ItemSeparatorComponent={() => <View style={{height: 20}} />}
           />
-        </View>
+        </View> */}
       </View>
     </WrapperContainer>
   );

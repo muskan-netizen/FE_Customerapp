@@ -25,6 +25,7 @@ import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
 import PaymentProcessingModal from '../../CourierService/PaymentProcessingModal';
 import {BlurView} from '@react-native-community/blur';
+import {useFocusEffect} from '@react-navigation/native';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -117,8 +118,15 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     pickedUpTime: moment().format('hh:mm A'),
     selectedDate: moment().format('YYY-MM-DD'),
     pickedUpDate: moment().format('YYYY-MM-DD'),
+    selectedPayment: {
+      id: 1,
+      off_site: 0,
+      title: 'Cash On Delivery',
+      title_lng: strings.CASH_ON_DELIVERY,
+    },
   });
   const {
+    selectedPayment,
     couponInfo,
     updatedAmount,
     totalDistance,
@@ -161,6 +169,16 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const styles = stylesFun({fontFamily, themeColors});
   const commonStyles = commonStylesFun({fontFamily});
   const {profile} = appData;
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (paramData && paramData?.selectedMethod) {
+        updateState({selectedPayment: paramData?.selectedMethod});
+      }
+      // updateState({isLoadingB: true});
+    }, [paramData]),
+  );
+
   useEffect(() => {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
@@ -443,6 +461,11 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     );
   };
 
+  const _redirectToPayement = () => {
+    moveToNewScreen(navigationStrings.PAYMENT_OPTIONS, {
+      screenName: strings.PAYMENT,
+    })();
+  };
   const _selectPaymentView = () => {
     return (
       <SelectPaymentModalView
@@ -466,6 +489,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         loyalityAmount={loyalityAmount}
         removeCoupon={() => removeCoupon()}
         pickUpTimeType={pickUpTimeType}
+        redirectToPayement={() => _redirectToPayement()}
       />
     );
   };

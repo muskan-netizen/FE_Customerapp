@@ -23,10 +23,10 @@ export default ({fontFamily, themeColors}) => {
     },
     offersViewB: {
       marginHorizontal: moderateScale(20),
-      backgroundColor: getColorCodeWithOpactiyNumber(
-        themeColors.primary_color.substr(1),
-        20,
-      ),
+      // backgroundColor: getColorCodeWithOpactiyNumber(
+      //   themeColors.primary_color.substr(1),
+      //   20,
+      // ),
       paddingVertical: moderateScaleVertical(15),
       paddingHorizontal: moderateScaleVertical(10),
       marginVertical: moderateScaleVertical(10),
@@ -232,6 +232,19 @@ export default ({fontFamily, themeColors}) => {
       borderRadius: 15,
       overflow: 'hidden',
       paddingTop: 0,
+    },
+    paymentMainView: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: moderateScaleVertical(20),
+      paddingVertical: moderateScaleVertical(10),
+      backgroundColor: colors.lightGreyBgB,
+    },
+    selectedMethod: {
+      color: colors.textGrey,
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(14),
+      marginLeft: moderateScale(10),
     },
   });
   return styles;

@@ -25,6 +25,13 @@ export function setUserData(data) {
   return AsyncStorage.setItem('userData', data);
 }
 
+//Save wallet info
+
+export function setWalletData(data) {
+  data = JSON.stringify(data);
+  return AsyncStorage.setItem('walletData', data);
+}
+
 export function setAppData(data) {
   data = JSON.stringify(data);
   return AsyncStorage.setItem('appData', data);

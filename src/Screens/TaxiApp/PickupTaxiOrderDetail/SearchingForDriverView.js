@@ -27,6 +27,7 @@ import {
   BallIndicator,
   UIActivityIndicator,
 } from 'react-native-indicators';
+import navigationStrings from '../../../navigation/navigationStrings';
 
 export default function ({
   isLoading = false,
@@ -40,6 +41,7 @@ export default function ({
   selectedCarOption,
   productRatings,
   isShowRating,
+  navigation,
   onStarRatingPress = () => {},
 }) {
   //   console.log(selectedCarOption, 'selectedCarOption');
@@ -60,8 +62,14 @@ export default function ({
   console.log(orderDetail, 'orderDetail>>>');
   console.log(agent_image, 'agent_image>>>');
   console.log(agent_location, 'agent_location');
-  console.log(productRatings, 'productRatings');
+  console.log(productRatings, 'productRatings>>>>>>>>>>>>>>>>>>>');
   console.log(totalDuration, 'totalDuration');
+
+  //give review and update the rate
+  const rateYourOrder = (item) => {
+    navigation.navigate(navigationStrings.RATEORDER, {item});
+  };
+
   return (
     <>
       <View
@@ -231,14 +239,18 @@ export default function ({
                       <StarRating
                         disabled={false}
                         maxStars={5}
-                        // rating={rating}
+                        rating={item?.product_rating?.rating}
                         selectedStar={(rating) =>
                           onStarRatingPress(item, rating)
                         }
                         fullStarColor={colors.ORANGE}
                         starSize={20}
                       />
-                      <Text>{strings.WRITE_A_REVIEW}</Text>
+                      {!!item?.product_rating && (
+                        <Text onPress={() => rateYourOrder(item)}>
+                          {strings.WRITE_A_REVIEW}
+                        </Text>
+                      )}
                     </View>
                   );
                 })}
