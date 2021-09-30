@@ -10,6 +10,7 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
+import StarRating from 'react-native-star-rating';
 import {
   height,
   moderateScale,
@@ -37,6 +38,9 @@ export default function ({
   agent_image = null,
   totalDuration,
   selectedCarOption,
+  productRatings,
+  isShowRating,
+  onStarRatingPress = () => {},
 }) {
   //   console.log(selectedCarOption, 'selectedCarOption');
   const {appData, themeColors, appStyle} = useSelector(
@@ -56,7 +60,8 @@ export default function ({
   console.log(orderDetail, 'orderDetail>>>');
   console.log(agent_image, 'agent_image>>>');
   console.log(agent_location, 'agent_location');
-
+  console.log(productRatings, 'productRatings');
+  console.log(totalDuration, 'totalDuration');
   return (
     <>
       <View
@@ -160,28 +165,30 @@ export default function ({
                       4.5
                     </Text>
                   </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      marginHorizontal: moderateScale(20),
-                    }}>
-                    <Image
-                      // style={{}}
-                      source={imagePath.location2}
-                    />
-                    <Text
+                  {totalDuration ? (
+                    <View
                       style={{
-                        marginHorizontal: moderateScale(5),
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.lightgray,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginHorizontal: moderateScale(20),
                       }}>
-                      {totalDuration < 60
-                        ? `${totalDuration} mins`
-                        : `${(totalDuration / 60).toFixed(2)} hrs`}
-                    </Text>
-                  </View>
+                      <Image
+                        // style={{}}
+                        source={imagePath.location2}
+                      />
+                      <Text
+                        style={{
+                          marginHorizontal: moderateScale(5),
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.lightgray,
+                        }}>
+                        {totalDuration < 60
+                          ? `${Number(totalDuration)} mins`
+                          : `${(Number(totalDuration) / 60).toFixed(2)} hrs`}
+                      </Text>
+                    </View>
+                  ) : null}
                 </View>
               </View>
               <View>
@@ -197,7 +204,46 @@ export default function ({
                 </Text>
               </View>
             </View>
-
+            {isShowRating ? (
+              <ScrollView horizontal>
+                {productRatings?.map((item, index) => {
+                  return (
+                    <View
+                      style={{
+                        justifyContent: 'center',
+                      }}>
+                      <FastImage
+                        style={{
+                          height: moderateScale(40),
+                          width: moderateScale(40),
+                          alignSelf: 'center',
+                          borderRadius: 20,
+                        }}
+                        source={{
+                          uri: getImageUrl(
+                            item.image.proxy_url,
+                            item.image.image_path,
+                            '600/360',
+                          ),
+                          priority: FastImage.priority.high,
+                        }}
+                      />
+                      <StarRating
+                        disabled={false}
+                        maxStars={5}
+                        // rating={rating}
+                        selectedStar={(rating) =>
+                          onStarRatingPress(item, rating)
+                        }
+                        fullStarColor={colors.ORANGE}
+                        starSize={20}
+                      />
+                      <Text>{strings.WRITE_A_REVIEW}</Text>
+                    </View>
+                  );
+                })}
+              </ScrollView>
+            ) : null}
             {agent_location && (
               <View
                 style={{
@@ -205,7 +251,7 @@ export default function ({
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  marginVertical: moderateScaleVertical(10),
+                  marginVertical: moderateScaleVertical(5),
                 }}>
                 <GradientButton
                   colorsArray={[

@@ -9,7 +9,7 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import {showError} from '../../../utils/helperFunctions';
+import {showError, showSuccess} from '../../../utils/helperFunctions';
 import stylesFunc from './styles';
 const {height, width} = Dimensions.get('window');
 import MapViewDirections from 'react-native-maps-directions';
@@ -25,6 +25,7 @@ import TaxiOrderDetailView from './TaxiOrderDetailView';
 import SearchingForDriverView from './SearchingForDriverView';
 import {color} from 'react-native-reanimated';
 import useInterval from '../../../utils/useInterval';
+import {cloneDeep} from 'lodash';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -51,6 +52,10 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     agent_image: null,
     orderDetail: null,
     showOrderDetailView: false,
+    driverStatus: null,
+    productInfo: [],
+    isShowRating: false,
+    getDispatchId: null,
   });
   const {
     isLoading,
@@ -61,6 +66,14 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     agent_location,
     agent_image,
     showOrderDetailView,
+    driverStatus,
+    order_vendor_product_id,
+    order_id,
+    orderRootId,
+    productId,
+    productInfo,
+    isShowRating,
+    getDispatchId,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -80,30 +93,31 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     () => {
       navigation.navigate(screenName, {data});
     };
-  const urlValue = paramData?.orderDetail?.dispatch_traking_url
-    ? (paramData?.orderDetail?.dispatch_traking_url).replace(
-        '/order/',
-        '/order-details/',
-      )
-    : null;
+  console.log(productInfo, 'productInfoproductInfoproductInfo');
+  // const urlValue = paramData?.orderDetail?.dispatch_traking_url
+  //   ? (paramData?.orderDetail?.dispatch_traking_url).replace(
+  //       '/order/',
+  //       '/order-details/',
+  //     )
+  //   : null;
 
-  console.log(
-    paramData?.selectedCarOption,
-    'selectedCarOptionselectedCarOption',
-  );
+  const urlValue = `/pickup-delivery/order-tracking-details`;
+
+  console.log(paramData, 'selectedCarOptionselectedCarOption');
 
   useFocusEffect(
     React.useCallback(() => {
       //   updateState({isLoading: true});
       if (!!userData?.auth_token) {
-        let url = paramData?.orderDetail?.dispatch_traking_url
-          ? (paramData?.orderDetail?.dispatch_traking_url).replace(
-              '/order/',
-              '/order-details/',
-            )
-          : null;
+        // let url = paramData?.orderDetail?.dispatch_traking_url
+        //   ? (paramData?.orderDetail?.dispatch_traking_url).replace(
+        //       '/order/',
+        //       '/order-details/',
+        //     )
+        //   : null;
+        let url = `/pickup-delivery/order-tracking-details`;
 
-        if (url && url.includes('order-details')) {
+        if (url) {
           _getOrderDetailScreen(url);
         } else {
           updateState({isLoading: false});
@@ -117,34 +131,45 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
 
   useInterval(
     () => {
-      if (urlValue && urlValue.includes('order-details')) {
+      if (urlValue) {
         _updateDriverLocationLocation(urlValue);
       } else {
         updateState({isLoading: false});
       }
     },
-    isFocused ? 3000 : null,
+    isFocused && driverStatus != 'Completed' ? 3000 : null,
   );
 
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     //assign interval to a variable to clear it.
+  useEffect(() => {
+    if (
+      driverStatus != '' &&
+      driverStatus != null &&
+      driverStatus != undefined
+    ) {
+      if (driverStatus === 'Completed') {
+        showSuccess(driverStatus);
+        updateState({
+          isShowRating: true,
+        });
+      }
+      showSuccess(driverStatus);
+    }
+  }, [driverStatus]);
 
-  //     if (urlValue && urlValue.includes('order-details')) {
-  //       _updateDriverLocationLocation(urlValue);
-  //     } else {
-  //       updateState({isLoading: false});
-  //     }
-  //   }, 3000);
-  //   return () => clearInterval(intervalId);
-  // }, []);
-
+  const new_dispatch_traking_url = paramData?.orderDetail?.dispatch_traking_url
+    ? (paramData?.orderDetail?.dispatch_traking_url).replace(
+        '/order/',
+        '/order-details/',
+      )
+    : null;
   /*********Update driver detail screen********* */
   const _updateDriverLocationLocation = (url) => {
     actions
       .getOrderDetailPickUp(
-        url,
-        {},
+        {
+          order_id: paramData?.orderId,
+          new_dispatch_traking_url: new_dispatch_traking_url,
+        },
         {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
@@ -155,9 +180,12 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       .then((res) => {
         console.log(res, 'res---agent');
         updateState({
-          agent_location: res?.agent_location,
-          orderDetail: res?.order,
-          agent_image: res?.agent_image,
+          agent_location: res?.data?.agent_location,
+          orderDetail: res?.data?.order,
+          agent_image: res?.data?.agent_image,
+          driverStatus: res?.data?.order_details?.dispatcher_status,
+          productInfo: res?.data?.order_details?.products,
+          getDispatchId: res?.data?.order?.id,
         });
       })
       .catch(errorMethod);
@@ -169,8 +197,10 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   const _getOrderDetailScreen = (url) => {
     actions
       .getOrderDetailPickUp(
-        url,
-        {},
+        {
+          order_id: paramData?.orderId,
+          new_dispatch_traking_url: new_dispatch_traking_url,
+        },
         {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
@@ -179,34 +209,36 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res, 'res from pickup');
+        console.log(res?.data, 'res---agent>>>>>>>');
         updateState({
           isLoading: false,
-          tasks: res?.tasks,
+          tasks: res?.data?.tasks,
+          driverStatus: res?.data?.order?.status,
           region: {
-            latitude: res?.tasks[0]?.latitude
-              ? Number(res?.tasks[0].latitude)
+            latitude: res?.data?.tasks[0]?.latitude
+              ? Number(res?.data?.tasks[0].latitude)
               : 30.7191,
-            longitude: res?.tasks[0]?.longitude
-              ? Number(res?.tasks[0].longitude)
+            longitude: res?.data?.tasks[0]?.longitude
+              ? Number(res?.data?.tasks[0].longitude)
               : 76.8107,
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
           },
           coordinate: {
-            latitude: res?.tasks[0]?.latitude
-              ? Number(res?.tasks[0].latitude)
+            latitude: res?.data?.tasks[0]?.latitude
+              ? Number(res?.data?.tasks[0].latitude)
               : 30.7191,
-            longitude: res?.tasks[0]?.longitude
-              ? Number(res?.tasks[0].longitude)
+            longitude: res?.data?.tasks[0]?.longitude
+              ? Number(res?.data?.tasks[0].longitude)
               : 76.8107,
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
           },
-          agent_location: res?.agent_location,
-          orderDetail: res?.order,
           showOrderDetailView: true,
-          agent_image: res?.agent_image,
+          agent_location: res?.data?.agent_location,
+          orderDetail: res?.data?.order,
+          agent_image: res?.data?.agent_image,
+          driverStatus: res?.data?.order_details?.dispatcher_status,
         });
       })
       .catch(errorMethod);
@@ -227,12 +259,73 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     Communications.phonecall(orderDetail?.phone_number, true);
   };
 
+  const _giveRatingToProduct = (productDetail, rating) => {
+    let data = {};
+    data['order_vendor_product_id'] = productDetail?.id;
+    data['order_id'] = productDetail?.order_id;
+    data['product_id'] = productDetail?.product_id;
+    data['rating'] = rating;
+    data['review'] = productDetail?.product_rating?.review
+      ? productDetail?.product_rating?.review
+      : '';
+    // data['vendor_id'] = productDetail.vendor_id;
+
+    actions
+      .giveRating(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        console.log(res, 'resresresresres');
+        let cloned_productInfo = cloneDeep(productInfo);
+        updateState({
+          isLoading: false,
+          productInfo: (cloned_productInfo = cloned_productInfo.map(
+            (itm, inx) => {
+              itm.products.map((j, jnx) => {
+                if (j?.product_id == productDetail?.product_id) {
+                  j.product_rating = res.data;
+                  return j;
+                } else {
+                  return j;
+                }
+              });
+              return itm;
+            },
+          )),
+        });
+      })
+      .catch(errorMethod);
+  };
+
   // on press chat
   const _onPressChat = (orderDetail) => {
     Communications.text(orderDetail?.phone_number);
   };
 
-  console.log(paramData?.fromCab, 'paramData?.fromCab');
+  const onStarRatingPress = (productData, rating) => {
+    let productListarray = cloneDeep(productInfo);
+
+    // console.log(getDispatchId, 'productData,rating');
+    console.log(productData, rating, 'productDataproductDataproductData');
+    // updateState({isLoading: true});
+    _giveRatingToProduct(productData, rating);
+
+    // navigation.navigate(navigationStrings.RATEORDER, {
+    //   item: {
+    //     product_rating: {
+    //       id: productData?.id,
+    //       order_vendor_product_id: productData?.order_vendor_id,
+    //       product_id: productData?.product_id,
+    //       order_id: productData?.order_id,
+    //       dispatchId: getDispatchId,
+    //     },
+    //   },
+    // });
+  };
+
+  console.log(productInfo, 'productInfo');
   //order detail View
   const _selectOrderDetailView = () => {
     return (
@@ -260,6 +353,9 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         onPressChat={(orderDetail) => _onPressChat(orderDetail)}
         totalDuration={paramData?.totalDuration}
         selectedCarOption={paramData?.selectedCarOption}
+        productRatings={productInfo}
+        isShowRating={isShowRating}
+        onStarRatingPress={onStarRatingPress}
       />
     );
   };
@@ -308,13 +404,15 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
               ))}
 
               {/* driver location */}
-              {agent_location && (
+              {agent_location && driverStatus != 'Completed' && (
                 <MapView.Marker
-                  key={`coordinate_${agent_location?.agent_id}`}
+                  key={`coordinate_${agent_location?.lat}`}
                   //   image={imagePath.driver}
                   coordinate={{
                     latitude: Number(agent_location?.lat),
-                    longitude: Number(agent_location?.long),
+                    longitude: Number(
+                      agent_location?.long || agent_location?.lng,
+                    ),
                   }}>
                   <Image
                     style={{height: 35, width: 35}}
@@ -368,13 +466,13 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                   },
                 ]}
                 onPress={
-                  paramData?.fromCab
-                    ? () => navigation.navigate(navigationStrings.HOME)
-                    : () =>
-                        navigation.navigate(navigationStrings.TAB_ROUTES, {
-                          screen: navigationStrings.ACCOUNTS,
-                        })
-                  // navigation.goBack()
+                  // paramData?.fromCab
+                  //   ? () => navigation.navigate(navigationStrings.HOME)
+                  //   : () =>
+                  //       navigation.navigate(navigationStrings.TAB_ROUTES, {
+                  //         screen: navigationStrings.ACCOUNTS,
+                  //       })
+                  () => navigation.goBack()
                 }>
                 <Image
                   style={{

@@ -10,6 +10,7 @@ import {
   GET_RETURN_PRODUCT_DETAIL,
   UPLOAD_PRODUCT_IMAGE,
   SUBMIT_RETURN_ORDER,
+  DISPATCHER_URL,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -122,9 +123,9 @@ export const getRevenueData = (data = {}, headers = {}) => {
 };
 
 //Get Cart Detail
-export function getOrderDetailPickUp(url = '', data = {}, headers = {}) {
+export function getOrderDetailPickUp(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
-    apiGet(url, data, headers)
+    apiPost(DISPATCHER_URL, data, headers)
       .then((res) => {
         resolve(res);
       })

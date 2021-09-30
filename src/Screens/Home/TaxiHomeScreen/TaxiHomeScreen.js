@@ -359,7 +359,7 @@ export default function TaxiHomeScreen({route, navigation}) {
             moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
           } else {
             // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
-            moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
+            moveToNewScreen(navigationStrings.ADDADDRESS, item)();
           }
         }
       } else {

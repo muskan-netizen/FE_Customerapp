@@ -162,8 +162,8 @@ export default function Vendors3({route, navigation}) {
       {/* <Image
           style={
             isDarkMode
-              ? {tintColor: MyDarkTheme.colors.text}
-              : {tintColor: null}
+              && {tintColor: MyDarkTheme.colors.text}
+              
           }
           source={imagePath.filter1}
         /> */}

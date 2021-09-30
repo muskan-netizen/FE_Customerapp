@@ -187,10 +187,12 @@ export default ({fontFamily}) => {
     cartItemWeight: {
       color: colors.textGreyB,
       fontSize: textScale(14),
+      fontFamily: fontFamily.regular,
     },
     cartItemWeight2: {
       color: colors.textGreyB,
       fontSize: moderateScaleVertical(11),
+      fontFamily: fontFamily.regular,
     },
     rattingContainer: {
       // borderWidth: 0.5,
@@ -323,6 +325,17 @@ export default ({fontFamily}) => {
       borderStyle: 'dotted',
       borderColor: '#979797',
       marginBottom: moderateScaleVertical(12),
+    },
+    ariveTextStyle: {
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(11),
+    },
+    ariveView: {
+      padding: moderateScale(6),
+    },
+    quantityStyles: {
+      fontSize: textScale(14),
+      fontFamily: fontFamily.regular,
     },
   });
   return styles;

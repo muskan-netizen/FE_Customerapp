@@ -40,6 +40,8 @@ export default function OrderCardVendorComponent2({
   onPressRateOrder,
   updateOrderStatus,
   onPressReturnOrder,
+  etaTime = null,
+  cardStyle,
 }) {
   let cardWidth = width - 21.5;
 
@@ -66,16 +68,32 @@ export default function OrderCardVendorComponent2({
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={1}
-      style={
-        isDarkMode
-          ? [styles.cardStyle, {backgroundColor: MyDarkTheme.colors.lightDark}]
-          : styles.cardStyle
-      }>
+      style={{
+        ...styles.cardStyle,
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.lightDark
+          : colors.white,
+        ...cardStyle,
+      }}>
+      {!!etaTime && (
+        <View
+          style={{
+            ...styles.ariveView,
+            backgroundColor: themeColors?.primary_color,
+          }}>
+          <Text
+            style={{
+              ...styles.ariveTextStyle,
+              color: colors.white,
+            }}>
+            {strings.YOUR_ORDER_WILL_ARRIVE_BY} {etaTime}
+          </Text>
+        </View>
+      )}
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View
           style={{
             flex: 1,
-
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -114,7 +132,7 @@ export default function OrderCardVendorComponent2({
                     ? [styles.orderLableStyle, {color: MyDarkTheme.colors.text}]
                     : styles.orderLableStyle
                 }>
-                {`${strings.ORDER_ID}:#${data?.order_number}`}
+                {`${strings.ORDER_ID}: #${data?.order_number}`}
               </Text>
               <Text
                 style={
@@ -133,7 +151,7 @@ export default function OrderCardVendorComponent2({
                           color: colors.black,
                         },
                       ]
-                }>{`${moment(data?.date_time).format('DD MMM,YYYY')} ${moment(
+                }>{`${moment(data?.date_time).format('DD MMM, YYYY')} ${moment(
                 data?.date_time,
               ).format('LT')} `}</Text>
             </View>
@@ -560,6 +578,15 @@ export function stylesFunc({fontFamily, themeColors}) {
       justifyContent: 'center',
       // backgroundColor: 'black',
       // flexWrap:'wrap'
+    },
+    ariveTextStyle: {
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(11),
+    },
+    ariveView: {
+      padding: moderateScale(6),
+      borderTopRightRadius: moderateScale(6),
+      borderTopLeftRadius: moderateScale(6),
     },
   });
   return styles;

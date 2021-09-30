@@ -7,7 +7,7 @@ import { useDarkMode } from 'react-native-dark-mode';
 import FlashMessage from 'react-native-flash-message';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import NoInternetModal from './src/Components/NoInternetModal';
 import strings from './src/constants/lang';
 import Container from './src/library/toastify-react-native';
@@ -19,15 +19,16 @@ import store from './src/redux/store';
 import types from './src/redux/types';
 import { moderateScaleVertical, width } from './src/styles/responsiveSize';
 import { getParameterByName, getUrlRoutes } from './src/utils/helperFunctions';
-import {requestUserPermission, notificationListener } from './src/utils/notificationService';
+import { requestUserPermission, notificationListener } from './src/utils/notificationService';
 import { getItem, getUserData, setItem } from './src/utils/utils';
 
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
-
+  // const appMainData = useSelector((state) => state?.home?.appMainData);
+  const appMainData=store.getState().home
   // deep linking
-
+console.log(appMainData,"appMainData+++++++++");
   async function handleDynamicLink(deepLinkUrl) {
     console.log(deepLinkUrl, 'deepLinkUrl');
     if (deepLinkUrl != null) {
@@ -73,9 +74,10 @@ const App = () => {
   }, []);
 
 
-  const notificationConfig = () =>{
-      requestUserPermission()
-      notificationListener()
+  const notificationConfig = () => {
+    requestUserPermission()
+    console.log("app main data++++", appMainData)
+    notificationListener()
   }
 
   useEffect(() => {

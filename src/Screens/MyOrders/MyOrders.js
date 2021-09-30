@@ -48,11 +48,22 @@ import LottieView from 'lottie-react-native';
 export default function MyOrders({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const location = useSelector((state) => state?.home?.location);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const {appData, currencies, languages, themeColors, appStyle} = useSelector(
+    (state) => state?.initBoot,
+  );
+  const businessType = appData?.profile?.preferences?.business_type;
   const [state, setState] = useState({
     tabBarData: [
+      // businessType == 'taxi'
+      //   ? {title: strings.ACTIVERIDES, isActive: true}
+      // :
       {title: strings.ACTIVE_ORDERS, isActive: true},
+      // businessType == 'taxi'
+      //   ? {title: strings.PASTRIDES, isActive: false}
+      // :
       {title: strings.PAST_ORDERS, isActive: false},
       // {title: strings.SCHEDULED_ORDERS, isActive: false},
     ],
@@ -99,9 +110,8 @@ export default function MyOrders({navigation}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const _scrollRef = createRef();
   //Reduc store data
-  const {appData, currencies, languages, themeColors, appStyle} = useSelector(
-    (state) => state?.initBoot,
-  );
+
+  console.log(businessType, 'businessType');
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
   const styles = stylesFun({fontFamily, themeColors});
@@ -111,6 +121,8 @@ export default function MyOrders({navigation}) {
     updateState({isLoading: true});
     _getListOfOrders();
   }, [selectedTab]);
+
+  console.log('lat lng', location);
 
   //Get list of all orders api
   console.log(RNLocalize.getTimeZone(), 'RNLocalize.getTimeZone()');
@@ -124,6 +136,8 @@ export default function MyOrders({navigation}) {
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
           timezone: RNLocalize.getTimeZone(),
+          latitude: location?.latitude.toString() || '',
+          longitude: location?.longitude.toString() || '',
         },
       )
       .then((res) => {
@@ -241,7 +255,6 @@ export default function MyOrders({navigation}) {
   };
 
   const renderOrders = ({item, index}) => {
-    // console.log(item,"item>>item")
     return (
       <OrderCardVendorComponent2
         data={item}
@@ -256,8 +269,9 @@ export default function MyOrders({navigation}) {
             ? () => returnYourOrder(item)
             : null
         }
+        cardStyle={{padding: 0}}
+        etaTime={!!item?.ETA ? item.ETA : null}
       />
-
       // <OrderCardComponent
       //   data={item}
       //   selectedTab={selectedTab}
@@ -403,7 +417,7 @@ export default function MyOrders({navigation}) {
             ? imagePath.icBackb
             : imagePath.back
         }
-        centerTitle={strings.MY_ORDERS}
+        centerTitle={true ? strings.MYRIDES : strings.MY_ORDERS}
         headerStyle={
           isDarkMode
             ? {backgroundColor: MyDarkTheme.colors.background}

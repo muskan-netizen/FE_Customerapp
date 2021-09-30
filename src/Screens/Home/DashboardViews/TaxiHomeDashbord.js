@@ -45,6 +45,8 @@ import {useNavigation} from '@react-navigation/native';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import actions from '../../../redux/actions';
 import BottomViewModal from '../../../Components/BottomViewModal';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => {},
@@ -59,6 +61,11 @@ export default function TaxiHomeDashbord({
 }) {
   const mapRef = React.createRef();
   const navigation = useNavigation();
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
@@ -278,7 +285,11 @@ export default function TaxiHomeDashbord({
             paddingHorizontal: moderateScale(10),
           }}>
           <Text
-            style={{fontSize: textScale(14), fontFamily: fontFamily.Medium}}>
+            style={{
+              fontSize: textScale(14),
+              fontFamily: fontFamily.Medium,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}>
             {strings.WHERETO}
           </Text>
         </View>
@@ -291,14 +302,6 @@ export default function TaxiHomeDashbord({
         }}>
         {addressView(imagePath.savedLocationImage)}
       </View>
-      <View
-        style={{
-          width: width - 20,
-          height: 0.5,
-          backgroundColor: colors.textGreyOpcaity7,
-          marginHorizontal: moderateScale(50),
-        }}
-      />
 
       <View style={{marginHorizontal: moderateScale(20)}}>
         <Text
@@ -306,6 +309,7 @@ export default function TaxiHomeDashbord({
             fontSize: textScale(14),
             marginVertical: moderateScaleVertical(20),
             fontFamily: fontFamily.medium,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           }}>
           {strings.AROUNDYOU}
         </Text>

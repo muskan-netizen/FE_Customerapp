@@ -41,12 +41,14 @@ export default function Account3({navigation}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const {shortCodeStatus, themeColors, appStyle, appData} = useSelector(
+    (state) => state?.initBoot,
+  );
+
+  const businessType = appData?.profile?.preferences?.business_type;
   const [state, setState] = useState({
     isLoading: false,
   });
-  const {shortCodeStatus, themeColors, appStyle} = useSelector(
-    (state) => state?.initBoot,
-  );
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
@@ -285,7 +287,7 @@ export default function Account3({navigation}) {
             />
           </TouchableOpacity>
         )} */}
-          {!!userData?.auth_token && (
+          {!!userData?.auth_token && businessType == 'taxi' ? null : (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -365,7 +367,7 @@ export default function Account3({navigation}) {
               // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
-          {!!userData?.auth_token && (
+          {!!userData?.auth_token && businessType == 'taxi' ? null : (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -454,7 +456,9 @@ export default function Account3({navigation}) {
             // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
 
-          {!!userData?.auth_token && !!appMainData?.is_admin && (
+          {!!userData?.auth_token &&
+          !!appMainData?.is_admin &&
+          businessType == 'taxi' ? null : (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}

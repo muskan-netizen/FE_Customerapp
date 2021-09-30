@@ -15,7 +15,6 @@ export default function HomeCategoryCard2({
   onPress = () => {},
   isLoading = false,
 }) {
-  // console.log(data, 'data>>>>');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -25,7 +24,7 @@ export default function HomeCategoryCard2({
   const imageURI = getImageUrl(
     data?.icon?.image_fit,
     data?.icon?.image_path,
-    '400/200',
+    '200/200',
   );
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
@@ -50,16 +49,15 @@ export default function HomeCategoryCard2({
             uri={imageURI}
           />
         ) : (
-          <Image
+          <FastImage
             style={{
               height: moderateScale(width / 8),
               width: moderateScale(width / 8),
               borderRadius: moderateScale(10),
-              // backgroundColor: 'red',
             }}
             source={{
               uri: imageURI,
-              // priority: FastImage.priority.high,
+              priority: FastImage.priority.high,
             }}
             resizeMode="contain"
           />

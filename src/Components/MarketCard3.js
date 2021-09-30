@@ -56,31 +56,26 @@ export default function MarketCard3({
       }}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
-      {/* <BlurImages
+      <BlurImages
+        isDarkMode={isDarkMode}
         themeColor={themeColors.primary_color}
-        data={data}
-        source={{
+        thumnailUrl={{
           uri: getImageUrl(
             data.banner.proxy_url || data.image.proxy_url,
             data.banner.image_path || data.image.image_path,
-            '800/400',
-          )
+            '20/20',
+          ),
         }}
-        style={[styles.mainImage, { ...fastImageStyle }]}
-
-      /> */}
-      <FastImage
-        style={[styles.mainImage, {...fastImageStyle}]}
-        resizeMode={imageResizeMode}
-        source={{
+        originalUrl={{
           uri: getImageUrl(
             data.banner.proxy_url || data.image.proxy_url,
             data.banner.image_path || data.image.image_path,
             '800/400',
           ),
-          priority: FastImage.priority.high,
         }}
+        style={[styles.mainImage, {...fastImageStyle}]}
       />
+
       <View
         style={{
           padding: 8,
@@ -140,33 +135,35 @@ export default function MarketCard3({
           }}
         />
         <View style={styles.distanceView}>
-          {
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              {data?.lineOfSightDistance && (
-                <Image
-                  style={{tintColor: themeColors.primary_color}}
-                  source={imagePath.location2}
-                />
-              )}
-              <Text
-                style={{
-                  color: colors.greyLight,
-                  fontSize: textScale(10),
-                  fontFamily: fontFamily.regular,
-                  marginHorizontal: moderateScale(5),
-                  textAlign: 'left',
-                }}>
-                {data?.lineOfSightDistance}{' '}
-                {!!data?.lineOfSightDistance ? 'miles' : ''}{' '}
-                {!!data?.lineOfSightDistance &&
-                !!data?.timeofLineOfSightDistance
-                  ? '|'
-                  : ''}{' '}
-                {data?.timeofLineOfSightDistance}{' '}
-                {!!data?.timeofLineOfSightDistance ? 'mins' : ''}
-              </Text>
-            </View>
-          }
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              flex: 1,
+            }}>
+            {data?.lineOfSightDistance && (
+              <Image
+                style={{tintColor: themeColors.primary_color}}
+                source={imagePath.location2}
+              />
+            )}
+            <Text
+              style={{
+                color: colors.greyLight,
+                fontSize: textScale(10),
+                fontFamily: fontFamily.regular,
+                marginHorizontal: moderateScale(5),
+                textAlign: 'left',
+              }}>
+              {data?.lineOfSightDistance}{' '}
+              {!!data?.lineOfSightDistance ? 'miles' : ''}{' '}
+              {!!data?.lineOfSightDistance && !!data?.timeofLineOfSightDistance
+                ? '|'
+                : ''}{' '}
+              {data?.timeofLineOfSightDistance}{' '}
+              {!!data?.timeofLineOfSightDistance ? 'mins' : ''}
+            </Text>
+          </View>
 
           <Text
             style={{

@@ -21,6 +21,7 @@ import DeviceInfo from 'react-native-device-info';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import {UIActivityIndicator} from 'react-native-indicators';
 import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
@@ -65,6 +66,7 @@ export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const location = useSelector((state) => state?.home?.location);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   let paramsData = route?.params;
@@ -106,6 +108,8 @@ export default function Cart({navigation, route}) {
     scheduleType: null,
     swipeKey: 'randomStrings',
     wishlistArray: [],
+    btnLoader: false,
+    placeLoader: false,
   });
   const {
     viewHeight,
@@ -133,6 +137,8 @@ export default function Cart({navigation, route}) {
     scheduleType,
     swipeKey,
     wishlistArray,
+    btnLoader,
+    placeLoader,
   } = state;
 
   //Redux store data
@@ -165,7 +171,9 @@ export default function Cart({navigation, route}) {
         updateState({selectedPayment: paramsData?.selectedMethod});
       }
       // alert('run')
-      updateState({isLoadingB: true});
+      if (!checkCartItem?.data?.item_count) {
+        updateState({isLoadingB: true});
+      }
       getCartDetail();
       getAllWishListData();
       // if (!!checkCartItem?.data) {
@@ -184,6 +192,7 @@ export default function Cart({navigation, route}) {
       selectedAddress,
       paramsData,
       isRefreshing,
+      checkCartItem?.data?.item_count,
     ]),
   );
 
@@ -376,13 +385,12 @@ export default function Cart({navigation, route}) {
       quanitity = Number(itemToUpdate.quantity) - 1;
     }
     if (quanitity) {
-      updateState({isLoadingB: true});
       let data = {};
       data['cart_id'] = itemToUpdate?.cart_id;
       data['quantity'] = quanitity;
       data['cart_product_id'] = itemToUpdate?.id;
       data['type'] = dineInType;
-
+      updateState({btnLoader: true});
       actions
         .increaseDecreaseItemQty(data, {
           code: appData?.profile?.code,
@@ -395,12 +403,12 @@ export default function Cart({navigation, route}) {
           updateState({
             cartItems: res.data.products,
             cartData: res.data,
-            isLoadingB: false,
+            btnLoader: false,
           });
         })
         .catch(errorMethod);
     } else {
-      updateState({isLoadingB: true});
+      updateState({btnLoader: true});
       removeItem('selectedTable');
       removeProductFromCart(itemToUpdate);
     }
@@ -425,6 +433,7 @@ export default function Cart({navigation, route}) {
           cartItems: res.data.products,
           cartData: res.data,
           isLoadingB: false,
+          btnLoader: false,
         });
         showSuccess(res?.message);
       })
@@ -471,7 +480,12 @@ export default function Cart({navigation, route}) {
 
   //Error handling in screen
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({
+      isLoading: false,
+      isLoadingB: false,
+      isRefreshing: false,
+      btnLoader: false,
+    });
     showError(error?.message || error?.error);
   };
 
@@ -525,11 +539,14 @@ export default function Cart({navigation, route}) {
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
     }
+    console.log('sending data++', data);
     actions
       .placeOrder(data, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
+        latitude: location?.latitude.toString() || '',
+        longitude: location?.longitude.toString() || '',
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
@@ -538,6 +555,7 @@ export default function Cart({navigation, route}) {
           cartItems: [],
           cartData: {},
           isLoadingB: false,
+          placeLoader: false,
         });
         moveToNewScreen(navigationStrings.ORDERSUCESS, {
           orderDetail: res.data,
@@ -572,7 +590,7 @@ export default function Cart({navigation, route}) {
 
   const _finalPayment = () => {
     if (selectedPayment?.id == 1 && selectedPayment?.off_site == 0) {
-      updateState({isLoadingB: true});
+      updateState({placeLoader: true});
       _directOrderPlace();
     } else {
       if (selectedPayment?.off_site == 1) {
@@ -592,7 +610,7 @@ export default function Cart({navigation, route}) {
         // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
       } else if (!selectedPayment) {
-        showError('Please select a payment method');
+        showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
       }
       // else if (!(sheduledorderdate && selectedTimeOption)) {
       //   showError(strings.PLEASE_SELECT_ORDER_TYPE);
@@ -670,7 +688,7 @@ export default function Cart({navigation, route}) {
     let returnUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
     let cancelUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
 
-    updateState({isLoadingB: true});
+    updateState({placeLoader: true});
     actions
       .openPaymentWebUrl(
         `/${selectedMethod}?tip=${
@@ -690,7 +708,11 @@ export default function Cart({navigation, route}) {
         },
       )
       .then((res) => {
-        updateState({isLoadingB: false, isRefreshing: false});
+        updateState({
+          isLoadingB: false,
+          isRefreshing: false,
+          placeLoader: false,
+        });
         if (res && res?.status == 'Success' && res?.data) {
           // updateState({allAvailAblePaymentMethods: res?.data});
           navigation.navigate(navigationStrings.WEBPAYMENTS, {
@@ -708,9 +730,9 @@ export default function Cart({navigation, route}) {
   //Offline payments
   const _offineLinePayment = async () => {
     if (paramsData?.tokenInfo) {
-      updateState({isLoadingB: true});
+      updateState({placeLoader: true});
       let selectedMethod = selectedPayment.title.toLowerCase();
-      updateState({isLoadingB: true});
+      updateState({placeLoader: true});
       actions
         .openPaymentWebUrl(
           `/${selectedMethod}?tip=${
@@ -738,13 +760,14 @@ export default function Cart({navigation, route}) {
               cartItems: [],
               cartData: {},
               isLoadingB: false,
+              placeLoader: false,
             });
             moveToNewScreen(navigationStrings.ORDERSUCESS, {
               orderDetail: res.data,
             })();
             showSuccess(res?.message);
           } else {
-            updateState({isLoadingB: false});
+            updateState({isLoadingB: false, placeLoader: false});
           }
         })
         .catch(errorMethod);
@@ -1008,6 +1031,7 @@ export default function Cart({navigation, route}) {
                           </View>
 
                           <View
+                            pointerEvents={btnLoader ? 'none' : 'auto'}
                             style={{flex: 0.3, paddingRight: moderateScale(8)}}>
                             <View style={styles.incDecBtnContainer}>
                               <TouchableOpacity
@@ -1016,9 +1040,16 @@ export default function Cart({navigation, route}) {
                                 <Text style={styles.cartItemValueBtn}>-</Text>
                               </TouchableOpacity>
                               <View style={{flex: 0.4, alignItems: 'center'}}>
-                                <Text style={styles.cartItemValue}>
-                                  {i?.quantity}
-                                </Text>
+                                {btnLoader ? (
+                                  <UIActivityIndicator
+                                    size={moderateScale(18)}
+                                    color={colors.white}
+                                  />
+                                ) : (
+                                  <Text style={styles.cartItemValue}>
+                                    {i?.quantity}
+                                  </Text>
+                                )}
                               </View>
                               <TouchableOpacity
                                 style={{flex: 0.3, alignItems: 'center'}}
@@ -1643,11 +1674,7 @@ export default function Cart({navigation, route}) {
           }>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Image
-              style={
-                isDarkMode
-                  ? {tintColor: MyDarkTheme.colors.text}
-                  : {tintColor: null}
-              }
+              style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
               source={imagePath.paymentMethod}
             />
             <Text
@@ -1730,7 +1757,7 @@ export default function Cart({navigation, route}) {
                   style={
                     isDarkMode
                       ? {color: MyDarkTheme.colors.text}
-                      : {color: null}
+                      : {color: colors.black}
                   }>
                   {sheduledorderdate && scheduleType
                     ? `${moment(sheduledorderdate).format('DD MMM,YYYY HH:mm')}`
@@ -1742,15 +1769,18 @@ export default function Cart({navigation, route}) {
         ) : null}
 
         {!!cartData?.deliver_status && (
-          <View style={styles.paymentView}>
+          <View
+            pointerEvents={placeLoader ? 'none' : 'auto'}
+            style={styles.paymentView}>
             <ButtonComponent
               onPress={() => {
                 placeOrder();
               }}
               btnText={strings.PLACE_ORDER}
               borderRadius={moderateScale(13)}
-              textStyle={{color: '#fff'}}
+              textStyle={{color: colors.white}}
               containerStyle={styles.placeOrderButtonStyle}
+              placeLoader={placeLoader}
             />
           </View>
         )}
@@ -2177,6 +2207,7 @@ export default function Cart({navigation, route}) {
   const renderCardItemLoader = () => {
     return (
       <View>
+             
         <HeaderLoader
           widthLeft={moderateScale(140)}
           rectWidthLeft={moderateScale(140)}
@@ -2250,6 +2281,27 @@ export default function Cart({navigation, route}) {
         // isLoadingB={isLoadingB}
       >
         <Header centerTitle={strings.CART} leftIcon={imagePath.icBackb} />
+        <View
+          style={{
+            // flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            // backgroundColor: '#fff',
+          }}>
+          <FastImage
+            source={{uri: Image.resolveAssetSource(imagePath.icEmptyCartC).uri}}
+            style={{
+              marginVertical: moderateScaleVertical(20),
+              height: moderateScale(120),
+              width: moderateScale(120),
+            }}
+
+            // resizeMode="contain"s
+          />
+          <Text style={{...styles.textStyle}}>
+            {strings.YOUR_CART_EMPTY_ADD_ITEMS}
+          </Text>
+        </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <HeaderLoader
             widthLeft={width - moderateScale(30)}
@@ -2453,7 +2505,7 @@ export default function Cart({navigation, route}) {
           contentContainerStyle={{
             flexGrow: 1,
           }}
-          ListEmptyComponent={() => !isLoadingB ? <ListEmptyComp /> :<></>}
+          ListEmptyComponent={() => (!isLoadingB ? <ListEmptyComp /> : <></>)}
         />
       </View>
       {!!isModalVisibleForClearCart && (
@@ -2493,11 +2545,7 @@ export default function Cart({navigation, route}) {
         }}>
         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
           <Image
-            style={
-              isDarkMode
-                ? {tintColor: MyDarkTheme.colors.white}
-                : {tintColor: null}
-            }
+            style={isDarkMode && {tintColor: MyDarkTheme.colors.white}}
             source={imagePath.crossB}
           />
         </TouchableOpacity>

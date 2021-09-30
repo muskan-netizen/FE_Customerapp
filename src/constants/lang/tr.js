@@ -515,6 +515,7 @@ export default {
   LABEL1: 'Label 1',
   LABEL2: 'Label 2',
   DOYOUHAVECLEANINGMATERIAL: ' Do you require cleaning materials ?',
+  YOUR_ORDER_WILL_ARRIVE_BY: 'Your order will arrive by',
   CHOICE_OF: 'Choice of',
   FEATURED_INCLUDED: 'Featured Included :',
   SAVED_NEW_PLACE: 'Save new Place',
@@ -527,4 +528,7 @@ export default {
   AROUNDYOU: 'Around you',
   PLEASESELECTONECATEGORY: 'Please Select One Category',
   MYRIDES: 'My Rides',
+  WRITE_REVIEW: 'Write a Review',
+  PASTRIDES: 'Past Rides',
+  ACTIVERIDES: 'Active Rides',
 };

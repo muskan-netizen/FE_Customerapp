@@ -48,8 +48,8 @@ export function initApp(
           ? data.languages.map((x) => {
               return {
                 id: x.language.id,
-                label: x.language.name,
-                value: x.language.name,
+                label: x.language.nativeName || x.language.name,
+                value: x.language.nativeName || x.language.name,
                 sort_code: x.language.sort_code,
               };
             })
@@ -102,6 +102,7 @@ export function initApp(
           appData: data,
           themeColors: themeColorsData,
           appStyle: appStyle,
+          businessType: data.profile.preferences.business_type,
         };
 
         // setPrimaryCurrency

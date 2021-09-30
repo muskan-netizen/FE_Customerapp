@@ -107,6 +107,7 @@ export default function DashBoardFour({
             itemWidth={itemWidth}
             onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
             onPress={(item) => bannerPress(item)}
+            isDarkMode={isDarkMode}
           />
           <View style={{height: moderateScaleVertical(5)}} />
         </>

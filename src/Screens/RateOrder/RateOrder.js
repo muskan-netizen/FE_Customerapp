@@ -34,6 +34,7 @@ import stylesFunc from './styles';
 export default function RateOrder({navigation, route}) {
   const ratingData = route?.params?.item?.product_rating;
 
+  console.log(ratingData, 'ratingData');
   const [state, setState] = useState({
     isLoading: false,
     rating: 0,
@@ -58,6 +59,7 @@ export default function RateOrder({navigation, route}) {
   const {appData, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
+  const businessType = appData?.profile?.preferences?.business_type;
   const {themeColors, themeLayouts} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
 
@@ -147,6 +149,9 @@ export default function RateOrder({navigation, route}) {
     );
     formdata.append('order_id', ratingData.order_id);
     formdata.append('product_id', ratingData.product_id);
+    if (businessType === 'taxi') {
+      formdata.append('rating_for_dispatch', ratingData.dispatchId);
+    }
     formdata.append('rating', rating);
     formdata.append('review', reviewText);
     // formdata.append('vendor_id', ratingData.vendor_id);
@@ -198,6 +203,7 @@ export default function RateOrder({navigation, route}) {
         },
       )
       .then((res) => {
+        console.log(res, 'res>>>>res');
         updateState({
           // imageArray: res.data.review_files,
           rating: res.data.rating,
@@ -221,6 +227,7 @@ export default function RateOrder({navigation, route}) {
         }
       })
       .catch((error) => {
+        console.log(error, 'error>>>>error');
         updateState({
           isLoading: false,
           isRefreshing: false,

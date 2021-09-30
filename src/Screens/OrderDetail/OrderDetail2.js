@@ -800,11 +800,7 @@ export default function OrderDetail({navigation, route}) {
           }>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Image
-              style={
-                isDarkMode
-                  ? {tintColor: MyDarkTheme.colors.text}
-                  : {tintColor: null}
-              }
+              style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
               source={imagePath.paymentMethod}
             />
             <Text

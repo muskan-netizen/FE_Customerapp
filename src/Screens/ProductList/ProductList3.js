@@ -27,7 +27,7 @@ import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import commonStylesFunc from '../../styles/commonStyles';
+import commonStylesFunc, {hitSlopProp} from '../../styles/commonStyles';
 import DeviceInfo from 'react-native-device-info';
 import {
   height,
@@ -143,6 +143,8 @@ export default function Products({route, navigation}) {
     isSearch: false,
     searchInput: '',
     allServicesTabData: data?.children,
+    btnLoader: false,
+    selectedItemID: -1,
   });
 
   const {
@@ -189,6 +191,8 @@ export default function Products({route, navigation}) {
     isSearch,
     searchInput,
     allServicesTabData,
+    btnLoader,
+    selectedItemID,
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -442,7 +446,7 @@ export default function Products({route, navigation}) {
     console.log('api hit getAllProductsByVendor');
     actions
       .getProductByVendorId(
-        `/${productListId.id}?limit=${limit}&page=${pageNo}`,
+        `/${productListId?.id}?limit=${limit}&page=${pageNo}`,
         {},
         {
           code: appData.profile.code,
@@ -562,11 +566,12 @@ export default function Products({route, navigation}) {
       productListData: newArray,
       isLoadingB: false,
       updateQtyLoader: false,
+      selectedItemID: -1,
     });
   };
 
   const errorMethod = (error) => {
-    updateState({updateQtyLoader: false});
+    updateState({updateQtyLoader: false, selectedItemID: -1});
     showError(error?.message || error?.error);
   };
 
@@ -608,9 +613,10 @@ export default function Products({route, navigation}) {
     });
   };
 
-  const checkSingleVendor = async () => {
+  const checkSingleVendor = async (id) => {
     let vendorData = {vendor_id: categoryInfo?.id};
-    updateState({updateQtyLoader: true});
+    console.log('idd', id);
+    updateState({selectedItemID: id});
     return new Promise((resolve, reject) => {
       actions
         .checkSingleVendor(vendorData, {
@@ -624,6 +630,7 @@ export default function Products({route, navigation}) {
         })
         .catch((error) => {
           reject(error);
+          updateState({selectedItemID: -1});
         });
     });
   };
@@ -649,13 +656,13 @@ export default function Products({route, navigation}) {
   };
 
   const addSingleItem = async (item) => {
-    let isSingleVendor = await checkSingleVendor();
+    let isSingleVendor = await checkSingleVendor(item.id);
     console.log('is single vendor', isSingleVendor);
     if (
       isSingleVendor.isSingleVendorEnabled !== 0 &&
       isSingleVendor.otherVendorExists !== 0
     ) {
-      updateState({updateQtyLoader: false});
+      updateState({updateQtyLoader: false, selectedItemID: -1});
       Alert.alert('', strings.ALREADY_EXIST, [
         {
           text: strings.CANCEL,
@@ -674,6 +681,7 @@ export default function Products({route, navigation}) {
         updateQtyLoader: false,
         isVisibleModal: true,
         selectedCartItem: item,
+        selectedItemID: -1,
       });
       return;
     }
@@ -684,7 +692,8 @@ export default function Products({route, navigation}) {
     data['product_variant_id'] = item?.variant[0]?.id;
     data['type'] = dine_In_Type;
     console.log(data, 'datadata');
-    updateState({updateQtyLoader: true});
+    updateState({updateQtyLoader: true, selectedItemID: item?.id});
+
     actions
       .addProductsToCart(data, {
         code: appData.profile.code,
@@ -711,6 +720,7 @@ export default function Products({route, navigation}) {
           productListData: updateArray,
           selectedCartItem: item,
           updateQtyLoader: false,
+          selectedItemID: -1,
         });
       })
       .catch((error) => errorMethodSecond(error));
@@ -748,7 +758,7 @@ export default function Products({route, navigation}) {
       quanitity = Number(isExistqty) - 1;
     }
     if (quanitity) {
-      updateState({updateQtyLoader: true});
+      updateState({selectedItemID: itemToUpdate.id});
       let data = {};
       data['cart_id'] = isExistCartId;
       data['quantity'] = quanitity;
@@ -768,6 +778,7 @@ export default function Products({route, navigation}) {
             cartItems: res.data.products,
             cartData: res.data,
             updateQtyLoader: false,
+            selectedItemID: -1,
           });
           let updateArray = productListData.map((val, i) => {
             if (val.id == item.id) {
@@ -780,11 +791,11 @@ export default function Products({route, navigation}) {
             }
             return val;
           });
-          updateState({productListData: updateArray});
+          updateState({productListData: updateArray, selectedItemID: -1});
         })
         .catch(errorMethod);
     } else {
-      updateState({updateQtyLoader: true});
+      updateState({selectedItemID: itemToUpdate?.id});
       removeItem('selectedTable');
       removeProductFromCart(itemToUpdate);
     }
@@ -831,7 +842,11 @@ export default function Products({route, navigation}) {
           }
           return val;
         });
-        updateState({productListData: updateArray, updateQtyLoader: false});
+        updateState({
+          productListData: updateArray,
+          updateQtyLoader: false,
+          selectedItemID: -1,
+        });
         // showSuccess(res?.message);
       })
       .catch(errorMethod);
@@ -841,7 +856,12 @@ export default function Products({route, navigation}) {
     console.log(error.message.alert, 'Error>>>>>');
     updateState({updateQtyLoader: false});
     if (error?.message?.alert == 1) {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+      updateState({
+        isLoading: false,
+        isLoadingB: false,
+        isLoadingC: false,
+        selectedItemID: -1,
+      });
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
@@ -852,7 +872,12 @@ export default function Products({route, navigation}) {
         {text: 'Clear Cart', onPress: () => clearCart(addonSet)},
       ]);
     } else {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+      updateState({
+        isLoading: false,
+        isLoadingB: false,
+        isLoadingC: false,
+        selectedItemID: -1,
+      });
       showError(error?.message || error?.error);
     }
   };
@@ -892,6 +917,8 @@ export default function Products({route, navigation}) {
         onDecrement={() => addDeleteCartItems(item, 2)}
         selectedCartItem={selectedCartItem}
         Servicetype={categoryInfo.type_id}
+        selectedItemID={selectedItemID}
+        btnLoader={btnLoader}
       />
     );
   };
@@ -1112,57 +1139,6 @@ export default function Products({route, navigation}) {
     );
   };
 
-  const headerTextRef = useRef(null);
-
-  // if (isLoading) {
-  //   return (
-  //     <View
-  //       style={{
-  //         flex: 1,
-  //         backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
-  //       }}>
-  //       <SafeAreaView>
-  //         <View style={styles.loaderHeader}>
-  //           <CardLoader cardWidth={20} height={20} />
-  //           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-  //             <CardLoader cardWidth={20} height={20} />
-  //             <View style={{marginHorizontal: moderateScale(6)}} />
-  //             <CardLoader cardWidth={20} height={20} />
-  //           </View>
-  //         </View>
-
-  //         <View
-  //           style={{
-  //             marginVertical: moderateScaleVertical(16),
-  //             marginBottom: moderateScaleVertical(24),
-  //             flexDirection: 'row',
-  //             alignItems: 'center',
-  //             justifyContent: 'space-between',
-  //           }}>
-  //           <CircularLoader />
-  //           <View>
-  //             <CardLoader cardWidth={40} height={20} />
-  //             <CardLoader cardWidth={40} height={20} />
-  //           </View>
-  //         </View>
-
-  //         <View style={{marginHorizontal: moderateScale(16)}}>
-  //           <ProductDetailLoader />
-  //           <View style={{marginBottom: moderateScaleVertical(12)}} />
-  //           <ProductDetailLoader />
-  //           <View style={{marginBottom: moderateScaleVertical(12)}} />
-  //           <ProductDetailLoader />
-  //           <View style={{marginBottom: moderateScaleVertical(12)}} />
-  //           <ProductDetailLoader />
-  //           <View style={{marginBottom: moderateScaleVertical(12)}} />
-  //           <ProductDetailLoader />
-  //           <View style={{marginBottom: moderateScaleVertical(12)}} />
-  //         </View>
-  //       </SafeAreaView>
-  //     </View>
-  //   );
-  // }
-
   if (isLoading) {
     return (
       <View
@@ -1240,10 +1216,8 @@ export default function Products({route, navigation}) {
   }
 
   const onShare = async () => {
-    console.log('item==>>>>', categoryInfo);
     let convertJson = JSON.stringify(data);
     let shareLink = `${categoryInfo.share_link + `?data=${convertJson}`}`;
-    console.log('vendor link+++', shareLink);
     try {
       const result = await Share.share({
         url: shareLink,
@@ -1409,7 +1383,7 @@ export default function Products({route, navigation}) {
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={() => updateState({isSearch: true})}
+                  // onPress={() => updateState({isSearch: true})}
                   // onPress={moveToNewScreen(
                   //   navigationStrings.SEARCHPRODUCTOVENDOR,
                   //   {
@@ -1431,7 +1405,10 @@ export default function Products({route, navigation}) {
                   />
                 </TouchableOpacity>
                 <View style={{marginHorizontal: moderateScale(8)}} />
-                <TouchableOpacity onPress={onShare} activeOpacity={0.8}>
+                <TouchableOpacity
+                  onPress={onShare}
+                  hitSlop={hitSlopProp}
+                  activeOpacity={0.8}>
                   <Image
                     style={{
                       tintColor: isDarkMode

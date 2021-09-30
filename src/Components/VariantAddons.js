@@ -45,6 +45,8 @@ import actions from '../redux/actions';
 import {Pagination} from 'react-native-snap-carousel';
 import CardLoader from './Loaders/CardLoader';
 import StarRating from 'react-native-star-rating';
+import BannerLoader from './Loaders/BannerLoader';
+import HeaderLoader from './Loaders/HeaderLoader';
 
 export default function VariantAddons({
   productdetail = {},
@@ -125,8 +127,6 @@ export default function VariantAddons({
     }, [variantSet, productdetail, isVisible]),
   );
 
-  console.log('product detail', productDetailData);
-
   const getProductDetailBasedOnFilter = (variantSetData) => {
     updateState({isLoadingC: true});
     let data = {};
@@ -183,8 +183,6 @@ export default function VariantAddons({
     }
   };
 
-  console.log('showErrorMessageTitle', showErrorMessageTitle);
-
   const clearCart = (addonSet) => {
     // actions
     //   .clearCart(
@@ -214,8 +212,6 @@ export default function VariantAddons({
     //   })
     //   .catch(errorMethod);
   };
-
-  console.log('shimmer value', showShimmer);
 
   useEffect(() => {
     getProductDetail();
@@ -705,76 +701,136 @@ export default function VariantAddons({
           borderTopLeftRadius: 0,
           borderTopStartRadius: 0,
         }}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          bounces={false}
-          // onScroll={onScroll}
-          style={{
-            ...styles.modalMainViewContainer,
-            borderTopLeftRadius: 0,
-            borderTopStartRadius: 0,
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.background
-              : '#fff',
-          }}>
-          <CardLoader cardWidth={width} height={width * 0.6} />
-          <View style={{marginHorizontal: moderateScale(12)}}>
-            <View
-              style={{
-                alignSelf: 'center',
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <CardLoader cardWidth={10} height={10} />
-              <View style={{marginHorizontal: moderateScale(6)}} />
-              <CardLoader cardWidth={10} height={10} />
-              <View style={{marginHorizontal: moderateScale(6)}} />
-              <CardLoader cardWidth={10} height={10} />
-            </View>
-            <CardLoader cardWidth={80} height={10} />
-            <CardLoader cardWidth={60} height={10} />
-            <View style={{marginTop: moderateScaleVertical(0)}} />
-            <CardLoader cardWidth={'100%'} height={2} />
-            <CardLoader cardWidth={40} height={8} />
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <CardLoader cardWidth={60} height={10} />
-              <View style={{marginHorizontal: 8}} />
-              <CardLoader cardWidth={60} height={10} />
-            </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <CardLoader cardWidth={60} height={10} />
-              <View style={{marginHorizontal: 8}} />
-              <CardLoader cardWidth={60} height={10} />
-            </View>
-            <CardLoader cardWidth={40} height={8} />
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <CardLoader cardWidth={60} height={10} />
-              <View style={{marginHorizontal: 8}} />
-              <CardLoader cardWidth={60} height={10} />
-            </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <CardLoader cardWidth={60} height={10} />
-              <View style={{marginHorizontal: 8}} />
-              <CardLoader cardWidth={60} height={10} />
-            </View>
-          </View>
-        </ScrollView>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginHorizontal: moderateScale(16),
-            paddingBottom: moderateScaleVertical(10),
-          }}>
-          <View style={{flex: 0.25}}>
-            <CardLoader cardWidth={'100%'} height={38} />
-          </View>
-          <View style={{marginHorizontal: moderateScale(8)}} />
-          <View style={{flex: 0.75}}>
-            {/* <View style={{ marginHorizontal: 8 }} /> */}
-            <CardLoader cardWidth={'100%'} height={38} />
-          </View>
-        </View>
+        <BannerLoader
+          isBannerDots
+          homeLoaderWidth={width}
+          homeLoaderHeight={moderateScaleVertical(190)}
+          viewStyles={{
+            marginHorizontal: 0,
+          }}
+        />
+        <HeaderLoader
+          isRight={false}
+          widthLeft={moderateScale(80)}
+          heightLeft={moderateScaleVertical(10)}
+          rectWidthLeft={moderateScale(80)}
+          rectHeightLeft={moderateScaleVertical(10)}
+          rx={5}
+          ry={5}
+        />
+        <HeaderLoader
+          isRight={false}
+          widthLeft={moderateScale(60)}
+          heightLeft={moderateScaleVertical(10)}
+          rectWidthLeft={moderateScale(60)}
+          rectHeightLeft={moderateScaleVertical(10)}
+          rx={5}
+          ry={5}
+          viewStyles={{marginTop: moderateScaleVertical(8)}}
+        />
+        <HeaderLoader
+          isRight={false}
+          widthLeft={width - moderateScale(30)}
+          heightLeft={moderateScaleVertical(10)}
+          rectWidthLeft={width - moderateScale(30)}
+          rectHeightLeft={moderateScaleVertical(10)}
+          rx={5}
+          ry={5}
+          viewStyles={{marginTop: moderateScaleVertical(12)}}
+        />
+        <HeaderLoader
+          isRight={false}
+          widthLeft={width}
+          heightLeft={moderateScaleVertical(2)}
+          rectWidthLeft={width}
+          rectHeightLeft={moderateScaleVertical(2)}
+          rx={5}
+          ry={5}
+          viewStyles={{marginTop: moderateScaleVertical(12)}}
+        />
+        <HeaderLoader
+          isRight={false}
+          widthLeft={moderateScale(30)}
+          heightLeft={moderateScaleVertical(7)}
+          rectWidthLeft={moderateScale(30)}
+          rectHeightLeft={moderateScaleVertical(7)}
+          rx={5}
+          ry={5}
+          viewStyles={{marginTop: moderateScaleVertical(8)}}
+        />
+        <HeaderLoader
+          widthLeft={moderateScale(60)}
+          heightLeft={moderateScaleVertical(10)}
+          rectWidthLeft={moderateScale(60)}
+          rectHeightLeft={moderateScaleVertical(10)}
+          widthRight={moderateScale(60)}
+          heightRight={moderateScaleVertical(10)}
+          rectWidthRight={moderateScale(60)}
+          rectHeightRight={moderateScaleVertical(10)}
+          rx={5}
+          ry={5}
+          viewStyles={{marginTop: moderateScaleVertical(8)}}
+        />
+        <HeaderLoader
+          widthLeft={moderateScale(60)}
+          heightLeft={moderateScaleVertical(10)}
+          rectWidthLeft={moderateScale(60)}
+          rectHeightLeft={moderateScaleVertical(10)}
+          widthRight={moderateScale(60)}
+          heightRight={moderateScaleVertical(10)}
+          rectWidthRight={moderateScale(60)}
+          rectHeightRight={moderateScaleVertical(10)}
+          rx={5}
+          ry={5}
+          viewStyles={{marginTop: moderateScaleVertical(8)}}
+        />
+        <HeaderLoader
+          isRight={false}
+          widthLeft={moderateScale(30)}
+          heightLeft={moderateScaleVertical(7)}
+          rectWidthLeft={moderateScale(30)}
+          rectHeightLeft={moderateScaleVertical(7)}
+          rx={5}
+          ry={5}
+          viewStyles={{marginTop: moderateScaleVertical(8)}}
+        />
+        <HeaderLoader
+          isRight={false}
+          widthLeft={moderateScale(30)}
+          heightLeft={moderateScaleVertical(7)}
+          rectWidthLeft={moderateScale(30)}
+          rectHeightLeft={moderateScaleVertical(7)}
+          rx={5}
+          ry={5}
+          viewStyles={{marginTop: moderateScaleVertical(8)}}
+        />
+
+        <HeaderLoader
+          isRight={false}
+          widthLeft={width}
+          heightLeft={moderateScaleVertical(2)}
+          rectWidthLeft={width}
+          rectHeightLeft={moderateScaleVertical(2)}
+          rx={5}
+          ry={5}
+          viewStyles={{marginTop: moderateScaleVertical(15)}}
+        />
+        <HeaderLoader
+          widthLeft={moderateScale(80)}
+          heightLeft={moderateScaleVertical(30)}
+          rectWidthLeft={moderateScale(80)}
+          rectHeightLeft={moderateScaleVertical(30)}
+          widthRight={width - moderateScale(130)}
+          heightRight={moderateScaleVertical(30)}
+          rectWidthRight={width - moderateScale(130)}
+          rectHeightRight={moderateScaleVertical(30)}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            marginTop: 'auto',
+            marginBottom: moderateScaleVertical(25),
+          }}
+        />
       </View>
     );
   };
@@ -799,7 +855,6 @@ export default function VariantAddons({
     }
   };
 
-  console.log('product details+++', productdetail);
   return (
     <Modal
       transparent={false}
@@ -1029,7 +1084,9 @@ export default function VariantAddons({
               </View>
 
               <View style={{marginHorizontal: 8}} />
-              <View style={{flex: 0.75}}>
+              <View
+                pointerEvents={btnLoader ? 'none' : 'auto'}
+                style={{flex: 0.75}}>
                 <GradientButton
                   indicator={btnLoader}
                   indicatorColor={colors.white}
