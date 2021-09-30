@@ -352,22 +352,6 @@ export default function AddressModal3({
   };
 
   return (
-    // <View style={{flex: 1}}>
-    //   <StatusBar translucent backgroundColor={colors.transparent} />
-    //   <View style={{flex: 1}}>
-    //     <MapView
-    //       //   provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-    //       style={styles.map}
-    //       region={region}
-    //       initialRegion={region}
-    //       //   customMapStyle={mapStyle}
-    //       ref={mapRef}
-    //       // liteMode={true}
-    //       tracksViewChanges={false}
-    //       // onPress={onMapPress}
-    //     >
-    //     </MapView>
-
     <Modal
       isVisible={isVisible}
       animationType={'none'}
@@ -384,13 +368,6 @@ export default function AddressModal3({
           source={imagePath.crossB}
         />
       </TouchableOpacity>
-      {/* <ScrollView
-        showsVerticalScrollIndicator={false}
-        bounces={false}
-        style={[
-          styles.modalMainViewContainer,
-          {paddingHorizontal: moderateScale(24)},
-        ]}> */}
 
       <View
         style={
@@ -398,7 +375,6 @@ export default function AddressModal3({
             ? [
                 styles.modalMainViewContainer,
                 {
-                  // paddingHorizontal: moderateScale(24),
                   backgroundColor: MyDarkTheme.colors.lightDark,
                 },
               ]
@@ -799,7 +775,8 @@ export function stylesData({fontFamily, themeColors}) {
     listView: {
       borderWidth: moderateScale(1),
       borderColor: colors.borderLight,
-      marginHorizontal: moderateScale(0),
+      alignSelf: 'flex-start',
+      marginLeft: -moderateScale(15),
     },
 
     textInput: {

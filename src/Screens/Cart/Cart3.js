@@ -8,6 +8,7 @@ import {
   FlatList,
   I18nManager,
   Image,
+  Platform,
   RefreshControl,
   ScrollView,
   Text,
@@ -300,6 +301,7 @@ export default function Cart({navigation, route}) {
       )
       .then((res) => {
         actions.cartItemQty(res);
+
         updateState({
           isRefreshing: false,
           isLoadingB: false,
@@ -539,7 +541,6 @@ export default function Cart({navigation, route}) {
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
     }
-    console.log('sending data++', data);
     actions
       .placeOrder(data, {
         code: appData?.profile?.code,
@@ -788,21 +789,9 @@ export default function Cart({navigation, route}) {
 
   const _selectTime = (item) => {
     updateState({
-      scheduleType: item?.type,
+      scheduleType: 'schedule',
+      isVisibleTimeModal: true,
     });
-
-    {
-      selectedTimeOption && selectedTimeOption?.id == item?.id
-        ? updateState({
-            isVisibleTimeModal: item?.type === 'schedule' ? true : false,
-            isLoading: true,
-          })
-        : updateState({
-            selectedTimeOption: item,
-            isLoading: true,
-            isVisibleTimeModal: item?.type === 'schedule' ? true : false,
-          });
-    }
   };
 
   const selectOrderDate = () => {
@@ -870,439 +859,500 @@ export default function Cart({navigation, route}) {
 
   const _renderItem = ({item, index}) => {
     return (
-      <View
-        key={swipeKey}
-        style={{
-          backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
-          paddingHorizontal: moderateScale(10),
-          marginVertical: moderateScaleVertical(10),
-          marginBottom: moderateScaleVertical(10),
-        }}>
-        <View style={styles.vendorView}>
-          <Text
-            numberOfLines={1}
-            style={
-              isDarkMode
-                ? [styles.vendorText, {color: MyDarkTheme.colors.text}]
-                : styles.vendorText
-            }>
-            {item?.vendor?.name}
-          </Text>
-        </View>
-        {/************ start  render cart items *************/}
-        {item?.vendor_products.length
-          ? item?.vendor_products.map((i, inx) => {
-              return (
-                <Swipeable
-                  ref={swipeRef}
-                  key={swipeKey}
-                  renderRightActions={swipeBtns}
-                  onSwipeableOpen={() => deleteItem(i, index)}
-                  rightThreshold={width / 1.4}
-                  // overshootFriction={8}
-                >
-                  <Animated.View
-                    style={{
-                      backgroundColor: isDarkMode
-                        ? MyDarkTheme.colors.lightDark
-                        : '#F8F8F8',
-                      marginBottom: moderateScaleVertical(12),
-                      marginRight: moderateScale(8),
-                      borderRadius: moderateScale(10),
+      <View>
+        {index === 0 && (
+          <View style={Platform.OS==="ios"?{zIndex: 5000}:{}}>
+            {dineInType === 'dine_in' &&
+              userData?.auth_token &&
+              !!cartData?.vendor_details?.vendor_tables && (
+                <DropDownPicker
+                  items={tableData}
+                  onOpen={() => updateState({isTableDropDown: true})}
+                  onClose={() => updateState({isTableDropDown: false})}
+                  defaultValue={
+                    deepLinkUrl
+                      ? deepLinkUrl == 1
+                        ? tableData[0]?.label
+                        : tableData[1]?.label
+                      : tableData[0]?.label || ''
+                  }
+                  containerStyle={styles.dropDownContainerStyle}
+                  style={{
+                    marginHorizontal: moderateScale(20),
+                    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                    backgroundColor: isDarkMode
+                      ? MyDarkTheme.colors.lightDark
+                      : colors.greyColor1,
+                  }}
+                  labelStyle={
+                    isDarkMode
+                      ? {color: MyDarkTheme.colors.text}
+                      : {color: colors.textGrey}
+                  }
+                  itemStyle={{
+                    justifyContent: 'flex-start',
+                    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                  }}
+                  dropDownStyle={{
+                    ...styles.dropDownStyle,
+                    backgroundColor: isDarkMode
+                      ? MyDarkTheme.colors.lightDark
+                      : colors.greyColor1,
+                  }}
+                  onChangeItem={(item) => _onTableSelection(item)}
+                />
+              )}
+          </View>
+        )}
+        <View
+          key={swipeKey}
+          style={{
+            ...styles.mainViewRednderItem,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.white,
+          }}>
+          <View style={styles.vendorView}>
+            <Text
+              numberOfLines={1}
+              style={
+                isDarkMode
+                  ? [styles.vendorText, {color: MyDarkTheme.colors.text}]
+                  : styles.vendorText
+              }>
+              {item?.vendor?.name}
+            </Text>
+          </View>
+          {/************ start  render cart items *************/}
+          {item?.vendor_products.length
+            ? item?.vendor_products.map((i, inx) => {
+                return (
+                  <Swipeable
+                    ref={swipeRef}
+                    key={swipeKey}
+                    renderRightActions={swipeBtns}
+                    onSwipeableOpen={() => deleteItem(i, index)}
+                    rightThreshold={width / 1.4}
+                    // overshootFriction={8}
+                  >
+                    <Animated.View
+                      style={{
+                        backgroundColor: isDarkMode
+                          ? MyDarkTheme.colors.lightDark
+                          : '#F8F8F8',
+                        marginBottom: moderateScaleVertical(12),
+                        marginRight: moderateScale(8),
+                        borderRadius: moderateScale(10),
 
-                      transform: [],
-                    }}
-                    key={inx}>
-                    <View style={[styles.cartItemMainContainer]}>
-                      <View
-                        style={[
-                          styles.cartItemImage,
-                          {
-                            backgroundColor: isDarkMode
-                              ? MyDarkTheme.colors.lightDark
-                              : colors.white,
-                          },
-                        ]}>
-                        <FastImage
-                          source={
-                            i?.cartImg != '' && i?.cartImg != null
-                              ? {
-                                  uri: getImageUrl(
-                                    i?.cartImg?.path?.proxy_url,
-                                    i?.cartImg?.path?.image_path,
-                                    '300/300',
-                                  ),
-                                  priority: FastImage.priority.high,
-                                }
-                              : imagePath.patternOne
-                          }
-                          style={styles.imageStyle}
-                        />
-                      </View>
-
-                      <View style={styles.cartItemDetailsCon}>
+                        transform: [],
+                      }}
+                      key={inx}>
+                      <View style={[styles.cartItemMainContainer]}>
                         <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                          }}>
-                          <View style={{flex: 0.6}}>
-                            <Text
-                              numberOfLines={1}
-                              style={{
-                                ...styles.priceItemLabel2,
-                                color: isDarkMode
-                                  ? MyDarkTheme.colors.text
-                                  : colors.blackOpacity86,
-                                fontSize: textScale(12),
-                                fontFamily: fontFamily.medium,
-                              }}>
-                              {i?.product?.translation[0]?.title},
-                            </Text>
+                          style={[
+                            styles.cartItemImage,
+                            {
+                              backgroundColor: isDarkMode
+                                ? MyDarkTheme.colors.lightDark
+                                : colors.white,
+                            },
+                          ]}>
+                          <FastImage
+                            source={
+                              i?.cartImg != '' && i?.cartImg != null
+                                ? {
+                                    uri: getImageUrl(
+                                      i?.cartImg?.path?.proxy_url,
+                                      i?.cartImg?.path?.image_path,
+                                      '300/300',
+                                    ),
+                                    priority: FastImage.priority.high,
+                                  }
+                                : imagePath.patternOne
+                            }
+                            style={styles.imageStyle}
+                          />
+                        </View>
 
-                            <Text
-                              style={{
-                                ...styles.priceItemLabel2,
-                                fontSize: textScale(12),
-                                color: isDarkMode
-                                  ? MyDarkTheme.colors.text
-                                  : '#B3B3B3',
-                                marginTop: moderateScaleVertical(4),
-                                fontFamily: fontFamily.regular,
-                              }}>
-                              <Text style={{}}>
-                                {`${currencies?.primary_currency?.symbol}${
-                                  // Number(i?.pvariant?.multiplier) *
-                                  Number(i?.variants?.price).toFixed(2)
-                                }`}
-                              </Text>{' '}
-                              X {i?.quantity} ={' '}
+                        <View style={styles.cartItemDetailsCon}>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              justifyContent: 'space-between',
+                            }}>
+                            <View style={{flex: 0.6}}>
                               <Text
+                                numberOfLines={1}
                                 style={{
+                                  ...styles.priceItemLabel2,
                                   color: isDarkMode
                                     ? MyDarkTheme.colors.text
-                                    : colors.black,
+                                    : colors.blackOpacity86,
+                                  fontSize: textScale(12),
+                                  fontFamily: fontFamily.medium,
                                 }}>
-                                {`${currencies?.primary_currency?.symbol}${
-                                  // Number(i?.pvariant?.multiplier) *
-                                  Number(i?.variants?.quantity_price).toFixed(2)
-                                }`}
+                                {i?.product?.translation[0]?.title},
                               </Text>
-                            </Text>
 
-                            {i?.variant_options.length
-                              ? i?.variant_options.map((j, jnx) => {
-                                  return (
-                                    <View style={{flexDirection: 'row'}}>
-                                      <Text
-                                        style={
-                                          isDarkMode
-                                            ? [
-                                                styles.cartItemWeight2,
-                                                {
-                                                  color:
-                                                    MyDarkTheme.colors.text,
-                                                },
-                                              ]
-                                            : styles.cartItemWeight2
-                                        }
-                                        numberOfLines={1}>
-                                        {j.title}{' '}
-                                      </Text>
-                                      <Text
-                                        style={
-                                          isDarkMode
-                                            ? [
-                                                styles.cartItemWeight2,
-                                                {
-                                                  color:
-                                                    MyDarkTheme.colors.text,
-                                                },
-                                              ]
-                                            : styles.cartItemWeight2
-                                        }
-                                        numberOfLines={
-                                          1
-                                        }>{`(${j.option})`}</Text>
-                                    </View>
-                                  );
-                                })
-                              : null}
-                          </View>
+                              <Text
+                                style={{
+                                  ...styles.priceItemLabel2,
+                                  fontSize: textScale(12),
+                                  color: isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : '#B3B3B3',
+                                  marginTop: moderateScaleVertical(4),
+                                  fontFamily: fontFamily.regular,
+                                }}>
+                                <Text style={{}}>
+                                  {`${currencies?.primary_currency?.symbol}${
+                                    // Number(i?.pvariant?.multiplier) *
+                                    Number(i?.variants?.price).toFixed(2)
+                                  }`}
+                                </Text>{' '}
+                                X {i?.quantity} ={' '}
+                                <Text
+                                  style={{
+                                    color: isDarkMode
+                                      ? MyDarkTheme.colors.text
+                                      : colors.black,
+                                  }}>
+                                  {`${currencies?.primary_currency?.symbol}${
+                                    // Number(i?.pvariant?.multiplier) *
+                                    Number(i?.variants?.quantity_price).toFixed(
+                                      2,
+                                    )
+                                  }`}
+                                </Text>
+                              </Text>
 
-                          <View
-                            pointerEvents={btnLoader ? 'none' : 'auto'}
-                            style={{flex: 0.3, paddingRight: moderateScale(8)}}>
-                            <View style={styles.incDecBtnContainer}>
-                              <TouchableOpacity
-                                style={{flex: 0.3, alignItems: 'center'}}
-                                onPress={() => addDeleteCartItems(i, inx, 2)}>
-                                <Text style={styles.cartItemValueBtn}>-</Text>
-                              </TouchableOpacity>
-                              <View style={{flex: 0.4, alignItems: 'center'}}>
-                                {btnLoader ? (
-                                  <UIActivityIndicator
-                                    size={moderateScale(18)}
-                                    color={colors.white}
-                                  />
-                                ) : (
-                                  <Text style={styles.cartItemValue}>
-                                    {i?.quantity}
-                                  </Text>
-                                )}
+                              {i?.variant_options.length
+                                ? i?.variant_options.map((j, jnx) => {
+                                    return (
+                                      <View style={{flexDirection: 'row'}}>
+                                        <Text
+                                          style={
+                                            isDarkMode
+                                              ? [
+                                                  styles.cartItemWeight2,
+                                                  {
+                                                    color:
+                                                      MyDarkTheme.colors.text,
+                                                  },
+                                                ]
+                                              : styles.cartItemWeight2
+                                          }
+                                          numberOfLines={1}>
+                                          {j.title}{' '}
+                                        </Text>
+                                        <Text
+                                          style={
+                                            isDarkMode
+                                              ? [
+                                                  styles.cartItemWeight2,
+                                                  {
+                                                    color:
+                                                      MyDarkTheme.colors.text,
+                                                  },
+                                                ]
+                                              : styles.cartItemWeight2
+                                          }
+                                          numberOfLines={
+                                            1
+                                          }>{`(${j.option})`}</Text>
+                                      </View>
+                                    );
+                                  })
+                                : null}
+                            </View>
+
+                            <View
+                              pointerEvents={btnLoader ? 'none' : 'auto'}
+                              style={{
+                                flex: 0.3,
+                                paddingRight: moderateScale(8),
+                              }}>
+                              <View style={styles.incDecBtnContainer}>
+                                <TouchableOpacity
+                                  style={{flex: 0.3, alignItems: 'center'}}
+                                  onPress={() => addDeleteCartItems(i, inx, 2)}>
+                                  <Text style={styles.cartItemValueBtn}>-</Text>
+                                </TouchableOpacity>
+                                <View style={{flex: 0.4, alignItems: 'center'}}>
+                                  {btnLoader ? (
+                                    <UIActivityIndicator
+                                      size={moderateScale(18)}
+                                      color={colors.white}
+                                    />
+                                  ) : (
+                                    <Text style={styles.cartItemValue}>
+                                      {i?.quantity}
+                                    </Text>
+                                  )}
+                                </View>
+                                <TouchableOpacity
+                                  style={{flex: 0.3, alignItems: 'center'}}
+                                  onPress={() => addDeleteCartItems(i, inx, 1)}>
+                                  <Text style={styles.cartItemValueBtn}>+</Text>
+                                </TouchableOpacity>
                               </View>
-                              <TouchableOpacity
-                                style={{flex: 0.3, alignItems: 'center'}}
-                                onPress={() => addDeleteCartItems(i, inx, 1)}>
-                                <Text style={styles.cartItemValueBtn}>+</Text>
-                              </TouchableOpacity>
+                            </View>
+                          </View>
+                          <TouchableOpacity
+                            style={{
+                              position: 'absolute',
+                              bottom: 10,
+                              right: 20,
+                            }}
+                            onPress={() => openDeleteView(i)}>
+                            <Image source={imagePath.deleteRed} />
+                          </TouchableOpacity>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              justifyContent: 'space-between',
+                            }}>
+                            <View style={{flex: 0.5, justifyContent: 'center'}}>
+                              {!!i?.product_addons.length && (
+                                <View>
+                                  <Text
+                                    style={
+                                      isDarkMode
+                                        ? [
+                                            styles.cartItemWeight2,
+                                            {
+                                              color: MyDarkTheme.colors.text,
+                                            },
+                                          ]
+                                        : styles.cartItemWeight2
+                                    }>
+                                    {strings.EXTRA}
+                                  </Text>
+                                </View>
+                              )}
+                              {i?.product_addons.length
+                                ? i?.product_addons.map((j, jnx) => {
+                                    return (
+                                      <View style={{flexDirection: 'row'}}>
+                                        <Text
+                                          style={
+                                            isDarkMode
+                                              ? [
+                                                  styles.cartItemWeight2,
+                                                  {
+                                                    color:
+                                                      MyDarkTheme.colors.text,
+                                                  },
+                                                ]
+                                              : styles.cartItemWeight2
+                                          }
+                                          numberOfLines={1}>
+                                          {j.addon_title}
+                                        </Text>
+                                        <Text
+                                          style={
+                                            isDarkMode
+                                              ? [
+                                                  styles.cartItemWeight2,
+                                                  {
+                                                    color:
+                                                      MyDarkTheme.colors.text,
+                                                  },
+                                                ]
+                                              : styles.cartItemWeight2
+                                          }
+                                          numberOfLines={
+                                            1
+                                          }>{`(${j.option_title})`}</Text>
+                                        <Text
+                                          style={
+                                            isDarkMode
+                                              ? [
+                                                  styles.cartItemWeight2,
+                                                  {
+                                                    color:
+                                                      MyDarkTheme.colors.text,
+                                                  },
+                                                ]
+                                              : [
+                                                  styles.cartItemWeight2,
+                                                  {color: colors.textGrey},
+                                                ]
+                                          }
+                                          numberOfLines={1}>{` ${
+                                          currencies?.primary_currency?.symbol
+                                        }${(
+                                          Number(j.price) * Number(j.multiplier)
+                                        ).toFixed(2)} `}</Text>
+                                      </View>
+                                    );
+                                  })
+                                : null}
                             </View>
                           </View>
                         </View>
-                        <TouchableOpacity
-                          style={{
-                            position: 'absolute',
-                            bottom: 10,
-                            right: 20,
-                          }}
-                          onPress={() => openDeleteView(i)}>
-                          <Image source={imagePath.deleteRed} />
-                        </TouchableOpacity>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                          }}>
-                          <View style={{flex: 0.5, justifyContent: 'center'}}>
-                            {!!i?.product_addons.length && (
-                              <View>
-                                <Text
-                                  style={
-                                    isDarkMode
-                                      ? [
-                                          styles.cartItemWeight2,
-                                          {
-                                            color: MyDarkTheme.colors.text,
-                                          },
-                                        ]
-                                      : styles.cartItemWeight2
-                                  }>
-                                  {strings.EXTRA}
-                                </Text>
-                              </View>
-                            )}
-                            {i?.product_addons.length
-                              ? i?.product_addons.map((j, jnx) => {
-                                  return (
-                                    <View style={{flexDirection: 'row'}}>
-                                      <Text
-                                        style={
-                                          isDarkMode
-                                            ? [
-                                                styles.cartItemWeight2,
-                                                {
-                                                  color:
-                                                    MyDarkTheme.colors.text,
-                                                },
-                                              ]
-                                            : styles.cartItemWeight2
-                                        }
-                                        numberOfLines={1}>
-                                        {j.addon_title}
-                                      </Text>
-                                      <Text
-                                        style={
-                                          isDarkMode
-                                            ? [
-                                                styles.cartItemWeight2,
-                                                {
-                                                  color:
-                                                    MyDarkTheme.colors.text,
-                                                },
-                                              ]
-                                            : styles.cartItemWeight2
-                                        }
-                                        numberOfLines={
-                                          1
-                                        }>{`(${j.option_title})`}</Text>
-                                      <Text
-                                        style={
-                                          isDarkMode
-                                            ? [
-                                                styles.cartItemWeight2,
-                                                {
-                                                  color:
-                                                    MyDarkTheme.colors.text,
-                                                },
-                                              ]
-                                            : [
-                                                styles.cartItemWeight2,
-                                                {color: colors.textGrey},
-                                              ]
-                                        }
-                                        numberOfLines={1}>{` ${
-                                        currencies?.primary_currency?.symbol
-                                      }${(
-                                        Number(j.price) * Number(j.multiplier)
-                                      ).toFixed(2)} `}</Text>
-                                    </View>
-                                  );
-                                })
-                              : null}
-                          </View>
-                        </View>
                       </View>
-                    </View>
 
-                    {/* <View style={styles.dashedLine} /> */}
-                  </Animated.View>
-                </Swipeable>
-              );
-            })
-          : null}
-        {/************ end render cart items *************/}
-        {item?.isDeliverable ? null : (
-          <View style={{marginHorizontal: moderateScale(10)}}>
-            <Text
-              style={{
-                fontSize: moderateScale(12),
-                fontFamily: fontFamily.medium,
-                color: colors.redFireBrick,
-              }}>
-              {strings.ITEM_NOT_DELIVERABLE}
-            </Text>
-          </View>
-        )}
+                      {/* <View style={styles.dashedLine} /> */}
+                    </Animated.View>
+                  </Swipeable>
+                );
+              })
+            : null}
+          {/************ end render cart items *************/}
+          {item?.isDeliverable ? null : (
+            <View style={{marginHorizontal: moderateScale(10)}}>
+              <Text
+                style={{
+                  fontSize: moderateScale(12),
+                  fontFamily: fontFamily.medium,
+                  color: colors.redFireBrick,
+                }}>
+                {strings.ITEM_NOT_DELIVERABLE}
+              </Text>
+            </View>
+          )}
 
-        {/* offerview */}
-        <TouchableOpacity
-          disabled={item?.couponData ? true : false}
-          onPress={() => _getAllOffers(item.vendor, cartData)}
-          style={styles.offersViewB}>
-          {item?.couponData ? (
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          {/* offerview */}
+          <TouchableOpacity
+            disabled={item?.couponData ? true : false}
+            onPress={() => _getAllOffers(item.vendor, cartData)}
+            style={styles.offersViewB}>
+            {item?.couponData ? (
               <View
-                style={{flex: 0.7, flexDirection: 'row', alignItems: 'center'}}>
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View
+                  style={{
+                    flex: 0.7,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    style={{tintColor: themeColors.primary_color}}
+                    source={imagePath.percent}
+                  />
+                  <Text
+                    numberOfLines={1}
+                    style={[
+                      styles.viewOffers,
+                      {marginLeft: moderateScale(10)},
+                    ]}>
+                    {`${strings.CODE} ${item?.couponData?.name} ${strings.APPLYED}`}
+                  </Text>
+                </View>
+                <View style={{flex: 0.3, alignItems: 'flex-end'}}>
+                  {/* <Image source={imagePath.crossBlueB}  /> */}
+                  <Text
+                    onPress={() => _removeCoupon(item, cartData)}
+                    style={[
+                      styles.removeCoupon,
+                      {color: colors.cartItemPrice},
+                    ]}>
+                    {strings.REMOVE}
+                  </Text>
+                </View>
+              </View>
+            ) : (
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Image
                   style={{tintColor: themeColors.primary_color}}
                   source={imagePath.percent}
                 />
                 <Text
-                  numberOfLines={1}
                   style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
-                  {`${strings.CODE} ${item?.couponData?.name} ${strings.APPLYED}`}
+                  {strings.APPLY_PROMO_CODE}
                 </Text>
               </View>
-              <View style={{flex: 0.3, alignItems: 'flex-end'}}>
-                {/* <Image source={imagePath.crossBlueB}  /> */}
-                <Text
-                  onPress={() => _removeCoupon(item, cartData)}
-                  style={[styles.removeCoupon, {color: colors.cartItemPrice}]}>
-                  {strings.REMOVE}
-                </Text>
-              </View>
-            </View>
-          ) : (
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image
-                style={{tintColor: themeColors.primary_color}}
-                source={imagePath.percent}
-              />
+            )}
+          </TouchableOpacity>
+          {!!item?.discount_amount && (
+            <View style={styles.itemPriceDiscountTaxView}>
               <Text
-                style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
-                {strings.APPLY_PROMO_CODE}
+                style={
+                  isDarkMode
+                    ? [
+                        styles.priceItemLabel,
+                        {
+                          color: MyDarkTheme.colors.text,
+                        },
+                      ]
+                    : styles.priceItemLabel
+                }>
+                {strings.DISCOUNT}
               </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                        styles.priceItemLabel,
+                        {
+                          color: MyDarkTheme.colors.text,
+                        },
+                      ]
+                    : styles.priceItemLabel
+                }>{`- ${currencies?.primary_currency?.symbol}${Number(
+                item?.discount_amount ? item?.discount_amount : 0,
+              ).toFixed(2)}`}</Text>
             </View>
           )}
-        </TouchableOpacity>
-        {!!item?.discount_amount && (
+          {!!item?.deliver_charge && (
+            <View style={styles.itemPriceDiscountTaxView}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                        styles.priceItemLabel,
+                        {
+                          color: MyDarkTheme.colors.text,
+                        },
+                      ]
+                    : styles.priceItemLabel
+                }>
+                {strings.DELIVERY_CHARGES}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                        styles.priceItemLabel,
+                        {
+                          color: MyDarkTheme.colors.text,
+                        },
+                      ]
+                    : styles.priceItemLabel
+                }>{`${currencies?.primary_currency?.symbol}${Number(
+                item?.deliver_charge ? item?.deliver_charge : 0,
+              ).toFixed(2)}`}</Text>
+            </View>
+          )}
           <View style={styles.itemPriceDiscountTaxView}>
             <Text
               style={
                 isDarkMode
                   ? [
-                      styles.priceItemLabel,
+                      styles.priceItemLabel2,
                       {
                         color: MyDarkTheme.colors.text,
                       },
                     ]
-                  : styles.priceItemLabel
+                  : styles.priceItemLabel2
               }>
-              {strings.DISCOUNT}
+              {strings.AMOUNT}
             </Text>
             <Text
               style={
                 isDarkMode
                   ? [
-                      styles.priceItemLabel,
+                      styles.priceItemLabel2,
                       {
                         color: MyDarkTheme.colors.text,
                       },
                     ]
-                  : styles.priceItemLabel
-              }>{`- ${currencies?.primary_currency?.symbol}${Number(
-              item?.discount_amount ? item?.discount_amount : 0,
-            ).toFixed(2)}`}</Text>
-          </View>
-        )}
-        {!!item?.deliver_charge && (
-          <View style={styles.itemPriceDiscountTaxView}>
-            <Text
-              style={
-                isDarkMode
-                  ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                      },
-                    ]
-                  : styles.priceItemLabel
-              }>
-              {strings.DELIVERY_CHARGES}
-            </Text>
-            <Text
-              style={
-                isDarkMode
-                  ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                      },
-                    ]
-                  : styles.priceItemLabel
+                  : styles.priceItemLabel2
               }>{`${currencies?.primary_currency?.symbol}${Number(
-              item?.deliver_charge ? item?.deliver_charge : 0,
+              item?.payable_amount ? item?.payable_amount : 0,
             ).toFixed(2)}`}</Text>
           </View>
-        )}
-        <View style={styles.itemPriceDiscountTaxView}>
-          <Text
-            style={
-              isDarkMode
-                ? [
-                    styles.priceItemLabel2,
-                    {
-                      color: MyDarkTheme.colors.text,
-                    },
-                  ]
-                : styles.priceItemLabel2
-            }>
-            {strings.AMOUNT}
-          </Text>
-          <Text
-            style={
-              isDarkMode
-                ? [
-                    styles.priceItemLabel2,
-                    {
-                      color: MyDarkTheme.colors.text,
-                    },
-                  ]
-                : styles.priceItemLabel2
-            }>{`${currencies?.primary_currency?.symbol}${Number(
-            item?.payable_amount ? item?.payable_amount : 0,
-          ).toFixed(2)}`}</Text>
         </View>
       </View>
     );
@@ -1360,7 +1410,6 @@ export default function Cart({navigation, route}) {
   const getFooter = () => {
     return (
       <>
-        {/* Price section */}
         <View style={styles.priceSection}>
           <View style={[styles.bottomTabLableValue]}>
             <Text
@@ -1490,7 +1539,10 @@ export default function Cart({navigation, route}) {
                   {strings.DOYOUWANTTOGIVEATIP}
                 </Text>
 
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={{flexGrow: 1}}>
                   {cartData?.tip.map((j, jnx) => {
                     return (
                       <TouchableOpacity
@@ -1501,6 +1553,7 @@ export default function Cart({navigation, route}) {
                               selectedTipvalue?.value == j?.value
                                 ? themeColors.primary_color
                                 : 'transparent',
+                            flex: 0.18,
                           },
                         ]}
                         onPress={() => selectedTip(j)}>
@@ -1543,6 +1596,7 @@ export default function Cart({navigation, route}) {
                           selectedTipvalue == 'custom'
                             ? themeColors.primary_color
                             : 'transparent',
+                        flex: 0.45,
                       },
                     ]}
                     onPress={() => selectedTip('custom')}>
@@ -1706,7 +1760,7 @@ export default function Cart({navigation, route}) {
         </TouchableOpacity>
 
         {/* {payment submit button} */}
-        {userData ? (
+        {/* {userData ? (
           <View
             style={{
               flexDirection: 'row',
@@ -1766,12 +1820,31 @@ export default function Cart({navigation, route}) {
               )}
             </View>
           </View>
-        ) : null}
+        ) : null} */}
 
         {!!cartData?.deliver_status && (
           <View
             pointerEvents={placeLoader ? 'none' : 'auto'}
             style={styles.paymentView}>
+            {userData && (
+              <ButtonComponent
+                onPress={_selectTime}
+                btnText={
+                  sheduledorderdate && scheduleType
+                    ? `${moment(sheduledorderdate).format('DD MMM,YYYY HH:mm')}`
+                    : strings.SCHEDULE_ORDER
+                }
+                borderRadius={moderateScale(13)}
+                textStyle={{color: themeColors.primary_color}}
+                containerStyle={{
+                  ...styles.placeOrderButtonStyle,
+                  backgroundColor: colors.transparent,
+                  borderColor: themeColors.primary_color,
+                  borderWidth: 0.8,
+                }}
+              />
+            )}
+
             <ButtonComponent
               onPress={() => {
                 placeOrder();
@@ -1796,160 +1869,44 @@ export default function Cart({navigation, route}) {
   //Header section of cart screen
   const getHeader = () => {
     return (
-      <>
-        {vendorAddress ? (
-          <View
-            style={{
-              height: isTableDropDown
-                ? moderateScaleVertical(190)
-                : cartData?.vendor_details?.vendor_tables
-                ? moderateScaleVertical(120)
-                : moderateScaleVertical(70),
-            }}>
-            <View
+      <View
+        style={{
+          ...styles.topLable,
+          marginVertical: moderateScale(7),
+          justifyContent: 'space-between',
+        }}>
+        <View style={{flexDirection: 'row', flex: 0.85}}>
+          <Image source={imagePath.icMap} />
+          <View style={styles.addressView}>
+            <Text
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginHorizontal: moderateScale(20),
-                marginTop: moderateScaleVertical(10),
+                ...styles.homeTxt,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
-              <Image
-                style={
-                  isDarkMode
-                    ? {tintColor: MyDarkTheme.colors.text}
-                    : {tintColor: colors.black}
-                }
-                source={imagePath.redLocation}
-              />
-              <Text
-                numberOfLines={1}
-                style={
-                  isDarkMode
-                    ? [
-                        styles.deliveryLocationAndTime,
-                        {color: MyDarkTheme.colors.text},
-                      ]
-                    : styles.deliveryLocationAndTime
-                }>
-                {` ${strings.ADDRESS}`}:
-              </Text>
-              <Text
-                numberOfLines={1}
-                style={
-                  isDarkMode
-                    ? [styles.address, {color: MyDarkTheme.colors.text}]
-                    : styles.address
-                }>
-                {` ${vendorAddress}`}
-              </Text>
-            </View>
-            <View style={styles.clearCartView}>
-              <TouchableOpacity onPress={() => openClearCartModal()}>
-                <Text style={styles.clearCart}>{strings.CLEARCART}</Text>
-              </TouchableOpacity>
-            </View>
-
-            {dineInType === 'dine_in' &&
-            userData?.auth_token &&
-            !!cartData?.vendor_details?.vendor_tables ? (
-              <DropDownPicker
-                items={tableData}
-                onOpen={() => updateState({isTableDropDown: true})}
-                onClose={() => updateState({isTableDropDown: false})}
-                defaultValue={
-                  deepLinkUrl
-                    ? deepLinkUrl == 1
-                      ? tableData[0]?.label
-                      : tableData[1]?.label
-                    : tableData[0]?.label || ''
-                }
-                containerStyle={{
-                  height: 40,
-                  marginTop: moderateScaleVertical(10),
-                }}
-                style={{
-                  marginHorizontal: moderateScale(20),
-                  flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-                  backgroundColor: isDarkMode
-                    ? MyDarkTheme.colors.lightDark
-                    : '#fafafa',
-                }}
-                labelStyle={
-                  isDarkMode
-                    ? {color: MyDarkTheme.colors.text}
-                    : {color: colors.textGrey}
-                }
-                itemStyle={{
-                  justifyContent: 'flex-start',
-                  flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-                }}
-                dropDownStyle={{
-                  backgroundColor: isDarkMode
-                    ? MyDarkTheme.colors.lightDark
-                    : '#fafafa',
-                  height: 80,
-                  width: width - moderateScale(40),
-                  alignSelf: 'center',
-                }}
-                onChangeItem={(item) => _onTableSelection(item)}
-              />
-            ) : null}
+              {strings.HOME}
+            </Text>
+            <Text
+              numberOfLines={2}
+              style={{
+                ...styles.addAddressTxt,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {vendorAddress
+                ? vendorAddress
+                : selectedAddressData
+                ? selectedAddressData?.address
+                : strings.ADD_ADDRESS}
+            </Text>
           </View>
-        ) : (
-          <>
-            <View style={[styles.topLable, {marginTop: moderateScale(20)}]}>
-              <View
-                style={{
-                  flex: 0.3,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <Image
-                  style={
-                    isDarkMode
-                      ? {tintColor: MyDarkTheme.colors.text}
-                      : {tintColor: colors.black}
-                  }
-                  source={imagePath.redLocation}
-                />
-                <Text
-                  numberOfLines={1}
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.deliveryLocationAndTime,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.deliveryLocationAndTime
-                  }>
-                  {` ${strings.DELIVERYAT}`}
-                </Text>
-              </View>
-
-              <TouchableOpacity
-                style={{
-                  flex: 0.8,
-                  // flexWrap: 'wrap',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-                onPress={() => setModalVisible(true)}>
-                <Text numberOfLines={1} style={styles.address}>
-                  {selectedAddressData
-                    ? selectedAddressData?.address
-                    : strings.ADD_ADDRESS}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            {/* clear cart  */}
-            <View style={styles.clearCartView}>
-              <TouchableOpacity onPress={() => openClearCartModal()}>
-                <Text style={styles.clearCart}>{strings.CLEARCART}</Text>
-              </TouchableOpacity>
-            </View>
-          </>
+        </View>
+        {!vendorAddress && (
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => setModalVisible(true)}>
+            <Image source={imagePath.icEdit1} style={styles.editIcon} />
+          </TouchableOpacity>
         )}
-      </>
+      </View>
     );
   };
 
@@ -2207,7 +2164,6 @@ export default function Cart({navigation, route}) {
   const renderCardItemLoader = () => {
     return (
       <View>
-             
         <HeaderLoader
           widthLeft={moderateScale(140)}
           rectWidthLeft={moderateScale(140)}
@@ -2465,7 +2421,12 @@ export default function Cart({navigation, route}) {
       source={loaderOne}
       // isLoadingB={isLoadingB}
     >
-      <Header centerTitle={strings.CART} leftIcon={imagePath.icBackb} />
+      <Header
+        centerTitle={strings.CART}
+        leftIcon={imagePath.icBackb}
+        isRightText={!!cartItems.length}
+        onPressRightTxt={() => openClearCartModal()}
+      />
       <View
         style={
           isDarkMode
