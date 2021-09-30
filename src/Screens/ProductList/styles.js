@@ -1,15 +1,16 @@
-import { Platform, StyleSheet } from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import colors from '../../styles/colors';
 import commonStyles from '../../styles/commonStyles';
 import {
   height,
   moderateScale,
   moderateScaleVertical,
+  StatusBarHeight,
   textScale,
   width,
 } from '../../styles/responsiveSize';
 
-export default ({ themeColors, fontFamily }) =>
+export default ({themeColors, fontFamily}) =>
   StyleSheet.create({
     topHeaderView: {
       flexDirection: 'row',
@@ -18,7 +19,7 @@ export default ({ themeColors, fontFamily }) =>
       width: width - moderateScale(20),
       top: height > 700 ? 50 : 30,
       alignItems: 'center',
-      marginTop: moderateScaleVertical(16)
+      marginTop: moderateScaleVertical(16),
     },
     leftRightHeaderIconStyle: {
       // backgroundColor: colors.white,
@@ -43,11 +44,10 @@ export default ({ themeColors, fontFamily }) =>
       paddingLeft: moderateScale(20),
       borderRadius: 13,
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 1 },
+      shadowOffset: {width: 0, height: 1},
       shadowOpacity: 0.1,
       shadowRadius: 2,
       elevation: 2,
-
     },
     rateViewStyle: {
       backgroundColor: colors.yellowB,
@@ -61,54 +61,132 @@ export default ({ themeColors, fontFamily }) =>
     },
     overlay: {
       ...StyleSheet.absoluteFillObject,
-      backgroundColor: 'rgba(0,0,0,0.5)'
+      backgroundColor: 'rgba(0,0,0,0.5)',
     },
-    openCloseStatus: { fontFamily: fontFamily.bold, color: colors.green, fontSize: textScale(12), paddingTop: moderateScaleVertical(10) },
-    distanceAndTimeView: { color: colors.black, opacity: 0.48, fontSize: textScale(12), paddingTop: moderateScaleVertical(10) },
+    openCloseStatus: {
+      fontFamily: fontFamily.bold,
+      color: colors.green,
+      fontSize: textScale(12),
+      paddingTop: moderateScaleVertical(10),
+    },
+    distanceAndTimeView: {
+      color: colors.black,
+      opacity: 0.48,
+      fontSize: textScale(12),
+      paddingTop: moderateScaleVertical(10),
+    },
 
-    MainContainer:
-    {
+    MainContainer: {
       flex: 1,
       // backgroundColor: 'white'
     },
 
-    headerStyle:
-    {
+    headerStyle: {
       flexDirection: 'row',
-      justifyContent: "space-between", alignItems: 'center',
+      justifyContent: 'space-between',
+      alignItems: 'center',
       paddingHorizontal: moderateScale(8),
-      height: 42
-
+      height: 42,
+      marginTop: StatusBarHeight - 10,
     },
 
-    HeaderInsideTextStyle:
-    {
-      color: "#fff",
+    HeaderInsideTextStyle: {
+      color: '#fff',
       fontSize: 18,
-      textAlign: 'center'
+      textAlign: 'center',
     },
 
-    TextViewStyle:
-    {
+    TextViewStyle: {
       textAlign: 'center',
-      color: "#000",
+      color: '#000',
       fontSize: 18,
       margin: 5,
       padding: 7,
-      backgroundColor: "#ECEFF1"
+      backgroundColor: '#ECEFF1',
     },
     loaderHeader: {
-      marginTop:moderateScaleVertical(16),
-      marginHorizontal: moderateScale(12), 
-      flexDirection: 'row', 
-      alignItems: 'center', 
-      justifyContent: 'space-between', 
-      height: moderateScale(42)
+      marginTop: moderateScaleVertical(16),
+      marginHorizontal: moderateScale(12),
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      height: moderateScale(42),
     },
     hitSlopProp: {
       top: 50,
       right: 50,
       left: 50,
       bottom: 50,
+    },
+    header2: {height: height * 0.3},
+    imageBackgroundHdr: {width: width, height: '100%'},
+    linearGradientHdr: {alignItems: 'center', height: '100%', width: width},
+    hdrCompHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width: width - moderateScale(20),
+      marginTop: StatusBarHeight + 5,
+    },
+    hdrCompRoundImg: {
+      height: moderateScale(70),
+      width: moderateScale(70),
+      borderRadius: 35,
+    },
+    rightViewOfShareSearch: {flexDirection: 'row'},
+    hdrAbsoluteView: {
+      marginHorizontal: moderateScale(15),
+      position: 'absolute',
+      width: width - moderateScale(30),
+      bottom: -42,
+      height: moderateScale(90),
+      shadowOpacity: 0.3,
+      shadowColor: '#000',
+      shadowOffset: {height: 0, width: 0},
+
+      borderRadius: moderateScale(12),
+      paddingVertical: moderateScale(5),
+      paddingLeft: moderateScale(15),
+      justifyContent: 'center',
+    },
+    hdrNameRatingView: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    hdrTitleTxt: {
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(16),
+      flex: 0.9,
+    },
+    hdrRatingTxtView: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: colors.green,
+      borderTopLeftRadius: moderateScale(4),
+      borderBottomLeftRadius: moderateScale(4),
+      paddingVertical: moderateScale(2),
+      paddingHorizontal: moderateScale(10),
+    },
+    ratingTxt: {
+      // color: colors.yellowC,
+      // fontSize: textScale(11),
+      fontFamily: fontFamily.medium,
+      textAlign: 'left',
+      color: colors.white,
+      fontSize: textScale(9),
+    },
+    starImg: {
+      tintColor: colors.white,
+      marginLeft: 2,
+      width: 9,
+      height: 9,
+    },
+    milesView: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    milesTxt: {
+      color: colors.black,
+      opacity: 0.4,
+      marginLeft: moderateScale(5),
     },
   });
