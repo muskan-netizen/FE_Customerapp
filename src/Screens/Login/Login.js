@@ -91,8 +91,8 @@ export default function Login({navigation}) {
   };
 
   //Login api fucntion
-  const _onLogin = async() => {
-    let fcmToken = await AsyncStorage.getItem('fcmToken')
+  const _onLogin = async () => {
+    let fcmToken = await AsyncStorage.getItem('fcmToken');
     const checkValid = isValidData();
     if (!checkValid) {
       return;
@@ -102,7 +102,7 @@ export default function Login({navigation}) {
       password: password,
       device_type: Platform.OS,
       device_token: DeviceInfo.getUniqueId(),
-      fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId()
+      fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
     };
     updateState({isLoading: true});
     actions
@@ -153,8 +153,8 @@ export default function Login({navigation}) {
   };
 
   //Saving login user to backend
-  const _saveSocailLogin = async(socialLoginData, type) => {
-    let fcmToken = await AsyncStorage.getItem('fcmToken')
+  const _saveSocailLogin = async (socialLoginData, type) => {
+    let fcmToken = await AsyncStorage.getItem('fcmToken');
     let data = {};
     data['name'] =
       socialLoginData?.name ||
@@ -168,7 +168,7 @@ export default function Login({navigation}) {
     data['email'] = socialLoginData?.email;
     data['device_type'] = Platform.OS;
     data['device_token'] = DeviceInfo.getUniqueId();
-    data['fcm_token'] = !!fcmToken ? fcmToken : DeviceInfo.getUniqueId()
+    data['fcm_token'] = !!fcmToken ? fcmToken : DeviceInfo.getUniqueId();
 
     let query = '';
     if (

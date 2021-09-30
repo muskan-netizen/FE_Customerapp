@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -75,6 +76,38 @@ export default ({themeColors, fontFamily}) => {
       height: moderateScaleVertical(60),
       paddingHorizontal: moderateScale(24),
       justifyContent: 'center',
+    },
+    picker: {
+      flex: 0.25,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+
+      // paddingBottom: (height * 1) / 100,
+    },
+    modalText: {
+      fontFamily: fontFamily.reguler,
+      fontSize: textScale(16),
+      color: colors.black,
+    },
+    textInputText: {
+      flex: 0.7,
+
+      fontFamily: fontFamily.reguler,
+      fontSize: textScale(16),
+      color: colors.grayOpacity51,
+      borderBottomColor: colors.gray,
+    },
+    mainCont: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: moderateScale(18),
+      borderWidth: 0.2,
+      borderColor: colors.gray,
+      paddingVertical: moderateScale(8),
+      borderRadius: moderateScale(8),
     },
   });
   return styles;

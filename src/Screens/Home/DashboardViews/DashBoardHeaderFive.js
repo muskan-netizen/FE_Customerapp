@@ -395,10 +395,11 @@ export default function DashBoardHeaderFive({
           </TouchableOpacity>
         )}
         <Modal
-          transparent={true}
           isVisible={isModalVisible}
-          testID={'modal'}
-          style={{justifyContent: 'flex-end', margin: 0}}
+          style={{
+            justifyContent: 'flex-end',
+            margin: 0,
+          }}
           onBackdropPress={() => updateState({isModalVisible: false})}>
           <View>
             <TouchableOpacity
@@ -406,15 +407,22 @@ export default function DashBoardHeaderFive({
               onPress={() => updateState({isModalVisible: false})}>
               <Image source={imagePath.crossC} resizeMode="contain" />
             </TouchableOpacity>
+
             <View
               style={[
                 styles.modalMainViewContainer,
                 {
                   backgroundColor: isDarkMode
                     ? MyDarkTheme.colors.background
-                    : colors.white,
+                    : colors.transparent,
                 },
               ]}>
+              <BlurView
+                blurType="light"
+                style={styles.blurView}
+                blurAmount={32}
+              />
+
               <View style={{padding: moderateScale(10)}}>
                 {tabs.map((item, indx) => {
                   return (
@@ -445,6 +453,7 @@ export default function DashBoardHeaderFive({
                         style={{
                           flexDirection: 'row',
                           justifyContent: 'center',
+                          alignItems: 'center',
                         }}>
                         <Image
                           source={
@@ -463,14 +472,14 @@ export default function DashBoardHeaderFive({
                         <Text
                           style={{
                             fontFamily: fontFamily.medium,
-                            color:
-                              isDarkMode && item.isActive
-                                ? themeColors.primary_color
-                                : isDarkMode
-                                ? MyDarkTheme.colors.text
-                                : colors.black,
+                            color: item.isActive
+                              ? themeColors.primary_color
+                              : isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.white,
                             fontSize: textScale(12),
                             marginHorizontal: moderateScale(10),
+                            opacity: item.isActive ? 1 : 0.5,
                           }}>
                           {item.value}
                         </Text>
@@ -480,12 +489,11 @@ export default function DashBoardHeaderFive({
                         style={{
                           height: moderateScale(22),
                           width: moderateScale(22),
-                          tintColor:
-                            isDarkMode && item.isActive
-                              ? themeColors.primary_color
-                              : isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.black,
+                          tintColor: item.isActive
+                            ? themeColors.primary_color
+                            : isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.white,
                           alignSelf: 'flex-end',
                         }}
                         resizeMode="contain"

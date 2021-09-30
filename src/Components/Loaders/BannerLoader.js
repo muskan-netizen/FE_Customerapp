@@ -14,6 +14,8 @@ export default function BannerLoader({
   isBannerDots = false,
   isVendorLoader = false,
   vendorTxtStyles = {},
+  homeLoaderWidth = width - moderateScale(30),
+  homeLoaderHeight = moderateScaleVertical(130),
 }) {
   const renderDots = () => {
     return (
@@ -50,17 +52,11 @@ export default function BannerLoader({
         ...viewStyles,
       }}>
       <HomeLoader
-        width={width - moderateScale(30)}
-        height={
-          isVendorLoader
-            ? moderateScaleVertical(160)
-            : moderateScaleVertical(130)
-        }
-        rectWidth={width - moderateScale(30)}
+        width={homeLoaderWidth}
+        height={isVendorLoader ? moderateScaleVertical(160) : homeLoaderHeight}
+        rectWidth={homeLoaderWidth}
         rectHeight={
-          isVendorLoader
-            ? moderateScaleVertical(160)
-            : moderateScaleVertical(130)
+          isVendorLoader ? moderateScaleVertical(160) : homeLoaderHeight
         }
       />
       {isBannerDots && (

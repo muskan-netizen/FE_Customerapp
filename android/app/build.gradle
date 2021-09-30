@@ -1118,6 +1118,16 @@ android {
             resValue "string", "app_name", "PickMeUp"
             resValue "string", "host_name", ""
          }
+          taquick{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.taquick'
+            resValue "string", "app_name", "Taquick"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

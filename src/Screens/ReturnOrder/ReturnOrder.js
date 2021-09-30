@@ -430,9 +430,7 @@ export default function ReturnOrder({navigation, route}) {
                 justifyContent: 'flex-start',
                 flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
               }}
-              labelStyle={
-                isDarkMode ? {color: MyDarkTheme.colors.text} : {color: null}
-              }
+              labelStyle={isDarkMode && {color: MyDarkTheme.colors.text}}
               zIndex={5000}
               dropDownStyle={{
                 backgroundColor: isDarkMode

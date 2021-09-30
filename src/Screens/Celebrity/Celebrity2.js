@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, ScrollView, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import React, {useEffect, useRef, useState} from 'react';
+import {FlatList, ScrollView, Text, View} from 'react-native';
+import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import CelebrityLoader from '../../Components/Loaders/CelebrityLoader';
 import NoDataFound from '../../Components/NoDataFound';
@@ -17,15 +17,15 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import { shortCodes } from '../../utils/constants/DynamicAppKeys';
-import { showError } from '../../utils/helperFunctions';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import {showError} from '../../utils/helperFunctions';
 import ListEmptyCleb from './ListEmptyCeleb';
 import stylesFun from './styles';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 
-export default function Celebrity2({ navigation }) {
+export default function Celebrity2({navigation}) {
   const swiperRef = useRef();
   const [state, setState] = useState({
     isLoading: true,
@@ -48,24 +48,24 @@ export default function Celebrity2({ navigation }) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { appData, currencies, languages, appStyle, themeColors } = useSelector(
+  const {appData, currencies, languages, appStyle, themeColors} = useSelector(
     (state) => state.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({ fontFamily });
+  const styles = stylesFun({fontFamily});
 
-  const { isLoading, celebrityList, scrollableDataArray, selectedTab } = state;
+  const {isLoading, celebrityList, scrollableDataArray, selectedTab} = state;
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
   //get list of celebrity based on selected top tab item
   useEffect(() => {
     if (!!celebrityList?.length) {
-      updateState({ isLoading: true });
+      updateState({isLoading: true});
     }
     _getAllCelebrity();
   }, [selectedTab]);
@@ -91,7 +91,7 @@ export default function Celebrity2({ navigation }) {
       .then((res) => {
         console.log(res, 'res>>>>DATA');
         if (res) {
-          updateState({ celebrityList: res.data });
+          updateState({celebrityList: res.data});
         }
         updateState({
           isLoading: false,
@@ -102,21 +102,21 @@ export default function Celebrity2({ navigation }) {
   //Error handling of api
   const errorMethod = (error) => {
     console.log(error, 'error');
-    updateState({ isLoading: false });
+    updateState({isLoading: false});
     showError(error?.message || error?.error);
   };
 
   //Update state in screen
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const _onPress = (item, key) => {
     // if (swiperRef.current) {
     //   swiperRef.current.setPage(key);
     // }
-    updateState({ pageIndex: key, selectedTab: scrollableDataArray[key] });
+    updateState({pageIndex: key, selectedTab: scrollableDataArray[key]});
   };
   //Rendered view of list of celebrity
-  const _renderItem = ({ item, index }) => {
+  const _renderItem = ({item, index}) => {
     return (
       <ThreeColumnCard
         onPress={moveToNewScreen(navigationStrings.CELEBRITYDETAIL, item)}
@@ -135,18 +135,18 @@ export default function Celebrity2({ navigation }) {
         extraData={state}
         showsVerticalScrollIndicator={false}
         numColumns={3}
-        style={{ flex: 1 }}
-        contentContainerStyle={{ flexGrow: 1 }}
-        ListHeaderComponent={<View style={{ height: 10 }} />}
+        style={{flex: 1}}
+        contentContainerStyle={{flexGrow: 1}}
+        ListHeaderComponent={<View style={{height: 10}} />}
         ListEmptyComponent={<ListEmptyCleb isLoading={isLoading} />}
-        contentContainerStyle={{ paddingHorizontal: moderateScale(16) }}
-        ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+        contentContainerStyle={{paddingHorizontal: moderateScale(16)}}
+        ItemSeparatorComponent={() => <View style={{height: 10}} />}
         renderItem={_renderItem}
         keyExtractor={(item, index) => String(index)}
         ListEmptyComponent={
           <NoDataFound
             isLoading={isLoading}
-            containerStyle={{ marginVertical: moderateScaleVertical(height / 4) }}
+            containerStyle={{marginVertical: moderateScaleVertical(height / 4)}}
           />
         }
       />
@@ -215,8 +215,8 @@ export default function Celebrity2({ navigation }) {
             appStyle?.homePageLayout === 2
               ? imagePath.backArrow
               : appStyle?.homePageLayout === 3
-                ? imagePath.icBackb
-                : imagePath.back
+              ? imagePath.icBackb
+              : imagePath.back
           }
           rightIcon={
             appStyle?.homePageLayout === 3
@@ -270,8 +270,8 @@ export default function Celebrity2({ navigation }) {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3
-              ? imagePath.icBackb
-              : imagePath.back
+            ? imagePath.icBackb
+            : imagePath.back
         }
         rightIcon={
           appStyle?.homePageLayout === 3
@@ -283,10 +283,10 @@ export default function Celebrity2({ navigation }) {
         }
       />
 
-      <View style={{ height: 50 }}>
+      <View style={{height: 50}}>
         <ScrollView
           style={styles.scrollviewHorizontal2}
-          contentContainerStyle={{ paddingHorizontal: moderateScale(16) }}
+          contentContainerStyle={{paddingHorizontal: moderateScale(16)}}
           horizontal
           showsHorizontalScrollIndicator={false}>
           {scrollableDataArray.map((item, index) => {
@@ -296,7 +296,7 @@ export default function Celebrity2({ navigation }) {
                 onPress={() => _onPress(item, index)}
                 style={
                   selectedTab == item
-                    ? [styles.headerText2, { color: themeColors.primary_color }]
+                    ? [styles.headerText2, {color: themeColors.primary_color}]
                     : [styles.headerText2]
                 }>
                 {item}
@@ -306,7 +306,7 @@ export default function Celebrity2({ navigation }) {
         </ScrollView>
       </View>
 
-      <View style={{ flex: 1, marginTop: 3 }}>{_listOfCelebraties()}</View>
+      <View style={{flex: 1, marginTop: 3}}>{_listOfCelebraties()}</View>
 
       {/* <View style={{flex: 1}}>{_listOfCelebraties()}</View> */}
 
