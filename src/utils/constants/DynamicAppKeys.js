@@ -96,6 +96,9 @@ const shortCodes = {
   grub: '2f3120',
   gusto: 'd1b1a0',
   punnet: 'd2cca0',
+  homeric: 'c8fbba',
+  voltaic: 'd8473d',
+  zest: '6865aa',
 };
 
 const appIds = {
@@ -478,6 +481,18 @@ const appIds = {
   punnet: Platform.select({
     ios: 'com.punnet',
     android: 'com.punnet',
+  }),
+  homeric: Platform.select({
+    ios: 'com.homeric',
+    android: 'com.homeric',
+  }),
+  voltaic: Platform.select({
+    ios: 'com.voltaic',
+    android: 'com.voltaic',
+  }),
+  zest: Platform.select({
+    ios: 'com.zest.customer',
+    android: 'com.zest.customer',
   }),
 };
 

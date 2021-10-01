@@ -659,6 +659,24 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.homeric:
+          updateState({
+            shortCode: shortCodes.homeric,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.voltaic:
+          updateState({
+            shortCode: shortCodes.voltaic,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.zest:
+          updateState({
+            shortCode: shortCodes.zest,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

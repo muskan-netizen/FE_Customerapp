@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>223230619385-d3j4i1u744pdk2onoo56og3eeje456ke.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.223230619385-d3j4i1u744pdk2onoo56og3eeje456ke</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>223230619385-cn86lda2ctb751s8b78rlemks3peqj7n.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDVNh9lNu5SCMtEvGNwptz9CKAd6Ksyb5o</string>
+	<key>GCM_SENDER_ID</key>
+	<string>223230619385</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.zest.customer</string>
+	<key>PROJECT_ID</key>
+	<string>zest-2e94e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>zest-2e94e.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:223230619385:ios:87fb76acfbe78d4138fc28</string>
+</dict>
+</plist>
