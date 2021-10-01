@@ -19,22 +19,20 @@ export default function BottomViewModal({
   return (
     <Modal isVisible={show} style={styles.modal} animationInTiming={600}>
       <View style={styles.modalContainer}>
+        <TouchableOpacity
+          // hitSlop={{top: 200, left: 200, right: 200, bottom: 200}}
+          style={{position: 'absolute', top: -40}}
+          onPress={() => closeModal()}>
+          <Image source={imagePath.crossB} />
+        </TouchableOpacity>
         <View
           style={{
             height: moderateScaleVertical(30),
-            width: width - 40,
-            flexDirection: 'row',
+            width: width - 60,
+
             alignItems: 'center',
-            justifyContent: 'space-between',
           }}>
-          <Text style={{fontSize: textScale(14)}}>
-            {strings.PLEASESELECTONECATEGORY}
-          </Text>
-          <TouchableOpacity
-            // hitSlop={{top: 200, left: 200, right: 200, bottom: 200}}
-            onPress={() => closeModal()}>
-            <Image source={imagePath.cross} />
-          </TouchableOpacity>
+          <Text style={{fontSize: textScale(14)}}>{'Rate Your Ride'}</Text>
         </View>
         {mainContainView()}
       </View>
@@ -44,8 +42,8 @@ export default function BottomViewModal({
 
 const styles = StyleSheet.create({
   modal: {
-    justifyContent: 'flex-end',
     margin: 0,
+    alignItems: 'center',
   },
   modalContainer: {
     backgroundColor: '#fff',
@@ -53,6 +51,8 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 40,
     alignItems: 'center',
+    width: width - 50,
+    borderRadius: 12,
   },
   modalTitle: {
     fontSize: 22,

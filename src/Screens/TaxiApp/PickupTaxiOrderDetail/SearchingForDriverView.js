@@ -48,6 +48,8 @@ export default function ({
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  console.log(productRatings, 'productRatings');
+  // alert(isShowRating);
   const fontFamily = appStyle?.fontSizeData;
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -121,7 +123,6 @@ export default function ({
             style={{
               width: width - 40,
               justifyContent: 'space-between',
-              height: '100%',
               paddingVertical: moderateScaleVertical(30),
             }}>
             <View
@@ -212,50 +213,7 @@ export default function ({
                 </Text>
               </View>
             </View>
-            {isShowRating ? (
-              <ScrollView horizontal>
-                {productRatings?.map((item, index) => {
-                  return (
-                    <View
-                      style={{
-                        justifyContent: 'center',
-                      }}>
-                      <FastImage
-                        style={{
-                          height: moderateScale(40),
-                          width: moderateScale(40),
-                          alignSelf: 'center',
-                          borderRadius: 20,
-                        }}
-                        source={{
-                          uri: getImageUrl(
-                            item.image.proxy_url,
-                            item.image.image_path,
-                            '600/360',
-                          ),
-                          priority: FastImage.priority.high,
-                        }}
-                      />
-                      <StarRating
-                        disabled={false}
-                        maxStars={5}
-                        rating={item?.product_rating?.rating}
-                        selectedStar={(rating) =>
-                          onStarRatingPress(item, rating)
-                        }
-                        fullStarColor={colors.ORANGE}
-                        starSize={20}
-                      />
-                      {!!item?.product_rating && (
-                        <Text onPress={() => rateYourOrder(item)}>
-                          {strings.WRITE_A_REVIEW}
-                        </Text>
-                      )}
-                    </View>
-                  );
-                })}
-              </ScrollView>
-            ) : null}
+
             {agent_location && (
               <View
                 style={{

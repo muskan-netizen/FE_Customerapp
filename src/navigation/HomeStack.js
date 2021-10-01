@@ -40,11 +40,17 @@ import TopTabRoutes from './TopTabRoutes';
 const Stack = createStackNavigator();
 export default function () {
   const {appStyle, appData} = useSelector((state) => state?.initBoot);
+  const businessType = appData?.profile?.preferences?.business_type;
+
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={navigationStrings.TAXIHOMESCREEN}
-        component={TaxiHomeScreen}
+        name={
+          businessType === 'taxi'
+            ? navigationStrings.HOMESCREENTAXI
+            : navigationStrings.HOMESTACK
+        }
+        component={businessType === 'taxi' ? HomeScreenTaxi : Home}
         options={{headerShown: false}}
       />
 

@@ -159,23 +159,24 @@ export default function Account({navigation}) {
             }
           />
         )}
-        {!!userData?.auth_token && businessType == 'taxi' ? null : (
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.MY_ORDERS)}
-            iconLeft={imagePath.myOrder}
-            centerHeading={strings.MY_ORDERS}
-            containerStyle={styles.containerStyle}
-            centerHeadingStyle={
-              isDarkMode
-                ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
-                : {fontSize: textScale(15)}
-            }
-            iconRight={imagePath.goRight}
-            rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )}
+        {!!userData?.auth_token &&
+          (businessType == 'taxi' ? null : (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.MY_ORDERS)}
+              iconLeft={imagePath.myOrder}
+              centerHeading={strings.MY_ORDERS}
+              containerStyle={styles.containerStyle}
+              centerHeadingStyle={
+                isDarkMode
+                  ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+                  : {fontSize: textScale(15)}
+              }
+              iconRight={imagePath.goRight}
+              rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          ))}
 
         {!!userData?.auth_token && (
           <ListItemHorizontal
@@ -243,23 +244,24 @@ export default function Account({navigation}) {
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )}
-        {!!userData?.auth_token && businessType == 'taxi' ? null : (
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.WISHLIST)}
-            iconLeft={imagePath.fav}
-            centerHeading={strings.WISHLIST}
-            containerStyle={styles.containerStyle}
-            centerHeadingStyle={
-              isDarkMode
-                ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
-                : {fontSize: textScale(15)}
-            }
-            iconRight={imagePath.goRight}
-            rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )}
+        {!!userData?.auth_token &&
+          (businessType == 'taxi' ? null : (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.WISHLIST)}
+              iconLeft={imagePath.fav}
+              centerHeading={strings.WISHLIST}
+              containerStyle={styles.containerStyle}
+              centerHeadingStyle={
+                isDarkMode
+                  ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+                  : {fontSize: textScale(15)}
+              }
+              iconRight={imagePath.goRight}
+              rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          ))}
 
         <ListItemHorizontal
           centerContainerStyle={{flexDirection: 'row'}}

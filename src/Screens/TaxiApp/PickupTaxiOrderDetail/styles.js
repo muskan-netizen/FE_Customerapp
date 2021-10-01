@@ -201,9 +201,6 @@ export default ({fontFamily}) => {
       borderTopLeftRadius: moderateScale(18),
       borderTopRightRadius: moderateScale(18),
       overflow: 'hidden',
-      height: height / 2.9,
-
-      // maxHeight: height / 2,
       alignItems: 'center',
       justifyContent: 'center',
       width: width,

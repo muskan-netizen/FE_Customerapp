@@ -32,7 +32,7 @@ import actions from '../../../redux/actions';
 const PaymentOptions = ({navigation, route}) => {
   const [state, setState] = useState({
     paymentMethods: [
-      {id: 1, title: 'Cash', image: imagePath.cash},
+      {id: 1, title: 'Cash On Delivery', image: imagePath.cash},
       {id: 2, title: 'Wallet', image: imagePath.card},
       // {id: 2, title: 'UPI', image: imagePath.upi},
     ],
@@ -85,7 +85,7 @@ const PaymentOptions = ({navigation, route}) => {
           selectedMethod: item,
         });
       } else {
-        showError('Please add Money in Your Wallet');
+        showError('Please Recharge Your Wallet');
       }
     }
   };

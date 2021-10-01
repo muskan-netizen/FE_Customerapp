@@ -128,7 +128,7 @@ export default function Addaddress({navigation, route}) {
   useFocusEffect(
     React.useCallback(() => {
       getAllAddress();
-    }, []),
+    }, [allSavedAddress]),
   );
 
   useEffect(() => {

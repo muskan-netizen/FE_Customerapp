@@ -1,6 +1,13 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {Dimensions, View, Text, TouchableOpacity, Image} from 'react-native';
+import {
+  Dimensions,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 import HeaderWithFilters from '../../../Components/HeaderWithFilters';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
@@ -9,7 +16,11 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import {showError, showSuccess} from '../../../utils/helperFunctions';
+import {
+  getImageUrl,
+  showError,
+  showSuccess,
+} from '../../../utils/helperFunctions';
 import stylesFunc from './styles';
 const {height, width} = Dimensions.get('window');
 import MapViewDirections from 'react-native-maps-directions';
@@ -26,6 +37,10 @@ import SearchingForDriverView from './SearchingForDriverView';
 import {color} from 'react-native-reanimated';
 import useInterval from '../../../utils/useInterval';
 import {cloneDeep} from 'lodash';
+import BottomViewModal from '../../../Components/BottomViewModal';
+import FastImage from 'react-native-fast-image';
+import {moderateScale} from '../../../styles/responsiveSize';
+import StarRating from 'react-native-star-rating';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -56,6 +71,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     productInfo: [],
     isShowRating: false,
     getDispatchId: null,
+    isVisible: false,
   });
   const {
     isLoading,
@@ -74,6 +90,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     productInfo,
     isShowRating,
     getDispatchId,
+    isVisible,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -146,10 +163,12 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       driverStatus != null &&
       driverStatus != undefined
     ) {
+      console.log(driverStatus, 'driverStatus');
       if (driverStatus === 'Completed') {
         showSuccess(driverStatus);
         updateState({
           isShowRating: true,
+          isVisible: true,
         });
       }
       showSuccess(driverStatus);
@@ -213,7 +232,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         updateState({
           isLoading: false,
           tasks: res?.data?.tasks,
-          driverStatus: res?.data?.order?.status,
           region: {
             latitude: res?.data?.tasks[0]?.latitude
               ? Number(res?.data?.tasks[0].latitude)
@@ -239,6 +257,11 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
           orderDetail: res?.data?.order,
           agent_image: res?.data?.agent_image,
           driverStatus: res?.data?.order_details?.dispatcher_status,
+          isShowRating:
+            res?.data?.order_details?.dispatcher_status == 'Completed'
+              ? true
+              : false,
+          productInfo: res?.data?.order_details?.products,
         });
       })
       .catch(errorMethod);
@@ -320,6 +343,62 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     //   },
     // });
   };
+
+  const _modalClose = () => {
+    updateState({
+      isVisible: false,
+    });
+  };
+  const _ModalMainView = () => (
+    <View
+      style={{
+        height: height / 5,
+        backgroundColor: colors.white,
+      }}>
+      {!!isShowRating && (
+        <ScrollView horizontal>
+          {productInfo?.map((item, index) => {
+            return (
+              <View
+                style={{
+                  justifyContent: 'center',
+                }}>
+                <FastImage
+                  style={{
+                    height: moderateScale(40),
+                    width: moderateScale(40),
+                    alignSelf: 'center',
+                    borderRadius: 20,
+                  }}
+                  source={{
+                    uri: getImageUrl(
+                      item.image.proxy_url,
+                      item.image.image_path,
+                      '600/360',
+                    ),
+                    priority: FastImage.priority.high,
+                  }}
+                />
+                <StarRating
+                  disabled={false}
+                  maxStars={5}
+                  rating={item?.product_rating?.rating}
+                  selectedStar={(rating) => onStarRatingPress(item, rating)}
+                  fullStarColor={colors.ORANGE}
+                  starSize={20}
+                />
+                {!!item?.product_rating && (
+                  <Text onPress={() => rateYourOrder(item)}>
+                    {strings.WRITE_A_REVIEW}
+                  </Text>
+                )}
+              </View>
+            );
+          })}
+        </ScrollView>
+      )}
+    </View>
+  );
 
   console.log(productInfo, 'productInfo');
   //order detail View
@@ -453,7 +532,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
             </MapView>
 
             <View style={styles.topView}>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={[
                   styles.backButtonView,
                   {
@@ -479,13 +558,18 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                   }}
                   source={imagePath.backArrowCourier}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             {/* {_selectOrderDetailView()} */}
             {_selectTexiOrderDetailView()}
           </>
         )}
       </View>
+      <BottomViewModal
+        show={isVisible}
+        mainContainView={_ModalMainView}
+        closeModal={_modalClose}
+      />
     </WrapperContainer>
   );
 }

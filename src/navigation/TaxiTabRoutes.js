@@ -110,21 +110,22 @@ export default function TaxiTabRoutes(props) {
                   tintColor: focused
                     ? colors.white
                     : getColorCodeWithOpactiyNumber(colors.white.substr(1), 50),
+                  height: 25,
+                  width: 25,
                 },
-                appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
               ]}
               source={
                 appStyle?.tabBarLayout === 5
                   ? focused
-                    ? imagePath.taxiOrders
-                    : imagePath.taxiOrders
+                    ? imagePath.ride
+                    : imagePath.ride
                   : appStyle?.tabBarLayout === 4
                   ? focused
-                    ? imagePath.taxiOrders
-                    : imagePath.taxiOrders
+                    ? imagePath.ride
+                    : imagePath.ride
                   : focused
-                  ? imagePath.taxiOrders
-                  : imagePath.taxiOrders
+                  ? imagePath.ride
+                  : imagePath.ride
               }
             />
           ),

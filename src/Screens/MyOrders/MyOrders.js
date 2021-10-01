@@ -111,8 +111,7 @@ export default function MyOrders({navigation}) {
   const _scrollRef = createRef();
   //Reduc store data
   const userData = useSelector((state) => state.auth.userData);
-  console.log(userData, 'userDatauserDatauserData');
-  console.log(businessType, 'businessType');
+
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
   const styles = stylesFun({fontFamily, themeColors});
@@ -120,7 +119,7 @@ export default function MyOrders({navigation}) {
   //Get list of all orders
   useEffect(() => {
     updateState({isLoading: true});
-    if (userData) {
+    if (userData && userData?.auth_token) {
       _getListOfOrders();
     } else {
       updateState({
@@ -177,7 +176,7 @@ export default function MyOrders({navigation}) {
 
   // changeTab function
   const changeTab = (tabData) => {
-    if (userData) {
+    if (userData && userData?.auth_token && tabBarData.length) {
       let clonedArray = cloneDeep(tabBarData);
 
       updateState({
@@ -213,6 +212,8 @@ export default function MyOrders({navigation}) {
           fromVendorApp: true,
           selectedVendor: {id: item?.vendor_id},
           orderDetail: item,
+          showRating:
+            item?.order_status?.current_status?.id != 6 ? false : true,
         })
       : // navigation.navigate(navigationStrings.ACCOUNTS, {
         //   screen: navigationStrings.PICKUPORDERDETAIL,
@@ -296,7 +297,7 @@ export default function MyOrders({navigation}) {
 
   //Get list of all orders based on selected tab
   useEffect(() => {
-    if (userData) {
+    if (userData && userData?.auth_token) {
       _getListOfOrders();
     } else {
       updateState({

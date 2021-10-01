@@ -165,6 +165,10 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const commonStyles = commonStylesFun({fontFamily});
   const {profile} = appData;
 
+  const walletAmount = useSelector(
+    (state) => state?.product?.walletData?.wallet_amount,
+  );
+
   useFocusEffect(
     React.useCallback(() => {
       if (paramData && paramData?.selectedMethod) {
@@ -316,6 +320,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   const _confirmAndPay = () => {
     console.log(selectedCarOption, 'selectedCarOption');
+    console.log(selectedPayment?.id, 'selectedPayment?.id ');
     let data = {};
 
     data['task_type'] = pickUpTimeType ? pickUpTimeType : '';
@@ -328,7 +333,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     //     ? updatedAmount
     //     : selectedCarOption?.tags_price;
     data['amount'] = selectedCarOption?.tags_price;
-    data['payment_method'] = 1;
+    data['payment_option_id'] = selectedPayment ? selectedPayment?.id : 1;
     data['vendor_id'] = selectedCarOption?.vendor_id;
     data['product_id'] = selectedCarOption?.id;
     data['currency_id'] = currencies?.primary_currency?.id;
