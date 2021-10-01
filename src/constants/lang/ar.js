@@ -530,4 +530,7 @@ export default {
   RECENT_LOCATIONS: 'المواقع الأخيرة',
   PLACE_PIN_ON_MAP: 'ضع الدبوس على الخريطة لتحديد الموقع الدقيق',
   WRITE_REVIEW: 'Write a Review',
+  PICKUP: 'PICKUP',
+  ALREADY_EXIST:
+    'Your already have items in your cart. Do you want to discard them?',
 };

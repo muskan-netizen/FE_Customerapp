@@ -34,11 +34,6 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
 
-  console.log(
-    getImageUrl(data.image.image_fit, data.image.image_path, '800/400'),
-    'datadatadatadatadata',
-  );
-
   return (
     <View style={styles.imgContainer}>
       <TouchableOpacity
