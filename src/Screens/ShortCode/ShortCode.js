@@ -653,6 +653,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.punnet:
+          updateState({
+            shortCode: shortCodes.punnet,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

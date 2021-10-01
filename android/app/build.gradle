@@ -1158,6 +1158,16 @@ android {
             resValue "string", "app_name", "Gusto"
             resValue "string", "host_name", ""
          }
+          punnet{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.punnet'
+            resValue "string", "app_name", "Punnet"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

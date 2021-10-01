@@ -95,6 +95,7 @@ const shortCodes = {
   goody: '397840',
   grub: '2f3120',
   gusto: 'd1b1a0',
+  punnet: 'd2cca0',
 };
 
 const appIds = {
@@ -467,12 +468,16 @@ const appIds = {
     android: 'com.goody',
   }),
   grub: Platform.select({
-    ios: '  com.customer.grub',
+    ios: 'com.customer.grub',
     android: 'com.grub',
   }),
   gusto: Platform.select({
     ios: 'com.gusto',
     android: 'com.gusto',
+  }),
+  punnet: Platform.select({
+    ios: 'com.punnet',
+    android: 'com.punnet',
   }),
 };
 
