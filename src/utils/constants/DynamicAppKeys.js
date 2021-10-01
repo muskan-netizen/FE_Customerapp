@@ -97,6 +97,8 @@ const shortCodes = {
   gusto: 'd1b1a0',
   suel: '638bd1',
   gokab: 'fb78f0',
+  elixir: 'fb78f0',
+
 };
 
 const appIds = {
@@ -483,6 +485,10 @@ const appIds = {
   gokab: Platform.select({
     ios: 'com.gokab',
     android: 'com.gokab',
+  }),
+  elixir: Platform.select({
+    ios: 'com.elixir',
+    android: 'com.elixir',
   }),
 };
 

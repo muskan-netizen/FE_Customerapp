@@ -1168,7 +1168,7 @@ android {
             resValue "string", "app_name", "Suel"
             resValue "string", "host_name", ""
          }
-            gokab{
+        gokab{
             dimension "appType"
             versionCode 1
             versionName "1.0"
@@ -1176,6 +1176,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.gokab'
             resValue "string", "app_name", "GoKab"
+            resValue "string", "host_name", ""
+         }
+        elixir{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.elixir'
+            resValue "string", "app_name", "Elixir"
             resValue "string", "host_name", ""
          }
     }

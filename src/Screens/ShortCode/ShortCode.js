@@ -665,6 +665,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.elixir:
+          updateState({
+            shortCode: shortCodes.elixir,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

@@ -99,6 +99,7 @@
     "gusto": "react-native run-android --variant=gustoDebug --appIdSuffix=gusto",
     "suel": "react-native run-android --variant=suelDebug --appIdSuffix=suel",
     "gokab": "react-native run-android --variant=gokabDebug --appIdSuffix=gokab",
+    "elixir": "react-native run-android --variant=elixirDebug --appIdSuffix=elixir",
 
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
@@ -196,7 +197,7 @@
     "gustoRelease": "cd android && ./gradlew assembleGustoRelease",
     "suelRelease": "cd android && ./gradlew assembleSuelRelease",
     "gokabRelease": "cd android && ./gradlew assembleGoKabRelease",
-
+    "elixirRelease": "cd android && ./gradlew assembleElixirRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
