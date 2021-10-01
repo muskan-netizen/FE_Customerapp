@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "891912578966",
+    "project_id": "gusto-fa0b2",
+    "storage_bucket": "gusto-fa0b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:891912578966:android:75f14026a0c3cc4c319fb7",
+        "android_client_info": {
+          "package_name": "com.gusto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "891912578966-11t6i0n309kab94dsv5plg6do3t3d4h7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gusto",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "891912578966-soh3u9fhih1lu9il63t799ps63i5690s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gusto",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "891912578966-5s5soe2vkresmqvbgpm1guoud9s59hh4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4q-VVRBPIN6kA1n3FkFHPiHOC3LN7qEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "891912578966-5s5soe2vkresmqvbgpm1guoud9s59hh4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "891912578966-ff26j4kon861jtb5g12cvjv7d4a13qkb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gusto"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

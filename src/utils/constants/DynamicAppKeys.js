@@ -93,6 +93,8 @@ const shortCodes = {
   vecto: '39f6fd',
   taquick: '630e49',
   goody: '397840',
+  grub: '2f3120',
+  gusto: 'd1b1a0',
 };
 
 const appIds = {
@@ -463,6 +465,14 @@ const appIds = {
   goody: Platform.select({
     ios: 'com.goody.customer',
     android: 'com.goody',
+  }),
+  grub: Platform.select({
+    ios: '  com.customer.grub',
+    android: 'com.grub',
+  }),
+  gusto: Platform.select({
+    ios: '  com.gusto',
+    android: 'com.gusto',
   }),
 };
 
