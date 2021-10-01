@@ -629,6 +629,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.taquick:
+          updateState({
+            shortCode: shortCodes.taquick,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.goody:
+          updateState({
+            shortCode: shortCodes.goody,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

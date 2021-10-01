@@ -157,7 +157,7 @@ export default function VendorDetail3({navigation, route}) {
           id: item.id,
           rootProducts: vendorParams?.rootProducts,
           vendor: vendorParams?.rootProducts ? true : false,
-          // rootProducts:
+
           vendorData: vendorParams?.item,
           categoryInfo: item,
           name: item.name,

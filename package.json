@@ -93,6 +93,8 @@
     "eboyo": "react-native run-android --variant=eboyoDebug --appIdSuffix=eboyo",
     "share": "react-native run-android --variant=shareDebug --appIdSuffix=share",
     "pickmeup": "react-native run-android --variant=pickmeupDebug --appIdSuffix=pickmeup",
+    "goody": "react-native run-android --variant=goodyDebug --appIdSuffix=goody",
+    "taquick": "react-native run-android --variant=taquickDebug --appIdSuffix=taquick",
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "bustanfakiehRelease": "cd android && ./gradlew assembleBustanFakiehRelease",
@@ -183,6 +185,8 @@
     "eboyoRelease": "cd android && ./gradlew assembleeBOYORelease",
     "shareRelease": "cd android && ./gradlew assembleShareRelease",
     "pickmeupRelease": "cd android && ./gradlew assemblePickMeUpRelease",
+    "taquickRelease": "cd android && ./gradlew assembleTaquickRelease",
+    "goodyRelease": "cd android && ./gradlew assembleGoodyRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
@@ -315,7 +319,8 @@
     "redux-thunk": "^2.3.0",
     "toastify-react-native": "^2.0.0",
     "toggle-switch-react-native": "^3.2.0",
-    "translate-json-object": "^2.3.7"
+    "translate-json-object": "^2.3.7",
+    "react-native-switch-selector": "^2.1.4"
   },
   "devDependencies": {
     "@babel/core": "7.12.16",

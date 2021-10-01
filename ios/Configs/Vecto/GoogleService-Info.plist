@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>162956325266-99khchok14muthjrcdgtu4jdj854vlb8.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.162956325266-99khchok14muthjrcdgtu4jdj854vlb8</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>162956325266-0md8lbu4li10ue0vu6oknl8iaqrq46dg.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBHCDW7TMIt3xn7nxzT68clIdtb5gld1M4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>162956325266</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.vecto</string>
+	<key>PROJECT_ID</key>
+	<string>vecto-53b39</string>
+	<key>STORAGE_BUCKET</key>
+	<string>vecto-53b39.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:162956325266:ios:042462b62c08f38bb2d14b</string>
+</dict>
+</plist>

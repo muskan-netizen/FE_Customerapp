@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>908277900153-nf2rkb2ria375db77o7omh3vje9m3rmd.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.908277900153-nf2rkb2ria375db77o7omh3vje9m3rmd</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>908277900153-e71dh9dvo1hkotvjoj5kavl0v00lqjue.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA97lQrSIstwYfDLKmDfNzHSbexW6pKirU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>908277900153</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.taquick</string>
+	<key>PROJECT_ID</key>
+	<string>taquick-b24b4</string>
+	<key>STORAGE_BUCKET</key>
+	<string>taquick-b24b4.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:908277900153:ios:46a0abbeee7d89beb745a8</string>
+</dict>
+</plist>

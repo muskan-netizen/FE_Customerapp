@@ -39,7 +39,6 @@ export default function ThreeColumnCard2({
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
-  console.log(data, 'datadatadatadatadata');
   return (
     <TouchableOpacity
       activeOpacity={0.5}

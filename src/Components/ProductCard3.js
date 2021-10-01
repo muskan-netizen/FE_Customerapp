@@ -306,16 +306,6 @@ export default function ProductCard3({
                   ) : (
                     <View style={{}}>
                       <Text style={styles.addStyleText}>{strings.ADD}</Text>
-                      {/* <Text
-                        style={{
-                          ...styles.addStyleText,
-                          // position: 'absolute',
-                          top: 2,
-                          right: moderateScale(8),
-                          alignSelf:'flex-end'
-                        }}>
-                        {'+'}
-                      </Text> */}
                     </View>
                   )}
 

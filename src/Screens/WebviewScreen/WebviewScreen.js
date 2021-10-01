@@ -8,6 +8,7 @@ import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
+import {moderateScale} from '../../styles/responsiveSize';
 import stylesFun from './styles';
 
 export default function WebviewScreen({navigation, route}) {
@@ -46,6 +47,7 @@ export default function WebviewScreen({navigation, route}) {
         contentContainerStyle={{flexGrow: 1}}
         showsVerticalScrollIndicator={false}>
         <WebView source={{uri: paramData?.url}} />
+        <View style={{height: moderateScale(40)}} />
       </ScrollView>
     </WrapperContainer>
   );

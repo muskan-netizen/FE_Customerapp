@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Keyboard} from 'react-native';
+import {StyleSheet, Text, View, Keyboard, Image} from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {useSelector} from 'react-redux';
@@ -16,6 +16,7 @@ navigator.geolocation = require('react-native-geolocation-service');
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 import strings from '../constants/lang';
+import imagePath from '../constants/imagePath';
 
 export default function GooglePlaceInput({
   type,
@@ -189,7 +190,6 @@ export default function GooglePlaceInput({
           location: `${currentLat},${currentLang}`,
         }}
         renderRow={(results) => {
-          console.log(results, 'results>>>>>>>>>>>>');
           if (getResults) {
             getResults(results);
           }
@@ -203,9 +203,19 @@ export default function GooglePlaceInput({
           return renderCustomRow ? (
             renderCustomRow(results)
           ) : (
-            <Text style={rowStyle ? rowStyle : styles.detectLocation}>
-              {results.description}
-            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={imagePath.location2}
+                style={{marginRight: moderateScale(3)}}
+              />
+              <Text style={rowStyle ? rowStyle : {...styles.detectLocation}}>
+                {results.description}
+              </Text>
+            </View>
           );
           // return <Text style={rowStyle ? rowStyle : styles.detectLocation}>
           //     {results.description}
@@ -259,7 +269,6 @@ export function stylesFunc({fontFamily}) {
       color: colors.black,
       fontFamily: fontFamily.bold,
       fontSize: moderateScale(14),
-      // textAlign: 'center',
       opacity: 0.8,
     },
     listView: {

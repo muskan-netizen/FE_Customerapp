@@ -90,6 +90,9 @@ const shortCodes = {
   eboyo: '1d0fd3',
   share: 'bb8440',
   pickmeup: '87a4de',
+  vecto: '39f6fd',
+  taquick: '630e49',
+  goody: '397840',
 };
 
 const appIds = {
@@ -452,6 +455,14 @@ const appIds = {
   pickmeup: Platform.select({
     ios: 'com.pickmeup.customer',
     android: 'com.pickmeup',
+  }),
+  taquick: Platform.select({
+    ios: 'com.taquick',
+    android: 'com.taquick',
+  }),
+  goody: Platform.select({
+    ios: 'com.goody.customer',
+    android: 'com.goody',
   }),
 };
 
