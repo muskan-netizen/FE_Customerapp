@@ -471,7 +471,7 @@ const appIds = {
     android: 'com.grub',
   }),
   gusto: Platform.select({
-    ios: '  com.gusto',
+    ios: 'com.gusto',
     android: 'com.gusto',
   }),
 };
