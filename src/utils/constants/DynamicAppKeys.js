@@ -98,7 +98,7 @@ const shortCodes = {
   suel: '638bd1',
   gokab: 'fb78f0',
   elixir: 'fb78f0',
-
+  ace: '2d98b5',
 };
 
 const appIds = {
@@ -489,6 +489,10 @@ const appIds = {
   elixir: Platform.select({
     ios: 'com.elixir',
     android: 'com.elixir',
+  }),
+  ace: Platform.select({
+    ios: 'com.customer.ace',
+    android: 'com.ace',
   }),
 };
 

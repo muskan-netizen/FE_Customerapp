@@ -671,6 +671,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.ace:
+          updateState({
+            shortCode: shortCodes.ace,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
