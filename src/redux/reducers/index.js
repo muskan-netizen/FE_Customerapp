@@ -9,7 +9,7 @@ import product from './product';
 import vendor from './vendor';
 import pickupdelivery from './pickupdelivery';
 import order from './order';
-
+import pendingNotifications from './pendingNotifications';
 const appReducer = combineReducers({
   auth,
   appTheme,
@@ -20,6 +20,7 @@ const appReducer = combineReducers({
   cart,
   pickupdelivery,
   order,
+  pendingNotifications
 });
 
 const rootReducer = (state, action) => {

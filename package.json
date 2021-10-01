@@ -197,9 +197,7 @@
     "test": "jest",
     "lint": "eslint .",
     "clean": "cd ./android && ./gradlew clean",
-    "uninstallAll": "cd android && ./gradlew uninstallAll",
-    "postinstall": "cd ios && pod install"
-
+    "uninstallAll": "cd android && ./gradlew uninstallAll"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^2.3.0",
@@ -210,6 +208,7 @@
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/netinfo": "^6.0.0",
+    "@react-native-community/push-notification-ios": "^1.10.1",
     "@react-native-firebase/app": "^12.8.0",
     "@react-native-firebase/messaging": "^12.8.0",
     "@react-native-google-signin/google-signin": "^6.0.0",
@@ -293,6 +292,7 @@
     "react-native-paper": "^4.7.2",
     "react-native-permissions": "^3.0.5",
     "react-native-photo-view-ex": "^1.1.0",
+    "react-native-push-notification": "^8.1.0",
     "react-native-radio-buttons-group": "^2.2.5",
     "react-native-ratings": "github:vinaygoyal20/react-native-ratings",
     "react-native-reanimated": "^1.13.2",
@@ -318,11 +318,13 @@
     "react-native-webview": "^11.4.5",
     "react-redux": "^7.2.2",
     "react-toastify": "^7.0.4",
+    "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "toastify-react-native": "^2.0.0",
     "toggle-switch-react-native": "^3.2.0",
-    "translate-json-object": "^2.3.7"
+    "translate-json-object": "^2.3.7",
+    "react-native-switch-selector": "^2.1.4"
   },
   "devDependencies": {
     "@babel/core": "7.12.16",

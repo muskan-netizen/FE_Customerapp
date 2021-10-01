@@ -301,7 +301,7 @@ export default function Cart({navigation, route}) {
       )
       .then((res) => {
         actions.cartItemQty(res);
-
+        console.log(res, 'cart details>>>');
         updateState({
           isRefreshing: false,
           isLoadingB: false,
@@ -624,15 +624,50 @@ export default function Cart({navigation, route}) {
         showError(strings.INVALID_SCHEDULED_DATE);
       } else {
         if (!!userData) {
-          !!userData?.client_preference?.verify_email ||
-          !!userData?.client_preference?.verify_phone
-            ? !!userData?.verify_details?.is_email_verified &&
-              !!userData?.verify_details?.is_phone_verified
-              ? _finalPayment()
-              : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+          console.log('user data', userData);
+
+          if (!!userData) {
+            if (
+              !!userData?.client_preference?.verify_email &&
+              !!userData?.client_preference?.verify_phone
+            ) {
+              if (
+                !!userData?.verify_details?.is_email_verified &&
+                !!userData?.verify_details?.is_phone_verified
+              ) {
+                _finalPayment();
+              } else {
+                moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
                   formCart: true,
-                })()
-            : _finalPayment();
+                })();
+              }
+            } else if (
+              !!userData?.client_preference?.verify_email ||
+              !!userData?.client_preference?.verify_phone
+            ) {
+              if (
+                !!userData?.verify_details?.is_email_verified ||
+                !!userData?.verify_details?.is_phone_verified
+              ) {
+                _finalPayment();
+              } else {
+                moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+                  formCart: true,
+                })();
+              }
+            } else {
+              _finalPayment();
+            }
+          }
+          // !!userData?.client_preference?.verify_email ||
+          // !!userData?.client_preference?.verify_phone
+          //   ? !!userData?.verify_details?.is_email_verified &&
+          //     !!userData?.verify_details?.is_phone_verified
+          //     ? _finalPayment()
+          //     : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+          //         formCart: true,
+          //       })()
+          //   : _finalPayment();
         } else {
           _finalPayment();
         }
@@ -1778,9 +1813,9 @@ export default function Cart({navigation, route}) {
                       selectedTimeOption && selectedTimeOption?.id == i.id
                         ? themeColors?.primary_color
                         : getColorCodeWithOpactiyNumber(
-                            themeColors.primary_color.substr(1),
-                            20,
-                          ),
+                          themeColors.primary_color.substr(1),
+                          20,
+                        ),
                     borderColor: themeColors.primary_color,
                     borderWidth:
                       selectedTimeOption && selectedTimeOption?.id == i.id
@@ -1810,8 +1845,8 @@ export default function Cart({navigation, route}) {
                 <Text
                   style={
                     isDarkMode
-                      ? {color: MyDarkTheme.colors.text}
-                      : {color: colors.black}
+                      ? { color: MyDarkTheme.colors.text }
+                      : { color: colors.black }
                   }>
                   {sheduledorderdate && scheduleType
                     ? `${moment(sheduledorderdate).format('DD MMM,YYYY HH:mm')}`
@@ -1999,7 +2034,7 @@ export default function Cart({navigation, route}) {
   };
 
   const onDateChange = (value) => {
-    console.log(value, "valuesis")
+    console.log(value, 'valuesis');
     updateState({
       sheduledorderdate: value,
     });

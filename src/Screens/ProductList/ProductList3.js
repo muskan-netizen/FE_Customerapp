@@ -70,7 +70,6 @@ import FastImage from 'react-native-fast-image';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
-  console.log(data, 'route.params===>');
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
@@ -1191,15 +1190,12 @@ export default function Products({route, navigation}) {
                   }}
                   style={styles.hdrCompRoundImg}
                 />
-               
+
                 <View
                   style={{
                     ...styles.rightViewOfShareSearch,
                   }}>
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                 
-                  >
+                  <TouchableOpacity activeOpacity={0.8}>
                     <Image
                       style={{
                         tintColor: isDarkMode

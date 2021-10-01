@@ -104,7 +104,7 @@ export default function VendorOrders({navigation, route}) {
         },
       )
       .then((res) => {
-      
+        // console.log("vendor orders res",res)
         updateState({
           activeOrders:
             pageActive == 1
@@ -158,8 +158,6 @@ export default function VendorOrders({navigation, route}) {
     data['vendor_id'] = selectedVendor?.id;
     data['order_status_option_id'] = status;
     console.log(data, 'data>>data');
-    return
-
     updateState({isLoadingB: true});
     actions
       .updateOrderStatus(data, {

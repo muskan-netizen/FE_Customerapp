@@ -56,9 +56,10 @@ export default function DashBoardFive({
     (state) => state?.initBoot,
   );
 
-  const fontFamily = appStyle?.fontSizeData;
+
   const {bannerRef} = useRef();
   const {slider1ActiveSlide} = state;
+  const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
 
   //update state
