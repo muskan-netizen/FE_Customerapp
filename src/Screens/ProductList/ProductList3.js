@@ -454,6 +454,8 @@ export default function Products({route, navigation}) {
           code: appData.profile.code,
           currency: currencies.primary_currency.id,
           language: languages.primary_language.id,
+          latitude: appMainData?.reqData?.latitude,
+          longitude: appMainData?.reqData?.longitude,
           systemuser: DeviceInfo.getUniqueId(),
         },
       )
@@ -1189,28 +1191,14 @@ export default function Products({route, navigation}) {
                   }}
                   style={styles.hdrCompRoundImg}
                 />
-                {/* <TouchableOpacity hitSlop={hitSlopProp}>
-                  <Image
-                    source={imagePath.icSearchb}
-                    style={{tintColor: colors.white}}
-                  />
-                </TouchableOpacity> */}
+               
                 <View
                   style={{
                     ...styles.rightViewOfShareSearch,
                   }}>
                   <TouchableOpacity
                     activeOpacity={0.8}
-                    // onPress={() => updateState({isSearch: true})}
-                    // onPress={moveToNewScreen(
-                    //   navigationStrings.SEARCHPRODUCTOVENDOR,
-                    //   {
-                    //     type: data?.vendor
-                    //       ? staticStrings.VENDOR
-                    //       : staticStrings.CATEGORY,
-                    //     id: data?.vendor ? data?.id : productListId?.id,
-                    //   },
-                    // )}
+                 
                   >
                     <Image
                       style={{
@@ -1256,12 +1244,12 @@ export default function Products({route, navigation}) {
                     ...styles.hdrTitleTxt,
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}>
-                  {data?.name || ''}
+                  {data?.name || categoryInfo?.name || ''}
                 </Text>
-                {data?.item?.product_avg_average_rating && (
+                {!!categoryInfo && !!categoryInfo?.product_avg_average_rating && (
                   <View style={styles.hdrRatingTxtView}>
                     <Text style={styles.ratingTxt}>
-                      {Number(data?.item?.product_avg_average_rating).toFixed(
+                      {Number(categoryInfo?.product_avg_average_rating).toFixed(
                         1,
                       )}
                     </Text>
@@ -1273,21 +1261,9 @@ export default function Products({route, navigation}) {
                   </View>
                 )}
               </View>
-              {!!data?.item && data?.item?.categoriesList ? (
+              {!!categoryInfo && !!categoryInfo?.categoriesList && (
                 <Text
                   numberOfLines={1}
-                  style={{
-                    ...styles.milesTxt,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                    opacity: 0.6,
-                    marginRight: moderateScale(40),
-                    marginVertical: moderateScale(1),
-                  }}>
-                  {data?.item.categoriesList || ''}
-                </Text>
-              ) : (
-                <Text
-                  numberOfLines={2}
                   style={{
                     ...styles.milesTxt,
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
@@ -1295,10 +1271,10 @@ export default function Products({route, navigation}) {
                     marginRight: moderateScale(40),
                     marginVertical: moderateScale(1),
                   }}>
-                  {desc || ''}
+                  {categoryInfo?.categoriesList || ''}
                 </Text>
               )}
-              {data?.item && data?.item?.lineOfSightDistance && (
+              {!!categoryInfo && !!categoryInfo?.lineOfSightDistance && (
                 <View
                   style={{
                     ...styles.hdrNameRatingView,
@@ -1320,14 +1296,13 @@ export default function Products({route, navigation}) {
                           ? MyDarkTheme.colors.text
                           : colors.black,
                       }}>
-                      {data?.item?.lineOfSightDistance}{' '}
-                      {!!data?.item?.lineOfSightDistance ? 'miles' : ''}{' '}
-                      {!!data?.item?.lineOfSightDistance &&
-                      !!data?.item?.timeofLineOfSightDistance
+                      {categoryInfo.lineOfSightDistance}{' '}
+                      {!!categoryInfo.lineOfSightDistance &&
+                      !!categoryInfo.timeofLineOfSightDistance
                         ? '|'
                         : ''}{' '}
-                      {data?.item?.timeofLineOfSightDistance}{' '}
-                      {!!data?.item?.timeofLineOfSightDistance ? 'mins' : ''}
+                      {categoryInfo.timeofLineOfSightDistance}{' '}
+                      {!!categoryInfo.timeofLineOfSightDistance ? 'mins' : ''}
                     </Text>
                   </View>
 
@@ -1337,17 +1312,17 @@ export default function Products({route, navigation}) {
                       fontSize: textScale(12),
                       textAlign: 'left',
                       marginRight: moderateScale(5),
-                      color: data?.item?.show_slot
+                      color: categoryInfo?.show_slot
                         ? colors.green
-                        : data?.item?.slot && data?.item?.slot.length
-                        ? colors.green
-                        : colors.redB,
+                        : categoryInfo?.is_vendor_closed
+                        ? colors.redB
+                        : colors.green,
                     }}>
-                    {data?.item?.show_slot
+                    {categoryInfo?.show_slot
                       ? strings.OPEN
-                      : data?.item?.slot && data?.item?.slot.length
-                      ? strings.OPEN
-                      : strings.CLOSE}
+                      : categoryInfo?.is_vendor_closed
+                      ? strings.CLOSE
+                      : strings.OPEN}
                   </Text>
                 </View>
               )}
@@ -1556,7 +1531,7 @@ export default function Products({route, navigation}) {
                           fontFamily: fontFamily.medium,
                           marginTop: moderateScaleVertical(2),
                         }}>
-                        {data?.item?.categoriesList}
+                        {!!categoryInfo?.categoriesList || ''}
                       </Text>
                     </View>
                   </View>
@@ -1639,9 +1614,6 @@ export default function Products({route, navigation}) {
         <FlatList
           onScroll={onScroll}
           disableScrollViewPanResponder
-          // scrollEventThrottle={e => console.log("eeee1", e)}
-          // initialScrollIndex={e => console.log("eeee2", e)}
-          // overScrollMode={e => console.log("eeee3", e)}
           showsVerticalScrollIndicator={false}
           data={(!isLoading && productListData) || []}
           renderItem={renderProduct}
@@ -1649,12 +1621,8 @@ export default function Products({route, navigation}) {
           keyExtractor={(item, index) => String(index)}
           keyboardShouldPersistTaps="always"
           showsVerticalScrollIndicator={false}
-          // style={{flex: 1}}
           contentContainerStyle={{
             flexGrow: 1,
-            // flex:1,
-            // backgroundColor:'red',
-            // marginTop: width * 0.1,
           }}
           ItemSeparatorComponent={() => <View style={{height: 10}} />}
           refreshing={isRefreshing}

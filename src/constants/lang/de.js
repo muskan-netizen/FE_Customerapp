@@ -523,4 +523,6 @@ export default {
   TABLE: 'Table',
   SEAT_CAPACITY: 'Seat Capacity',
   WRITE_REVIEW: 'Write a Review',
+  ALREADY_EXIST:
+    'Your already have items in your cart. Do you want to discard them?',
 };

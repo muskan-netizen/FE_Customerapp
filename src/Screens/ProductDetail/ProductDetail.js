@@ -755,9 +755,13 @@ export default function ProductDetail({route, navigation}) {
                       }>
                       {productDetailData?.translation[0]?.title}
                     </Text>
-                    <Text style={styles.productPrice}>{`${
-                      currencies?.primary_currency.symbol
-                    }${(
+                    <Text
+                      style={{
+                        ...styles.productPrice,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                      }}>{`${currencies?.primary_currency.symbol}${(
                       Number(productPriceData?.multiplier) *
                       Number(productPriceData?.price)
                     ).toFixed(2)}`}</Text>

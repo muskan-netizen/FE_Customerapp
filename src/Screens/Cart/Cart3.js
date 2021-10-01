@@ -1999,6 +1999,7 @@ export default function Cart({navigation, route}) {
   };
 
   const onDateChange = (value) => {
+    console.log(value, "valuesis")
     updateState({
       sheduledorderdate: value,
     });

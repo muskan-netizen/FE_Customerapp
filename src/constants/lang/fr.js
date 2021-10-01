@@ -558,4 +558,5 @@ montant`,
   TABLE: 'Table',
   SEAT_CAPACITY: 'Seat Capacity',
   WRITE_REVIEW: 'Write a Review',
+  PICKUP: 'PICKUP',
 };

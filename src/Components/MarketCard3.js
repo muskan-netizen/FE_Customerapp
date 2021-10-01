@@ -156,7 +156,6 @@ export default function MarketCard3({
                 textAlign: 'left',
               }}>
               {data?.lineOfSightDistance}{' '}
-              {!!data?.lineOfSightDistance ? 'miles' : ''}{' '}
               {!!data?.lineOfSightDistance && !!data?.timeofLineOfSightDistance
                 ? '|'
                 : ''}{' '}

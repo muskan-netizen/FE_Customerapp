@@ -384,7 +384,6 @@ export default function Home({route, navigation}) {
             id: item?.id,
             vendor: true,
             name: item?.name,
-            item:item
           })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
@@ -614,8 +613,7 @@ export default function Home({route, navigation}) {
       bgColor={
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }>
-      <View style={{ flex: 1 }}>{renderHomeScreen()}</View>
-      
+      <View style={{flex: 1}}>{renderHomeScreen()}</View>
     </WrapperContainer>
   );
 }
