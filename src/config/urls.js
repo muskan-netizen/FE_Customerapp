@@ -1,4 +1,5 @@
-export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.100.89:8005/api/v1';
 //export const API_BASE_URL = 'http://192.168.99.149:8005/api/v1';
@@ -116,3 +117,4 @@ export const SUBMIT_RETURN_ORDER = getApiUrl(
 export const VENDOR_TABLE_CART = getApiUrl('/add/vendorTable/cart');
 
 export const SCHEDULE_ORDER = getApiUrl('/cart/schedule/update');
+export const MY_PENDING_ORDERS = getApiUrl('/my_pending_orders');

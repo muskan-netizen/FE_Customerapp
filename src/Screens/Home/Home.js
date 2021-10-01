@@ -1,8 +1,16 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {Alert, BackHandler, View} from 'react-native';
+import {
+  Alert,
+  BackHandler,
+  View,
+  Text,
+  ScrollView,
+  FlatList,
+} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {useSelector} from 'react-redux';
+import {cloneDeep, debounce} from 'lodash';
 
 import WrapperContainer from '../../Components/WrapperContainer';
 import staticStrings from '../../constants/staticStrings';
@@ -12,6 +20,7 @@ import colors from '../../styles/colors';
 import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   androidBackButtonHandler,
+  getColorCodeWithOpactiyNumber,
   getCurrentLocation,
   getParameterByName,
   getUrlRoutes,
@@ -30,12 +39,26 @@ import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
 import {useDarkMode} from 'react-native-dark-mode';
 import Geocoder from 'react-native-geocoding';
 import strings from '../../constants/lang';
-
+import BottomSheet from 'reanimated-bottom-sheet';
+import {
+  height,
+  moderateScale,
+  moderateScaleVertical,
+} from '../../styles/responsiveSize';
+import OrderCardVendorComponent from '../../Components/OrderCardVendorComponent';
+import PendingOrderCard from '../../Components/PendingOrderCard';
+import {BlurView} from '@react-native-community/blur';
 navigator.geolocation = require('react-native-geolocation-service');
+import stylesFunc from './styles';
+import NotificationModal from '../../Components/NotificationModal';
 
 export default function Home({route, navigation}) {
   const paramData = route?.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const pendingNotifications = useSelector(
+    (state) => state?.pendingNotifications?.pendingNotifications,
+  );
+
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
@@ -52,6 +75,10 @@ export default function Home({route, navigation}) {
     selectedTabType: '',
     updateTime: 0,
     isDineInSelected: false,
+    pageActive: 1,
+    acceptLoader: false,
+    rejectLoader: false,
+    selectedOrder: null,
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
@@ -72,6 +99,9 @@ export default function Home({route, navigation}) {
 
   const profileInfo = appData?.profile;
   const {profile} = appData;
+  const fontFamily = appStyle?.fontSizeData;
+  const styles = stylesFunc({themeColors, fontFamily});
+
   const {
     updateTime,
     isLoading,
@@ -82,6 +112,10 @@ export default function Home({route, navigation}) {
     themeLayout,
     updatedData,
     selectedTabType,
+    pageActive,
+    acceptLoader,
+    rejectLoader,
+    selectedOrder,
   } = state;
   useFocusEffect(
     React.useCallback(() => {
@@ -319,7 +353,14 @@ export default function Home({route, navigation}) {
   //Error handling in screen
   const errorMethod = (error) => {
     console.log(error, 'error');
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({
+      isLoading: false,
+      isLoadingB: false,
+      isRefreshing: false,
+      acceptLoader: false,
+      rejectLoader: false,
+      selectedOrder: null,
+    });
     showError(error?.message || error?.error);
   };
 
@@ -606,7 +647,37 @@ export default function Home({route, navigation}) {
         );
     }
   };
+
+  useEffect(() => {
+    if (!!userData?.auth_token) {
+      (async () => {
+        try {
+          const res = await actions.allPendingOrders(
+            `?limit=${10}&page=${pageActive}`,
+            {},
+            {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+              // systemuser: DeviceInfo.getUniqueId(),
+            },
+          );
+          console.log('pending res==>>>', res.data.order_list);
+          let orders =
+            pageActive == 1
+              ? res.data.order_list.data
+              : [...pendingNotifications, ...res.data.order_list.data];
+          actions.pendingNotifications(orders);
+        } catch (error) {
+          console.log('erro rirased', error);
+        }
+      })();
+    }
+  }, []);
   // console.log(appMainData, 'appMainData');
+
+  const {blurRef} = useRef();
+
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}

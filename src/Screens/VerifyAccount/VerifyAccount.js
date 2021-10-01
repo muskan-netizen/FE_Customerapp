@@ -285,6 +285,7 @@ export default function VerifyAccount({navigation, route}) {
     }
   };
 
+  console.log("verify account+++")
   const otpView = (type, value) => {
     return (
       <SmoothPinCodeInput

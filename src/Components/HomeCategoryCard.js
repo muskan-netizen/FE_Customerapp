@@ -22,7 +22,7 @@ export default function HomeCategoryCard({data = {}, onPress = () => {}}) {
   );
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
-  console.log(imageURI, 'imageURI');
+ 
 
   return (
     <TouchableOpacity

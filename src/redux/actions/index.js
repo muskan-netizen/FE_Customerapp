@@ -9,6 +9,7 @@ import * as vendor from './vendor';
 import * as celebrity from './celebrity';
 import * as order from './order';
 import * as pickup from './pickupdelivery';
+import * as pendingNotifications from './pendingNotifications';
 
 export default {
   ...init,
@@ -20,5 +21,6 @@ export default {
   ...cart,
   ...celebrity,
   ...order,
-  ...pickup
+  ...pickup,
+  ...pendingNotifications
 };
