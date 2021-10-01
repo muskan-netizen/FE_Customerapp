@@ -1,24 +1,26 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
-import {Alert, BackHandler, View} from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, BackHandler, View, Text, ScrollView, FlatList } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
+import { cloneDeep, debounce } from 'lodash';
 
 import WrapperContainer from '../../Components/WrapperContainer';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
+import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
 import {
   androidBackButtonHandler,
+  getColorCodeWithOpactiyNumber,
   getCurrentLocation,
   getParameterByName,
   getUrlRoutes,
   showError,
 } from '../../utils/helperFunctions';
-import {chekLocationPermission} from '../../utils/permissions';
-import {setItem} from '../../utils/utils';
+import { chekLocationPermission } from '../../utils/permissions';
+import { setItem } from '../../utils/utils';
 import {
   DashBoardFive,
   DashBoardFour,
@@ -26,16 +28,24 @@ import {
   DashBoardHeaderOne,
   DashBoardOne,
 } from './DashboardViews/Index';
-import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
-import {useDarkMode} from 'react-native-dark-mode';
+import { MyDarkTheme, MyDefaultTheme } from '../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
 import Geocoder from 'react-native-geocoding';
 import strings from '../../constants/lang';
-
+import BottomSheet from 'reanimated-bottom-sheet';
+import { height, moderateScale, moderateScaleVertical } from '../../styles/responsiveSize';
+import OrderCardVendorComponent from '../../Components/OrderCardVendorComponent';
+import PendingOrderCard from '../../Components/PendingOrderCard';
+import { BlurView } from '@react-native-community/blur';
 navigator.geolocation = require('react-native-geolocation-service');
+import stylesFunc from './styles';
+import NotificationModal from '../../Components/NotificationModal';
 
-export default function Home({route, navigation}) {
+export default function Home({ route, navigation }) {
   const paramData = route?.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const pendingNotifications = useSelector((state) => state?.pendingNotifications?.pendingNotifications);
+
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
@@ -52,6 +62,10 @@ export default function Home({route, navigation}) {
     selectedTabType: '',
     updateTime: 0,
     isDineInSelected: false,
+    pageActive: 1,
+    acceptLoader: false,
+    rejectLoader: false,
+    selectedOrder: null
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
@@ -71,7 +85,10 @@ export default function Home({route, navigation}) {
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
 
   const profileInfo = appData?.profile;
-  const {profile} = appData;
+  const { profile } = appData;
+  const fontFamily = appStyle?.fontSizeData;
+  const styles = stylesFunc({ themeColors, fontFamily });
+
   const {
     updateTime,
     isLoading,
@@ -82,6 +99,10 @@ export default function Home({route, navigation}) {
     themeLayout,
     updatedData,
     selectedTabType,
+    pageActive,
+    acceptLoader,
+    rejectLoader,
+    selectedOrder
   } = state;
   useFocusEffect(
     React.useCallback(() => {
@@ -94,7 +115,7 @@ export default function Home({route, navigation}) {
   );
 
   useEffect(() => {
-    updateState({updatedData: appMainData?.categories});
+    updateState({ updatedData: appMainData?.categories });
     console.log(appMainData, 'appMainData');
   }, [appMainData]);
 
@@ -131,7 +152,7 @@ export default function Home({route, navigation}) {
         onPress: () => console.log('Cancel Pressed'),
         // style: 'destructive',
       },
-      {text: strings.CLEAR_CART2, onPress: () => clearCart(res)},
+      { text: strings.CLEAR_CART2, onPress: () => clearCart(res) },
     ]);
   };
 
@@ -155,7 +176,7 @@ export default function Home({route, navigation}) {
   };
 
   const updateLatLang = (res) => {
-    updateState({updateTime: Math.random()});
+    updateState({ updateTime: Math.random() });
     actions.locationData(res);
   };
   useEffect(() => {
@@ -164,7 +185,7 @@ export default function Home({route, navigation}) {
     }
   }, [updateTime]);
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+    Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
   }, []);
 
   useEffect(() => {
@@ -193,7 +214,7 @@ export default function Home({route, navigation}) {
                 }
               }
             })
-            .catch((err) => {});
+            .catch((err) => { });
         }
       })
       .catch((error) => console.log('error while accessing location', error));
@@ -261,57 +282,57 @@ export default function Home({route, navigation}) {
     {
       selectedTabType
         ? actions
-            .homeData(
-              {
-                type: dine_In_Type ? dine_In_Type : dine_In_Type,
-                ...latlongObj,
-              },
-              {
-                code: appData?.profile?.code,
-                currency: currencies?.primary_currency?.id,
-                language: languages?.primary_language?.id,
-                // ...latlongObj,
-              },
-            )
-            .then((res) => {
-              console.log('Home data++++++', res);
+          .homeData(
+            {
+              type: dine_In_Type ? dine_In_Type : dine_In_Type,
+              ...latlongObj,
+            },
+            {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+              // ...latlongObj,
+            },
+          )
+          .then((res) => {
+            console.log('Home data++++++', res);
+            if (
+              appData?.profile?.preferences?.is_hyperlocal &&
+              location?.latitude == '' &&
+              location?.longitude == ''
+            ) {
+              if (
+                typeof res?.data?.reqData == 'object' &&
+                res?.data?.reqData?.latitude &&
+                res?.data?.reqData?.longitude
+              ) {
+                const data = {
+                  address: res?.data?.reqData?.address,
+                  latitude: res?.data?.reqData?.latitude,
+                  longitude: res?.data?.reqData?.longitude,
+                };
+                actions.locationData(data);
+              }
+            } else {
               if (
                 appData?.profile?.preferences?.is_hyperlocal &&
-                location?.latitude == '' &&
-                location?.longitude == ''
+                location?.latitude != '' &&
+                location?.longitude != ''
               ) {
-                if (
-                  typeof res?.data?.reqData == 'object' &&
-                  res?.data?.reqData?.latitude &&
-                  res?.data?.reqData?.longitude
-                ) {
-                  const data = {
-                    address: res?.data?.reqData?.address,
-                    latitude: res?.data?.reqData?.latitude,
-                    longitude: res?.data?.reqData?.longitude,
-                  };
-                  actions.locationData(data);
-                }
               } else {
-                if (
-                  appData?.profile?.preferences?.is_hyperlocal &&
-                  location?.latitude != '' &&
-                  location?.longitude != ''
-                ) {
-                } else {
-                  const data = {
-                    address: '',
-                    latitude: '',
-                    longitude: '',
-                  };
-                  actions.locationData(data);
-                }
+                const data = {
+                  address: '',
+                  latitude: '',
+                  longitude: '',
+                };
+                actions.locationData(data);
               }
-              setTimeout(() => {
-                updateState({isLoading: false});
-              }, 1000);
-            })
-            .catch(errorMethod)
+            }
+            setTimeout(() => {
+              updateState({ isLoading: false });
+            }, 1000);
+          })
+          .catch(errorMethod)
         : null;
     }
   };
@@ -319,21 +340,28 @@ export default function Home({route, navigation}) {
   //Error handling in screen
   const errorMethod = (error) => {
     console.log(error, 'error');
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({
+      isLoading: false,
+      isLoadingB: false,
+      isRefreshing: false,
+      acceptLoader: false,
+      rejectLoader: false,
+      selectedOrder: null
+    });
     showError(error?.message || error?.error);
   };
 
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
-  const {viewRef2, viewRef3, bannerRef} = useRef();
+  const { viewRef2, viewRef3, bannerRef } = useRef();
 
   //onPress Category
   const onPressCategory = (item) => {
@@ -372,19 +400,19 @@ export default function Home({route, navigation}) {
       moveToNewScreen(navigationStrings.BRANDS)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { item })();
     } else if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: item?.id,
-            vendor: true,
-            name: item?.name,
-          })();
+          id: item?.id,
+          vendor: true,
+          name: item?.name,
+        })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
@@ -411,15 +439,15 @@ export default function Home({route, navigation}) {
       if (data.redirect_to == staticStrings.VENDOR) {
         data?.is_show_category
           ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-              item,
-              rootProducts: true,
-              // categoryData: data,
-            })()
+            item,
+            rootProducts: true,
+            // categoryData: data,
+          })()
           : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-              id: data.redirect_id,
-              vendor: true,
-              name: data.redirect_name,
-            })();
+            id: data.redirect_id,
+            vendor: true,
+            name: data.redirect_name,
+          })();
       } else if (data.redirect_to == staticStrings.CATEGORY) {
         moveToNewScreen(navigationStrings.PRODUCT_LIST, {
           id: data.redirect_id,
@@ -455,22 +483,22 @@ export default function Home({route, navigation}) {
       )
       .then((res) => {
         console.log(res, 'initApp');
-        updateState({isRefreshing: false});
+        updateState({ isRefreshing: false });
       })
       .catch((error) => {
-        updateState({isRefreshing: false});
+        updateState({ isRefreshing: false });
       });
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({isRefreshing: true});
+    updateState({ isRefreshing: true });
 
     initApiHit();
     // homeData();
   };
   const updateCircleData = (data) => {
-    updateState({updatedData: data});
+    updateState({ updatedData: data });
   };
 
   const selcetedToggle = (type) => {
@@ -521,20 +549,20 @@ export default function Home({route, navigation}) {
     } else if (data.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, data)();
 
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {data})();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { data })();
     } else if (!data.is_show_category || data.is_show_category) {
       let item = data;
       data?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: data?.id,
-            vendor: true,
-            name: data?.name,
-          })();
+          id: data?.id,
+          vendor: true,
+          name: data?.name,
+        })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
@@ -606,7 +634,36 @@ export default function Home({route, navigation}) {
         );
     }
   };
+
+  useEffect(() => {
+    if (!!userData?.auth_token) {
+      (async () => {
+        try {
+          const res = await actions.allPendingOrders(
+            `?limit=${10}&page=${pageActive}`,
+            {},
+            {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+              // systemuser: DeviceInfo.getUniqueId(),
+            })
+          console.log("pending res==>>>", res.data.order_list)
+          let orders = pageActive == 1
+            ? res.data.order_list.data
+            : [...pendingNotifications, ...res.data.order_list.data]
+          actions.pendingNotifications(orders)
+        } catch (error) {
+          console.log("erro rirased", error)
+        }
+      })()
+    }
+  }, [])
   // console.log(appMainData, 'appMainData');
+
+
+  const { blurRef } = useRef();
+
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
@@ -614,7 +671,15 @@ export default function Home({route, navigation}) {
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }>
       <View style={{ flex: 1 }}>{renderHomeScreen()}</View>
-      
+
+      {/* {!!pendingNotifications?.length && <BlurView
+        style={styles.blurViewHome}
+        viewRef={blurRef}
+        blurType="light"
+        blurAmount={20}
+        blurRadius={20}
+      />} */}
+    
     </WrapperContainer>
   );
 }

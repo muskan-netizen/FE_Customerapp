@@ -10,11 +10,12 @@ import {
   GET_RETURN_PRODUCT_DETAIL,
   UPLOAD_PRODUCT_IMAGE,
   SUBMIT_RETURN_ORDER,
+  MY_PENDING_ORDERS,
 } from '../../config/urls';
-import {apiGet, apiPost} from '../../utils/utils';
+import { apiGet, apiPost } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
-const {dispatch} = store;
+const { dispatch } = store;
 
 //Get Cart Detail
 export function getOrderDetail(data = {}, headers = {}) {
@@ -55,6 +56,9 @@ export const savedSelectedVendor = (data) => {
 
 //get all orders of specific vendor
 export const _getListOfVendorOrders = (query = '', data, headers = {}) => {
+  console.log('query++++ query', query)
+  console.log('query++++ data', data)
+  console.log('query++++ headers', headers)
   return new Promise((resolve, reject) => {
     apiGet(GET_ALL_VENDOR_ORDERS + query, data, headers)
       .then((res) => {
@@ -175,6 +179,7 @@ export function uploadReturnOrderImage(data = {}, headers = {}) {
 
 //Submit return order
 export function submitReturnOrder(data = {}, headers = {}) {
+  console.log("headers ++", headers)
   return new Promise((resolve, reject) => {
     apiPost(SUBMIT_RETURN_ORDER, data, headers)
       .then((res) => {
@@ -185,3 +190,18 @@ export function submitReturnOrder(data = {}, headers = {}) {
       });
   });
 }
+
+export function allPendingOrders(query, data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiGet(MY_PENDING_ORDERS + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+
+

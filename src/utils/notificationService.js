@@ -4,6 +4,7 @@ import { getUserData } from './utils';
 import * as NavigationService from '../navigation/NavigationService';
 import navigationStrings from '../navigation/navigationStrings';
 import { Platform } from 'react-native';
+import actions from '../redux/actions';
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
   const enabled =
@@ -34,11 +35,11 @@ const getFcmToken = async () => {
 
 export const notificationListener = async () => {
   messaging().onNotificationOpenedApp((remoteMessage) => {
-    console.log(
-      'Notification caused app to open from background state:',
-      remoteMessage.notification,
-    );
-    console.log('backgrund state', remoteMessage.notification);
+    const { notification } = remoteMessage
+    console.log('Notification caused app to open from background state:', notification);
+    if (notification?.sound == 'notification.wav') {
+      actions.isVendorNotification(true)
+    }
   });
 
   // Check whether an initial notification is available
@@ -46,34 +47,12 @@ export const notificationListener = async () => {
     .getInitialNotification()
     .then((remoteMessage) => {
       if (remoteMessage) {
-        console.log(
-          'Notification caused app to open from quit state:',
-          remoteMessage.notification,
-        );
-        console.log('remote message', remoteMessage.notification);
+        const { notification } = remoteMessage
+        console.log('Notification caused app to open from quit state:',remoteMessage.notification);
+        if (notification?.sound == 'notification.wav') {
+          actions.isVendorNotification(true)
+        }
       }
     });
 
-
-  messaging().onMessage(async (remoteMessage) => {
-    const userData = await getUserData();
-    if (!!userData && !!userData?.auth_token) {
-      // console.log("received in foreground", JSON.parse(remoteMessage?.data?.data))
-      // NavigationService.navigate(navigationStrings.TABROUTESVENDOR)
-      console.log("user data==>>>", userData)
-    }
-    // alert("Hello")
-  })
-  // Check whether an initial notification is available
-  messaging()
-    .getInitialNotification()
-    .then(remoteMessage => {
-      if (remoteMessage) {
-        console.log(
-          'Notification caused app to open from quit state:',
-          remoteMessage.notification,
-        );
-        console.log("remote message", remoteMessage.notification)
-      }
-    })
 }

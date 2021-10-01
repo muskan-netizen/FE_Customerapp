@@ -1,14 +1,15 @@
 import Clipboard from '@react-native-community/clipboard';
 import NetInfo from '@react-native-community/netinfo';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import React, { useEffect, useState } from 'react';
-import { Linking } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Linking, Text, View } from 'react-native';
 import { useDarkMode } from 'react-native-dark-mode';
 import FlashMessage from 'react-native-flash-message';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import { Provider, useSelector } from 'react-redux';
 import NoInternetModal from './src/Components/NoInternetModal';
+import NotificationModal from './src/Components/NotificationModal';
 import strings from './src/constants/lang';
 import Container from './src/library/toastify-react-native';
 import * as NavigationService from './src/navigation/NavigationService';
@@ -18,17 +19,19 @@ import { updateInternetConnection } from './src/redux/actions/auth';
 import store from './src/redux/store';
 import types from './src/redux/types';
 import { moderateScaleVertical, width } from './src/styles/responsiveSize';
+import ForegroundHandler from './src/utils/ForegroundHandler';
 import { getParameterByName, getUrlRoutes } from './src/utils/helperFunctions';
 import { requestUserPermission, notificationListener } from './src/utils/notificationService';
 import { getItem, getUserData, setItem } from './src/utils/utils';
-
+import Modal from 'react-native-modal'
+import { BlurView } from '@react-native-community/blur';
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
   // const appMainData = useSelector((state) => state?.home?.appMainData);
-  const appMainData=store.getState().home
+  const appMainData = store.getState().home
   // deep linking
-console.log(appMainData,"appMainData+++++++++");
+  console.log(appMainData, "appMainData+++++++++");
   async function handleDynamicLink(deepLinkUrl) {
     console.log(deepLinkUrl, 'deepLinkUrl');
     if (deepLinkUrl != null) {
@@ -215,11 +218,15 @@ console.log(appMainData,"appMainData+++++++++");
 
     return () => removeNetInfoSubscription();
   }, []);
-
+  const { blurRef } = useRef();
+  // let isVal = store.getState().pendingNotifications.isVendorNotification
+  // console.log("is val++",isVal)
   return (
     <SafeAreaProvider>
-      <Provider store={store}>
+      <Provider ref={blurRef} store={store}>
+        <ForegroundHandler />
         <Routes />
+        <NotificationModal />
       </Provider>
       <Container
         width={width - 20}
@@ -229,6 +236,7 @@ console.log(appMainData,"appMainData+++++++++");
       />
       <FlashMessage position="top" />
       <NoInternetModal show={!internetConnection} />
+
     </SafeAreaProvider>
   );
 };

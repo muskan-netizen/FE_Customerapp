@@ -126,13 +126,27 @@ export default function Signup2({navigation}) {
         updateState({isLoading: false});
 
         if (!!res.data) {
-          !!res.data?.client_preference?.verify_email ||
-          !!res.data?.client_preference?.verify_phone
-            ? !!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified
-              ? navigation.push(navigationStrings.DRAWER_ROUTES)
-              : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : navigation.push(navigationStrings.DRAWER_ROUTES);
+          if (!!res.data?.client_preference?.verify_email &&
+            !!res.data?.client_preference?.verify_phone) {
+            if (!!res.data?.verify_details?.is_email_verified &&
+              !!res.data?.verify_details?.is_phone_verified) {
+              navigation.push(navigationStrings.DRAWER_ROUTES)
+            } else {
+              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
+            }
+          }
+          else if (!!res.data?.client_preference?.verify_email ||
+            !!res.data?.client_preference?.verify_phone) {
+            if (!!res.data?.verify_details?.is_email_verified ||
+              !!res.data?.verify_details?.is_phone_verified) {
+              navigation.push(navigationStrings.DRAWER_ROUTES)
+            } else {
+              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
+            }
+          }
+          else {
+            navigation.push(navigationStrings.DRAWER_ROUTES)
+          }
         }
       })
       .catch(errorMethod);
