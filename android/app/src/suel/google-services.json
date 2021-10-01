@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "435964631201",
+    "project_id": "suel-9aef8",
+    "storage_bucket": "suel-9aef8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435964631201:android:fd65536c684ea1e3c5b8e0",
+        "android_client_info": {
+          "package_name": "com.suel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "435964631201-r4vrjdvc6j3kdssip6o14gkp9qs07vgl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.suel",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "435964631201-tg1od1kdr4cs2s8ign5i359upouv70kf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.suel",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "435964631201-v1gk2l297lit4e7dneccn6dd74gob6jf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.suel",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "435964631201-6i2pph1k84urpijohhc67aeh2qa5bnis.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzBXGuIO2-WueAqUrYOsJxkOAu551Sqjg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "435964631201-6i2pph1k84urpijohhc67aeh2qa5bnis.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

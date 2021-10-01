@@ -776,7 +776,7 @@ export default function ProductDetail({route, navigation}) {
                         ? MyDarkTheme.colors.text
                         : colors.blackOpacity43,
                     }}>
-                    In{' '}
+                    {strings.IN}{' '}
                     {
                       productDetailData?.category?.category_detail
                         ?.translation[0]?.name

@@ -1158,6 +1158,26 @@ android {
             resValue "string", "app_name", "Gusto"
             resValue "string", "host_name", ""
          }
+        suel{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.suel'
+            resValue "string", "app_name", "Suel"
+            resValue "string", "host_name", ""
+         }
+            gokab{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.gokab'
+            resValue "string", "app_name", "GoKab"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

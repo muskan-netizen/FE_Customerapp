@@ -95,6 +95,8 @@ const shortCodes = {
   goody: '397840',
   grub: '2f3120',
   gusto: 'd1b1a0',
+  suel: '638bd1',
+  gokab: 'fb78f0',
 };
 
 const appIds = {
@@ -473,6 +475,14 @@ const appIds = {
   gusto: Platform.select({
     ios: 'com.gusto',
     android: 'com.gusto',
+  }),
+  suel: Platform.select({
+    ios: 'com.suel',
+    android: 'com.suel',
+  }),
+  gokab: Platform.select({
+    ios: 'com.gokab',
+    android: 'com.gokab',
   }),
 };
 

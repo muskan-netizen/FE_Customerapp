@@ -97,6 +97,9 @@
     "grub": "react-native run-android --variant=grubDebug --appIdSuffix=grub",
     "taquick": "react-native run-android --variant=taquickDebug --appIdSuffix=taquick",
     "gusto": "react-native run-android --variant=gustoDebug --appIdSuffix=gusto",
+    "suel": "react-native run-android --variant=suelDebug --appIdSuffix=suel",
+    "gokab": "react-native run-android --variant=gokabDebug --appIdSuffix=gokab",
+
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "bustanfakiehRelease": "cd android && ./gradlew assembleBustanFakiehRelease",
@@ -191,6 +194,9 @@
     "goodyRelease": "cd android && ./gradlew assembleGoodyRelease",
     "grubRelease": "cd android && ./gradlew assembleGrubRelease",
     "gustoRelease": "cd android && ./gradlew assembleGustoRelease",
+    "suelRelease": "cd android && ./gradlew assembleSuelRelease",
+    "gokabRelease": "cd android && ./gradlew assembleGoKabRelease",
+
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
