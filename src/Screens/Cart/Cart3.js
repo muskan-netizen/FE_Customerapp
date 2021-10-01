@@ -2034,7 +2034,6 @@ export default function Cart({navigation, route}) {
   };
 
   const onDateChange = (value) => {
-    console.log(value, 'valuesis');
     updateState({
       sheduledorderdate: value,
     });
@@ -2604,6 +2603,7 @@ export default function Cart({navigation, route}) {
                 style={styles.datetimePickerText}
                 // onDateChange={setDate}
                 onDateChange={(value) => onDateChange(value)}
+                
               />
             </View>
           </ScrollView>

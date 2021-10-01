@@ -1142,7 +1142,10 @@ export default function Products({route, navigation}) {
   const listHeaderComponent2 = () => {
     return (
       <View style={styles.header2}>
-        <StatusBar translucent barStyle="light-content" />
+        <StatusBar
+          translucent
+          barStyle={Platform.OS === 'ios' ? 'light-content' : 'dark-content'}
+        />
         <View style={{height: '80%'}}>
           <ImageBackground
             source={{
@@ -1263,9 +1266,9 @@ export default function Products({route, navigation}) {
                   style={{
                     ...styles.milesTxt,
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                    opacity: 0.8,
                     marginRight: moderateScale(40),
                     marginVertical: moderateScale(1),
+                    marginLeft: 0,
                   }}>
                   {categoryInfo?.categoriesList || ''}
                 </Text>
@@ -1527,7 +1530,7 @@ export default function Products({route, navigation}) {
                           fontFamily: fontFamily.medium,
                           marginTop: moderateScaleVertical(2),
                         }}>
-                        {!!categoryInfo?.categoriesList || ''}
+                        {categoryInfo?.categoriesList || ''}
                       </Text>
                     </View>
                   </View>

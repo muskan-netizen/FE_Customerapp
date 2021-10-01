@@ -1167,6 +1167,17 @@ android {
             applicationId 'com.punnet'
             resValue "string", "app_name", "Punnet"
             resValue "string", "host_name", ""
+          }
+        suel{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+             applicationId 'com.suel'
+            resValue "string", "app_name", "Suel"
+            resValue "string", "host_name", ""
+
          }
          homeric{
             dimension "appType"
@@ -1176,6 +1187,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.homeric'
             resValue "string", "app_name", "Homeric"
+            resValue "string", "host_name", ""  
+         }
+        gokab{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.gokab'
+            resValue "string", "app_name", "GoKab"
             resValue "string", "host_name", ""
          }
          voltaic{
@@ -1188,6 +1209,16 @@ android {
             resValue "string", "app_name", "Voltaic"
             resValue "string", "host_name", ""
          }
+        elixir{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            applicationId 'com.elixir'
+            resValue "string", "app_name", "Elixir"
+            resValue "string", "host_name", ""
+         }
          zest{
             dimension "appType"
             versionCode 1
@@ -1196,6 +1227,17 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.zest.customer'
             resValue "string", "app_name", "Zest"
+            resValue "string", "host_name", ""
+
+         }
+        ace{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ace'
+            resValue "string", "app_name", "Ace"
             resValue "string", "host_name", ""
          }
     }

@@ -147,6 +147,7 @@ export default ({themeColors, fontFamily}) =>
       paddingVertical: moderateScale(5),
       paddingLeft: moderateScale(15),
       justifyContent: 'center',
+      elevation: 0.9,
     },
     hdrNameRatingView: {
       flexDirection: 'row',

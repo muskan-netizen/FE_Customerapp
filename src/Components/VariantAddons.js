@@ -932,19 +932,6 @@ export default function VariantAddons({
                   }}>
                   {productdetail?.translation[0]?.title}
                 </Text>
-                <Text
-                  style={{
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.blackOpacity40,
-                    fontFamily: fontFamily.regular,
-                    fontSize: textScale(9),
-                    textAlign: 'left',
-                    marginBottom: moderateScaleVertical(4),
-                    marginTop: moderateScaleVertical(6),
-                  }}>
-                  In Category_name
-                </Text>
 
                 {/* rating View */}
                 {productDetailData?.averageRating !== null && (

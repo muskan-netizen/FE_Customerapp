@@ -101,6 +101,11 @@
     "homeric": "react-native run-android --variant=homericDebug --appIdSuffix=homeric",
     "voltaic": "react-native run-android --variant=voltaicDebug --appIdSuffix=voltaic",
     "zest": "react-native run-android --variant=zestDebug --appIdSuffix=zest",
+    "suel": "react-native run-android --variant=suelDebug --appIdSuffix=suel",
+    "gokab": "react-native run-android --variant=gokabDebug --appIdSuffix=gokab",
+    "elixir": "react-native run-android --variant=elixirDebug --appIdSuffix=elixir",
+    "ace": "react-native run-android --variant=aceDebug --appIdSuffix=ace",
+
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "bustanfakiehRelease": "cd android && ./gradlew assembleBustanFakiehRelease",
@@ -199,6 +204,11 @@
     "homericRelease": "cd android && ./gradlew assembleHomericRelease",
     "voltaicRelease": "cd android && ./gradlew assembleVoltaicRelease",
     "zestRelease": "cd android && ./gradlew assembleZestRelease",
+    "suelRelease": "cd android && ./gradlew assembleSuelRelease",
+    "gokabRelease": "cd android && ./gradlew assembleGoKabRelease",
+    "elixirRelease": "cd android && ./gradlew assembleElixirRelease",
+    "aceRelease": "cd android && ./gradlew assembleAceRelease",
+
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

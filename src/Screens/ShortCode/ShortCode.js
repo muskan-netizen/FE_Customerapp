@@ -674,6 +674,29 @@ export default function ShortCode({route, navigation}) {
         case appIds.zest:
           updateState({
             shortCode: shortCodes.zest,
+          });
+          break;
+        case appIds.gokab:
+          updateState({
+            shortCode: shortCodes.gokab,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.elixir:
+          updateState({
+            shortCode: shortCodes.elixir,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ace:
+          updateState({
+            shortCode: shortCodes.ace,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.suel:
+          updateState({
+            shortCode: shortCodes.suel,
             isShortcodePrefilled: true,
           });
           break;
