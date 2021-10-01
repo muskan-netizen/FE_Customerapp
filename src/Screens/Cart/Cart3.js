@@ -301,7 +301,7 @@ export default function Cart({navigation, route}) {
       )
       .then((res) => {
         actions.cartItemQty(res);
-
+        console.log(res, "cart details>>>")
         updateState({
           isRefreshing: false,
           isLoadingB: false,
