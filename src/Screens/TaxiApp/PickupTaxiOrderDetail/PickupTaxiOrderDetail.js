@@ -39,7 +39,10 @@ import useInterval from '../../../utils/useInterval';
 import {cloneDeep} from 'lodash';
 import BottomViewModal from '../../../Components/BottomViewModal';
 import FastImage from 'react-native-fast-image';
-import {moderateScale} from '../../../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+} from '../../../styles/responsiveSize';
 import StarRating from 'react-native-star-rating';
 
 const ASPECT_RATIO = width / height;
@@ -349,6 +352,12 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       isVisible: false,
     });
   };
+  const rateYourOrder = (item) => {
+    updateState({
+      isVisible: false,
+    });
+    navigation.navigate(navigationStrings.RATEORDER, {item});
+  };
   const _ModalMainView = () => (
     <View
       style={{
@@ -365,10 +374,10 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                 }}>
                 <FastImage
                   style={{
-                    height: moderateScale(40),
-                    width: moderateScale(40),
+                    height: moderateScale(60),
+                    width: moderateScale(60),
                     alignSelf: 'center',
-                    borderRadius: 20,
+                    borderRadius: 30,
                   }}
                   source={{
                     uri: getImageUrl(
@@ -379,16 +388,23 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     priority: FastImage.priority.high,
                   }}
                 />
-                <StarRating
-                  disabled={false}
-                  maxStars={5}
-                  rating={item?.product_rating?.rating}
-                  selectedStar={(rating) => onStarRatingPress(item, rating)}
-                  fullStarColor={colors.ORANGE}
-                  starSize={20}
-                />
+                <View style={{marginTop: moderateScaleVertical(10)}}>
+                  <StarRating
+                    disabled={false}
+                    maxStars={5}
+                    rating={item?.product_rating?.rating}
+                    selectedStar={(rating) => onStarRatingPress(item, rating)}
+                    fullStarColor={colors.ORANGE}
+                    starSize={30}
+                  />
+                </View>
                 {!!item?.product_rating && (
-                  <Text onPress={() => rateYourOrder(item)}>
+                  <Text
+                    style={{
+                      marginVertical: moderateScaleVertical(10),
+                      textAlign: 'center',
+                    }}
+                    onPress={() => rateYourOrder(item)}>
                     {strings.WRITE_A_REVIEW}
                   </Text>
                 )}
@@ -533,7 +549,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
 
             <View style={styles.topView}>
               {/* <TouchableOpacity
-                style={[
+                style={[z
                   styles.backButtonView,
                   {
                     backgroundColor: isDarkMode

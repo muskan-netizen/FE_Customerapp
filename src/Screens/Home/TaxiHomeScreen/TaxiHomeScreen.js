@@ -96,7 +96,6 @@ export default function TaxiHomeScreen({route, navigation}) {
 
   useEffect(() => {
     updateState({updatedData: appMainData?.categories});
-    console.log(appMainData, 'appMainData');
   }, [appMainData]);
 
   useEffect(() => {
@@ -558,12 +557,8 @@ export default function TaxiHomeScreen({route, navigation}) {
   };
   // console.log(appMainData, 'appMainData');
   return (
-    <WrapperContainer
-      statusBarColor={colors.backgroundGrey}
-      bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-      }>
+    <>
       <View style={{flex: 1}}>{renderHomeScreen()}</View>
-    </WrapperContainer>
+    </>
   );
 }

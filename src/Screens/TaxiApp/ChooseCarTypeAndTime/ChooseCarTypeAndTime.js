@@ -26,6 +26,7 @@ import strings from '../../../constants/lang';
 import PaymentProcessingModal from '../../CourierService/PaymentProcessingModal';
 import {BlurView} from '@react-native-community/blur';
 import {useFocusEffect} from '@react-navigation/native';
+import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -558,6 +559,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     <View style={styles.container}>
       <MapView
         //   provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+
         style={styles.map}
         region={region}
         initialRegion={region}

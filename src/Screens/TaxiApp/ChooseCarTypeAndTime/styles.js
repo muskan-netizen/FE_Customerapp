@@ -109,8 +109,8 @@ export default ({fontFamily, themeColors}) => {
       textAlign: 'center',
     },
     carType: {
-      fontSize: textScale(14),
-      color: colors.blackC,
+      fontSize: textScale(12),
+      color: colors.black,
       fontFamily: fontFamily.bold,
     },
     carType2: {

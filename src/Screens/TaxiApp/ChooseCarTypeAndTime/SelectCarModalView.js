@@ -75,7 +75,7 @@ export default function SelectCarModalView({
             paddingVertical: moderateScaleVertical(20),
             paddingHorizontal: moderateScale(10),
             borderRadius: moderateScale(12),
-            marginBottom: moderateScaleVertical(20),
+            marginBottom: moderateScaleVertical(10),
             borderColor:
               selectedCarOption?.id == item?.id
                 ? 'transparent'
@@ -128,7 +128,7 @@ export default function SelectCarModalView({
               <View>
                 <Image
                   resizeMode={'contain'}
-                  style={{height: 60, width: 100}}
+                  style={{height: 40, width: 100}}
                   source={{
                     uri: getImageUrl(
                       item?.media[0]?.image?.path?.image_fit,
@@ -247,14 +247,14 @@ export default function SelectCarModalView({
       <View style={{padding: moderateScale(20)}}>
         {/* <Text style={styles.addressMainTitle}>{addressLabel}</Text> */}
 
-        <Text
+        {/* <Text
           style={
             isDarkMode
               ? [styles.chooseSuitable, {color: MyDarkTheme.colors.text}]
               : styles.chooseSuitable
           }>
           {strings.CHOSSESUITABLECAR}
-        </Text>
+        </Text> */}
         {availableVendors.length > 1 ? (
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {availableVendors.map((i, inx) => {

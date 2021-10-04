@@ -94,6 +94,7 @@ export default function HomeScreenTaxi({navigation, route}) {
   const businessType = appData?.profile?.preferences?.business_type;
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const updateState = (data) => setState((state) => ({...state, ...data}));
+  const userData = useSelector((state) => state.auth.userData);
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
@@ -227,7 +228,11 @@ export default function HomeScreenTaxi({navigation, route}) {
     (screenName, data = {}) =>
     () => {
       const data = appMainData?.categories[0];
-      navigation.navigate(screenName, {data});
+      {
+        userData?.auth_token
+          ? navigation.navigate(screenName, {data})
+          : navigation.navigate(navigationStrings.LOGIN);
+      }
     };
 
   const _modalClose = () => {
@@ -468,10 +473,11 @@ export default function HomeScreenTaxi({navigation, route}) {
           </TouchableOpacity>
         )}
       </View>
-
-      <View style={styles.userAccountImageStyle}>
-        <Image source={imagePath.taxiUserAccount} />
-      </View>
+      {businessType === 'taxi' ? null : (
+        <View style={styles.userAccountImageStyle}>
+          <Image source={imagePath.taxiUserAccount} />
+        </View>
+      )}
 
       <View
         style={{

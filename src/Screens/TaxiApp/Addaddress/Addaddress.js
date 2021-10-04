@@ -125,12 +125,6 @@ export default function Addaddress({navigation, route}) {
     del,
   } = state;
 
-  useFocusEffect(
-    React.useCallback(() => {
-      getAllAddress();
-    }, [allSavedAddress]),
-  );
-
   useEffect(() => {
     if (paramData?.data?.pickuplocationAllData != undefined) {
       updateState({
@@ -148,6 +142,7 @@ export default function Addaddress({navigation, route}) {
         dropOffLocationAddressData: paramData?.data.pickuplocationAllData[1],
       });
     }
+    getAllAddress();
   }, [paramData]);
 
   //get All address
@@ -410,35 +405,21 @@ export default function Addaddress({navigation, route}) {
     return (
       <>
         <View style={{height: 40, overflow: 'hidden', alignItems: 'center'}}>
-          {dot.map((item, index) => {
-            return (
-              <View
-                style={[
-                  styles.dots,
-                  {
-                    backgroundColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.blackB,
-                  },
-                ]}></View>
-            );
-          })}
+          <View
+            style={{
+              height: 40,
+              width: 0.5,
+              backgroundColor: colors.textGreyLight,
+            }}
+          />
         </View>
-        {showDropOfTwo ? (
-          <Image
-            style={{
-              tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            }}
-            source={imagePath.icLocation1}
-          />
-        ) : (
-          <Image
-            style={{
-              tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            }}
-            source={imagePath.icLocation1}
-          />
-        )}
+
+        <Image
+          style={{
+            tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          }}
+          source={imagePath.blackSquare}
+        />
       </>
     );
   };
@@ -500,16 +481,11 @@ export default function Addaddress({navigation, route}) {
             justifyContent: 'center',
           }}>
           <Image
-            style={
-              isDarkMode
-                ? {
-                    height: 25,
-                    width: 25,
-                    tintColor: MyDarkTheme.colors.text,
-                  }
-                : {height: 25, width: 25, tintColor: colors.blackB}
-            }
-            source={imagePath.locationPin}
+            style={{
+              height: 25,
+              width: 25,
+            }}
+            source={imagePath.blackNav}
           />
         </TouchableOpacity>
       </>
@@ -646,8 +622,10 @@ export default function Addaddress({navigation, route}) {
                   flex: 0.3,
                   zIndex: -1000,
                   // height: getHeight(),
+                  marginTop: moderateScaleVertical(8),
+                  alignItems: 'center',
                 }}>
-                <Image source={imagePath.icRedOval} />
+                <Image source={imagePath.grayDot} />
                 {renderDotContainer()}
                 {showDropOfTwo ? renderDotContainer() : null}
               </View>
@@ -738,7 +716,6 @@ export default function Addaddress({navigation, route}) {
                     height: 0.5,
                     width: width - 100,
                     marginLeft: moderateScale(40),
-                    marginTop: moderateScaleVertical(5),
                   }}
                 />
               </View>
@@ -748,7 +725,6 @@ export default function Addaddress({navigation, route}) {
                 style={{
                   height: 48,
                   alignItems: 'center',
-                  marginTop: moderateScaleVertical(10),
                 }}>
                 <GooglePlaceInput
                   selectionColor={themeColors.primary_color}
@@ -835,16 +811,11 @@ export default function Addaddress({navigation, route}) {
             <View style={{position: 'absolute', end: 28, top: 27}}>
               <TouchableOpacity onPress={() => _moveToNextScreen()}>
                 <Image
-                  style={
-                    isDarkMode
-                      ? {
-                          height: 25,
-                          width: 25,
-                          tintColor: MyDarkTheme.colors.text,
-                        }
-                      : {height: 25, width: 25, tintColor: colors.blackB}
-                  }
-                  source={imagePath.locationPin}
+                  style={{
+                    height: 25,
+                    width: 25,
+                  }}
+                  source={imagePath.blackNav}
                 />
               </TouchableOpacity>
             </View>
@@ -853,11 +824,17 @@ export default function Addaddress({navigation, route}) {
           {/* <View style={{flex: 0.7, zIndex: -1000}}> */}
           <ScrollView
             showsVerticalScrollIndicator={false}
+            horizontal={false}
+            scrollEnabled={false}
             keyboardShouldPersistTaps={'handled'}
             style={[styles.modalMainViewContainer]}>
             {!!(allSavedAddress && allSavedAddress.length) ? (
               <>
                 <View style={styles.savedAddressView}>
+                  <Image
+                    style={{marginHorizontal: moderateScale(12)}}
+                    source={imagePath.starRoundedBackground}
+                  />
                   <Text
                     numberOfLines={1}
                     style={
@@ -869,28 +846,6 @@ export default function Addaddress({navigation, route}) {
                         : styles.addresssLableName
                     }>
                     {strings.SAVED_LOCATIONS}
-                  </Text>
-                  <TouchableOpacity onPress={() => _setModalVisiblity()}>
-                    <Text numberOfLines={1} style={styles.savedAddressText}>
-                      {strings.SAVED_NEW_PLACE}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-
-                {addressView(imagePath.savedLocationImage)}
-
-                <View style={styles.savedAddressView}>
-                  <Text
-                    numberOfLines={1}
-                    style={
-                      isDarkMode
-                        ? [
-                            styles.addresssLableName,
-                            {color: MyDarkTheme.colors.text},
-                          ]
-                        : styles.addresssLableName
-                    }>
-                    {strings.RECENT_LOCATIONS}
                   </Text>
                 </View>
 

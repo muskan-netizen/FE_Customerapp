@@ -47,6 +47,8 @@ import actions from '../../../redux/actions';
 import BottomViewModal from '../../../Components/BottomViewModal';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
+import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
+import TaxiBannerHome from '../../../Components/TaxiBannerHome';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => {},
@@ -69,12 +71,7 @@ export default function TaxiHomeDashbord({
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
-    homeCategoryData: [
-      {id: 1, categoryImage: imagePath.car5, categoryName: 'Ride'},
-      {id: 2, categoryImage: imagePath.ic_package1, categoryName: 'Package'},
-      {id: 3, categoryImage: imagePath.car5, categoryName: 'Rentals'},
-      {id: 4, categoryImage: imagePath.car5, categoryName: 'Intercity'},
-    ],
+
     region: {
       latitude: 30.7191,
       longitude: 76.8107,
@@ -112,8 +109,6 @@ export default function TaxiHomeDashbord({
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const newCategoryAry = [...appMainData?.categories];
 
-  console.log(appMainData?.categories, 'appMainData');
-
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
@@ -135,8 +130,8 @@ export default function TaxiHomeDashbord({
         },
       )
       .then((res) => {
-        console.log(res, 'all address');
         // actions.saveAllUserAddress(res.data);
+        console.log(res, 'res?>>>>>>>>>>>>>>');
         updateState({
           allSavedAddress: res.data,
           isLoading: false,
@@ -150,9 +145,6 @@ export default function TaxiHomeDashbord({
   };
 
   const continueWithNaxtScreen = (item) => {
-    updateState({
-      isVisible: false,
-    });
     onPressCategory(item);
   };
 
@@ -162,70 +154,130 @@ export default function TaxiHomeDashbord({
     });
   };
 
+  console.log(appMainData?.categories, 'appMainData?.categories');
+
   const _renderItem = ({item}) => {
     return (
-      <HomeCategoryCard2
+      <TaxiHomeCategoryCard
         data={item}
         onPress={() => continueWithNaxtScreen(item)}
       />
     );
   };
 
-  const _ModalMainView = () => (
-    <View
-      style={{
-        height: height / 5,
-        backgroundColor: colors.white,
-      }}>
-      <Text />
-      <FlatList
-        numColumns={4}
-        data={appMainData?.categories}
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item) => item.id.toString()}
-        ItemSeparatorComponent={() => {
-          return <View style={{height: moderateScaleVertical(20)}}></View>;
-        }}
-        renderItem={_renderItem}
-      />
-    </View>
-  );
-
   const addressView = (image) => {
     return (
       allSavedAddress &&
       allSavedAddress.map((itm, inx) => {
-        console.log(itm, 'saved Address');
         return (
           <ScrollView
             keyboardShouldPersistTaps={'handled'}
-            style={{width: width - 40}}>
+            style={{width: width}}>
             <TouchableOpacity
               key={inx}
               style={{
-                marginTop: moderateScaleVertical(10),
                 flexDirection: 'row',
                 alignItems: 'center',
                 paddingVertical: 10,
-                marginHorizontal: moderateScale(10),
+                justifyContent: 'space-between',
+                marginLeft: moderateScale(20),
+                width: width - 20,
               }}
-              onPress={() => {
-                updateState({
-                  isVisible: true,
-                });
-              }}>
-              <View>
-                <Image source={image} />
+              onPress={moveToNewScreen(
+                navigationStrings.ADDADDRESS,
+                appMainData?.categories[0],
+              )}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  paddingVertical: 10,
+                }}>
+                <View>
+                  <Image source={image} />
+                </View>
+                <View style={{marginHorizontal: moderateScale(10)}}>
+                  <Text numberOfLines={2} style={[styles.addressTitle]}>
+                    {itm?.street}
+                  </Text>
+                  <Text numberOfLines={2} style={[styles.address]}>
+                    {itm?.address}
+                  </Text>
+                </View>
               </View>
-              <View style={{marginHorizontal: moderateScale(10)}}>
-                <Text numberOfLines={2} style={[styles.address]}>
-                  {itm?.address}
-                </Text>
-              </View>
+              <Image
+                style={{
+                  tintColor: colors.textGreyLight,
+                  marginRight: moderateScale(20),
+                }}
+                source={imagePath.goRight}
+              />
             </TouchableOpacity>
+            <View
+              style={{
+                backgroundColor: getColorCodeWithOpactiyNumber(
+                  colors.textGreyLight.substr(1),
+                  40,
+                ),
+                width: width / 1.2,
+                marginLeft: moderateScale(60),
+                height: 0.5,
+              }}></View>
           </ScrollView>
         );
       })
+    );
+  };
+  const savedPlaceView1 = (image) => {
+    return (
+      <ScrollView keyboardShouldPersistTaps={'handled'} style={{width: width}}>
+        <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingVertical: 10,
+            justifyContent: 'space-between',
+            marginLeft: moderateScale(20),
+            width: width - 20,
+          }}
+          onPress={moveToNewScreen(
+            navigationStrings.ADDADDRESS,
+            appMainData?.categories[0],
+          )}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingVertical: 10,
+            }}>
+            <View>
+              <Image source={image} />
+            </View>
+            <View style={{marginHorizontal: moderateScale(10)}}>
+              <Text numberOfLines={2} style={[styles.address]}>
+                {strings.CHOOSESAVEDPLACE}
+              </Text>
+            </View>
+          </View>
+          <Image
+            style={{
+              tintColor: colors.textGreyLight,
+              marginRight: moderateScale(20),
+            }}
+            source={imagePath.goRight}
+          />
+        </TouchableOpacity>
+        <View
+          style={{
+            backgroundColor: getColorCodeWithOpactiyNumber(
+              colors.textGreyLight.substr(1),
+              40,
+            ),
+            width: width / 1.2,
+            marginLeft: moderateScale(60),
+            height: 0.5,
+          }}></View>
+      </ScrollView>
     );
   };
 
@@ -244,12 +296,12 @@ export default function TaxiHomeDashbord({
       showsVerticalScrollIndicator={false}
       style={{flex: 1, marginHorizontal: moderateScale(3)}}>
       <>
-        <BannerHome
+        <TaxiBannerHome
           bannerRef={bannerRef}
           slider1ActiveSlide={slider1ActiveSlide}
-          bannerData={appData?.banners}
-          sliderWidth={sliderWidth}
-          itemWidth={itemWidth}
+          bannerData={[appData?.banners[0]]}
+          sliderWidth={sliderWidth + 20}
+          itemWidth={itemWidth + 20}
           onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
           onPress={(item) => bannerPress(item)}
         />
@@ -267,22 +319,23 @@ export default function TaxiHomeDashbord({
         renderItem={_renderItem}
       />
       <TouchableOpacity
-        onPress={() => {
-          updateState({
-            isVisible: true,
-          });
-        }}>
+        onPress={moveToNewScreen(
+          navigationStrings.ADDADDRESS,
+          appMainData?.categories[0],
+        )}>
         <View
           style={{
             marginHorizontal: moderateScale(10),
             height: moderateScaleVertical(40),
             backgroundColor: getColorCodeWithOpactiyNumber(
-              colors.textGreyLight.substr(1),
-              40,
+              colors.taxiCategoryGrayColor.substr(1),
+              30,
             ),
             flexDirection: 'row',
             alignItems: 'center',
             paddingHorizontal: moderateScale(10),
+            justifyContent: 'space-between',
+            marginTop: moderateScaleVertical(5),
           }}>
           <Text
             style={{
@@ -292,6 +345,28 @@ export default function TaxiHomeDashbord({
             }}>
             {strings.WHERETO}
           </Text>
+          <View
+            style={{
+              backgroundColor: colors.white,
+              width: moderateScale(80),
+              height: moderateScaleVertical(26),
+              borderRadius: 20,
+              justifyContent: 'space-around',
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingHorizontal: moderateScale(5),
+            }}>
+            <Image source={imagePath.clock} />
+            <Text>{strings.NOW}</Text>
+            <Image
+              style={{
+                transform: [{rotate: '90deg'}],
+                height: moderateScaleVertical(8),
+                width: moderateScale(8),
+              }}
+              source={imagePath.goRight}
+            />
+          </View>
         </View>
       </TouchableOpacity>
       <View
@@ -300,14 +375,14 @@ export default function TaxiHomeDashbord({
           marginHorizontal: moderateScale(20),
           marginVertical: moderateScaleVertical(20),
         }}>
-        {addressView(imagePath.savedLocationImage)}
+        {addressView(imagePath.locationRoundedBackground)}
+        {savedPlaceView1(imagePath.starRoundedBackground)}
       </View>
 
       <View style={{marginHorizontal: moderateScale(20)}}>
         <Text
           style={{
             fontSize: textScale(14),
-            marginVertical: moderateScaleVertical(20),
             fontFamily: fontFamily.medium,
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           }}>
@@ -319,29 +394,25 @@ export default function TaxiHomeDashbord({
             height: height / 4,
             width: width - 50,
             borderRadius: 12,
+            marginTop: moderateScaleVertical(20),
           }}>
           <MapView
             ref={mapRef}
-            //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            customMapStyle={mapStyleGrey}
             style={{
               ...StyleSheet.absoluteFillObject,
               borderRadius: 12,
             }}
+            // provider={MapView.PROVIDER_GOOGLE}
             region={region}
             initialRegion={region}
-            customMapStyle={mapStyleGrey}
             showsUserLocation={true}
-            showsMyLocationButton={true}
+            //showsMyLocationButton={true}
             // pointerEvents={'none'}
           ></MapView>
         </View>
       </View>
-
-      <BottomViewModal
-        show={isVisible}
-        mainContainView={_ModalMainView}
-        closeModal={_modalClose}
-      />
 
       <View style={{height: moderateScaleVertical(65)}} />
     </ScrollView>

@@ -68,9 +68,6 @@ export default function ({
   console.log(totalDuration, 'totalDuration');
 
   //give review and update the rate
-  const rateYourOrder = (item) => {
-    navigation.navigate(navigationStrings.RATEORDER, {item});
-  };
 
   return (
     <>
@@ -200,20 +197,7 @@ export default function ({
                   ) : null}
                 </View>
               </View>
-              <View>
-                <Image source={imagePath.car3} />
-                <Text
-                  style={{
-                    marginHorizontal: moderateScale(5),
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.lightgray,
-                  }}>
-                  {selectedCarOption}
-                </Text>
-              </View>
             </View>
-
             {agent_location && (
               <View
                 style={{

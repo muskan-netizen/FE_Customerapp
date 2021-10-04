@@ -19,6 +19,7 @@ import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
+import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
@@ -183,7 +184,7 @@ export default function RateOrder({navigation, route}) {
       })
       .then((res) => {
         updateState({isLoading: false});
-        navigation.goBack();
+        navigation.navigate(navigationStrings.ADDADDRESS);
       })
       .catch(errorMethod);
   };

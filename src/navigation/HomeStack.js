@@ -47,10 +47,10 @@ export default function () {
       <Stack.Screen
         name={
           businessType === 'taxi'
-            ? navigationStrings.HOMESCREENTAXI
+            ? navigationStrings.TAXIHOMESCREEN
             : navigationStrings.HOMESTACK
         }
-        component={businessType === 'taxi' ? HomeScreenTaxi : Home}
+        component={businessType === 'taxi' ? TaxiHomeScreen : Home}
         options={{headerShown: false}}
       />
 

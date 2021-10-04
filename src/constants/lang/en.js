@@ -534,4 +534,5 @@ Amount`,
   WRITE_REVIEW: 'Write a Review',
   PASTRIDES: 'Past Rides',
   ACTIVERIDES: 'Active Rides',
+  CHOOSESAVEDPLACE: 'Choose a saved place',
 };

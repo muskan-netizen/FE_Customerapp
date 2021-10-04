@@ -8,6 +8,7 @@
 #import "RNSplashScreen.h"  // here
 #import <React/RCTLinkingManager.h> //deeplinking
 #import <Firebase.h>
+#import <GoogleMaps/GoogleMaps.h>
 @import GooglePlaces;
 @import GoogleMaps;
 // AppDelegate.m
