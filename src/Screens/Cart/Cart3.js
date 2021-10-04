@@ -2596,7 +2596,7 @@ export default function Cart({navigation, route}) {
                 date={
                   sheduledorderdate ? new Date(sheduledorderdate) : new Date()
                 }
-                textColor={isDarkMode ? '#fff' : colors.blackB}
+                textColor={isDarkMode ? colors.white : colors.blackB}
                 mode="datetime"
                 minimumDate={new Date()}
                 maximumDate={undefined}
