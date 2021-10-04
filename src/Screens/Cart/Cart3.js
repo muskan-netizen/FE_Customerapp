@@ -1859,7 +1859,7 @@ export default function Cart({navigation, route}) {
           </View>
         ) : null} */}
 
-        {  !!cartData?.deliver_status && (
+        {!!cartData?.deliver_status && (
           <View
             pointerEvents={placeLoader ? 'none' : 'auto'}
             style={styles.paymentView}>
@@ -2034,18 +2034,13 @@ export default function Cart({navigation, route}) {
   };
 
   const onDateChange = (value) => {
-    const options = {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    };
-
     updateState({
       sheduledorderdate: value,
-      localeSheduledOrderDate: `${value.toLocaleDateString(
-        selectedLanguage,
-        options,
-      )}, ${value.toLocaleTimeString(selectedLanguage, {
+      localeSheduledOrderDate: `${value.toLocaleDateString(selectedLanguage, {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      })}, ${value.toLocaleTimeString(selectedLanguage, {
         hour: '2-digit',
         minute: '2-digit',
       })}`,
