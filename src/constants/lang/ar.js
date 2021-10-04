@@ -533,4 +533,5 @@ export default {
   PICKUP: 'PICKUP',
   ALREADY_EXIST:
     'Your already have items in your cart. Do you want to discard them?',
+  YOUR_EMAIL_PHONE: 'Your Email or Phone Number',
 };
