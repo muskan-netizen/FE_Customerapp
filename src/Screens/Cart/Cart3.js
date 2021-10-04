@@ -111,6 +111,7 @@ export default function Cart({navigation, route}) {
     wishlistArray: [],
     btnLoader: false,
     placeLoader: false,
+    localeSheduledOrderDate: null,
   });
   const {
     viewHeight,
@@ -140,6 +141,7 @@ export default function Cart({navigation, route}) {
     wishlistArray,
     btnLoader,
     placeLoader,
+    localeSheduledOrderDate,
   } = state;
 
   //Redux store data
@@ -1857,18 +1859,16 @@ export default function Cart({navigation, route}) {
           </View>
         ) : null} */}
 
-        {!!cartData?.deliver_status && (
+        {  !!cartData?.deliver_status && (
           <View
             pointerEvents={placeLoader ? 'none' : 'auto'}
             style={styles.paymentView}>
-            {userData && (
+            {userData?.auth_token && (
               <ButtonComponent
                 onPress={_selectTime}
                 btnText={
-                  sheduledorderdate && scheduleType
-                    ? `${moment(sheduledorderdate).format(
-                        'DD MMM, YYYY HH:mm',
-                      )}`
+                  localeSheduledOrderDate
+                    ? localeSheduledOrderDate
                     : strings.SCHEDULE_ORDER
                 }
                 borderRadius={moderateScale(13)}
@@ -2034,10 +2034,30 @@ export default function Cart({navigation, route}) {
   };
 
   const onDateChange = (value) => {
+    const options = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    };
+
     updateState({
       sheduledorderdate: value,
+      localeSheduledOrderDate: `${value.toLocaleDateString(
+        selectedLanguage,
+        options,
+      )}, ${value.toLocaleTimeString(selectedLanguage, {
+        hour: '2-digit',
+        minute: '2-digit',
+      })}`,
     });
   };
+
+  // console.log(
+  //   moment(selectOrderDate)
+  //     .format('DD MMM, YYYY HH:mm')
+  //     .toLocaleDateString('fr-FR'),
+  //   'djkjfjdfkdkj',
+  // );
 
   useEffect(() => {
     if (!!checkCartItem?.data) {

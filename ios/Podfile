@@ -1218,8 +1218,8 @@ target 'Elixir' do
 
 end
 
-#Gokab Target
-target 'Gokab' do
+#GoKab Target
+target 'GoKab' do
   permissions_path = '../node_modules/react-native-permissions/ios'
   config = use_native_modules!
   use_react_native!(:path => config["reactNativePath"])
