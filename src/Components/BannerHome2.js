@@ -29,9 +29,9 @@ const BannerHome2 = ({
       ? getImageUrl(
         item.image.path.image_fit,
         item.image.path.image_path,
-        '400/200',
+        '900/700',
       )
-      : getImageUrl(item.image.image_fit, item.image.image_path, '400/200');
+      : getImageUrl(item.image.image_fit, item.image.image_path, '900/700');
 
     return (
       <TouchableOpacity
