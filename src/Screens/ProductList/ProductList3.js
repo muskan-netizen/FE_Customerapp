@@ -1172,10 +1172,15 @@ export default function Products({route, navigation}) {
               <View style={styles.hdrCompHeader}>
                 <TouchableOpacity
                   hitSlop={styles.hitSlopProp}
-                  onPress={() => navigation.goBack()}>
+                  onPress={() => navigation.goBack()}
+                  style={{flex: 0.2}}>
                   <Image
                     source={imagePath.icBackb}
-                    style={{tintColor: colors.white}}
+                    style={{
+                      marginLeft: moderateScale(10),
+                      tintColor: colors.white,
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    }}
                   />
                 </TouchableOpacity>
                 <FastImage
@@ -1194,10 +1199,7 @@ export default function Products({route, navigation}) {
                   style={styles.hdrCompRoundImg}
                 />
 
-                <View
-                  style={{
-                    ...styles.rightViewOfShareSearch,
-                  }}>
+                <View style={styles.rightViewOfShareSearch}>
                   <TouchableOpacity activeOpacity={0.8}>
                     <Image
                       style={{

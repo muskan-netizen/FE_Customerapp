@@ -382,7 +382,6 @@ export default function Settings({route, navigation}) {
         }
         itemStyle={{
           justifyContent: 'flex-start',
-          flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
         }}
         dropDownStyle={{
           backgroundColor: isDarkMode
@@ -435,10 +434,6 @@ export default function Settings({route, navigation}) {
         }}
         itemStyle={{
           justifyContent: 'flex-start',
-          flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-        }}
-        labelStyle={{
-          textAlign: I18nManager.isRTL ? 'right' : 'left',
         }}
         labelStyle={
           isDarkMode

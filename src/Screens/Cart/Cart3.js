@@ -2603,7 +2603,6 @@ export default function Cart({navigation, route}) {
                 style={styles.datetimePickerText}
                 // onDateChange={setDate}
                 onDateChange={(value) => onDateChange(value)}
-                
               />
             </View>
           </ScrollView>
