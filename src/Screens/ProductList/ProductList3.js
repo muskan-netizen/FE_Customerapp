@@ -1482,7 +1482,7 @@ export default function Products({route, navigation}) {
               flexDirection: 'row',
               justifyContent: 'space-between',
               paddingHorizontal: moderateScale(15),
-              marginTop: StatusBarHeight,
+              marginTop: Platform.OS === 'ios' ? StatusBarHeight : 15,
             }}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <TouchableOpacity
