@@ -95,10 +95,14 @@ const shortCodes = {
   goody: '397840',
   grub: '2f3120',
   gusto: 'd1b1a0',
+  punnet: 'd2cca0',
+  homeric: 'c8fbba',
+  voltaic: 'd8473d',
+  zest: '6865aa',
   suel: '638bd1',
   gokab: 'fb78f0',
   elixir: 'fb78f0',
-
+  ace: '2d98b5',
 };
 
 const appIds = {
@@ -471,12 +475,28 @@ const appIds = {
     android: 'com.goody',
   }),
   grub: Platform.select({
-    ios: '  com.customer.grub',
+    ios: 'com.customer.grub',
     android: 'com.grub',
   }),
   gusto: Platform.select({
     ios: 'com.gusto',
     android: 'com.gusto',
+  }),
+  punnet: Platform.select({
+    ios: 'com.punnet',
+    android: 'com.punnet',
+  }),
+  homeric: Platform.select({
+    ios: 'com.homeric',
+    android: 'com.homeric',
+  }),
+  voltaic: Platform.select({
+    ios: 'com.voltaic',
+    android: 'com.voltaic',
+  }),
+  zest: Platform.select({
+    ios: 'com.zest.customer',
+    android: 'com.zest.customer',
   }),
   suel: Platform.select({
     ios: 'com.suel',
@@ -489,6 +509,10 @@ const appIds = {
   elixir: Platform.select({
     ios: 'com.elixir',
     android: 'com.elixir',
+  }),
+  ace: Platform.select({
+    ios: 'com.customer.ace',
+    android: 'com.ace',
   }),
 };
 

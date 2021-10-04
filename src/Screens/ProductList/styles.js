@@ -126,13 +126,17 @@ export default ({themeColors, fontFamily}) =>
       justifyContent: 'space-between',
       width: width - moderateScale(20),
       marginTop: StatusBarHeight + 5,
+      flex: 1,
     },
     hdrCompRoundImg: {
       height: moderateScale(70),
       width: moderateScale(70),
       borderRadius: 35,
     },
-    rightViewOfShareSearch: {flexDirection: 'row'},
+    rightViewOfShareSearch: {
+      flexDirection: 'row',
+      flex: 0.2,
+    },
     hdrAbsoluteView: {
       marginHorizontal: moderateScale(15),
       position: 'absolute',

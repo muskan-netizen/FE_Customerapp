@@ -58,18 +58,26 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
               : colors.greyColor,
           }}
           thumnailUrl={{
-            uri: getImageUrl(
-              data.image.image_fit,
-              data.image.image_path,
-              '40/40',
-            ),
+            uri: data?.icon
+              ? getImageUrl(data.icon.image_fit, data.icon.image_path, '40/40')
+              : getImageUrl(
+                  data.image.image_fit,
+                  data.image.image_path,
+                  '40/40',
+                ),
           }}
           originalUrl={{
-            uri: getImageUrl(
-              data.image.image_fit,
-              data.image.image_path,
-              '400/400',
-            ),
+            uri: data?.icon
+              ? getImageUrl(
+                  data.icon.image_fit,
+                  data.icon.image_path,
+                  '400/400',
+                )
+              : getImageUrl(
+                  data.image.image_fit,
+                  data.image.image_path,
+                  '400/400',
+                ),
           }}
           containerStyle={{borderRadius: moderateScale(10), width: '100%'}}
         />

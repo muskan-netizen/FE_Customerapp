@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1065930669250-4j3t5j34bbi0k8kc48m6tfksj3an012j.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1065930669250-4j3t5j34bbi0k8kc48m6tfksj3an012j</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1065930669250-abogdlcted3idnuan7vidnvv8e5ergmh.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDA9BtbPb4LF-ZL2DMVC6UAZJH5AHbGAes</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1065930669250</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.voltaic</string>
+	<key>PROJECT_ID</key>
+	<string>voltaic-e59be</string>
+	<key>STORAGE_BUCKET</key>
+	<string>voltaic-e59be.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1065930669250:ios:fd1657efef3bcc064d4f5b</string>
+</dict>
+</plist>

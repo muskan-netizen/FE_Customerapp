@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "756050024465",
+    "project_id": "ace-app-63db9",
+    "storage_bucket": "ace-app-63db9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:756050024465:android:492cff34fa3591083639b0",
+        "android_client_info": {
+          "package_name": "com.ace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "756050024465-csb4dmer8gnp560olguddg2taldnvmlo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ace",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "756050024465-m8892mp8vjq18a047ck4qr49sqicovu9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ace",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "756050024465-p6qdd5o0gqbrpl00p7d9sk1c9359cc8j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ace",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "756050024465-61o0allq2l27ke3dflcthocb2lnb3i9u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqUMRVmVwiOun0mn46eUH8R6OrP8FEntw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "756050024465-61o0allq2l27ke3dflcthocb2lnb3i9u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

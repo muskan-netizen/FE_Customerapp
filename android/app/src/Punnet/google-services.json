@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "437223220844",
+    "project_id": "punnet-cae9a",
+    "storage_bucket": "punnet-cae9a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437223220844:android:44baf3103a46db2cb41a49",
+        "android_client_info": {
+          "package_name": "com.punnet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "437223220844-5e5v2vhuc0ijq19lkeoisagbkj180org.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.punnet",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "437223220844-dhb1jpbundt5j5kgdmce8gc25jlild6f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.punnet",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "437223220844-oek5pactq4ad2071t45hre41a8qhb5i8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.punnet",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "437223220844-k5jdqu0u9nvunrbf3c3h9l1mo1mspv6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAj1MHOIcJt3-yRixUc9xDS3UZ50HpgMnY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "437223220844-k5jdqu0u9nvunrbf3c3h9l1mo1mspv6t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "437223220844-hg090h0cdcfhsgqcgbmsjpog44jnmpks.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.punnet"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

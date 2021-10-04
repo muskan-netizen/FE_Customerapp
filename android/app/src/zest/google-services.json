@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "223230619385",
+    "project_id": "zest-2e94e",
+    "storage_bucket": "zest-2e94e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223230619385:android:c4b351c3b68e1bb338fc28",
+        "android_client_info": {
+          "package_name": "com.zest.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223230619385-cn86lda2ctb751s8b78rlemks3peqj7n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zest.customer",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "223230619385-ggccirpmlpelhlc9e7n7ve4l96qd2arf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zest.customer",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "223230619385-gldpsl4t1h876sluukp6opr5b6q1psq9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zest.customer",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "223230619385-k940g5thp1nh9tbc1usl3vm1ledhv5pt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALciWmDV5sXZ4WivyJ2J67SEZ_31awAUI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "223230619385-k940g5thp1nh9tbc1usl3vm1ledhv5pt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "223230619385-d3j4i1u744pdk2onoo56og3eeje456ke.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.zest.customer"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -653,10 +653,27 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-        case appIds.suel:
+        case appIds.punnet:
           updateState({
-            shortCode: shortCodes.suel,
+            shortCode: shortCodes.punnet,
             isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.homeric:
+          updateState({
+            shortCode: shortCodes.homeric,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.voltaic:
+          updateState({
+            shortCode: shortCodes.voltaic,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.zest:
+          updateState({
+            shortCode: shortCodes.zest,
           });
           break;
         case appIds.gokab:
@@ -668,6 +685,18 @@ export default function ShortCode({route, navigation}) {
         case appIds.elixir:
           updateState({
             shortCode: shortCodes.elixir,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ace:
+          updateState({
+            shortCode: shortCodes.ace,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.suel:
+          updateState({
+            shortCode: shortCodes.suel,
             isShortcodePrefilled: true,
           });
           break;

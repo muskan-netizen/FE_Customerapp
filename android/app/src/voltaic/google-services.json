@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "1065930669250",
+    "project_id": "voltaic-e59be",
+    "storage_bucket": "voltaic-e59be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1065930669250:android:1923b2d1d9e675094d4f5b",
+        "android_client_info": {
+          "package_name": "com.voltaic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1065930669250-abogdlcted3idnuan7vidnvv8e5ergmh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.voltaic",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1065930669250-j4ktvffvvs06h691dvv9t8h1f2h3anop.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.voltaic",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "1065930669250-ji78noq62qh4hhe3vhedg4r5uqq9b1r5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.voltaic",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "1065930669250-cov2pv73jk39c3j5f0bgid7b8piirvac.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjasPg7HF2hN2VRZbBkBF58yCNNOzBbaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1065930669250-cov2pv73jk39c3j5f0bgid7b8piirvac.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1065930669250-4j3t5j34bbi0k8kc48m6tfksj3an012j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.voltaic"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
