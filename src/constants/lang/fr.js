@@ -559,4 +559,5 @@ montant`,
   SEAT_CAPACITY: 'Seat Capacity',
   WRITE_REVIEW: 'Write a Review',
   PICKUP: 'PICKUP',
+  YOUR_EMAIL_PHONE: 'Your Email or Phone Number',
 };

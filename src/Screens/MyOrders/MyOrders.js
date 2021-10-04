@@ -220,6 +220,7 @@ export default function MyOrders({navigation}) {
   };
 
   const returnYourOrder = (item) => {
+    console.log('hhdhsdshdshdh');
     console.log(item, 'item>item>');
     updateState({isLoading: true});
     actions
@@ -624,7 +625,7 @@ export default function MyOrders({navigation}) {
                                       ]
                                     : [styles.priceItemLabel2, {opacity: 0.8}]
                                 }>
-                                {item?.product_name}
+                                {item?.translation?.title}
                               </Text>
                             </View>
 
