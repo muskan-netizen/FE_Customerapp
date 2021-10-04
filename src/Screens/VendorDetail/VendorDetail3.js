@@ -157,10 +157,10 @@ export default function VendorDetail3({navigation, route}) {
           id: item.id,
           rootProducts: vendorParams?.rootProducts,
           vendor: vendorParams?.rootProducts ? true : false,
-
           vendorData: vendorParams?.item,
           categoryInfo: item,
           name: item.name,
+          isVendorList: false,
         })}
         // onPress={() => navigation.navigate(navigationStrings.PRODUCT_LIST)}
         data={item}

@@ -1464,6 +1464,8 @@ export default function Products({route, navigation}) {
     (!!categoryInfo?.translation &&
       categoryInfo?.translation[0]?.meta_description);
 
+  console.log(data, 'is_show_category');
+
   return (
     <View
       style={{
@@ -1474,7 +1476,87 @@ export default function Products({route, navigation}) {
         // paddingVertical: moderateScale(16),
       }}>
       <View style={{flex: 1}}>
-        {AnimatedHeaderValue &&
+        {!data.isVendorList && (
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingHorizontal: moderateScale(15),
+              marginTop: StatusBarHeight,
+            }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.goBack()}
+                hitSlop={styles.hitSlopProp}>
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                  }}
+                  source={imagePath.icBackb}
+                />
+              </TouchableOpacity>
+              <Text
+                numberOfLines={1}
+                style={{
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity86,
+                  fontSize: moderateScale(14),
+                  fontFamily: fontFamily.bold,
+                  marginLeft: moderateScale(15),
+                }}>
+                {name}
+              </Text>
+            </View>
+
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => updateState({isSearch: true})}
+                onPress={moveToNewScreen(
+                  navigationStrings.SEARCHPRODUCTOVENDOR,
+                  {
+                    type: data?.vendor
+                      ? staticStrings.VENDOR
+                      : staticStrings.CATEGORY,
+                    id: data?.vendor ? data?.id : productListId?.id,
+                  },
+                )}>
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    marginRight: moderateScale(15),
+                  }}
+                  source={imagePath.icSearchb}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={onShare}
+                hitSlop={hitSlopProp}
+                activeOpacity={0.8}>
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                  }}
+                  source={imagePath.icShareb}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+
+        {data.isVendorList &&
+          AnimatedHeaderValue &&
           !!productListData &&
           productListData.length > 0 && (
             <View style={styles.headerStyle}>
@@ -1610,7 +1692,6 @@ export default function Products({route, navigation}) {
               )}
             </View>
           )}
-
         {/* <View style={{height: moderateScale(10)}} /> */}
         <FlatList
           onScroll={onScroll}
@@ -1618,7 +1699,13 @@ export default function Products({route, navigation}) {
           showsVerticalScrollIndicator={false}
           data={(!isLoading && productListData) || []}
           renderItem={renderProduct}
-          ListHeaderComponent={listHeaderComponent2()}
+          ListHeaderComponent={
+            data?.isVendorList ? (
+              listHeaderComponent2()
+            ) : (
+              <View style={{height: 20}} />
+            )
+          }
           keyExtractor={(item, index) => String(index)}
           keyboardShouldPersistTaps="always"
           showsVerticalScrollIndicator={false}

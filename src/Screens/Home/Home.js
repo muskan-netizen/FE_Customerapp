@@ -425,6 +425,7 @@ export default function Home({route, navigation}) {
             id: item?.id,
             vendor: true,
             name: item?.name,
+            isVendorList: true,
           })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();

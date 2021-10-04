@@ -161,6 +161,7 @@ export default ({themeColors, fontFamily}) =>
       fontFamily: fontFamily.bold,
       fontSize: textScale(16),
       flex: 0.9,
+      textAlign: 'left',
     },
     hdrRatingTxtView: {
       flexDirection: 'row',
@@ -193,5 +194,6 @@ export default ({themeColors, fontFamily}) =>
       color: colors.black,
       opacity: 0.4,
       marginLeft: moderateScale(5),
+      textAlign: 'left',
     },
   });
