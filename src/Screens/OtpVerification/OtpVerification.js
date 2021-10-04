@@ -9,6 +9,8 @@ import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
+import AsyncStorage from '@react-native-community/async-storage';
+import DeviceInfo from 'react-native-device-info';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -22,13 +24,17 @@ import {
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
 
-export default function OtpVerification({navigation}) {
+export default function OtpVerification({navigation, route}) {
+  const paramData = route?.params;
+
   const [state, setState] = useState({
     timer: 30,
     phoneOTP: '',
     emailOTP: '',
   });
+
   const updateState = (data) => setState((state) => ({...state, ...data}));
+  const {currencies, languages} = useSelector((state) => state?.initBoot);
   useEffect(() => {
     let timerId;
     if (timer > 0) {
@@ -41,18 +47,38 @@ export default function OtpVerification({navigation}) {
     };
   }, [state.timer]);
 
-  const _onResend = () => {
-    let data = {};
+  const _onResend = async () => {
+    let fcmToken = await AsyncStorage.getItem('fcmToken');
+    let data = {
+      username: paramData?.username,
+      dialCode: paramData?.dialCode,
+      device_type: Platform.OS,
+      device_token: DeviceInfo.getUniqueId(),
+      fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
+      countryData: paramData?.countryData,
+    };
     actions
-      .resendOTP(data, {
+      .loginUsername(data, {
         code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
       })
-      .then((res) => {
-        showSuccess(res.success);
-
-        updateState({isLoading: false});
+      .then(() => {
+        console.log(res.data);
       })
       .catch(errorMethod);
+    // let data = {};
+    // actions
+    //   .resendOTP(data, {
+    //     code: appData?.profile?.code,
+    //   })
+    //   .then((res) => {
+    //     showSuccess(res.success);
+
+    //     updateState({isLoading: false});
+    //   })
+    //   .catch(errorMethod);
     updateState({timer: 30});
   };
 
@@ -83,32 +109,44 @@ export default function OtpVerification({navigation}) {
     return true;
   };
 
-  const onVerify = (type, otp) => {
+  const onVerify = async (type, otp) => {
+    let fcmToken = await AsyncStorage.getItem('fcmToken');
     const checkValid = isValidData(otp);
     if (!checkValid) {
       return;
     }
+    // console.log(DeviceInfo.getUniqueId(), 'DeviceInfo');
 
     let data = {
-      type: type,
-      otp: otp,
+      username: paramData?.username,
+      dialCode: paramData?.dialCode,
+      verifyToken: otp,
+      device_type: Platform.OS,
+      device_token: DeviceInfo.getUniqueId(),
+      fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
     };
+    console.log(data, 'datadatadatadata');
     updateState({isLoading: true});
     actions
-      .verifyAccount(data, {
+      .phoneloginOtp(data, {
         code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        console.log(res.data, 'resdata');
         showSuccess(res.message);
-        if (userData) {
-          userData?.client_preference?.verify_email ||
-          userData?.client_preference?.verify_phone
-            ? userData?.verify_details?.is_email_verified ||
-              userData?.verify_details?.is_phone_verified
-              ? navigation.push(navigationStrings.DRAWER_ROUTES)
-              : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : navigation.push(navigationStrings.DRAWER_ROUTES);
-        }
+        navigation.push(navigationStrings.DRAWER_ROUTES);
+        // if (userData) {
+        //   userData?.client_preference?.verify_email ||
+        //   userData?.client_preference?.verify_phone
+        //     ? userData?.verify_details?.is_email_verified ||
+        //       userData?.verify_details?.is_phone_verified
+        //       ? navigation.push(navigationStrings.DRAWER_ROUTES)
+        //       : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
+        //     : navigation.push(navigationStrings.DRAWER_ROUTES);
+        // }
         updateState({isLoading: false});
       })
       .catch(errorMethod);
@@ -117,7 +155,7 @@ export default function OtpVerification({navigation}) {
   const errorMethod = (error) => {
     updateState({isLoading: false});
     showError(error?.message || error?.error);
-    console.log(error);
+    console.log(error, 'error');
   };
 
   return (
@@ -137,10 +175,10 @@ export default function OtpVerification({navigation}) {
             style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
           />
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => navigation.push(navigationStrings.DRAWER_ROUTES)}>
           <Text style={styles.skipText}>{strings.SKIP}</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
@@ -157,56 +195,53 @@ export default function OtpVerification({navigation}) {
           <Text style={styles.header}>{strings.OTP_VERIFICATION}</Text>
           <Text style={styles.txtSmall}>{strings.ENTER_OTP_SENT}</Text>
           <View style={{height: moderateScaleVertical(50)}} />
-
-          {!!userData?.client_preference?.verify_phone ? (
-            !userData?.verify_details?.is_phone_verified && (
-              <View
+          {/* {!!userData?.client_preference?.verify_phone ? (
+            !userData?.verify_details?.is_phone_verified && ( */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginVertical: moderateScaleVertical(20),
+            }}>
+            <BorderTextInput
+              placeholder={strings.ENTER_OTP}
+              containerStyle={{flex: 0.7}}
+              marginBottom={0}
+              onChangeText={_onChangeText('phoneOTP')}
+              value={phoneOTP}
+            />
+            <TouchableOpacity
+              onPress={() => onVerify('phone', phoneOTP)}
+              style={{
+                flex: 0.27,
+                backgroundColor: !userData?.verify_details?.is_phone_verified
+                  ? themeColors.primary_color
+                  : colors.white,
+                paddingVertical: moderateScaleVertical(8),
+                paddingHorizontal: moderateScale(8),
+                borderRadius: 10,
+              }}>
+              <Text
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  marginVertical: moderateScaleVertical(20),
+                  textAlign: 'center',
+                  color: !userData?.verify_details?.is_phone_verified
+                    ? colors.white
+                    : colors.green,
+                  fontFamily: fontFamily.bold,
+                  fontSize: textScale(12),
                 }}>
-                <BorderTextInput
-                  placeholder={strings.ENTER_OTP}
-                  containerStyle={{flex: 0.7}}
-                  marginBottom={0}
-                  onChangeText={_onChangeText('phoneOTP')}
-                  value={phoneOTP}
-                />
-                <TouchableOpacity
-                  onPress={() => onVerify('phone', phoneOTP)}
-                  style={{
-                    flex: 0.27,
-                    backgroundColor: !userData?.verify_details
-                      ?.is_phone_verified
-                      ? themeColors.primary_color
-                      : colors.white,
-                    paddingVertical: moderateScaleVertical(8),
-                    paddingHorizontal: moderateScale(8),
-                    borderRadius: 10,
-                  }}>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      color: !userData?.verify_details?.is_phone_verified
-                        ? colors.white
-                        : colors.green,
-                      fontFamily: fontFamily.bold,
-                      fontSize: textScale(12),
-                    }}>
-                    {!userData?.verify_details?.is_phone_verified
-                      ? strings.VERIFY_PHONE
-                      : strings.VERIFIED}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            )
-          ) : (
-            <View></View>
-          )}
+                {!userData?.verify_details?.is_phone_verified
+                  ? strings.VERIFY_PHONE
+                  : strings.VERIFIED}
+              </Text>
+            </TouchableOpacity>
+          </View>
 
-          {!!userData?.client_preference?.verify_email ? (
+          {/* ) : (
+            <View></View> */}
+          {/* )} */}
+          {/* {!!userData?.client_preference?.verify_email ? (
             !userData?.verify_details?.is_email_verified && (
               <View
                 style={{
@@ -252,8 +287,7 @@ export default function OtpVerification({navigation}) {
             )
           ) : (
             <View></View>
-          )}
-
+          )} */}
           {/* <GradientButton
             onPress={() => navigation.navigate(navigationStrings.TAB_ROUTES)}
             containerStyle={{marginTop: moderateScaleVertical(10)}}

@@ -525,4 +525,5 @@ Amount`,
   TABLE: 'Table',
   SEAT_CAPACITY: 'Seat Capacity',
   WRITE_REVIEW: 'Write a Review',
+  YOUR_EMAIL_PHONE: 'Your Email or Phone Number',
 };

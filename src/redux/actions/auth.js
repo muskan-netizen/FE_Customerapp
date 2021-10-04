@@ -25,7 +25,9 @@ import {
   SELECT_SPECIFIC_PLAN,
   PURCHASE_SPECIFIC_PLAN,
   GET_LOYALTY_INFO,
-  CANCEL_SPECIFIC_PLAN
+  CANCEL_SPECIFIC_PLAN,
+  LOGIN_BY_USERNAME,
+  PHONE_LOGIN_OTP,
 } from '../../config/urls';
 import {apiGet, apiPost, clearUserData, setUserData} from '../../utils/utils';
 import store from '../store';
@@ -135,10 +137,40 @@ export const login = (data, headers = {}) => {
       });
   });
 };
+export const loginUsername = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(LOGIN_BY_USERNAME, data, headers)
+      .then((res) => {
+        setUserData(res.data).then((suc) => {
+          saveUserData(res.data);
+          resolve(res);
+        });
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
 
 export const verifyAccount = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(VERIFY_ACCOUNT, data, headers)
+      .then((res) => {
+        // resolve(res);
+        setUserData(res.data).then((suc) => {
+          saveUserData(res.data);
+          resolve(res);
+        });
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const phoneloginOtp = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(PHONE_LOGIN_OTP, data, headers)
       .then((res) => {
         // resolve(res);
         setUserData(res.data).then((suc) => {
@@ -368,7 +400,6 @@ export function purchaseSubscriptionPlan(query = '', data = {}, headers = {}) {
   });
 }
 
-
 //Cancel subscription plan
 export function cancelSubscriptionPlan(query = '', data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
@@ -381,7 +412,6 @@ export function cancelSubscriptionPlan(query = '', data = {}, headers = {}) {
       });
   });
 }
-
 
 // //Renew Subscription
 // export function renewSubscriptionPlan(query = '', data = {}, headers = {}) {
