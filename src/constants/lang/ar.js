@@ -533,4 +533,8 @@ export default {
   PICKUP: 'PICKUP',
   ALREADY_EXIST:
     'Your already have items in your cart. Do you want to discard them?',
+    VIEW_ALL:"View All",
+    POPULAR_BRANDS:"Popular Brands",
+    FEATURED_PRODUCTS:"Featured products",
+    ON_SALE:"On Sale",
 };

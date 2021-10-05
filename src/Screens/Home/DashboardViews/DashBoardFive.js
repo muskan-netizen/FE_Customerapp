@@ -1,43 +1,43 @@
-import React, {useRef, useState} from 'react';
+import { useScrollToTop } from '@react-navigation/native';
+import React, { useRef, useState } from 'react';
 import {
-  FlatList,
-  Platform,
+  FlatList, Platform,
   RefreshControl,
   ScrollView,
   Text,
-  View,
+  View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {useDarkMode} from 'react-native-dark-mode';
-import {Pagination} from 'react-native-snap-carousel';
-import {useScrollToTop} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
-import BannerHome2 from '../../../Components/BannerHome2';
+import { useDarkMode } from 'react-native-dark-mode';
+import FastImage from 'react-native-fast-image';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
+import BlurImages from '../../../Components/BlurImages';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import BannerLoader from '../../../Components/Loaders/BannerLoader';
 import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import SearchLoader from '../../../Components/Loaders/SearchLoader';
 import MarketCard3 from '../../../Components/MarketCard3';
+import ProductsComp from '../../../Components/ProductsComp';
 import SearchBar2 from '../../../Components/SearchBar2';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
 import {
-  itemWidth,
   moderateScale,
-  moderateScaleVertical,
-  sliderWidth,
-  width,
+  moderateScaleVertical
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
+import { MyDarkTheme } from '../../../styles/theme';
+import { getImageUrl } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 
+
 export default function DashBoardFive({
-  handleRefresh = () => {},
-  bannerPress = () => {},
+  handleRefresh = () => { },
+  bannerPress = () => { },
   isLoading = true,
   isRefreshing = false,
-  onPressCategory = () => {},
+  onPressCategory = () => { },
   navigation = {},
   toggleData = {},
 }) {
@@ -52,20 +52,20 @@ export default function DashBoardFive({
     isVendorColumnList: false,
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  const {appData, themeColors, appStyle} = useSelector(
+  const { appData, themeColors, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
 
 
-  const {bannerRef} = useRef();
-  const {slider1ActiveSlide} = state;
+  const { bannerRef } = useRef();
+  const { slider1ActiveSlide } = state;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
 
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
-  const _renderItem = ({item}) => (
+  const _renderItem = ({ item }) => (
     <HomeCategoryCard2
       data={item}
       onPress={() => onPressCategory(item)}
@@ -73,89 +73,163 @@ export default function DashBoardFive({
     />
   );
 
-  const _renderVendors = ({item}) => (
-    <MarketCard3
-      data={item}
-      onPress={() => onPressCategory(item)}
-      extraStyles={{margin: 0}}
-    />
+  const _renderVendors = ({ item }) => (
+    <View style={{ marginHorizontal: moderateScale(16) }}>
+      <MarketCard3
+        data={item}
+        onPress={() => onPressCategory(item)}
+        extraStyles={{ margin: 2 }}
+      />
+    </View>
   );
 
   const ref = React.useRef(null);
   useScrollToTop(ref); // scroll to top
 
-  const listHeader = () => {
+
+  const renderBanners = ({ item }) => {
+    console.log("banner item", item)
+    const imageUrl = getImageUrl(item.image.proxy_url, item.image.image_path, '900/700');
+    return (
+      <TouchableOpacity
+        onPress={() => bannerPress(item)}
+      >
+        <FastImage
+          source={{ uri: imageUrl, priority: FastImage.priority.high }}
+          style={{
+            height: moderateScale(220),
+            width: moderateScale(160),
+            borderRadius: moderateScale(16)
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+      </TouchableOpacity>
+    )
+  }
+
+  console.log("app main data", appMainData)
+
+  const categoriesBanners = () => {
     return (
       <View>
         {appMainData &&
           appMainData?.categories &&
           !!appMainData?.categories.length && (
-            <FlatList
-              numColumns={4}
-              data={appMainData?.categories}
-              keyExtractor={(item) => item.id.toString()}
-              showsHorizontalScrollIndicator={false}
-              renderItem={_renderItem}
-              ItemSeparatorComponent={() => (
-                <View style={{height: moderateScale(10)}} />
-              )}
-            />
+            <View style={{ marginHorizontal: moderateScale(8) }}>
+              <FlatList
+                numColumns={4}
+                data={appMainData?.categories}
+                keyExtractor={(item) => item.id.toString()}
+                showsHorizontalScrollIndicator={false}
+                renderItem={_renderItem}
+                ItemSeparatorComponent={() => (
+                  <View style={{ height: moderateScale(10) }} />
+                )}
+              />
+            </View>
           )}
-        <View style={{marginTop: moderateScale(30)}}>
+        <View style={{ marginVertical: moderateScale(24) }}>
           {!!appData?.banners?.length && (
             <>
-              <BannerHome2
-                bannerRef={bannerRef}
-                slider1ActiveSlide={slider1ActiveSlide}
-                bannerData={appData.banners}
-                sliderWidth={sliderWidth}
-                itemWidth={itemWidth}
-                onSnapToItem={(index) =>
-                  updateState({slider1ActiveSlide: index})
-                }
-                setActiveState={(index) =>
-                  updateState({slider1ActiveSlide: index})
-                }
-                onPress={(item) => bannerPress(item)}
-                carouselViewStyle={{height: width * 0.33}}
-                isDarkMode={isDarkMode}
-              />
-              <Pagination
-                dotsLength={appData?.banners?.length}
-                activeDotIndex={slider1ActiveSlide}
-                containerStyle={{
-                  marginTop: -15,
-                }}
-                dotColor={themeColors.primary_color}
-                dotStyle={styles.dotStyle}
-                inactiveDotColor={colors.greyLight}
-                inactiveDotOpacity={0.4}
-                inactiveDotScale={0.8}
-                inactiveDotStyle={styles.inActiveDotStyle}
+              <FlatList
+                horizontal
+                data={appData?.banners}
+                keyExtractor={(item) => item.id.toString()}
+                showsHorizontalScrollIndicator={false}
+                renderItem={renderBanners}
+                ItemSeparatorComponent={() => (
+                  <View style={{ marginRight: moderateScale(12) }} />
+                )}
+                ListHeaderComponent={() => <View style={{ marginLeft: moderateScale(16) }} />}
+                ListFooterComponent={() => <View style={{ marginRight: moderateScale(16) }} />}
               />
             </>
           )}
         </View>
+      </View>
+    );
+  };
+
+  const renderBrands = ({ item }) => {
+    const imageUrl = getImageUrl(item.image.image_fit, item.image.image_path, '900/700');
+    return (
+      <View>
+        <BlurImages
+          isDarkMode={isDarkMode}
+          themeColor={themeColors.primary_color}
+          style={{
+            height: moderateScale(96),
+            width: moderateScale(96),
+            borderRadius: moderateScale(10),
+            backgroundColor: isDarkMode
+              ? colors.whiteOpacity15
+              : colors.greyColor,
+          }}
+          thumnailUrl={{
+            uri: getImageUrl(item.image.image_fit, item.image.image_path, '100/50')
+          }}
+          originalUrl={{
+            uri: getImageUrl(item.image.proxy_url, item.image.image_path, '600/400')
+          }}
+          containerStyle={{ borderRadius: moderateScale(10), }}
+        />
+        {/* <FastImage
+          source={{ uri: imageUrl }}
+          style={{
+            height: moderateScale(96),
+            width: moderateScale(96),
+            borderRadius: moderateScale(10)
+          }}
+        /> */}
+      </View>
+    )
+  }
+
+
+  const listHeader = (type, isViewAll = true) => {
+    return (
+      <View style={styles.viewAllVeiw}>
         <Text
           style={{
             ...styles.exploreStoresTxt,
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             marginTop: 0,
           }}>
-          {strings.EXPLORE_STORES}
+          {type}
         </Text>
+        {!!isViewAll && (<TouchableOpacity>
+          <Text style={styles.viewAllText}>{strings.VIEW_ALL}</Text>
+        </TouchableOpacity>)}
       </View>
-    );
-  };
+    )
+  }
+
+  const renderFeaturedProducts = ({ item }) => {
+    return (
+      <ProductsComp
+        item={item}
+      />
+    )
+  }
+
+  const renderSale = ({ item }) => {
+    return (
+      <ProductsComp
+        isDiscount
+        item={item}
+        imageStyle={{ height: moderateScale(186) }}
+      />
+    )
+  }
 
   if (isLoading) {
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{flexGrow: 1}}>
-        <SearchLoader viewStyles={{marginTop: moderateScale(15)}} />
-        <CategoryLoader2 viewStyles={{marginTop: moderateScale(25)}} />
-        <CategoryLoader2 viewStyles={{marginTop: moderateScale(25)}} />
+        contentContainerStyle={{ flexGrow: 1 }}>
+        <SearchLoader viewStyles={{ marginTop: moderateScale(15) }} />
+        <CategoryLoader2 viewStyles={{ marginTop: moderateScale(25) }} />
+        <CategoryLoader2 viewStyles={{ marginTop: moderateScale(25) }} />
         <BannerLoader
           isBannerDots
           viewStyles={{
@@ -163,7 +237,7 @@ export default function DashBoardFive({
           }}
         />
         <HeaderLoader
-          viewStyles={{marginVertical: 20}}
+          viewStyles={{ marginVertical: 20 }}
           widthLeft={moderateScale(150)}
           rectWidthLeft={moderateScale(150)}
           heightLeft={moderateScaleVertical(20)}
@@ -174,23 +248,24 @@ export default function DashBoardFive({
         />
         <BannerLoader
           isVendorLoader
-          viewStyles={{marginTop: moderateScale(20)}}
+          viewStyles={{ marginTop: moderateScale(20) }}
         />
         <BannerLoader
           isVendorLoader
-          viewStyles={{marginTop: moderateScale(25)}}
+          viewStyles={{ marginTop: moderateScale(25) }}
         />
         <BannerLoader
           isVendorLoader
-          viewStyles={{marginTop: moderateScale(25)}}
+          viewStyles={{ marginTop: moderateScale(25) }}
         />
         {/* <HomeLoader /> */}
       </ScrollView>
     );
   }
 
+
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <SearchBar2
         placeHolderTxt={
           toggleData?.profile?.preferences?.search_nomenclature ||
@@ -198,15 +273,16 @@ export default function DashBoardFive({
         }
         navigation={navigation}
       />
-      <View style={{flex: 1, marginHorizontal: moderateScale(15)}}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
         {appMainData?.vendors && !!appMainData?.vendors?.length && (
           <Animatable.View animation={'fadeInUp'} delay={200}>
+            {categoriesBanners()}
             <FlatList
+              ListHeaderComponent={() => listHeader(strings.EXPLORE_STORES)}
               showsVerticalScrollIndicator={false}
               alwaysBounceVertical={true}
               ref={ref}
-              ListHeaderComponent={listHeader()}
-              data={appMainData?.vendors}
+              data={appMainData?.vendors.splice(0, 1)}
               keyExtractor={(item) => item.id.toString()}
               showsHorizontalScrollIndicator={false}
               renderItem={_renderVendors}
@@ -218,22 +294,77 @@ export default function DashBoardFive({
                 />
               }
               ItemSeparatorComponent={() => (
-                <View style={{height: moderateScale(10)}} />
-              )}
-              ListFooterComponent={() => (
-                <View
-                  style={{
-                    height:
-                      Platform.OS == 'ios'
-                        ? moderateScale(72)
-                        : moderateScale(90),
-                  }}
-                />
+                <View style={{ height: moderateScale(10) }} />
               )}
             />
+            <View style={{ marginVertical: 16 }} />
+            <View>
+              {appMainData &&
+                appMainData?.brands &&
+                !!appMainData?.brands.length && (
+                  <>
+                    <View>
+                      {listHeader(strings.POPULAR_BRANDS, false)}
+                    </View>
+                    <FlatList
+                      showsHorizontalScrollIndicator={false}
+                      horizontal
+                      data={appMainData?.brands}
+                      renderItem={renderBrands}
+                      ItemSeparatorComponent={() => (
+                        <View style={{ marginRight: moderateScale(12) }} />
+                      )}
+                      ListHeaderComponent={() => <View style={{ marginLeft: moderateScale(16) }} />}
+                      ListFooterComponent={() => <View style={{ marginRight: moderateScale(16) }} />}
+                    />
+                  </>
+                )}
+            </View>
+
+            <View style={{ marginVertical: moderateScaleVertical(32) }}>
+              <View>
+                {listHeader(strings.FEATURED_PRODUCTS)}
+              </View>
+              <FlatList
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                data={[{}, {}, {}]}
+                renderItem={renderFeaturedProducts}
+                ItemSeparatorComponent={() => (
+                  <View style={{ marginRight: moderateScale(16) }} />
+                )}
+                ListHeaderComponent={() => <View style={{ marginLeft: moderateScale(16) }} />}
+                ListFooterComponent={() => <View style={{ marginRight: moderateScale(16) }} />}
+              />
+            </View>
+
+            <View>
+              <View>
+                {listHeader(strings.ON_SALE)}
+              </View>
+              <FlatList
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                data={[{}, {}, {}]}
+                renderItem={renderSale}
+                ItemSeparatorComponent={() => (
+                  <View style={{ marginRight: moderateScale(16) }} />
+                )}
+                ListHeaderComponent={() => <View style={{ marginLeft: moderateScale(16) }} />}
+                ListFooterComponent={() => <View style={{ marginRight: moderateScale(16) }} />}
+              />
+            </View>
           </Animatable.View>
         )}
-      </View>
+        <View
+          style={{
+            height:
+              Platform.OS == 'ios'
+                ? moderateScale(60)
+                : moderateScale(90),
+          }}
+        />
+      </ScrollView>
     </View>
   );
 }

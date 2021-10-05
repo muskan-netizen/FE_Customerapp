@@ -559,4 +559,8 @@ montant`,
   SEAT_CAPACITY: 'Seat Capacity',
   WRITE_REVIEW: 'Write a Review',
   PICKUP: 'PICKUP',
+  VIEW_ALL:"View All",
+  POPULAR_BRANDS:"Popular Brands",
+    FEATURED_PRODUCTS:"Featured products",
+    ON_SALE:"On Sale",
 };

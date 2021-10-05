@@ -48,14 +48,15 @@ export default function MarketCard3({
   const scaleInAnimated = new Animated.Value(0);
   return (
     <TouchableOpacity
-      activeOpacity={0.5}
+      activeOpacity={1}
       onPress={onPress}
       style={{
         ...styles.mainTouchContainer,
         ...getScaleTransformationStyle(scaleInAnimated),
       }}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
-      onPressOut={() => pressOutAnimation(scaleInAnimated)}>
+      onPressOut={() => pressOutAnimation(scaleInAnimated)}
+      >
       <BlurImages
         isDarkMode={isDarkMode}
         themeColor={themeColors.primary_color}
@@ -194,7 +195,7 @@ export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
       shadowColor: '#000',
       shadowOffset: {width: 0, height: 0},
       shadowOpacity: 0.15,
-      shadowRadius: 3.84,
+      shadowRadius: 1.84,
       elevation: 2,
       backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
       margin: 6,
@@ -208,7 +209,7 @@ export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
       textAlign: 'left',
     },
     mainImage: {
-      height: moderateScaleVertical(190),
+      height: moderateScaleVertical(140),
       width: '100%',
       borderTopRightRadius: moderateScale(9),
       borderTopLeftRadius: moderateScale(9),

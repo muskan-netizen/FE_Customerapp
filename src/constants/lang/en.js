@@ -525,4 +525,8 @@ Amount`,
   TABLE: 'Table',
   SEAT_CAPACITY: 'Seat Capacity',
   WRITE_REVIEW: 'Write a Review',
+  VIEW_ALL:"View All",
+  POPULAR_BRANDS:"Popular Brands",
+  FEATURED_PRODUCTS:"Featured products",
+  ON_SALE:"On Sale",
 };

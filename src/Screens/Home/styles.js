@@ -289,9 +289,7 @@ export default ({ themeColors, fontFamily }) => {
     exploreStoresTxt: {
       fontFamily: fontFamily.medium,
       fontSize: textScale(18),
-      marginBottom: moderateScale(10),
       textAlign: 'left',
-      marginTop: moderateScale(-36),
     },
     dotStyle: {
       height: 6,
@@ -334,7 +332,42 @@ export default ({ themeColors, fontFamily }) => {
       borderRadius: moderateScale(10),
       alignSelf: 'center',
       marginVertical: moderateScale(10),
-    }
+    },
+    viewAllText: {
+      color: colors.redD,
+      fontFamily:fontFamily.regular
+    },
+    viewAllVeiw: {
+      flexDirection: 'row', 
+      alignItems: 'center', 
+      justifyContent:'space-between',
+      marginBottom: moderateScaleVertical(16),
+      marginHorizontal:moderateScale(16)
+    },
+    hdrRatingTxtView: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: colors.green,
+      paddingVertical: moderateScale(2),
+      paddingHorizontal: moderateScale(4),
+      alignSelf:'flex-start',
+      borderRadius: moderateScale(2),
+      marginTop:moderateScaleVertical(16)
+    },
+    ratingTxt: {
+      // color: colors.yellowC,
+      // fontSize: textScale(11),
+      fontFamily: fontFamily.medium,
+      textAlign: 'left',
+      color: colors.white,
+      fontSize: textScale(9),
+    },
+    starImg: {
+      tintColor: colors.white,
+      marginLeft: 2,
+      width: 9,
+      height: 9,
+    },
   });
 
   return styles;
