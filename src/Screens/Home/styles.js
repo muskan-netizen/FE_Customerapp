@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import {StyleSheet} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import colors from '../../styles/colors';
 import {
   height,
@@ -8,9 +8,9 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
+import {MyDarkTheme} from '../../styles/theme';
 
-export default ({ themeColors, fontFamily }) => {
+export default ({themeColors, fontFamily}) => {
   const styles = StyleSheet.create({
     absolute: {
       position: 'absolute',
@@ -30,7 +30,7 @@ export default ({ themeColors, fontFamily }) => {
       paddingBottom: moderateScaleVertical(12),
       paddingLeft: moderateScaleVertical(12),
     },
-    imgSmall: { height: '100%', width: '100%', borderRadius: 4 },
+    imgSmall: {height: '100%', width: '100%', borderRadius: 4},
     imgContainer: {
       height: moderateScaleVertical(128),
       width: width * 0.5 - moderateScale(12),
@@ -183,7 +183,7 @@ export default ({ themeColors, fontFamily }) => {
       fontSize: textScale(9),
       textAlign: 'left',
     },
-    circularListImage: { height: moderateScale(40), width: moderateScale(40) },
+    circularListImage: {height: moderateScale(40), width: moderateScale(40)},
     applyPromoBtn: {
       marginHorizontal: moderateScale(7),
       borderRadius: moderateScale(15),
@@ -246,7 +246,7 @@ export default ({ themeColors, fontFamily }) => {
       lineHeight: 20,
       fontFamily: fontFamily.regular,
       color: colors.textGrey,
-      fontSize: textScale(10),
+      fontSize: textScale(12),
       textAlign: 'left',
     },
     deliveryIcon: {
@@ -259,6 +259,7 @@ export default ({ themeColors, fontFamily }) => {
       color: themeColors.primary_color,
       marginHorizontal: moderateScale(3),
       textAlign: 'left',
+      fontSize: textScale(12),
     },
     customDropDownIcon: {
       width: moderateScale(8),
@@ -334,7 +335,7 @@ export default ({ themeColors, fontFamily }) => {
       borderRadius: moderateScale(10),
       alignSelf: 'center',
       marginVertical: moderateScale(10),
-    }
+    },
   });
 
   return styles;

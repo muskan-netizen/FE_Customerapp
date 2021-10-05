@@ -440,14 +440,14 @@ export default function DashBoardHeaderFive({
                 {
                   backgroundColor: isDarkMode
                     ? MyDarkTheme.colors.background
-                    : colors.transparent,
+                    : colors.white,
                 },
               ]}>
-              <BlurView
+              {/* <BlurView
                 blurType="light"
                 style={styles.blurView}
                 blurAmount={32}
-              />
+              /> */}
 
               <View style={{padding: moderateScale(10)}}>
                 {tabs.map((item, indx) => {
@@ -492,7 +492,7 @@ export default function DashBoardHeaderFive({
                             width: moderateScale(20),
                             tintColor: item.isActive
                               ? themeColors.primary_color
-                              : colors.iconGrey,
+                              : colors.blackOpacity43,
                           }}
                         />
                         <Text
@@ -502,10 +502,9 @@ export default function DashBoardHeaderFive({
                               ? themeColors.primary_color
                               : isDarkMode
                               ? MyDarkTheme.colors.text
-                              : colors.white,
+                              : colors.blackOpacity43,
                             fontSize: textScale(12),
                             marginHorizontal: moderateScale(10),
-                            opacity: item.isActive ? 1 : 0.5,
                           }}>
                           {item.value}
                         </Text>
@@ -519,7 +518,7 @@ export default function DashBoardHeaderFive({
                             ? themeColors.primary_color
                             : isDarkMode
                             ? MyDarkTheme.colors.text
-                            : colors.white,
+                            : colors.blackOpacity66,
                           alignSelf: 'flex-end',
                         }}
                         resizeMode="contain"
