@@ -7,10 +7,12 @@ import {
   Text,
   ScrollView,
   FlatList,
+  Linking,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import {cloneDeep, debounce} from 'lodash';
+import OpenApplication from 'react-native-open-application';
 
 import WrapperContainer from '../../Components/WrapperContainer';
 import staticStrings from '../../constants/staticStrings';
@@ -376,6 +378,22 @@ export default function Home({route, navigation}) {
 
   const {viewRef2, viewRef3, bannerRef} = useRef();
 
+  //OnClick Link
+
+  const _onLink = async () => {
+    // const supported = await Linking.canOpenURL(
+    //   'https://apps.apple.com/in/app/uber/id368677368',
+    // );
+    // console.log(supported, 'supported>>>');
+    // if (supported) {
+    //   // alert('123');
+    //   Linking.openURL('https://apps.apple.com/in/app/uber/id368677368');
+    // } else {
+    //   Linking.openURL('https://www.google.com/');
+    // }
+    Linking.openURL('https://www.uber.com/');
+  };
+
   //onPress Category
   const onPressCategory = (item) => {
     if (item.redirect_to == staticStrings.VENDOR) {
@@ -387,18 +405,22 @@ export default function Home({route, navigation}) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
-        if (item?.warning_page_id) {
-          if (item?.warning_page_id == 2) {
-            moveToNewScreen(navigationStrings.DELIVERY, item)();
-          } else {
-            moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
-          }
+        if (shortCodes.arenagrub == appData?.profile?.code) {
+          _onLink();
         } else {
-          if (item?.template_type_id == 1) {
-            moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
+          if (item?.warning_page_id) {
+            if (item?.warning_page_id == 2) {
+              moveToNewScreen(navigationStrings.DELIVERY, item)();
+            } else {
+              moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
+            }
           } else {
-            // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
-            moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
+            if (item?.template_type_id == 1) {
+              moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
+            } else {
+              // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
+              moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
+            }
           }
         }
       } else {

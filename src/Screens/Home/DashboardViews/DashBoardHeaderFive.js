@@ -8,9 +8,11 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../../../styles/responsiveSize';
 import {getImageUrl, showSuccess} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
@@ -23,6 +25,7 @@ import strings from '../../../constants/lang';
 import {string} from 'prop-types';
 import {BlurView} from '@react-native-community/blur';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import ScaledImage from 'react-native-scalable-image';
 
 export default function DashBoardHeaderFive({
   navigation = {},
@@ -356,6 +359,24 @@ export default function DashBoardHeaderFive({
             flexDirection: 'row',
             flex: 1,
           }}>
+          {!!(profileInfo && profileInfo?.logo) ? (
+            <ScaledImage
+              width={width / 6}
+              height={moderateScaleVertical(50)}
+              resizeMode="contain"
+              source={
+                profileInfo && profileInfo?.logo
+                  ? {
+                      uri: getImageUrl(
+                        profileInfo.logo.image_fit,
+                        profileInfo.logo.image_path,
+                        '1000/1000',
+                      ),
+                    }
+                  : imagePath.logo
+              }
+            />
+          ) : null}
           {!!appData?.profile?.preferences?.is_hyperlocal && (
             <TouchableOpacity
               activeOpacity={1}
