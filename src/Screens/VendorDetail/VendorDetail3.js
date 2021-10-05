@@ -25,6 +25,7 @@ import strings from '../../constants/lang';
 import BrandCard2 from '../../Components/BrandCard2';
 import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
 import {trim} from 'lodash';
+import NoDataFound from '../../Components/NoDataFound';
 
 export default function VendorDetail3({navigation, route}) {
   let vendorParams = route?.params?.data;
@@ -157,10 +158,10 @@ export default function VendorDetail3({navigation, route}) {
           id: item.id,
           rootProducts: vendorParams?.rootProducts,
           vendor: vendorParams?.rootProducts ? true : false,
-
           vendorData: vendorParams?.item,
           categoryInfo: item,
           name: item.name,
+          isVendorList: false,
         })}
         // onPress={() => navigation.navigate(navigationStrings.PRODUCT_LIST)}
         data={item}
@@ -250,7 +251,7 @@ export default function VendorDetail3({navigation, route}) {
         }
       />
       <FlatList
-        data={vendorData}
+        data={vendorData || []}
         numColumns={3}
         ListHeaderComponent={<View style={{height: 10}} />}
         // columnWrapperStyle={{justifyContent: 'space-between'}}
@@ -265,10 +266,7 @@ export default function VendorDetail3({navigation, route}) {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <ListEmptyVendors
-                isLoading={isLoading}
-                emptyText={strings.NO_DATA_FOUND}
-              />
+              <NoDataFound isLoading={state.isLoading} />
             </View>
           )
         }
