@@ -273,7 +273,16 @@ export default function DashBoardFive({
         }
         navigation={navigation}
       />
-      <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <ScrollView 
+      showsVerticalScrollIndicator={false} style={{ flex: 1 }}
+      refreshControl={
+        <RefreshControl
+          refreshing={isRefreshing}
+          onRefresh={handleRefresh}
+          tintColor={themeColors.primary_color}
+        />
+      }
+      >
         {appMainData?.vendors && !!appMainData?.vendors?.length && (
           <Animatable.View animation={'fadeInUp'} delay={200}>
             {categoriesBanners()}
@@ -282,17 +291,10 @@ export default function DashBoardFive({
               showsVerticalScrollIndicator={false}
               alwaysBounceVertical={true}
               ref={ref}
-              data={appMainData?.vendors.splice(0, 1)}
+              data={appMainData?.vendors.splice(0, 4)}
               keyExtractor={(item) => item.id.toString()}
               showsHorizontalScrollIndicator={false}
               renderItem={_renderVendors}
-              refreshControl={
-                <RefreshControl
-                  refreshing={isRefreshing}
-                  onRefresh={handleRefresh}
-                  tintColor={themeColors.primary_color}
-                />
-              }
               ItemSeparatorComponent={() => (
                 <View style={{ height: moderateScale(10) }} />
               )}
