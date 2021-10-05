@@ -145,6 +145,7 @@ export default function Products({route, navigation}) {
     searchInput: '',
     btnLoader: false,
     selectedItemID: -1,
+    selectedItemIndx: null,
   });
 
   const {
@@ -192,6 +193,7 @@ export default function Products({route, navigation}) {
     searchInput,
     btnLoader,
     selectedItemID,
+    selectedItemIndx,
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -726,14 +728,11 @@ export default function Products({route, navigation}) {
       .catch((error) => errorMethodSecond(error));
   };
 
-  const addDeleteCartItems = (item, type) => {
+  const addDeleteCartItems = (item, index, type) => {
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
     //!!data?.variant[0]?.check_if_in_cart_app && data?.variant[0]?.check_if_in_cart_app.length > 0 || !!data?.qty ?
-    console.log(
-      'check if in cart',
-      itemToUpdate?.variant[0]?.check_if_in_cart_app,
-    );
+
     let isExistqty = itemToUpdate?.qty
       ? itemToUpdate?.qty
       : !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
@@ -758,7 +757,11 @@ export default function Products({route, navigation}) {
       quanitity = Number(isExistqty) - 1;
     }
     if (quanitity) {
-      updateState({selectedItemID: itemToUpdate.id});
+      updateState({
+        selectedItemID: itemToUpdate.id,
+        btnLoader: true,
+        selectedItemIndx: index,
+      });
       let data = {};
       data['cart_id'] = isExistCartId;
       data['quantity'] = quanitity;
@@ -779,6 +782,7 @@ export default function Products({route, navigation}) {
             cartData: res.data,
             updateQtyLoader: false,
             selectedItemID: -1,
+            btnLoader: false,
           });
           let updateArray = productListData.map((val, i) => {
             if (val.id == item.id) {
@@ -791,11 +795,15 @@ export default function Products({route, navigation}) {
             }
             return val;
           });
-          updateState({productListData: updateArray, selectedItemID: -1});
+          updateState({
+            productListData: updateArray,
+            selectedItemID: -1,
+          });
         })
         .catch(errorMethod);
     } else {
-      updateState({selectedItemID: itemToUpdate?.id});
+      updateState({selectedItemID: itemToUpdate?.id,             btnLoader: false,
+      });
       removeItem('selectedTable');
       removeProductFromCart(itemToUpdate);
     }
@@ -913,10 +921,11 @@ export default function Products({route, navigation}) {
         onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
         onAddtoWishlist={() => _onAddtoWishlist(item)}
         addToCart={() => addSingleItem(item)}
-        onIncrement={() => addDeleteCartItems(item, 1)}
-        onDecrement={() => addDeleteCartItems(item, 2)}
+        onIncrement={() => addDeleteCartItems(item, index, 1)}
+        onDecrement={() => addDeleteCartItems(item, index, 2)}
         selectedItemID={selectedItemID}
         btnLoader={btnLoader}
+        selectedItemIndx={selectedItemIndx}
       />
     );
   };
@@ -1464,6 +1473,8 @@ export default function Products({route, navigation}) {
     (!!categoryInfo?.translation &&
       categoryInfo?.translation[0]?.meta_description);
 
+  console.log(data, 'is_show_category');
+
   return (
     <View
       style={{
@@ -1474,7 +1485,87 @@ export default function Products({route, navigation}) {
         // paddingVertical: moderateScale(16),
       }}>
       <View style={{flex: 1}}>
-        {AnimatedHeaderValue &&
+        {!data.isVendorList && (
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingHorizontal: moderateScale(15),
+              marginTop: Platform.OS === 'ios' ? StatusBarHeight : 15,
+            }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.goBack()}
+                hitSlop={styles.hitSlopProp}>
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                  }}
+                  source={imagePath.icBackb}
+                />
+              </TouchableOpacity>
+              <Text
+                numberOfLines={1}
+                style={{
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity86,
+                  fontSize: moderateScale(14),
+                  fontFamily: fontFamily.bold,
+                  marginLeft: moderateScale(15),
+                }}>
+                {name}
+              </Text>
+            </View>
+
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => updateState({isSearch: true})}
+                onPress={moveToNewScreen(
+                  navigationStrings.SEARCHPRODUCTOVENDOR,
+                  {
+                    type: data?.vendor
+                      ? staticStrings.VENDOR
+                      : staticStrings.CATEGORY,
+                    id: data?.vendor ? data?.id : productListId?.id,
+                  },
+                )}>
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    marginRight: moderateScale(15),
+                  }}
+                  source={imagePath.icSearchb}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={onShare}
+                hitSlop={hitSlopProp}
+                activeOpacity={0.8}>
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                  }}
+                  source={imagePath.icShareb}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+
+        {data.isVendorList &&
+          AnimatedHeaderValue &&
           !!productListData &&
           productListData.length > 0 && (
             <View style={styles.headerStyle}>
@@ -1610,7 +1701,6 @@ export default function Products({route, navigation}) {
               )}
             </View>
           )}
-
         {/* <View style={{height: moderateScale(10)}} /> */}
         <FlatList
           onScroll={onScroll}
@@ -1618,7 +1708,13 @@ export default function Products({route, navigation}) {
           showsVerticalScrollIndicator={false}
           data={(!isLoading && productListData) || []}
           renderItem={renderProduct}
-          ListHeaderComponent={listHeaderComponent2()}
+          ListHeaderComponent={
+            data?.isVendorList ? (
+              listHeaderComponent2()
+            ) : (
+              <View style={{height: 20}} />
+            )
+          }
           keyExtractor={(item, index) => String(index)}
           keyboardShouldPersistTaps="always"
           showsVerticalScrollIndicator={false}

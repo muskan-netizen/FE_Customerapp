@@ -373,13 +373,12 @@ export default function Settings({route, navigation}) {
             ? MyDarkTheme.colors.lightDark
             : colors.greyColor1,
           marginHorizontal: moderateScale(20),
-          flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+          flexDirection: 'row',
         }}
-        labelStyle={
-          isDarkMode
-            ? {color: MyDarkTheme.colors.text}
-            : {color: colors.textGrey}
-        }
+        labelStyle={{
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+          textAlign: 'left',
+        }}
         itemStyle={{
           justifyContent: 'flex-start',
         }}
@@ -429,17 +428,16 @@ export default function Settings({route, navigation}) {
             ? MyDarkTheme.colors.lightDark
             : colors.greyColor1,
           marginHorizontal: moderateScale(20),
-          flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+          flexDirection: 'row',
           zIndex: 1000,
         }}
         itemStyle={{
           justifyContent: 'flex-start',
         }}
-        labelStyle={
-          isDarkMode
-            ? {color: MyDarkTheme.colors.text}
-            : {color: colors.textGrey}
-        }
+        labelStyle={{
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+          textAlign: 'left',
+        }}
         dropDownStyle={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.lightDark

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import colors from '../../styles/colors';
 import {
   height,
@@ -8,7 +8,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 
-export default ({ themeColors, fontFamily, productTotalQuantity }) =>
+export default ({themeColors, fontFamily, productTotalQuantity}) =>
   StyleSheet.create({
     cardViewStyle: {
       alignItems: 'center',
@@ -17,7 +17,7 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
 
       // marginRight: 20
     },
-    dotStyle: { height: 12, width: 12, borderRadius: 12 / 2 },
+    dotStyle: {height: 12, width: 12, borderRadius: 12 / 2},
     ratingColor: {
       color: colors.backgroundGrey,
       paddingLeft: 5,
@@ -64,15 +64,15 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
       color: colors.orangeB,
       fontSize: textScale(14),
       fontFamily: fontFamily.bold,
-      textAlign: 'left'
+      textAlign: 'left',
     },
     productPrice2: {
-      color: colors.orangeB,
+      color: colors.black,
       fontSize: textScale(18),
       lineHeight: 28,
       fontFamily: fontFamily.bold,
       textAlign: 'center',
-      textAlign: 'left'
+      textAlign: 'left',
     },
     descriptiontitle: {
       color: colors.textGrey,
@@ -80,7 +80,7 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
       fontFamily: fontFamily.medium,
       // marginVertical: moderateScaleVertical(10),
       textAlign: 'left',
-      marginBottom: moderateScaleVertical(4)
+      marginBottom: moderateScaleVertical(4),
     },
     description: {
       color: colors.textGreyB,
@@ -88,7 +88,6 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
       lineHeight: 22,
       fontFamily: fontFamily.medium,
       textAlign: 'left',
-
     },
     relatedProducts: {
       color: colors.textGrey,
@@ -96,7 +95,7 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
       lineHeight: 28,
       fontFamily: fontFamily.bold,
       marginVertical: moderateScaleVertical(10),
-      textAlign: 'left'
+      textAlign: 'left',
     },
 
     addonLable: {
@@ -104,7 +103,7 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
       fontSize: textScale(16),
       lineHeight: 22,
       fontFamily: fontFamily.bold,
-      textAlign: 'left'
+      textAlign: 'left',
     },
 
     variantLable: {
@@ -112,7 +111,7 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
       fontSize: textScale(14),
       lineHeight: 22,
       fontFamily: fontFamily.bold,
-      textAlign: 'left'
+      textAlign: 'left',
     },
     variantSizeViewOne: {
       height: moderateScale(23),
@@ -127,7 +126,7 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
       borderRadius: 2,
       alignItems: 'center',
       justifyContent: 'center',
-      textAlign: 'left'
+      textAlign: 'left',
     },
 
     modalMainViewContainer: {
@@ -135,7 +134,7 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
       backgroundColor: colors.white,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
-      textAlign: 'left'
+      textAlign: 'left',
       // overflow: 'hidden',
       // paddingHorizontal: moderateScale(24),
     },
@@ -144,7 +143,6 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
       marginBottom: 0,
       marginTop: moderateScaleVertical(height / 10),
       overflow: 'hidden',
-
     },
     closeButton: {
       alignItems: 'center',
@@ -248,10 +246,10 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
       lineHeight: moderateScale(22),
     },
     flexView: {
-      flexDirection: "row",
+      flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      marginTop: moderateScaleVertical(4)
+      marginTop: moderateScaleVertical(4),
     },
     incDecBtnStyle: {
       borderWidth: 0.4,
@@ -270,6 +268,6 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
       // height: 24,
       borderRadius: 2,
       paddingHorizontal: 10,
-      paddingVertical: 6
-    }
+      paddingVertical: 6,
+    },
   });

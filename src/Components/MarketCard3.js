@@ -115,18 +115,21 @@ export default function MarketCard3({
             </View>
           )}
         </View>
-        <Text
-          numberOfLines={1}
-          style={{
-            color: colors.greyLight,
-            fontSize: textScale(10),
-            fontFamily: fontFamily.regular,
-            textAlign: 'left',
-            marginVertical: moderateScaleVertical(4),
-            marginTop: moderateScaleVertical(6),
-          }}>
-          {data?.categoriesList}
-        </Text>
+        {data?.categoriesList ? (
+          <Text
+            numberOfLines={1}
+            style={{
+              color: colors.greyLight,
+              fontSize: textScale(10),
+              fontFamily: fontFamily.regular,
+              textAlign: 'left',
+              marginVertical: moderateScaleVertical(4),
+              marginTop: moderateScaleVertical(6),
+            }}>
+            {data?.categoriesList}
+          </Text>
+        ) : null}
+
         <View
           style={{
             height: 1,
@@ -142,27 +145,35 @@ export default function MarketCard3({
               alignItems: 'center',
               flex: 1,
             }}>
-            {data?.lineOfSightDistance && (
-              <Image
-                style={{tintColor: themeColors.primary_color}}
-                source={imagePath.location2}
-              />
+            {!!data?.lineOfSightDistance && (
+              <View style={{flexDirection: 'row'}}>
+                <Image
+                  style={{tintColor: themeColors.primary_color}}
+                  source={imagePath.location2}
+                />
+                <Text
+                  style={{
+                    color: colors.greyLight,
+                    fontSize: textScale(10),
+                    fontFamily: fontFamily.regular,
+                    marginHorizontal: moderateScale(5),
+                    textAlign: 'left',
+                  }}>
+                  {data?.lineOfSightDistance}
+                </Text>
+              </View>
             )}
-            <Text
-              style={{
-                color: colors.greyLight,
-                fontSize: textScale(10),
-                fontFamily: fontFamily.regular,
-                marginHorizontal: moderateScale(5),
-                textAlign: 'left',
-              }}>
-              {data?.lineOfSightDistance}{' '}
-              {!!data?.lineOfSightDistance && !!data?.timeofLineOfSightDistance
-                ? '|'
-                : ''}{' '}
-              {data?.timeofLineOfSightDistance}{' '}
-              {!!data?.timeofLineOfSightDistance ? 'mins' : ''}
-            </Text>
+            {!!data?.timeofLineOfSightDistance ? (
+              <Text
+                style={{
+                  color: colors.greyLight,
+                  fontSize: textScale(10),
+                  fontFamily: fontFamily.regular,
+                  textAlign: 'left',
+                }}>
+                {`| ${data?.timeofLineOfSightDistance} mins`}
+              </Text>
+            ) : null}
           </View>
 
           <Text

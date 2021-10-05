@@ -2,7 +2,7 @@
 export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.100.89:8005/api/v1';
-//export const API_BASE_URL = 'http://192.168.99.149:8005/api/v1';
+// export const API_BASE_URL = 'http://192.168.100.89:8005/api/v1';
 
 // export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
 
@@ -15,6 +15,8 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
 //export const SEND_OTP = getApiUrl('/auth/sendOtp');
+export const LOGIN_BY_USERNAME = getApiUrl('/auth/loginViaUsername');
+export const PHONE_LOGIN_OTP = getApiUrl('/auth/verify/phoneLoginOtp');
 export const LOGIN_API = getApiUrl('/auth/login');
 export const SIGN_UP_API = getApiUrl('/auth/register');
 export const FORGOT_API = getApiUrl('/auth/forgotPassword');
