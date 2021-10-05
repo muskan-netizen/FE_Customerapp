@@ -86,4 +86,18 @@ export default {
   OFFERS2: 'OFFERS2',
   PICKUPTAXIORDERDETAILS: 'PickupTaxiOrderDetails',
   PICKUPORDERDETAIL2: 'pickOrderDetail2',
+
+
+
+
+
+
+  // royo order
+
+
+  ROYO_HOME: 'royoHome',
+  ROYO_ORDER: 'royoOrder',
+  ROYO_BOTTOMTAB: 'royoBottom',
+  ROYO_ACCOUNT: 'royoAccount',
+  ROYO_PRODUCTS: 'royoProducts',
 };
