@@ -1940,7 +1940,7 @@ export default function Cart({navigation, route}) {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => setModalVisible(true)}>
-            <Image source={imagePath.icEdit1} style={styles.editIcon} />
+            <Image source={imagePath.icEdit1} style={styles.editIcon} resizeMode="contain"/>
           </TouchableOpacity>
         )}
       </View>
