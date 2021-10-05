@@ -30,6 +30,8 @@ export default function ProductCard3({
   onIncrement,
   onDecrement,
   selectedItemID,
+  selectedItemIndx,
+  btnLoader,
 }) {
   // data['qty'] = 1
   const [state, setState] = useState({
@@ -261,7 +263,7 @@ export default function ProductCard3({
                     </Text>
                   </TouchableOpacity>
                   <View style={{}}>
-                    {selectedItemID == data?.id ? (
+                    {selectedItemIndx === index && btnLoader ? (
                       <UIActivityIndicator
                         size={moderateScale(18)}
                         color={colors.white}

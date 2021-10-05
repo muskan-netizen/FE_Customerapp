@@ -145,6 +145,7 @@ export default function Products({route, navigation}) {
     searchInput: '',
     btnLoader: false,
     selectedItemID: -1,
+    selectedItemIndx: null,
   });
 
   const {
@@ -192,6 +193,7 @@ export default function Products({route, navigation}) {
     searchInput,
     btnLoader,
     selectedItemID,
+    selectedItemIndx,
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -726,14 +728,11 @@ export default function Products({route, navigation}) {
       .catch((error) => errorMethodSecond(error));
   };
 
-  const addDeleteCartItems = (item, type) => {
+  const addDeleteCartItems = (item, index, type) => {
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
     //!!data?.variant[0]?.check_if_in_cart_app && data?.variant[0]?.check_if_in_cart_app.length > 0 || !!data?.qty ?
-    console.log(
-      'check if in cart',
-      itemToUpdate?.variant[0]?.check_if_in_cart_app,
-    );
+
     let isExistqty = itemToUpdate?.qty
       ? itemToUpdate?.qty
       : !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
@@ -758,7 +757,11 @@ export default function Products({route, navigation}) {
       quanitity = Number(isExistqty) - 1;
     }
     if (quanitity) {
-      updateState({selectedItemID: itemToUpdate.id});
+      updateState({
+        selectedItemID: itemToUpdate.id,
+        btnLoader: true,
+        selectedItemIndx: index,
+      });
       let data = {};
       data['cart_id'] = isExistCartId;
       data['quantity'] = quanitity;
@@ -779,6 +782,7 @@ export default function Products({route, navigation}) {
             cartData: res.data,
             updateQtyLoader: false,
             selectedItemID: -1,
+            btnLoader: false,
           });
           let updateArray = productListData.map((val, i) => {
             if (val.id == item.id) {
@@ -791,11 +795,15 @@ export default function Products({route, navigation}) {
             }
             return val;
           });
-          updateState({productListData: updateArray, selectedItemID: -1});
+          updateState({
+            productListData: updateArray,
+            selectedItemID: -1,
+          });
         })
         .catch(errorMethod);
     } else {
-      updateState({selectedItemID: itemToUpdate?.id});
+      updateState({selectedItemID: itemToUpdate?.id,             btnLoader: false,
+      });
       removeItem('selectedTable');
       removeProductFromCart(itemToUpdate);
     }
@@ -913,10 +921,11 @@ export default function Products({route, navigation}) {
         onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
         onAddtoWishlist={() => _onAddtoWishlist(item)}
         addToCart={() => addSingleItem(item)}
-        onIncrement={() => addDeleteCartItems(item, 1)}
-        onDecrement={() => addDeleteCartItems(item, 2)}
+        onIncrement={() => addDeleteCartItems(item, index, 1)}
+        onDecrement={() => addDeleteCartItems(item, index, 2)}
         selectedItemID={selectedItemID}
         btnLoader={btnLoader}
+        selectedItemIndx={selectedItemIndx}
       />
     );
   };

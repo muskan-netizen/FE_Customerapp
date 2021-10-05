@@ -732,7 +732,7 @@ export default function ShortCode({route, navigation}) {
     let header = {};
     if (languages?.primary_language?.id) {
       header = {
-        code: appData?.profile?.code,
+        code: shortCode,
         language: languages?.primary_language?.id,
       };
     } else {
