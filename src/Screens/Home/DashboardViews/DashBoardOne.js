@@ -25,6 +25,7 @@ export default function DashBoardOne({
   selcetedToggle,
   toggleData,
   isDineInSelected = false,
+  curAddress ={}
 }) {
   const [state, setState] = useState({
     slider1ActiveSlide: 0,

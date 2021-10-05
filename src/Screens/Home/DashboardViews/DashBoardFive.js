@@ -24,6 +24,7 @@ import SearchBar2 from '../../../Components/SearchBar2';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
 import {
+  height,
   moderateScale,
   moderateScaleVertical
 } from '../../../styles/responsiveSize';
@@ -40,6 +41,7 @@ export default function DashBoardFive({
   onPressCategory = () => { },
   navigation = {},
   toggleData = {},
+  curAddress={}
 }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -88,7 +90,6 @@ export default function DashBoardFive({
 
 
   const renderBanners = ({ item }) => {
-    console.log("banner item", item)
     const imageUrl = getImageUrl(item.image.proxy_url, item.image.image_path, '900/700');
     return (
       <TouchableOpacity
@@ -97,7 +98,7 @@ export default function DashBoardFive({
         <FastImage
           source={{ uri: imageUrl, priority: FastImage.priority.high }}
           style={{
-            height: moderateScale(220),
+            height: height / 3.8,
             width: moderateScale(160),
             borderRadius: moderateScale(16)
           }}
@@ -169,9 +170,10 @@ export default function DashBoardFive({
             uri: getImageUrl(item.image.image_fit, item.image.image_path, '100/50')
           }}
           originalUrl={{
-            uri: getImageUrl(item.image.proxy_url, item.image.image_path, '600/400')
+            uri: getImageUrl(item.image.image_fit, item.image.image_path, '600/400')
           }}
           containerStyle={{ borderRadius: moderateScale(10), }}
+          resizeMode="contain"
         />
         {/* <FastImage
           source={{ uri: imageUrl }}
@@ -215,7 +217,7 @@ export default function DashBoardFive({
   const renderSale = ({ item }) => {
     return (
       <ProductsComp
-        isDiscount
+        // isDiscount
         item={item}
         imageStyle={{ height: moderateScale(186) }}
       />
@@ -273,48 +275,74 @@ export default function DashBoardFive({
         }
         navigation={navigation}
       />
-      <ScrollView 
-      showsVerticalScrollIndicator={false} style={{ flex: 1 }}
-      refreshControl={
-        <RefreshControl
-          refreshing={isRefreshing}
-          onRefresh={handleRefresh}
-          tintColor={themeColors.primary_color}
-        />
-      }
+      <ScrollView
+        showsVerticalScrollIndicator={false} style={{ flex: 1 }}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+            tintColor={themeColors.primary_color}
+          />
+        }
       >
-        {appMainData?.vendors && !!appMainData?.vendors?.length && (
-          <Animatable.View animation={'fadeInUp'} delay={200}>
-            {categoriesBanners()}
-            <FlatList
-              ListHeaderComponent={() => listHeader(strings.EXPLORE_STORES)}
-              showsVerticalScrollIndicator={false}
-              alwaysBounceVertical={true}
-              ref={ref}
-              data={appMainData?.vendors.splice(0, 4)}
-              keyExtractor={(item) => item.id.toString()}
-              showsHorizontalScrollIndicator={false}
-              renderItem={_renderVendors}
-              ItemSeparatorComponent={() => (
-                <View style={{ height: moderateScale(10) }} />
-              )}
-            />
-            <View style={{ marginVertical: 16 }} />
+        <Animatable.View animation={'fadeInUp'} delay={200}>
+          {categoriesBanners()}
+          {appMainData?.vendors && !!appMainData?.vendors?.length && (
+            <>
+              < FlatList
+                ListHeaderComponent={() => listHeader(strings.EXPLORE_STORES)}
+                showsVerticalScrollIndicator={false}
+                alwaysBounceVertical={true}
+                ref={ref}
+                data={appMainData?.vendors.splice(0, 4)}
+                keyExtractor={(item) => item.id.toString()}
+                showsHorizontalScrollIndicator={false}
+                renderItem={_renderVendors}
+                ItemSeparatorComponent={() => (
+                  <View style={{ height: moderateScale(10) }} />
+                )}
+              />
+              <View style={{ marginVertical: 16 }} />
+              <View>
+                {appMainData &&
+                  appMainData?.brands &&
+                  !!appMainData?.brands.length && (
+                    <>
+                      <View>
+                        {listHeader(strings.POPULAR_BRANDS, false)}
+                      </View>
+                      <FlatList
+                        showsHorizontalScrollIndicator={false}
+                        horizontal
+                        data={appMainData?.brands}
+                        renderItem={renderBrands}
+                        ItemSeparatorComponent={() => (
+                          <View style={{ marginRight: moderateScale(12) }} />
+                        )}
+                        ListHeaderComponent={() => <View style={{ marginLeft: moderateScale(16) }} />}
+                        ListFooterComponent={() => <View style={{ marginRight: moderateScale(16) }} />}
+                      />
+                    </>
+                  )}
+              </View>
+            </>
+          )}
+          <View style={{ marginVertical: moderateScaleVertical(12) }}>
             <View>
               {appMainData &&
-                appMainData?.brands &&
-                !!appMainData?.brands.length && (
+                appMainData?.featured_products &&
+                !!appMainData?.featured_products.length && (
                   <>
                     <View>
-                      {listHeader(strings.POPULAR_BRANDS, false)}
+                      {listHeader(strings.FEATURED_PRODUCTS)}
                     </View>
                     <FlatList
                       showsHorizontalScrollIndicator={false}
                       horizontal
-                      data={appMainData?.brands}
-                      renderItem={renderBrands}
+                      data={appMainData?.featured_products}
+                      renderItem={renderFeaturedProducts}
                       ItemSeparatorComponent={() => (
-                        <View style={{ marginRight: moderateScale(12) }} />
+                        <View style={{ marginRight: moderateScale(16) }} />
                       )}
                       ListHeaderComponent={() => <View style={{ marginLeft: moderateScale(16) }} />}
                       ListFooterComponent={() => <View style={{ marginRight: moderateScale(16) }} />}
@@ -322,42 +350,56 @@ export default function DashBoardFive({
                   </>
                 )}
             </View>
+          </View>
 
-            <View style={{ marginVertical: moderateScaleVertical(32) }}>
-              <View>
-                {listHeader(strings.FEATURED_PRODUCTS)}
-              </View>
-              <FlatList
-                showsHorizontalScrollIndicator={false}
-                horizontal
-                data={[{}, {}, {}]}
-                renderItem={renderFeaturedProducts}
-                ItemSeparatorComponent={() => (
-                  <View style={{ marginRight: moderateScale(16) }} />
-                )}
-                ListHeaderComponent={() => <View style={{ marginLeft: moderateScale(16) }} />}
-                ListFooterComponent={() => <View style={{ marginRight: moderateScale(16) }} />}
-              />
-            </View>
-
+          <View style={{ marginVertical: moderateScaleVertical(12) }}>
             <View>
-              <View>
-                {listHeader(strings.ON_SALE)}
-              </View>
-              <FlatList
-                showsHorizontalScrollIndicator={false}
-                horizontal
-                data={[{}, {}, {}]}
-                renderItem={renderSale}
-                ItemSeparatorComponent={() => (
-                  <View style={{ marginRight: moderateScale(16) }} />
+              {appMainData &&
+                appMainData?.new_products &&
+                !!appMainData?.new_products.length && (
+                  <>
+                    <View>
+                      {listHeader('New Products')}
+                    </View>
+                    <FlatList
+                      showsHorizontalScrollIndicator={false}
+                      horizontal
+                      data={appMainData?.new_products}
+                      renderItem={renderFeaturedProducts}
+                      ItemSeparatorComponent={() => (
+                        <View style={{ marginRight: moderateScale(16) }} />
+                      )}
+                      ListHeaderComponent={() => <View style={{ marginLeft: moderateScale(16) }} />}
+                      ListFooterComponent={() => <View style={{ marginRight: moderateScale(16) }} />}
+                    />
+                  </>
                 )}
-                ListHeaderComponent={() => <View style={{ marginLeft: moderateScale(16) }} />}
-                ListFooterComponent={() => <View style={{ marginRight: moderateScale(16) }} />}
-              />
             </View>
-          </Animatable.View>
-        )}
+          </View>
+
+          <View>
+            {appMainData &&
+              appMainData?.on_sale_products &&
+              !!appMainData?.on_sale_products.length && (
+                <>
+                  <View>
+                    {listHeader(strings.ON_SALE)}
+                  </View>
+                  <FlatList
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
+                    data={appMainData?.on_sale_products}
+                    renderItem={renderSale}
+                    ItemSeparatorComponent={() => (
+                      <View style={{ marginRight: moderateScale(16) }} />
+                    )}
+                    ListHeaderComponent={() => <View style={{ marginLeft: moderateScale(16) }} />}
+                    ListFooterComponent={() => <View style={{ marginRight: moderateScale(16) }} />}
+                  />
+                </>
+              )}
+          </View>
+        </Animatable.View>
         <View
           style={{
             height:

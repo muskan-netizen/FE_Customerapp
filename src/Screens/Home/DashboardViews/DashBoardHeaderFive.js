@@ -30,6 +30,7 @@ export default function DashBoardHeaderFive({
   selcetedToggle,
   toggleData,
   isLoading = false,
+  curAddress={}
 }) {
   const pickerRef = createRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);

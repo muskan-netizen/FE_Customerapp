@@ -31,10 +31,13 @@ const ProductsComp = ({
     const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
     const darkthemeusingDevice = useDarkMode();
     const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-    const { themeColors, appStyle } = useSelector((state) => state?.initBoot);
+    const { themeColors, appStyle, currencies } = useSelector((state) => state?.initBoot);
     const fontFamily = appStyle?.fontSizeData;
 
     const scaleInAnimated = new Animated.Value(0);
+
+    const { translation = [], category = {}, media = [], vendor = {}, variant = [] } = item
+    const imageUrl = getImageUrl(media[0]?.image?.path?.image_fit, media[0]?.image?.path?.image_path, '600/600');
     return (
         <TouchableOpacity
             activeOpacity={1}
@@ -46,7 +49,7 @@ const ProductsComp = ({
             onPressOut={() => pressOutAnimation(scaleInAnimated)}
         >
             <ImageBackground
-                source={{ uri: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2FuZHdpY2h8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80' }}
+                source={{ uri: imageUrl }}
                 style={{
                     height: moderateScale(100),
                     width: width / 2.5,
@@ -54,17 +57,17 @@ const ProductsComp = ({
                 }}
                 imageStyle={{ borderRadius: moderateScale(10) }}
             >
-                <View style={styles.hdrRatingTxtView}>
+                {!!item?.averageRating && (<View style={styles.hdrRatingTxtView}>
                     <Text style={{
                         ...styles.ratingTxt,
                         fontFamily: fontFamily.medium
-                    }}>4</Text>
+                    }}>{Number(item?.averageRating).toFixed(1)}</Text>
                     <Image
                         style={styles.starImg}
                         source={imagePath.star}
                         resizeMode="contain"
                     />
-                </View>
+                </View>)}
             </ImageBackground>
             <View style={{ marginVertical: moderateScaleVertical(6) }}>
                 <Text
@@ -76,14 +79,14 @@ const ProductsComp = ({
                         textAlign: 'left',
                         lineHeight: moderateScale(16)
                     }}
-                >Potato Grilled Sandwich</Text>
+                >{translation[0]?.title}</Text>
                 <Text style={{
                     fontSize: textScale(11),
                     fontFamily: fontFamily.regular,
                     marginVertical: moderateScaleVertical(4),
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity40,
                     textAlign: 'left',
-                }}>Foodie's Hub</Text>
+                }}>{vendor?.name}</Text>
                 {!isDiscount ? <View style={{ flex: 1, flexDirection: 'row' }}>
                     <View style={{ flex: 0.6, alignItems: 'flex-start' }}>
                         <Text
@@ -93,7 +96,7 @@ const ProductsComp = ({
                                 color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity40,
                                 width: width / 4
                             }}
-                        >{strings.IN} sandwiche</Text>
+                        >{strings.IN} {category?.category_detail?.translation[0]?.name}</Text>
                     </View>
                     <View style={{ flex: 0.4, alignItems: 'flex-end' }}>
                         <Text style={{
@@ -102,7 +105,10 @@ const ProductsComp = ({
                             color: isDarkMode
                                 ? MyDarkTheme.colors.text
                                 : colors.black,
-                        }}>$ 1267</Text>
+                        }}>
+                            <Text>
+                                {`${currencies?.primary_currency?.symbol} ${Number(variant[0]?.price).toFixed(2)}`}</Text>
+                        </Text>
                     </View>
                 </View> :
                     <View>
@@ -112,20 +118,20 @@ const ProductsComp = ({
                                 fontFamily: fontFamily.regular,
                                 color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity40,
                             }}
-                        >{strings.IN} sandwiche</Text>
+                        >{strings.IN} {category?.category_detail?.translation[0]?.name}</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Text style={{
                                 fontSize: textScale(12),
                                 fontFamily: fontFamily.medium,
                                 color: colors.green,
                                 marginVertical: moderateScaleVertical(8)
-                            }}>$ 12
+                            }}>$ {variant[0]?.price}
                             </Text>
                             <Text style={{
                                 textDecorationLine: 'line-through',
                                 color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity40,
                                 marginLeft: moderateScale(12)
-                            }}  >$ 11</Text>
+                            }}  >$ {variant[0]?.price}</Text>
                         </View>
                     </View>
                 }
