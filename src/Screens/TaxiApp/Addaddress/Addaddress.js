@@ -282,40 +282,24 @@ export default function Addaddress({navigation, route}) {
     });
   };
 
-  const _renderBottomComponent = (type, addressType) => {
-    return (
-      <View
-        style={{
-          padding: moderateScale(15),
-          flexDirection: 'row',
-          alignItems: 'center',
-          zIndex: -1000,
-        }}>
-        <View style={{flex: 0.09}}>
-          <Image source={imagePath.locationCourier} />
-        </View>
-        <TouchableOpacity
-          onPress={() => _redirectToMapScreen(type, addressType)}
-          style={{flex: 0.75}}>
-          <Text style={styles.addresssLableName}>
-            {strings.SETLOCATIONONMAP}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-
   const _rendorCustomRow = (itm) => {
     return (
       <View
         style={{
-          padding: moderateScale(2),
           flexDirection: 'row',
         }}>
-        <View style={{flex: 0.2, marginRight: 10}}>
-          <Image source={imagePath.locationCourier} />
+        <View
+          style={{
+            flex: 0.1,
+            marginRight: 10,
+            justifyContent: 'space-around',
+          }}>
+          <Image source={imagePath.locationRoundedBackground} />
         </View>
-        <View style={{flex: 0.7}}>
+        <View
+          style={{
+            flex: 0.15,
+          }}>
           <Text style={styles.address}>{itm.description}</Text>
         </View>
       </View>
@@ -706,9 +690,9 @@ export default function Addaddress({navigation, route}) {
                   updateTheAddress={(details, addressType) =>
                     updateTheAddress(details, addressType, 'pickUpLocation')
                   }
-                  ListHeaderComponent={() =>
-                    _renderBottomComponent('pickUpLocation', 'pickup')
-                  }
+                  // ListHeaderComponent={() =>
+                  //   _renderBottomComponent('pickUpLocation', 'pickup')
+                  // }
                 />
                 <View
                   style={{
@@ -787,9 +771,9 @@ export default function Addaddress({navigation, route}) {
                   updateTheAddress={(details, addressType) =>
                     updateTheAddress(details, addressType, 'dropOffLocation')
                   }
-                  ListHeaderComponent={() =>
-                    _renderBottomComponent('dropOffLocation', 'dropoff')
-                  }
+                  // ListHeaderComponent={() =>
+                  //   _renderBottomComponent('dropOffLocation', 'dropoff')
+                  // }
                 />
                 <View
                   style={{

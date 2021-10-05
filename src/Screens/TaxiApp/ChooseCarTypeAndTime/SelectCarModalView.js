@@ -71,7 +71,6 @@ export default function SelectCarModalView({
           start={{x: 0.5, y: 2.0}}
           style={{
             borderWidth: 1,
-
             paddingVertical: moderateScaleVertical(20),
             paddingHorizontal: moderateScale(10),
             borderRadius: moderateScale(12),

@@ -30,6 +30,7 @@ export default function ProductCard3({
   onIncrement,
   onDecrement,
   selectedItemID,
+  Servicetype,
 }) {
   // data['qty'] = 1
   const [state, setState] = useState({
@@ -70,6 +71,8 @@ export default function ProductCard3({
   };
 
   let htmlText = data?.translation[0]?.body_html || null;
+
+  console.log(Servicetype, 'ServicetypeServicetypeServicetype');
 
   return (
     <Animatable.View
@@ -224,7 +227,7 @@ export default function ProductCard3({
             </View>
           </Animatable.View>
 
-          {!!data?.variant[0]?.quantity ? (
+          {!!data?.variant[0]?.quantity || Servicetype == 8 ? (
             <View
               style={{
                 marginTop:

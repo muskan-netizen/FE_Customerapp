@@ -123,7 +123,7 @@ export default ({themeColors, fontFamily}) => {
       lineHeight: 20,
       fontFamily: fontFamily.regular,
       color: colors.black,
-      fontSize: textScale(14),
+      fontSize: textScale(13),
       textAlign: 'left',
     },
 

@@ -82,6 +82,7 @@ export default ({
       fontFamily: fontFamily.regular,
       lineHeight: moderateScaleVertical(20),
       marginLeft: moderateScale(10),
+      width: width - 20,
     },
     suggestions: {
       padding: moderateScale(10),

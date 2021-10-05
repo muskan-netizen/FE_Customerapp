@@ -1064,6 +1064,11 @@ export default function HomeServiceVariantAddons({
   };
 
   const showScheduleTimeView = () => {
+    console.log(
+      timeforMarkedQuestion.length,
+      timeforMarkedQuestion,
+      'timeforMarkedQuestion.length',
+    );
     return (
       <View>
         {timeforMarkedQuestion && timeforMarkedQuestion.length ? (
@@ -1075,13 +1080,14 @@ export default function HomeServiceVariantAddons({
               backgroundColor: colors.white,
               paddingVertical: moderateScale(10),
             }}>
-            <Text style={{fontSize: textScale()}}>
+            <Text style={{fontSize: textScale(14)}}>
               What Time Would You Like Us To Start?
             </Text>
+
             <FlatList
               keyExtractor={(item, index) => String(index)}
               extraData={timeforMarkedQuestion ? timeforMarkedQuestion : []}
-              data={timeforMarkedQuestion ? timeforMarkedQuestion : []}
+              data={timeforMarkedQuestion}
               renderItem={renderCardComponentSecond}
               // ref={(ref) => (this.timingRef = ref)}
               removeClippedSubviews={false}

@@ -1468,7 +1468,7 @@ export default function Products({route, navigation}) {
           {/* <View style={{ height: moderateScale(height * 0.070) }} /> */}
         </View>
 
-        {categoryInfo.type_id == 8 && isVisibleModal ? (
+        {categoryInfo?.type_id == 8 && isVisibleModal ? (
           <HomeServiceVariantAddons
             addonSet={selectedCartItem?.add_on}
             variantData={selectedCartItem?.variantSet}
