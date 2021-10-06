@@ -7,10 +7,12 @@ import {
   Text,
   ScrollView,
   FlatList,
+  Linking,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import {cloneDeep, debounce} from 'lodash';
+import OpenApplication from 'react-native-open-application';
 
 import WrapperContainer from '../../Components/WrapperContainer';
 import staticStrings from '../../constants/staticStrings';
@@ -79,6 +81,12 @@ export default function Home({route, navigation}) {
     acceptLoader: false,
     rejectLoader: false,
     selectedOrder: null,
+    curAddress: {
+      address:
+        'Plot no 5, Code Brew Labs, CH Devi Lal Centre of Learning, Sh.Chaudhari Devi Lal Memorial, Madhya Marg, 28B, Sector 28, Chandigarh',
+      latitude: 30.7188856,
+      longitude: 76.8083078,
+    },
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
@@ -116,6 +124,7 @@ export default function Home({route, navigation}) {
     acceptLoader,
     rejectLoader,
     selectedOrder,
+    curAddress,
   } = state;
   useFocusEffect(
     React.useCallback(() => {
@@ -207,6 +216,8 @@ export default function Home({route, navigation}) {
         if (result !== 'goback') {
           getCurrentLocation('home')
             .then((res) => {
+              console.log('chekLocationPermission', res);
+              updateState({curAddress: res});
               if (
                 appMainData &&
                 typeof appMainData?.reqData == 'object' &&
@@ -268,7 +279,11 @@ export default function Home({route, navigation}) {
 
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
-    let latlongObj = {};
+    let latlongObj = {
+      address: curAddress?.address,
+      latitude: curAddress?.latitude,
+      longitude: curAddress?.longitude,
+    };
 
     if (appData?.profile?.preferences?.is_hyperlocal) {
       latlongObj = {
@@ -352,7 +367,6 @@ export default function Home({route, navigation}) {
 
   //Error handling in screen
   const errorMethod = (error) => {
-    console.log(error, 'error');
     updateState({
       isLoading: false,
       isLoadingB: false,
@@ -376,6 +390,22 @@ export default function Home({route, navigation}) {
 
   const {viewRef2, viewRef3, bannerRef} = useRef();
 
+  //OnClick Link
+
+  const _onLink = async () => {
+    // const supported = await Linking.canOpenURL(
+    //   'https://apps.apple.com/in/app/uber/id368677368',
+    // );
+    // console.log(supported, 'supported>>>');
+    // if (supported) {
+    //   // alert('123');
+    //   Linking.openURL('https://apps.apple.com/in/app/uber/id368677368');
+    // } else {
+    //   Linking.openURL('https://www.google.com/');
+    // }
+    Linking.openURL('https://www.uber.com/');
+  };
+
   //onPress Category
   const onPressCategory = (item) => {
     console.log(item, 'itemitemitemitemitemitem');
@@ -389,18 +419,22 @@ export default function Home({route, navigation}) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
-        if (item?.warning_page_id) {
-          if (item?.warning_page_id == 2) {
-            moveToNewScreen(navigationStrings.DELIVERY, item)();
-          } else {
-            moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
-          }
+        if (shortCodes.arenagrub === appData?.profile?.code) {
+          _onLink();
         } else {
-          if (item?.template_type_id == 1) {
-            moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
+          if (item?.warning_page_id) {
+            if (item?.warning_page_id == 2) {
+              moveToNewScreen(navigationStrings.DELIVERY, item)();
+            } else {
+              moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
+            }
           } else {
-            // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
-            moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
+            if (item?.template_type_id == 1) {
+              moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
+            } else {
+              // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
+              moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
+            }
           }
         }
       } else {
@@ -509,7 +543,6 @@ export default function Home({route, navigation}) {
   //Pull to refresh
   const handleRefresh = () => {
     updateState({isRefreshing: true});
-
     initApiHit();
     // homeData();
   };
@@ -589,7 +622,11 @@ export default function Home({route, navigation}) {
       case 1:
         return (
           <>
-            <DashBoardHeaderOne navigation={navigation} location={location} />
+            <DashBoardHeaderOne
+              navigation={navigation}
+              location={location}
+              curAddress={curAddress}
+            />
             <DashBoardOne
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}
@@ -599,6 +636,7 @@ export default function Home({route, navigation}) {
               onPressCategory={(item) => onPressCategory(item)}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
+              curAddress={curAddress}
             />
           </>
         );
@@ -606,7 +644,11 @@ export default function Home({route, navigation}) {
       case 2:
         return (
           <>
-            <DashBoardHeaderOne navigation={navigation} location={location} />
+            <DashBoardHeaderOne
+              navigation={navigation}
+              location={location}
+              curAddress={curAddress}
+            />
             <DashBoardFour
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}
@@ -618,6 +660,7 @@ export default function Home({route, navigation}) {
               }}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
+              curAddress={curAddress}
             />
           </>
         );
@@ -630,6 +673,7 @@ export default function Home({route, navigation}) {
               selcetedToggle={selcetedToggle}
               toggleData={appData}
               isLoading={isLoading}
+              curAddress={curAddress}
             />
 
             <DashBoardFive
@@ -645,6 +689,7 @@ export default function Home({route, navigation}) {
               selcetedToggle={selcetedToggle}
               toggleData={appData}
               navigation={navigation}
+              curAddress={curAddress}
             />
           </>
         );

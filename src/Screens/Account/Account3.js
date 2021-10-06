@@ -30,6 +30,7 @@ import {
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
+  getRandomColor,
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
@@ -41,7 +42,7 @@ export default function Account3({navigation}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {themeColors, appStyle, appData} = useSelector(
+  const {themeColors, appStyle, appData, shortCodeStatus} = useSelector(
     (state) => state?.initBoot,
   );
 
@@ -49,7 +50,6 @@ export default function Account3({navigation}) {
   const [state, setState] = useState({
     isLoading: false,
   });
-  const {shortCodeStatus} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
@@ -212,10 +212,7 @@ export default function Account3({navigation}) {
                 ) : (
                   <View
                     style={{
-                      backgroundColor: getColorCodeWithOpactiyNumber(
-                        themeColors.primary_color.substr(1),
-                        20,
-                      ),
+                      backgroundColor: getRandomColor(),
                       height: moderateScale(46),
                       width: moderateScale(46),
                       borderRadius: moderateScale(12),

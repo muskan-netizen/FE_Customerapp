@@ -106,4 +106,5 @@ export default {
   lightgray: '#222B45',
   greyA: '#C6C6C6',
   taxiCategoryGrayColor: '#C0C0C8',
+  redD: '#FD4937',
 };

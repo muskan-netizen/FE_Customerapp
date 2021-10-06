@@ -8,9 +8,11 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../../../styles/responsiveSize';
 import {getImageUrl, showSuccess} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
@@ -23,6 +25,8 @@ import strings from '../../../constants/lang';
 import {string} from 'prop-types';
 import {BlurView} from '@react-native-community/blur';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import ScaledImage from 'react-native-scalable-image';
+import {shortCodes} from '../../../utils/constants/DynamicAppKeys';
 
 export default function DashBoardHeaderFive({
   navigation = {},
@@ -30,6 +34,7 @@ export default function DashBoardHeaderFive({
   selcetedToggle,
   toggleData,
   isLoading = false,
+  curAddress = {},
 }) {
   const pickerRef = createRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -356,39 +361,57 @@ export default function DashBoardHeaderFive({
             flexDirection: 'row',
             flex: 1,
           }}>
-          {!!appData?.profile?.preferences?.is_hyperlocal && (
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() =>
-                navigation.navigate(navigationStrings.LOCATION, {
-                  type: 'Home1',
-                })
+          {
+          !!(profileInfo && profileInfo?.logo) ? (
+            <ScaledImage
+              width={width / 6}
+              height={moderateScaleVertical(50)}
+              resizeMode="contain"
+              source={
+                profileInfo && profileInfo?.logo
+                  ? {
+                      uri: getImageUrl(
+                        profileInfo.logo.image_fit,
+                        profileInfo.logo.image_path,
+                        '1000/1000',
+                      ),
+                    }
+                  : imagePath.logo
               }
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                flex: 0.85,
-              }}>
-              <Image
-                style={styles.locationIcon}
-                source={imagePath.redLocation}
-                resizeMode="contain"
-              />
+            />
+          ) : null}
+          {/* {!!appData?.profile?.preferences?.is_hyperlocal && ( */}
+          <TouchableOpacity
+            activeOpacity={1}
+            disabled={!appData?.profile?.preferences?.is_hyperlocal}
+            onPress={() =>
+              navigation.navigate(navigationStrings.LOCATION, {
+                type: 'Home1',
+              })
+            }
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              flex: 0.85,
+            }}>
+            <Image
+              style={styles.locationIcon}
+              source={imagePath.redLocation}
+              resizeMode="contain"
+            />
 
-              <Text
-                numberOfLines={1}
-                style={[
-                  styles.locationTxt,
-                  {
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGrey,
-                  },
-                ]}>
-                {location?.address}
-              </Text>
-            </TouchableOpacity>
-          )}
+            <Text
+              numberOfLines={1}
+              style={[
+                styles.locationTxt,
+                {
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+                },
+              ]}>
+              {location?.address || curAddress?.address}
+            </Text>
+          </TouchableOpacity>
+          {/* )} */}
         </View>
         {tabs.length > 1 && (
           <TouchableOpacity
@@ -440,14 +463,14 @@ export default function DashBoardHeaderFive({
                 {
                   backgroundColor: isDarkMode
                     ? MyDarkTheme.colors.background
-                    : colors.transparent,
+                    : colors.white,
                 },
               ]}>
-              <BlurView
+              {/* <BlurView
                 blurType="light"
                 style={styles.blurView}
                 blurAmount={32}
-              />
+              /> */}
 
               <View style={{padding: moderateScale(10)}}>
                 {tabs.map((item, indx) => {
@@ -492,7 +515,7 @@ export default function DashBoardHeaderFive({
                             width: moderateScale(20),
                             tintColor: item.isActive
                               ? themeColors.primary_color
-                              : colors.iconGrey,
+                              : colors.blackOpacity43,
                           }}
                         />
                         <Text
@@ -502,10 +525,9 @@ export default function DashBoardHeaderFive({
                               ? themeColors.primary_color
                               : isDarkMode
                               ? MyDarkTheme.colors.text
-                              : colors.white,
+                              : colors.blackOpacity43,
                             fontSize: textScale(12),
                             marginHorizontal: moderateScale(10),
-                            opacity: item.isActive ? 1 : 0.5,
                           }}>
                           {item.value}
                         </Text>
@@ -519,7 +541,7 @@ export default function DashBoardHeaderFive({
                             ? themeColors.primary_color
                             : isDarkMode
                             ? MyDarkTheme.colors.text
-                            : colors.white,
+                            : colors.blackOpacity66,
                           alignSelf: 'flex-end',
                         }}
                         resizeMode="contain"

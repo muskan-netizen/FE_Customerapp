@@ -41,7 +41,15 @@ export default function HomeCategoryCard2({
         alignItems: 'center',
         height: moderateScale(70),
       }}>
-      <View style={{flex: 0.8}}>
+      <View
+        style={{
+          flex: 0.8,
+          backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
+          borderRadius: moderateScale(40),
+          width: moderateScale(60),
+          height: moderateScale(60),
+          justifyContent: 'flex-end',
+        }}>
         {isSVG ? (
           <SvgUri
             height={moderateScale(50)}
@@ -51,8 +59,8 @@ export default function HomeCategoryCard2({
         ) : (
           <FastImage
             style={{
-              height: moderateScale(width / 8),
-              width: moderateScale(width / 8),
+              height: moderateScale(50),
+              width: moderateScale(50),
               borderRadius: moderateScale(10),
             }}
             source={{

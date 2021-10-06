@@ -39,6 +39,7 @@ export default function DashBoardFour({
   onPressCategory = () => {},
   selcetedToggle,
   toggleData,
+  curAddress={}
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
