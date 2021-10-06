@@ -381,10 +381,9 @@ export default function Home({route, navigation}) {
 
   const openUber = () => {
     let appName = 'Uber - Easy affordable trips';
-    let appStoreLocale = 'in';
+    let appStoreLocale = '';
     let playStoreId = 'com.ubercab';
     let appStoreId = '368677368';
-    s;
     AppLink.maybeOpenURL('uber://', {
       appName: appName,
       appStoreId: appStoreId,
