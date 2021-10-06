@@ -436,7 +436,9 @@ export default function MyOrders({navigation}) {
             ? imagePath.icBackb
             : imagePath.back
         }
-        centerTitle={true ? strings.MYRIDES : strings.MY_ORDERS}
+        centerTitle={
+          businessType === 'taxi' ? strings.MYRIDES : strings.MY_ORDERS
+        }
         headerStyle={
           isDarkMode
             ? {backgroundColor: MyDarkTheme.colors.background}
