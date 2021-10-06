@@ -1,5 +1,5 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   BackHandler,
@@ -9,15 +9,15 @@ import {
   FlatList,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {useSelector} from 'react-redux';
-import {cloneDeep, debounce} from 'lodash';
+import { useSelector } from 'react-redux';
+import { cloneDeep, debounce } from 'lodash';
 
 import WrapperContainer from '../../Components/WrapperContainer';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
+import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
 import {
   androidBackButtonHandler,
   getColorCodeWithOpactiyNumber,
@@ -26,8 +26,8 @@ import {
   getUrlRoutes,
   showError,
 } from '../../utils/helperFunctions';
-import {chekLocationPermission} from '../../utils/permissions';
-import {setItem} from '../../utils/utils';
+import { chekLocationPermission } from '../../utils/permissions';
+import { setItem } from '../../utils/utils';
 import {
   DashBoardFive,
   DashBoardFour,
@@ -35,8 +35,8 @@ import {
   DashBoardHeaderOne,
   DashBoardOne,
 } from './DashboardViews/Index';
-import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
-import {useDarkMode} from 'react-native-dark-mode';
+import { MyDarkTheme, MyDefaultTheme } from '../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
 import Geocoder from 'react-native-geocoding';
 import strings from '../../constants/lang';
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -47,12 +47,12 @@ import {
 } from '../../styles/responsiveSize';
 import OrderCardVendorComponent from '../../Components/OrderCardVendorComponent';
 import PendingOrderCard from '../../Components/PendingOrderCard';
-import {BlurView} from '@react-native-community/blur';
+import { BlurView } from '@react-native-community/blur';
 navigator.geolocation = require('react-native-geolocation-service');
 import stylesFunc from './styles';
 import NotificationModal from '../../Components/NotificationModal';
 
-export default function Home({route, navigation}) {
+export default function Home({ route, navigation }) {
   const paramData = route?.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const pendingNotifications = useSelector(
@@ -79,6 +79,11 @@ export default function Home({route, navigation}) {
     acceptLoader: false,
     rejectLoader: false,
     selectedOrder: null,
+    curAddress: {
+      address: 'Plot no 5, Code Brew Labs, CH Devi Lal Centre of Learning, Sh.Chaudhari Devi Lal Memorial, Madhya Marg, 28B, Sector 28, Chandigarh',
+      latitude: 30.7188856,
+      longitude: 76.8083078,
+    }
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
@@ -98,9 +103,9 @@ export default function Home({route, navigation}) {
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
 
   const profileInfo = appData?.profile;
-  const {profile} = appData;
+  const { profile } = appData;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
 
   const {
     updateTime,
@@ -116,6 +121,7 @@ export default function Home({route, navigation}) {
     acceptLoader,
     rejectLoader,
     selectedOrder,
+    curAddress,
   } = state;
   useFocusEffect(
     React.useCallback(() => {
@@ -128,7 +134,7 @@ export default function Home({route, navigation}) {
   );
 
   useEffect(() => {
-    updateState({updatedData: appMainData?.categories});
+    updateState({ updatedData: appMainData?.categories });
     console.log(appMainData, 'appMainData');
   }, [appMainData]);
 
@@ -165,7 +171,7 @@ export default function Home({route, navigation}) {
         onPress: () => console.log('Cancel Pressed'),
         // style: 'destructive',
       },
-      {text: strings.CLEAR_CART2, onPress: () => clearCart(res)},
+      { text: strings.CLEAR_CART2, onPress: () => clearCart(res) },
     ]);
   };
 
@@ -189,7 +195,7 @@ export default function Home({route, navigation}) {
   };
 
   const updateLatLang = (res) => {
-    updateState({updateTime: Math.random()});
+    updateState({ updateTime: Math.random() });
     actions.locationData(res);
   };
   useEffect(() => {
@@ -198,7 +204,7 @@ export default function Home({route, navigation}) {
     }
   }, [updateTime]);
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+    Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
   }, []);
 
   useEffect(() => {
@@ -207,6 +213,8 @@ export default function Home({route, navigation}) {
         if (result !== 'goback') {
           getCurrentLocation('home')
             .then((res) => {
+              console.log("chekLocationPermission", res)
+              updateState({ curAddress: res })
               if (
                 appMainData &&
                 typeof appMainData?.reqData == 'object' &&
@@ -227,7 +235,7 @@ export default function Home({route, navigation}) {
                 }
               }
             })
-            .catch((err) => {});
+            .catch((err) => { });
         }
       })
       .catch((error) => console.log('error while accessing location', error));
@@ -268,7 +276,11 @@ export default function Home({route, navigation}) {
 
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
-    let latlongObj = {};
+    let latlongObj = {
+      address: curAddress?.address,
+      latitude: curAddress?.latitude,
+      longitude: curAddress?.longitude,
+    };
 
     if (appData?.profile?.preferences?.is_hyperlocal) {
       latlongObj = {
@@ -295,57 +307,57 @@ export default function Home({route, navigation}) {
     {
       selectedTabType
         ? actions
-            .homeData(
-              {
-                type: dine_In_Type ? dine_In_Type : dine_In_Type,
-                ...latlongObj,
-              },
-              {
-                code: appData?.profile?.code,
-                currency: currencies?.primary_currency?.id,
-                language: languages?.primary_language?.id,
-                // ...latlongObj,
-              },
-            )
-            .then((res) => {
-              console.log('Home data++++++', res);
+          .homeData(
+            {
+              type: dine_In_Type ? dine_In_Type : dine_In_Type,
+              ...latlongObj,
+            },
+            {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+              // ...latlongObj,
+            },
+          )
+          .then((res) => {
+            console.log('Home data++++++', res);
+            if (
+              appData?.profile?.preferences?.is_hyperlocal &&
+              location?.latitude == '' &&
+              location?.longitude == ''
+            ) {
+              if (
+                typeof res?.data?.reqData == 'object' &&
+                res?.data?.reqData?.latitude &&
+                res?.data?.reqData?.longitude
+              ) {
+                const data = {
+                  address: res?.data?.reqData?.address,
+                  latitude: res?.data?.reqData?.latitude,
+                  longitude: res?.data?.reqData?.longitude,
+                };
+                actions.locationData(data);
+              }
+            } else {
               if (
                 appData?.profile?.preferences?.is_hyperlocal &&
-                location?.latitude == '' &&
-                location?.longitude == ''
+                location?.latitude != '' &&
+                location?.longitude != ''
               ) {
-                if (
-                  typeof res?.data?.reqData == 'object' &&
-                  res?.data?.reqData?.latitude &&
-                  res?.data?.reqData?.longitude
-                ) {
-                  const data = {
-                    address: res?.data?.reqData?.address,
-                    latitude: res?.data?.reqData?.latitude,
-                    longitude: res?.data?.reqData?.longitude,
-                  };
-                  actions.locationData(data);
-                }
               } else {
-                if (
-                  appData?.profile?.preferences?.is_hyperlocal &&
-                  location?.latitude != '' &&
-                  location?.longitude != ''
-                ) {
-                } else {
-                  const data = {
-                    address: '',
-                    latitude: '',
-                    longitude: '',
-                  };
-                  actions.locationData(data);
-                }
+                const data = {
+                  address: '',
+                  latitude: '',
+                  longitude: '',
+                };
+                actions.locationData(data);
               }
-              setTimeout(() => {
-                updateState({isLoading: false});
-              }, 1000);
-            })
-            .catch(errorMethod)
+            }
+            setTimeout(() => {
+              updateState({ isLoading: false });
+            }, 1000);
+          })
+          .catch(errorMethod)
         : null;
     }
   };
@@ -365,16 +377,16 @@ export default function Home({route, navigation}) {
   };
 
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
-  const {viewRef2, viewRef3, bannerRef} = useRef();
+  const { viewRef2, viewRef3, bannerRef } = useRef();
 
   //onPress Category
   const onPressCategory = (item) => {
@@ -413,14 +425,14 @@ export default function Home({route, navigation}) {
       moveToNewScreen(navigationStrings.BRANDS)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { item })();
     } else if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
             id: item?.id,
             vendor: true,
@@ -453,15 +465,15 @@ export default function Home({route, navigation}) {
       if (data.redirect_to == staticStrings.VENDOR) {
         data?.is_show_category
           ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-              item,
-              rootProducts: true,
-              // categoryData: data,
-            })()
+            item,
+            rootProducts: true,
+            // categoryData: data,
+          })()
           : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-              id: data.redirect_id,
-              vendor: true,
-              name: data.redirect_name,
-            })();
+            id: data.redirect_id,
+            vendor: true,
+            name: data.redirect_name,
+          })();
       } else if (data.redirect_to == staticStrings.CATEGORY) {
         moveToNewScreen(navigationStrings.PRODUCT_LIST, {
           id: data.redirect_id,
@@ -497,22 +509,21 @@ export default function Home({route, navigation}) {
       )
       .then((res) => {
         console.log(res, 'initApp');
-        updateState({isRefreshing: false});
+        updateState({ isRefreshing: false });
       })
       .catch((error) => {
-        updateState({isRefreshing: false});
+        updateState({ isRefreshing: false });
       });
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({isRefreshing: true});
-
+    updateState({ isRefreshing: true });
     initApiHit();
     // homeData();
   };
   const updateCircleData = (data) => {
-    updateState({updatedData: data});
+    updateState({ updatedData: data });
   };
 
   const selcetedToggle = (type) => {
@@ -563,20 +574,20 @@ export default function Home({route, navigation}) {
     } else if (data.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, data)();
 
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {data})();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { data })();
     } else if (!data.is_show_category || data.is_show_category) {
       let item = data;
       data?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: data?.id,
-            vendor: true,
-            name: data?.name,
-          })();
+          id: data?.id,
+          vendor: true,
+          name: data?.name,
+        })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
@@ -587,7 +598,10 @@ export default function Home({route, navigation}) {
       case 1:
         return (
           <>
-            <DashBoardHeaderOne navigation={navigation} location={location} />
+            <DashBoardHeaderOne
+              navigation={navigation} location={location}
+              curAddress={curAddress}
+            />
             <DashBoardOne
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}
@@ -597,6 +611,7 @@ export default function Home({route, navigation}) {
               onPressCategory={(item) => onPressCategory(item)}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
+              curAddress={curAddress}
             />
           </>
         );
@@ -604,7 +619,11 @@ export default function Home({route, navigation}) {
       case 2:
         return (
           <>
-            <DashBoardHeaderOne navigation={navigation} location={location} />
+            <DashBoardHeaderOne
+              navigation={navigation}
+              location={location}
+              curAddress={curAddress}
+            />
             <DashBoardFour
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}
@@ -616,6 +635,7 @@ export default function Home({route, navigation}) {
               }}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
+              curAddress={curAddress}
             />
           </>
         );
@@ -628,6 +648,7 @@ export default function Home({route, navigation}) {
               selcetedToggle={selcetedToggle}
               toggleData={appData}
               isLoading={isLoading}
+              curAddress={curAddress}
             />
 
             <DashBoardFive
@@ -643,6 +664,7 @@ export default function Home({route, navigation}) {
               selcetedToggle={selcetedToggle}
               toggleData={appData}
               navigation={navigation}
+              curAddress={curAddress}
             />
           </>
         );
@@ -677,7 +699,7 @@ export default function Home({route, navigation}) {
   }, []);
   // console.log(appMainData, 'appMainData');
 
-  const {blurRef} = useRef();
+  const { blurRef } = useRef();
 
   return (
     <WrapperContainer
@@ -685,7 +707,7 @@ export default function Home({route, navigation}) {
       bgColor={
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }>
-      <View style={{flex: 1}}>{renderHomeScreen()}</View>
+      <View style={{ flex: 1 }}>{renderHomeScreen()}</View>
     </WrapperContainer>
   );
 }
