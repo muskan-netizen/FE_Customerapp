@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import {StyleSheet} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import colors from '../../styles/colors';
 import {
   height,
@@ -8,9 +8,9 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
+import {MyDarkTheme} from '../../styles/theme';
 
-export default ({ themeColors, fontFamily }) => {
+export default ({themeColors, fontFamily}) => {
   const styles = StyleSheet.create({
     absolute: {
       position: 'absolute',
@@ -30,7 +30,7 @@ export default ({ themeColors, fontFamily }) => {
       paddingBottom: moderateScaleVertical(12),
       paddingLeft: moderateScaleVertical(12),
     },
-    imgSmall: { height: '100%', width: '100%', borderRadius: 4 },
+    imgSmall: {height: '100%', width: '100%', borderRadius: 4},
     imgContainer: {
       height: moderateScaleVertical(128),
       width: width * 0.5 - moderateScale(12),
@@ -192,7 +192,7 @@ export default ({ themeColors, fontFamily }) => {
       fontSize: textScale(9),
       textAlign: 'left',
     },
-    circularListImage: { height: moderateScale(40), width: moderateScale(40) },
+    circularListImage: {height: moderateScale(40), width: moderateScale(40)},
     applyPromoBtn: {
       marginHorizontal: moderateScale(7),
       borderRadius: moderateScale(15),
@@ -255,7 +255,7 @@ export default ({ themeColors, fontFamily }) => {
       lineHeight: 20,
       fontFamily: fontFamily.regular,
       color: colors.textGrey,
-      fontSize: textScale(10),
+      fontSize: textScale(12),
       textAlign: 'left',
     },
     deliveryIcon: {
@@ -268,6 +268,7 @@ export default ({ themeColors, fontFamily }) => {
       color: themeColors.primary_color,
       marginHorizontal: moderateScale(3),
       textAlign: 'left',
+      fontSize: textScale(12),
     },
     customDropDownIcon: {
       width: moderateScale(8),
@@ -298,9 +299,7 @@ export default ({ themeColors, fontFamily }) => {
     exploreStoresTxt: {
       fontFamily: fontFamily.medium,
       fontSize: textScale(18),
-      marginBottom: moderateScale(10),
       textAlign: 'left',
-      marginTop: moderateScale(-36),
     },
     dotStyle: {
       height: 6,
@@ -343,7 +342,42 @@ export default ({ themeColors, fontFamily }) => {
       borderRadius: moderateScale(10),
       alignSelf: 'center',
       marginVertical: moderateScale(10),
-    }
+    },
+    viewAllText: {
+      color: colors.redD,
+      fontFamily: fontFamily.regular,
+    },
+    viewAllVeiw: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: moderateScaleVertical(16),
+      marginHorizontal: moderateScale(16),
+    },
+    hdrRatingTxtView: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: colors.green,
+      paddingVertical: moderateScale(2),
+      paddingHorizontal: moderateScale(4),
+      alignSelf: 'flex-start',
+      borderRadius: moderateScale(2),
+      marginTop: moderateScaleVertical(16),
+    },
+    ratingTxt: {
+      // color: colors.yellowC,
+      // fontSize: textScale(11),
+      fontFamily: fontFamily.medium,
+      textAlign: 'left',
+      color: colors.white,
+      fontSize: textScale(9),
+    },
+    starImg: {
+      tintColor: colors.white,
+      marginLeft: 2,
+      width: 9,
+      height: 9,
+    },
   });
 
   return styles;

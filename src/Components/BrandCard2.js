@@ -1,7 +1,8 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {useDarkMode} from 'react-native-dark-mode';
+import {SvgUri} from 'react-native-svg';
 import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 import commonStylesFun from '../styles/commonStyles';
@@ -11,14 +12,12 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
+import {MyDarkTheme} from '../styles/theme';
 import {
   getImageUrl,
-  getScaleTransformationStyle,
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
 import BlurImages from './BlurImages';
 
 export default function BrandCard2({data = {}, onPress = () => {}}) {
@@ -33,6 +32,13 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
   const {appStyle, themeColors} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
+  const imageURI = getImageUrl(
+    data?.icon?.image_fit,
+    data?.icon?.image_path,
+    '200/200',
+  );
+
+  const isSVG = imageURI ? imageURI.includes('.svg') : null;
 
   return (
     <View style={styles.imgContainer}>
@@ -48,39 +54,58 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <BlurImages
-          isDarkMode={isDarkMode}
-          themeColor={themeColors.primary_color}
-          style={{
-            ...styles.imgStyle,
-            backgroundColor: isDarkMode
-              ? colors.whiteOpacity15
-              : colors.greyColor,
-          }}
-          thumnailUrl={{
-            uri: data?.icon
-              ? getImageUrl(data.icon.image_fit, data.icon.image_path, '40/40')
-              : getImageUrl(
-                  data.image.image_fit,
-                  data.image.image_path,
-                  '40/40',
-                ),
-          }}
-          originalUrl={{
-            uri: data?.icon
-              ? getImageUrl(
-                  data.icon.image_fit,
-                  data.icon.image_path,
-                  '400/400',
-                )
-              : getImageUrl(
-                  data.image.image_fit,
-                  data.image.image_path,
-                  '400/400',
-                ),
-          }}
-          containerStyle={{borderRadius: moderateScale(10), width: '100%'}}
-        />
+        {isSVG ? (
+          <SvgUri
+            height={moderateScale(90)}
+            width={moderateScale(90)}
+            style={{
+              marginHorizontal: moderateScale(5),
+            }}
+            uri={imageURI}
+          />
+        ) : (
+          <BlurImages
+            isDarkMode={isDarkMode}
+            themeColor={themeColors.primary_color}
+            style={{
+              ...styles.imgStyle,
+              backgroundColor: isDarkMode
+                ? colors.whiteOpacity15
+                : colors.greyColor,
+            }}
+            thumnailUrl={{
+              uri: data?.icon
+                ? isSVG
+                  ? imageURI
+                  : getImageUrl(
+                      data.icon.image_fit,
+                      data.icon.image_path,
+                      '40/40',
+                    )
+                : getImageUrl(
+                    data.image.image_fit,
+                    data.image.image_path,
+                    '40/40',
+                  ),
+            }}
+            originalUrl={{
+              uri: data?.icon
+                ? isSVG
+                  ? imageURI
+                  : getImageUrl(
+                      data.icon.image_fit,
+                      data.icon.image_path,
+                      '400/400',
+                    )
+                : getImageUrl(
+                    data.image.image_fit,
+                    data.image.image_path,
+                    '400/400',
+                  ),
+            }}
+            containerStyle={{borderRadius: moderateScale(10), width: '100%'}}
+          />
+        )}
       </TouchableOpacity>
 
       <Text

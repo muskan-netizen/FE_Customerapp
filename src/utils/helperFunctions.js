@@ -8,7 +8,7 @@ import {callingCountries} from 'country-data';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import * as NavigationService from '../navigation/NavigationService';
-import {Toast} from '../library/toastify-react-native';
+import Toast from 'react-native-simple-toast';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -88,7 +88,7 @@ const showError = (message) => {
   //   icon: 'danger',
   //   message,
   // });
-  Toast.error(message);
+  Toast.show(message);
 };
 
 const showSuccess = (message) => {
@@ -98,7 +98,7 @@ const showSuccess = (message) => {
   //   message,
   // });
 
-  Toast.success(message);
+  Toast.show(message);
 };
 const showInfo = (message) => {
   // showMessage({
@@ -106,7 +106,7 @@ const showInfo = (message) => {
   //   icon: 'info',
   //   message,
   // });
-  Toast.info(message);
+  Toast.show(message);
 };
 
 export function otpTimerCounter(seconds) {

@@ -530,6 +530,10 @@ export default {
   WRITE_REVIEW: 'Write a Review',
   ALREADY_EXIST:
     'Your already have items in your cart. Do you want to discard them?',
+  VIEW_ALL: 'View All',
+  POPULAR_BRANDS: 'Popular Brands',
+  FEATURED_PRODUCTS: 'Featured products',
+  ON_SALE: 'On Sale',
   YOUR_EMAIL_PHONE: 'Your Email or Phone Number',
   PASTRIDES: 'Past Rides',
   ACTIVERIDES: 'Active Rides',

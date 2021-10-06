@@ -395,8 +395,8 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       textAlign: 'left',
     },
     editIcon: {
-      height: 20,
-      width: 20,
+      height: moderateScaleVertical(18),
+      width: moderateScale(18),
       tintColor: themeColors.primary_color,
     },
     dropDownStyle: {

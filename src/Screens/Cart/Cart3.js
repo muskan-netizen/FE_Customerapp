@@ -112,6 +112,7 @@ export default function Cart({navigation, route}) {
     btnLoader: false,
     placeLoader: false,
     localeSheduledOrderDate: null,
+    btnLoadrIndx: null,
   });
   const {
     viewHeight,
@@ -142,6 +143,7 @@ export default function Cart({navigation, route}) {
     btnLoader,
     placeLoader,
     localeSheduledOrderDate,
+    btnLoadrIndx,
   } = state;
 
   //Redux store data
@@ -394,7 +396,7 @@ export default function Cart({navigation, route}) {
       data['quantity'] = quanitity;
       data['cart_product_id'] = itemToUpdate?.id;
       data['type'] = dineInType;
-      updateState({btnLoader: true});
+      updateState({btnLoader: true, btnLoadrIndx: index});
       actions
         .increaseDecreaseItemQty(data, {
           code: appData?.profile?.code,
@@ -976,12 +978,12 @@ export default function Cart({navigation, route}) {
                       style={{
                         backgroundColor: isDarkMode
                           ? MyDarkTheme.colors.lightDark
-                          : '#F8F8F8',
+                          : colors.transactionHistoryBg,
                         marginBottom: moderateScaleVertical(12),
                         marginRight: moderateScale(8),
                         borderRadius: moderateScale(10),
-
                         transform: [],
+                        minHeight: height * 0.125,
                       }}
                       key={inx}>
                       <View style={[styles.cartItemMainContainer]}>
@@ -1116,7 +1118,7 @@ export default function Cart({navigation, route}) {
                                   <Text style={styles.cartItemValueBtn}>-</Text>
                                 </TouchableOpacity>
                                 <View style={{flex: 0.4, alignItems: 'center'}}>
-                                  {btnLoader ? (
+                                  {btnLoadrIndx === inx && btnLoader ? (
                                     <UIActivityIndicator
                                       size={moderateScale(18)}
                                       color={colors.white}
@@ -1940,7 +1942,11 @@ export default function Cart({navigation, route}) {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => setModalVisible(true)}>
-            <Image source={imagePath.icEdit1} style={styles.editIcon} />
+            <Image
+              source={imagePath.icEdit1}
+              style={styles.editIcon}
+              resizeMode="contain"
+            />
           </TouchableOpacity>
         )}
       </View>

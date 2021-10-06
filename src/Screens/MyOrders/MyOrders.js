@@ -2,23 +2,24 @@ import {cloneDeep, debounce} from 'lodash';
 import React, {createRef, useEffect, useState} from 'react';
 import {
   FlatList,
-  RefreshControl,
-  View,
-  TouchableOpacity,
   Image,
+  RefreshControl,
   ScrollView,
   Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import FastImage from 'react-native-fast-image';
+import * as RNLocalize from 'react-native-localize';
+import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
 import CustomTopTabBar from '../../Components/CustomTopTabBar';
+import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {
-  loaderOne,
-  loaderSix,
-} from '../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import NoDataFound from '../../Components/NoDataFound';
 import OrderCardVendorComponent2 from '../../Components/OrderCardVendorComponent2';
-import OrderCardVendorComponent from '../../Components/OrderCardVendorComponent';
-
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
@@ -33,17 +34,9 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {getImageUrl, showError} from '../../utils/helperFunctions';
-import Modal from 'react-native-modal';
-import stylesFun from './styles';
-import DatePicker from 'react-native-date-picker';
-import FastImage from 'react-native-fast-image';
-import GradientButton from '../../Components/GradientButton';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import * as RNLocalize from 'react-native-localize';
-import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
-import LottieView from 'lottie-react-native';
+import {getImageUrl, showError} from '../../utils/helperFunctions';
+import stylesFun from './styles';
 
 export default function MyOrders({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -487,29 +480,18 @@ export default function MyOrders({navigation}) {
         onEndReachedThreshold={0.5}
         ItemSeparatorComponent={() => <View style={{height: 20}} />}
         ListFooterComponent={() => <View style={{height: 90}} />}
-        ListEmptyComponent={() => (
-          <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <LottieView
-              source={loaderSix}
-              autoPlay
-              loop
+        ListEmptyComponent={
+          !isLoading && (
+            <View
               style={{
-                height: moderateScaleVertical(100),
-                width: moderateScale(100),
-              }}
-            />
-            <Text
-              style={[
-                styles.textStyle,
-                {
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
-                },
-              ]}>
-              {strings.NO_ORDERS_FOUND}
-            </Text>
-          </View>
-        )}
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <NoDataFound isLoading={state.isLoading} />
+            </View>
+          )
+        }
       />
 
       <Modal

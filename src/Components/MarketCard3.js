@@ -48,14 +48,15 @@ export default function MarketCard3({
   const scaleInAnimated = new Animated.Value(0);
   return (
     <TouchableOpacity
-      activeOpacity={0.5}
+      activeOpacity={1}
       onPress={onPress}
       style={{
         ...styles.mainTouchContainer,
         ...getScaleTransformationStyle(scaleInAnimated),
       }}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
-      onPressOut={() => pressOutAnimation(scaleInAnimated)}>
+      onPressOut={() => pressOutAnimation(scaleInAnimated)}
+      >
       <BlurImages
         isDarkMode={isDarkMode}
         themeColor={themeColors.primary_color}
@@ -114,18 +115,21 @@ export default function MarketCard3({
             </View>
           )}
         </View>
-        <Text
-          numberOfLines={1}
-          style={{
-            color: colors.greyLight,
-            fontSize: textScale(10),
-            fontFamily: fontFamily.regular,
-            textAlign: 'left',
-            marginVertical: moderateScaleVertical(4),
-            marginTop: moderateScaleVertical(6),
-          }}>
-          {data?.categoriesList}
-        </Text>
+        {data?.categoriesList ? (
+          <Text
+            numberOfLines={1}
+            style={{
+              color: colors.greyLight,
+              fontSize: textScale(10),
+              fontFamily: fontFamily.regular,
+              textAlign: 'left',
+              marginVertical: moderateScaleVertical(4),
+              marginTop: moderateScaleVertical(6),
+            }}>
+            {data?.categoriesList}
+          </Text>
+        ) : null}
+
         <View
           style={{
             height: 1,
@@ -141,27 +145,35 @@ export default function MarketCard3({
               alignItems: 'center',
               flex: 1,
             }}>
-            {data?.lineOfSightDistance && (
-              <Image
-                style={{tintColor: themeColors.primary_color}}
-                source={imagePath.location2}
-              />
+            {!!data?.lineOfSightDistance && (
+              <View style={{flexDirection: 'row'}}>
+                <Image
+                  style={{tintColor: themeColors.primary_color}}
+                  source={imagePath.location2}
+                />
+                <Text
+                  style={{
+                    color: colors.greyLight,
+                    fontSize: textScale(10),
+                    fontFamily: fontFamily.regular,
+                    marginHorizontal: moderateScale(5),
+                    textAlign: 'left',
+                  }}>
+                  {data?.lineOfSightDistance}
+                </Text>
+              </View>
             )}
-            <Text
-              style={{
-                color: colors.greyLight,
-                fontSize: textScale(10),
-                fontFamily: fontFamily.regular,
-                marginHorizontal: moderateScale(5),
-                textAlign: 'left',
-              }}>
-              {data?.lineOfSightDistance}{' '}
-              {!!data?.lineOfSightDistance && !!data?.timeofLineOfSightDistance
-                ? '|'
-                : ''}{' '}
-              {data?.timeofLineOfSightDistance}{' '}
-              {!!data?.timeofLineOfSightDistance ? 'mins' : ''}
-            </Text>
+            {!!data?.timeofLineOfSightDistance ? (
+              <Text
+                style={{
+                  color: colors.greyLight,
+                  fontSize: textScale(10),
+                  fontFamily: fontFamily.regular,
+                  textAlign: 'left',
+                }}>
+                {`| ${data?.timeofLineOfSightDistance} mins`}
+              </Text>
+            ) : null}
           </View>
 
           <Text
@@ -194,7 +206,7 @@ export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
       shadowColor: '#000',
       shadowOffset: {width: 0, height: 0},
       shadowOpacity: 0.15,
-      shadowRadius: 3.84,
+      shadowRadius: 1.84,
       elevation: 2,
       backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
       margin: 6,
@@ -208,7 +220,7 @@ export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
       textAlign: 'left',
     },
     mainImage: {
-      height: moderateScaleVertical(190),
+      height: moderateScaleVertical(140),
       width: '100%',
       borderTopRightRadius: moderateScale(9),
       borderTopLeftRadius: moderateScale(9),

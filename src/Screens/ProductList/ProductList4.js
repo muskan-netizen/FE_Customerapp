@@ -41,6 +41,7 @@ export default function Products() {
     );
   };
   const onEnd = () => {
+    console.log(currIndex, 'currIndex');
     setCurrIndex(currIndex + 1);
   };
   return (
