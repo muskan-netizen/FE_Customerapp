@@ -40,15 +40,15 @@ export default function HomeCategoryCard2({
         justifyContent: 'center',
         alignItems: 'center',
         height: moderateScale(70),
-
       }}>
-      <View style={{
-        flex: 0.8, 
-        backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
-        borderRadius:moderateScale(40),
-        width: moderateScale(60),
-        height: moderateScale(60),
-        justifyContent:'flex-end',
+      <View
+        style={{
+          flex: 0.8,
+          backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
+          borderRadius: moderateScale(40),
+          width: moderateScale(60),
+          height: moderateScale(60),
+          justifyContent: 'flex-end',
         }}>
         {isSVG ? (
           <SvgUri

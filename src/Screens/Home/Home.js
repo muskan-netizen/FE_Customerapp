@@ -417,7 +417,7 @@ export default function Home({route, navigation}) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
-        if (shortCodes.arenagrub == appData?.profile?.code) {
+        if (shortCodes.arenagrub === appData?.profile?.code) {
           _onLink();
         } else {
           if (item?.warning_page_id) {

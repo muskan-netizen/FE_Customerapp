@@ -26,6 +26,7 @@ import {string} from 'prop-types';
 import {BlurView} from '@react-native-community/blur';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import ScaledImage from 'react-native-scalable-image';
+import {shortCodes} from '../../../utils/constants/DynamicAppKeys';
 
 export default function DashBoardHeaderFive({
   navigation = {},
@@ -33,7 +34,7 @@ export default function DashBoardHeaderFive({
   selcetedToggle,
   toggleData,
   isLoading = false,
-  curAddress={}
+  curAddress = {},
 }) {
   const pickerRef = createRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -360,7 +361,8 @@ export default function DashBoardHeaderFive({
             flexDirection: 'row',
             flex: 1,
           }}>
-          {!!(profileInfo && profileInfo?.logo) ? (
+          {shortCodes.arenagrub === appData?.profile?.code &&
+          !!(profileInfo && profileInfo?.logo) ? (
             <ScaledImage
               width={width / 6}
               height={moderateScaleVertical(50)}
