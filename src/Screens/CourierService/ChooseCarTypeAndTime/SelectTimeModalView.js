@@ -27,6 +27,7 @@ export default function SelectTimeModalView({
   selectAvailAbleTime,
   _selectTime,
   _onDateChange,
+  showBottomButton,
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -143,6 +144,7 @@ export default function SelectTimeModalView({
             onDateChange={(value) => onDateChange(value)}
           />
         </View>
+
         <View
           style={{
             marginVertical: moderateScaleVertical(20),

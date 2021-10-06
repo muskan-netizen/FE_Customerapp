@@ -514,6 +514,7 @@ export default {
   YOUR_RIDE_WILL_START_SOON: 'Your ride will start soon',
   LABEL1: 'Label 1',
   LABEL2: 'Label 2',
+  DOYOUHAVECLEANINGMATERIAL: ' Do you require cleaning materials ?',
   YOUR_ORDER_WILL_ARRIVE_BY: 'Your order will arrive by',
   CHOICE_OF: 'Choice of',
   FEATURED_INCLUDED: 'Featured Included :',
@@ -522,6 +523,11 @@ export default {
   PLACE_PIN_ON_MAP: 'Place the pin on Map to mark exact location',
   TABLE: 'Table',
   SEAT_CAPACITY: 'Seat Capacity',
+  WRITE_A_REVIEW: 'Write a Review',
+  WHERETO: '  Where to ?',
+  AROUNDYOU: 'Around you',
+  PLEASESELECTONECATEGORY: 'Please Select One Category',
+  MYRIDES: 'My Rides',
   WRITE_REVIEW: 'Write a Review',
   PICKUP: 'PICKUP',
   ALREADY_EXIST:
@@ -531,4 +537,8 @@ export default {
   FEATURED_PRODUCTS: 'Featured products',
   ON_SALE: 'On Sale',
   YOUR_EMAIL_PHONE: 'Your Email or Phone Number',
+  PASTRIDES: 'Past Rides',
+  ACTIVERIDES: 'Active Rides',
+  CHOOSESAVEDPLACE: 'Choose a saved place',
+  SETPICKUPTIME: 'Set pickiup time',
 };

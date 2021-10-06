@@ -10,6 +10,7 @@
 #import <Firebase.h>
 #import <UserNotifications/UserNotifications.h>
 #import <RNCPushNotificationIOS.h>
+#import <GoogleMaps/GoogleMaps.h>
 @import GooglePlaces;
 @import GoogleMaps;
 // AppDelegate.m

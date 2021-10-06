@@ -7,5 +7,17 @@ import loaderFive from './Files/2112-hourglass.json';
 import loaderSix from './Files/66934-tumbleweed-rolling.json';
 import searchLoader from './Files/searchloader.json';
 import noDataFound from './Files/nodatafound.json';
+import searchingLoader from './Files/8428-loader.json';
 
-export {defaultLoader, loaderOne, loaderTwo, loaderThree, loaderFour,loaderFive,loaderSix,searchLoader,noDataFound};
+export {
+  defaultLoader,
+  loaderOne,
+  loaderTwo,
+  loaderThree,
+  loaderFour,
+  loaderFive,
+  loaderSix,
+  searchLoader,
+  noDataFound,
+  searchingLoader,
+};

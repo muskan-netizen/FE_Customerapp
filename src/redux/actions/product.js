@@ -13,10 +13,10 @@ import {
   MY_WALLET,
   CHECK_VENDORS,
 } from '../../config/urls';
-import { apiGet, apiPost } from '../../utils/utils';
+import {apiGet, apiPost, setWalletData} from '../../utils/utils';
 import store from '../store';
 import types from '../types';
-const { dispatch } = store;
+const {dispatch} = store;
 
 // save vendor listing and category data
 export function saveProductListingAndCategoryInfo(data) {
@@ -26,9 +26,7 @@ export function saveProductListingAndCategoryInfo(data) {
   });
 }
 
-export function storeWishList(data){
-  
-}
+export function storeWishList(data) {}
 
 //Get all Products by Vendor id
 
@@ -44,10 +42,13 @@ export function getProductByVendorId(query = '', data = {}, headers = {}) {
   });
 }
 
-
 //Get all Products by Vendor id
 
-export function getProductByVendorCategoryId(query = '', data = {}, headers = {}) {
+export function getProductByVendorCategoryId(
+  query = '',
+  data = {},
+  headers = {},
+) {
   return new Promise((resolve, reject) => {
     apiGet(GET_PRODUCT_DATA_BY_VENDORID + query, data, headers)
       .then((res) => {
@@ -58,7 +59,6 @@ export function getProductByVendorCategoryId(query = '', data = {}, headers = {}
       });
   });
 }
-
 
 //Get Category data
 export function getProductByCategoryId(query = '', data = {}, headers = {}) {
@@ -163,9 +163,6 @@ export function getProductDetailByProductId(
   });
 }
 
-
-
-
 export function getWishlistProducts(query = '', data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiGet(GET_WISHLIST_PRODUCT + query, data, headers)
@@ -193,10 +190,22 @@ export function updateProductWishListData(query = '', data = {}, headers = {}) {
   });
 }
 
+export const setWallet = (data) => {
+  dispatch({
+    type: types.WALLET_DATA,
+    payload: data,
+  });
+};
+
 export function walletHistory(query = '', data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiGet(MY_WALLET + query, data, headers)
       .then((res) => {
+        setWalletData(res.data).then((suc) => {
+          setWallet(res.data);
+          resolve(res);
+        });
+
         resolve(res);
       })
       .catch((error) => {
@@ -208,7 +217,6 @@ export function walletHistory(query = '', data = {}, headers = {}) {
 
 //Get Product by category id for specific store
 export function getProductBySpecificId(query = '', data = {}, headers = {}) {
-
   return new Promise((resolve, reject) => {
     apiGet(GET_ALL_PRODUCTSBY_STORE_ID + query, data, headers)
       .then((res) => {
@@ -220,10 +228,9 @@ export function getProductBySpecificId(query = '', data = {}, headers = {}) {
   });
 }
 
-
 export function checkSingleVendor(data = {}, header = {}) {
-  console.log("Sending data",data )
-  console.log("header==>>>",header)
+  console.log('Sending data', data);
+  console.log('header==>>>', header);
   return new Promise((resolve, reject) => {
     apiPost(CHECK_VENDORS, data, header)
       .then((res) => {
@@ -234,4 +241,3 @@ export function checkSingleVendor(data = {}, header = {}) {
       });
   });
 }
-

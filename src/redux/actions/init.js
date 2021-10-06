@@ -102,6 +102,7 @@ export function initApp(
           appData: data,
           themeColors: themeColorsData,
           appStyle: appStyle,
+          businessType: data.profile.preferences.business_type,
         };
 
         // setPrimaryCurrency

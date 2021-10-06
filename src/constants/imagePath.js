@@ -338,6 +338,7 @@ export default {
   calendarB: require('../assets/images/TAXIAPPIMAGES/ic_calendar.png'),
   icTime: require('../assets/images/TAXIAPPIMAGES/ic_time.png'),
   discount2: require('../assets/images/TAXIAPPIMAGES/ic_discount.png'),
+
   icgo2: require('../assets/images/TAXIAPPIMAGES/ic_go2.png'),
   locationpin3: require('../assets/images/TAXIAPPIMAGES/ic_pin3.png'),
   locationpinGreen: require('../assets/images/TAXIAPPIMAGES/ic_pingreen.png'),
@@ -349,4 +350,13 @@ export default {
   car3: require('../assets/images/TAXIAPPIMAGES/ic_car3.png'),
   icStar3: require('../assets/images/RoyoorderNewImages/ic_star3.png'),
   icEdit1: require('../assets/images/RoyoorderNewImages/ic_edit1.png'),
+  car5: require('../assets/images/TAXIAPPIMAGES/ic_car1.png'),
+  ride: require('../assets/images/TAXIAPPIMAGES/ic_ride.png'),
+  taxiOrders: require('../assets/images/TAXIAPPIMAGES/ic_orders.png'),
+  locationRoundedBackground: require('../assets/images/TAXIAPPIMAGES/ic_location.png'),
+  starRoundedBackground: require('../assets/images/TAXIAPPIMAGES/ic_star.png'),
+  clock: require('../assets/images/TAXIAPPIMAGES/ic_clock.png'),
+  grayDot: require('../assets/images/TAXIAPPIMAGES/ic_dot.png'),
+  blackSquare: require('../assets/images/TAXIAPPIMAGES/ic_square.png'),
+  blackNav: require('../assets/images/TAXIAPPIMAGES/ic_nav.png'),
 };

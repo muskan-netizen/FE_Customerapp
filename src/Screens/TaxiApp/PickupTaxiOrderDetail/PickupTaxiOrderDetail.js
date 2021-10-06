@@ -1,6 +1,14 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {Dimensions, View, Text, TouchableOpacity, Image} from 'react-native';
+import {
+  Dimensions,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  BackHandler,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 import HeaderWithFilters from '../../../Components/HeaderWithFilters';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
@@ -9,12 +17,16 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import {showError} from '../../../utils/helperFunctions';
+import {
+  getImageUrl,
+  showError,
+  showSuccess,
+} from '../../../utils/helperFunctions';
 import stylesFunc from './styles';
 const {height, width} = Dimensions.get('window');
 import MapViewDirections from 'react-native-maps-directions';
 import Geocoder from 'react-native-geocoding';
-import MapView, {Marker, Callout} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapView, {Marker, Callout, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import {useIsFocused} from '@react-navigation/native';
 
 import Communications from 'react-native-communications';
@@ -25,6 +37,15 @@ import TaxiOrderDetailView from './TaxiOrderDetailView';
 import SearchingForDriverView from './SearchingForDriverView';
 import {color} from 'react-native-reanimated';
 import useInterval from '../../../utils/useInterval';
+import {cloneDeep} from 'lodash';
+import BottomViewModal from '../../../Components/BottomViewModal';
+import FastImage from 'react-native-fast-image';
+import {
+  moderateScale,
+  moderateScaleVertical,
+} from '../../../styles/responsiveSize';
+import StarRating from 'react-native-star-rating';
+import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -51,6 +72,11 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     agent_image: null,
     orderDetail: null,
     showOrderDetailView: false,
+    driverStatus: null,
+    productInfo: [],
+    isShowRating: false,
+    getDispatchId: null,
+    isVisible: false,
   });
   const {
     isLoading,
@@ -61,6 +87,15 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     agent_location,
     agent_image,
     showOrderDetailView,
+    driverStatus,
+    order_vendor_product_id,
+    order_id,
+    orderRootId,
+    productId,
+    productInfo,
+    isShowRating,
+    getDispatchId,
+    isVisible,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -80,30 +115,31 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     () => {
       navigation.navigate(screenName, {data});
     };
-  const urlValue = paramData?.orderDetail?.dispatch_traking_url
-    ? (paramData?.orderDetail?.dispatch_traking_url).replace(
-        '/order/',
-        '/order-details/',
-      )
-    : null;
 
-  console.log(
-    paramData?.selectedCarOption,
-    'selectedCarOptionselectedCarOption',
-  );
+  // const urlValue = paramData?.orderDetail?.dispatch_traking_url
+  //   ? (paramData?.orderDetail?.dispatch_traking_url).replace(
+  //       '/order/',
+  //       '/order-details/',
+  //     )
+  //   : null;
+
+  const urlValue = `/pickup-delivery/order-tracking-details`;
+
+  console.log(paramData, 'selectedCarOptionselectedCarOption');
 
   useFocusEffect(
     React.useCallback(() => {
       //   updateState({isLoading: true});
       if (!!userData?.auth_token) {
-        let url = paramData?.orderDetail?.dispatch_traking_url
-          ? (paramData?.orderDetail?.dispatch_traking_url).replace(
-              '/order/',
-              '/order-details/',
-            )
-          : null;
+        // let url = paramData?.orderDetail?.dispatch_traking_url
+        //   ? (paramData?.orderDetail?.dispatch_traking_url).replace(
+        //       '/order/',
+        //       '/order-details/',
+        //     )
+        //   : null;
+        let url = `/pickup-delivery/order-tracking-details`;
 
-        if (url && url.includes('order-details')) {
+        if (url) {
           _getOrderDetailScreen(url);
         } else {
           updateState({isLoading: false});
@@ -117,34 +153,55 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
 
   useInterval(
     () => {
-      if (urlValue && urlValue.includes('order-details')) {
+      if (urlValue) {
         _updateDriverLocationLocation(urlValue);
       } else {
         updateState({isLoading: false});
       }
     },
-    isFocused ? 3000 : null,
+    isFocused && driverStatus != 'Completed' ? 3000 : null,
   );
 
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     //assign interval to a variable to clear it.
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => true,
+    );
+    return () => backHandler.remove();
+  }, []);
 
-  //     if (urlValue && urlValue.includes('order-details')) {
-  //       _updateDriverLocationLocation(urlValue);
-  //     } else {
-  //       updateState({isLoading: false});
-  //     }
-  //   }, 3000);
-  //   return () => clearInterval(intervalId);
-  // }, []);
+  useEffect(() => {
+    if (
+      driverStatus != '' &&
+      driverStatus != null &&
+      driverStatus != undefined
+    ) {
+      console.log(driverStatus, 'driverStatus');
+      if (driverStatus === 'Completed') {
+        showSuccess(driverStatus);
+        updateState({
+          isShowRating: true,
+          isVisible: true,
+        });
+      }
+      showSuccess(driverStatus);
+    }
+  }, [driverStatus]);
 
+  const new_dispatch_traking_url = paramData?.orderDetail?.dispatch_traking_url
+    ? (paramData?.orderDetail?.dispatch_traking_url).replace(
+        '/order/',
+        '/order-details/',
+      )
+    : null;
   /*********Update driver detail screen********* */
   const _updateDriverLocationLocation = (url) => {
     actions
       .getOrderDetailPickUp(
-        url,
-        {},
+        {
+          order_id: paramData?.orderId,
+          new_dispatch_traking_url: new_dispatch_traking_url,
+        },
         {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
@@ -155,22 +212,25 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       .then((res) => {
         console.log(res, 'res---agent');
         updateState({
-          agent_location: res?.agent_location,
-          orderDetail: res?.order,
-          agent_image: res?.agent_image,
+          agent_location: res?.data?.agent_location,
+          orderDetail: res?.data?.order,
+          agent_image: res?.data?.agent_image,
+          driverStatus: res?.data?.order_details?.dispatcher_status,
+          productInfo: res?.data?.order_details?.products,
+          getDispatchId: res?.data?.order?.id,
         });
       })
       .catch(errorMethod);
   };
 
-  console.log(agent_location, 'agent_locationagent_location');
-
   /*********Get order detail screen********* */
   const _getOrderDetailScreen = (url) => {
     actions
       .getOrderDetailPickUp(
-        url,
-        {},
+        {
+          order_id: paramData?.orderId,
+          new_dispatch_traking_url: new_dispatch_traking_url,
+        },
         {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
@@ -179,34 +239,40 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res, 'res from pickup');
+        console.log(res?.data, 'res---agent>>>>>>>');
         updateState({
           isLoading: false,
-          tasks: res?.tasks,
+          tasks: res?.data?.tasks,
           region: {
-            latitude: res?.tasks[0]?.latitude
-              ? Number(res?.tasks[0].latitude)
+            latitude: res?.data?.tasks[0]?.latitude
+              ? Number(res?.data?.tasks[0].latitude)
               : 30.7191,
-            longitude: res?.tasks[0]?.longitude
-              ? Number(res?.tasks[0].longitude)
+            longitude: res?.data?.tasks[0]?.longitude
+              ? Number(res?.data?.tasks[0].longitude)
               : 76.8107,
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
           },
           coordinate: {
-            latitude: res?.tasks[0]?.latitude
-              ? Number(res?.tasks[0].latitude)
+            latitude: res?.data?.tasks[0]?.latitude
+              ? Number(res?.data?.tasks[0].latitude)
               : 30.7191,
-            longitude: res?.tasks[0]?.longitude
-              ? Number(res?.tasks[0].longitude)
+            longitude: res?.data?.tasks[0]?.longitude
+              ? Number(res?.data?.tasks[0].longitude)
               : 76.8107,
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
           },
-          agent_location: res?.agent_location,
-          orderDetail: res?.order,
           showOrderDetailView: true,
-          agent_image: res?.agent_image,
+          agent_location: res?.data?.agent_location,
+          orderDetail: res?.data?.order,
+          agent_image: res?.data?.agent_image,
+          driverStatus: res?.data?.order_details?.dispatcher_status,
+          isShowRating:
+            res?.data?.order_details?.dispatcher_status == 'Completed'
+              ? true
+              : false,
+          productInfo: res?.data?.order_details?.products,
         });
       })
       .catch(errorMethod);
@@ -227,12 +293,138 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     Communications.phonecall(orderDetail?.phone_number, true);
   };
 
+  const _giveRatingToProduct = (productDetail, rating) => {
+    let data = {};
+    data['order_vendor_product_id'] = productDetail?.id;
+    data['order_id'] = productDetail?.order_id;
+    data['product_id'] = productDetail?.product_id;
+    data['rating'] = rating;
+    data['review'] = productDetail?.product_rating?.review
+      ? productDetail?.product_rating?.review
+      : '';
+    // data['vendor_id'] = productDetail.vendor_id;
+    console.log(productDetail, 'productDetail');
+    actions
+      .giveRating(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        console.log(res, 'resresresresres');
+        let cloned_productInfo = cloneDeep(productInfo);
+        console.log(cloned_productInfo, 'cloned_productInfo');
+        updateState({
+          isLoading: false,
+          productInfo: cloned_productInfo.map((itm, inx) => {
+            if (itm?.product_id == productDetail?.product_id) {
+              itm.product_rating = res.data;
+              return itm;
+            } else {
+              return itm;
+            }
+          }),
+        });
+      })
+      .catch(errorMethod);
+  };
+
   // on press chat
   const _onPressChat = (orderDetail) => {
     Communications.text(orderDetail?.phone_number);
   };
 
-  console.log(paramData?.fromCab, 'paramData?.fromCab');
+  const onStarRatingPress = (productData, rating) => {
+    let productListarray = cloneDeep(productInfo);
+
+    // console.log(getDispatchId, 'productData,rating');
+    console.log(productData, rating, 'productDataproductDataproductData');
+    // updateState({isLoading: true});
+    _giveRatingToProduct(productData, rating);
+
+    // navigation.navigate(navigationStrings.RATEORDER, {
+    //   item: {
+    //     product_rating: {
+    //       id: productData?.id,
+    //       order_vendor_product_id: productData?.order_vendor_id,
+    //       product_id: productData?.product_id,
+    //       order_id: productData?.order_id,
+    //       dispatchId: getDispatchId,
+    //     },
+    //   },
+    // });
+  };
+
+  const _modalClose = () => {
+    updateState({
+      isVisible: false,
+    });
+  };
+  const rateYourOrder = (item) => {
+    updateState({
+      isVisible: false,
+    });
+    navigation.navigate(navigationStrings.RATEORDER, {item});
+  };
+  const _ModalMainView = () => (
+    <View
+      style={{
+        height: height / 5,
+        backgroundColor: colors.white,
+      }}>
+      {!!isShowRating && (
+        <ScrollView horizontal>
+          {productInfo?.map((item, index) => {
+            return (
+              <View
+                style={{
+                  justifyContent: 'center',
+                }}>
+                <Image
+                  style={{
+                    resizeMode: 'contain',
+                    height: moderateScale(60),
+                    width: moderateScale(60),
+                    alignSelf: 'center',
+                  }}
+                  source={{
+                    uri: getImageUrl(
+                      item.image.proxy_url,
+                      item.image.image_path,
+                      '150/150',
+                    ),
+                    priority: FastImage.priority.high,
+                  }}
+                />
+                <View style={{marginTop: moderateScaleVertical(10)}}>
+                  <StarRating
+                    disabled={false}
+                    maxStars={5}
+                    rating={item?.product_rating?.rating}
+                    selectedStar={(rating) => onStarRatingPress(item, rating)}
+                    fullStarColor={colors.ORANGE}
+                    starSize={30}
+                  />
+                </View>
+                {!!item?.product_rating && (
+                  <Text
+                    style={{
+                      marginVertical: moderateScaleVertical(10),
+                      textAlign: 'center',
+                    }}
+                    onPress={() => rateYourOrder(item)}>
+                    {strings.WRITE_A_REVIEW}
+                  </Text>
+                )}
+              </View>
+            );
+          })}
+        </ScrollView>
+      )}
+    </View>
+  );
+
+  console.log(productInfo, 'productInfo');
   //order detail View
   const _selectOrderDetailView = () => {
     return (
@@ -260,6 +452,10 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         onPressChat={(orderDetail) => _onPressChat(orderDetail)}
         totalDuration={paramData?.totalDuration}
         selectedCarOption={paramData?.selectedCarOption}
+        productRatings={productInfo}
+        isShowRating={isShowRating}
+        navigation={navigation}
+        onStarRatingPress={onStarRatingPress}
       />
     );
   };
@@ -274,12 +470,13 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         {!isLoading && (
           <>
             <MapView
-              //   provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
               style={styles.map}
               region={region}
               // initialRegion={region}
               ref={mapRef}
               // cacheEnabled={true}
+              customMapStyle={mapStyleGrey}
               showsMyLocationButton={true}
               userLocationFastestInterval={10000}
               onRegionChangeComplete={_onRegionChange}>
@@ -308,13 +505,15 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
               ))}
 
               {/* driver location */}
-              {agent_location && (
+              {agent_location && driverStatus != 'Completed' && (
                 <MapView.Marker
-                  key={`coordinate_${agent_location?.agent_id}`}
+                  key={`coordinate_${agent_location?.lat}`}
                   //   image={imagePath.driver}
                   coordinate={{
                     latitude: Number(agent_location?.lat),
-                    longitude: Number(agent_location?.long),
+                    longitude: Number(
+                      agent_location?.long || agent_location?.lng,
+                    ),
                   }}>
                   <Image
                     style={{height: 35, width: 35}}
@@ -358,8 +557,8 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
             </MapView>
 
             <View style={styles.topView}>
-              <TouchableOpacity
-                style={[
+              {/* <TouchableOpacity
+                style={[z
                   styles.backButtonView,
                   {
                     backgroundColor: isDarkMode
@@ -368,13 +567,13 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                   },
                 ]}
                 onPress={
-                  paramData?.fromCab
-                    ? () => navigation.navigate(navigationStrings.HOME)
-                    : () =>
-                        navigation.navigate(navigationStrings.TAB_ROUTES, {
-                          screen: navigationStrings.ACCOUNTS,
-                        })
-                  // navigation.goBack()
+                  // paramData?.fromCab
+                  //   ? () => navigation.navigate(navigationStrings.HOME)
+                  //   : () =>
+                  //       navigation.navigate(navigationStrings.TAB_ROUTES, {
+                  //         screen: navigationStrings.ACCOUNTS,
+                  //       })
+                  () => navigation.goBack()
                 }>
                 <Image
                   style={{
@@ -384,13 +583,18 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                   }}
                   source={imagePath.backArrowCourier}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             {/* {_selectOrderDetailView()} */}
             {_selectTexiOrderDetailView()}
           </>
         )}
       </View>
+      <BottomViewModal
+        show={isVisible}
+        mainContainView={_ModalMainView}
+        closeModal={_modalClose}
+      />
     </WrapperContainer>
   );
 }

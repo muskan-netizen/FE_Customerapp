@@ -50,6 +50,8 @@ export default function SelectTimeModalView({
   _modalOkPress = () => {},
   _pickerCancel = () => {},
   _onDayPress = () => {},
+  scheduleDate,
+  scheduleTime,
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -348,9 +350,9 @@ export default function SelectTimeModalView({
               alignItems: 'center',
             }}
             isLableIcon={true}
-            labelIconPath={imagePath.calendarB}
+            // labelIconPath={imagePath.calendarB}
             labelIconStyle={{tintColor: themeColors.primary_color}}
-            onPressLabel={() => pickerOpen('isDatePickerModal')}
+            // onPressLabel={() => pickerOpen('isDatePickerModal')}
           />
           <TextInputWithUnderlineAndLabel
             value={pickedUpTime}
@@ -372,9 +374,9 @@ export default function SelectTimeModalView({
               alignItems: 'center',
             }}
             isLableIcon={true}
-            labelIconPath={imagePath.icTime}
+            // labelIconPath={imagePath.icTime}
             labelIconStyle={{tintColor: themeColors.primary_color}}
-            onPressLabel={() => pickerOpen('isTimerPickerModal')}
+            // onPressLabel={() => pickerOpen('isTimerPickerModal')}
           />
         </View>
         <View

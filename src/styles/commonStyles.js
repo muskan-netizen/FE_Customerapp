@@ -4,10 +4,10 @@ import colors from './colors';
 import {moderateScaleVertical, textScale} from './responsiveSize';
 
 export const hitSlopProp = {
-  top: 12,
-  right: 12,
-  left: 12,
-  bottom: 12,
+  top: 15,
+  right: 15,
+  left: 15,
+  bottom: 15,
 };
 
 export default ({fontFamily, buttonTextColor}) => {
@@ -26,7 +26,7 @@ export default ({fontFamily, buttonTextColor}) => {
       color: colors.textGrey,
       fontFamily: fontFamily?.medium,
       opacity: 0.7,
-      textAlign: 'left'
+      textAlign: 'left',
     },
     mediumFont14: {
       // fontSize:RFValue(14,height),
@@ -34,40 +34,38 @@ export default ({fontFamily, buttonTextColor}) => {
       color: colors.textGrey,
       fontFamily: fontFamily?.medium,
       opacity: 0.7,
-      textAlign: 'left'
+      textAlign: 'left',
     },
     mediumFont14Normal: {
       fontSize: textScale(14),
       color: colors.textGrey,
       fontFamily: fontFamily?.medium,
       opacity: 1,
-      textAlign: 'left'
+      textAlign: 'left',
     },
     mediumFont16: {
       fontSize: textScale(14),
       color: colors.textGrey,
       fontFamily: fontFamily?.medium,
-      textAlign: 'left'
-
+      textAlign: 'left',
     },
     futuraBtHeavyFont16: {
       fontSize: textScale(16),
       color: colors.black,
       fontFamily: fontFamily?.bold,
-      textAlign: 'left'
-      
+      textAlign: 'left',
     },
     futuraBtHeavyFont14: {
       fontSize: textScale(14),
       color: colors.black,
       fontFamily: fontFamily?.bold,
-      textAlign: 'left'
+      textAlign: 'left',
     },
     futuraHeavyBt: {
       fontSize: textScale(16),
       color: colors.black,
       fontFamily: fontFamily?.bold,
-      textAlign: 'left'
+      textAlign: 'left',
     },
     buttonRect: {
       height: moderateScaleVertical(46),

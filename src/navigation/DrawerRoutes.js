@@ -17,14 +17,18 @@ import fontFamily from '../styles/fontFamily';
 import CustomDrawerContent from '../Components/CustomDrawerContent';
 import {View} from 'react-native-animatable';
 import TabRoutes from './TabRoutes';
+import TaxiTabRoutes from './TaxiTabRoutes';
 
 const Drawer = createDrawerNavigator();
 export default function DrawerRoutes(props) {
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const appMainData = useSelector((state) => state?.home?.appMainData);
+
   const {shortCodeStatus, appStyle, appData} = useSelector(
     (state) => state?.initBoot,
   );
+  const businessType = appData?.profile?.preferences?.business_type;
+
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
 
@@ -86,9 +90,28 @@ export default function DrawerRoutes(props) {
       // hideStatusBar={true}
       drawerStyle={{width: '75%', backgroundColor: colors.blueHeaderColor}}
       drawerContent={(props) => <CustomDrawerContent {...props} />}>
-      <Drawer.Screen
+      {/* <Drawer.Screen
         component={TabRoutes}
         name={navigationStrings.HOMESTACK}
+        options={{
+          gestureEnabled: gestureEnabled,
+          swipeEnabled: swipeEnabled,
+          drawerLabel: strings.HOME,
+          drawerIcon: ({focused}) => (
+            <Image
+              source={focused ? imagePath.tabAActive : imagePath.tabAInActive}
+            />
+          ),
+        }}
+      /> */}
+
+      <Drawer.Screen
+        component={businessType === 'taxi' ? TaxiTabRoutes : TabRoutes}
+        name={
+          businessType === 'taxi'
+            ? navigationStrings.TAXITABROUTES
+            : navigationStrings.TAB_ROUTES
+        }
         options={{
           gestureEnabled: gestureEnabled,
           swipeEnabled: swipeEnabled,

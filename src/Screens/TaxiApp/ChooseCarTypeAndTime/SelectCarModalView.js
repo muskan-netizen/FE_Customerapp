@@ -62,62 +62,24 @@ export default function SelectCarModalView({
 
   //Render all Available amounts
   const _renderItem = ({item, index}) => {
+    console.log(item, 'itemsssssssssss');
     return (
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => onPressAvailableCar(item)}>
-        <LinearGradient
-          end={{x: 0.0, y: 0.25}}
-          start={{x: 0.5, y: 2.0}}
+        <View
           style={{
-            borderWidth: 1,
-
-            paddingVertical: moderateScaleVertical(20),
+            paddingVertical: moderateScaleVertical(12),
             paddingHorizontal: moderateScale(10),
-            borderRadius: moderateScale(12),
+
             marginBottom: moderateScaleVertical(20),
-            borderColor:
-              selectedCarOption?.id == item?.id
-                ? 'transparent'
-                : colors.lightGreyBorder,
+
             opacity: selectedCarOption?.id == item?.id ? 0.8 : 1,
-          }}
-          colors={[
-            isDarkMode
-              ? selectedCarOption?.id == item?.id
-                ? themeColors.primary_color
-                : MyDarkTheme.colors.lightDark
-              : selectedCarOption?.id == item?.id
-              ? themeColors.primary_color
-              : colors.white,
-            isDarkMode
-              ? selectedCarOption?.id == item?.id
-                ? themeColors.primary_color
-                : MyDarkTheme.colors.lightDark
-              : selectedCarOption?.id == item?.id
-              ? themeColors.primary_color
-              : colors.white,
-            isDarkMode
-              ? selectedCarOption?.id == item?.id
-                ? themeColors.primary_color
-                : MyDarkTheme.colors.lightDark
-              : selectedCarOption?.id == item?.id
-              ? getColorCodeWithOpactiyNumber(
-                  themeColors.primary_color.substr(1),
-                  70,
-                )
-              : colors.white,
-            isDarkMode
-              ? selectedCarOption?.id == item?.id
-                ? themeColors.primary_color
-                : MyDarkTheme.colors.lightDark
-              : selectedCarOption?.id == item?.id
-              ? getColorCodeWithOpactiyNumber(
-                  themeColors.primary_color.substr(1),
-                  70,
-                )
-              : colors.white,
-          ]}>
+            backgroundColor:
+              selectedCarOption?.id == item?.id
+                ? colors.lightGreyBg
+                : colors.whiteOpacity77,
+          }}>
           <View style={{flexDirection: 'row'}}>
             <View
               style={{
@@ -128,10 +90,10 @@ export default function SelectCarModalView({
               <View>
                 <Image
                   resizeMode={'contain'}
-                  style={{height: 60, width: 100}}
+                  style={{height: 40, width: 100}}
                   source={{
                     uri: getImageUrl(
-                      item?.media[0]?.image?.path?.image_fit,
+                      item?.media[0]?.image?.path?.proxy_url,
                       item?.media[0]?.image?.path?.image_path,
                       '150/150',
                     ),
@@ -154,13 +116,20 @@ export default function SelectCarModalView({
                   numberOfLines={1}
                   style={
                     selectedCarOption?.id == item?.id
-                      ? [styles.carType, {color: colors.white}]
+                      ? [
+                          styles.carType,
+                          {
+                            color: colors.black,
+                            fontFamily: fontFamily.medium,
+                            fontSize: textScale(12),
+                          },
+                        ]
                       : [
                           styles.carType,
                           {
-                            color: isDarkMode
-                              ? colors.whiteOpacity5
-                              : colors.textGreyOpcaity7,
+                            color: colors.blackC,
+                            fontFamily: fontFamily.medium,
+                            fontSize: textScale(12),
                           },
                         ]
                   }>
@@ -176,13 +145,22 @@ export default function SelectCarModalView({
                   numberOfLines={1}
                   style={
                     selectedCarOption?.id == item?.id
-                      ? [styles.priceStyle, {color: colors.white}]
+                      ? [
+                          styles.priceStyle,
+                          {
+                            color: colors.black,
+                            fontFamily: fontFamily.medium,
+                            fontSize: textScale(12),
+                          },
+                        ]
                       : [
                           styles.priceStyle,
                           {
                             color: isDarkMode
                               ? colors.white
                               : colors.textGreyOpcaity7,
+                            fontFamily: fontFamily.medium,
+                            fontSize: textScale(12),
                           },
                         ]
 
@@ -199,7 +177,7 @@ export default function SelectCarModalView({
               {/* <Text style={styles.deliveryPrice}>{item.minimumDistance}</Text> */}
             </View>
           </View>
-        </LinearGradient>
+        </View>
       </TouchableOpacity>
     );
   };
@@ -242,19 +220,40 @@ export default function SelectCarModalView({
               styles.bottomView,
               {backgroundColor: MyDarkTheme.colors.background},
             ]
-          : [styles.bottomView]
+          : [
+              styles.bottomView,
+              {
+                borderTopLeftRadius: moderateScale(0),
+                borderTopRightRadius: moderateScale(0),
+                height: height / 2.2,
+              },
+            ]
       }>
-      <View style={{padding: moderateScale(20)}}>
+      <View
+        style={
+          availableCarList.length
+            ? {padding: moderateScale(0)}
+            : {padding: moderateScale(20)}
+        }>
         {/* <Text style={styles.addressMainTitle}>{addressLabel}</Text> */}
 
-        <Text
+        <View
+          style={{
+            width: moderateScale(40),
+            height: moderateScaleVertical(2),
+            backgroundColor: colors.textGreyJ,
+            marginTop: moderateScaleVertical(10),
+            alignSelf: 'center',
+          }}></View>
+
+        {/* <Text
           style={
             isDarkMode
               ? [styles.chooseSuitable, {color: MyDarkTheme.colors.text}]
               : styles.chooseSuitable
           }>
           {strings.CHOSSESUITABLECAR}
-        </Text>
+        </Text> */}
         {availableVendors.length > 1 ? (
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {availableVendors.map((i, inx) => {
@@ -322,6 +321,7 @@ export default function SelectCarModalView({
                 : availableVendors.length == 1
                 ? height / 3
                 : height / 4,
+              marginTop: moderateScaleVertical(10),
             }}
             keyExtractor={(item, index) => String(index)}
             renderItem={_renderItem}
@@ -330,7 +330,12 @@ export default function SelectCarModalView({
         </ScrollView>
 
         {availableCarList.length ? (
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginHorizontal: 20,
+            }}>
             <GradientButton
               // endcolor={{x: 0.0, y: 0.25}}
               // startcolor={{x: 0.0, y: 0.0}}

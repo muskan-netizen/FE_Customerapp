@@ -234,7 +234,7 @@ export default function (data) {
     if (emptyValidationText !== '') {
       return emptyValidationText;
     } else {
-      let minLengthValidation = checkMinLength(name, 6, strings.MESSAGE);
+      let minLengthValidation = checkMinLength(message, 6, strings.MESSAGE);
       if (minLengthValidation !== '') {
         return minLengthValidation;
       }

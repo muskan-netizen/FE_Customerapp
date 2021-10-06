@@ -30,7 +30,7 @@ export default function Account({navigation}) {
   const [state, setState] = useState({
     isLoading: false,
   });
-  const {shortCodeStatus, themeColors, appStyle} = useSelector(
+  const {shortCodeStatus, themeColors, appStyle, appData} = useSelector(
     (state) => state?.initBoot,
   );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -39,7 +39,7 @@ export default function Account({navigation}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const homePageLayout = appStyle?.homePageLayout;
-
+  const businessType = appData?.profile?.preferences?.business_type;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
   const commonStyles = commonStylesFun({fontFamily});
@@ -159,23 +159,24 @@ export default function Account({navigation}) {
             }
           />
         )}
-        {!!userData?.auth_token && (
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.MY_ORDERS)}
-            iconLeft={imagePath.myOrder}
-            centerHeading={strings.MY_ORDERS}
-            containerStyle={styles.containerStyle}
-            centerHeadingStyle={
-              isDarkMode
-                ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
-                : {fontSize: textScale(15)}
-            }
-            iconRight={imagePath.goRight}
-            rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )}
+        {!!userData?.auth_token &&
+          (businessType == 'taxi' ? null : (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.MY_ORDERS)}
+              iconLeft={imagePath.myOrder}
+              centerHeading={strings.MY_ORDERS}
+              containerStyle={styles.containerStyle}
+              centerHeadingStyle={
+                isDarkMode
+                  ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+                  : {fontSize: textScale(15)}
+              }
+              iconRight={imagePath.goRight}
+              rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          ))}
 
         {!!userData?.auth_token && (
           <ListItemHorizontal
@@ -243,23 +244,24 @@ export default function Account({navigation}) {
             rightIconStyle={{tintColor: colors.textGreyLight}}
           />
         )}
-        {!!userData?.auth_token && (
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.WISHLIST)}
-            iconLeft={imagePath.fav}
-            centerHeading={strings.WISHLIST}
-            containerStyle={styles.containerStyle}
-            centerHeadingStyle={
-              isDarkMode
-                ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
-                : {fontSize: textScale(15)}
-            }
-            iconRight={imagePath.goRight}
-            rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )}
+        {!!userData?.auth_token &&
+          (businessType == 'taxi' ? null : (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.WISHLIST)}
+              iconLeft={imagePath.fav}
+              centerHeading={strings.WISHLIST}
+              containerStyle={styles.containerStyle}
+              centerHeadingStyle={
+                isDarkMode
+                  ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+                  : {fontSize: textScale(15)}
+              }
+              iconRight={imagePath.goRight}
+              rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          ))}
 
         <ListItemHorizontal
           centerContainerStyle={{flexDirection: 'row'}}
@@ -337,23 +339,25 @@ export default function Account({navigation}) {
           rightIconStyle={{tintColor: colors.textGreyLight}}
         />
 
-        {!!userData?.auth_token && !!appMainData?.is_admin && (
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
-            iconLeft={imagePath.myStoreIcon}
-            centerHeading={strings.MYSTORES}
-            containerStyle={styles.containerStyle}
-            centerHeadingStyle={
-              isDarkMode
-                ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
-                : {fontSize: textScale(15)}
-            }
-            iconRight={imagePath.goRight}
-            rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )}
+        {!!userData?.auth_token &&
+          !!appMainData?.is_admin &&
+          (business_type === 'taxi' ? null : (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
+              iconLeft={imagePath.myStoreIcon}
+              centerHeading={strings.MYSTORES}
+              containerStyle={styles.containerStyle}
+              centerHeadingStyle={
+                isDarkMode
+                  ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+                  : {fontSize: textScale(15)}
+              }
+              iconRight={imagePath.goRight}
+              rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          ))}
 
         <View style={styles.loginView}>
           <TouchableOpacity

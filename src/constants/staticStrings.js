@@ -14,5 +14,6 @@ export default {
   SCHEDULE: 'schedule',
   PICKUPANDDELIEVRY: 'Pickup/Delivery',
   RETURNREQUEST: 'Return Request',
-  VIEW_ALL_VENDORS:"veiwAllVendors"
+  ONDEMANDSERVICE: 'On Demand Service',
+  VIEW_ALL_VENDORS: 'veiwAllVendors',
 };
