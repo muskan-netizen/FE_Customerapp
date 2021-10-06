@@ -4,6 +4,7 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
 import actions from '../redux/actions';
+import { printReciept } from '../BLEPrinter';
 const ForegroundHandler = (props) => {
 
 
@@ -27,12 +28,13 @@ const ForegroundHandler = (props) => {
             title: data?.type || '',
             soundName: notification.android.sound,
             vibrate: true,
-            playSound: true,
-
+            playSound: true
           })
       }
       if (Platform.OS == 'android' && notification.android.sound == 'notification') {
         actions.isVendorNotification(true)
+        const { data } = remoteMessage.data
+        printReciept(data)
       }
       if (Platform.OS == 'ios' && notification.sound == 'notification.wav') {
         actions.isVendorNotification(true)

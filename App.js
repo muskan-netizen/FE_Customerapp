@@ -29,9 +29,14 @@ import { getItem, getUserData, setItem } from './src/utils/utils';
 import Modal from 'react-native-modal';
 import { BlurView } from '@react-native-community/blur';
 import PushNotification from 'react-native-push-notification';
+import { BluetoothEscposPrinter, BluetoothManager } from "@brooons/react-native-bluetooth-escpos-printer";
+import BLEPrinter from './src/BLEPrinter'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+  const [pairedDs, setPairedDs] = useState([]);
   // const appMainData = useSelector((state) => state?.home?.appMainData);
   const appMainData = store.getState().home;
   // deep linking
@@ -73,25 +78,72 @@ const App = () => {
     };
   }, [handleDynamicLink]);
 
+  const initBlePrinterConnection = () => {
+    BluetoothManager.checkBluetoothEnabled().then((enabled) => {
+      console.log('checking blue enabled >>>', enabled)
+      // this.setState({
+      //     bleOpend: Boolean(enabled),
+      //     loading: false
+      // })
+      if (enabled) {
+        setIsVisible(enabled)
+      } else {
+        BluetoothManager.enableBluetooth().then((r) => {
+          var paired = [];
+          if (r && r.length > 0) {
+            for (var i = 0; i < r.length; i++) {
+              try {
+                paired.push(JSON.parse(r[i]));
+              } catch (e) {
+                //ignore
+              }
+            }
+          }
+          // this.setState({
+          //     bleOpend: true,
+          //     loading: false,
+          //     pairedDs: paired
+          // })
+          setPairedDs(paired)
+          setIsVisible(true)
+        }, (err) => {
+          // this.setState({
+          //     loading: false
+          // })
+          alert(err)
+        });
+      }
+
+    }, (err) => {
+      console.log(err)
+
+    });
+  }
+
+  const checkBT = () => {
+    initBlePrinterConnection()
+  }
+
   const isDarkMode = useDarkMode();
   useEffect(() => {
     //stop splahs screen from loading
     setTimeout(() => {
       SplashScreen.hide();
+      checkBT()
     }, 1500);
   }, []);
 
   const notificationConfig = () => {
     requestUserPermission();
     notificationListener();
-    if(Platform.OS == 'android'){
-    checkExistChannel()
-  }
+    if (Platform.OS == 'android') {
+      checkExistChannel()
+    }
   };
 
-  const checkExistChannel = () =>{
+  const checkExistChannel = () => {
     PushNotification.getChannels(function (channel_ids) {
-      console.log("exist channels",channel_ids); // ['channel_id_1']
+      console.log("exist channels", channel_ids); // ['channel_id_1']
     });
   }
   useEffect(() => {
@@ -247,6 +299,12 @@ const App = () => {
       />
       <FlashMessage position="top" />
       <NoInternetModal show={!internetConnection} />
+      <Modal
+        isVisible={isVisible}
+      >
+        <BLEPrinter onCloseModal={() => setIsVisible(false)} />
+      </Modal>
+     
     </SafeAreaProvider>
   );
 };
