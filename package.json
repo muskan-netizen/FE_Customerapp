@@ -214,6 +214,7 @@
     "lint": "eslint .",
     "clean": "cd ./android && ./gradlew clean",
     "uninstallAll": "cd android && ./gradlew uninstallAll"
+  
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^2.3.0",
