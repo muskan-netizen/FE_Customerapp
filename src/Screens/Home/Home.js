@@ -354,7 +354,6 @@ export default function Home({route, navigation}) {
 
   //Error handling in screen
   const errorMethod = (error) => {
-    console.log(error, 'error');
     updateState({
       isLoading: false,
       isLoadingB: false,
