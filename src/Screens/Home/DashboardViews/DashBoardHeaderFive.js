@@ -380,39 +380,38 @@ export default function DashBoardHeaderFive({
               }
             />
           ) : null}
-          {!!appData?.profile?.preferences?.is_hyperlocal && (
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() =>
-                navigation.navigate(navigationStrings.LOCATION, {
-                  type: 'Home1',
-                })
-              }
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                flex: 0.85,
-              }}>
-              <Image
-                style={styles.locationIcon}
-                source={imagePath.redLocation}
-                resizeMode="contain"
-              />
+          {/* {!!appData?.profile?.preferences?.is_hyperlocal && ( */}
+          <TouchableOpacity
+            activeOpacity={1}
+            disabled={!appData?.profile?.preferences?.is_hyperlocal}
+            onPress={() =>
+              navigation.navigate(navigationStrings.LOCATION, {
+                type: 'Home1',
+              })
+            }
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              flex: 0.85,
+            }}>
+            <Image
+              style={styles.locationIcon}
+              source={imagePath.redLocation}
+              resizeMode="contain"
+            />
 
-              <Text
-                numberOfLines={1}
-                style={[
-                  styles.locationTxt,
-                  {
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGrey,
-                  },
-                ]}>
-                {location?.address}
-              </Text>
-            </TouchableOpacity>
-          )}
+            <Text
+              numberOfLines={1}
+              style={[
+                styles.locationTxt,
+                {
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+                },
+              ]}>
+              {location?.address || curAddress?.address}
+            </Text>
+          </TouchableOpacity>
+          {/* )} */}
         </View>
         {tabs.length > 1 && (
           <TouchableOpacity

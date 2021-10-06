@@ -18,6 +18,7 @@ import {
   ProductList2,
   ProductList3,
   SearchProductVendorItem,
+  SearchProductVendorItem2,
   SendProduct,
   ShippingDetails,
   SuperMarket,
@@ -25,19 +26,18 @@ import {
   Tracking,
   VendorDetail,
   VendorDetail2,
+  VendorDetail3,
   Vendors,
   Vendors2,
   Vendors3,
-  SearchProductVendorItem2,
-  VendorDetail3,
 } from '../Screens';
-import {shortCodes} from '../utils/constants/DynamicAppKeys';
+import {verticalAnimation} from '../utils/utils';
 import navigationStrings from './navigationStrings';
-import TopTabRoutes from './TopTabRoutes';
 
 const Stack = createStackNavigator();
 export default function () {
   const {appStyle, appData} = useSelector((state) => state?.initBoot);
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -129,7 +129,7 @@ export default function () {
             ? SearchProductVendorItem2
             : SearchProductVendorItem
         }
-        options={{headerShown: false}}
+        options={verticalAnimation}
       />
 
       <Stack.Screen
