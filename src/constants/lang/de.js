@@ -534,4 +534,5 @@ export default {
   PASTRIDES: 'Past Rides',
   ACTIVERIDES: 'Active Rides',
   CHOOSESAVEDPLACE: 'Choose a saved place',
+  SETPICKUPTIME: 'Set pickiup time',
 };

@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import BannerHome from '../../../Components/BannerHome';
@@ -38,7 +39,7 @@ import {
 import stylesFunc from '../styles';
 import ToggleTabBar from './ToggleTabBar';
 import {mapStyleGrey} from '../../../utils/constants/MapStyle';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+
 import navigationStrings from '../../../navigation/navigationStrings';
 import {useNavigation} from '@react-navigation/native';
 
@@ -49,6 +50,10 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
 import TaxiBannerHome from '../../../Components/TaxiBannerHome';
+import SelectTimeModalView from '../../CourierService/ChooseCarTypeAndTime/SelectTimeModalView';
+import moment from 'moment';
+import DatePicker from 'react-native-date-picker';
+import GradientButton from '../../../Components/GradientButton';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => {},
@@ -66,12 +71,13 @@ export default function TaxiHomeDashbord({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const userData = useSelector((state) => state?.auth?.userData);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
-
+    date: new Date(),
     region: {
       latitude: 30.7191,
       longitude: 76.8107,
@@ -86,6 +92,24 @@ export default function TaxiHomeDashbord({
     },
     allSavedAddress: [],
     isVisible: false,
+    availAbleTimes: [
+      {
+        id: 1,
+        label: 'in 20 min.',
+      },
+      {
+        id: 2,
+        label: 'in 50 min.',
+      },
+      {
+        id: 3,
+        label: 'in 80 min.',
+      },
+    ],
+    selectedAvailableTimeOption: null,
+    selectedTime: null,
+    selectedDateAndTime: null,
+    slectedDate: null,
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const {appData, themeColors, appStyle} = useSelector(
@@ -102,6 +126,12 @@ export default function TaxiHomeDashbord({
     coordinate,
     allSavedAddress,
     isVisible,
+    date,
+    availAbleTimes,
+    selectedAvailableTimeOption,
+    selectedTime,
+    selectedDateAndTime,
+    slectedDate,
   } = state;
   const styles = stylesFunc({themeColors, fontFamily});
 
@@ -153,15 +183,81 @@ export default function TaxiHomeDashbord({
       isVisible: false,
     });
   };
+  console.log(slectedDate, selectedTime, 'jskjsnsdkjgndsgkdsgj');
+  const _onDateChange = (date) => {
+    // alert(213);
+    console.log(date, 'date');
+    let time = moment(date).format('HH:mm');
+    let dateSelectd = moment(date).format('YYYY-MM-DD');
 
-  console.log(appMainData?.categories, 'appMainData?.categories');
-
+    console.log(time, 'time');
+    console.log(dateSelectd, 'dateSelectd');
+    updateState({
+      selectedDateAndTime: `${dateSelectd} ${time}`,
+      slectedDate: dateSelectd,
+      selectedTime: moment(date).format('LT'),
+      date: date,
+    });
+  };
+  const onDateChange = (value) => {
+    console.log(value, 'value');
+    _onDateChange(value);
+  };
   const _renderItem = ({item}) => {
     return (
       <TaxiHomeCategoryCard
         data={item}
         onPress={() => continueWithNaxtScreen(item)}
       />
+    );
+  };
+
+  const _ModalMainView = () => {
+    return (
+      <View style={styles.modalContainer}>
+        <View>
+          <View
+            style={{
+              alignItems: 'center',
+              height: height / 3.5,
+            }}>
+            <DatePicker
+              date={date}
+              mode="datetime"
+              textColor={isDarkMode ? '#fff' : colors.blackB}
+              minimumDate={new Date()}
+              style={{width: width - 20, height: height / 4.1}}
+              // onDateChange={setDate}
+              onDateChange={(value) => onDateChange(value)}
+            />
+            <TouchableOpacity
+              style={{
+                width: width - 40,
+                height: 40,
+                backgroundColor: themeColors.primary_color,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onPress={() => {
+                updateState({
+                  isVisible: false,
+                });
+
+                setTimeout(() => {
+                  navigation.navigate(navigationStrings.ADDADDRESS, {
+                    cat: appMainData?.categories[0],
+                    datetime: {slectedDate, selectedTime},
+                  });
+                }, 2000);
+              }}>
+              <Text
+                style={{color: colors.white, fontFamily: fontFamily.regular}}>
+                {strings.SETPICKUPTIME}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
     );
   };
 
@@ -318,24 +414,29 @@ export default function TaxiHomeDashbord({
         }}
         renderItem={_renderItem}
       />
-      <TouchableOpacity
-        onPress={moveToNewScreen(
-          navigationStrings.ADDADDRESS,
-          appMainData?.categories[0],
-        )}>
-        <View
-          style={{
-            marginHorizontal: moderateScale(10),
-            height: moderateScaleVertical(40),
-            backgroundColor: getColorCodeWithOpactiyNumber(
-              colors.taxiCategoryGrayColor.substr(1),
-              30,
-            ),
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingHorizontal: moderateScale(10),
-            justifyContent: 'space-between',
-            marginTop: moderateScaleVertical(5),
+
+      <View
+        style={{
+          marginHorizontal: moderateScale(10),
+          height: moderateScaleVertical(40),
+          backgroundColor: getColorCodeWithOpactiyNumber(
+            colors.taxiCategoryGrayColor.substr(1),
+            30,
+          ),
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingHorizontal: moderateScale(10),
+          justifyContent: 'space-between',
+          marginTop: moderateScaleVertical(5),
+        }}>
+        <TouchableOpacity
+          onPress={() => {
+            userData?.auth_token
+              ? navigation.navigate(navigationStrings.ADDADDRESS, {
+                  cat: appMainData?.categories[0],
+                  datetime: {slectedDate, selectedTime},
+                })
+              : navigation.navigate(navigationStrings.LOGIN);
           }}>
           <Text
             style={{
@@ -345,6 +446,15 @@ export default function TaxiHomeDashbord({
             }}>
             {strings.WHERETO}
           </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            userData?.auth_token
+              ? updateState({
+                  isVisible: true,
+                })
+              : navigation.navigate(navigationStrings.LOGIN);
+          }}>
           <View
             style={{
               backgroundColor: colors.white,
@@ -367,8 +477,9 @@ export default function TaxiHomeDashbord({
               source={imagePath.goRight}
             />
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
+
       <View
         style={{
           alignItems: 'center',
@@ -413,7 +524,12 @@ export default function TaxiHomeDashbord({
           ></MapView>
         </View>
       </View>
-
+      <BottomViewModal
+        isDatetimePicker={true}
+        show={isVisible}
+        mainContainView={_ModalMainView}
+        closeModal={_modalClose}
+      />
       <View style={{height: moderateScaleVertical(65)}} />
     </ScrollView>
   );

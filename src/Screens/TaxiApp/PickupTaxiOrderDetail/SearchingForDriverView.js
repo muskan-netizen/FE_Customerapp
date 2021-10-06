@@ -28,6 +28,8 @@ import {
   UIActivityIndicator,
 } from 'react-native-indicators';
 import navigationStrings from '../../../navigation/navigationStrings';
+import {searchingLoader} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import LottieView from 'lottie-react-native';
 
 export default function ({
   isLoading = false,
@@ -242,14 +244,18 @@ export default function ({
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <View
               style={{
-                height: moderateScaleVertical(70),
-                width: moderateScale(70),
+                height: moderateScaleVertical(100),
+                width: moderateScale(100),
                 marginVertical: moderateScaleVertical(40),
               }}>
-              <UIActivityIndicator
-                size={70}
-                count={18}
-                color={themeColors.primary_color}
+              <LottieView
+                source={searchingLoader}
+                autoPlay
+                loop
+                style={{
+                  height: moderateScaleVertical(100),
+                  width: moderateScale(100),
+                }}
               />
             </View>
             <Text

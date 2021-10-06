@@ -43,7 +43,7 @@ import AddressModal3 from '../../../Components/AddressModal3';
 
 export default function Addaddress({navigation, route}) {
   const paramData = route?.params;
-  console.log(paramData?.data?.id, 'taxi categ');
+  console.log(paramData, 'paramDataparamDataparamDataparamData');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -142,6 +142,7 @@ export default function Addaddress({navigation, route}) {
         dropOffLocationAddressData: paramData?.data.pickuplocationAllData[1],
       });
     }
+
     getAllAddress();
   }, [paramData]);
 
@@ -203,7 +204,9 @@ export default function Addaddress({navigation, route}) {
   const getAllPickUpVendors = () => {
     actions
       .getDataByCategoryId(
-        `/${paramData?.data?.id}?limit=${limit}&page=${pageNo}`,
+        `/${
+          paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
+        }?limit=${limit}&page=${pageNo}`,
         {},
         {code: appData?.profile?.code},
       )
@@ -495,12 +498,14 @@ export default function Addaddress({navigation, route}) {
       //   location.push(dropOffLocationTwoLatLng);
       //   addressData.push(dropOffLocationTwoAddressData);
       // }
+      console.log('here it goes');
 
       navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
         location: location,
         id: paramData?.data?.id,
         tasks: addressData,
         cabVendors: pickUpVendors,
+        datetime: paramData?.datetime,
       });
     }
   };
