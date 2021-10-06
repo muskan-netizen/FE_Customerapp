@@ -49,7 +49,7 @@ export default function DashBoardFive({
   onPressCategory = () => { },
   navigation = {},
   toggleData = {},
-  curAddress = {}
+
 }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -185,11 +185,11 @@ export default function DashBoardFive({
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={moveToNewScreen(navigationStrings.BRANDDETAIL, item)}
-        // style={{
-        //   ...getScaleTransformationStyle(scaleInAnimated),
-        // }}
-        // onPressIn={() => pressInAnimation(scaleInAnimated)}
-        // onPressOut={() => pressOutAnimation(scaleInAnimated)}
+      // style={{
+      //   ...getScaleTransformationStyle(scaleInAnimated),
+      // }}
+      // onPressIn={() => pressInAnimation(scaleInAnimated)}
+      // onPressOut={() => pressOutAnimation(scaleInAnimated)}
       >
         {isSVG ? (
           <SvgUri
@@ -214,8 +214,15 @@ export default function DashBoardFive({
     )
   }
 
+  const onViewAll = (type, data) => {
+    navigation.navigate(navigationStrings.VIEW_ALL_DATA, {
+      data: data,
+      type: type
+    })
+  }
 
-  const listHeader = (type, isViewAll = true) => {
+
+  const listHeader = (type, data = [], isViewAll = false,) => {
     return (
       <View style={styles.viewAllVeiw}>
         <Text
@@ -226,9 +233,11 @@ export default function DashBoardFive({
           }}>
           {type}
         </Text>
-        {/* {!!isViewAll && (<TouchableOpacity>
+        {!!isViewAll && (<TouchableOpacity
+          onPress={() => onViewAll(type, data)}
+        >
           <Text style={styles.viewAllText}>{strings.VIEW_ALL}</Text>
-        </TouchableOpacity>)} */}
+        </TouchableOpacity>)}
       </View>
     )
   }
@@ -298,13 +307,13 @@ export default function DashBoardFive({
 
   return (
     <View style={{ flex: 1 }}>
-      <SearchBar2
+      {/* <SearchBar2
         placeHolderTxt={
           toggleData?.profile?.preferences?.search_nomenclature ||
           strings.SEARCH_HERE
         }
-        navigation={navigation}
-      />
+        navigation={navigation}``
+      /> */}
       <ScrollView
         showsVerticalScrollIndicator={false} style={{ flex: 1 }}
         refreshControl={
@@ -320,7 +329,7 @@ export default function DashBoardFive({
           {vendorsData && !!vendorsData?.length && (
             <>
               <FlatList
-                ListHeaderComponent={() => listHeader(strings.EXPLORE_STORES)}
+                ListHeaderComponent={() => listHeader(strings.EXPLORE_STORES, appMainData?.vendors, true)}
                 showsVerticalScrollIndicator={false}
                 alwaysBounceVertical={true}
                 ref={ref}
@@ -339,7 +348,7 @@ export default function DashBoardFive({
                   !!appMainData?.brands.length && (
                     <>
                       <View>
-                        {listHeader(strings.POPULAR_BRANDS, false)}
+                        {listHeader(strings.POPULAR_BRANDS)}
                       </View>
                       <FlatList
                         showsHorizontalScrollIndicator={false}

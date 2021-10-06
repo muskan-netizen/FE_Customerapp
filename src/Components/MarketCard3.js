@@ -67,8 +67,8 @@ export default function MarketCard3({
       <FastImage
         source={{ uri: imageUrl, priority: FastImage.priority.high }}
         style={{
-         ...styles.mainImage,
-         ...fastImageStyle
+          ...styles.mainImage,
+          ...fastImageStyle
         }}
         resizeMode={FastImage.resizeMode.cover}
       />

@@ -82,12 +82,6 @@ export default function Home({ route, navigation }) {
     acceptLoader: false,
     rejectLoader: false,
     selectedOrder: null,
-    curAddress: {
-      address:
-        'Plot no 5, Code Brew Labs, CH Devi Lal Centre of Learning, Sh.Chaudhari Devi Lal Memorial, Madhya Marg, 28B, Sector 28, Chandigarh',
-      latitude: 30.7188856,
-      longitude: 76.8083078,
-    },
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
@@ -124,8 +118,7 @@ export default function Home({ route, navigation }) {
     pageActive,
     acceptLoader,
     rejectLoader,
-    selectedOrder,
-    curAddress,
+    selectedOrder
   } = state;
   useFocusEffect(
     React.useCallback(() => {
@@ -218,7 +211,6 @@ export default function Home({ route, navigation }) {
           getCurrentLocation('home')
             .then((res) => {
               console.log('chekLocationPermission', res);
-              updateState({ curAddress: res });
               if (
                 appMainData &&
                 typeof appMainData?.reqData == 'object' &&
@@ -280,11 +272,7 @@ export default function Home({ route, navigation }) {
 
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
-    let latlongObj = {
-      // address: curAddress?.address,
-      // latitude: curAddress?.latitude,
-      // longitude: curAddress?.longitude,
-    };
+    let latlongObj = {};
 
     if (appData?.profile?.preferences?.is_hyperlocal) {
       latlongObj = {
@@ -391,21 +379,7 @@ export default function Home({ route, navigation }) {
 
   const { viewRef2, viewRef3, bannerRef } = useRef();
 
-  //OnClick Link
 
-  const _onLink = async () => {
-    // const supported = await Linking.canOpenURL(
-    //   'https://apps.apple.com/in/app/uber/id368677368',
-    // );
-    // console.log(supported, 'supported>>>');
-    // if (supported) {
-    //   // alert('123');
-    //   Linking.openURL('https://apps.apple.com/in/app/uber/id368677368');
-    // } else {
-    //   Linking.openURL('https://www.google.com/');
-    // }
-    Linking.openURL('https://www.uber.com/');
-  };
 
 
   const openUber = () => {
@@ -414,11 +388,12 @@ export default function Home({ route, navigation }) {
     let playStoreId = 'com.ubercab'
     let appStoreId = '310633997'
 
-    AppLink.maybeOpenURL('https://www.uber.com/in/en/',
+    AppLink.maybeOpenURL('uber://',
       { appName: appName, appStoreId: appStoreId, appStoreLocale: appStoreLocale, playStoreId: playStoreId }).then((res) => {
 
       })
       .catch((err) => {
+        Linking.openURL('https://www.uber.com/in/en/')
         console.log("errro raised", err)
         // handle error
       });
@@ -636,7 +611,6 @@ export default function Home({ route, navigation }) {
             <DashBoardHeaderOne
               navigation={navigation}
               location={location}
-              curAddress={curAddress}
             />
             <DashBoardOne
               handleRefresh={() => handleRefresh()}
@@ -647,7 +621,6 @@ export default function Home({ route, navigation }) {
               onPressCategory={(item) => onPressCategory(item)}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
-              curAddress={curAddress}
             />
           </>
         );
@@ -658,7 +631,6 @@ export default function Home({ route, navigation }) {
             <DashBoardHeaderOne
               navigation={navigation}
               location={location}
-              curAddress={curAddress}
             />
             <DashBoardFour
               handleRefresh={() => handleRefresh()}
@@ -671,7 +643,6 @@ export default function Home({ route, navigation }) {
               }}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
-              curAddress={curAddress}
             />
           </>
         );
@@ -684,7 +655,6 @@ export default function Home({ route, navigation }) {
               selcetedToggle={selcetedToggle}
               toggleData={appData}
               isLoading={isLoading}
-              curAddress={curAddress}
             />
 
             <DashBoardFive
@@ -700,7 +670,6 @@ export default function Home({ route, navigation }) {
               selcetedToggle={selcetedToggle}
               toggleData={appData}
               navigation={navigation}
-              curAddress={curAddress}
             />
           </>
         );

@@ -235,6 +235,7 @@ export default ({themeColors, fontFamily}) => {
       justifyContent: 'space-between',
       paddingHorizontal: moderateScale(15),
       marginTop: moderateScale(5),
+      alignItems:'center'
     },
     locationIcon: {
       height: moderateScale(18),
