@@ -12,6 +12,13 @@ export const hitSlopProp = {
 
 export default ({fontFamily, buttonTextColor}) => {
   const styles = StyleSheet.create({
+    boldFont14: {
+      fontSize: 14,
+      fontFamily: fontFamily.bold,
+    },
+    regularFont13: {fontSize: 13, fontFamily: fontFamily.regular},
+    regularFont16: {fontSize: 16, fontFamily: fontFamily.regular},
+    boldFont16: {fontSize: 16, fontFamily: fontFamily.bold},
     loader: {
       position: 'absolute',
       left: 0,
@@ -26,7 +33,7 @@ export default ({fontFamily, buttonTextColor}) => {
       color: colors.textGrey,
       fontFamily: fontFamily?.medium,
       opacity: 0.7,
-      textAlign: 'left'
+      textAlign: 'left',
     },
     mediumFont14: {
       // fontSize:RFValue(14,height),
@@ -34,55 +41,53 @@ export default ({fontFamily, buttonTextColor}) => {
       color: colors.textGrey,
       fontFamily: fontFamily?.medium,
       opacity: 0.7,
-      textAlign: 'left'
+      textAlign: 'left',
     },
     mediumFont14Normal: {
       fontSize: textScale(14),
       color: colors.textGrey,
       fontFamily: fontFamily?.medium,
       opacity: 1,
-      textAlign: 'left'
+      textAlign: 'left',
     },
     mediumFont16: {
       fontSize: textScale(14),
       color: colors.textGrey,
       fontFamily: fontFamily?.medium,
-      textAlign: 'left'
-
+      textAlign: 'left',
     },
     futuraBtHeavyFont16: {
       fontSize: textScale(16),
       color: colors.black,
       fontFamily: fontFamily?.bold,
-      textAlign: 'left'
-      
+      textAlign: 'left',
     },
     futuraBtHeavyFont14: {
       fontSize: textScale(14),
       color: colors.black,
       fontFamily: fontFamily?.bold,
-      textAlign: 'left'
+      textAlign: 'left',
     },
     futuraHeavyBt: {
       fontSize: textScale(16),
       color: colors.black,
       fontFamily: fontFamily?.bold,
-      textAlign: 'left'
+      textAlign: 'left',
     },
     buttonRect: {
       height: moderateScaleVertical(46),
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: colors.themeMain,
+      backgroundColor: colors.themeColor,
       borderWidth: 1,
-      borderColor: colors.themeMain,
+      borderColor: colors.themeColor,
       borderRadius: 13,
     },
     buttonRectTransparent: {
       height: moderateScaleVertical(46),
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: colors.themeMain,
+      backgroundColor: colors.themeColor,
       borderWidth: 1,
       borderColor: getColorCodeWithOpactiyNumber('1E2428', 20),
       borderRadius: 13,

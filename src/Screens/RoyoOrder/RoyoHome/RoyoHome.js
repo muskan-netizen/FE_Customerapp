@@ -19,32 +19,99 @@ import {
 import fontFamily from '../../../styles/fontFamily';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
-import commonStyles from '../../../styles/commonStyles';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
+import {BarChart} from 'react-native-chart-kit';
+import {FlatList} from 'react-native';
+import OrderCard from '../../../Components/OrderCard';
+import commonStyles from '../../../styles/commonStyles';
+
+const commonStyle = commonStyles({
+  fontFamily,
+  buttonTextColor: colors.themeColor2,
+});
 
 const RoyoHome = (props) => {
   const {navigation} = props;
-  // const {product} = useSelector(state => state.product)
   const [state, setState] = useState(null);
-  // console.log(product, 'product stored in store')
   const updateState = (data) =>
     setState((state) => {
       return {...state, ...data};
     });
 
   const data1 = '';
+  const data = {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+    datasets: [
+      {
+        data: [100, 45, 58, 80, 99, 43, 100],
+        colors: [
+          (opacity = 1) => `rgba(4, 14, 22, ${opacity})`,
+          (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
+          (opacity = 1) => `rgba(174, 44, 242, ${opacity})`,
+          (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
+          (opacity = 1) => `rgba(7, 14, 242, ${opacity})`,
+          (opacity = 1) => `rgba(174, 144, 22, ${opacity})`,
+          (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
+        ],
+      },
+    ],
+  };
+  const orderData = [
+    imagePath.cabImage,
+    imagePath.contactIllustration,
+    imagePath.listViewIcon,
+    imagePath.icoTimeOrder,
+  ];
+  const chartConfig = {
+    barRadius: moderateScale(2.5),
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientToOpacity: 0,
+    fillShadowGradientOpacity: 0,
+    fillShadowGradient: 'black',
+    yAxisInterval: 2,
+    barPercentage: 0.75,
+    decimalPlaces: 0, // optional, defaults to 2dp
+    color: (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
+    labelColor: (opacity = 0.61) => `rgba(40, 62, 58, ${opacity})`,
+    propsForDots: {
+      r: '6',
+      strokeWidth: '1',
+      stroke: colors.themeColor2,
+    },
+  };
+
   const onPressAdd = () => {
     navigation.navigate(navigationStrings.AddProduct);
   };
-  const dashboard = () => {
+
+  const dashboard = (image, header, text) => {
     return (
       <View style={styles.dashboardBox}>
-        <Image source={imagePath.apple} />
-        <Text>Pending Order</Text>
-        <Text>117 order pending</Text>
+        <Image
+          style={{
+            shadowColor: 'rgba(242,96,97,0.23)',
+            elevation: 19,
+          }}
+          source={image}
+        />
+        <Text
+          style={{
+            ...commonStyle.boldFont14,
+            marginTop: moderateScaleVertical(18),
+          }}>
+          {header}
+        </Text>
+        <Text
+          style={{
+            ...styles.font14Regular,
+            marginVertical: moderateScaleVertical(4),
+          }}>
+          {text}
+        </Text>
       </View>
     );
   };
+
   return (
     <WrapperContainer
       bgColor="white"
@@ -53,29 +120,18 @@ const RoyoHome = (props) => {
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
         style={styles.container}
+        showsVerticalScrollIndicator={false}
         bounces={false}>
         <View style={styles.header}>
-          <Text style={styles.royoShop}>Royo shop</Text>
+          <Image source={imagePath.logoRoyo} />
           <View style={styles.toggle}>
-            <Text
-              style={{...commonStyles.font14Bold, color: colors.whiteColor}}>
+            <Text style={{...commonStyle.boldFont14, color: colors.white}}>
               online
             </Text>
             <View style={styles.indicator} />
           </View>
         </View>
-        {/* <Carousel
-          data={data}
-          sliderWidth={width}
-          itemWidth={width - itemWidth}
-          renderItem={carouselRender}
-          loop={true}
-          loopClonesPerSide={2}
-          autoplay={true}
-          autoplayDelay={2000}
-          autoplayInterval={2000}
-          // onSnapToItem={(index) => updateState({ activeCarouselIndex: index })}
-        /> */}
+
         {data1 ? (
           <View
             style={{
@@ -97,47 +153,191 @@ const RoyoHome = (props) => {
           </View>
         ) : (
           <View>
-            <View
-              style={{
-                flexWrap: 'wrap',
-              flexDirection: "row",
-              justifyContent: 'space-between',
-                marginTop: moderateScaleVertical(16),
-              }}>
-              {dashboard()}
-              {dashboard()}
-              {dashboard()}
-              {dashboard()}
+            <View style={styles.dashboard}>
+              {dashboard(
+                imagePath.timerRoyo,
+                'Pending order',
+                '117 pending order',
+              )}
+              {dashboard(
+                imagePath.activeRoyo,
+                'Active order',
+                '17 active orders',
+              )}
+              {dashboard(
+                imagePath.deliveredRoyo,
+                'Delivered order',
+                '4 orders delivered',
+              )}
+              {dashboard(
+                imagePath.cancelledRoyo,
+                'Cancelled order',
+                '7 orders cancelled',
+              )}
             </View>
 
-            <View
-              style={{
-                flexDirection: 'row',
-                paddingVertical: moderateScaleVertical(16),
-                backgroundColor: '#D8D8D81f',
-              }}>
+            {/* <FlatList
+            contentContainerStyle={{justifyContent: 'space-between'}}
+            data={[1, 2, 3, 4]}
+            numColumns={width>600?4: 2}
+            renderItem={dashboard}
+            keyExtractor={(item, key)=>key}
+            /> */}
+
+            <View style={styles.warningBox}>
               <Image
-                source={imagePath.warning}
+                source={imagePath.warningRoyo}
                 style={{marginTop: moderateScaleVertical(5)}}
               />
               <View style={{flex: 1, marginLeft: moderateScale(16)}}>
                 <Text
                   style={{
-                    ...commonStyles.font16Bold,
-                    color: colors.blackColor,
+                    ...commonStyle.boldFont16,
+                    color: colors.black,
                   }}>
                   Complete store profile
                 </Text>
                 <Text
                   style={{
-                    ...commonStyles.font13Regular,
-                    color: colors.blackColor,
+                    ...commonStyle.regularFont13,
+                    color: colors.black,
                     letterSpacing: 1,
                   }}>
                   you have missing store imformation.{' '}
                   <Text style={styles.span}>Tap here</Text> to complete.
                 </Text>
               </View>
+            </View>
+
+            {/* chart */}
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                justifyContent: 'space-between',
+              }}>
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    paddingVertical: moderateScaleVertical(16),
+                  }}>
+                  <Text style={styles.font18Semibold}>Revenue</Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={{...styles.font14Regular, color: '#2E3E3A5f'}}>
+                      This month
+                    </Text>
+                    <Image source={imagePath.dropdownTriangle} />
+                  </View>
+                </View>
+                <View style={styles.graphContainer}>
+                  <View style={styles.graphHeader}>
+                    <Text style={{...styles.font13Regular, color: '#2E3E3A5f'}}>
+                      Total revenue (Delivered order)
+                    </Text>
+                    <Text
+                      style={styles.font16Bold}>
+                      $123456
+                    </Text>
+                  </View>
+                  <BarChart
+                    withCustomBarColorFromData={true}
+                    style={{margin: 0, padding: 0, flex: 1, marginLeft: 0}}
+                    // yLabelsOffset={30}
+                    data={data}
+                    width={
+                      width > 600 ? width / 2.55 : width - moderateScale(65)
+                    }
+                    height={moderateScaleVertical(220)}
+                    yAxisLabel="$"
+                    yAxisInterval={2}
+                    chartConfig={chartConfig}
+                    verticalLabelRotation={0}
+                    horizontalLabelRotation={0}
+                    withInnerLines={false}
+                    showBarTops={false}
+                    fromZero={true}
+                    flatColor={true}
+                  />
+                </View>
+              </View>
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    paddingVertical: moderateScaleVertical(16),
+                  }}>
+                  <Text style={styles.font18Semibold}>Revenue</Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={{...styles.font14Regular, color: '#2E3E3A5f'}}>
+                      This month
+                    </Text>
+                    <Image source={imagePath.dropdownTriangle} />
+                  </View>
+                </View>
+                <View style={styles.graphContainer}>
+                  <View style={styles.graphHeader}>
+                    <Text style={styles.font13Regular}>
+                      Total revenue (Delivered order)
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: fontFamily.bold,
+                        fontSize: 16,
+                        color: colors.themeColor2,
+                        marginVertical: moderateScaleVertical(4),
+                      }}>
+                      $123456
+                    </Text>
+                  </View>
+                  <BarChart
+                    withCustomBarColorFromData={true}
+                    data={data}
+                    width={
+                      width > 600 ? width / 2.55 : width - moderateScale(65)
+                    }
+                    height={moderateScaleVertical(220)}
+                    yAxisLabel="$"
+                    chartConfig={chartConfig}
+                    verticalLabelRotation={0}
+                    horizontalLabelRotation={0}
+                    withInnerLines={false}
+                    showBarTops={false}
+                    fromZero={true}
+                    flatColor={true}
+                  />
+                </View>
+              </View>
+            </View>
+
+            {/* new Order */}
+            <View>
+              <Text
+                style={{
+                  ...styles.font18Semibold,
+                  marginVertical: moderateScaleVertical(16),
+                }}>
+                New Order
+              </Text>
+              <FlatList
+                data={['Cash', 'Card', 'Cash', 'Cash']}
+                numColumns={width > 600 ? 2 : 1}
+                renderItem={({item, index}) => {
+                  return (
+                    <View
+                      style={{
+                        marginLeft:
+                          width > 600 ? index % 2 && moderateScale(12) : 0,
+                        flex: 1,
+                      }}>
+                      <OrderCard data={orderData} index={index} mode={item} />
+                    </View>
+                  );
+                }}
+                keyExtractor={(item, key) => key}
+              />
             </View>
           </View>
         )}
@@ -149,27 +349,54 @@ const RoyoHome = (props) => {
 export default RoyoHome;
 
 const styles = StyleSheet.create({
+  font14Regular: {
+    fontSize: 14,
+    fontFamily: fontFamily.regular,
+    color: '#2E3E3A6d',
+  },
+  font18Semibold: {
+    fontFamily: fontFamily.semiBold,
+    fontSize: 18,
+    color: '#2E3E3A',
+  },
+  font16Bold: {
+    fontFamily: fontFamily.bold,
+    fontSize: 16,
+    color: colors.themeColor2,
+    marginVertical: moderateScaleVertical(4),
+  },
+  font13Regular: {
+    fontFamily: fontFamily.regular,
+    fontSize: 13,
+    color: '#2E3E3A5f',
+  },
   container: {
     paddingHorizontal: moderateScale(16),
     paddingVertical: moderateScaleVertical(24),
+    marginBottom:
+      Platform.OS == 'android'
+        ? moderateScaleVertical(18)
+        : moderateScaleVertical(80),
+    backgroundColor: 'transparent',
+    backfaceVisibility: 'hidden',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: moderateScaleVertical(18),
   },
   royoShop: {
-    ...commonStyles.font18Bold,
-    color: colors.blackColor,
+    ...commonStyle.regularFont16,
+    color: colors.black,
   },
   toggle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: colors.themeColor,
-    // padding: moderateScale(8),
-    paddingHorizontal: moderateScale(8),
-    paddingVertical: moderateScaleVertical(5),
+    backgroundColor: colors.themeColor2,
+    paddingHorizontal: moderateScale(12),
+    paddingVertical: moderateScaleVertical(8),
     borderRadius: moderateScale(28),
   },
 
@@ -180,46 +407,54 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     marginLeft: moderateScale(8),
   },
-  carousel: {
-    marginVertical: moderateScaleVertical(27),
-    // alignSelf: "center",
-    // borderRadius: moderateScale(6),
-    // flexDirection: "row",
-    // justifyContent: "space-between",
-    // alignItems: "center",
-    marginLeft: -moderateScale(38),
-    // marginRight: moderateScale(35),
-    // backgroundColor: "rgba(192,85,35,0.14)",
-    // padding: moderateScale(16),
-  },
-  caption: {
-    fontSize: textScale(10),
-    fontFamily: fontFamily.Urbanist_Regular,
-    lineHeight: textScale(16),
-    color: '#00000030',
+  warningBox: {
+    marginBottom: moderateScaleVertical(16),
+    flexDirection: 'row',
+    paddingVertical: moderateScaleVertical(16),
+    backgroundColor: '#D8D8D81f',
   },
   btnContainer: {
-    backgroundColor: colors.whiteColor,
+    backgroundColor: colors.white,
     width: '100%',
+    borderColor: colors.themeColor2,
   },
   btnText: {
-    ...commonStyles.font16SemiBold,
-    color: colors.themeColor,
+    ...commonStyle.mediumFont16,
+    color: colors.themeColor2,
   },
   emptyText: {
-    ...commonStyles.font14Regular,
-    color: colors.blackColor,
+    ...commonStyle.mediumFont16,
+    color: colors.black,
     marginVertical: moderateScaleVertical(40),
     textAlign: 'center',
   },
   span: {
-    color: '#0091ff4a',
+    color: '#0091ff',
+  },
+  dashboard: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: moderateScaleVertical(16),
   },
   dashboardBox: {
-    width: width > 600 ? width/4.5 : width/2.25,
+    width: width > 600 ? width / 4.5 : width / 2.25,
     backgroundColor: '#F5F5F5',
     padding: moderateScale(16),
     borderRadius: moderateScaleVertical(6),
+    marginBottom: moderateScaleVertical(16),
+  },
+  graphContainer: {
+    padding: moderateScale(15),
+    borderWidth: 1,
+    borderRadius: moderateScale(6),
+    borderColor: 'rgba(151,151,151,0.15)',
+    marginBottom: moderateScaleVertical(16),
+  },
+  graphHeader: {
+    backgroundColor: '#F3F9F7',
+    padding: moderateScaleVertical(16),
+    borderRadius: moderateScaleVertical(5),
     marginBottom: moderateScaleVertical(16),
   },
 });

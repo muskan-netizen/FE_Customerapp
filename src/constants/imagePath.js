@@ -349,4 +349,28 @@ export default {
   car3: require('../assets/images/TAXIAPPIMAGES/ic_car3.png'),
   icStar3: require('../assets/images/RoyoorderNewImages/ic_star3.png'),
   icEdit1: require('../assets/images/RoyoorderNewImages/ic_edit1.png'),
+
+
+
+  // royo order tab
+  activeRoyo: require('../assets/images/royoTab/ic_active.png'),
+  cancelledRoyo: require('../assets/images/royoTab/ic_cancelled.png'),
+  deliveredRoyo: require('../assets/images/royoTab/ic_deliverd.png'),
+  logoRoyo: require('../assets/images/royoTab/ic_logo.png'),
+  timerRoyo: require('../assets/images/royoTab/ic_pensinf.png'),
+  warningRoyo: require('../assets/images/royoTab/ic_warning.png'),
+
+
+
+
+
+  accountActiveRoyo: require('../assets/images/royoTab/ic_account2.png'),
+  accountInactiveRoyo: require('../assets/images/royoTab/ic_account2.png'),
+  homeActiveRoyo: require('../assets/images/royoTab/ic_homwe2.png'),
+  homeInactiveRoyo: require('../assets/images/royoTab/ic_homwe2.png'),
+  productActiveRoyo: require('../assets/images/royoTab/ic_products2.png'),
+  productInactiveRoyo: require('../assets/images/royoTab/ic_products2.png'),
+  orderActiveRoyo: require('../assets/images/royoTab/ic_orders.png'),
+  orderInactiveRoyo: require('../assets/images/royoTab/ic_orders.png'),
+ 
 };

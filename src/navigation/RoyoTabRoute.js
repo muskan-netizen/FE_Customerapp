@@ -14,7 +14,7 @@ import navigationStrings from './navigationStrings';
 
 const Tab = createBottomTabNavigator();
 
-const RoyoTabRoute = ({barColor = colors.themeColor}) => {
+const RoyoTabRoute = ({barColor = colors.themeColor2}) => {
   const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
@@ -63,12 +63,12 @@ const RoyoTabRoute = ({barColor = colors.themeColor}) => {
           paddingTop: moderateScale(8),
         },
         labelStyle: {
-          fontSize: moderateScale(14),
-          fontFamily: fontFamily.Urbanist_Medium,
+          fontSize: 14,
+          fontFamily: fontFamily.medium,
           paddingVertical: moderateScale(8),
         },
-        activeTintColor: colors.whiteColor,
-        inactiveTintColor: colors.whiteColor,
+        activeTintColor: colors.white,
+        inactiveTintColor: colors.white,
 
         // keyboardHidesTabBar: true,
       }}>
@@ -80,7 +80,7 @@ const RoyoTabRoute = ({barColor = colors.themeColor}) => {
             return (
               <Image
                 source={
-                  focused ? imagePath.homeActive : imagePath.home2InActive
+                  focused ? imagePath.homeActiveRoyo : imagePath.homeInactiveRoyo
                 }
               />
             );
@@ -89,11 +89,11 @@ const RoyoTabRoute = ({barColor = colors.themeColor}) => {
             return (
               <Text
                 style={{
-                  color: colors.whiteColor,
-                  fontSize: moderateScale(14),
+                  color: colors.white,
+                  fontSize: 14,
                   fontFamily: focused
-                    ? fontFamily.Urbanist_Bold
-                    : fontFamily.Urbanist_Regular,
+                    ? fontFamily.bold
+                    : fontFamily.regular,
                   paddingVertical: moderateScale(8),
                 }}>
                 Home
@@ -113,7 +113,7 @@ const RoyoTabRoute = ({barColor = colors.themeColor}) => {
             return (
               <Image
                 source={
-                  focused ? imagePath.ordersActive : imagePath.ordersInActive
+                  focused ? imagePath.orderActiveRoyo : imagePath.orderInactiveRoyo
                 }
               />
             );
@@ -122,11 +122,11 @@ const RoyoTabRoute = ({barColor = colors.themeColor}) => {
             return (
               <Text
                 style={{
-                  color: colors.whiteColor,
-                  fontSize: moderateScale(14),
+                  color: colors.white,
+                  fontSize: 14,
                   fontFamily: focused
-                    ? fontFamily.Urbanist_Bold
-                    : fontFamily.Urbanist_Regular,
+                    ? fontFamily.bold
+                    : fontFamily.regular,
                   paddingVertical: moderateScale(8),
                 }}>
                 Orders
@@ -146,8 +146,8 @@ const RoyoTabRoute = ({barColor = colors.themeColor}) => {
               <Image
                 source={
                   focused
-                    ? imagePath.icoSelectProductActive
-                    : imagePath.icoSelectProductInActive
+                    ? imagePath.productActiveRoyo
+                    : imagePath.productInactiveRoyo
                 }
               />
             );
@@ -156,11 +156,11 @@ const RoyoTabRoute = ({barColor = colors.themeColor}) => {
             return (
               <Text
                 style={{
-                  color: colors.whiteColor,
-                  fontSize: moderateScale(14),
+                  color: colors.white,
+                  fontSize: 14,
                   fontFamily: focused
-                    ? fontFamily.Urbanist_Bold
-                    : fontFamily.Urbanist_Regular,
+                    ? fontFamily.bold
+                    : fontFamily.regular,
                   paddingVertical: moderateScale(8),
                 }}>
                 Product
@@ -179,7 +179,7 @@ const RoyoTabRoute = ({barColor = colors.themeColor}) => {
             return (
               <Image
                 source={
-                  focused ? imagePath.accountActive : imagePath.accountInActive
+                  focused ? imagePath.accountActiveRoyo : imagePath.accountInactiveRoyo
                 }
               />
             );
@@ -188,11 +188,11 @@ const RoyoTabRoute = ({barColor = colors.themeColor}) => {
             return (
               <Text
                 style={{
-                  color: colors.whiteColor,
-                  fontSize: moderateScale(14),
+                  color: colors.white,
+                  fontSize: 14,
                   fontFamily: focused
-                    ? fontFamily.Urbanist_Bold
-                    : fontFamily.Urbanist_Regular,
+                    ? fontFamily.bold
+                    : fontFamily.regular,
                   paddingVertical: moderateScale(8),
                 }}>
                 Account
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     // backgroundColor: 'transparent',
-    backgroundColor: colors.themeColor
+    backgroundColor: colors.themeColor2
   },
 
   navigator: {
