@@ -395,7 +395,7 @@ export default {
   PROCESSING: 'Processing',
   OUT_FOR_DELIVERY: 'Out For Delivery',
   DELIVERED: 'Delivered',
-  PLEASE_ENTER: 'Please Enter',
+  PLEASE_ENTER: 'Please enter your',
   PLEASE_ENTER_VALID: 'Please enter valid',
   NAME: 'Name',
   EMAIL: 'email',

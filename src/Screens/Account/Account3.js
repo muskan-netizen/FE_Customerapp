@@ -457,23 +457,23 @@ export default function Account3({navigation}) {
           />
 
           {!!userData?.auth_token &&
-          !!appMainData?.is_admin &&
-          businessType == 'taxi' ? null : (
-            <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-              onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
-              iconLeft={imagePath.mystores2}
-              centerHeading={strings.MYSTORES}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
-            />
-          )}
+            !!appMainData?.is_admin &&
+            businessType === null && (
+              <ListItemHorizontal
+                centerContainerStyle={{flexDirection: 'row'}}
+                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
+                iconLeft={imagePath.mystores2}
+                centerHeading={strings.MYSTORES}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+                // iconRight={imagePath.goRight}
+                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              />
+            )}
 
           <View style={styles.loginView}>
             <TouchableOpacity
