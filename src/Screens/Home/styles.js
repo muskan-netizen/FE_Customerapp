@@ -289,7 +289,7 @@ export default ({themeColors, fontFamily}) => {
     },
     exploreStoresTxt: {
       fontFamily: fontFamily.medium,
-      fontSize: textScale(18),
+      fontSize: textScale(16),
       textAlign: 'left',
     },
     dotStyle: {

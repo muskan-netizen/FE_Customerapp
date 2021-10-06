@@ -25,7 +25,8 @@ import {
 const ProductsComp = ({
     isDiscount,
     item,
-    imageStyle
+    imageStyle,
+    onPress = () => { }
 }) => {
     const theme = useSelector((state) => state?.initBoot?.themeColor);
     const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -40,6 +41,7 @@ const ProductsComp = ({
     const imageUrl = getImageUrl(media[0]?.image?.path?.image_fit, media[0]?.image?.path?.image_path, '600/600');
     return (
         <TouchableOpacity
+            onPress={onPress}
             activeOpacity={1}
             style={{
                 width: width / 2.5,
