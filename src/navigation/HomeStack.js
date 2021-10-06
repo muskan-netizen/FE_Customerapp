@@ -50,7 +50,7 @@ export default function () {
         name={
           businessType === 'taxi'
             ? navigationStrings.TAXIHOMESCREEN
-            : navigationStrings.HOMESTACK
+            : navigationStrings.HOME
         }
         component={businessType === 'taxi' ? TaxiHomeScreen : Home}
         options={{headerShown: false}}
