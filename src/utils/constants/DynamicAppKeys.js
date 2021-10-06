@@ -93,8 +93,14 @@ const shortCodes = {
   vecto: '39f6fd',
   grub: '2f3120',
   gusto: 'd1b1a0',
-  homeric: 'c8fbba',
+  gokab: 'fb78f0',
+  suel: '638bd1',
+  elixir: '574467',
+  ace: '2d98b5',
   punnet: 'd2cca0',
+  homeric: 'c8fbba',
+  voltaic: 'd8473d',
+  zest: '6865aa',
 };
 
 const appIds = {
