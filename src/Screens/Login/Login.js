@@ -1,5 +1,5 @@
 import {cloneDeep} from 'lodash';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   I18nManager,
   Image,
@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  TextInput,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -20,6 +21,9 @@ import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
+import PhoneNumberInput from '../../Components/PhoneNumberInput';
+import CountryPicker from 'react-native-country-picker-modal';
+
 import {
   moderateScale,
   moderateScaleVertical,
@@ -37,6 +41,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-community/async-storage';
+import {mobile} from 'is_js';
 
 export default function Login({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -44,10 +49,29 @@ export default function Login({navigation}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   var clonedState = {};
+
   const [state, setState] = useState({
-    email: '',
-    password: '',
+    // email: '',
+    // password: '',
     isLoading: false,
+    phoneInput: false,
+    phoneNoVisibility: false,
+    phoneNumber: '',
+    email: {
+      value: '',
+      focus: false,
+    },
+    mobilNo: {
+      phoneNo: '',
+      callingCode: appData?.profile.country?.phonecode
+        ? appData?.profile?.country?.phonecode
+        : '91',
+      cca2: appData?.profile?.country?.code
+        ? appData?.profile?.country?.code
+        : 'IN',
+      focus: false,
+      countryName: '',
+    },
   });
 
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
@@ -69,7 +93,15 @@ export default function Login({navigation}) {
   const styles = stylesFunc({themeColors, fontFamily});
 
   //all states used in this screen
-  const {email, password, isLoading} = state;
+  const {
+    password,
+    isLoading,
+    phoneInput,
+    phoneNoVisibility,
+    mobilNo,
+    email,
+    number,
+  } = state;
 
   //Naviagtion to specific screen
   const moveToNewScreen = (screenName, data) => () => {
@@ -82,7 +114,12 @@ export default function Login({navigation}) {
 
   //Validate form
   const isValidData = () => {
-    const error = validator({email, password});
+    const error = email.focus
+      ? validator({email: email.value, password})
+      : validator({
+          phoneNumber: mobilNo.phoneNo,
+          callingCode: mobilNo.callingCode,
+        });
     if (error) {
       showError(error);
       return;
@@ -93,30 +130,47 @@ export default function Login({navigation}) {
   //Login api fucntion
   const _onLogin = async () => {
     let fcmToken = await AsyncStorage.getItem('fcmToken');
-    const checkValid = isValidData();
-    if (!checkValid) {
-      return;
+    if (mobilNo.focus) {
+      const checkValid = isValidData();
+
+      if (!checkValid) {
+        return;
+      }
+    } else {
+      const checkValid = isValidData();
+      if (!checkValid) {
+        return;
+      }
     }
+
     let data = {
-      email: email,
+      username: email.focus ? email.value : mobilNo.phoneNo,
       password: password,
       device_type: Platform.OS,
       device_token: DeviceInfo.getUniqueId(),
       fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
+      dialCode: mobilNo.focus ? mobilNo.callingCode : '',
+      countryData: mobilNo.focus ? mobilNo.cca2 : '',
     };
+    console.log(data, 'dataaa');
     updateState({isLoading: true});
     actions
-      .login(data, {
+      .loginUsername(data, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'login data');
         if (!!res.data) {
-          !!res.data?.client_preference?.verify_email ||
-          !!res.data?.client_preference?.verify_phone
+          res.data.is_phone
+            ? navigation.navigate(navigationStrings.OTP_VERIFICATION, {
+                username: mobilNo?.phoneNo,
+                dialCode: mobilNo?.callingCode,
+                countryData: mobilNo?.cca2,
+              })
+            : !!res.data?.client_preference?.verify_email ||
+              !!res.data?.client_preference?.verify_phone
             ? !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
               ? navigation.push(navigationStrings.DRAWER_ROUTES)
@@ -261,7 +315,65 @@ export default function Login({navigation}) {
       })
       .catch((err) => {});
   };
+  const _onCountryChange = (data) => {
+    updateState({
+      mobilNo: {
+        phoneNo: mobilNo.phoneNo,
+        cca2: data.cca2,
+        callingCode: data.callingCode,
+      },
+      // cca2: data.cca2,
+      // callingCode: data.mobilNo.callingCode[0],
+    });
+    return;
+  };
 
+  /*************************** Check Input Handler */
+  const checkInputHandler = (data = '') => {
+    let re = /^[0-9]{1,45}$/;
+    let c = re.test(data);
+
+    if (c) {
+      updateState({
+        phoneInput: true,
+        mobilNo: {
+          ...mobilNo,
+          phoneNo: data,
+          focus: true,
+        },
+        email: {
+          ...email,
+          focus: false,
+        },
+      });
+    } else {
+      updateState({
+        phoneInput: false,
+        email: {
+          value: data,
+          focus: true,
+        },
+        mobilNo: {
+          ...mobilNo,
+          focus: false,
+        },
+      });
+    }
+  };
+  /*************************** On Text Change
+   */ const textChangeHandler = (type, data, value = 'value') => {
+    updateState((preState) => {
+      return {
+        [type]: {
+          ...preState[type],
+          [value]: data,
+        },
+      };
+    });
+  };
+
+  console.log(mobilNo, 'mobilNo');
+  console.log(email, 'email');
   return (
     <WrapperContainer
       isLoadingB={isLoading}
@@ -304,6 +416,7 @@ export default function Login({navigation}) {
           }>
           {strings.LOGIN_YOUR_ACCOUNT}
         </Text>
+
         <Text
           style={
             isDarkMode
@@ -313,19 +426,47 @@ export default function Login({navigation}) {
           {strings.ENTE_REGISTERED_EMAIL}
         </Text>
         <View style={{height: moderateScaleVertical(30)}} />
-        <BorderTextInput
-          onChangeText={_onChangeText('email')}
-          placeholder={strings.YOUR_EMAIL}
-          value={email}
-          keyboardType={'email-address'}
-          autoCapitalize={'none'}
-        />
-        <BorderTextInput
-          onChangeText={_onChangeText('password')}
-          placeholder={strings.ENTER_PASSWORD}
-          value={password}
-          secureTextEntry={true}
-        />
+        {/* <BorderTextInput
+            onChangeText={_onChangeText('email')}
+            placeholder={strings.YOUR_EMAIL}
+            value={email}
+            keyboardType={'email-ad
+            autoCapitalize={'none'}
+          /> */}
+        {!phoneInput && (
+          <>
+            <BorderTextInput
+              onChangeText={(data) => checkInputHandler(data)}
+              placeholder={strings.YOUR_EMAIL_PHONE}
+              value={email.value}
+              keyboardType={'email-address'}
+              autoCapitalize={'none'}
+              autoFocus={true}
+            />
+            <BorderTextInput
+              onChangeText={_onChangeText('password')}
+              placeholder={strings.ENTER_PASSWORD}
+              value={password}
+              secureTextEntry={true}
+            />
+          </>
+        )}
+        {phoneInput && (
+          <View style={{marginBottom: moderateScale(18)}}>
+            <PhoneNumberInput
+              onCountryChange={_onCountryChange}
+              onChangePhone={(data) => checkInputHandler(data)}
+              cca2={mobilNo.cca2}
+              phoneNumber={mobilNo.phoneNo}
+              callingCode={mobilNo.callingCode}
+              placeholder={strings.YOUR_PHONE_NUMBER}
+              keyboardType={'phone-pad'}
+              color={isDarkMode ? MyDarkTheme.colors.text : null}
+              autoFocus={true}
+            />
+          </View>
+        )}
+
         <View style={styles.forgotContainer}>
           <Text
             onPress={moveToNewScreen(navigationStrings.FORGOT_PASSWORD)}
@@ -497,3 +638,4 @@ export default function Login({navigation}) {
     </WrapperContainer>
   );
 }
+
