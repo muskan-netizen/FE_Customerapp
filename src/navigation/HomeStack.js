@@ -30,6 +30,8 @@ import {
   Vendors3,
   SearchProductVendorItem2,
   VendorDetail3,
+  HomeScreenTaxi,
+  TaxiHomeScreen,
 } from '../Screens';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
@@ -38,13 +40,20 @@ import TopTabRoutes from './TopTabRoutes';
 const Stack = createStackNavigator();
 export default function () {
   const {appStyle, appData} = useSelector((state) => state?.initBoot);
+  const businessType = appData?.profile?.preferences?.business_type;
+
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={navigationStrings.HOME}
-        component={Home}
+        name={
+          businessType === 'taxi'
+            ? navigationStrings.TAXIHOMESCREEN
+            : navigationStrings.HOMESTACK
+        }
+        component={businessType === 'taxi' ? TaxiHomeScreen : Home}
         options={{headerShown: false}}
       />
+
       <Stack.Screen
         name={navigationStrings.DELIVERY}
         component={Delivery}

@@ -33,7 +33,6 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
-  StatusBarHeight,
   textScale,
   width,
 } from '../../styles/responsiveSize';
@@ -66,10 +65,10 @@ import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoade
 import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
 import ProductListLoader from '../../Components/Loaders/ProductListLoader';
 import HomeServiceVariantAddons from '../../Components/HomeServiceVariantAddons';
-import FastImage from 'react-native-fast-image';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
+  console.log(data, 'data params >>>>>');
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
@@ -77,7 +76,6 @@ export default function Products({route, navigation}) {
 
   const isDarkMode = theme;
   const [state, setState] = useState({
-    isVisibleModal: false,
     isOffline: false,
     isLoading: true,
     isLoadingB: false,
@@ -143,6 +141,7 @@ export default function Products({route, navigation}) {
     cartId: null,
     isSearch: false,
     searchInput: '',
+    allServicesTabData: data?.children,
     btnLoader: false,
     selectedItemID: -1,
   });
@@ -190,6 +189,7 @@ export default function Products({route, navigation}) {
     showShimmer,
     isSearch,
     searchInput,
+    allServicesTabData,
     btnLoader,
     selectedItemID,
   } = state;
@@ -197,7 +197,6 @@ export default function Products({route, navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
   const styles = stylesFunc({themeColors, fontFamily});
-
   //Saving the initial state
   const initialState = cloneDeep(state);
   //Logged in user data
@@ -217,11 +216,14 @@ export default function Products({route, navigation}) {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       updateState({pageNo: 1});
+
       getAllListItems();
+
       if (isLoadingC) {
         getAllProducts(true);
       }
     });
+
     return unsubscribe;
   }, [navigation]);
 
@@ -265,15 +267,14 @@ export default function Products({route, navigation}) {
       }
     }
   };
-
   /****Get all list items by vendor id */
   const getAllProductsByVendorCategory = () => {
     // alert("21312")
     console.log('api hit getAllProductsByVendorCategory');
-    console.log(
-      `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
-      'url',
-    );
+    // console.log(
+    //   `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
+    //   'url',
+    // );
     actions
       .getProductByVendorCategoryId(
         `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
@@ -286,7 +287,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'resz');
+        console.log(res.data, 'ressssssss');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -305,7 +306,6 @@ export default function Products({route, navigation}) {
   const updateBrandAndCategoryFilter = (filterData, allBrands) => {
     var brandDatas = [];
     var filterDataNew = [];
-
     if (allBrands.length) {
       brandDatas = [
         {
@@ -320,10 +320,8 @@ export default function Products({route, navigation}) {
           }),
         },
       ];
-
       // updateState({allFilters: [...allFilters,...brandDatas]});
     }
-
     // Price filter
     if (filterData.length) {
       filterDataNew = filterData.map((i, inx) => {
@@ -453,8 +451,6 @@ export default function Products({route, navigation}) {
           code: appData.profile.code,
           currency: currencies.primary_currency.id,
           language: languages.primary_language.id,
-          latitude: appMainData?.reqData?.latitude,
-          longitude: appMainData?.reqData?.longitude,
           systemuser: DeviceInfo.getUniqueId(),
         },
       )
@@ -477,7 +473,6 @@ export default function Products({route, navigation}) {
 
   /**********Get all list items by category id */
   const getAllProducts = () => {
-    console.log('api hit getAllProducts');
     actions
       .getProductByCategoryId(
         `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${
@@ -492,12 +487,13 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log('getAllProducts res', res);
+        console.log(res.data, 'getAllProducts res');
         updateState({
           isLoading: false,
           isLoadingC: false,
           isRefreshing: false,
           categoryInfo: categoryInfo ? categoryInfo : res.data.category,
+
           filterData: res.data.filterData,
           productListData:
             pageNo == 1
@@ -523,6 +519,7 @@ export default function Products({route, navigation}) {
       .catch(errorMethod);
     // }
   };
+  console.log(categoryInfo, 'categoryInfo');
 
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
@@ -687,13 +684,15 @@ export default function Products({route, navigation}) {
       });
       return;
     }
-
+    console.log(item, 'itemitem');
     let data = {};
     data['sku'] = item.sku;
     data['quantity'] = 1;
     data['product_variant_id'] = item?.variant[0]?.id;
     data['type'] = dine_In_Type;
-    updateState({selectedItemID: item?.id});
+    console.log(data, 'datadata');
+    updateState({updateQtyLoader: true, selectedItemID: item?.id});
+
     actions
       .addProductsToCart(data, {
         code: appData.profile.code,
@@ -906,6 +905,7 @@ export default function Products({route, navigation}) {
 
   const renderProduct = ({item, index}) => {
     const {isSelectItem} = state;
+    console.log(item, 'itemmmm');
     return (
       <ProductCard3
         data={item}
@@ -915,8 +915,11 @@ export default function Products({route, navigation}) {
         addToCart={() => addSingleItem(item)}
         onIncrement={() => addDeleteCartItems(item, 1)}
         onDecrement={() => addDeleteCartItems(item, 2)}
+        selectedCartItem={selectedCartItem}
+        Servicetype={categoryInfo.type_id}
         selectedItemID={selectedItemID}
         btnLoader={btnLoader}
+        isVisibleModal={isVisibleModal}
       />
     );
   };
@@ -929,8 +932,6 @@ export default function Products({route, navigation}) {
   };
 
   const onPressChildCards = (item) => {
-    console.log(item, 'item upload');
-
     updateState({
       selectedCategory: item,
       // productListData: [],
@@ -1037,7 +1038,7 @@ export default function Products({route, navigation}) {
               </View>
             </View>
 
-            <View style={{}}>
+            <View>
               {/* <View style={styles.rateViewStyle}>
                 <View>
                   <Text style={{ color: colors.white }}>
@@ -1139,209 +1140,12 @@ export default function Products({route, navigation}) {
     );
   };
 
-  const listHeaderComponent2 = () => {
-    return (
-      <View style={styles.header2}>
-        <StatusBar
-          translucent
-          barStyle={Platform.OS === 'ios' ? 'light-content' : 'dark-content'}
-        />
-        <View style={{height: '80%'}}>
-          <ImageBackground
-            source={{
-              uri: getImageUrl(
-                data?.item?.banner.image_fit ||
-                  data?.categoryInfo?.image?.image_fit ||
-                  categoryInfo.banner.image_fit,
-                data?.item?.banner.image_path ||
-                  data?.categoryInfo?.image?.image_path ||
-                  categoryInfo.banner.image_path,
-                '400/400',
-              ),
-            }}
-            style={{
-              ...styles.imageBackgroundHdr,
-              backgroundColor: isDarkMode
-                ? colors.whiteOpacity15
-                : colors.greyColor,
-            }}
-            resizeMode="cover">
-            <LinearGradient
-              style={styles.linearGradientHdr}
-              colors={['rgba(0,0,0,0.5)', 'rgba(0,0,0,0.5)']}>
-              <View style={styles.hdrCompHeader}>
-                <TouchableOpacity
-                  hitSlop={styles.hitSlopProp}
-                  onPress={() => navigation.goBack()}
-                  style={{flex: 0.2}}>
-                  <Image
-                    source={imagePath.icBackb}
-                    style={{
-                      marginLeft: moderateScale(10),
-                      tintColor: colors.white,
-                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                    }}
-                  />
-                </TouchableOpacity>
-                <FastImage
-                  source={{
-                    uri: getImageUrl(
-                      data?.item?.banner.image_fit ||
-                        data?.categoryInfo?.image?.image_fit ||
-                        categoryInfo.banner.image_fit,
-                      data?.item?.banner.image_path ||
-                        data?.categoryInfo?.image?.image_path ||
-                        categoryInfo.banner.image_path,
-                      '400/400',
-                    ),
-                    priority: FastImage.priority.low,
-                  }}
-                  style={styles.hdrCompRoundImg}
-                />
-
-                <View style={styles.rightViewOfShareSearch}>
-                  <TouchableOpacity activeOpacity={0.8}>
-                    <Image
-                      style={{
-                        tintColor: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.white,
-                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                      }}
-                      source={
-                        !!data?.showAddToCart ? false : imagePath.icSearchb
-                      }
-                    />
-                  </TouchableOpacity>
-                  <View style={{marginHorizontal: moderateScale(8)}} />
-                  <TouchableOpacity
-                    onPress={onShare}
-                    hitSlop={hitSlopProp}
-                    activeOpacity={0.8}>
-                    <Image
-                      style={{
-                        tintColor: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.white,
-                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                      }}
-                      source={imagePath.icShareb}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </LinearGradient>
-            <View
-              style={{
-                ...styles.hdrAbsoluteView,
-                backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.lightDark
-                  : colors.white,
-              }}>
-              <View style={styles.hdrNameRatingView}>
-                <Text
-                  numberOfLines={2}
-                  style={{
-                    ...styles.hdrTitleTxt,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}>
-                  {data?.name || categoryInfo?.name || ''}
-                </Text>
-                {!!categoryInfo && !!categoryInfo?.product_avg_average_rating && (
-                  <View style={styles.hdrRatingTxtView}>
-                    <Text style={styles.ratingTxt}>
-                      {Number(categoryInfo?.product_avg_average_rating).toFixed(
-                        1,
-                      )}
-                    </Text>
-                    <Image
-                      style={styles.starImg}
-                      source={imagePath.star}
-                      resizeMode="contain"
-                    />
-                  </View>
-                )}
-              </View>
-              {!!categoryInfo && !!categoryInfo?.categoriesList && (
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    ...styles.milesTxt,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                    marginRight: moderateScale(40),
-                    marginVertical: moderateScale(1),
-                    marginLeft: 0,
-                  }}>
-                  {categoryInfo?.categoriesList || ''}
-                </Text>
-              )}
-              {!!categoryInfo && !!categoryInfo?.lineOfSightDistance && (
-                <View
-                  style={{
-                    ...styles.hdrNameRatingView,
-                    marginTop: moderateScaleVertical(5),
-                  }}>
-                  <View style={styles.milesView}>
-                    <Image
-                      source={imagePath.location2}
-                      style={{
-                        tintColor: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        ...styles.milesTxt,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
-                      }}>
-                      {categoryInfo.lineOfSightDistance}{' '}
-                      {!!categoryInfo.lineOfSightDistance &&
-                      !!categoryInfo.timeofLineOfSightDistance
-                        ? '|'
-                        : ''}{' '}
-                      {categoryInfo.timeofLineOfSightDistance}{' '}
-                      {!!categoryInfo.timeofLineOfSightDistance ? 'mins' : ''}
-                    </Text>
-                  </View>
-
-                  <Text
-                    style={{
-                      ...commonStyles.mediumFont14Normal,
-                      fontSize: textScale(12),
-                      textAlign: 'left',
-                      marginRight: moderateScale(5),
-                      color: categoryInfo?.show_slot
-                        ? colors.green
-                        : categoryInfo?.is_vendor_closed
-                        ? colors.redB
-                        : colors.green,
-                    }}>
-                    {categoryInfo?.show_slot
-                      ? strings.OPEN
-                      : categoryInfo?.is_vendor_closed
-                      ? strings.CLOSE
-                      : strings.OPEN}
-                  </Text>
-                </View>
-              )}
-            </View>
-          </ImageBackground>
-        </View>
-      </View>
-    );
-  };
-
   if (isLoading) {
     return (
       <View
         style={{
           flex: 1,
-          backgroundColor: isDarkMode
-            ? MyDarkTheme.colors.background
-            : colors.white,
+          backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
         }}>
         <SafeAreaView>
           <HeaderLoader
@@ -1432,19 +1236,19 @@ export default function Products({route, navigation}) {
   };
 
   const onScroll = ({nativeEvent}) => {
-    if (productListData.length < 6) {
+    if (productListData?.length < 6) {
       return;
     }
     let offset = nativeEvent.contentOffset.y;
     let index = parseInt(offset / 10); // your cell height
     console.log('now index is ' + index);
-    if (index > 16) {
+    if (index > 1) {
       if (!AnimatedHeaderValue) {
         updateState({AnimatedHeaderValue: true});
       }
       return;
     }
-    if (index < 16) {
+    if (index < 1) {
       if (AnimatedHeaderValue) {
         updateState({AnimatedHeaderValue: false});
         return;
@@ -1452,6 +1256,8 @@ export default function Products({route, navigation}) {
       return;
     }
   };
+
+  console.log(productListData, 'productListDataproductListDataproductListData');
 
   let uri1 = categoryInfo?.banner?.image_fit || categoryInfo?.icon?.image_fit;
   let uri2 = categoryInfo?.banner?.image_path || categoryInfo?.icon?.image_path;
@@ -1464,26 +1270,34 @@ export default function Products({route, navigation}) {
     (!!categoryInfo?.translation &&
       categoryInfo?.translation[0]?.meta_description);
 
-  console.log(data, 'is_show_category');
-
   return (
     <View
       style={{
-        backgroundColor: isDarkMode
-          ? MyDarkTheme.colors.background
-          : colors.white,
+        backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff',
         flex: 1,
-        // paddingVertical: moderateScale(16),
+        paddingVertical: moderateScale(16),
       }}>
-      <View style={{flex: 1}}>
-        {!data.isVendorList && (
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingHorizontal: moderateScale(15),
-              marginTop: Platform.OS === 'ios' ? StatusBarHeight : 15,
-            }}>
+      <StatusBar
+        // translucent
+        backgroundColor="transparent"
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+      />
+      <CustomAnimatedLoader
+        source={loaderOne}
+        loaderTitle="Loading"
+        containerColor={colors.white}
+        loadercolor={themeColors.primary_color}
+        animationStyle={[
+          {
+            height: moderateScaleVertical(40),
+            width: moderateScale(40),
+          },
+        ]}
+        visible={updateQtyLoader}
+      />
+      <SafeAreaView style={{flex: 1}}>
+        <View style={{flex: 1}}>
+          <View style={styles.headerStyle}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -1499,76 +1313,90 @@ export default function Products({route, navigation}) {
                   source={imagePath.icBackb}
                 />
               </TouchableOpacity>
-              <Text
-                numberOfLines={1}
-                style={{
-                  color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.blackOpacity86,
-                  fontSize: moderateScale(14),
-                  fontFamily: fontFamily.bold,
-                  marginLeft: moderateScale(15),
-                }}>
-                {name}
-              </Text>
+              {AnimatedHeaderValue &&
+                !!productListData &&
+                productListData?.length > 0 && (
+                  <Animatable.View
+                    // key={AnimatedHeaderValue}
+                    // duration={10}
+                    animation={'fadeIn'}
+                    style={{marginLeft: moderateScale(8), flex: 0.7}}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <RoundImg
+                        img={getImageUrl(uri1, uri2, '400/400')}
+                        size={20}
+                        isDarkMode={isDarkMode}
+                        MyDarkTheme={MyDarkTheme}
+                      />
+                      <View style={{marginLeft: moderateScale(8)}}>
+                        <Text
+                          numberOfLines={1}
+                          style={{
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.blackOpacity86,
+                            fontSize: moderateScale(12),
+                            fontFamily: fontFamily.regular,
+                          }}>
+                          {name}
+                        </Text>
+                        <Text
+                          numberOfLines={1}
+                          style={{
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
+                            fontSize: moderateScale(12),
+                            fontFamily: fontFamily.medium,
+                            marginTop: moderateScaleVertical(2),
+                          }}>
+                          {desc}
+                        </Text>
+                      </View>
+                    </View>
+                  </Animatable.View>
+                )}
             </View>
-
-            <View style={{flexDirection: 'row'}}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => updateState({isSearch: true})}
-                onPress={moveToNewScreen(
-                  navigationStrings.SEARCHPRODUCTOVENDOR,
-                  {
-                    type: data?.vendor
-                      ? staticStrings.VENDOR
-                      : staticStrings.CATEGORY,
-                    id: data?.vendor ? data?.id : productListId?.id,
-                  },
-                )}>
-                <Image
-                  style={{
-                    tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
-                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                    marginRight: moderateScale(15),
+            {isSearch ? (
+              <Animatable.View animation="fadeIn">
+                <SearchBar
+                  containerStyle={{
+                    marginHorizontal: moderateScale(18),
+                    borderRadius: 8,
+                    width: width / 1.15,
+                    backgroundColor: isDarkMode
+                      ? colors.whiteOpacity15
+                      : colors.greyColor,
+                    height: moderateScaleVertical(37),
                   }}
-                  source={imagePath.icSearchb}
+                  searchValue={searchInput}
+                  placeholder={strings.SEARCH_ITEM}
+                  // onChangeText={(value) => onChangeText(value)}
+                  showRightIcon
+                  rightIconPress={() =>
+                    updateState({
+                      searchInput: '',
+                      isSearch: false,
+                      isLoading: false,
+                    })
+                  }
                 />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={onShare}
-                hitSlop={hitSlopProp}
-                activeOpacity={0.8}>
-                <Image
-                  style={{
-                    tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
-                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                  }}
-                  source={imagePath.icShareb}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
-
-        {data.isVendorList &&
-          AnimatedHeaderValue &&
-          !!productListData &&
-          productListData.length > 0 && (
-            <View style={styles.headerStyle}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
+              </Animatable.View>
+            ) : (
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={() => navigation.goBack()}
-                  hitSlop={styles.hitSlopProp}>
+                  // onPress={() => updateState({isSearch: true})}
+                  // onPress={moveToNewScreen(
+                  //   navigationStrings.SEARCHPRODUCTOVENDOR,
+                  //   {
+                  //     type: data?.vendor
+                  //       ? staticStrings.VENDOR
+                  //       : staticStrings.CATEGORY,
+                  //     id: data?.vendor ? data?.id : productListId?.id,
+                  //   },
+                  // )}
+                >
                   <Image
                     style={{
                       tintColor: isDarkMode
@@ -1576,206 +1404,102 @@ export default function Products({route, navigation}) {
                         : colors.black,
                       transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
                     }}
-                    source={imagePath.icBackb}
+                    source={!!data?.showAddToCart ? false : imagePath.icSearchb}
                   />
                 </TouchableOpacity>
-
-                <Animatable.View
-                  // key={AnimatedHeaderValue}
-                  // duration={10}
-                  animation={'fadeIn'}
-                  style={{marginLeft: moderateScale(8), flex: 0.7}}>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <RoundImg
-                      img={getImageUrl(uri1, uri2, '400/400')}
-                      size={20}
-                      isDarkMode={isDarkMode}
-                      MyDarkTheme={MyDarkTheme}
-                    />
-                    <View style={{marginLeft: moderateScale(8)}}>
-                      <Text
-                        numberOfLines={1}
-                        style={{
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.blackOpacity86,
-                          fontSize: moderateScale(12),
-                          fontFamily: fontFamily.regular,
-                        }}>
-                        {name}
-                      </Text>
-                      <Text
-                        numberOfLines={1}
-                        style={{
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.black,
-                          fontSize: moderateScale(12),
-                          fontFamily: fontFamily.medium,
-                          marginTop: moderateScaleVertical(2),
-                        }}>
-                        {categoryInfo?.categoriesList || ''}
-                      </Text>
-                    </View>
-                  </View>
-                </Animatable.View>
-              </View>
-
-              {isSearch ? (
-                <Animatable.View animation="fadeIn">
-                  <SearchBar
-                    containerStyle={{
-                      marginHorizontal: moderateScale(18),
-                      borderRadius: 8,
-                      width: width / 1.15,
-                      backgroundColor: isDarkMode
-                        ? colors.whiteOpacity15
-                        : colors.greyColor,
-                      height: moderateScaleVertical(37),
+                <View style={{marginHorizontal: moderateScale(8)}} />
+                <TouchableOpacity
+                  onPress={onShare}
+                  hitSlop={hitSlopProp}
+                  activeOpacity={0.8}>
+                  <Image
+                    style={{
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
                     }}
-                    searchValue={searchInput}
-                    placeholder={strings.SEARCH_ITEM}
-                    // onChangeText={(value) => onChangeText(value)}
-                    showRightIcon
-                    rightIconPress={() =>
-                      updateState({
-                        searchInput: '',
-                        isSearch: false,
-                        isLoading: false,
-                      })
-                    }
+                    source={imagePath.icShareb}
                   />
-                </Animatable.View>
-              ) : (
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    // onPress={() => updateState({isSearch: true})}
-                    // onPress={moveToNewScreen(
-                    //   navigationStrings.SEARCHPRODUCTOVENDOR,
-                    //   {
-                    //     type: data?.vendor
-                    //       ? staticStrings.VENDOR
-                    //       : staticStrings.CATEGORY,
-                    //     id: data?.vendor ? data?.id : productListId?.id,
-                    //   },
-                    // )}
-                  >
-                    <Image
-                      style={{
-                        tintColor: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
-                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                      }}
-                      source={
-                        !!data?.showAddToCart ? false : imagePath.icSearchb
-                      }
-                    />
-                  </TouchableOpacity>
-                  <View style={{marginHorizontal: moderateScale(8)}} />
-                  <TouchableOpacity
-                    onPress={onShare}
-                    hitSlop={hitSlopProp}
-                    activeOpacity={0.8}>
-                    <Image
-                      style={{
-                        tintColor: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
-                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                      }}
-                      source={imagePath.icShareb}
-                    />
-                  </TouchableOpacity>
-                </View>
-              )}
-            </View>
-          )}
-        {/* <View style={{height: moderateScale(10)}} /> */}
-        <FlatList
-          onScroll={onScroll}
-          disableScrollViewPanResponder
-          showsVerticalScrollIndicator={false}
-          data={(!isLoading && productListData) || []}
-          renderItem={renderProduct}
-          ListHeaderComponent={
-            data?.isVendorList ? (
-              listHeaderComponent2()
-            ) : (
-              <View style={{height: 20}} />
-            )
-          }
-          keyExtractor={(item, index) => String(index)}
-          keyboardShouldPersistTaps="always"
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            flexGrow: 1,
-          }}
-          ItemSeparatorComponent={() => <View style={{height: 10}} />}
-          refreshing={isRefreshing}
-          // initialNumToRender={12}
-          // maxToRenderPerBatch={10}
-          // windowSize={10}
-          refreshControl={
-            <RefreshControl
-              refreshing={isRefreshing}
-              onRefresh={handleRefresh}
-              tintColor={themeColors.primary_color}
-            />
-          }
-          onEndReached={onEndReachedDelayed}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={() => (
-            <View style={{height: moderateScale(50)}} />
-          )}
-          ListEmptyComponent={
-            <NoDataFound isLoading={state.isLoading} containerStyle={{}} />
-          }
-        />
-        {/* <View style={{ height: moderateScale(height * 0.070) }} /> */}
-      </View>
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
 
-      {isVisibleModal && (
-        <VariantAddons
-          addonSet={selectedCartItem?.add_on}
-          variantData={selectedCartItem?.variantSet}
-          isVisible={isVisibleModal}
-          productdetail={selectedCartItem}
-          onClose={() =>
-            updateState({isVisibleModal: false, showShimmer: true})
-          }
-          showShimmer={showShimmer}
-          shimmerClose={(val) => updateState({showShimmer: val})}
-          updateCartItems={updateCartItems}
-        />
+          <View style={{height: moderateScale(10)}} />
+          <FlatList
+            onScroll={onScroll}
+            disableScrollViewPanResponder
+            // scrollEventThrottle={e => console.log("eeee1", e)}
+            // initialScrollIndex={e => console.log("eeee2", e)}
+            // overScrollMode={e => console.log("eeee3", e)}
+            showsVerticalScrollIndicator={false}
+            data={(!isLoading && productListData) || []}
+            renderItem={renderProduct}
+            ListHeaderComponent={listHeaderComponent()}
+            keyExtractor={(item, index) => String(index)}
+            keyboardShouldPersistTaps="always"
+            showsVerticalScrollIndicator={false}
+            // style={{flex: 1}}
+            contentContainerStyle={{
+              flexGrow: 1,
+              // flex:1,
+              // backgroundColor:'red',
+              // marginTop: width * 0.1,
+            }}
+            ItemSeparatorComponent={() => <View style={{height: 10}} />}
+            refreshing={isRefreshing}
+            // initialNumToRender={12}
+            // maxToRenderPerBatch={10}
+            // windowSize={10}
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                onRefresh={handleRefresh}
+                tintColor={themeColors.primary_color}
+              />
+            }
+            onEndReached={onEndReachedDelayed}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={() => (
+              <View style={{height: moderateScale(50)}} />
+            )}
+            ListEmptyComponent={
+              <NoDataFound isLoading={state.isLoading} containerStyle={{}} />
+            }
+          />
+          {/* <View style={{ height: moderateScale(height * 0.070) }} /> */}
+        </View>
 
-        // <HomeServiceVariantAddons
-        //   addonSet={selectedCartItem?.add_on}
-        //   variantData={selectedCartItem?.variantSet}
-        //   isVisible={isVisibleModal}
-        //   productdetail={selectedCartItem}
-        //   onClose={() =>
-        //     updateState({isVisibleModal: false, showShimmer: true})
-        //   }
-        //   showShimmer={showShimmer}
-        //   shimmerClose={(val) => updateState({showShimmer: val})}
-        //   updateCartItems={updateCartItems}
-        // />
-      )}
-      <CustomAnimatedLoader
-        source={loaderOne}
-        loaderTitle="Loading"
-        containerColor={colors.white}
-        loadercolor={themeColors.primary_color}
-        animationStyle={[
-          {
-            height: moderateScaleVertical(40),
-            width: moderateScale(40),
-          },
-        ]}
-        visible={updateQtyLoader}
-      />
+        {categoryInfo?.type_id == 8 && isVisibleModal ? (
+          <HomeServiceVariantAddons
+            addonSet={selectedCartItem?.add_on}
+            variantData={selectedCartItem?.variantSet}
+            isVisible={isVisibleModal}
+            productdetail={selectedCartItem}
+            onClose={() =>
+              updateState({isVisibleModal: false, showShimmer: true})
+            }
+            showShimmer={showShimmer}
+            shimmerClose={(val) => updateState({showShimmer: val})}
+            updateCartItems={updateCartItems}
+            modeOfService={true}
+          />
+        ) : (
+          <VariantAddons
+            addonSet={selectedCartItem?.add_on}
+            variantData={selectedCartItem?.variantSet}
+            isVisible={isVisibleModal}
+            productdetail={selectedCartItem}
+            onClose={() =>
+              updateState({isVisibleModal: false, showShimmer: true})
+            }
+            showShimmer={showShimmer}
+            shimmerClose={(val) => updateState({showShimmer: val})}
+            updateCartItems={updateCartItems}
+          />
+        )}
+      </SafeAreaView>
     </View>
   );
 }

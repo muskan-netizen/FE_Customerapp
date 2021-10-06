@@ -48,7 +48,7 @@ export default function OrderCardVendorComponent2({
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-
+  const businessType = appData?.profile?.preferences?.business_type;
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
@@ -94,7 +94,6 @@ export default function OrderCardVendorComponent2({
         <View
           style={{
             flex: 1,
-
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -313,11 +312,13 @@ export default function OrderCardVendorComponent2({
               onPress={onPressReturnOrder}
               // style={{flex:0.6}}
               style={styles.bottomSecondHalf}>
-              <View style={styles.orderAcceptAndReadyStyleSecond}>
-                <Text style={styles.orderStatusStyleSecond}>
-                  {strings.RETURNORDER}
-                </Text>
-              </View>
+              {businessType === 'taxi' ? null : (
+                <View style={styles.orderAcceptAndReadyStyleSecond}>
+                  <Text style={styles.orderStatusStyleSecond}>
+                    {strings.RETURNORDER}
+                  </Text>
+                </View>
+              )}
             </TouchableOpacity>
           </View>
         ) : (

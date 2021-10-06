@@ -1083,6 +1083,8 @@ end
 #Vecto Target
 target 'Vecto' do
   permissions_path = '../node_modules/react-native-permissions/ios'
+  rn_maps_path = '../node_modules/react-native-maps'
+  pod 'react-native-google-maps', :path => rn_maps_path
   config = use_native_modules!
   use_react_native!(:path => config["reactNativePath"])
   pod 'react-native-restart', :path => '../node_modules/react-native-restart'

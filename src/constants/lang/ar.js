@@ -534,4 +534,11 @@ export default {
   ALREADY_EXIST:
     'Your already have items in your cart. Do you want to discard them?',
   YOUR_EMAIL_PHONE: 'Your Email or Phone Number',
+  WHERETO: '  Where to ?',
+  AROUNDYOU: 'Around you',
+  PLEASESELECTONECATEGORY: 'Please Select One Category',
+  MYRIDES: 'My Rides',
+  PASTRIDES: 'Past Rides',
+  ACTIVERIDES: 'Active Rides',
+  CHOOSESAVEDPLACE: 'Choose a saved place',
 };

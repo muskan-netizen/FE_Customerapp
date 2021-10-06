@@ -64,10 +64,11 @@ export default ({
       elevation: 7,
     },
     addresssLableName: {
-      fontSize: textScale(14),
+      fontSize: textScale(12),
       color: colors.black,
       fontFamily: fontFamily.medium,
       lineHeight: moderateScaleVertical(20),
+      marginLeft: moderateScale(10),
     },
     saveAddressLabel: {
       fontSize: textScale(14),
@@ -80,6 +81,8 @@ export default ({
       color: colors.textGreyJ,
       fontFamily: fontFamily.regular,
       lineHeight: moderateScaleVertical(20),
+      marginLeft: moderateScale(10),
+      width: width - 20,
     },
     suggestions: {
       padding: moderateScale(10),
@@ -110,11 +113,9 @@ export default ({
       // viewHeight,
       top:
         type == 'pickup'
-          ? moderateScaleVertical(48) * 2 + 34
+          ? moderateScaleVertical(40) * 2
           : type == 'dropOffLocation'
-          ? moderateScaleVertical(48) + 20
-          : type == 'dropOffLocationTwo'
-          ? moderateScaleVertical(44)
+          ? moderateScaleVertical(28)
           : -100,
       // height: height / 3,
     },
@@ -143,16 +144,9 @@ export default ({
       marginVertical: 10,
 
       padding: moderateScale(10),
-      marginTop: savedAddressViewHeight == 1 ? 48 * 2 : 48 + 5,
+      marginTop: 48 + 5,
       zIndex: type || avalibleValueInTextInput ? -1000 : 1000,
-      top:
-        type == 'pickup'
-          ? 48 * 2 + 50
-          : type == 'dropOffLocation'
-          ? 48 * 2
-          : type == 'dropOffLocationTwo'
-          ? 48
-          : 80,
+      top: 80,
 
       bottom: 0,
       left: 0,
@@ -160,10 +154,9 @@ export default ({
     },
     savedAddressView: {
       flexDirection: 'row',
-      marginTop: moderateScaleVertical(40),
 
       width: width - 30,
-      justifyContent: 'space-between',
+
       // shadowColor: '#000',
       // shadowOffset: {
       //   width: 0,

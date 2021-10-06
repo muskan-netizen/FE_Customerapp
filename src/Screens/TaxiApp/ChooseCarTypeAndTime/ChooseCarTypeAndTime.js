@@ -25,6 +25,8 @@ import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
 import PaymentProcessingModal from '../../CourierService/PaymentProcessingModal';
 import {BlurView} from '@react-native-community/blur';
+import {useFocusEffect} from '@react-navigation/native';
+import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -117,8 +119,10 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     pickedUpTime: moment().format('hh:mm A'),
     selectedDate: moment().format('YYY-MM-DD'),
     pickedUpDate: moment().format('YYYY-MM-DD'),
+    selectedPayment: {id: 1, title: 'Cash On Delivery', image: imagePath.cash},
   });
   const {
+    selectedPayment,
     couponInfo,
     updatedAmount,
     totalDistance,
@@ -161,6 +165,20 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const styles = stylesFun({fontFamily, themeColors});
   const commonStyles = commonStylesFun({fontFamily});
   const {profile} = appData;
+
+  const walletAmount = useSelector(
+    (state) => state?.product?.walletData?.wallet_amount,
+  );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (paramData && paramData?.selectedMethod) {
+        updateState({selectedPayment: paramData?.selectedMethod});
+      }
+      // updateState({isLoadingB: true});
+    }, [paramData]),
+  );
+  console.log(selectedPayment, 'selectedPayment');
   useEffect(() => {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
@@ -303,6 +321,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   const _confirmAndPay = () => {
     console.log(selectedCarOption, 'selectedCarOption');
+    console.log(selectedPayment?.id, 'selectedPayment?.id ');
     let data = {};
 
     data['task_type'] = pickUpTimeType ? pickUpTimeType : '';
@@ -315,7 +334,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     //     ? updatedAmount
     //     : selectedCarOption?.tags_price;
     data['amount'] = selectedCarOption?.tags_price;
-    data['payment_method'] = 1;
+    data['payment_option_id'] = selectedPayment ? selectedPayment?.id : 1;
     data['vendor_id'] = selectedCarOption?.vendor_id;
     data['product_id'] = selectedCarOption?.id;
     data['currency_id'] = currencies?.primary_currency?.id;
@@ -443,6 +462,11 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     );
   };
 
+  const _redirectToPayement = () => {
+    moveToNewScreen(navigationStrings.PAYMENT_OPTIONS, {
+      screenName: strings.PAYMENT,
+    })();
+  };
   const _selectPaymentView = () => {
     return (
       <SelectPaymentModalView
@@ -466,6 +490,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         loyalityAmount={loyalityAmount}
         removeCoupon={() => removeCoupon()}
         pickUpTimeType={pickUpTimeType}
+        redirectToPayement={() => _redirectToPayement()}
+        selectedPayment={selectedPayment}
       />
     );
   };
@@ -533,6 +559,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     <View style={styles.container}>
       <MapView
         //   provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+
         style={styles.map}
         region={region}
         initialRegion={region}

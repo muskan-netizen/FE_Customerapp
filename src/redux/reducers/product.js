@@ -3,6 +3,7 @@ import types from '../types';
 const initial_state = {
   productListData: [],
   productDetailData: {},
+  walletData: null,
 };
 
 export default function (state = initial_state, action) {
@@ -12,6 +13,14 @@ export default function (state = initial_state, action) {
       return {
         ...state,
         productListData: data,
+      };
+    }
+
+    case types.WALLET_DATA: {
+      const data = action.payload;
+      return {
+        ...state,
+        walletData: data,
       };
     }
 

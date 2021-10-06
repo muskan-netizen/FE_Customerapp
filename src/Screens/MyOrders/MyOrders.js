@@ -51,9 +51,19 @@ export default function MyOrders({navigation}) {
   const location = useSelector((state) => state?.home?.location);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const {appData, currencies, languages, themeColors, appStyle} = useSelector(
+    (state) => state?.initBoot,
+  );
+  const businessType = appData?.profile?.preferences?.business_type;
   const [state, setState] = useState({
     tabBarData: [
+      // businessType == 'taxi'
+      //   ? {title: strings.ACTIVERIDES, isActive: true}
+      // :
       {title: strings.ACTIVE_ORDERS, isActive: true},
+      // businessType == 'taxi'
+      //   ? {title: strings.PASTRIDES, isActive: false}
+      // :
       {title: strings.PAST_ORDERS, isActive: false},
       // {title: strings.SCHEDULED_ORDERS, isActive: false},
     ],
@@ -100,9 +110,8 @@ export default function MyOrders({navigation}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const _scrollRef = createRef();
   //Reduc store data
-  const {appData, currencies, languages, themeColors, appStyle} = useSelector(
-    (state) => state?.initBoot,
-  );
+  const userData = useSelector((state) => state.auth.userData);
+
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
   const styles = stylesFun({fontFamily, themeColors});
@@ -110,7 +119,13 @@ export default function MyOrders({navigation}) {
   //Get list of all orders
   useEffect(() => {
     updateState({isLoading: true});
-    _getListOfOrders();
+    if (userData && userData?.auth_token) {
+      _getListOfOrders();
+    } else {
+      updateState({
+        isLoading: false,
+      });
+    }
   }, [selectedTab]);
 
   console.log('lat lng', location);
@@ -161,29 +176,33 @@ export default function MyOrders({navigation}) {
 
   // changeTab function
   const changeTab = (tabData) => {
-    let clonedArray = cloneDeep(tabBarData);
+    if (userData && userData?.auth_token && tabBarData.length) {
+      let clonedArray = cloneDeep(tabBarData);
 
-    updateState({
-      tabBarData: clonedArray.map((item) => {
-        if (item.title == tabData.title) {
-          item.isActive = true;
-          return item;
-        } else {
-          item.isActive = false;
-          return item;
-        }
-      }),
-      selectedTab: tabData.title,
-      tabType:
-        tabData.title == strings.ACTIVE_ORDERS
-          ? staticStrings.ACTIVE
-          : tabData.title == strings.PAST_ORDERS
-          ? staticStrings.PAST
-          : staticStrings.SCHEDULE,
-      pageActive: 1,
-      orders: selectedTab != tabData.title ? [] : orders,
-    });
-    _scrollRef.current.scrollToOffset({animated: true, offset: 0});
+      updateState({
+        tabBarData: clonedArray.map((item) => {
+          if (item.title == tabData.title) {
+            item.isActive = true;
+            return item;
+          } else {
+            item.isActive = false;
+            return item;
+          }
+        }),
+        selectedTab: tabData.title,
+        tabType:
+          tabData.title == strings.ACTIVE_ORDERS
+            ? staticStrings.ACTIVE
+            : tabData.title == strings.PAST_ORDERS
+            ? staticStrings.PAST
+            : staticStrings.SCHEDULE,
+        pageActive: 1,
+        orders: selectedTab != tabData.title ? [] : orders,
+      });
+      _scrollRef.current.scrollToOffset({animated: true, offset: 0});
+    } else {
+      navigation.navigate(navigationStrings.LOGIN);
+    }
   };
 
   const onPressViewEditAndReplace = (item) => {
@@ -193,6 +212,8 @@ export default function MyOrders({navigation}) {
           fromVendorApp: true,
           selectedVendor: {id: item?.vendor_id},
           orderDetail: item,
+          showRating:
+            item?.order_status?.current_status?.id != 6 ? false : true,
         })
       : // navigation.navigate(navigationStrings.ACCOUNTS, {
         //   screen: navigationStrings.PICKUPORDERDETAIL,
@@ -264,7 +285,6 @@ export default function MyOrders({navigation}) {
         cardStyle={{padding: 0}}
         etaTime={!!item?.ETA ? item.ETA : null}
       />
-
       // <OrderCardComponent
       //   data={item}
       //   selectedTab={selectedTab}
@@ -278,7 +298,13 @@ export default function MyOrders({navigation}) {
 
   //Get list of all orders based on selected tab
   useEffect(() => {
-    _getListOfOrders();
+    if (userData && userData?.auth_token) {
+      _getListOfOrders();
+    } else {
+      updateState({
+        isLoading: false,
+      });
+    }
   }, [pageActive, pagePastOrder, pageScheduleOrder, isRefreshing]);
 
   //Refresh screen
@@ -410,7 +436,7 @@ export default function MyOrders({navigation}) {
             ? imagePath.icBackb
             : imagePath.back
         }
-        centerTitle={strings.MY_ORDERS}
+        centerTitle={true ? strings.MYRIDES : strings.MY_ORDERS}
         headerStyle={
           isDarkMode
             ? {backgroundColor: MyDarkTheme.colors.background}

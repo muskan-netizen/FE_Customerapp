@@ -1,5 +1,5 @@
-import { useFocusEffect } from '@react-navigation/native';
-import React, { useRef, useState } from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useRef, useState} from 'react';
 import {
   Alert,
   I18nManager,
@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import ListItemHorizontal from '../../Components/ListItemHorizontalWithImage';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -32,32 +32,35 @@ import {
   getImageUrl,
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../styles/theme';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
-export default function Account3({ navigation }) {
+export default function Account3({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const [state, setState] = useState({
-    isLoading: false,
-  });
-  const { shortCodeStatus, themeColors, appStyle } = useSelector(
+  const {themeColors, appStyle, appData} = useSelector(
     (state) => state?.initBoot,
   );
 
+  const businessType = appData?.profile?.preferences?.business_type;
+  const [state, setState] = useState({
+    isLoading: false,
+  });
+  const {shortCodeStatus} = useSelector((state) => state?.initBoot);
+
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({ fontFamily, themeColors });
-  const commonStyles = commonStylesFun({ fontFamily });
+  const styles = stylesFun({fontFamily, themeColors});
+  const commonStyles = commonStylesFun({fontFamily});
 
   //Navigation to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   const userData = useSelector((state) => state.auth.userData);
   const appMainData = useSelector((state) => state?.home?.appMainData);
@@ -127,9 +130,9 @@ export default function Account3({ navigation }) {
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.background
             : getColorCodeWithOpactiyNumber(
-              themeColors.primary_color.substr(1),
-              20,
-            ),
+                themeColors.primary_color.substr(1),
+                20,
+              ),
         }}>
         {/* <StatusBar
         backgroundColor={
@@ -159,8 +162,8 @@ export default function Account3({ navigation }) {
                 {strings.EDITCODE}
               </Text>
             )}
-          // rightIcon={imagePath.cartShop}
-          //   centerTitle={strings.MY_ACCOUNT}
+            // rightIcon={imagePath.cartShop}
+            //   centerTitle={strings.MY_ACCOUNT}
           />
         ) : (
           <Header centerTitle={strings.MY_ACCOUNT} noLeftIcon={true} />
@@ -168,7 +171,7 @@ export default function Account3({ navigation }) {
 
         {/* <View style={{...commonStyles.headerTopLine}} /> */}
 
-        <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+        <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
           {!!userData?.auth_token && (
             <>
               <TouchableOpacity
@@ -190,12 +193,12 @@ export default function Account3({ navigation }) {
                     source={
                       userData?.source?.image_path
                         ? {
-                          uri: getImageUrl(
-                            userData?.source?.proxy_url,
-                            userData?.source?.image_path,
-                            '200/200',
-                          ),
-                        }
+                            uri: getImageUrl(
+                              userData?.source?.proxy_url,
+                              userData?.source?.image_path,
+                              '200/200',
+                            ),
+                          }
                         : userData?.source
                     }
                     style={{
@@ -285,27 +288,28 @@ export default function Account3({ navigation }) {
             />
           </TouchableOpacity>
         )} */}
-          {!!userData?.auth_token && (
-            <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-              onPress={moveToNewScreen(navigationStrings.MY_ORDERS)}
-              iconLeft={imagePath.myOrder2}
-              centerHeading={strings.MY_ORDERS}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
-            />
-          )}
+          {!!userData?.auth_token &&
+            (businessType == 'taxi' ? null : (
+              <ListItemHorizontal
+                centerContainerStyle={{flexDirection: 'row'}}
+                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                onPress={moveToNewScreen(navigationStrings.MY_ORDERS)}
+                iconLeft={imagePath.myOrder2}
+                centerHeading={strings.MY_ORDERS}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+                // iconRight={imagePath.goRight}
+                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              />
+            ))}
 
           {!!userData?.auth_token && (
             <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
               onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
               iconLeft={imagePath.subscription}
               centerHeading={strings.SUBSCRIPTION}
@@ -314,15 +318,15 @@ export default function Account3({ navigation }) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
 
           {!!userData?.auth_token && (
             <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
               onPress={moveToNewScreen(navigationStrings.LOYALTY)}
               iconLeft={imagePath.loyalty}
               centerHeading={strings.LOYALTYPOINTS}
@@ -331,8 +335,8 @@ export default function Account3({ navigation }) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
 
@@ -351,8 +355,8 @@ export default function Account3({ navigation }) {
         )} */}
           {!!userData?.auth_token && (
             <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
               onPress={moveToNewScreen(navigationStrings.WALLET)}
               iconLeft={imagePath.wallet3}
               centerHeading={strings.WALLET}
@@ -361,30 +365,31 @@ export default function Account3({ navigation }) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
-          {!!userData?.auth_token && (
-            <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-              onPress={moveToNewScreen(navigationStrings.WISHLIST)}
-              iconLeft={imagePath.wishlist}
-              centerHeading={strings.FAVOURITE}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
-            />
-          )}
+          {!!userData?.auth_token &&
+            (businessType == 'taxi' ? null : (
+              <ListItemHorizontal
+                centerContainerStyle={{flexDirection: 'row'}}
+                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                onPress={moveToNewScreen(navigationStrings.WISHLIST)}
+                iconLeft={imagePath.wishlist}
+                centerHeading={strings.FAVOURITE}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+                // iconRight={imagePath.goRight}
+                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              />
+            ))}
 
           <ListItemHorizontal
-            centerContainerStyle={{ flexDirection: 'row' }}
-            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
             iconLeft={imagePath.links}
             centerHeading={strings.LINKS}
@@ -393,13 +398,13 @@ export default function Account3({ navigation }) {
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
           {!!userData?.auth_token && (
             <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
               onPress={onShare}
               iconLeft={imagePath.share1}
               centerHeading={strings.SHARE_APP}
@@ -408,14 +413,14 @@ export default function Account3({ navigation }) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
 
           <ListItemHorizontal
-            centerContainerStyle={{ flexDirection: 'row' }}
-            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={moveToNewScreen(navigationStrings.SETTIGS)}
             iconLeft={imagePath.settings1}
             centerHeading={strings.SETTINGS}
@@ -424,8 +429,8 @@ export default function Account3({ navigation }) {
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
           {/* {!!userData?.auth_token && (
           <ListItemHorizontal
@@ -440,8 +445,8 @@ export default function Account3({ navigation }) {
           />
         )} */}
           <ListItemHorizontal
-            centerContainerStyle={{ flexDirection: 'row' }}
-            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={moveToNewScreen(navigationStrings.CONTACT_US)}
             iconLeft={imagePath.contactUs}
             centerHeading={strings.CONTACT_US}
@@ -450,14 +455,16 @@ export default function Account3({ navigation }) {
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
 
-          {!!userData?.auth_token && !!appMainData?.is_admin && (
+          {!!userData?.auth_token &&
+          !!appMainData?.is_admin &&
+          businessType == 'taxi' ? null : (
             <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
               onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
               iconLeft={imagePath.mystores2}
               centerHeading={strings.MYSTORES}
@@ -466,8 +473,8 @@ export default function Account3({ navigation }) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
 
@@ -481,11 +488,11 @@ export default function Account3({ navigation }) {
               </Text>
               <Image
                 source={imagePath.rightBlue}
-                style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
+                style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
               />
             </TouchableOpacity>
           </View>
-          <View style={{ height: 100 }} />
+          <View style={{height: 100}} />
         </ScrollView>
       </SafeAreaView>
     </View>

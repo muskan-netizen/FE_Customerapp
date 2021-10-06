@@ -1,0 +1,80 @@
+import React from 'react';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+// import {TouchableOpacity} from 'react-native-gesture-handler';
+import Modal from 'react-native-modal';
+import imagePath from '../constants/imagePath';
+import strings from '../constants/lang';
+import fontFamily from '../styles/fontFamily';
+import {
+  moderateScaleVertical,
+  textScale,
+  width,
+} from '../styles/responsiveSize';
+
+export default function BottomViewModal({
+  show,
+  mainContainView,
+  closeModal = () => {},
+}) {
+  return (
+    <Modal isVisible={show} style={styles.modal} animationInTiming={600}>
+      <View style={styles.modalContainer}>
+        <TouchableOpacity
+          // hitSlop={{top: 200, left: 200, right: 200, bottom: 200}}
+          style={{position: 'absolute', top: -40}}
+          onPress={() => closeModal()}>
+          <Image source={imagePath.crossB} />
+        </TouchableOpacity>
+        <View
+          style={{
+            height: moderateScaleVertical(30),
+            width: width - 60,
+
+            alignItems: 'center',
+          }}>
+          <Text style={{fontSize: textScale(14)}}>{'Rate Your Ride'}</Text>
+        </View>
+        {mainContainView()}
+      </View>
+    </Modal>
+  );
+}
+
+const styles = StyleSheet.create({
+  modal: {
+    margin: 0,
+    alignItems: 'center',
+  },
+  modalContainer: {
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    paddingTop: 20,
+    paddingBottom: 40,
+    alignItems: 'center',
+    width: width - 50,
+    borderRadius: 12,
+  },
+  modalTitle: {
+    fontSize: 22,
+    fontWeight: '600',
+  },
+  modalText: {
+    fontSize: 18,
+    color: '#555',
+    marginTop: 14,
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  button: {
+    backgroundColor: '#000',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 20,
+  },
+});

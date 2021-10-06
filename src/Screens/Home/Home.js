@@ -378,11 +378,13 @@ export default function Home({route, navigation}) {
 
   //onPress Category
   const onPressCategory = (item) => {
+    console.log(item, 'itemitemitemitemitemitem');
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
       item.redirect_to == staticStrings.PRODUCT ||
-      item.redirect_to == staticStrings.CATEGORY
+      item.redirect_to == staticStrings.CATEGORY ||
+      item.redirect_to == staticStrings.ONDEMANDSERVICE
     ) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {

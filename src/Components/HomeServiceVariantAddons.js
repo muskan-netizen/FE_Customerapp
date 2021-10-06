@@ -13,6 +13,7 @@ import {
   Alert,
   TextInput,
   I18nManager,
+  FlatList,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
@@ -24,6 +25,8 @@ import commonStylesFun, {hitSlopProp} from '../styles/commonStyles';
 import fontFamily from '../styles/fontFamily';
 import Banner from './Banner';
 import DeviceInfo from 'react-native-device-info';
+import * as RNLocalize from 'react-native-localize';
+import moment from 'moment';
 import {
   height,
   moderateScale,
@@ -47,16 +50,17 @@ import actions from '../redux/actions';
 import {Pagination} from 'react-native-snap-carousel';
 import CardLoader from './Loaders/CardLoader';
 import StarRating from 'react-native-star-rating';
+import CalanderStrip from 'react-native-calendar-strip';
+import {timeforMarkedQuestion} from '../utils/constants/ConstantValues';
 
 export default function HomeServiceVariantAddons({
   productdetail = {},
   isVisible = false,
   onClose,
-  resizeMode = 'contain',
-  imagestyle = {},
   showShimmer,
   shimmerClose = () => {},
   updateCartItems,
+  modeOfService = true,
 }) {
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
 
@@ -81,11 +85,15 @@ export default function HomeServiceVariantAddons({
     totalItemsPrice: null,
     inputInstructionText: '',
     cleaningmaterialArray: [
-      {id: 1, name: 'No i have them'},
+      {id: 1, name: strings.NOIHAVETHEM},
       {id: 2, name: 'yes please'},
     ],
-    selectedCleaningmaterial: null,
+    selectedCleaningmaterial: {id: 1, name: strings.NOIHAVETHEM},
     totalPriceArray: [],
+    selectedDate: null,
+    calendarMarkedDates: null,
+    selectedTime: null,
+    timeModalVisable: false,
   });
 
   const {
@@ -105,6 +113,10 @@ export default function HomeServiceVariantAddons({
     cleaningmaterialArray,
     selectedCleaningmaterial,
     totalPriceArray,
+    selectedDate,
+    calendarMarkedDates,
+    selectedTime,
+    timeModalVisable,
   } = state;
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -114,32 +126,34 @@ export default function HomeServiceVariantAddons({
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
+  const dineInType = useSelector((state) => state?.home?.dineInType);
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
-
-  useFocusEffect(
-    React.useCallback(() => {
-      if (variantSet.length) {
-        let variantSetData = variantSet
-          .map((i, inx) => {
-            let find = i.options.filter((x) => x.value);
-            if (find.length) {
-              return {
-                variant_id: find[0].variant_id,
-                optionId: find[0].id,
-              };
-            }
-          })
-          .filter((x) => x != undefined);
-        console.log(variantSetData, 'variantSetData callback');
-        if (variantSetData.length) {
-          getProductDetailBasedOnFilter(variantSetData);
-        } else {
-          getProductDetail();
-        }
-      }
-    }, [variantSet, productdetail, isVisible]),
-  );
+  console.log(timeforMarkedQuestion, 'timeforMarkedQuestion');
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     getCartDetail();
+  //     if (variantSet.length) {
+  //       let variantSetData = variantSet
+  //         .map((i, inx) => {
+  //           let find = i.options.filter((x) => x.value);
+  //           if (find.length) {
+  //             return {
+  //               variant_id: find[0].variant_id,
+  //               optionId: find[0].id,
+  //             };
+  //           }
+  //         })
+  //         .filter((x) => x != undefined);
+  //       console.log(variantSetData, 'variantSetData callback');
+  //       if (variantSetData.length) {
+  //         getProductDetailBasedOnFilter(variantSetData);
+  //       } else {
+  //         getProductDetail();
+  //       }
+  //     }
+  //   }, [variantSet, productdetail, isVisible]),
+  // );
 
   console.log('product detail', productDetailData);
 
@@ -231,7 +245,29 @@ export default function HomeServiceVariantAddons({
     //   .catch(errorMethod);
   };
 
-  console.log('shimmer value', showShimmer);
+  //get the entire cart detail
+  const getCartDetail = () => {
+    // alert("cart detail hit")
+    actions
+      .getCartDetail(
+        `/?type=${dineInType}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+          timezone: RNLocalize.getTimeZone(),
+        },
+      )
+      .then((res) => {
+        console.log(res.data, 'resssssDatatatatat');
+        // updateState({
+        //   modeOfService :res.data.products[0].vendor_products[0].product[0].mode_of_service
+        // })
+      })
+      .catch(errorMethod);
+  };
 
   useEffect(() => {
     getProductDetail();
@@ -326,31 +362,6 @@ export default function HomeServiceVariantAddons({
       }),
     });
   };
-
-  useEffect(() => {
-    {
-      addonSet?.map((i, inx) => {
-        {
-          i?.setoptions?.map((i, inx) => {
-            {
-              if (i?.value) {
-                totalPriceArray.push(i);
-              }
-            }
-          });
-        }
-      });
-      console.log(totalItemsPrice, 'totalItemsPrice');
-      if (totalPriceArray?.length) {
-        totalPriceArray?.map((i, inx) => {
-          updateState({
-            ...totalItemsPrice,
-            totalItemsPrice: totalItemsPrice + Number(i?.price),
-          });
-        });
-      }
-    }
-  }, [totalPriceArray]);
 
   const checkBoxButtonViewAddons = ({setoptions}) => {
     return (
@@ -754,7 +765,6 @@ export default function HomeServiceVariantAddons({
     const addon_options = [];
     addonSet.map((i, inx) => {
       i.setoptions.map((j, jnx) => {
-        console.log(j, 'J');
         if (j?.value == true) {
           addon_ids.push(j?.addon_id);
           addon_options.push(j?.id);
@@ -772,7 +782,7 @@ export default function HomeServiceVariantAddons({
       data['addon_ids'] = addon_ids;
       data['addon_options'] = addon_options;
     }
-    console.log(data, 'data for cart');
+
     updateState({btnLoader: true});
     actions
       .addProductsToCart(data, {
@@ -782,17 +792,21 @@ export default function HomeServiceVariantAddons({
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'add item cart res');
         actions.cartItemQty(res);
-        // showSuccess('Product successfully added');
-        updateState({isLoadingC: false, btnLoader: false});
+        showSuccess('Product successfully added');
+        updateState({
+          isLoadingC: false,
+          btnLoader: false,
+          isVisibleAddonModal: false,
+        });
         updateCartItems(
           productdetail,
           productQuantityForCart,
           res.data.cart_product_id,
           res.data.id,
         );
-        onClose();
+        getCartDetail();
+        // onClose();
       })
       .catch((error) => errorMethodSecond(error, addonSet));
   };
@@ -826,7 +840,32 @@ export default function HomeServiceVariantAddons({
       showError(error?.message || error?.error);
     }
   };
+  const addItemCart = (addonSet) => {
+    if (modeOfService) {
+      addToCart(addonSet);
+      updateState({
+        timeModalVisable: true,
+      });
+    } else {
+      addToCart(addonSet);
+      onClose();
+    }
 
+    // if (modeOfService && timeModalVisable) {
+    //   addToCart(addonSet);
+    //   updateState({
+    //     isVisible: false,
+    //   });
+    // } else {
+    //   updateState({
+    //     timeModalVisable: true,
+    //   });
+    // }
+  };
+  const addTimeDate = (selectedDate, selectedTime) => {
+    onClose();
+    console.log(selectedDate, selectedTime, 'timeeeeeee');
+  };
   const shimmerShow = () => {
     return (
       <View
@@ -936,6 +975,167 @@ export default function HomeServiceVariantAddons({
     });
   };
 
+  const onDayPress = (date) => {
+    console.log(date, 'date');
+
+    const selectedCalendarDate = date;
+
+    if (
+      selectedDate &&
+      selectedDate == selectedCalendarDate.format('MM/DD/YYYY')
+    ) {
+      updateState({
+        selectedDate: null,
+        calendarMarkedDates: {},
+      });
+    } else {
+      updateState({selectedDate: selectedCalendarDate.format('MM/DD/YYYY')});
+
+      const selectedCalendarDateString =
+        selectedCalendarDate.format('YYYY-MM-DD');
+      console.log(selectedDate, 'selectedDateselectedDate');
+      updateState(
+        {
+          calendarMarkedDates: {
+            [date.dateString]: {
+              selected: true,
+            },
+          },
+          ratesInventoryDataArray: [], // reset inventory data
+          selectedCalendarDateString,
+          selectedCalendarMonthString: selectedCalendarDateString,
+        },
+        () => {
+          console.log('calendarMarkedDates', calendarMarkedDates);
+          console.log(
+            'selectedCalendarMonthString',
+            selectedCalendarMonthString,
+          );
+          console.log(
+            'selectedCalendarMonthString',
+            selectedCalendarMonthString,
+          );
+          // this.getMatchsForEvent()
+        },
+      );
+    }
+  };
+  const showAddonsAndSehedule = () => {};
+  const dateSelected = (item) => {
+    updateState({selectedTime: item});
+  };
+  console.log(selectedTime, 'selecteTime');
+  const renderCardComponentSecond = ({item, index}) => {
+    // let {visible, selectedTime, searchArray, selectService, cartItems} =
+    //   this.state;
+
+    return (
+      <TouchableOpacity
+        onPress={() => dateSelected(item)}
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: moderateScale(15),
+          paddingHorizontal: moderateScale(10),
+
+          height: moderateScale(30),
+          backgroundColor:
+            selectedTime && selectedTime == item
+              ? themeColors.primary_color
+              : colors.grey2,
+        }}>
+        <Text
+          style={[
+            styles.value,
+            {
+              color:
+                selectedTime && selectedTime == item
+                  ? colors.white
+                  : colors.textGrey,
+              fontSize: textScale(14),
+            },
+          ]}>
+          {/* {this.formatDate(item)} */}
+          {item.time}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const showScheduleCalenderView = () => {
+    return (
+      <CalanderStrip
+        scrollable
+        highlightDateContainerStyle={{
+          backgroundColor: themeColors.primary_color,
+        }}
+        highlightDateNameStyle={{
+          color: colors.white,
+        }}
+        highlightDateNumberStyle={{
+          color: colors.white,
+        }}
+        dateNameStyle={{
+          color: colors.black,
+        }}
+        dateNumberStyle={{
+          color: colors.black,
+        }}
+        minDate={new Date()}
+        onDateSelected={onDayPress}
+        style={{
+          height: moderateScaleVertical(100),
+          backgroundColor: colors.WHITE,
+          paddingVertical: 12,
+        }}
+        // selectedDate={(selectedDate && selectedDate) || undefined}
+      />
+    );
+  };
+
+  const showScheduleTimeView = () => {
+    console.log(
+      timeforMarkedQuestion.length,
+      timeforMarkedQuestion,
+      'timeforMarkedQuestion.length',
+    );
+    return (
+      <View>
+        {timeforMarkedQuestion && timeforMarkedQuestion.length ? (
+          <View
+            style={{
+              marginHorizontal: 20,
+              marginTop: 10,
+              borderRadius: 8,
+              backgroundColor: colors.white,
+              paddingVertical: moderateScale(10),
+            }}>
+            <View style={{marginBottom: moderateScale(12)}}>
+              <Text style={{fontSize: textScale(14)}}>
+                What Time Would You Like Us To Start?
+              </Text>
+            </View>
+            <FlatList
+              keyExtractor={(item, index) => String(index)}
+              extraData={timeforMarkedQuestion ? timeforMarkedQuestion : []}
+              data={timeforMarkedQuestion}
+              renderItem={renderCardComponentSecond}
+              // ref={(ref) => (this.timingRef = ref)}
+              removeClippedSubviews={false}
+              enableEmptySections={false}
+              initialNumToRender={5}
+              // initialNumToRender={this.state?.timings?.length||10}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              // ListFooterComponent={() => { return <View style={{ height: 200 }} /> }}
+            />
+          </View>
+        ) : null}
+      </View>
+    );
+  };
+
   return (
     <Modal
       transparent={false}
@@ -962,7 +1162,12 @@ export default function HomeServiceVariantAddons({
                 ? MyDarkTheme.colors.background
                 : '#fff',
             }}>
-            <View style={{flex: 1, alignItems: 'center'}}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                // marginTop: moderateScaleVertical(-20),
+              }}>
               <Banner
                 bannerRef={bannerRef}
                 bannerData={productDetailData?.product_media}
@@ -988,17 +1193,6 @@ export default function HomeServiceVariantAddons({
                 />
               </View>
             </View>
-            {/* <ImageBackground
-            source={{
-              uri: getImageUrl(
-                productImage?.image?.path?.image_fit,
-                productImage?.image?.path?.image_path,
-                '400/400',
-              ),
-            }}
-            style={[styles.cardView, imagestyle]}
-            resizeMode={resizeMode}
-          /> */}
             <Animatable.View
               delay={1}
               animation="fadeInUp"
@@ -1056,21 +1250,6 @@ export default function HomeServiceVariantAddons({
                   </View>
                 )}
               </View>
-              <View style={{justifyContent: 'center'}}>
-                <Text
-                  style={{
-                    color:
-                      productTotalQuantity && productTotalQuantity != 0
-                        ? colors.green
-                        : colors.orangeB,
-                    fontSize: textScale(10),
-                    fontFamily: fontFamily.medium,
-                  }}>
-                  {productTotalQuantity && productTotalQuantity != 0
-                    ? ''
-                    : strings.OUT_OF_STOCK}
-                </Text>
-              </View>
 
               {productdetail?.translation[0]?.body_html != null && (
                 <View>
@@ -1084,15 +1263,25 @@ export default function HomeServiceVariantAddons({
               <View
                 style={{
                   ...commonStyles.headerTopLine,
-                  // marginVertical: moderateScaleVertical(10),
                 }}
               />
-              {/* ********Addon set View*******  */}
-              {/* {!!addonSet && addonSet?.length ? showAllAddons() : null} */}
+              {timeModalVisable ? (
+                <>
+                  <View>{showScheduleCalenderView()}</View>
+                  <View>{showScheduleTimeView()}</View>
+                </>
+              ) : (
+                <View>
+                  {(!!addonSet && addonSet?.length) ||
+                  (modeOfService == null && modeOfService == undefined)
+                    ? showhomeServiceAddons()
+                    : null}
 
-              {!!addonSet && addonSet?.length ? showhomeServiceAddons() : null}
-
-              {!!variantSet && variantSet?.length ? showAllVariants() : null}
+                  {!!variantSet && variantSet?.length
+                    ? showAllVariants()
+                    : null}
+                </View>
+              )}
             </Animatable.View>
             {showErrorMessageTitle ? (
               <Text
@@ -1106,63 +1295,8 @@ export default function HomeServiceVariantAddons({
                 {strings.NOVARIANTPRODUCTAVAILABLE}
               </Text>
             ) : null}
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                alignItems: 'center',
-                // justifyContent: 'space-between',
-              }}>
-              <Text
-                style={{
-                  fontSize: textScale(14),
-                  marginHorizontal: moderateScale(20),
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  fontFamily: fontFamily.regular,
-                }}>
-                Do you require cleaning materials ?
-              </Text>
-              {cleaningmaterialArray.map((item, index) => {
-                console.log(item, 'itemitem');
-                return (
-                  <View style={{marginVertical: moderateScaleVertical(10)}}>
-                    <TouchableOpacity
-                      style={{
-                        flexDirection: 'row',
-                        borderColor:
-                          item?.id === selectedCleaningmaterial?.id
-                            ? themeColors.primary_color
-                            : colors.textGreyB,
-                        borderWidth: 0.5,
-                        borderRadius: 4,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginLeft: moderateScale(20),
-                        paddingHorizontal: moderateScale(5),
-                        paddingVertical: moderateScaleVertical(7),
-                        marginVertical: moderateScaleVertical(5),
-                      }}
-                      onPress={() => _selectedCleaingmaterial(item)}
-                      key={index}>
-                      <View>
-                        <Text
-                          style={{
-                            fontSize: 15,
-                            fontFamily: fontFamily.medium,
-                            color:
-                              item?.id === selectedCleaningmaterial?.id
-                                ? themeColors.primary_color
-                                : colors.textGreyLight,
-                          }}>
-                          {item?.name}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                );
-              })}
-            </View>
-            <Text
+
+            {/* <Text
               style={{
                 fontSize: textScale(14),
                 marginHorizontal: moderateScale(20),
@@ -1182,72 +1316,21 @@ export default function HomeServiceVariantAddons({
               ]}
               placeholderTextColor={colors.greyLight}
               onChangeText={(text) => updateState({inputInstructionText: text})}
-            />
+            /> */}
           </ScrollView>
 
-          {/* {!showErrorMessageTitle && productTotalQuantity != 0 && (
+          {!showErrorMessageTitle && (
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                justifyContent: 'space-between',
-                paddingHorizontal: moderateScale(16),
+                justifyContent: 'center',
+
                 paddingBottom: moderateScaleVertical(16),
                 backgroundColor: isDarkMode
                   ? MyDarkTheme.colors.background
                   : '#fff',
               }}>
-              <View style={{flex: 0.25}}>
-                <View
-                  style={{
-                    ...commonStyles.buttonRect,
-                    ...styles.incDecBtnStyle,
-                    backgroundColor: getColorCodeWithOpactiyNumber(
-                      themeColors.primary_color.substr(1),
-                      15,
-                    ),
-                    borderColor: themeColors?.primary_color,
-                    height: moderateScale(38),
-                  }}
-                  // onPress={onPress}
-                >
-                  <TouchableOpacity
-                    onPress={() => productIncrDecreamentForCart(2)}
-                    hitSlop={hitSlopProp}>
-                    <Text
-                      style={{
-                        ...commonStyles.mediumFont14,
-                        color: themeColors?.primary_color,
-                        fontFamily: fontFamily.bold,
-                      }}>
-                      -
-                    </Text>
-                  </TouchableOpacity>
-                  <Text
-                    style={{
-                      ...commonStyles.mediumFont14,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    {productQuantityForCart}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => productIncrDecreamentForCart(1)}
-                    hitSlop={hitSlopProp}>
-                    <Text
-                      style={{
-                        ...commonStyles.mediumFont14,
-                        color: themeColors?.primary_color,
-                        fontFamily: fontFamily.bold,
-                      }}>
-                      +
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-
-              <View style={{marginHorizontal: 8}} />
               <View style={{flex: 0.75}}>
                 <GradientButton
                   indicator={btnLoader}
@@ -1260,76 +1343,12 @@ export default function HomeServiceVariantAddons({
                     fontFamily: fontFamily.medium,
                     textTransform: 'capitalize',
                   }}
-                  onPress={() => addToCart(addonSet)}
-                  btnText={`${strings.ADD_ITEM} - ${
-                    currencies?.primary_currency?.symbol
-                  }${(
-                    Number(productPriceData?.multiplier) *
-                    Number(productPriceData?.price)
-                  ).toFixed(2)}`}
-                  btnStyle={{
-                    borderRadius: moderateScale(4),
-                    height: moderateScale(38),
-                  }}
-                />
-              </View>
-            </View>
-          )} */}
-
-          {!showErrorMessageTitle && productTotalQuantity != 0 && (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                paddingHorizontal: moderateScale(16),
-                paddingBottom: moderateScaleVertical(16),
-                backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.background
-                  : '#fff',
-              }}>
-              <View style={{flex: 0.75}}>
-                {totalItemsPrice ? (
-                  <>
-                    <Text
-                      style={{
-                        fontSize: textScale(12),
-                        fontFamily: fontFamily.regular,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.textGreyLight,
-                      }}>
-                      Service Cost
-                    </Text>
-                    <Text
-                      style={{
-                        marginVertical: moderateScaleVertical(5),
-                        fontSize: textScale(16),
-                        fontFamily: fontFamily.bold,
-                        color: colors.green,
-                      }}>{`${currencies?.primary_currency?.symbol}${(
-                      Number(productPriceData?.multiplier) *
-                      Number(totalItemsPrice)
-                    ).toFixed(2)}`}</Text>
-                  </>
-                ) : null}
-              </View>
-
-              <View style={{marginHorizontal: 8}} />
-              <View style={{flex: 0.25}}>
-                <GradientButton
-                  indicator={btnLoader}
-                  indicatorColor={colors.white}
-                  colorsArray={[
-                    themeColors.primary_color,
-                    themeColors.primary_color,
-                  ]}
-                  textStyle={{
-                    fontFamily: fontFamily.medium,
-                    textTransform: 'capitalize',
-                  }}
-                  onPress={() => addToCart(addonSet)}
-                  btnText={`${strings.ADD_ITEM}`}
+                  onPress={() =>
+                    timeModalVisable
+                      ? addTimeDate(selectedTime, selectedDate)
+                      : addItemCart(addonSet)
+                  }
+                  btnText={timeModalVisable ? strings.ADD_ITEM : 'Countinue'}
                   btnStyle={{
                     borderRadius: moderateScale(4),
                     height: moderateScale(38),
@@ -1462,8 +1481,7 @@ const styles = StyleSheet.create({
   cardViewStyle: {
     alignItems: 'center',
     height: width * 0.7,
-    width: width,
-    // marginRight: 20
+    width: width - 25,
   },
   dotStyle: {height: 12, width: 12, borderRadius: 12 / 2},
   ratingColor: {
