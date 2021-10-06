@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, {useEffect, useRef, useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Geocoder from 'react-native-geocoding';
-import MapView, {Callout} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapView, {Callout, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from 'react-native-maps-directions';
 import {useSelector} from 'react-redux';
 import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
@@ -38,7 +38,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  console.log(paramData, 'paramData>>>>>');
+  console.log(paramData?.datetime?.slectedDate, 'paramData>>>>>');
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -94,8 +94,12 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     redirectFromNow: false,
     date: new Date(),
 
-    slectedDate: moment(date).format('YYYY-MM-DD'),
-    selectedTime: moment(date).format('LT'),
+    slectedDate: paramData?.datetime?.slectedDate
+      ? paramData?.datetime?.slectedDate
+      : moment(date).format('YYYY-MM-DD'),
+    selectedTime: paramData?.datetime?.selectedTime
+      ? paramData?.datetime?.selectedTime
+      : moment(date).format('LT'),
 
     isModalVisible: false,
     pickUpTimeType: null,
@@ -116,9 +120,13 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     isTimerPickerModal: false,
     formatedTime: moment().format('hh:mm A'),
     isDatePickerModal: false,
-    pickedUpTime: moment().format('hh:mm A'),
+    pickedUpTime: paramData?.datetime?.selectedTime
+      ? paramData?.datetime?.selectedTime
+      : moment().format('hh:mm A'),
     selectedDate: moment().format('YYY-MM-DD'),
-    pickedUpDate: moment().format('YYYY-MM-DD'),
+    pickedUpDate: paramData?.datetime?.slectedDate
+      ? paramData?.datetime?.slectedDate
+      : moment().format('YYYY-MM-DD'),
     selectedPayment: {id: 1, title: 'Cash On Delivery', image: imagePath.cash},
   });
   const {
@@ -388,6 +396,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         _onDayPress={_onDayPress}
         _modalOkPress={_modalOkPress}
         // date={formatedTime}
+        scheduleDate={slectedDate}
+        scheduleTime={selectedTime}
       />
     );
   };
@@ -559,16 +569,20 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     <View style={styles.container}>
       <MapView
         //   provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-
+        ref={mapRef}
+        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+        customMapStyle={mapStyleGrey}
         style={styles.map}
         region={region}
         initialRegion={region}
         //   customMapStyle={mapStyle}
-        ref={mapRef}
+        // ref={mapRef}
         // liteMode={true}
         tracksViewChanges={false}
         // onPress={onMapPress}
-        onRegionChangeComplete={_onRegionChange}>
+        onRegionChangeComplete={() =>
+          _onRegionChange(region, {isGesture: true})
+        }>
         {/* <Marker
             coordinate={paramData?.location[0]}
             image={imagePath.radioLocation}>

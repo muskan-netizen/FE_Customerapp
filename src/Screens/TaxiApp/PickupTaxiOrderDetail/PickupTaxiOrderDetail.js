@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  BackHandler,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import HeaderWithFilters from '../../../Components/HeaderWithFilters';
@@ -25,7 +26,7 @@ import stylesFunc from './styles';
 const {height, width} = Dimensions.get('window');
 import MapViewDirections from 'react-native-maps-directions';
 import Geocoder from 'react-native-geocoding';
-import MapView, {Marker, Callout} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapView, {Marker, Callout, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import {useIsFocused} from '@react-navigation/native';
 
 import Communications from 'react-native-communications';
@@ -44,6 +45,7 @@ import {
   moderateScaleVertical,
 } from '../../../styles/responsiveSize';
 import StarRating from 'react-native-star-rating';
+import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -113,7 +115,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     () => {
       navigation.navigate(screenName, {data});
     };
-  console.log(productInfo, 'productInfoproductInfoproductInfo');
+
   // const urlValue = paramData?.orderDetail?.dispatch_traking_url
   //   ? (paramData?.orderDetail?.dispatch_traking_url).replace(
   //       '/order/',
@@ -159,6 +161,14 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     },
     isFocused && driverStatus != 'Completed' ? 3000 : null,
   );
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => true,
+    );
+    return () => backHandler.remove();
+  }, []);
 
   useEffect(() => {
     if (
@@ -212,8 +222,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       })
       .catch(errorMethod);
   };
-
-  console.log(agent_location, 'agent_locationagent_location');
 
   /*********Get order detail screen********* */
   const _getOrderDetailScreen = (url) => {
@@ -372,18 +380,18 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                 style={{
                   justifyContent: 'center',
                 }}>
-                <FastImage
+                <Image
                   style={{
+                    resizeMode: 'contain',
                     height: moderateScale(60),
                     width: moderateScale(60),
                     alignSelf: 'center',
-                    borderRadius: 30,
                   }}
                   source={{
                     uri: getImageUrl(
                       item.image.proxy_url,
                       item.image.image_path,
-                      '600/360',
+                      '150/150',
                     ),
                     priority: FastImage.priority.high,
                   }}
@@ -462,12 +470,13 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         {!isLoading && (
           <>
             <MapView
-              //   provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
               style={styles.map}
               region={region}
               // initialRegion={region}
               ref={mapRef}
               // cacheEnabled={true}
+              customMapStyle={mapStyleGrey}
               showsMyLocationButton={true}
               userLocationFastestInterval={10000}
               onRegionChangeComplete={_onRegionChange}>

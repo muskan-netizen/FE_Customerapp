@@ -243,7 +243,7 @@ export default ({fontFamily, themeColors}) => {
     selectedMethod: {
       color: colors.textGrey,
       fontFamily: fontFamily.bold,
-      fontSize: textScale(14),
+      fontSize: textScale(13),
       marginLeft: moderateScale(10),
     },
   });

@@ -246,11 +246,29 @@ export const mapStyleGrey = [
     ],
   },
   {
+    featureType: 'poi.attraction',
+    elementType: 'geometry.fill',
+    stylers: [
+      {
+        color: '#a6f7f5',
+      },
+    ],
+  },
+  {
     featureType: 'poi.park',
     elementType: 'geometry',
     stylers: [
       {
         color: '#e5e5e5',
+      },
+    ],
+  },
+  {
+    featureType: 'poi.park',
+    elementType: 'geometry.fill',
+    stylers: [
+      {
+        color: '#c9e8ca',
       },
     ],
   },
@@ -264,8 +282,26 @@ export const mapStyleGrey = [
     ],
   },
   {
+    featureType: 'poi.place_of_worship',
+    elementType: 'geometry.fill',
+    stylers: [
+      {
+        color: '#a6f7f5',
+      },
+    ],
+  },
+  {
     featureType: 'road',
     elementType: 'geometry',
+    stylers: [
+      {
+        color: '#ffffff',
+      },
+    ],
+  },
+  {
+    featureType: 'road.arterial',
+    elementType: 'geometry.fill',
     stylers: [
       {
         color: '#ffffff',
@@ -296,6 +332,15 @@ export const mapStyleGrey = [
     stylers: [
       {
         color: '#616161',
+      },
+    ],
+  },
+  {
+    featureType: 'road.local',
+    elementType: 'geometry.fill',
+    stylers: [
+      {
+        color: '#ffffff',
       },
     ],
   },
@@ -332,6 +377,18 @@ export const mapStyleGrey = [
     stylers: [
       {
         color: '#c9c9c9',
+      },
+    ],
+  },
+  {
+    featureType: 'water',
+    elementType: 'geometry.stroke',
+    stylers: [
+      {
+        color: '#7298df',
+      },
+      {
+        visibility: 'on',
       },
     ],
   },

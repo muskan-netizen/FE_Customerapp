@@ -106,7 +106,7 @@ export default ({
       zIndex: 1000, //Forcing it to front
       // marginTop: moderateScaleVertical(-20),
       marginHorizontal: moderateScale(0),
-
+      paddingHorizontal: moderateScale(10),
       width: width,
       alignSelf: 'center',
       // borderWidth: 1,

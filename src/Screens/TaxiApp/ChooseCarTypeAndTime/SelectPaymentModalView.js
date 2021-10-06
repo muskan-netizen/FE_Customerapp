@@ -302,6 +302,7 @@ export default function SelectPaymentModalView({
               }}>
               <Image
                 style={{height: 40, width: 100}}
+                resizeMode={'contain'}
                 source={
                   selectedCarOption?.media.length &&
                   selectedCarOption?.media[0]?.image?.path
