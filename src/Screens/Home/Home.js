@@ -12,7 +12,6 @@ import {
 import DeviceInfo from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import {cloneDeep, debounce} from 'lodash';
-import {cloneDeep, debounce} from 'lodash';
 import OpenApplication from 'react-native-open-application';
 
 import WrapperContainer from '../../Components/WrapperContainer';
