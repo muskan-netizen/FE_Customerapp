@@ -557,8 +557,8 @@ export default function TaxiHomeScreen({route, navigation}) {
   };
   // console.log(appMainData, 'appMainData');
   return (
-    <>
-      <View style={{flex: 1}}>{renderHomeScreen()}</View>
-    </>
+    <View style={{flex: 1, backgroundColor: colors.white}}>
+      {renderHomeScreen()}
+    </View>
   );
 }

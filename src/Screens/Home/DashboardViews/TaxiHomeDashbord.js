@@ -336,10 +336,14 @@ export default function TaxiHomeDashbord({
             marginLeft: moderateScale(20),
             width: width - 20,
           }}
-          onPress={moveToNewScreen(
-            navigationStrings.ADDADDRESS,
-            appMainData?.categories[0],
-          )}>
+          onPress={
+            userData?.auth_token
+              ? moveToNewScreen(
+                  navigationStrings.ADDADDRESS,
+                  appMainData?.categories[0],
+                )
+              : navigation.navigate(navigationStrings.LOGIN)
+          }>
           <View
             style={{
               flexDirection: 'row',
