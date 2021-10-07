@@ -213,8 +213,7 @@
     "test": "jest",
     "lint": "eslint .",
     "clean": "cd ./android && ./gradlew clean",
-    "uninstallAll": "cd android && ./gradlew uninstallAll",
-    "postinstall": "cd ios && pod install"
+    "uninstallAll": "cd android && ./gradlew uninstallAll"
   
   },
   "dependencies": {
