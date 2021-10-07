@@ -31,6 +31,7 @@ export default function OtpVerification({navigation, route}) {
     timer: 30,
     phoneOTP: '',
     emailOTP: '',
+    isLoading: false,
   });
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
