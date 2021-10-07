@@ -140,7 +140,7 @@ export default function () {
             ? SearchProductVendorItem2
             : SearchProductVendorItem
         }
-        options={{headerShown: false}}
+        options={verticalAnimation}
       />
 
       <Stack.Screen
