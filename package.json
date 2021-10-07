@@ -213,7 +213,8 @@
     "test": "jest",
     "lint": "eslint .",
     "clean": "cd ./android && ./gradlew clean",
-    "uninstallAll": "cd android && ./gradlew uninstallAll"
+    "uninstallAll": "cd android && ./gradlew uninstallAll",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^2.3.0",
@@ -247,6 +248,7 @@
     "lottie-ios": "^3.1.8",
     "lottie-react-native": "^4.0.2",
     "moment": "^2.29.1",
+    "patch-package": "^6.4.7",
     "prop-types": "^15.7.2",
     "querystring": "^0.2.1",
     "react": "16.13.1",
