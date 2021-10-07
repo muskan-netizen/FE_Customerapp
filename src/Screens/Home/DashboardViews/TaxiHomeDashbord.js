@@ -418,7 +418,7 @@ export default function TaxiHomeDashbord({
       <View
         style={{
           marginHorizontal: moderateScale(10),
-          height: moderateScaleVertical(40),
+          height: moderateScaleVertical(45),
           backgroundColor: getColorCodeWithOpactiyNumber(
             colors.taxiCategoryGrayColor.substr(1),
             30,
@@ -427,7 +427,6 @@ export default function TaxiHomeDashbord({
           alignItems: 'center',
           paddingHorizontal: moderateScale(10),
           justifyContent: 'space-between',
-          marginTop: moderateScaleVertical(5),
         }}>
         <TouchableOpacity
           onPress={() => {
