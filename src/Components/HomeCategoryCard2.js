@@ -34,7 +34,7 @@ export default function HomeCategoryCard2({
       activeOpacity={0.9}
       style={{
         // shadowOpacity: 0.5,
-        width: (width - moderateScale(30)) / 4,
+        width: (width - moderateScale(16)) / 4,
         marginVertical: moderateScale(10),
         flexDirection: 'column',
         justifyContent: 'center',

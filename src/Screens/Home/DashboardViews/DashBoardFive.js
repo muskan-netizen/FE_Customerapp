@@ -361,6 +361,7 @@ export default function DashBoardFive({
                         horizontal
                         data={appMainData?.brands}
                         renderItem={renderBrands}
+                        keyExtractor={(item) => item.id.toString()}
                         ItemSeparatorComponent={() => (
                           <View style={{marginRight: moderateScale(12)}} />
                         )}
@@ -388,6 +389,7 @@ export default function DashBoardFive({
                       horizontal
                       data={appMainData?.featured_products}
                       renderItem={renderFeaturedProducts}
+                      keyExtractor={(item) => item.id.toString()}
                       ItemSeparatorComponent={() => (
                         <View style={{marginRight: moderateScale(16)}} />
                       )}
@@ -415,6 +417,7 @@ export default function DashBoardFive({
                       horizontal
                       data={appMainData?.new_products}
                       renderItem={renderFeaturedProducts}
+                      keyExtractor={(item) => item.id.toString()}
                       ItemSeparatorComponent={() => (
                         <View style={{marginRight: moderateScale(16)}} />
                       )}
@@ -439,6 +442,7 @@ export default function DashBoardFive({
                   <FlatList
                     showsHorizontalScrollIndicator={false}
                     horizontal
+                    keyExtractor={(item) => item?.id.toString() || ''}
                     data={appMainData?.on_sale_products}
                     renderItem={renderSale}
                     ItemSeparatorComponent={() => (
