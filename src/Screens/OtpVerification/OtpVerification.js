@@ -171,7 +171,11 @@ export default function OtpVerification({navigation, route}) {
           onPress={() => navigation.goBack(null)}
           style={{alignSelf: 'flex-start'}}>
           <Image
-            source={imagePath.back}
+            source={
+              appStyle?.homePageLayout === 3
+                ? imagePath.icBackb
+                : imagePath.back
+            }
             style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
           />
         </TouchableOpacity>

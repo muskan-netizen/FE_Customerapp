@@ -59,7 +59,7 @@ export default function Login({navigation}) {
     phoneNumber: '',
     email: {
       value: '',
-      focus: false,
+      focus: true,
     },
     mobilNo: {
       phoneNo: '',
@@ -130,17 +130,10 @@ export default function Login({navigation}) {
   //Login api fucntion
   const _onLogin = async () => {
     let fcmToken = await AsyncStorage.getItem('fcmToken');
-    if (mobilNo.focus) {
-      const checkValid = isValidData();
 
-      if (!checkValid) {
-        return;
-      }
-    } else {
-      const checkValid = isValidData();
-      if (!checkValid) {
-        return;
-      }
+    const checkValid = isValidData();
+    if (!checkValid) {
+      return;
     }
 
     let data = {
@@ -638,4 +631,3 @@ export default function Login({navigation}) {
     </WrapperContainer>
   );
 }
-
