@@ -44,7 +44,7 @@ export default function SearchProductVendorItem({navigation, route}) {
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
 
-  console.log("param data",paramData)
+  console.log('param data', paramData);
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -233,7 +233,11 @@ export default function SearchProductVendorItem({navigation, route}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 2 ? imagePath.backArrow : appStyle?.homePageLayout === 3 ? imagePath.icBackb: imagePath.back
+          appStyle?.homePageLayout === 2
+            ? imagePath.backArrow
+            : appStyle?.homePageLayout === 3
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={strings.SEARCH}
         // rightIcon={imagePath.cartShop}
