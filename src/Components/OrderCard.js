@@ -10,7 +10,7 @@ import {
 import ButtonWithLoader from './ButtonWithLoader';
 
 const OrderCard = (props) => {
-  const {data = [], mode = 'cash',} = props;
+  const {data = [], mode = 'cash', status = ''} = props;
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -66,24 +66,47 @@ const OrderCard = (props) => {
           <Text style={styles.orderText}>Order Total</Text>
           <Text style={styles.totalPrice}>$ 40.00</Text>
         </View>
-        <View style={{flexDirection: 'row'}}>
-          <ButtonWithLoader
-            btnText="Reject"
-            btnTextStyle={styles.btnText}
-            btnStyle={styles.btnContainer}
-            //   onPress={onPressAdd}
-          />
-          <ButtonWithLoader
-            btnText="Confirm"
-            btnTextStyle={{...styles.btnText, color: colors.white}}
-            btnStyle={{
-              ...styles.btnContainer,
-              backgroundColor: colors.themeColor2,
-              marginLeft: moderateScale(10),
-            }}
-            //   onPress={onPressAdd}
-          />
-        </View>
+
+        {status ? (
+          <View>
+            <Text
+              style={{
+                fontFamily: fontFamily.medium,
+                fontSize: 11,
+                color: '#8B8B8B',
+              }}>
+              Order Status
+            </Text>
+            <Text
+              style={{
+                fontFamily: fontFamily.regular,
+                fontSize: 14,
+                color: status=='Cancelled'?'#E02020':colors.black,
+                lineHeight: textScale(24),
+              }}>
+              {status}
+            </Text>
+          </View>
+        ) : (
+          <View style={{flexDirection: 'row'}}>
+            <ButtonWithLoader
+              btnText="Reject"
+              btnTextStyle={styles.btnText}
+              btnStyle={styles.btnContainer}
+              //   onPress={onPressAdd}
+            />
+            <ButtonWithLoader
+              btnText="Confirm"
+              btnTextStyle={{...styles.btnText, color: colors.white}}
+              btnStyle={{
+                ...styles.btnContainer,
+                backgroundColor: colors.themeColor2,
+                marginLeft: moderateScale(10),
+              }}
+              //   onPress={onPressAdd}
+            />
+          </View>
+        )}
       </View>
     </View>
   );

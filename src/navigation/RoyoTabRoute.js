@@ -113,7 +113,7 @@ const RoyoTabRoute = ({barColor = colors.themeColor2}) => {
             return (
               <Image
                 source={
-                  focused ? imagePath.orderActiveRoyo : imagePath.orderInactiveRoyo
+                  focused ? imagePath.orderActiveRoyo : imagePath.orderInActiveRoyo
                 }
               />
             );

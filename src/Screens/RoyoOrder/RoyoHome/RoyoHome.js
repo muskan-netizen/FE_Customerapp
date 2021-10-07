@@ -24,6 +24,11 @@ import {BarChart} from 'react-native-chart-kit';
 import {FlatList} from 'react-native';
 import OrderCard from '../../../Components/OrderCard';
 import commonStyles from '../../../styles/commonStyles';
+import {
+  boxWidth,
+  customMarginBottom,
+  customMarginLeftForBox,
+} from '../../../utils/constants/constants';
 
 const commonStyle = commonStyles({
   fontFamily,
@@ -176,14 +181,6 @@ const RoyoHome = (props) => {
               )}
             </View>
 
-            {/* <FlatList
-            contentContainerStyle={{justifyContent: 'space-between'}}
-            data={[1, 2, 3, 4]}
-            numColumns={width>600?4: 2}
-            renderItem={dashboard}
-            keyExtractor={(item, key)=>key}
-            /> */}
-
             <View style={styles.warningBox}>
               <Image
                 source={imagePath.warningRoyo}
@@ -236,19 +233,14 @@ const RoyoHome = (props) => {
                     <Text style={{...styles.font13Regular, color: '#2E3E3A5f'}}>
                       Total revenue (Delivered order)
                     </Text>
-                    <Text
-                      style={styles.font16Bold}>
-                      $123456
-                    </Text>
+                    <Text style={styles.font16Bold}>$123456</Text>
                   </View>
                   <BarChart
                     withCustomBarColorFromData={true}
                     style={{margin: 0, padding: 0, flex: 1, marginLeft: 0}}
                     // yLabelsOffset={30}
                     data={data}
-                    width={
-                      width > 600 ? width / 2.55 : width - moderateScale(65)
-                    }
+                    width={boxWidth()}
                     height={moderateScaleVertical(220)}
                     yAxisLabel="$"
                     yAxisInterval={2}
@@ -295,9 +287,7 @@ const RoyoHome = (props) => {
                   <BarChart
                     withCustomBarColorFromData={true}
                     data={data}
-                    width={
-                      width > 600 ? width / 2.55 : width - moderateScale(65)
-                    }
+                    width={boxWidth()}
                     height={moderateScaleVertical(220)}
                     yAxisLabel="$"
                     chartConfig={chartConfig}
@@ -328,8 +318,7 @@ const RoyoHome = (props) => {
                   return (
                     <View
                       style={{
-                        marginLeft:
-                          width > 600 ? index % 2 && moderateScale(12) : 0,
+                        marginLeft: customMarginLeftForBox(index),
                         flex: 1,
                       }}>
                       <OrderCard data={orderData} index={index} mode={item} />
@@ -373,10 +362,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: moderateScale(16),
     paddingVertical: moderateScaleVertical(24),
-    marginBottom:
-      Platform.OS == 'android'
-        ? moderateScaleVertical(18)
-        : moderateScaleVertical(80),
+    marginBottom: customMarginBottom(18, 86),
     backgroundColor: 'transparent',
     backfaceVisibility: 'hidden',
   },

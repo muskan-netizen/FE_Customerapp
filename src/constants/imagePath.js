@@ -359,18 +359,25 @@ export default {
   logoRoyo: require('../assets/images/royoTab/ic_logo.png'),
   timerRoyo: require('../assets/images/royoTab/ic_pensinf.png'),
   warningRoyo: require('../assets/images/royoTab/ic_warning.png'),
-
-
+  inStockRoyo: require('../assets/images/royoTab/ic_on.png'),
+  outStockRoyo: require('../assets/images/royoTab/ic_off.png'),
+  editRoyo: require('../assets/images/royoTab/ic_edit.png'),
+  deleteRoyo: require('../assets/images/royoTab/ic_delete.png'), 
 
 
 
   accountActiveRoyo: require('../assets/images/royoTab/ic_account2.png'),
-  accountInactiveRoyo: require('../assets/images/royoTab/ic_account2.png'),
-  homeActiveRoyo: require('../assets/images/royoTab/ic_homwe2.png'),
+  accountInactiveRoyo: require('../assets/images/royoTab/ic_account1.png'),
+  homeActiveRoyo: require('../assets/images/royoTab/ic_home2.png'),
   homeInactiveRoyo: require('../assets/images/royoTab/ic_homwe2.png'),
   productActiveRoyo: require('../assets/images/royoTab/ic_products2.png'),
-  productInactiveRoyo: require('../assets/images/royoTab/ic_products2.png'),
+  productInactiveRoyo: require('../assets/images/royoTab/ic_products1.png'),
   orderActiveRoyo: require('../assets/images/royoTab/ic_orders.png'),
-  orderInactiveRoyo: require('../assets/images/royoTab/ic_orders.png'),
+  orderInActiveRoyo: require('../assets/images/royoTab/ic_orders1.png'),
+  signoutRoyo: require('../assets/images/royoTab/ic_signout.png'),
+  transactionsRoyo: require('../assets/images/royoTab/ic_transactions.png'),
+  edit1Royo: require('../assets/images/royoTab/Shape.png'),
+  paymentSettinRoyo: require('../assets/images/royoTab/ic_paysettings.png'),
+  cameraRoyo: require('../assets/images/royoTab/ic_camera2.png'),
  
 };
