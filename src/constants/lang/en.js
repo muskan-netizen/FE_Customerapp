@@ -32,8 +32,7 @@ export default {
   WISHLIST: 'Wishlist',
   SIGNUP_AN_ACCOUNT: 'SIGN UP ACCOUNT',
   OTP_VERIFICATION: 'OTP Verification',
-  ENTER_OTP_SENT:
-    'Enter the OTP sent to your registered email and phone number',
+  ENTER_OTP_SENT: 'Enter the OTP sent to your registered phone number',
   ENTER_OTP_PHONE: 'Enter OTP sent on your phone',
   ENTER_OTP_EMAIL: 'Enter OTP sent on your email ID',
   VERIFY_ACCOUNT: 'VERIFY ACCOUNT',
