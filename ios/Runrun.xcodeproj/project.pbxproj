@@ -14,7 +14,7 @@
 		02883CD0A1EAF0FD6DF516AB /* libPods-Gusto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B8F3966DA5524BACFC15104 /* libPods-Gusto.a */; };
 		047C52AE63713F795D4CB92D /* libPods-Shariff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD371DE7B5E57D71AEF6190D /* libPods-Shariff.a */; };
 		0570D07E52B104A74A8D5412 /* libPods-Masa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2200987770B05866E387D4 /* libPods-Masa.a */; };
-		05E77F762483A687D0CF2996 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		05E77F762483A687D0CF2996 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		060F27248E48D9B2881C4538 /* libPods-Ublue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 604C6C43284050D8F24CFF96 /* libPods-Ublue.a */; };
 		061F6AB353BEC60407355B85 /* libPods-ArenaGrub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2744564E8E6689E555D793E /* libPods-ArenaGrub.a */; };
 		06FC540D977CA19A501B59D5 /* libPods-PartnerProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2D9F813E48546FC16778F5 /* libPods-PartnerProject.a */; };
@@ -26,65 +26,65 @@
 		113091C4003B5CDB65858442 /* libPods-LastMinuteDress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A0C59B1411353925590B27 /* libPods-LastMinuteDress.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		14F223EE5F1A0544245B3322 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		15ED4E4B5AB4AAE729CBB737 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		14F223EE5F1A0544245B3322 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		15ED4E4B5AB4AAE729CBB737 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		171757B8CEB21AE2BDEAEEBD /* libPods-Fleety.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5666E5B008A5340F1111CBF /* libPods-Fleety.a */; };
 		175F673B73AE8F97F81CC6A9 /* libPods-Klickmat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A15B79FC9870ACEB6AE3D4CD /* libPods-Klickmat.a */; };
 		1953C29CF253FA273799CE4B /* libPods-HoganChef.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B74D56AABB98E5B6E0F6E3C /* libPods-HoganChef.a */; };
 		1B53DB5139BD4A69F7E9EC89 /* libPods-DoorStep.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DEC5DBFD4EC8F1C306CC5507 /* libPods-DoorStep.a */; };
-		1C460C2099CBB24433268494 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		1EFD4A19C3C9787E1FF02CE8 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		20EE00A76B224D1D1A738A2D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		1C460C2099CBB24433268494 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		1EFD4A19C3C9787E1FF02CE8 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		20EE00A76B224D1D1A738A2D /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		228BA6657A7B94F2167F06C9 /* libPods-Zest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF58073E086119FB744019D3 /* libPods-Zest.a */; };
-		2690AD526CBB85EB2CCE639B /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		26938B8CA7D3A9F10C18BFD7 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		2690AD526CBB85EB2CCE639B /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		26938B8CA7D3A9F10C18BFD7 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		27496E6D76DBD61DC27B3AC7 /* libPods-Elixir.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC0C7D4C7967BF62F7E92EA /* libPods-Elixir.a */; };
-		2A089DE17ED68FAA66DC1C47 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		2A089DE17ED68FAA66DC1C47 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		2DAAE6BB79BB701530BD98A3 /* libPods-GajaMove.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D483DABDD7707FB032C9EC9B /* libPods-GajaMove.a */; };
 		2F5D536021F342BA4585A088 /* libPods-Autotek.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E33F45E49566E7CF2307825E /* libPods-Autotek.a */; };
 		3084338DF84E9BAF2E854260 /* libPods-Travo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 173172884E1F1D25980B5F01 /* libPods-Travo.a */; };
 		3121307A6E5CD3FAF4B5DD2E /* libPods-PickMeUp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1987072943E7815C6A5FBD3 /* libPods-PickMeUp.a */; };
-		32D00D33B258D4CB59106247 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		32D00D33B258D4CB59106247 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		339CDF68685C029B72DE667C /* libPods-Homeric.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED24D77B303122D9F1109BE7 /* libPods-Homeric.a */; };
-		35E037394FC2AF7FA279598D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		3BFBAC0753B2D307E31A8527 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		3E90892A316034834B947B29 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		35E037394FC2AF7FA279598D /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		3BFBAC0753B2D307E31A8527 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		3E90892A316034834B947B29 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		3F8006B294BFC9EF4842EF47 /* libPods-eBOYO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F236556AD2EF2A6DCB1046 /* libPods-eBOYO.a */; };
-		42306BF20E5582B8D3D917F0 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		42306BF20E5582B8D3D917F0 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		43BCB7FC1E39E8565EE862FD /* libPods-Hmoobhub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4D62A70864E548DED0AB788 /* libPods-Hmoobhub.a */; };
-		46C0EB227324EB0408E15FE3 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		48200DB09BF182B3A9D74FE1 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		46C0EB227324EB0408E15FE3 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		48200DB09BF182B3A9D74FE1 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		48E7B25047BD6322CE20747E /* libPods-UFood.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FECA5148D03ACE8E8B32B595 /* libPods-UFood.a */; };
-		4E3BDC81CC06DE5928DDFEB8 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		4E3BDC81CC06DE5928DDFEB8 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		4ED244D8F3741D9315C8E0AB /* libPods-Grub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 729C41F1F98DC9EE80236FA6 /* libPods-Grub.a */; };
-		4EE15BD954F26B9DE5A4A947 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		4FD43D68F25B6EDD510E72C9 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		5237AA11F7715FA6E0AB4E75 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		54A74C5E6D686EE3C0EB4729 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		557090FD0E1684BCE3DEDF20 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		4EE15BD954F26B9DE5A4A947 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		4FD43D68F25B6EDD510E72C9 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		5237AA11F7715FA6E0AB4E75 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		54A74C5E6D686EE3C0EB4729 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		557090FD0E1684BCE3DEDF20 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		55D0C1C18BB8D97BA69CBEF5 /* libPods-MOBI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 484D83E3167A4B8410C0D499 /* libPods-MOBI.a */; };
 		579F505A89452A33251B28CE /* libPods-Getme.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F3CBD98D9C4848044938749 /* libPods-Getme.a */; };
 		584C70F87E5E81DD8D2A94E4 /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC239B0128A5185DC00195CA /* libPods-RoyoOrder.a */; };
 		5A83462C77E49BBC95524504 /* libPods-CarHop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93C0C543E1D2CD11E2DB4369 /* libPods-CarHop.a */; };
 		5CC238434FA86302166BC198 /* libPods-YogoLift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 40A904C699413BBEFD7941A5 /* libPods-YogoLift.a */; };
 		5D1F13543957C74596CF823D /* libPods-Vecto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04DD41F0773A8883E8278F97 /* libPods-Vecto.a */; };
-		5EA53C664CF2D96134393B29 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		5EA53C664CF2D96134393B29 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		606001B46A805F1DBD638FDC /* libPods-BLIP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E71BB95FB1E55826BBA23529 /* libPods-BLIP.a */; };
 		6294E13FFEC501F2EFFBC5A0 /* libPods-Share.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7807EE02336F31B9E2A19136 /* libPods-Share.a */; };
 		6344C2BF05A5DD569AA76DB7 /* libPods-DiamondDashers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8728D4556E8AAA296449D5D6 /* libPods-DiamondDashers.a */; };
-		65449B8FFE0A8AD79A41877C /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		666F8502708238FFE10E33C8 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		65449B8FFE0A8AD79A41877C /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		666F8502708238FFE10E33C8 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		672E51A8E6DBB74CD16F48C4 /* libPods-DoctaTransportation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A05D12F5C243214626481420 /* libPods-DoctaTransportation.a */; };
-		693ABDA01D03BD9B0E1AE8B9 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		693ABDA01D03BD9B0E1AE8B9 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		69D17B8A0B6ACC75777BAE4A /* libPods-Baytukom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0FDF127A8424E66B5B05CC0 /* libPods-Baytukom.a */; };
 		6C184A05586BB4C30A306716 /* libPods-Cannabus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CABEAACDFCC46FF7F5A82DE /* libPods-Cannabus.a */; };
-		6D17E68B63EFE60D7039FEF5 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		6D17E68B63EFE60D7039FEF5 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		6E572965A900F63344851916 /* libPods-Menus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E6439E9C55D1831F60A46C /* libPods-Menus.a */; };
 		6EFD83BE9AB9328FEF20B8F9 /* libPods-Codiner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C19704B7F9EA7DDBDF41A614 /* libPods-Codiner.a */; };
 		6F526F828E7E40C1BC8D2BEE /* libPods-Runrun.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 621C290583D6FA37D0B2DB59 /* libPods-Runrun.a */; };
 		703486ECC9B5C1F74900C73D /* libPods-Yoho.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED640B3F7C894051345B5CF /* libPods-Yoho.a */; };
 		70F294F534ACD8EFECD3DD06 /* libPods-Housekeeper4Hire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEEC7723470C4346232D713 /* libPods-Housekeeper4Hire.a */; };
-		7472439BE80625049BC9B531 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		7472439BE80625049BC9B531 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		76693A5B269D9B87000F83B2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		76693A5D269D9B87000F83B2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		76693A63269D9B87000F83B2 /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
@@ -104,17 +104,17 @@
 		76693A73269D9B87000F83B2 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		76693AA8269D9EF4000F83B2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76693AA4269D9EF4000F83B2 /* Images.xcassets */; };
 		76693AAB269D9EF4000F83B2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76693AA7269D9EF4000F83B2 /* GoogleService-Info.plist */; };
-		767995CEDF62882BC2A144A7 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		767995CEDF62882BC2A144A7 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		767C68602655481D00AA80AD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 767C685F2655481D00AA80AD /* GoogleService-Info.plist */; };
 		767C68672655484700AA80AD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 767C68662655484600AA80AD /* GoogleService-Info.plist */; };
-		797CC0319A4C01B2D18F28A2 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		797CC0319A4C01B2D18F28A2 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		797FA8E54A9FD7234D39DE86 /* libPods-Gorillas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABEDA1540E0586204E218368 /* libPods-Gorillas.a */; };
 		7A4943AA1965DC70E669CE31 /* libPods-Senshive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 917915062BCB054D4DF3E6B4 /* libPods-Senshive.a */; };
 		7A8092B5D8BC39555C321644 /* libPods-Totum4U.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFC54474663440CAB75323C /* libPods-Totum4U.a */; };
 		7EA2BE2B8B0991540C3DFF22 /* libPods-SunshineRideshare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF32F03C3F607A425A3FB565 /* libPods-SunshineRideshare.a */; };
 		7F293FA324F40E18F22187F5 /* libPods-Tranzit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C088D0EB938C7D98AEADAC73 /* libPods-Tranzit.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		827E17F53A9DE07E4317FDB7 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		827E17F53A9DE07E4317FDB7 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		82EAAD3738DFC2E3CEB6111E /* libPods-Goody.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 713A83E8A3978EC04D7A24AA /* libPods-Goody.a */; };
 		8405999A26FDF3A600B6E1C6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		8405999B26FDF3A600B6E1C6 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -1670,7 +1670,7 @@
 		847E8E3B26DCB3B50054CD42 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847E8E3A26DCB3B50054CD42 /* Images.xcassets */; };
 		847E8E8126DCB4690054CD42 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847E8E8026DCB4680054CD42 /* GoogleService-Info.plist */; };
 		8480076A26CE20340014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		8480076B26CE20340014F500 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		8480076B26CE20340014F500 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8480076C26CE20340014F500 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8480076D26CE20340014F500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848007AD26CE260D0014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -1748,7 +1748,7 @@
 		84854F3C26C4EEDC00BFFD11 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84854F3B26C4EEDC00BFFD11 /* Images.xcassets */; };
 		8485508F26C4FBF800BFFD11 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8485508E26C4FBF800BFFD11 /* GoogleService-Info.plist */; };
 		848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		848CEF8126CE229D0077C918 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		848CEF8126CE229D0077C918 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		848CEF8226CE229D0077C918 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848CEF8326CE229D0077C918 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848F9EF226E8B5A7008116B5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -3065,51 +3065,51 @@
 		84FFFFE826D6754300F2B059 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84FFFFE726D6754200F2B059 /* GoogleService-Info.plist */; };
 		871F789D6E3723BF0709BC69 /* libPods-Markita.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D110B70B0CE89400F742D8 /* libPods-Markita.a */; };
 		8742E48AC6DB8DBC97A3E6C8 /* libPods-Orbit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16DCDA2F6DBAF063EEB2B83B /* libPods-Orbit.a */; };
-		87BF810F7E69B0DF7609B726 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		87BF810F7E69B0DF7609B726 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		89406E489EB0B992DB5E03C4 /* libPods-DestinationOps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 471E047E3B6D0129F49FC459 /* libPods-DestinationOps.a */; };
 		89477A0F8282C803BED57CDB /* libPods-Errand.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CC978544C44DB8D267A40D1 /* libPods-Errand.a */; };
-		8A9CCE89D83C8A9E075A964F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8BB69089BBBC27CEBE24C9F8 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		8A9CCE89D83C8A9E075A964F /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		8BB69089BBBC27CEBE24C9F8 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		8F76E83210DA55E5963F435F /* libPods-Specialhalal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0449E467AB14E5940A387806 /* libPods-Specialhalal.a */; };
 		9174850DEC406C17E7790AE8 /* libPods-Rerak.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8937FDDA7EB138243450B018 /* libPods-Rerak.a */; };
-		9322389440851FAC8A6E24E2 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		9322389440851FAC8A6E24E2 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		940B19581C14E79FA0FDF09E /* libPods-HemptiFy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9542B0A99650628893203757 /* libPods-HemptiFy.a */; };
 		96088E971C425F0817444556 /* libPods-ClickEat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89EDDFA411B3F2FE040B176F /* libPods-ClickEat.a */; };
 		9612E276B5B8922862D68CD5 /* libPods-LoopWhole.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6659AAE0468E582D35F1B4A /* libPods-LoopWhole.a */; };
 		96E24989470D04640C7B339A /* libPods-MsTechy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E2292B6788CB6C32D550985B /* libPods-MsTechy.a */; };
 		9AC3EECDB5E850295F06CA2E /* libPods-WashValley.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B648276F2941B44E6E09384F /* libPods-WashValley.a */; };
 		9C6CE45F6D7AF5AF7B6520FA /* libPods-Ace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01F57279DED993D561886D65 /* libPods-Ace.a */; };
-		9DE1E5632B06DAB19F6F295B /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		A07DA7E4A911268765997F58 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		9DE1E5632B06DAB19F6F295B /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		A07DA7E4A911268765997F58 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		A394C6DB55392B67F002A7C4 /* libPods-Capcorp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6553DC7413EDF2382A6A7BA /* libPods-Capcorp.a */; };
 		A3E98680A056A41429494B5F /* libPods-AfricanVillageMarket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB808A4AF5B872DD307651C /* libPods-AfricanVillageMarket.a */; };
-		A43790E116AD8CDCAE25465D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		A53D4EAD70DC72CB9116BEB8 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		A43790E116AD8CDCAE25465D /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		A53D4EAD70DC72CB9116BEB8 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		A5915C3E59C773BF450E0CF3 /* libPods-EquaMD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D74E5740DAE904A809567E38 /* libPods-EquaMD.a */; };
-		A62BEE3282BD29747E28F623 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		A68B9E24E0B4BF8120E5A80D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		AA727695876EEE7000C2FE74 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		A62BEE3282BD29747E28F623 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		A68B9E24E0B4BF8120E5A80D /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		AA727695876EEE7000C2FE74 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		AB733DBAF95F230398BD425C /* libPods-Jet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A726442DBB156FAC888025B7 /* libPods-Jet.a */; };
 		ADFE2398095554ADED01E08D /* libPods-Glamsouq.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2631B215F6236F1F83BD8627 /* libPods-Glamsouq.a */; };
 		AE6B564062D5D472DF5D0BCE /* libPods-BottomsUp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC5A4AF6213D2CAAA915B4A /* libPods-BottomsUp.a */; };
 		AFDABEEBCC741DE73185B1FB /* libPods-Vici.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31F61C89C7A1C9821A6AE76F /* libPods-Vici.a */; };
-		B007C5DE756DB161C202DC79 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		B0CE2A4E6A31CBD1BD0B93A2 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		B007C5DE756DB161C202DC79 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		B0CE2A4E6A31CBD1BD0B93A2 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		B42E688E78BC2CC2CE895F4A /* libPods-WeEat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0AB5C72DB4FEBCA85AC760D /* libPods-WeEat.a */; };
 		B451342BE9947C3F19899C35 /* libPods-Taquick.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DFEF5B8AB9CB85C176EF85D /* libPods-Taquick.a */; };
-		B62151EE5E9195E6F94CDC27 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		B82236DFB5201F41C66EF75F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		B62151EE5E9195E6F94CDC27 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		B82236DFB5201F41C66EF75F /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		B97AA645B24E3EFEDE4453EF /* libPods-Survuhs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC21FCB594A159517F597857 /* libPods-Survuhs.a */; };
 		B989C31C476B6F6FFF45F3B4 /* libPods-Tasmeem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D63F5576E9BD4A4299B6A157 /* libPods-Tasmeem.a */; };
 		BBCDAC73CA8561D8C934FC1D /* libPods-Ridemate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44C625F1E94D11A38769DCF3 /* libPods-Ridemate.a */; };
-		BC467E4EEBDDE27B175FB8AE /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		BC467E4EEBDDE27B175FB8AE /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		BD5F067A81CFF25EEC241FF9 /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AA177C3594CB5737327A892 /* libPods-RoyoOrder.a */; };
 		BF62E397D4B3F7AE3606937C /* libPods-TowTrek.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEE81A2C4AB1A6D4002C947 /* libPods-TowTrek.a */; };
 		C04A42BA437DA5A52304CE7E /* libPods-Africanize.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B060EE34F64AE10891DBBF67 /* libPods-Africanize.a */; };
 		C16EEDEBB78F38834C13FE62 /* libPods-Groupy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF79418833FCDA60FFD6A4D2 /* libPods-Groupy.a */; };
 		C71917FED2E3FAD98887DDA5 /* libPods-HelloDeliver.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5490933D0766BFE8B1992E /* libPods-HelloDeliver.a */; };
 		C8BECB841D4A685F04C69F30 /* libPods-SMCompany.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A1E7FBC1F79607A14B5CB79 /* libPods-SMCompany.a */; };
-		D5672F13989C61DFEEEA4ED4 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		D5672F13989C61DFEEEA4ED4 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		DB7A1ADF9F89687A3BF2BA4C /* libPods-HairstonExpress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB69453C06C974952A731CCD /* libPods-HairstonExpress.a */; };
 		DD785C1AA182BECA444B7C9A /* libPods-MartiniOnWheels.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F06B8633EFC2E4E0E28C5F6A /* libPods-MartiniOnWheels.a */; };
 		DDA51E49EA72511A67C249D1 /* libPods-Spidbi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEDEE0813A27086A7592A882 /* libPods-Spidbi.a */; };
@@ -3117,27 +3117,27 @@
 		E067D8450A90A02124DC36B4 /* libPods-BustanFakieh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 373A9B25BC48E07C97707F73 /* libPods-BustanFakieh.a */; };
 		E0F10EA7758B683BF10713BB /* libPods-Toda.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C902131CEC0DB6B4A4DB935A /* libPods-Toda.a */; };
 		E1F9B1A8666DE8C92A1F0E9D /* libPods-ZuzuClean.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA4A718C7E92C32B723DE717 /* libPods-ZuzuClean.a */; };
-		E22FAEB7796B33CB0D2AE548 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		E22FAEB7796B33CB0D2AE548 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		E233EDFB2BB29A6F1458750F /* libPods-Yogo Food.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3769703E12C55CAD74E240E3 /* libPods-Yogo Food.a */; };
 		E5481363D1C720FFF40EA0A9 /* libPods-SirVU.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B36BC1887796E80F34185D78 /* libPods-SirVU.a */; };
-		E6095431D20F7820B0A376F5 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		E6095431D20F7820B0A376F5 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		E673060068A6DD128F52AB2A /* libPods-Drus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B98683F3AB8383558C330D9E /* libPods-Drus.a */; };
-		E6F5E782BC88FCD8D5FBFD44 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		E6F5E782BC88FCD8D5FBFD44 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		E86CB52C4A062DB3F3157212 /* libPods-Voltaic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E523D4A9B2197A5C14221B4B /* libPods-Voltaic.a */; };
 		EACB26CA7111AAE457C0F697 /* libPods-Cabdelivr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C072D8C1022A2B2BB8BDF0D /* libPods-Cabdelivr.a */; };
-		EAF5CCBD44D2FBC491811268 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		EAF5CCBD44D2FBC491811268 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		EB251690315A160DD8B8FAE7 /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 041FE2B914A6AB75144305A3 /* libPods-RoyoOrder.a */; };
-		EEB569FE185958EF1512C270 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		EF5D1BE6EEB761946817CFB8 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		EEB569FE185958EF1512C270 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		EF5D1BE6EEB761946817CFB8 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		EF5E445DC2CFC28A29A0DB60 /* libPods-Punnet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EBC5F05642A377EBCA25993C /* libPods-Punnet.a */; };
-		F03DDEB5872E13FAD41D8339 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		F03DDEB5872E13FAD41D8339 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		F0C219D1BA8B488EAC0F6657 /* libPods-Suel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B36EB80EB1C7B114DC433C1 /* libPods-Suel.a */; };
 		F1B3D86542780548AD7543F1 /* libPods-Sharu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91752937A9B9F1844694D058 /* libPods-Sharu.a */; };
 		F2D151410313C9A056111C1D /* libPods-WeGotit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCE3939846DDB589E72F66E6 /* libPods-WeGotit.a */; };
-		FA7B9B71F55340B9B618DB69 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		FA7B9B71F55340B9B618DB69 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		FC5BF68F92C06CCACA3278CB /* libPods-TheHouse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94A93A2CD26624DB8E66729A /* libPods-TheHouse.a */; };
 		FD7710B56CD97F0BA68D1C35 /* libPods-FlyingHorse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2674BB5B017C3E9EF1252029 /* libPods-FlyingHorse.a */; };
-		FDAF37DA11D83ADB9F33303E /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		FDAF37DA11D83ADB9F33303E /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		FEAB7D98A3F2CFC4F93D8105 /* libPods-Yummiidash.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39EA04355FD895BD4CCC4837 /* libPods-Yummiidash.a */; };
 /* End PBXBuildFile section */
 
@@ -4383,120 +4383,120 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32D00D33B258D4CB59106247 /* BuildFile in Frameworks */,
-				7472439BE80625049BC9B531 /* BuildFile in Frameworks */,
-				A62BEE3282BD29747E28F623 /* BuildFile in Frameworks */,
-				3BFBAC0753B2D307E31A8527 /* BuildFile in Frameworks */,
-				A68B9E24E0B4BF8120E5A80D /* BuildFile in Frameworks */,
-				EF5D1BE6EEB761946817CFB8 /* BuildFile in Frameworks */,
-				B62151EE5E9195E6F94CDC27 /* BuildFile in Frameworks */,
-				B82236DFB5201F41C66EF75F /* BuildFile in Frameworks */,
-				A43790E116AD8CDCAE25465D /* BuildFile in Frameworks */,
-				87BF810F7E69B0DF7609B726 /* BuildFile in Frameworks */,
-				35E037394FC2AF7FA279598D /* BuildFile in Frameworks */,
-				48200DB09BF182B3A9D74FE1 /* BuildFile in Frameworks */,
-				D5672F13989C61DFEEEA4ED4 /* BuildFile in Frameworks */,
-				E6095431D20F7820B0A376F5 /* BuildFile in Frameworks */,
-				EAF5CCBD44D2FBC491811268 /* BuildFile in Frameworks */,
-				A53D4EAD70DC72CB9116BEB8 /* BuildFile in Frameworks */,
-				AA727695876EEE7000C2FE74 /* BuildFile in Frameworks */,
-				05E77F762483A687D0CF2996 /* BuildFile in Frameworks */,
-				42306BF20E5582B8D3D917F0 /* BuildFile in Frameworks */,
-				B007C5DE756DB161C202DC79 /* BuildFile in Frameworks */,
-				6D17E68B63EFE60D7039FEF5 /* BuildFile in Frameworks */,
-				5237AA11F7715FA6E0AB4E75 /* BuildFile in Frameworks */,
-				693ABDA01D03BD9B0E1AE8B9 /* BuildFile in Frameworks */,
-				F03DDEB5872E13FAD41D8339 /* BuildFile in Frameworks */,
-				14F223EE5F1A0544245B3322 /* BuildFile in Frameworks */,
-				1C460C2099CBB24433268494 /* BuildFile in Frameworks */,
-				5EA53C664CF2D96134393B29 /* BuildFile in Frameworks */,
-				20EE00A76B224D1D1A738A2D /* BuildFile in Frameworks */,
-				15ED4E4B5AB4AAE729CBB737 /* BuildFile in Frameworks */,
-				E22FAEB7796B33CB0D2AE548 /* BuildFile in Frameworks */,
-				797CC0319A4C01B2D18F28A2 /* BuildFile in Frameworks */,
-				767995CEDF62882BC2A144A7 /* BuildFile in Frameworks */,
-				65449B8FFE0A8AD79A41877C /* BuildFile in Frameworks */,
-				54A74C5E6D686EE3C0EB4729 /* BuildFile in Frameworks */,
-				9322389440851FAC8A6E24E2 /* BuildFile in Frameworks */,
-				4EE15BD954F26B9DE5A4A947 /* BuildFile in Frameworks */,
-				3E90892A316034834B947B29 /* BuildFile in Frameworks */,
-				46C0EB227324EB0408E15FE3 /* BuildFile in Frameworks */,
-				4E3BDC81CC06DE5928DDFEB8 /* BuildFile in Frameworks */,
-				FA7B9B71F55340B9B618DB69 /* BuildFile in Frameworks */,
-				A07DA7E4A911268765997F58 /* BuildFile in Frameworks */,
-				4FD43D68F25B6EDD510E72C9 /* BuildFile in Frameworks */,
-				827E17F53A9DE07E4317FDB7 /* BuildFile in Frameworks */,
-				2690AD526CBB85EB2CCE639B /* BuildFile in Frameworks */,
-				2A089DE17ED68FAA66DC1C47 /* BuildFile in Frameworks */,
-				8BB69089BBBC27CEBE24C9F8 /* BuildFile in Frameworks */,
-				FDAF37DA11D83ADB9F33303E /* BuildFile in Frameworks */,
-				1EFD4A19C3C9787E1FF02CE8 /* BuildFile in Frameworks */,
-				557090FD0E1684BCE3DEDF20 /* BuildFile in Frameworks */,
-				666F8502708238FFE10E33C8 /* BuildFile in Frameworks */,
-				8A9CCE89D83C8A9E075A964F /* BuildFile in Frameworks */,
-				26938B8CA7D3A9F10C18BFD7 /* BuildFile in Frameworks */,
-				BC467E4EEBDDE27B175FB8AE /* BuildFile in Frameworks */,
-				E6F5E782BC88FCD8D5FBFD44 /* BuildFile in Frameworks */,
-				9DE1E5632B06DAB19F6F295B /* BuildFile in Frameworks */,
+				32D00D33B258D4CB59106247 /* (null) in Frameworks */,
+				7472439BE80625049BC9B531 /* (null) in Frameworks */,
+				A62BEE3282BD29747E28F623 /* (null) in Frameworks */,
+				3BFBAC0753B2D307E31A8527 /* (null) in Frameworks */,
+				A68B9E24E0B4BF8120E5A80D /* (null) in Frameworks */,
+				EF5D1BE6EEB761946817CFB8 /* (null) in Frameworks */,
+				B62151EE5E9195E6F94CDC27 /* (null) in Frameworks */,
+				B82236DFB5201F41C66EF75F /* (null) in Frameworks */,
+				A43790E116AD8CDCAE25465D /* (null) in Frameworks */,
+				87BF810F7E69B0DF7609B726 /* (null) in Frameworks */,
+				35E037394FC2AF7FA279598D /* (null) in Frameworks */,
+				48200DB09BF182B3A9D74FE1 /* (null) in Frameworks */,
+				D5672F13989C61DFEEEA4ED4 /* (null) in Frameworks */,
+				E6095431D20F7820B0A376F5 /* (null) in Frameworks */,
+				EAF5CCBD44D2FBC491811268 /* (null) in Frameworks */,
+				A53D4EAD70DC72CB9116BEB8 /* (null) in Frameworks */,
+				AA727695876EEE7000C2FE74 /* (null) in Frameworks */,
+				05E77F762483A687D0CF2996 /* (null) in Frameworks */,
+				42306BF20E5582B8D3D917F0 /* (null) in Frameworks */,
+				B007C5DE756DB161C202DC79 /* (null) in Frameworks */,
+				6D17E68B63EFE60D7039FEF5 /* (null) in Frameworks */,
+				5237AA11F7715FA6E0AB4E75 /* (null) in Frameworks */,
+				693ABDA01D03BD9B0E1AE8B9 /* (null) in Frameworks */,
+				F03DDEB5872E13FAD41D8339 /* (null) in Frameworks */,
+				14F223EE5F1A0544245B3322 /* (null) in Frameworks */,
+				1C460C2099CBB24433268494 /* (null) in Frameworks */,
+				5EA53C664CF2D96134393B29 /* (null) in Frameworks */,
+				20EE00A76B224D1D1A738A2D /* (null) in Frameworks */,
+				15ED4E4B5AB4AAE729CBB737 /* (null) in Frameworks */,
+				E22FAEB7796B33CB0D2AE548 /* (null) in Frameworks */,
+				797CC0319A4C01B2D18F28A2 /* (null) in Frameworks */,
+				767995CEDF62882BC2A144A7 /* (null) in Frameworks */,
+				65449B8FFE0A8AD79A41877C /* (null) in Frameworks */,
+				54A74C5E6D686EE3C0EB4729 /* (null) in Frameworks */,
+				9322389440851FAC8A6E24E2 /* (null) in Frameworks */,
+				4EE15BD954F26B9DE5A4A947 /* (null) in Frameworks */,
+				3E90892A316034834B947B29 /* (null) in Frameworks */,
+				46C0EB227324EB0408E15FE3 /* (null) in Frameworks */,
+				4E3BDC81CC06DE5928DDFEB8 /* (null) in Frameworks */,
+				FA7B9B71F55340B9B618DB69 /* (null) in Frameworks */,
+				A07DA7E4A911268765997F58 /* (null) in Frameworks */,
+				4FD43D68F25B6EDD510E72C9 /* (null) in Frameworks */,
+				827E17F53A9DE07E4317FDB7 /* (null) in Frameworks */,
+				2690AD526CBB85EB2CCE639B /* (null) in Frameworks */,
+				2A089DE17ED68FAA66DC1C47 /* (null) in Frameworks */,
+				8BB69089BBBC27CEBE24C9F8 /* (null) in Frameworks */,
+				FDAF37DA11D83ADB9F33303E /* (null) in Frameworks */,
+				1EFD4A19C3C9787E1FF02CE8 /* (null) in Frameworks */,
+				557090FD0E1684BCE3DEDF20 /* (null) in Frameworks */,
+				666F8502708238FFE10E33C8 /* (null) in Frameworks */,
+				8A9CCE89D83C8A9E075A964F /* (null) in Frameworks */,
+				26938B8CA7D3A9F10C18BFD7 /* (null) in Frameworks */,
+				BC467E4EEBDDE27B175FB8AE /* (null) in Frameworks */,
+				E6F5E782BC88FCD8D5FBFD44 /* (null) in Frameworks */,
+				9DE1E5632B06DAB19F6F295B /* (null) in Frameworks */,
 				EB251690315A160DD8B8FAE7 /* libPods-RoyoOrder.a in Frameworks */,
 				584C70F87E5E81DD8D2A94E4 /* libPods-RoyoOrder.a in Frameworks */,
-				32D00D33B258D4CB59106247 /* BuildFile in Frameworks */,
-				7472439BE80625049BC9B531 /* BuildFile in Frameworks */,
-				A62BEE3282BD29747E28F623 /* BuildFile in Frameworks */,
-				3BFBAC0753B2D307E31A8527 /* BuildFile in Frameworks */,
-				A68B9E24E0B4BF8120E5A80D /* BuildFile in Frameworks */,
-				EF5D1BE6EEB761946817CFB8 /* BuildFile in Frameworks */,
-				B62151EE5E9195E6F94CDC27 /* BuildFile in Frameworks */,
-				B82236DFB5201F41C66EF75F /* BuildFile in Frameworks */,
-				A43790E116AD8CDCAE25465D /* BuildFile in Frameworks */,
-				87BF810F7E69B0DF7609B726 /* BuildFile in Frameworks */,
-				35E037394FC2AF7FA279598D /* BuildFile in Frameworks */,
-				48200DB09BF182B3A9D74FE1 /* BuildFile in Frameworks */,
-				D5672F13989C61DFEEEA4ED4 /* BuildFile in Frameworks */,
-				E6095431D20F7820B0A376F5 /* BuildFile in Frameworks */,
-				EAF5CCBD44D2FBC491811268 /* BuildFile in Frameworks */,
-				A53D4EAD70DC72CB9116BEB8 /* BuildFile in Frameworks */,
-				AA727695876EEE7000C2FE74 /* BuildFile in Frameworks */,
-				05E77F762483A687D0CF2996 /* BuildFile in Frameworks */,
-				42306BF20E5582B8D3D917F0 /* BuildFile in Frameworks */,
-				B007C5DE756DB161C202DC79 /* BuildFile in Frameworks */,
-				6D17E68B63EFE60D7039FEF5 /* BuildFile in Frameworks */,
-				5237AA11F7715FA6E0AB4E75 /* BuildFile in Frameworks */,
-				693ABDA01D03BD9B0E1AE8B9 /* BuildFile in Frameworks */,
-				F03DDEB5872E13FAD41D8339 /* BuildFile in Frameworks */,
-				14F223EE5F1A0544245B3322 /* BuildFile in Frameworks */,
-				1C460C2099CBB24433268494 /* BuildFile in Frameworks */,
-				5EA53C664CF2D96134393B29 /* BuildFile in Frameworks */,
-				20EE00A76B224D1D1A738A2D /* BuildFile in Frameworks */,
-				15ED4E4B5AB4AAE729CBB737 /* BuildFile in Frameworks */,
-				E22FAEB7796B33CB0D2AE548 /* BuildFile in Frameworks */,
-				797CC0319A4C01B2D18F28A2 /* BuildFile in Frameworks */,
-				767995CEDF62882BC2A144A7 /* BuildFile in Frameworks */,
-				65449B8FFE0A8AD79A41877C /* BuildFile in Frameworks */,
-				54A74C5E6D686EE3C0EB4729 /* BuildFile in Frameworks */,
-				9322389440851FAC8A6E24E2 /* BuildFile in Frameworks */,
-				4EE15BD954F26B9DE5A4A947 /* BuildFile in Frameworks */,
-				3E90892A316034834B947B29 /* BuildFile in Frameworks */,
-				46C0EB227324EB0408E15FE3 /* BuildFile in Frameworks */,
-				4E3BDC81CC06DE5928DDFEB8 /* BuildFile in Frameworks */,
-				FA7B9B71F55340B9B618DB69 /* BuildFile in Frameworks */,
-				A07DA7E4A911268765997F58 /* BuildFile in Frameworks */,
-				4FD43D68F25B6EDD510E72C9 /* BuildFile in Frameworks */,
-				827E17F53A9DE07E4317FDB7 /* BuildFile in Frameworks */,
-				2690AD526CBB85EB2CCE639B /* BuildFile in Frameworks */,
-				2A089DE17ED68FAA66DC1C47 /* BuildFile in Frameworks */,
-				8BB69089BBBC27CEBE24C9F8 /* BuildFile in Frameworks */,
-				FDAF37DA11D83ADB9F33303E /* BuildFile in Frameworks */,
-				1EFD4A19C3C9787E1FF02CE8 /* BuildFile in Frameworks */,
-				557090FD0E1684BCE3DEDF20 /* BuildFile in Frameworks */,
-				666F8502708238FFE10E33C8 /* BuildFile in Frameworks */,
-				8A9CCE89D83C8A9E075A964F /* BuildFile in Frameworks */,
-				26938B8CA7D3A9F10C18BFD7 /* BuildFile in Frameworks */,
-				BC467E4EEBDDE27B175FB8AE /* BuildFile in Frameworks */,
-				E6F5E782BC88FCD8D5FBFD44 /* BuildFile in Frameworks */,
-				9DE1E5632B06DAB19F6F295B /* BuildFile in Frameworks */,
-				EEB569FE185958EF1512C270 /* BuildFile in Frameworks */,
-				B0CE2A4E6A31CBD1BD0B93A2 /* BuildFile in Frameworks */,
+				32D00D33B258D4CB59106247 /* (null) in Frameworks */,
+				7472439BE80625049BC9B531 /* (null) in Frameworks */,
+				A62BEE3282BD29747E28F623 /* (null) in Frameworks */,
+				3BFBAC0753B2D307E31A8527 /* (null) in Frameworks */,
+				A68B9E24E0B4BF8120E5A80D /* (null) in Frameworks */,
+				EF5D1BE6EEB761946817CFB8 /* (null) in Frameworks */,
+				B62151EE5E9195E6F94CDC27 /* (null) in Frameworks */,
+				B82236DFB5201F41C66EF75F /* (null) in Frameworks */,
+				A43790E116AD8CDCAE25465D /* (null) in Frameworks */,
+				87BF810F7E69B0DF7609B726 /* (null) in Frameworks */,
+				35E037394FC2AF7FA279598D /* (null) in Frameworks */,
+				48200DB09BF182B3A9D74FE1 /* (null) in Frameworks */,
+				D5672F13989C61DFEEEA4ED4 /* (null) in Frameworks */,
+				E6095431D20F7820B0A376F5 /* (null) in Frameworks */,
+				EAF5CCBD44D2FBC491811268 /* (null) in Frameworks */,
+				A53D4EAD70DC72CB9116BEB8 /* (null) in Frameworks */,
+				AA727695876EEE7000C2FE74 /* (null) in Frameworks */,
+				05E77F762483A687D0CF2996 /* (null) in Frameworks */,
+				42306BF20E5582B8D3D917F0 /* (null) in Frameworks */,
+				B007C5DE756DB161C202DC79 /* (null) in Frameworks */,
+				6D17E68B63EFE60D7039FEF5 /* (null) in Frameworks */,
+				5237AA11F7715FA6E0AB4E75 /* (null) in Frameworks */,
+				693ABDA01D03BD9B0E1AE8B9 /* (null) in Frameworks */,
+				F03DDEB5872E13FAD41D8339 /* (null) in Frameworks */,
+				14F223EE5F1A0544245B3322 /* (null) in Frameworks */,
+				1C460C2099CBB24433268494 /* (null) in Frameworks */,
+				5EA53C664CF2D96134393B29 /* (null) in Frameworks */,
+				20EE00A76B224D1D1A738A2D /* (null) in Frameworks */,
+				15ED4E4B5AB4AAE729CBB737 /* (null) in Frameworks */,
+				E22FAEB7796B33CB0D2AE548 /* (null) in Frameworks */,
+				797CC0319A4C01B2D18F28A2 /* (null) in Frameworks */,
+				767995CEDF62882BC2A144A7 /* (null) in Frameworks */,
+				65449B8FFE0A8AD79A41877C /* (null) in Frameworks */,
+				54A74C5E6D686EE3C0EB4729 /* (null) in Frameworks */,
+				9322389440851FAC8A6E24E2 /* (null) in Frameworks */,
+				4EE15BD954F26B9DE5A4A947 /* (null) in Frameworks */,
+				3E90892A316034834B947B29 /* (null) in Frameworks */,
+				46C0EB227324EB0408E15FE3 /* (null) in Frameworks */,
+				4E3BDC81CC06DE5928DDFEB8 /* (null) in Frameworks */,
+				FA7B9B71F55340B9B618DB69 /* (null) in Frameworks */,
+				A07DA7E4A911268765997F58 /* (null) in Frameworks */,
+				4FD43D68F25B6EDD510E72C9 /* (null) in Frameworks */,
+				827E17F53A9DE07E4317FDB7 /* (null) in Frameworks */,
+				2690AD526CBB85EB2CCE639B /* (null) in Frameworks */,
+				2A089DE17ED68FAA66DC1C47 /* (null) in Frameworks */,
+				8BB69089BBBC27CEBE24C9F8 /* (null) in Frameworks */,
+				FDAF37DA11D83ADB9F33303E /* (null) in Frameworks */,
+				1EFD4A19C3C9787E1FF02CE8 /* (null) in Frameworks */,
+				557090FD0E1684BCE3DEDF20 /* (null) in Frameworks */,
+				666F8502708238FFE10E33C8 /* (null) in Frameworks */,
+				8A9CCE89D83C8A9E075A964F /* (null) in Frameworks */,
+				26938B8CA7D3A9F10C18BFD7 /* (null) in Frameworks */,
+				BC467E4EEBDDE27B175FB8AE /* (null) in Frameworks */,
+				E6F5E782BC88FCD8D5FBFD44 /* (null) in Frameworks */,
+				9DE1E5632B06DAB19F6F295B /* (null) in Frameworks */,
+				EEB569FE185958EF1512C270 /* (null) in Frameworks */,
+				B0CE2A4E6A31CBD1BD0B93A2 /* (null) in Frameworks */,
 				BD5F067A81CFF25EEC241FF9 /* libPods-RoyoOrder.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -30362,7 +30362,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */,
-				848CEF8126CE229D0077C918 /* BuildFile in Sources */,
+				848CEF8126CE229D0077C918 /* (null) in Sources */,
 				848CEF8226CE229D0077C918 /* Royo.swift in Sources */,
 				848CEF8326CE229D0077C918 /* main.m in Sources */,
 			);
@@ -30406,7 +30406,7 @@
 				84FFFF2026D672E600F2B059 /* Royo.swift in Sources */,
 				84FFFF2126D672E600F2B059 /* main.m in Sources */,
 				8480076A26CE20340014F500 /* AppDelegate.m in Sources */,
-				8480076B26CE20340014F500 /* BuildFile in Sources */,
+				8480076B26CE20340014F500 /* (null) in Sources */,
 				8480076C26CE20340014F500 /* Royo.swift in Sources */,
 				8480076D26CE20340014F500 /* main.m in Sources */,
 			);
