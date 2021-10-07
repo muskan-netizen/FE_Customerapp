@@ -336,10 +336,14 @@ export default function TaxiHomeDashbord({
             marginLeft: moderateScale(20),
             width: width - 20,
           }}
-          onPress={moveToNewScreen(
-            navigationStrings.ADDADDRESS,
-            appMainData?.categories[0],
-          )}>
+          onPress={
+            userData?.auth_token
+              ? moveToNewScreen(
+                  navigationStrings.ADDADDRESS,
+                  appMainData?.categories[0],
+                )
+              : navigation.navigate(navigationStrings.LOGIN)
+          }>
           <View
             style={{
               flexDirection: 'row',
@@ -418,7 +422,7 @@ export default function TaxiHomeDashbord({
       <View
         style={{
           marginHorizontal: moderateScale(10),
-          height: moderateScaleVertical(40),
+          height: moderateScaleVertical(45),
           backgroundColor: getColorCodeWithOpactiyNumber(
             colors.taxiCategoryGrayColor.substr(1),
             30,
@@ -427,7 +431,6 @@ export default function TaxiHomeDashbord({
           alignItems: 'center',
           paddingHorizontal: moderateScale(10),
           justifyContent: 'space-between',
-          marginTop: moderateScaleVertical(5),
         }}>
         <TouchableOpacity
           onPress={() => {
