@@ -385,32 +385,34 @@ export default function SearchProductVendorItem2({navigation, route}) {
               ) : null}
             </View>
             <View>{recentlyData(previousSearches)}</View>
-            <View>
-              <Text
-                style={{
-                  fontSize: textScale(16),
-                  fontFamily: fontFamily.medium,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                {strings.RECOMMENDED_FOR_YOU}
-              </Text>
+            {!!recommendedVendorsdata.length && (
+              <View>
+                <Text
+                  style={{
+                    fontSize: textScale(16),
+                    fontFamily: fontFamily.medium,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  }}>
+                  {strings.RECOMMENDED_FOR_YOU}
+                </Text>
 
-              <FlatList
-                horizontal
-                data={recommendedVendorsdata}
-                renderItem={renderRecommendedVendors}
-                keyExtractor={(item, index) => item?.id.toString()}
-                keyboardShouldPersistTaps="always"
-                showsHorizontalScrollIndicator={false}
-                style={{
-                  flex: 1,
-                  marginVertical: moderateScaleVertical(5),
-                  paddingVertical: moderateScaleVertical(5),
-                }}
-                ListEmptyComponent={_listEmptyComponent}
-                ItemSeparatorComponent={() => <View style={{height: 30}} />}
-              />
-            </View>
+                <FlatList
+                  horizontal
+                  data={recommendedVendorsdata}
+                  renderItem={renderRecommendedVendors}
+                  keyExtractor={(item, index) => item?.id.toString()}
+                  keyboardShouldPersistTaps="always"
+                  showsHorizontalScrollIndicator={false}
+                  style={{
+                    flex: 1,
+                    marginVertical: moderateScaleVertical(5),
+                    paddingVertical: moderateScaleVertical(5),
+                  }}
+                  // ListEmptyComponent={_listEmptyComponent}
+                  ItemSeparatorComponent={() => <View style={{height: 30}} />}
+                />
+              </View>
+            )}
           </>
         )}
       </View>
