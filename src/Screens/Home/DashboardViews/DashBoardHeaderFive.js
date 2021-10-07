@@ -355,7 +355,13 @@ export default function DashBoardHeaderFive({
 
   return (
     <>
-      <View style={styles.headerContainer}>
+      <View
+        style={{
+          ...styles.headerContainer,
+          borderBottomColor: isDarkMode
+            ? colors.whiteOpacity22
+            : colors.borderColorD,
+        }}>
         <View
           style={{
             flexDirection: 'row',

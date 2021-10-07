@@ -130,11 +130,15 @@ export default function DashBoardFive({
 
   const categoriesBanners = () => {
     return (
-      <View>
+      <View style={{}}>
         {appMainData &&
           appMainData?.categories &&
           !!appMainData?.categories.length && (
-            <View style={{marginHorizontal: moderateScale(8)}}>
+            <View
+              style={{
+                marginHorizontal: moderateScale(8),
+                marginTop: moderateScaleVertical(12),
+              }}>
               <FlatList
                 numColumns={4}
                 data={appMainData?.categories}
@@ -147,9 +151,9 @@ export default function DashBoardFive({
               />
             </View>
           )}
-        <View style={{marginVertical: moderateScale(24)}}>
+        <View style={{marginTop: moderateScaleVertical(16)}}>
           {!!appData?.banners?.length && (
-            <>
+            <View>
               <FlatList
                 horizontal
                 data={appData?.banners}
@@ -166,7 +170,7 @@ export default function DashBoardFive({
                   <View style={{marginRight: moderateScale(16)}} />
                 )}
               />
-            </>
+            </View>
           )}
         </View>
       </View>
@@ -349,8 +353,8 @@ export default function DashBoardFive({
                   <View style={{height: moderateScale(10)}} />
                 )}
               />
-              <View style={{marginVertical: 16}} />
-              <View>
+
+              <View style={{}}>
                 {appMainData &&
                   appMainData?.brands &&
                   !!appMainData?.brands.length && (
@@ -377,60 +381,57 @@ export default function DashBoardFive({
               </View>
             </>
           )}
-          <View style={{marginVertical: moderateScaleVertical(12)}}>
-            <View>
-              {appMainData &&
-                appMainData?.featured_products &&
-                !!appMainData?.featured_products.length && (
-                  <>
-                    <View>{listHeader(strings.FEATURED_PRODUCTS)}</View>
-                    <FlatList
-                      showsHorizontalScrollIndicator={false}
-                      horizontal
-                      data={appMainData?.featured_products}
-                      renderItem={renderFeaturedProducts}
-                      keyExtractor={(item) => item.id.toString()}
-                      ItemSeparatorComponent={() => (
-                        <View style={{marginRight: moderateScale(16)}} />
-                      )}
-                      ListHeaderComponent={() => (
-                        <View style={{marginLeft: moderateScale(16)}} />
-                      )}
-                      ListFooterComponent={() => (
-                        <View style={{marginRight: moderateScale(16)}} />
-                      )}
-                    />
-                  </>
-                )}
-            </View>
+
+          <View style={{}}>
+            {appMainData &&
+              appMainData?.featured_products &&
+              !!appMainData?.featured_products.length && (
+                <>
+                  <View>{listHeader(strings.FEATURED_PRODUCTS)}</View>
+                  <FlatList
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
+                    data={appMainData?.featured_products}
+                    renderItem={renderFeaturedProducts}
+                    keyExtractor={(item) => item.id.toString()}
+                    ItemSeparatorComponent={() => (
+                      <View style={{marginRight: moderateScale(16)}} />
+                    )}
+                    ListHeaderComponent={() => (
+                      <View style={{marginLeft: moderateScale(16)}} />
+                    )}
+                    ListFooterComponent={() => (
+                      <View style={{marginRight: moderateScale(16)}} />
+                    )}
+                  />
+                </>
+              )}
           </View>
 
-          <View style={{marginVertical: moderateScaleVertical(12)}}>
-            <View>
-              {appMainData &&
-                appMainData?.new_products &&
-                !!appMainData?.new_products.length && (
-                  <>
-                    <View>{listHeader('New Products')}</View>
-                    <FlatList
-                      showsHorizontalScrollIndicator={false}
-                      horizontal
-                      data={appMainData?.new_products}
-                      renderItem={renderFeaturedProducts}
-                      keyExtractor={(item) => item.id.toString()}
-                      ItemSeparatorComponent={() => (
-                        <View style={{marginRight: moderateScale(16)}} />
-                      )}
-                      ListHeaderComponent={() => (
-                        <View style={{marginLeft: moderateScale(16)}} />
-                      )}
-                      ListFooterComponent={() => (
-                        <View style={{marginRight: moderateScale(16)}} />
-                      )}
-                    />
-                  </>
-                )}
-            </View>
+          <View style={{}}>
+            {appMainData &&
+              appMainData?.new_products &&
+              !!appMainData?.new_products.length && (
+                <>
+                  <View>{listHeader('New Products')}</View>
+                  <FlatList
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
+                    data={appMainData?.new_products}
+                    renderItem={renderFeaturedProducts}
+                    keyExtractor={(item) => item.id.toString()}
+                    ItemSeparatorComponent={() => (
+                      <View style={{marginRight: moderateScale(16)}} />
+                    )}
+                    ListHeaderComponent={() => (
+                      <View style={{marginLeft: moderateScale(16)}} />
+                    )}
+                    ListFooterComponent={() => (
+                      <View style={{marginRight: moderateScale(16)}} />
+                    )}
+                  />
+                </>
+              )}
           </View>
 
           <View>

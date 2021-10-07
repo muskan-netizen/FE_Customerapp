@@ -290,7 +290,12 @@ export default function SearchProductVendorItem2({navigation, route}) {
     return (
       <TouchableOpacity
         onPress={() => _onclickSearchItem(item)}
-        style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginHorizontal: moderateScale(20),
+        }}>
         <RoundImg
           img={item?.image_url}
           size={35}
@@ -346,45 +351,47 @@ export default function SearchProductVendorItem2({navigation, route}) {
       <View>
         {searchInput ? null : (
           <>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+            <View style={{marginHorizontal: moderateScale(20)}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
 
-                width: width - 16,
-              }}>
-              {previousSearches?.length > 0 ? (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    width: width - 16,
-                  }}>
-                  <Text
+                  width: width - 16,
+                }}>
+                {previousSearches?.length > 0 ? (
+                  <View
                     style={{
-                      fontSize: textScale(16),
-                      fontFamily: fontFamily.medium,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      width: width - 16,
                     }}>
-                    {strings.RECENTLY_SEARCH}
-                  </Text>
-                  <TouchableOpacity onPress={() => _clearRecentSearches()}>
                     <Text
                       style={{
-                        paddingHorizontal: moderateScale(30),
-                        fontSize: textScale(12),
-                        fontFamily: fontFamily.regular,
-                        color: themeColors.primary_color,
+                        fontSize: textScale(16),
+                        fontFamily: fontFamily.medium,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
                       }}>
-                      {strings.CLEAR}
+                      {strings.RECENTLY_SEARCH}
                     </Text>
-                  </TouchableOpacity>
-                </View>
-              ) : null}
+                    <TouchableOpacity onPress={() => _clearRecentSearches()}>
+                      <Text
+                        style={{
+                          paddingHorizontal: moderateScale(20),
+                          fontSize: textScale(12),
+                          fontFamily: fontFamily.regular,
+                          color: themeColors.primary_color,
+                        }}>
+                        {strings.CLEAR}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
+              </View>
+              <View>{recentlyData(previousSearches)}</View>
             </View>
-            <View>{recentlyData(previousSearches)}</View>
             {!!recommendedVendorsdata.length && (
               <View>
                 <Text
@@ -392,6 +399,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
                     fontSize: textScale(16),
                     fontFamily: fontFamily.medium,
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    marginHorizontal: moderateScale(20),
                   }}>
                   {strings.RECOMMENDED_FOR_YOU}
                 </Text>
@@ -486,7 +494,6 @@ export default function SearchProductVendorItem2({navigation, route}) {
           style={{
             flex: 1,
             marginVertical: moderateScaleVertical(10),
-            marginHorizontal: moderateScale(20),
             // backgroundColor: 'black',
           }}
           ListEmptyComponent={_listEmptyComponent}
