@@ -555,6 +555,7 @@ export default function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        console.log("item added++",res)
         actions.cartItemQty({});
         updateState({
           cartItems: [],
