@@ -1,13 +1,15 @@
 import { useScrollToTop } from '@react-navigation/native';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   FlatList, Platform,
   RefreshControl,
   ScrollView,
   Text,
-  View
+  View,
+  Animated
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import AppLink from 'react-native-app-link';
 import { useDarkMode } from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -22,6 +24,7 @@ import MarketCard3 from '../../../Components/MarketCard3';
 import ProductsComp from '../../../Components/ProductsComp';
 import SearchBar2 from '../../../Components/SearchBar2';
 import strings from '../../../constants/lang';
+import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import {
   height,
@@ -29,9 +32,14 @@ import {
   moderateScaleVertical
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
-import { getImageUrl } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
-
+import { SvgUri } from 'react-native-svg';
+import {
+  getImageUrl,
+  getScaleTransformationStyle,
+  pressInAnimation,
+  pressOutAnimation,
+} from '../../../utils/helperFunctions';
 
 export default function DashBoardFive({
   handleRefresh = () => { },
@@ -41,7 +49,7 @@ export default function DashBoardFive({
   onPressCategory = () => { },
   navigation = {},
   toggleData = {},
-  curAddress={}
+  curAddress = {}
 }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -52,7 +60,9 @@ export default function DashBoardFive({
     slider1ActiveSlide: 0,
     newCategoryData: [],
     isVendorColumnList: false,
+    vendorsData: []
   });
+
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const { appData, themeColors, appStyle } = useSelector(
     (state) => state?.initBoot,
@@ -60,12 +70,21 @@ export default function DashBoardFive({
 
 
   const { bannerRef } = useRef();
-  const { slider1ActiveSlide } = state;
+  const { slider1ActiveSlide, vendorsData } = state;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ themeColors, fontFamily });
 
   //update state
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
+
+  useEffect(() => {
+    if (appMainData?.vendors && appMainData?.vendors.length) {
+      updateState({
+        vendorsData: appMainData?.vendors.splice(0, 4)
+      })
+    }
+  }, [appMainData?.vendors])
+
 
   const _renderItem = ({ item }) => (
     <HomeCategoryCard2
@@ -75,7 +94,7 @@ export default function DashBoardFive({
     />
   );
 
-  const _renderVendors = ({ item }) => (
+  const _renderVendors = ({ item, index }) => (
     <View style={{ marginHorizontal: moderateScale(16) }}>
       <MarketCard3
         data={item}
@@ -88,6 +107,7 @@ export default function DashBoardFive({
   const ref = React.useRef(null);
   useScrollToTop(ref); // scroll to top
 
+  const scaleInAnimated = new Animated.Value(0);
 
   const renderBanners = ({ item }) => {
     const imageUrl = getImageUrl(item.image.proxy_url, item.image.image_path, '900/700');
@@ -108,7 +128,8 @@ export default function DashBoardFive({
     )
   }
 
-  console.log("app main data", appMainData)
+  // console.log("app main data", appMainData)
+
 
   const categoriesBanners = () => {
     return (
@@ -151,39 +172,45 @@ export default function DashBoardFive({
     );
   };
 
+  const moveToNewScreen = (screenName, data = {}) => () => { navigation.navigate(screenName, { data }) };
   const renderBrands = ({ item }) => {
-    const imageUrl = getImageUrl(item.image.image_fit, item.image.image_path, '900/700');
+    // const imageUrl = getImageUrl(item.image.proxy_url, item.image.image_path, '800/600');
+    const imageURI = getImageUrl(
+      item.image.proxy_url,
+      item.image.image_path,
+      '800/600'
+    );
+    const isSVG = imageURI ? imageURI.includes('.svg') : null;
     return (
-      <View>
-        <BlurImages
-          isDarkMode={isDarkMode}
-          themeColor={themeColors.primary_color}
-          style={{
-            height: moderateScale(96),
-            width: moderateScale(96),
-            borderRadius: moderateScale(10),
-            backgroundColor: isDarkMode
-              ? colors.whiteOpacity15
-              : colors.greyColor,
-          }}
-          thumnailUrl={{
-            uri: getImageUrl(item.image.image_fit, item.image.image_path, '100/50')
-          }}
-          originalUrl={{
-            uri: getImageUrl(item.image.image_fit, item.image.image_path, '600/400')
-          }}
-          containerStyle={{ borderRadius: moderateScale(10), }}
-          resizeMode="contain"
-        />
-        {/* <FastImage
-          source={{ uri: imageUrl }}
-          style={{
-            height: moderateScale(96),
-            width: moderateScale(96),
-            borderRadius: moderateScale(10)
-          }}
-        /> */}
-      </View>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={moveToNewScreen(navigationStrings.BRANDDETAIL, item)}
+        // style={{
+        //   ...getScaleTransformationStyle(scaleInAnimated),
+        // }}
+        // onPressIn={() => pressInAnimation(scaleInAnimated)}
+        // onPressOut={() => pressOutAnimation(scaleInAnimated)}
+      >
+        {isSVG ? (
+          <SvgUri
+            height={moderateScale(96)}
+            width={moderateScale(96)}
+            uri={imageURI}
+          />
+        ) : (
+          <FastImage
+            source={{ uri: imageURI, priority: FastImage.priority.high }}
+            style={{
+              height: moderateScale(96),
+              width: moderateScale(96),
+              borderRadius: moderateScale(10),
+              backgroundColor: isDarkMode
+                ? colors.whiteOpacity15
+                : colors.greyColor,
+            }}
+          />
+        )}
+      </TouchableOpacity>
     )
   }
 
@@ -199,17 +226,19 @@ export default function DashBoardFive({
           }}>
           {type}
         </Text>
-        {!!isViewAll && (<TouchableOpacity>
+        {/* {!!isViewAll && (<TouchableOpacity>
           <Text style={styles.viewAllText}>{strings.VIEW_ALL}</Text>
-        </TouchableOpacity>)}
+        </TouchableOpacity>)} */}
       </View>
     )
   }
+
 
   const renderFeaturedProducts = ({ item }) => {
     return (
       <ProductsComp
         item={item}
+        onPress={() => navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })}
       />
     )
   }
@@ -220,6 +249,7 @@ export default function DashBoardFive({
         // isDiscount
         item={item}
         imageStyle={{ height: moderateScale(186) }}
+        onPress={() => navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item })}
       />
     )
   }
@@ -287,14 +317,14 @@ export default function DashBoardFive({
       >
         <Animatable.View animation={'fadeInUp'} delay={200}>
           {categoriesBanners()}
-          {appMainData?.vendors && !!appMainData?.vendors?.length && (
+          {vendorsData && !!vendorsData?.length && (
             <>
-              < FlatList
+              <FlatList
                 ListHeaderComponent={() => listHeader(strings.EXPLORE_STORES)}
                 showsVerticalScrollIndicator={false}
                 alwaysBounceVertical={true}
                 ref={ref}
-                data={appMainData?.vendors.splice(0, 4)}
+                data={vendorsData}
                 keyExtractor={(item) => item.id.toString()}
                 showsHorizontalScrollIndicator={false}
                 renderItem={_renderVendors}

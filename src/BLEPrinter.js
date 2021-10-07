@@ -13,13 +13,14 @@ import {
     ScrollView,
     DeviceEventEmitter,
     NativeEventEmitter,
-    Switch,
     TouchableOpacity,
     Dimensions,
     ToastAndroid
 } from 'react-native';
-import { BluetoothEscposPrinter, BluetoothManager, BluetoothTscPrinter } from "@brooons/react-native-bluetooth-escpos-printer";
-// import EscPos from "./escpos";
+import { BluetoothEscposPrinter, BluetoothManager } from "@brooons/react-native-bluetooth-escpos-printer";
+import fontFamily from './styles/fontFamily';
+import BackgroundService from 'react-native-background-actions';
+import AsyncStorage from '@react-native-community/async-storage';
 
 var { height, width } = Dimensions.get('window');
 
@@ -33,14 +34,17 @@ export const printReciept = async (data) => {
         order_no: '#0697030279',
         delivery_address: 'Fatehgarh Sahib, Punjab, India',
         Items: [
-            {name: 'Pizza', qty: 2, amt: 400},
-            {name: 'Rolls', qty: 5, amt: 900}
+            { name: 'Pizza', qty: 2, amt: 400, add_ons: [{ title: 'cheese' }, { title: 'capsicum' }] },
+            { name: 'Rolls', qty: 5, amt: 900 },
+            { name: 'UCB shirt', qty: 1, amt: 1300, variant: 'black' },
         ],
         total_items: 7,
         total_amt: 1300,
         delievery_fee: 10.00,
         discount: 0.00,
-        paid_amount: 1300
+        paid_amount: 1300,
+        loyalty: 2.65,
+
     }
 
     BluetoothManager.checkBluetoothEnabled().then(async (enabled) => {
@@ -85,20 +89,32 @@ export const printReciept = async (data) => {
                 /** Create Column **/
                 let columnWidths = [11, 12, 12, 11];
                 await BluetoothEscposPrinter.printColumn(columnWidths,
-                    [BluetoothEscposPrinter.ALIGN.LEFT , BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.RIGHT],
-                    ["Item", 'quantity', 'unit price', 'Amount'], {});
-                await detail.Items.forEach(async(el) => {
+                    [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.RIGHT],
+                    ["Item", 'Quantity', 'Unit price', 'Amount'], {});
+
+                /** Add Items **/
+                await detail.Items.forEach(async (el) => {
+                    const title = el.variant ? `${el.name}(${el.variant})` : `${el.name}`
                     BluetoothEscposPrinter.printColumn(columnWidths,
                         [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.RIGHT],
-                        [el.name, JSON.stringify(el.qty), JSON.stringify(el.amt / el.qty), JSON.stringify(el.amt)], {});
+                        [title, JSON.stringify(el.qty), JSON.stringify(el.amt / el.qty), JSON.stringify(el.amt)], {});
+
+                    /** Add ons If available **/
+                    if (el.add_ons) {
+                        let arr = el.add_ons.map(el => el.title)
+                        arr = '(' + arr.join(',') + ')'
+                        BluetoothEscposPrinter.printColumn(columnWidths,
+                            [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.RIGHT],
+                            [arr, '', '', ''], {});
+                    }
                     await BluetoothEscposPrinter.printText("\r\n", {});
-                }); 
-                
+                });
+
                 await BluetoothEscposPrinter.printText("----------------------------------------------\r\n", {});
 
                 await BluetoothEscposPrinter.printColumn(columnWidths,
                     [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.RIGHT],
-                    ["total", JSON.stringify(detail.total_items), " ", JSON.stringify(detail.total_amt)], {});
+                    ["Total", JSON.stringify(detail.total_items), " ", JSON.stringify(detail.total_amt)], {});
                 await BluetoothEscposPrinter.printText("\r\n", {});
 
                 await BluetoothEscposPrinter.printColumn([15, 30],
@@ -108,7 +124,12 @@ export const printReciept = async (data) => {
 
                 await BluetoothEscposPrinter.printColumn([15, 30],
                     [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.RIGHT],
-                    ["Discount", JSON.stringify(detail.discount)], {});
+                    ["Discount", JSON.stringify(-detail.discount)], {});
+                await BluetoothEscposPrinter.printText("\r\n", {});
+
+                await BluetoothEscposPrinter.printColumn([15, 30],
+                    [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.RIGHT],
+                    ["Loyalty", JSON.stringify(-detail.loyalty)], {});
                 await BluetoothEscposPrinter.printText("\r\n", {});
 
                 await BluetoothEscposPrinter.printColumn([15, 30],
@@ -132,7 +153,6 @@ export const printReciept = async (data) => {
 
                 await BluetoothEscposPrinter.printText("\r\n\n", {});
                 await BluetoothEscposPrinter.cutOnePoint();
-
 
             } catch (e) {
                 // alert(e.message || "ERROR");
@@ -158,12 +178,15 @@ export default class Home extends Component {
     }
 
     componentDidMount() {//alert(BluetoothManager)
-        printReciept()
+        // printReciept()
         BluetoothManager.checkBluetoothEnabled().then((enabled) => {
             this.setState({
                 bleOpend: Boolean(enabled),
                 loading: false
             })
+            if (enabled) {
+                this._scan()
+            }
         }, (err) => {
             err
         });
@@ -182,6 +205,7 @@ export default class Home extends Component {
                     name: '',
                     boundAddress: ''
                 });
+                AsyncStorage.removeItem('BleDevice')
             }));
         } else if (Platform.OS === 'android') {
             this._listeners.push(DeviceEventEmitter.addListener(
@@ -198,6 +222,7 @@ export default class Home extends Component {
                         name: '',
                         boundAddress: ''
                     });
+                    AsyncStorage.removeItem('BleDevice')
                 }
             ));
             this._listeners.push(DeviceEventEmitter.addListener(
@@ -213,6 +238,60 @@ export default class Home extends Component {
         //    this._listeners[ls].remove();
         //}
     }
+
+    backgroundServiceInit = async () => {
+        const veryIntensiveTask = async (taskDataArguments) => {
+            // Example of an infinite loop task
+            const { delay } = taskDataArguments;
+            await new Promise(async (resolve) => {
+                for (let i = 0; BackgroundService.isRunning(); i++) {
+                    console.log('Background Service >>>>', i);
+                    await sleep(delay);
+                }
+                BluetoothManager.connect(row.address)
+                    .then((s) => {
+                        this.setState({
+                            loading: false,
+                            boundAddress: row.address,
+                            name: row.name || "UNKNOWN"
+                        })
+                        AsyncStorage.setItem('BleDevice',JSON.stringify({
+                            boundAddress: row.address,
+                            name: row.name || "UNKNOWN"
+                        }))
+                    }, (e) => {
+                        this.setState({
+                            loading: false
+                        })
+                        alert(e);
+                    })
+                
+                printReciept()
+            });
+        };
+
+        const options = {
+            taskName: 'Example',
+            taskTitle: 'ExampleTask title',
+            taskDesc: 'ExampleTask description',
+            taskIcon: {
+                name: 'ic_launcher',
+                type: 'mipmap',
+            },
+            color: '#ff00ff',
+            // linkingURI: 'yourSchemeHere://chat/jane', // See Deep Linking for more info
+            parameters: {
+                delay: 5,
+            },
+        };
+
+
+        await BackgroundService.start(veryIntensiveTask, options);
+        await BackgroundService.updateNotification({ taskDesc: 'New ExampleTask description' }); // Only Android, iOS will ignore this call
+        // iOS will also run everything here in the background until .stop() is called
+        // await BackgroundService.stop();
+    }
+
 
     _deviceAlreadPaired(rsp) {
         var ds = null;
@@ -268,11 +347,11 @@ export default class Home extends Component {
             let row = rows[i];
             if (row.address) {
                 items.push(
-                    <TouchableOpacity key={new Date().getTime() + i} style={styles.wtf} onPress={async() => {
+                    <TouchableOpacity key={new Date().getTime() + i} style={styles.wtf} onPress={async () => {
                         this.setState({
                             loading: true
                         });
-                        
+
                         BluetoothManager.connect(row.address)
                             .then((s) => {
                                 this.setState({
@@ -286,6 +365,7 @@ export default class Home extends Component {
                                 })
                                 alert(e);
                             })
+                        this.backgroundServiceInit(row.address)
                     }}><Text style={styles.name}>{row.name || "UNKNOWN"}</Text><Text
                         style={styles.address}>{row.address}</Text></TouchableOpacity>
                 );
@@ -297,49 +377,60 @@ export default class Home extends Component {
 
     render() {
         return (
-            <ScrollView style={styles.container}>
-                <TouchableOpacity onPress={() => this.props.onCloseModal()} style={{ width: 70, height: 70, borderRadius: 50, backgroundColor: 'white', alignSelf: 'center', alignItems: 'center', justifyContent: 'center' }}>
-                    <Text>Close</Text>
-                </TouchableOpacity>
+            <View style={styles.main}>
                 <View>
-                    <Button disabled={this.state.loading || !this.state.bleOpend} onPress={() => {
-                        this._scan();
-                    }} title="Scan" />
+                    <TouchableOpacity
+                        disabled={this.state.loading || !this.state.bleOpend} onPress={() => {
+                            this._scan();
+                        }}
+                        style={styles.scanBtn}>
+                        <Text style={styles.scanBtnTxt}>Scan</Text>
+                    </TouchableOpacity>
                 </View>
-                <Text style={styles.title}>Connected:<Text style={{ color: "blue" }}>{!this.state.name ? 'No Devices' : this.state.name}</Text></Text>
-                <Text style={styles.title}>Found(tap to connect):</Text>
-                {this.state.loading ? (<ActivityIndicator animating={true} />) : null}
-                <View style={{ flex: 1, flexDirection: "column" }}>
-                    {
-                        this._renderRow(this.state.foundDs)
-                    }
-                </View>
-                <Text style={styles.title}>Paired:</Text>
-                {this.state.loading ? (<ActivityIndicator animating={true} />) : null}
-                <View style={{ flex: 1, flexDirection: "column" }}>
-                    {
-                        this._renderRow(this.state.pairedDs)
-                    }
-                </View>
+                <ScrollView style={styles.container}>
+                    {/* <View style={styles.closeBtn}>
+                <TouchableOpacity onPress={() => this.props.onCloseModal()} style={styles.closeBtn}>
+                    <Image source={imagePath.icAdd} style={styles.imageStyle} />
+                </TouchableOpacity>
+                </View> */}
 
-                <View style={{ flexDirection: "row", justifyContent: "space-around", paddingVertical: 30 }}>
-                    <Button disabled={this.state.loading || !(this.state.bleOpend && this.state.boundAddress.length > 0)}
-                        title="Disconnect" onPress={async () => {
-                            await BluetoothManager.disconnect(this.state.boundAddress).then((s) => {
-                                this.setState({
-                                    loading: false,
-                                    boundAddress: '',
-                                    name: ''
+
+                    <Text style={styles.title}>Connected:<Text style={{ color: "blue" }}>{!this.state.name ? 'No Devices' : this.state.name}</Text></Text>
+                    <Text style={styles.title}>Found(tap to connect):</Text>
+                    {this.state.loading ? (<ActivityIndicator animating={true} />) : null}
+                    <View style={{ flex: 1, flexDirection: "column" }}>
+                        {
+                            this._renderRow(this.state.foundDs)
+                        }
+                    </View>
+                    <Text style={styles.title}>Paired:</Text>
+                    {this.state.loading ? (<ActivityIndicator animating={true} />) : null}
+                    <View style={{ flex: 1, flexDirection: "column" }}>
+                        {
+                            this._renderRow(this.state.pairedDs)
+                        }
+                    </View>
+
+                    <View style={{ flexDirection: "row", justifyContent: "space-around", paddingVertical: 30 }}>
+                        <Button disabled={this.state.loading || !(this.state.bleOpend && this.state.boundAddress.length > 0)}
+                            title="Disconnect" onPress={async () => {
+                                await BluetoothManager.disconnect(this.state.boundAddress).then((s) => {
+                                    this.setState({
+                                        loading: false,
+                                        boundAddress: '',
+                                        name: ''
+                                    })
+                                    AsyncStorage.removeItem('BleDevice')
+                                }, (e) => {
+                                    this.setState({
+                                        loading: false
+                                    })
+                                    alert(e);
                                 })
-                            }, (e) => {
-                                this.setState({
-                                    loading: false
-                                })
-                                alert(e);
-                            })
-                        }} />
-                </View>
-            </ScrollView>
+                            }} />
+                    </View>
+                </ScrollView>
+            </View>
         );
     }
 
@@ -348,8 +439,22 @@ export default class Home extends Component {
             loading: true
         })
 
+        // .then((el) => {
+        //     this.setState({
+        //         loading: false,
+        //         boundAddress: row.address,
+        //         name: row.name || "UNKNOWN"
+        //     })
+        // }, (e) => {
+        //     this.setState({
+        //         loading: false
+        //     })
+        //     alert(e);
+        // })
+
         BluetoothManager.scanDevices()
             .then((s) => {
+                console.log('scan device >>>> checking ', JSON.parse(s).paired)
                 var ss = s;
                 var found = ss.found;
                 try {
@@ -375,11 +480,34 @@ export default class Home extends Component {
 }
 
 const styles = StyleSheet.create({
+    main: {
+        flex: 1,
+        // marginVertical: 40
+    },
     container: {
         flex: 1,
         backgroundColor: '#F5FCFF',
+        // marginVertical: 30,
+        // borderBottomLeftRadius: 20,
+        // borderBottomRightRadius: 20
     },
-
+    scanBtn: {
+        width: '100%',
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#4287f5',
+        // borderTopStartRadius: 20,
+        // borderTopEndRadius: 20,
+        // marginBottom: 10
+    },
+    scanBtnTxt: {
+        fontSize: 13,
+        fontFamily: fontFamily.regular,
+        color: 'white'
+    },
+    closeBtn: { borderRadius: 50, top: 0, right: 0, zIndex: 99999, alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-end' },
+    imageStyle: { tintColor: 'black', transform: [{ rotate: '45deg' }], width: 35, height: 35 },
     title: {
         width: width,
         backgroundColor: "#eee",

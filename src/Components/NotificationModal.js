@@ -170,7 +170,7 @@ const NotificationModal = () => {
     console.log("pending notifications++++", pendingNotifications)
     return (
         <Modal
-            isVisible={pendingNotifications.length && isVendorNotification}
+            isVisible={pendingNotifications.length ? Boolean(isVendorNotification): false}
             style={{
                 margin: 0,
                 justifyContent: 'flex-end'

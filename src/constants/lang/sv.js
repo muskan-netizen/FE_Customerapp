@@ -524,4 +524,5 @@ export default {
   TABLE: 'Tabell',
   SEAT_CAPACITY: 'Sittkapacitet',
   WRITE_REVIEW: 'Skriv en recension',
+  ATTACH_PRINTER: 'Attach Printer',
 };

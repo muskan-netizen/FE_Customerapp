@@ -26,17 +26,11 @@ import {
   notificationListener,
 } from './src/utils/notificationService';
 import { getItem, getUserData, setItem } from './src/utils/utils';
-import Modal from 'react-native-modal';
-import { BlurView } from '@react-native-community/blur';
 import PushNotification from 'react-native-push-notification';
-import { BluetoothEscposPrinter, BluetoothManager } from "@brooons/react-native-bluetooth-escpos-printer";
-import BLEPrinter from './src/BLEPrinter'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import BackgroundService from 'react-native-background-actions';
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
-  const [isVisible, setIsVisible] = useState(false);
-  const [pairedDs, setPairedDs] = useState([]);
   // const appMainData = useSelector((state) => state?.home?.appMainData);
   const appMainData = store.getState().home;
   // deep linking
@@ -67,6 +61,44 @@ const App = () => {
       }, 1800);
     }
   }
+  
+  const backgroundServiceInit = async () => {
+    const veryIntensiveTask = async (taskDataArguments) => {
+      // Example of an infinite loop task
+      const { delay } = taskDataArguments;
+      await new Promise( async (resolve) => {
+          for (let i = 0; BackgroundService.isRunning(); i++) {
+              console.log('Background Service >>>>', i);
+              await sleep(delay);
+          }
+      });
+  };
+  
+  const options = {
+      taskName: 'Example',
+      taskTitle: 'ExampleTask title',
+      taskDesc: 'ExampleTask description',
+      taskIcon: {
+          name: 'ic_launcher',
+          type: 'mipmap',
+      },
+      color: '#ff00ff',
+      // linkingURI: 'yourSchemeHere://chat/jane', // See Deep Linking for more info
+      parameters: {
+          delay: 5,
+      },
+  };
+  
+  
+  await BackgroundService.start(veryIntensiveTask, options);
+  await BackgroundService.updateNotification({taskDesc: 'New ExampleTask description'}); // Only Android, iOS will ignore this call
+  // iOS will also run everything here in the background until .stop() is called
+  // await BackgroundService.stop();
+  }
+
+  useEffect(() => {
+    backgroundServiceInit()
+  }, [])
 
   useEffect(() => {
     Linking.getInitialURL().then((link) => handleDynamicLink(link));
@@ -78,58 +110,11 @@ const App = () => {
     };
   }, [handleDynamicLink]);
 
-  const initBlePrinterConnection = () => {
-    BluetoothManager.checkBluetoothEnabled().then((enabled) => {
-      console.log('checking blue enabled >>>', enabled)
-      // this.setState({
-      //     bleOpend: Boolean(enabled),
-      //     loading: false
-      // })
-      if (enabled) {
-        setIsVisible(enabled)
-      } else {
-        BluetoothManager.enableBluetooth().then((r) => {
-          var paired = [];
-          if (r && r.length > 0) {
-            for (var i = 0; i < r.length; i++) {
-              try {
-                paired.push(JSON.parse(r[i]));
-              } catch (e) {
-                //ignore
-              }
-            }
-          }
-          // this.setState({
-          //     bleOpend: true,
-          //     loading: false,
-          //     pairedDs: paired
-          // })
-          setPairedDs(paired)
-          setIsVisible(true)
-        }, (err) => {
-          // this.setState({
-          //     loading: false
-          // })
-          alert(err)
-        });
-      }
-
-    }, (err) => {
-      console.log(err)
-
-    });
-  }
-
-  const checkBT = () => {
-    initBlePrinterConnection()
-  }
-
   const isDarkMode = useDarkMode();
   useEffect(() => {
     //stop splahs screen from loading
     setTimeout(() => {
       SplashScreen.hide();
-      checkBT()
     }, 1500);
   }, []);
 
@@ -299,12 +284,8 @@ const App = () => {
       />
       <FlashMessage position="top" />
       <NoInternetModal show={!internetConnection} />
-      <Modal
-        isVisible={isVisible}
-      >
-        <BLEPrinter onCloseModal={() => setIsVisible(false)} />
-      </Modal>
-     
+
+
     </SafeAreaProvider>
   );
 };

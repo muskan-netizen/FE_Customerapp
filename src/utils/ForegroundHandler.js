@@ -5,9 +5,8 @@ import messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
 import actions from '../redux/actions';
 import { printReciept } from '../BLEPrinter';
+
 const ForegroundHandler = (props) => {
-
-
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       console.log("remote message foreground", remoteMessage)
@@ -31,10 +30,11 @@ const ForegroundHandler = (props) => {
             playSound: true
           })
       }
+      printReciept()
       if (Platform.OS == 'android' && notification.android.sound == 'notification') {
         actions.isVendorNotification(true)
         const { data } = remoteMessage.data
-        printReciept(data)
+        // printReciept(data)
       }
       if (Platform.OS == 'ios' && notification.sound == 'notification.wav') {
         actions.isVendorNotification(true)

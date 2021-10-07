@@ -18,10 +18,12 @@ const {dispatch} = store;
 
 //Get Homme banners and Category data
 export function homeData(data = {}, headers = {}) {
-
+  console.log("sending++++ data",data)
+  console.log("sending++++ headers",headers)
   return new Promise((resolve, reject) => {
     apiPost(HOMEPAGE_DATA_URL, data, headers)
       .then((res) => {
+        console.log("sending++++ res",res)
         dispatch({
           type: types.HOME_DATA,
           payload: res.data,

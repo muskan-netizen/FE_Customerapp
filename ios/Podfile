@@ -28,6 +28,8 @@ target 'Runrun' do
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
   pod 'Stripe', '~> 21.7.0'
+  pod 'react-native-background-actions', :path => '../node_modules/react-native-background-actions'
+
 end
 
 

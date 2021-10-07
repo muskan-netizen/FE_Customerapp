@@ -7,10 +7,12 @@ import {
   Text,
   ScrollView,
   FlatList,
+  Linking,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { useSelector } from 'react-redux';
 import { cloneDeep, debounce } from 'lodash';
+import OpenApplication from 'react-native-open-application';
 
 import WrapperContainer from '../../Components/WrapperContainer';
 import staticStrings from '../../constants/staticStrings';
@@ -51,6 +53,7 @@ import { BlurView } from '@react-native-community/blur';
 navigator.geolocation = require('react-native-geolocation-service');
 import stylesFunc from './styles';
 import NotificationModal from '../../Components/NotificationModal';
+import AppLink from 'react-native-app-link';
 
 export default function Home({ route, navigation }) {
   const paramData = route?.params;
@@ -80,10 +83,11 @@ export default function Home({ route, navigation }) {
     rejectLoader: false,
     selectedOrder: null,
     curAddress: {
-      address: 'Plot no 5, Code Brew Labs, CH Devi Lal Centre of Learning, Sh.Chaudhari Devi Lal Memorial, Madhya Marg, 28B, Sector 28, Chandigarh',
+      address:
+        'Plot no 5, Code Brew Labs, CH Devi Lal Centre of Learning, Sh.Chaudhari Devi Lal Memorial, Madhya Marg, 28B, Sector 28, Chandigarh',
       latitude: 30.7188856,
       longitude: 76.8083078,
-    }
+    },
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
@@ -213,8 +217,8 @@ export default function Home({ route, navigation }) {
         if (result !== 'goback') {
           getCurrentLocation('home')
             .then((res) => {
-              console.log("chekLocationPermission", res)
-              updateState({ curAddress: res })
+              console.log('chekLocationPermission', res);
+              updateState({ curAddress: res });
               if (
                 appMainData &&
                 typeof appMainData?.reqData == 'object' &&
@@ -277,9 +281,9 @@ export default function Home({ route, navigation }) {
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
     let latlongObj = {
-      address: curAddress?.address,
-      latitude: curAddress?.latitude,
-      longitude: curAddress?.longitude,
+      // address: curAddress?.address,
+      // latitude: curAddress?.latitude,
+      // longitude: curAddress?.longitude,
     };
 
     if (appData?.profile?.preferences?.is_hyperlocal) {
@@ -364,7 +368,6 @@ export default function Home({ route, navigation }) {
 
   //Error handling in screen
   const errorMethod = (error) => {
-    console.log(error, 'error');
     updateState({
       isLoading: false,
       isLoadingB: false,
@@ -388,6 +391,40 @@ export default function Home({ route, navigation }) {
 
   const { viewRef2, viewRef3, bannerRef } = useRef();
 
+  //OnClick Link
+
+  const _onLink = async () => {
+    // const supported = await Linking.canOpenURL(
+    //   'https://apps.apple.com/in/app/uber/id368677368',
+    // );
+    // console.log(supported, 'supported>>>');
+    // if (supported) {
+    //   // alert('123');
+    //   Linking.openURL('https://apps.apple.com/in/app/uber/id368677368');
+    // } else {
+    //   Linking.openURL('https://www.google.com/');
+    // }
+    Linking.openURL('https://www.uber.com/');
+  };
+
+
+  const openUber = () => {
+    let appName = 'Uber - Easy affordable trips'
+    let appStoreLocale = "in"
+    let playStoreId = 'com.ubercab'
+    let appStoreId = '310633997'
+
+    AppLink.maybeOpenURL('https://www.uber.com/in/en/',
+      { appName: appName, appStoreId: appStoreId, appStoreLocale: appStoreLocale, playStoreId: playStoreId }).then((res) => {
+
+      })
+      .catch((err) => {
+        console.log("errro raised", err)
+        // handle error
+      });
+
+  }
+
   //onPress Category
   const onPressCategory = (item) => {
     if (item.redirect_to == staticStrings.VENDOR) {
@@ -399,18 +436,22 @@ export default function Home({ route, navigation }) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
-        if (item?.warning_page_id) {
-          if (item?.warning_page_id == 2) {
-            moveToNewScreen(navigationStrings.DELIVERY, item)();
-          } else {
-            moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
-          }
+        if (shortCodes.arenagrub == appData?.profile?.code) {
+          openUber()
         } else {
-          if (item?.template_type_id == 1) {
-            moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
+          if (item?.warning_page_id) {
+            if (item?.warning_page_id == 2) {
+              moveToNewScreen(navigationStrings.DELIVERY, item)();
+            } else {
+              moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
+            }
           } else {
-            // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
-            moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
+            if (item?.template_type_id == 1) {
+              moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
+            } else {
+              // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
+              moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
+            }
           }
         }
       } else {
@@ -434,11 +475,11 @@ export default function Home({ route, navigation }) {
           // categoryData: data,
         })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: item?.id,
-            vendor: true,
-            name: item?.name,
-            isVendorList: true,
-          })();
+          id: item?.id,
+          vendor: true,
+          name: item?.name,
+          isVendorList: true,
+        })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
@@ -488,16 +529,10 @@ export default function Home({ route, navigation }) {
   const initApiHit = () => {
     let header = {};
     // console.log(languages?.primary_language?.id, 'languageID');
-    if (languages?.primary_language?.id) {
-      header = {
-        code: appData?.profile?.code,
-        language: languages?.primary_language?.id,
-      };
-    } else {
-      header = {
-        code: appData?.profile?.code,
-      };
-    }
+    header = {
+      code: appData?.profile?.code,
+      language: languages?.primary_language?.id,
+    };
 
     actions
       .initApp(
@@ -599,7 +634,8 @@ export default function Home({ route, navigation }) {
         return (
           <>
             <DashBoardHeaderOne
-              navigation={navigation} location={location}
+              navigation={navigation}
+              location={location}
               curAddress={curAddress}
             />
             <DashBoardOne
