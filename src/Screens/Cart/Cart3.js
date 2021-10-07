@@ -491,6 +491,7 @@ export default function Cart({navigation, route}) {
       isLoadingB: false,
       isRefreshing: false,
       btnLoader: false,
+      placeLoader: false,
     });
     showError(error?.message || error?.error);
   };
