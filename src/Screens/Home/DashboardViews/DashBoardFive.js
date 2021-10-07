@@ -109,9 +109,9 @@ export default function DashBoardFive({
 
   const renderBanners = ({item}) => {
     const imageUrl = getImageUrl(
-      item.image.proxy_url,
-      item.image.image_path,
-      '900/700',
+      item.image_mobile.image_fit || item.image.image_fit,
+      item.image_mobile.image_path || item.image.image_path,
+      '700/300',
     );
     return (
       <TouchableOpacity onPress={() => bannerPress(item)}>
@@ -137,7 +137,7 @@ export default function DashBoardFive({
             <View
               style={{
                 marginHorizontal: moderateScale(8),
-                marginTop: moderateScaleVertical(12),
+                marginTop: moderateScaleVertical(10),
               }}>
               <FlatList
                 numColumns={4}
