@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import DashedLine from 'react-native-dashed-line';
 import FastImage from 'react-native-fast-image';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -21,8 +21,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 import BlurImages from './BlurImages';
 import {
   getImageUrl,
@@ -33,7 +33,7 @@ import {
 
 export default function MarketCard3({
   data = {},
-  onPress = () => { },
+  onPress = () => {},
   extraStyles = {},
   fastImageStyle = {},
   imageResizeMode = 'cover',
@@ -42,17 +42,17 @@ export default function MarketCard3({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
+  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ fontFamily, extraStyles, MyDarkTheme, isDarkMode });
+  const styles = stylesFunc({fontFamily, extraStyles, MyDarkTheme, isDarkMode});
   const scaleInAnimated = new Animated.Value(0);
 
   let imageUrl = getImageUrl(
     data.banner.proxy_url || data.image.proxy_url,
     data.banner.image_path || data.image.image_path,
     '800/400',
-  )
+  );
   return (
     <TouchableOpacity
       activeOpacity={1}
@@ -62,13 +62,12 @@ export default function MarketCard3({
         ...getScaleTransformationStyle(scaleInAnimated),
       }}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
-      onPressOut={() => pressOutAnimation(scaleInAnimated)}
-    >
+      onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <FastImage
-        source={{ uri: imageUrl, priority: FastImage.priority.high }}
+        source={{uri: imageUrl, priority: FastImage.priority.high}}
         style={{
           ...styles.mainImage,
-          ...fastImageStyle
+          ...fastImageStyle,
         }}
         resizeMode={FastImage.resizeMode.cover}
       />
@@ -101,7 +100,7 @@ export default function MarketCard3({
             numberOfLines={1}
             style={
               isDarkMode
-                ? [styles.categoryText, { color: MyDarkTheme.colors.text }]
+                ? [styles.categoryText, {color: MyDarkTheme.colors.text}]
                 : styles.categoryText
             }>
             {data.name}
@@ -161,12 +160,16 @@ export default function MarketCard3({
               flex: 1,
             }}>
             {!!data?.lineOfSightDistance && (
-              <View style={{ flexDirection: 'row' }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                }}>
                 <Image
-                  style={{ tintColor: themeColors.primary_color }}
+                  style={{tintColor: themeColors.primary_color}}
                   source={imagePath.location2}
                 />
                 <Text
+                  numberOfLines={1}
                   style={{
                     color: colors.greyLight,
                     fontSize: textScale(10),
@@ -174,12 +177,14 @@ export default function MarketCard3({
                     marginHorizontal: moderateScale(5),
                     textAlign: 'left',
                   }}>
-                  {data?.lineOfSightDistance}
+                  {data?.lineOfSightDistance && data?.lineOfSightDistance}
+                  {` | ${data?.timeofLineOfSightDistance} mins`}
                 </Text>
               </View>
             )}
-            {!!data?.timeofLineOfSightDistance ? (
+            {/* {!!data?.timeofLineOfSightDistance ? (
               <Text
+                numberOfLines={1}
                 style={{
                   color: colors.greyLight,
                   fontSize: textScale(10),
@@ -188,7 +193,7 @@ export default function MarketCard3({
                 }}>
                 {`| ${data?.timeofLineOfSightDistance} mins`}
               </Text>
-            ) : null}
+            ) : null} */}
           </View>
 
           <Text
@@ -199,14 +204,14 @@ export default function MarketCard3({
               color: data?.show_slot
                 ? colors.green
                 : data?.slot && data?.slot.length
-                  ? colors.green
-                  : colors.redB,
+                ? colors.green
+                : colors.redB,
             }}>
             {data?.show_slot
               ? strings.OPEN
               : data?.slot && data?.slot.length
-                ? strings.OPEN
-                : strings.CLOSE}
+              ? strings.OPEN
+              : strings.CLOSE}
           </Text>
         </View>
       </View>
@@ -214,12 +219,12 @@ export default function MarketCard3({
   );
 }
 
-export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme }) {
+export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
   const styles = StyleSheet.create({
     mainTouchContainer: {
       borderRadius: moderateScale(10),
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 0 },
+      shadowOffset: {width: 0, height: 0},
       shadowOpacity: 0.15,
       shadowRadius: 1.84,
       elevation: 2,

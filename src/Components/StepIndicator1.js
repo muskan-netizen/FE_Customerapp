@@ -45,8 +45,6 @@ export default function StepIndicators1({
   };
 
   const getSourceImage = ({position, stepStatus}) => {
-    console.log(position, 'position');
-    console.log(stepStatus, 'stepStatus');
     let iconConfig = null;
     switch (position) {
       case 0: {

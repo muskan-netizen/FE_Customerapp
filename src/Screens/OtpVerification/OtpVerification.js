@@ -23,6 +23,7 @@ import {
 } from '../../utils/helperFunctions';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 
 export default function OtpVerification({navigation, route}) {
   const paramData = route?.params;
@@ -31,7 +32,9 @@ export default function OtpVerification({navigation, route}) {
     timer: 30,
     phoneOTP: '',
     emailOTP: '',
+    isLoading: false,
   });
+  const {timer, phoneOTP, emailOTP, isLoading} = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {currencies, languages} = useSelector((state) => state?.initBoot);
@@ -57,6 +60,8 @@ export default function OtpVerification({navigation, route}) {
       fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
       countryData: paramData?.countryData,
     };
+    updateState({isLoading: true});
+
     actions
       .loginUsername(data, {
         code: appData?.profile?.code,
@@ -65,20 +70,10 @@ export default function OtpVerification({navigation, route}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then(() => {
-        console.log(res.data);
+        updateState({isLoading: false});
       })
       .catch(errorMethod);
-    // let data = {};
-    // actions
-    //   .resendOTP(data, {
-    //     code: appData?.profile?.code,
-    //   })
-    //   .then((res) => {
-    //     showSuccess(res.success);
 
-    //     updateState({isLoading: false});
-    //   })
-    //   .catch(errorMethod);
     updateState({timer: 30});
   };
 
@@ -97,7 +92,6 @@ export default function OtpVerification({navigation, route}) {
     updateState({[key]: val});
   };
 
-  const {timer, phoneOTP, emailOTP} = state;
   const isValidData = (otp) => {
     const error = validations({
       otp,
@@ -115,7 +109,6 @@ export default function OtpVerification({navigation, route}) {
     if (!checkValid) {
       return;
     }
-    // console.log(DeviceInfo.getUniqueId(), 'DeviceInfo');
 
     let data = {
       username: paramData?.username,
@@ -125,7 +118,6 @@ export default function OtpVerification({navigation, route}) {
       device_token: DeviceInfo.getUniqueId(),
       fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
     };
-    console.log(data, 'datadatadatadata');
     updateState({isLoading: true});
     actions
       .phoneloginOtp(data, {
@@ -135,8 +127,6 @@ export default function OtpVerification({navigation, route}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res.data, 'resdata');
-        showSuccess(res.message);
         navigation.push(navigationStrings.DRAWER_ROUTES);
         // if (userData) {
         //   userData?.client_preference?.verify_email ||
@@ -154,12 +144,13 @@ export default function OtpVerification({navigation, route}) {
 
   const errorMethod = (error) => {
     updateState({isLoading: false});
-    showError(error?.message || error?.error);
-    console.log(error, 'error');
+    setTimeout(() => {
+      showError(error?.message || error?.error);
+    }, 500);
   };
 
   return (
-    <WrapperContainer>
+    <WrapperContainer isLoadingB={isLoading} source={loaderOne}>
       <View
         style={{
           flexDirection: 'row',

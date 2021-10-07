@@ -49,11 +49,15 @@ const TaxiBannerHome = ({
   const bannerDataImages = ({item, index}) => {
     const imageUrl = item?.image?.path
       ? getImageUrl(
-          item.image.path.proxy_url,
-          item.image.path.image_path,
+          item?.image.path.proxy_url,
+          item?.image.path.image_path,
           '2000/600',
         )
-      : getImageUrl(item.image.proxy_url, item.image.image_path, '2000/600');
+      : getImageUrl(
+          item?.image?.proxy_url,
+          item?.image?.image_path,
+          '2000/600',
+        );
 
     return (
       <>

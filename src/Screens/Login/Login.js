@@ -196,7 +196,10 @@ export default function Login({navigation}) {
   //Error handling in api
   const errorMethod = (error) => {
     updateState({isLoading: false});
-    showError(error?.message || error?.error);
+
+    setTimeout(() => {
+      showError(error?.message || error?.error);
+    }, 500);
   };
 
   //Saving login user to backend

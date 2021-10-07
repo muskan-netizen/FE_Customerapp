@@ -506,7 +506,7 @@ const appIds = {
   }),
   elixir: Platform.select({
     ios: 'com.elixir',
-    android: 'com.elixir',
+    android: 'com.elixir.customer',
   }),
   ace: Platform.select({
     ios: 'com.customer.ace',
