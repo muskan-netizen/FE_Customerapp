@@ -637,7 +637,6 @@ export default function VariantAddons({
       data['addon_ids'] = addon_ids;
       data['addon_options'] = addon_options;
     }
-    console.log(data, 'data for cart');
     updateState({btnLoader: true});
     actions
       .addProductsToCart(data, {
@@ -647,9 +646,10 @@ export default function VariantAddons({
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'add item cart res');
         actions.cartItemQty(res);
-        // showSuccess('Product successfully added');
+        setTimeout(() => {
+          showSuccess(strings.PRODUCT_ADDED_SUCCESS);
+        }, 1000);
         updateState({isLoadingC: false, btnLoader: false});
         updateCartItems(
           productdetail,

@@ -86,7 +86,7 @@ export default function Products({route, navigation}) {
     isRefreshing: false,
     selectedSbCategoryID: -1,
     productListId: data,
-    productListData: [],
+    productListData: null,
     categoryInfo: null,
     click: false,
     filterData: [],
@@ -146,6 +146,9 @@ export default function Products({route, navigation}) {
     btnLoader: false,
     selectedItemID: -1,
     selectedItemIndx: null,
+    vendorCategories: null,
+    vendorCategorySelectedIndx: 0,
+    vendorCategoryItms: null,
   });
 
   const {
@@ -194,6 +197,9 @@ export default function Products({route, navigation}) {
     btnLoader,
     selectedItemID,
     selectedItemIndx,
+    vendorCategories,
+    vendorCategorySelectedIndx,
+    vendorCategoryItms,
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -471,6 +477,8 @@ export default function Products({route, navigation}) {
             pageNo == 1
               ? res.data.products.data
               : [...productListData, ...res.data.products.data],
+          vendorCategories: res?.data?.categories,
+          vendorCategoryItms: res?.data?.categories[0]?.products,
         });
         updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
@@ -1156,196 +1164,278 @@ export default function Products({route, navigation}) {
 
   const listHeaderComponent2 = () => {
     return (
-      <View style={styles.header2}>
-        <StatusBar
-          translucent
-          barStyle={Platform.OS === 'ios' ? 'light-content' : 'dark-content'}
-        />
-        <View style={{height: '80%'}}>
-          <ImageBackground
-            source={{
-              uri: getImageUrl(
-                // data?.item?.banner.image_fit ||
-                data?.categoryInfo?.image?.image_fit ||
-                  categoryInfo?.banner.image_fit,
-                // data?.item?.banner.image_path ||
-                data?.categoryInfo?.image?.image_path ||
-                  categoryInfo?.banner.image_path,
-                '400/400',
-              ),
-            }}
-            style={{
-              ...styles.imageBackgroundHdr,
-              backgroundColor: isDarkMode
-                ? colors.whiteOpacity15
-                : colors.greyColor,
-            }}
-            resizeMode="cover">
-            <LinearGradient
-              style={styles.linearGradientHdr}
-              colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0.7)']}>
-              <View style={styles.hdrCompHeader}>
-                <TouchableOpacity
-                  hitSlop={styles.hitSlopProp}
-                  onPress={() => navigation.goBack()}
-                  style={{flex: 0.2}}>
-                  <Image
-                    source={imagePath.icBackb}
-                    style={{
-                      marginLeft: moderateScale(10),
-                      tintColor: colors.white,
-                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                    }}
-                  />
-                </TouchableOpacity>
-                <FastImage
-                  source={{
-                    uri: getImageUrl(
-                      data?.item?.banner.image_fit ||
-                        data?.categoryInfo?.image?.image_fit ||
-                        categoryInfo?.banner.image_fit,
-                      data?.item?.banner.image_path ||
-                        data?.categoryInfo?.image?.image_path ||
-                        categoryInfo?.banner.image_path,
-                      '400/400',
-                    ),
-                    priority: FastImage.priority.low,
-                  }}
-                  style={styles.hdrCompRoundImg}
-                />
-
-                <View style={styles.rightViewOfShareSearch}>
-                  <TouchableOpacity activeOpacity={0.8}>
-                    <Image
-                      style={{
-                        tintColor: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.white,
-                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                      }}
-                      source={
-                        !!data?.showAddToCart ? false : imagePath.icSearchb
-                      }
-                    />
-                  </TouchableOpacity>
-                  <View style={{marginHorizontal: moderateScale(8)}} />
-                  <TouchableOpacity
-                    onPress={onShare}
-                    hitSlop={hitSlopProp}
-                    activeOpacity={0.8}>
-                    <Image
-                      style={{
-                        tintColor: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.white,
-                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                      }}
-                      source={imagePath.icShareb}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </LinearGradient>
-            <View
+      <View>
+        <View style={{...styles.header2}}>
+          <StatusBar
+            translucent
+            barStyle={Platform.OS === 'ios' ? 'light-content' : 'dark-content'}
+          />
+          <View style={{height: '80%'}}>
+            <ImageBackground
+              source={{
+                uri: getImageUrl(
+                  // data?.item?.banner.image_fit ||
+                  data?.categoryInfo?.image?.image_fit ||
+                    categoryInfo?.banner.image_fit,
+                  // data?.item?.banner.image_path ||
+                  data?.categoryInfo?.image?.image_path ||
+                    categoryInfo?.banner.image_path,
+                  '400/400',
+                ),
+              }}
               style={{
-                ...styles.hdrAbsoluteView,
+                ...styles.imageBackgroundHdr,
                 backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.lightDark
-                  : colors.white,
-              }}>
-              <View style={styles.hdrNameRatingView}>
-                <Text
-                  numberOfLines={2}
-                  style={{
-                    ...styles.hdrTitleTxt,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}>
-                  {data?.name || categoryInfo?.name || ''}
-                </Text>
-                {!!categoryInfo && !!categoryInfo?.product_avg_average_rating && (
-                  <View style={styles.hdrRatingTxtView}>
-                    <Text style={styles.ratingTxt}>
-                      {Number(categoryInfo?.product_avg_average_rating).toFixed(
-                        1,
-                      )}
-                    </Text>
+                  ? colors.whiteOpacity15
+                  : colors.greyColor,
+              }}
+              resizeMode="cover">
+              <LinearGradient
+                style={styles.linearGradientHdr}
+                colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0.7)']}>
+                <View style={styles.hdrCompHeader}>
+                  <TouchableOpacity
+                    hitSlop={styles.hitSlopProp}
+                    onPress={() => navigation.goBack()}
+                    style={{flex: 0.2}}>
                     <Image
-                      style={styles.starImg}
-                      source={imagePath.star}
-                      resizeMode="contain"
+                      source={imagePath.icBackb}
+                      style={{
+                        marginLeft: moderateScale(10),
+                        tintColor: colors.white,
+                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                      }}
                     />
+                  </TouchableOpacity>
+                  <FastImage
+                    source={{
+                      uri: getImageUrl(
+                        data?.item?.banner.image_fit ||
+                          data?.categoryInfo?.image?.image_fit ||
+                          categoryInfo?.banner.image_fit,
+                        data?.item?.banner.image_path ||
+                          data?.categoryInfo?.image?.image_path ||
+                          categoryInfo?.banner.image_path,
+                        '400/400',
+                      ),
+                      priority: FastImage.priority.low,
+                    }}
+                    style={styles.hdrCompRoundImg}
+                  />
+
+                  <View style={styles.rightViewOfShareSearch}>
+                    <TouchableOpacity activeOpacity={0.8}>
+                      <Image
+                        style={{
+                          tintColor: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.white,
+                          transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                        }}
+                        source={
+                          !!data?.showAddToCart ? false : imagePath.icSearchb
+                        }
+                      />
+                    </TouchableOpacity>
+                    <View style={{marginHorizontal: moderateScale(8)}} />
+                    <TouchableOpacity
+                      onPress={onShare}
+                      hitSlop={hitSlopProp}
+                      activeOpacity={0.8}>
+                      <Image
+                        style={{
+                          tintColor: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.white,
+                          transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                        }}
+                        source={imagePath.icShareb}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </LinearGradient>
+              <View
+                style={{
+                  ...styles.hdrAbsoluteView,
+                  backgroundColor: isDarkMode
+                    ? MyDarkTheme.colors.lightDark
+                    : colors.white,
+                }}>
+                <View style={styles.hdrNameRatingView}>
+                  <Text
+                    numberOfLines={2}
+                    style={{
+                      ...styles.hdrTitleTxt,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
+                    {data?.name || categoryInfo?.name || ''}
+                  </Text>
+                  {!!categoryInfo &&
+                    !!categoryInfo?.product_avg_average_rating && (
+                      <View style={styles.hdrRatingTxtView}>
+                        <Text style={styles.ratingTxt}>
+                          {Number(
+                            categoryInfo?.product_avg_average_rating,
+                          ).toFixed(1)}
+                        </Text>
+                        <Image
+                          style={styles.starImg}
+                          source={imagePath.star}
+                          resizeMode="contain"
+                        />
+                      </View>
+                    )}
+                </View>
+                {!!categoryInfo && !!categoryInfo?.categoriesList && (
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      ...styles.milesTxt,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      marginRight: moderateScale(40),
+                      marginVertical: moderateScale(1),
+                      marginLeft: 0,
+                    }}>
+                    {categoryInfo?.categoriesList || ''}
+                  </Text>
+                )}
+                {!!categoryInfo && !!categoryInfo?.lineOfSightDistance && (
+                  <View
+                    style={{
+                      ...styles.hdrNameRatingView,
+                      marginTop: moderateScaleVertical(5),
+                    }}>
+                    <View style={styles.milesView}>
+                      <Image
+                        source={imagePath.location2}
+                        style={{
+                          tintColor: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                        }}
+                      />
+                      <Text
+                        style={{
+                          ...styles.milesTxt,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                        }}>
+                        {categoryInfo.lineOfSightDistance}{' '}
+                        {!!categoryInfo.lineOfSightDistance &&
+                        !!categoryInfo.timeofLineOfSightDistance
+                          ? '|'
+                          : ''}{' '}
+                        {categoryInfo.timeofLineOfSightDistance}{' '}
+                        {!!categoryInfo.timeofLineOfSightDistance ? 'mins' : ''}
+                      </Text>
+                    </View>
+
+                    <Text
+                      style={{
+                        ...commonStyles.mediumFont14Normal,
+                        fontSize: textScale(12),
+                        textAlign: 'left',
+                        marginRight: moderateScale(5),
+                        color: categoryInfo?.show_slot
+                          ? colors.green
+                          : categoryInfo?.is_vendor_closed
+                          ? colors.redB
+                          : colors.green,
+                      }}>
+                      {categoryInfo?.show_slot
+                        ? strings.OPEN
+                        : categoryInfo?.is_vendor_closed
+                        ? strings.CLOSE
+                        : strings.OPEN}
+                    </Text>
                   </View>
                 )}
               </View>
-              {!!categoryInfo && !!categoryInfo?.categoriesList && (
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    ...styles.milesTxt,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                    marginRight: moderateScale(40),
-                    marginVertical: moderateScale(1),
-                    marginLeft: 0,
-                  }}>
-                  {categoryInfo?.categoriesList || ''}
-                </Text>
-              )}
-              {!!categoryInfo && !!categoryInfo?.lineOfSightDistance && (
-                <View
-                  style={{
-                    ...styles.hdrNameRatingView,
-                    marginTop: moderateScaleVertical(5),
-                  }}>
-                  <View style={styles.milesView}>
-                    <Image
-                      source={imagePath.location2}
-                      style={{
-                        tintColor: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        ...styles.milesTxt,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
-                      }}>
-                      {categoryInfo.lineOfSightDistance}{' '}
-                      {!!categoryInfo.lineOfSightDistance &&
-                      !!categoryInfo.timeofLineOfSightDistance
-                        ? '|'
-                        : ''}{' '}
-                      {categoryInfo.timeofLineOfSightDistance}{' '}
-                      {!!categoryInfo.timeofLineOfSightDistance ? 'mins' : ''}
-                    </Text>
-                  </View>
-
-                  <Text
-                    style={{
-                      ...commonStyles.mediumFont14Normal,
-                      fontSize: textScale(12),
-                      textAlign: 'left',
-                      marginRight: moderateScale(5),
-                      color: categoryInfo?.show_slot
-                        ? colors.green
-                        : categoryInfo?.is_vendor_closed
-                        ? colors.redB
-                        : colors.green,
-                    }}>
-                    {categoryInfo?.show_slot
-                      ? strings.OPEN
-                      : categoryInfo?.is_vendor_closed
-                      ? strings.CLOSE
-                      : strings.OPEN}
-                  </Text>
-                </View>
-              )}
-            </View>
-          </ImageBackground>
+            </ImageBackground>
+          </View>
         </View>
+
+        {!!categoryInfo?.is_show_products_with_category && (
+          <>
+            <View style={{marginHorizontal: moderateScale(20)}}>
+              <FlatList
+                data={vendorCategories}
+                renderItem={_renderVendorCategories}
+                horizontal={true}
+                ItemSeparatorComponent={() => <View style={{width: 15}} />}
+              />
+            </View>
+
+            <FlatList
+              data={vendorCategoryItms}
+              renderItem={_renderVendorCategoryItms}
+              ItemSeparatorComponent={() => <View style={{width: 15}} />}
+            />
+          </>
+        )}
       </View>
+    );
+  };
+
+  const _renderVendorCategoryItms = ({item, index}) => {
+    return (
+      <ProductCard3
+        data={item}
+        index={index}
+        onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+        onAddtoWishlist={() => _onAddtoWishlist(item)}
+        addToCart={() => addSingleItem(item)}
+        onIncrement={() => addDeleteCartItems(item, index, 1)}
+        onDecrement={() => addDeleteCartItems(item, index, 2)}
+        selectedItemID={selectedItemID}
+        btnLoader={btnLoader}
+        selectedItemIndx={selectedItemIndx}
+      />
+    );
+  };
+
+  const _onVendorCategory = (itm, indx) => {
+    updateState({
+      vendorCategorySelectedIndx: indx,
+      vendorCategoryItms: itm?.products,
+    });
+  };
+
+  const _renderVendorCategories = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        onPress={() => _onVendorCategory(item, index)}
+        style={{
+          paddingHorizontal: 5,
+          paddingVertical: 7,
+          backgroundColor:
+            vendorCategorySelectedIndx === index
+              ? themeColors.primary_color
+              : colors.transparent,
+          borderRadius: 10,
+          borderColor:
+            vendorCategorySelectedIndx !== index
+              ? themeColors.primary_color
+              : colors.transparent,
+          borderWidth: 0.7,
+        }}>
+        <Text
+          style={{
+            fontFamily: fontFamily.medium,
+            color:
+              vendorCategorySelectedIndx === index
+                ? colors.white
+                : colors.blackOpacity66,
+          }}>
+          {item?.category?.translation[0]?.name}
+        </Text>
+      </TouchableOpacity>
     );
   };
 
@@ -1521,7 +1611,12 @@ export default function Products({route, navigation}) {
   };
 
   const onScroll = ({nativeEvent}) => {
-    if (productListData.length < 6) {
+    if (
+      (productListData &&
+        productListData.length &&
+        !!productListData.length < 6) ||
+      vendorCategoryItms.length < 6
+    ) {
       return;
     }
     let offset = nativeEvent.contentOffset.y;
@@ -1553,6 +1648,18 @@ export default function Products({route, navigation}) {
       categoryInfo?.translation[0]?.meta_description);
 
   console.log(data, 'is_show_category');
+
+  const _emptyComp = () => {
+    return (
+      <>
+        {!categoryInfo?.is_show_products_with_category ? (
+          <NoDataFound isLoading={state.isLoading} containerStyle={{}} />
+        ) : (
+          <></>
+        )}
+      </>
+    );
+  };
 
   return (
     <View
@@ -1643,20 +1750,109 @@ export default function Products({route, navigation}) {
           </View>
         )}
 
-        {data.isVendorList &&
-          AnimatedHeaderValue &&
-          !!productListData &&
-          productListData.length > 0 && (
-            <View style={styles.headerStyle}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
+        {data.isVendorList && AnimatedHeaderValue && !!productListData && (
+          <View style={styles.headerStyle}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.goBack()}
+                hitSlop={styles.hitSlopProp}>
+                <Image
+                  style={{
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                  }}
+                  source={imagePath.icBackb}
+                />
+              </TouchableOpacity>
+
+              <Animatable.View
+                // key={AnimatedHeaderValue}
+                // duration={10}
+                animation={'fadeIn'}
+                style={{marginLeft: moderateScale(8), flex: 0.7}}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <RoundImg
+                    img={getImageUrl(uri1, uri2, '400/400')}
+                    size={20}
+                    isDarkMode={isDarkMode}
+                    MyDarkTheme={MyDarkTheme}
+                  />
+                  <View style={{marginLeft: moderateScale(8)}}>
+                    <Text
+                      numberOfLines={1}
+                      style={{
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.blackOpacity86,
+                        fontSize: moderateScale(12),
+                        fontFamily: fontFamily.regular,
+                      }}>
+                      {name}
+                    </Text>
+                    <Text
+                      numberOfLines={1}
+                      style={{
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        fontSize: moderateScale(12),
+                        fontFamily: fontFamily.medium,
+                        marginTop: moderateScaleVertical(2),
+                      }}>
+                      {categoryInfo?.categoriesList || ''}
+                    </Text>
+                  </View>
+                </View>
+              </Animatable.View>
+            </View>
+
+            {isSearch ? (
+              <Animatable.View animation="fadeIn">
+                <SearchBar
+                  containerStyle={{
+                    marginHorizontal: moderateScale(18),
+                    borderRadius: 8,
+                    width: width / 1.15,
+                    backgroundColor: isDarkMode
+                      ? colors.whiteOpacity15
+                      : colors.greyColor,
+                    height: moderateScaleVertical(37),
+                  }}
+                  searchValue={searchInput}
+                  placeholder={strings.SEARCH_ITEM}
+                  // onChangeText={(value) => onChangeText(value)}
+                  showRightIcon
+                  rightIconPress={() =>
+                    updateState({
+                      searchInput: '',
+                      isSearch: false,
+                      isLoading: false,
+                    })
+                  }
+                />
+              </Animatable.View>
+            ) : (
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={() => navigation.goBack()}
-                  hitSlop={styles.hitSlopProp}>
+                  // onPress={() => updateState({isSearch: true})}
+                  // onPress={moveToNewScreen(
+                  //   navigationStrings.SEARCHPRODUCTOVENDOR,
+                  //   {
+                  //     type: data?.vendor
+                  //       ? staticStrings.VENDOR
+                  //       : staticStrings.CATEGORY,
+                  //     id: data?.vendor ? data?.id : productListId?.id,
+                  //   },
+                  // )}
+                >
                   <Image
                     style={{
                       tintColor: isDarkMode
@@ -1664,122 +1860,30 @@ export default function Products({route, navigation}) {
                         : colors.black,
                       transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
                     }}
-                    source={imagePath.icBackb}
+                    source={!!data?.showAddToCart ? false : imagePath.icSearchb}
                   />
                 </TouchableOpacity>
+                <View style={{marginHorizontal: moderateScale(8)}} />
 
-                <Animatable.View
-                  // key={AnimatedHeaderValue}
-                  // duration={10}
-                  animation={'fadeIn'}
-                  style={{marginLeft: moderateScale(8), flex: 0.7}}>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <RoundImg
-                      img={getImageUrl(uri1, uri2, '400/400')}
-                      size={20}
-                      isDarkMode={isDarkMode}
-                      MyDarkTheme={MyDarkTheme}
-                    />
-                    <View style={{marginLeft: moderateScale(8)}}>
-                      <Text
-                        numberOfLines={1}
-                        style={{
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.blackOpacity86,
-                          fontSize: moderateScale(12),
-                          fontFamily: fontFamily.regular,
-                        }}>
-                        {name}
-                      </Text>
-                      <Text
-                        numberOfLines={1}
-                        style={{
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.black,
-                          fontSize: moderateScale(12),
-                          fontFamily: fontFamily.medium,
-                          marginTop: moderateScaleVertical(2),
-                        }}>
-                        {categoryInfo?.categoriesList || ''}
-                      </Text>
-                    </View>
-                  </View>
-                </Animatable.View>
-              </View>
-
-              {isSearch ? (
-                <Animatable.View animation="fadeIn">
-                  <SearchBar
-                    containerStyle={{
-                      marginHorizontal: moderateScale(18),
-                      borderRadius: 8,
-                      width: width / 1.15,
-                      backgroundColor: isDarkMode
-                        ? colors.whiteOpacity15
-                        : colors.greyColor,
-                      height: moderateScaleVertical(37),
+                <TouchableOpacity
+                  onPress={onShare}
+                  hitSlop={hitSlopProp}
+                  activeOpacity={0.8}>
+                  <Image
+                    style={{
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
                     }}
-                    searchValue={searchInput}
-                    placeholder={strings.SEARCH_ITEM}
-                    // onChangeText={(value) => onChangeText(value)}
-                    showRightIcon
-                    rightIconPress={() =>
-                      updateState({
-                        searchInput: '',
-                        isSearch: false,
-                        isLoading: false,
-                      })
-                    }
+                    source={imagePath.icShareb}
                   />
-                </Animatable.View>
-              ) : (
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    // onPress={() => updateState({isSearch: true})}
-                    // onPress={moveToNewScreen(
-                    //   navigationStrings.SEARCHPRODUCTOVENDOR,
-                    //   {
-                    //     type: data?.vendor
-                    //       ? staticStrings.VENDOR
-                    //       : staticStrings.CATEGORY,
-                    //     id: data?.vendor ? data?.id : productListId?.id,
-                    //   },
-                    // )}
-                  >
-                    <Image
-                      style={{
-                        tintColor: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
-                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                      }}
-                      source={
-                        !!data?.showAddToCart ? false : imagePath.icSearchb
-                      }
-                    />
-                  </TouchableOpacity>
-                  <View style={{marginHorizontal: moderateScale(8)}} />
-                  <TouchableOpacity
-                    onPress={onShare}
-                    hitSlop={hitSlopProp}
-                    activeOpacity={0.8}>
-                    <Image
-                      style={{
-                        tintColor: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
-                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                      }}
-                      source={imagePath.icShareb}
-                    />
-                  </TouchableOpacity>
-                </View>
-              )}
-            </View>
-          )}
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+        )}
+
         {/* <View style={{height: moderateScale(10)}} /> */}
         <FlatList
           onScroll={onScroll}
@@ -1817,9 +1921,7 @@ export default function Products({route, navigation}) {
           ListFooterComponent={() => (
             <View style={{height: moderateScale(50)}} />
           )}
-          ListEmptyComponent={
-            <NoDataFound isLoading={state.isLoading} containerStyle={{}} />
-          }
+          ListEmptyComponent={_emptyComp}
         />
         {/* <View style={{ height: moderateScale(height * 0.070) }} /> */}
       </View>

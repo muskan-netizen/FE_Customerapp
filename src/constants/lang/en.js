@@ -388,7 +388,7 @@ export default {
   ADD_ADDRESS1: 'ADD ADDRESS',
   YOUR_LOCATION: 'Your Location',
   COMPLETE_ADDRESS: 'Complete Address',
-  PRODUCT_ADDED_SUCCESS: 'Product successfully added',
+  PRODUCT_ADDED_SUCCESS: 'Product successfully added in your cart',
   LOADING: 'Loading',
   ACCEPTED: 'Accepted',
   PROCESSING: 'Processing',

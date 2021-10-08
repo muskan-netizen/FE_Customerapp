@@ -75,6 +75,8 @@ export default function ProductCard3({
 
   let htmlText = data?.translation[0]?.body_html || null;
 
+  console.log(data, 'datadatadata');
+
   return (
     <Animatable.View
       animation={index > 8 ? '' : 'fadeInUp'}
@@ -212,8 +214,9 @@ export default function ProductCard3({
                   fontFamily: fontFamily.regular,
                 }}>
                 {`${currencies?.primary_currency?.symbol}${(
-                  Number(data?.variant[0]?.multiplier) *
-                  Number(data?.variant[0]?.price)
+                  Number(
+                    data?.variant[0]?.multiplier || data?.variant_multiplier,
+                  ) * Number(data?.variant[0]?.price)
                 ).toFixed(2)}`}
               </Text>
             </View>
