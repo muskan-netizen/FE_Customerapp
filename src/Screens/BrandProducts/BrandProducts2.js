@@ -530,8 +530,10 @@ export default function BrandProducts2({route, navigation}) {
                   resizeMode="contain"
                   source={{
                     uri: getImageUrl(
-                      brandDetail.image.image_fit,
-                      brandDetail.image.image_path,
+                      brandDetail?.image_banner?.image_fit ||
+                        brandDetail.image.image_fit,
+                      brandDetail?.image_banner?.image_path ||
+                        brandDetail.image.image_path,
                       '1000/1000',
                     ),
                   }}

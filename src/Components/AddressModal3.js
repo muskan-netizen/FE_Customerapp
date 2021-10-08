@@ -56,6 +56,7 @@ export default function AddressModal3({
   indicator,
   navigation,
 }) {
+  console.log(type, 'type');
   const mapRef = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -199,6 +200,7 @@ export default function AddressModal3({
 
   /*************************** On Text Change
    */ const addressHelper = (results) => {
+    console.log(results, 'resultsresultsresults');
     let clonedArrayData = {...state};
     clonedArrayData = {...clonedArrayData, ...results, showDialogBox: false};
     updateState(clonedArrayData);
@@ -290,6 +292,7 @@ export default function AddressModal3({
     } else if (type == 'addAddress') {
       onClose();
       clearState();
+
       passLocation(data);
       // clearState();
     } else if (type == 'updateAddress') {
@@ -729,6 +732,7 @@ export function stylesData({fontFamily, themeColors}) {
       marginBottom: 0,
       marginTop: moderateScaleVertical(height / 10),
       overflow: 'hidden',
+      // zIndex: -1000,
     },
     modalMainViewContainer: {
       flex: 1,
@@ -769,9 +773,24 @@ export function stylesData({fontFamily, themeColors}) {
       marginHorizontal: moderateScale(0),
       marginVertical: moderateScaleVertical(0),
       alignItems: 'center',
-
-      // backgroundColor:'red'
     },
+
+    // textGoogleInputContainerAddress: {
+    //   // flexDirection: 'row',
+    //   // flexWrap:'wrap',
+    //   // overflow:'hidden',
+    //   height: moderateScaleVertical(49),
+    //   borderWidth: 1,
+    //   borderRadius: 13,
+    //   borderColor: colors.borderLight,
+    //   marginBottom: 20,
+    //   justifyContent: 'center',
+    //   marginHorizontal: moderateScale(0),
+    //   marginVertical: moderateScaleVertical(0),
+    //   alignItems: 'center',
+    //   // backgroundColor:'red'
+    // },
+
     listView: {
       borderWidth: moderateScale(1),
       borderColor: colors.borderLight,
@@ -803,7 +822,7 @@ export function stylesData({fontFamily, themeColors}) {
     },
     addressHomeOrOfficeView: {
       flexDirection: 'row',
-      marginRight: moderateScale(40),
+      marginRight: moderateScale(25),
       paddingVertical: moderateScale(10),
       paddingHorizontal: moderateScale(15),
       backgroundColor: colors.white,

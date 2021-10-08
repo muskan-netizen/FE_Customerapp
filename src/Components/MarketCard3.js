@@ -53,6 +53,8 @@ export default function MarketCard3({
     data.banner.image_path || data.image.image_path,
     '800/400',
   );
+
+  console.log(data, 'datadatadata');
   return (
     <TouchableOpacity
       activeOpacity={1}
@@ -206,15 +208,15 @@ export default function MarketCard3({
               textAlign: 'left',
               color: data?.show_slot
                 ? colors.green
-                : data?.slot && data?.slot.length
-                ? colors.green
-                : colors.redB,
+                : data?.is_vendor_closed
+                ? colors.redB
+                : colors.green,
             }}>
             {data?.show_slot
               ? strings.OPEN
-              : data?.slot && data?.slot.length
-              ? strings.OPEN
-              : strings.CLOSE}
+              : data?.is_vendor_closed
+              ? strings.CLOSE
+              : strings.OPEN}
           </Text>
         </View>
       </View>

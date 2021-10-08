@@ -209,7 +209,7 @@ export function getAddressComponent(details, update) {
   )?.short_name;
 
   street = details?.address_components?.find((addressComponent) =>
-    addressComponent?.types.includes('administrative_area_level_2'),
+    addressComponent?.types.includes('route'),
   )?.short_name;
 
   country = details?.address_components?.find((addressComponent) =>
