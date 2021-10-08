@@ -48,7 +48,7 @@ export default function TaxiHomeCategoryCard({
         justifyContent: 'center',
 
         alignItems: 'center',
-        height: moderateScale(70),
+        height: moderateScale(90),
       }}>
       <View
         style={{
@@ -81,13 +81,13 @@ export default function TaxiHomeCategoryCard({
           />
         )}
       </View>
-      <View style={{flex: 0.2}}>
+      <View style={{flex: 0.5}}>
         <Text
           numberOfLines={1}
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             fontFamily: fontFamily.regular,
-            // marginVertical: moderateScaleVertical(2),
+            marginTop: moderateScaleVertical(8),
             fontSize: textScale(10),
           }}>
           {data.name}

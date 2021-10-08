@@ -79,7 +79,7 @@ export default function DashBoardFive({
   useEffect(() => {
     if (appMainData?.vendors && appMainData?.vendors.length) {
       updateState({
-        vendorsData: appMainData?.vendors.splice(0, 4),
+        vendorsData: appMainData?.vendors.filter((item, indx) => indx < 4),
       });
     }
   }, [appMainData?.vendors]);
@@ -109,9 +109,9 @@ export default function DashBoardFive({
 
   const renderBanners = ({item}) => {
     const imageUrl = getImageUrl(
-      item.image.proxy_url,
-      item.image.image_path,
-      '900/700',
+      item.image_mobile.image_fit || item.image.image_fit,
+      item.image_mobile.image_path || item.image.image_path,
+      '700/300',
     );
     return (
       <TouchableOpacity onPress={() => bannerPress(item)}>
@@ -130,11 +130,15 @@ export default function DashBoardFive({
 
   const categoriesBanners = () => {
     return (
-      <View>
+      <View style={{}}>
         {appMainData &&
           appMainData?.categories &&
           !!appMainData?.categories.length && (
-            <View style={{marginHorizontal: moderateScale(8)}}>
+            <View
+              style={{
+                marginHorizontal: moderateScale(8),
+                marginTop: moderateScaleVertical(10),
+              }}>
               <FlatList
                 numColumns={4}
                 data={appMainData?.categories}
@@ -147,9 +151,9 @@ export default function DashBoardFive({
               />
             </View>
           )}
-        <View style={{marginVertical: moderateScale(24)}}>
+        <View style={{marginTop: moderateScaleVertical(16)}}>
           {!!appData?.banners?.length && (
-            <>
+            <View>
               <FlatList
                 horizontal
                 data={appData?.banners}
@@ -166,7 +170,7 @@ export default function DashBoardFive({
                   <View style={{marginRight: moderateScale(16)}} />
                 )}
               />
-            </>
+            </View>
           )}
         </View>
       </View>
@@ -275,25 +279,65 @@ export default function DashBoardFive({
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{flexGrow: 1}}>
-        <SearchLoader viewStyles={{marginTop: moderateScale(15)}} />
+        {/* <SearchLoader viewStyles={{marginTop: moderateScale(15)}} /> */}
         <CategoryLoader2 viewStyles={{marginTop: moderateScale(25)}} />
-        <CategoryLoader2 viewStyles={{marginTop: moderateScale(25)}} />
-        <BannerLoader
-          isBannerDots
-          viewStyles={{
-            marginTop: moderateScale(35),
-          }}
-        />
-        <HeaderLoader
-          viewStyles={{marginVertical: 20}}
-          widthLeft={moderateScale(150)}
-          rectWidthLeft={moderateScale(150)}
-          heightLeft={moderateScaleVertical(20)}
-          rectHeightLeft={moderateScaleVertical(20)}
-          isRight={false}
-          rx={15}
-          ry={15}
-        />
+        <CategoryLoader2 viewStyles={{marginTop: moderateScale(35)}} />
+
+        <View style={{flexDirection: 'row'}}>
+          <HeaderLoader
+            viewStyles={{marginVertical: 30}}
+            widthLeft={moderateScale(150)}
+            rectWidthLeft={moderateScale(150)}
+            heightLeft={moderateScaleVertical(240)}
+            rectHeightLeft={moderateScaleVertical(240)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{marginVertical: 30, marginLeft: 0}}
+            widthLeft={moderateScale(150)}
+            rectWidthLeft={moderateScale(150)}
+            heightLeft={moderateScaleVertical(240)}
+            rectHeightLeft={moderateScaleVertical(240)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{marginVertical: 30, marginLeft: 0}}
+            widthLeft={moderateScale(150)}
+            rectWidthLeft={moderateScale(150)}
+            heightLeft={moderateScaleVertical(240)}
+            rectHeightLeft={moderateScaleVertical(240)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+        </View>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <HeaderLoader
+            viewStyles={{marginTop: 5}}
+            widthLeft={moderateScale(150)}
+            rectWidthLeft={moderateScale(150)}
+            heightLeft={moderateScaleVertical(20)}
+            rectHeightLeft={moderateScaleVertical(20)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{marginTop: 5}}
+            widthLeft={moderateScale(60)}
+            rectWidthLeft={moderateScale(60)}
+            heightLeft={moderateScaleVertical(20)}
+            rectHeightLeft={moderateScaleVertical(20)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+        </View>
+
         <BannerLoader
           isVendorLoader
           viewStyles={{marginTop: moderateScale(20)}}
@@ -349,8 +393,8 @@ export default function DashBoardFive({
                   <View style={{height: moderateScale(10)}} />
                 )}
               />
-              <View style={{marginVertical: 16}} />
-              <View>
+
+              <View style={{}}>
                 {appMainData &&
                   appMainData?.brands &&
                   !!appMainData?.brands.length && (
@@ -361,6 +405,7 @@ export default function DashBoardFive({
                         horizontal
                         data={appMainData?.brands}
                         renderItem={renderBrands}
+                        keyExtractor={(item) => item.id.toString()}
                         ItemSeparatorComponent={() => (
                           <View style={{marginRight: moderateScale(12)}} />
                         )}
@@ -376,58 +421,57 @@ export default function DashBoardFive({
               </View>
             </>
           )}
-          <View style={{marginVertical: moderateScaleVertical(12)}}>
-            <View>
-              {appMainData &&
-                appMainData?.featured_products &&
-                !!appMainData?.featured_products.length && (
-                  <>
-                    <View>{listHeader(strings.FEATURED_PRODUCTS)}</View>
-                    <FlatList
-                      showsHorizontalScrollIndicator={false}
-                      horizontal
-                      data={appMainData?.featured_products}
-                      renderItem={renderFeaturedProducts}
-                      ItemSeparatorComponent={() => (
-                        <View style={{marginRight: moderateScale(16)}} />
-                      )}
-                      ListHeaderComponent={() => (
-                        <View style={{marginLeft: moderateScale(16)}} />
-                      )}
-                      ListFooterComponent={() => (
-                        <View style={{marginRight: moderateScale(16)}} />
-                      )}
-                    />
-                  </>
-                )}
-            </View>
+
+          <View style={{}}>
+            {appMainData &&
+              appMainData?.featured_products &&
+              !!appMainData?.featured_products.length && (
+                <>
+                  <View>{listHeader(strings.FEATURED_PRODUCTS)}</View>
+                  <FlatList
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
+                    data={appMainData?.featured_products}
+                    renderItem={renderFeaturedProducts}
+                    keyExtractor={(item) => item.id.toString()}
+                    ItemSeparatorComponent={() => (
+                      <View style={{marginRight: moderateScale(16)}} />
+                    )}
+                    ListHeaderComponent={() => (
+                      <View style={{marginLeft: moderateScale(16)}} />
+                    )}
+                    ListFooterComponent={() => (
+                      <View style={{marginRight: moderateScale(16)}} />
+                    )}
+                  />
+                </>
+              )}
           </View>
 
-          <View style={{marginVertical: moderateScaleVertical(12)}}>
-            <View>
-              {appMainData &&
-                appMainData?.new_products &&
-                !!appMainData?.new_products.length && (
-                  <>
-                    <View>{listHeader('New Products')}</View>
-                    <FlatList
-                      showsHorizontalScrollIndicator={false}
-                      horizontal
-                      data={appMainData?.new_products}
-                      renderItem={renderFeaturedProducts}
-                      ItemSeparatorComponent={() => (
-                        <View style={{marginRight: moderateScale(16)}} />
-                      )}
-                      ListHeaderComponent={() => (
-                        <View style={{marginLeft: moderateScale(16)}} />
-                      )}
-                      ListFooterComponent={() => (
-                        <View style={{marginRight: moderateScale(16)}} />
-                      )}
-                    />
-                  </>
-                )}
-            </View>
+          <View style={{}}>
+            {appMainData &&
+              appMainData?.new_products &&
+              !!appMainData?.new_products.length && (
+                <>
+                  <View>{listHeader('New Products')}</View>
+                  <FlatList
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
+                    data={appMainData?.new_products}
+                    renderItem={renderFeaturedProducts}
+                    keyExtractor={(item) => item.id.toString()}
+                    ItemSeparatorComponent={() => (
+                      <View style={{marginRight: moderateScale(16)}} />
+                    )}
+                    ListHeaderComponent={() => (
+                      <View style={{marginLeft: moderateScale(16)}} />
+                    )}
+                    ListFooterComponent={() => (
+                      <View style={{marginRight: moderateScale(16)}} />
+                    )}
+                  />
+                </>
+              )}
           </View>
 
           <View>
@@ -439,6 +483,7 @@ export default function DashBoardFive({
                   <FlatList
                     showsHorizontalScrollIndicator={false}
                     horizontal
+                    keyExtractor={(item) => item?.id.toString() || ''}
                     data={appMainData?.on_sale_products}
                     renderItem={renderSale}
                     ItemSeparatorComponent={() => (
