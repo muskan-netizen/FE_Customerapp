@@ -702,18 +702,18 @@ export default function ProductDetail({route, navigation}) {
                                 style={
                                   isDarkMode
                                     ? {tintColor: MyDarkTheme.colors.text}
-                                    : {tintColor: colors.black}
+                                    : {tintColor: colors.white}
                                 }
-                                source={imagePath.heart2}
+                                source={imagePath.whiteFilledHeart}
                               />
                             ) : (
                               <Image
                                 style={
                                   isDarkMode
                                     ? {tintColor: MyDarkTheme.colors.text}
-                                    : null
+                                    : {tintColor: colors.white}
                                 }
-                                source={imagePath.whiteFilledHeart}
+                                source={imagePath.heart2}
                               />
                             )}
                           </View>

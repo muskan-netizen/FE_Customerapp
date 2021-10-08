@@ -473,7 +473,6 @@ export default function BrandProducts2({route, navigation}) {
     index,
   });
 
-
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -557,7 +556,7 @@ export default function BrandProducts2({route, navigation}) {
                   {strings.PRODUCTS}
                 </Text>
               </View>
-              <View
+              {/* <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
@@ -653,7 +652,7 @@ export default function BrandProducts2({route, navigation}) {
                     {strings.FILTER}
                   </Text>
                 </TouchableOpacity>
-              </View>
+              </View> */}
             </View>
             {/* )} */}
 
