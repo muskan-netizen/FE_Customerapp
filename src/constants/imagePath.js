@@ -351,7 +351,7 @@ export default {
   icStar3: require('../assets/images/RoyoorderNewImages/ic_star3.png'),
   icEdit1: require('../assets/images/RoyoorderNewImages/ic_edit1.png'),
   car5: require('../assets/images/TAXIAPPIMAGES/ic_car1.png'),
-  ride: require('../assets/images/TAXIAPPIMAGES/ic_ride.png'),
+  ride: require('../assets/images/TAXIAPPIMAGES/ic_ride_icon.png'),
   taxiOrders: require('../assets/images/TAXIAPPIMAGES/ic_orders.png'),
   locationRoundedBackground: require('../assets/images/TAXIAPPIMAGES/ic_location.png'),
   starRoundedBackground: require('../assets/images/TAXIAPPIMAGES/ic_star.png'),
