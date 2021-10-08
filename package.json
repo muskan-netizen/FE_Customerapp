@@ -295,6 +295,7 @@
     "react-native-image-crop-picker": "^0.36.2",
     "react-native-image-header-scroll-view": "^0.10.3",
     "react-native-indicators": "^0.17.0",
+    "react-native-job-queue": "^0.4.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
     "react-native-lightbox": "^0.8.1",
     "react-native-lightbox-v2": "^0.8.6",

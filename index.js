@@ -7,11 +7,16 @@ import App from './App';
 import { name as appName } from './app.json';
 console.disableYellowBox = true;
 import messaging from '@react-native-firebase/messaging';
-import { printReciept } from './src/BLEPrinter';
+import { StartPrinting } from './src/Screens/PrinterConnection/PrinteFunc';
+
 // Register background handler
 messaging().setBackgroundMessageHandler(async remoteMessage => {
     console.log('Message handled in the background!', remoteMessage);
-    printReciept({})
+    const { data, notification } = remoteMessage
+
+    if (Platform.OS == 'android' && notification.android.sound == 'notification') {
+        StartPrinting(JSON.parse(data))
+      }
 });
 
 AppRegistry.registerComponent(appName, () => App);

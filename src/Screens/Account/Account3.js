@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import Modal from 'react-native-modal';
 import { useDarkMode } from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -32,8 +31,6 @@ import {
   getRandomColor
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
-import BLEPrinter from '../../BLEPrinter'
-import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
 
 export default function Account3({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -52,23 +49,6 @@ export default function Account3({ navigation }) {
   const styles = stylesFun({ fontFamily, themeColors });
   const commonStyles = commonStylesFun({ fontFamily });
 
-
-  const initBlePrinterConnection = () => {
-    BluetoothManager.checkBluetoothEnabled().then((enabled) => {
-      console.log('checking blue enabled >>>', enabled)
-      if (Boolean(enabled)) {
-        setIsVisible(Boolean(enabled))
-      } else {
-        BluetoothManager.enableBluetooth().then((r) => {
-          setIsVisible(true)
-        }, (err) => {
-          alert(err)
-        });
-      }
-    }, (err) => {
-      console.log(err)
-    });
-  }
 
   //Navigation to specific screen
   const moveToNewScreen =
@@ -177,13 +157,6 @@ export default function Account3({ navigation }) {
         ) : (
           <Header centerTitle={strings.MY_ACCOUNT} noLeftIcon={true} />
         )}
-
-        <Modal
-        onBackdropPress={() => setIsVisible(false)}
-          isVisible={isVisible}
-        >
-          <BLEPrinter onCloseModal={() => setIsVisible(false)} />
-        </Modal>
 
         {/* <View style={{...commonStyles.headerTopLine}} /> */}
 
@@ -446,7 +419,6 @@ export default function Account3({ navigation }) {
           <ListItemHorizontal
             centerContainerStyle={{ flexDirection: 'row' }}
             leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-            // onPress={() => initBlePrinterConnection()}
             onPress={moveToNewScreen(navigationStrings.ATTACH_PRINTER)}
             iconLeft={imagePath.mystores2}
             centerHeading={strings.ATTACH_PRINTER}

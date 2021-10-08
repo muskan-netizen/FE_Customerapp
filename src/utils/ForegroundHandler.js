@@ -4,9 +4,28 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
 import actions from '../redux/actions';
-import { printReciept } from '../BLEPrinter';
+import { printReciept, StartPrinting } from '../Screens/PrinterConnection/PrinteFunc';
+
+// let arr = []
+// let canEnablePrinter = true
 
 const ForegroundHandler = (props) => {
+
+  // const initPrinter = () => {
+  //   canEnablePrinter = false
+
+  //   printReciept(arr[0]).then(() => {
+  //     arr.shift()
+  //     setTimeout(() => {
+  //       if(arr.length > 0){
+  //         initPrinter()
+  //       }else{
+  //         canEnablePrinter = true
+  //       }
+  //     }, 2000);
+  //   })
+  // }
+
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       console.log("remote message foreground", remoteMessage)
@@ -30,11 +49,19 @@ const ForegroundHandler = (props) => {
             playSound: true
           })
       }
-      printReciept()
+
       if (Platform.OS == 'android' && notification.android.sound == 'notification') {
         actions.isVendorNotification(true)
         const { data } = remoteMessage.data
-        // printReciept(data)
+      
+        // arr.push(data)
+
+        // if (canEnablePrinter) {
+        //   initPrinter()
+        // }
+
+        StartPrinting(JSON.parse(data))
+
       }
       if (Platform.OS == 'ios' && notification.sound == 'notification.wav') {
         actions.isVendorNotification(true)
