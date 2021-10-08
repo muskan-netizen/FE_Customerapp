@@ -102,7 +102,7 @@ export default function OrderCardVendorComponent2({
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              padding: moderateScale(10),
+              padding: moderateScale(15),
               flex: 1,
             }}>
             <Image
@@ -115,6 +115,7 @@ export default function OrderCardVendorComponent2({
             />
 
             <Text
+              numberOfLines={2}
               style={
                 isDarkMode
                   ? [styles.userName, {color: MyDarkTheme.colors.text}]
@@ -465,7 +466,7 @@ export function stylesFunc({fontFamily, themeColors}) {
       opacity: 0.6,
     },
     userName: {
-      marginHorizontal: moderateScale(15),
+      marginHorizontal: moderateScale(14),
       color: colors.textGreyI,
       fontFamily: fontFamily.medium,
       fontSize: textScale(14),

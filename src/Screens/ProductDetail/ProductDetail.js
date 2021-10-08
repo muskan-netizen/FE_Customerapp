@@ -46,6 +46,8 @@ import {MyDarkTheme} from '../../styles/theme';
 import HorizontalLine from '../../Components/HorizontalLine';
 import StarRating from 'react-native-star-rating';
 import Banner2 from '../../Components/Banner2';
+import MarketCard3 from '../../Components/MarketCard3';
+import ProductsComp from '../../Components/ProductsComp';
 
 export default function ProductDetail({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -590,25 +592,31 @@ export default function ProductDetail({route, navigation}) {
   const renderProduct = ({item, index}) => {
     item.showAddToCart = true;
     return (
-      <ProductCard
+      <ProductsComp
+        item={item}
         onPress={() =>
           navigation.push(navigationStrings.PRODUCTDETAIL, {data: item})
         }
-        onAddtoWishlist={() => _onAddtoWishlist(item)}
-        data={item}
-        cardStyle={{
-          backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
-          marginHorizontal: moderateScale(10),
-        }}
-        addToCart={() =>
-          navigation.push(navigationStrings.PRODUCTDETAIL, {data: item})
-        }
-        bottomText={strings.VIEW_DETAIL}
-        nameTextStyle={{
-          ...styles.productName,
-          color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-        }}
       />
+      // <ProductCard
+      // onPress={() =>
+      //   navigation.push(navigationStrings.PRODUCTDETAIL, {data: item})
+      // }
+      //   onAddtoWishlist={() => _onAddtoWishlist(item)}
+      //   data={item}
+      //   cardStyle={{
+      //     backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
+      //     marginHorizontal: moderateScale(10),
+      //   }}
+      //   addToCart={() =>
+      //     navigation.push(navigationStrings.PRODUCTDETAIL, {data: item})
+      //   }
+      //   bottomText={strings.VIEW_DETAIL}
+      //   nameTextStyle={{
+      //     ...styles.productName,
+      //     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+      //   }}
+      // />
     );
   };
 
@@ -1014,7 +1022,7 @@ export default function ProductDetail({route, navigation}) {
             style={{flex: 1, marginVertical: moderateScaleVertical(10)}}
             contentContainerStyle={{flexGrow: 1}}
             horizontal
-            ItemSeparatorComponent={() => <View style={{height: 10}} />}
+            ItemSeparatorComponent={() => <View style={{width: 10}} />}
             ListHeaderComponent={() => (
               <View style={{marginLeft: moderateScale(8)}} />
             )}

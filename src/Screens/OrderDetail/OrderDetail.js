@@ -824,7 +824,7 @@ export default function OrderDetail({navigation, route}) {
           <LeftRightText
             leftText={strings.PLACED_ON}
             rightText={`${moment(cartData?.created_at).format(
-              'DD MMM,YYYY',
+              'DD MMM, YYYY',
             )} ${moment(cartData?.created_at).format('LT')} `}
             isDarkMode={isDarkMode}
             MyDarkTheme={MyDarkTheme}
@@ -841,6 +841,28 @@ export default function OrderDetail({navigation, route}) {
                 : colors.blackOpacity86,
             }}
           />
+          {!!cartData?.scheduled_date_time && (
+            <LeftRightText
+              leftText={strings.SEHEDLEDFOR}
+              rightText={`${moment(cartData?.scheduled_date_time).format(
+                'DD MMM, YYYY',
+              )} ${moment(cartData?.created_at).format('LT')} `}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+              leftTextStyle={{
+                fontSize: textScale(12),
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity43,
+              }}
+              rightTextStyle={{
+                fontSize: textScale(12),
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity86,
+              }}
+            />
+          )}
         </View>
         <View
           style={{

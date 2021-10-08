@@ -708,6 +708,7 @@ export default function Products({route, navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        console.log(res.data, 'adddddddddd');
         actions.cartItemQty(res);
         updateState({cartId: res.data.id});
         // showSuccess('Product successfully added');
@@ -1215,7 +1216,11 @@ export default function Products({route, navigation}) {
                 />
 
                 <View style={styles.rightViewOfShareSearch}>
-                  <TouchableOpacity activeOpacity={0.8}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={moveToNewScreen(
+                      navigationStrings.SEARCHPRODUCTOVENDOR,
+                    )}>
                     <Image
                       style={{
                         tintColor: isDarkMode

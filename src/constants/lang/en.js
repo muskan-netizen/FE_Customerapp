@@ -540,4 +540,5 @@ Amount`,
   ACTIVERIDES: 'Active Rides',
   CHOOSESAVEDPLACE: 'Choose a saved place',
   SETPICKUPTIME: 'Set pickiup time',
+  SEHEDLEDFOR: 'Scheduled For',
 };
