@@ -1165,12 +1165,12 @@ export default function Products({route, navigation}) {
           <ImageBackground
             source={{
               uri: getImageUrl(
-                data?.item?.banner.image_fit ||
-                  data?.categoryInfo?.image?.image_fit ||
-                  categoryInfo.banner.image_fit,
-                data?.item?.banner.image_path ||
-                  data?.categoryInfo?.image?.image_path ||
-                  categoryInfo.banner.image_path,
+                // data?.item?.banner.image_fit ||
+                data?.categoryInfo?.image?.image_fit ||
+                  categoryInfo?.banner.image_fit,
+                // data?.item?.banner.image_path ||
+                data?.categoryInfo?.image?.image_path ||
+                  categoryInfo?.banner.image_path,
                 '400/400',
               ),
             }}
@@ -1203,10 +1203,10 @@ export default function Products({route, navigation}) {
                     uri: getImageUrl(
                       data?.item?.banner.image_fit ||
                         data?.categoryInfo?.image?.image_fit ||
-                        categoryInfo.banner.image_fit,
+                        categoryInfo?.banner.image_fit,
                       data?.item?.banner.image_path ||
                         data?.categoryInfo?.image?.image_path ||
-                        categoryInfo.banner.image_path,
+                        categoryInfo?.banner.image_path,
                       '400/400',
                     ),
                     priority: FastImage.priority.low,
@@ -1349,7 +1349,7 @@ export default function Products({route, navigation}) {
     );
   };
 
-  if (!isLoading) {
+  if (isLoading) {
     return (
       <View
         style={{
