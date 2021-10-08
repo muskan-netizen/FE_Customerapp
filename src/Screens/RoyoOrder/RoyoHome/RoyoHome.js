@@ -43,6 +43,28 @@ const RoyoHome = (props) => {
       return {...state, ...data};
     });
 
+  const dashboardData = [
+    {
+      image: imagePath.timerRoyo,
+      header: 'Pending order',
+      text: '117 pending order',
+    },
+    {
+      image: imagePath.activeRoyo,
+      header: 'Active order',
+      text: '17 active orders',
+    },
+    {
+      image: imagePath.deliveredRoyo,
+      header: 'Delivered order',
+      text: '4 orders delivered',
+    },
+    {
+      image: imagePath.cancelledRoyo,
+      header: 'Cancelled order',
+      text: '7 orders cancelled',
+    },
+  ];
   const data1 = '';
   const data = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
@@ -72,7 +94,7 @@ const RoyoHome = (props) => {
     backgroundGradientFromOpacity: 0,
     backgroundGradientToOpacity: 0,
     fillShadowGradientOpacity: 0,
-    fillShadowGradient: 'black',
+    fillShadowGradient: colors.black,
     yAxisInterval: 2,
     barPercentage: 0.75,
     decimalPlaces: 0, // optional, defaults to 2dp
@@ -89,7 +111,8 @@ const RoyoHome = (props) => {
     navigation.navigate(navigationStrings.AddProduct);
   };
 
-  const dashboard = (image, header, text) => {
+  const dashboard = (item, index) => {
+    const {image, header, text} = item;
     return (
       <View style={styles.dashboardBox}>
         <Image
@@ -119,8 +142,8 @@ const RoyoHome = (props) => {
 
   return (
     <WrapperContainer
-      bgColor="white"
-      statusBarColor="white"
+      bgColor={colors.white}
+      statusBarColor={colors.white}
       barStyle="dark-content">
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
@@ -138,12 +161,7 @@ const RoyoHome = (props) => {
         </View>
 
         {data1 ? (
-          <View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexGrow: 1,
-            }}>
+          <View style={styles.center}>
             <Image source={imagePath.emptyPackage} style={{}} />
             <Text style={styles.emptyText}>
               No product added. plaease add new product sto create digital
@@ -158,29 +176,7 @@ const RoyoHome = (props) => {
           </View>
         ) : (
           <View>
-            <View style={styles.dashboard}>
-              {dashboard(
-                imagePath.timerRoyo,
-                'Pending order',
-                '117 pending order',
-              )}
-              {dashboard(
-                imagePath.activeRoyo,
-                'Active order',
-                '17 active orders',
-              )}
-              {dashboard(
-                imagePath.deliveredRoyo,
-                'Delivered order',
-                '4 orders delivered',
-              )}
-              {dashboard(
-                imagePath.cancelledRoyo,
-                'Cancelled order',
-                '7 orders cancelled',
-              )}
-            </View>
-
+            <View style={styles.dashboard}>{dashboardData.map(dashboard)}</View>
             <View style={styles.warningBox}>
               <Image
                 source={imagePath.warningRoyo}
@@ -207,19 +203,9 @@ const RoyoHome = (props) => {
             </View>
 
             {/* chart */}
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                justifyContent: 'space-between',
-              }}>
+            <View style={styles.rowWrapSpace}>
               <View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    paddingVertical: moderateScaleVertical(16),
-                  }}>
+                <View style={styles.chartHeader}>
                   <Text style={styles.font18Semibold}>Revenue</Text>
                   <View style={{flexDirection: 'row'}}>
                     <Text style={{...styles.font14Regular, color: '#2E3E3A5f'}}>
@@ -255,12 +241,7 @@ const RoyoHome = (props) => {
                 </View>
               </View>
               <View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    paddingVertical: moderateScaleVertical(16),
-                  }}>
+                <View style={styles.chartHeader}>
                   <Text style={styles.font18Semibold}>Revenue</Text>
                   <View style={{flexDirection: 'row'}}>
                     <Text style={{...styles.font14Regular, color: '#2E3E3A5f'}}>
@@ -274,15 +255,7 @@ const RoyoHome = (props) => {
                     <Text style={styles.font13Regular}>
                       Total revenue (Delivered order)
                     </Text>
-                    <Text
-                      style={{
-                        fontFamily: fontFamily.bold,
-                        fontSize: 16,
-                        color: colors.themeColor2,
-                        marginVertical: moderateScaleVertical(4),
-                      }}>
-                      $123456
-                    </Text>
+                    <Text style={styles.font16Bold}>$123456</Text>
                   </View>
                   <BarChart
                     withCustomBarColorFromData={true}
@@ -321,7 +294,16 @@ const RoyoHome = (props) => {
                         marginLeft: customMarginLeftForBox(index),
                         flex: 1,
                       }}>
-                      <OrderCard data={orderData} index={index} mode={item} />
+                      <OrderCard
+                        onPress={() =>
+                          navigation.navigate(
+                            navigationStrings.ROYO_ORDER_DETAIL,
+                          )
+                        }
+                        data={orderData}
+                        index={index}
+                        mode={item}
+                      />
                     </View>
                   );
                 }}
@@ -442,5 +424,21 @@ const styles = StyleSheet.create({
     padding: moderateScaleVertical(16),
     borderRadius: moderateScaleVertical(5),
     marginBottom: moderateScaleVertical(16),
+  },
+
+  rowWrapSpace: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  chartHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: moderateScaleVertical(16),
+  },
+  center: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexGrow: 1,
   },
 });

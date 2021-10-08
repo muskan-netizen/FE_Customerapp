@@ -100,4 +100,8 @@ export default {
   ROYO_BOTTOMTAB: 'royoBottom',
   ROYO_ACCOUNT: 'royoAccount',
   ROYO_PRODUCTS: 'royoProducts',
+  ROYO_TRANSACTIONS: 'royoTransactions',
+  ROYO_PAYMENT_SETTINGS: 'royoPaymentSettings',
+  ROYO_ORDER_DETAIL: 'royoOrderDetail',
+  ROYO_ADD_PRODUCT: 'royoAddProduct',
 };

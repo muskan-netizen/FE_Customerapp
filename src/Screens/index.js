@@ -100,3 +100,7 @@ export {default as RoyoHome} from './RoyoOrder/RoyoHome/RoyoHome';
 export {default as RoyoOrder} from './RoyoOrder/RoyoOrder/RoyoOrder';
 export {default as RoyoAccounts} from './RoyoOrder/RoyoAccounts/RoyoAccounts';
 export {default as RoyoProducts} from './RoyoOrder/RoyoProducts/RoyoProducts';
+export {default as RoyoPaymentSetting} from './RoyoOrder/RoyoPaymentSetting/RoyoPaymentSetting';
+export {default as RoyoTransactions} from './RoyoOrder/RoyoTransactions/RoyoTransactions';
+export {default as RoyoOrderDetail} from './RoyoOrder/RoyoOrderDetail/RoyoOrderDetail';
+export {default as RoyoAddProduct} from './RoyoOrder/RoyoAddProduct/RoyoAddProduct';

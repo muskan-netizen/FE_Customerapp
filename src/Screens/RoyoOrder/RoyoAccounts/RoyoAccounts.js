@@ -43,13 +43,13 @@ const RoyoAccounts = (props) => {
     {
       text: 'Transactions',
       image: imagePath.transactionsRoyo,
-      //   onPress: () => navigation.navigate(navigationStrings.Transactions),
+        onPress: () => navigation.navigate(navigationStrings.ROYO_TRANSACTIONS),
     },
     
     {
       text: 'Payment Settings',
       image: imagePath.paymentSettinRoyo,
-      //   onPress: () => navigation.navigate(navigationStrings.PaymentSettings),
+        onPress: () => navigation.navigate(navigationStrings.ROYO_PAYMENT_SETTINGS),
     },
     
     {
@@ -67,7 +67,7 @@ const RoyoAccounts = (props) => {
       statusBarColor="white"
       barStyle="dark-content">
       <View style={styles.container}>
-      {/* <View
+      <View
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
@@ -155,7 +155,7 @@ const RoyoAccounts = (props) => {
               </TouchableOpacity>
             );
           })}
-        </View> */}
+        </View>
       </View>
     </WrapperContainer>
   );

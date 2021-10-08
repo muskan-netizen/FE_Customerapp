@@ -18,8 +18,11 @@ import {
   customMarginLeftForBox,
   noOfColumn,
 } from '../../../utils/constants/constants';
+import navigationStrings from '../../../navigation/navigationStrings';
 
 const RoyoOrder = (props) => {
+  const {navigation} = props;
+
   const [state, setState] = useState({activeIndex: 0});
   const {activeIndex} = state;
   const updateState = (data) =>
@@ -50,20 +53,8 @@ const RoyoOrder = (props) => {
       statusBarColor="white"
       barStyle="dark-content">
       <View style={styles.container}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text
-            style={{
-              fontFamily: fontFamily.bold,
-              fontSize: textScale(15),
-              textAlign: 'center',
-            }}>
-            Orders | Foodies hub {'  '}
-          </Text>
+        <View style={styles.flexRowCenter}>
+          <Text style={styles.font15Bold}>Orders | Foodies hub {'  '}</Text>
           <Image source={imagePath.dropDownNew} />
         </View>
 
@@ -78,6 +69,13 @@ const RoyoOrder = (props) => {
             bounces={false}
             data={['Cash', 'Card', 'Cash', 'Cash']}
             numColumns={noOfColumn}
+            ListEmptyComponent={() => {
+              return (
+                <View style={styles.emptyCartBody}>
+                  <Image source={imagePath.emptyCartRoyo} />
+                </View>
+              );
+            }}
             renderItem={({item, index}) => {
               return (
                 <View
@@ -85,7 +83,14 @@ const RoyoOrder = (props) => {
                     marginLeft: customMarginLeftForBox(index),
                     flex: 1,
                   }}>
-                  <OrderCard data={data} index={index} mode={item} />
+                  <OrderCard
+                    onPress={() =>
+                      navigation.navigate(navigationStrings.ROYO_ORDER_DETAIL)
+                    }
+                    data={data}
+                    index={index}
+                    mode={item}
+                  />
                 </View>
               );
             }}
@@ -96,8 +101,15 @@ const RoyoOrder = (props) => {
           <FlatList
             showsVerticalScrollIndicator={false}
             bounces={false}
-            data={['Cash', 'Card', 'Cash']}
+            data={[]}
             numColumns={noOfColumn}
+            ListEmptyComponent={() => {
+              return (
+                <View style={styles.emptyCartBody}>
+                  <Image source={imagePath.emptyCartRoyo} />
+                </View>
+              );
+            }}
             renderItem={({item, index}) => {
               return (
                 <View
@@ -123,6 +135,13 @@ const RoyoOrder = (props) => {
             bounces={false}
             data={['Cash', 'Cash']}
             numColumns={noOfColumn}
+            ListEmptyComponent={() => {
+              return (
+                <View style={styles.emptyCartBody}>
+                  <Image source={imagePath.emptyCartRoyo} />
+                </View>
+              );
+            }}
             renderItem={({item, index}) => {
               return (
                 <View
@@ -148,6 +167,13 @@ const RoyoOrder = (props) => {
             bounces={false}
             data={['Cash']}
             numColumns={noOfColumn}
+            ListEmptyComponent={() => {
+              return (
+                <View style={styles.emptyCartBody}>
+                  <Image source={imagePath.emptyCartRoyo} />
+                </View>
+              );
+            }}
             renderItem={({item, index}) => {
               return (
                 <View
@@ -181,7 +207,12 @@ const styles = StyleSheet.create({
     marginBottom: customMarginBottom(),
     flex: 1,
   },
-
+  emptyCartBody: {
+    flex: 1,
+    justifyContent: 'center',
+    height: 400,
+    alignItems: 'center',
+  },
   textStyle: {
     color: colors.black,
     fontSize: 24,
@@ -192,5 +223,15 @@ const styles = StyleSheet.create({
     height: moderateScale(50),
     borderRadius: moderateScale(34),
     marginLeft: moderateScaleVertical(20),
+  },
+  flexRowCenter: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  font15Bold: {
+    fontFamily: fontFamily.bold,
+    fontSize: textScale(15),
+    textAlign: 'center',
   },
 });

@@ -17,6 +17,7 @@ import {useSelector} from 'react-redux';
 import {TouchableOpacity} from 'react-native';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import {Platform} from 'react-native';
+import navigationStrings from '../../../navigation/navigationStrings';
 
 const RoyoProducts = (props) => {
   const {navigation} = props;
@@ -60,7 +61,7 @@ const RoyoProducts = (props) => {
                   fontFamily: fontFamily.medium,
                   color: colors.black,
                 }}>
-                item.productName
+                item.Name
               </Text>
               <Text
                 style={{
@@ -170,7 +171,7 @@ const RoyoProducts = (props) => {
               rightOpenValue={-moderateScale(100)}
             />
             <ButtonWithLoader
-              // onPress={() => navigation.navigate(navigationString.AddProduct)}
+              onPress={() => navigation.navigate(navigationStrings.ROYO_ADD_PRODUCT)}
               btnStyle={{
                 position: 'absolute',
                 padding: moderateScale(10),
@@ -220,7 +221,7 @@ const RoyoProducts = (props) => {
               );
             })}
             <ButtonWithLoader
-              // onPress={() => navigation.navigate(navigationString.AddProduct)}
+              onPress={() => navigation.navigate(navigationStrings.ROYO_ADD_PRODUCT)}
               btnStyle={{
                 position: 'absolute',
                 padding: moderateScale(10),
@@ -273,7 +274,7 @@ const styles = StyleSheet.create({
   hiddenButton: {
     paddingHorizontal: moderateScale(14),
     marginBottom: moderateScale(16),
-    borderRadius: 4,
+    borderRadius: moderateScaleVertical(8),
     justifyContent: 'center',
     marginLeft: moderateScale(8),
   },

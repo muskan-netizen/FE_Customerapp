@@ -350,8 +350,6 @@ export default {
   icStar3: require('../assets/images/RoyoorderNewImages/ic_star3.png'),
   icEdit1: require('../assets/images/RoyoorderNewImages/ic_edit1.png'),
 
-
-
   // royo order tab
   activeRoyo: require('../assets/images/royoTab/ic_active.png'),
   cancelledRoyo: require('../assets/images/royoTab/ic_cancelled.png'),
@@ -362,9 +360,17 @@ export default {
   inStockRoyo: require('../assets/images/royoTab/ic_on.png'),
   outStockRoyo: require('../assets/images/royoTab/ic_off.png'),
   editRoyo: require('../assets/images/royoTab/ic_edit.png'),
-  deleteRoyo: require('../assets/images/royoTab/ic_delete.png'), 
-
-
+  deleteRoyo: require('../assets/images/royoTab/ic_delete.png'),
+  selectedRoyo: require('../assets/images/royoTab/ic_select.png'),
+  deselectedRoyo: require('../assets/images/royoTab/ic_deselect.png'),
+  viseCardRoyo: require('../assets/images/royoTab/ic_visa.png'),
+  masterCardRoyo: require('../assets/images/royoTab/ic_mastercard.png'),
+  backRoyo: require('../assets/images/royoTab/ic_back.png'),
+  whatsAppRoyo: require('../assets/images/royoTab/ic_wa.png'),
+  callRoyo: require('../assets/images/royoTab/ic_call.png'),
+  shareRoyo: require('../assets/images/royoTab/ic_share.png'),
+  emptyCartRoyo: require('../assets/images/royoTab/ic_epmtycart.png'),
+  closeRoyo: require('../assets/images/royoTab/ic_close.png'),
 
   accountActiveRoyo: require('../assets/images/royoTab/ic_account2.png'),
   accountInactiveRoyo: require('../assets/images/royoTab/ic_account1.png'),
@@ -379,5 +385,4 @@ export default {
   edit1Royo: require('../assets/images/royoTab/Shape.png'),
   paymentSettinRoyo: require('../assets/images/royoTab/ic_paysettings.png'),
   cameraRoyo: require('../assets/images/royoTab/ic_camera2.png'),
- 
 };

@@ -1,17 +1,38 @@
-import React from 'react'
-import navigationStrings from './navigationStrings'
-import RoyoTabRoute from './RoyoTabRoute'
+import React from 'react';
+import {RoyoAddProduct, RoyoOrderDetail, RoyoPaymentSetting, RoyoTransactions} from '../Screens';
+import navigationStrings from './navigationStrings';
+import RoyoTabRoute from './RoyoTabRoute';
 
 const RoyoOrderStack = (Stack) => {
   return (
     <>
-    <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.ROYO_BOTTOMTAB}
         component={RoyoTabRoute}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name={navigationStrings.ROYO_TRANSACTIONS}
+        component={RoyoTransactions}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.ROYO_PAYMENT_SETTINGS}
+        component={RoyoPaymentSetting}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.ROYO_ORDER_DETAIL}
+        component={RoyoOrderDetail}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.ROYO_ADD_PRODUCT}
+        component={RoyoAddProduct}
+        options={{headerShown: false}}
+      />
     </>
-  )
-}
+  );
+};
 
-export default RoyoOrderStack
+export default RoyoOrderStack;

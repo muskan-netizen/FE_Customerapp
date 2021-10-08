@@ -1,4 +1,5 @@
 import React from 'react';
+import {TouchableOpacity} from 'react-native';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import colors from '../styles/colors';
 import fontFamily from '../styles/fontFamily';
@@ -10,57 +11,52 @@ import {
 import ButtonWithLoader from './ButtonWithLoader';
 
 const OrderCard = (props) => {
-  const {data = [], mode = 'cash', status = ''} = props;
+  const {data = [], mode = 'cash', status = '', onPress = () => {}} = props;
   return (
     <View style={styles.container}>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Text style={styles.font13Regular}>Order #836372</Text>
-        <Text style={styles.date}>9 oct; 11: 11 pm</Text>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <View
-            style={{
-              minWidth: moderateScale(30 + data?.length * 8),
-              height: moderateScaleVertical(48),
-              justifyContent: 'center',
-            }}>
-            {data?.map((val, index) => (
-              <Image
-                key={index}
-                source={val}
-                style={{
-                  ...styles.image,
-                  zIndex: -index,
-                  marginLeft: moderateScale(8 * index),
-                }}
-              />
-            ))}
-          </View>
-          <Text style={styles.font16Regular}>Salt x 3 more</Text>
+      <TouchableOpacity onPress={onPress}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <Text style={styles.font13Regular}>Order #836372</Text>
+          <Text style={styles.date}>9 oct; 11: 11 pm</Text>
         </View>
-        <Text
-          style={{
-            fontSize: 14,
-            fontFamily: fontFamily.regular,
-            color: '#35B300',
-            textAlign: 'right',
-          }}>
-          {mode}
-        </Text>
-      </View>
+        <View
+          style={styles.rowSapce}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View
+              style={{
+                minWidth: moderateScale(30 + data?.length * 8),
+                height: moderateScaleVertical(48),
+                justifyContent: 'center',
+              }}>
+              {data?.map((val, index) => (
+                <Image
+                  key={index}
+                  source={val}
+                  style={{
+                    ...styles.image,
+                    zIndex: -index,
+                    marginLeft: moderateScale(8 * index),
+                  }}
+                />
+              ))}
+            </View>
+            <Text style={styles.font16Regular}>Salt x 3 more</Text>
+          </View>
+          <Text
+            style={{
+              ...styles.font14Regular,
+              color: '#35B300',
+              textAlign: 'right',
+            }}>
+            {mode}
+          </Text>
+        </View>
+      </TouchableOpacity>
       <View style={styles.line} />
       <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
+        style={{...styles.rowSapce,
           marginTop: moderateScaleVertical(12),
-          alignItems: 'center',
+          
         }}>
         <View>
           <Text style={styles.orderText}>Order Total</Text>
@@ -79,10 +75,8 @@ const OrderCard = (props) => {
             </Text>
             <Text
               style={{
-                fontFamily: fontFamily.regular,
-                fontSize: 14,
-                color: status=='Cancelled'?'#E02020':colors.black,
-                lineHeight: textScale(24),
+                ...styles.font14Regular,
+                color: status == 'Cancelled' ? '#E02020' : colors.black,
               }}>
               {status}
             </Text>
@@ -124,6 +118,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: fontFamily.regular,
     color: colors.black,
+  },
+  font14Regular: {
+    fontFamily: fontFamily.regular,
+    fontSize: 14,
+    lineHeight: textScale(24),
   },
   font13Regular: {
     fontFamily: fontFamily.regular,
@@ -171,5 +170,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.themeColor2,
     lineHeight: textScale(24),
+  },
+  rowSapce: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });

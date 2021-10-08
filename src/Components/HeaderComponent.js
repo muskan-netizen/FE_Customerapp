@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
-import commonStyles from '../styles/commonStyles';
-import { moderateScale } from '../styles/responsiveSize';
+import fontFamily from '../styles/fontFamily';
+import { moderateScale, textScale } from '../styles/responsiveSize';
 const HeaderComponent = props => {
-  let {centerTitle = '', leftIcon = '', onPressLeft=()=>{}, containerStyle} = props;
+  let {centerTitle = '', leftIcon = '',centerTextStyle, onPressLeft=()=>{}, containerStyle, centerImage} = props;
   return (
     <View style={{flexDirection: 'row', alignItems: 'center', ...containerStyle}}>
       {leftIcon? (
@@ -11,8 +11,9 @@ const HeaderComponent = props => {
           <Image source={leftIcon} />
         </TouchableOpacity>
       ):null}
-      <View style={{flex: 1, alignItems: 'center', marginLeft: -moderateScale(15)}}>
-        <Text style={{...commonStyles.font18SemiBold}}>{centerTitle}</Text>
+      <View style={{flex: 1, alignItems: 'center',justifyContent: 'center', marginLeft: -moderateScale(15), flexDirection: 'row'}}>
+        <Text style={{fontFamily: fontFamily.bold, fontSize: textScale(15),...centerTextStyle}}>{centerTitle}</Text>
+        <Image source={centerImage}/>
       </View>
     </View>
   );

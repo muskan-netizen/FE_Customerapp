@@ -526,4 +526,51 @@ Amount`,
   SEAT_CAPACITY: 'Seat Capacity',
   WRITE_REVIEW: 'Write a Review',
   YOUR_EMAIL_PHONE: 'Your Email or Phone Number',
+
+
+
+
+
+
+
+
+
+  // royo order
+  // royo orderAddProduct 
+  YES: 'Yes',
+  NO: 'No',
+  OPEN_CAMERA: 'Open Camera',
+  OPEN_GALLERY: 'Open Gallery',
+  CANCEL_IMAGE_LOADING: 'Cancel Image Loading',
+  CAMERA_UNAVAILABLE: 'Camera Unavailable',
+  PERMISSION_ERROR: 'Permission Error',
+  ADD_PRODUCT: "Add product",
+  ADD_PRODUCT_IMAGE: "Add Product Images (Upto 5)",
+  PRODUCT_NAME: "Product name",
+  ENTER_BUISNESS_NAME: "Enter buisness name here",
+  PRODUCT_CATEGORY: "Product Category",
+  CHOOSE_BUISNESS_TYPE: "Choose your buisness type",
+  MRP: "MRP",
+  ENTER_MARP: "Enter MRP",
+  SALE_PRICE: "Sale price",
+  ENTER_SALE_PRICE: "Enter sale price",
+  PRODUCT_UNIT: "Product unit",
+  SET: "Set",
+  UNIT_PER_SET: "Unit per Set",
+  ENTER_UNIT: "Enter units",
+  
+  PRODUCT_DETAILS: "Product details",
+  ENTER_PRODUCT_DETAIL: 'Enter product details here',
+  VARIANTS_ADD: "+Variants & Add -Ons",
+  SAVE_ADD_NEW: "Save & Add new",
+  SAVE: "Save",
+
+
+
+  // roy0 paymet settng
+  PAYMENT_SETTINGS: 'Payment Settings',
+  CASH_ON_DELIVERY: 'Cash on delivery',
+  BANK_ACCOUNT_TRANSFER: 'Bank account transfer',
+  ADD_ACCOUNT: ' + Add account',
+
 };

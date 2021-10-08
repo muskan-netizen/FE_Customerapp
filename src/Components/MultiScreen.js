@@ -15,17 +15,13 @@ const MultiScreen = (props) => {
     selectedScreen,
     selectedScreenIndex,
     activeTintColor = colors.themeColor2,
-    inActiveTintColor = '#0000004b',
+    inActiveTintColor = colors.blackOpacity66,
     borderWidth = 1,
     tabTextStyle,
   } = props;
   return (
     <View
-      style={{
-        borderBottomColor: colors.blackOpacity20,
-        borderBottomWidth: 0.5,
-        marginBottom: moderateScaleVertical(16),
-      }}>
+      style={styles.container}>
       <View style={{...styles.mainView, ...mainViewStyle}}>
         {screenName.map((value, index) => {
           return (
@@ -68,6 +64,11 @@ const MultiScreen = (props) => {
 export default MultiScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    borderBottomColor: colors.blackOpacity20,
+    borderBottomWidth: 0.5,
+    marginBottom: moderateScaleVertical(16),
+  },
   mainView: {
     flexDirection: 'row',
     maxWidth: 500,
