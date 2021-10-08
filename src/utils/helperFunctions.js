@@ -88,7 +88,7 @@ const showError = (message) => {
     icon: 'danger',
     message,
   });
-  Toast.show(message);
+  // Toast.show(message);
 };
 
 const showSuccess = (message) => {
