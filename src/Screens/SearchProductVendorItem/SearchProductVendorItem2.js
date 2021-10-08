@@ -332,7 +332,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
       <View
         style={{
           width: moderateScale(width / 2),
-          marginHorizontal: moderateScale(10),
+          marginLeft: moderateScale(10),
         }}>
         <MarketCard3
           data={item}

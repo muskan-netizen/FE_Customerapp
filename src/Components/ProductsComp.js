@@ -112,18 +112,20 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
         {!isDiscount ? (
           <View style={{flex: 1, flexDirection: 'row'}}>
             <View style={{flex: 0.5, alignItems: 'flex-start'}}>
-              <Text
-                numberOfLines={1}
-                style={{
-                  ...styles.inTextStyle,
-                  fontFamily: fontFamily.regular,
-                  color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.blackOpacity40,
-                  width: width / 4,
-                }}>
-                {strings.IN} {category?.category_detail?.translation[0]?.name}
-              </Text>
+              {category?.category_detail?.translation[0]?.name && (
+                <Text
+                  numberOfLines={1}
+                  style={{
+                    ...styles.inTextStyle,
+                    fontFamily: fontFamily.regular,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity40,
+                    width: width / 4,
+                  }}>
+                  {strings.IN} {category?.category_detail?.translation[0]?.name}
+                </Text>
+              )}
             </View>
             <View style={{marginHorizontal: 10}} />
             <View style={{flex: 0.5, alignItems: 'flex-end'}}>

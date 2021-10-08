@@ -2124,7 +2124,7 @@ export default function Cart({navigation, route}) {
       <View
         style={{
           width: moderateScale(width / 2),
-          marginHorizontal: moderateScale(10),
+          marginLeft: moderateScale(5),
         }}>
         <MarketCard3
           data={item}

@@ -699,7 +699,6 @@ export default function Home({route, navigation}) {
   // console.log(appMainData, 'appMainData');
 
   const {blurRef} = useRef();
-
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
