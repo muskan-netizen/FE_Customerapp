@@ -1365,7 +1365,7 @@ export default function Products({route, navigation}) {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 paddingHorizontal: moderateScale(15),
-                marginBottom: moderateScale(10),
+                marginBottom: moderateScale(15),
               }}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <TouchableOpacity
