@@ -1183,7 +1183,7 @@ export default function Products({route, navigation}) {
             resizeMode="cover">
             <LinearGradient
               style={styles.linearGradientHdr}
-              colors={['rgba(0,0,0,0.5)', 'rgba(0,0,0,0.5)']}>
+              colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0.7)']}>
               <View style={styles.hdrCompHeader}>
                 <TouchableOpacity
                   hitSlop={styles.hitSlopProp}
@@ -1454,40 +1454,25 @@ export default function Products({route, navigation}) {
               />
               <View
                 style={{
-                  marginVertical: moderateScaleVertical(16),
-                  marginBottom: moderateScaleVertical(24),
-                  marginLeft: moderateScale(15),
-                  flexDirection: 'row',
+                  marginVertical: moderateScaleVertical(12),
                   alignItems: 'center',
-                  justifyContent: 'space-between',
+                  justifyContent: 'center',
                 }}>
-                <CircularProfileLoader />
-                <View>
-                  <HeaderLoader
-                    widthLeft={50}
-                    rectWidthLeft={50}
-                    heightLeft={20}
-                    rectHeightLeft={20}
-                    rx={5}
-                    ry={5}
-                    isRight={false}
-                    viewStyles={{marginHorizontal: 0}}
-                  />
-                  <HeaderLoader
-                    widthLeft={50}
-                    rectWidthLeft={50}
-                    heightLeft={20}
-                    rectHeightLeft={20}
-                    rx={5}
-                    ry={5}
-                    viewStyles={{
-                      marginTop: moderateScaleVertical(10),
-                      marginHorizontal: 0,
-                    }}
-                    isRight={false}
-                  />
-                </View>
+                <CircularProfileLoader isDesc={false} />
               </View>
+              <HeaderLoader
+                viewStyles={{
+                  marginHorizontal: moderateScale(20),
+                  marginBottom: moderateScale(10),
+                }}
+                widthLeft={width - moderateScale(40)}
+                rectWidthLeft={width - moderateScale(40)}
+                heightLeft={moderateScaleVertical(80)}
+                rectHeightLeft={moderateScaleVertical(80)}
+                isRight={false}
+                rx={8}
+                ry={8}
+              />
             </>
           )}
 
@@ -1541,7 +1526,6 @@ export default function Products({route, navigation}) {
     }
     let offset = nativeEvent.contentOffset.y;
     let index = parseInt(offset / 10); // your cell height
-    console.log('now index is ' + index);
     if (index > 16) {
       if (!AnimatedHeaderValue) {
         updateState({AnimatedHeaderValue: true});
