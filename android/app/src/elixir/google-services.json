@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "73453565602",
+    "project_id": "elixir-e4a73",
+    "storage_bucket": "elixir-e4a73.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73453565602:android:2c977442f6245d1cef89fb",
+        "android_client_info": {
+          "package_name": "com.elixir.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "73453565602-al61q38jrtujd21t44n7n4bnq1nm01fm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elixir.customer",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "73453565602-o7h47hjo9p2d4cguhr924ua948arlovp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elixir.customer",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "73453565602-pbkdmrsufsc2svn6sj83tuof42fk3aal.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elixir.customer",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "73453565602-7g9up648feo7hdvnc8rqmbfors2lsvdi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApbJ38Bqfk3qivsafDIbunQcYtIcWg0Fw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "73453565602-7g9up648feo7hdvnc8rqmbfors2lsvdi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "73453565602-g4nnafq1527hhjldcoc83ufu9432r83g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.elixir"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

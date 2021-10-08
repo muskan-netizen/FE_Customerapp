@@ -474,11 +474,11 @@ const appIds = {
   }),
   grub: Platform.select({
     ios: 'com.customer.grub',
-    android: 'com.grub',
+    android: 'com.customer.grub',
   }),
   gusto: Platform.select({
     ios: 'com.gusto',
-    android: 'com.gusto',
+    android: 'com.customer.gusto',
   }),
   punnet: Platform.select({
     ios: 'com.punnet',
@@ -510,7 +510,7 @@ const appIds = {
   }),
   ace: Platform.select({
     ios: 'com.customer.ace',
-    android: 'com.ace',
+    android: 'com.customer.ace',
   }),
 };
 

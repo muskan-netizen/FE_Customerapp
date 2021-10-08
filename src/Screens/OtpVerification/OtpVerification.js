@@ -213,7 +213,7 @@ export default function OtpVerification({navigation, route}) {
                 backgroundColor: !userData?.verify_details?.is_phone_verified
                   ? themeColors.primary_color
                   : colors.white,
-                paddingVertical: moderateScaleVertical(8),
+                paddingVertical: moderateScaleVertical(17),
                 paddingHorizontal: moderateScale(8),
                 borderRadius: 10,
               }}>

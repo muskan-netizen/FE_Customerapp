@@ -235,7 +235,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       marginHorizontal: moderateScale(10),
       backgroundColor: getColorCodeWithOpactiyNumber(
         themeColors.primary_color.substr(1),
-        20,
+        10,
       ),
       paddingVertical: moderateScaleVertical(15),
       paddingHorizontal: moderateScaleVertical(10),

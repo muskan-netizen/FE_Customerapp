@@ -122,7 +122,7 @@ export default function ProductCard4({
           </View>
         </View>
       </View>
-      <View
+      {/* <View
         style={{
           height: moderateScale(30),
           width: moderateScale(30),
@@ -137,7 +137,7 @@ export default function ProductCard4({
             tintColor: colors.white,
           }}
         />
-      </View>
+      </View> */}
     </TouchableOpacity>
   );
 }

@@ -491,6 +491,7 @@ export default function Cart({navigation, route}) {
       isLoadingB: false,
       isRefreshing: false,
       btnLoader: false,
+      placeLoader: false,
     });
     showError(error?.message || error?.error);
   };
@@ -555,6 +556,7 @@ export default function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        console.log('item added++', res);
         actions.cartItemQty({});
         updateState({
           cartItems: [],
@@ -2122,7 +2124,7 @@ export default function Cart({navigation, route}) {
       <View
         style={{
           width: moderateScale(width / 2),
-          marginHorizontal: moderateScale(10),
+          marginLeft: moderateScale(5),
         }}>
         <MarketCard3
           data={item}
@@ -2212,7 +2214,7 @@ export default function Cart({navigation, route}) {
               keyExtractor={(item, index) => item?.id.toString()}
               keyboardShouldPersistTaps="always"
               showsHorizontalScrollIndicator={false}
-              ItemSeparatorComponent={() => <View style={{height: 30}} />}
+              ItemSeparatorComponent={() => <View style={{height: 20}} />}
             />
           </View>
         )}

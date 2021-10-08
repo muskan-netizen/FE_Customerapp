@@ -245,6 +245,8 @@ export default ({themeColors, fontFamily}) => {
       paddingHorizontal: moderateScale(15),
       marginTop: moderateScale(5),
       alignItems: 'center',
+      borderBottomWidth: 0.8,
+      paddingBottom: moderateScale(5),
     },
     locationIcon: {
       height: moderateScale(18),
@@ -352,8 +354,8 @@ export default ({themeColors, fontFamily}) => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      marginBottom: moderateScaleVertical(16),
       marginHorizontal: moderateScale(16),
+      marginVertical: moderateScaleVertical(24),
     },
     hdrRatingTxtView: {
       flexDirection: 'row',

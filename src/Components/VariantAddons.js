@@ -626,12 +626,14 @@ export default function VariantAddons({
         }
       });
     });
+    console.log(addonSet, 'addonSet');
     let data = {};
     data['sku'] = productSku;
     data['quantity'] = productQuantityForCart;
     data['product_variant_id'] = productVariantId;
     data['type'] = dine_In_Type;
-
+    console.log(addon_ids, 'addon_ids');
+    console.log(addon_options, 'addon_options');
     if (addonSet && addonSet.length) {
       // console.log(addonSetData, 'addonSetData');
       data['addon_ids'] = addon_ids;
@@ -647,9 +649,8 @@ export default function VariantAddons({
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'add item cart res');
         actions.cartItemQty(res);
-        // showSuccess('Product successfully added');
+        showSuccess(strings.PRODUCT_ADDED_SUCCESS);
         updateState({isLoadingC: false, btnLoader: false});
         updateCartItems(
           productdetail,
@@ -946,7 +947,7 @@ export default function VariantAddons({
                       backgroundColor: colors.yellowOpacity10,
                     }}>
                     <StarRating
-                      disabled={false}
+                      // disabled={false}
                       maxStars={5}
                       rating={Number(productDetailData?.averageRating).toFixed(
                         1,

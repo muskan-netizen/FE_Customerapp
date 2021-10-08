@@ -209,11 +209,25 @@ export default function GooglePlaceInput({
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
+                width: width - moderateScale(60),
               }}>
-              <Image
-                source={imagePath.location2}
-                style={{marginRight: moderateScale(3)}}
-              />
+              <View
+                style={{
+                  height: 23,
+                  width: 23,
+                  borderRadius: 13,
+                  backgroundColor: '#D9D9D9',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginRight: moderateScale(5),
+                }}>
+                <Image
+                  source={imagePath.icLocation1}
+                  style={{tintColor: colors.white, height: '65%', width: '65%'}}
+                  resizeMode="contain"
+                />
+              </View>
+
               <Text style={rowStyle ? rowStyle : {...styles.detectLocation}}>
                 {results.description}
               </Text>
@@ -252,10 +266,7 @@ export default function GooglePlaceInput({
             ...textInputContainer,
           },
           predefinedPlacesDescription: styles.predefinedPlacesDescription,
-          textInput: [
-            {...styles.textInput},
-            {...textInput, selectionColor: selectionColor},
-          ],
+          textInput: [{...styles.textInput}, {...textInput}],
         }}
         ListFooterComponent={() => <View style={{height: height / 6}} />}
         renderHeaderComponent={ListHeaderComponent}
