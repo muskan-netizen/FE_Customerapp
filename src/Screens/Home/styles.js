@@ -109,7 +109,7 @@ export default ({themeColors, fontFamily}) => {
       alignItems: 'center',
     },
     address: {
-      paddingLeft: 5,
+      paddingLeft: 2,
       // height:20,
       lineHeight: 20,
       fontFamily: fontFamily.regular,
@@ -118,7 +118,7 @@ export default ({themeColors, fontFamily}) => {
       textAlign: 'left',
     },
     addressTitle: {
-      paddingLeft: 5,
+      paddingLeft: 2,
       // height:20,
       lineHeight: 20,
       fontFamily: fontFamily.regular,
@@ -244,7 +244,7 @@ export default ({themeColors, fontFamily}) => {
       justifyContent: 'space-between',
       paddingHorizontal: moderateScale(15),
       marginTop: moderateScale(5),
-      alignItems:'center'
+      alignItems: 'center',
     },
     locationIcon: {
       height: moderateScale(18),

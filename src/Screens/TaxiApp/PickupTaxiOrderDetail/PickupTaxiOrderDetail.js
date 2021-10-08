@@ -194,6 +194,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         '/order-details/',
       )
     : null;
+  console.log(new_dispatch_traking_url, 'new_dispatch_traking_url');
   /*********Update driver detail screen********* */
   const _updateDriverLocationLocation = (url) => {
     actions
@@ -557,8 +558,8 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
             </MapView>
 
             <View style={styles.topView}>
-              {/* <TouchableOpacity
-                style={[z
+              <TouchableOpacity
+                style={[
                   styles.backButtonView,
                   {
                     backgroundColor: isDarkMode
@@ -567,13 +568,11 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                   },
                 ]}
                 onPress={
-                  // paramData?.fromCab
-                  //   ? () => navigation.navigate(navigationStrings.HOME)
-                  //   : () =>
-                  //       navigation.navigate(navigationStrings.TAB_ROUTES, {
-                  //         screen: navigationStrings.ACCOUNTS,
-                  //       })
-                  () => navigation.goBack()
+                  paramData?.fromCab
+                    ? () =>
+                        navigation.navigate(navigationStrings.TAXIHOMESCREEN)
+                    : () => navigation.goBack()
+                  // () => navigation.navigate(navigationStrings.TAXIHOMESCREEN)
                 }>
                 <Image
                   style={{
@@ -583,7 +582,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                   }}
                   source={imagePath.backArrowCourier}
                 />
-              </TouchableOpacity> */}
+              </TouchableOpacity>
             </View>
             {/* {_selectOrderDetailView()} */}
             {_selectTexiOrderDetailView()}
