@@ -108,7 +108,7 @@ export default function DashBoardFive({
     const imageUrl = getImageUrl(
       item.image_mobile.image_fit || item.image.image_fit,
       item.image_mobile.image_path || item.image.image_path,
-      '700/300',
+      '800/400',
     );
     return (
       <TouchableOpacity onPress={() => bannerPress(item)}>
