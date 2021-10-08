@@ -1349,7 +1349,7 @@ export default function Products({route, navigation}) {
     );
   };
 
-  if (isLoading) {
+  if (!isLoading) {
     return (
       <View
         style={{
@@ -1359,56 +1359,137 @@ export default function Products({route, navigation}) {
             : colors.white,
         }}>
         <SafeAreaView>
-          <HeaderLoader
-            widthLeft={20}
-            rectWidthLeft={20}
-            widthRight={20}
-            rectWidthRight={20}
-            heightLeft={20}
-            rectHeightLeft={20}
-            heightRight={20}
-            rectHeightRight={20}
-            rx={5}
-            ry={5}
-            viewStyles={{marginTop: moderateScale(10)}}
-          />
+          {!data.isVendorList && (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingHorizontal: moderateScale(15),
+                marginBottom: moderateScale(10),
+              }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => navigation.goBack()}
+                  hitSlop={styles.hitSlopProp}>
+                  <Image
+                    style={{
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    }}
+                    source={imagePath.icBackb}
+                  />
+                </TouchableOpacity>
+                <Text
+                  numberOfLines={1}
+                  style={{
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity86,
+                    fontSize: moderateScale(14),
+                    fontFamily: fontFamily.bold,
+                    marginLeft: moderateScale(15),
+                  }}>
+                  {data?.name}
+                </Text>
+              </View>
 
-          <View
-            style={{
-              marginVertical: moderateScaleVertical(16),
-              marginBottom: moderateScaleVertical(24),
-              marginLeft: moderateScale(15),
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <CircularProfileLoader />
-            <View>
-              <HeaderLoader
-                widthLeft={50}
-                rectWidthLeft={50}
-                heightLeft={20}
-                rectHeightLeft={20}
-                rx={5}
-                ry={5}
-                isRight={false}
-                viewStyles={{marginHorizontal: 0}}
-              />
-              <HeaderLoader
-                widthLeft={50}
-                rectWidthLeft={50}
-                heightLeft={20}
-                rectHeightLeft={20}
-                rx={5}
-                ry={5}
-                viewStyles={{
-                  marginTop: moderateScaleVertical(10),
-                  marginHorizontal: 0,
-                }}
-                isRight={false}
-              />
+              <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => updateState({isSearch: true})}
+                  onPress={moveToNewScreen(
+                    navigationStrings.SEARCHPRODUCTOVENDOR,
+                    {
+                      type: data?.vendor
+                        ? staticStrings.VENDOR
+                        : staticStrings.CATEGORY,
+                      id: data?.vendor ? data?.id : productListId?.id,
+                    },
+                  )}>
+                  <Image
+                    style={{
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                      marginRight: moderateScale(15),
+                    }}
+                    source={imagePath.icSearchb}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={onShare}
+                  hitSlop={hitSlopProp}
+                  activeOpacity={0.8}>
+                  <Image
+                    style={{
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    }}
+                    source={imagePath.icShareb}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
+          )}
+          {data?.isVendorList && (
+            <>
+              <HeaderLoader
+                widthLeft={20}
+                rectWidthLeft={20}
+                widthRight={20}
+                rectWidthRight={20}
+                heightLeft={20}
+                rectHeightLeft={20}
+                heightRight={20}
+                rectHeightRight={20}
+                rx={5}
+                ry={5}
+                viewStyles={{marginTop: moderateScale(10)}}
+              />
+              <View
+                style={{
+                  marginVertical: moderateScaleVertical(16),
+                  marginBottom: moderateScaleVertical(24),
+                  marginLeft: moderateScale(15),
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <CircularProfileLoader />
+                <View>
+                  <HeaderLoader
+                    widthLeft={50}
+                    rectWidthLeft={50}
+                    heightLeft={20}
+                    rectHeightLeft={20}
+                    rx={5}
+                    ry={5}
+                    isRight={false}
+                    viewStyles={{marginHorizontal: 0}}
+                  />
+                  <HeaderLoader
+                    widthLeft={50}
+                    rectWidthLeft={50}
+                    heightLeft={20}
+                    rectHeightLeft={20}
+                    rx={5}
+                    ry={5}
+                    viewStyles={{
+                      marginTop: moderateScaleVertical(10),
+                      marginHorizontal: 0,
+                    }}
+                    isRight={false}
+                  />
+                </View>
+              </View>
+            </>
+          )}
 
           <View style={{marginHorizontal: moderateScale(16)}}>
             <ProductListLoader />
@@ -1422,6 +1503,14 @@ export default function Products({route, navigation}) {
             <ProductListLoader />
             <View style={{marginBottom: moderateScaleVertical(12)}} />
           </View>
+          {!data?.isVerndorList && (
+            <View style={{marginHorizontal: moderateScale(16)}}>
+              <ProductListLoader />
+              <View style={{marginBottom: moderateScaleVertical(12)}} />
+              <ProductListLoader />
+              <View style={{marginBottom: moderateScaleVertical(12)}} />
+            </View>
+          )}
         </SafeAreaView>
       </View>
     );
