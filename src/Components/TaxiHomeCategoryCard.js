@@ -42,48 +42,53 @@ export default function TaxiHomeCategoryCard({
       activeOpacity={0.9}
       style={{
         // shadowOpacity: 0.5,
-        width: (width - moderateScale(30)) / 4,
+        width: (width - moderateScale(-5)) / 4,
         marginVertical: moderateScale(10),
         flexDirection: 'column',
         justifyContent: 'center',
-
         alignItems: 'center',
         height: moderateScale(90),
       }}>
+      {imageURI ? (
+        <View
+          style={{
+            flex: 0.8,
+            backgroundColor: getColorCodeWithOpactiyNumber(
+              colors.taxiCategoryGrayColor.substr(1),
+              30,
+            ),
+            paddingHorizontal: moderateScale(8),
+            borderRadius: 10,
+          }}>
+          {isSVG ? (
+            <SvgUri
+              height={moderateScale(50)}
+              width={moderateScale(50)}
+              uri={imageURI}
+            />
+          ) : (
+            <FastImage
+              style={{
+                height: moderateScale(width / 8),
+                width: moderateScale(width / 8),
+                borderRadius: moderateScale(10),
+              }}
+              source={{
+                uri: imageURI,
+                priority: FastImage.priority.high,
+              }}
+              resizeMode="contain"
+            />
+          )}
+        </View>
+      ) : (
+        <></>
+      )}
       <View
         style={{
-          flex: 0.8,
-          backgroundColor: getColorCodeWithOpactiyNumber(
-            colors.taxiCategoryGrayColor.substr(1),
-            30,
-          ),
-          paddingHorizontal: moderateScale(8),
-          borderRadius: 10,
+          flex: 0.5,
         }}>
-        {isSVG ? (
-          <SvgUri
-            height={moderateScale(50)}
-            width={moderateScale(50)}
-            uri={imageURI}
-          />
-        ) : (
-          <FastImage
-            style={{
-              height: moderateScale(width / 8),
-              width: moderateScale(width / 8),
-              borderRadius: moderateScale(10),
-            }}
-            source={{
-              uri: imageURI,
-              priority: FastImage.priority.high,
-            }}
-            resizeMode="contain"
-          />
-        )}
-      </View>
-      <View style={{flex: 0.5}}>
         <Text
-          numberOfLines={1}
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             fontFamily: fontFamily.regular,

@@ -190,6 +190,7 @@ export default function GooglePlaceInput({
           location: `${currentLat},${currentLang}`,
         }}
         renderRow={(results) => {
+          console.log(results, 'results>results');
           if (getResults) {
             getResults(results);
           }
@@ -200,6 +201,7 @@ export default function GooglePlaceInput({
           //     <Text style={styles.detectLocation}>{results.description}</Text>
           //   );
           // }
+
           return renderCustomRow ? (
             renderCustomRow(results)
           ) : (

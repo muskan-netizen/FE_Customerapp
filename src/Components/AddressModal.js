@@ -253,6 +253,7 @@ export default function AddressModal({
     if (!checkValid) {
       return;
     }
+
     let data = {
       address: address,
       street: street,
