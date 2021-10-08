@@ -215,9 +215,10 @@ export default function TabRoutes(props) {
           tabBarLabel: strings.ACCOUNTS,
           tabBarIcon: ({focused, tintColor}) => (
             <Image
+              resizeMode="contain"
               style={[
                 {tintColor: tintColor},
-                appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
+                appStyle?.tabBarLayout === 2 && {height: 23, width: 23},
               ]}
               source={
                 appStyle?.tabBarLayout === 5
