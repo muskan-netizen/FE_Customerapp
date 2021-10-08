@@ -1,4 +1,3 @@
-import {useScrollToTop} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
@@ -41,6 +40,7 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../../../utils/helperFunctions';
+import {useScrollToTop} from '@react-navigation/native';
 
 export default function DashBoardFive({
   handleRefresh = () => {},
@@ -68,7 +68,7 @@ export default function DashBoardFive({
     (state) => state?.initBoot,
   );
 
-  const {bannerRef} = useRef();
+  // const {bannerRef} = useRef();
   const {slider1ActiveSlide, vendorsData} = state;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
@@ -101,9 +101,6 @@ export default function DashBoardFive({
       />
     </View>
   );
-
-  const ref = React.useRef(null);
-  useScrollToTop(ref); // scroll to top
 
   const scaleInAnimated = new Animated.Value(0);
 
@@ -274,6 +271,9 @@ export default function DashBoardFive({
     );
   };
 
+  const scrollRef = React.useRef(null);
+  useScrollToTop(scrollRef);
+
   if (isLoading) {
     return (
       <ScrollView
@@ -365,6 +365,7 @@ export default function DashBoardFive({
         navigation={navigation}``
       /> */}
       <ScrollView
+        ref={scrollRef}
         showsVerticalScrollIndicator={false}
         style={{flex: 1}}
         refreshControl={
@@ -384,7 +385,7 @@ export default function DashBoardFive({
                 }
                 showsVerticalScrollIndicator={false}
                 alwaysBounceVertical={true}
-                ref={ref}
+                // ref={ref}
                 data={vendorsData}
                 keyExtractor={(item) => item.id.toString()}
                 showsHorizontalScrollIndicator={false}

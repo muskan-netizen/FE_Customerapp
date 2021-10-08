@@ -83,30 +83,30 @@ const getLocation = async (lat, lng, type) => {
 const showError = (message) => {
   console.log(message, 'THIS IS MESSAGE');
 
-  // showMessage({
-  //   type: 'danger',
-  //   icon: 'danger',
-  //   message,
-  // });
+  showMessage({
+    type: 'danger',
+    icon: 'danger',
+    message,
+  });
   Toast.show(message);
 };
 
 const showSuccess = (message) => {
-  // showMessage({
-  //   type: 'success',
-  //   icon: 'success',
-  //   message,
-  // });
+  showMessage({
+    type: 'success',
+    icon: 'success',
+    message,
+  });
 
-  Toast.show(message);
+  // Toast.show(message);
 };
 const showInfo = (message) => {
-  // showMessage({
-  //   type: 'info',
-  //   icon: 'info',
-  //   message,
-  // });
-  Toast.show(message);
+  showMessage({
+    type: 'info',
+    icon: 'info',
+    message,
+  });
+  // Toast.show(message);
 };
 
 export function otpTimerCounter(seconds) {

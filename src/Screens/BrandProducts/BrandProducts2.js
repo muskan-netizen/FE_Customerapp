@@ -473,6 +473,7 @@ export default function BrandProducts2({route, navigation}) {
     index,
   });
 
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}

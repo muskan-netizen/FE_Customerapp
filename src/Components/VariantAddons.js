@@ -626,17 +626,20 @@ export default function VariantAddons({
         }
       });
     });
+    console.log(addonSet, 'addonSet');
     let data = {};
     data['sku'] = productSku;
     data['quantity'] = productQuantityForCart;
     data['product_variant_id'] = productVariantId;
     data['type'] = dine_In_Type;
-
+    console.log(addon_ids, 'addon_ids');
+    console.log(addon_options, 'addon_options');
     if (addonSet && addonSet.length) {
       // console.log(addonSetData, 'addonSetData');
       data['addon_ids'] = addon_ids;
       data['addon_options'] = addon_options;
     }
+    console.log(data, 'data for cart');
     updateState({btnLoader: true});
     actions
       .addProductsToCart(data, {
@@ -647,9 +650,7 @@ export default function VariantAddons({
       })
       .then((res) => {
         actions.cartItemQty(res);
-        setTimeout(() => {
-          showSuccess(strings.PRODUCT_ADDED_SUCCESS);
-        }, 1000);
+        showSuccess(strings.PRODUCT_ADDED_SUCCESS);
         updateState({isLoadingC: false, btnLoader: false});
         updateCartItems(
           productdetail,
@@ -946,7 +947,7 @@ export default function VariantAddons({
                       backgroundColor: colors.yellowOpacity10,
                     }}>
                     <StarRating
-                      disabled={false}
+                      // disabled={false}
                       maxStars={5}
                       rating={Number(productDetailData?.averageRating).toFixed(
                         1,

@@ -473,12 +473,13 @@ export default function Products({route, navigation}) {
           isRefreshing: false,
           categoryInfo: res.data.vendor,
           filterData: res.data.filterData,
-          productListData:
-            pageNo == 1
-              ? res.data.products.data
-              : [...productListData, ...res.data.products.data],
+          productListData: res?.data?.vendor?.is_show_products_with_category
+            ? res?.data?.categories[0]?.products
+            : pageNo == 1
+            ? res.data.products.data
+            : [...productListData, ...res.data.products.data],
           vendorCategories: res?.data?.categories,
-          vendorCategoryItms: res?.data?.categories[0]?.products,
+          // vendorCategoryItms: res?.data?.categories[0]?.products,
         });
         updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
@@ -938,7 +939,7 @@ export default function Products({route, navigation}) {
         onIncrement={() => addDeleteCartItems(item, index, 1)}
         onDecrement={() => addDeleteCartItems(item, index, 2)}
         selectedItemID={selectedItemID}
-        btnLoader={btnLoader}
+        // btnLoader={btnLoader}
         selectedItemIndx={selectedItemIndx}
       />
     );
@@ -971,6 +972,8 @@ export default function Products({route, navigation}) {
     console.log('cart++ quanitify', quanitity);
     console.log('cart++ product id', productId);
     console.log('cart++ idd', cartID);
+    console.log(productListData, 'productListData');
+
     let updateArray = productListData.map((val, i) => {
       if (val.id == item.id) {
         return {
@@ -983,6 +986,34 @@ export default function Products({route, navigation}) {
       return val;
     });
     updateState({cartId: cartID, productListData: updateArray});
+
+    // if (vendorCategoryItms && vendorCategoryItms.length) {
+    //   let updateArray = vendorCategoryItms.map((val, i) => {
+    //     if (val.id == item.id) {
+    //       return {
+    //         ...val,
+    //         qty: quanitity,
+    //         cart_product_id: productId,
+    //         isRemove: false,
+    //       };
+    //     }
+    //     return val;
+    //   });
+    //   updateState({cartId: cartID, vendorCategoryItms: updateArray});
+    // } else {
+    //   let updateArray = productListData.map((val, i) => {
+    //     if (val.id == item.id) {
+    //       return {
+    //         ...val,
+    //         qty: quanitity,
+    //         cart_product_id: productId,
+    //         isRemove: false,
+    //       };
+    //     }
+    //     return val;
+    //   });
+    //   updateState({cartId: cartID, productListData: updateArray});
+    // }
   };
 
   useEffect(() => {
@@ -1372,11 +1403,11 @@ export default function Products({route, navigation}) {
               />
             </View>
 
-            <FlatList
+            {/* <FlatList
               data={vendorCategoryItms}
               renderItem={_renderVendorCategoryItms}
               ItemSeparatorComponent={() => <View style={{width: 15}} />}
-            />
+            /> */}
           </>
         )}
       </View>
@@ -1403,7 +1434,7 @@ export default function Products({route, navigation}) {
   const _onVendorCategory = (itm, indx) => {
     updateState({
       vendorCategorySelectedIndx: indx,
-      vendorCategoryItms: itm?.products,
+      productListData: itm?.products,
     });
   };
 
@@ -1612,10 +1643,10 @@ export default function Products({route, navigation}) {
 
   const onScroll = ({nativeEvent}) => {
     if (
-      (productListData &&
-        productListData.length &&
-        !!productListData.length < 6) ||
-      vendorCategoryItms.length < 6
+      productListData &&
+      productListData.length &&
+      !!productListData.length < 6
+     
     ) {
       return;
     }
@@ -1647,7 +1678,6 @@ export default function Products({route, navigation}) {
     (!!categoryInfo?.translation &&
       categoryInfo?.translation[0]?.meta_description);
 
-  console.log(data, 'is_show_category');
 
   const _emptyComp = () => {
     return (
