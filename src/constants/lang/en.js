@@ -13,8 +13,8 @@ export default {
   LOGIN: 'Login',
   SKIP: 'Skip',
   VERIFIED: 'Verified',
-  VERIFY_EMAIL: 'Verify Email',
-  VERIFY_PHONE: 'Verify Phone',
+  VERIFY_EMAIL: 'Verify',
+  VERIFY_PHONE: 'Verify',
   ENTER_DETAILS_BELOW: 'Enter details below to create new account.',
   TO_ENJOY_SHOPPING:
     'To enjoy shopping from our app, Please verify below information. So you will not face any interruption in future.',

@@ -79,7 +79,7 @@ export default function DashBoardFive({
   useEffect(() => {
     if (appMainData?.vendors && appMainData?.vendors.length) {
       updateState({
-        vendorsData: appMainData?.vendors.splice(0, 4),
+        vendorsData: appMainData?.vendors.filter((item, indx) => indx < 4),
       });
     }
   }, [appMainData?.vendors]);
@@ -279,25 +279,65 @@ export default function DashBoardFive({
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{flexGrow: 1}}>
-        <SearchLoader viewStyles={{marginTop: moderateScale(15)}} />
+        {/* <SearchLoader viewStyles={{marginTop: moderateScale(15)}} /> */}
         <CategoryLoader2 viewStyles={{marginTop: moderateScale(25)}} />
-        <CategoryLoader2 viewStyles={{marginTop: moderateScale(25)}} />
-        <BannerLoader
-          isBannerDots
-          viewStyles={{
-            marginTop: moderateScale(35),
-          }}
-        />
-        <HeaderLoader
-          viewStyles={{marginVertical: 20}}
-          widthLeft={moderateScale(150)}
-          rectWidthLeft={moderateScale(150)}
-          heightLeft={moderateScaleVertical(20)}
-          rectHeightLeft={moderateScaleVertical(20)}
-          isRight={false}
-          rx={15}
-          ry={15}
-        />
+        <CategoryLoader2 viewStyles={{marginTop: moderateScale(35)}} />
+
+        <View style={{flexDirection: 'row'}}>
+          <HeaderLoader
+            viewStyles={{marginVertical: 30}}
+            widthLeft={moderateScale(150)}
+            rectWidthLeft={moderateScale(150)}
+            heightLeft={moderateScaleVertical(240)}
+            rectHeightLeft={moderateScaleVertical(240)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{marginVertical: 30, marginLeft: 0}}
+            widthLeft={moderateScale(150)}
+            rectWidthLeft={moderateScale(150)}
+            heightLeft={moderateScaleVertical(240)}
+            rectHeightLeft={moderateScaleVertical(240)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{marginVertical: 30, marginLeft: 0}}
+            widthLeft={moderateScale(150)}
+            rectWidthLeft={moderateScale(150)}
+            heightLeft={moderateScaleVertical(240)}
+            rectHeightLeft={moderateScaleVertical(240)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+        </View>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <HeaderLoader
+            viewStyles={{marginTop: 5}}
+            widthLeft={moderateScale(150)}
+            rectWidthLeft={moderateScale(150)}
+            heightLeft={moderateScaleVertical(20)}
+            rectHeightLeft={moderateScaleVertical(20)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{marginTop: 5}}
+            widthLeft={moderateScale(60)}
+            rectWidthLeft={moderateScale(60)}
+            heightLeft={moderateScaleVertical(20)}
+            rectHeightLeft={moderateScaleVertical(20)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+        </View>
+
         <BannerLoader
           isVendorLoader
           viewStyles={{marginTop: moderateScale(20)}}

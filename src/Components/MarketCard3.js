@@ -178,7 +178,10 @@ export default function MarketCard3({
                     textAlign: 'left',
                   }}>
                   {data?.lineOfSightDistance && data?.lineOfSightDistance}
-                  {` | ${data?.timeofLineOfSightDistance} mins`}
+                  {` | ${
+                    data?.timeofLineOfSightDistance &&
+                    data?.timeofLineOfSightDistance
+                  } mins`}
                 </Text>
               </View>
             )}

@@ -756,7 +756,9 @@ export default function ShortCode({route, navigation}) {
           changeInShortCode: false,
           shortCode: '',
         });
-        showError(error?.message || error?.error);
+        setTimeout(() => {
+          showError(error?.message || error?.error);
+        }, 500);
       });
   };
 
