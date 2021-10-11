@@ -183,7 +183,7 @@ const NotificationModal = () => {
       />
     </View>
   );
-  console.log('pending notifications++++', pendingNotifications);
+ 
   return (
     <Modal
       isVisible={!!pendingNotifications.length && isVendorNotification}

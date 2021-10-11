@@ -602,6 +602,8 @@ export default function Cart({ navigation, route }) {
     }
   };
 
+  // console.log("sheduledorderdate", sheduledorderdate)
+  // console.log("sheduledorderdate", selectedTimeOption)
   //Clear cart
   const placeOrder = () => {
     var d1 = new Date();
@@ -618,7 +620,7 @@ export default function Cart({ navigation, route }) {
       // } else if (d1.getTime() >= d2.getTime()) {
       //   showError(strings.INVALID_SCHEDULED_DATE);
       // }
-      else if (!(sheduledorderdate && selectedTimeOption)) {
+      else if (!(sheduledorderdate || selectedTimeOption)) {
         showError(strings.PLEASE_SELECT_ORDER_TYPE);
       } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
         showError(strings.INVALID_SCHEDULED_DATE);
@@ -806,12 +808,15 @@ export default function Cart({ navigation, route }) {
     }
   };
 
+
   useEffect(() => {
+
     if (
       scheduleType != null &&
       scheduleType == 'now' &&
       !!checkCartItem?.data
     ) {
+      alert("schedulte type hit")
       setDateAndTimeSchedule();
     }
   }, [scheduleType]);
@@ -1127,15 +1132,7 @@ export default function Cart({ navigation, route }) {
                             </View>
                           </View>
                         </View>
-                        <TouchableOpacity
-                          style={{
-                            position: 'absolute',
-                            bottom: 10,
-                            right: 20,
-                          }}
-                          onPress={() => openDeleteView(i)}>
-                          <Image source={imagePath.deleteRed} />
-                        </TouchableOpacity>
+
                         <View
                           style={{
                             flexDirection: 'row',
@@ -1216,9 +1213,20 @@ export default function Cart({ navigation, route }) {
                                 );
                               })
                               : null}
+
                           </View>
                         </View>
+                        <TouchableOpacity
+                          style={{
+                            alignSelf: 'flex-end',
+                            paddingRight: moderateScale(24),
+                            paddingTop: moderateScaleVertical(10)
+                          }}
+                          onPress={() => openDeleteView(i)}>
+                          <Image source={imagePath.deleteRed} />
+                        </TouchableOpacity>
                       </View>
+
                     </View>
 
                     {/* <View style={styles.dashedLine} /> */}

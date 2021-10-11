@@ -254,7 +254,6 @@ export default function TaxiHomeDashbord({
   };
 
   const setModalVisible = (visible, type, id, data) => {
-    console.log(visible, type, id, data, 'datadatadatadata');
     if (!!userData?.auth_token) {
       updateState({
         updateData: data,

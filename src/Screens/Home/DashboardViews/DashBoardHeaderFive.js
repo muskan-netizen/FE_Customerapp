@@ -416,7 +416,7 @@ export default function DashBoardHeaderFive({
                       : colors.textGrey,
                   },
                 ]}>
-                {location?.address || curAddress?.address}
+                {location?.address}
               </Text>
             </TouchableOpacity>
           )}

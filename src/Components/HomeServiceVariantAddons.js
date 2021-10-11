@@ -1,5 +1,5 @@
-import {cloneDeep} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Image,
   Keyboard,
@@ -16,12 +16,12 @@ import {
   FlatList,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import GradientButton from './GradientButton';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import commonStylesFun, {hitSlopProp} from '../styles/commonStyles';
+import commonStylesFun, { hitSlopProp } from '../styles/commonStyles';
 import fontFamily from '../styles/fontFamily';
 import Banner from './Banner';
 import DeviceInfo from 'react-native-device-info';
@@ -40,27 +40,27 @@ import {
   showError,
   showSuccess,
 } from '../utils/helperFunctions';
-import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import navigationStrings from '../navigation/navigationStrings';
 import HTMLView from 'react-native-htmlview';
 import HtmlViewComp from './HtmlViewComp';
-import {MyDarkTheme} from '../styles/theme';
+import { MyDarkTheme } from '../styles/theme';
 import * as Animatable from 'react-native-animatable';
 import actions from '../redux/actions';
-import {Pagination} from 'react-native-snap-carousel';
+import { Pagination } from 'react-native-snap-carousel';
 import CardLoader from './Loaders/CardLoader';
 import StarRating from 'react-native-star-rating';
 import CalanderStrip from 'react-native-calendar-strip';
-import {timeforMarkedQuestion} from '../utils/constants/ConstantValues';
+import { timeforMarkedQuestion } from '../utils/constants/ConstantValues';
 
 export default function HomeServiceVariantAddons({
   productdetail = {},
   isVisible = false,
   onClose,
   showShimmer,
-  shimmerClose = () => {},
+  shimmerClose = () => { },
   updateCartItems,
-  modeOfService = true,
+  modeOfService = false,
 }) {
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
 
@@ -85,10 +85,10 @@ export default function HomeServiceVariantAddons({
     totalItemsPrice: null,
     inputInstructionText: '',
     cleaningmaterialArray: [
-      {id: 1, name: strings.NOIHAVETHEM},
-      {id: 2, name: 'yes please'},
+      { id: 1, name: strings.NOIHAVETHEM },
+      { id: 2, name: 'yes please' },
     ],
-    selectedCleaningmaterial: {id: 1, name: strings.NOIHAVETHEM},
+    selectedCleaningmaterial: { id: 1, name: strings.NOIHAVETHEM },
     totalPriceArray: [],
     selectedDate: null,
     calendarMarkedDates: null,
@@ -121,14 +121,14 @@ export default function HomeServiceVariantAddons({
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = theme;
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
+  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;
-  const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
+  const commonStyles = commonStylesFun({ fontFamily, buttonTextColor });
   const dineInType = useSelector((state) => state?.home?.dineInType);
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   console.log(timeforMarkedQuestion, 'timeforMarkedQuestion');
   // useFocusEffect(
   //   React.useCallback(() => {
@@ -158,7 +158,7 @@ export default function HomeServiceVariantAddons({
   console.log('product detail', productDetailData);
 
   const getProductDetailBasedOnFilter = (variantSetData) => {
-    updateState({isLoadingC: true});
+    updateState({ isLoadingC: true });
     let data = {};
     data['variants'] = variantSetData.map((i) => i.variant_id);
     data['options'] = variantSetData.map((i) => i.optionId);
@@ -188,7 +188,7 @@ export default function HomeServiceVariantAddons({
     console.log(error, 'Error>>>>>');
 
     if (error?.message?.alert == 1) {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
@@ -196,7 +196,7 @@ export default function HomeServiceVariantAddons({
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        {text: 'Clear Cart', onPress: () => clearCart()},
+        { text: 'Clear Cart', onPress: () => clearCart() },
       ]);
     } else {
       if (error?.data?.variant_empty) {
@@ -207,7 +207,7 @@ export default function HomeServiceVariantAddons({
           isLoadingC: false,
         });
       } else {
-        updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+        updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
         showError(error?.message || error?.error);
       }
     }
@@ -363,7 +363,7 @@ export default function HomeServiceVariantAddons({
     });
   };
 
-  const checkBoxButtonViewAddons = ({setoptions}) => {
+  const checkBoxButtonViewAddons = ({ setoptions }) => {
     return (
       <View>
         {setoptions.map((i, inx) => {
@@ -380,7 +380,7 @@ export default function HomeServiceVariantAddons({
                 justifyContent: 'space-between',
                 marginBottom: moderateScaleVertical(10),
               }}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text
                   style={[
                     styles.variantValue,
@@ -396,7 +396,7 @@ export default function HomeServiceVariantAddons({
                 </Text>
               </View>
 
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text
                   style={[
                     styles.variantValue,
@@ -410,7 +410,7 @@ export default function HomeServiceVariantAddons({
                     Number(i?.multiplier) * Number(i?.price)
                   ).toFixed(2)}`}
                 </Text>
-                <View style={{paddingLeft: moderateScale(5)}}>
+                <View style={{ paddingLeft: moderateScale(5) }}>
                   <Image
                     source={
                       i?.value
@@ -427,7 +427,7 @@ export default function HomeServiceVariantAddons({
     );
   };
 
-  const checkBoxHomeServiceButtonViewAddons = ({setoptions}) => {
+  const checkBoxHomeServiceButtonViewAddons = ({ setoptions }) => {
     return (
       <View
         style={{
@@ -454,23 +454,23 @@ export default function HomeServiceVariantAddons({
                 style={
                   i?.value
                     ? {
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        borderColor: themeColors.primary_color,
-                        borderWidth: 0.5,
-                        paddingHorizontal: moderateScale(20),
-                        paddingVertical: moderateScaleVertical(6),
-                        borderRadius: 6,
-                      }
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: themeColors.primary_color,
+                      borderWidth: 0.5,
+                      paddingHorizontal: moderateScale(20),
+                      paddingVertical: moderateScaleVertical(6),
+                      borderRadius: 6,
+                    }
                     : {
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        borderColor: colors.textGreyLight,
-                        borderWidth: 0.5,
-                        paddingHorizontal: moderateScale(20),
-                        paddingVertical: moderateScaleVertical(6),
-                        borderRadius: 6,
-                      }
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: colors.textGreyLight,
+                      borderWidth: 0.5,
+                      paddingHorizontal: moderateScale(20),
+                      paddingVertical: moderateScaleVertical(6),
+                      borderRadius: 6,
+                    }
                 }>
                 <Text
                   style={[
@@ -640,12 +640,12 @@ export default function HomeServiceVariantAddons({
       }
     });
 
-    updateState({variantSet: modifyVariants});
+    updateState({ variantSet: modifyVariants });
 
     // console.log(modifyVariants, 'im newArray>>>>>');
   };
 
-  const variantSetValue = ({options, type}) => {
+  const variantSetValue = ({ options, type }) => {
     if (type == 1) {
       return <>{radioButtonView(options)}</>;
     }
@@ -654,7 +654,7 @@ export default function HomeServiceVariantAddons({
 
   const radioButtonView = (options) => {
     return (
-      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         {options.map((i, inx) => {
           return (
             <TouchableOpacity
@@ -688,7 +688,7 @@ export default function HomeServiceVariantAddons({
   const circularView = (options) => {
     console.log('circular view', options);
     return (
-      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         {options.map((i, inx) => {
           return (
             <TouchableNativeFeedback
@@ -709,7 +709,7 @@ export default function HomeServiceVariantAddons({
 
                     borderColor:
                       i?.value &&
-                      (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
+                        (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
                         ? colors.textGrey
                         : i.hexacode,
                   },
@@ -733,12 +733,12 @@ export default function HomeServiceVariantAddons({
     );
   };
 
-  const {bannerRef} = useRef();
+  const { bannerRef } = useRef();
 
   const showAllVariants = () => {
     let variantSetData = cloneDeep(variantSet);
     return (
-      <View style={{marginBottom: 10, paddingHorizontal: moderateScale(0)}}>
+      <View style={{ marginBottom: 10, paddingHorizontal: moderateScale(0) }}>
         {variantSetData.map((i, inx) => {
           return (
             <View
@@ -783,7 +783,7 @@ export default function HomeServiceVariantAddons({
       data['addon_options'] = addon_options;
     }
 
-    updateState({btnLoader: true});
+    updateState({ btnLoader: true });
     actions
       .addProductsToCart(data, {
         code: appData.profile.code,
@@ -888,7 +888,7 @@ export default function HomeServiceVariantAddons({
               : '#fff',
           }}>
           <CardLoader cardWidth={width} height={width * 0.6} />
-          <View style={{marginHorizontal: moderateScale(12)}}>
+          <View style={{ marginHorizontal: moderateScale(12) }}>
             <View
               style={{
                 alignSelf: 'center',
@@ -896,35 +896,35 @@ export default function HomeServiceVariantAddons({
                 alignItems: 'center',
               }}>
               <CardLoader cardWidth={10} height={10} />
-              <View style={{marginHorizontal: moderateScale(6)}} />
+              <View style={{ marginHorizontal: moderateScale(6) }} />
               <CardLoader cardWidth={10} height={10} />
-              <View style={{marginHorizontal: moderateScale(6)}} />
+              <View style={{ marginHorizontal: moderateScale(6) }} />
               <CardLoader cardWidth={10} height={10} />
             </View>
             <CardLoader cardWidth={80} height={10} />
             <CardLoader cardWidth={60} height={10} />
-            <View style={{marginTop: moderateScaleVertical(0)}} />
+            <View style={{ marginTop: moderateScaleVertical(0) }} />
             <CardLoader cardWidth={'100%'} height={2} />
             <CardLoader cardWidth={40} height={8} />
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <CardLoader cardWidth={60} height={10} />
-              <View style={{marginHorizontal: 8}} />
+              <View style={{ marginHorizontal: 8 }} />
               <CardLoader cardWidth={60} height={10} />
             </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <CardLoader cardWidth={60} height={10} />
-              <View style={{marginHorizontal: 8}} />
+              <View style={{ marginHorizontal: 8 }} />
               <CardLoader cardWidth={60} height={10} />
             </View>
             <CardLoader cardWidth={40} height={8} />
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <CardLoader cardWidth={60} height={10} />
-              <View style={{marginHorizontal: 8}} />
+              <View style={{ marginHorizontal: 8 }} />
               <CardLoader cardWidth={60} height={10} />
             </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <CardLoader cardWidth={60} height={10} />
-              <View style={{marginHorizontal: 8}} />
+              <View style={{ marginHorizontal: 8 }} />
               <CardLoader cardWidth={60} height={10} />
             </View>
           </View>
@@ -936,11 +936,11 @@ export default function HomeServiceVariantAddons({
             marginHorizontal: moderateScale(16),
             paddingBottom: moderateScaleVertical(10),
           }}>
-          <View style={{flex: 0.25}}>
+          <View style={{ flex: 0.25 }}>
             <CardLoader cardWidth={'100%'} height={38} />
           </View>
-          <View style={{marginHorizontal: moderateScale(8)}} />
-          <View style={{flex: 0.75}}>
+          <View style={{ marginHorizontal: moderateScale(8) }} />
+          <View style={{ flex: 0.75 }}>
             {/* <View style={{ marginHorizontal: 8 }} /> */}
             <CardLoader cardWidth={'100%'} height={38} />
           </View>
@@ -989,7 +989,7 @@ export default function HomeServiceVariantAddons({
         calendarMarkedDates: {},
       });
     } else {
-      updateState({selectedDate: selectedCalendarDate.format('MM/DD/YYYY')});
+      updateState({ selectedDate: selectedCalendarDate.format('MM/DD/YYYY') });
 
       const selectedCalendarDateString =
         selectedCalendarDate.format('YYYY-MM-DD');
@@ -1020,12 +1020,12 @@ export default function HomeServiceVariantAddons({
       );
     }
   };
-  const showAddonsAndSehedule = () => {};
+  const showAddonsAndSehedule = () => { };
   const dateSelected = (item) => {
-    updateState({selectedTime: item});
+    updateState({ selectedTime: item });
   };
   console.log(selectedTime, 'selecteTime');
-  const renderCardComponentSecond = ({item, index}) => {
+  const renderCardComponentSecond = ({ item, index }) => {
     // let {visible, selectedTime, searchArray, selectService, cartItems} =
     //   this.state;
 
@@ -1089,7 +1089,7 @@ export default function HomeServiceVariantAddons({
           backgroundColor: colors.WHITE,
           paddingVertical: 12,
         }}
-        // selectedDate={(selectedDate && selectedDate) || undefined}
+      // selectedDate={(selectedDate && selectedDate) || undefined}
       />
     );
   };
@@ -1111,8 +1111,8 @@ export default function HomeServiceVariantAddons({
               backgroundColor: colors.white,
               paddingVertical: moderateScale(10),
             }}>
-            <View style={{marginBottom: moderateScale(12)}}>
-              <Text style={{fontSize: textScale(14)}}>
+            <View style={{ marginBottom: moderateScale(12) }}>
+              <Text style={{ fontSize: textScale(14) }}>
                 What Time Would You Like Us To Start?
               </Text>
             </View>
@@ -1128,7 +1128,7 @@ export default function HomeServiceVariantAddons({
               // initialNumToRender={this.state?.timings?.length||10}
               horizontal
               showsHorizontalScrollIndicator={false}
-              // ListFooterComponent={() => { return <View style={{ height: 200 }} /> }}
+            // ListFooterComponent={() => { return <View style={{ height: 200 }} /> }}
             />
           </View>
         ) : null}
@@ -1143,7 +1143,7 @@ export default function HomeServiceVariantAddons({
       animationType={'none'}
       style={styles.modalContainer}
       onLayout={(event) => {
-        updateState({viewHeight: event.nativeEvent.layout.height});
+        updateState({ viewHeight: event.nativeEvent.layout.height });
       }}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Image source={imagePath.crossC} />
@@ -1151,7 +1151,7 @@ export default function HomeServiceVariantAddons({
       {showShimmer ? (
         shimmerShow()
       ) : (
-        <Animatable.View style={{flex: 1}}>
+        <Animatable.View style={{ flex: 1 }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             bounces={false}
@@ -1175,13 +1175,13 @@ export default function HomeServiceVariantAddons({
                 itemWidth={width}
                 pagination={false}
                 setActiveState={(index) =>
-                  updateState({slider1ActiveSlide: index})
+                  updateState({ slider1ActiveSlide: index })
                 }
                 showLightbox={true}
                 cardViewStyle={styles.cardViewStyle}
                 resizeMode="contain"
               />
-              <View style={{paddingTop: 5}}>
+              <View style={{ paddingTop: 5 }}>
                 <Pagination
                   dotsLength={productDetailData?.product_media?.length}
                   activeDotIndex={state.slider1ActiveSlide}
@@ -1245,7 +1245,7 @@ export default function HomeServiceVariantAddons({
                       )}
                       fullStarColor={colors.yellowB}
                       starSize={8}
-                      containerStyle={{width: width / 9}}
+                      containerStyle={{ width: width / 9 }}
                     />
                   </View>
                 )}
@@ -1256,7 +1256,7 @@ export default function HomeServiceVariantAddons({
                   <HtmlViewComp
                     plainHtml={productdetail?.translation[0]?.body_html}
                   />
-                  <View style={{marginBottom: 10}} />
+                  <View style={{ marginBottom: 10 }} />
                 </View>
               )}
 
@@ -1273,7 +1273,7 @@ export default function HomeServiceVariantAddons({
               ) : (
                 <View>
                   {(!!addonSet && addonSet?.length) ||
-                  (modeOfService == null && modeOfService == undefined)
+                    (modeOfService == null && modeOfService == undefined)
                     ? showhomeServiceAddons()
                     : null}
 
@@ -1331,7 +1331,7 @@ export default function HomeServiceVariantAddons({
                   ? MyDarkTheme.colors.background
                   : '#fff',
               }}>
-              <View style={{flex: 0.75}}>
+              <View style={{ flex: 0.75 }}>
                 <GradientButton
                   indicator={btnLoader}
                   indicatorColor={colors.white}
@@ -1348,7 +1348,7 @@ export default function HomeServiceVariantAddons({
                       ? addTimeDate(selectedTime, selectedDate)
                       : addItemCart(addonSet)
                   }
-                  btnText={timeModalVisable ? strings.ADD_ITEM : 'Countinue'}
+                  btnText={timeModalVisable ? 'Countinue' : strings.ADD_ITEM}
                   btnStyle={{
                     borderRadius: moderateScale(4),
                     height: moderateScale(38),
@@ -1483,7 +1483,7 @@ const styles = StyleSheet.create({
     height: width * 0.7,
     width: width - 25,
   },
-  dotStyle: {height: 12, width: 12, borderRadius: 12 / 2},
+  dotStyle: { height: 12, width: 12, borderRadius: 12 / 2 },
   ratingColor: {
     color: colors.backgroundGrey,
     paddingLeft: 5,

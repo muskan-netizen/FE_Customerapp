@@ -29,7 +29,7 @@ import {SvgUri} from 'react-native-svg';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 
-export default function DashBoardHeaderOne({navigation = {}, location = [],  curAddress={}}) {
+export default function DashBoardHeaderOne({navigation = {}, location = []}) {
   const [state, setState] = useState({});
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,

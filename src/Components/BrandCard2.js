@@ -1,8 +1,8 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import commonStylesFun from '../styles/commonStyles';
 import {
@@ -16,12 +16,12 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../styles/theme';
 import BlurImages from './BlurImages';
-import {SvgUri} from 'react-native-svg';
+import { SvgUri } from 'react-native-svg';
 
-export default function BrandCard2({data = {}, onPress = () => {}}) {
+export default function BrandCard2({ data = {}, onPress = () => { } }) {
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -30,9 +30,9 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const scaleInAnimated = new Animated.Value(0);
-  const {appStyle, themeColors} = useSelector((state) => state.initBoot);
+  const { appStyle, themeColors } = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({fontFamily});
+  const commonStyles = commonStylesFun({ fontFamily });
 
   // console.log("svg data",data)
 
@@ -51,15 +51,16 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
         onPressIn={() => pressInAnimation(scaleInAnimated)}
         onPressOut={() => pressOutAnimation(scaleInAnimated)}
         style={{
-          // backgroundColor: colors.borderColorNew,
+          height: moderateScale(80),
           // paddingVertical: moderateScaleVertical(30),
           borderRadius: moderateScale(10),
           alignItems: 'center',
           justifyContent: 'center',
+          // backgroundColor: 'red'
         }}>
         {isSVG ? (
           <SvgUri
-            height={moderateScale(100)}
+            height={moderateScale(80)}
             width={moderateScale(96)}
             uri={imageURI}
             style={
@@ -73,7 +74,7 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
           />
         ) : (
           <FastImage
-            source={{uri: imageURI, priority: FastImage.priority.high}}
+            source={{ uri: imageURI, priority: FastImage.priority.high }}
             style={{
               ...styles.imgStyle,
               backgroundColor: isDarkMode
@@ -82,48 +83,14 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
             }}
           />
         )}
-        {/* <BlurImages
-          isDarkMode={isDarkMode}
-          themeColor={themeColors.primary_color}
-          style={{
-            ...styles.imgStyle,
-            backgroundColor: isDarkMode
-              ? colors.whiteOpacity15
-              : colors.greyColor,
-          }}
-          thumnailUrl={{
-            uri: data?.icon
-              ? getImageUrl(data.icon.image_fit, data.icon.image_path, '40/40')
-              : getImageUrl(
-                  data.image.image_fit,
-                  data.image.image_path,
-                  '40/40',
-                ),
-          }}
-          originalUrl={{
-            uri: data?.icon
-              ? getImageUrl(
-                  data.icon.image_fit,
-                  data.icon.image_path,
-                  '400/400',
-                )
-              : getImageUrl(
-                  data.image.image_fit,
-                  data.image.image_path,
-                  '400/400',
-                ),
-          }}
-          containerStyle={{borderRadius: moderateScale(10), width: '100%'}}
-        /> */}
       </TouchableOpacity>
 
       <Text
         style={{
-          fontSize: textScale(11),
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
           fontFamily: fontFamily.regular,
-          marginVertical: moderateScaleVertical(10),
-          alignSelf: 'center',
-          color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          fontSize: textScale(10),
+          textAlign: 'center'
         }}>
         {data?.name ? data?.name : data?.translation[0]?.title}
       </Text>
@@ -133,13 +100,10 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
 
 const styles = StyleSheet.create({
   imgContainer: {
-    width: (width - moderateScale(60)) / 3,
-    justifyContent: 'space-between',
-    marginHorizontal: moderateScale(10),
-    flexDirection: 'column',
+    flex: 1,
   },
   imgStyle: {
-    height: moderateScale(100),
+    height: moderateScale(80),
     width: '100%',
     borderRadius: moderateScale(10),
   },
