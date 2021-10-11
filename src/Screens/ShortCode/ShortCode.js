@@ -712,6 +712,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.booziedoozie:
+          updateState({
+            shortCode: shortCodes.booziedoozie,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.zestyclickz:
+          updateState({
+            shortCode: shortCodes.zestyclickz,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

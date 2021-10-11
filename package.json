@@ -106,8 +106,9 @@
     "elixir": "react-native run-android --variant=elixirDebug --appIdSuffix=elixir",
     "ace": "react-native run-android --variant=aceDebug --appIdSuffix=ace",
     "empire": "react-native run-android --variant=empireDebug --appIdSuffix=empire",
+    "zestyclickz": "react-native run-android --variant=zestyclickzDebug --appIdSuffix=zestyclickz",
     "expressdelivery": "react-native run-android --variant=expressdeliveryDebug --appIdSuffix=expressdelivery",
-   
+    "booziedoozie": "react-native run-android --variant=booziedoozieDebug --appIdSuffix=booziedoozie",
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "bustanfakiehRelease": "cd android && ./gradlew assembleBustanFakiehRelease",
@@ -212,6 +213,8 @@
     "aceRelease": "cd android && ./gradlew assembleAceRelease",
     "empireRelease": "cd android && ./gradlew assembleEmpireRelease",
     "expressdeliveryRelease": "cd android && ./gradlew assembleExpressDeliveryRelease",
+    "booziedoozieRelease": "cd android && ./gradlew assembleBoozieDoozieRelease",
+    "zestyclickzRelease": "cd android && ./gradlew assembleZestyClickzRelease",
    
     "android": "react-native run-android",
     "ios": "react-native run-ios",

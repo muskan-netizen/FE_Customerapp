@@ -1260,6 +1260,26 @@ android {
             resValue "string", "app_name", "Express Delivery"
             resValue "string", "host_name", ""
          }
+         booziedoozie{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.booziedoozie'
+            resValue "string", "app_name", "Boozie Doozie"
+            resValue "string", "host_name", ""
+         }
+         zestyclickz{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.zestyclickz'
+            resValue "string", "app_name", "ZestyClickz"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

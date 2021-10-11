@@ -103,6 +103,8 @@ const shortCodes = {
   zest: '6865aa',
   empire: '79fbc8',
   expressdelivery: '6098e4',
+  booziedoozie: '9f5473',
+  zestyclickz: '3046ca',
 };
 
 const appIds = {
@@ -521,6 +523,14 @@ const appIds = {
   expressdelivery: Platform.select({
     ios: 'com.expressdelivery',
     android: 'com.expressdelivery',
+  }),
+  booziedoozie: Platform.select({
+    ios: 'com.booziedoozie',
+    android: 'com.booziedoozie',
+  }),
+  zestyclickz: Platform.select({
+    ios: 'com.zestyclickz',
+    android: 'com.zestyclickz',
   }),
 };
 
