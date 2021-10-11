@@ -85,7 +85,7 @@ export default function DashBoardFive({
   }, [appMainData?.vendors]);
 
   const _renderItem = ({ item }) => (
-    <View style={{ flex: 1 }}>
+    <View style={{width: '25%'}}>
       <HomeCategoryCard2
         data={item}
         onPress={() => onPressCategory(item)}
