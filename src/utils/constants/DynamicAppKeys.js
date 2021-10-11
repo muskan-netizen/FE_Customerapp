@@ -102,6 +102,7 @@ const shortCodes = {
   voltaic: 'd8473d',
   zest: '6865aa',
   empire: '79fbc8',
+  expressdelivery: '6098e4',
 };
 
 const appIds = {
@@ -516,6 +517,10 @@ const appIds = {
   empire: Platform.select({
     ios: 'com.empire',
     android: 'com.empire',
+  }),
+  expressdelivery: Platform.select({
+    ios: 'com.expressdelivery',
+    android: 'com.expressdelivery',
   }),
 };
 

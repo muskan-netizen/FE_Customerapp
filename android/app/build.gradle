@@ -1250,6 +1250,16 @@ android {
             resValue "string", "app_name", "Empire"
             resValue "string", "host_name", ""
          }
+          expressdelivery{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.expressdelivery'
+            resValue "string", "app_name", "Express Delivery"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

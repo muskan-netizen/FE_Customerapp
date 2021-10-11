@@ -106,6 +106,8 @@
     "elixir": "react-native run-android --variant=elixirDebug --appIdSuffix=elixir",
     "ace": "react-native run-android --variant=aceDebug --appIdSuffix=ace",
     "empire": "react-native run-android --variant=empireDebug --appIdSuffix=empire",
+    "expressdelivery": "react-native run-android --variant=expressdeliveryDebug --appIdSuffix=expressdelivery",
+   
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "bustanfakiehRelease": "cd android && ./gradlew assembleBustanFakiehRelease",
@@ -209,6 +211,8 @@
     "elixirRelease": "cd android && ./gradlew assembleElixirRelease",
     "aceRelease": "cd android && ./gradlew assembleAceRelease",
     "empireRelease": "cd android && ./gradlew assembleEmpireRelease",
+    "expressdeliveryRelease": "cd android && ./gradlew assembleExpressDeliveryRelease",
+   
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
