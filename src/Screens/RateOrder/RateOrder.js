@@ -184,7 +184,7 @@ export default function RateOrder({navigation, route}) {
       })
       .then((res) => {
         updateState({isLoading: false});
-        navigation.navigate(navigationStrings.ADDADDRESS);
+        navigation.navigate(navigationStrings.TAXIHOMESCREEN);
       })
       .catch(errorMethod);
   };

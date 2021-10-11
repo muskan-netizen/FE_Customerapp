@@ -89,7 +89,7 @@ export default function SubscriptionComponent2({
         source={getImage ? {uri: getImage} : ''}
         style={{
           ...styles.imageBackground,
-          backgroundColor: MyDarkTheme.colors.lightDark,
+          // backgroundColor: MyDarkTheme.colors.lightDark,
         }}
         resizeMode="contain">
         <View style={styles.titleBagView}>

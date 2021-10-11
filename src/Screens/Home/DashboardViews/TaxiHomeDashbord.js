@@ -278,7 +278,10 @@ export default function TaxiHomeDashbord({
               mode="datetime"
               textColor={isDarkMode ? '#fff' : colors.blackB}
               minimumDate={new Date()}
-              style={{width: width - 20, height: height / 4.1}}
+              style={{
+                width: width - 20,
+                height: height / 4.1,
+              }}
               // onDateChange={setDate}
               onDateChange={(value) => onDateChange(value)}
             />
