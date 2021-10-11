@@ -700,6 +700,30 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.empire:
+          updateState({
+            shortCode: shortCodes.empire,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.expressdelivery:
+          updateState({
+            shortCode: shortCodes.expressdelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.booziedoozie:
+          updateState({
+            shortCode: shortCodes.booziedoozie,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.zestyclickz:
+          updateState({
+            shortCode: shortCodes.zestyclickz,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

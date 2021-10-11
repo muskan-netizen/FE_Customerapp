@@ -101,6 +101,10 @@ const shortCodes = {
   homeric: 'c8fbba',
   voltaic: 'd8473d',
   zest: '6865aa',
+  empire: '79fbc8',
+  expressdelivery: '6098e4',
+  booziedoozie: '9f5473',
+  zestyclickz: '3046ca',
 };
 
 const appIds = {
@@ -511,6 +515,22 @@ const appIds = {
   ace: Platform.select({
     ios: 'com.customer.ace',
     android: 'com.customer.ace',
+  }),
+  empire: Platform.select({
+    ios: 'com.customer.empire',
+    android: 'com.empire',
+  }),
+  expressdelivery: Platform.select({
+    ios: 'com.customer.expressdelivery',
+    android: 'com.expressdelivery',
+  }),
+  booziedoozie: Platform.select({
+    ios: 'com.booziedoozie',
+    android: 'com.booziedoozie',
+  }),
+  zestyclickz: Platform.select({
+    ios: 'com.zestyclickz',
+    android: 'com.zestyclickz',
   }),
 };
 

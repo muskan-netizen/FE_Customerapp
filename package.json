@@ -105,6 +105,10 @@
     "gokab": "react-native run-android --variant=gokabDebug --appIdSuffix=gokab",
     "elixir": "react-native run-android --variant=elixirDebug --appIdSuffix=elixir",
     "ace": "react-native run-android --variant=aceDebug --appIdSuffix=ace",
+    "empire": "react-native run-android --variant=empireDebug --appIdSuffix=empire",
+    "zestyclickz": "react-native run-android --variant=zestyclickzDebug --appIdSuffix=zestyclickz",
+    "expressdelivery": "react-native run-android --variant=expressdeliveryDebug --appIdSuffix=expressdelivery",
+    "booziedoozie": "react-native run-android --variant=booziedoozieDebug --appIdSuffix=booziedoozie",
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "bustanfakiehRelease": "cd android && ./gradlew assembleBustanFakiehRelease",
@@ -207,6 +211,11 @@
     "gokabRelease": "cd android && ./gradlew assembleGoKabRelease",
     "elixirRelease": "cd android && ./gradlew assembleElixirRelease",
     "aceRelease": "cd android && ./gradlew assembleAceRelease",
+    "empireRelease": "cd android && ./gradlew assembleEmpireRelease",
+    "expressdeliveryRelease": "cd android && ./gradlew assembleExpressDeliveryRelease",
+    "booziedoozieRelease": "cd android && ./gradlew assembleBoozieDoozieRelease",
+    "zestyclickzRelease": "cd android && ./gradlew assembleZestyClickzRelease",
+   
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
@@ -214,7 +223,7 @@
     "lint": "eslint .",
     "clean": "cd ./android && ./gradlew clean",
     "uninstallAll": "cd android && ./gradlew uninstallAll",
-    "postinstall": "patch-package"
+    "postinstall": "cd ios && pod install"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^2.3.0",
