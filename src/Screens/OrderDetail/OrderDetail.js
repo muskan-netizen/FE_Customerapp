@@ -844,9 +844,7 @@ export default function OrderDetail({navigation, route}) {
           {!!cartData?.scheduled_date_time && (
             <LeftRightText
               leftText={strings.SEHEDLEDFOR}
-              rightText={`${moment(cartData?.scheduled_date_time).format(
-                'DD MMM, YYYY',
-              )} ${moment(cartData?.created_at).format('LT')} `}
+              rightText={moment(cartData?.scheduled_date_time).format('lll')}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
               leftTextStyle={{

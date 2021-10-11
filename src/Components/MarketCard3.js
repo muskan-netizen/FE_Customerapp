@@ -54,7 +54,6 @@ export default function MarketCard3({
     '800/400',
   );
 
-  console.log(data, 'datadatadata');
   return (
     <TouchableOpacity
       activeOpacity={1}

@@ -95,6 +95,7 @@ export default function Products({ route, navigation }) {
     isVisibleModal: false,
     updateQtyLoader: false,
     showShimmer: true,
+    typeId: null,
     sortFilters: [
       {
         id: -2,
@@ -200,11 +201,14 @@ export default function Products({ route, navigation }) {
     vendorCategories,
     vendorCategorySelectedIndx,
     vendorCategoryItms,
+    typeId
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
   const styles = stylesFunc({ themeColors, fontFamily });
+
+  // console.log("category info",productListData)
 
   //Saving the initial state
   const initialState = cloneDeep(state);
@@ -436,7 +440,6 @@ export default function Products({ route, navigation }) {
         },
       )
       .then((res) => {
-        console.log(res, 'comes here++');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -668,6 +671,8 @@ export default function Products({ route, navigation }) {
   };
 
   const addSingleItem = async (item) => {
+    let getTypeId = !!item?.category && item?.category.category_detail?.type_id
+
     updateState({ selectedItemID: item?.id, btnLoader: true });
     let isSingleVendor = await checkSingleVendor(item.id);
     console.log('is single vendor', isSingleVendor);
@@ -696,6 +701,7 @@ export default function Products({ route, navigation }) {
     if (item?.add_on?.length !== 0 || item?.variantSet?.length !== 0) {
       updateState({
         updateQtyLoader: false,
+        typeId: getTypeId,
         isVisibleModal: true,
         selectedCartItem: item,
         selectedItemID: -1,
@@ -1962,7 +1968,21 @@ export default function Products({ route, navigation }) {
         {/* <View style={{ height: moderateScale(height * 0.070) }} /> */}
       </View>
 
-      {isVisibleModal && (
+
+      {!!typeId && typeId == 8 ?
+        <HomeServiceVariantAddons
+          addonSet={selectedCartItem?.add_on}
+          variantData={selectedCartItem?.variantSet}
+          isVisible={isVisibleModal}
+          productdetail={selectedCartItem}
+          onClose={() =>
+            updateState({ isVisibleModal: false, showShimmer: true })
+          }
+          showShimmer={showShimmer}
+          shimmerClose={(val) => updateState({ showShimmer: val })}
+          updateCartItems={updateCartItems}
+        />
+        :
         <VariantAddons
           addonSet={selectedCartItem?.add_on}
           variantData={selectedCartItem?.variantSet}
@@ -1975,20 +1995,9 @@ export default function Products({ route, navigation }) {
           shimmerClose={(val) => updateState({ showShimmer: val })}
           updateCartItems={updateCartItems}
         />
+      }
 
-        // <HomeServiceVariantAddons
-        //   addonSet={selectedCartItem?.add_on}
-        //   variantData={selectedCartItem?.variantSet}
-        //   isVisible={isVisibleModal}
-        //   productdetail={selectedCartItem}
-        //   onClose={() =>
-        //     updateState({isVisibleModal: false, showShimmer: true})
-        //   }
-        //   showShimmer={showShimmer}
-        //   shimmerClose={(val) => updateState({showShimmer: val})}
-        //   updateCartItems={updateCartItems}
-        // />
-      )}
+
       <CustomAnimatedLoader
         source={loaderOne}
         loaderTitle="Loading"

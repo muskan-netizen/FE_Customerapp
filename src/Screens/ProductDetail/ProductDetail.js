@@ -1,6 +1,6 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -12,13 +12,13 @@ import {
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import HTMLView from 'react-native-htmlview';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Pagination} from 'react-native-snap-carousel';
-import {useSelector} from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Pagination } from 'react-native-snap-carousel';
+import { useSelector } from 'react-redux';
 import Banner from '../../Components/Banner';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import ProductCard from '../../Components/ProductCard';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -26,7 +26,7 @@ import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import commonStylesFunc, {hitSlopProp} from '../../styles/commonStyles';
+import commonStylesFunc, { hitSlopProp } from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -41,26 +41,26 @@ import {
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../styles/theme';
 import HorizontalLine from '../../Components/HorizontalLine';
 import StarRating from 'react-native-star-rating';
 import Banner2 from '../../Components/Banner2';
 import MarketCard3 from '../../Components/MarketCard3';
 import ProductsComp from '../../Components/ProductsComp';
 
-export default function ProductDetail({route, navigation}) {
+export default function ProductDetail({ route, navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
+  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
-  const {productListData} = useSelector((state) => state?.product);
+  const { productListData } = useSelector((state) => state?.product);
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
-  const commonStyles = commonStylesFunc({fontFamily});
-  const {data} = route.params;
+  const styles = stylesFunc({ themeColors, fontFamily });
+  const commonStyles = commonStylesFunc({ fontFamily });
+  const { data } = route.params;
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     isLoading: true,
@@ -81,13 +81,14 @@ export default function ProductDetail({route, navigation}) {
     lightBox: false,
     productQuantityForCart: 1,
     showErrorMessageTitle: false,
+    typeId: null,
   });
   //Saving the initial state
   const initialState = cloneDeep(state);
   const userData = useSelector((state) => state?.auth?.userData);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {bannerRef} = useRef();
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const { bannerRef } = useRef();
   const {
     productDetailData,
     productPriceData,
@@ -104,11 +105,12 @@ export default function ProductDetail({route, navigation}) {
     lightBox,
     productQuantityForCart,
     showErrorMessageTitle,
+    typeId
   } = state;
 
   const customRight = () => {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Image source={imagePath.search} />
       </View>
     );
@@ -118,9 +120,9 @@ export default function ProductDetail({route, navigation}) {
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -194,26 +196,29 @@ export default function ProductDetail({route, navigation}) {
           relatedProducts: res.data.relatedProducts,
           productPriceData: res.data.products.variant[0],
           addonSet: res.data.products.add_on,
-
+          typeId: res.data.products.category.category_detail.type_id,
           venderDetail: res.data.products.vendor,
           productTotalQuantity: res.data.products.variant[0].quantity,
           productVariantId: res.data.products.variant[0].id,
           productSku: res.data.products.sku,
+
         });
         if (
           res.data.products.variant_set.length &&
           variantSet &&
           !variantSet.length
         ) {
-          updateState({variantSet: res.data.products.variant_set});
+          updateState({ variantSet: res.data.products.variant_set });
         }
       })
       .catch(errorMethod);
   };
 
+  console.log("type id type id", typeId)
+
   //Get Product detail based on varint selection
   const getProductDetailBasedOnFilter = (variantSetData) => {
-    updateState({isLoadingC: true});
+    updateState({ isLoadingC: true });
     let data = {};
     data['variants'] = variantSetData.map((i) => i.variant_id);
     data['options'] = variantSetData.map((i) => i.optionId);
@@ -246,7 +251,7 @@ export default function ProductDetail({route, navigation}) {
     console.log(error, 'Error>>>>>');
 
     if (error?.message?.alert == 1) {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
@@ -254,7 +259,7 @@ export default function ProductDetail({route, navigation}) {
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        {text: strings.CLEAR_CART2, onPress: () => clearCart()},
+        { text: strings.CLEAR_CART2, onPress: () => clearCart() },
       ]);
     } else {
       if (error?.data?.variant_empty) {
@@ -265,7 +270,7 @@ export default function ProductDetail({route, navigation}) {
           isLoadingC: false,
         });
       } else {
-        updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+        updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
         showError(error?.message || error?.error);
       }
     }
@@ -275,7 +280,7 @@ export default function ProductDetail({route, navigation}) {
     console.log(error.message.alert, 'Error>>>>>');
 
     if (error?.message?.alert == 1) {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
@@ -283,10 +288,10 @@ export default function ProductDetail({route, navigation}) {
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        {text: strings.CLEAR_CART2, onPress: () => clearCart(addonSet)},
+        { text: strings.CLEAR_CART2, onPress: () => clearCart(addonSet) },
       ]);
     } else {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
       showError(error?.message || error?.error);
     }
   };
@@ -342,10 +347,10 @@ export default function ProductDetail({route, navigation}) {
 
           if (item.inwishlist) {
             item.inwishlist = null;
-            updateState({productDetailData: item});
+            updateState({ productDetailData: item });
           } else {
-            item.inwishlist = {product_id: item.id};
-            updateState({productDetailData: item});
+            item.inwishlist = { product_id: item.id };
+            updateState({ productDetailData: item });
           }
         })
         .catch(errorMethod);
@@ -389,7 +394,7 @@ export default function ProductDetail({route, navigation}) {
 
   const radioButtonView = (options) => {
     return (
-      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         {options.map((i, inx) => {
           return (
             <View>
@@ -401,8 +406,8 @@ export default function ProductDetail({route, navigation}) {
                   backgroundColor: i?.value
                     ? themeColors?.primary_color
                     : isDarkMode
-                    ? colors.whiteOpacity15
-                    : '#D8D8D8',
+                      ? colors.whiteOpacity15
+                      : '#D8D8D8',
                 }}>
                 {/* <Image source={i?.value ? imagePath.check : imagePath.unCheck} /> */}
                 <Text
@@ -411,8 +416,8 @@ export default function ProductDetail({route, navigation}) {
                     color: i?.value
                       ? colors.white
                       : isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGrey,
+                        ? MyDarkTheme.colors.text
+                        : colors.textGrey,
                   }}>
                   {i.title}
                 </Text>
@@ -426,7 +431,7 @@ export default function ProductDetail({route, navigation}) {
 
   const circularView = (options) => {
     return (
-      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         {options.map((i, inx) => {
           return (
             <TouchableOpacity
@@ -447,7 +452,7 @@ export default function ProductDetail({route, navigation}) {
 
                     borderColor:
                       i?.value &&
-                      (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
+                        (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
                         ? colors.textGrey
                         : i.hexacode,
                   },
@@ -470,7 +475,7 @@ export default function ProductDetail({route, navigation}) {
       </View>
     );
   };
-  const variantSetValue = ({options, type}) => {
+  const variantSetValue = ({ options, type }) => {
     if (type == 1) {
       return <>{radioButtonView(options)}</>;
     }
@@ -496,7 +501,7 @@ export default function ProductDetail({route, navigation}) {
                 }}>{`${i?.title}`}</Text>
               {i?.options ? variantSetValue(i) : null}
               <HorizontalLine
-                lineStyle={{marginVertical: moderateScaleVertical(8)}}
+                lineStyle={{ marginVertical: moderateScaleVertical(8) }}
               />
             </View>
           );
@@ -507,7 +512,7 @@ export default function ProductDetail({route, navigation}) {
 
   useEffect(() => {
     if (data?.addonSetData && data?.randomValue) {
-      updateState({addonSet: data?.addonSetData});
+      updateState({ addonSet: data?.addonSetData });
       setTimeout(() => {
         _finalAddToCart(data?.addonSetData);
       }, 1000);
@@ -539,7 +544,7 @@ export default function ProductDetail({route, navigation}) {
       data['addon_options'] = addon_options;
     }
     console.log(data, 'data for cart');
-    updateState({isLoadingC: true, isVisibleAddonModal: false});
+    updateState({ isLoadingC: true, isVisibleAddonModal: false });
     actions
       .addProductsToCart(data, {
         code: appData.profile.code,
@@ -553,7 +558,7 @@ export default function ProductDetail({route, navigation}) {
 
         showSuccess(strings.PRODUCT_ADDED_SUCCESS);
 
-        updateState({isLoadingC: false});
+        updateState({ isLoadingC: false });
         navigation.goBack();
       })
       .catch((error) => errorMethodSecond(error, addonSet));
@@ -562,7 +567,7 @@ export default function ProductDetail({route, navigation}) {
   const addToCart = () => {
     {
       addonSet && addonSet.length
-        ? updateState({isVisibleAddonModal: true})
+        ? updateState({ isVisibleAddonModal: true })
         : _finalAddToCart(addonSet);
     }
     // _finalAddToCart()
@@ -589,13 +594,13 @@ export default function ProductDetail({route, navigation}) {
     }
   };
 
-  const renderProduct = ({item, index}) => {
+  const renderProduct = ({ item, index }) => {
     item.showAddToCart = true;
     return (
       <ProductsComp
         item={item}
         onPress={() =>
-          navigation.push(navigationStrings.PRODUCTDETAIL, {data: item})
+          navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
         }
       />
       // <ProductCard
@@ -621,17 +626,14 @@ export default function ProductDetail({route, navigation}) {
   };
 
   const setModalVisibleForAddonModal = (visible) => {
-    updateState({isVisibleAddonModal: false});
+    updateState({ isVisibleAddonModal: false });
   };
 
   const onclickBanner = () => {
-    updateState({lightBox: true});
+    updateState({ lightBox: true });
   };
 
-  console.log(
-    productTotalQuantity,
-    'productDetailData?.translation[0]?.body_html',
-  );
+  console.log("product detail+++", productDetailData);
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -643,13 +645,13 @@ export default function ProductDetail({route, navigation}) {
           appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
         }
         centerTitle={productDetailData?.translation[0]?.title}
-        textStyle={{fontSize: textScale(14)}}
+        textStyle={{ fontSize: textScale(14) }}
         rightIcon={
           !!data?.showAddToCart
             ? false
             : appStyle?.homePageLayout === 3
-            ? imagePath.icSearchb
-            : imagePath.search
+              ? imagePath.icSearchb
+              : imagePath.search
         }
         onPressRight={() =>
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
@@ -662,7 +664,7 @@ export default function ProductDetail({route, navigation}) {
       />
 
       <KeyboardAwareScrollView ref={myRef} showsVerticalScrollIndicator={false}>
-        <View style={{marginHorizontal: moderateScale(16)}}>
+        <View style={{ marginHorizontal: moderateScale(16) }}>
           {state.isLoading && <ListEmptyProduct isLoading={state.isLoading} />}
 
           {!state.isLoading && (
@@ -676,7 +678,7 @@ export default function ProductDetail({route, navigation}) {
                   justifyContent: 'space-between',
                 }}>
                 {/* <View style={{ flex: 0.2 }}><Image source={imagePath.fav} /></View> */}
-                <View style={{flex: 1, alignItems: 'center'}}>
+                <View style={{ flex: 1, alignItems: 'center' }}>
                   <Banner2
                     // resizeMode="contain"
                     bannerRef={bannerRef}
@@ -685,7 +687,7 @@ export default function ProductDetail({route, navigation}) {
                     itemWidth={width / 1.1}
                     pagination={false}
                     setActiveState={(index) =>
-                      updateState({slider1ActiveSlide: index})
+                      updateState({ slider1ActiveSlide: index })
                     }
                     imagestyle={{
                       borderRadius: 8,
@@ -696,13 +698,13 @@ export default function ProductDetail({route, navigation}) {
                       <TouchableOpacity
                         onPress={() => _onAddtoWishlist(productDetailData)}>
                         {productDetailData?.is_wishlist ? (
-                          <View style={{alignSelf: 'flex-end', padding: 8}}>
+                          <View style={{ alignSelf: 'flex-end', padding: 8 }}>
                             {!!productDetailData?.inwishlist ? (
                               <Image
                                 style={
                                   isDarkMode
-                                    ? {tintColor: MyDarkTheme.colors.text}
-                                    : {tintColor: colors.white}
+                                    ? { tintColor: MyDarkTheme.colors.text }
+                                    : { tintColor: colors.white }
                                 }
                                 source={imagePath.whiteFilledHeart}
                               />
@@ -710,8 +712,8 @@ export default function ProductDetail({route, navigation}) {
                               <Image
                                 style={
                                   isDarkMode
-                                    ? {tintColor: MyDarkTheme.colors.text}
-                                    : {tintColor: colors.white}
+                                    ? { tintColor: MyDarkTheme.colors.text }
+                                    : { tintColor: colors.white }
                                 }
                                 source={imagePath.heart2}
                               />
@@ -722,7 +724,7 @@ export default function ProductDetail({route, navigation}) {
                     }
                   />
 
-                  <View style={{paddingTop: 5}}>
+                  <View style={{ paddingTop: 5 }}>
                     <Pagination
                       dotsLength={productDetailData?.product_media?.length}
                       activeDotIndex={state.slider1ActiveSlide}
@@ -738,7 +740,7 @@ export default function ProductDetail({route, navigation}) {
 
               {/* Product Name and Branc detail */}
 
-              <View style={{marginTop: moderateScaleVertical(10)}}>
+              <View style={{ marginTop: moderateScaleVertical(10) }}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -756,9 +758,9 @@ export default function ProductDetail({route, navigation}) {
                       style={
                         isDarkMode
                           ? [
-                              styles.productName,
-                              {color: MyDarkTheme.colors.text},
-                            ]
+                            styles.productName,
+                            { color: MyDarkTheme.colors.text },
+                          ]
                           : styles.productName
                       }>
                       {productDetailData?.translation[0]?.title}
@@ -770,9 +772,9 @@ export default function ProductDetail({route, navigation}) {
                           ? MyDarkTheme.colors.text
                           : colors.black,
                       }}>{`${currencies?.primary_currency.symbol}${(
-                      Number(productPriceData?.multiplier) *
-                      Number(productPriceData?.price)
-                    ).toFixed(2)}`}</Text>
+                        Number(productPriceData?.multiplier) *
+                        Number(productPriceData?.price)
+                      ).toFixed(2)}`}</Text>
                   </View>
                 </View>
 
@@ -810,14 +812,14 @@ export default function ProductDetail({route, navigation}) {
                         ).toFixed(1)}
                         fullStarColor={colors.yellowB}
                         starSize={8}
-                        containerStyle={{width: width / 9}}
+                        containerStyle={{ width: width / 9 }}
                       />
                     </View>
                   )}
                 </View>
 
-                {productTotalQuantity == 0 && (
-                  <View style={{justifyContent: 'center'}}>
+                {productTotalQuantity == 0 && !!typeId && typeId !== 8 && (
+                  <View style={{ justifyContent: 'center' }}>
                     <Text
                       style={
                         stylesFunc({
@@ -835,7 +837,7 @@ export default function ProductDetail({route, navigation}) {
               </View>
 
               <HorizontalLine
-                lineStyle={{marginVertical: moderateScaleVertical(16)}}
+                lineStyle={{ marginVertical: moderateScaleVertical(16) }}
               />
 
               {/* Product description */}
@@ -851,9 +853,9 @@ export default function ProductDetail({route, navigation}) {
                         style={
                           isDarkMode
                             ? [
-                                styles.descriptiontitle,
-                                {color: MyDarkTheme.colors.text},
-                              ]
+                              styles.descriptiontitle,
+                              { color: MyDarkTheme.colors.text },
+                            ]
                             : styles.descriptiontitle
                         }>
                         {strings.DESCRIPTION}
@@ -865,12 +867,12 @@ export default function ProductDetail({route, navigation}) {
                             ? plainHtml
                             : '<p>' + plainHtml + '</p>'
                         }
-                        stylesheet={{p: styles.descriptionStyle}}
+                        stylesheet={{ p: styles.descriptionStyle }}
                       />
                     </View>
                   </View>
                   <HorizontalLine
-                    lineStyle={{marginVertical: moderateScaleVertical(14)}}
+                    lineStyle={{ marginVertical: moderateScaleVertical(14) }}
                   />
                 </>
               ) : null}
@@ -891,8 +893,8 @@ export default function ProductDetail({route, navigation}) {
                 </Text>
               ) : null}
               {/* Add to Cart button */}
-              {!!productTotalQuantity &&
-                !!productTotalQuantity != 0 &&
+              {((!!productTotalQuantity &&
+                !!productTotalQuantity != 0) || (!!typeId && typeId == 8)) &&
                 (!!data?.showAddToCart ? null : showErrorMessageTitle ? null : (
                   <View
                     style={{
@@ -909,7 +911,7 @@ export default function ProductDetail({route, navigation}) {
                           ? MyDarkTheme.colors.background
                           : colors.white,
                       }}>
-                      <View style={{flex: 0.25}}>
+                      <View style={{ flex: 0.25 }}>
                         <View
                           style={{
                             ...commonStyles.buttonRect,
@@ -921,7 +923,7 @@ export default function ProductDetail({route, navigation}) {
                             borderColor: themeColors?.primary_color,
                             height: moderateScale(38),
                           }}
-                          // onPress={onPress}
+                        // onPress={onPress}
                         >
                           <TouchableOpacity
                             onPress={() => productIncrDecreamentForCart(2)}
@@ -959,8 +961,8 @@ export default function ProductDetail({route, navigation}) {
                         </View>
                       </View>
 
-                      <View style={{marginHorizontal: 8}} />
-                      <View style={{flex: 0.75}}>
+                      <View style={{ marginHorizontal: 8 }} />
+                      <View style={{ flex: 0.75 }}>
                         <GradientButton
                           // indicator={btnLoader}
                           indicatorColor={colors.white}
@@ -973,12 +975,11 @@ export default function ProductDetail({route, navigation}) {
                             textTransform: 'capitalize',
                           }}
                           onPress={addToCart}
-                          btnText={`${strings.ADD}  ${
-                            currencies?.primary_currency?.symbol
-                          }${(
-                            Number(productPriceData?.multiplier) *
-                            Number(productPriceData?.price)
-                          ).toFixed(2)}`}
+                          btnText={`${strings.ADD}  ${currencies?.primary_currency?.symbol
+                            }${(
+                              Number(productPriceData?.multiplier) *
+                              Number(productPriceData?.price)
+                            ).toFixed(2)}`}
                           btnStyle={{
                             borderRadius: moderateScale(4),
                             height: moderateScale(38),
@@ -995,7 +996,7 @@ export default function ProductDetail({route, navigation}) {
                 onClose={() => setModalVisibleForAddonModal(false)}
                 // onPress={(data) => alert('123')}
                 addonSet={addonSet}
-                // onPress={currentLocation}
+              // onPress={currentLocation}
               />
             </>
           )}
@@ -1019,20 +1020,20 @@ export default function ProductDetail({route, navigation}) {
             keyExtractor={(item, index) => String(index)}
             keyboardShouldPersistTaps="always"
             showsHorizontalScrollIndicator={false}
-            style={{flex: 1, marginVertical: moderateScaleVertical(10)}}
-            contentContainerStyle={{flexGrow: 1}}
+            style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
+            contentContainerStyle={{ flexGrow: 1 }}
             horizontal
-            ItemSeparatorComponent={() => <View style={{width: 10}} />}
+            ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
             ListHeaderComponent={() => (
-              <View style={{marginLeft: moderateScale(8)}} />
+              <View style={{ marginLeft: moderateScale(8) }} />
             )}
             ListFooterComponent={() => (
-              <View style={{marginLeft: moderateScale(8)}} />
+              <View style={{ marginLeft: moderateScale(8) }} />
             )}
-            // ListEmptyComponent={<ListEmptyProduct isLoading={state.isLoading}/>}
+          // ListEmptyComponent={<ListEmptyProduct isLoading={state.isLoading}/>}
           />
         </View>
-        <View style={{marginBottom: moderateScale(40)}} />
+        <View style={{ marginBottom: moderateScale(40) }} />
       </KeyboardAwareScrollView>
     </WrapperContainer>
   );
