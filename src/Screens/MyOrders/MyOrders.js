@@ -353,18 +353,24 @@ export default function MyOrders({navigation}) {
 
   //pagination of data
   const onEndReached = ({distanceFromEnd}) => {
-    if (selectedTab == strings.ACTIVE_ORDERS) {
+    if (
+      selectedTab == strings.ACTIVE_ORDERS ||
+      selectedTab == strings.ACTIVERIDES
+    ) {
       updateState({pageActive: pageActive + 1, tabType: staticStrings.ACTIVE});
     }
-    if (selectedTab == strings.PAST_ORDERS) {
+    if (
+      selectedTab == strings.PAST_ORDERS ||
+      selectedTab == strings.PASTRIDES
+    ) {
       updateState({pageActive: pagePastOrder + 1, tabType: staticStrings.PAST});
     }
-    if (selectedTab == strings.SCHEDULED_ORDERS) {
-      updateState({
-        pageActive: pageScheduleOrder + 1,
-        tabType: staticStrings.SCHEDULE,
-      });
-    }
+    // if (selectedTab == strings.SCHEDULED_ORDERS) {
+    //   updateState({
+    //     pageActive: pageScheduleOrder + 1,
+    //     tabType: staticStrings.SCHEDULE,
+    //   });
+    // }
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
