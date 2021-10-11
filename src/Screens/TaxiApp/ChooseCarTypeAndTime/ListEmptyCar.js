@@ -12,11 +12,11 @@ import {
 export default function ListEmptyCar({isLoading = false}) {
   if (isLoading) {
     return (
-      <View style={{marginTop: moderateScaleVertical(20), }}>
+      <View>
         <View style={{flexDirection: 'row'}}>
           <CardLoader
-            cardWidth={width / 6}
-            height={moderateScaleVertical(100)}
+            cardWidth={width / 12}
+            height={moderateScaleVertical(30)}
             listSize={1}
             containerStyle={{
               marginLeft: moderateScale(16),
@@ -43,38 +43,18 @@ export default function ListEmptyCar({isLoading = false}) {
                 color: colors.white,
               }}
             />
-            <CardLoader
-              cardWidth={width / 2}
-              height={moderateScaleVertical(16)}
-              listSize={1}
-              containerStyle={{
-                marginLeft: moderateScale(16),
-                color: colors.white,
-              }}
-            />
-            <CardLoader
-              cardWidth={width / 2}
-              height={moderateScaleVertical(16)}
-              listSize={1}
-              containerStyle={{
-                marginLeft: moderateScale(16),
-                color: colors.white,
-              }}
-            />
           </View>
 
-          
-            <CardLoader
-              cardWidth={width / 6}
-              height={moderateScaleVertical(25)}
-              listSize={1}
-              containerStyle={{
-                marginLeft: moderateScale(16),
-                // backgroundColor: colors.white,
-                justifyContent: 'center',
-              }}
-            />
-          
+          <CardLoader
+            cardWidth={width / 6}
+            height={moderateScaleVertical(25)}
+            listSize={1}
+            containerStyle={{
+              marginLeft: moderateScale(16),
+              // backgroundColor: colors.white,
+              justifyContent: 'center',
+            }}
+          />
         </View>
       </View>
     );

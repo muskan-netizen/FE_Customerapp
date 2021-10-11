@@ -50,14 +50,12 @@ export default function MyOrders({navigation}) {
   const businessType = appData?.profile?.preferences?.business_type;
   const [state, setState] = useState({
     tabBarData: [
-      // businessType == 'taxi'
-      //   ? {title: strings.ACTIVERIDES, isActive: true}
-      // :
-      {title: strings.ACTIVE_ORDERS, isActive: true},
-      // businessType == 'taxi'
-      //   ? {title: strings.PASTRIDES, isActive: false}
-      // :
-      {title: strings.PAST_ORDERS, isActive: false},
+      businessType == 'taxi'
+        ? {title: strings.ACTIVERIDES, isActive: true}
+        : {title: strings.ACTIVE_ORDERS, isActive: true},
+      businessType == 'taxi'
+        ? {title: strings.PASTRIDES, isActive: false}
+        : {title: strings.PAST_ORDERS, isActive: false},
       // {title: strings.SCHEDULED_ORDERS, isActive: false},
     ],
     selectedTab: strings.ACTIVE_ORDERS,

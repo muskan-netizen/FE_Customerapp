@@ -37,17 +37,17 @@ export default function BottomViewModal({
           onPress={() => closeModal()}>
           <Image source={imagePath.crossC} />
         </TouchableOpacity>
-        <View
-          style={{
-            height: moderateScaleVertical(30),
-            width: width - 60,
+        {isDatetimePicker ? null : (
+          <View
+            style={{
+              height: moderateScaleVertical(30),
+              width: width - 60,
 
-            alignItems: 'center',
-          }}>
-          {isDatetimePicker ? null : (
+              alignItems: 'center',
+            }}>
             <Text style={{fontSize: textScale(14)}}>{'Rate Your Ride'}</Text>
-          )}
-        </View>
+          </View>
+        )}
         {mainContainView()}
       </View>
     </Modal>

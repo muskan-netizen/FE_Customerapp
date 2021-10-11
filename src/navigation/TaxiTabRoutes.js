@@ -106,10 +106,11 @@ export default function TaxiTabRoutes(props) {
           tabBarIcon: ({focused, tintColor}) => (
             <Image
               style={[
+                {tintColor: tintColor},
                 {
-                  tintColor: focused
-                    ? colors.white
-                    : getColorCodeWithOpactiyNumber(colors.white.substr(1), 50),
+                  // tintColor: focused
+                  //   ? them
+                  //   : getColorCodeWithOpactiyNumber(colors.white.substr(1), 50),
                   height: 25,
                   width: 25,
                 },

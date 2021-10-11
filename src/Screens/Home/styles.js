@@ -12,6 +12,21 @@ import {MyDarkTheme} from '../../styles/theme';
 
 export default ({themeColors, fontFamily}) => {
   const styles = StyleSheet.create({
+    modalContainer: {
+      backgroundColor: colors.white,
+      // position: 'absolute',
+      // left: 0,
+      // right: 0,
+      // bottom: 0,
+      // top: height - height / 3,
+      borderRadius: moderateScale(25),
+      overflow: 'hidden',
+
+      // paddingBottom: moderateScaleVertical(30),
+      height: height / 3.5,
+      // maxHeight: height / 2,
+      width: width,
+    },
     absolute: {
       position: 'absolute',
       alignItems: 'center',

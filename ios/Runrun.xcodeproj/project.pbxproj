@@ -3631,7 +3631,6 @@
 		847802A5270746F90083F24E /* Zest(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zest(Production).xcconfig"; sourceTree = "<group>"; };
 		8478030D270747090083F24E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84780375270747980083F24E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		8478050F2707485E0083F24E /* Zest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Zest.entitlements; sourceTree = "<group>"; };
 		8478DB45270703490083F24E /* Grub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8478DDF02707043D0083F24E /* Grub(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Grub(Development).xcconfig"; sourceTree = "<group>"; };
 		8478DE53270704600083F24E /* Grub(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Grub(Production).xcconfig"; sourceTree = "<group>"; };
@@ -3944,6 +3943,7 @@
 		84F4679426A7F27400D378D5 /* Yogo Food-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Yogo Food-Bridging-Header.h"; sourceTree = "<group>"; };
 		84F4679526A7F27400D378D5 /* BottomsUp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BottomsUp-Bridging-Header.h"; sourceTree = "<group>"; };
 		84F4679626A7F27500D378D5 /* Royo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Royo.swift; sourceTree = "<group>"; };
+		84F5BA6527107E4000470705 /* Zest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Zest.entitlements; sourceTree = "<group>"; };
 		84FE247B26EF515D00849F64 /* WeEat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeEat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FE258626EF525000849F64 /* WeEat(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "WeEat(Development).xcconfig"; sourceTree = "<group>"; };
 		84FE263826EF528200849F64 /* WeEat(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "WeEat(Production).xcconfig"; sourceTree = "<group>"; };
@@ -5483,7 +5483,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				8478050F2707485E0083F24E /* Zest.entitlements */,
+				84F5BA6527107E4000470705 /* Zest.entitlements */,
 				8478FDDD27073B9D0083F24E /* Voltaic.entitlements */,
 				8478F6BE270731500083F24E /* Homeric.entitlements */,
 				8478F078270724ED0083F24E /* Punnet.entitlements */,
