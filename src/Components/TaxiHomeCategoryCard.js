@@ -61,11 +61,13 @@ export default function TaxiHomeCategoryCard({
             borderRadius: 10,
           }}>
           {isSVG ? (
-            <SvgUri
-              height={moderateScale(50)}
-              width={moderateScale(50)}
-              uri={imageURI}
-            />
+            <View style={{height: moderateScale(50), width: moderateScale(50)}}>
+              <SvgUri
+                height={moderateScale(50)}
+                width={moderateScale(50)}
+                uri={imageURI}
+              />
+            </View>
           ) : (
             <FastImage
               style={{

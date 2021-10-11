@@ -212,7 +212,8 @@ export default function TaxiHomeScreen({route, navigation}) {
 
   //get All address
   const getAllAddress = () => {
-    if (!!userData?.auth_token) {
+    // console.log("userData?.auth_token",userData?)
+    if (!!(userData && userData?.auth_token)) {
       actions
         .getAddress(
           {},
@@ -221,6 +222,7 @@ export default function TaxiHomeScreen({route, navigation}) {
           },
         )
         .then((res) => {
+          console.log(res, 'res>>>res');
           updateState({
             isLoadingB: false,
           });
@@ -318,7 +320,7 @@ export default function TaxiHomeScreen({route, navigation}) {
 
   //Error handling in screen
   const errorMethod = (error) => {
-    console.log(error, 'error');
+    console.log(error, 'error>>>>');
     updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
@@ -474,7 +476,7 @@ export default function TaxiHomeScreen({route, navigation}) {
     updateState({updatedData: data});
   };
 
-  const selcetedToggle = (type) => {
+  const selectedToggle = (type) => {
     actions.dineInData(type);
     updateState({
       selectedTabType: type,
@@ -550,7 +552,7 @@ export default function TaxiHomeScreen({route, navigation}) {
         isRefreshing={isRefreshing}
         appMainData={appMainData}
         onPressCategory={(item) => onPressCategory(item)}
-        selcetedToggle={selcetedToggle}
+        selectedToggle={selectedToggle}
         toggleData={appData}
       />
     );

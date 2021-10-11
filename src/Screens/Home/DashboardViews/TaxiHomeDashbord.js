@@ -35,6 +35,7 @@ import MapView, {
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
+  showError,
 } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 import ToggleTabBar from './ToggleTabBar';
@@ -56,6 +57,7 @@ import DatePicker from 'react-native-date-picker';
 import GradientButton from '../../../Components/GradientButton';
 import AddressModal3 from '../../../Components/AddressModal3';
 import AddressModal from '../../../Components/AddressModal';
+import Loader from '../../../Components/Loader';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => {},
@@ -64,7 +66,7 @@ export default function TaxiHomeDashbord({
   isLoading = false,
   isRefreshing = false,
   onPressCategory = () => {},
-  selcetedToggle,
+  selectedToggle,
   toggleData,
   isDineInSelected = false,
 }) {
@@ -117,6 +119,7 @@ export default function TaxiHomeDashbord({
     selectedDateAndTime: null,
     slectedDate: null,
     newAddressAdded: null,
+    isLoadingModal: false,
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const {appData, themeColors, appStyle} = useSelector(
@@ -144,6 +147,7 @@ export default function TaxiHomeDashbord({
     indicator,
     type,
     del,
+    isLoadingModal,
   } = state;
   const styles = stylesFunc({themeColors, fontFamily});
 
@@ -159,7 +163,14 @@ export default function TaxiHomeDashbord({
 
   useFocusEffect(
     React.useCallback(() => {
-      getAllAddress();
+      updateState({
+        selectedTime: null,
+        selectedDateAndTime: null,
+        slectedDate: null,
+      });
+      if (!!userData?.auth_token) {
+        getAllAddress();
+      }
     }, []),
   );
 
@@ -201,7 +212,7 @@ export default function TaxiHomeDashbord({
       isVisible: false,
     });
   };
-  console.log(slectedDate, selectedTime, 'jskjsnsdkjgndsgkdsgj');
+  // console.log(slectedDate, selectedTime, 'jskjsnsdkjgndsgkdsgj');
   const _onDateChange = (date) => {
     // alert(213);
     console.log(date, 'date');
@@ -213,7 +224,7 @@ export default function TaxiHomeDashbord({
     updateState({
       selectedDateAndTime: `${dateSelectd} ${time}`,
       slectedDate: dateSelectd,
-      selectedTime: moment(date).format('LT'),
+      selectedTime: moment(date).format('HH:mm'),
       date: date,
     });
   };
@@ -232,6 +243,7 @@ export default function TaxiHomeDashbord({
         code: appData?.profile?.code,
       })
       .then((res) => {
+        console.log(res, 'res>res>res');
         updateState({del: del ? false : true});
         showSuccess(res.message);
       })
@@ -296,12 +308,15 @@ export default function TaxiHomeDashbord({
               onPress={() => {
                 updateState({
                   isVisible: false,
+                  isLoadingModal: true,
                 });
 
                 setTimeout(() => {
+                  updateState({isLoadingModal: false});
                   navigation.navigate(navigationStrings.ADDADDRESS, {
                     cat: appMainData?.categories[0],
                     datetime: {slectedDate, selectedTime},
+                    pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
                   });
                 }, 2000);
               }}>
@@ -396,14 +411,14 @@ export default function TaxiHomeDashbord({
             marginLeft: moderateScale(20),
             width: width - 20,
           }}
-          onPress={
+          onPress={() => {
             userData?.auth_token
               ? moveToNewScreen(
                   navigationStrings.ADDADDRESS,
                   appMainData?.categories[0],
                 )
-              : navigation.navigate(navigationStrings.LOGIN)
-          }>
+              : navigation.navigate(navigationStrings.LOGIN);
+          }}>
           <View
             style={{
               flexDirection: 'row',
@@ -468,6 +483,7 @@ export default function TaxiHomeDashbord({
           />
           <View style={{height: moderateScaleVertical(5)}} />
         </>
+        <Loader isLoading={isLoadingModal} />
 
         <FlatList
           horizontal
@@ -504,11 +520,13 @@ export default function TaxiHomeDashbord({
             justifyContent: 'space-between',
           }}>
           <TouchableOpacity
+            style={{width: width - width / 3}}
             onPress={() => {
               userData?.auth_token
                 ? navigation.navigate(navigationStrings.ADDADDRESS, {
                     cat: appMainData?.categories[0],
                     datetime: {slectedDate, selectedTime},
+                    pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
                   })
                 : navigation.navigate(navigationStrings.LOGIN);
             }}>
@@ -566,11 +584,11 @@ export default function TaxiHomeDashbord({
               width: width - 20,
               marginTop: moderateScaleVertical(10),
             }}
-            onPress={
+            onPress={() => {
               userData?.auth_token
-                ? () => setModalVisible(true, 'addAddress')
-                : navigation.navigate(navigationStrings.LOGIN)
-            }>
+                ? setModalVisible(true, 'addAddress')
+                : navigation.navigate(navigationStrings.LOGIN);
+            }}>
             <View
               style={{
                 flexDirection: 'row',

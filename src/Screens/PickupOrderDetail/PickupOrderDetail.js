@@ -21,6 +21,7 @@ import Communications from 'react-native-communications';
 import navigationStrings from '../../navigation/navigationStrings';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import SearchingForDriverView from '../TaxiApp/PickupTaxiOrderDetail/SearchingForDriverView';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -232,6 +233,7 @@ export default function PickupOrderDetail({navigation, route}) {
 
   //   on press call
   const _onPressCall = (orderDetail) => {
+    console.log(orderDetail,"_onPressCall>");
     Communications.phonecall(orderDetail?.phone_number, true);
   };
 

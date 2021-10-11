@@ -111,7 +111,10 @@ export default function MultipleDropOffSelection({navigation, route}) {
 
   useFocusEffect(
     React.useCallback(() => {
-      getAllAddress();
+      
+      if (!!userData?.auth_token) {
+        getAllAddress();
+      }
       // console.log(height*.25,"sadasdasdasd")
     }, []),
   );

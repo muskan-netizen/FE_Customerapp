@@ -142,8 +142,10 @@ export default function Addaddress({navigation, route}) {
         dropOffLocationAddressData: paramData?.data.pickuplocationAllData[1],
       });
     }
-
-    getAllAddress();
+    if (!!(userData && userData?.auth_token)) {
+      getAllAddress();
+    }
+   
   }, [paramData]);
 
   //get All address
@@ -506,6 +508,7 @@ export default function Addaddress({navigation, route}) {
         tasks: addressData,
         cabVendors: pickUpVendors,
         datetime: paramData?.datetime,
+        pickUpTimeType:paramData?.pickUpTimeType
       });
     }
   };

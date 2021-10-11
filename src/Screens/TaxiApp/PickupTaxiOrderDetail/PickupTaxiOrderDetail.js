@@ -291,6 +291,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
 
   //   on press call
   const _onPressCall = (orderDetail) => {
+    // alert("123")
     Communications.phonecall(orderDetail?.phone_number, true);
   };
 
@@ -408,14 +409,17 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                   />
                 </View>
                 {!!item?.product_rating && (
-                  <Text
-                    style={{
-                      marginVertical: moderateScaleVertical(10),
-                      textAlign: 'center',
-                    }}
-                    onPress={() => rateYourOrder(item)}>
-                    {strings.WRITE_A_REVIEW}
-                  </Text>
+                  <TouchableOpacity hitSlop={{top:100,bottom:100,left:125,right:125}} onPress={() => rateYourOrder(item)}>
+                    <Text
+                      style={{
+                        marginVertical: moderateScaleVertical(20),
+                        textAlign: 'center',
+                        fontSize:moderateScale(14),
+                        fontFamily:fontFamily.medium
+                      }}>
+                      {strings.WRITE_A_REVIEW}
+                    </Text>
+                  </TouchableOpacity>
                 )}
               </View>
             );

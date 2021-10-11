@@ -194,7 +194,7 @@ export default function OrderCardVendorComponent2({
         <ScrollView bounces={true}>
           {data?.product_details.map((i, inx) => {
             return (
-              <View>
+              <View key={inx}>
                 <View
                   style={{
                     marginVertical: moderateScaleVertical(10),

@@ -354,9 +354,9 @@ export default function SelectCarModalView({
               textStyle={{textTransform: 'none', fontSize: textScale(14)}}
               onPress={onPressPickUpNow}
               btnText={strings.BOOK_NOW}
-              containerStyle={{flex: 0.83}}
+              containerStyle={{flex: 1}}
             />
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{
                 flex: 0.14,
                 borderRadius: moderateScaleVertical(15),
@@ -373,7 +373,7 @@ export default function SelectCarModalView({
                 }}
                 resizeMode="contain"
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         ) : null}
       </View>

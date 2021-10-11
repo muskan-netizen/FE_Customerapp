@@ -1,3 +1,4 @@
+import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep, debounce} from 'lodash';
 import React, {createRef, useEffect, useState} from 'react';
 import {
@@ -58,7 +59,8 @@ export default function MyOrders({navigation}) {
         : {title: strings.PAST_ORDERS, isActive: false},
       // {title: strings.SCHEDULED_ORDERS, isActive: false},
     ],
-    selectedTab: strings.ACTIVE_ORDERS,
+    selectedTab:
+      businessType == 'taxi' ? strings.ACTIVERIDES : strings.ACTIVE_ORDERS,
     orders: [],
     activeOrders: [],
     pastOrders: [],
@@ -119,11 +121,23 @@ export default function MyOrders({navigation}) {
     }
   }, [selectedTab]);
 
-  console.log('lat lng', location);
+  useFocusEffect(
+    React.useCallback(() => {
+      if (userData && userData?.auth_token) {
+        _getListOfOrders();
+      } else {
+        updateState({
+          isLoading: false,
+        });
+      }
+    }, []),
+  );
 
   //Get list of all orders api
-  console.log(RNLocalize.getTimeZone(), 'RNLocalize.getTimeZone()');
   const _getListOfOrders = () => {
+    console.log(RNLocalize.getTimeZone(), 'RNLocalize.getTimeZone()');
+    console.log(tabType, 'tabType');
+    console.log(pageActive, 'pageActive');
     actions
       .getOrderListing(
         `?limit=${limit}&page=${pageActive}&type=${tabType}`,
@@ -182,9 +196,11 @@ export default function MyOrders({navigation}) {
         }),
         selectedTab: tabData.title,
         tabType:
-          tabData.title == strings.ACTIVE_ORDERS
+          tabData.title == strings.ACTIVE_ORDERS ||
+          tabData.title == strings.ACTIVERIDES
             ? staticStrings.ACTIVE
-            : tabData.title == strings.PAST_ORDERS
+            : tabData.title == strings.PAST_ORDERS ||
+              tabData.title == strings.PASTRIDES
             ? staticStrings.PAST
             : staticStrings.SCHEDULE,
         pageActive: 1,
@@ -302,26 +318,36 @@ export default function MyOrders({navigation}) {
 
   //Pull to refresh
   const handleRefresh = () => {
-    if (selectedTab == strings.ACTIVE_ORDERS) {
-      updateState({
-        pageActive: 1,
-        tabType: staticStrings.ACTIVE,
-        isRefreshing: true,
-      });
-    }
-    if (selectedTab == strings.PAST_ORDERS) {
-      updateState({
-        pageActive: 1,
-        tabType: staticStrings.PAST,
-        isRefreshing: true,
-      });
-    }
-    if (selectedTab == strings.SCHEDULED_ORDERS) {
-      updateState({
-        pageActive: 1,
-        tabType: staticStrings.SCHEDULE,
-        isRefreshing: true,
-      });
+    console.log(selectedTab, 'selectedTab');
+
+    if (userData && userData?.auth_token) {
+      if (
+        selectedTab == strings.ACTIVE_ORDERS ||
+        selectedTab == strings.ACTIVERIDES
+      ) {
+        updateState({
+          pageActive: 1,
+          tabType: staticStrings.ACTIVE,
+          isRefreshing: true,
+        });
+      }
+      if (
+        selectedTab == strings.PAST_ORDERS ||
+        selectedTab == strings.PASTRIDES
+      ) {
+        updateState({
+          pageActive: 1,
+          tabType: staticStrings.PAST,
+          isRefreshing: true,
+        });
+      }
+      if (selectedTab == strings.SCHEDULED_ORDERS) {
+        updateState({
+          pageActive: 1,
+          tabType: staticStrings.SCHEDULE,
+          isRefreshing: true,
+        });
+      }
     }
   };
 
@@ -351,10 +377,6 @@ export default function MyOrders({navigation}) {
   const onClose = () => {
     updateState({isVisibleReturnOrderModal: false});
   };
-
-  useEffect(() => {
-    console.log(selectedOrderForReturn, 'selectedOrderForReturn');
-  }, [selectedOrderForReturn]);
 
   const selectProduct = (item) => {
     console.log(item, '>item>item');

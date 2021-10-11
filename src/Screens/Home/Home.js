@@ -240,7 +240,10 @@ export default function Home({route, navigation}) {
   useFocusEffect(
     React.useCallback(() => {
       // homeData();
-      getAllAddress();
+      if (!!userData?.auth_token) {
+        getAllAddress();
+      }
+    
     }, []),
   );
 

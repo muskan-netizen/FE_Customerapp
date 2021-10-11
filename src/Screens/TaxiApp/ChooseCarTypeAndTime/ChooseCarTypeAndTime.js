@@ -38,7 +38,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  console.log(paramData?.datetime?.slectedDate, 'paramData>>>>>');
+  console.log(paramData, 'paramData>>>>>');
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -102,7 +102,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       : moment(date).format('LT'),
 
     isModalVisible: false,
-    pickUpTimeType: null,
+    pickUpTimeType: paramData?.pickUpTimeType
+      ? paramData?.pickUpTimeType
+      : null,
     selectedDateAndTime: `${moment().format('YYYY-MM-DD')} ${moment().format(
       'H:MM',
     )}`,
@@ -333,7 +335,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     let data = {};
 
     data['task_type'] = pickUpTimeType ? pickUpTimeType : '';
-    data['schedule_time'] = pickUpTimeType == 'now' ? '' : selectedDateAndTime;
+    data['schedule_time'] =
+      pickUpTimeType == 'now' ? '' : `${slectedDate} ${selectedTime}`;
     data['recipient_phone'] = '';
     data['recipient_email'] = '';
     data['task_description'] = '';
@@ -351,7 +354,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       data['coupon_id'] = couponInfo?.id;
     }
     data['order_time_zone'] = RNLocalize.getTimeZone();
-    console.log(data, 'data>>>');
+    console.log(data, '_confirmAndPay>>>>data>>>');
 
     if (!!userData) {
       !!userData?.client_preference?.verify_email ||
@@ -439,7 +442,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         onPressPickUpNow={() => {
           selectedCarOption
             ? updateState({
-                pickUpTimeType: 'now',
+                // pickUpTimeType: 'now',
                 showPaymentModal: true,
                 redirectFromNow: true,
                 showCarModal: false,
@@ -450,7 +453,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         onPressPickUplater={() => {
           selectedCarOption
             ? updateState({
-                pickUpTimeType: 'schedule',
+                // pickUpTimeType: 'schedule',
                 showTimeModal: true,
                 redirectFromNow: false,
                 showCarModal: false,
