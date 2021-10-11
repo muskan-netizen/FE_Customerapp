@@ -101,6 +101,7 @@ const shortCodes = {
   homeric: 'c8fbba',
   voltaic: 'd8473d',
   zest: '6865aa',
+  empire: '79fbc8',
 };
 
 const appIds = {
@@ -511,6 +512,10 @@ const appIds = {
   ace: Platform.select({
     ios: 'com.customer.ace',
     android: 'com.customer.ace',
+  }),
+  empire: Platform.select({
+    ios: 'com.empire',
+    android: 'com.empire',
   }),
 };
 

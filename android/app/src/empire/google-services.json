@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "359996128665",
+    "project_id": "empire-4b216",
+    "storage_bucket": "empire-4b216.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:359996128665:android:55693f51a9a9c483f8e708",
+        "android_client_info": {
+          "package_name": "com.empire"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "359996128665-hpb5cl159fk1m4v9adl23s6mdfclvdta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.empire",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "359996128665-k9jbq9193fcu1bm6gc66lsv2oli2413e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.empire",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "359996128665-kqlikd7qjkokujh1od5pvthuv072ct9u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.empire",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "359996128665-ul1enbai2vl3ra0ejcspogs71gohjir0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvYpZS-FqWN0iVqif5iBaisESzdzy2iPE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "359996128665-ul1enbai2vl3ra0ejcspogs71gohjir0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "359996128665-4jp1gsq3t35sk3offmfdhaj6sld2tsb0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.empire"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
