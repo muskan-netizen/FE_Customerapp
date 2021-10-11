@@ -51,6 +51,7 @@ export default function ProductCard4({
     data?.variant[0]?.price *
     (data?.variant[0]?.multiplier ? data?.variant[0]?.multiplier : 1);
   const scaleInAnimated = new Animated.Value(0);
+  console.log(data, 'dataaaaaaa');
   return (
     <TouchableOpacity
       activeOpacity={activeOpacity}
