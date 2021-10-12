@@ -312,7 +312,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             fromVendorApp: true,
             selectedVendor: {id: selectedCarOption?.vendor_id},
             orderDetail: res?.data,
-            fromCab: true,
+            fromCab: paramData?.pickup_taxi ? false : true,
+            pickup_taxi:paramData?.pickup_taxi,
             totalDuration: totalDuration,
             selectedCarOption: selectedCarOption?.sku,
           });
@@ -505,6 +506,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         pickUpTimeType={pickUpTimeType}
         redirectToPayement={() => _redirectToPayement()}
         selectedPayment={selectedPayment}
+        pickup_taxi={paramData?.pickup_taxi}
       />
     );
   };

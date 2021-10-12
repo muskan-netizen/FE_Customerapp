@@ -43,6 +43,7 @@ export default function HomeScreenTaxi({navigation, route}) {
   const mapRef = React.createRef();
   const paramData = route?.params;
 
+  console.log(paramData, 'paramData>paramData>paramData');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -473,11 +474,11 @@ export default function HomeScreenTaxi({navigation, route}) {
           </TouchableOpacity>
         )}
       </View>
-      {businessType === 'taxi' ? null : (
+      {/* {businessType === 'taxi' ? null : (
         <View style={styles.userAccountImageStyle}>
           <Image source={imagePath.taxiUserAccount} />
         </View>
-      )}
+      )} */}
 
       <View
         style={{

@@ -145,7 +145,6 @@ export default function Addaddress({navigation, route}) {
     if (!!(userData && userData?.auth_token)) {
       getAllAddress();
     }
-   
   }, [paramData]);
 
   //get All address
@@ -505,10 +504,11 @@ export default function Addaddress({navigation, route}) {
       navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
         location: location,
         id: paramData?.data?.id,
+        pickup_taxi:paramData?.data?.pickup_taxi,
         tasks: addressData,
         cabVendors: pickUpVendors,
         datetime: paramData?.datetime,
-        pickUpTimeType:paramData?.pickUpTimeType
+        pickUpTimeType: paramData?.pickUpTimeType,
       });
     }
   };
