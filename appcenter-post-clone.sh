@@ -1,17 +1,14 @@
 #!/usr/bin/env bash
+CUR_COCOAPODS_VER=`sed -n -e 's/^COCOAPODS: \([0-9.]*\)/\1/p' ios/Podfile.lock`
+ENV_COCOAPODS_VER=`pod --version`
 
-# Force the 1.7.5 version of cocoapods, as opposed to the version installed by AppCenter
-echo "Uninstalling all cocoapods versions"
-sudo gem uninstall cocoapods --all
-echo "Installing cocoapods version 1.7.5"
-sudo gem install cocoapods -v 1.7.5
-
-# Upgrade Node to a version expected by React Native 0.60
-set -ex
-brew uninstall node@6
-NODE_VERSION="8.10.0"
-curl "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}.pkg" > "$HOME/Downloads/node-installer.pkg"
-sudo installer -store -pkg "$HOME/Downloads/node-installer.pkg" -target "/"
-
-# Run Yarn
-yarn
+# check if not the same version, reinstall cocoapods version to current project's
+if [ $CUR_COCOAPODS_VER != $ENV_COCOAPODS_VER ];
+then
+    echo "Uninstalling all CocoaPods versions"
+    sudo gem uninstall cocoapods --all --executables
+    echo "Installing CocoaPods version $CUR_COCOAPODS_VER"
+    sudo gem install cocoapods -v $CUR_COCOAPODS_VER
+else 
+    echo "CocoaPods version is suitable for the project"
+fi;
