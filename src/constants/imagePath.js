@@ -350,4 +350,7 @@ export default {
   icStar3: require('../assets/images/RoyoorderNewImages/ic_star3.png'),
   icEdit1: require('../assets/images/RoyoorderNewImages/ic_edit1.png'),
   icAdd: require('../assets/images/RoyoorderNewImages/ic_add3.png'),
+  printer: require('../assets/images/RoyoorderNewImages/ic_print.png'),
+  bluetooth: require('../assets/images/RoyoorderNewImages/bluetooth.png'),
+  rightArrowAngle: require('../assets/images/RoyoorderNewImages/right-arrow-angle.png')
 };

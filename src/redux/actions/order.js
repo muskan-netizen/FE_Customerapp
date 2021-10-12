@@ -11,11 +11,25 @@ import {
   UPLOAD_PRODUCT_IMAGE,
   SUBMIT_RETURN_ORDER,
   MY_PENDING_ORDERS,
+  GET_ORDER_DETAIL_FOR_BILLING,
 } from '../../config/urls';
 import { apiGet, apiPost } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
 const { dispatch } = store;
+
+//Get Order Detail For Billing
+export function getOrderDetailForBilling(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiGet(GET_ORDER_DETAIL_FOR_BILLING+data.order_id, {}, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
 
 //Get Cart Detail
 export function getOrderDetail(data = {}, headers = {}) {

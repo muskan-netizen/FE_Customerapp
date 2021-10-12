@@ -1,3 +1,4 @@
+import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
 import React, { useState } from 'react';
 import {
   Alert,
@@ -419,8 +420,21 @@ export default function Account3({ navigation }) {
           <ListItemHorizontal
             centerContainerStyle={{ flexDirection: 'row' }}
             leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-            onPress={moveToNewScreen(navigationStrings.ATTACH_PRINTER)}
-            iconLeft={imagePath.mystores2}
+            onPress={() => {
+              BluetoothManager.checkBluetoothEnabled().then((enabled) => {
+                if(Boolean(enabled)){
+                  navigation.navigate(navigationStrings.ATTACH_PRINTER)
+                }else{
+                  BluetoothManager.enableBluetooth().then(() => {
+                    navigation.navigate(navigationStrings.ATTACH_PRINTER)
+                  }).catch((err) => {})
+                }
+            }, (err) => {
+                err
+            });
+              
+            }}
+            iconLeft={imagePath.printer}
             centerHeading={strings.ATTACH_PRINTER}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{

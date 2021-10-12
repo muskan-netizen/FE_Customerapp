@@ -68,6 +68,7 @@ export const GET_PRODUCTS_BASED_ON_CELEBRITYFILTER =
 export const GET_PRODUCTS_BASED_ON_CELEBRITY = getApiUrl('/celebrityProducts');
 export const PLACE_ORDER = getApiUrl('/place/order');
 export const GET_ORDER_DETAIL = getApiUrl('/order-detail');
+export const GET_ORDER_DETAIL_FOR_BILLING = getApiUrl('/order/orderDetails_for_notification/');
 export const GET_ALL_ORDERS = getApiUrl('/orders');
 export const GET_VENDOR_DETAIL = getApiUrl('/vendor/category/list');
 export const SEND_REFFERAL_CODE = getApiUrl('/send/referralcode');

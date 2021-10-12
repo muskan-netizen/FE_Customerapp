@@ -58,4 +58,11 @@ export function getImageUrl(url1, url2, dimentions) {
   return `${url1}${dimentions}${url2}`;
 }
 
+export const ifDataExist = (data) => {
+  if(data && data !== null){
+    return true
+  }
+  return false
+}
+
 export {cameraHandler, currencyNumberFormatter};

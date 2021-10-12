@@ -27,6 +27,10 @@ import {
 } from './src/utils/notificationService';
 import { getItem, getUserData, setItem } from './src/utils/utils';
 import PushNotification from 'react-native-push-notification';
+import { StartPrinting } from './src/Screens/PrinterConnection/PrinteFunc';
+
+export let appData = {}
+export let language = ''
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
@@ -60,54 +64,6 @@ const App = () => {
       }, 1800);
     }
   }
-
-  // let arr = []
-  // let canEnablePrinter = true
-  // useEffect(() => {
-    
-  //   noti({id: 1})
-  //   noti({id: 2})
-  //   noti({id: 3})
-  //   noti({id: 4})
-  //   noti({id: 5})
-  //   noti({id: 6})
-  //   noti({id: 7})
-  //   noti({id: 8})
-
-  //   setTimeout(() => {
-  //   noti({id: 9})
-  //   noti({id: 10})
-  //   noti({id: 11})
-  //   }, 2000);
-
-  // }, [])
-
-  // const noti = (data) => {
-  //   enablePrinter = true
-  //   setTimeout(() => {
-  //     enablePrinter = false
-  //   }, (1000*60*60));
-  //   arr.push(data)
-
-  //   if(canEnablePrinter){
-  //     temp()
-  //   }
-  // }
-  
-  // const temp = () => {
-  //   canEnablePrinter = false
-  //   console.log('check data >>> ', arr[0])
-  //   printReciept(arr[0]).then(() => {
-  //     arr.shift()
-  //     setTimeout(() => {
-  //       if(arr.length > 0){
-  //         temp()
-  //       }else{
-  //         canEnablePrinter = true
-  //       }
-  //     }, 2000);
-  //   })
-  // }
 
   useEffect(() => {
     Linking.getInitialURL().then((link) => handleDynamicLink(link));
@@ -154,6 +110,7 @@ const App = () => {
       }
 
       const getAppData = await getItem('appData');
+      appData = getAppData
       dispatch({
         type: types.APP_INIT,
         payload: getAppData,
@@ -242,6 +199,7 @@ const App = () => {
 
       //Language
       const getLanguage = await getItem('language');
+      language = getLanguage
       if (getLanguage) {
         strings.setLanguage(getLanguage);
       }
@@ -267,6 +225,7 @@ const App = () => {
 
   //Check internet connection
   useEffect(() => {
+  
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
       const netStatus = state.isConnected;
       setInternet(netStatus);
