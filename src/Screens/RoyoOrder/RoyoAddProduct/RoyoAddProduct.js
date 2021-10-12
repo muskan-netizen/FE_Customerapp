@@ -199,6 +199,7 @@ const RoyoAddProduct = (props) => {
       statusBarColor="white"
       barStyle="dark-content">
       <Header
+      headerStyle={{marginVertical: moderateScaleVertical(16)}}
         leftIcon={imagePath.backRoyo}
         centerTitle="Add product | Foodies hub   "
         showImageAlongwithTitle
@@ -353,7 +354,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.regular,
     color: colors.black,
     marginBottom: moderateScaleVertical(10),
-    marginTop: moderateScaleVertical(34),
+    marginTop: moderateScaleVertical(14),
   },
   camera: {
     maxWidth: moderateScale(69),

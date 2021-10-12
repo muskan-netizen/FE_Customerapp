@@ -72,6 +72,7 @@ const RoyoAccounts = (props) => {
       statusBarColor="white"
       barStyle="dark-content">
       <Header
+      headerStyle={{marginVertical: moderateScaleVertical(16)}}
         centerTitle="Accounts | Foodies hub  "
         noLeftIcon
         imageAlongwithTitle={imagePath.dropdownTriangle}
@@ -129,7 +130,6 @@ export default RoyoAccounts;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: moderateScaleVertical(8),
     marginBottom: moderateScaleVertical(24),
     marginHorizontal: moderateScale(16),
   },
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     padding: moderateScale(12),
     backgroundColor: '#24C3A323',
     borderRadius: moderateScale(5),
-    marginTop: moderateScaleVertical(16),
+    // marginTop: moderateScaleVertical(16),
   },
   cameraBox: {
     marginRight: moderateScale(8),

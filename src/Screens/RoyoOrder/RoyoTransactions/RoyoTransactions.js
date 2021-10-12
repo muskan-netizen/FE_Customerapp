@@ -65,6 +65,7 @@ const RoyoTransactions = (props) => {
       barStyle="dark-content">
       
       <Header
+      headerStyle={{marginVertical: moderateScaleVertical(16)}}
         leftIcon={imagePath.backRoyo}
         centerTitle="Transactions | Foodies hub   "
         showImageAlongwithTitle
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerBox: {
-    marginTop: moderateScaleVertical(24),
+    marginTop: moderateScaleVertical(10),
     alignItems: 'center',
     paddingVertical: moderateScaleVertical(30),
     backgroundColor: '#25C7A7',

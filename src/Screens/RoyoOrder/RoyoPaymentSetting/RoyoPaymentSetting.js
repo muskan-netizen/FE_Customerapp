@@ -68,6 +68,7 @@ const PaymentSettings = (props) => {
       statusBarColor="white"
       barStyle="dark-content">
       <Header
+      headerStyle={{marginVertical: moderateScaleVertical(16)}}
         leftIcon={imagePath.backRoyo}
         centerTitle="Payment settings | Foodies hub   "
         showImageAlongwithTitle
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
   cashBox: {
     flexDirection: 'row',
     paddingBottom: moderateScaleVertical(16),
-    paddingTop: moderateScaleVertical(30),
+    paddingTop: moderateScaleVertical(10),
     alignItems: 'baseline',
   },
   cashOnDeliver: {

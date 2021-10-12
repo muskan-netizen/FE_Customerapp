@@ -374,6 +374,8 @@ export default {
   onlineRoyo: require('../assets/images/royoTab/ic_online.png'),
   offlineRoyo: require('../assets/images/royoTab/ic_offline.png'),
 
+
+
   accountActiveRoyo: require('../assets/images/royoTab/ic_account2.png'),
   accountInactiveRoyo: require('../assets/images/royoTab/ic_account1.png'),
   homeActiveRoyo: require('../assets/images/royoTab/ic_home2.png'),
@@ -387,4 +389,7 @@ export default {
   edit1Royo: require('../assets/images/royoTab/Shape.png'),
   paymentSettinRoyo: require('../assets/images/royoTab/ic_paysettings.png'),
   cameraRoyo: require('../assets/images/royoTab/ic_camera2.png'),
+
+
+  testingImageRoyo: require('../assets/images/royoTab/Food-Pizza-Basil-Tomato-removebg-preview.png'),
 };

@@ -24,7 +24,11 @@ const RoyoOrderDetail = (props) => {
       bgColor="white"
       statusBarColor="white"
       barStyle="dark-content">
-      <Header leftIcon={imagePath.backRoyo} centerTitle="Order details" />
+      <Header
+        headerStyle={{marginVertical: moderateScaleVertical(16)}}
+        leftIcon={imagePath.backRoyo}
+        centerTitle="Order details"
+      />
       <ScrollView style={styles.container} bounces={false}>
         <Text style={styles.jobStatus}>Job Status</Text>
         <View style={styles.preparingBox}>
@@ -87,18 +91,18 @@ const RoyoOrderDetail = (props) => {
           <View style={styles.flexRow}>
             <Text style={styles.font14Semibold}>Delivery address</Text>
             <View style={{flexDirection: 'row'}}>
-              <Image style={styles.shareImage} source={imagePath.callRoyo} />
+              <Image source={imagePath.callRoyo} />
               <Image
                 style={{
                   marginLeft: moderateScaleVertical(10),
-                  ...styles.shareImage,
+                  // ...styles.shareImage,
                 }}
                 source={imagePath.whatsAppRoyo}
               />
               <Image
                 style={{
                   marginLeft: moderateScaleVertical(10),
-                  ...styles.shareImage,
+                  // ...styles.shareImage,
                 }}
                 source={imagePath.shareRoyo}
               />
@@ -196,7 +200,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginTop: moderateScaleVertical(24),
+    // marginTop: moderateScaleVertical(24),
     paddingBottom: moderateScaleVertical(10),
     marginBottom: moderateScaleVertical(16),
   },

@@ -1,5 +1,5 @@
 import React, {useState, useCallback} from 'react';
-import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {SwipeListView} from 'react-native-swipe-list-view';
 import {customMarginBottom} from '../../../utils/constants/constants';
@@ -9,16 +9,16 @@ import fontFamily from '../../../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale,
+  width,
 } from '../../../styles/responsiveSize';
 import MultiScreen from '../../../Components/MultiScreen';
 import imagePath from '../../../constants/imagePath';
 import {useSelector} from 'react-redux';
 import {TouchableOpacity} from 'react-native';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
-import {Platform} from 'react-native';
 import navigationStrings from '../../../navigation/navigationStrings';
 import Header from '../../../Components/Header';
+import {FlatList} from 'react-native';
 
 const RoyoProducts = (props) => {
   const {navigation} = props;
@@ -33,7 +33,7 @@ const RoyoProducts = (props) => {
     });
 
   //   const {product} = useSelector((state) => state.product);
-  const product = [1, 2, 3, 4];
+  const product = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const renderItem = (data, rowMap) => {
     const {item, index} = data;
     return (
@@ -122,6 +122,7 @@ const RoyoProducts = (props) => {
       statusBarColor="white"
       barStyle="dark-content">
       <Header
+        headerStyle={{marginVertical: moderateScaleVertical(16)}}
         centerTitle={`${headerText} | Foodies hub  `}
         noLeftIcon
         imageAlongwithTitle={imagePath.dropdownTriangle}
@@ -129,6 +130,7 @@ const RoyoProducts = (props) => {
       />
       <View style={styles.container}>
         <MultiScreen
+          tabTextStyle={{marginTop: moderateScaleVertical(0)}}
           screenName={['Products', 'Categories', '', '', '']}
           selectedScreen={(index) => selectedOrder(index)}
           selectedScreenIndex={activeIndex}
@@ -165,14 +167,7 @@ const RoyoProducts = (props) => {
               onPress={() =>
                 navigation.navigate(navigationStrings.ROYO_ADD_PRODUCT)
               }
-              btnStyle={{
-                position: 'absolute',
-                padding: moderateScale(10),
-                bottom: moderateScaleVertical(20),
-                right: moderateScale(10),
-                borderRadius: moderateScale(100),
-                paddingHorizontal: moderateScale(15),
-              }}
+              btnStyle={styles.productBtn}
               btnText="+  products"
             />
           </View>
@@ -180,51 +175,54 @@ const RoyoProducts = (props) => {
         {activeIndex == 1 ? (
           <View
             style={{
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              justifyContent: 'space-between',
               flex: 1,
             }}>
-            {[1, 2, 3, 4, 5, 6, 7].map((item, index) => {
-              return (
+            <FlatList
+              data={[1, 2, 3, 4, 5, 6, 7]}
+              keyExtractor={(item, index) => index}
+              bounces={false}
+              showsVerticalScrollIndicator={false}
+              numColumns={width > 600 ? 5 : 3}
+              renderItem={({item, index}) => (
                 <View
                   key={index}
-                  style={{marginBottom: moderateScaleVertical(16)}}>
-                  <TouchableOpacity
-                    style={{
-                      alignSelf: 'center',
-                      backgroundColor: '#D8D8D8',
-                      paddingHorizontal: 10,
-                      paddingVertical: moderateScaleVertical(16),
-                      marginBottom: moderateScaleVertical(8),
-                      borderRadius: moderateScaleVertical(6),
-                    }}>
+                  style={{
+                    marginBottom: moderateScaleVertical(16),
+                    marginLeft:
+                      width > 600
+                        ? index % 5
+                          ? moderateScale(10)
+                          : 0
+                        : index % 3
+                        ? moderateScale(10)
+                        : 0,
+                  }}>
+                  <TouchableOpacity style={styles.categoryItem}>
                     <Image
                       style={{
-                        width: moderateScale(75),
-                        height: moderateScaleVertical(65),
+                        resizeMode: 'center',
+                        width:
+                          width > 600
+                            ? (width - moderateScale(173)) / 5
+                            : (width - moderateScale(112)) / 3,
+                        height:
+                          width > 600
+                            ? (width - moderateScale(203)) / 5
+                            : (width - moderateScale(152)) / 3,
                       }}
-                      source={{
-                        uri: 'https://cdn.britannica.com/q:60/08/177308-050-94D9D6BE/Food-Pizza-Basil-Tomato.jpg',
-                      }}
+                      source={imagePath.testingImageRoyo}
                     />
                   </TouchableOpacity>
                   <Text style={{textAlign: 'center'}}>pizza</Text>
                 </View>
-              );
-            })}
+              )}
+            />
+
             <ButtonWithLoader
               onPress={() =>
                 navigation.navigate(navigationStrings.ROYO_ADD_PRODUCT)
               }
-              btnStyle={{
-                position: 'absolute',
-                padding: moderateScale(10),
-                bottom: moderateScaleVertical(20),
-                right: moderateScale(10),
-                borderRadius: moderateScale(100),
-                paddingHorizontal: moderateScale(15),
-              }}
+              btnStyle={styles.categoryBtn}
               btnText="+  category"
             />
           </View>
@@ -272,5 +270,29 @@ const styles = StyleSheet.create({
     borderRadius: moderateScaleVertical(8),
     justifyContent: 'center',
     marginLeft: moderateScale(8),
+  },
+  categoryItem: {
+    alignSelf: 'center',
+    backgroundColor: '#F8F8F8',
+    paddingHorizontal: moderateScale(10),
+    paddingVertical: moderateScaleVertical(16),
+    marginBottom: moderateScaleVertical(8),
+    borderRadius: moderateScaleVertical(6),
+  },
+  productBtn: {
+    position: 'absolute',
+    padding: moderateScale(10),
+    bottom: moderateScaleVertical(20),
+    right: moderateScale(10),
+    borderRadius: moderateScale(100),
+    paddingHorizontal: moderateScale(15),
+  },
+  categoryBtn: {
+    position: 'absolute',
+    padding: moderateScale(10),
+    bottom: moderateScaleVertical(20),
+    right: moderateScale(10),
+    borderRadius: moderateScale(100),
+    paddingHorizontal: moderateScale(15),
   },
 });

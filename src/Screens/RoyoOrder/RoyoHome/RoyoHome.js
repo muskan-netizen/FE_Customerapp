@@ -159,42 +159,17 @@ const RoyoHome = (props) => {
       statusBarColor={colors.white}
       barStyle="dark-content">
       <Header
-        // headerStyle={{marginTop:moderateScaleVertical(8)}}
+        headerStyle={{marginVertical: moderateScaleVertical(16)}}
         onPressLeft={() => {}}
         leftIcon={imagePath.logoRoyo}
-        customRight={() => (
-          <TouchableOpacity onPress={toggleStatus}>
-            <Image
-              source={status ? imagePath.onlineRoyo : imagePath.offlineRoyo}
-            />
-            <Text
-              style={{
-                ...commonStyle.boldFont14,
-                color: colors.white,
-                position: 'absolute',
-                left: status ? moderateScale(11) : null,
-                right: status ? null : moderateScale(10),
-                top: moderateScaleVertical(6.5),
-              }}>
-              {status ? 'online' : 'offline'}
-            </Text>
-          </TouchableOpacity>
-        )}
+        rightIcon={status?imagePath.onlineRoyo:imagePath.offlineRoyo}
+        onPressRight={toggleStatus}
       />
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
         style={styles.container}
         showsVerticalScrollIndicator={false}
         bounces={false}>
-        {/* <View style={styles.header}>
-          <Image source={imagePath.logoRoyo} />
-          <View style={styles.toggle}>
-            <Text style={{...commonStyle.boldFont14, color: colors.white}}>
-              online
-            </Text>
-            <View style={styles.indicator} />
-          </View>
-        </View> */}
         {data1 ? (
           <View style={styles.center}>
             <Image source={imagePath.emptyPackage} style={{}} />
@@ -378,7 +353,7 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: moderateScale(16),
-    paddingVertical: moderateScaleVertical(24),
+    paddingBottom: moderateScaleVertical(24),
     marginBottom: customMarginBottom(18, 86),
     backgroundColor: 'transparent',
     backfaceVisibility: 'hidden',
