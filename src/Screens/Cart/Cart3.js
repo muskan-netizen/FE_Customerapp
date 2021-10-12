@@ -1884,7 +1884,11 @@ export default function Cart({ navigation, route }) {
 
 
         {scheduleType == 'schedule' && (<TouchableOpacity
-          style={{ marginTop: 16, marginLeft: 16 }}
+          style={{ 
+            marginTop: moderateScale(16), 
+            marginLeft: moderateScale(16), 
+            alignSelf:'flex-start',
+           }}
           onPress={clearSceduleDate}
         >
           <Text style={{

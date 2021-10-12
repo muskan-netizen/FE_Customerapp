@@ -3233,6 +3233,7 @@
 		C4B40907F6070E525E660362 /* libPods-HemptiFy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC70C5FDFECAE8E9799B12C2 /* libPods-HemptiFy.a */; };
 		C5028181C20027730C1E372D /* libPods-Sharu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBBAB7485B45F3DF8F5D6CBE /* libPods-Sharu.a */; };
 		C8DC425A59FD835DEECF7AF8 /* libPods-ZuzuClean.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F9861008A402D0290EF381F /* libPods-ZuzuClean.a */; };
+		CAF8C6C20294934FB4826934 /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C6B5F17E75EBAF5F216CB99D /* libPods-RoyoOrder.a */; };
 		CDEE0B9720D46ECF7CDA385F /* libPods-GajaMove.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31714801220DA6F17F3ED4B7 /* libPods-GajaMove.a */; };
 		D40A6E4DED4A9C880BD24ABC /* libPods-Specialhalal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1637FAB85504B5682CA244A /* libPods-Specialhalal.a */; };
 		D44DCAA5FB81D4A2FB3C5705 /* libPods-eBOYO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F34ACF96F53A2451CDD1DF /* libPods-eBOYO.a */; };
@@ -4206,6 +4207,7 @@
 		C4FB3EAF9103564ABBF0D76A /* libPods-GoKab.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GoKab.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5012EFE408B3FA5CDFEEF51 /* Pods-UFood.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UFood.debug.xcconfig"; path = "Target Support Files/Pods-UFood/Pods-UFood.debug.xcconfig"; sourceTree = "<group>"; };
 		C67CAF9031627E03996F22C1 /* Pods-Carlitoo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Carlitoo.release.xcconfig"; path = "Target Support Files/Pods-Carlitoo/Pods-Carlitoo.release.xcconfig"; sourceTree = "<group>"; };
+		C6B5F17E75EBAF5F216CB99D /* libPods-RoyoOrder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RoyoOrder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C710EDE624BEC9C17B1B4C54 /* Pods-Getme.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Getme.release.xcconfig"; path = "Target Support Files/Pods-Getme/Pods-Getme.release.xcconfig"; sourceTree = "<group>"; };
 		C756A8235ECA1113DFB033B8 /* Pods-eBOYO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eBOYO.release.xcconfig"; path = "Target Support Files/Pods-eBOYO/Pods-eBOYO.release.xcconfig"; sourceTree = "<group>"; };
 		C786BF525810D58AA69050E3 /* libPods-Servze.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Servze.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4659,7 +4661,7 @@
 				6A35F9D9DDBE15FB7DE850DE /* BuildFile in Frameworks */,
 				740070B24C6D2862CD56E472 /* BuildFile in Frameworks */,
 				69680EB30FDA8201999AF9A5 /* libPods-RoyoOrder.a in Frameworks */,
-				A7E062EBA0533610A71C422E /* libPods-RoyoOrder.a in Frameworks */,
+				CAF8C6C20294934FB4826934 /* libPods-RoyoOrder.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5657,7 +5659,7 @@
 				75634FC83C8A74A94CC388DA /* libPods-ExpressDeliveryLLC.a */,
 				2DE79BEA5A05FC47B1F9CCB1 /* libPods-BoozieDoozie.a */,
 				D20A5C8364136F17D3C22FC0 /* libPods-ZestyClickz.a */,
-				A68C19B6E5486C0263DA8C6A /* libPods-RoyoOrder.a */,
+				C6B5F17E75EBAF5F216CB99D /* libPods-RoyoOrder.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
