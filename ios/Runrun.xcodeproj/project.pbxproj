@@ -111,7 +111,7 @@
 		76693A73269D9B87000F83B2 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		76693AA8269D9EF4000F83B2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76693AA4269D9EF4000F83B2 /* Images.xcassets */; };
 		76693AAB269D9EF4000F83B2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76693AA7269D9EF4000F83B2 /* GoogleService-Info.plist */; };
-		767995CEDF62882BC2A144A7 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		767995CEDF62882BC2A144A7 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		767C68602655481D00AA80AD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 767C685F2655481D00AA80AD /* GoogleService-Info.plist */; };
 		767C68672655484700AA80AD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 767C68662655484600AA80AD /* GoogleService-Info.plist */; };
 		79463AF0CC8961F729E28EF0 /* libPods-BoozieDoozie.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DE79BEA5A05FC47B1F9CCB1 /* libPods-BoozieDoozie.a */; };
@@ -1677,7 +1677,7 @@
 		847E8E8126DCB4690054CD42 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847E8E8026DCB4680054CD42 /* GoogleService-Info.plist */; };
 		847F52A9F43BF8B4D59EFD84 /* libPods-GoKab.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FB3EAF9103564ABBF0D76A /* libPods-GoKab.a */; };
 		8480076A26CE20340014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		8480076B26CE20340014F500 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		8480076B26CE20340014F500 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8480076C26CE20340014F500 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8480076D26CE20340014F500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848007AD26CE260D0014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -1993,7 +1993,7 @@
 		848C3CBC27146B5000D492B5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848C3CBB27146B5000D492B5 /* Images.xcassets */; };
 		848C3D2C27146C4100D492B5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848C3D2B27146C4000D492B5 /* GoogleService-Info.plist */; };
 		848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		848CEF8126CE229D0077C918 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		848CEF8126CE229D0077C918 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		848CEF8226CE229D0077C918 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848CEF8326CE229D0077C918 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848F9EF226E8B5A7008116B5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -9995,9 +9995,9 @@
 						ProvisioningStyle = Automatic;
 					};
 					8442C9EF265D1A7A00EDB001 = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = 6852A48TRM;
 						LastSwiftMigration = 1240;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					8447E34D26DF950500A23425 = {
 						DevelopmentTeam = 6FXUMT5X23;
@@ -31648,7 +31648,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */,
-				848CEF8126CE229D0077C918 /* BuildFile in Sources */,
+				848CEF8126CE229D0077C918 /* (null) in Sources */,
 				848CEF8226CE229D0077C918 /* Royo.swift in Sources */,
 				848CEF8326CE229D0077C918 /* main.m in Sources */,
 			);
@@ -31692,7 +31692,7 @@
 				84FFFF2026D672E600F2B059 /* Royo.swift in Sources */,
 				84FFFF2126D672E600F2B059 /* main.m in Sources */,
 				8480076A26CE20340014F500 /* AppDelegate.m in Sources */,
-				8480076B26CE20340014F500 /* BuildFile in Sources */,
+				8480076B26CE20340014F500 /* (null) in Sources */,
 				8480076C26CE20340014F500 /* Royo.swift in Sources */,
 				8480076D26CE20340014F500 /* main.m in Sources */,
 			);
@@ -33537,10 +33537,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Tranzit.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = 6852A48TRM;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -33554,7 +33554,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = Tranzitprovision;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tranzit-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
