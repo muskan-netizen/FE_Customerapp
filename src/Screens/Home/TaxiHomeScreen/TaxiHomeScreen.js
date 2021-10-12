@@ -259,63 +259,59 @@ export default function TaxiHomeScreen({route, navigation}) {
       },
       'latlongObj>>Data',
     );
-
-    {
-      selectedTabType
-        ? actions
-            .homeData(
-              {
-                type: dine_In_Type ? dine_In_Type : dine_In_Type,
-                ...latlongObj,
-              },
-              {
-                code: appData?.profile?.code,
-                currency: currencies?.primary_currency?.id,
-                language: languages?.primary_language?.id,
-                // ...latlongObj,
-              },
-            )
-            .then((res) => {
-              console.log('Home data++++++', res);
-              if (
-                appData?.profile?.preferences?.is_hyperlocal &&
-                location?.latitude == '' &&
-                location?.longitude == ''
-              ) {
-                if (
-                  typeof res?.data?.reqData == 'object' &&
-                  res?.data?.reqData?.latitude &&
-                  res?.data?.reqData?.longitude
-                ) {
-                  const data = {
-                    address: res?.data?.reqData?.address,
-                    latitude: res?.data?.reqData?.latitude,
-                    longitude: res?.data?.reqData?.longitude,
-                  };
-                  actions.locationData(data);
-                }
-              } else {
-                if (
-                  appData?.profile?.preferences?.is_hyperlocal &&
-                  location?.latitude != '' &&
-                  location?.longitude != ''
-                ) {
-                } else {
-                  const data = {
-                    address: '',
-                    latitude: '',
-                    longitude: '',
-                  };
-                  actions.locationData(data);
-                }
-              }
-              setTimeout(() => {
-                updateState({isLoading: false});
-              }, 1000);
-            })
-            .catch(errorMethod)
-        : null;
-    }
+    console.log(selectedTabType, 'selectedTabType');
+    actions
+      .homeData(
+        {
+          type: dine_In_Type ? dine_In_Type : dine_In_Type,
+          ...latlongObj,
+        },
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          // ...latlongObj,
+        },
+      )
+      .then((res) => {
+        console.log('Home data++++++', res);
+        if (
+          appData?.profile?.preferences?.is_hyperlocal &&
+          location?.latitude == '' &&
+          location?.longitude == ''
+        ) {
+          if (
+            typeof res?.data?.reqData == 'object' &&
+            res?.data?.reqData?.latitude &&
+            res?.data?.reqData?.longitude
+          ) {
+            const data = {
+              address: res?.data?.reqData?.address,
+              latitude: res?.data?.reqData?.latitude,
+              longitude: res?.data?.reqData?.longitude,
+            };
+            actions.locationData(data);
+          }
+        } else {
+          if (
+            appData?.profile?.preferences?.is_hyperlocal &&
+            location?.latitude != '' &&
+            location?.longitude != ''
+          ) {
+          } else {
+            const data = {
+              address: '',
+              latitude: '',
+              longitude: '',
+            };
+            actions.locationData(data);
+          }
+        }
+        setTimeout(() => {
+          updateState({isLoading: false, isRefreshing: false});
+        }, 1000);
+      })
+      .catch(errorMethod);
   };
 
   //Error handling in screen
@@ -458,7 +454,7 @@ export default function TaxiHomeScreen({route, navigation}) {
       )
       .then((res) => {
         console.log(res, 'initApp');
-        updateState({isRefreshing: false});
+        // updateState({isRefreshing: false});
       })
       .catch((error) => {
         updateState({isRefreshing: false});
@@ -468,7 +464,6 @@ export default function TaxiHomeScreen({route, navigation}) {
   //Pull to refresh
   const handleRefresh = () => {
     updateState({isRefreshing: true});
-
     initApiHit();
     // homeData();
   };

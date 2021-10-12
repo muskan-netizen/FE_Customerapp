@@ -58,6 +58,7 @@ import GradientButton from '../../../Components/GradientButton';
 import AddressModal3 from '../../../Components/AddressModal3';
 import AddressModal from '../../../Components/AddressModal';
 import Loader from '../../../Components/Loader';
+import staticStrings from '../../../constants/staticStrings';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => {},
@@ -122,6 +123,11 @@ export default function TaxiHomeDashbord({
     isLoadingModal: false,
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
+  console.log(appMainData, 'appMainData>new');
+  let findCabCategory = appMainData?.categories?.find(
+    (x) => x?.redirect_to == staticStrings.PICKUPANDDELIEVRY,
+  );
+  console.log(findCabCategory, 'findCabCategory');
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
@@ -505,158 +511,164 @@ export default function TaxiHomeDashbord({
           renderItem={_renderItem}
         />
 
-        <View
-          style={{
-            marginHorizontal: moderateScale(10),
-            height: moderateScaleVertical(50),
-            backgroundColor: getColorCodeWithOpactiyNumber(
-              colors.taxiCategoryGrayColor.substr(1),
-              30,
-            ),
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingHorizontal: moderateScale(10),
-            justifyContent: 'space-between',
-          }}>
-          <TouchableOpacity
-            style={{width: width - width / 3}}
-            onPress={() => {
-              userData?.auth_token
-                ? navigation.navigate(navigationStrings.ADDADDRESS, {
-                    cat: appMainData?.categories[0],
-                    datetime: {slectedDate, selectedTime},
-                    pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
-                  })
-                : navigation.navigate(navigationStrings.LOGIN);
-            }}>
-            <Text
-              style={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.Medium,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              }}>
-              {strings.WHERETO}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              userData?.auth_token
-                ? updateState({
-                    isVisible: true,
-                  })
-                : navigation.navigate(navigationStrings.LOGIN);
-            }}>
+        {!!findCabCategory && (
+          <>
             <View
               style={{
-                backgroundColor: colors.white,
-                width: moderateScale(80),
-                height: moderateScaleVertical(26),
-                borderRadius: 20,
-                justifyContent: 'space-around',
+                marginHorizontal: moderateScale(10),
+                height: moderateScaleVertical(50),
+                backgroundColor: getColorCodeWithOpactiyNumber(
+                  colors.taxiCategoryGrayColor.substr(1),
+                  30,
+                ),
                 flexDirection: 'row',
                 alignItems: 'center',
-                paddingHorizontal: moderateScale(5),
+                paddingHorizontal: moderateScale(10),
+                justifyContent: 'space-between',
               }}>
-              <Image source={imagePath.clock} />
-              <Text>{strings.NOW}</Text>
-              <Image
-                style={{
-                  transform: [{rotate: '90deg'}],
-                  height: moderateScaleVertical(8),
-                  width: moderateScale(8),
-                }}
-                source={imagePath.goRight}
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
-        {allSavedAddress.length && userData?.auth_token ? (
-          <></>
-        ) : (
-          <TouchableOpacity
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingVertical: 10,
-              justifyContent: 'space-between',
-              marginLeft: moderateScale(20),
-              width: width - 20,
-              marginTop: moderateScaleVertical(10),
-            }}
-            onPress={() => {
-              userData?.auth_token
-                ? setModalVisible(true, 'addAddress')
-                : navigation.navigate(navigationStrings.LOGIN);
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingVertical: 10,
-              }}>
-              <View>
-                <Image source={imagePath.plushRoundedBackground} />
-              </View>
-              <View style={{marginHorizontal: moderateScale(10)}}>
-                <Text numberOfLines={2} style={[styles.address]}>
-                  {'Add new address'}
+              <TouchableOpacity
+                style={{width: width - width / 3}}
+                onPress={() => {
+                  userData?.auth_token
+                    ? navigation.navigate(navigationStrings.ADDADDRESS, {
+                        cat: appMainData?.categories[0],
+                        datetime: {slectedDate, selectedTime},
+                        pickUpTimeType:
+                          slectedDate || selectedTime ? '' : 'now',
+                      })
+                    : navigation.navigate(navigationStrings.LOGIN);
+                }}>
+                <Text
+                  style={{
+                    fontSize: textScale(14),
+                    fontFamily: fontFamily.Medium,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  }}>
+                  {strings.WHERETO}
                 </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  userData?.auth_token
+                    ? updateState({
+                        isVisible: true,
+                      })
+                    : navigation.navigate(navigationStrings.LOGIN);
+                }}>
+                <View
+                  style={{
+                    backgroundColor: colors.white,
+                    width: moderateScale(80),
+                    height: moderateScaleVertical(26),
+                    borderRadius: 20,
+                    justifyContent: 'space-around',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingHorizontal: moderateScale(5),
+                  }}>
+                  <Image source={imagePath.clock} />
+                  <Text>{strings.NOW}</Text>
+                  <Image
+                    style={{
+                      transform: [{rotate: '90deg'}],
+                      height: moderateScaleVertical(8),
+                      width: moderateScale(8),
+                    }}
+                    source={imagePath.goRight}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
+            {allSavedAddress.length && userData?.auth_token ? (
+              <></>
+            ) : (
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  paddingVertical: 10,
+                  justifyContent: 'space-between',
+                  marginLeft: moderateScale(20),
+                  width: width - 20,
+                  marginTop: moderateScaleVertical(10),
+                }}
+                onPress={() => {
+                  userData?.auth_token
+                    ? setModalVisible(true, 'addAddress')
+                    : navigation.navigate(navigationStrings.LOGIN);
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingVertical: 10,
+                  }}>
+                  <View>
+                    <Image source={imagePath.plushRoundedBackground} />
+                  </View>
+                  <View style={{marginHorizontal: moderateScale(10)}}>
+                    <Text numberOfLines={2} style={[styles.address]}>
+                      {'Add new address'}
+                    </Text>
+                  </View>
+                </View>
+                <Image
+                  style={{
+                    tintColor: colors.textGreyLight,
+                    marginRight: moderateScale(20),
+                  }}
+                  source={imagePath.goRight}
+                />
+              </TouchableOpacity>
+            )}
+            <View
+              style={{
+                alignItems: 'center',
+                marginHorizontal: moderateScale(20),
+                marginBottom: moderateScaleVertical(20),
+              }}>
+              {addressView(imagePath.locationRoundedBackground)}
+              {savedPlaceView1(imagePath.starRoundedBackground)}
+            </View>
+
+            <View style={{marginHorizontal: moderateScale(20)}}>
+              <Text
+                style={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.medium,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
+                {strings.AROUNDYOU}
+              </Text>
+
+              <View
+                style={{
+                  height: height / 4,
+                  width: width - 45,
+                  borderRadius: 12,
+                  marginTop: moderateScaleVertical(20),
+                  alignItems: 'center',
+                }}>
+                <MapView
+                  ref={mapRef}
+                  provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                  customMapStyle={mapStyleGrey}
+                  style={{
+                    ...StyleSheet.absoluteFillObject,
+                    borderRadius: 12,
+                  }}
+                  // provider={MapView.PROVIDER_GOOGLE}
+                  region={region}
+                  initialRegion={region}
+                  showsUserLocation={true}
+                  //showsMyLocationButton={true}
+                  // pointerEvents={'none'}
+                ></MapView>
               </View>
             </View>
-            <Image
-              style={{
-                tintColor: colors.textGreyLight,
-                marginRight: moderateScale(20),
-              }}
-              source={imagePath.goRight}
-            />
-          </TouchableOpacity>
+          </>
         )}
-        <View
-          style={{
-            alignItems: 'center',
-            marginHorizontal: moderateScale(20),
-            marginBottom: moderateScaleVertical(20),
-          }}>
-          {addressView(imagePath.locationRoundedBackground)}
-          {savedPlaceView1(imagePath.starRoundedBackground)}
-        </View>
 
-        <View style={{marginHorizontal: moderateScale(20)}}>
-          <Text
-            style={{
-              fontSize: textScale(14),
-              fontFamily: fontFamily.medium,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            }}>
-            {strings.AROUNDYOU}
-          </Text>
-
-          <View
-            style={{
-              height: height / 4,
-              width: width - 45,
-              borderRadius: 12,
-              marginTop: moderateScaleVertical(20),
-              alignItems: 'center',
-            }}>
-            <MapView
-              ref={mapRef}
-              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-              customMapStyle={mapStyleGrey}
-              style={{
-                ...StyleSheet.absoluteFillObject,
-                borderRadius: 12,
-              }}
-              // provider={MapView.PROVIDER_GOOGLE}
-              region={region}
-              initialRegion={region}
-              showsUserLocation={true}
-              //showsMyLocationButton={true}
-              // pointerEvents={'none'}
-            ></MapView>
-          </View>
-        </View>
         <BottomViewModal
           isDatetimePicker={true}
           show={isVisible}

@@ -39,8 +39,8 @@ export default function Account({navigation}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const homePageLayout = appStyle?.homePageLayout;
-  const businessType = appData?.profile?.preferences?.business_type;
-  const fontFamily = appStyle?.fontSizeData;
+  const businessType = appStyle?.homePageLayout; 
+   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
   const commonStyles = commonStylesFun({fontFamily});
 
@@ -160,7 +160,7 @@ export default function Account({navigation}) {
           />
         )}
         {!!userData?.auth_token &&
-          (businessType == 'taxi' ? null : (
+          (businessType == 4 ? null : (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -245,7 +245,7 @@ export default function Account({navigation}) {
           />
         )}
         {!!userData?.auth_token &&
-          (businessType == 'taxi' ? null : (
+          (businessType == 4 ? null : (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -341,7 +341,7 @@ export default function Account({navigation}) {
 
         {!!userData?.auth_token &&
           !!appMainData?.is_admin &&
-          (business_type === 'taxi' ? null : (
+          (business_type === 4 ? null : (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}

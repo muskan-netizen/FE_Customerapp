@@ -8,7 +8,7 @@ platform :ios, '11.0'
 #RoyoOrder Target
 target 'RoyoOrder' do
   permissions_path = '../node_modules/react-native-permissions/ios'
- rn_maps_path = '../node_modules/react-native-maps'
+  rn_maps_path = '../node_modules/react-native-maps'
   config = use_native_modules!
   use_react_native!(:path => config["reactNativePath"])
   pod 'react-native-google-maps', :path => rn_maps_path
@@ -16,7 +16,7 @@ target 'RoyoOrder' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'Stripe', '~> 21.7.0'
+ 
 end
 
 #Runrun Target
@@ -30,7 +30,7 @@ target 'Runrun' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'Stripe', '~> 21.7.0'
+ 
 end
 
 
@@ -45,7 +45,7 @@ target 'Tranzit' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'Stripe', '~> 21.7.0'
+ 
 end
 
 
@@ -60,7 +60,7 @@ target 'Hmoobhub' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'Stripe', '~> 21.7.0'
+ 
 end
 
 
@@ -75,7 +75,7 @@ target 'Capcorp' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'Stripe', '~> 21.7.0'
+ 
 
 end
 
@@ -91,7 +91,7 @@ target 'Masa' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'Stripe', '~> 21.7.0'
+ 
 
 end
 
@@ -107,7 +107,7 @@ target 'Yogo Food' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-  pod 'Stripe', '~> 21.7.0'
+ 
 end
 
 

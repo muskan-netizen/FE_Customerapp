@@ -48,19 +48,19 @@ export default function MyOrders({navigation}) {
   const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-  const businessType = appData?.profile?.preferences?.business_type;
-  const [state, setState] = useState({
+  const businessType = appStyle?.homePageLayout;
+    const [state, setState] = useState({
     tabBarData: [
-      businessType == 'taxi'
+      businessType == 4
         ? {title: strings.ACTIVERIDES, isActive: true}
         : {title: strings.ACTIVE_ORDERS, isActive: true},
-      businessType == 'taxi'
+      businessType == 4
         ? {title: strings.PASTRIDES, isActive: false}
         : {title: strings.PAST_ORDERS, isActive: false},
       // {title: strings.SCHEDULED_ORDERS, isActive: false},
     ],
     selectedTab:
-      businessType == 'taxi' ? strings.ACTIVERIDES : strings.ACTIVE_ORDERS,
+      businessType == 4 ? strings.ACTIVERIDES : strings.ACTIVE_ORDERS,
     orders: [],
     activeOrders: [],
     pastOrders: [],
@@ -456,7 +456,7 @@ export default function MyOrders({navigation}) {
             : imagePath.back
         }
         centerTitle={
-          businessType === 'taxi' ? strings.MYRIDES : strings.MY_ORDERS
+          businessType === 4 ? strings.MYRIDES : strings.MY_ORDERS
         }
         headerStyle={
           isDarkMode

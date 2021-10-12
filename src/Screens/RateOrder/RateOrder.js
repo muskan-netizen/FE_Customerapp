@@ -60,8 +60,8 @@ export default function RateOrder({navigation, route}) {
   const {appData, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
-  const businessType = appData?.profile?.preferences?.business_type;
-  const {themeColors, themeLayouts} = currentTheme;
+  const businessType = appStyle?.homePageLayout; 
+   const {themeColors, themeLayouts} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
 
   const styles = stylesFunc({themeColors, fontFamily});
@@ -150,7 +150,7 @@ export default function RateOrder({navigation, route}) {
     );
     formdata.append('order_id', ratingData.order_id);
     formdata.append('product_id', ratingData.product_id);
-    if (businessType === 'taxi') {
+    if (businessType === 4) {
       formdata.append('rating_for_dispatch', ratingData.dispatchId);
     }
     formdata.append('rating', rating);
