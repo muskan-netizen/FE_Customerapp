@@ -4,7 +4,6 @@ import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import fontFamily from '../../../styles/fontFamily';
 import colors from '../../../styles/colors';
-import HeaderComponent from '../../../Components/HeaderComponent';
 import strings from '../../../constants/lang';
 import {
   moderateScale,
@@ -16,6 +15,7 @@ import DropDown from '../../../Components/DropDown';
 import {TouchableOpacity} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
+import Header from '../../../Components/Header';
 
 const PaymentSettings = (props) => {
   const {navigation} = props;
@@ -67,13 +67,13 @@ const PaymentSettings = (props) => {
       bgColor="white"
       statusBarColor="white"
       barStyle="dark-content">
+      <Header
+        leftIcon={imagePath.backRoyo}
+        centerTitle="Payment settings | Foodies hub   "
+        showImageAlongwithTitle
+        imageAlongwithTitle={imagePath.dropdownTriangle}
+      />
       <View style={styles.container}>
-        <HeaderComponent
-          centerTitle="Accounts | Foodies hub   "
-          onPressLeft={() => navigation.goBack()}
-          leftIcon={imagePath.backRoyo}
-          centerImage={imagePath.dropdownTriangle}
-        />
         <View style={styles.cashBox}>
           <Image source={imagePath.selectedRoyo} />
           <Text style={styles.cashOnDeliver}>{strings.CASH_ON_DELIVERY}</Text>
@@ -123,7 +123,7 @@ const PaymentSettings = (props) => {
           </TouchableOpacity>
           <View style={styles.modalBody}>
             <Text style={styles.modalHeaderText}>Add new account</Text>
-            
+
             <TextInputWithUnderlineAndLabel
               labelStyle={styles.labelText}
               mainStyle={{...styles.textInputView, flex: 0.48}}
@@ -174,7 +174,7 @@ const PaymentSettings = (props) => {
               onChangeText={onChangeText('accouontNumber')}
               placeholder="xxxxxxxxxxxxxx"
             />
-            
+
             <TextInputWithUnderlineAndLabel
               labelStyle={styles.labelText}
               mainStyle={{...styles.textInputView, zIndex: -9}}
@@ -196,7 +196,7 @@ export default PaymentSettings;
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: moderateScaleVertical(24),
+    paddingBottom: moderateScaleVertical(24),
     paddingHorizontal: moderateScale(16),
   },
   cashBox: {
@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(12),
     fontSize: 14,
     marginBottom: 0,
-    marginTop: 0
+    marginTop: 0,
   },
   dropDown: {
     backgroundColor: colors.white,

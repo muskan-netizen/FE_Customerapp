@@ -10,8 +10,8 @@ import {
 } from '../../../styles/responsiveSize';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
-import HeaderComponent from '../../../Components/HeaderComponent';
 import {FlatList} from 'react-native';
+import Header from '../../../Components/Header';
 
 const RoyoTransactions = (props) => {
   const {navigation} = props;
@@ -63,15 +63,12 @@ const RoyoTransactions = (props) => {
       bgColor="white"
       statusBarColor="white"
       barStyle="dark-content">
-      <HeaderComponent
-        containerStyle={{
-          paddingHorizontal: moderateScale(16),
-          paddingVertical: moderateScaleVertical(24),
-        }}
-        centerTitle="Transactions | Foodies hub   "
-        onPressLeft={() => navigation.goBack()}
+      
+      <Header
         leftIcon={imagePath.backRoyo}
-        centerImage={imagePath.dropdownTriangle}
+        centerTitle="Transactions | Foodies hub   "
+        showImageAlongwithTitle
+        imageAlongwithTitle={imagePath.dropdownTriangle}
       />
       <View style={styles.headerBox}>
         <Text style={styles.font28Semibold}>$ 20,890</Text>
@@ -161,6 +158,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerBox: {
+    marginTop: moderateScaleVertical(24),
     alignItems: 'center',
     paddingVertical: moderateScaleVertical(30),
     backgroundColor: '#25C7A7',

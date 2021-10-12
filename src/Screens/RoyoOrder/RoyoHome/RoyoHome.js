@@ -29,6 +29,8 @@ import {
   customMarginBottom,
   customMarginLeftForBox,
 } from '../../../utils/constants/constants';
+import Header from '../../../Components/Header';
+import {TouchableOpacity} from 'react-native';
 
 const commonStyle = commonStyles({
   fontFamily,
@@ -37,7 +39,8 @@ const commonStyle = commonStyles({
 
 const RoyoHome = (props) => {
   const {navigation} = props;
-  const [state, setState] = useState(null);
+  const [state, setState] = useState({status: true});
+  const {status} = state;
   const updateState = (data) =>
     setState((state) => {
       return {...state, ...data};
@@ -107,6 +110,8 @@ const RoyoHome = (props) => {
     },
   };
 
+  const toggleStatus = () => updateState({status: !status});
+
   const onPressAdd = () => {
     navigation.navigate(navigationStrings.AddProduct);
   };
@@ -114,14 +119,22 @@ const RoyoHome = (props) => {
   const dashboard = (item, index) => {
     const {image, header, text} = item;
     return (
-      <View style={styles.dashboardBox}>
-        <Image
+      <View key={String(index)} style={styles.dashboardBox}>
+        <View
           style={{
             shadowColor: 'rgba(242,96,97,0.23)',
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.25,
+            flexShrink: 1,
+            shadowRadius: 3.84,
+
             elevation: 19,
-          }}
-          source={image}
-        />
+          }}>
+          <Image source={image} />
+        </View>
         <Text
           style={{
             ...commonStyle.boldFont14,
@@ -145,12 +158,35 @@ const RoyoHome = (props) => {
       bgColor={colors.white}
       statusBarColor={colors.white}
       barStyle="dark-content">
+      <Header
+        // headerStyle={{marginTop:moderateScaleVertical(8)}}
+        onPressLeft={() => {}}
+        leftIcon={imagePath.logoRoyo}
+        customRight={() => (
+          <TouchableOpacity onPress={toggleStatus}>
+            <Image
+              source={status ? imagePath.onlineRoyo : imagePath.offlineRoyo}
+            />
+            <Text
+              style={{
+                ...commonStyle.boldFont14,
+                color: colors.white,
+                position: 'absolute',
+                left: status ? moderateScale(11) : null,
+                right: status ? null : moderateScale(10),
+                top: moderateScaleVertical(6.5),
+              }}>
+              {status ? 'online' : 'offline'}
+            </Text>
+          </TouchableOpacity>
+        )}
+      />
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
         style={styles.container}
         showsVerticalScrollIndicator={false}
         bounces={false}>
-        <View style={styles.header}>
+        {/* <View style={styles.header}>
           <Image source={imagePath.logoRoyo} />
           <View style={styles.toggle}>
             <Text style={{...commonStyle.boldFont14, color: colors.white}}>
@@ -158,8 +194,7 @@ const RoyoHome = (props) => {
             </Text>
             <View style={styles.indicator} />
           </View>
-        </View>
-
+        </View> */}
         {data1 ? (
           <View style={styles.center}>
             <Image source={imagePath.emptyPackage} style={{}} />
@@ -188,7 +223,7 @@ const RoyoHome = (props) => {
                     ...commonStyle.boldFont16,
                     color: colors.black,
                   }}>
-                  Complete store profile
+                  Complete your profile
                 </Text>
                 <Text
                   style={{
@@ -196,7 +231,7 @@ const RoyoHome = (props) => {
                     color: colors.black,
                     letterSpacing: 1,
                   }}>
-                  you have missing store imformation.{' '}
+                  you have missing profile imformation.{' '}
                   <Text style={styles.span}>Tap here</Text> to complete.
                 </Text>
               </View>
@@ -209,7 +244,7 @@ const RoyoHome = (props) => {
                   <Text style={styles.font18Semibold}>Revenue</Text>
                   <View style={{flexDirection: 'row'}}>
                     <Text style={{...styles.font14Regular, color: '#2E3E3A5f'}}>
-                      This month
+                      This month{' '}
                     </Text>
                     <Image source={imagePath.dropdownTriangle} />
                   </View>
@@ -245,7 +280,7 @@ const RoyoHome = (props) => {
                   <Text style={styles.font18Semibold}>Revenue</Text>
                   <View style={{flexDirection: 'row'}}>
                     <Text style={{...styles.font14Regular, color: '#2E3E3A5f'}}>
-                      This month
+                      This month{' '}
                     </Text>
                     <Image source={imagePath.dropdownTriangle} />
                   </View>
@@ -407,7 +442,7 @@ const styles = StyleSheet.create({
   },
   dashboardBox: {
     width: width > 600 ? width / 4.5 : width / 2.25,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#F3F9F7',
     padding: moderateScale(16),
     borderRadius: moderateScaleVertical(6),
     marginBottom: moderateScaleVertical(16),

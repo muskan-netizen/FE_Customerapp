@@ -16,7 +16,7 @@ const OrderCard = (props) => {
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={styles.font13Regular}>Order #836372</Text>
+          <Text style={styles.font13Regular}>Order #8036372</Text>
           <Text style={styles.date}>9 oct; 11: 11 pm</Text>
         </View>
         <View

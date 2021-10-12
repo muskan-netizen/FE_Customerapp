@@ -18,13 +18,14 @@ import {TouchableOpacity} from 'react-native';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import {Platform} from 'react-native';
 import navigationStrings from '../../../navigation/navigationStrings';
+import Header from '../../../Components/Header';
 
 const RoyoProducts = (props) => {
   const {navigation} = props;
 
-  const [state, setState] = useState({activeIndex: 0});
+  const [state, setState] = useState({activeIndex: 0, headerText: 'Products'});
 
-  const {activeIndex} = state;
+  const {activeIndex, headerText} = state;
 
   const updateState = (data) =>
     setState((state) => {
@@ -111,7 +112,8 @@ const RoyoProducts = (props) => {
   // );
 
   const selectedOrder = (index) => {
-    updateState({activeIndex: index});
+    if (index == 0) updateState({activeIndex: index, headerText: 'Products'});
+    else updateState({activeIndex: index, headerText: 'Categories'});
   };
 
   return (
@@ -119,24 +121,13 @@ const RoyoProducts = (props) => {
       bgColor="white"
       statusBarColor="white"
       barStyle="dark-content">
+      <Header
+        centerTitle={`${headerText} | Foodies hub  `}
+        noLeftIcon
+        imageAlongwithTitle={imagePath.dropdownTriangle}
+        showImageAlongwithTitle
+      />
       <View style={styles.container}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text
-            style={{
-              fontFamily: fontFamily.bold,
-              fontSize: textScale(15),
-              textAlign: 'center',
-            }}>
-            Products | Foodies hub {'  '}
-          </Text>
-          <Image source={imagePath.dropDownNew} />
-        </View>
-
         <MultiScreen
           screenName={['Products', 'Categories', '', '', '']}
           selectedScreen={(index) => selectedOrder(index)}
@@ -171,7 +162,9 @@ const RoyoProducts = (props) => {
               rightOpenValue={-moderateScale(100)}
             />
             <ButtonWithLoader
-              onPress={() => navigation.navigate(navigationStrings.ROYO_ADD_PRODUCT)}
+              onPress={() =>
+                navigation.navigate(navigationStrings.ROYO_ADD_PRODUCT)
+              }
               btnStyle={{
                 position: 'absolute',
                 padding: moderateScale(10),
@@ -196,7 +189,7 @@ const RoyoProducts = (props) => {
               return (
                 <View
                   key={index}
-                  style={{marginBottom: moderateScaleVertical(16),}}>
+                  style={{marginBottom: moderateScaleVertical(16)}}>
                   <TouchableOpacity
                     style={{
                       alignSelf: 'center',
@@ -221,7 +214,9 @@ const RoyoProducts = (props) => {
               );
             })}
             <ButtonWithLoader
-              onPress={() => navigation.navigate(navigationStrings.ROYO_ADD_PRODUCT)}
+              onPress={() =>
+                navigation.navigate(navigationStrings.ROYO_ADD_PRODUCT)
+              }
               btnStyle={{
                 position: 'absolute',
                 padding: moderateScale(10),
@@ -249,7 +244,7 @@ const styles = StyleSheet.create({
     marginRight: moderateScale(10),
   },
   container: {
-    marginTop: moderateScaleVertical(24),
+    // marginTop: moderateScaleVertical(24),
     marginHorizontal: moderateScale(16),
     marginBottom: customMarginBottom(),
     flex: 1,

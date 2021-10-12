@@ -19,6 +19,7 @@ import {
   noOfColumn,
 } from '../../../utils/constants/constants';
 import navigationStrings from '../../../navigation/navigationStrings';
+import Header from '../../../Components/Header';
 
 const RoyoOrder = (props) => {
   const {navigation} = props;
@@ -52,12 +53,13 @@ const RoyoOrder = (props) => {
       bgColor="white"
       statusBarColor="white"
       barStyle="dark-content">
+      <Header
+        centerTitle="Orders | Foodies hub  "
+        noLeftIcon
+        imageAlongwithTitle={imagePath.dropdownTriangle}
+        showImageAlongwithTitle
+      />
       <View style={styles.container}>
-        <View style={styles.flexRowCenter}>
-          <Text style={styles.font15Bold}>Orders | Foodies hub {'  '}</Text>
-          <Image source={imagePath.dropDownNew} />
-        </View>
-
         <MultiScreen
           screenName={['new', 'confirmed', 'cancelled', 'completed']}
           selectedScreen={(index) => selectedOrder(index)}
@@ -179,6 +181,7 @@ const RoyoOrder = (props) => {
                 <View
                   style={{
                     marginLeft: customMarginLeftForBox(index),
+                    // flex: 0.5,
                     flex: 1,
                   }}>
                   <OrderCard
@@ -202,7 +205,7 @@ export default RoyoOrder;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: moderateScaleVertical(24),
+    // marginTop: moderateScaleVertical(24),
     marginHorizontal: moderateScale(16),
     marginBottom: customMarginBottom(),
     flex: 1,

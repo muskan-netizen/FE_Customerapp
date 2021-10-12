@@ -371,6 +371,8 @@ export default {
   shareRoyo: require('../assets/images/royoTab/ic_share.png'),
   emptyCartRoyo: require('../assets/images/royoTab/ic_epmtycart.png'),
   closeRoyo: require('../assets/images/royoTab/ic_close.png'),
+  onlineRoyo: require('../assets/images/royoTab/ic_online.png'),
+  offlineRoyo: require('../assets/images/royoTab/ic_offline.png'),
 
   accountActiveRoyo: require('../assets/images/royoTab/ic_account2.png'),
   accountInactiveRoyo: require('../assets/images/royoTab/ic_account1.png'),

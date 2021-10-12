@@ -7,12 +7,17 @@ import {
   TouchableOpacity,
   Share,
 } from 'react-native';
+import Header from '../../../Components/Header';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import fontFamily from '../../../styles/fontFamily';
-import { moderateScale, moderateScaleVertical, textScale } from '../../../styles/responsiveSize';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  textScale,
+} from '../../../styles/responsiveSize';
 
 const RoyoAccounts = (props) => {
   const {navigation} = props;
@@ -39,19 +44,19 @@ const RoyoAccounts = (props) => {
   };
 
   const data = [
-    
     {
       text: 'Transactions',
       image: imagePath.transactionsRoyo,
-        onPress: () => navigation.navigate(navigationStrings.ROYO_TRANSACTIONS),
+      onPress: () => navigation.navigate(navigationStrings.ROYO_TRANSACTIONS),
     },
-    
+
     {
       text: 'Payment Settings',
       image: imagePath.paymentSettinRoyo,
-        onPress: () => navigation.navigate(navigationStrings.ROYO_PAYMENT_SETTINGS),
+      onPress: () =>
+        navigation.navigate(navigationStrings.ROYO_PAYMENT_SETTINGS),
     },
-    
+
     {
       text: 'Signout',
       image: imagePath.signoutRoyo,
@@ -66,40 +71,15 @@ const RoyoAccounts = (props) => {
       bgColor="white"
       statusBarColor="white"
       barStyle="dark-content">
+      <Header
+        centerTitle="Accounts | Foodies hub  "
+        noLeftIcon
+        imageAlongwithTitle={imagePath.dropdownTriangle}
+        showImageAlongwithTitle
+      />
       <View style={styles.container}>
-      <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: moderateScaleVertical(16)
-          }}>
-          <Text
-            style={{
-              fontFamily: fontFamily.bold,
-              fontSize: textScale(15),
-              textAlign: 'center',
-            }}>
-            Accounts | Foodies hub {'  '}
-          </Text>
-          <Image source={imagePath.dropDownNew} />
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            padding: moderateScale(12),
-            backgroundColor: '#24C3A323',
-            borderRadius: moderateScale(5),
-            marginTop: moderateScaleVertical(16),
-          }}>
-          <View
-            style={{
-              marginRight: moderateScale(8),
-              backgroundColor: colors.white,
-              padding: moderateScale(12),
-              alignItems: 'center',
-              borderRadius: moderateScale(5),
-            }}>
+        <View style={styles.header}>
+          <View style={styles.cameraBox}>
             <Image source={imagePath.cameraRoyo} />
             <Text
               style={{
@@ -111,15 +91,7 @@ const RoyoAccounts = (props) => {
             </Text>
           </View>
           <View style={{flex: 1, justifyContent: 'center'}}>
-            <Text
-              style={{
-                fontFamily: fontFamily.medium,
-                fontSize: 14,
-                marginBottom: moderateScaleVertical(8),
-                color: colors.black,
-              }}>
-              My Shop
-            </Text>
+            <Text style={styles.font16Semibold}>Foodies's Hub</Text>
             <Text
               style={{
                 fontSize: 13,
@@ -140,18 +112,10 @@ const RoyoAccounts = (props) => {
                 style={{
                   flexDirection: 'row',
                   marginVertical: moderateScaleVertical(15),
-                  alignItems: 'center'
+                  alignItems: 'center',
                 }}>
                 <Image source={val.image} />
-                <Text
-                  style={{
-                    fontFamily: fontFamily.semiBold,
-                    fontSize: textScale(15),
-                    color: colors.blackOpacity66,
-                    marginLeft: moderateScale(16),
-                  }}>
-                  {val.text}
-                </Text>
+                <Text style={styles.font15Semibold}>{val.text}</Text>
               </TouchableOpacity>
             );
           })}
@@ -165,7 +129,34 @@ export default RoyoAccounts;
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: moderateScaleVertical(24),
+    marginTop: moderateScaleVertical(8),
+    marginBottom: moderateScaleVertical(24),
     marginHorizontal: moderateScale(16),
+  },
+  header: {
+    flexDirection: 'row',
+    padding: moderateScale(12),
+    backgroundColor: '#24C3A323',
+    borderRadius: moderateScale(5),
+    marginTop: moderateScaleVertical(16),
+  },
+  cameraBox: {
+    marginRight: moderateScale(8),
+    backgroundColor: colors.white,
+    padding: moderateScale(12),
+    alignItems: 'center',
+    borderRadius: moderateScale(5),
+  },
+  font16Semibold: {
+    fontFamily: fontFamily.semiBold,
+    fontSize: 16,
+    marginBottom: moderateScaleVertical(8),
+    color: colors.black,
+  },
+  font15Semibold: {
+    fontFamily: fontFamily.semiBold,
+    fontSize: textScale(15),
+    color: colors.blackOpacity66,
+    marginLeft: moderateScale(16),
   },
 });

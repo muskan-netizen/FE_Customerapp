@@ -5,7 +5,7 @@ import {ScrollView} from 'react-native';
 import {FlatList} from 'react-native';
 import {View, Text} from 'react-native';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
-import HeaderComponent from '../../../Components/HeaderComponent';
+import Header from '../../../Components/Header';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import colors from '../../../styles/colors';
@@ -24,13 +24,8 @@ const RoyoOrderDetail = (props) => {
       bgColor="white"
       statusBarColor="white"
       barStyle="dark-content">
+      <Header leftIcon={imagePath.backRoyo} centerTitle="Order details" />
       <ScrollView style={styles.container} bounces={false}>
-        <HeaderComponent
-          containerStyle={styles.header}
-          centerTitle="Order details"
-          onPressLeft={() => navigation.goBack()}
-          leftIcon={imagePath.backRoyo}
-        />
         <Text style={styles.jobStatus}>Job Status</Text>
         <View style={styles.preparingBox}>
           <Text style={{...styles.font16Semibold, color: colors.white}}>
@@ -201,7 +196,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginTop: moderateScaleVertical(16),
+    marginTop: moderateScaleVertical(24),
     paddingBottom: moderateScaleVertical(10),
     marginBottom: moderateScaleVertical(16),
   },

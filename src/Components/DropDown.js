@@ -45,7 +45,7 @@ const DropDown = ({
           style={{
             ...styles.textStyle,
             ...textStyle,
-            color: !!value ? colors.black : colors.blackOpacity43,
+            color: !!value ? colors.black : colors.textGreyB,
           }}>
           {!!value ? value : placeholder}
         </Text>
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     marginBottom: 5,
-    borderColor: colors.grayOpacity51,
+    borderColor: colors.borderColorGrey,
     paddingHorizontal: moderateScale(16),
   },
 
