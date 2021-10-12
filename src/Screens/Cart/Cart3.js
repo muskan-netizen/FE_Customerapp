@@ -1,0 +1,2687 @@
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep } from 'lodash';
+import moment from 'moment';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  Alert,
+  Animated,
+  FlatList,
+  I18nManager,
+  Image,
+  Platform,
+  RefreshControl,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { useDarkMode } from 'react-native-dark-mode';
+import DatePicker from 'react-native-date-picker';
+import DeviceInfo from 'react-native-device-info';
+import DropDownPicker from 'react-native-dropdown-picker';
+import FastImage from 'react-native-fast-image';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { UIActivityIndicator } from 'react-native-indicators';
+import * as RNLocalize from 'react-native-localize';
+import Modal from 'react-native-modal';
+import { useSelector } from 'react-redux';
+import AddressModal3 from '../../Components/AddressModal3';
+import ButtonComponent from '../../Components/ButtonComponent';
+import ChooseAddressModal from '../../Components/ChooseAddressModal';
+import ConfirmationModal from '../../Components/ConfirmationModal';
+import GradientButton from '../../Components/GradientButton';
+import Header from '../../Components/Header';
+import HorizontalLine from '../../Components/HorizontalLine';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
+import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
+import HeaderLoader from '../../Components/Loaders/HeaderLoader';
+import ProductListLoader from '../../Components/Loaders/ProductListLoader';
+import MarketCard3 from '../../Components/MarketCard3';
+import WishlistCard from '../../Components/WishlistCard';
+import WrapperContainer from '../../Components/WrapperContainer';
+import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
+import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
+import colors from '../../styles/colors';
+import {
+  height,
+  moderateScale,
+  moderateScaleVertical,
+  textScale,
+  width,
+} from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
+import {
+  getColorCodeWithOpactiyNumber,
+  getImageUrl,
+  getParameterByName,
+  showError,
+  showSuccess,
+  timeInLocalLangauge,
+} from '../../utils/helperFunctions';
+import { getItem, removeItem, setItem } from '../../utils/utils';
+import stylesFun from './styles';
+
+export default function Cart({ navigation, route }) {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const location = useSelector((state) => state?.home?.location);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  let paramsData = route?.params;
+  const appMainData = useSelector((state) => state?.home?.appMainData);
+  const recommendedVendorsdata = appMainData?.vendors;
+
+  const [state, setState] = useState({
+    isVisibleTimeModal: false,
+    isVisible: false,
+    cartItems: [],
+    cartData: {},
+    isLoadingB: true,
+    isModalVisibleForClearCart: false,
+    isVisibleAddressModal: false,
+    type: '',
+    vendorAddress: '',
+    selectedAddress: null,
+    selectedPayment: {
+      id: 1,
+      off_site: 0,
+      title: 'Cash On Delivery',
+      title_lng: strings.CASH_ON_DELIVERY,
+    },
+    // selectedPayment: null,
+    isRefreshing: false,
+    selectedTipvalue: null,
+    selectedTipAmount: null,
+    viewHeight: 0,
+    tableData: [],
+    isTableDropDown: false,
+    defaultSelectedTable: '',
+    deepLinkUrl: null,
+    selectedTimeOptions: [
+      { id: 1, title: strings.NOW, type: 'now' },
+      { id: 2, title: strings.SCHEDULE_ORDER, type: 'schedule' },
+    ],
+    selectedTimeOption: null,
+    sheduledorderdate: null,
+    scheduleType: null,
+    swipeKey: 'randomStrings',
+    wishlistArray: [],
+    btnLoader: false,
+    placeLoader: false,
+    localeSheduledOrderDate: null,
+    btnLoadrId: null,
+  });
+  const {
+    viewHeight,
+    isVisibleTimeModal,
+    cartItems,
+    cartData,
+    isLoadingB,
+    isModalVisibleForClearCart,
+    isVisibleAddressModal,
+    isVisible,
+    type,
+    selectedAddress,
+    selectedPayment,
+    isRefreshing,
+    vendorAddress,
+    selectedTipvalue,
+    selectedTipAmount,
+    tableData,
+    isTableDropDown,
+    defaultSelectedTable,
+    deepLinkUrl,
+    selectedTimeOptions,
+    selectedTimeOption,
+    sheduledorderdate,
+    scheduleType,
+    swipeKey,
+    wishlistArray,
+    btnLoader,
+    placeLoader,
+    localeSheduledOrderDate,
+    btnLoadrId,
+  } = state;
+
+  //Redux store data
+  const userData = useSelector((state) => state?.auth?.userData);
+  const { appData, allAddresss, themeColors, currencies, languages, appStyle } =
+    useSelector((state) => state?.initBoot);
+  const selectedLanguage = languages?.primary_language?.sort_code;
+  const fontFamily = appStyle?.fontSizeData;
+  const styles = stylesFun({ fontFamily, themeColors, isDarkMode, MyDarkTheme });
+
+  const selectedAddressData = useSelector(
+    (state) => state?.cart?.selectedAddress,
+  );
+
+  const dineInType = useSelector((state) => state?.home?.dineInType);
+
+  //Update states on screens
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+
+  //Naviagtion to specific screen
+  const moveToNewScreen =
+    (screenName, data = {}) =>
+      () => {
+        navigation.navigate(screenName, { data });
+      };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (paramsData && paramsData?.selectedMethod) {
+        updateState({ selectedPayment: paramsData?.selectedMethod });
+      }
+      // alert('run')
+      if (!checkCartItem?.data?.item_count) {
+        updateState({ isLoadingB: true });
+      }
+      getCartDetail();
+      getAllWishListData();
+      // if (!!checkCartItem?.data) {
+      //   getCartDetail();
+      // } else {
+      //   getAllWishListData();
+      // }
+      return () => {
+        // alert('blur')
+      };
+    }, [
+      currencies,
+      languages,
+      route?.params?.promocodeDetail,
+      allAddresss,
+      selectedAddress,
+      paramsData,
+      isRefreshing,
+      checkCartItem?.data?.item_count,
+    ]),
+  );
+
+  // useEffect(() => {
+  //   if (paramsData && paramsData?.selectedMethod) {
+  //     updateState({ selectedPayment: paramsData?.selectedMethod });
+  //   }
+
+  //   // alert('run')
+  //   // updateState({ isLoadingB: true });
+  //   if (!!cartItems) {
+  //     getCartDetail();
+  //     return
+  //   }
+  //   if (!!userData?.auth_token) {
+  //     getAllWishListData();
+  //     return
+  //   }
+
+  // }, [
+  //   currencies,
+  //   languages,
+  //   route?.params?.promocodeDetail,
+  //   allAddresss,
+  //   selectedAddress,
+  //   paramsData,
+  //   isRefreshing,
+  //   cartItems,
+  // ])
+
+  useEffect(() => {
+    if (!!checkCartItem?.data) {
+      checkforAddressUpdate();
+    }
+  }, [selectedAddress, allAddresss]);
+
+  //check for addreess Update and change
+  const checkforAddressUpdate = () => {
+    if (allAddresss.length == 0) {
+      updateState({ selectedAddress: null });
+      actions.saveAddress(null);
+    }
+    if (!selectedAddress && allAddresss.length) {
+      let find = allAddresss.find((x) => x.is_primary);
+
+      if (find) {
+        updateState({ selectedAddress: find });
+        actions.saveAddress(find);
+      } else {
+        selectAddress(allAddresss[0]);
+      }
+    }
+    if (selectedAddress && allAddresss.length) {
+      let find = allAddresss.find(
+        (x) =>
+          x.id == selectedAddress.id &&
+          x.is_primary == selectedAddress.is_primary,
+      );
+      if (find) {
+        selectAddress(find);
+      } else {
+        selectAddress(allAddresss[0]);
+        // updateState({selectedAddress: null});
+        // actions.saveAddress(null);
+      }
+    }
+  };
+
+  //get All address
+  const getAllAddress = () => {
+    if (!!userData?.auth_token) {
+      actions
+        .getAddress(
+          {},
+          {
+            code: appData?.profile?.code,
+          },
+        )
+        .then((res) => {
+          updateState({
+            isLoadingB: false,
+          });
+          if (res.data) {
+            actions.saveAllUserAddress(res.data);
+          }
+        })
+        .catch(errorMethod);
+    }
+  };
+
+  //get the entire cart detail
+  const getCartDetail = () => {
+    // alert("cart detail hit")
+    actions
+      .getCartDetail(
+        `/?type=${dineInType}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+          timezone: RNLocalize.getTimeZone(),
+        },
+      )
+      .then((res) => {
+        actions.cartItemQty(res);
+        console.log(res.data, 'cart details>>>');
+        let checkDate = !!res?.data?.scheduled_date_time
+        if (!!checkDate && res.data.schedule_type == 'schedule') {
+          let formatDate = new Date(res?.data?.scheduled_date_time)
+          updateState({
+            localeSheduledOrderDate: timeInLocalLangauge(formatDate, selectedLanguage)
+          })
+        }else{
+          updateState({
+            scheduleType: 'now',
+            localeSheduledOrderDate: null
+          })
+        }
+        updateState({
+          isRefreshing: false,
+          isLoadingB: false,
+          sheduledorderdate: res?.data?.scheduled_date_time,
+          scheduleType: res?.data?.schedule_type,
+          selectedTimeOption:
+            res?.data?.schedule_type == 'now'
+              ? { id: 1, title: strings.NOW, type: 'now' }
+              : res?.data?.schedule_type == 'schedule'
+                ? { id: 2, title: strings.SCHEDULE_ORDER, type: 'schedule' }
+                : { id: 1, title: strings.NOW, type: 'now' },
+        });
+        if (res && res.data) {
+          if (res.data.vendor_details.vendor_tables) {
+            res.data.vendor_details.vendor_tables.forEach(
+              (item, indx) =>
+              (tableData[indx] = {
+                id: item.id,
+                label: `${strings.CATEGORY}: ${item.category.title ? item.category.title : ''
+                  } | ${strings.TABLE}: ${item.table_number ? item.table_number : 0
+                  } | ${strings.SEAT_CAPACITY}: ${item.seating_number ? item.seating_number : 0
+                  }`,
+                value: `${strings.CATEGORY}: ${item.category.title ? item.category.title : ''
+                  } | ${strings.TABLE}: ${item.table_number ? item.table_number : 0
+                  } | ${strings.SEAT_CAPACITY}: ${item.seating_number ? item.seating_number : 0
+                  }`,
+                title: item.category.title,
+                table_number: item.table_number,
+                seating_number: item.seating_number,
+                vendor_id: res.data.vendor_details.vendor_address.id,
+              }),
+              updateState({
+                tableData: tableData,
+              }),
+            );
+          }
+          updateState({
+            cartItems: res.data.products,
+            vendorAddress: res.data.address,
+            cartData: res.data,
+            isLoadingB: false,
+            isRefreshing: false,
+          });
+          if(!res.data.schedule_type){ //if schedule type is null then hit the api again with now option
+            setDateAndTimeSchedule()
+          }
+        } else {
+          updateState({
+            cartData: {},
+            vendorAddress: '',
+            isLoadingB: false,
+            isRefreshing: false,
+          });
+        }
+      })
+      .catch(errorMethod);
+
+    getItem('selectedTable')
+      .then((res) => {
+        updateState({
+          defaultSelectedTable: res,
+        });
+      })
+      .catch((error) => {
+        showError(error.message);
+      });
+  };
+
+  // useEffect(() => {
+  //   getAllWishListData()
+  // }, [])
+
+  //add /delete products from cart
+  const addDeleteCartItems = (item, index, type) => {
+    let quanitity = null;
+    let itemToUpdate = cloneDeep(item);
+    if (type == 1) {
+      quanitity = Number(itemToUpdate.quantity) + 1;
+    } else {
+      quanitity = Number(itemToUpdate.quantity) - 1;
+    }
+    if (quanitity) {
+      let data = {};
+      data['cart_id'] = itemToUpdate?.cart_id;
+      data['quantity'] = quanitity;
+      data['cart_product_id'] = itemToUpdate?.id;
+      data['type'] = dineInType;
+      updateState({ btnLoader: true, btnLoadrId: item?.id });
+      actions
+        .increaseDecreaseItemQty(data, {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        })
+        .then((res) => {
+          actions.cartItemQty(res);
+          updateState({
+            cartItems: res.data.products,
+            cartData: res.data,
+            btnLoader: false,
+          });
+        })
+        .catch(errorMethod);
+    } else {
+      updateState({ btnLoader: true });
+      removeItem('selectedTable');
+      removeProductFromCart(itemToUpdate);
+    }
+  };
+
+  //decrementing/removeing products from cart
+  const removeProductFromCart = (item) => {
+    let data = {};
+    data['cart_id'] = item?.cart_id;
+    data['cart_product_id'] = item?.id;
+    data['type'] = dineInType;
+    actions
+      .removeProductFromCart(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        actions.cartItemQty(res);
+        updateState({
+          cartItems: res.data.products,
+          cartData: res.data,
+          isLoadingB: false,
+          btnLoader: false,
+        });
+        showSuccess(res?.message);
+      })
+      .catch(errorMethod);
+  };
+
+  //Close modal for Clear cart
+  const closeOptionModal = () => {
+    updateState({ isModalVisibleForClearCart: false });
+  };
+
+  const bottomButtonClick = () => {
+    updateState({ isLoadingB: true, isModalVisibleForClearCart: false });
+    removeItem('selectedTable');
+    setTimeout(() => {
+      clearEntireCart();
+    }, 1000);
+  };
+
+  //Clear cart
+  const clearEntireCart = () => {
+    actions
+      .clearCart(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        actions.cartItemQty(res);
+        updateState({
+          cartItems: [],
+          cartData: {},
+          isLoadingB: false,
+        });
+        getAllWishListData();
+        showSuccess(res?.message);
+      })
+      .catch(errorMethod);
+  };
+
+  //Error handling in screen
+  const errorMethod = (error) => {
+    updateState({
+      isLoading: false,
+      isLoadingB: false,
+      isRefreshing: false,
+      btnLoader: false,
+      placeLoader: false,
+    });
+    showError(error?.message || error?.error);
+  };
+
+  //Get list of all offers
+  const _getAllOffers = (vendor, cartData) => {
+    moveToNewScreen(navigationStrings.OFFERS, {
+      vendor: vendor,
+      cartId: cartData.id,
+    })();
+  };
+
+  useEffect(() => {
+    if (paramsData?.transactionId && !!checkCartItem?.data) {
+      _directOrderPlace();
+    }
+  }, [paramsData?.transactionId]);
+
+  //Verify your promo code
+  const _removeCoupon = (item, cartData) => {
+    updateState({ isLoadingB: true });
+    let data = {};
+    data['vendor_id'] = item?.vendor_id;
+    data['cart_id'] = cartData?.id;
+    data['coupon_id'] = item?.couponData?.coupon_id;
+
+    actions
+      .removePromoCode(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        if (res) {
+          showSuccess(res?.message || res?.error);
+          getCartDetail();
+        } else {
+          updateState({ isLoadingB: false });
+        }
+      })
+      .catch(errorMethod);
+  };
+
+  const _directOrderPlace = () => {
+    let data = {};
+    data['address_id'] =
+      paramsData?.selectedAddressData?.id || selectedAddressData?.id;
+    data['payment_option_id'] =
+      paramsData?.selectedPayment?.id || selectedPayment?.id;
+
+    if (paramsData?.transactionId) {
+      data['transaction_id'] = paramsData?.transactionId;
+    }
+    actions
+      .placeOrder(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        latitude: location?.latitude.toString() || '',
+        longitude: location?.longitude.toString() || '',
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log('item added++', res);
+        actions.cartItemQty({});
+        updateState({
+          cartItems: [],
+          cartData: {},
+          isLoadingB: false,
+          placeLoader: false,
+        });
+        moveToNewScreen(navigationStrings.ORDERSUCESS, {
+          orderDetail: res.data,
+        })();
+        showSuccess(res?.message);
+      })
+      .catch(errorMethod);
+  };
+
+  const setDateAndTimeSchedule = () => {
+    console.log("setDateAndTimeSchedule", scheduleType)
+    let data = {};
+    data['task_type'] = scheduleType;
+    data['schedule_dt'] =
+      scheduleType != 'now' && sheduledorderdate
+        ? new Date(sheduledorderdate).toISOString()
+        : null;
+
+    actions
+      .scheduledOrder(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        getCartDetail();
+        updateState({
+          isLoadingB: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+
+  const _finalPayment = () => {
+    if (selectedPayment?.id == 1 && selectedPayment?.off_site == 0) {
+      updateState({ placeLoader: true });
+      _directOrderPlace();
+    } else {
+      if (selectedPayment?.off_site == 1) {
+        _webPayment();
+      } else {
+        _offineLinePayment();
+      }
+    }
+  };
+
+  // console.log("sheduledorderdate", sheduledorderdate)
+  // console.log("sheduledorderdate", selectedTimeOption)
+  //Clear cart
+  const placeOrder = () => {
+    var d1 = new Date();
+    var d2 = new Date(sheduledorderdate);
+    if (!!userData?.auth_token) {
+      if (!selectedAddressData) {
+        // showError(strings.PLEASE_SELECT_ADDRESS);
+        setModalVisible(true);
+      } else if (!selectedPayment) {
+        showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
+      }
+      // else if (!(sheduledorderdate && selectedTimeOption)) {
+      //   showError(strings.PLEASE_SELECT_ORDER_TYPE);
+      // } else if (d1.getTime() >= d2.getTime()) {
+      //   showError(strings.INVALID_SCHEDULED_DATE);
+      // }
+      else if (false) { //(!(sheduledorderdate && selectedTimeOption))
+        showError(strings.PLEASE_SELECT_ORDER_TYPE);
+      } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
+        showError(strings.INVALID_SCHEDULED_DATE);
+      } else {
+        if (!!userData) {
+          console.log('user data', userData);
+
+          if (!!userData) {
+            if (
+              !!userData?.client_preference?.verify_email &&
+              !!userData?.client_preference?.verify_phone
+            ) {
+              if (
+                !!userData?.verify_details?.is_email_verified &&
+                !!userData?.verify_details?.is_phone_verified
+              ) {
+                _finalPayment();
+              } else {
+                moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+                  formCart: true,
+                })();
+              }
+            } else if (
+              !!userData?.client_preference?.verify_email ||
+              !!userData?.client_preference?.verify_phone
+            ) {
+              if (
+                !!userData?.verify_details?.is_email_verified ||
+                !!userData?.verify_details?.is_phone_verified
+              ) {
+                _finalPayment();
+              } else {
+                moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+                  formCart: true,
+                })();
+              }
+            } else {
+              _finalPayment();
+            }
+          }
+          // !!userData?.client_preference?.verify_email ||
+          // !!userData?.client_preference?.verify_phone
+          //   ? !!userData?.verify_details?.is_email_verified &&
+          //     !!userData?.verify_details?.is_phone_verified
+          //     ? _finalPayment()
+          //     : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
+          //         formCart: true,
+          //       })()
+          //   : _finalPayment();
+        } else {
+          _finalPayment();
+        }
+        // _finalPayment()
+      }
+    } else {
+      // showError(strings.UNAUTHORIZED_MESSAGE);
+      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+    }
+  };
+
+  useEffect(() => {
+    if (paramsData?.redirectFrom && !!checkCartItem?.data) {
+      _directOrderPlace();
+    }
+  }, [paramsData?.redirectFrom]);
+
+  const swipeRef = useRef(null);
+
+  const openDeleteView = async (item) => {
+    updateState({ isLoadingB: true });
+    let itemToUpdate = cloneDeep(item);
+    removeItem('selectedTable');
+    removeProductFromCart(itemToUpdate);
+    // updateState({ isLoadingB: true });
+    // if (!!swipeRef && swipeRef?.current) {
+    //     swipeRef?.current.openRight()
+    // }
+  };
+
+  const swipeBtns = (progress, dragX) => {
+    return (
+      <Animated.View
+        key={String(cartItems.length)}
+        style={{
+          ...styles.swipeView,
+          backgroundColor: getColorCodeWithOpactiyNumber(
+            themeColors.primary_color.substr(1),
+            15,
+          ),
+          marginBottom: moderateScaleVertical(12),
+        }}>
+        {/* <TouchableOpacity
+          style={{justifyContent: 'center'}}
+          onPress={openDeleteView}>
+          <Image source={imagePath.deleteRed} />
+        </TouchableOpacity> */}
+      </Animated.View>
+    );
+  };
+
+  const _webPayment = () => {
+    let selectedMethod = selectedPayment.title.toLowerCase();
+    let returnUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
+    let cancelUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
+
+    updateState({ placeLoader: true });
+    actions
+      .openPaymentWebUrl(
+        `/${selectedMethod}?tip=${selectedTipAmount && selectedTipAmount != ''
+          ? Number(selectedTipAmount)
+          : 0
+        }&amount=${cartData?.total_payable_amount
+        }&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&address_id=${selectedAddressData?.id
+        }&payment_option_id=${selectedPayment?.id}&action=cart`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        updateState({
+          isLoadingB: false,
+          isRefreshing: false,
+          placeLoader: false,
+        });
+        if (res && res?.status == 'Success' && res?.data) {
+          // updateState({allAvailAblePaymentMethods: res?.data});
+          navigation.navigate(navigationStrings.WEBPAYMENTS, {
+            paymentUrl: res?.data,
+            paymentTitle: selectedPayment?.title,
+            redirectFrom: 'cart',
+            selectedAddressData: selectedAddressData,
+            selectedPayment: selectedPayment,
+          });
+        }
+      })
+      .catch(errorMethod);
+  };
+
+  //Offline payments
+  const _offineLinePayment = async () => {
+    if (paramsData?.tokenInfo) {
+      updateState({ placeLoader: true });
+      let selectedMethod = selectedPayment.title.toLowerCase();
+      updateState({ placeLoader: true });
+      actions
+        .openPaymentWebUrl(
+          `/${selectedMethod}?tip=${selectedTipAmount && selectedTipAmount != ''
+            ? Number(selectedTipAmount)
+            : 0
+          }&amount=${cartData?.total_payable_amount}&auth_token=${userData?.auth_token
+          }&address_id=${selectedAddressData?.id}&payment_option_id=${selectedPayment?.id
+          }&action=cart&stripe_token=${paramsData?.tokenInfo}`,
+          {},
+          {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+          },
+        )
+        .then((res) => {
+          updateState({ isRefreshing: false });
+          if (res && res?.status == 'Success' && res?.data) {
+            // updateState({allAvailAblePaymentMethods: res?.data});
+            actions.cartItemQty({});
+            updateState({
+              cartItems: [],
+              cartData: {},
+              isLoadingB: false,
+              placeLoader: false,
+            });
+            moveToNewScreen(navigationStrings.ORDERSUCESS, {
+              orderDetail: res.data,
+            })();
+            showSuccess(res?.message);
+          } else {
+            updateState({ isLoadingB: false, placeLoader: false });
+          }
+        })
+        .catch(errorMethod);
+    } else {
+      showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
+    }
+  };
+
+  const clearSceduleDate = async () => {
+    updateState({
+      scheduleType: 'now',
+      localeSheduledOrderDate: null,
+      sheduledorderdate: null
+    });
+  }
+
+
+  useEffect(() => {
+    if (
+      scheduleType != null &&
+      scheduleType == 'now' &&
+      !!checkCartItem?.data
+    ) {
+      setDateAndTimeSchedule();
+    }
+  }, [scheduleType]);
+
+  const _selectTime = (item) => {
+    updateState({
+      scheduleType: 'schedule',
+      isVisibleTimeModal: true,
+    });
+  };
+
+  const selectOrderDate = () => {
+    onClose();
+    updateState({
+      scheduleType: 'schedule',
+    });
+    setDateAndTimeSchedule();
+  };
+
+  function makeid(length) {
+    var result = '';
+    var characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
+  const deleteItem = async (i, index) => {
+    updateState({ swipeKey: makeid(5) });
+    openDeleteView(i);
+    swipeRef.current.close();
+    // return;
+
+    // Animated.timing(height, {
+    //   toValue: 0,
+    //   duration: 350,
+    //   useNativeDriver: false,
+    // }).start(() => openDeleteView(i));
+  };
+
+  const getAllWishListData = () => {
+    if (!!userData?.auth_token) {
+      getAllWishlistItems();
+      return;
+    }
+    updateState({ isRefreshing: false, wishlistArray: [] });
+    return;
+  };
+  /*  GET ALL WISHLISTED ITEMS API FUNCTION  */
+  const getAllWishlistItems = () => {
+    // updateState({ isLoadingB: true });
+    actions
+      .getWishlistProducts(
+        `?limit=${10}&page=${1}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        updateState({
+          isLoadingB: false,
+          wishlistArray: res.data.data,
+          isRefreshing: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+
+  const _renderItem = ({ item, index }) => {
+    return (
+      <View>
+        {index === 0 && (
+          <View style={Platform.OS === 'ios' ? { zIndex: 5000 } : {}}>
+            {dineInType === 'dine_in' &&
+              userData?.auth_token &&
+              !!cartData?.vendor_details?.vendor_tables && (
+                <DropDownPicker
+                  items={tableData}
+                  onOpen={() => updateState({ isTableDropDown: true })}
+                  onClose={() => updateState({ isTableDropDown: false })}
+                  defaultValue={
+                    deepLinkUrl
+                      ? deepLinkUrl == 1
+                        ? tableData[0]?.label
+                        : tableData[1]?.label
+                      : tableData[0]?.label || ''
+                  }
+                  containerStyle={styles.dropDownContainerStyle}
+                  style={{
+                    marginHorizontal: moderateScale(20),
+                    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                    backgroundColor: isDarkMode
+                      ? MyDarkTheme.colors.lightDark
+                      : colors.greyColor1,
+                  }}
+                  labelStyle={
+                    isDarkMode
+                      ? { color: MyDarkTheme.colors.text }
+                      : { color: colors.textGrey }
+                  }
+                  itemStyle={{
+                    justifyContent: 'flex-start',
+                    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+                  }}
+                  dropDownStyle={{
+                    ...styles.dropDownStyle,
+                    backgroundColor: isDarkMode
+                      ? MyDarkTheme.colors.lightDark
+                      : colors.greyColor1,
+                  }}
+                  onChangeItem={(item) => _onTableSelection(item)}
+                />
+              )}
+          </View>
+        )}
+        <View
+          key={swipeKey}
+          style={{
+            ...styles.mainViewRednderItem,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.white,
+          }}>
+          <View style={styles.vendorView}>
+            <Text
+              numberOfLines={1}
+              style={
+                isDarkMode
+                  ? [styles.vendorText, { color: MyDarkTheme.colors.text }]
+                  : styles.vendorText
+              }>
+              {item?.vendor?.name}
+            </Text>
+          </View>
+          {/************ start  render cart items *************/}
+          {item?.vendor_products.length
+            ? item?.vendor_products.map((i, inx) => {
+              return (
+                <Swipeable
+                  ref={swipeRef}
+                  key={swipeKey}
+                  renderRightActions={swipeBtns}
+                  onSwipeableOpen={() => deleteItem(i, index)}
+                  rightThreshold={width / 1.4}
+                // overshootFriction={8}
+                >
+                  <Animated.View
+                    style={{
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : colors.transactionHistoryBg,
+                      marginBottom: moderateScaleVertical(12),
+                      marginRight: moderateScale(8),
+                      borderRadius: moderateScale(10),
+                      transform: [],
+                      minHeight: height * 0.125,
+                    }}
+                    key={inx}>
+                    <View style={[styles.cartItemMainContainer]}>
+                      <View
+                        style={[
+                          styles.cartItemImage,
+                          {
+                            backgroundColor: isDarkMode
+                              ? MyDarkTheme.colors.lightDark
+                              : colors.white,
+                          },
+                        ]}>
+                        <FastImage
+                          source={
+                            i?.cartImg != '' && i?.cartImg != null
+                              ? {
+                                uri: getImageUrl(
+                                  i?.cartImg?.path?.proxy_url,
+                                  i?.cartImg?.path?.image_path,
+                                  '300/300',
+                                ),
+                                priority: FastImage.priority.high,
+                              }
+                              : imagePath.patternOne
+                          }
+                          style={styles.imageStyle}
+                        />
+                      </View>
+
+                      <View style={styles.cartItemDetailsCon}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                          }}>
+                          <View style={{ flex: 0.6 }}>
+                            <Text
+                              numberOfLines={1}
+                              style={{
+                                ...styles.priceItemLabel2,
+                                color: isDarkMode
+                                  ? MyDarkTheme.colors.text
+                                  : colors.blackOpacity86,
+                                fontSize: textScale(12),
+                                fontFamily: fontFamily.medium,
+                              }}>
+                              {i?.product?.translation[0]?.title},
+                            </Text>
+
+                            <Text
+                              style={{
+                                ...styles.priceItemLabel2,
+                                fontSize: textScale(12),
+                                color: isDarkMode
+                                  ? MyDarkTheme.colors.text
+                                  : '#B3B3B3',
+                                marginTop: moderateScaleVertical(4),
+                                fontFamily: fontFamily.regular,
+                              }}>
+                              <Text style={{}}>
+                                {`${currencies?.primary_currency?.symbol}${
+                                  // Number(i?.pvariant?.multiplier) *
+                                  Number(i?.variants?.price).toFixed(2)
+                                  }`}
+                              </Text>{' '}
+                              X {i?.quantity} ={' '}
+                              <Text
+                                style={{
+                                  color: isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : colors.black,
+                                }}>
+                                {`${currencies?.primary_currency?.symbol}${
+                                  // Number(i?.pvariant?.multiplier) *
+                                  Number(i?.variants?.quantity_price).toFixed(
+                                    2,
+                                  )
+                                  }`}
+                              </Text>
+                            </Text>
+
+                            {i?.variant_options.length
+                              ? i?.variant_options.map((j, jnx) => {
+                                return (
+                                  <View style={{ flexDirection: 'row' }}>
+                                    <Text
+                                      style={
+                                        isDarkMode
+                                          ? [
+                                            styles.cartItemWeight2,
+                                            {
+                                              color:
+                                                MyDarkTheme.colors.text,
+                                            },
+                                          ]
+                                          : styles.cartItemWeight2
+                                      }
+                                      numberOfLines={1}>
+                                      {j.title}{' '}
+                                    </Text>
+                                    <Text
+                                      style={
+                                        isDarkMode
+                                          ? [
+                                            styles.cartItemWeight2,
+                                            {
+                                              color:
+                                                MyDarkTheme.colors.text,
+                                            },
+                                          ]
+                                          : styles.cartItemWeight2
+                                      }
+                                      numberOfLines={
+                                        1
+                                      }>{`(${j.option})`}</Text>
+                                  </View>
+                                );
+                              })
+                              : null}
+                          </View>
+
+                          <View
+                            pointerEvents={btnLoader ? 'none' : 'auto'}
+                            style={{
+                              flex: 0.3,
+                              paddingRight: moderateScale(8),
+                            }}>
+                            <View style={styles.incDecBtnContainer}>
+                              <TouchableOpacity
+                                style={{ flex: 0.3, alignItems: 'center' }}
+                                onPress={() => addDeleteCartItems(i, inx, 2)}>
+                                <Text style={styles.cartItemValueBtn}>-</Text>
+                              </TouchableOpacity>
+                              <View style={{ flex: 0.4, alignItems: 'center' }}>
+                                {btnLoadrId === i.id && btnLoader ? (
+                                  <UIActivityIndicator
+                                    size={moderateScale(18)}
+                                    color={colors.white}
+                                  />
+                                ) : (
+                                  <Text style={styles.cartItemValue}>
+                                    {i?.quantity}
+                                  </Text>
+                                )}
+                              </View>
+                              <TouchableOpacity
+                                style={{ flex: 0.3, alignItems: 'center' }}
+                                onPress={() => addDeleteCartItems(i, inx, 1)}>
+                                <Text style={styles.cartItemValueBtn}>+</Text>
+                              </TouchableOpacity>
+                            </View>
+                          </View>
+                        </View>
+
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                          }}>
+                          <View style={{ flex: 0.5, justifyContent: 'center' }}>
+                            {!!i?.product_addons.length && (
+                              <View>
+                                <Text
+                                  style={
+                                    isDarkMode
+                                      ? [
+                                        styles.cartItemWeight2,
+                                        {
+                                          color: MyDarkTheme.colors.text,
+                                        },
+                                      ]
+                                      : styles.cartItemWeight2
+                                  }>
+                                  {strings.EXTRA}
+                                </Text>
+                              </View>
+                            )}
+                            {i?.product_addons.length
+                              ? i?.product_addons.map((j, jnx) => {
+                                return (
+                                  <View style={{ flexDirection: 'row' }}>
+                                    <Text
+                                      style={
+                                        isDarkMode
+                                          ? [
+                                            styles.cartItemWeight2,
+                                            {
+                                              color:
+                                                MyDarkTheme.colors.text,
+                                            },
+                                          ]
+                                          : styles.cartItemWeight2
+                                      }
+                                      numberOfLines={1}>
+                                      {j.addon_title}
+                                    </Text>
+                                    <Text
+                                      style={
+                                        isDarkMode
+                                          ? [
+                                            styles.cartItemWeight2,
+                                            {
+                                              color:
+                                                MyDarkTheme.colors.text,
+                                            },
+                                          ]
+                                          : styles.cartItemWeight2
+                                      }
+                                      numberOfLines={
+                                        1
+                                      }>{`(${j.option_title})`}</Text>
+                                    <Text
+                                      style={
+                                        isDarkMode
+                                          ? [
+                                            styles.cartItemWeight2,
+                                            {
+                                              color:
+                                                MyDarkTheme.colors.text,
+                                            },
+                                          ]
+                                          : [
+                                            styles.cartItemWeight2,
+                                            { color: colors.textGrey },
+                                          ]
+                                      }
+                                      numberOfLines={1}>{` ${currencies?.primary_currency?.symbol
+                                        }${(
+                                          Number(j.price) * Number(j.multiplier)
+                                        ).toFixed(2)} `}</Text>
+                                  </View>
+                                );
+                              })
+                              : null}
+
+                          </View>
+                        </View>
+                        <TouchableOpacity
+                          style={{
+                            alignSelf: 'flex-end',
+                            paddingRight: moderateScale(24),
+                            paddingTop: moderateScaleVertical(10)
+                          }}
+                          onPress={() => openDeleteView(i)}>
+                          <Image source={imagePath.deleteRed} />
+                        </TouchableOpacity>
+                      </View>
+
+                    </View>
+
+                    {/* <View style={styles.dashedLine} /> */}
+                  </Animated.View>
+                </Swipeable>
+              );
+            })
+            : null}
+          {/************ end render cart items *************/}
+          {item?.isDeliverable ? null : (
+            <View style={{ marginHorizontal: moderateScale(10) }}>
+              <Text
+                style={{
+                  fontSize: moderateScale(12),
+                  fontFamily: fontFamily.medium,
+                  color: colors.redFireBrick,
+                }}>
+                {strings.ITEM_NOT_DELIVERABLE}
+              </Text>
+            </View>
+          )}
+
+          {/* offerview */}
+          <TouchableOpacity
+            disabled={item?.couponData ? true : false}
+            onPress={() => _getAllOffers(item.vendor, cartData)}
+            style={styles.offersViewB}>
+            {item?.couponData ? (
+              <View
+                style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View
+                  style={{
+                    flex: 0.7,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    style={{ tintColor: themeColors.primary_color }}
+                    source={imagePath.percent}
+                  />
+                  <Text
+                    numberOfLines={1}
+                    style={[
+                      styles.viewOffers,
+                      { marginLeft: moderateScale(10) },
+                    ]}>
+                    {`${strings.CODE} ${item?.couponData?.name} ${strings.APPLYED}`}
+                  </Text>
+                </View>
+                <View style={{ flex: 0.3, alignItems: 'flex-end' }}>
+                  {/* <Image source={imagePath.crossBlueB}  /> */}
+                  <Text
+                    onPress={() => _removeCoupon(item, cartData)}
+                    style={[
+                      styles.removeCoupon,
+                      { color: colors.cartItemPrice },
+                    ]}>
+                    {strings.REMOVE}
+                  </Text>
+                </View>
+              </View>
+            ) : (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Image
+                  style={{ tintColor: themeColors.primary_color }}
+                  source={imagePath.percent}
+                />
+                <Text
+                  style={[styles.viewOffers, { marginLeft: moderateScale(10) }]}>
+                  {strings.APPLY_PROMO_CODE}
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+          {!!item?.discount_amount && (
+            <View style={styles.itemPriceDiscountTaxView}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                      },
+                    ]
+                    : styles.priceItemLabel
+                }>
+                {strings.DISCOUNT}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                      },
+                    ]
+                    : styles.priceItemLabel
+                }>{`- ${currencies?.primary_currency?.symbol}${Number(
+                  item?.discount_amount ? item?.discount_amount : 0,
+                ).toFixed(2)}`}</Text>
+            </View>
+          )}
+          {!!item?.deliver_charge && (
+            <View style={styles.itemPriceDiscountTaxView}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                      },
+                    ]
+                    : styles.priceItemLabel
+                }>
+                {strings.DELIVERY_CHARGES}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [
+                      styles.priceItemLabel,
+                      {
+                        color: MyDarkTheme.colors.text,
+                      },
+                    ]
+                    : styles.priceItemLabel
+                }>{`${currencies?.primary_currency?.symbol}${Number(
+                  item?.deliver_charge ? item?.deliver_charge : 0,
+                ).toFixed(2)}`}</Text>
+            </View>
+          )}
+          <View style={styles.itemPriceDiscountTaxView}>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                    styles.priceItemLabel2,
+                    {
+                      color: MyDarkTheme.colors.text,
+                    },
+                  ]
+                  : styles.priceItemLabel2
+              }>
+              {strings.AMOUNT}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                    styles.priceItemLabel2,
+                    {
+                      color: MyDarkTheme.colors.text,
+                    },
+                  ]
+                  : styles.priceItemLabel2
+              }>{`${currencies?.primary_currency?.symbol}${Number(
+                item?.payable_amount ? item?.payable_amount : 0,
+              ).toFixed(2)}`}</Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+  const setModalVisible = (visible, type, id, data) => {
+    if (!!userData?.auth_token) {
+      updateState({
+        updateData: data,
+        isVisible: visible,
+        type: type,
+        selectedId: id,
+      });
+    } else {
+      // showError(strings.UNAUTHORIZED_MESSAGE);
+      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+    }
+  };
+  const setModalVisibleForAddessModal = (visible, type, id, data) => {
+    if (!!userData?.auth_token) {
+      updateState({ isVisible: false });
+      setTimeout(() => {
+        updateState({
+          updateData: data,
+          isVisibleAddressModal: visible,
+          type: type,
+          selectedId: id,
+        });
+      }, 1000);
+    } else {
+      // showError(strings.UNAUTHORIZED_MESSAGE);
+      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+    }
+  };
+
+  const selectedTip = (tip) => {
+    if (selectedTipvalue == 'custom') {
+      updateState({ selectedTipvalue: tip, selectedTipAmount: null });
+    } else {
+      if (selectedTipvalue && selectedTipvalue?.value == tip?.value) {
+        updateState({ selectedTipvalue: null, selectedTipAmount: null });
+      } else {
+        updateState({ selectedTipvalue: tip, selectedTipAmount: tip?.value });
+      }
+    }
+  };
+
+  // const onPressPickUplater = () => {
+  //   updateState({
+  //     isVisibleTimeModal: true,
+  //   });
+  // };
+  //Footer section in cart screen
+
+  const getFooter = () => {
+    return (
+      <>
+        <View style={styles.priceSection}>
+          <View style={[styles.bottomTabLableValue]}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel
+              }>
+              {strings.SUBTOTAL}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel
+              }>{`${currencies?.primary_currency?.symbol}${Number(
+                cartData?.gross_paybale_amount,
+              ).toFixed(2)}`}</Text>
+          </View>
+          {!!cartData?.wallet_amount && (
+            <View style={styles.bottomTabLableValue}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                    : styles.priceItemLabel
+                }>
+                {strings.WALLET}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                    : styles.priceItemLabel
+                }>{`${currencies?.primary_currency?.symbol}${Number(
+                  cartData?.wallet_amount ? cartData?.wallet_amount : 0,
+                ).toFixed(2)}`}</Text>
+            </View>
+          )}
+          {!!cartData?.loyalty_amount && (
+            <View style={styles.bottomTabLableValue}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                    : styles.priceItemLabel
+                }>
+                {strings.LOYALTY}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                    : styles.priceItemLabel
+                }>{`-${currencies?.primary_currency?.symbol}${Number(
+                  cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
+                ).toFixed(2)}`}</Text>
+            </View>
+          )}
+
+          {!!cartData?.wallet_amount_used && (
+            <View style={styles.bottomTabLableValue}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                    : styles.priceItemLabel
+                }>
+                {strings.WALLET}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                    : styles.priceItemLabel
+                }>{`-${currencies?.primary_currency?.symbol}${Number(
+                  cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
+                ).toFixed(2)}`}</Text>
+            </View>
+          )}
+          {!!cartData?.total_subscription_discount && (
+            <View style={styles.bottomTabLableValue}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                    : styles.priceItemLabel
+                }>
+                {strings.TOTALSUBSCRIPTION}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                    : styles.priceItemLabel
+                }>{`-${currencies?.primary_currency?.symbol}${Number(
+                  cartData?.total_subscription_discount,
+                ).toFixed(2)}`}</Text>
+            </View>
+          )}
+
+          {/* {!!cartData?.total_discount_amount && (
+            <View style={styles.bottomTabLableValue}>
+              <Text style={styles.priceItemLabel}>
+                {strings.TOTAL_DISCOUNT}
+              </Text>
+              <Text style={styles.priceItemLabel}>{`-${
+                currencies?.primary_currency?.symbol
+              }${Number(cartData?.total_discount_amount).toFixed(2)}`}</Text>
+            </View>
+          )} */}
+
+          {!!cartData?.tip &&
+            cartData?.tip.length &&
+            Number(cartData?.total_payable_amount) != 0 && (
+              <View
+                style={[
+                  styles.bottomTabLableValue,
+                  { flexDirection: 'column', marginTop: 20 },
+                ]}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.priceTipLabel, { color: MyDarkTheme.colors.text }]
+                      : [styles.priceTipLabel]
+                  }>
+                  {strings.DOYOUWANTTOGIVEATIP}
+                </Text>
+
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={{ flexGrow: 1 }}>
+                  {cartData?.tip.map((j, jnx) => {
+                    return (
+                      <TouchableOpacity
+                        style={[
+                          styles.tipArrayStyle,
+                          {
+                            backgroundColor:
+                              selectedTipvalue?.value == j?.value
+                                ? themeColors.primary_color
+                                : 'transparent',
+                            flex: 0.18,
+                          },
+                        ]}
+                        onPress={() => selectedTip(j)}>
+                        <Text
+                          style={
+                            isDarkMode
+                              ? {
+                                color:
+                                  selectedTipvalue?.value == j?.value
+                                    ? colors.white
+                                    : MyDarkTheme.colors.text,
+                              }
+                              : {
+                                color:
+                                  selectedTipvalue?.value == j?.value
+                                    ? colors.white
+                                    : colors.black,
+                              }
+                          }>
+                          {`${currencies?.primary_currency?.symbol} ${j.value}`}
+                        </Text>
+                        <Text
+                          style={{
+                            color:
+                              selectedTipvalue?.value == j?.value
+                                ? colors.white
+                                : colors.textGreyB,
+                          }}>
+                          {j.label}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+
+                  <TouchableOpacity
+                    style={[
+                      styles.tipArrayStyle2,
+                      {
+                        backgroundColor:
+                          selectedTipvalue == 'custom'
+                            ? themeColors.primary_color
+                            : 'transparent',
+                        flex: 0.45,
+                      },
+                    ]}
+                    onPress={() => selectedTip('custom')}>
+                    <Text
+                      style={
+                        isDarkMode
+                          ? {
+                            color:
+                              selectedTipvalue == 'custom'
+                                ? colors.white
+                                : MyDarkTheme.colors.text,
+                          }
+                          : {
+                            color:
+                              selectedTipvalue == 'custom'
+                                ? colors.white
+                                : colors.black,
+                          }
+                      }>
+                      {strings.CUSTOM}
+                    </Text>
+                  </TouchableOpacity>
+                </ScrollView>
+
+                {!!selectedTipvalue && selectedTipvalue == 'custom' && (
+                  <View
+                    style={{
+                      borderRadius: 5,
+                      borderWidth: 0.5,
+                      borderColor: colors.textGreyB,
+                      height: 40,
+                    }}>
+                    <TextInput
+                      value={selectedTipAmount}
+                      onChangeText={(text) =>
+                        updateState({ selectedTipAmount: text })
+                      }
+                      style={{
+                        height: 40,
+                        alignItems: 'center',
+                        paddingHorizontal: 10,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.textGreyOpcaity7,
+                      }}
+                      maxLength={5}
+                      returnKeyType={'done'}
+                      keyboardType={'number-pad'}
+                      placeholder={strings.ENTER_CUSTOM_AMOUNT}
+                      placeholderTextColor={
+                        isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.textGreyOpcaity7
+                      }
+                    />
+                  </View>
+                )}
+              </View>
+            )}
+
+          {!!cartData?.total_tax && (
+            <View style={styles.bottomTabLableValue}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                    : styles.priceItemLabel
+                }>
+                {strings.TAX_AMOUNT}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                    : styles.priceItemLabel
+                }>{`${currencies?.primary_currency?.symbol}${Number(
+                  cartData?.total_tax ? cartData?.total_tax : 0,
+                ).toFixed(2)}`}</Text>
+            </View>
+          )}
+
+          <View style={styles.amountPayable}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel2, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel2
+              }>
+              {strings.AMOUNT_PAYABLE}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel2, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel2
+              }>{`${currencies?.primary_currency?.symbol}${(
+                Number(cartData?.total_payable_amount) +
+                (selectedTipAmount != null && selectedTipAmount != ''
+                  ? Number(selectedTipAmount)
+                  : 0)
+              ).toFixed(2)}`}</Text>
+          </View>
+        </View>
+
+        {/* Add instruction */}
+        {/* <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={styles.addInstruction}>{strings.ADD_INSTRUCTIONS}</Text>
+        </View> */}
+        <View style={{ height: moderateScaleVertical(20) }} />
+
+        <View style={{ height: 2 }} />
+        {/* select payment method */}
+        <TouchableOpacity
+          onPress={() =>
+            !!userData?.auth_token
+              ? moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
+              : navigation.navigate(navigationStrings.OUTER_SCREEN, {})
+          }
+          style={
+            isDarkMode
+              ? [
+                styles.paymentMainView,
+                {
+                  justifyContent: 'space-between',
+                  backgroundColor: MyDarkTheme.colors.lightDark,
+                },
+              ]
+              : [styles.paymentMainView, { justifyContent: 'space-between' }]
+          }>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Image
+              style={isDarkMode && { tintColor: MyDarkTheme.colors.text }}
+              source={imagePath.paymentMethod}
+            />
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.selectedMethod, { color: MyDarkTheme.colors.text }]
+                  : styles.selectedMethod
+              }>
+              {selectedPayment.title_lng
+                ? selectedPayment.title_lng
+                : selectedPayment.title
+                  ? selectedPayment.title
+                  : strings.SELECT_PAYMENT_METHOD}
+            </Text>
+          </View>
+          <View>
+            <Image
+              source={imagePath.goRight}
+              style={
+                isDarkMode
+                  ? {
+                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    tintColor: MyDarkTheme.colors.text,
+                  }
+                  : { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }
+              }
+            />
+          </View>
+        </TouchableOpacity>
+
+        {/* {payment submit button} */}
+        {/* {userData ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              marginVertical: moderateScaleVertical(20),
+              marginHorizontal: moderateScale(10),
+            }}>
+            {selectedTimeOptions.map((i, inx) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => _selectTime(i)}
+                  style={{
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    backgroundColor:
+                      selectedTimeOption && selectedTimeOption?.id == i.id
+                        ? themeColors?.primary_color
+                        : getColorCodeWithOpactiyNumber(
+                          themeColors.primary_color.substr(1),
+                          20,
+                        ),
+                    borderColor: themeColors.primary_color,
+                    borderWidth:
+                      selectedTimeOption && selectedTimeOption?.id == i.id
+                        ? 1
+                        : 0,
+                    borderRadius: 10,
+                    marginRight: 10,
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: fontFamily.medium,
+                      color:
+                        selectedTimeOption && selectedTimeOption?.id == i.id
+                          ? colors.white
+                          : themeColors.primary_color,
+                    }}>
+                    {i.title}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+            <View
+              style={{
+                justifyContent: 'center',
+              }}>
+              {selectedTimeOption?.type === 'now' ? null : (
+                <Text
+                  style={
+                    isDarkMode
+                      ? { color: MyDarkTheme.colors.text }
+                      : { color: colors.black }
+                  }>
+                  {sheduledorderdate && scheduleType
+                    ? `${moment(sheduledorderdate).format('DD MMM,YYYY HH:mm')}`
+                    : null}
+                </Text>
+              )}
+            </View>
+          </View>
+        ) : null} */}
+
+
+        {scheduleType == 'schedule' && (<TouchableOpacity
+          style={{ marginTop: 16, marginLeft: 16 }}
+          onPress={clearSceduleDate}
+        >
+          <Text style={{
+            fontFamily: fontFamily?.bold,
+            color: themeColors.primary_color,
+            textAlign: 'left'
+          }}>Clear Schedule Date</Text>
+        </TouchableOpacity>)
+        }
+
+        {
+          !!cartData?.deliver_status && (
+            <View
+              pointerEvents={placeLoader ? 'none' : 'auto'}
+              style={styles.paymentView}>
+              {userData?.auth_token && (
+                <ButtonComponent
+                  onPress={_selectTime}
+                  btnText={
+                    localeSheduledOrderDate
+                      ? localeSheduledOrderDate
+                      : strings.SCHEDULE_ORDER
+                  }
+                  borderRadius={moderateScale(13)}
+                  textStyle={{ color: themeColors.primary_color }}
+                  containerStyle={{
+                    ...styles.placeOrderButtonStyle,
+                    backgroundColor: colors.transparent,
+                    borderColor: themeColors.primary_color,
+                    borderWidth: 0.8,
+                  }}
+                />
+              )}
+
+              <ButtonComponent
+                onPress={() => {
+                  placeOrder();
+                }}
+                btnText={strings.PLACE_ORDER}
+                borderRadius={moderateScale(13)}
+                textStyle={{ color: colors.white }}
+                containerStyle={styles.placeOrderButtonStyle}
+                placeLoader={placeLoader}
+              />
+            </View>
+          )
+        }
+        <View
+          style={{
+            height: moderateScaleVertical(65),
+            backgroundColor: colors.transparent,
+          }}></View>
+      </>
+    );
+  };
+
+  //Header section of cart screen
+  const getHeader = () => {
+    return (
+      <View
+        style={{
+          ...styles.topLable,
+          marginVertical: moderateScale(7),
+          justifyContent: 'space-between',
+        }}>
+        <View style={{ flexDirection: 'row', flex: 0.85 }}>
+          <Image source={imagePath.icMap} />
+          <View style={styles.addressView}>
+            <Text
+              style={{
+                ...styles.homeTxt,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {strings.HOME}
+            </Text>
+            <Text
+              numberOfLines={2}
+              style={{
+                ...styles.addAddressTxt,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {vendorAddress
+                ? vendorAddress
+                : selectedAddressData
+                  ? selectedAddressData?.address
+                  : strings.ADD_ADDRESS}
+            </Text>
+          </View>
+        </View>
+        {!vendorAddress && (
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => setModalVisible(true)}>
+            <Image
+              source={imagePath.icEdit1}
+              style={styles.editIcon}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+  };
+
+  //Native modal for Modal
+  const openClearCartModal = () => {
+    Alert.alert('', strings.AREYOUSURE, [
+      {
+        text: strings.CANCEL,
+        onPress: () => { },
+        // style: 'destructive',
+      },
+      { text: strings.CONFIRM, onPress: () => bottomButtonClick() },
+    ]);
+  };
+  //SelectAddress
+  const selectAddress = (address) => {
+    if (!!userData?.auth_token) {
+      updateState({ isLoadingB: true });
+      let data = {};
+      let query = `/${address?.id}`;
+      actions
+        .setPrimaryAddress(query, data, {
+          code: appData?.profile?.code,
+        })
+        .then((res) => {
+          actions.saveAddress(address);
+          updateState({
+            isVisible: false,
+            isLoadingB: false,
+            selectedAddress: address,
+          });
+        })
+        .catch((error) => {
+          updateState({ isLoadingB: false });
+          showError(error?.message || error?.error);
+        });
+    }
+  };
+
+  //Add and update the addreess
+  const addUpdateLocation = (childData) => {
+    // setModalVisible(false);
+    updateState({ isLoading: true });
+    actions
+      .addAddress(childData, {
+        code: appData?.profile?.code,
+      })
+      .then((res) => {
+        updateState({
+          isLoading: false,
+          isLoadingB: false,
+          isVisible: false,
+          isVisibleAddressModal: false,
+        });
+        getAllAddress();
+        setTimeout(() => {
+          let address = res.data;
+          address['is_primary'] = 1;
+
+          updateState({
+            selectedAddress: address,
+          });
+          actions.saveAddress(address);
+        });
+
+        showSuccess(res.message);
+      })
+      .catch((error) => {
+        updateState({
+          isLoading: false,
+          isLoadingB: false,
+          isVisible: false,
+          isVisibleAddressModal: false,
+        });
+        showError(error?.message || error?.error);
+      });
+  };
+
+  //Pull to refresh
+  const handleRefresh = () => {
+    updateState({ pageNo: 1, isRefreshing: true });
+  };
+
+  const onClose = () => {
+    updateState({
+      isVisibleTimeModal: false,
+    });
+  };
+
+  const onDateChange = (value) => {
+    updateState({
+      sheduledorderdate: value,
+      localeSheduledOrderDate: `${value.toLocaleDateString(selectedLanguage, {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      })}, ${value.toLocaleTimeString(selectedLanguage, {
+        hour: '2-digit',
+        minute: '2-digit',
+      })}`,
+    });
+  };
+
+  // console.log(
+  //   moment(selectOrderDate)
+  //     .format('DD MMM, YYYY HH:mm')
+  //     .toLocaleDateString('fr-FR'),
+  //   'djkjfjdfkdkj',
+  // );
+
+  useEffect(() => {
+    if (!!checkCartItem?.data) {
+      getItem('deepLinkUrl')
+        .then((res) => {
+          console.log(res, 'response is');
+          if (res) {
+            let table_number = getParameterByName('table', res);
+            updateState({ deepLinkUrl: table_number });
+          }
+        })
+        .catch((error) => {
+          showError(error.message);
+        });
+    }
+  }, [deepLinkUrl]);
+  // console.log(deepLinkUrl, 'deepLinkUrlCarts');
+
+  const _onTableSelection = (item) => {
+    const data = {
+      vendor_id: item.id,
+      table: item.table_number,
+    };
+    actions
+      .vendorTableCart(data, {
+        code: appData?.profile?.code,
+      })
+      .then((res) => {
+        removeItem('deepLinkUrl');
+        setItem('selectedTable', item?.label);
+      })
+      .catch((error) => {
+        updateState({
+          isLoading: false,
+          isLoadingB: false,
+        });
+        showError(error?.message || error?.error);
+      });
+  };
+
+  const onPressRecommendedVendors = (item) => {
+    if (!item.is_show_category || item.is_show_category) {
+      item?.is_show_category
+        ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
+        : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+          id: item?.id,
+          vendor: true,
+          name: item?.name,
+        })();
+
+      // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+    }
+  };
+
+  const renderRecommendedVendors = ({ item }) => {
+    return (
+      <View
+        style={{
+          width: moderateScale(width / 2),
+          marginLeft: moderateScale(5),
+        }}>
+        <MarketCard3
+          data={item}
+          extraStyles={{ marginTop: 0, marginVertical: moderateScaleVertical(2) }}
+          fastImageStyle={{
+            height: moderateScaleVertical(110),
+          }}
+          imageResizeMode="cover"
+          onPress={() => onPressRecommendedVendors(item)}
+        />
+      </View>
+    );
+  };
+
+  const ListEmptyComp = () => {
+    return (
+      <View style={{ flex: 1 }}>
+        <View
+          style={{
+            // flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            // backgroundColor: '#fff',
+          }}>
+          <FastImage
+            source={{ uri: Image.resolveAssetSource(imagePath.icEmptyCartC).uri }}
+            style={{
+              marginVertical: moderateScaleVertical(20),
+              height: moderateScale(120),
+              width: moderateScale(120),
+            }}
+
+          // resizeMode="contain"s
+          />
+          <Text style={{ ...styles.textStyle }}>
+            {strings.YOUR_CART_EMPTY_ADD_ITEMS}
+          </Text>
+        </View>
+        <HorizontalLine
+          lineStyle={{
+            borderBottomWidth: 1,
+            borderBottomColor: isDarkMode
+              ? colors.whiteOpacity77
+              : colors.greyA,
+            marginVertical: moderateScaleVertical(16),
+          }}
+        />
+        {wishlistArray.length > 0 && (
+          <View>
+            <Text
+              style={{
+                ...styles.commTextStyle,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {strings.SHOP_FROM_WISHLIST}
+            </Text>
+            {wishlistArray.map((val, i) => {
+              return (
+                <View key={String(i)}>
+                  <WishlistCard
+                    data={val.product}
+                    onPress={moveToNewScreen(
+                      navigationStrings.PRODUCTDETAIL,
+                      val.product,
+                    )}
+                  />
+                </View>
+              );
+            })}
+          </View>
+        )}
+        <View style={{ marginVertical: moderateScaleVertical(8) }} />
+
+        {recommendedVendorsdata.length > 0 && (
+          <View>
+            <Text
+              style={{
+                ...styles.commTextStyle,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {strings.RECOMMENDED_VENDORS}
+            </Text>
+            <FlatList
+              horizontal
+              data={recommendedVendorsdata}
+              renderItem={renderRecommendedVendors}
+              keyExtractor={(item, index) => item?.id.toString()}
+              keyboardShouldPersistTaps="always"
+              showsHorizontalScrollIndicator={false}
+              ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+            />
+          </View>
+        )}
+
+        <View style={{ marginBottom: moderateScale(100) }} />
+      </View>
+    );
+  };
+  const renderCardItemLoader = () => {
+    return (
+      <View>
+        <HeaderLoader
+          widthLeft={moderateScale(140)}
+          rectWidthLeft={moderateScale(140)}
+          heightLeft={15}
+          rectHeightLeft={15}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            marginTop: moderateScaleVertical(30),
+          }}
+          isRight={false}
+        />
+        <ProductListLoader
+          widthLeft={moderateScale(100)}
+          mainView={{
+            marginHorizontal: moderateScale(15),
+            marginTop: moderateScale(5),
+            alignItems: 'flex-start',
+          }}
+        />
+        <HeaderLoader
+          widthLeft={width - moderateScale(30)}
+          rectWidthLeft={width - moderateScale(30)}
+          heightLeft={moderateScale(35)}
+          rectHeightLeft={moderateScale(35)}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            marginTop: moderateScaleVertical(15),
+          }}
+          isRight={false}
+        />
+        <HeaderLoader
+          widthLeft={moderateScale(90)}
+          rectWidthLeft={moderateScale(90)}
+          heightLeft={moderateScale(15)}
+          rectHeightLeft={moderateScale(15)}
+          rectHeightRight={moderateScale(15)}
+          heightRight={moderateScale(15)}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            marginTop: moderateScaleVertical(15),
+          }}
+        />
+        <HeaderLoader
+          widthLeft={moderateScale(90)}
+          rectWidthLeft={moderateScale(90)}
+          heightLeft={moderateScale(15)}
+          rectHeightLeft={moderateScale(15)}
+          rectHeightRight={moderateScale(15)}
+          heightRight={moderateScale(15)}
+          rx={5}
+          ry={5}
+          viewStyles={{
+            marginTop: moderateScaleVertical(8),
+          }}
+        />
+      </View>
+    );
+  };
+
+  if (isLoadingB) {
+    return (
+      <WrapperContainer
+        bgColor={
+          isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+        }
+        statusBarColor={colors.backgroundGrey}
+        source={loaderOne}
+      // isLoadingB={isLoadingB}
+      >
+        <Header centerTitle={strings.CART} leftIcon={imagePath.icBackb} />
+        <View
+          style={{
+            // flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            // backgroundColor: '#fff',
+          }}>
+          <FastImage
+            source={{ uri: Image.resolveAssetSource(imagePath.icEmptyCartC).uri }}
+            style={{
+              marginVertical: moderateScaleVertical(20),
+              height: moderateScale(120),
+              width: moderateScale(120),
+            }}
+
+          // resizeMode="contain"s
+          />
+          <Text style={{ ...styles.textStyle }}>
+            {strings.YOUR_CART_EMPTY_ADD_ITEMS}
+          </Text>
+        </View>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <HeaderLoader
+            widthLeft={width - moderateScale(30)}
+            rectWidthLeft={width - moderateScale(30)}
+            heightLeft={15}
+            rectHeightLeft={15}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              marginTop: moderateScaleVertical(10),
+            }}
+            isRight={false}
+          />
+          <HeaderLoader
+            widthLeft={moderateScale(100)}
+            rectWidthLeft={moderateScale(100)}
+            heightLeft={15}
+            rectHeightLeft={15}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              marginTop: moderateScaleVertical(10),
+              alignSelf: 'center',
+            }}
+            isRight={false}
+          />
+          {renderCardItemLoader()}
+          {renderCardItemLoader()}
+          <HeaderLoader
+            widthLeft={moderateScale(60)}
+            rectWidthLeft={moderateScale(60)}
+            heightLeft={moderateScale(15)}
+            rectHeightLeft={moderateScale(15)}
+            rectHeightRight={moderateScale(15)}
+            heightRight={moderateScale(15)}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              marginTop: moderateScaleVertical(30),
+            }}
+          />
+          <HeaderLoader
+            widthLeft={moderateScale(60)}
+            rectWidthLeft={moderateScale(60)}
+            heightLeft={moderateScale(15)}
+            rectHeightLeft={moderateScale(15)}
+            rectHeightRight={moderateScale(15)}
+            heightRight={moderateScale(15)}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              marginTop: moderateScaleVertical(8),
+            }}
+          />
+          <HeaderLoader
+            widthLeft={width - moderateScale(90)}
+            rectWidthLeft={width - moderateScale(90)}
+            heightLeft={moderateScale(15)}
+            rectHeightLeft={moderateScale(15)}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              marginTop: moderateScaleVertical(20),
+            }}
+            isRight={false}
+          />
+          <View style={{ flexDirection: 'row' }}>
+            <HeaderLoader
+              widthLeft={moderateScale(80)}
+              rectWidthLeft={moderateScale(80)}
+              heightLeft={moderateScale(40)}
+              rectHeightLeft={moderateScale(40)}
+              rx={5}
+              ry={5}
+              viewStyles={{
+                marginTop: moderateScaleVertical(10),
+                marginHorizontal: moderateScale(0),
+                marginLeft: moderateScale(15),
+              }}
+              isRight={false}
+            />
+            <HeaderLoader
+              widthLeft={moderateScale(80)}
+              rectWidthLeft={moderateScale(80)}
+              heightLeft={moderateScale(40)}
+              rectHeightLeft={moderateScale(40)}
+              rx={5}
+              ry={5}
+              viewStyles={{
+                marginTop: moderateScaleVertical(10),
+                marginHorizontal: moderateScale(0),
+                marginLeft: moderateScale(8),
+              }}
+              isRight={false}
+            />
+            <HeaderLoader
+              widthLeft={moderateScale(80)}
+              rectWidthLeft={moderateScale(80)}
+              heightLeft={moderateScale(40)}
+              rectHeightLeft={moderateScale(40)}
+              rx={5}
+              ry={5}
+              viewStyles={{
+                marginTop: moderateScaleVertical(10),
+                marginHorizontal: moderateScale(0),
+                marginLeft: moderateScale(8),
+              }}
+              isRight={false}
+            />
+            <HeaderLoader
+              widthLeft={moderateScale(80)}
+              rectWidthLeft={moderateScale(80)}
+              heightLeft={moderateScale(40)}
+              rectHeightLeft={moderateScale(40)}
+              rx={5}
+              ry={5}
+              viewStyles={{
+                marginTop: moderateScaleVertical(10),
+                marginHorizontal: moderateScale(0),
+                marginLeft: moderateScale(8),
+              }}
+              isRight={false}
+            />
+          </View>
+          <HeaderLoader
+            widthLeft={moderateScale(90)}
+            rectWidthLeft={moderateScale(90)}
+            heightLeft={moderateScale(15)}
+            rectHeightLeft={moderateScale(15)}
+            rectHeightRight={moderateScale(15)}
+            heightRight={moderateScale(15)}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              marginTop: moderateScaleVertical(15),
+            }}
+          />
+          <HeaderLoader
+            widthLeft={width - moderateScale(30)}
+            rectWidthLeft={width - moderateScale(30)}
+            heightLeft={moderateScale(40)}
+            rectHeightLeft={moderateScale(40)}
+            rx={5}
+            ry={5}
+            viewStyles={{
+              marginTop: moderateScaleVertical(15),
+            }}
+            isRight={false}
+          />
+        </ScrollView>
+      </WrapperContainer>
+    );
+  }
+
+  return (
+    <WrapperContainer
+      bgColor={
+        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+      }
+      statusBarColor={colors.backgroundGrey}
+      source={loaderOne}
+    // isLoadingB={isLoadingB}
+    >
+      <Header
+        centerTitle={strings.CART}
+        leftIcon={imagePath.icBackb}
+        isRightText={cartItems && cartItems?.length}
+        onPressRightTxt={() => openClearCartModal()}
+      />
+      <View
+        style={
+          isDarkMode
+            ? [
+              styles.mainComponent,
+              { backgroundColor: MyDarkTheme.colors.background },
+            ]
+            : styles.mainComponent
+        }>
+        {/* <SwipeListView
+          disableRightSwipe
+          data={cartItems}
+          renderItem={_renderItem}
+          renderHiddenItem={renderHiddenItem}
+          rightOpenValue={width}
+          // onSwipeValueChange={onSwipeValueChange}
+          useNativeDriver={false}
+        /> */}
+        <FlatList
+          key={swipeKey}
+          data={cartItems}
+          extraData={cartItems}
+          ListHeaderComponent={cartItems?.length ? getHeader() : null}
+          ListFooterComponent={cartItems?.length ? getFooter() : null}
+          showsVerticalScrollIndicator={false}
+          style={{ backgroundColor: colors.backgroundGrey }}
+          keyExtractor={(item, index) => String(index)}
+          renderItem={_renderItem}
+          style={{ flex: 1 }}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              tintColor={themeColors.primary_color}
+            />
+          }
+          contentContainerStyle={{
+            flexGrow: 1,
+          }}
+          ListEmptyComponent={() => (!isLoadingB ? <ListEmptyComp /> : <></>)}
+        />
+      </View>
+      {!!isModalVisibleForClearCart && (
+        <ConfirmationModal
+          closeModal={() => closeOptionModal()}
+          ShowModal={isModalVisibleForClearCart}
+          showBottomButton={true}
+          mainText={strings.AREYOUSURE}
+          bottomButtonClick={bottomButtonClick}
+          updateStatus={(item) => updateStatus(item)}
+        />
+      )}
+      <ChooseAddressModal
+        isVisible={isVisible}
+        onClose={() => setModalVisible(false)}
+        openAddressModal={() =>
+          setModalVisibleForAddessModal(true, 'addAddress')
+        }
+        selectAddress={(data) => selectAddress(data)}
+        selectedAddress={selectedAddressData}
+      />
+      <AddressModal3
+        isVisible={isVisibleAddressModal}
+        onClose={() => setModalVisibleForAddessModal(false)}
+        type={type}
+        passLocation={(data) => addUpdateLocation(data)}
+      />
+
+      {/* Date time modal */}
+      <Modal
+        transparent={true}
+        isVisible={isVisibleTimeModal}
+        animationType={'none'}
+        style={styles.modalContainer}
+        onLayout={(event) => {
+          updateState({ viewHeight: event.nativeEvent.layout.height });
+        }}>
+        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+          <Image
+            style={isDarkMode && { tintColor: MyDarkTheme.colors.white }}
+            source={imagePath.crossB}
+          />
+        </TouchableOpacity>
+        <View
+          style={
+            isDarkMode
+              ? [
+                styles.modalMainViewContainer,
+                { backgroundColor: MyDarkTheme.colors.lightDark },
+              ]
+              : styles.modalMainViewContainer
+          }>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            bounces={false}
+            style={
+              isDarkMode
+                ? [
+                  styles.modalMainViewContainer,
+                  { backgroundColor: MyDarkTheme.colors.lightDark },
+                ]
+                : styles.modalMainViewContainer
+            }>
+            <View
+              style={{
+                // flex: 0.6,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 10,
+              }}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.carType, { color: MyDarkTheme.colors.text }]
+                    : styles.carType
+                }>
+                {strings.SELECTDATEANDTIME}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                alignItems: 'center',
+                height: height / 3.5,
+              }}>
+              <DatePicker
+                locale={selectedLanguage}
+                date={
+                  sheduledorderdate ? new Date(sheduledorderdate) : new Date()
+                }
+                textColor={isDarkMode ? colors.white : colors.blackB}
+                mode="datetime"
+                minimumDate={new Date()}
+                maximumDate={undefined}
+                style={styles.datetimePickerText}
+                // onDateChange={setDate}
+                onDateChange={(value) => onDateChange(value)}
+              />
+            </View>
+          </ScrollView>
+          <View
+            style={[
+              styles.bottomAddToCartView,
+              { top: viewHeight - height / 6 },
+            ]}>
+            <GradientButton
+              colorsArray={[
+                themeColors.primary_color,
+                themeColors.primary_color,
+              ]}
+              // textStyle={styles.textStyle}
+              onPress={selectOrderDate}
+              marginTop={moderateScaleVertical(10)}
+              marginBottom={moderateScaleVertical(30)}
+              btnText={strings.SELECT}
+            />
+          </View>
+        </View>
+      </Modal>
+    </WrapperContainer>
+  );
+}
