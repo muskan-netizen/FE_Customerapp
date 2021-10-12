@@ -59,6 +59,7 @@ import {
   getParameterByName,
   showError,
   showSuccess,
+  timeInLocalLangauge,
 } from '../../utils/helperFunctions';
 import { getItem, removeItem, setItem } from '../../utils/utils';
 import stylesFun from './styles';
@@ -306,6 +307,13 @@ export default function Cart({ navigation, route }) {
       .then((res) => {
         actions.cartItemQty(res);
         console.log(res, 'cart details>>>');
+        let checkDate = !!res?.data?.scheduled_date_time
+        if (!!checkDate) {
+          let formatDate = new Date(res?.data?.scheduled_date_time)
+          updateState({
+            localeSheduledOrderDate: timeInLocalLangauge(formatDate, selectedLanguage)
+          })
+        }
         updateState({
           isRefreshing: false,
           isLoadingB: false,
@@ -567,6 +575,7 @@ export default function Cart({ navigation, route }) {
   };
 
   const setDateAndTimeSchedule = () => {
+    console.log("setDateAndTimeSchedule", scheduleType)
     let data = {};
     data['task_type'] = scheduleType;
     data['schedule_dt'] =
@@ -620,7 +629,7 @@ export default function Cart({ navigation, route }) {
       // } else if (d1.getTime() >= d2.getTime()) {
       //   showError(strings.INVALID_SCHEDULED_DATE);
       // }
-      else if (!(sheduledorderdate || selectedTimeOption)) {
+      else if (!(sheduledorderdate && selectedTimeOption)) {
         showError(strings.PLEASE_SELECT_ORDER_TYPE);
       } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
         showError(strings.INVALID_SCHEDULED_DATE);
@@ -808,15 +817,20 @@ export default function Cart({ navigation, route }) {
     }
   };
 
+  const clearSceduleDate = async () => {
+    updateState({
+      scheduleType: 'now',
+      localeSheduledOrderDate: null
+    });
+  }
+
 
   useEffect(() => {
-
     if (
       scheduleType != null &&
       scheduleType == 'now' &&
       !!checkCartItem?.data
     ) {
-      alert("schedulte type hit")
       setDateAndTimeSchedule();
     }
   }, [scheduleType]);
@@ -1857,6 +1871,14 @@ export default function Cart({ navigation, route }) {
             </View>
           </View>
         ) : null} */}
+
+
+        <TouchableOpacity
+          style={{ marginTop: 16, marginLeft: 16 }}
+          onPress={clearSceduleDate}
+        >
+          <Text>Clear</Text>
+        </TouchableOpacity>
 
         {!!cartData?.deliver_status && (
           <View
