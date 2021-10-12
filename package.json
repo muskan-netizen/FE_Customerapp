@@ -223,7 +223,7 @@
     "lint": "eslint .",
     "clean": "cd ./android && ./gradlew clean",
     "uninstallAll": "cd android && ./gradlew uninstallAll",
-    "postinstall": "cd ios && pod install"
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^2.3.0",
