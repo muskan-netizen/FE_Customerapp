@@ -540,4 +540,5 @@ Amount`,
   CHOOSESAVEDPLACE: 'Choose a saved place',
   SETPICKUPTIME: 'Set pickup time',
   SEHEDLEDFOR: 'Scheduled For',
+  BOOK_NOW_RIDE:'Book Ride'
 };

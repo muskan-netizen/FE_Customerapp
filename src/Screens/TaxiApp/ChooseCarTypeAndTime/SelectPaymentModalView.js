@@ -44,6 +44,7 @@ export default function SelectPaymentModalView({
   pickUpTimeType = '',
   redirectToPayement,
   selectedPayment = null,
+  pickup_taxi=false
 }) {
   console.log(pickUpTimeType, 'pickUpTimeType');
   console.log(selectedTime, 'selectedTime');
@@ -494,6 +495,9 @@ export default function SelectPaymentModalView({
             // marginBottom={moderateScaleVertical(5)}
             // btnText={`${slectedDate}  -  ${selectedTime}`}
             btnText={
+              pickup_taxi?
+              strings.BOOK_NOW_RIDE
+              :
               pickUpTimeType === 'now'
                 ? strings.BOOK_NOW
                 : strings.SCHEDULE_RIDE_FOR +
