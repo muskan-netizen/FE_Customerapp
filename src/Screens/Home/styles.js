@@ -12,6 +12,21 @@ import {MyDarkTheme} from '../../styles/theme';
 
 export default ({themeColors, fontFamily}) => {
   const styles = StyleSheet.create({
+    modalContainer: {
+      backgroundColor: colors.white,
+      // position: 'absolute',
+      // left: 0,
+      // right: 0,
+      // bottom: 0,
+      // top: height - height / 3,
+      borderRadius: moderateScale(25),
+      overflow: 'hidden',
+
+      // paddingBottom: moderateScaleVertical(30),
+      height: height / 3.5,
+      // maxHeight: height / 2,
+      width: width,
+    },
     absolute: {
       position: 'absolute',
       alignItems: 'center',
@@ -109,12 +124,21 @@ export default ({themeColors, fontFamily}) => {
       alignItems: 'center',
     },
     address: {
-      paddingLeft: 5,
+      paddingLeft: 2,
       // height:20,
       lineHeight: 20,
-      fontFamily: fontFamily.medium,
-      color: colors.lightGreyBgColor,
-      fontSize: textScale(10),
+      fontFamily: fontFamily.regular,
+      color: colors.blackOpacity66,
+      fontSize: textScale(12),
+      textAlign: 'left',
+    },
+    addressTitle: {
+      paddingLeft: 2,
+      // height:20,
+      lineHeight: 20,
+      fontFamily: fontFamily.regular,
+      color: colors.black,
+      fontSize: textScale(13),
       textAlign: 'left',
     },
 
@@ -235,6 +259,9 @@ export default ({themeColors, fontFamily}) => {
       justifyContent: 'space-between',
       paddingHorizontal: moderateScale(15),
       marginTop: moderateScale(5),
+      alignItems: 'center',
+      borderBottomWidth: 0.8,
+      paddingBottom: moderateScale(5),
     },
     locationIcon: {
       height: moderateScale(18),
@@ -342,8 +369,8 @@ export default ({themeColors, fontFamily}) => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      marginBottom: moderateScaleVertical(16),
       marginHorizontal: moderateScale(16),
+      marginVertical: moderateScaleVertical(24),
     },
     hdrRatingTxtView: {
       flexDirection: 'row',

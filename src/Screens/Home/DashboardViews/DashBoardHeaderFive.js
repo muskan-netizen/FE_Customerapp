@@ -26,15 +26,16 @@ import {string} from 'prop-types';
 import {BlurView} from '@react-native-community/blur';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import ScaledImage from 'react-native-scalable-image';
+import {useNavigation} from '@react-navigation/native';
 
 export default function DashBoardHeaderFive({
-  navigation = {},
+  // navigation = {},
   location = [],
   selcetedToggle,
   toggleData,
   isLoading = false,
-  curAddress={}
 }) {
+  const navigation = useNavigation();
   const pickerRef = createRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -354,11 +355,18 @@ export default function DashBoardHeaderFive({
 
   return (
     <>
-      <View style={styles.headerContainer}>
+      <View
+        style={{
+          ...styles.headerContainer,
+          borderBottomColor: isDarkMode
+            ? colors.whiteOpacity22
+            : colors.borderColorD,
+        }}>
         <View
           style={{
             flexDirection: 'row',
             flex: 1,
+            alignItems: 'center',
           }}>
           {!!(profileInfo && profileInfo?.logo) ? (
             <ScaledImage
@@ -390,6 +398,7 @@ export default function DashBoardHeaderFive({
                 flexDirection: 'row',
                 alignItems: 'center',
                 flex: 0.85,
+                marginLeft: moderateScale(8),
               }}>
               <Image
                 style={styles.locationIcon}
@@ -412,6 +421,17 @@ export default function DashBoardHeaderFive({
             </TouchableOpacity>
           )}
         </View>
+
+        <TouchableOpacity
+          style={{marginHorizontal: moderateScale(8)}}
+          onPress={() =>
+            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+          }>
+          <Image
+            style={{tintColor: themeColors.primary_color}}
+            source={imagePath.search1}
+          />
+        </TouchableOpacity>
         {tabs.length > 1 && (
           <TouchableOpacity
             activeOpacity={0.7}

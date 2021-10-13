@@ -36,6 +36,8 @@ import {MyDarkTheme} from '../../../styles/theme';
 import Geolocation from 'react-native-geolocation-service';
 import {chekLocationPermission} from '../../../utils/permissions';
 import {getCurrentLocation} from '../../../utils/helperFunctions';
+import BottomViewModal from '../../../Components/BottomViewModal';
+import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 
 export default function HomeScreenTaxi({navigation, route}) {
   const mapRef = React.createRef();
@@ -70,6 +72,7 @@ export default function HomeScreenTaxi({navigation, route}) {
     ],
     userCurrentLongitude: null,
     userCurrentLatitude: null,
+    isVisible: false,
   });
 
   const {
@@ -82,13 +85,16 @@ export default function HomeScreenTaxi({navigation, route}) {
     locationListData,
     userCurrentLongitude,
     userCurrentLatitude,
+    isVisible,
   } = state;
 
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-
+  const businessType = appData?.profile?.preferences?.business_type;
+  const appMainData = useSelector((state) => state?.home?.appMainData);
   const updateState = (data) => setState((state) => ({...state, ...data}));
+  const userData = useSelector((state) => state.auth.userData);
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
@@ -218,8 +224,21 @@ export default function HomeScreenTaxi({navigation, route}) {
   //     });
   //   };
 
-  const _modeToNextScreen = () => {
-    navigation.navigate(navigationStrings.ADDADDRESS, paramData);
+  const moveToNewScreen =
+    (screenName, data = {}) =>
+    () => {
+      const data = appMainData?.categories[0];
+      {
+        userData?.auth_token
+          ? navigation.navigate(screenName, {data})
+          : navigation.navigate(navigationStrings.LOGIN);
+      }
+    };
+
+  const _modalClose = () => {
+    updateState({
+      isVisible: false,
+    });
   };
 
   const markerRef = useRef();
@@ -281,7 +300,7 @@ export default function HomeScreenTaxi({navigation, route}) {
         }}>
         <View
           style={{
-            height: height / 2.8,
+            height: height / 3.2,
             borderTopLeftRadius: moderateScale(30),
             borderTopRightRadius: moderateScale(30),
             width: width,
@@ -339,7 +358,10 @@ export default function HomeScreenTaxi({navigation, route}) {
                       <Text style={{color: colors.textGreyLight}}>
                         {strings.PICKUP_LOCATION2}
                       </Text>
-                      <TouchableOpacity onPress={() => _modeToNextScreen()}>
+                      <TouchableOpacity
+                        onPress={() =>
+                          moveToNewScreen(navigationStrings.ADDADDRESS)()
+                        }>
                         <Text
                           style={{
                             marginVertical: moderateScaleVertical(10),
@@ -367,7 +389,10 @@ export default function HomeScreenTaxi({navigation, route}) {
                       <Text style={{color: colors.textGreyLight}}>
                         {strings.DROP_OFF}
                       </Text>
-                      <TouchableOpacity onPress={() => _modeToNextScreen()}>
+                      <TouchableOpacity
+                        onPress={() =>
+                          moveToNewScreen(navigationStrings.ADDADDRESS)()
+                        }>
                         <Text
                           style={{
                             marginVertical: moderateScaleVertical(10),
@@ -390,6 +415,11 @@ export default function HomeScreenTaxi({navigation, route}) {
                   </View>
                 </View>
               </View>
+              {/* <BottomViewModal
+                show={isVisible}
+                mainContainView={_ModalMainView}
+                closeModal={_modalClose}
+              /> */}
             </View>
           </ScrollView>
         </View>
@@ -420,29 +450,34 @@ export default function HomeScreenTaxi({navigation, route}) {
           /> */}
       </MapView>
       <View style={[styles.backbutton, {marginHorizontal: moderateScale(15)}]}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <View
-            style={{
-              paddingHorizontal: moderateScale(15),
-              paddingVertical: moderateScaleVertical(15),
-              borderRadius: 15,
-              backgroundColor: isDarkMode
-                ? MyDarkTheme.colors.lightDark
-                : colors.greyColor,
-            }}>
-            <Image
+        {businessType === 'taxi' ? null : (
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <View
               style={{
-                tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              }}
-              source={imagePath.backArrow}
-            />
-          </View>
-        </TouchableOpacity>
+                paddingHorizontal: moderateScale(15),
+                paddingVertical: moderateScaleVertical(15),
+                borderRadius: 15,
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.lightDark
+                  : colors.greyColor,
+              }}>
+              <Image
+                style={{
+                  tintColor: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.black,
+                }}
+                source={imagePath.backArrow}
+              />
+            </View>
+          </TouchableOpacity>
+        )}
       </View>
-
-      <View style={styles.userAccountImageStyle}>
-        <Image source={imagePath.taxiUserAccount} />
-      </View>
+      {businessType === 'taxi' ? null : (
+        <View style={styles.userAccountImageStyle}>
+          <Image source={imagePath.taxiUserAccount} />
+        </View>
+      )}
 
       <View
         style={{

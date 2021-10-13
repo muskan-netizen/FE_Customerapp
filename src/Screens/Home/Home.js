@@ -82,12 +82,6 @@ export default function Home({ route, navigation }) {
     acceptLoader: false,
     rejectLoader: false,
     selectedOrder: null,
-    curAddress: {
-      address:
-        'Plot no 5, Code Brew Labs, CH Devi Lal Centre of Learning, Sh.Chaudhari Devi Lal Memorial, Madhya Marg, 28B, Sector 28, Chandigarh',
-      latitude: 30.7188856,
-      longitude: 76.8083078,
-    },
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
@@ -125,7 +119,6 @@ export default function Home({ route, navigation }) {
     acceptLoader,
     rejectLoader,
     selectedOrder,
-    curAddress,
   } = state;
   useFocusEffect(
     React.useCallback(() => {
@@ -218,7 +211,6 @@ export default function Home({ route, navigation }) {
           getCurrentLocation('home')
             .then((res) => {
               console.log('chekLocationPermission', res);
-              updateState({ curAddress: res });
               if (
                 appMainData &&
                 typeof appMainData?.reqData == 'object' &&
@@ -248,7 +240,10 @@ export default function Home({ route, navigation }) {
   useFocusEffect(
     React.useCallback(() => {
       // homeData();
-      getAllAddress();
+      if (!!userData?.auth_token) {
+        getAllAddress();
+      }
+    
     }, []),
   );
 
@@ -280,11 +275,7 @@ export default function Home({ route, navigation }) {
 
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
-    let latlongObj = {
-      // address: curAddress?.address,
-      // latitude: curAddress?.latitude,
-      // longitude: curAddress?.longitude,
-    };
+    let latlongObj = {};
 
     if (appData?.profile?.preferences?.is_hyperlocal) {
       latlongObj = {
@@ -391,53 +382,40 @@ export default function Home({ route, navigation }) {
 
   const { viewRef2, viewRef3, bannerRef } = useRef();
 
-  //OnClick Link
-
-  const _onLink = async () => {
-    // const supported = await Linking.canOpenURL(
-    //   'https://apps.apple.com/in/app/uber/id368677368',
-    // );
-    // console.log(supported, 'supported>>>');
-    // if (supported) {
-    //   // alert('123');
-    //   Linking.openURL('https://apps.apple.com/in/app/uber/id368677368');
-    // } else {
-    //   Linking.openURL('https://www.google.com/');
-    // }
-    Linking.openURL('https://www.uber.com/');
-  };
-
-
   const openUber = () => {
-    let appName = 'Uber - Easy affordable trips'
-    let appStoreLocale = "in"
-    let playStoreId = 'com.ubercab'
-    let appStoreId = '310633997'
-
-    AppLink.maybeOpenURL('https://www.uber.com/in/en/',
-      { appName: appName, appStoreId: appStoreId, appStoreLocale: appStoreLocale, playStoreId: playStoreId }).then((res) => {
-
-      })
+    let appName = 'Uber - Easy affordable trips';
+    let appStoreLocale = '';
+    let playStoreId = 'com.ubercab';
+    let appStoreId = '368677368';
+    AppLink.maybeOpenURL('uber://', {
+      appName: appName,
+      appStoreId: appStoreId,
+      appStoreLocale: appStoreLocale,
+      playStoreId: playStoreId,
+    })
+      .then((res) => { })
       .catch((err) => {
-        console.log("errro raised", err)
+        Linking.openURL('https://www.uber.com/in/en/');
+        console.log('errro raised', err);
         // handle error
       });
-
-  }
+  };
 
   //onPress Category
   const onPressCategory = (item) => {
+    console.log(item, 'itemitemitemitemitemitem');
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
       item.redirect_to == staticStrings.PRODUCT ||
-      item.redirect_to == staticStrings.CATEGORY
+      item.redirect_to == staticStrings.CATEGORY ||
+      item.redirect_to == staticStrings.ONDEMANDSERVICE
     ) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
         if (shortCodes.arenagrub == appData?.profile?.code) {
-          openUber()
+          openUber();
         } else {
           if (item?.warning_page_id) {
             if (item?.warning_page_id == 2) {
@@ -633,11 +611,7 @@ export default function Home({ route, navigation }) {
       case 1:
         return (
           <>
-            <DashBoardHeaderOne
-              navigation={navigation}
-              location={location}
-              curAddress={curAddress}
-            />
+            <DashBoardHeaderOne navigation={navigation} location={location} />
             <DashBoardOne
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}
@@ -647,7 +621,6 @@ export default function Home({ route, navigation }) {
               onPressCategory={(item) => onPressCategory(item)}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
-              curAddress={curAddress}
             />
           </>
         );
@@ -655,11 +628,7 @@ export default function Home({ route, navigation }) {
       case 2:
         return (
           <>
-            <DashBoardHeaderOne
-              navigation={navigation}
-              location={location}
-              curAddress={curAddress}
-            />
+            <DashBoardHeaderOne navigation={navigation} location={location} />
             <DashBoardFour
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}
@@ -671,7 +640,6 @@ export default function Home({ route, navigation }) {
               }}
               selcetedToggle={selcetedToggle}
               toggleData={appData}
-              curAddress={curAddress}
             />
           </>
         );
@@ -684,7 +652,6 @@ export default function Home({ route, navigation }) {
               selcetedToggle={selcetedToggle}
               toggleData={appData}
               isLoading={isLoading}
-              curAddress={curAddress}
             />
 
             <DashBoardFive
@@ -700,7 +667,6 @@ export default function Home({ route, navigation }) {
               selcetedToggle={selcetedToggle}
               toggleData={appData}
               navigation={navigation}
-              curAddress={curAddress}
             />
           </>
         );
@@ -736,7 +702,6 @@ export default function Home({ route, navigation }) {
   // console.log(appMainData, 'appMainData');
 
   const { blurRef } = useRef();
-
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}

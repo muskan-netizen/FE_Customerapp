@@ -9,8 +9,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import {dummyUser} from '../constants/constants';
+import { useSelector } from 'react-redux';
+import { dummyUser } from '../constants/constants';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import staticStrings from '../constants/staticStrings';
@@ -27,9 +27,9 @@ import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
-import {color} from 'react-native-reanimated';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../styles/theme';
+import { color } from 'react-native-reanimated';
 
 export default function OrderCardVendorComponent2({
   data = {},
@@ -45,24 +45,24 @@ export default function OrderCardVendorComponent2({
 }) {
   let cardWidth = width - 21.5;
 
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
+  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-
+  const businessType = appData?.profile?.preferences?.business_type;
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const imageUrl =
     data && data.vendor
       ? getImageUrl(
-          data.vendor.logo.image_fit,
-          data.vendor.logo.image_path,
-          '200/200',
-        )
+        data.vendor.logo.image_fit,
+        data.vendor.logo.image_path,
+        '200/200',
+      )
       : dummyUser;
   const fontFamily = appStyle?.fontSizeData;
 
-  const styles = stylesFunc({fontFamily, themeColors});
+  const styles = stylesFunc({ fontFamily, themeColors });
 
   return (
     <TouchableOpacity
@@ -75,7 +75,7 @@ export default function OrderCardVendorComponent2({
           : colors.white,
         ...cardStyle,
       }}>
-      {!!etaTime && (
+      {(!!etaTime || !!data?.scheduled_date_time) && (
         <View
           style={{
             ...styles.ariveView,
@@ -86,15 +86,14 @@ export default function OrderCardVendorComponent2({
               ...styles.ariveTextStyle,
               color: colors.white,
             }}>
-            {strings.YOUR_ORDER_WILL_ARRIVE_BY} {etaTime}
+            {strings.YOUR_ORDER_WILL_ARRIVE_BY} {data?.scheduled_date_time ? data?.scheduled_date_time : etaTime}
           </Text>
         </View>
       )}
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <View
           style={{
             flex: 1,
-
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -103,11 +102,11 @@ export default function OrderCardVendorComponent2({
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              padding: moderateScale(10),
+              padding: moderateScale(15),
               flex: 1,
             }}>
             <Image
-              source={{uri: imageUrl}}
+              source={{ uri: imageUrl }}
               style={{
                 height: moderateScale(35),
                 width: moderateScale(35),
@@ -116,9 +115,10 @@ export default function OrderCardVendorComponent2({
             />
 
             <Text
+              numberOfLines={2}
               style={
                 isDarkMode
-                  ? [styles.userName, {color: MyDarkTheme.colors.text}]
+                  ? [styles.userName, { color: MyDarkTheme.colors.text }]
                   : styles.userName
               }>
               {data?.vendor?.name || ''}
@@ -126,11 +126,11 @@ export default function OrderCardVendorComponent2({
           </View>
 
           <View>
-            <View style={{width: moderateScale(130)}}>
+            <View style={{ width: moderateScale(130) }}>
               <Text
                 style={
                   isDarkMode
-                    ? [styles.orderLableStyle, {color: MyDarkTheme.colors.text}]
+                    ? [styles.orderLableStyle, { color: MyDarkTheme.colors.text }]
                     : styles.orderLableStyle
                 }>
                 {`${strings.ORDER_ID}: #${data?.order_number}`}
@@ -139,22 +139,22 @@ export default function OrderCardVendorComponent2({
                 style={
                   isDarkMode
                     ? [
-                        styles.orderLableStyle,
-                        {
-                          color: MyDarkTheme.colors.text,
-                          marginVertical: moderateScaleVertical(5),
-                        },
-                      ]
+                      styles.orderLableStyle,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        marginVertical: moderateScaleVertical(5),
+                      },
+                    ]
                     : [
-                        styles.orderLableStyle,
-                        {
-                          marginVertical: moderateScaleVertical(5),
-                          color: colors.black,
-                        },
-                      ]
+                      styles.orderLableStyle,
+                      {
+                        marginVertical: moderateScaleVertical(5),
+                        color: colors.black,
+                      },
+                    ]
                 }>{`${moment(data?.date_time).format('DD MMM, YYYY')} ${moment(
-                data?.date_time,
-              ).format('LT')} `}</Text>
+                  data?.date_time,
+                ).format('LT')} `}</Text>
             </View>
           </View>
         </View>
@@ -175,7 +175,7 @@ export default function OrderCardVendorComponent2({
       <View
         style={[
           styles.borderStyle,
-          {marginHorizontal: moderateScale(10)},
+          { marginHorizontal: moderateScale(10) },
         ]}></View>
       <View
         style={{
@@ -194,7 +194,7 @@ export default function OrderCardVendorComponent2({
         <ScrollView bounces={true}>
           {data?.product_details.map((i, inx) => {
             return (
-              <View>
+              <View key={inx}>
                 <View
                   style={{
                     marginVertical: moderateScaleVertical(10),
@@ -206,9 +206,9 @@ export default function OrderCardVendorComponent2({
                       style={
                         isDarkMode
                           ? [
-                              styles.orderLableStyle,
-                              {color: MyDarkTheme.colors.text},
-                            ]
+                            styles.orderLableStyle,
+                            { color: MyDarkTheme.colors.text },
+                          ]
                           : styles.orderLableStyle
                       }>
                       {i?.title || ''}
@@ -219,13 +219,13 @@ export default function OrderCardVendorComponent2({
                       style={
                         isDarkMode
                           ? [
-                              styles.qtyViewStyle,
-                              {
-                                color: MyDarkTheme.colors.text,
-                                fontSize: textScale(10),
-                              },
-                            ]
-                          : [styles.qtyViewStyle, {fontSize: textScale(10)}]
+                            styles.qtyViewStyle,
+                            {
+                              color: MyDarkTheme.colors.text,
+                              fontSize: textScale(10),
+                            },
+                          ]
+                          : [styles.qtyViewStyle, { fontSize: textScale(10) }]
                       }>
                       {`x ${i?.qty || ''}`}
                     </Text>
@@ -250,19 +250,19 @@ export default function OrderCardVendorComponent2({
             }}>
             <Image
               source={imagePath.iconPayments}
-              style={{tintColor: colors.textGreyB}}
+              style={{ tintColor: colors.textGreyB }}
             />
             <Text
               style={
                 isDarkMode
                   ? [
-                      styles.lableOrders,
-                      {
-                        paddingLeft: moderateScale(5),
-                        color: MyDarkTheme.colors.text,
-                      },
-                    ]
-                  : [styles.lableOrders, {paddingLeft: moderateScale(5)}]
+                    styles.lableOrders,
+                    {
+                      paddingLeft: moderateScale(5),
+                      color: MyDarkTheme.colors.text,
+                    },
+                  ]
+                  : [styles.lableOrders, { paddingLeft: moderateScale(5) }]
               }>
               {`${strings.PAYMENT} : `}
               <Text style={styles.valueOrders}>
@@ -276,13 +276,13 @@ export default function OrderCardVendorComponent2({
                 color: themeColors.primary_color,
                 marginHorizontal: moderateScale(10),
               }}>{`${currencies?.primary_currency?.symbol}${
-              // Number(i?.pvariant?.multiplier) *
-              Number(data?.payable_amount).toFixed(2)
-            }`}</Text>
+                // Number(i?.pvariant?.multiplier) *
+                Number(data?.payable_amount).toFixed(2)
+                }`}</Text>
           </View>
         </View>
 
-        <View style={[styles.borderStyle, {marginHorizontal: -15}]}></View>
+        <View style={[styles.borderStyle, { marginHorizontal: -15 }]}></View>
 
         {selectedTab && selectedTab == strings.PAST_ORDERS ? (
           <View
@@ -313,11 +313,13 @@ export default function OrderCardVendorComponent2({
               onPress={onPressReturnOrder}
               // style={{flex:0.6}}
               style={styles.bottomSecondHalf}>
-              <View style={styles.orderAcceptAndReadyStyleSecond}>
-                <Text style={styles.orderStatusStyleSecond}>
-                  {strings.RETURNORDER}
-                </Text>
-              </View>
+              {businessType === 'taxi' ? null : (
+                <View style={styles.orderAcceptAndReadyStyleSecond}>
+                  <Text style={styles.orderStatusStyleSecond}>
+                    {strings.RETURNORDER}
+                  </Text>
+                </View>
+              )}
             </TouchableOpacity>
           </View>
         ) : (
@@ -344,11 +346,11 @@ export default function OrderCardVendorComponent2({
               </View>
             </View>
             {selectedTab &&
-            data?.dispatch_traking_url &&
-            data?.product_details[0]?.category_type !=
+              data?.dispatch_traking_url &&
+              data?.product_details[0]?.category_type !=
               staticStrings.PICKUPANDDELIEVRY &&
-            (selectedTab == strings.ACTIVE_ORDERS ||
-              selectedTab == strings.SCHEDULED_ORDERS) ? (
+              (selectedTab == strings.ACTIVE_ORDERS ||
+                selectedTab == strings.SCHEDULED_ORDERS) ? (
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate(navigationStrings.WEBVIEWSCREEN, {
@@ -370,11 +372,11 @@ export default function OrderCardVendorComponent2({
             ) : null}
 
             {selectedTab &&
-            (selectedTab != strings.ACTIVE_ORDERS ||
-              selectedTab != strings.SCHEDULED_ORDERS) ? null : (
+              (selectedTab != strings.ACTIVE_ORDERS ||
+                selectedTab != strings.SCHEDULED_ORDERS) ? null : (
               <View style={styles.bottomSecondHalf}>
                 {data?.order_status?.current_status?.id == 1 ? (
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{ flexDirection: 'row' }}>
                     <TouchableOpacity
                       onPress={() => updateOrderStatus(data, 8)}
                       style={styles.orderReject}>
@@ -382,7 +384,7 @@ export default function OrderCardVendorComponent2({
                         {strings.REJECT}
                       </Text>
                     </TouchableOpacity>
-                    <View style={{width: moderateScale(10)}} />
+                    <View style={{ width: moderateScale(10) }} />
                     <TouchableOpacity
                       onPress={() => updateOrderStatus(data, 7)}
                       style={styles.orderAccept}>
@@ -413,8 +415,8 @@ export default function OrderCardVendorComponent2({
     </TouchableOpacity>
   );
 }
-export function stylesFunc({fontFamily, themeColors}) {
-  const commonStyles = commonStylesFunc({fontFamily});
+export function stylesFunc({ fontFamily, themeColors }) {
+  const commonStyles = commonStylesFunc({ fontFamily });
 
   let cardWidth = width - 21.5;
 
@@ -464,7 +466,7 @@ export function stylesFunc({fontFamily, themeColors}) {
       opacity: 0.6,
     },
     userName: {
-      marginHorizontal: moderateScale(15),
+      marginHorizontal: moderateScale(14),
       color: colors.textGreyI,
       fontFamily: fontFamily.medium,
       fontSize: textScale(14),

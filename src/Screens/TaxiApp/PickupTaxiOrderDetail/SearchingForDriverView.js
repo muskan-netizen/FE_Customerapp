@@ -10,6 +10,7 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
+import StarRating from 'react-native-star-rating';
 import {
   height,
   moderateScale,
@@ -26,6 +27,9 @@ import {
   BallIndicator,
   UIActivityIndicator,
 } from 'react-native-indicators';
+import navigationStrings from '../../../navigation/navigationStrings';
+import {searchingLoader} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import LottieView from 'lottie-react-native';
 
 export default function ({
   isLoading = false,
@@ -37,11 +41,17 @@ export default function ({
   agent_image = null,
   totalDuration,
   selectedCarOption,
+  productRatings,
+  isShowRating,
+  navigation,
+  onStarRatingPress = () => {},
 }) {
   //   console.log(selectedCarOption, 'selectedCarOption');
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  console.log(productRatings, 'productRatings');
+  // alert(isShowRating);
   const fontFamily = appStyle?.fontSizeData;
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -56,6 +66,10 @@ export default function ({
   console.log(orderDetail, 'orderDetail>>>');
   console.log(agent_image, 'agent_image>>>');
   console.log(agent_location, 'agent_location');
+  console.log(productRatings, 'productRatings>>>>>>>>>>>>>>>>>>>');
+  console.log(totalDuration, 'totalDuration');
+
+  //give review and update the rate
 
   return (
     <>
@@ -108,7 +122,6 @@ export default function ({
             style={{
               width: width - 40,
               justifyContent: 'space-between',
-              height: '100%',
               paddingVertical: moderateScaleVertical(30),
             }}>
             <View
@@ -160,44 +173,33 @@ export default function ({
                       4.5
                     </Text>
                   </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      marginHorizontal: moderateScale(20),
-                    }}>
-                    <Image
-                      // style={{}}
-                      source={imagePath.location2}
-                    />
-                    <Text
+                  {totalDuration ? (
+                    <View
                       style={{
-                        marginHorizontal: moderateScale(5),
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.lightgray,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginHorizontal: moderateScale(20),
                       }}>
-                      {totalDuration < 60
-                        ? `${totalDuration} mins`
-                        : `${(totalDuration / 60).toFixed(2)} hrs`}
-                    </Text>
-                  </View>
+                      <Image
+                        // style={{}}
+                        source={imagePath.location2}
+                      />
+                      <Text
+                        style={{
+                          marginHorizontal: moderateScale(5),
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.lightgray,
+                        }}>
+                        {totalDuration < 60
+                          ? `${Number(totalDuration)} mins`
+                          : `${(Number(totalDuration) / 60).toFixed(2)} hrs`}
+                      </Text>
+                    </View>
+                  ) : null}
                 </View>
               </View>
-              <View>
-                <Image source={imagePath.car3} />
-                <Text
-                  style={{
-                    marginHorizontal: moderateScale(5),
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.lightgray,
-                  }}>
-                  {selectedCarOption}
-                </Text>
-              </View>
             </View>
-
             {agent_location && (
               <View
                 style={{
@@ -205,7 +207,7 @@ export default function ({
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  marginVertical: moderateScaleVertical(10),
+                  marginVertical: moderateScaleVertical(5),
                 }}>
                 <GradientButton
                   colorsArray={[
@@ -242,14 +244,18 @@ export default function ({
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <View
               style={{
-                height: moderateScaleVertical(70),
-                width: moderateScale(70),
+                height: moderateScaleVertical(100),
+                width: moderateScale(100),
                 marginVertical: moderateScaleVertical(40),
               }}>
-              <UIActivityIndicator
-                size={70}
-                count={18}
-                color={themeColors.primary_color}
+              <LottieView
+                source={searchingLoader}
+                autoPlay
+                loop
+                style={{
+                  height: moderateScaleVertical(100),
+                  width: moderateScale(100),
+                }}
               />
             </View>
             <Text

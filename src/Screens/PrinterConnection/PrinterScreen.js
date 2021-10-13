@@ -29,6 +29,8 @@ import { arr, canEnablePrinter, initPrinter, printReciept, StartPrinting } from 
 import _ from 'lodash'
 import ModalView from '../../Components/Modal';
 import { moderateScale } from '../../styles/responsiveSize';
+import { getItem } from '../../utils/utils';
+import { appData, language } from '../../../App';
 
 
 const styles = stylesFun();
@@ -59,47 +61,55 @@ class PrinterScreen extends Component {
         }}>
         <Text style={styles.subscription2}>{'Are you sure you want to unpair this device ?'}</Text>
         <TouchableOpacity
-          onPress={() => this.setState({ ...this.state, isModalVisibleForPayment: false})}>
+          onPress={() => this.setState({ ...this.state, isModalVisibleForPayment: false })}>
           <Image source={imagePath.cross} />
         </TouchableOpacity>
       </View>
     );
   };
 
-    //Modal main component
-    modalMainContent = () => {
-      return (
-        <>
-          <View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              paddingHorizontal: moderateScale(20),
-              marginVertical: moderateScale(10),
-            }}>
-            <Text style={styles.title}>{``}</Text>
-            <TouchableOpacity onPress={() => {
-              BluetoothManager.unpair(this.state.unpairDeviceData.address).then(() => {
-                console.log('unpair success')
-                let pairedDevice = [...this.state.pairedDs]
-                pairedDevice = pairedDevice.filter(el => el.address !== this.state.unpairDeviceData.address)
-                console.log('filterPairedDevice>>', pairedDevice)
-                this.setState({ ...this.state, isModalVisibleForPayment: false, pairedDs: pairedDevice, unpairDeviceData: {} })
-                
-              }).catch((err) => {
-                console.log('unpair catch', err)
-              })
-            }} style={styles.unpairBtn}>
-              <Text style={styles.unpairBtnTxt}>Unpair</Text>
-            </TouchableOpacity>
-            </View>
-        </>
-      );
-    };
-  
+  //Modal main component
+  modalMainContent = () => {
+    return (
+      <>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingHorizontal: moderateScale(20),
+            marginVertical: moderateScale(10),
+          }}>
+          <Text style={styles.title}>{``}</Text>
+          <TouchableOpacity onPress={() => {
+            BluetoothManager.unpair(this.state.unpairDeviceData.address).then(() => {
+              console.log('unpair success')
+              let pairedDevice = [...this.state.pairedDs]
+              pairedDevice = pairedDevice.filter(el => el.address !== this.state.unpairDeviceData.address)
+              console.log('filterPairedDevice>>', pairedDevice)
+              this.setState({ ...this.state, isModalVisibleForPayment: false, pairedDs: pairedDevice, unpairDeviceData: {} })
 
-  componentDidMount = () => {//alert(BluetoothManager)
-    StartPrinting({})
+            }).catch((err) => {
+              console.log('unpair catch', err)
+            })
+          }} style={styles.unpairBtn}>
+            <Text style={styles.unpairBtnTxt}>Unpair</Text>
+          </TouchableOpacity>
+        </View>
+      </>
+    );
+  };
+
+
+  componentDidMount = async() => {//alert(BluetoothManager)
+    // StartPrinting({})
+    const getAppData = await getItem('appData');
+    appData = getAppData
+    const getLanguage = await getItem('language');
+    language = getLanguage
+
+    if (getLanguage) {
+      strings.setLanguage(getLanguage);
+    }
     AsyncStorage.getItem('BleDevice').then(res => {
       // console.log('checking ble device storage data >>>', JSON.parse(res))
       if (res !== null) {
@@ -229,9 +239,9 @@ class PrinterScreen extends Component {
     };
 
     const options = {
-      taskName: 'Example',
-      taskTitle: 'ExampleTask title',
-      taskDesc: 'ExampleTask description',
+      taskName: 'Printer',
+      taskTitle: 'Printer Attached',
+      taskDesc: 'Your Printer is attached and service keep going on in background.',
       taskIcon: {
         name: 'ic_launcher',
         type: 'mipmap',
@@ -245,7 +255,7 @@ class PrinterScreen extends Component {
 
 
     await BackgroundService.start(veryIntensiveTask, options);
-    await BackgroundService.updateNotification({ taskDesc: 'New ExampleTask description' }); // Only Android, iOS will ignore this call
+    await BackgroundService.updateNotification({ taskDesc: 'Your Printer is attached and service keep going on in background.' }); // Only Android, iOS will ignore this call
     // iOS will also run everything here in the background until .stop() is called
     // await BackgroundService.stop();
   }
@@ -390,7 +400,7 @@ class PrinterScreen extends Component {
                   <Text style={styles.PairedRowAdrress}>{row.address}</Text>
                 </View>
               </View>
-              <TouchableOpacity onPress={() => this.setState({ ...this.state, unpairDeviceData: row, isModalVisibleForPayment: true})} style={styles.rightArrowBtn}>
+              <TouchableOpacity onPress={() => this.setState({ ...this.state, unpairDeviceData: row, isModalVisibleForPayment: true })} style={styles.rightArrowBtn}>
                 <Image source={imagePath.rightArrowAngle} style={styles.rightArrowImg} />
               </TouchableOpacity>
             </View>
@@ -437,15 +447,15 @@ class PrinterScreen extends Component {
     const { isModalVisibleForPayment } = this.state
     return (
       <>
-      <ModalView
-        isVisible={isModalVisibleForPayment}
-        onClose={() => this.setState({ ...this.state, isModalVisibleForPayment: false})}
-        mainViewStyle={{minHeight: Dimensions.get('screen').height / 4, maxHeight: Dimensions.get('screen').height}}
-        leftIcon={imagePath.cross}
-        topCustomComponent={this.topCustomComponent}
-        modalMainContent={this.modalMainContent}
+        <ModalView
+          isVisible={isModalVisibleForPayment}
+          onClose={() => this.setState({ ...this.state, isModalVisibleForPayment: false })}
+          mainViewStyle={{ minHeight: Dimensions.get('screen').height / 4, maxHeight: Dimensions.get('screen').height }}
+          leftIcon={imagePath.cross}
+          topCustomComponent={this.topCustomComponent}
+          modalMainContent={this.modalMainContent}
         // modalBottomContent={modalBottomContent}
-      />
+        />
         <Header
           leftIcon={
             imagePath.icBackb

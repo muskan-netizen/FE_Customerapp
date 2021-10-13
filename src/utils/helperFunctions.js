@@ -8,7 +8,7 @@ import {callingCountries} from 'country-data';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import * as NavigationService from '../navigation/NavigationService';
-import {Toast} from '../library/toastify-react-native';
+import Toast from 'react-native-simple-toast';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -83,30 +83,30 @@ const getLocation = async (lat, lng, type) => {
 const showError = (message) => {
   console.log(message, 'THIS IS MESSAGE');
 
-  // showMessage({
-  //   type: 'danger',
-  //   icon: 'danger',
-  //   message,
-  // });
-  Toast.error(message);
+  showMessage({
+    type: 'danger',
+    icon: 'danger',
+    message,
+  });
+  // Toast.show(message);
 };
 
 const showSuccess = (message) => {
-  // showMessage({
-  //   type: 'success',
-  //   icon: 'success',
-  //   message,
-  // });
+  showMessage({
+    type: 'success',
+    icon: 'success',
+    message,
+  });
 
-  Toast.success(message);
+  // Toast.show(message);
 };
 const showInfo = (message) => {
-  // showMessage({
-  //   type: 'info',
-  //   icon: 'info',
-  //   message,
-  // });
-  Toast.info(message);
+  showMessage({
+    type: 'info',
+    icon: 'info',
+    message,
+  });
+  // Toast.show(message);
 };
 
 export function otpTimerCounter(seconds) {
@@ -209,7 +209,7 @@ export function getAddressComponent(details, update) {
   )?.short_name;
 
   street = details?.address_components?.find((addressComponent) =>
-    addressComponent?.types.includes('administrative_area_level_2'),
+    addressComponent?.types.includes('route'),
   )?.short_name;
 
   country = details?.address_components?.find((addressComponent) =>

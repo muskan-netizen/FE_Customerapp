@@ -91,18 +91,16 @@ const shortCodes = {
   share: 'bb8440',
   pickmeup: '87a4de',
   vecto: '39f6fd',
-  taquick: '630e49',
-  goody: '397840',
   grub: '2f3120',
   gusto: 'd1b1a0',
+  gokab: 'fb78f0',
+  suel: '638bd1',
+  elixir: '574467',
+  ace: '2d98b5',
   punnet: 'd2cca0',
   homeric: 'c8fbba',
   voltaic: 'd8473d',
   zest: '6865aa',
-  suel: '638bd1',
-  gokab: 'fb78f0',
-  elixir: 'fb78f0',
-  ace: '2d98b5',
 };
 
 const appIds = {
@@ -476,11 +474,11 @@ const appIds = {
   }),
   grub: Platform.select({
     ios: 'com.customer.grub',
-    android: 'com.grub',
+    android: 'com.customer.grub',
   }),
   gusto: Platform.select({
     ios: 'com.gusto',
-    android: 'com.gusto',
+    android: 'com.customer.gusto',
   }),
   punnet: Platform.select({
     ios: 'com.punnet',
@@ -508,11 +506,11 @@ const appIds = {
   }),
   elixir: Platform.select({
     ios: 'com.elixir',
-    android: 'com.elixir',
+    android: 'com.elixir.customer',
   }),
   ace: Platform.select({
     ios: 'com.customer.ace',
-    android: 'com.ace',
+    android: 'com.customer.ace',
   }),
 };
 

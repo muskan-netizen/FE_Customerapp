@@ -1,5 +1,12 @@
 import React from 'react';
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  I18nManager,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
 import imagePath from '../../../constants/imagePath';
@@ -35,6 +42,8 @@ export default function SelectPaymentModalView({
   removeCoupon,
   loyalityAmount = 0,
   pickUpTimeType = '',
+  redirectToPayement,
+  selectedPayment = null,
 }) {
   console.log(pickUpTimeType, 'pickUpTimeType');
   console.log(selectedTime, 'selectedTime');
@@ -55,6 +64,7 @@ export default function SelectPaymentModalView({
   const commonStyles = commonStylesFun({fontFamily});
   const {profile} = appData;
   const currencies = useSelector((state) => state?.initBoot?.currencies);
+  const userData = useSelector((state) => state?.auth?.userData);
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -292,6 +302,7 @@ export default function SelectPaymentModalView({
               }}>
               <Image
                 style={{height: 40, width: 100}}
+                resizeMode={'contain'}
                 source={
                   selectedCarOption?.media.length &&
                   selectedCarOption?.media[0]?.image?.path
@@ -383,6 +394,52 @@ export default function SelectPaymentModalView({
             ).toFixed(2)}`}</Text>
           </View>
         )}
+
+        {/* select payment method */}
+        <TouchableOpacity
+          onPress={redirectToPayement}
+          style={
+            isDarkMode
+              ? [
+                  styles.paymentMainView,
+                  {
+                    justifyContent: 'space-between',
+                    backgroundColor: MyDarkTheme.colors.lightDark,
+                  },
+                ]
+              : [styles.paymentMainView, {justifyContent: 'space-between'}]
+          }>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Image
+              style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
+              source={imagePath.paymentMethod}
+            />
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.selectedMethod, {color: MyDarkTheme.colors.text}]
+                  : styles.selectedMethod
+              }>
+              {selectedPayment
+                ? selectedPayment?.title
+                : strings.SELECT_PAYMENT_METHOD}
+            </Text>
+          </View>
+          <View>
+            <Image
+              source={imagePath.goRight}
+              style={
+                isDarkMode
+                  ? {
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                      tintColor: MyDarkTheme.colors.text,
+                    }
+                  : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
+              }
+            />
+          </View>
+        </TouchableOpacity>
+
         <TouchableOpacity
           onPress={() => _getAllOffers(selectedCarOption, '')}
           style={styles.offersViewB}>

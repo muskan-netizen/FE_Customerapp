@@ -3,7 +3,7 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import stylesFun from './styles';
 import {useSelector} from 'react-redux';
-import MapView, {AnimatedRegion} from 'react-native-maps';
+import MapView, {AnimatedRegion, PROVIDER_GOOGLE} from 'react-native-maps';
 import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
@@ -467,17 +467,23 @@ export default function PinAddressOnMap(props) {
       })
       .catch((error) => console.log(error, 'errro geocode'));
   };
-
+  const _onRegionChange = (region) => {
+    updateState({region: region});
+    _getAddressBasedOnCoordinates(region);
+    // animate(region);
+  };
   return (
     <>
       <MapView
         ref={mapRef}
-        //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+        // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+        // customMapStyle={mapStyleGrey}
         style={styles.map}
         region={region}
         initialRegion={region}
-        customMapStyle={mapStyleGrey}
-        // pointerEvents={'none'}
+        // onRegionChangeComplete={() =>
+        //   _onRegionChange(region, {isGesture: true})
+        // }
       >
         {markers?.map((marker, index) => (
           <MapView.Marker

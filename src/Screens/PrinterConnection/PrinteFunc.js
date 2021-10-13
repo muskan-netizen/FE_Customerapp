@@ -7,15 +7,17 @@ const fs = RNFetchBlob.fs;
 export let arr = []
 export let canEnablePrinter = true
 
-/**@function : Get Details of order for print bills */
+/** @function : Get Details of order for print bills */
 const _getOrderDetails = async (_data) => {
-  console.log('check app data >>>>', _data)
+  console.log('check app data >>>>', JSON.stringify(_data))
   return new Promise((resolve, reject) => {
     let data = {};
-    data['order_id'] = '408';
-
+    data['order_id'] = _data.id;
+    // data['order_id'] = 424;
+    console.log('check AppCode profile data >>>>', appData?.appData)
     actions
       .getOrderDetailForBilling(data, {
+        // code: '245bae',
         code: appData?.appData.profile?.code,
         currency: 1,
         language: language ? language?.primary_language?.id : 148,
@@ -25,7 +27,9 @@ const _getOrderDetails = async (_data) => {
           resolve(res?.data)
         }
       })
-      .catch((err) => reject(err));
+      .catch((err) => {
+        reject(err)
+      });
   })
 };
 
@@ -48,7 +52,7 @@ export const initPrinter = () => {
   canEnablePrinter = false
 
   _getOrderDetails(arr[0]).then(res => {
-    console.log('check _getOrderDetails response >>>', JSON.stringify(res))
+    console.log('check _getOrderDetails response >>>', res)
     printReciept(res).then(() => {
       console.log('check start printing >>>> 3')
       arr.shift()
@@ -62,6 +66,7 @@ export const initPrinter = () => {
     })
   }).catch(err => {
     console.log('check catch block >>>', err)
+    canEnablePrinter = true
   })
 }
 
@@ -81,7 +86,6 @@ function getBase64Image(img) {
       })
       .then(base64Data => {
         // here's base64 encoded image
-        console.log('checking base 64 image ', base64Data);
         // remove the file from storage
         resolve({ url: imagePath, base64String: base64Data })
         // return fs.unlink(imagePath);
@@ -96,26 +100,8 @@ export const printReciept = async (data) => {
 
   console.log('check notifications length >>>> 8', data)
   return new Promise((resolve, reject) => {
-    //   const detail = {
-    //     Vendor: 'La Fresca de Italia',
-    //     order_number: '#0697030279',
-    //     address: {address:"5, Madhya Marg, 28B, Sector 28B, Chandigarh, 160028, India","user_id":1,"id":77},
-    //     Items: [
-    //       { name: 'Pizza', qty: 2, amt: 400, add_ons: [{ title: 'cheese' }, { title: 'capsicum' }] },
-    //       { name: 'Rolls', qty: 5, amt: 900 },
-    //       { name: 'UCB shirt', qty: 1, amt: 1300, variant: 'black' },
-    //     ],
-    //     item_count: 7,
-    //     total_amount: 1300,
-    //     total_delivery_fee: 10.00,
-    //     total_discount: 0.00,
-    //     payable_amount: 1300,
-    //     loyalty_amount_saved: 2.65,
-
-    //   }
 
     const detail = data
-
 
     BluetoothManager.checkBluetoothEnabled().then(async (enabled) => {
       console.log('check start printing >>>> 4')
@@ -128,7 +114,6 @@ export const printReciept = async (data) => {
           // await BluetoothEscposPrinter.printerLeftSpace(0);
 
           const base64Data = await getBase64Image(`${detail.vendors[0].vendor.logo.image_fit}200/200${detail.vendors[0].vendor.logo.image_path}`)
-          console.log('checking return data >>>>', base64Data)
 
           await BluetoothEscposPrinter.printPic(base64Data.base64String, { width: 200, left: 180 });
 
@@ -156,18 +141,18 @@ export const printReciept = async (data) => {
 
           await BluetoothEscposPrinter.printerAlign(BluetoothEscposPrinter.ALIGN.CENTER)
           /** Create Column **/
-          let columnWidths = [11, 12, 12, 11];
+          let columnWidths = [18, 5, 11, 9];
           await BluetoothEscposPrinter.printColumn(columnWidths,
             [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.RIGHT],
-            ["Item", 'Quantity', 'Unit price', 'Amount'], {});
+            ["Item", 'Qty', 'Unit price', 'Amount'], {});
 
           /** Add Items **/
           await detail.vendors[0].products.forEach(async (el) => {
-              const title = el.pvariant.title && el.pvariant.title !== null ? `${el.product_name}(${el.pvariant.title})` : `${el.product_name}`
+            const title = el.pvariant.title && el.pvariant.title !== null ? `${el.product_name}(${el.pvariant.title})` : `${el.product_name}`
             // const title = `${el.product_name}`
             BluetoothEscposPrinter.printColumn(columnWidths,
               [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.RIGHT],
-              [title, JSON.stringify(el.quantity), JSON.stringify(el.price), JSON.stringify(el.quantity*el.price)], {});
+              [title, JSON.stringify(el.quantity), JSON.stringify(el.price), JSON.stringify(el.quantity * el.price)], {});
 
             /** Add ons If available **/
             if (el.addon.length > 0) {
@@ -182,7 +167,7 @@ export const printReciept = async (data) => {
 
           await BluetoothEscposPrinter.printText("\r\n----------------------------------------------\r\n", {});
 
-          await BluetoothEscposPrinter.printColumn(columnWidths,
+          await BluetoothEscposPrinter.printColumn([16, 11, 9, 10],
             [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.RIGHT],
             ["Total", JSON.stringify(detail.item_count), " ", JSON.stringify(detail.total_amount) + '\r\n'], {});
 
@@ -202,7 +187,7 @@ export const printReciept = async (data) => {
             [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.RIGHT],
             ["Paid amount", detail.payable_amount + '\r\n'], {});
 
-          await BluetoothEscposPrinter.printText("----------------------------------------------\r\n\n                Welcome next time\r\n\r\n\r\n\r\n\n", {});
+          await BluetoothEscposPrinter.printText("----------------------------------------------\r\n\nWelcome next time\r\n\r\n\r\n\r\n\n", {});
 
           await BluetoothEscposPrinter.cutOnePoint();
 
@@ -215,6 +200,8 @@ export const printReciept = async (data) => {
           alert(e.message || "ERROR");
           console.log('check notifications length >>>> 12', e)
         }
+      } else {
+        canEnablePrinter = true
       }
 
     }, (err) => {

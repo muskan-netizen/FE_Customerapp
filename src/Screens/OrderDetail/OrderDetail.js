@@ -51,6 +51,7 @@ export default function OrderDetail({navigation, route}) {
       strings.OUT_FOR_DELIVERY,
       strings.DELIVERED,
     ],
+
     // labels: [
     //   {lable: 'Accepted', orderDate: '12/12/1233'},
     //   {lable: 'Processing', orderDate: ''},
@@ -58,8 +59,10 @@ export default function OrderDetail({navigation, route}) {
     //   {lable: 'Delivered', orderDate: ''},
     // ],
     currentPosition: null,
+    orderStatus: null,
   });
-  const {isLoading, cartItems, cartData, labels, currentPosition} = state;
+  const {isLoading, cartItems, cartData, labels, currentPosition, orderStatus} =
+    state;
   const userData = useSelector((state) => state?.auth?.userData);
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -104,6 +107,7 @@ export default function OrderDetail({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        console.log(res, '=====res');
         updateState({isLoading: false});
         if (res?.data) {
           updateState({
@@ -118,6 +122,7 @@ export default function OrderDetail({navigation, route}) {
                     paramData?.orderStatus?.current_status?.title.slice(1),
                 )
               : null,
+            orderStatus: res?.data?.vendors[0]?.order_status,
           });
         }
       })
@@ -819,7 +824,7 @@ export default function OrderDetail({navigation, route}) {
           <LeftRightText
             leftText={strings.PLACED_ON}
             rightText={`${moment(cartData?.created_at).format(
-              'DD MMM,YYYY',
+              'DD MMM, YYYY',
             )} ${moment(cartData?.created_at).format('LT')} `}
             isDarkMode={isDarkMode}
             MyDarkTheme={MyDarkTheme}
@@ -836,6 +841,26 @@ export default function OrderDetail({navigation, route}) {
                 : colors.blackOpacity86,
             }}
           />
+          {!!cartData?.scheduled_date_time && (
+            <LeftRightText
+              leftText={strings.SEHEDLEDFOR}
+              rightText={moment(cartData?.scheduled_date_time).format('lll')}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+              leftTextStyle={{
+                fontSize: textScale(12),
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity43,
+              }}
+              rightTextStyle={{
+                fontSize: textScale(12),
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.blackOpacity86,
+              }}
+            />
+          )}
         </View>
         <View
           style={{
@@ -930,7 +955,9 @@ export default function OrderDetail({navigation, route}) {
 
     return (
       <>
-        {paramData?.orderStatus?.current_status?.title == 'Placed' && (
+        {((!!orderStatus && orderStatus?.current_status?.title == 'Placed') ||
+          (!!paramData &&
+            paramData?.orderStatus?.current_status?.title == 'Placed')) && (
           <View
             style={{
               alignItems: 'center',
@@ -1017,7 +1044,21 @@ export default function OrderDetail({navigation, route}) {
             <Text style={styles.waitToAccept}>{strings.WAITINGTOACCEPT}</Text>
           </View>
         )}
-        {paramData?.orderStatus &&
+        {!!orderStatus &&
+          orderStatus?.current_status?.title != 'Rejected' &&
+          orderStatus?.current_status?.title != 'Placed' && (
+            <View
+              style={{
+                marginVertical: moderateScaleVertical(20),
+              }}>
+              <StepIndicators
+                labels={labels}
+                currentPosition={currentPosition}
+                themeColor={themeColors}
+              />
+            </View>
+          )}
+        {!orderStatus &&
           paramData?.orderStatus?.current_status?.title != 'Rejected' &&
           paramData?.orderStatus?.current_status?.title != 'Placed' && (
             <View
@@ -1073,7 +1114,7 @@ export default function OrderDetail({navigation, route}) {
           ListFooterComponent={cartItems.length ? getFooter() : null}
           showsVerticalScrollIndicator={false}
           style={{backgroundColor: colors.backgroundGrey}}
-          keyExtractor={(item, index) => String(index)}
+          keyExtractor={(item, index) => index.toString()}
           renderItem={_renderItem}
           ListEmptyComponent={<ListEmptyCart isLoading={isLoading} />}
           style={{flex: 1}}

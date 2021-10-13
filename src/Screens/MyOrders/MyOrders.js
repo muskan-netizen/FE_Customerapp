@@ -1,24 +1,26 @@
+import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep, debounce} from 'lodash';
 import React, {createRef, useEffect, useState} from 'react';
 import {
   FlatList,
-  RefreshControl,
-  View,
-  TouchableOpacity,
   Image,
+  RefreshControl,
   ScrollView,
   Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import FastImage from 'react-native-fast-image';
+import * as RNLocalize from 'react-native-localize';
+import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
 import CustomTopTabBar from '../../Components/CustomTopTabBar';
+import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {
-  loaderOne,
-  loaderSix,
-} from '../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import NoDataFound from '../../Components/NoDataFound';
 import OrderCardVendorComponent2 from '../../Components/OrderCardVendorComponent2';
-import OrderCardVendorComponent from '../../Components/OrderCardVendorComponent';
-
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
@@ -33,17 +35,9 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {getImageUrl, showError} from '../../utils/helperFunctions';
-import Modal from 'react-native-modal';
-import stylesFun from './styles';
-import DatePicker from 'react-native-date-picker';
-import FastImage from 'react-native-fast-image';
-import GradientButton from '../../Components/GradientButton';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import * as RNLocalize from 'react-native-localize';
-import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
-import LottieView from 'lottie-react-native';
+import {getImageUrl, showError} from '../../utils/helperFunctions';
+import stylesFun from './styles';
 
 export default function MyOrders({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -51,13 +45,22 @@ export default function MyOrders({navigation}) {
   const location = useSelector((state) => state?.home?.location);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const {appData, currencies, languages, themeColors, appStyle} = useSelector(
+    (state) => state?.initBoot,
+  );
+  const businessType = appData?.profile?.preferences?.business_type;
   const [state, setState] = useState({
     tabBarData: [
-      {title: strings.ACTIVE_ORDERS, isActive: true},
-      {title: strings.PAST_ORDERS, isActive: false},
+      businessType == 'taxi'
+        ? {title: strings.ACTIVERIDES, isActive: true}
+        : {title: strings.ACTIVE_ORDERS, isActive: true},
+      businessType == 'taxi'
+        ? {title: strings.PASTRIDES, isActive: false}
+        : {title: strings.PAST_ORDERS, isActive: false},
       // {title: strings.SCHEDULED_ORDERS, isActive: false},
     ],
-    selectedTab: strings.ACTIVE_ORDERS,
+    selectedTab:
+      businessType == 'taxi' ? strings.ACTIVERIDES : strings.ACTIVE_ORDERS,
     orders: [],
     activeOrders: [],
     pastOrders: [],
@@ -100,9 +103,8 @@ export default function MyOrders({navigation}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const _scrollRef = createRef();
   //Reduc store data
-  const {appData, currencies, languages, themeColors, appStyle} = useSelector(
-    (state) => state?.initBoot,
-  );
+  const userData = useSelector((state) => state.auth.userData);
+
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
   const styles = stylesFun({fontFamily, themeColors});
@@ -110,14 +112,32 @@ export default function MyOrders({navigation}) {
   //Get list of all orders
   useEffect(() => {
     updateState({isLoading: true});
-    _getListOfOrders();
+    if (userData && userData?.auth_token) {
+      _getListOfOrders();
+    } else {
+      updateState({
+        isLoading: false,
+      });
+    }
   }, [selectedTab]);
 
-  console.log('lat lng', location);
+  useFocusEffect(
+    React.useCallback(() => {
+      if (userData && userData?.auth_token) {
+        _getListOfOrders();
+      } else {
+        updateState({
+          isLoading: false,
+        });
+      }
+    }, []),
+  );
 
   //Get list of all orders api
-  console.log(RNLocalize.getTimeZone(), 'RNLocalize.getTimeZone()');
   const _getListOfOrders = () => {
+    console.log(RNLocalize.getTimeZone(), 'RNLocalize.getTimeZone()');
+    console.log(tabType, 'tabType');
+    console.log(pageActive, 'pageActive');
     actions
       .getOrderListing(
         `?limit=${limit}&page=${pageActive}&type=${tabType}`,
@@ -161,29 +181,35 @@ export default function MyOrders({navigation}) {
 
   // changeTab function
   const changeTab = (tabData) => {
-    let clonedArray = cloneDeep(tabBarData);
+    if (userData && userData?.auth_token && tabBarData.length) {
+      let clonedArray = cloneDeep(tabBarData);
 
-    updateState({
-      tabBarData: clonedArray.map((item) => {
-        if (item.title == tabData.title) {
-          item.isActive = true;
-          return item;
-        } else {
-          item.isActive = false;
-          return item;
-        }
-      }),
-      selectedTab: tabData.title,
-      tabType:
-        tabData.title == strings.ACTIVE_ORDERS
-          ? staticStrings.ACTIVE
-          : tabData.title == strings.PAST_ORDERS
-          ? staticStrings.PAST
-          : staticStrings.SCHEDULE,
-      pageActive: 1,
-      orders: selectedTab != tabData.title ? [] : orders,
-    });
-    _scrollRef.current.scrollToOffset({animated: true, offset: 0});
+      updateState({
+        tabBarData: clonedArray.map((item) => {
+          if (item.title == tabData.title) {
+            item.isActive = true;
+            return item;
+          } else {
+            item.isActive = false;
+            return item;
+          }
+        }),
+        selectedTab: tabData.title,
+        tabType:
+          tabData.title == strings.ACTIVE_ORDERS ||
+          tabData.title == strings.ACTIVERIDES
+            ? staticStrings.ACTIVE
+            : tabData.title == strings.PAST_ORDERS ||
+              tabData.title == strings.PASTRIDES
+            ? staticStrings.PAST
+            : staticStrings.SCHEDULE,
+        pageActive: 1,
+        orders: selectedTab != tabData.title ? [] : orders,
+      });
+      _scrollRef.current.scrollToOffset({animated: true, offset: 0});
+    } else {
+      navigation.navigate(navigationStrings.LOGIN);
+    }
   };
 
   const onPressViewEditAndReplace = (item) => {
@@ -193,6 +219,8 @@ export default function MyOrders({navigation}) {
           fromVendorApp: true,
           selectedVendor: {id: item?.vendor_id},
           orderDetail: item,
+          showRating:
+            item?.order_status?.current_status?.id != 6 ? false : true,
         })
       : // navigation.navigate(navigationStrings.ACCOUNTS, {
         //   screen: navigationStrings.PICKUPORDERDETAIL,
@@ -264,7 +292,6 @@ export default function MyOrders({navigation}) {
         cardStyle={{padding: 0}}
         etaTime={!!item?.ETA ? item.ETA : null}
       />
-
       // <OrderCardComponent
       //   data={item}
       //   selectedTab={selectedTab}
@@ -278,50 +305,72 @@ export default function MyOrders({navigation}) {
 
   //Get list of all orders based on selected tab
   useEffect(() => {
-    _getListOfOrders();
+    if (userData && userData?.auth_token) {
+      _getListOfOrders();
+    } else {
+      updateState({
+        isLoading: false,
+      });
+    }
   }, [pageActive, pagePastOrder, pageScheduleOrder, isRefreshing]);
 
   //Refresh screen
 
   //Pull to refresh
   const handleRefresh = () => {
-    if (selectedTab == strings.ACTIVE_ORDERS) {
-      updateState({
-        pageActive: 1,
-        tabType: staticStrings.ACTIVE,
-        isRefreshing: true,
-      });
-    }
-    if (selectedTab == strings.PAST_ORDERS) {
-      updateState({
-        pageActive: 1,
-        tabType: staticStrings.PAST,
-        isRefreshing: true,
-      });
-    }
-    if (selectedTab == strings.SCHEDULED_ORDERS) {
-      updateState({
-        pageActive: 1,
-        tabType: staticStrings.SCHEDULE,
-        isRefreshing: true,
-      });
+    console.log(selectedTab, 'selectedTab');
+
+    if (userData && userData?.auth_token) {
+      if (
+        selectedTab == strings.ACTIVE_ORDERS ||
+        selectedTab == strings.ACTIVERIDES
+      ) {
+        updateState({
+          pageActive: 1,
+          tabType: staticStrings.ACTIVE,
+          isRefreshing: true,
+        });
+      }
+      if (
+        selectedTab == strings.PAST_ORDERS ||
+        selectedTab == strings.PASTRIDES
+      ) {
+        updateState({
+          pageActive: 1,
+          tabType: staticStrings.PAST,
+          isRefreshing: true,
+        });
+      }
+      if (selectedTab == strings.SCHEDULED_ORDERS) {
+        updateState({
+          pageActive: 1,
+          tabType: staticStrings.SCHEDULE,
+          isRefreshing: true,
+        });
+      }
     }
   };
 
   //pagination of data
   const onEndReached = ({distanceFromEnd}) => {
-    if (selectedTab == strings.ACTIVE_ORDERS) {
+    if (
+      selectedTab == strings.ACTIVE_ORDERS ||
+      selectedTab == strings.ACTIVERIDES
+    ) {
       updateState({pageActive: pageActive + 1, tabType: staticStrings.ACTIVE});
     }
-    if (selectedTab == strings.PAST_ORDERS) {
+    if (
+      selectedTab == strings.PAST_ORDERS ||
+      selectedTab == strings.PASTRIDES
+    ) {
       updateState({pageActive: pagePastOrder + 1, tabType: staticStrings.PAST});
     }
-    if (selectedTab == strings.SCHEDULED_ORDERS) {
-      updateState({
-        pageActive: pageScheduleOrder + 1,
-        tabType: staticStrings.SCHEDULE,
-      });
-    }
+    // if (selectedTab == strings.SCHEDULED_ORDERS) {
+    //   updateState({
+    //     pageActive: pageScheduleOrder + 1,
+    //     tabType: staticStrings.SCHEDULE,
+    //   });
+    // }
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -334,10 +383,6 @@ export default function MyOrders({navigation}) {
   const onClose = () => {
     updateState({isVisibleReturnOrderModal: false});
   };
-
-  useEffect(() => {
-    console.log(selectedOrderForReturn, 'selectedOrderForReturn');
-  }, [selectedOrderForReturn]);
 
   const selectProduct = (item) => {
     console.log(item, '>item>item');
@@ -410,7 +455,9 @@ export default function MyOrders({navigation}) {
             ? imagePath.icBackb
             : imagePath.back
         }
-        centerTitle={strings.MY_ORDERS}
+        centerTitle={
+          businessType === 'taxi' ? strings.MYRIDES : strings.MY_ORDERS
+        }
         headerStyle={
           isDarkMode
             ? {backgroundColor: MyDarkTheme.colors.background}
@@ -459,29 +506,18 @@ export default function MyOrders({navigation}) {
         onEndReachedThreshold={0.5}
         ItemSeparatorComponent={() => <View style={{height: 20}} />}
         ListFooterComponent={() => <View style={{height: 90}} />}
-        ListEmptyComponent={() => (
-          <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <LottieView
-              source={loaderSix}
-              autoPlay
-              loop
+        ListEmptyComponent={
+          !isLoading && (
+            <View
               style={{
-                height: moderateScaleVertical(100),
-                width: moderateScale(100),
-              }}
-            />
-            <Text
-              style={[
-                styles.textStyle,
-                {
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
-                },
-              ]}>
-              {strings.NO_ORDERS_FOUND}
-            </Text>
-          </View>
-        )}
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <NoDataFound isLoading={state.isLoading} />
+            </View>
+          )
+        }
       />
 
       <Modal

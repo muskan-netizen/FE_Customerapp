@@ -51,6 +51,7 @@ export default function ProductCard4({
     data?.variant[0]?.price *
     (data?.variant[0]?.multiplier ? data?.variant[0]?.multiplier : 1);
   const scaleInAnimated = new Animated.Value(0);
+  console.log(data, 'dataaaaaaa');
   return (
     <TouchableOpacity
       activeOpacity={activeOpacity}
@@ -122,7 +123,7 @@ export default function ProductCard4({
           </View>
         </View>
       </View>
-      <View
+      {/* <View
         style={{
           height: moderateScale(30),
           width: moderateScale(30),
@@ -137,7 +138,7 @@ export default function ProductCard4({
             tintColor: colors.white,
           }}
         />
-      </View>
+      </View> */}
     </TouchableOpacity>
   );
 }

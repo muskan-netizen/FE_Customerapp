@@ -14,6 +14,7 @@ import {chekLocationPermission} from '../../utils/permissions';
 import stylesFun from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import {moderateScale} from '../../styles/responsiveSize';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -149,13 +150,18 @@ export default function Location({route, navigation}) {
             onPress={() => getCurrentLocation()}>
             <View style={styles.useCurrentLocationView}>
               <Image
-                style={{tintColor: themeColors.primary_color}}
-                source={imagePath.locationSmall}
+                style={{
+                  tintColor: themeColors.primary_color,
+                  height: moderateScale(16),
+                  width: moderateScale(16),
+                }}
+                source={imagePath.icLocation1}
+                resizeMode="contain"
               />
               <Text
                 style={[
                   styles.detectLocation,
-                  {color: themeColors.primary_color, paddingLeft: 10},
+                  {color: themeColors.primary_color},
                 ]}>
                 {strings.USECURRENTLOACTION}
               </Text>

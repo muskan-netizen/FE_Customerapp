@@ -1504,15 +1504,10 @@ export default function Cart2({navigation, route}) {
       source={loaderOne}
       isLoadingB={isLoadingB}>
       <Header
-        leftIcon={
-          appStyle?.homePageLayout === 2 ? imagePath.backArrow : imagePath.back
-        }
         centerTitle={strings.CART}
-        headerStyle={
-          isDarkMode
-            ? {backgroundColor: MyDarkTheme.colors.background}
-            : {backgroundColor: colors.backgroundGrey}
-        }
+        leftIcon={imagePath.backArrow}
+        isRightText={cartItems && cartItems?.length}
+        onPressRightTxt={() => openClearCartModal()}
       />
       <View style={{height: 1, backgroundColor: colors.borderColorD}} />
       <View

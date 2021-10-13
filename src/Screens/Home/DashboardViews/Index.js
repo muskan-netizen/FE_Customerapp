@@ -10,3 +10,4 @@ export {default as DashBoardHeaderOne} from './DashBoardHeaderOne';
 export {default as DashBoardHeaderTwo} from './DashBoardHeaderTwo';
 export {default as DashBoardHeaderThree} from './DashBoardHeaderThree';
 export {default as DashBoardHeaderFive} from './DashBoardHeaderFive';
+export {default as TaxiHomeDashbord} from './TaxiHomeDashbord';

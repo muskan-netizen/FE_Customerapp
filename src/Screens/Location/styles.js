@@ -10,7 +10,7 @@ export default ({fontFamily}) => {
     detectLocation: {
       color: colors.black,
       fontFamily: fontFamily.bold,
-      fontSize: moderateScale(14),
+      fontSize: moderateScale(13),
       // textAlign: 'center',
       opacity: 0.8,
     },
@@ -41,7 +41,7 @@ export default ({fontFamily}) => {
       alignItems: 'center',
       flexDirection: 'row',
       marginHorizontal: moderateScale(15),
-      marginTop: moderateScaleVertical(60),
+      marginTop: moderateScaleVertical(70),
     },
   });
   return styles;

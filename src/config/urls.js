@@ -121,3 +121,6 @@ export const VENDOR_TABLE_CART = getApiUrl('/add/vendorTable/cart');
 
 export const SCHEDULE_ORDER = getApiUrl('/cart/schedule/update');
 export const MY_PENDING_ORDERS = getApiUrl('/my_pending_orders');
+export const DISPATCHER_URL = getApiUrl(
+  '/pickup-delivery/order-tracking-details',
+);

@@ -539,4 +539,12 @@ export default {
   ON_SALE: 'On Sale',
   YOUR_EMAIL_PHONE: 'Your Email or Phone Number',
   ATTACH_PRINTER: 'Attach Printer',
+  WHERETO: '  Where to ?',
+  AROUNDYOU: 'Around you',
+  PLEASESELECTONECATEGORY: 'Please Select One Category',
+  MYRIDES: 'My Rides',
+  PASTRIDES: 'Past Rides',
+  ACTIVERIDES: 'Active Rides',
+  CHOOSESAVEDPLACE: 'Choose a saved place',
+  SETPICKUPTIME: 'Set pickiup time',
 };
