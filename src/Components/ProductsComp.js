@@ -8,7 +8,7 @@ import {
   Image,
   Animated,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import {
   moderateScale,
@@ -18,8 +18,8 @@ import {
 } from '../styles/responsiveSize';
 import colors from '../styles/colors';
 import strings from '../constants/lang';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 import {
   getImageUrl,
   getScaleTransformationStyle,
@@ -27,12 +27,12 @@ import {
   pressOutAnimation,
 } from '../utils/helperFunctions';
 
-const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { } }) => {
+const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { themeColors, appStyle, currencies } = useSelector(
+  const {themeColors, appStyle, currencies} = useSelector(
     (state) => state?.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
@@ -62,12 +62,11 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { } }) => 
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <ImageBackground
-        source={{ uri: imageUrl }}
+        source={{uri: imageUrl}}
         style={{
           height: moderateScale(100),
           width: width / 2.5,
           ...imageStyle,
-
         }}
         imageStyle={{
           borderRadius: moderateScale(10),
@@ -75,7 +74,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { } }) => 
             ? colors.whiteOpacity15
             : colors.greyColor,
         }}>
-        {!!item?.averageRating && (
+        {!!item?.averageRating && item?.averageRating !== '0.0' && (
           <View style={styles.hdrRatingTxtView}>
             <Text
               style={{
@@ -92,7 +91,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { } }) => 
           </View>
         )}
       </ImageBackground>
-      <View style={{ marginVertical: moderateScaleVertical(6) }}>
+      <View style={{marginVertical: moderateScaleVertical(6)}}>
         <Text
           numberOfLines={1}
           style={{
@@ -116,8 +115,8 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { } }) => 
           {vendor?.name}
         </Text>
         {!isDiscount ? (
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <View style={{ flex: 0.5, alignItems: 'flex-start' }}>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <View style={{flex: 0.5, alignItems: 'flex-start'}}>
               {category?.category_detail?.translation[0]?.name && (
                 <Text
                   numberOfLines={1}
@@ -133,8 +132,8 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { } }) => 
                 </Text>
               )}
             </View>
-            <View style={{ marginHorizontal: 10 }} />
-            <View style={{ flex: 0.5, alignItems: 'flex-end' }}>
+            <View style={{marginHorizontal: 10}} />
+            <View style={{flex: 0.5, alignItems: 'flex-end'}}>
               <Text
                 numberOfLines={1}
                 style={{
@@ -162,7 +161,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { } }) => 
               }}>
               {strings.IN} {category?.category_detail?.translation[0]?.name}
             </Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text
                 style={{
                   fontSize: textScale(12),
