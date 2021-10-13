@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   ActivityIndicator,
   Platform,
-  StyleSheet,
   Text,
   View,
   Button,
@@ -14,23 +13,20 @@ import {
   Image,
   ToastAndroid
 } from 'react-native';
-import { BluetoothEscposPrinter, BluetoothManager } from "@brooons/react-native-bluetooth-escpos-printer";
-//  import fontFamily from './styles/fontFamily';
+import { BluetoothManager } from "@brooons/react-native-bluetooth-escpos-printer";
 import BackgroundService from 'react-native-background-actions';
 import AsyncStorage from '@react-native-community/async-storage';
 import stylesFun from './styles'
 import colors from '../../styles/colors';
 import commonStyles from '../../styles/commonStyles';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import Header from '../../Components/Header';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import imagePath from '../../constants/imagePath';
-import { arr, canEnablePrinter, initPrinter, printReciept, StartPrinting } from './PrinteFunc';
+import { printReciept } from './PrinteFunc';
 import _ from 'lodash'
 import ModalView from '../../Components/Modal';
 import { moderateScale } from '../../styles/responsiveSize';
 import { getItem } from '../../utils/utils';
-import { appData, language } from '../../../App';
 
 
 const styles = stylesFun();
@@ -100,7 +96,7 @@ class PrinterScreen extends Component {
   };
 
 
-  componentDidMount = async() => {//alert(BluetoothManager)
+  componentDidMount = async() => {
     // StartPrinting({})
     const getAppData = await getItem('appData');
     appData = getAppData
@@ -177,14 +173,12 @@ class PrinterScreen extends Component {
   }
 
   componentWillUnmount() {
-    //for (let ls in this._listeners) {
-    //    this._listeners[ls].remove();
-    //}
+
   }
 
   backgroundServiceInit = async () => {
     const veryIntensiveTask = async (taskDataArguments) => {
-      // Example of an infinite loop task
+      
       const { delay } = taskDataArguments;
       await new Promise(async (resolve) => {
         for (let i = 0; BackgroundService.isRunning(); i++) {
@@ -247,7 +241,6 @@ class PrinterScreen extends Component {
         type: 'mipmap',
       },
       color: '#ff00ff',
-      // linkingURI: 'yourSchemeHere://chat/jane', // See Deep Linking for more info
       parameters: {
         delay: 5,
       },
@@ -271,7 +264,7 @@ class PrinterScreen extends Component {
         var ss = s;
         var found = ss.found;
         try {
-          found = JSON.parse(found);//@FIX_it: the parse action too weired..
+          found = JSON.parse(found);
         } catch (e) {
           //ignore
         }
@@ -314,7 +307,7 @@ class PrinterScreen extends Component {
     }
   }
 
-  _deviceFoundEvent(rsp) {//alert(JSON.stringify(rsp))
+  _deviceFoundEvent(rsp) {
     var r = null;
     try {
       if (typeof (rsp.device) == "object") {
@@ -417,7 +410,7 @@ class PrinterScreen extends Component {
     for (let i in rows) {
       let row = rows[i];
       if (row.address) {
-        // console.log('checking ble device storage data >>>', row)
+ 
         items.push(
           <TouchableOpacity key={new Date().getTime() + i} style={styles.wtf} onPress={async () => {
             this.setState({
@@ -503,26 +496,6 @@ class PrinterScreen extends Component {
                   </TouchableOpacity>
                 )
               }
-
-              {/* <View style={styles.disconnectBtnView}>
-                <Button disabled={this.state.loading || !(this.state.bleOpend && this.state.boundAddress.length > 0)}
-                  title="Disconnect" onPress={async () => {
-                    await BluetoothManager.disconnect(this.state.boundAddress).then(async (s) => {
-                      this.setState({
-                        loading: false,
-                        boundAddress: '',
-                        name: ''
-                      })
-                      AsyncStorage.removeItem('BleDevice')
-                      await BackgroundService.stop();
-                    }, (e) => {
-                      this.setState({
-                        loading: false
-                      })
-                      alert(e);
-                    })
-                  }} />
-              </View> */}
 
               <Text style={styles.title}>Paired:</Text>
               {/* {this.state.loading ? (<ActivityIndicator animating={true} />) : null} */}

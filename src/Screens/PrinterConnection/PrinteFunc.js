@@ -114,7 +114,6 @@ export const printReciept = async (data) => {
         console.log('check start printing >>>> 6')
         try {
           await BluetoothEscposPrinter.printerInit();
-          // await BluetoothEscposPrinter.printerLeftSpace(0);
 
           const base64Data = await getBase64Image(`${detail.vendors[0].vendor.logo.image_fit}200/200${detail.vendors[0].vendor.logo.image_path}`)
 
@@ -194,14 +193,14 @@ export const printReciept = async (data) => {
 
           await BluetoothEscposPrinter.cutOnePoint();
 
-          console.log('check notifications length >>>> 9')
+          console.log('check start printing >>>> 9')
           setTimeout(() => {
             resolve(true)
           }, 1000);
 
         } catch (e) {
           alert(e.message || "ERROR");
-          console.log('check notifications length >>>> 12', e)
+          console.log('check start printing >>>> 12', e)
         }
       } else {
         canEnablePrinter = true
@@ -209,8 +208,8 @@ export const printReciept = async (data) => {
 
     }, (err) => {
       console.log(err)
-      console.log('check notifications length >>>> 11', err)
+      console.log('check start printing >>>> 11', err)
     });
-  }).catch(err => console.log('check error in primise>>', err))
+  }).catch(err => console.log('check start printing >>>>>> 12', err))
 
 }
