@@ -40,7 +40,6 @@ export default function ProductCard3({
     selectedIndex: -1,
     selectedIndexForCartIcon: -1,
   });
-  console.log(data, 'itemmmmmmmm');
   const {selectedIndex, selectedIndexForCartIcon} = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
