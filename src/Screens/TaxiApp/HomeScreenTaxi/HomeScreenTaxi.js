@@ -93,7 +93,7 @@ export default function HomeScreenTaxi({navigation, route}) {
     (state) => state?.initBoot,
   );
   const businessType = appStyle?.homePageLayout;
-    const appMainData = useSelector((state) => state?.home?.appMainData);
+  const appMainData = useSelector((state) => state?.home?.appMainData);
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const userData = useSelector((state) => state.auth.userData);
 
@@ -224,14 +224,17 @@ export default function HomeScreenTaxi({navigation, route}) {
   //       addressType: paramData?.addressType,
   //     });
   //   };
+  console.log(paramData, 'paramDataparamDataparamDataparamDataparamData');
 
   const moveToNewScreen =
-    (screenName, data = {}) =>
+    (screenName, data = {paramData}) =>
     () => {
-      const data = appMainData?.categories[0];
+      {
+        data;
+      }
       {
         userData?.auth_token
-          ? navigation.navigate(screenName, {data})
+          ? navigation.navigate(screenName, paramData)
           : navigation.navigate(navigationStrings.LOGIN);
       }
     };

@@ -345,20 +345,21 @@ export default function TaxiHomeScreen({route, navigation}) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
-        if (item?.warning_page_id) {
-          if (item?.warning_page_id == 2) {
-            moveToNewScreen(navigationStrings.DELIVERY, item)();
-          } else {
-            moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
-          }
-        } else {
-          if (item?.template_type_id == 1) {
-            moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
-          } else {
-            // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
-            moveToNewScreen(navigationStrings.ADDADDRESS, item)();
-          }
-        }
+        // if (item?.warning_page_id) {
+        //   if (item?.warning_page_id == 2) {
+        //     moveToNewScreen(navigationStrings.DELIVERY, item)();
+        //   } else {
+        //     moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
+        //   }
+        // } else {
+        //   if (item?.template_type_id == 1) {
+        //     moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
+        //   } else {
+        //     // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
+        //     moveToNewScreen(navigationStrings.ADDADDRESS, item)();
+        //   }
+        // }
+        moveToNewScreen(navigationStrings.ADDADDRESS, item)();
       } else {
         // showError(strings.UNAUTHORIZED_MESSAGE);
         moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
