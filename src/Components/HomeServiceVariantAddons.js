@@ -96,9 +96,11 @@ export default function HomeServiceVariantAddons({
     mode_of_service: productdetail?.mode_of_service,
     scheduleItemDateList: [],
     userSelectedTimeForSchedule: null,
+    timeMarkedQuestion: [],
   });
 
   const {
+    timeMarkedQuestion,
     totalItemsPrice,
     variantSet,
     addonSet,
@@ -269,10 +271,18 @@ export default function HomeServiceVariantAddons({
         console.log(res?.data, 'resssssDatatatatat');
         updateState({
           scheduleItemDateList: res?.data?.products[0]?.vendor_products,
+          timeMarkedQuestion: res?.data?.products[0]?.vendor_products.map(
+            (i, inx) => {
+              return timeforMarkedQuestion;
+            },
+          ),
         });
       })
       .catch(errorMethod);
   };
+  useEffect(() => {
+    console.log(timeMarkedQuestion, 'timeMarkedQuestion>timeMarkedQuestion');
+  }, [timeMarkedQuestion]);
 
   console.log(
     scheduleItemDateList,
@@ -907,6 +917,7 @@ export default function HomeServiceVariantAddons({
   };
 
   const _renderScheduleDateList = ({item, index}) => {
+    console.log(item?.id, 'item?.iditem?.iditem?.iditem?.iditem?.id');
     return item?.product?.mode_of_service === 'schedule' ? (
       <>
         <Text
@@ -918,7 +929,7 @@ export default function HomeServiceVariantAddons({
           {item?.product?.translation[0]?.title}
         </Text>
         <View>{showScheduleCalenderView()}</View>
-        {selectedDate ? <View>{showScheduleTimeView()}</View> : null}
+        <View>{showScheduleTimeView(item, index)}</View>
       </>
     ) : null;
   };
@@ -1083,20 +1094,42 @@ export default function HomeServiceVariantAddons({
     'selectedDateselectedDate',
   );
   const showAddonsAndSehedule = () => {};
-  const dateSelected = (item, selecteduserTime) => {
+  const dateSelected = (item, index, i, inx) => {
+    // let updatedArray = cloneDeep(scheduleItemDateList);
+    // console.log(updatedArray, 'updatedArray');
+    // updatedArray[index]['selected_time'] = item;
+
+    let updatedArrayTimeSelecttion = cloneDeep(timeMarkedQuestion);
+    console.log(
+      updatedArrayTimeSelecttion,
+      'updatedArrayTimeSelecttion>updatedArrayTimeSelecttion',
+    );
+    updatedArrayTimeSelecttion[inx].map((j, jnx) => {
+      delete j['selected_time'];
+      return j;
+    });
+
+    // console.log(updatedArrayTimeSelecttion, 'updatedArrayTimeSelecttion');
+    updatedArrayTimeSelecttion[inx][index]['selected_time'] = item;
+    console.log(updatedArrayTimeSelecttion, 'updatedArrayTimeSelecttion');
     updateState({
-      selectedTime: item,
-      userSelectedTimeForSchedule: item?.selectedTime,
+      // scheduleItemDateList: updatedArray,
+      timeMarkedQuestion: updatedArrayTimeSelecttion,
+      // selectedTime: item,
+      // userSelectedTimeForSchedule: item?.selectedTime,
     });
   };
-  console.log(selectedTime, 'selecteTime');
-  const renderCardComponentSecond = ({item, index}) => {
+  useEffect(() => {
+    console.log(scheduleItemDateList, 'array after upadte');
+    console.log(timeforMarkedQuestion, 'array time after upadte');
+  }, [timeforMarkedQuestion, scheduleItemDateList]);
+  const renderCardComponentSecond = (item, index, i, inx) => {
     // let {visible, selectedTime, searchArray, selectService, cartItems} =
     //   this.state;
-
+    console.log(item, 'scheduleItemDateList[inx]');
     return (
       <TouchableOpacity
-        onPress={() => dateSelected(item)}
+        onPress={() => dateSelected(item, index, i, inx)}
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
@@ -1106,7 +1139,7 @@ export default function HomeServiceVariantAddons({
 
           height: moderateScale(30),
           backgroundColor:
-            selectedTime && selectedTime == item
+            item?.selected_time && item?.selected_time == item
               ? themeColors.primary_color
               : colors.grey2,
         }}>
@@ -1115,7 +1148,7 @@ export default function HomeServiceVariantAddons({
             styles.value,
             {
               color:
-                selectedTime && selectedTime == item
+                item?.selected_time && item?.selected_time == item
                   ? colors.white
                   : colors.textGrey,
               fontSize: textScale(14),
@@ -1127,21 +1160,20 @@ export default function HomeServiceVariantAddons({
       </TouchableOpacity>
     );
   };
+  console.log(new Date(), 'new Date()new Date()new Date()');
 
   const showScheduleCalenderView = () => {
     return (
       <CalanderStrip
         scrollable
         highlightDateContainerStyle={{
-          backgroundColor: selectedDate
-            ? themeColors.primary_color
-            : colors.white,
+          backgroundColor: themeColors.primary_color,
         }}
         highlightDateNameStyle={{
-          color: selectedDate ? colors.white : colors.black,
+          color: colors.white,
         }}
         highlightDateNumberStyle={{
-          color: selectedDate ? colors.white : colors.black,
+          color: colors.white,
         }}
         dateNameStyle={{
           color: colors.black,
@@ -1161,7 +1193,7 @@ export default function HomeServiceVariantAddons({
     );
   };
 
-  const showScheduleTimeView = () => {
+  const showScheduleTimeView = (i, inx) => {
     console.log(
       timeforMarkedQuestion.length,
       timeforMarkedQuestion,
@@ -1185,9 +1217,11 @@ export default function HomeServiceVariantAddons({
             </View>
             <FlatList
               keyExtractor={(item, index) => String(index)}
-              extraData={timeforMarkedQuestion ? timeforMarkedQuestion : []}
-              data={timeforMarkedQuestion}
-              renderItem={renderCardComponentSecond}
+              extraData={[timeMarkedQuestion, scheduleItemDateList]}
+              data={timeMarkedQuestion[inx]}
+              renderItem={({item, index}) =>
+                renderCardComponentSecond(item, index, i, inx)
+              }
               // ref={(ref) => (this.timingRef = ref)}
               removeClippedSubviews={false}
               enableEmptySections={false}
@@ -1337,6 +1371,7 @@ export default function HomeServiceVariantAddons({
               />
               {timeModalVisable ? (
                 <FlatList
+                  extraData={[scheduleItemDateList]}
                   data={scheduleItemDateList}
                   renderItem={_renderScheduleDateList}
                   ItemSeparatorComponent={() => (
