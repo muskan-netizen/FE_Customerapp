@@ -69,8 +69,11 @@ export default function DashBoardFive({
     (state) => state?.initBoot,
   );
 
+  console.log('app main data+++++++', appMainData)
+
   const allCategory = appMainData?.categories;
   const checkForBrand = allCategory && allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
+  console.log("checkForBrand", checkForBrand)
   // const {bannerRef} = useRef();
   const { slider1ActiveSlide, vendorsData } = state;
   const fontFamily = appStyle?.fontSizeData;
@@ -84,11 +87,16 @@ export default function DashBoardFive({
       updateState({
         vendorsData: appMainData?.vendors.filter((item, indx) => indx < 4),
       });
+      return;
     }
+    updateState({
+      vendorsData: [],
+    });
+
   }, [appMainData?.vendors]);
 
   const _renderItem = ({ item }) => (
-    <View style={{width: '25%'}}>
+    <View style={{ width: '25%' }}>
       <HomeCategoryCard2
         data={item}
         onPress={() => onPressCategory(item)}
@@ -115,7 +123,7 @@ export default function DashBoardFive({
       item.image_mobile.image_path || item.image.image_path,
       '500/1000',
     );
- 
+
     return (
       <TouchableOpacity
         activeOpacity={0.8}
@@ -290,7 +298,8 @@ export default function DashBoardFive({
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1 }}>
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
         {/* <SearchLoader viewStyles={{marginTop: moderateScale(15)}} /> */}
         <CategoryLoader2 viewStyles={{ marginTop: moderateScale(25) }} />
         <CategoryLoader2 viewStyles={{ marginTop: moderateScale(35) }} />
@@ -392,8 +401,9 @@ export default function DashBoardFive({
           {vendorsData && !!vendorsData?.length && (
             <>
               <FlatList
+                scrollEnabled={false}
                 ListHeaderComponent={() =>
-                  listHeader(strings.EXPLORE_STORES, appMainData?.vendors, true)
+                  listHeader(strings.EXPLORE_STORES, appMainData.vendors, true)
                 }
                 showsVerticalScrollIndicator={false}
                 alwaysBounceVertical={true}
@@ -407,7 +417,7 @@ export default function DashBoardFive({
                 )}
               />
 
-              {checkForBrand  && <View style={{}}>
+              {checkForBrand && <View style={{}}>
                 {appMainData &&
                   appMainData?.brands &&
                   !!appMainData?.brands.length && (

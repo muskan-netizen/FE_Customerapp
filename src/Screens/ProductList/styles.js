@@ -86,7 +86,7 @@ export default ({themeColors, fontFamily}) =>
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingHorizontal: moderateScale(8),
-      height: 42,
+      // height: 42,
       marginTop: StatusBarHeight - 10,
     },
 
@@ -196,4 +196,9 @@ export default ({themeColors, fontFamily}) =>
       marginLeft: moderateScale(5),
       textAlign: 'left',
     },
+    categoryStyle: {
+      paddingLeft: moderateScale(8),
+      paddingRight: moderateScale(8),
+      marginTop: moderateScaleVertical(5),
+    }
   });
