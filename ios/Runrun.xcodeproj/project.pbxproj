@@ -3459,6 +3459,7 @@
 		A62BEE3282BD29747E28F623 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		A68B9E24E0B4BF8120E5A80D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		A7C92FD1FFCF542E4F4A97AE /* libPods-YogoLift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE984A8FEFAB991127B24EE2 /* libPods-YogoLift.a */; };
+		A7E062EBA0533610A71C422E /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A68C19B6E5486C0263DA8C6A /* libPods-RoyoOrder.a */; };
 		AA4AEAAFEF66FB1E1197E72B /* libPods-Drus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D576E1940EC9FBFAD23F10B /* libPods-Drus.a */; };
 		AA727695876EEE7000C2FE74 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		AD2A4EB4A64E235203E7D452 /* libPods-Getme.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E6E9B5B09D8D72F92A494C1 /* libPods-Getme.a */; };
@@ -3485,6 +3486,7 @@
 		D5672F13989C61DFEEEA4ED4 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		D769A63C697DB69C328C275E /* libPods-LoopWhole.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06D2A72845384D70BCE374B4 /* libPods-LoopWhole.a */; };
 		D8FEB8B6CB7A18AF9C30BC87 /* libPods-Ridemate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9331098347B7CC6D873281D /* libPods-Ridemate.a */; };
+		DBFC49238652ABF3716FFEDE /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB06615C5521C48C4BB9B5A2 /* libPods-RoyoOrder.a */; };
 		DC9BBDAE01A6B6FA3638AE8F /* libPods-Spidbi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5BB937C3468CBF2C584F46 /* libPods-Spidbi.a */; };
 		DD15112FAC9428A826401C22 /* libPods-Vecto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DDDE7C59E5BDC61EBD4EF6F /* libPods-Vecto.a */; };
 		E2007FF93D3E36598A25BA5A /* libPods-Carlitoo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 696523BCBE5AF4679CD7DA2B /* libPods-Carlitoo.a */; };
@@ -4458,6 +4460,7 @@
 		A4919B5F71E5035DE3BCA416 /* Pods-UFood.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UFood.release.xcconfig"; path = "Target Support Files/Pods-UFood/Pods-UFood.release.xcconfig"; sourceTree = "<group>"; };
 		A50E47287C1B72C9096CC6AF /* libPods-Tranzit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tranzit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A66A52E03971E1C2897866B8 /* Pods-Goody.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goody.debug.xcconfig"; path = "Target Support Files/Pods-Goody/Pods-Goody.debug.xcconfig"; sourceTree = "<group>"; };
+		A68C19B6E5486C0263DA8C6A /* libPods-RoyoOrder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RoyoOrder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6C1B74E0163450460DC7387 /* Pods-eBOYO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eBOYO.debug.xcconfig"; path = "Target Support Files/Pods-eBOYO/Pods-eBOYO.debug.xcconfig"; sourceTree = "<group>"; };
 		A83AC1A31F7ED13B26669D84 /* Pods-Specialhalal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specialhalal.debug.xcconfig"; path = "Target Support Files/Pods-Specialhalal/Pods-Specialhalal.debug.xcconfig"; sourceTree = "<group>"; };
 		A8DAE54260A542851E43437F /* Pods-Yoho.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yoho.debug.xcconfig"; path = "Target Support Files/Pods-Yoho/Pods-Yoho.debug.xcconfig"; sourceTree = "<group>"; };
@@ -4487,6 +4490,7 @@
 		C4FB3EAF9103564ABBF0D76A /* libPods-GoKab.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GoKab.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5012EFE408B3FA5CDFEEF51 /* Pods-UFood.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UFood.debug.xcconfig"; path = "Target Support Files/Pods-UFood/Pods-UFood.debug.xcconfig"; sourceTree = "<group>"; };
 		C67CAF9031627E03996F22C1 /* Pods-Carlitoo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Carlitoo.release.xcconfig"; path = "Target Support Files/Pods-Carlitoo/Pods-Carlitoo.release.xcconfig"; sourceTree = "<group>"; };
+		C6B5F17E75EBAF5F216CB99D /* libPods-RoyoOrder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RoyoOrder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C710EDE624BEC9C17B1B4C54 /* Pods-Getme.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Getme.release.xcconfig"; path = "Target Support Files/Pods-Getme/Pods-Getme.release.xcconfig"; sourceTree = "<group>"; };
 		C756A8235ECA1113DFB033B8 /* Pods-eBOYO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eBOYO.release.xcconfig"; path = "Target Support Files/Pods-eBOYO/Pods-eBOYO.release.xcconfig"; sourceTree = "<group>"; };
 		C786BF525810D58AA69050E3 /* libPods-Servze.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Servze.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4544,6 +4548,7 @@
 		E97ED6DEF3BDC0E6B7D4ED3A /* Pods-LastMinuteDress.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastMinuteDress.release.xcconfig"; path = "Target Support Files/Pods-LastMinuteDress/Pods-LastMinuteDress.release.xcconfig"; sourceTree = "<group>"; };
 		E9BD5F3ECF465C03C516C8C3 /* Pods-MartiniOnWheels.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MartiniOnWheels.debug.xcconfig"; path = "Target Support Files/Pods-MartiniOnWheels/Pods-MartiniOnWheels.debug.xcconfig"; sourceTree = "<group>"; };
 		EA1BAA7F2B851A3F62C20899 /* Pods-WashValley.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WashValley.release.xcconfig"; path = "Target Support Files/Pods-WashValley/Pods-WashValley.release.xcconfig"; sourceTree = "<group>"; };
+		EB06615C5521C48C4BB9B5A2 /* libPods-RoyoOrder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RoyoOrder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC12B7850FBE00A1BE07D628 /* libPods-ClickEat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ClickEat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECF3425057A2BD6BB4944AA9 /* libPods-MartiniOnWheels.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MartiniOnWheels.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -10350,9 +10355,9 @@
 						ProvisioningStyle = Automatic;
 					};
 					8442C9EF265D1A7A00EDB001 = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = 6852A48TRM;
 						LastSwiftMigration = 1240;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					8447E34D26DF950500A23425 = {
 						DevelopmentTeam = 6FXUMT5X23;
@@ -34708,10 +34713,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Tranzit.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = 6852A48TRM;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -34725,7 +34730,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = Tranzitprovision;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tranzit-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;

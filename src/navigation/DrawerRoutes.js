@@ -24,10 +24,12 @@ export default function DrawerRoutes(props) {
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const appMainData = useSelector((state) => state?.home?.appMainData);
 
+ 
   const {shortCodeStatus, appStyle, appData} = useSelector(
     (state) => state?.initBoot,
   );
-  const businessType = appData?.profile?.preferences?.business_type;
+  console.log(appStyle,"appStyle>appStyle>appStyle>appStyle>");
+  const businessType = appStyle?.homePageLayout;  
 
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;
@@ -106,9 +108,9 @@ export default function DrawerRoutes(props) {
       /> */}
 
       <Drawer.Screen
-        component={businessType === 'taxi' ? TaxiTabRoutes : TabRoutes}
+        component={businessType === 4 ? TaxiTabRoutes : TabRoutes}
         name={
-          businessType === 'taxi'
+          businessType === 4
             ? navigationStrings.TAXITABROUTES
             : navigationStrings.TAB_ROUTES
         }

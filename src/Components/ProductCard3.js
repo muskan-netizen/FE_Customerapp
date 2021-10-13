@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import FastImage from 'react-native-fast-image';
 import {UIActivityIndicator} from 'react-native-indicators';
 import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
@@ -40,7 +41,6 @@ export default function ProductCard3({
     selectedIndex: -1,
     selectedIndexForCartIcon: -1,
   });
-  console.log(data, 'itemmmmmmmm');
   const {selectedIndex, selectedIndexForCartIcon} = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -109,22 +109,14 @@ export default function ProductCard3({
               margin: 2,
               borderRadius: moderateScale(15),
             }}>
-            <BlurImages
-              isDarkMode={isDarkMode}
-              themeColor={themeColors.primary_color}
+            <FastImage
               style={{
                 ...styles.imgStyle,
                 backgroundColor: isDarkMode
                   ? colors.whiteOpacity15
                   : colors.greyColor,
               }}
-              containerStyle={{borderRadius: moderateScale(15)}}
-              thumnailUrl={{
-                uri: getImage('20/20'),
-              }}
-              originalUrl={{
-                uri: getImage('800/400'),
-              }}
+              source={{uri: getImage('800/400')}}
             />
           </TouchableOpacity>
         </Animatable.View>

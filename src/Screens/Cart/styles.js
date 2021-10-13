@@ -257,8 +257,8 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     paymentView: {
       marginVertical:
         Platform.OS === 'ios'
-          ? moderateScaleVertical(40)
-          : moderateScaleVertical(50),
+          ? moderateScaleVertical(16)
+          : moderateScaleVertical(26),
       marginHorizontal: moderateScale(10),
       justifyContent: 'space-between',
       flex: 1,
@@ -414,6 +414,10 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       marginVertical: moderateScaleVertical(10),
       marginBottom: moderateScaleVertical(10),
       zIndex: 1000,
+    },
+    suggetionView: {
+      marginHorizontal: moderateScale(20),
+      marginBottom: moderateScaleVertical(16),
     },
   });
   return styles;

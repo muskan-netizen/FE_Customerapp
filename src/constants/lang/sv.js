@@ -524,4 +524,7 @@ export default {
   TABLE: 'Tabell',
   SEAT_CAPACITY: 'Sittkapacitet',
   WRITE_REVIEW: 'Skriv en recension',
+  CLEAR_SCHEDULE_DATE: 'Clear Schedule Date',
+  FREQUENTLY_BOUGHT_TOGETHER: 'Frequently Bought Together',
+  YOU_MIGHT_INTERESTED: 'You Might Be Interested In',
 };

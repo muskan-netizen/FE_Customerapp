@@ -42,17 +42,16 @@ import navigationStrings from './navigationStrings';
 const Stack = createStackNavigator();
 export default function () {
   const {appStyle, appData} = useSelector((state) => state?.initBoot);
-  const businessType = appData?.profile?.preferences?.business_type;
-
+  const businessType = appStyle?.homePageLayout;
   return (
     <Stack.Navigator>
       <Stack.Screen
         name={
-          businessType === 'taxi'
+          businessType === 4
             ? navigationStrings.TAXIHOMESCREEN
             : navigationStrings.HOME
         }
-        component={businessType === 'taxi' ? TaxiHomeScreen : Home}
+        component={businessType === 4 ? TaxiHomeScreen : Home}
         options={{headerShown: false}}
       />
 

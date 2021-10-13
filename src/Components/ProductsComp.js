@@ -68,8 +68,13 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
           width: width / 2.5,
           ...imageStyle,
         }}
-        imageStyle={{borderRadius: moderateScale(10)}}>
-        {!!item?.averageRating && (
+        imageStyle={{
+          borderRadius: moderateScale(10),
+          backgroundColor: isDarkMode
+            ? colors.whiteOpacity15
+            : colors.greyColor,
+        }}>
+        {!!item?.averageRating && item?.averageRating !== '0.0' && (
           <View style={styles.hdrRatingTxtView}>
             <Text
               style={{
