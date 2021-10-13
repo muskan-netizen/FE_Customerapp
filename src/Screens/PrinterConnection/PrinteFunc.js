@@ -1,4 +1,5 @@
 import { BluetoothEscposPrinter, BluetoothManager } from "@brooons/react-native-bluetooth-escpos-printer";
+import { Platform } from "react-native";
 import RNFetchBlob from "rn-fetch-blob-v2";
 import { appData, language } from "../../../App";
 import actions from "../../redux/actions";
@@ -35,14 +36,16 @@ const _getOrderDetails = async (_data) => {
 
 /** @function : Queuing the jobs for printing in sequence */
 export const StartPrinting = (_data) => {
-  console.log('check start printing >>>>', _data)
-  // arr.push({"item_count":3,"payment_option_title":"Cash On Delivery","total_discount":"0.00","address":{"address":"5, Madhya Marg, 28B, Sector 28B, Chandigarh, 160028, India","user_id":1,"id":77},"order_number":"02437024","address_id":77,"payment_option_id":1,"total_delivery_fee":"0.00","user_id":1,"total_amount":13,"id":391,"loyalty_amount_saved":"2.75","payable_amount":"10.25","taxable_amount":"0.00","vendors":[{"vendor":{"name":"La Fresca de Italia","id":2,"auto_accept_order":0},"vendor_id":2,"id":402,"order_id":391,"products":[{"addon":[],"product_id":71,"order_vendor_id":402,"variant":[{"quantity":12,"product_id":71,"id":85,"sku":"LA113","title":null}],"id":450,"product_name":" Buckhorn Burger","order_id":391},{"addon":[],"product_id":72,"order_vendor_id":402,"variant":[{"quantity":12,"product_id":72,"id":86,"sku":"LA114","title":null}],"id":451,"product_name":"Ham Sandwich","order_id":391},{"addon":[],"product_id":73,"order_vendor_id":402,"variant":[{"quantity":12,"product_id":73,"id":87,"sku":"LA115","title":null}],"id":452,"product_name":"Quesadilla","order_id":391}]}],"user":{"timezone":"Asia\/Kolkata","name":"Pankaj Pundir","id":1}})
+  if (Platform.OS === 'android') {
+    console.log('check start printing >>>>', _data)
+    // arr.push({"item_count":3,"payment_option_title":"Cash On Delivery","total_discount":"0.00","address":{"address":"5, Madhya Marg, 28B, Sector 28B, Chandigarh, 160028, India","user_id":1,"id":77},"order_number":"02437024","address_id":77,"payment_option_id":1,"total_delivery_fee":"0.00","user_id":1,"total_amount":13,"id":391,"loyalty_amount_saved":"2.75","payable_amount":"10.25","taxable_amount":"0.00","vendors":[{"vendor":{"name":"La Fresca de Italia","id":2,"auto_accept_order":0},"vendor_id":2,"id":402,"order_id":391,"products":[{"addon":[],"product_id":71,"order_vendor_id":402,"variant":[{"quantity":12,"product_id":71,"id":85,"sku":"LA113","title":null}],"id":450,"product_name":" Buckhorn Burger","order_id":391},{"addon":[],"product_id":72,"order_vendor_id":402,"variant":[{"quantity":12,"product_id":72,"id":86,"sku":"LA114","title":null}],"id":451,"product_name":"Ham Sandwich","order_id":391},{"addon":[],"product_id":73,"order_vendor_id":402,"variant":[{"quantity":12,"product_id":73,"id":87,"sku":"LA115","title":null}],"id":452,"product_name":"Quesadilla","order_id":391}]}],"user":{"timezone":"Asia\/Kolkata","name":"Pankaj Pundir","id":1}})
 
-  arr.push(_data)
+    arr.push(_data)
 
-  if (canEnablePrinter) {
-    console.log('check start printing >>>> 1')
-    initPrinter()
+    if (canEnablePrinter) {
+      console.log('check start printing >>>> 1')
+      initPrinter()
+    }
   }
 }
 

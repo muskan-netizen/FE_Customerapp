@@ -100,7 +100,9 @@ export default function BrandCard2({ data = {}, onPress = () => { } }) {
 
 const styles = StyleSheet.create({
   imgContainer: {
-    flex: 1,
+    // flex: 1,
+    marginRight: '3%',
+    width: '31%',
   },
   imgStyle: {
     height: moderateScale(80),

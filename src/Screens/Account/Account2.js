@@ -42,8 +42,8 @@ export default function Account2({navigation}) {
   const {shortCodeStatus, themeColors, appStyle, appData} = useSelector(
     (state) => state?.initBoot,
   );
-  const businessType = appData?.profile?.preferences?.business_type;
-  const fontFamily = appStyle?.fontSizeData;
+  const businessType = appStyle?.homePageLayout;
+    const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
   const commonStyles = commonStylesFun({fontFamily});
 
@@ -220,7 +220,7 @@ export default function Account2({navigation}) {
           </TouchableOpacity>
         )} */}
         {!!userData?.auth_token &&
-          (businessType == 'taxi' ? null : (
+          (businessType == 4 ? null : (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -289,7 +289,7 @@ export default function Account2({navigation}) {
           />
         )}
         {!!userData?.auth_token &&
-          (businessType == 'taxi' ? null : (
+          (businessType == 4 ? null : (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
@@ -365,7 +365,7 @@ export default function Account2({navigation}) {
 
         {!!userData?.auth_token &&
         !!appMainData?.is_admin &&
-        businessType == 'taxi' ? null : (
+        businessType == 4 ? null : (
           <ListItemHorizontal
             centerContainerStyle={{flexDirection: 'row'}}
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}

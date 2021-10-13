@@ -409,13 +409,15 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                   />
                 </View>
                 {!!item?.product_rating && (
-                  <TouchableOpacity hitSlop={{top:100,bottom:100,left:125,right:125}} onPress={() => rateYourOrder(item)}>
+                  <TouchableOpacity
+                    hitSlop={{top: 100, bottom: 100, left: 125, right: 125}}
+                    onPress={() => rateYourOrder(item)}>
                     <Text
                       style={{
                         marginVertical: moderateScaleVertical(20),
                         textAlign: 'center',
-                        fontSize:moderateScale(14),
-                        fontFamily:fontFamily.medium
+                        fontSize: moderateScale(14),
+                        fontFamily: fontFamily.medium,
                       }}>
                       {strings.WRITE_A_REVIEW}
                     </Text>
@@ -575,6 +577,8 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                   paramData?.fromCab
                     ? () =>
                         navigation.navigate(navigationStrings.TAXIHOMESCREEN)
+                    : paramData?.pickup_taxi
+                    ? ()=>navigation.navigate(navigationStrings.HOME)
                     : () => navigation.goBack()
                   // () => navigation.navigate(navigationStrings.TAXIHOMESCREEN)
                 }>

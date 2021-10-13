@@ -43,6 +43,7 @@ export default function HomeScreenTaxi({navigation, route}) {
   const mapRef = React.createRef();
   const paramData = route?.params;
 
+  console.log(paramData, 'paramData>paramData>paramData');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -91,8 +92,8 @@ export default function HomeScreenTaxi({navigation, route}) {
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-  const businessType = appData?.profile?.preferences?.business_type;
-  const appMainData = useSelector((state) => state?.home?.appMainData);
+  const businessType = appStyle?.homePageLayout;
+    const appMainData = useSelector((state) => state?.home?.appMainData);
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const userData = useSelector((state) => state.auth.userData);
 
@@ -450,7 +451,7 @@ export default function HomeScreenTaxi({navigation, route}) {
           /> */}
       </MapView>
       <View style={[styles.backbutton, {marginHorizontal: moderateScale(15)}]}>
-        {businessType === 'taxi' ? null : (
+        {businessType === 4 ? null : (
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <View
               style={{
@@ -473,11 +474,11 @@ export default function HomeScreenTaxi({navigation, route}) {
           </TouchableOpacity>
         )}
       </View>
-      {businessType === 'taxi' ? null : (
+      {/* {businessType === 4 ? null : (
         <View style={styles.userAccountImageStyle}>
           <Image source={imagePath.taxiUserAccount} />
         </View>
-      )}
+      )} */}
 
       <View
         style={{

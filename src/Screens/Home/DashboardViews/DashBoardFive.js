@@ -41,6 +41,7 @@ import {
   pressOutAnimation,
 } from '../../../utils/helperFunctions';
 import { useScrollToTop } from '@react-navigation/native';
+import staticStrings from '../../../constants/staticStrings';
 
 export default function DashBoardFive({
   handleRefresh = () => { },
@@ -68,6 +69,8 @@ export default function DashBoardFive({
     (state) => state?.initBoot,
   );
 
+  const allCategory = appMainData?.categories;
+  const checkForBrand = allCategory && allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
   // const {bannerRef} = useRef();
   const { slider1ActiveSlide, vendorsData } = state;
   const fontFamily = appStyle?.fontSizeData;
@@ -85,7 +88,7 @@ export default function DashBoardFive({
   }, [appMainData?.vendors]);
 
   const _renderItem = ({ item }) => (
-    <View style={{ flex: 1 }}>
+    <View style={{width: '25%'}}>
       <HomeCategoryCard2
         data={item}
         onPress={() => onPressCategory(item)}
@@ -112,7 +115,7 @@ export default function DashBoardFive({
       item.image_mobile.image_path || item.image.image_path,
       '500/1000',
     );
-    console.log("image url+++", imageUrl)
+ 
     return (
       <TouchableOpacity
         activeOpacity={0.8}
@@ -404,7 +407,7 @@ export default function DashBoardFive({
                 )}
               />
 
-              <View style={{}}>
+              {checkForBrand  && <View style={{}}>
                 {appMainData &&
                   appMainData?.brands &&
                   !!appMainData?.brands.length && (
@@ -428,7 +431,7 @@ export default function DashBoardFive({
                       />
                     </>
                   )}
-              </View>
+              </View>}
             </>
           )}
 

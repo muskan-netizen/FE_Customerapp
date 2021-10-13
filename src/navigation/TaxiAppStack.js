@@ -13,7 +13,7 @@ import {
 
 import VerifyAccountSecond from '../Screens/VerifyAccountSecond/VerifyAccount';
 import navigationStrings from './navigationStrings';
-ChooseCarTypeAndTimeTaxi;
+// ChooseCarTypeAndTimeTaxi;
 
 export default function (Stack) {
   return (

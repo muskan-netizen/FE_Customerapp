@@ -59,6 +59,7 @@ import {
   getParameterByName,
   showError,
   showSuccess,
+  timeInLocalLangauge,
 } from '../../utils/helperFunctions';
 import { getItem, removeItem, setItem } from '../../utils/utils';
 import stylesFun from './styles';
@@ -305,7 +306,19 @@ export default function Cart({ navigation, route }) {
       )
       .then((res) => {
         actions.cartItemQty(res);
-        console.log(res, 'cart details>>>');
+        console.log(res.data, 'cart details>>>');
+        let checkDate = !!res?.data?.scheduled_date_time
+        if (!!checkDate && res.data.schedule_type == 'schedule') {
+          let formatDate = new Date(res?.data?.scheduled_date_time)
+          updateState({
+            localeSheduledOrderDate: timeInLocalLangauge(formatDate, selectedLanguage)
+          })
+        }else{
+          updateState({
+            scheduleType: 'now',
+            localeSheduledOrderDate: null
+          })
+        }
         updateState({
           isRefreshing: false,
           isLoadingB: false,
@@ -349,6 +362,9 @@ export default function Cart({ navigation, route }) {
             isLoadingB: false,
             isRefreshing: false,
           });
+          if(!res.data.schedule_type){ //if schedule type is null then hit the api again with now option
+            setDateAndTimeSchedule()
+          }
         } else {
           updateState({
             cartData: {},
@@ -567,6 +583,7 @@ export default function Cart({ navigation, route }) {
   };
 
   const setDateAndTimeSchedule = () => {
+    console.log("setDateAndTimeSchedule", scheduleType)
     let data = {};
     data['task_type'] = scheduleType;
     data['schedule_dt'] =
@@ -582,6 +599,7 @@ export default function Cart({ navigation, route }) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        getCartDetail();
         updateState({
           isLoadingB: false,
         });
@@ -620,7 +638,7 @@ export default function Cart({ navigation, route }) {
       // } else if (d1.getTime() >= d2.getTime()) {
       //   showError(strings.INVALID_SCHEDULED_DATE);
       // }
-      else if (!(sheduledorderdate || selectedTimeOption)) {
+      else if (false) { //(!(sheduledorderdate && selectedTimeOption))
         showError(strings.PLEASE_SELECT_ORDER_TYPE);
       } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
         showError(strings.INVALID_SCHEDULED_DATE);
@@ -808,15 +826,21 @@ export default function Cart({ navigation, route }) {
     }
   };
 
+  const clearSceduleDate = async () => {
+    updateState({
+      scheduleType: 'now',
+      localeSheduledOrderDate: null,
+      sheduledorderdate: null
+    });
+  }
+
 
   useEffect(() => {
-
     if (
       scheduleType != null &&
       scheduleType == 'now' &&
       !!checkCartItem?.data
     ) {
-      alert("schedulte type hit")
       setDateAndTimeSchedule();
     }
   }, [scheduleType]);
@@ -1858,41 +1882,60 @@ export default function Cart({ navigation, route }) {
           </View>
         ) : null} */}
 
-        {!!cartData?.deliver_status && (
-          <View
-            pointerEvents={placeLoader ? 'none' : 'auto'}
-            style={styles.paymentView}>
-            {userData?.auth_token && (
-              <ButtonComponent
-                onPress={_selectTime}
-                btnText={
-                  localeSheduledOrderDate
-                    ? localeSheduledOrderDate
-                    : strings.SCHEDULE_ORDER
-                }
-                borderRadius={moderateScale(13)}
-                textStyle={{ color: themeColors.primary_color }}
-                containerStyle={{
-                  ...styles.placeOrderButtonStyle,
-                  backgroundColor: colors.transparent,
-                  borderColor: themeColors.primary_color,
-                  borderWidth: 0.8,
-                }}
-              />
-            )}
 
-            <ButtonComponent
-              onPress={() => {
-                placeOrder();
-              }}
-              btnText={strings.PLACE_ORDER}
-              borderRadius={moderateScale(13)}
-              textStyle={{ color: colors.white }}
-              containerStyle={styles.placeOrderButtonStyle}
-              placeLoader={placeLoader}
-            />
-          </View>
-        )}
+        {scheduleType == 'schedule' && (<TouchableOpacity
+          style={{ 
+            marginTop: moderateScale(16), 
+            marginLeft: moderateScale(16), 
+            alignSelf:'flex-start',
+           }}
+          onPress={clearSceduleDate}
+        >
+          <Text style={{
+            fontFamily: fontFamily?.bold,
+            color: themeColors.primary_color,
+            textAlign: 'left'
+          }}>Clear Schedule Date</Text>
+        </TouchableOpacity>)
+        }
+
+        {
+          !!cartData?.deliver_status && (
+            <View
+              pointerEvents={placeLoader ? 'none' : 'auto'}
+              style={styles.paymentView}>
+              {userData?.auth_token && (
+                <ButtonComponent
+                  onPress={_selectTime}
+                  btnText={
+                    localeSheduledOrderDate
+                      ? localeSheduledOrderDate
+                      : strings.SCHEDULE_ORDER
+                  }
+                  borderRadius={moderateScale(13)}
+                  textStyle={{ color: themeColors.primary_color }}
+                  containerStyle={{
+                    ...styles.placeOrderButtonStyle,
+                    backgroundColor: colors.transparent,
+                    borderColor: themeColors.primary_color,
+                    borderWidth: 0.8,
+                  }}
+                />
+              )}
+
+              <ButtonComponent
+                onPress={() => {
+                  placeOrder();
+                }}
+                btnText={strings.PLACE_ORDER}
+                borderRadius={moderateScale(13)}
+                textStyle={{ color: colors.white }}
+                containerStyle={styles.placeOrderButtonStyle}
+                placeLoader={placeLoader}
+              />
+            </View>
+          )
+        }
         <View
           style={{
             height: moderateScaleVertical(65),

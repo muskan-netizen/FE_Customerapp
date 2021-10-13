@@ -4,6 +4,7 @@ import {
   Alert,
   I18nManager,
   Image,
+  Platform,
   ScrollView,
   Share,
   Text,
@@ -44,8 +45,8 @@ export default function Account3({ navigation }) {
     (state) => state?.initBoot,
   );
 
-  const businessType = appData?.profile?.preferences?.business_type;
-  const [state, setState] = useState({
+  const businessType = appStyle?.homePageLayout; 
+   const [state, setState] = useState({
     isLoading: false,
   });
 
@@ -280,7 +281,7 @@ export default function Account3({ navigation }) {
           </TouchableOpacity>
         )} */}
           {!!userData?.auth_token &&
-            (businessType == 'taxi' ? null : (
+            (businessType == 4 ? null : (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
                 leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -361,7 +362,7 @@ export default function Account3({ navigation }) {
             />
           )}
           {!!userData?.auth_token &&
-            (businessType == 'taxi' ? null : (
+            (businessType == 4 ? null : (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
                 leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
@@ -423,7 +424,7 @@ export default function Account3({ navigation }) {
           // iconRight={imagePath.goRight}
           // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
-          {!!userData?.auth_token &&
+          {((!!userData?.auth_token) && Platform.OS === 'android') &&
             (businessType == 'taxi' ? null : (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
@@ -484,7 +485,7 @@ export default function Account3({ navigation }) {
 
           {!!userData?.auth_token &&
             !!appMainData?.is_admin &&
-            businessType === null && (
+            businessType === 4 && (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
                 leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
