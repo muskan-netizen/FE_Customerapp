@@ -213,7 +213,10 @@ export default function MyOrders({navigation}) {
   };
 
   const onPressViewEditAndReplace = (item) => {
-    item?.product_details[0]?.category_type == staticStrings.PICKUPANDDELIEVRY
+    console.log(item, 'item>');
+    item?.product_details[0]?.category_type ==
+      staticStrings.PICKUPANDDELIEVRY ||
+    item?.product_details[0]?.category_type == staticStrings.ONDEMANDSERVICE
       ? navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
           orderId: item?.order_id,
           fromVendorApp: true,
