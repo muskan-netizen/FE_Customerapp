@@ -220,7 +220,7 @@
     "expressdeliveryRelease": "cd android && ./gradlew assembleExpressDeliveryRelease",
     "booziedoozieRelease": "cd android && ./gradlew assembleBoozieDoozieRelease",
     "zestyclickzRelease": "cd android && ./gradlew assembleZestyClickzRelease",
-    "bakesaleRelease": "cd android && ./gradlew assembleZestyClickzRelease",
+    "bakesaleRelease": "cd android && ./gradlew assembleBakesaleRelease",
     "elcheregioRelease": "cd android && ./gradlew assembleElCheRegioRelease",
     "yaawiRelease": "cd android && ./gradlew assembleYaawiRelease",
     "hostaRelease": "cd android && ./gradlew assembleHOSTARelease",
