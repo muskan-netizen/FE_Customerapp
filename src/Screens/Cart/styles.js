@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
@@ -8,10 +8,10 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { getColorCodeWithOpactiyNumber } from '../../utils/helperFunctions';
+import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
 
-export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
-  const commonStyles = commonStylesFun({ fontFamily });
+export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
+  const commonStyles = commonStylesFun({fontFamily});
   const styles = StyleSheet.create({
     scrollviewHorizontal: {
       borderTopWidth: 1,
@@ -289,7 +289,7 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
       fontSize: textScale(12),
       marginHorizontal: moderateScale(2),
     },
-    imageStyle: { height: width / 4.5, width: width / 4.5 },
+    imageStyle: {height: width / 4.5, width: width / 4.5},
 
     containerStyle: {
       flex: 1,
@@ -414,6 +414,10 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
       marginVertical: moderateScaleVertical(10),
       marginBottom: moderateScaleVertical(10),
       zIndex: 1000,
+    },
+    suggetionView: {
+      marginHorizontal: moderateScale(20),
+      marginBottom: moderateScaleVertical(16),
     },
   });
   return styles;

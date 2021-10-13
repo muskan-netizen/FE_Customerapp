@@ -167,8 +167,6 @@ export const removePromoCode = (data, headers = {}) => {
 //Plce order code
 
 export const placeOrder = (data, headers = {}) => {
-  console.log('data+++==>>>', data);
-  console.log('data+++header', headers);
   return new Promise((resolve, reject) => {
     apiPost(PLACE_ORDER, data, headers)
       .then((res) => {
