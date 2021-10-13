@@ -575,4 +575,7 @@ montant`,
   ACTIVERIDES: 'Active Rides',
   CHOOSESAVEDPLACE: 'Choose a saved place',
   SETPICKUPTIME: 'Set pickiup time',
+  CLEAR_SCHEDULE_DATE: 'Clear Schedule Date',
+  FREQUENTLY_BOUGHT_TOGETHER: 'Frequently Bought Together',
+  YOU_MIGHT_INTERESTED: 'You Might Be Interested In',
 };

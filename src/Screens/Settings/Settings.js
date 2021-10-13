@@ -136,8 +136,6 @@ export default function Settings({route, navigation}) {
     }
   };
 
-  console.log(languages, 'languageslanguages');
-
   //Update language
   const updateLanguage = (item) => {
     const data = languages.all_languages.filter((x) => x.id == item.id)[0];
@@ -227,7 +225,6 @@ export default function Settings({route, navigation}) {
     }
   };
 
-  console.log(appCurrencies.all_currencies, 'll_currencies');
   return (
     <WrapperContainer
       bgColor={

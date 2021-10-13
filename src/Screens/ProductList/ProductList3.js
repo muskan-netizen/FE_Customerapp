@@ -591,7 +591,7 @@ export default function Products({route, navigation}) {
   };
 
   const errorMethod = (error) => {
-    updateState({updateQtyLoader: false, selectedItemID: -1});
+    updateState({updateQtyLoader: false, selectedItemID: -1, btnLoader: false});
     showError(error?.message || error?.error);
   };
 

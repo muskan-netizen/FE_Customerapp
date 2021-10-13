@@ -540,5 +540,8 @@ Amount`,
   CHOOSESAVEDPLACE: 'Choose a saved place',
   SETPICKUPTIME: 'Set pickup time',
   SEHEDLEDFOR: 'Scheduled For',
-  BOOK_NOW_RIDE:'Book Ride'
+  BOOK_NOW_RIDE: 'Book Ride',
+  CLEAR_SCHEDULE_DATE: 'Clear Schedule Date',
+  FREQUENTLY_BOUGHT_TOGETHER: 'Frequently Bought Together',
+  YOU_MIGHT_INTERESTED: 'You Might Be Interested In',
 };
