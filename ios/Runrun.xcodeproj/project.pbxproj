@@ -3241,6 +3241,7 @@
 		D5672F13989C61DFEEEA4ED4 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		D769A63C697DB69C328C275E /* libPods-LoopWhole.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06D2A72845384D70BCE374B4 /* libPods-LoopWhole.a */; };
 		D8FEB8B6CB7A18AF9C30BC87 /* libPods-Ridemate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9331098347B7CC6D873281D /* libPods-Ridemate.a */; };
+		DBFC49238652ABF3716FFEDE /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB06615C5521C48C4BB9B5A2 /* libPods-RoyoOrder.a */; };
 		DC9BBDAE01A6B6FA3638AE8F /* libPods-Spidbi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5BB937C3468CBF2C584F46 /* libPods-Spidbi.a */; };
 		DD15112FAC9428A826401C22 /* libPods-Vecto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DDDE7C59E5BDC61EBD4EF6F /* libPods-Vecto.a */; };
 		E2007FF93D3E36598A25BA5A /* libPods-Carlitoo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 696523BCBE5AF4679CD7DA2B /* libPods-Carlitoo.a */; };
@@ -4265,6 +4266,7 @@
 		E97ED6DEF3BDC0E6B7D4ED3A /* Pods-LastMinuteDress.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastMinuteDress.release.xcconfig"; path = "Target Support Files/Pods-LastMinuteDress/Pods-LastMinuteDress.release.xcconfig"; sourceTree = "<group>"; };
 		E9BD5F3ECF465C03C516C8C3 /* Pods-MartiniOnWheels.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MartiniOnWheels.debug.xcconfig"; path = "Target Support Files/Pods-MartiniOnWheels/Pods-MartiniOnWheels.debug.xcconfig"; sourceTree = "<group>"; };
 		EA1BAA7F2B851A3F62C20899 /* Pods-WashValley.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WashValley.release.xcconfig"; path = "Target Support Files/Pods-WashValley/Pods-WashValley.release.xcconfig"; sourceTree = "<group>"; };
+		EB06615C5521C48C4BB9B5A2 /* libPods-RoyoOrder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RoyoOrder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC12B7850FBE00A1BE07D628 /* libPods-ClickEat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ClickEat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECF3425057A2BD6BB4944AA9 /* libPods-MartiniOnWheels.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MartiniOnWheels.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -5997,6 +5999,7 @@
 		841D9D5B26A6999600324021 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
+				7F1632FB9FDB4AEEBF4B65BC /* libPods-RoyoOrder.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";

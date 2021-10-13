@@ -11,6 +11,7 @@ import {
 import {useDarkMode} from 'react-native-dark-mode';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RNRestart from 'react-native-restart'; // Import package from node modules
+import LinearGradient from 'react-native-linear-gradient';
 import {useSelector} from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
 import Header from '../../Components/Header';
@@ -359,22 +360,33 @@ export default function Settings({route, navigation}) {
         <View style={{height: 10}} />
       </View>
       <View style={{height: moderateScaleVertical(30)}} />
-      <View
+      <LinearGradient
         style={{
-          backgroundColor: isDarkMode
-            ? MyDarkTheme.colors.lightDark
-            : colors.white,
-          borderTopWidth: 0.7,
-          borderBottomWidth: 0.7,
-          borderColor: isDarkMode
-            ? MyDarkTheme.colors.text
-            : colors.blackOpacity20,
-          paddingVertical: 20,
-        }}>
+          width: width,
+          // borderTopWidth: 0.7,
+          // borderBottomWidth: 0.7,
+          // borderColor: isDarkMode
+          //   ? MyDarkTheme.colors.text
+          //   : colors.blackOpacity20,
+        }}
+        colors={
+          isDarkMode
+            ? ['rgba(31,31,31, 0.8)', 'rgba(31,31,31, 0.8)']
+            : ['rgba(256,256,256,256)', 'rgba(256,256,256,256)']
+        }>
+        <View
+          style={{
+            height: 0.5,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.text
+              : colors.blackOpacity20,
+          }}
+        />
         <View
           style={{
             flexDirection: 'row',
             marginHorizontal: moderateScale(20),
+            marginTop: moderateScaleVertical(20),
           }}>
           <Text
             style={{
@@ -475,7 +487,16 @@ export default function Settings({route, navigation}) {
           arrowColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
           onChangeItem={(item) => updateLanguage(item)}
         />
-      </View>
+        <View
+          style={{
+            height: 0.5,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.text
+              : colors.blackOpacity20,
+            marginTop: moderateScaleVertical(20),
+          }}
+        />
+      </LinearGradient>
 
       {/* </KeyboardAwareScrollView> */}
     </WrapperContainer>
