@@ -13,6 +13,7 @@ import {
   VERIFY_PROMO_CODE_CAB_ORDER,
   VENDOR_TABLE_CART,
   SCHEDULE_ORDER,
+  CART_PRODUCT_SCHEDULE,
 } from '../../config/urls';
 import {
   apiGet,
@@ -166,8 +167,8 @@ export const removePromoCode = (data, headers = {}) => {
 //Plce order code
 
 export const placeOrder = (data, headers = {}) => {
-  console.log("data+++==>>>",data)
-  console.log("data+++header",headers)
+  console.log('data+++==>>>', data);
+  console.log('data+++header', headers);
   return new Promise((resolve, reject) => {
     apiPost(PLACE_ORDER, data, headers)
       .then((res) => {
@@ -220,6 +221,18 @@ export function vendorTableCart(data = {}, headers = {}) {
 export const scheduledOrder = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(SCHEDULE_ORDER, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const cartProductSchedule = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(CART_PRODUCT_SCHEDULE, data, headers)
       .then((res) => {
         resolve(res);
       })
