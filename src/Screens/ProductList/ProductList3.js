@@ -1263,7 +1263,18 @@ export default function Products({ route, navigation }) {
                   />
 
                   <View style={styles.rightViewOfShareSearch}>
-                    <TouchableOpacity activeOpacity={0.8}>
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={moveToNewScreen(
+                        navigationStrings.SEARCHPRODUCTOVENDOR,
+                        {
+                          type: data?.vendor
+                            ? staticStrings.VENDOR
+                            : staticStrings.CATEGORY,
+                          id: data?.vendor ? data?.id : productListId?.id,
+                        },
+                      )}
+                    >
                       <Image
                         style={{
                           tintColor: isDarkMode
@@ -1528,7 +1539,7 @@ export default function Products({ route, navigation }) {
               <View style={{ flexDirection: 'row' }}>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={() => updateState({ isSearch: true })}
+                  // onPress={() => updateState({ isSearch: true })}
                   onPress={moveToNewScreen(
                     navigationStrings.SEARCHPRODUCTOVENDOR,
                     {
@@ -1748,7 +1759,7 @@ export default function Products({ route, navigation }) {
             <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => updateState({ isSearch: true })}
+                // onPress={() => updateState({ isSearch: true })}
                 onPress={moveToNewScreen(
                   navigationStrings.SEARCHPRODUCTOVENDOR,
                   {
@@ -1882,16 +1893,16 @@ export default function Products({ route, navigation }) {
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <TouchableOpacity
                     activeOpacity={0.8}
-                  // onPress={() => updateState({isSearch: true})}
-                  // onPress={moveToNewScreen(
-                  //   navigationStrings.SEARCHPRODUCTOVENDOR,
-                  //   {
-                  //     type: data?.vendor
-                  //       ? staticStrings.VENDOR
-                  //       : staticStrings.CATEGORY,
-                  //     id: data?.vendor ? data?.id : productListId?.id,
-                  //   },
-                  // )}
+                    // onPress={() => updateState({isSearch: true})}
+                    onPress={moveToNewScreen(
+                      navigationStrings.SEARCHPRODUCTOVENDOR,
+                      {
+                        type: data?.vendor
+                          ? staticStrings.VENDOR
+                          : staticStrings.CATEGORY,
+                        id: data?.vendor ? data?.id : productListId?.id,
+                      },
+                    )}
                   >
                     <Image
                       style={{
