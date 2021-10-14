@@ -1330,6 +1330,26 @@ android {
             resValue "string", "app_name", "Somame"
             resValue "string", "host_name", ""
          }
+         goodwheelz{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.goodwheelz'
+            resValue "string", "app_name", "Good Wheelz"
+            resValue "string", "host_name", ""
+         }
+         tranznet{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.tranznet'
+            resValue "string", "app_name", "Tranz.net"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

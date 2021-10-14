@@ -110,6 +110,8 @@ const shortCodes = {
   yaawi: '64a3e8',
   hosta: '757287',
   somame: '069701',
+  goodwheelz: 'ceab64',
+  tranznet: '02aad0',
 };
 
 const appIds = {
@@ -556,6 +558,14 @@ const appIds = {
   somame: Platform.select({
     ios: 'com.somame',
     android: 'com.somame',
+  }),
+  goodwheelz: Platform.select({
+    ios: 'com.goodwheelz',
+    android: 'com.goodwheelz',
+  }),
+  tranznet: Platform.select({
+    ios: 'com.tranznet',
+    android: 'com.tranznet',
   }),
 };
 

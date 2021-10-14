@@ -756,6 +756,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.goodwheelz:
+          updateState({
+            shortCode: shortCodes.goodwheelz,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.tranznet:
+          updateState({
+            shortCode: shortCodes.tranznet,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
