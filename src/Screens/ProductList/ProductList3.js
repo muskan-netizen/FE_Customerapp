@@ -191,8 +191,6 @@ export default function Products({route, navigation}) {
   const commonStyles = commonStylesFunc({fontFamily});
   const styles = stylesFunc({themeColors, fontFamily});
 
-  // console.log("category info",productListData)
-
   //Saving the initial state
   const initialState = cloneDeep(state);
   //Logged in user data
@@ -266,10 +264,6 @@ export default function Products({route, navigation}) {
   const getAllProductsByVendorCategory = () => {
     // alert("21312")
     console.log('api hit getAllProductsByVendorCategory');
-    console.log(
-      `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
-      'url',
-    );
     actions
       .getProductByVendorCategoryId(
         `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
@@ -623,7 +617,6 @@ export default function Products({route, navigation}) {
 
   const checkSingleVendor = async (id) => {
     let vendorData = {vendor_id: categoryInfo?.id};
-    console.log('idd', id);
     updateState({selectedItemID: id});
     return new Promise((resolve, reject) => {
       actions
@@ -941,6 +934,7 @@ export default function Products({route, navigation}) {
         selectedItemID={selectedItemID}
         btnLoader={btnLoader}
         selectedItemIndx={selectedItemIndx}
+        categoryInfo={categoryInfo}
       />
     );
   };
@@ -953,7 +947,6 @@ export default function Products({route, navigation}) {
   };
 
   const onPressChildCards = (item) => {
-    console.log(item, 'item upload');
     updateState({
       selectedCategory: item,
       productListId: item,
@@ -964,12 +957,6 @@ export default function Products({route, navigation}) {
   };
 
   const updateCartItems = (item, quanitity, productId, cartID) => {
-    console.log('cart+++ item', item);
-    console.log('cart++ quanitify', quanitity);
-    console.log('cart++ product id', productId);
-    console.log('cart++ idd', cartID);
-    console.log(productListData, 'productListData');
-
     let updateArray = productListData.map((val, i) => {
       if (val.id == item.id) {
         return {
@@ -998,7 +985,6 @@ export default function Products({route, navigation}) {
   });
 
   //To remove flickering of icon and image we are creating the header child seperately
-  console.log('btnLoader++', btnLoader);
   const listHeaderComponent = () => {
     return (
       <Fragment>

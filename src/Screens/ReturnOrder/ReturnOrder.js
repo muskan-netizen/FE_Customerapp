@@ -247,7 +247,9 @@ export default function ReturnOrder({navigation, route}) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+        }
         centerTitle={strings.RETURNORDER}
         headerStyle={
           isDarkMode
