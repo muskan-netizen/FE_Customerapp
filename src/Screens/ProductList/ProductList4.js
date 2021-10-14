@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
+import {StyleSheet, View, Text, SafeAreaView} from 'react-native';
 import SectionList from 'react-native-tabs-section-list';
 
 const SECTIONS = [
@@ -78,13 +78,13 @@ const SECTIONS = [
 class ProductList4 extends React.Component {
   static navigationOptions = {
     title: 'Menu',
-    headerStyle: { borderBottomWidth: 0 },
+    headerStyle: {borderBottomWidth: 0},
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{flex: 1}}>
           <SectionList
             sections={SECTIONS}
             keyExtractor={(item) => item.title}
@@ -92,22 +92,22 @@ class ProductList4 extends React.Component {
             scrollToLocationOffset={50}
             tabBarStyle={styles.tabBar}
             ItemSeparatorComponent={() => <View style={styles.separator} />}
-            renderTab={({ title, isActive }) => (
+            renderTab={({title, isActive}) => (
               <View
                 style={[
                   styles.tabContainer,
-                  { borderBottomWidth: isActive ? 1 : 0 },
+                  {borderBottomWidth: isActive ? 1 : 0},
                 ]}>
                 <Text
                   style={[
                     styles.tabText,
-                    { color: isActive ? '#090909' : '#9e9e9e' },
+                    {color: isActive ? '#090909' : '#9e9e9e'},
                   ]}>
                   {title}
                 </Text>
               </View>
             )}
-            renderItem={({ item }) => (
+            renderItem={({item}) => (
               <View style={styles.itemContainer}>
                 <View style={styles.itemRow}>
                   <Text style={styles.itemTitle}>{item.title}</Text>

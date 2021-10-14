@@ -368,8 +368,6 @@ export default function Login({navigation}) {
     });
   };
 
-  console.log(mobilNo, 'mobilNo');
-  console.log(email, 'email');
   return (
     <WrapperContainer
       isLoadingB={isLoading}

@@ -37,7 +37,9 @@ export default function WebPayment({navigation, route}) {
       bgColor={colors.backgroundGrey}
       statusBarColor={colors.white}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+        }
         centerTitle={paramData?.paymentTitle || ''}
         headerStyle={{backgroundColor: Colors.white}}
       />

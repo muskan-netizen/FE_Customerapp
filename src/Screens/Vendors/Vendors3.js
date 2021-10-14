@@ -122,8 +122,6 @@ export default function Vendors3({route, navigation}) {
     }
   };
 
-  /**********/
-
   const _renderItem = ({item, index}) => {
     return (
       <View style={{marginHorizontal: moderateScale(15)}}>

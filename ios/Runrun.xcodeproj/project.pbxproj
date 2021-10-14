@@ -3337,6 +3337,7 @@
 		A7C92FD1FFCF542E4F4A97AE /* libPods-YogoLift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE984A8FEFAB991127B24EE2 /* libPods-YogoLift.a */; };
 		AA4AEAAFEF66FB1E1197E72B /* libPods-Drus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D576E1940EC9FBFAD23F10B /* libPods-Drus.a */; };
 		AA727695876EEE7000C2FE74 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		AC5C1DC7E7937B9A7849C16F /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4E77E3DBE95E0035EFE7098 /* libPods-RoyoOrder.a */; };
 		AD2A4EB4A64E235203E7D452 /* libPods-Getme.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E6E9B5B09D8D72F92A494C1 /* libPods-Getme.a */; };
 		AE3A960F1594787C293DE228 /* libPods-ExpressDeliveryLLC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75634FC83C8A74A94CC388DA /* libPods-ExpressDeliveryLLC.a */; };
 		AF26F746AFEE2FE6C156FD5E /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44175A85B0E849DAA8F47C7B /* libPods-RoyoOrder.a */; };
@@ -4362,6 +4363,7 @@
 		BDD5100A8C4B26BAC7B20977 /* Pods-WeEat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeEat.debug.xcconfig"; path = "Target Support Files/Pods-WeEat/Pods-WeEat.debug.xcconfig"; sourceTree = "<group>"; };
 		BFB43F292E5CA317424F4AEA /* Pods-Markita.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Markita.debug.xcconfig"; path = "Target Support Files/Pods-Markita/Pods-Markita.debug.xcconfig"; sourceTree = "<group>"; };
 		C217BE5769CEE69BB5D917BB /* libPods-Menus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Menus.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4E77E3DBE95E0035EFE7098 /* libPods-RoyoOrder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RoyoOrder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4FB3EAF9103564ABBF0D76A /* libPods-GoKab.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GoKab.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5012EFE408B3FA5CDFEEF51 /* Pods-UFood.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UFood.debug.xcconfig"; path = "Target Support Files/Pods-UFood/Pods-UFood.debug.xcconfig"; sourceTree = "<group>"; };
 		C67CAF9031627E03996F22C1 /* Pods-Carlitoo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Carlitoo.release.xcconfig"; path = "Target Support Files/Pods-Carlitoo/Pods-Carlitoo.release.xcconfig"; sourceTree = "<group>"; };
