@@ -94,6 +94,8 @@ export default function HomeServiceVariantAddons({
     selectedTime: null,
     timeModalVisable: false,
     mode_of_service: productdetail?.mode_of_service,
+    scheduleItemDateList: [],
+    userSelectedTimeForSchedule: null,
   });
 
   const {
@@ -118,6 +120,8 @@ export default function HomeServiceVariantAddons({
     selectedTime,
     timeModalVisable,
     mode_of_service,
+    scheduleItemDateList,
+    userSelectedTimeForSchedule,
   } = state;
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -262,13 +266,18 @@ export default function HomeServiceVariantAddons({
         },
       )
       .then((res) => {
-        console.log(res.data, 'resssssDatatatatat');
-        // updateState({
-        //   modeOfService :res.data.products[0].vendor_products[0].product[0].mode_of_service
-        // })
+        console.log(res?.data, 'resssssDatatatatat');
+        updateState({
+          scheduleItemDateList: res?.data?.products[0]?.vendor_products,
+        });
       })
       .catch(errorMethod);
   };
+
+  console.log(
+    scheduleItemDateList,
+    'scheduleItemDateListscheduleItemDateListscheduleItemDateList',
+  );
 
   useEffect(() => {
     getProductDetail();
@@ -862,6 +871,7 @@ export default function HomeServiceVariantAddons({
     }
   };
   const addItemCart = (addonSet) => {
+    console.log(mode_of_service, 'mode_of_servicemode_of_service');
     if (mode_of_service === 'schedule') {
       addToCart(addonSet);
 
@@ -870,6 +880,9 @@ export default function HomeServiceVariantAddons({
       });
     } else {
       addToCart(addonSet);
+      updateState({
+        timeModalVisable: false,
+      });
       onClose();
     }
 
@@ -885,13 +898,31 @@ export default function HomeServiceVariantAddons({
     // }
   };
   const addTimeDate = (selectedDate, selectedTime) => {
-    productShedule();
-    onClose();
+    // productShedule();
+    // onClose();
     console.log(selectedDate, selectedTime, 'timeeeeeee');
     updateState({
       timeModalVisable: false,
     });
   };
+
+  const _renderScheduleDateList = ({item, index}) => {
+    return item?.product?.mode_of_service === 'schedule' ? (
+      <>
+        <Text
+          style={{
+            marginHorizontal: moderateScale(16),
+            fontFamily: fontFamily.bold,
+            marginTop: moderateScaleVertical(5),
+          }}>
+          {item?.product?.translation[0]?.title}
+        </Text>
+        <View>{showScheduleCalenderView()}</View>
+        {selectedDate ? <View>{showScheduleTimeView()}</View> : null}
+      </>
+    ) : null;
+  };
+
   const shimmerShow = () => {
     return (
       <View
@@ -1019,7 +1050,7 @@ export default function HomeServiceVariantAddons({
 
       const selectedCalendarDateString =
         selectedCalendarDate.format('YYYY-MM-DD');
-      console.log(selectedDate, 'selectedDateselectedDate');
+
       updateState(
         {
           calendarMarkedDates: {
@@ -1046,9 +1077,17 @@ export default function HomeServiceVariantAddons({
       );
     }
   };
+
+  console.log(
+    moment(selectedDate).format('YYYY-MM-DD'),
+    'selectedDateselectedDate',
+  );
   const showAddonsAndSehedule = () => {};
-  const dateSelected = (item) => {
-    updateState({selectedTime: item});
+  const dateSelected = (item, selecteduserTime) => {
+    updateState({
+      selectedTime: item,
+      userSelectedTimeForSchedule: item?.selectedTime,
+    });
   };
   console.log(selectedTime, 'selecteTime');
   const renderCardComponentSecond = ({item, index}) => {
@@ -1094,13 +1133,15 @@ export default function HomeServiceVariantAddons({
       <CalanderStrip
         scrollable
         highlightDateContainerStyle={{
-          backgroundColor: themeColors.primary_color,
+          backgroundColor: selectedDate
+            ? themeColors.primary_color
+            : colors.white,
         }}
         highlightDateNameStyle={{
-          color: colors.white,
+          color: selectedDate ? colors.white : colors.black,
         }}
         highlightDateNumberStyle={{
-          color: colors.white,
+          color: selectedDate ? colors.white : colors.black,
         }}
         dateNameStyle={{
           color: colors.black,
@@ -1152,6 +1193,9 @@ export default function HomeServiceVariantAddons({
               enableEmptySections={false}
               initialNumToRender={5}
               // initialNumToRender={this.state?.timings?.length||10}
+              ItemSeparatorComponent={() => {
+                return <View style={{marginHorizontal: moderateScale(10)}} />;
+              }}
               horizontal
               showsHorizontalScrollIndicator={false}
               // ListFooterComponent={() => { return <View style={{ height: 200 }} /> }}
@@ -1292,14 +1336,17 @@ export default function HomeServiceVariantAddons({
                 }}
               />
               {timeModalVisable ? (
-                <>
-                  <View>{showScheduleCalenderView()}</View>
-                  <View>{showScheduleTimeView()}</View>
-                </>
+                <FlatList
+                  data={scheduleItemDateList}
+                  renderItem={_renderScheduleDateList}
+                  ItemSeparatorComponent={() => (
+                    <View style={{height: moderateScaleVertical(20)}} />
+                  )}
+                />
               ) : (
                 <View>
                   {(!!addonSet && addonSet?.length) ||
-                  (modeOfService == null && modeOfService == undefined)
+                  (mode_of_service == null && mode_of_service == undefined)
                     ? showhomeServiceAddons()
                     : null}
 
@@ -1374,7 +1421,11 @@ export default function HomeServiceVariantAddons({
                       ? addTimeDate(selectedTime, selectedDate)
                       : addItemCart(addonSet)
                   }
-                  btnText={timeModalVisable ? 'Countinue' : strings.ADD_ITEM}
+                  btnText={
+                    timeModalVisable && mode_of_service
+                      ? 'Countinue'
+                      : strings.ADD_ITEM
+                  }
                   btnStyle={{
                     borderRadius: moderateScale(4),
                     height: moderateScale(38),

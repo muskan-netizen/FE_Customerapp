@@ -1,20 +1,20 @@
-import React, {useState} from 'react';
-import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, { useState } from 'react';
+import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FastImage from 'react-native-fast-image';
-import {UIActivityIndicator} from 'react-native-indicators';
+import { UIActivityIndicator } from 'react-native-indicators';
 import StarRating from 'react-native-star-rating';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import commonStylesFunc, {hitSlopProp} from '../styles/commonStyles';
+import commonStylesFunc, { hitSlopProp } from '../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
+import { MyDarkTheme } from '../styles/theme';
 import {
   getImageUrl,
   pressInAnimation,
@@ -25,8 +25,8 @@ import HtmlViewComp from './HtmlViewComp';
 
 export default function ProductCard3({
   data = {},
-  onPress = () => {},
-  addToCart = () => {},
+  onPress = () => { },
+  addToCart = () => { },
   index,
   onIncrement,
   onDecrement,
@@ -41,22 +41,24 @@ export default function ProductCard3({
     selectedIndex: -1,
     selectedIndexForCartIcon: -1,
   });
-  const {selectedIndex, selectedIndexForCartIcon} = state;
+  const { selectedIndex, selectedIndexForCartIcon } = state;
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  console.log(data, 'data?.add_on.data?.add_on.data?.add_on.');
+
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const isDarkMode = theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = styleData({themeColors, fontFamily});
+  const styles = styleData({ themeColors, fontFamily });
 
-  const {themeLayouts} = currentTheme;
-  const commonStyles = commonStylesFunc({fontFamily});
+  const { themeLayouts } = currentTheme;
+  const commonStyles = commonStylesFunc({ fontFamily });
 
   const url1 = data?.media[0]?.image?.path.image_fit;
   const url2 = data?.media[0]?.image?.path.image_path;
@@ -66,12 +68,12 @@ export default function ProductCard3({
 
   const changePosition = () => {
     let i = selectedIndex == -1 ? index : -1;
-    updateState({selectedIndex: i});
+    updateState({ selectedIndex: i });
   };
 
   const changePositionForCartIcon = () => {
     let i = selectedIndexForCartIcon == -1 ? index : -1;
-    updateState({selectedIndexForCartIcon: i});
+    updateState({ selectedIndexForCartIcon: i });
   };
 
   let htmlText = data?.translation[0]?.body_html || null;
@@ -116,7 +118,7 @@ export default function ProductCard3({
                   ? colors.whiteOpacity15
                   : colors.greyColor,
               }}
-              source={{uri: getImage('800/400')}}
+              source={{ uri: getImage('800/400') }}
             />
           </TouchableOpacity>
         </Animatable.View>
@@ -136,7 +138,7 @@ export default function ProductCard3({
               flex: 1,
               marginTop: selectedIndex == index ? moderateScaleVertical(8) : 0,
             }}
-            // animation={selectedIndex == index ? 'fadeInDown' : 'fadeInLeft'}
+          // animation={selectedIndex == index ? 'fadeInDown' : 'fadeInLeft'}
           >
             {/* Title View */}
             <View>
@@ -187,7 +189,7 @@ export default function ProductCard3({
                   rating={Number(data?.averageRating).toFixed(1)}
                   fullStarColor={colors.yellowB}
                   starSize={8}
-                  containerStyle={{width: width / 9}}
+                  containerStyle={{ width: width / 9 }}
                 />
               </View>
             )}
@@ -213,7 +215,7 @@ export default function ProductCard3({
                 ).toFixed(2)}`}
               </Text>
             </View>
-            <View style={{width: width / 2}}>
+            <View style={{ width: width / 2 }}>
               {!!htmlText && (
                 <HtmlViewComp
                   plainHtml={htmlText}
@@ -234,7 +236,7 @@ export default function ProductCard3({
               }}>
               {(!!data?.variant[0]?.check_if_in_cart_app &&
                 data?.variant[0]?.check_if_in_cart_app.length > 0) ||
-              !!data?.qty ? (
+                !!data?.qty ? (
                 <View
                   style={{
                     ...styles.addBtnStyle,
@@ -261,10 +263,10 @@ export default function ProductCard3({
                       -
                     </Text>
                   </TouchableOpacity>
-                  <View style={{}}>
+                  <View>
                     {selectedItemIndx === index &&
-                    selectedItemID == data?.id &&
-                    btnLoader ? (
+                      selectedItemID == data?.id &&
+                      btnLoader ? (
                       <UIActivityIndicator
                         size={moderateScale(18)}
                         color={colors.white}
@@ -307,7 +309,7 @@ export default function ProductCard3({
                       color={themeColors.primary_color}
                     />
                   ) : (
-                    <View style={{}}>
+                    <View>
                       <Text style={styles.addStyleText}>{strings.ADD}</Text>
                     </View>
                   )}
@@ -316,7 +318,7 @@ export default function ProductCard3({
                 </TouchableOpacity>
               )}
               {(!!data?.add_on && data?.add_on.length !== 0) ||
-              (!!data?.variantSet && data?.variantSet.length !== 0) ? (
+                (!!data?.variantSet && data?.variantSet.length !== 0) ? (
                 <Text
                   style={{
                     ...styles.customTextStyle,
@@ -336,7 +338,7 @@ export default function ProductCard3({
   );
 }
 
-function styleData({themeColors, fontFamily}) {
+function styleData({ themeColors, fontFamily }) {
   const styles = StyleSheet.create({
     outOfStock: {
       color: colors.orangeB,
