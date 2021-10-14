@@ -103,10 +103,13 @@ export const printReciept = async (data) => {
 
   console.log('check notifications length >>>> 8', data)
   return new Promise((resolve, reject) => {
-
     const detail = data
-
     BluetoothManager.checkBluetoothEnabled().then(async (enabled) => {
+      let total_amt = 0
+      await detail.vendors[0].products.forEach(async (el) => {
+        total_amt = total_amt + (el.quantity * el.price)
+      })
+      
       console.log('check start printing >>>> 4')
       const isConnected = await BluetoothManager.getConnectedDeviceAddress()
       console.log('check start printing >>>> 5', isConnected, '>>>>>>>', enabled)
@@ -171,7 +174,7 @@ export const printReciept = async (data) => {
 
           await BluetoothEscposPrinter.printColumn([16, 11, 9, 10],
             [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.RIGHT],
-            ["Total", JSON.stringify(detail.item_count), " ", JSON.stringify(detail.total_amount) + '\r\n'], {});
+            ["Total", JSON.stringify(detail.item_count), " ", JSON.stringify(total_amt) + '\r\n'], {});
 
           await BluetoothEscposPrinter.printColumn([15, 30],
             [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.RIGHT],
@@ -181,13 +184,15 @@ export const printReciept = async (data) => {
             [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.RIGHT],
             ["Discount", -detail.total_discount + '\r\n'], {});
 
-          await BluetoothEscposPrinter.printColumn([15, 30],
-            [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.RIGHT],
-            ["Loyalty", -detail.loyalty_amount_saved + '\r\n'], {});
+          if (!(detail.vendors.length > 1)) {
+            await BluetoothEscposPrinter.printColumn([15, 30],
+              [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.RIGHT],
+              ["Loyalty", -detail.loyalty_amount_saved + '\r\n'], {});
 
-          await BluetoothEscposPrinter.printColumn([15, 30],
-            [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.RIGHT],
-            ["Paid amount", detail.payable_amount + '\r\n'], {});
+            await BluetoothEscposPrinter.printColumn([15, 30],
+              [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.RIGHT],
+              ["Paid amount", detail.payable_amount + '\r\n'], {});
+          }
 
           await BluetoothEscposPrinter.printText("----------------------------------------------\r\n\nWelcome next time\r\n\r\n\r\n\r\n\n", {});
 
