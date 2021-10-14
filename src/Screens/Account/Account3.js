@@ -43,8 +43,8 @@ export default function Account3({navigation}) {
     (state) => state?.initBoot,
   );
 
-  const businessType = appStyle?.homePageLayout; 
-   const [state, setState] = useState({
+  const businessType = appStyle?.homePageLayout;
+  const [state, setState] = useState({
     isLoading: false,
   });
 

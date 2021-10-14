@@ -540,5 +540,8 @@ Amount`,
   CHOOSESAVEDPLACE: 'Choose a saved place',
   SETPICKUPTIME: 'Set pickup time',
   SEHEDLEDFOR: 'Scheduled For',
-  BOOK_NOW_RIDE:'Book Ride'
+  BOOK_NOW_RIDE: 'Book Ride',
+  WHAT_TIME_WOULD_YOU_LIKE_US_TO_START:
+    ' What Time Would You Like Us To Start?',
+  PLEASE_SELECT_DATE_FIRST: 'Please Select Date First For Service ',
 };
