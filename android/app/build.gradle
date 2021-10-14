@@ -1280,6 +1280,56 @@ android {
             resValue "string", "app_name", "ZestyClickz"
             resValue "string", "host_name", ""
          }
+         bakesale{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.bakesale'
+            resValue "string", "app_name", "BakeSale"
+            resValue "string", "host_name", ""
+         }
+         elcheregio{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.elcheregio'
+            resValue "string", "app_name", "El Che Regio"
+            resValue "string", "host_name", ""
+         }
+          yaawi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.yaawi'
+            resValue "string", "app_name", "Yaawi"
+            resValue "string", "host_name", ""
+         }
+         hosta{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.hosta'
+            resValue "string", "app_name", "HOSTA"
+            resValue "string", "host_name", ""
+         }
+         somame{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.somame'
+            resValue "string", "app_name", "Somame"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

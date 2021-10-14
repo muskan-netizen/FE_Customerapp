@@ -725,6 +725,37 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+          break;
+        case appIds.bakesale:
+          updateState({
+            shortCode: shortCodes.bakesale,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.elcheregio:
+          updateState({
+            shortCode: shortCodes.elcheregio,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.yaawi:
+          updateState({
+            shortCode: shortCodes.yaawi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hosta:
+          updateState({
+            shortCode: shortCodes.hosta,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.somame:
+          updateState({
+            shortCode: shortCodes.somame,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
