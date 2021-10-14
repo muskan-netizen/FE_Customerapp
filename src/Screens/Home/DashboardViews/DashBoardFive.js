@@ -157,6 +157,7 @@ export default function DashBoardFive({
                 marginTop: moderateScaleVertical(10),
               }}>
               <FlatList
+                scrollEnabled={false}
                 numColumns={4}
                 data={appMainData?.categories}
                 keyExtractor={(item) => item.id.toString()}
