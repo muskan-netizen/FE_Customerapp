@@ -34,7 +34,6 @@ export default function ContactUs({navigation}) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state.appTheme);
   const userData = useSelector((state) => state?.auth?.userData);
-  console.log(userData, 'userData>>>userData');
   console.log(appData, 'appDataa');
   const [state, setState] = useState({
     callingCode: appData?.profile?.country?.phonecode

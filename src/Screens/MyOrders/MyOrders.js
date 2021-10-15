@@ -49,7 +49,7 @@ export default function MyOrders({navigation}) {
     (state) => state?.initBoot,
   );
   const businessType = appStyle?.homePageLayout;
-    const [state, setState] = useState({
+  const [state, setState] = useState({
     tabBarData: [
       businessType == 4
         ? {title: strings.ACTIVERIDES, isActive: true}
@@ -458,9 +458,7 @@ export default function MyOrders({navigation}) {
             ? imagePath.icBackb
             : imagePath.back
         }
-        centerTitle={
-          businessType === 4 ? strings.MYRIDES : strings.MY_ORDERS
-        }
+        centerTitle={businessType === 4 ? strings.MYRIDES : strings.MY_ORDERS}
         headerStyle={
           isDarkMode
             ? {backgroundColor: MyDarkTheme.colors.background}

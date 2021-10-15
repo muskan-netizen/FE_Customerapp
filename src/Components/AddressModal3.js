@@ -56,7 +56,6 @@ export default function AddressModal3({
   indicator,
   navigation,
 }) {
-  console.log(type, 'type');
   const mapRef = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -606,6 +605,7 @@ export default function AddressModal3({
                 return (
                   <>
                     <TouchableOpacity
+                      key={index}
                       onPress={() => updateState({address_type: item.id})}
                       style={[
                         styles.addressHomeOrOfficeView,

@@ -341,7 +341,7 @@ export default function Account({navigation}) {
 
         {!!userData?.auth_token &&
           !!appMainData?.is_admin &&
-          (business_type === 4 ? null : (
+          (businessType === 4 ? null : (
             <ListItemHorizontal
               centerContainerStyle={{flexDirection: 'row'}}
               leftIconStyle={{flex: 0.1, alignItems: 'center'}}
