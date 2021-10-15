@@ -532,4 +532,5 @@ export default {
   YOU_MIGHT_INTERESTED: 'You Might Be Interested In',
   VENDOR_NOT_ACCEPTING_ORDERS: 'Vendor is not accepting orders right now.',
   REJECTED: 'Rejected',
+  ATTACH_PRINTER: 'Attach Printer',
 };

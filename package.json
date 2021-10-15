@@ -239,6 +239,7 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
+    "@brooons/react-native-bluetooth-escpos-printer": "^1.1.5",
     "@gorhom/bottom-sheet": "^2.3.0",
     "@invertase/react-native-apple-authentication": "^2.1.2",
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
@@ -280,6 +281,7 @@
     "react-native-animated-loader": "0.0.9",
     "react-native-app-link": "^1.0.1",
     "react-native-appearance": "^0.3.4",
+    "react-native-background-actions": "^2.6.4",
     "react-native-calendar-strip": "^2.2.5",
     "react-native-calendars": "^1.1266.0",
     "react-native-cardview": "^2.0.5",
@@ -317,7 +319,7 @@
     "react-native-image-crop-picker": "^0.36.2",
     "react-native-image-header-scroll-view": "^0.10.3",
     "react-native-indicators": "^0.17.0",
-    "react-native-keyboard-aware-scroll-view": "^0.9.3",
+    "react-native-keyboard-aware-scroll-view": "^0.9.4",
     "react-native-lightbox": "^0.8.1",
     "react-native-lightbox-v2": "^0.8.6",
     "react-native-linear-gradient": "^2.5.6",
@@ -366,6 +368,7 @@
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "rn-fetch-blob-v2": "^0.14.1",
     "toastify-react-native": "^2.0.0",
     "toggle-switch-react-native": "^3.2.0",
     "translate-json-object": "^2.3.7"

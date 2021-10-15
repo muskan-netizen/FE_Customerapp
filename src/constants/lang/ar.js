@@ -538,6 +538,7 @@ export default {
   FEATURED_PRODUCTS: 'Featured products',
   ON_SALE: 'On Sale',
   YOUR_EMAIL_PHONE: 'Your Email or Phone Number',
+  ATTACH_PRINTER: 'Attach Printer',
   WHERETO: '  Where to ?',
   AROUNDYOU: 'Around you',
   PLEASESELECTONECATEGORY: 'Please Select One Category',

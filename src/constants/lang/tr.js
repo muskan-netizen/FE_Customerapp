@@ -537,6 +537,7 @@ export default {
   FEATURED_PRODUCTS: 'Featured products',
   ON_SALE: 'On Sale',
   YOUR_EMAIL_PHONE: 'Your Email or Phone Number',
+  ATTACH_PRINTER: 'Attach Printer',
   PASTRIDES: 'Past Rides',
   ACTIVERIDES: 'Active Rides',
   CHOOSESAVEDPLACE: 'Choose a saved place',
