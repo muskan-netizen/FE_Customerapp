@@ -182,6 +182,9 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const _renderItem = ({item, index}) => {
+    console.log(item, 'itemitem');
+    console.log(cartData, 'cartData');
+
     // return <OffersCard />;
     let {itemCount} = state;
     return (
@@ -194,21 +197,26 @@ export default function OrderDetail({navigation, route}) {
         }}>
         {/* show ETA Time */}
 
-        {!!item?.ETA && (
-          <View
-            style={{
-              ...styles.ariveView,
-              backgroundColor: themeColors.primary_color,
-            }}>
-            <Text
+        {cartData?.order_status?.current_status?.title !== strings.DELIVERED &&
+          cartData?.order_status?.current_status?.title !== strings.REJECTED &&
+          (!!cartData?.scheduled_date_time || !!cartData?.ETA) && (
+            <View
               style={{
-                ...styles.ariveTextStyle,
-                color: colors.white,
+                ...styles.ariveView,
+                backgroundColor: themeColors.primary_color,
               }}>
-              {strings.YOUR_ORDER_WILL_ARRIVE_BY} {item?.ETA}
-            </Text>
-          </View>
-        )}
+              <Text
+                style={{
+                  ...styles.ariveTextStyle,
+                  color: colors.white,
+                }}>
+                {strings.YOUR_ORDER_WILL_ARRIVE_BY}{' '}
+                {cartData?.scheduled_date_time
+                  ? cartData?.scheduled_date_time
+                  : cartData?.ETA}
+              </Text>
+            </View>
+          )}
         <View
           style={{
             paddingHorizontal: moderateScale(10),
