@@ -90,7 +90,9 @@ const shortCodes = {
   eboyo: '1d0fd3',
   share: 'bb8440',
   pickmeup: '87a4de',
+  taquick: '630e49',
   vecto: '39f6fd',
+  goody: '397840',
   grub: '2f3120',
   gusto: 'd1b1a0',
   gokab: 'fb78f0',
@@ -112,6 +114,8 @@ const shortCodes = {
   somame: '069701',
   goodwheelz: 'ceab64',
   tranznet: '02aad0',
+  sambiga: '4fadae',
+  agrionline: 'dd93ce',
 };
 
 const appIds = {
@@ -566,6 +570,14 @@ const appIds = {
   tranznet: Platform.select({
     ios: 'com.tranznet',
     android: 'com.tranznet',
+  }),
+  sambiga: Platform.select({
+    ios: 'com.sambiga',
+    android: 'com.sambiga',
+  }),
+  agrionline: Platform.select({
+    ios: 'com.agrionline',
+    android: 'com.agrionline',
   }),
 };
 
