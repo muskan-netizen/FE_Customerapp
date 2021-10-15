@@ -47,7 +47,6 @@ export default function WebPayment({navigation, route}) {
       <WebView
         source={{uri: paramData?.paymentUrl}}
         onNavigationStateChange={(navState) => {
-          console.log(navState, 'navState>>>>>>>>>>>PAYMENT');
           if (
             navState.canGoBack &&
             navState.url.includes('payment/checkoutSuccess')
