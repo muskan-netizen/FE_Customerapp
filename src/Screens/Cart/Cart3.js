@@ -152,6 +152,7 @@ export default function Cart({navigation, route}) {
   const userData = useSelector((state) => state?.auth?.userData);
   const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
+  console.log(appData, 'appDataCart');
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
@@ -580,7 +581,6 @@ export default function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log('item added++', res);
         actions.cartItemQty({});
         updateState({
           cartItems: [],
@@ -725,7 +725,6 @@ export default function Cart({navigation, route}) {
   const swipeRef = useRef(null);
 
   const openDeleteView = async (item) => {
-    updateState({isLoadingB: true});
     let itemToUpdate = cloneDeep(item);
     removeItem('selectedTable');
     removeProductFromCart(itemToUpdate);
@@ -761,18 +760,20 @@ export default function Cart({navigation, route}) {
     let returnUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
     let cancelUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
 
+    let queryData = `/${selectedMethod}?tip=${
+      selectedTipAmount && selectedTipAmount != ''
+        ? Number(selectedTipAmount)
+        : 0
+    }&amount=${
+      cartData?.total_payable_amount
+    }&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&address_id=${
+      selectedAddressData?.id
+    }&payment_option_id=${selectedPayment?.id}&action=cart`;
+
     updateState({placeLoader: true});
     actions
       .openPaymentWebUrl(
-        `/${selectedMethod}?tip=${
-          selectedTipAmount && selectedTipAmount != ''
-            ? Number(selectedTipAmount)
-            : 0
-        }&amount=${
-          cartData?.total_payable_amount
-        }&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&address_id=${
-          selectedAddressData?.id
-        }&payment_option_id=${selectedPayment?.id}&action=cart`,
+        queryData,
         {},
         {
           code: appData?.profile?.code,
@@ -1927,24 +1928,26 @@ export default function Cart({navigation, route}) {
           <View
             pointerEvents={placeLoader ? 'none' : 'auto'}
             style={styles.paymentView}>
-            {userData?.auth_token && (
-              <ButtonComponent
-                onPress={_selectTime}
-                btnText={
-                  localeSheduledOrderDate
-                    ? localeSheduledOrderDate
-                    : strings.SCHEDULE_ORDER
-                }
-                borderRadius={moderateScale(13)}
-                textStyle={{color: themeColors.primary_color}}
-                containerStyle={{
-                  ...styles.placeOrderButtonStyle,
-                  backgroundColor: colors.transparent,
-                  borderColor: themeColors.primary_color,
-                  borderWidth: 0.8,
-                }}
-              />
-            )}
+            {userData?.auth_token &&
+              // !appData?.profile?.preferences?.off_scheduling_at_cart && 
+              (
+                <ButtonComponent
+                  onPress={_selectTime}
+                  btnText={
+                    localeSheduledOrderDate
+                      ? localeSheduledOrderDate
+                      : strings.SCHEDULE_ORDER
+                  }
+                  borderRadius={moderateScale(13)}
+                  textStyle={{color: themeColors.primary_color}}
+                  containerStyle={{
+                    ...styles.placeOrderButtonStyle,
+                    backgroundColor: colors.transparent,
+                    borderColor: themeColors.primary_color,
+                    borderWidth: 0.8,
+                  }}
+                />
+              )}
 
             <ButtonComponent
               onPress={() => {

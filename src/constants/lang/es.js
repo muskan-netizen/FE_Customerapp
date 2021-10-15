@@ -546,4 +546,6 @@ personalizado`,
   CLEAR_SCHEDULE_DATE: 'Clear Schedule Date',
   FREQUENTLY_BOUGHT_TOGETHER: 'Frequently Bought Together',
   YOU_MIGHT_INTERESTED: 'You Might Be Interested In',
+  VENDOR_NOT_ACCEPTING_ORDERS: 'Vendor is not accepting orders right now.',
+  REJECTED: 'Rejected',
 };
