@@ -158,9 +158,9 @@ export default ({fontFamily}) => {
       alignItems: 'center',
       justifyContent: 'center',
       width: moderateScale(100),
+
       backgroundColor: colors.textGreyLight,
-      position: 'absolute',
-      zIndex: -1000,
+
       left: 20,
       height: moderateScaleVertical(30),
     },

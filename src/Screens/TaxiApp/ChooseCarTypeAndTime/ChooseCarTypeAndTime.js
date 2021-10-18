@@ -658,7 +658,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
                     {
                       alignItems: 'center',
                       justifyContent: 'center',
-                      paddingRight: 10,
+                      //paddingRight: 10,
                     },
                   ]}>
                   <Text style={styles.pickupDropOff}>
