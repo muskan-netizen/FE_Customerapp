@@ -534,4 +534,6 @@ export default {
   REJECTED: 'Rejected',
   ATTACH_PRINTER: 'Attach Printer',
   NORIDEAVAILABLE: 'No Ride Available',
+  ON_SALE: 'On Sale',
+  NEW_PRODUCTS: 'New Products',
 };

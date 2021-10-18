@@ -476,7 +476,7 @@ export default function DashBoardFive({
               appMainData?.new_products &&
               !!appMainData?.new_products.length && (
                 <>
-                  <View>{listHeader('New Products')}</View>
+                  <View>{listHeader(strings.NEW_PRODUCTS)}</View>
                   <FlatList
                     showsHorizontalScrollIndicator={false}
                     horizontal

@@ -995,9 +995,7 @@ export default function OrderDetail({navigation, route}) {
                           },
                         ]
                       : styles.orderLableStyle
-                  }>{`${moment(cartData?.created_at).format(
-                  'DD MMM,YYYY',
-                )} ${moment(cartData?.created_at).format('LT')} `}</Text>
+                  }>{cartData?.created_date}</Text>
               </View>
             </View>
           </View>

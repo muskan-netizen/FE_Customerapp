@@ -755,8 +755,8 @@ export default function Cart({ navigation, route }) {
     let cancelUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
 
     let queryData = `/${selectedMethod}?tip=${selectedTipAmount && selectedTipAmount != ''
-        ? Number(selectedTipAmount)
-        : 0
+      ? Number(selectedTipAmount)
+      : 0
       }&amount=${cartData?.total_payable_amount
       }&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&address_id=${selectedAddressData?.id
       }&payment_option_id=${selectedPayment?.id}&action=cart`;
@@ -1892,7 +1892,7 @@ export default function Cart({ navigation, route }) {
           </View>
         ) : null} */}
 
-        {scheduleType == 'schedule' && (
+        {!!(userData?.auth_token && !appData?.profile?.preferences?.off_scheduling_at_cart) && scheduleType == 'schedule' && (
           <TouchableOpacity
             style={{
               marginTop: moderateScale(16),

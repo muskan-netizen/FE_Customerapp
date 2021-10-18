@@ -537,6 +537,7 @@ export default {
   POPULAR_BRANDS: 'Popular Brands',
   FEATURED_PRODUCTS: 'Featured products',
   ON_SALE: 'On Sale',
+  NEW_PRODUCTS: 'New Products',
   YOUR_EMAIL_PHONE: 'Your Email or Phone Number',
   ATTACH_PRINTER: 'Attach Printer',
   WHERETO: '  Where to ?',
@@ -556,4 +557,5 @@ export default {
   VENDOR_NOT_ACCEPTING_ORDERS: 'Vendor is not accepting orders right now.',
   REJECTED: 'Rejected',
   NORIDEAVAILABLE: 'No Ride Available',
+  
 };
