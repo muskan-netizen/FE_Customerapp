@@ -116,6 +116,7 @@ const shortCodes = {
   tranznet: '02aad0',
   sambiga: '4fadae',
   agrionline: 'dd93ce',
+  quickquick: '9bd088',
 };
 
 const appIds = {
@@ -578,6 +579,10 @@ const appIds = {
   agrionline: Platform.select({
     ios: 'com.agrionline',
     android: 'com.agrionline',
+  }),
+  quickquick: Platform.select({
+    ios: 'com.quickquick',
+    android: 'com.quickquick',
   }),
 };
 

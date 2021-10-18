@@ -1370,6 +1370,16 @@ android {
             resValue "string", "app_name", "Agrionline"
             resValue "string", "host_name", ""
          }
+         quickquick{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.quickquick'
+            resValue "string", "app_name", "Quick Quick"
+            resValue "string", "host_name", ""
+         }
     }
 }
 
