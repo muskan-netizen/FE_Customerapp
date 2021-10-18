@@ -89,4 +89,5 @@ export default {
   VIEW_ALL_DATA: 'viewAllData',
   TAXIHOMESCREEN: 'taxiHomeScreen',
   TAXITABROUTES: 'taxiTabRoutes',
+  MOBBEX: 'mobbex',
 };

@@ -581,6 +581,7 @@ export default function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        console.log(res, 'orderResponse');
         actions.cartItemQty({});
         updateState({
           cartItems: [],
@@ -588,9 +589,26 @@ export default function Cart({navigation, route}) {
           isLoadingB: false,
           placeLoader: false,
         });
-        moveToNewScreen(navigationStrings.ORDERSUCESS, {
-          orderDetail: res.data,
-        })();
+
+        if (res?.data?.payment_option_id === 7) {
+          navigation.navigate(navigationStrings.MOBBEX, {
+            selectedPayment: selectedPayment,
+            total_payable_amount: (
+              Number(cartData?.total_payable_amount) +
+              (selectedTipAmount != null && selectedTipAmount != ''
+                ? Number(selectedTipAmount)
+                : 0)
+            ).toFixed(2),
+
+            payment_option_id: selectedPayment?.id,
+            order_number: res?.data?.order_number,
+          });
+        } else {
+          moveToNewScreen(navigationStrings.ORDERSUCESS, {
+            orderDetail: res.data,
+          })();
+        }
+
         showSuccess(res?.message);
       })
       .catch(errorMethod);
@@ -627,13 +645,19 @@ export default function Cart({navigation, route}) {
     if (selectedPayment?.id == 1 && selectedPayment?.off_site == 0) {
       updateState({placeLoader: true});
       _directOrderPlace();
-    } else {
-      if (selectedPayment?.off_site == 1) {
-        _webPayment();
-      } else {
-        _offineLinePayment();
-      }
+      return;
     }
+    if (selectedPayment?.off_site == 1 && selectedPayment?.id === 7) {
+      updateState({placeLoader: true});
+      _directOrderPlace();
+      return;
+    }
+    if (selectedPayment?.off_site == 1 && selectedPayment?.id !== 7) {
+      // updateState({placeLoader: true});
+      _webPayment();
+      return;
+    }
+    _offineLinePayment();
   };
 
   // console.log("sheduledorderdate", sheduledorderdate)
@@ -1606,8 +1630,7 @@ export default function Cart({navigation, route}) {
 
           {!!appData?.profile?.preferences?.tip_before_order &&
             !!cartData?.tip &&
-            cartData?.tip.length &&
-            Number(cartData?.total_payable_amount) != 0 && (
+            cartData?.tip.length && (
               <View
                 style={[
                   styles.bottomTabLableValue,
@@ -1626,50 +1649,51 @@ export default function Cart({navigation, route}) {
                   horizontal
                   showsHorizontalScrollIndicator={false}
                   contentContainerStyle={{flexGrow: 1}}>
-                  {cartData?.tip.map((j, jnx) => {
-                    return (
-                      <TouchableOpacity
-                        style={[
-                          styles.tipArrayStyle,
-                          {
-                            backgroundColor:
-                              selectedTipvalue?.value == j?.value
-                                ? themeColors.primary_color
-                                : 'transparent',
-                            flex: 0.18,
-                          },
-                        ]}
-                        onPress={() => selectedTip(j)}>
-                        <Text
-                          style={
-                            isDarkMode
-                              ? {
-                                  color:
-                                    selectedTipvalue?.value == j?.value
-                                      ? colors.white
-                                      : MyDarkTheme.colors.text,
-                                }
-                              : {
-                                  color:
-                                    selectedTipvalue?.value == j?.value
-                                      ? colors.white
-                                      : colors.black,
-                                }
-                          }>
-                          {`${currencies?.primary_currency?.symbol} ${j.value}`}
-                        </Text>
-                        <Text
-                          style={{
-                            color:
-                              selectedTipvalue?.value == j?.value
-                                ? colors.white
-                                : colors.textGreyB,
-                          }}>
-                          {j.label}
-                        </Text>
-                      </TouchableOpacity>
-                    );
-                  })}
+                  {cartData?.total_payable_amount !== 0 &&
+                    cartData?.tip.map((j, jnx) => {
+                      return (
+                        <TouchableOpacity
+                          style={[
+                            styles.tipArrayStyle,
+                            {
+                              backgroundColor:
+                                selectedTipvalue?.value == j?.value
+                                  ? themeColors.primary_color
+                                  : 'transparent',
+                              flex: 0.18,
+                            },
+                          ]}
+                          onPress={() => selectedTip(j)}>
+                          <Text
+                            style={
+                              isDarkMode
+                                ? {
+                                    color:
+                                      selectedTipvalue?.value == j?.value
+                                        ? colors.white
+                                        : MyDarkTheme.colors.text,
+                                  }
+                                : {
+                                    color:
+                                      selectedTipvalue?.value == j?.value
+                                        ? colors.white
+                                        : colors.black,
+                                  }
+                            }>
+                            {`${currencies?.primary_currency?.symbol} ${j.value}`}
+                          </Text>
+                          <Text
+                            style={{
+                              color:
+                                selectedTipvalue?.value == j?.value
+                                  ? colors.white
+                                  : colors.textGreyB,
+                            }}>
+                            {j.label}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    })}
 
                   <TouchableOpacity
                     style={[
@@ -1679,7 +1703,7 @@ export default function Cart({navigation, route}) {
                           selectedTipvalue == 'custom'
                             ? themeColors.primary_color
                             : 'transparent',
-                        flex: 0.45,
+                        flex: cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
                       },
                     ]}
                     onPress={() => selectedTip('custom')}>
@@ -1928,26 +1952,25 @@ export default function Cart({navigation, route}) {
           <View
             pointerEvents={placeLoader ? 'none' : 'auto'}
             style={styles.paymentView}>
-            {userData?.auth_token &&
-              // !appData?.profile?.preferences?.off_scheduling_at_cart && 
-              (
-                <ButtonComponent
-                  onPress={_selectTime}
-                  btnText={
-                    localeSheduledOrderDate
-                      ? localeSheduledOrderDate
-                      : strings.SCHEDULE_ORDER
-                  }
-                  borderRadius={moderateScale(13)}
-                  textStyle={{color: themeColors.primary_color}}
-                  containerStyle={{
-                    ...styles.placeOrderButtonStyle,
-                    backgroundColor: colors.transparent,
-                    borderColor: themeColors.primary_color,
-                    borderWidth: 0.8,
-                  }}
-                />
-              )}
+            {userData?.auth_token && (
+              // !appData?.profile?.preferences?.off_scheduling_at_cart &&
+              <ButtonComponent
+                onPress={_selectTime}
+                btnText={
+                  localeSheduledOrderDate
+                    ? localeSheduledOrderDate
+                    : strings.SCHEDULE_ORDER
+                }
+                borderRadius={moderateScale(13)}
+                textStyle={{color: themeColors.primary_color}}
+                containerStyle={{
+                  ...styles.placeOrderButtonStyle,
+                  backgroundColor: colors.transparent,
+                  borderColor: themeColors.primary_color,
+                  borderWidth: 0.8,
+                }}
+              />
+            )}
 
             <ButtonComponent
               onPress={() => {
