@@ -364,7 +364,7 @@ export default function SelectCarModalView({
               btnText={
                 selectedCarOption?.variant[0]?.price > 0
                   ? strings.BOOK_NOW
-                  : 'No Ride Available'
+                  : strings.NORIDEAVAILABLE
               }
               containerStyle={{flex: 1}}
             />
