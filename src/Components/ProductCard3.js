@@ -111,6 +111,8 @@ export default function ProductCard3({
               ...commonStyles.shadowStyle,
               margin: 2,
               borderRadius: moderateScale(15),
+              height: moderateScale(100),
+              width: moderateScale(100),
             }}>
             <FastImage
               style={{

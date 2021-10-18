@@ -14,6 +14,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  // SectionList
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { cloneDeep, debounce } from 'lodash';
@@ -1012,7 +1013,6 @@ export default function Products({ route, navigation }) {
   };
 
   const renderProduct = ({ item, index }) => {
-    const { isSelectItem } = state;
     return (
       <ProductCard3
         data={item}
@@ -1789,12 +1789,15 @@ export default function Products({ route, navigation }) {
               showsVerticalScrollIndicator={false}
               onScroll={onScroll}
               sections={sectionListData}
-              ListHeaderComponent={listHeaderComponent2()}
-              // keyExtractor={(item, index) => index.toString()}
+              ListHeaderComponent={listHeaderComponent2}
               stickySectionHeadersEnabled={false}
-              // scrollToLocationOffset={50}
-              // maxToRenderPerBatch={10}
-              // windowSize={5}
+              scrollToLocationOffset={50}
+              maxToRenderPerBatch={15}
+              windowSize={15}
+              initialNumToRender={15}
+              removeClippedSubviews={true}
+              extraData={sectionListData}
+              keyExtractor={(item, index) => index}
               // tabBarStyle={styles.tabBar}
               // ItemSeparatorComponent={() => <View style={styles.separator} />}
               renderTab={renderSectionTab}
@@ -1815,8 +1818,7 @@ export default function Products({ route, navigation }) {
             showsVerticalScrollIndicator={false}
             data={(!isLoading && productListData) || []}
             renderItem={renderProduct}
-            ListHeaderComponent={listHeaderComponent2()
-            }
+            ListHeaderComponent={listHeaderComponent2}
             keyExtractor={(item, index) => String(index)}
             keyboardShouldPersistTaps="always"
             showsVerticalScrollIndicator={false}
