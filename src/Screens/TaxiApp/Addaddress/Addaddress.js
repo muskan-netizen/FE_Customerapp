@@ -126,22 +126,35 @@ export default function Addaddress({navigation, route}) {
   } = state;
 
   useEffect(() => {
-    if (paramData?.data?.pickuplocationAllData != undefined) {
+    if (
+      paramData?.data?.pickuplocationAllData != undefined &&
+      paramData?.data?.pickuplocationAllData[0]?.task_type_id === 1
+    ) {
       updateState({
         pickUpLocation: paramData?.data.pickuplocationAllData[0]?.address,
-        dropOffLocation: paramData?.data.pickuplocationAllData[1]?.address,
         pickUpLocationLatLng: {
           latitude: paramData?.data.pickuplocationAllData[0]?.latitude,
           longitude: paramData?.data.pickuplocationAllData[0]?.longitude,
         },
-        dropOffLocationLatLng: {
-          latitude: paramData?.data.pickuplocationAllData[1]?.latitude,
-          longitude: paramData?.data.pickuplocationAllData[1]?.longitude,
-        },
+
         pickUpLocationAddressData: paramData?.data.pickuplocationAllData[0],
-        dropOffLocationAddressData: paramData?.data.pickuplocationAllData[1],
       });
     }
+    if (
+      paramData?.data?.pickuplocationAllData != undefined &&
+      paramData?.data?.pickuplocationAllData[0]?.task_type_id === 2
+    ) {
+      updateState({
+        dropOffLocation: paramData?.data.pickuplocationAllData[0]?.address,
+
+        dropOffLocationLatLng: {
+          latitude: paramData?.data.pickuplocationAllData[0]?.latitude,
+          longitude: paramData?.data.pickuplocationAllData[0]?.longitude,
+        },
+        dropOffLocationAddressData: paramData?.data.pickuplocationAllData[0],
+      });
+    }
+
     if (!!(userData && userData?.auth_token)) {
       getAllAddress();
     }
@@ -385,8 +398,8 @@ export default function Addaddress({navigation, route}) {
     );
   }, [paramData?.type]);
 
-  const _moveToNextScreen = () => {
-    navigation.navigate(navigationStrings.PINADDRESSONMAP, paramData);
+  const _moveToNextScreen = (type) => {
+    navigation.navigate(navigationStrings.PINADDRESSONMAP, {data: type});
   };
 
   const renderDotContainer = () => {
@@ -462,7 +475,7 @@ export default function Addaddress({navigation, route}) {
         />
         <TouchableOpacity
           //  onPress={() => addRemoveAddress(type)}
-          onPress={() => _moveToNextScreen()}
+          onPress={() => _moveToNextScreen('drop')}
           style={{
             height: moderateScale(48),
             alignItems: 'center',
@@ -504,7 +517,7 @@ export default function Addaddress({navigation, route}) {
       navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
         location: location,
         id: paramData?.data?.id,
-        pickup_taxi:paramData?.data?.pickup_taxi,
+        pickup_taxi: paramData?.data?.pickup_taxi,
         tasks: addressData,
         cabVendors: pickUpVendors,
         datetime: paramData?.datetime,
@@ -801,7 +814,7 @@ export default function Addaddress({navigation, route}) {
               {/* {showDropOfThree ? renderCross('dropOffLocationThree') : null} */}
             </View>
             <View style={{position: 'absolute', end: 28, top: 27}}>
-              <TouchableOpacity onPress={() => _moveToNextScreen()}>
+              <TouchableOpacity onPress={() => _moveToNextScreen('pickup')}>
                 <Image
                   style={{
                     height: 25,
