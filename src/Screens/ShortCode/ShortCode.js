@@ -768,6 +768,24 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.sambiga:
+          updateState({
+            shortCode: shortCodes.sambiga,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.agrionline:
+          updateState({
+            shortCode: shortCodes.agrionline,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.quickquick:
+          updateState({
+            shortCode: shortCodes.quickquick,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
