@@ -142,6 +142,13 @@ export default ({fontFamily, buttonTextColor}) => {
       fontSize: textScale(14),
       color: colors.textGreyD,
     },
+    regularFont11: {
+      fontSize: textScale(11),
+      color: colors.textGrey,
+      fontFamily: fontFamily?.regular,
+      opacity: 0.7,
+      textAlign: 'left',
+    },
   });
   return styles;
 };

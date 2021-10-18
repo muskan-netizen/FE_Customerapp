@@ -75,7 +75,6 @@ export function getProductByCategoryId(query = '', data = {}, headers = {}) {
 
 ///Add Product to Cartr
 export const addProductsToCart = (data = {}, headers = {}) => {
-  console.log(headers, 'headers');
   return new Promise((resolve, reject) => {
     apiPost(ADD_PRODUCT_TO_CART, data, headers)
       .then((res) => {

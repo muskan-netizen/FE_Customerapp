@@ -105,6 +105,13 @@ const shortCodes = {
   expressdelivery: '6098e4',
   booziedoozie: '9f5473',
   zestyclickz: '3046ca',
+  bakesale: '55534f',
+  elcheregio: '3154ed',
+  yaawi: '64a3e8',
+  hosta: '757287',
+  somame: '069701',
+  goodwheelz: 'ceab64',
+  tranznet: '02aad0',
 };
 
 const appIds = {
@@ -531,6 +538,34 @@ const appIds = {
   zestyclickz: Platform.select({
     ios: 'com.zestyclickz',
     android: 'com.zestyclickz',
+  }),
+  bakesale: Platform.select({
+    ios: 'com.bakesale',
+    android: 'com.bakesale',
+  }),
+  elcheregio: Platform.select({
+    ios: 'com.elcheregio',
+    android: 'com.elcheregio',
+  }),
+  yaawi: Platform.select({
+    ios: 'com.yaawi',
+    android: 'com.yaawi',
+  }),
+  hosta: Platform.select({
+    ios: 'com.hosta',
+    android: 'com.hosta',
+  }),
+  somame: Platform.select({
+    ios: 'com.somame',
+    android: 'com.somame',
+  }),
+  goodwheelz: Platform.select({
+    ios: 'com.goodwheelz',
+    android: 'com.goodwheelz',
+  }),
+  tranznet: Platform.select({
+    ios: 'com.tranznet',
+    android: 'com.tranznet',
   }),
 };
 

@@ -39,7 +39,6 @@ export default function (state = initial_state, action) {
   switch (action.type) {
     case types.APP_INIT: {
       const data = action.payload;
-      console.log(data, 'in reducer>>>>>>>>>>>>>>>>>>');
       return {
         ...state,
         appData: data.appData,

@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {
   I18nManager,
   Image,
+  Platform,
   Text,
   TouchableOpacity,
   Vibration,
@@ -135,8 +136,6 @@ export default function Settings({route, navigation}) {
     }
   };
 
-  console.log(languages, 'languageslanguages');
-
   //Update language
   const updateLanguage = (item) => {
     const data = languages.all_languages.filter((x) => x.id == item.id)[0];
@@ -226,7 +225,6 @@ export default function Settings({route, navigation}) {
     }
   };
 
-  console.log(appCurrencies.all_currencies, 'll_currencies');
   return (
     <WrapperContainer
       bgColor={
@@ -360,144 +358,263 @@ export default function Settings({route, navigation}) {
         <View style={{height: 10}} />
       </View>
       <View style={{height: moderateScaleVertical(30)}} />
-      <LinearGradient
-        style={{
-          width: width,
-          // borderTopWidth: 0.7,
-          // borderBottomWidth: 0.7,
-          // borderColor: isDarkMode
-          //   ? MyDarkTheme.colors.text
-          //   : colors.blackOpacity20,
-        }}
-        colors={
-          isDarkMode
-            ? ['rgba(31,31,31, 0.8)', 'rgba(31,31,31, 0.8)']
-            : ['rgba(256,256,256,256)', 'rgba(256,256,256,256)']
-        }>
+      {Platform.OS === 'android' ? (
+        <LinearGradient
+          style={{
+            width: width,
+            // borderTopWidth: 0.7,
+            // borderBottomWidth: 0.7,
+            // borderColor: isDarkMode
+            //   ? MyDarkTheme.colors.text
+            //   : colors.blackOpacity20,
+          }}
+          colors={
+            isDarkMode
+              ? ['rgba(31,31,31, 0.8)', 'rgba(31,31,31, 0.8)']
+              : ['rgba(256,256,256,256)', 'rgba(256,256,256,256)']
+          }>
+          <View
+            style={{
+              height: 0.5,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.text
+                : colors.blackOpacity20,
+            }}
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              marginHorizontal: moderateScale(20),
+              marginTop: moderateScaleVertical(20),
+            }}>
+            <Text
+              style={{
+                ...styles.currency,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.blackB,
+              }}>
+              {strings.CURRENCIES}
+            </Text>
+          </View>
+          <DropDownPicker
+            items={appCurrencies.all_currencies}
+            defaultValue={
+              appCurrencies?.primary_currency?.name ||
+              appCurrencies?.primary_currency?.label ||
+              ''
+            }
+            containerStyle={{height: 40, marginTop: moderateScaleVertical(5)}}
+            style={{
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.greyColor1,
+              marginHorizontal: moderateScale(20),
+              flexDirection: 'row',
+            }}
+            labelStyle={{
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+              textAlign: 'left',
+            }}
+            itemStyle={{
+              justifyContent: 'flex-start',
+            }}
+            dropDownStyle={{
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.greyColor1,
+              height: 120,
+              width: width - moderateScale(40),
+              alignSelf: 'center',
+              zIndex: 5000,
+            }}
+            zIndex={5000}
+            arrowColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
+            onChangeItem={(item) => updateCurrency(item)}
+          />
+
+          <View
+            style={{
+              flexDirection: 'row',
+              marginHorizontal: moderateScale(20),
+              marginTop: moderateScaleVertical(10),
+            }}>
+            <Text
+              style={{
+                ...styles.currency,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.blackB,
+                marginTop: moderateScaleVertical(7),
+              }}>
+              {strings.LANGUAGES}
+            </Text>
+          </View>
+          <DropDownPicker
+            items={appLanguages.all_languages}
+            defaultValue={
+              appLanguages?.primary_language?.name ||
+              appLanguages?.primary_language?.label ||
+              ''
+            }
+            containerStyle={{
+              height: 40,
+              marginTop: moderateScaleVertical(5),
+            }}
+            zIndex={1000}
+            style={{
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.greyColor1,
+              marginHorizontal: moderateScale(20),
+              flexDirection: 'row',
+              zIndex: 1000,
+            }}
+            itemStyle={{
+              justifyContent: 'flex-start',
+            }}
+            labelStyle={{
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+              textAlign: 'left',
+            }}
+            dropDownStyle={{
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.greyColor1,
+              minHeight: moderateScaleVertical(40),
+              maxHeight: moderateScaleVertical(145),
+
+              width: width - moderateScale(40),
+              alignSelf: 'center',
+            }}
+            arrowColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
+            onChangeItem={(item) => updateLanguage(item)}
+          />
+          <View
+            style={{
+              height: 0.5,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.text
+                : colors.blackOpacity20,
+              marginTop: moderateScaleVertical(20),
+            }}
+          />
+        </LinearGradient>
+      ) : (
         <View
           style={{
-            height: 0.5,
             backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : colors.white,
+            borderTopWidth: 0.7,
+            borderBottomWidth: 0.7,
+            borderColor: isDarkMode
               ? MyDarkTheme.colors.text
               : colors.blackOpacity20,
-          }}
-        />
-        <View
-          style={{
-            flexDirection: 'row',
-            marginHorizontal: moderateScale(20),
-            marginTop: moderateScaleVertical(20),
+            paddingVertical: 20,
           }}>
-          <Text
+          <View
             style={{
-              ...styles.currency,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.blackB,
+              flexDirection: 'row',
+              marginHorizontal: moderateScale(20),
             }}>
-            {strings.CURRENCIES}
-          </Text>
-        </View>
-        <DropDownPicker
-          items={appCurrencies.all_currencies}
-          defaultValue={
-            appCurrencies?.primary_currency?.name ||
-            appCurrencies?.primary_currency?.label ||
-            ''
-          }
-          containerStyle={{height: 40, marginTop: moderateScaleVertical(5)}}
-          style={{
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.lightDark
-              : colors.greyColor1,
-            marginHorizontal: moderateScale(20),
-            flexDirection: 'row',
-          }}
-          labelStyle={{
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
-            textAlign: 'left',
-          }}
-          itemStyle={{
-            justifyContent: 'flex-start',
-          }}
-          dropDownStyle={{
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.lightDark
-              : colors.greyColor1,
-            height: 120,
-            width: width - moderateScale(40),
-            alignSelf: 'center',
-            zIndex: 5000,
-          }}
-          zIndex={5000}
-          arrowColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
-          onChangeItem={(item) => updateCurrency(item)}
-        />
-
-        <View
-          style={{
-            flexDirection: 'row',
-            marginHorizontal: moderateScale(20),
-            marginTop: moderateScaleVertical(10),
-          }}>
-          <Text
+            <Text
+              style={{
+                ...styles.currency,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.blackB,
+              }}>
+              {strings.CURRENCIES}
+            </Text>
+          </View>
+          <DropDownPicker
+            items={appCurrencies.all_currencies}
+            defaultValue={
+              appCurrencies?.primary_currency?.name ||
+              appCurrencies?.primary_currency?.label ||
+              ''
+            }
+            containerStyle={{height: 40, marginTop: moderateScaleVertical(5)}}
             style={{
-              ...styles.currency,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.blackB,
-              marginTop: moderateScaleVertical(7),
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.greyColor1,
+              marginHorizontal: moderateScale(20),
+              flexDirection: 'row',
+            }}
+            labelStyle={{
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+              textAlign: 'left',
+            }}
+            itemStyle={{
+              justifyContent: 'flex-start',
+            }}
+            dropDownStyle={{
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.greyColor1,
+              height: 120,
+              width: width - moderateScale(40),
+              alignSelf: 'center',
+              zIndex: 5000,
+            }}
+            zIndex={5000}
+            arrowColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
+            onChangeItem={(item) => updateCurrency(item)}
+          />
+
+          <View
+            style={{
+              flexDirection: 'row',
+              marginHorizontal: moderateScale(20),
+              marginTop: moderateScaleVertical(10),
             }}>
-            {strings.LANGUAGES}
-          </Text>
+            <Text
+              style={{
+                ...styles.currency,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.blackB,
+                marginTop: moderateScaleVertical(7),
+              }}>
+              {strings.LANGUAGES}
+            </Text>
+          </View>
+          <DropDownPicker
+            items={appLanguages.all_languages}
+            defaultValue={
+              appLanguages?.primary_language?.name ||
+              appLanguages?.primary_language?.label ||
+              ''
+            }
+            containerStyle={{
+              height: 40,
+              marginTop: moderateScaleVertical(5),
+            }}
+            zIndex={1000}
+            style={{
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.greyColor1,
+              marginHorizontal: moderateScale(20),
+              flexDirection: 'row',
+              zIndex: 1000,
+            }}
+            itemStyle={{
+              justifyContent: 'flex-start',
+            }}
+            labelStyle={{
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+              textAlign: 'left',
+            }}
+            dropDownStyle={{
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.greyColor1,
+              minHeight: moderateScaleVertical(40),
+              maxHeight: moderateScaleVertical(145),
+
+              width: width - moderateScale(40),
+              alignSelf: 'center',
+            }}
+            arrowColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
+            onChangeItem={(item) => updateLanguage(item)}
+          />
         </View>
-        <DropDownPicker
-          items={appLanguages.all_languages}
-          defaultValue={
-            appLanguages?.primary_language?.name ||
-            appLanguages?.primary_language?.label ||
-            ''
-          }
-          containerStyle={{
-            height: 40,
-            marginTop: moderateScaleVertical(5),
-          }}
-          zIndex={1000}
-          style={{
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.lightDark
-              : colors.greyColor1,
-            marginHorizontal: moderateScale(20),
-            flexDirection: 'row',
-            zIndex: 1000,
-          }}
-          itemStyle={{
-            justifyContent: 'flex-start',
-          }}
-          labelStyle={{
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
-            textAlign: 'left',
-          }}
-          dropDownStyle={{
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.lightDark
-              : colors.greyColor1,
-            minHeight: moderateScaleVertical(40),
-            maxHeight: moderateScaleVertical(145),
-
-            width: width - moderateScale(40),
-            alignSelf: 'center',
-          }}
-          arrowColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
-          onChangeItem={(item) => updateLanguage(item)}
-        />
-        <View
-          style={{
-            height: 0.5,
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.text
-              : colors.blackOpacity20,
-            marginTop: moderateScaleVertical(20),
-          }}
-        />
-      </LinearGradient>
-
+      )}
       {/* </KeyboardAwareScrollView> */}
     </WrapperContainer>
   );
