@@ -1,4 +1,5 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import { cloneDeep, debounce } from 'lodash';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -7,20 +8,17 @@ import {
   ImageBackground,
   Platform,
   RefreshControl,
-  SafeAreaView,
-  ScrollView,
-  Share,
+  SafeAreaView, Share,
   StatusBar,
   Text,
   TouchableOpacity,
-  View,
-  // SectionList
+  View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { cloneDeep, debounce } from 'lodash';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
+import SectionList from 'react-native-tabs-section-list';
 import { useSelector } from 'react-redux';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
 import HomeServiceVariantAddons from '../../Components/HomeServiceVariantAddons';
@@ -40,18 +38,11 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc, { hitSlopProp } from '../../styles/commonStyles';
-import {
-  moderateScale,
-  moderateScaleVertical,
-  StatusBarHeight,
-  textScale,
-  width,
-} from '../../styles/responsiveSize';
+import { height, moderateScale, moderateScaleVertical, textScale, width } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { getImageUrl, showError, showSuccess } from '../../utils/helperFunctions';
 import { removeItem } from '../../utils/utils';
 import stylesFunc from './styles';
-import SectionList from 'react-native-tabs-section-list';
 
 export default function Products({ route, navigation }) {
   const { data } = route.params;
@@ -1478,6 +1469,7 @@ export default function Products({ route, navigation }) {
 
     return (
       <View
+
         style={{
           marginHorizontal: moderateScale(16),
           marginVertical: moderateScaleVertical(8),
@@ -1553,6 +1545,16 @@ export default function Products({ route, navigation }) {
       categoryInfo?.translation[0]?.meta_description);
 
   console.log("sectionListData", sectionListData)
+
+  var itemHeights = [];
+  const getItemLayout = (data, index) => {
+    const length = itemHeights[index];
+    const offset = itemHeights.slice(0, index).reduce((a, c) => a + c, 0)
+    console.log("l++++lenght", length)
+    console.log("l++++index", index)
+    console.log('l++++offset', offset)
+    return { length, offset, index }
+  }
   return (
     <View
       style={{
@@ -1792,14 +1794,18 @@ export default function Products({ route, navigation }) {
               ListHeaderComponent={listHeaderComponent2}
               stickySectionHeadersEnabled={false}
               scrollToLocationOffset={50}
-              maxToRenderPerBatch={15}
-              windowSize={15}
-              initialNumToRender={15}
+              maxToRenderPerBatch={18}
+              windowSize={18}
+              initialNumToRender={18}
               removeClippedSubviews={true}
               extraData={sectionListData}
               keyExtractor={(item, index) => index}
               // tabBarStyle={styles.tabBar}
               // ItemSeparatorComponent={() => <View style={styles.separator} />}
+              getItemLayout={(data, index) => {
+                // console.log(data,`getItemLayout called with index: ${index}`);
+                return { length: height/10, offset:height/10 * index, index: index };
+              }}
               renderTab={renderSectionTab}
               renderItem={renderSectionItem}
               ListFooterComponent={() => (
