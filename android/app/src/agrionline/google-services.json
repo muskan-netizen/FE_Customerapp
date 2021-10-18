@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "710110279617",
+    "project_id": "agrionline-2e073",
+    "storage_bucket": "agrionline-2e073.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710110279617:android:ecdf10e204903f21a26140",
+        "android_client_info": {
+          "package_name": "com.agrionline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710110279617-417sf0b67dm88uppgtsntt65q1ra7tk3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.agrionline",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "710110279617-g15rm9tn70drtc8fbl9ibjqjgtdnsug3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.agrionline",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "710110279617-vffofad5obdq9q7ochqa8tb6m1cmg12m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.agrionline",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "710110279617-ti95egl4pgthciidlisp50gjuiue3f8e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAvCkUQdCQ2q7TgpbxVDxCXaFIkUIVM3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710110279617-ti95egl4pgthciidlisp50gjuiue3f8e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "710110279617-ab4fo7doevds5c0s85quj1guc1gku7p9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.agrionline"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

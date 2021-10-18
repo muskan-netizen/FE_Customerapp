@@ -97,3 +97,4 @@ export {default as PickupTaxiOrderDetail} from './TaxiApp/PickupTaxiOrderDetail/
 export {default as PrinterConnection} from './PrinterConnection/PrinterScreen';
 export {default as TaxiHomeScreen} from './Home/TaxiHomeScreen/TaxiHomeScreen';
 export {default as ViewAllData} from './ViewAllData/ViewAllData';
+export {default as Mobbex} from './PaymentGateways/Mobbex';

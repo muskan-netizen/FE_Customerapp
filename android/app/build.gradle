@@ -1014,7 +1014,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.smcompany'
-            resValue "string", "app_name", "SMCompany"
+            resValue "string", "app_name", "SMCompany" 
             resValue "string", "host_name", ""
          }
          totum4U{
@@ -1348,6 +1348,36 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.tranznet'
             resValue "string", "app_name", "Tranz.net"
+            resValue "string", "host_name", ""
+         }
+          sambiga{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.sambiga'
+            resValue "string", "app_name", "Sambiga"
+            resValue "string", "host_name", ""
+         }
+         agrionline{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.agrionline'
+            resValue "string", "app_name", "Agrionline"
+            resValue "string", "host_name", ""
+         }
+         quickquick{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.quickquick'
+            resValue "string", "app_name", "Quick Quick"
             resValue "string", "host_name", ""
          }
     }
