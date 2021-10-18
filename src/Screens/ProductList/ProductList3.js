@@ -1430,12 +1430,10 @@ export default function Products({ route, navigation }) {
   const renderSectionTab = (props) => {
     const { title, isActive } = props;
     if (!AnimatedHeaderValue) {
-      return null;
+      return <View style={{ width: 40 }} />
     }
     return (
-      <TouchableOpacity
-        disabled
-        activeOpacity={1}
+      <View
         style={{
           marginLeft: moderateScale(12),
           marginVertical: moderateScaleVertical(16),
@@ -1461,15 +1459,13 @@ export default function Products({ route, navigation }) {
           }}>
           {title}
         </Text>
-      </TouchableOpacity>
+      </View>
     );
   };
 
   const renderSectionHeader = ({ section }) => {
-
     return (
       <View
-
         style={{
           marginHorizontal: moderateScale(16),
           marginVertical: moderateScaleVertical(8),
@@ -1804,7 +1800,7 @@ export default function Products({ route, navigation }) {
               // ItemSeparatorComponent={() => <View style={styles.separator} />}
               getItemLayout={(data, index) => {
                 // console.log(data,`getItemLayout called with index: ${index}`);
-                return { length: height/10, offset:height/10 * index, index: index };
+                return { length: height / 10, offset: height / 10 * index, index: index };
               }}
               renderTab={renderSectionTab}
               renderItem={renderSectionItem}
