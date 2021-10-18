@@ -296,7 +296,10 @@ export default function Cart({navigation, route}) {
     // alert("cart detail hit")
     actions
       .getCartDetail(
-        `/?type=${dineInType}`,
+        `/?type=${dineInType}${
+          paramsData?.data?.queryURL ? `&${paramsData?.data?.queryURL}` : '' //for webPayment method- Mobbex,
+        }`,
+
         {},
         {
           code: appData?.profile?.code,
@@ -590,7 +593,17 @@ export default function Cart({navigation, route}) {
           placeLoader: false,
         });
 
-        if (res?.data?.payment_option_id === 7) {
+        console.log(
+          Number(cartData?.total_payable_amount),
+          Number(selectedTipAmount),
+          'payableAmout',
+        );
+
+        if (
+          (res?.data?.payment_option_id === 7 &&
+            !!(Number(cartData?.total_payable_amount) !== 0)) ||
+          Number(selectedTipAmount) !== 0
+        ) {
           navigation.navigate(navigationStrings.MOBBEX, {
             selectedPayment: selectedPayment,
             total_payable_amount: (
@@ -601,7 +614,7 @@ export default function Cart({navigation, route}) {
             ).toFixed(2),
 
             payment_option_id: selectedPayment?.id,
-            order_number: res?.data?.order_number,
+            orderDetail: res.data,
           });
         } else {
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
