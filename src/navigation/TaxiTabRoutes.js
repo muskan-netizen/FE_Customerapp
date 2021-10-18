@@ -108,9 +108,9 @@ export default function TaxiTabRoutes(props) {
               style={[
                 {tintColor: tintColor},
                 {
-                  // tintColor: focused
-                  //   ? them
-                  //   : getColorCodeWithOpactiyNumber(colors.white.substr(1), 50),
+                  tintColor: focused
+                    ? colors.white
+                    : getColorCodeWithOpactiyNumber(colors.white.substr(1), 50),
                   height: 25,
                   width: 25,
                 },

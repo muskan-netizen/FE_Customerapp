@@ -190,13 +190,17 @@ export default ({fontFamily, themeColors}) => {
     plainView: {
       alignItems: 'center',
       justifyContent: 'center',
-      width: width / 2.5,
-      maxWidth: width / 2.5,
+      width: moderateScale(100),
+      backgroundColor: colors.textGreyLight,
+      position: 'absolute',
+      zIndex: -1000,
+      left: 20,
+      height: moderateScaleVertical(30),
     },
     pickupDropOff: {
-      textAlign: 'left',
-      color: colors.themeColor,
-      fontFamily: fontFamily.regular,
+      textAlign: 'center',
+      color: colors.white,
+      fontFamily: fontFamily.bold,
       fontSize: textScale(12),
     },
     pickupDropOffAddress: {
