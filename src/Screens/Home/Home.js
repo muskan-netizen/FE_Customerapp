@@ -470,7 +470,6 @@ export default function Home({ route, navigation }) {
 
   //On Press banner
   const bannerPress = (data) => {
-    console.log(data, 'bannerPressdata');
     let item = {};
     if (data?.redirect_id) {
       if (data?.redirect_to == staticStrings.VENDOR) {
