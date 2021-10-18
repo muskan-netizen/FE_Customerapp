@@ -742,6 +742,17 @@ export default function Products({route, navigation}) {
       });
       return;
     }
+    if (item?.add_on?.length === 0 && item?.mode_of_service === 'schedule') {
+      updateState({
+        updateQtyLoader: false,
+        typeId: getTypeId,
+        isVisibleModal: true,
+        selectedCartItem: item,
+        selectedItemID: -1,
+        btnLoader: false,
+      });
+      return;
+    }
 
     let data = {};
     data['sku'] = item.sku;
@@ -1235,12 +1246,12 @@ export default function Products({route, navigation}) {
 
         {/* {!!categoryInfo?.is_show_products_with_category && (
           <>
-            <View style={{ marginHorizontal: moderateScale(20) }}>
+            <View style={{marginHorizontal: moderateScale(20)}}>
               <FlatList
                 data={vendorCategories}
                 renderItem={_renderVendorCategories}
                 horizontal={true}
-                ItemSeparatorComponent={() => <View style={{ width: 15 }} />}
+                ItemSeparatorComponent={() => <View style={{width: 15}} />}
               />
             </View>
           </>

@@ -53,6 +53,10 @@ export default function SelectCarModalView({
     (state) => state?.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
+  console.log(
+    selectedCarOption?.variant[0]?.price,
+    'selectedCarOptionselectedCarOptionselectedCarOption',
+  );
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});
@@ -352,8 +356,16 @@ export default function SelectCarModalView({
                 themeColors.primary_color,
               ]}
               textStyle={{textTransform: 'none', fontSize: textScale(14)}}
-              onPress={onPressPickUpNow}
-              btnText={strings.BOOK_NOW}
+              onPress={
+                selectedCarOption?.variant[0]?.price > 0
+                  ? onPressPickUpNow
+                  : () => {}
+              }
+              btnText={
+                selectedCarOption?.variant[0]?.price > 0
+                  ? strings.BOOK_NOW
+                  : strings.NORIDEAVAILABLE
+              }
               containerStyle={{flex: 1}}
             />
             {/* <TouchableOpacity
