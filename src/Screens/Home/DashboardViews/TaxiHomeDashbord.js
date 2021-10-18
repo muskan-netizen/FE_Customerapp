@@ -419,10 +419,9 @@ export default function TaxiHomeDashbord({
           }}
           onPress={() => {
             userData?.auth_token
-              ? moveToNewScreen(
-                  navigationStrings.ADDADDRESS,
-                  appMainData?.categories[0],
-                )
+              ? navigation.navigate(navigationStrings.ADDADDRESS, {
+                  data: appMainData?.categories[0],
+                })
               : navigation.navigate(navigationStrings.LOGIN);
           }}>
           <View
