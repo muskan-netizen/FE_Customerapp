@@ -11,6 +11,10 @@ import Header from '../../Components/Header';
 import actions from '../../redux/actions';
 import {useState} from 'react';
 import {WebView} from 'react-native-webview';
+import queryString from 'query-string';
+import navigationStrings from '../../navigation/navigationStrings';
+import {showError} from '../../utils/helperFunctions';
+import {moderateScaleVertical} from '../../styles/responsiveSize';
 
 export default function Mobbex({navigation, route}) {
   let paramsData = route?.params;
@@ -24,12 +28,10 @@ export default function Mobbex({navigation, route}) {
   const [state, setState] = useState({
     webUrl: '',
   });
+
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {webUrl} = state;
-
-  //   order_number: "53349553"
-  // payment_option_id: 7
 
   useEffect(() => {
     apiHit();
@@ -40,7 +42,7 @@ export default function Mobbex({navigation, route}) {
       paramsData?.total_payable_amount
     }&payment_option_id=${
       paramsData?.payment_option_id
-    }&action=cart&order_number=${paramsData?.order_number}`;
+    }&action=cart&order_number=${paramsData?.orderDetail?.order_number}`;
 
     try {
       const res = await actions.openPaymentWebUrl(
@@ -52,23 +54,37 @@ export default function Mobbex({navigation, route}) {
           language: languages?.primary_language?.id,
         },
       );
-      console.log(res, '<===response mobbex');
       updateState({webUrl: res.data});
     } catch (error) {
-      console.log('error raised', error);
+      showError(error.message || error);
     }
   };
+  const moveToNewScreen =
+    (screenName, data = {}) =>
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   const onNavigationStateChange = (props) => {
     const {url} = props;
+    const URL = queryString.parseUrl(url);
+    const queryParams = URL.query;
+    const nonQueryURL = URL.url;
 
-    // let queryString = new URL(url);
-    // let urlParams = queryString.searchParams;
-
-    console.log(props, 'urlParams');
-    // if((urlParams.has('gateway')) && (urlParams.get('gateway') == 'paystack')) {
-
-    // }
+    setTimeout(() => {
+      if (queryParams.status === '200') {
+        moveToNewScreen(navigationStrings.ORDERSUCESS, {
+          orderDetail: {
+            order_number: queryParams.order,
+            id: paramsData?.orderDetail?.id,
+          },
+        })();
+      } else if (queryParams.status === '0') {
+        moveToNewScreen(navigationStrings.CART, {
+          queryURL: url.replace(`${nonQueryURL}?`, ''),
+        })();
+      }
+    }, 3000);
   };
   return (
     <WrapperContainer
@@ -82,13 +98,17 @@ export default function Mobbex({navigation, route}) {
         centerTitle={''}
       />
       {webUrl !== '' && (
-        // <ScrollView contentContainerStyle={{paddingBottom: 60, flexGrow: 1}}>
         <WebView
           source={{uri: webUrl}}
           onNavigationStateChange={onNavigationStateChange}
         />
-        // </ScrollView>
       )}
+      <View
+        style={{
+          height: moderateScaleVertical(75),
+          backgroundColor: colors.transparent,
+        }}
+      />
     </WrapperContainer>
   );
 }
