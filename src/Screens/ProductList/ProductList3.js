@@ -80,6 +80,7 @@ export default function Products({ route, navigation }) {
     updateQtyLoader: false,
     showShimmer: true,
     typeId: null,
+    selectedSection: null,
     sortFilters: [
       {
         id: -2,
@@ -188,6 +189,7 @@ export default function Products({ route, navigation }) {
     vendorCategoryItms,
     typeId,
     sectionListData,
+    selectedSection
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -240,7 +242,6 @@ export default function Products({ route, navigation }) {
       maximumPrice != 50000 ||
       checkForMaximumPriceChange ||
       checkForMinimumPriceChange;
-    console.log(filterExist, 'filterExist');
     {
       filterExist
         ? updateState({ showFilterSlectedIcon: true })
@@ -614,32 +615,6 @@ export default function Products({ route, navigation }) {
     trailing: false,
   });
 
-  //Add product to cart
-  const _addToCart = async (item) => {
-    // moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
-    // return;
-    if (item.add_on.length !== 0 || item.variantSet.length !== 0) {
-      updateState({
-        isVisibleModal: true,
-        selectedCartItem: item,
-        btnLoader: false,
-      });
-      return;
-    }
-    let updateArray = productListData.map((val, i) => {
-      if (val.id == item.id) {
-        return { ...val, qty: 1 };
-      }
-      return val;
-    });
-    updateState({ updateQtyLoader: true });
-
-    updateState({
-      productListData: updateArray,
-      selectedCartItem: item,
-      updateQtyLoader: false,
-    });
-  };
 
   const checkSingleVendor = async (id) => {
     let vendorData = { vendor_id: categoryInfo?.id };
@@ -662,7 +637,7 @@ export default function Products({ route, navigation }) {
     });
   };
 
-  const clearCartAndAddProduct = async (item) => {
+  const clearCartAndAddProduct = async (item, section = null) => {
     updateState({ updateQtyLoader: true });
     actions
       .clearCart(
@@ -676,7 +651,7 @@ export default function Products({ route, navigation }) {
       )
       .then((res) => {
         actions.cartItemQty(res);
-        addSingleItem(item);
+        addSingleItem(item, section);
         // showSuccess(res?.message);
       })
       .catch(errorMethod);
@@ -702,7 +677,7 @@ export default function Products({ route, navigation }) {
           onPress: () => { },
           // style: 'destructive',
         },
-        { text: strings.CONFIRM, onPress: () => clearCartAndAddProduct(item) },
+        { text: strings.CONFIRM, onPress: () => clearCartAndAddProduct(item, section) },
       ]);
       return;
     }
@@ -715,6 +690,7 @@ export default function Products({ route, navigation }) {
         typeId: getTypeId,
         isVisibleModal: true,
         selectedCartItem: item,
+        selectedSection: section,
         selectedItemID: -1,
         btnLoader: false,
       });
@@ -726,6 +702,7 @@ export default function Products({ route, navigation }) {
         typeId: getTypeId,
         isVisibleModal: true,
         selectedCartItem: item,
+        selectedSection: section,
         selectedItemID: -1,
         btnLoader: false,
       });
@@ -786,6 +763,7 @@ export default function Products({ route, navigation }) {
         updateState({
           selectedCartItem: item,
           updateQtyLoader: false,
+          selectedSection: section,
           selectedItemID: -1,
           btnLoader: false,
         });
@@ -900,6 +878,9 @@ export default function Products({ route, navigation }) {
   console.log('section list data', sectionListData);
   //decrementing/removeing products from cart
   const removeProductFromCart = (itemToUpdate) => {
+    // alert("hey")
+    console.log('product list data', productListData)
+    // return;
     let data = {};
     let isExistproductId =
       !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
@@ -916,6 +897,7 @@ export default function Products({ route, navigation }) {
     data['cart_id'] = isExistCartId;
     data['cart_product_id'] = isExistproductId;
     data['type'] = dineInType;
+    updateState({ btnLoader: true })
     actions
       .removeProductFromCart(data, {
         code: appData?.profile?.code,
@@ -925,7 +907,6 @@ export default function Products({ route, navigation }) {
       })
       .then((res) => {
         actions.cartItemQty(res);
-
         let updateArray = productListData.map((val, i) => {
           if (val.id == itemToUpdate.id) {
             return {
@@ -939,10 +920,12 @@ export default function Products({ route, navigation }) {
           }
           return val;
         });
+        console.log("updated array", updateArray)
         updateState({
           productListData: updateArray,
           updateQtyLoader: false,
           selectedItemID: -1,
+          btnLoader: false
         });
         // showSuccess(res?.message);
       })
@@ -1022,36 +1005,45 @@ export default function Products({ route, navigation }) {
     );
   };
 
-  const openModal = () => {
-    updateState({ isVisibleModal: true });
-  };
-  const closeModal = () => {
-    updateState({ isVisibleModal: false });
-  };
-
-  const onPressChildCards = (item) => {
-    updateState({
-      selectedCategory: item,
-      productListId: item,
-      pageNo: 1,
-      limit: 12,
-      isLoadingC: true,
-    });
-  };
 
   const updateCartItems = (item, quanitity, productId, cartID) => {
-    let updateArray = productListData.map((val, i) => {
-      if (val.id == item.id) {
-        return {
-          ...val,
-          qty: quanitity,
-          cart_product_id: productId,
-          isRemove: false,
-        };
-      }
-      return val;
-    });
-    updateState({ cartId: cartID, productListData: updateArray });
+    if (!!selectedSection) {
+      let updatedSection = selectedSection.data.map((x, xnx) => {
+        if (x?.id == item?.id) {
+          return {
+            ...x,
+            qty: quanitity,
+            cart_product_id: productId,
+            isRemove: false,
+          }
+        }
+        return x
+      })
+      sectionListData['data'] = updatedSection
+      updateState({
+        sectionListData: sectionListData.map((f, fnx) => {
+          if (f?.id == sectionListData?.id) {
+            return sectionListData
+          }
+          return f
+        }),
+        selectedItemID: -1,
+      })
+    } else {
+      let updateArray = productListData.map((val, i) => {
+        if (val.id == item.id) {
+          return {
+            ...val,
+            qty: quanitity,
+            cart_product_id: productId,
+            isRemove: false,
+          };
+        }
+        return val;
+      });
+      updateState({ cartId: cartID, productListData: updateArray });
+    }
+
   };
 
   useEffect(() => {
@@ -1614,18 +1606,6 @@ export default function Products({ route, navigation }) {
     categoryInfo?.desc ||
     (!!categoryInfo?.translation &&
       categoryInfo?.translation[0]?.meta_description);
-
-  const _emptyComp = () => {
-    return (
-      <>
-        {!categoryInfo?.is_show_products_with_category ? (
-          <NoDataFound isLoading={state.isLoading} containerStyle={{}} />
-        ) : (
-          <></>
-        )}
-      </>
-    );
-  };
 
   return (
     <View
