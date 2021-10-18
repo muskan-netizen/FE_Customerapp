@@ -523,7 +523,7 @@ export default function Products({ route, navigation }) {
           isLoadingC: false,
           isRefreshing: false,
           categoryInfo: categoryInfo ? categoryInfo : res.data.category,
-          filterData: res.data.filterData,
+          filterData: res?.data?.filterData,
           productListData:
             pageNo == 1
               ? res.data.listData.data
@@ -1443,7 +1443,7 @@ export default function Products({ route, navigation }) {
     }
     return (
       <TouchableOpacity
-        // disabled
+        disabled
         activeOpacity={1}
         style={{
           marginLeft: moderateScale(12),
@@ -1512,7 +1512,7 @@ export default function Products({ route, navigation }) {
   };
 
   const onScroll = ({ nativeEvent }) => {
-    if (!!sectionListData?.length && sectionListData[0].totalProduct < 3) {
+    if (!sectionListData?.length) {
       return;
     } else {
       if (
@@ -1789,17 +1789,12 @@ export default function Products({ route, navigation }) {
               showsVerticalScrollIndicator={false}
               onScroll={onScroll}
               sections={sectionListData}
-
-              ListHeaderComponent={listHeaderComponent2()
-                // data?.isVendorList ? (
-                //   listHeaderComponent2()
-                // ) : (
-                //   <View style={{ height: 20 }} />
-                // )
-              }
-              // keyExtractor={(item) => item.title}
+              ListHeaderComponent={listHeaderComponent2()}
+              // keyExtractor={(item, index) => index.toString()}
               stickySectionHeadersEnabled={false}
-              scrollToLocationOffset={50}
+              // scrollToLocationOffset={50}
+              // maxToRenderPerBatch={10}
+              // windowSize={5}
               // tabBarStyle={styles.tabBar}
               // ItemSeparatorComponent={() => <View style={styles.separator} />}
               renderTab={renderSectionTab}

@@ -69,6 +69,8 @@ export default function DashBoardFive({
     (state) => state?.initBoot,
   );
 
+  console.log("appDataappData", appData)
+
   const allCategory = appMainData?.categories;
   const checkForBrand =
     allCategory &&
@@ -117,10 +119,11 @@ export default function DashBoardFive({
 
   const renderBanners = ({ item }) => {
     const imageUrl = getImageUrl(
-      item.image_mobile.image_fit || item.image.image_fit,
-      item.image_mobile.image_path || item.image.image_path,
+      item.image.image_fit,
+      item.image.image_path,
       '500/1000',
     );
+    console.log("Image url", imageUrl)
 
     return (
       <TouchableOpacity
@@ -168,11 +171,11 @@ export default function DashBoardFive({
             </View>
           )}
         <View style={{ marginTop: moderateScaleVertical(16) }}>
-          {!!appData?.banners?.length && (
+          {!!appData?.mobile_banners?.length && (
             <View>
               <FlatList
                 horizontal
-                data={appData?.banners}
+                data={appData?.mobile_banners}
                 keyExtractor={(item) => item.id.toString()}
                 showsHorizontalScrollIndicator={false}
                 renderItem={renderBanners}

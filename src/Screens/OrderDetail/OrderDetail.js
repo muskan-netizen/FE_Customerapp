@@ -32,6 +32,7 @@ import useInterval from '../../utils/useInterval';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
 import { useIsFocused } from '@react-navigation/native'
+import * as RNLocalize from 'react-native-localize';
 
 const { height, width } = Dimensions.get('window')
 
@@ -116,6 +117,7 @@ export default function OrderDetail({ navigation, route }) {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
+        timezone: RNLocalize.getTimeZone(),
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
