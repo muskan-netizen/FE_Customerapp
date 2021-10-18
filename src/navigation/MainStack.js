@@ -32,15 +32,21 @@ import {
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 import navigationStrings from './navigationStrings';
 import TabRoutes from './TabRoutes';
+import TaxiTabRoutes from './TaxiTabRoutes';
 
 export default function (Stack) {
   const {appData, appStyle} = useSelector((state) => state?.initBoot);
 
   return (
     <>
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.TAB_ROUTES}
         component={TabRoutes}
+        options={{headerShown: false}}
+      /> */}
+      <Stack.Screen
+        name={navigationStrings.TAXITABROUTES}
+        component={TaxiTabRoutes}
         options={{headerShown: false}}
       />
       <Stack.Screen

@@ -94,7 +94,9 @@ export {default as CelebrityProduct2} from './CelebrityProduct/CelebrityProduct2
 export {default as PaymentOptions} from './TaxiApp/PaymentOptions/PaymentOptions';
 export {default as ChooseCarTypeAndTimeTaxi} from './TaxiApp/ChooseCarTypeAndTime/ChooseCarTypeAndTime';
 export {default as PickupTaxiOrderDetail} from './TaxiApp/PickupTaxiOrderDetail/PickupTaxiOrderDetail';
-
+export {default as PrinterConnection} from './PrinterConnection/PrinterScreen';
+export {default as TaxiHomeScreen} from './Home/TaxiHomeScreen/TaxiHomeScreen';
+export {default as ViewAllData} from './ViewAllData/ViewAllData';
 // royo order
 export {default as RoyoHome} from './RoyoOrder/RoyoHome/RoyoHome';
 export {default as RoyoOrder} from './RoyoOrder/RoyoOrder/RoyoOrder';
@@ -104,3 +106,4 @@ export {default as RoyoPaymentSetting} from './RoyoOrder/RoyoPaymentSetting/Royo
 export {default as RoyoTransactions} from './RoyoOrder/RoyoTransactions/RoyoTransactions';
 export {default as RoyoOrderDetail} from './RoyoOrder/RoyoOrderDetail/RoyoOrderDetail';
 export {default as RoyoAddProduct} from './RoyoOrder/RoyoAddProduct/RoyoAddProduct';
+

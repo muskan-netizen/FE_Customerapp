@@ -1,13 +1,13 @@
 import Clipboard from '@react-native-community/clipboard';
 import NetInfo from '@react-native-community/netinfo';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import React, { useEffect, useRef, useState } from 'react';
-import { Linking, Platform, Text, View } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import React, {useEffect, useRef, useState} from 'react';
+import {Linking, Platform, Text, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import FlashMessage from 'react-native-flash-message';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
-import { Provider, useSelector } from 'react-redux';
+import {Provider, useSelector} from 'react-redux';
 import NoInternetModal from './src/Components/NoInternetModal';
 import NotificationModal from './src/Components/NotificationModal';
 import strings from './src/constants/lang';
@@ -15,20 +15,21 @@ import Container from './src/library/toastify-react-native';
 import * as NavigationService from './src/navigation/NavigationService';
 import navigationStrings from './src/navigation/navigationStrings';
 import Routes from './src/navigation/Routes';
-import { updateInternetConnection } from './src/redux/actions/auth';
+import {updateInternetConnection} from './src/redux/actions/auth';
 import store from './src/redux/store';
 import types from './src/redux/types';
-import { moderateScaleVertical, width } from './src/styles/responsiveSize';
+import {moderateScaleVertical, width} from './src/styles/responsiveSize';
 import ForegroundHandler from './src/utils/ForegroundHandler';
-import { getParameterByName, getUrlRoutes } from './src/utils/helperFunctions';
+import {getParameterByName, getUrlRoutes} from './src/utils/helperFunctions';
 import {
   requestUserPermission,
   notificationListener,
 } from './src/utils/notificationService';
-import { getItem, getUserData, setItem } from './src/utils/utils';
-import Modal from 'react-native-modal';
-import { BlurView } from '@react-native-community/blur';
+import {getItem, getUserData, setItem} from './src/utils/utils';
 import PushNotification from 'react-native-push-notification';
+
+export let appData = {}
+export let language = ''
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
@@ -84,22 +85,22 @@ const App = () => {
   const notificationConfig = () => {
     requestUserPermission();
     notificationListener();
-    if(Platform.OS == 'android'){
-    checkExistChannel()
-  }
+    if (Platform.OS == 'android') {
+      checkExistChannel();
+    }
   };
 
-  const checkExistChannel = () =>{
+  const checkExistChannel = () => {
     PushNotification.getChannels(function (channel_ids) {
-      console.log("exist channels",channel_ids); // ['channel_id_1']
+      console.log('exist channels', channel_ids); // ['channel_id_1']
     });
-  }
+  };
   useEffect(() => {
     (async () => {
       const userData = await getUserData();
       notificationConfig();
 
-      const { dispatch } = store;
+      const {dispatch} = store;
       if (userData && !!userData.auth_token) {
         dispatch({
           type: types.LOGIN,
@@ -108,6 +109,7 @@ const App = () => {
       }
 
       const getAppData = await getItem('appData');
+      appData = getAppData
       dispatch({
         type: types.APP_INIT,
         payload: getAppData,
@@ -138,6 +140,14 @@ const App = () => {
         dispatch({
           type: types.SAVE_ALL_ADDRESS,
           payload: allUserAddress,
+        });
+      }
+
+      const walletData = await getItem('walletData');
+      if (walletData) {
+        dispatch({
+          type: types.WALLET_DATA,
+          payload: data,
         });
       }
 
@@ -196,6 +206,7 @@ const App = () => {
 
       //Language
       const getLanguage = await getItem('language');
+      language = getLanguage
       if (getLanguage) {
         strings.setLanguage(getLanguage);
       }
@@ -216,11 +227,12 @@ const App = () => {
         Clipboard.setString('');
       }
     })();
-    return () => { };
+    return () => {};
   }, []);
 
   //Check internet connection
   useEffect(() => {
+  
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
       const netStatus = state.isConnected;
       setInternet(netStatus);
@@ -229,7 +241,7 @@ const App = () => {
 
     return () => removeNetInfoSubscription();
   }, []);
-  const { blurRef } = useRef();
+  const {blurRef} = useRef();
   // let isVal = store.getState().pendingNotifications.isVendorNotification
   // console.log("is val++",isVal)
   return (
@@ -247,6 +259,8 @@ const App = () => {
       />
       <FlashMessage position="top" />
       <NoInternetModal show={!internetConnection} />
+
+
     </SafeAreaProvider>
   );
 };

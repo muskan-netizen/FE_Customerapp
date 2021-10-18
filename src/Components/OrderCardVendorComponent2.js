@@ -48,7 +48,7 @@ export default function OrderCardVendorComponent2({
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-
+  const businessType = appStyle?.homePageLayout;
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
@@ -75,26 +75,28 @@ export default function OrderCardVendorComponent2({
           : colors.white,
         ...cardStyle,
       }}>
-      {!!etaTime && (
-        <View
-          style={{
-            ...styles.ariveView,
-            backgroundColor: themeColors?.primary_color,
-          }}>
-          <Text
+      {data?.order_status?.current_status?.title !== strings.DELIVERED &&
+        data?.order_status?.current_status?.title !== strings.REJECTED &&
+        (!!etaTime || !!data?.scheduled_date_time) && (
+          <View
             style={{
-              ...styles.ariveTextStyle,
-              color: colors.white,
+              ...styles.ariveView,
+              backgroundColor: themeColors?.primary_color,
             }}>
-            {strings.YOUR_ORDER_WILL_ARRIVE_BY} {etaTime}
-          </Text>
-        </View>
-      )}
+            <Text
+              style={{
+                ...styles.ariveTextStyle,
+                color: colors.white,
+              }}>
+              {strings.YOUR_ORDER_WILL_ARRIVE_BY}{' '}
+              {data?.scheduled_date_time ? data?.scheduled_date_time : etaTime}
+            </Text>
+          </View>
+        )}
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View
           style={{
             flex: 1,
-
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -103,7 +105,7 @@ export default function OrderCardVendorComponent2({
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              padding: moderateScale(10),
+              padding: moderateScale(15),
               flex: 1,
             }}>
             <Image
@@ -116,6 +118,7 @@ export default function OrderCardVendorComponent2({
             />
 
             <Text
+              numberOfLines={2}
               style={
                 isDarkMode
                   ? [styles.userName, {color: MyDarkTheme.colors.text}]
@@ -194,7 +197,7 @@ export default function OrderCardVendorComponent2({
         <ScrollView bounces={true}>
           {data?.product_details.map((i, inx) => {
             return (
-              <View>
+              <View key={inx}>
                 <View
                   style={{
                     marginVertical: moderateScaleVertical(10),
@@ -313,11 +316,13 @@ export default function OrderCardVendorComponent2({
               onPress={onPressReturnOrder}
               // style={{flex:0.6}}
               style={styles.bottomSecondHalf}>
-              <View style={styles.orderAcceptAndReadyStyleSecond}>
-                <Text style={styles.orderStatusStyleSecond}>
-                  {strings.RETURNORDER}
-                </Text>
-              </View>
+              {businessType === 4 ? null : (
+                <View style={styles.orderAcceptAndReadyStyleSecond}>
+                  <Text style={styles.orderStatusStyleSecond}>
+                    {strings.RETURNORDER}
+                  </Text>
+                </View>
+              )}
             </TouchableOpacity>
           </View>
         ) : (
@@ -464,7 +469,7 @@ export function stylesFunc({fontFamily, themeColors}) {
       opacity: 0.6,
     },
     userName: {
-      marginHorizontal: moderateScale(15),
+      marginHorizontal: moderateScale(14),
       color: colors.textGreyI,
       fontFamily: fontFamily.medium,
       fontSize: textScale(14),

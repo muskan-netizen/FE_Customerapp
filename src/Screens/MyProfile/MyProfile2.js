@@ -138,7 +138,9 @@ export default function MyProfile({route, navigation}) {
 
   useFocusEffect(
     React.useCallback(() => {
-      getAllAddress();
+      if (!!userData?.auth_token) {
+        getAllAddress();
+      }
     }, []),
   );
 

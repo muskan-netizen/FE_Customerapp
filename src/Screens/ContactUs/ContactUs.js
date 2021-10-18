@@ -34,7 +34,6 @@ export default function ContactUs({navigation}) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state.appTheme);
   const userData = useSelector((state) => state?.auth?.userData);
-  console.log(userData, 'userData>>>userData');
   console.log(appData, 'appDataa');
   const [state, setState] = useState({
     callingCode: appData?.profile?.country?.phonecode
@@ -51,7 +50,8 @@ export default function ContactUs({navigation}) {
     isLoading: false,
   });
 
-  const {message, phoneNumber, cca2, name, email, isLoading} = state;
+  const {message, phoneNumber, cca2, name, email, isLoading, callingCode} =
+    state;
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily});
@@ -86,6 +86,7 @@ export default function ContactUs({navigation}) {
       name: name,
       phoneNumber: phoneNumber,
       message: message,
+      callingCode: callingCode,
     });
     if (error) {
       showError(error);
@@ -95,7 +96,6 @@ export default function ContactUs({navigation}) {
   };
   //Save user info
   const saveUserInfo = () => {
-    const {callingCode} = state;
     const checkValid = isValidData();
     if (!checkValid) {
       return;
@@ -108,9 +108,9 @@ export default function ContactUs({navigation}) {
       email: email,
       phone_number: '+' + callingCode + phoneNumber,
       message: message,
+      callingCode: callingCode,
     };
 
-    console.log(data, 'data>>contactus');
     updateState({
       isLoading: true,
     });
@@ -162,7 +162,7 @@ export default function ContactUs({navigation}) {
           }
           cca2={cca2}
           phoneNumber={phoneNumber}
-          callingCode={state.callingCode}
+          callingCode={callingCode}
           keyboardType={'number-pad'}
           returnKeyType={'done'}
           color={isDarkMode ? MyDarkTheme.colors.text : null}
@@ -196,10 +196,11 @@ export default function ContactUs({navigation}) {
       isLoadingB={isLoading}>
       <Header
         leftIcon={
-          appStyle?.homePageLayout === 2 ? 
-          imagePath.backArrow:appStyle?.homePageLayout === 3?
-          imagePath.icBackb :
-           imagePath.back
+          appStyle?.homePageLayout === 2
+            ? imagePath.backArrow
+            : appStyle?.homePageLayout === 3
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={strings.CONTACT_USS}
         headerStyle={

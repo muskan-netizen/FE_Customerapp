@@ -16,6 +16,7 @@ import colors from '../styles/colors';
 import commonStyles from '../styles/commonStyles';
 
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -46,9 +47,15 @@ export default function MarketCard3({
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, extraStyles, MyDarkTheme, isDarkMode});
   const scaleInAnimated = new Animated.Value(0);
+
+  let imageUrl = getImageUrl(
+    data.banner.proxy_url || data.image.proxy_url,
+    data.banner.image_path || data.image.image_path,
+    '800/400',
+  );
   return (
     <TouchableOpacity
-      activeOpacity={0.5}
+      activeOpacity={1}
       onPress={onPress}
       style={{
         ...styles.mainTouchContainer,
@@ -56,7 +63,15 @@ export default function MarketCard3({
       }}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
-      <BlurImages
+      <FastImage
+        source={{uri: imageUrl, priority: FastImage.priority.high}}
+        style={{
+          ...styles.mainImage,
+          ...fastImageStyle,
+        }}
+        resizeMode={FastImage.resizeMode.cover}
+      />
+      {/* <BlurImages
         isDarkMode={isDarkMode}
         themeColor={themeColors.primary_color}
         thumnailUrl={{
@@ -74,7 +89,7 @@ export default function MarketCard3({
           ),
         }}
         style={[styles.mainImage, {...fastImageStyle}]}
-      />
+      /> */}
 
       <View
         style={{
@@ -145,12 +160,16 @@ export default function MarketCard3({
               flex: 1,
             }}>
             {!!data?.lineOfSightDistance && (
-              <View style={{flexDirection: 'row'}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                }}>
                 <Image
                   style={{tintColor: themeColors.primary_color}}
                   source={imagePath.location2}
                 />
                 <Text
+                  numberOfLines={1}
                   style={{
                     color: colors.greyLight,
                     fontSize: textScale(10),
@@ -158,12 +177,17 @@ export default function MarketCard3({
                     marginHorizontal: moderateScale(5),
                     textAlign: 'left',
                   }}>
-                  {data?.lineOfSightDistance}
+                  {data?.lineOfSightDistance && data?.lineOfSightDistance}
+                  {` | ${
+                    data?.timeofLineOfSightDistance &&
+                    data?.timeofLineOfSightDistance
+                  } mins`}
                 </Text>
               </View>
             )}
-            {!!data?.timeofLineOfSightDistance ? (
+            {/* {!!data?.timeofLineOfSightDistance ? (
               <Text
+                numberOfLines={1}
                 style={{
                   color: colors.greyLight,
                   fontSize: textScale(10),
@@ -172,7 +196,7 @@ export default function MarketCard3({
                 }}>
                 {`| ${data?.timeofLineOfSightDistance} mins`}
               </Text>
-            ) : null}
+            ) : null} */}
           </View>
 
           <Text
@@ -182,15 +206,15 @@ export default function MarketCard3({
               textAlign: 'left',
               color: data?.show_slot
                 ? colors.green
-                : data?.slot && data?.slot.length
-                ? colors.green
-                : colors.redB,
+                : data?.is_vendor_closed
+                ? colors.redB
+                : colors.green,
             }}>
             {data?.show_slot
               ? strings.OPEN
-              : data?.slot && data?.slot.length
-              ? strings.OPEN
-              : strings.CLOSE}
+              : data?.is_vendor_closed
+              ? strings.CLOSE
+              : strings.OPEN}
           </Text>
         </View>
       </View>
@@ -205,7 +229,7 @@ export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
       shadowColor: '#000',
       shadowOffset: {width: 0, height: 0},
       shadowOpacity: 0.15,
-      shadowRadius: 3.84,
+      shadowRadius: 1.84,
       elevation: 2,
       backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
       margin: 6,
@@ -219,7 +243,7 @@ export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
       textAlign: 'left',
     },
     mainImage: {
-      height: moderateScaleVertical(190),
+      height: moderateScaleVertical(140),
       width: '100%',
       borderTopRightRadius: moderateScale(9),
       borderTopLeftRadius: moderateScale(9),

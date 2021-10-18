@@ -1,14 +1,14 @@
 import * as React from 'react';
-import {showMessage} from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
 import Geocoder from 'react-native-geocoder';
 import Geolocation from 'react-native-geolocation-service';
-import {BackHandler, Alert, Animated} from 'react-native';
+import { BackHandler, Alert, Animated } from 'react-native';
 import strings from './../constants/lang/index';
-import {callingCountries} from 'country-data';
+import { callingCountries } from 'country-data';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import * as NavigationService from '../navigation/NavigationService';
-import {Toast} from '../library/toastify-react-native';
+import Toast from 'react-native-simple-toast';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -37,20 +37,20 @@ const getCurrentLocation = (type) =>
       (error) => {
         reject(error.message);
       },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
     );
   });
 
 const getLocation = async (lat, lng, type) => {
   if (type == 'home') {
     try {
-      let res = await Geocoder.geocodePosition({lat, lng});
+      let res = await Geocoder.geocodePosition({ lat, lng });
       let addr = res[0].formattedAddress;
       return addr;
-    } catch (err) {}
+    } catch (err) { }
   } else if (type == 'address') {
     try {
-      let res = await Geocoder.geocodePosition({lat, lng});
+      let res = await Geocoder.geocodePosition({ lat, lng });
 
       let addr = res[0].formattedAddress;
 
@@ -76,37 +76,37 @@ const getLocation = async (lat, lng, type) => {
       };
 
       return data;
-    } catch (err) {}
+    } catch (err) { }
   }
 };
 
 const showError = (message) => {
   console.log(message, 'THIS IS MESSAGE');
 
-  // showMessage({
-  //   type: 'danger',
-  //   icon: 'danger',
-  //   message,
-  // });
-  Toast.error(message);
+  showMessage({
+    type: 'danger',
+    icon: 'danger',
+    message,
+  });
+  // Toast.show(message);
 };
 
 const showSuccess = (message) => {
-  // showMessage({
-  //   type: 'success',
-  //   icon: 'success',
-  //   message,
-  // });
+  showMessage({
+    type: 'success',
+    icon: 'success',
+    message,
+  });
 
-  Toast.success(message);
+  // Toast.show(message);
 };
 const showInfo = (message) => {
-  // showMessage({
-  //   type: 'info',
-  //   icon: 'info',
-  //   message,
-  // });
-  Toast.info(message);
+  showMessage({
+    type: 'info',
+    icon: 'info',
+    message,
+  });
+  // Toast.show(message);
 };
 
 export function otpTimerCounter(seconds) {
@@ -169,7 +169,7 @@ const androidBackButtonHandler = () => {
       onPress: () => null,
       style: 'cancel',
     },
-    {text: strings.YES, onPress: () => BackHandler.exitApp()},
+    { text: strings.YES, onPress: () => BackHandler.exitApp() },
   ]);
   return true;
 };
@@ -209,7 +209,7 @@ export function getAddressComponent(details, update) {
   )?.short_name;
 
   street = details?.address_components?.find((addressComponent) =>
-    addressComponent?.types.includes('administrative_area_level_2'),
+    addressComponent?.types.includes('route'),
   )?.short_name;
 
   country = details?.address_components?.find((addressComponent) =>
@@ -279,7 +279,7 @@ export const getScaleTransformationStyle = (
     outputRange: [startSize, endSize],
   });
   return {
-    transform: [{scale: interpolation}],
+    transform: [{ scale: interpolation }],
   };
 };
 
@@ -324,6 +324,17 @@ const getUrlRoutes = (url, indexOfRoute) => {
   return routeName;
 };
 
+const timeInLocalLangauge = (value, selectedLanguage) => {
+  return `${value.toLocaleDateString(selectedLanguage, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })}, ${value.toLocaleTimeString(selectedLanguage, {
+    hour: '2-digit',
+    minute: '2-digit',
+  })}`
+}
+
 export {
   showError,
   showSuccess,
@@ -333,4 +344,5 @@ export {
   renameKey,
   getParameterByName,
   getUrlRoutes,
+  timeInLocalLangauge
 };

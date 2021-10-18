@@ -524,4 +524,13 @@ export default {
   TABLE: 'Tabell',
   SEAT_CAPACITY: 'Sittkapacitet',
   WRITE_REVIEW: 'Skriv en recension',
+  WHAT_TIME_WOULD_YOU_LIKE_US_TO_START:
+    ' What Time Would You Like Us To Start?',
+  PLEASE_SELECT_DATE_FIRST: 'Please Select Date First For Service ',
+  CLEAR_SCHEDULE_DATE: 'Clear Schedule Date',
+  FREQUENTLY_BOUGHT_TOGETHER: 'Frequently Bought Together',
+  YOU_MIGHT_INTERESTED: 'You Might Be Interested In',
+  VENDOR_NOT_ACCEPTING_ORDERS: 'Vendor is not accepting orders right now.',
+  REJECTED: 'Rejected',
+  ATTACH_PRINTER: 'Attach Printer',
 };

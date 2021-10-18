@@ -4,10 +4,10 @@ import colors from './colors';
 import {moderateScaleVertical, textScale} from './responsiveSize';
 
 export const hitSlopProp = {
-  top: 12,
-  right: 12,
-  left: 12,
-  bottom: 12,
+  top: 15,
+  right: 15,
+  left: 15,
+  bottom: 15,
 };
 
 export default ({fontFamily, buttonTextColor}) => {
@@ -148,6 +148,13 @@ export default ({fontFamily, buttonTextColor}) => {
       fontFamily: fontFamily.medium,
       fontSize: textScale(14),
       color: colors.textGreyD,
+    },
+    regularFont11: {
+      fontSize: textScale(11),
+      color: colors.textGrey,
+      fontFamily: fontFamily?.regular,
+      opacity: 0.7,
+      textAlign: 'left',
     },
   });
   return styles;

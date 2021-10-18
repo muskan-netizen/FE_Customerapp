@@ -7,10 +7,12 @@ import {
   Text,
   ScrollView,
   FlatList,
+  Linking,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import {cloneDeep, debounce} from 'lodash';
+import OpenApplication from 'react-native-open-application';
 
 import WrapperContainer from '../../Components/WrapperContainer';
 import staticStrings from '../../constants/staticStrings';
@@ -51,6 +53,7 @@ import {BlurView} from '@react-native-community/blur';
 navigator.geolocation = require('react-native-geolocation-service');
 import stylesFunc from './styles';
 import NotificationModal from '../../Components/NotificationModal';
+import AppLink from 'react-native-app-link';
 
 export default function Home({route, navigation}) {
   const paramData = route?.params;
@@ -207,6 +210,7 @@ export default function Home({route, navigation}) {
         if (result !== 'goback') {
           getCurrentLocation('home')
             .then((res) => {
+              console.log('chekLocationPermission', res);
               if (
                 appMainData &&
                 typeof appMainData?.reqData == 'object' &&
@@ -236,7 +240,9 @@ export default function Home({route, navigation}) {
   useFocusEffect(
     React.useCallback(() => {
       // homeData();
-      getAllAddress();
+      if (!!userData?.auth_token) {
+        getAllAddress();
+      }
     }, []),
   );
 
@@ -352,7 +358,6 @@ export default function Home({route, navigation}) {
 
   //Error handling in screen
   const errorMethod = (error) => {
-    console.log(error, 'error');
     updateState({
       isLoading: false,
       isLoadingB: false,
@@ -376,30 +381,61 @@ export default function Home({route, navigation}) {
 
   const {viewRef2, viewRef3, bannerRef} = useRef();
 
+  const openUber = () => {
+    let appName = 'Uber - Easy affordable trips';
+    let appStoreLocale = '';
+    let playStoreId = 'com.ubercab';
+    let appStoreId = '368677368';
+    AppLink.maybeOpenURL('uber://', {
+      appName: appName,
+      appStoreId: appStoreId,
+      appStoreLocale: appStoreLocale,
+      playStoreId: playStoreId,
+    })
+      .then((res) => {})
+      .catch((err) => {
+        Linking.openURL('https://www.uber.com/in/en/');
+        console.log('errro raised', err);
+        // handle error
+      });
+  };
+
   //onPress Category
   const onPressCategory = (item) => {
+    console.log(item, 'itemitemitemitemitemitem');
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
       item.redirect_to == staticStrings.PRODUCT ||
-      item.redirect_to == staticStrings.CATEGORY
+      item.redirect_to == staticStrings.CATEGORY ||
+      item.redirect_to == staticStrings.ONDEMANDSERVICE
     ) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
-        if (item?.warning_page_id) {
-          if (item?.warning_page_id == 2) {
-            moveToNewScreen(navigationStrings.DELIVERY, item)();
-          } else {
-            moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
-          }
+        if (shortCodes.arenagrub == appData?.profile?.code) {
+          openUber();
         } else {
-          if (item?.template_type_id == 1) {
-            moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
-          } else {
-            // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
-            moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
-          }
+          // if (item?.warning_page_id) {
+          //   if (item?.warning_page_id == 2) {
+          //     moveToNewScreen(navigationStrings.DELIVERY, item)();
+          //   } else {
+          //     moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
+          //   }
+          // } else {
+          //   if (item?.template_type_id == 1) {
+          //     moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
+          //   } else {
+          //     item['pickup_taxi'] = true;
+
+          //     // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
+          //     moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
+          //   }
+          // }
+          item['pickup_taxi'] = true;
+
+          // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
+          moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
         }
       } else {
         // showError(strings.UNAUTHORIZED_MESSAGE);
@@ -476,16 +512,10 @@ export default function Home({route, navigation}) {
   const initApiHit = () => {
     let header = {};
     // console.log(languages?.primary_language?.id, 'languageID');
-    if (languages?.primary_language?.id) {
-      header = {
-        code: appData?.profile?.code,
-        language: languages?.primary_language?.id,
-      };
-    } else {
-      header = {
-        code: appData?.profile?.code,
-      };
-    }
+    header = {
+      code: appData?.profile?.code,
+      language: languages?.primary_language?.id,
+    };
 
     actions
       .initApp(
@@ -507,7 +537,6 @@ export default function Home({route, navigation}) {
   //Pull to refresh
   const handleRefresh = () => {
     updateState({isRefreshing: true});
-
     initApiHit();
     // homeData();
   };
@@ -678,7 +707,6 @@ export default function Home({route, navigation}) {
   // console.log(appMainData, 'appMainData');
 
   const {blurRef} = useRef();
-
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}

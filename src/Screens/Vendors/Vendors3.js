@@ -7,6 +7,7 @@ import Header3 from '../../Components/Header3';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import SearchLoader from '../../Components/Loaders/SearchLoader';
 import MarketCard3 from '../../Components/MarketCard3';
+import NoDataFound from '../../Components/NoDataFound';
 import SearchBar2 from '../../Components/SearchBar2';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -121,8 +122,6 @@ export default function Vendors3({route, navigation}) {
     }
   };
 
-  /**********/
-
   const _renderItem = ({item, index}) => {
     return (
       <View style={{marginHorizontal: moderateScale(15)}}>
@@ -191,13 +190,17 @@ export default function Vendors3({route, navigation}) {
         onEndReachedThreshold={0.5}
         // onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
         ListEmptyComponent={
-          <ListEmptyVendors
-            isLoading={isLoading}
-            emptyText={'No data found'}
-            pRows={2}
-            pWidth={'100%'}
-            rowContainerstyle={{marginBottom: moderateScale(25)}}
-          />
+          !isLoading && (
+            <View
+              style={{
+                flex: 1,
+                marginTop: moderateScaleVertical(width / 2),
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <NoDataFound isLoading={state.isLoading} />
+            </View>
+          )
         }
         ListFooterComponent={() => <View style={{height: 100}} />}
       />

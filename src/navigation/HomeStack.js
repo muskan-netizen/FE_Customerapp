@@ -25,26 +25,36 @@ import {
   Tracking,
   VendorDetail,
   VendorDetail2,
+  VendorDetail3,
   Vendors,
   Vendors2,
   Vendors3,
   SearchProductVendorItem2,
-  VendorDetail3,
+  BrandProducts2,
+  ViewAllData,
+  TaxiHomeScreen,
 } from '../Screens';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
+
+import {verticalAnimation} from '../utils/utils';
 import navigationStrings from './navigationStrings';
-import TopTabRoutes from './TopTabRoutes';
 
 const Stack = createStackNavigator();
 export default function () {
   const {appStyle, appData} = useSelector((state) => state?.initBoot);
+  const businessType = appStyle?.homePageLayout;
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={navigationStrings.HOME}
-        component={Home}
+        name={
+          businessType === 4
+            ? navigationStrings.TAXIHOMESCREEN
+            : navigationStrings.HOME
+        }
+        component={businessType === 4 ? TaxiHomeScreen : Home}
         options={{headerShown: false}}
       />
+
       <Stack.Screen
         name={navigationStrings.DELIVERY}
         component={Delivery}
@@ -129,7 +139,7 @@ export default function () {
             ? SearchProductVendorItem2
             : SearchProductVendorItem
         }
-        options={{headerShown: false}}
+        options={verticalAnimation}
       />
 
       <Stack.Screen
@@ -146,7 +156,9 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.BRANDDETAIL}
-        component={BrandProducts}
+        component={
+          appStyle?.homePageLayout === 3 ? BrandProducts2 : BrandProducts
+        }
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -169,6 +181,12 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.ORDER_DETAIL}
         component={OrderDetail}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.VIEW_ALL_DATA}
+        component={ViewAllData}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

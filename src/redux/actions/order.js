@@ -11,11 +11,26 @@ import {
   UPLOAD_PRODUCT_IMAGE,
   SUBMIT_RETURN_ORDER,
   MY_PENDING_ORDERS,
+  GET_ORDER_DETAIL_FOR_BILLING,
+  DISPATCHER_URL,
 } from '../../config/urls';
-import { apiGet, apiPost } from '../../utils/utils';
+import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
 import types from '../types';
-const { dispatch } = store;
+const {dispatch} = store;
+
+//Get Order Detail For Billing
+export function getOrderDetailForBilling(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiGet(GET_ORDER_DETAIL_FOR_BILLING+data.order_id, {}, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
 
 //Get Cart Detail
 export function getOrderDetail(data = {}, headers = {}) {
@@ -56,9 +71,9 @@ export const savedSelectedVendor = (data) => {
 
 //get all orders of specific vendor
 export const _getListOfVendorOrders = (query = '', data, headers = {}) => {
-  console.log('query++++ query', query)
-  console.log('query++++ data', data)
-  console.log('query++++ headers', headers)
+  console.log('query++++ query', query);
+  console.log('query++++ data', data);
+  console.log('query++++ headers', headers);
   return new Promise((resolve, reject) => {
     apiGet(GET_ALL_VENDOR_ORDERS + query, data, headers)
       .then((res) => {
@@ -126,9 +141,9 @@ export const getRevenueData = (data = {}, headers = {}) => {
 };
 
 //Get Cart Detail
-export function getOrderDetailPickUp(url = '', data = {}, headers = {}) {
+export function getOrderDetailPickUp(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
-    apiGet(url, data, headers)
+    apiPost(DISPATCHER_URL, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -179,7 +194,7 @@ export function uploadReturnOrderImage(data = {}, headers = {}) {
 
 //Submit return order
 export function submitReturnOrder(data = {}, headers = {}) {
-  console.log("headers ++", headers)
+  console.log('headers ++', headers);
   return new Promise((resolve, reject) => {
     apiPost(SUBMIT_RETURN_ORDER, data, headers)
       .then((res) => {
@@ -202,6 +217,3 @@ export function allPendingOrders(query, data = {}, headers = {}) {
       });
   });
 }
-
-
-

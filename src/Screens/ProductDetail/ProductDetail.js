@@ -46,6 +46,8 @@ import {MyDarkTheme} from '../../styles/theme';
 import HorizontalLine from '../../Components/HorizontalLine';
 import StarRating from 'react-native-star-rating';
 import Banner2 from '../../Components/Banner2';
+import MarketCard3 from '../../Components/MarketCard3';
+import ProductsComp from '../../Components/ProductsComp';
 
 export default function ProductDetail({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -79,6 +81,7 @@ export default function ProductDetail({route, navigation}) {
     lightBox: false,
     productQuantityForCart: 1,
     showErrorMessageTitle: false,
+    typeId: null,
   });
   //Saving the initial state
   const initialState = cloneDeep(state);
@@ -102,6 +105,7 @@ export default function ProductDetail({route, navigation}) {
     lightBox,
     productQuantityForCart,
     showErrorMessageTitle,
+    typeId,
   } = state;
 
   const customRight = () => {
@@ -192,7 +196,7 @@ export default function ProductDetail({route, navigation}) {
           relatedProducts: res.data.relatedProducts,
           productPriceData: res.data.products.variant[0],
           addonSet: res.data.products.add_on,
-
+          typeId: res.data.products.category.category_detail.type_id,
           venderDetail: res.data.products.vendor,
           productTotalQuantity: res.data.products.variant[0].quantity,
           productVariantId: res.data.products.variant[0].id,
@@ -241,8 +245,6 @@ export default function ProductDetail({route, navigation}) {
   };
 
   const errorMethod = (error) => {
-    console.log(error, 'Error>>>>>');
-
     if (error?.message?.alert == 1) {
       updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
       // showError(error?.message?.error || error?.error);
@@ -335,7 +337,6 @@ export default function ProductDetail({route, navigation}) {
           },
         )
         .then((res) => {
-          console.log(res, 'addtowishlist response');
           showSuccess(res.message);
 
           if (item.inwishlist) {
@@ -381,8 +382,6 @@ export default function ProductDetail({route, navigation}) {
         }
       }),
     });
-
-    console.log(variantSet, 'newArray>>>>>');
   };
 
   const radioButtonView = (options) => {
@@ -590,25 +589,31 @@ export default function ProductDetail({route, navigation}) {
   const renderProduct = ({item, index}) => {
     item.showAddToCart = true;
     return (
-      <ProductCard
+      <ProductsComp
+        item={item}
         onPress={() =>
           navigation.push(navigationStrings.PRODUCTDETAIL, {data: item})
         }
-        onAddtoWishlist={() => _onAddtoWishlist(item)}
-        data={item}
-        cardStyle={{
-          backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
-          marginHorizontal: moderateScale(10),
-        }}
-        addToCart={() =>
-          navigation.push(navigationStrings.PRODUCTDETAIL, {data: item})
-        }
-        bottomText={strings.VIEW_DETAIL}
-        nameTextStyle={{
-          ...styles.productName,
-          color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-        }}
       />
+      // <ProductCard
+      // onPress={() =>
+      //   navigation.push(navigationStrings.PRODUCTDETAIL, {data: item})
+      // }
+      //   onAddtoWishlist={() => _onAddtoWishlist(item)}
+      //   data={item}
+      //   cardStyle={{
+      //     backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
+      //     marginHorizontal: moderateScale(10),
+      //   }}
+      //   addToCart={() =>
+      //     navigation.push(navigationStrings.PRODUCTDETAIL, {data: item})
+      //   }
+      //   bottomText={strings.VIEW_DETAIL}
+      //   nameTextStyle={{
+      //     ...styles.productName,
+      //     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+      //   }}
+      // />
     );
   };
 
@@ -620,10 +625,7 @@ export default function ProductDetail({route, navigation}) {
     updateState({lightBox: true});
   };
 
-  console.log(
-    productTotalQuantity,
-    'productDetailData?.translation[0]?.body_html',
-  );
+  console.log('product detail+++', productDetailData?.vendor?.show_slot);
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -694,18 +696,18 @@ export default function ProductDetail({route, navigation}) {
                                 style={
                                   isDarkMode
                                     ? {tintColor: MyDarkTheme.colors.text}
-                                    : {tintColor: colors.black}
+                                    : {tintColor: colors.white}
                                 }
-                                source={imagePath.heart2}
+                                source={imagePath.whiteFilledHeart}
                               />
                             ) : (
                               <Image
                                 style={
                                   isDarkMode
                                     ? {tintColor: MyDarkTheme.colors.text}
-                                    : null
+                                    : {tintColor: colors.white}
                                 }
-                                source={imagePath.whiteFilledHeart}
+                                source={imagePath.heart2}
                               />
                             )}
                           </View>
@@ -808,7 +810,7 @@ export default function ProductDetail({route, navigation}) {
                   )}
                 </View>
 
-                {productTotalQuantity == 0 && (
+                {productTotalQuantity == 0 && !!typeId && typeId !== 8 && (
                   <View style={{justifyContent: 'center'}}>
                     <Text
                       style={
@@ -883,8 +885,8 @@ export default function ProductDetail({route, navigation}) {
                 </Text>
               ) : null}
               {/* Add to Cart button */}
-              {!!productTotalQuantity &&
-                !!productTotalQuantity != 0 &&
+              {((!!productTotalQuantity && !!productTotalQuantity != 0) ||
+                (!!typeId && typeId == 8)) &&
                 (!!data?.showAddToCart ? null : showErrorMessageTitle ? null : (
                   <View
                     style={{
@@ -896,7 +898,6 @@ export default function ProductDetail({route, navigation}) {
                         alignItems: 'center',
                         justifyContent: 'space-between',
 
-                        paddingBottom: moderateScaleVertical(16),
                         backgroundColor: isDarkMode
                           ? MyDarkTheme.colors.background
                           : colors.white,
@@ -916,6 +917,10 @@ export default function ProductDetail({route, navigation}) {
                           // onPress={onPress}
                         >
                           <TouchableOpacity
+                            disabled={
+                              !productDetailData?.vendor?.show_slot &&
+                              !!productDetailData?.vendor?.is_vendor_closed
+                            }
                             onPress={() => productIncrDecreamentForCart(2)}
                             hitSlop={hitSlopProp}>
                             <Text
@@ -937,6 +942,10 @@ export default function ProductDetail({route, navigation}) {
                             {productQuantityForCart}
                           </Text>
                           <TouchableOpacity
+                            disabled={
+                              !productDetailData?.vendor?.show_slot &&
+                              !!productDetailData?.vendor?.is_vendor_closed
+                            }
                             onPress={() => productIncrDecreamentForCart(1)}
                             hitSlop={hitSlopProp}>
                             <Text
@@ -955,6 +964,10 @@ export default function ProductDetail({route, navigation}) {
                       <View style={{flex: 0.75}}>
                         <GradientButton
                           // indicator={btnLoader}
+                          disabled={
+                            !productDetailData?.vendor?.show_slot &&
+                            !!productDetailData?.vendor?.is_vendor_closed
+                          }
                           indicatorColor={colors.white}
                           colorsArray={[
                             themeColors.primary_color,
@@ -974,10 +987,25 @@ export default function ProductDetail({route, navigation}) {
                           btnStyle={{
                             borderRadius: moderateScale(4),
                             height: moderateScale(38),
+                            opacity: productDetailData?.vendor?.show_slot
+                              ? 1
+                              : productDetailData?.vendor?.is_vendor_closed
+                              ? 0.3
+                              : 1,
                           }}
                         />
                       </View>
                     </View>
+                    {!productDetailData?.vendor?.show_slot &&
+                    !!productDetailData?.vendor?.is_vendor_closed ? (
+                      <Text
+                        style={{
+                          ...commonStyles.regularFont11,
+                          color: colors.redB,
+                        }}>
+                        {strings.VENDOR_NOT_ACCEPTING_ORDERS}
+                      </Text>
+                    ) : null}
                   </View>
                 ))}
 
@@ -1014,7 +1042,7 @@ export default function ProductDetail({route, navigation}) {
             style={{flex: 1, marginVertical: moderateScaleVertical(10)}}
             contentContainerStyle={{flexGrow: 1}}
             horizontal
-            ItemSeparatorComponent={() => <View style={{height: 10}} />}
+            ItemSeparatorComponent={() => <View style={{width: 10}} />}
             ListHeaderComponent={() => (
               <View style={{marginLeft: moderateScale(8)}} />
             )}

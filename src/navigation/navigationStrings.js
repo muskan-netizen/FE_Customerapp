@@ -29,6 +29,7 @@ export default {
   BUY_PRODUCT: 'buyProduct',
   SHORT_CODE: 'shortCode',
   SETTIGS: 'settings',
+  ATTACH_PRINTER: 'AttachPrinter',
   PRODUCTDETAIL: 'productDetail',
   BRANDDETAIL: 'BrandProducts',
   SEARCHPRODUCTOVENDOR: 'SearchProductVendorItem',
@@ -104,4 +105,7 @@ export default {
   ROYO_PAYMENT_SETTINGS: 'royoPaymentSettings',
   ROYO_ORDER_DETAIL: 'royoOrderDetail',
   ROYO_ADD_PRODUCT: 'royoAddProduct',
+  VIEW_ALL_DATA: 'viewAllData',
+  TAXIHOMESCREEN: 'taxiHomeScreen',
+  TAXITABROUTES: 'taxiTabRoutes',
 };

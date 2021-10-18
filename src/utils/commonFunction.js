@@ -1,7 +1,5 @@
-import {algo} from 'crypto-js';
-import {Platform, Keyboard} from 'react-native';
-import {openCamera, openPicker} from './imagePicker';
-import {callingCountries} from 'country-data';
+import { Keyboard } from 'react-native';
+import { openCamera, openPicker } from './imagePicker';
 const cameraHandler = async (data, option) => {
   Keyboard.dismiss();
   //this condition use for open camera
@@ -56,6 +54,13 @@ const currencyNumberFormatter = (item) => {
 export function getImageUrl(url1, url2, dimentions) {
   // console.log(`${url1}${dimentions}${url2}`, "Url")
   return `${url1}${dimentions}${url2}`;
+}
+
+export const ifDataExist = (data) => {
+  if(data && data !== null){
+    return true
+  }
+  return false
 }
 
 export {cameraHandler, currencyNumberFormatter};

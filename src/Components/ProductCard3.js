@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import FastImage from 'react-native-fast-image';
 import {UIActivityIndicator} from 'react-native-indicators';
 import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
@@ -15,6 +16,7 @@ import {
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
 import {
+  getColorCodeWithOpactiyNumber,
   getImageUrl,
   pressInAnimation,
   pressOutAnimation,
@@ -30,6 +32,11 @@ export default function ProductCard3({
   onIncrement,
   onDecrement,
   selectedItemID,
+  Servicetype,
+  isVisibleModal,
+  selectedItemIndx,
+  btnLoader,
+  categoryInfo = '',
 }) {
   // data['qty'] = 1
   const [state, setState] = useState({
@@ -71,10 +78,13 @@ export default function ProductCard3({
 
   let htmlText = data?.translation[0]?.body_html || null;
 
+  let typeId = data?.category?.category_detail?.type_id;
+
   return (
     <Animatable.View
       animation={index > 8 ? '' : 'fadeInUp'}
-      delay={index > 8 ? 1 * 100 : index * 10}>
+      delay={index > 8 ? 1 * 100 : index * 10}
+      pointerEvents={btnLoader ? 'none' : 'auto'}>
       <TouchableOpacity
         disabled
         activeOpacity={0.6}
@@ -101,22 +111,14 @@ export default function ProductCard3({
               margin: 2,
               borderRadius: moderateScale(15),
             }}>
-            <BlurImages
-              isDarkMode={isDarkMode}
-              themeColor={themeColors.primary_color}
+            <FastImage
               style={{
                 ...styles.imgStyle,
                 backgroundColor: isDarkMode
                   ? colors.whiteOpacity15
                   : colors.greyColor,
               }}
-              containerStyle={{borderRadius: moderateScale(15)}}
-              thumnailUrl={{
-                uri: getImage('20/20'),
-              }}
-              originalUrl={{
-                uri: getImage('800/400'),
-              }}
+              source={{uri: getImage('800/400')}}
             />
           </TouchableOpacity>
         </Animatable.View>
@@ -207,8 +209,9 @@ export default function ProductCard3({
                   fontFamily: fontFamily.regular,
                 }}>
                 {`${currencies?.primary_currency?.symbol}${(
-                  Number(data?.variant[0]?.multiplier) *
-                  Number(data?.variant[0]?.price)
+                  Number(
+                    data?.variant[0]?.multiplier || data?.variant_multiplier,
+                  ) * Number(data?.variant[0]?.price)
                 ).toFixed(2)}`}
               </Text>
             </View>
@@ -224,7 +227,7 @@ export default function ProductCard3({
             </View>
           </Animatable.View>
 
-          {!!data?.variant[0]?.quantity ? (
+          {!!data?.variant[0]?.quantity || (!!typeId && typeId == 8) ? (
             <View
               style={{
                 marginTop:
@@ -246,8 +249,11 @@ export default function ProductCard3({
                     paddingHorizontal: moderateScale(8),
                   }}>
                   <TouchableOpacity
-                    disabled={selectedItemID == data?.id}
-                    style={{}}
+                    disabled={
+                      selectedItemID == data?.id || categoryInfo?.show_slot
+                        ? !categoryInfo?.show_slot
+                        : !!categoryInfo?.is_vendor_closed
+                    }
                     onPress={onDecrement}
                     activeOpacity={0.8}
                     hitSlop={hitSlopProp}>
@@ -260,8 +266,10 @@ export default function ProductCard3({
                       -
                     </Text>
                   </TouchableOpacity>
-                  <View style={{}}>
-                    {selectedItemID == data?.id ? (
+                  <View>
+                    {selectedItemIndx === index &&
+                    selectedItemID == data?.id &&
+                    btnLoader ? (
                       <UIActivityIndicator
                         size={moderateScale(18)}
                         color={colors.white}
@@ -279,7 +287,11 @@ export default function ProductCard3({
                     )}
                   </View>
                   <TouchableOpacity
-                    disabled={selectedItemID == data?.id}
+                    disabled={
+                      selectedItemID == data?.id || categoryInfo?.show_slot
+                        ? !categoryInfo?.show_slot
+                        : !!categoryInfo?.is_vendor_closed
+                    }
                     activeOpacity={0.8}
                     hitSlop={hitSlopProp}
                     onPress={onIncrement}>
@@ -295,16 +307,22 @@ export default function ProductCard3({
                 </View>
               ) : (
                 <TouchableOpacity
-                  disabled={selectedItemID == data?.id}
+                  disabled={
+                    selectedItemID == data?.id || categoryInfo?.show_slot
+                      ? !categoryInfo?.show_slot
+                      : !!categoryInfo?.is_vendor_closed
+                  }
                   onPress={addToCart}
-                  style={styles.addBtnStyle}>
+                  style={{
+                    ...styles.addBtnStyle,
+                  }}>
                   {selectedItemID == data?.id ? (
                     <UIActivityIndicator
                       size={moderateScale(18)}
                       color={themeColors.primary_color}
                     />
                   ) : (
-                    <View style={{}}>
+                    <View>
                       <Text style={styles.addStyleText}>{strings.ADD}</Text>
                     </View>
                   )}

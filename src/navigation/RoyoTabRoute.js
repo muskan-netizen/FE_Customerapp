@@ -11,6 +11,8 @@ import fontFamily from '../styles/fontFamily';
 import {moderateScale, moderateScaleVertical, width} from '../styles/responsiveSize';
 import {RoyoAccounts, RoyoHome, RoyoOrder, RoyoProducts} from '../Screens';
 import navigationStrings from './navigationStrings';
+import RoyoOrderScreenStack from './RoyoOrderScreenStack';
+import RoyoOrderProductStack from './RoyoOrderProductStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -106,7 +108,8 @@ const RoyoTabRoute = ({barColor = colors.themeColor2}) => {
 
       <Tab.Screen
         name={navigationStrings.ROYO_ORDER}
-        component={RoyoOrder}
+        // component={RoyoOrder}
+        component = {RoyoOrderScreenStack}
         options={{
           headerShown: false,
           tabBarIcon: ({focused}) => {
@@ -138,7 +141,8 @@ const RoyoTabRoute = ({barColor = colors.themeColor2}) => {
 
       <Tab.Screen
         name={navigationStrings.ROYO_PRODUCTS}
-        component={RoyoProducts}
+        // component={RoyoProducts}
+        component={RoyoOrderProductStack}
         options={{
           headerShown: false,
           tabBarIcon: ({focused}) => {

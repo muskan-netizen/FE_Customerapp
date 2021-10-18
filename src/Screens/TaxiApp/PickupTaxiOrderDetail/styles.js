@@ -29,10 +29,6 @@ export default ({fontFamily}) => {
       backgroundColor: colors.backgroundGrey,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
-
-      // justifyContent: 'flex-end',
-
-      // marginBottom: moderateScaleVertical(20),
     },
     container: {
       flex: 1,
@@ -72,7 +68,6 @@ export default ({fontFamily}) => {
       alignItems: 'center',
       paddingHorizontal: moderateScale(10),
       borderBottomWidth: moderateScaleVertical(0.5),
-      borderBottomColor: colors.borderLight,
     },
     clearCart: {
       ...commonStyles.mediumFont14,
@@ -157,11 +152,12 @@ export default ({fontFamily}) => {
     },
     map: {
       ...StyleSheet.absoluteFillObject,
-      height: height - height / 3,
+      height: height - height / 4,
     },
     plainView: {
       alignItems: 'center',
       justifyContent: 'center',
+
       width: width / 2.5,
       maxWidth: width / 2.5,
     },
@@ -201,9 +197,6 @@ export default ({fontFamily}) => {
       borderTopLeftRadius: moderateScale(18),
       borderTopRightRadius: moderateScale(18),
       overflow: 'hidden',
-      height: height / 2.9,
-
-      // maxHeight: height / 2,
       alignItems: 'center',
       justifyContent: 'center',
       width: width,

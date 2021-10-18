@@ -69,5 +69,5 @@ export {
   sliderWidth,
   itemWidth,
   StatusBarHeight,
-  StatusBarHeightSecond
+  StatusBarHeightSecond,
 };

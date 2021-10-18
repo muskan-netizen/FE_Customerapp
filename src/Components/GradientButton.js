@@ -19,6 +19,7 @@ const GradientButton = ({
   startcolor = {},
   colorsArray = null,
   indicatorColor = '#0000ff',
+  disabled = false,
 }) => {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -26,6 +27,7 @@ const GradientButton = ({
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
   return (
     <TouchableOpacity
+      disabled={disabled}
       style={{
         ...commonStyles.buttonRect,
         borderWidth: 0,

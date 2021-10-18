@@ -235,7 +235,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       marginHorizontal: moderateScale(10),
       backgroundColor: getColorCodeWithOpactiyNumber(
         themeColors.primary_color.substr(1),
-        20,
+        10,
       ),
       paddingVertical: moderateScaleVertical(15),
       paddingHorizontal: moderateScaleVertical(10),
@@ -257,8 +257,8 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     paymentView: {
       marginVertical:
         Platform.OS === 'ios'
-          ? moderateScaleVertical(40)
-          : moderateScaleVertical(50),
+          ? moderateScaleVertical(16)
+          : moderateScaleVertical(26),
       marginHorizontal: moderateScale(10),
       justifyContent: 'space-between',
       flex: 1,
@@ -395,8 +395,8 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       textAlign: 'left',
     },
     editIcon: {
-      height: 20,
-      width: 20,
+      height: moderateScaleVertical(18),
+      width: moderateScale(18),
       tintColor: themeColors.primary_color,
     },
     dropDownStyle: {
@@ -414,6 +414,10 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       marginVertical: moderateScaleVertical(10),
       marginBottom: moderateScaleVertical(10),
       zIndex: 1000,
+    },
+    suggetionView: {
+      marginHorizontal: moderateScale(20),
+      marginBottom: moderateScaleVertical(16),
     },
   });
   return styles;

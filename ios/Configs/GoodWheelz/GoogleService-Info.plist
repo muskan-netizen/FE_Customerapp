@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>403777178344-4bv7as82953t9njuii6q5napamo6pue2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.403777178344-4bv7as82953t9njuii6q5napamo6pue2</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>403777178344-ia0i14aqmu5h6gbsb15njupch32oe5ng.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDnE_NOIN5r_BmnoSHmH3RcfwSn7aYAthU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>403777178344</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.goodwheelz</string>
+	<key>PROJECT_ID</key>
+	<string>good-wheelz</string>
+	<key>STORAGE_BUCKET</key>
+	<string>good-wheelz.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:403777178344:ios:3aa25d9f6dd5d9d0c0175d</string>
+</dict>
+</plist>

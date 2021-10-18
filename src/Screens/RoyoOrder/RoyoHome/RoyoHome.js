@@ -263,9 +263,9 @@ const RoyoHome = (props) => {
                 <View style={styles.graphContainer}>
                   <View style={styles.graphHeader}>
                     <Text style={styles.font13Regular}>
-                      Total revenue (Delivered order)
+                      Total orders placed
                     </Text>
-                    <Text style={styles.font16Bold}>$123456</Text>
+                    <Text style={styles.font16Bold}>34565</Text>
                   </View>
                   <BarChart
                     withCustomBarColorFromData={true}

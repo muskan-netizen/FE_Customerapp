@@ -1,4 +1,5 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
+import {cloneDeep, debounce} from 'lodash';
 import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import WrapperContainer from '../../../Components/WrapperContainer';
@@ -20,32 +21,213 @@ import {
 } from '../../../utils/constants/constants';
 import navigationStrings from '../../../navigation/navigationStrings';
 import Header from '../../../Components/Header';
+import {useSelector} from 'react-redux';
+import actions from '../../../redux/actions';
+import strings from '../../../constants/lang';
+import {RefreshControl} from 'react-native';
+import staticStrings from '../../../constants/staticStrings';
 
 const RoyoOrder = (props) => {
   const {navigation} = props;
 
-  const [state, setState] = useState({activeIndex: 0});
-  const {activeIndex} = state;
-  const updateState = (data) =>
-    setState((state) => {
-      return {...state, ...data};
-    });
-
-  const data = [
-    imagePath.cabImage,
-    imagePath.contactIllustration,
-    imagePath.listViewIcon,
-    imagePath.icoTimeOrder,
-  ];
-
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     alert("focus");
-  //   }, [])
-  // );
-
   const selectedOrder = (index) => {
     updateState({activeIndex: index});
+  };
+
+  // new copy data
+
+  const {storeSelectedVendor} = useSelector((state) => state?.order);
+
+  const [state, setState] = useState({
+    tabBarData: [
+      {title: strings.ACTIVE_ORDERS, isActive: true},
+      {title: strings.PAST_ORDERS, isActive: false},
+      {title: strings.SCHEDULED_ORDERS, isActive: false},
+    ],
+    selectedTab: strings.ACTIVE_ORDERS,
+    activeOrders: [],
+    pastOrders: [],
+    scheduledOrders: [],
+    pageActive: 1,
+    pagePastOrder: 1,
+    pageScheduleOrder: 1,
+    limit: 10,
+    isLoading: true,
+    isLoadingB: false,
+    isRefreshing: false,
+    vendor_list: [],
+    selectedVendor: null,
+    activeIndex: 0,
+  });
+  const {
+    isLoadingB,
+    selectedTab,
+    isLoading,
+    activeOrders,
+    pageActive,
+    limit,
+    isRefreshing,
+    vendor_list,
+    selectedVendor,
+    activeIndex,
+  } = state;
+
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+
+  const currentTheme = useSelector((state) => state.initBoot);
+  const {appData, appStyle, currencies, languages} = useSelector(
+    (state) => state?.initBoot,
+  );
+
+  const {themeColors, themeLayouts} = currentTheme;
+  // const fontFamily = appStyle?.fontSizeData;
+  // const commonStyles = commonStylesFun({fontFamily});
+  useEffect(() => {
+    // updateState({isLoading: true});
+    if (isLoading) {
+      _getListOfVendorOrders();
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    updateState({
+      selectedVendor: storeSelectedVendor,
+      isLoading: true,
+      pageActive: 1,
+    });
+  }, [storeSelectedVendor]);
+
+  const _getListOfVendorOrders = () => {
+    let vendordId = !!storeSelectedVendor?.id
+      ? storeSelectedVendor?.id
+      : selectedVendor?.id
+      ? selectedVendor?.id
+      : '';
+    actions
+      ._getListOfVendorOrders(
+        `?limit=${limit}&page=${pageActive}&selected_vendor_id=${vendordId}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          // systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        console.log('vendor orders res', res);
+        updateState({
+          activeOrders:
+            pageActive == 1
+              ? res.data.order_list.data
+              : [...activeOrders, ...res.data.order_list.data],
+          vendor_list: res.data.vendor_list,
+          selectedVendor: !!storeSelectedVendor?.id
+            ? storeSelectedVendor
+            : res.data.vendor_list.find((x) => x.is_selected),
+          isLoading: false,
+          isRefreshing: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+
+  //error handling
+  const errorMethod = (error) => {
+    updateState({
+      isLoading: false,
+      isLoadingB: false,
+      isLoadingC: false,
+      isRefreshing: false,
+    });
+    showError(error?.message || error?.error);
+  };
+
+  const onPressViewEditAndReplace = (item) => {
+    // navigation.navigate(navigationStrings.ORDER_DETAIL, {
+    //   orderId: item?.id,
+    //   fromVendorApp: true,
+    //   showRating: false,
+    //   selectedVendor: selectedVendor,
+    // });
+  };
+
+  // const renderOrders = ({item, index}) => {
+  //   return (
+  //     <OrderCardVendorComponent
+  //       data={item}
+  //       // selectedTab={selectedTab}
+  //       onPress={() => onPressViewEditAndReplace(item)}
+  //       updateOrderStatus={(data, status) => updateOrderStatus(data, status)}
+  //     />
+  //   );
+  // };
+
+  const updateOrderStatus = (acceptRejectData, status) => {
+    let data = {};
+    data['order_id'] = acceptRejectData?.id;
+    data['vendor_id'] = selectedVendor?.id;
+    data['order_status_option_id'] = status;
+    console.log(data, 'data>>data');
+    updateState({isLoadingB: true});
+    actions
+      .updateOrderStatus(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res, 'res>>>acceptRejectOrder');
+        if (res && res.status == 'success') {
+          updateStatus(res, acceptRejectData);
+        }
+      })
+      .catch(errorMethod);
+  };
+
+  const updateStatus = (res, acceptRejectData) => {
+    let clonedArrayOrderList = cloneDeep(activeOrders);
+
+    updateState({
+      isLoadingB: false,
+      activeOrders: clonedArrayOrderList.map((i, inx) => {
+        if (i?.id == acceptRejectData?.id) {
+          i.order_status = res.order_status;
+          return i;
+        } else {
+          return i;
+        }
+      }),
+    });
+  };
+  useEffect(() => {
+    _getListOfVendorOrders();
+  }, [pageActive, isRefreshing]);
+
+  //Refresh screen
+
+  //Pull to refresh
+  const handleRefresh = () => {
+    updateState({pageActive: 1, isRefreshing: true});
+  };
+
+  //pagination of data
+  const onEndReached = ({distanceFromEnd}) => {
+    updateState({pageActive: pageActive + 1});
+  };
+
+  const onEndReachedDelayed = debounce(onEndReached, 1000, {
+    leading: true,
+    trailing: false,
+  });
+
+  const _reDirectToVendorList = () => {
+    navigation.navigate(navigationStrings.VENDORLIST, {
+      selectedVendor: selectedVendor,
+      allVendors: vendor_list,
+      screenType: staticStrings.ORDERS,
+    });
   };
 
   return (
@@ -55,7 +237,10 @@ const RoyoOrder = (props) => {
       barStyle="dark-content">
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
-        centerTitle="Orders | Foodies hub  "
+        // centerTitle="Orders | Foodies hub  "
+        centerTitle={'Orders | ' + selectedVendor?.name || ''}
+        onPressCenterTitle={() => _reDirectToVendorList()}
+        onPressImageAlongwithTitle={() => _reDirectToVendorList()}
         noLeftIcon
         imageAlongwithTitle={imagePath.dropdownTriangle}
         showImageAlongwithTitle
@@ -70,9 +255,19 @@ const RoyoOrder = (props) => {
         {activeIndex == 0 ? (
           <FlatList
             showsVerticalScrollIndicator={false}
-            bounces={false}
-            data={['Cash', 'Card', 'Cash', 'Cash']}
+            // bounces={false}
+            data={activeOrders}
             numColumns={noOfColumn}
+            refreshing={isRefreshing}
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                onRefresh={handleRefresh}
+                tintColor={themeColors.primary_color}
+              />
+            }
+            onEndReached={onEndReachedDelayed}
+            onEndReachedThreshold={0.5}
             ListEmptyComponent={() => {
               return (
                 <View style={styles.emptyCartBody}>
@@ -80,8 +275,9 @@ const RoyoOrder = (props) => {
                 </View>
               );
             }}
-            renderItem={({item, index}) => {
-              return (
+            renderItem={
+              ({item, index}) => (
+                // {return item?.order_status?.current_status?.id == 1 ? (
                 <View
                   style={{
                     marginLeft: customMarginLeftForBox(index),
@@ -91,22 +287,32 @@ const RoyoOrder = (props) => {
                     onPress={() =>
                       navigation.navigate(navigationStrings.ROYO_ORDER_DETAIL)
                     }
-                    data={data}
+                    item={item}
                     index={index}
-                    mode={item}
                   />
                 </View>
-              );
-            }}
+              )
+              // ) : null; }
+            }
             keyExtractor={(item, key) => key}
           />
         ) : null}
         {activeIndex == 1 ? (
           <FlatList
             showsVerticalScrollIndicator={false}
-            bounces={false}
-            data={[]}
+            // bounces={false}
+            data={activeOrders}
             numColumns={noOfColumn}
+            refreshing={isRefreshing}
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                onRefresh={handleRefresh}
+                tintColor={themeColors.primary_color}
+              />
+            }
+            onEndReached={onEndReachedDelayed}
+            onEndReachedThreshold={0.5}
             ListEmptyComponent={() => {
               return (
                 <View style={styles.emptyCartBody}>
@@ -115,20 +321,15 @@ const RoyoOrder = (props) => {
               );
             }}
             renderItem={({item, index}) => {
-              return (
+              return item?.order_status?.current_status?.id == 2 ? (
                 <View
                   style={{
                     marginLeft: customMarginLeftForBox(index),
                     flex: 1,
                   }}>
-                  <OrderCard
-                    data={data}
-                    index={index}
-                    mode={item}
-                    status="Confirmed"
-                  />
+                  <OrderCard item={item} index={index} status="Confirmed" />
                 </View>
-              );
+              ) : null;
             }}
             keyExtractor={(item, key) => key}
           />
@@ -136,9 +337,19 @@ const RoyoOrder = (props) => {
         {activeIndex == 2 ? (
           <FlatList
             showsVerticalScrollIndicator={false}
-            bounces={false}
-            data={['Cash', 'Cash']}
+            // bounces={false}
+            data={activeOrders}
             numColumns={noOfColumn}
+            refreshing={isRefreshing}
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                onRefresh={handleRefresh}
+                tintColor={themeColors.primary_color}
+              />
+            }
+            onEndReached={onEndReachedDelayed}
+            onEndReachedThreshold={0.5}
             ListEmptyComponent={() => {
               return (
                 <View style={styles.emptyCartBody}>
@@ -147,20 +358,15 @@ const RoyoOrder = (props) => {
               );
             }}
             renderItem={({item, index}) => {
-              return (
+              return item?.order_status?.current_status?.id == 3 ? (
                 <View
                   style={{
                     marginLeft: customMarginLeftForBox(index),
                     flex: 1,
                   }}>
-                  <OrderCard
-                    data={data}
-                    index={index}
-                    mode={item}
-                    status="Cancelled"
-                  />
+                  <OrderCard item={item} index={index} status="Cancelled" />
                 </View>
-              );
+              ) : null;
             }}
             keyExtractor={(item, key) => key}
           />
@@ -168,9 +374,19 @@ const RoyoOrder = (props) => {
         {activeIndex == 3 ? (
           <FlatList
             showsVerticalScrollIndicator={false}
-            bounces={false}
-            data={['Cash']}
+            // bounces={false}
+            data={activeOrders}
             numColumns={noOfColumn}
+            refreshing={isRefreshing}
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                onRefresh={handleRefresh}
+                tintColor={themeColors.primary_color}
+              />
+            }
+            onEndReached={onEndReachedDelayed}
+            onEndReachedThreshold={0.5}
             ListEmptyComponent={() => {
               return (
                 <View style={styles.emptyCartBody}>
@@ -179,21 +395,22 @@ const RoyoOrder = (props) => {
               );
             }}
             renderItem={({item, index}) => {
-              return (
+              return item?.order_status?.current_status?.id == 6 ? (
                 <View
                   style={{
                     marginLeft: customMarginLeftForBox(index),
-                    // flex: 0.5,
                     flex: 1,
                   }}>
                   <OrderCard
-                    data={data}
+                    onPress={() =>
+                      navigation.navigate(navigationStrings.ROYO_ORDER_DETAIL)
+                    }
+                    item={item}
                     index={index}
-                    mode={item}
-                    status="Completed"
+                    status="completed"
                   />
                 </View>
-              );
+              ) : null;
             }}
             keyExtractor={(item, key) => key}
           />

@@ -8,11 +8,12 @@ import {
   PaymentOptions,
   PickupTaxiOrderDetail,
   PinAddressOnMap,
+  RateOrder,
 } from '../Screens';
 
 import VerifyAccountSecond from '../Screens/VerifyAccountSecond/VerifyAccount';
 import navigationStrings from './navigationStrings';
-ChooseCarTypeAndTimeTaxi;
+// ChooseCarTypeAndTimeTaxi;
 
 export default function (Stack) {
   return (
@@ -52,6 +53,11 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.PICKUPTAXIORDERDETAILS}
         component={PickupTaxiOrderDetail}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.RATEORDER}
+        component={RateOrder}
         options={{headerShown: false}}
       />
     </>

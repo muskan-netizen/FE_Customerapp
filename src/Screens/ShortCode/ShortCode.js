@@ -65,7 +65,8 @@ export default function ShortCode({route, navigation}) {
               isShortcodePrefilled: true,
             });
           } else {
-            // updateState({shortCode: '', isShortcodePrefilled: false});
+            state;
+            //updateState({shortCode: '649a9a', isShortcodePrefilled: true});
             if (shortCodeParam) {
               updateState({shortCode: '', isShortcodePrefilled: false});
             } else {
@@ -700,6 +701,73 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.empire:
+          updateState({
+            shortCode: shortCodes.empire,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.expressdelivery:
+          updateState({
+            shortCode: shortCodes.expressdelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.booziedoozie:
+          updateState({
+            shortCode: shortCodes.booziedoozie,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.zestyclickz:
+          updateState({
+            shortCode: shortCodes.zestyclickz,
+            isShortcodePrefilled: true,
+          });
+          break;
+          break;
+        case appIds.bakesale:
+          updateState({
+            shortCode: shortCodes.bakesale,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.elcheregio:
+          updateState({
+            shortCode: shortCodes.elcheregio,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.yaawi:
+          updateState({
+            shortCode: shortCodes.yaawi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hosta:
+          updateState({
+            shortCode: shortCodes.hosta,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.somame:
+          updateState({
+            shortCode: shortCodes.somame,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.goodwheelz:
+          updateState({
+            shortCode: shortCodes.goodwheelz,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.tranznet:
+          updateState({
+            shortCode: shortCodes.tranznet,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -732,7 +800,7 @@ export default function ShortCode({route, navigation}) {
     let header = {};
     if (languages?.primary_language?.id) {
       header = {
-        code: appData?.profile?.code,
+        code: shortCode,
         language: languages?.primary_language?.id,
       };
     } else {
@@ -756,7 +824,9 @@ export default function ShortCode({route, navigation}) {
           changeInShortCode: false,
           shortCode: '',
         });
-        showError(error?.message || error?.error);
+        setTimeout(() => {
+          showError(error?.message || error?.error);
+        }, 500);
       });
   };
 

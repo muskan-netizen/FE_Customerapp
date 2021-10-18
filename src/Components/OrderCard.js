@@ -3,44 +3,61 @@ import {TouchableOpacity} from 'react-native';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import colors from '../styles/colors';
 import fontFamily from '../styles/fontFamily';
+import moment from 'moment';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
+import { getImageUrl } from '../utils/helperFunctions';
 import ButtonWithLoader from './ButtonWithLoader';
 
 const OrderCard = (props) => {
-  const {data = [], mode = 'cash', status = '', onPress = () => {}} = props;
+  
+  const {item={}, status = '', onPress = () => {}} = props;
+  console.log(item)
+  let count=-1;
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={styles.font13Regular}>Order #8036372</Text>
-          <Text style={styles.date}>9 oct; 11: 11 pm</Text>
+          <Text style={styles.font13Regular}>Order {item?.order_number}</Text>
+          <Text style={styles.date}>{`${moment(item?.date_time).format('DD MMM,YYYY')} ${moment(
+                  item?.date_time,
+                ).format('LT')} `}</Text>
         </View>
         <View
           style={styles.rowSapce}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <View
               style={{
-                minWidth: moderateScale(30 + data?.length * 8),
                 height: moderateScaleVertical(48),
                 justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'row',
+                marginRight: moderateScale(8)
               }}>
-              {data?.map((val, index) => (
+              {item?.product_details?.map((val, index) => {
+                count++;
+                return(
                 <Image
-                  key={index}
-                  source={val}
-                  style={{
-                    ...styles.image,
-                    zIndex: -index,
-                    marginLeft: moderateScale(8 * index),
-                  }}
-                />
-              ))}
+                key={index}
+                source={{
+                  uri: getImageUrl(
+                    val?.image_path?.image_fit,
+                    val?.image_path?.image_path,
+                    '500/500',
+                  ),
+                }}
+                style={{
+                  ...styles.image,
+                  zIndex: -index,
+                  marginLeft: index!=0?-moderateScale(20):0,
+                }}
+              />
+              )})}
             </View>
-            <Text style={styles.font16Regular}>Salt x 3 more</Text>
+            <Text style={styles.font16Regular}>Salt {count==0?'':'x' +" "+count+" more"}</Text>
           </View>
           <Text
             style={{
@@ -48,7 +65,7 @@ const OrderCard = (props) => {
               color: '#35B300',
               textAlign: 'right',
             }}>
-            {mode}
+            {item?.payment_option_title}
           </Text>
         </View>
       </TouchableOpacity>
@@ -60,7 +77,7 @@ const OrderCard = (props) => {
         }}>
         <View>
           <Text style={styles.orderText}>Order Total</Text>
-          <Text style={styles.totalPrice}>$ 40.00</Text>
+          <Text style={styles.totalPrice}>${item?.payable_amount}</Text>
         </View>
 
         {status ? (
@@ -137,10 +154,10 @@ const styles = StyleSheet.create({
   },
   image: {
     backgroundColor: colors.white,
-    position: 'absolute',
+    // position: 'absolute',
 
-    width: moderateScale(25),
-    height: moderateScale(25),
+    width: moderateScale(30),
+    height: moderateScale(30),
     borderRadius: moderateScale(25),
   },
   date: {

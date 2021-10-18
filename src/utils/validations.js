@@ -148,19 +148,19 @@ export default function (data) {
     // if (emptyValidationText !== '') {
     //   return emptyValidationText;
     // }
-    // if (!/^[0][1-9]$|^[1-9]\d{8,14}$/.test(phoneNumber)) {
-    //   return strings.PLEASE_ENTER_VALID_PHONE_NUMBER;
-    // }
+    if (!/^[0][1-9]$|^[1-9]\d{4,14}$/.test(phoneNumber)) {
+      return strings.PLEASE_ENTER_VALID_PHONE_NUMBER;
+    }
 
-    let isTrue = isValidPhoneNumber(`+${callingCode}${phoneNumber}`);
+    // let isTrue = isValidPhoneNumber(`+${callingCode}${phoneNumber}`);
 
     if (phoneNumber == '') {
       return strings.PLEASE_ENTER_YOUR_PHONE_NUMBER;
     }
-    if (isTrue) {
-    } else {
-      return strings.PHONE_NUMBER_NOT_VALID;
-    }
+    // if (isTrue) {
+    // } else {
+    //   return strings.PHONE_NUMBER_NOT_VALID;
+    // }
   }
 
   if (otp !== undefined) {
@@ -234,7 +234,7 @@ export default function (data) {
     if (emptyValidationText !== '') {
       return emptyValidationText;
     } else {
-      let minLengthValidation = checkMinLength(name, 6, strings.MESSAGE);
+      let minLengthValidation = checkMinLength(message, 6, strings.MESSAGE);
       if (minLengthValidation !== '') {
         return minLengthValidation;
       }

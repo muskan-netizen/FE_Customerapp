@@ -105,11 +105,6 @@ const RoyoProducts = (props) => {
       </View>
     );
   };
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     alert("focus");
-  //   }, [])
-  // );
 
   const selectedOrder = (index) => {
     if (index == 0) updateState({activeIndex: index, headerText: 'Products'});

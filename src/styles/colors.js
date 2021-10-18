@@ -28,6 +28,7 @@ export default {
   blackOpacity40: 'rgba(0,0,0,0.40)',
   blackOpacity0: 'rgba(0,0,0,0)',
   blackOpacity43: 'rgba(0,0,0,0.43)',
+  blackOpacity70: 'rgba(0,0,0,0.70)',
   blackOpacity86: 'rgba(0,0,0,0.86)',
   blackOpacity66: 'rgba(0,0,0,0.66)',
   green: '#3B9D38',
@@ -106,4 +107,6 @@ export default {
   whiteOpacity15: 'rgba(255,255,255,0.15)',
   lightgray: '#222B45',
   greyA: '#C6C6C6',
+  taxiCategoryGrayColor: '#C0C0C8',
+  redD: '#FD4937',
 };

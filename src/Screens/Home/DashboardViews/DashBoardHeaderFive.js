@@ -8,9 +8,11 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../../../styles/responsiveSize';
 import {getImageUrl, showSuccess} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
@@ -23,14 +25,17 @@ import strings from '../../../constants/lang';
 import {string} from 'prop-types';
 import {BlurView} from '@react-native-community/blur';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import ScaledImage from 'react-native-scalable-image';
+import {useNavigation} from '@react-navigation/native';
 
 export default function DashBoardHeaderFive({
-  navigation = {},
+  // navigation = {},
   location = [],
   selcetedToggle,
   toggleData,
   isLoading = false,
 }) {
+  const navigation = useNavigation();
   const pickerRef = createRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -350,12 +355,37 @@ export default function DashBoardHeaderFive({
 
   return (
     <>
-      <View style={styles.headerContainer}>
+      <View
+        style={{
+          ...styles.headerContainer,
+          borderBottomColor: isDarkMode
+            ? colors.whiteOpacity22
+            : colors.borderColorD,
+        }}>
         <View
           style={{
             flexDirection: 'row',
             flex: 1,
+            alignItems: 'center',
           }}>
+          {!!(profileInfo && profileInfo?.logo) ? (
+            <ScaledImage
+              width={width / 6}
+              height={moderateScaleVertical(50)}
+              resizeMode="contain"
+              source={
+                profileInfo && profileInfo?.logo
+                  ? {
+                      uri: getImageUrl(
+                        profileInfo.logo.image_fit,
+                        profileInfo.logo.image_path,
+                        '1000/1000',
+                      ),
+                    }
+                  : imagePath.logo
+              }
+            />
+          ) : null}
           {!!appData?.profile?.preferences?.is_hyperlocal && (
             <TouchableOpacity
               activeOpacity={1}
@@ -368,6 +398,7 @@ export default function DashBoardHeaderFive({
                 flexDirection: 'row',
                 alignItems: 'center',
                 flex: 0.85,
+                marginLeft: moderateScale(8),
               }}>
               <Image
                 style={styles.locationIcon}
@@ -390,6 +421,17 @@ export default function DashBoardHeaderFive({
             </TouchableOpacity>
           )}
         </View>
+
+        <TouchableOpacity
+          style={{marginHorizontal: moderateScale(8)}}
+          onPress={() =>
+            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+          }>
+          <Image
+            style={{tintColor: themeColors.primary_color}}
+            source={imagePath.search1}
+          />
+        </TouchableOpacity>
         {tabs.length > 1 && (
           <TouchableOpacity
             activeOpacity={0.7}
