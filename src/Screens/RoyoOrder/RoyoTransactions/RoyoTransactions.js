@@ -51,7 +51,7 @@ const RoyoTransactions = (props) => {
           ))}
         </View>
         <View style={{flex: 1}}>
-          <Text style={styles.font14Medium}>Order #836372</Text>
+          <Text style={styles.font14Medium}>Order #8363772</Text>
           <Text style={styles.font12Regular}>9 oct; 11: 11 pm</Text>
         </View>
         <Text style={styles.font16Semibold}>+ $112</Text>

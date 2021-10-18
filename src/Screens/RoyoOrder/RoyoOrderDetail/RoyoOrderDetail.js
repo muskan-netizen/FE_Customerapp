@@ -29,7 +29,10 @@ const RoyoOrderDetail = (props) => {
         leftIcon={imagePath.backRoyo}
         centerTitle="Order details"
       />
-      <ScrollView style={styles.container} bounces={false}>
+      <ScrollView
+        style={styles.container}
+        bounces={false}
+        showsVerticalScrollIndicator={false}>
         <Text style={styles.jobStatus}>Job Status</Text>
         <View style={styles.preparingBox}>
           <Text style={{...styles.font16Semibold, color: colors.white}}>
@@ -42,6 +45,7 @@ const RoyoOrderDetail = (props) => {
           <Text style={styles.orderTime}>9 oct 11: 12 PM</Text>
         </View>
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={[1, 2, 3]}
           keyExtractor={(val, index) => index}
           renderItem={({item, index}) => {
@@ -78,7 +82,7 @@ const RoyoOrderDetail = (props) => {
           <View style={styles.dashLine} />
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>Total</Text>
-            <Text style={{...styles.font15Semibold, color: '#31BD8F'}}>
+            <Text style={{...styles.font15Semibold, color: colors.themeColor2}}>
               $123
             </Text>
           </View>
@@ -86,7 +90,7 @@ const RoyoOrderDetail = (props) => {
         <View
           style={{
             padding: moderateScaleVertical(16),
-            backgroundColor: '#F5F5F5',
+            backgroundColor: colors.whiteSmokeColor,
           }}>
           <View style={styles.flexRow}>
             <Text style={styles.font14Semibold}>Delivery address</Text>
@@ -239,7 +243,6 @@ const styles = StyleSheet.create({
   itemBox: {
     flexDirection: 'row',
     padding: moderateScale(16),
-    backgroundColor: '#F5F5F5',
   },
   itemImage: {
     width: moderateScale(65),
@@ -248,20 +251,22 @@ const styles = StyleSheet.create({
     marginRight: moderateScale(16),
   },
   orderBox: {
-    borderRadius: moderateScale(5),
+    borderRadius: moderateScale(8),
+    backgroundColor: colors.whiteSmokeColor,
     margin: moderateScaleVertical(16),
   },
   itemSeperator: {
-    borderBottomColor: '#979797',
+    borderBottomColor: colors.lightGreyBgColor,
     borderBottomWidth: 1,
     marginHorizontal: moderateScale(16),
   },
   dashLine: {
     borderWidth: 1,
     borderStyle: 'dashed',
+    borderRadius: 1,
     flex: 1,
     marginVertical: moderateScaleVertical(16),
-    borderColor: '#979797',
+    borderColor: colors.lightGreyBgColor,
   },
   shareImage: {
     height: moderateScaleVertical(23),

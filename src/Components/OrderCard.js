@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: moderateScale(16),
-    backgroundColor: '#F5F5F5',
+    backgroundColor: colors.whiteSmokeColor,
     marginBottom: moderateScaleVertical(16),
     borderRadius: moderateScale(6),
   },

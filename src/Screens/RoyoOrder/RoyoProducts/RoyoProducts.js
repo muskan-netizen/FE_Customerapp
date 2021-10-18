@@ -41,7 +41,7 @@ const RoyoProducts = (props) => {
         style={{
           padding: moderateScale(18),
           borderRadius: moderateScale(6),
-          backgroundColor: '#F5F5F5',
+          backgroundColor: colors.whiteSmokeColor,
           flexDirection: 'row',
           marginBottom: moderateScaleVertical(16),
         }}>

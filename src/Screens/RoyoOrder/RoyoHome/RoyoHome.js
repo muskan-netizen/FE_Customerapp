@@ -172,7 +172,7 @@ const RoyoHome = (props) => {
         bounces={false}>
         {data1 ? (
           <View style={styles.center}>
-            <Image source={imagePath.emptyPackage} style={{}} />
+            <Image source={imagePath.emptyCartRoyo} style={{}} />
             <Text style={styles.emptyText}>
               No product added. plaease add new product sto create digital
               catalogue

@@ -79,7 +79,7 @@ const PaymentSettings = (props) => {
           <Image source={imagePath.selectedRoyo} />
           <Text style={styles.cashOnDeliver}>{strings.CASH_ON_DELIVERY}</Text>
         </View>
-        <View style={{borderWidth: 0.5, borderColor: '#979797'}} />
+        <View style={{borderWidth: 0.5, borderColor: colors.lightGreyBgColor}} />
         <View style={styles.cardBox}>
           <Image source={imagePath.deselectedRoyo} />
           <View style={{marginLeft: moderateScale(12), flex: 1}}>
