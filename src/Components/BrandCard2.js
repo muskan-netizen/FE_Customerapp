@@ -90,7 +90,8 @@ export default function BrandCard2({ data = {}, onPress = () => { } }) {
           color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
           fontFamily: fontFamily.regular,
           fontSize: textScale(10),
-          textAlign: 'center'
+          textAlign: 'center',
+          marginTop:moderateScaleVertical(2)
         }}>
         {data?.name ? data?.name : data?.translation[0]?.title}
       </Text>

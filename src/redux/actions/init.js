@@ -29,7 +29,7 @@ export function initApp(
         console.log(primary_language, 'primary_language>>>>>>><<<<<<');
         console.log(
           data?.languages.find((x) => x?.language?.id == primary_language?.id),
-          'data?.languages.find((x) => x?.id == primary_language?.id)',
+        
         );
         console.log(data, 'data>>>>>>><<<<<<');
         const currencies = data?.currencies

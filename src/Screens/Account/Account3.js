@@ -1,8 +1,10 @@
+import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
 import React, { useState } from 'react';
 import {
   Alert,
   I18nManager,
   Image,
+  Platform,
   ScrollView,
   Share,
   Text,
@@ -47,6 +49,8 @@ export default function Account3({ navigation }) {
   const [state, setState] = useState({
     isLoading: false,
   });
+
+  const [isVisible, setIsVisible] = useState(false);
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
@@ -419,6 +423,37 @@ export default function Account3({ navigation }) {
           // iconRight={imagePath.goRight}
           // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
+          {((!!userData?.auth_token) && Platform.OS === 'android') &&
+            (businessType == 'taxi' ? null : (
+              <ListItemHorizontal
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                onPress={() => {
+                  BluetoothManager.checkBluetoothEnabled().then((enabled) => {
+                    if (Boolean(enabled)) {
+                      navigation.navigate(navigationStrings.ATTACH_PRINTER)
+                    } else {
+                      BluetoothManager.enableBluetooth().then(() => {
+                        navigation.navigate(navigationStrings.ATTACH_PRINTER)
+                      }).catch((err) => { })
+                    }
+                  }, (err) => {
+                    err
+                  });
+
+                }}
+                iconLeft={imagePath.printer}
+                centerHeading={strings.ATTACH_PRINTER}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+              />
+            ))}
+
           {/* {!!userData?.auth_token && (
           <ListItemHorizontal
             centerContainerStyle={{flexDirection: 'row'}}
@@ -445,6 +480,7 @@ export default function Account3({ navigation }) {
           // iconRight={imagePath.goRight}
           // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
+
 
           {!!userData?.auth_token &&
             !!appMainData?.is_admin &&

@@ -1656,51 +1656,50 @@ export default function Cart({navigation, route}) {
                   horizontal
                   showsHorizontalScrollIndicator={false}
                   contentContainerStyle={{flexGrow: 1}}>
-                  {cartData?.total_payable_amount !== 0 &&
-                    cartData?.tip.map((j, jnx) => {
-                      return (
-                        <TouchableOpacity
-                          style={[
-                            styles.tipArrayStyle,
-                            {
-                              backgroundColor:
-                                selectedTipvalue?.value == j?.value
-                                  ? themeColors.primary_color
-                                  : 'transparent',
-                              flex: 0.18,
-                            },
-                          ]}
-                          onPress={() => selectedTip(j)}>
-                          <Text
-                            style={
-                              isDarkMode
-                                ? {
-                                    color:
-                                      selectedTipvalue?.value == j?.value
-                                        ? colors.white
-                                        : MyDarkTheme.colors.text,
-                                  }
-                                : {
-                                    color:
-                                      selectedTipvalue?.value == j?.value
-                                        ? colors.white
-                                        : colors.black,
-                                  }
-                            }>
-                            {`${currencies?.primary_currency?.symbol} ${j.value}`}
-                          </Text>
-                          <Text
-                            style={{
-                              color:
-                                selectedTipvalue?.value == j?.value
-                                  ? colors.white
-                                  : colors.textGreyB,
-                            }}>
-                            {j.label}
-                          </Text>
-                        </TouchableOpacity>
-                      );
-                    })}
+                  {cartData?.tip.map((j, jnx) => {
+                    return (
+                      <TouchableOpacity
+                        style={[
+                          styles.tipArrayStyle,
+                          {
+                            backgroundColor:
+                              selectedTipvalue?.value == j?.value
+                                ? themeColors.primary_color
+                                : 'transparent',
+                            flex: 0.18,
+                          },
+                        ]}
+                        onPress={() => selectedTip(j)}>
+                        <Text
+                          style={
+                            isDarkMode
+                              ? {
+                                  color:
+                                    selectedTipvalue?.value == j?.value
+                                      ? colors.white
+                                      : MyDarkTheme.colors.text,
+                                }
+                              : {
+                                  color:
+                                    selectedTipvalue?.value == j?.value
+                                      ? colors.white
+                                      : colors.black,
+                                }
+                          }>
+                          {`${currencies?.primary_currency?.symbol} ${j.value}`}
+                        </Text>
+                        <Text
+                          style={{
+                            color:
+                              selectedTipvalue?.value == j?.value
+                                ? colors.white
+                                : colors.textGreyB,
+                          }}>
+                          {j.label}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
 
                   <TouchableOpacity
                     style={[
@@ -1936,31 +1935,37 @@ export default function Cart({navigation, route}) {
           </View>
         ) : null} */}
 
-        {scheduleType == 'schedule' && (
-          <TouchableOpacity
-            style={{
-              marginTop: moderateScale(16),
-              marginLeft: moderateScale(16),
-              alignSelf: 'flex-start',
-            }}
-            onPress={clearSceduleDate}>
-            <Text
+        {!!(
+          userData?.auth_token &&
+          !appData?.profile?.preferences?.off_scheduling_at_cart
+        ) &&
+          scheduleType == 'schedule' && (
+            <TouchableOpacity
               style={{
-                fontFamily: fontFamily?.bold,
-                color: themeColors.primary_color,
-                textAlign: 'left',
-              }}>
-              {strings.CLEAR_SCHEDULE_DATE}
-            </Text>
-          </TouchableOpacity>
-        )}
+                marginTop: moderateScale(16),
+                marginLeft: moderateScale(16),
+                alignSelf: 'flex-start',
+              }}
+              onPress={clearSceduleDate}>
+              <Text
+                style={{
+                  fontFamily: fontFamily?.bold,
+                  color: themeColors.primary_color,
+                  textAlign: 'left',
+                }}>
+                {strings.CLEAR_SCHEDULE_DATE}
+              </Text>
+            </TouchableOpacity>
+          )}
 
         {!!cartData?.deliver_status && (
           <View
             pointerEvents={placeLoader ? 'none' : 'auto'}
             style={styles.paymentView}>
-            {userData?.auth_token && (
-              // !appData?.profile?.preferences?.off_scheduling_at_cart &&
+            {!!(
+              userData?.auth_token &&
+              !appData?.profile?.preferences?.off_scheduling_at_cart
+            ) && (
               <ButtonComponent
                 onPress={_selectTime}
                 btnText={

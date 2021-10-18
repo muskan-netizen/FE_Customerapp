@@ -29,6 +29,7 @@ export default {
   BUY_PRODUCT: 'buyProduct',
   SHORT_CODE: 'shortCode',
   SETTIGS: 'settings',
+  ATTACH_PRINTER: 'AttachPrinter',
   PRODUCTDETAIL: 'productDetail',
   BRANDDETAIL: 'BrandProducts',
   SEARCHPRODUCTOVENDOR: 'SearchProductVendorItem',

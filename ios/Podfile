@@ -16,6 +16,7 @@ target 'RoyoOrder' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  pod 'react-native-background-actions', :path => '../node_modules/react-native-background-actions'
  
 end
 
