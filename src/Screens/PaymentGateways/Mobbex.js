@@ -52,26 +52,20 @@ export default function Mobbex({navigation, route}) {
           language: languages?.primary_language?.id,
         },
       );
+      console.log(res, '<===response mobbex');
       updateState({webUrl: res.data});
     } catch (error) {
       console.log('error raised', error);
     }
   };
 
-  //   useEffect(() => {
-  //     console.log(
-  //       'decode uri',
-  //       decodeURI(
-  //         'https://sales.alerthire.com/payment/gateway/return9511&status=200&type=card&transactionId=kL3lXuuiG',
-  //       ),
-  //     );
-  //   }, []);
   const onNavigationStateChange = (props) => {
     const {url} = props;
 
-    let queryString = new URL(url);
-    let urlParams = queryString.searchParams;
-    console.log(urlParams, 'urlParams');
+    // let queryString = new URL(url);
+    // let urlParams = queryString.searchParams;
+
+    console.log(props, 'urlParams');
     // if((urlParams.has('gateway')) && (urlParams.get('gateway') == 'paystack')) {
 
     // }

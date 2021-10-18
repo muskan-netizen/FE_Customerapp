@@ -1,11 +1,11 @@
-export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.100.89:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
 
-//export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
+export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
 

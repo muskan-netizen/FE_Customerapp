@@ -2270,6 +2270,8 @@ export default function Cart({navigation, route}) {
     }
   };
 
+
+
   const renderRecommendedVendors = ({item}) => {
     return (
       <View
