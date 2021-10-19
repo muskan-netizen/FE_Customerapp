@@ -1380,6 +1380,16 @@ android {
             resValue "string", "app_name", "Quick Quick"
             resValue "string", "host_name", ""
          }
+          caribeclean{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.caribeclean'
+            resValue "string", "app_name", "Caribe Clean"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

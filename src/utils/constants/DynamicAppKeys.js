@@ -117,6 +117,7 @@ const shortCodes = {
   sambiga: '4fadae',
   agrionline: 'dd93ce',
   quickquick: '9bd088',
+  caribeclean: 'a6bf72',
 };
 
 const appIds = {
@@ -583,6 +584,10 @@ const appIds = {
   quickquick: Platform.select({
     ios: 'com.quickquick',
     android: 'com.quickquick',
+  }),
+  caribeclean: Platform.select({
+    ios: 'com.caribeclean',
+    android: 'com.caribeclean',
   }),
 };
 
