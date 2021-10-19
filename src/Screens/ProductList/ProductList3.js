@@ -542,7 +542,7 @@ export default function Products({route, navigation}) {
         }
         setTimeout(() => {
           updateState({isLoading: false});
-        }, 500);
+        }, 1500);
         updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
       .catch(errorMethod);
