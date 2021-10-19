@@ -401,7 +401,7 @@ export default function Products({route, navigation}) {
     // }
   };
 
-  /**********Get all list items by category filters */
+  /**********Get all list items category filters */
   const getAllProductsCategoryFilter = () => {
     console.log('api hit getAllProductsCategoryFilter');
     let data = {};
