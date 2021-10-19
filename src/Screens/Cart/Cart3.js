@@ -593,12 +593,6 @@ export default function Cart({navigation, route}) {
           placeLoader: false,
         });
 
-        console.log(
-          Number(cartData?.total_payable_amount),
-          Number(selectedTipAmount),
-          'payableAmout',
-        );
-
         if (
           (res?.data?.payment_option_id === 7 &&
             !!(Number(cartData?.total_payable_amount) !== 0)) ||
