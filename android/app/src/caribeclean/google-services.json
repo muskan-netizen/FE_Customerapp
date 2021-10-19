@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "951099557724",
+    "project_id": "caribe-clean",
+    "storage_bucket": "caribe-clean.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951099557724:android:ced5385fab5b10242fa399",
+        "android_client_info": {
+          "package_name": "com.caribeclean"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "951099557724-q4j7i8dgk2fjq5tilkdi5jdbf2ugicpa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.caribeclean",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "951099557724-qplgfm2ofo7g5mlodvfd61vac39e0urb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.caribeclean",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "951099557724-r9auvbc0gd1vfhlra8l3ko4tror14f97.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.caribeclean",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "951099557724-p66aki1r5spirkkmd86g81ujv5nkrj8c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwkNg47CcmuBM1P1CGQc62YlowigUewKc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "951099557724-p66aki1r5spirkkmd86g81ujv5nkrj8c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "951099557724-7utmekkja8kvd36kb7ki3pa0ea93tu34.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.caribeclean"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
