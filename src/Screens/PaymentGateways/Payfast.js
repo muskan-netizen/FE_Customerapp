@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ScrollView} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import {WebView} from 'react-native-webview';
 import {useSelector} from 'react-redux';
@@ -9,11 +9,10 @@ import WrapperContainer from '../../Components/WrapperContainer';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {moderateScaleVertical} from '../../styles/responsiveSize';
+import {height, moderateScaleVertical} from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {showError} from '../../utils/helperFunctions';
 
-export default function Mobbex({navigation, route}) {
+export default function Payfast({navigation, route}) {
   let paramsData = route?.params;
   console.log(paramsData, '===>paramsData');
 
@@ -23,12 +22,12 @@ export default function Mobbex({navigation, route}) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const [state, setState] = useState({
-    webUrl: '',
+    webData: '',
   });
 
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {webUrl} = state;
+  const {webData} = state;
 
   useEffect(() => {
     apiHit();
@@ -51,11 +50,14 @@ export default function Mobbex({navigation, route}) {
           language: languages?.primary_language?.id,
         },
       );
-      updateState({webUrl: res.data});
+      console.log(res?.data, 'responseData===>');
+
+      updateState({webData: res?.data});
     } catch (error) {
       showError(error.message || error);
     }
   };
+
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
@@ -67,6 +69,7 @@ export default function Mobbex({navigation, route}) {
     const URL = queryString.parseUrl(url);
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
+    console.log(props, 'props===>');
 
     setTimeout(() => {
       if (queryParams.status === '200') {
@@ -81,25 +84,26 @@ export default function Mobbex({navigation, route}) {
           queryURL: url.replace(`${nonQueryURL}?`, ''),
         })();
       }
-    }, 3000);
+    }, 200);
   };
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.transparent}
       statusBarColor={colors.white}
       source={loaderOne}>
-      {webUrl !== '' && (
+      {webData !== '' && (
         <WebView
-          source={{uri: webUrl}}
+          showsVerticalScrollIndicator={false}
+          source={{
+            uri: webData?.redirectUrl,
+            method: 'POST',
+            body: queryString.stringify(webData?.formData),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          }}
           onNavigationStateChange={onNavigationStateChange}
         />
       )}
-      <View
-        style={{
-          height: moderateScaleVertical(75),
-          backgroundColor: colors.transparent,
-        }}
-      />
     </WrapperContainer>
   );
 }

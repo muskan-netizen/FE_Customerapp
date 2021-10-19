@@ -52,6 +52,7 @@ export default function OrderDetail({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
+  console.log(paramData, 'paramData==>');
 
   const [state, setState] = useState({
     isLoading: true,
@@ -995,7 +996,9 @@ export default function OrderDetail({navigation, route}) {
                           },
                         ]
                       : styles.orderLableStyle
-                  }>{cartData?.created_date}</Text>
+                  }>
+                  {cartData?.created_date}
+                </Text>
               </View>
             </View>
           </View>
