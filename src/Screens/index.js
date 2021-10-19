@@ -94,6 +94,7 @@ export {default as CelebrityProduct2} from './CelebrityProduct/CelebrityProduct2
 export {default as PaymentOptions} from './TaxiApp/PaymentOptions/PaymentOptions';
 export {default as ChooseCarTypeAndTimeTaxi} from './TaxiApp/ChooseCarTypeAndTime/ChooseCarTypeAndTime';
 export {default as PickupTaxiOrderDetail} from './TaxiApp/PickupTaxiOrderDetail/PickupTaxiOrderDetail';
+export {default as PrinterConnection} from './PrinterConnection/PrinterScreen';
 export {default as TaxiHomeScreen} from './Home/TaxiHomeScreen/TaxiHomeScreen';
 export {default as ViewAllData} from './ViewAllData/ViewAllData';
 export {default as Mobbex} from './PaymentGateways/Mobbex';

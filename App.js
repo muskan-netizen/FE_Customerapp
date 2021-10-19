@@ -26,9 +26,10 @@ import {
   notificationListener,
 } from './src/utils/notificationService';
 import {getItem, getUserData, setItem} from './src/utils/utils';
-import Modal from 'react-native-modal';
-import {BlurView} from '@react-native-community/blur';
 import PushNotification from 'react-native-push-notification';
+
+export let appData = {}
+export let language = ''
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
@@ -108,6 +109,7 @@ const App = () => {
       }
 
       const getAppData = await getItem('appData');
+      appData = getAppData
       dispatch({
         type: types.APP_INIT,
         payload: getAppData,
@@ -204,6 +206,7 @@ const App = () => {
 
       //Language
       const getLanguage = await getItem('language');
+      language = getLanguage
       if (getLanguage) {
         strings.setLanguage(getLanguage);
       }
@@ -229,6 +232,7 @@ const App = () => {
 
   //Check internet connection
   useEffect(() => {
+  
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
       const netStatus = state.isConnected;
       setInternet(netStatus);
@@ -255,6 +259,8 @@ const App = () => {
       />
       <FlashMessage position="top" />
       <NoInternetModal show={!internetConnection} />
+
+
     </SafeAreaProvider>
   );
 };
