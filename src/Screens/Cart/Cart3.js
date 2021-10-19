@@ -594,6 +594,23 @@ export default function Cart({navigation, route}) {
         });
 
         if (
+          (res?.data?.payment_option_id === 6 &&
+            !!(Number(cartData?.total_payable_amount) !== 0)) ||
+          Number(selectedTipAmount) !== 0
+        ) {
+          navigation.navigate(navigationStrings.PAYFAST, {
+            selectedPayment: selectedPayment,
+            total_payable_amount: (
+              Number(cartData?.total_payable_amount) +
+              (selectedTipAmount != null && selectedTipAmount != ''
+                ? Number(selectedTipAmount)
+                : 0)
+            ).toFixed(2),
+
+            payment_option_id: selectedPayment?.id,
+            orderDetail: res.data,
+          });
+        } else if (
           (res?.data?.payment_option_id === 7 &&
             !!(Number(cartData?.total_payable_amount) !== 0)) ||
           Number(selectedTipAmount) !== 0
@@ -653,17 +670,18 @@ export default function Cart({navigation, route}) {
       updateState({placeLoader: true});
       _directOrderPlace();
       return;
-    }
-    if (selectedPayment?.off_site == 1 && selectedPayment?.id === 7) {
+    } else if (selectedPayment?.off_site == 1 && selectedPayment?.id === 3) {
+      _webPayment();
+      return;
+    } else if (
+      selectedPayment?.off_site == 1 &&
+      !!(selectedPayment?.id === 6 || selectedPayment?.id === 7)
+    ) {
       updateState({placeLoader: true});
       _directOrderPlace();
       return;
     }
-    if (selectedPayment?.off_site == 1 && selectedPayment?.id !== 7) {
-      // updateState({placeLoader: true});
-      _webPayment();
-      return;
-    }
+
     _offineLinePayment();
   };
 
