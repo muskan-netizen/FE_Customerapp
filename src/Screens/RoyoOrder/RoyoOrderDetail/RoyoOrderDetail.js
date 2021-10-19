@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react';
 import {Image} from 'react-native';
 import {StyleSheet} from 'react-native';
@@ -15,10 +16,16 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../../styles/responsiveSize';
+import {customMarginBottom} from '../../../utils/constants/constants';
+import {getImageUrl} from '../../../utils/helperFunctions';
 
 const RoyoOrderDetail = (props) => {
   const {navigation} = props;
-
+  const {data, updateOrderStatus} = props.route.params;
+  const updatedOrderStatus=(data, state)=>{
+    updateOrderStatus(data, state);
+    navigation.goBack()
+  }
   return (
     <WrapperContainer
       bgColor="white"
@@ -33,36 +40,52 @@ const RoyoOrderDetail = (props) => {
         style={styles.container}
         bounces={false}
         showsVerticalScrollIndicator={false}>
-        <Text style={styles.jobStatus}>Job Status</Text>
-        <View style={styles.preparingBox}>
-          <Text style={{...styles.font16Semibold, color: colors.white}}>
-            Preparing Food
-          </Text>
-          <Image source={imagePath.dropdownTriangle} />
-        </View>
+        {data?.order_status?.current_status.id != 1 ? (
+          <View>
+            <Text style={styles.jobStatus}>Job Status</Text>
+            <View style={styles.preparingBox}>
+              <Text style={{...styles.font16Semibold, color: colors.white}}>
+                {data?.order_status.current_status.title}
+              </Text>
+              <Image source={imagePath.dropdownTriangle} />
+            </View>
+          </View>
+        ) : null}
         <View style={styles.orderNumberBox}>
-          <Text style={styles.orderNumber}>Order #23883</Text>
-          <Text style={styles.orderTime}>9 oct 11: 12 PM</Text>
+          <Text style={styles.orderNumber}>Order #{data.order_number}</Text>
+          <Text style={styles.orderTime}>{`${moment(data?.date_time).format(
+            'DD MMM,YYYY',
+          )} ${moment(data?.date_time).format('LT')} `}</Text>
         </View>
         <FlatList
+          bounces={false}
           showsVerticalScrollIndicator={false}
-          data={[1, 2, 3]}
+          data={data?.product_details}
           keyExtractor={(val, index) => index}
           renderItem={({item, index}) => {
+            console.log(item, 'item');
             return (
               <View style={styles.itemBox}>
                 <Image
                   style={styles.itemImage}
                   source={{
-                    uri: 'https://cdn.britannica.com/q:60/08/177308-050-94D9D6BE/Food-Pizza-Basil-Tomato.jpg',
+                    uri: getImageUrl(
+                      item?.image_path?.image_fit,
+                      item?.image_path?.image_path,
+                      '500/500',
+                    ),
                   }}
                 />
                 <View style={{flex: 1, justifyContent: 'space-around'}}>
                   <Text style={styles.font16Medium}>Pizza</Text>
-                  <Text style={styles.font13Regular}>2 Unit</Text>
-                  <Text style={styles.font14Regular}>$ 23 dollar</Text>
+                  <Text style={styles.font13Regular}>{item.qty} Unit</Text>
+                  <Text style={styles.font14Regular}>
+                    $ {item.price} dollar
+                  </Text>
                 </View>
-                <Text style={styles.font16Semibold}>$ 46 </Text>
+                <Text style={styles.font16Semibold}>
+                  {`$ ${item.qty * item.price}`}{' '}
+                </Text>
               </View>
             );
           }}
@@ -73,7 +96,7 @@ const RoyoOrderDetail = (props) => {
         <View style={{margin: moderateScaleVertical(16)}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>Subtotal</Text>
-            <Text style={styles.font15Semibold}>$93</Text>
+            <Text style={styles.font15Semibold}>${data.payable_amount}</Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>Delivery fee</Text>
@@ -83,7 +106,7 @@ const RoyoOrderDetail = (props) => {
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>Total</Text>
             <Text style={{...styles.font15Semibold, color: colors.themeColor2}}>
-              $123
+              {`$ ${data.payable_amount + 23}`}
             </Text>
           </View>
         </View>
@@ -121,7 +144,9 @@ const RoyoOrderDetail = (props) => {
               }}
             />
             <View style={{justifyContent: 'space-evenly'}}>
-              <Text style={styles.font16Semibold}>Sruya narayan</Text>
+              <Text style={{fontFamily: fontFamily.semiBold, fontSize: 16}}>
+                {data.user_name}
+              </Text>
               <Text
                 style={{
                   ...styles.font13Regular,
@@ -135,28 +160,30 @@ const RoyoOrderDetail = (props) => {
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={{...styles.font14Semibold}}>Payment method</Text>
             <Text style={{...styles.font14Semibold, color: colors.black}}>
-              Cash on Delivery
+              {data.payment_option_title}
             </Text>
           </View>
         </View>
-        <View style={styles.buttonBox}>
-          <ButtonWithLoader
-            btnText="Reject"
-            btnTextStyle={styles.btnText}
-            btnStyle={styles.btnContainer}
-            //   onPress={onPressAdd}
-          />
-          <ButtonWithLoader
-            btnText="Confirm"
-            btnTextStyle={{...styles.btnText, color: colors.white}}
-            btnStyle={{
-              ...styles.btnContainer,
-              backgroundColor: colors.themeColor2,
-              marginLeft: moderateScale(10),
-            }}
-            //   onPress={onPressAdd}
-          />
-        </View>
+        {data?.order_status?.current_status.id == 1 ? (
+          <View style={styles.buttonBox}>
+            <ButtonWithLoader
+              btnText="Reject"
+              btnTextStyle={styles.btnText}
+              btnStyle={styles.btnContainer}
+              onPress={() => updatedOrderStatus(data, 8)}
+            />
+            <ButtonWithLoader
+              btnText="Confirm"
+              btnTextStyle={{...styles.btnText, color: colors.white}}
+              btnStyle={{
+                ...styles.btnContainer,
+                backgroundColor: colors.themeColor2,
+                marginLeft: moderateScale(10),
+              }}
+              onPress={() => updatedOrderStatus(data, 7)}
+            />
+          </View>
+        ) : null}
       </ScrollView>
     </WrapperContainer>
   );
@@ -206,7 +233,8 @@ const styles = StyleSheet.create({
     flex: 1,
     // marginTop: moderateScaleVertical(24),
     paddingBottom: moderateScaleVertical(10),
-    marginBottom: moderateScaleVertical(16),
+    // marginBottom: moderateScaleVertical(16),
+    marginBottom: customMarginBottom(),
   },
   jobStatus: {
     fontSize: 18,

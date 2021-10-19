@@ -39,12 +39,11 @@ const RoyoOrder = (props) => {
   const {storeSelectedVendor} = useSelector((state) => state?.order);
 
   const [state, setState] = useState({
-    tabBarData: [
-      {title: strings.ACTIVE_ORDERS, isActive: true},
-      {title: strings.PAST_ORDERS, isActive: false},
-      {title: strings.SCHEDULED_ORDERS, isActive: false},
-    ],
-    selectedTab: strings.ACTIVE_ORDERS,
+    
+    newOrder: [],
+    completed: [],
+    cancelled: [],
+    confirmed: [],
     activeOrders: [],
     pastOrders: [],
     scheduledOrders: [],
@@ -60,8 +59,11 @@ const RoyoOrder = (props) => {
     activeIndex: 0,
   });
   const {
+    newOrder,
+    completed,
+    cancelled,
+    confirmed,
     isLoadingB,
-    selectedTab,
     isLoading,
     activeOrders,
     pageActive,
@@ -91,6 +93,10 @@ const RoyoOrder = (props) => {
 
   useEffect(() => {
     updateState({
+      newOrder: [],
+      confirmed: [],
+      cancelled: [],
+      completed: [],
       selectedVendor: storeSelectedVendor,
       isLoading: true,
       pageActive: 1,
@@ -116,7 +122,27 @@ const RoyoOrder = (props) => {
       )
       .then((res) => {
         console.log('vendor orders res', res);
+        const data = res.data.order_list.data;
+        const newnewOrder = data.filter(
+          (value, index) => value?.order_status?.current_status?.id == 1,
+        );
+        const newconfirmed = data.filter(
+          (value, index) =>
+            value?.order_status?.current_status?.id == 2 ||
+            value?.order_status?.current_status?.id == 4 ||
+            value?.order_status?.current_status?.id == 5,
+        );
+        const newcancelled = data.filter(
+          (value, index) => value?.order_status?.current_status?.id == 3,
+        );
+        const newcompleted = data.filter(
+          (value, index) => value?.order_status?.current_status?.id == 6,
+        );
         updateState({
+          newOrder: [...newOrder, ...newnewOrder],
+          confirmed: [...confirmed,...newconfirmed],
+          cancelled: [...cancelled, ...newcancelled],
+          completed: [...completed, ...newcompleted],
           activeOrders:
             pageActive == 1
               ? res.data.order_list.data
@@ -229,7 +255,6 @@ const RoyoOrder = (props) => {
       screenType: staticStrings.ORDERS,
     });
   };
-
   return (
     <WrapperContainer
       bgColor="white"
@@ -255,8 +280,7 @@ const RoyoOrder = (props) => {
         {activeIndex == 0 ? (
           <FlatList
             showsVerticalScrollIndicator={false}
-            // bounces={false}
-            data={activeOrders}
+            data={newOrder}
             numColumns={noOfColumn}
             refreshing={isRefreshing}
             refreshControl={
@@ -275,25 +299,24 @@ const RoyoOrder = (props) => {
                 </View>
               );
             }}
-            renderItem={
-              ({item, index}) => (
-                // {return item?.order_status?.current_status?.id == 1 ? (
-                <View
-                  style={{
-                    marginLeft: customMarginLeftForBox(index),
-                    flex: 1,
-                  }}>
-                  <OrderCard
-                    onPress={() =>
-                      navigation.navigate(navigationStrings.ROYO_ORDER_DETAIL)
-                    }
-                    item={item}
-                    index={index}
-                  />
-                </View>
-              )
-              // ) : null; }
-            }
+            renderItem={({item, index}) => (
+              <View
+                style={{
+                  marginLeft: customMarginLeftForBox(index),
+                  flex: 1,
+                }}>
+                <OrderCard
+                  updateOrderStatus={updateOrderStatus}
+                  onPress={() =>
+                    navigation.navigate(navigationStrings.ORDER_DETAIL, {
+                      data: item,
+                      updateOrderStatus: updateOrderStatus,
+                    })
+                  }
+                  item={item}
+                />
+              </View>
+            )}
             keyExtractor={(item, key) => key}
           />
         ) : null}
@@ -301,7 +324,7 @@ const RoyoOrder = (props) => {
           <FlatList
             showsVerticalScrollIndicator={false}
             // bounces={false}
-            data={activeOrders}
+            data={confirmed}
             numColumns={noOfColumn}
             refreshing={isRefreshing}
             refreshControl={
@@ -320,17 +343,24 @@ const RoyoOrder = (props) => {
                 </View>
               );
             }}
-            renderItem={({item, index}) => {
-              return item?.order_status?.current_status?.id == 2 ? (
-                <View
-                  style={{
-                    marginLeft: customMarginLeftForBox(index),
-                    flex: 1,
-                  }}>
-                  <OrderCard item={item} index={index} status="Confirmed" />
-                </View>
-              ) : null;
-            }}
+            renderItem={({item, index}) => (
+              <View
+                style={{
+                  marginLeft: customMarginLeftForBox(index),
+                  flex: 1,
+                }}>
+                <OrderCard
+                  onPress={() =>
+                    navigation.navigate(navigationStrings.ORDER_DETAIL, {
+                      data: item,
+                      updateOrderStatus: updateOrderStatus,
+                    })
+                  }
+                  updateOrderStatus={updateOrderStatus}
+                  item={item}
+                />
+              </View>
+            )}
             keyExtractor={(item, key) => key}
           />
         ) : null}
@@ -338,7 +368,7 @@ const RoyoOrder = (props) => {
           <FlatList
             showsVerticalScrollIndicator={false}
             // bounces={false}
-            data={activeOrders}
+            data={cancelled}
             numColumns={noOfColumn}
             refreshing={isRefreshing}
             refreshControl={
@@ -357,17 +387,24 @@ const RoyoOrder = (props) => {
                 </View>
               );
             }}
-            renderItem={({item, index}) => {
-              return item?.order_status?.current_status?.id == 3 ? (
-                <View
-                  style={{
-                    marginLeft: customMarginLeftForBox(index),
-                    flex: 1,
-                  }}>
-                  <OrderCard item={item} index={index} status="Cancelled" />
-                </View>
-              ) : null;
-            }}
+            renderItem={({item, index}) => (
+              <View
+                style={{
+                  marginLeft: customMarginLeftForBox(index),
+                  flex: 1,
+                }}>
+                <OrderCard
+                  updateOrderStatus={updateOrderStatus}
+                  onPress={() =>
+                    navigation.navigate(navigationStrings.ORDER_DETAIL, {
+                      data: item,
+                      updateOrderStatus: updateOrderStatus,
+                    })
+                  }
+                  item={item}
+                />
+              </View>
+            )}
             keyExtractor={(item, key) => key}
           />
         ) : null}
@@ -375,7 +412,7 @@ const RoyoOrder = (props) => {
           <FlatList
             showsVerticalScrollIndicator={false}
             // bounces={false}
-            data={activeOrders}
+            data={completed}
             numColumns={noOfColumn}
             refreshing={isRefreshing}
             refreshControl={
@@ -394,24 +431,24 @@ const RoyoOrder = (props) => {
                 </View>
               );
             }}
-            renderItem={({item, index}) => {
-              return item?.order_status?.current_status?.id == 6 ? (
-                <View
-                  style={{
-                    marginLeft: customMarginLeftForBox(index),
-                    flex: 1,
-                  }}>
-                  <OrderCard
-                    onPress={() =>
-                      navigation.navigate(navigationStrings.ROYO_ORDER_DETAIL)
-                    }
-                    item={item}
-                    index={index}
-                    status="completed"
-                  />
-                </View>
-              ) : null;
-            }}
+            renderItem={({item, index}) => (
+              <View
+                style={{
+                  marginLeft: customMarginLeftForBox(index),
+                  flex: 1,
+                }}>
+                <OrderCard
+                  updateOrderStatus={updateOrderStatus}
+                  onPress={() =>
+                    navigation.navigate(navigationStrings.ORDER_DETAIL, {
+                      data: item,
+                      updateOrderStatus: updateOrderStatus,
+                    })
+                  }
+                  item={item}
+                />
+              </View>
+            )}
             keyExtractor={(item, key) => key}
           />
         ) : null}

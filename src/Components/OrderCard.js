@@ -14,9 +14,9 @@ import ButtonWithLoader from './ButtonWithLoader';
 
 const OrderCard = (props) => {
   
-  const {item={}, status = '', onPress = () => {}} = props;
-  console.log(item)
-  let count=-1;
+  const {item={},  onPress = () => {}, updateOrderStatus} = props;
+  // console.log(item)
+  let count=item.item_count-1;
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress}>
@@ -37,9 +37,7 @@ const OrderCard = (props) => {
                 flexDirection: 'row',
                 marginRight: moderateScale(8)
               }}>
-              {item?.product_details?.map((val, index) => {
-                count++;
-                return(
+              {item?.product_details?.map((val, index) => (
                 <Image
                 key={index}
                 source={{
@@ -55,7 +53,7 @@ const OrderCard = (props) => {
                   marginLeft: index!=0?-moderateScale(20):0,
                 }}
               />
-              )})}
+              ))}
             </View>
             <Text style={styles.font16Regular}>Salt {count==0?'':'x' +" "+count+" more"}</Text>
           </View>
@@ -80,7 +78,7 @@ const OrderCard = (props) => {
           <Text style={styles.totalPrice}>${item?.payable_amount}</Text>
         </View>
 
-        {status ? (
+        {item?.order_status?.current_status?.id != 1  ? (
           <View>
             <Text
               style={{
@@ -93,9 +91,9 @@ const OrderCard = (props) => {
             <Text
               style={{
                 ...styles.font14Regular,
-                color: status == 'Cancelled' ? '#E02020' : colors.black,
+                color: item?.order_status?.current_status?.id ==  3? '#E02020' : colors.black,
               }}>
-              {status}
+              {item?.order_status?.current_status?.title}
             </Text>
           </View>
         ) : (
@@ -104,7 +102,7 @@ const OrderCard = (props) => {
               btnText="Reject"
               btnTextStyle={styles.btnText}
               btnStyle={styles.btnContainer}
-              //   onPress={onPressAdd}
+              onPress={() => updateOrderStatus(item, 8)}
             />
             <ButtonWithLoader
               btnText="Confirm"
@@ -114,7 +112,7 @@ const OrderCard = (props) => {
                 backgroundColor: colors.themeColor2,
                 marginLeft: moderateScale(10),
               }}
-              //   onPress={onPressAdd}
+              onPress={() => updateOrderStatus(item, 7)}
             />
           </View>
         )}

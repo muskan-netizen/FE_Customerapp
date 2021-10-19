@@ -6,6 +6,7 @@ import {
   ProductDetail,
   ProductDetail2,
   RoyoOrder,
+  RoyoOrderDetail,
   VendorList,
 } from '../Screens';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
@@ -24,7 +25,8 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.ORDER_DETAIL}
-        component={OrderDetail}
+        component={RoyoOrderDetail}
+        // component={OrderDetail}
         options={{headerShown: false}}
       />
       <Stack.Screen

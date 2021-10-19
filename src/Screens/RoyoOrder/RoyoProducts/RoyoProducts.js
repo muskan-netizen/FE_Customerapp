@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {SwipeListView} from 'react-native-swipe-list-view';
@@ -19,23 +19,20 @@ import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import navigationStrings from '../../../navigation/navigationStrings';
 import Header from '../../../Components/Header';
 import {FlatList} from 'react-native';
+import staticStrings from '../../../constants/staticStrings';
+import {cloneDeep, debounce} from 'lodash';
+import actions from '../../../redux/actions';
+import {getImageUrl} from '../../../utils/helperFunctions';
 
 const RoyoProducts = (props) => {
   const {navigation} = props;
 
-  const [state, setState] = useState({activeIndex: 0, headerText: 'Products'});
-
-  const {activeIndex, headerText} = state;
-
-  const updateState = (data) =>
-    setState((state) => {
-      return {...state, ...data};
-    });
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   //   const {product} = useSelector((state) => state.product);
-  const product = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const renderItem = (data, rowMap) => {
     const {item, index} = data;
+    console.log(item);
     return (
       <View
         style={{
@@ -49,38 +46,50 @@ const RoyoProducts = (props) => {
           <Image
             style={styles.imageStyle}
             source={{
-              uri: 'https://cdn.britannica.com/q:60/08/177308-050-94D9D6BE/Food-Pizza-Basil-Tomato.jpg',
+              uri: getImageUrl(
+                item?.media[0].image?.path?.image_fit,
+                item?.media[0].image?.path?.image_path,
+                '500/500',
+              ),
             }}
           />
         </TouchableOpacity>
         <View style={{flex: 1}}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View>
-              <Text
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', }}>
+            {/* <View style={{flex: 1, }}> */}
+              <Text numberOfLines={1}
                 style={{
+                  flex: 1,
                   fontSize: 16,
                   fontFamily: fontFamily.medium,
                   color: colors.black,
                 }}>
-                item.Name
+                {item.translation[0]?.title}
               </Text>
-              <Text
+              
+            {/* </View> */}
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={styles.font16Semibold}>In Stock</Text>
+              <TouchableOpacity>
+                <Image
+                  source={
+                    item.is_live
+                      ? imagePath.inStockRoyo
+                      : imagePath.outStockRoyo
+                  }
+                />
+              </TouchableOpacity>
+            </View>
+            {/* <Image style={{alignSelf: 'flex-end'}} source={imagePath.share} /> */}
+          </View>
+          <Text
                 style={{
                   fontFamily: fontFamily.regular,
                   fontSize: 13,
                   color: colors.blackOpacity40,
                 }}>
-                item.Product
+                in {categoryName}
               </Text>
-            </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={styles.font16Semibold}>In Stock</Text>
-              <TouchableOpacity>
-                <Image source={imagePath.inStockRoyo} />
-              </TouchableOpacity>
-            </View>
-            {/* <Image style={{alignSelf: 'flex-end'}} source={imagePath.share} /> */}
-          </View>
           <Text
             style={{
               fontSize: 14,
@@ -88,8 +97,7 @@ const RoyoProducts = (props) => {
               color: colors.blackOpacity86,
               marginTop: moderateScaleVertical(8),
             }}>
-            $item.mrp hi this is very delicious pizza from one of your favourite
-            pizza station.
+            {item.translation[0]?.body_html}
           </Text>
           <Text
             style={{
@@ -98,9 +106,8 @@ const RoyoProducts = (props) => {
               color: colors.black,
               marginTop: moderateScaleVertical(4),
             }}>
-            $
+            $ {item.variant[0]?.price}
           </Text>
-          {/*item.salePrice*/}
         </View>
       </View>
     );
@@ -111,6 +118,175 @@ const RoyoProducts = (props) => {
     else updateState({activeIndex: index, headerText: 'Categories'});
   };
 
+  const {storeSelectedVendor} = useSelector((state) => state?.order);
+
+  const [state, setState] = useState({
+    activeIndex: 0,
+    headerText: 'Products',
+    vendor_list: [],
+    selectedVendor: null,
+    isVisibleModal: false,
+    isLoading: true,
+    pageNo: 1,
+    limit: 12,
+    isRefreshing: false,
+    productListData: [],
+    category_list: [],
+    categoryName: '',
+    gridView: false,
+  });
+
+  const {
+    appData,
+    themeColors,
+    themeLayouts,
+    currencies,
+    languages,
+    internetConnection,
+    appStyle,
+  } = useSelector((state) => state?.initBoot);
+  const {
+    vendor_list,
+    selectedVendor,
+    isLoading,
+    pageNo,
+    limit,
+    isRefreshing,
+    categoryInfo,
+    productListData,
+    category_list,
+    gridView,
+    activeIndex,
+    headerText,
+    categoryName,
+  } = state;
+
+  //Saving the initial state
+  const initialState = cloneDeep(state);
+  //Logged in user data
+  const userData = useSelector((state) => state?.auth?.userData);
+  //app Main Data
+  const appMainData = useSelector((state) => state?.home?.appMainData);
+
+  //Naviagtion to specific screen
+  const moveToNewScreen =
+    (screenName, data = {}) =>
+    () => {
+      navigation.navigate(screenName, {data});
+    };
+
+  useEffect(() => {
+    if (isLoading) {
+      getAllProducts();
+    }
+  }, [languages, currencies, isRefreshing, isLoading]);
+
+  useEffect(() => {
+    updateState({
+      // selectedTab: null,
+      selectedVendor: storeSelectedVendor,
+      isLoading: true,
+    });
+  }, [storeSelectedVendor]);
+
+  // useEffect(() => {
+  //   getAllListItems();
+  // }, [pageNo]);
+
+  // const getAllListItems = () => {
+  //   getAllProducts();
+  // };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      updateState({pageNo: 1});
+    }, [pageNo]),
+  );
+
+  /**********Get all list items by store  id and category id */
+  const getAllProducts = (id) => {
+    actions
+      .getProductBySpecificId(
+        `?selected_category_id=${
+          id || ''
+        }&limit=${limit}&page=${pageNo}&selected_vendor_id=${
+          selectedVendor?.id || ''
+        }`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        let categorylist = res.data.category_list.filter((x) => x.is_selected);
+        console.log(categorylist[0].name, 'data');
+        updateState({
+          isLoading: false,
+          isRefreshing: false,
+          vendor_list: res.data.vendor_list,
+          categoryName: categorylist[0].name,
+          selectedVendor: !!storeSelectedVendor?.id
+            ? storeSelectedVendor
+            : !!selectedVendor
+            ? selectedVendor
+            : res.data.vendor_list.find((x) => x.is_selected),
+
+          category_list: res.data.category_list,
+          productListData:
+            pageNo == 1
+              ? res.data.products.data
+              : [...productListData, ...res.data.products.data],
+        });
+      })
+      .catch(errorMethod);
+    // }
+  };
+
+  const errorMethod = (error) => {
+    updateState({isLoading: false, isRefreshing: false});
+    showError(error?.message || error?.error);
+  };
+
+  //Pull to refresh
+  const handleRefresh = () => {
+    updateState({pageNo: 1, isRefreshing: true});
+  };
+
+  //pagination of data
+  const onEndReached = ({distanceFromEnd}) => {
+    updateState({pageNo: pageNo + 1});
+  };
+
+  const onEndReachedDelayed = debounce(onEndReached, 1000, {
+    leading: true,
+    trailing: false,
+  });
+
+  const onPressChildCards = (item) => {
+    // updateState({selectedSbCategoryID: item.id});
+    navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
+  };
+
+  // we set the height of item is fixed
+  const getItemLayout = (data, index) => ({
+    length: width * 0.5 - 21.5,
+    offset: (width * 0.5 - 21.5) * index,
+    index,
+  });
+
+  const selectedCategory = (index) => {
+    getAllProducts(index);
+  };
+  const _reDirectToVendorList = () => {
+    navigation.navigate(navigationStrings.VENDORLIST, {
+      selectedVendor: selectedVendor,
+      allVendors: vendor_list,
+      screenType: staticStrings.PRODUCTS,
+    });
+  };
+
   return (
     <WrapperContainer
       bgColor="white"
@@ -118,111 +294,14 @@ const RoyoProducts = (props) => {
       barStyle="dark-content">
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
-        centerTitle={`${headerText} | Foodies hub  `}
+        centerTitle={`${headerText} | ${selectedVendor?.name} `}
         noLeftIcon
+        onPressCenterTitle={() => _reDirectToVendorList()}
+        onPressImageAlongwithTitle={() => _reDirectToVendorList()}
         imageAlongwithTitle={imagePath.dropdownTriangle}
         showImageAlongwithTitle
       />
-      <View style={styles.container}>
-        <MultiScreen
-          tabTextStyle={{marginTop: moderateScaleVertical(0)}}
-          screenName={['Products', 'Categories', '', '', '']}
-          selectedScreen={(index) => selectedOrder(index)}
-          selectedScreenIndex={activeIndex}
-        />
-        {activeIndex == 0 ? (
-          <View style={{flex: 1}}>
-            <SwipeListView
-              bounces={false}
-              data={product}
-              renderItem={renderItem}
-              showsVerticalScrollIndicator={false}
-              renderHiddenItem={(data, rowMap) => (
-                <View style={styles.rowReverse}>
-                  <TouchableOpacity
-                    style={{
-                      ...styles.hiddenButton,
-                      backgroundColor: '#FFC8C8',
-                    }}>
-                    <Image source={imagePath.deleteRoyo} />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{
-                      ...styles.hiddenButton,
-                      backgroundColor: '#C8F3FF',
-                    }}>
-                    <Image source={imagePath.editRoyo} />
-                  </TouchableOpacity>
-                </View>
-              )}
-              disableRightSwipe
-              rightOpenValue={-moderateScale(100)}
-            />
-            <ButtonWithLoader
-              onPress={() =>
-                navigation.navigate(navigationStrings.ROYO_ADD_PRODUCT)
-              }
-              btnStyle={styles.productBtn}
-              btnText="+  products"
-            />
-          </View>
-        ) : null}
-        {activeIndex == 1 ? (
-          <View
-            style={{
-              flex: 1,
-            }}>
-            <FlatList
-              data={[1, 2, 3, 4, 5, 6, 7]}
-              keyExtractor={(item, index) => index}
-              bounces={false}
-              showsVerticalScrollIndicator={false}
-              numColumns={width > 600 ? 5 : 3}
-              renderItem={({item, index}) => (
-                <View
-                  key={index}
-                  style={{
-                    marginBottom: moderateScaleVertical(16),
-                    marginLeft:
-                      width > 600
-                        ? index % 5
-                          ? moderateScale(10)
-                          : 0
-                        : index % 3
-                        ? moderateScale(10)
-                        : 0,
-                  }}>
-                  <TouchableOpacity style={styles.categoryItem}>
-                    <Image
-                      style={{
-                        resizeMode: 'center',
-                        width:
-                          width > 600
-                            ? (width - moderateScale(173)) / 5
-                            : (width - moderateScale(112)) / 3,
-                        height:
-                          width > 600
-                            ? (width - moderateScale(203)) / 5
-                            : (width - moderateScale(152)) / 3,
-                      }}
-                      source={imagePath.testingImageRoyo}
-                    />
-                  </TouchableOpacity>
-                  <Text style={{textAlign: 'center'}}>pizza</Text>
-                </View>
-              )}
-            />
-
-            <ButtonWithLoader
-              onPress={() =>
-                navigation.navigate(navigationStrings.ROYO_ADD_PRODUCT)
-              }
-              btnStyle={styles.categoryBtn}
-              btnText="+  category"
-            />
-          </View>
-        ) : null}
-      </View>
+      
     </WrapperContainer>
   );
 };
@@ -289,5 +368,11 @@ const styles = StyleSheet.create({
     right: moderateScale(10),
     borderRadius: moderateScale(100),
     paddingHorizontal: moderateScale(15),
+  },
+  emptyCartBody: {
+    flex: 1,
+    justifyContent: 'center',
+    height: 400,
+    alignItems: 'center',
   },
 });
