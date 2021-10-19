@@ -1,8 +1,10 @@
 import { BluetoothEscposPrinter, BluetoothManager } from "@brooons/react-native-bluetooth-escpos-printer";
+import AsyncStorage from "@react-native-community/async-storage";
 import { Platform } from "react-native";
 import RNFetchBlob from "rn-fetch-blob-v2";
 import { appData, language } from "../../../App";
 import actions from "../../redux/actions";
+import BackgroundService from 'react-native-background-actions';
 const fs = RNFetchBlob.fs;
 
 export let arr = []
@@ -109,7 +111,7 @@ export const printReciept = async (data) => {
       await detail.vendors[0].products.forEach(async (el) => {
         total_amt = total_amt + (el.quantity * el.price)
       })
-      
+
       console.log('check start printing >>>> 4')
       const isConnected = await BluetoothManager.getConnectedDeviceAddress()
       console.log('check start printing >>>> 5', isConnected, '>>>>>>>', enabled)
@@ -209,6 +211,17 @@ export const printReciept = async (data) => {
         }
       } else {
         canEnablePrinter = true
+        alert('Something went wrong, please make connection with printer again.');
+        AsyncStorage.getItem('BleDevice').then(res => {
+          // console.log('checking ble device storage data >>>', JSON.parse(res))
+          if (res !== null) {
+            BluetoothManager.disconnect(JSON.parse(res).boundAddress).then(async (s) => {
+              AsyncStorage.removeItem('BleDevice')
+              await BackgroundService.stop();
+            })
+          }
+        })
+
       }
 
     }, (err) => {

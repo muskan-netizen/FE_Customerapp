@@ -66,7 +66,7 @@ export default function ShortCode({route, navigation}) {
             });
           } else {
             state;
-            //updateState({shortCode: '649a9a', isShortcodePrefilled: true});
+            //updateState({shortCode: 'd0a898', isShortcodePrefilled: true});
             if (shortCodeParam) {
               updateState({shortCode: '', isShortcodePrefilled: false});
             } else {

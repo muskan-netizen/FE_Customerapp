@@ -77,6 +77,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     isShowRating: false,
     getDispatchId: null,
     isVisible: false,
+    driverRating: 0,
   });
   const {
     isLoading,
@@ -96,6 +97,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     isShowRating,
     getDispatchId,
     isVisible,
+    driverRating,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -219,6 +221,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
           driverStatus: res?.data?.order_details?.dispatcher_status,
           productInfo: res?.data?.order_details?.products,
           getDispatchId: res?.data?.order?.id,
+          driverRating: res?.data?.avgrating,
         });
       })
       .catch(errorMethod);
@@ -463,6 +466,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         isShowRating={isShowRating}
         navigation={navigation}
         onStarRatingPress={onStarRatingPress}
+        driverRating={driverRating}
       />
     );
   };
