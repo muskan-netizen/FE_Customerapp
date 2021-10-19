@@ -402,7 +402,6 @@ export default function Home({route, navigation}) {
 
   //onPress Category
   const onPressCategory = (item) => {
-    console.log(item, 'itemitemitemitemitemitem');
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -416,22 +415,26 @@ export default function Home({route, navigation}) {
         if (shortCodes.arenagrub == appData?.profile?.code) {
           openUber();
         } else {
-          if (item?.warning_page_id) {
-            if (item?.warning_page_id == 2) {
-              moveToNewScreen(navigationStrings.DELIVERY, item)();
-            } else {
-              moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
-            }
-          } else {
-            if (item?.template_type_id == 1) {
-              moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
-            } else {
-              item['pickup_taxi'] = true;
+          // if (item?.warning_page_id) {
+          //   if (item?.warning_page_id == 2) {
+          //     moveToNewScreen(navigationStrings.DELIVERY, item)();
+          //   } else {
+          //     moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
+          //   }
+          // } else {
+          //   if (item?.template_type_id == 1) {
+          //     moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
+          //   } else {
+          //     item['pickup_taxi'] = true;
 
-              // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
-              moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
-            }
-          }
+          //     // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
+          //     moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
+          //   }
+          // }
+          item['pickup_taxi'] = true;
+
+          // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
+          moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
         }
       } else {
         // showError(strings.UNAUTHORIZED_MESSAGE);
@@ -466,7 +469,6 @@ export default function Home({route, navigation}) {
 
   //On Press banner
   const bannerPress = (data) => {
-    console.log(data, 'bannerPressdata');
     let item = {};
     if (data?.redirect_id) {
       if (data?.redirect_to == staticStrings.VENDOR) {

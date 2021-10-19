@@ -1,16 +1,15 @@
 export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+//export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 
 // export const API_BASE_URL = 'http://192.168.100.89:8005/api/v1';
-// export const API_BASE_URL = 'http://192.168.100.89:8005/api/v1';
+//export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
+// export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
 
 // export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
 
-// export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
-
-// export const API_BASE_URL =  'http://192.168.98.193:8005/api/v1';
-// export const API_BASE_URL = 'http://192.168.99.149:8005/api/v1';
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+//export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
+//export const API_BASE_URL = 'https://zuzuclean.alerthire.com/api/v1';
+//export const API_BASE_URL =  'http://192.168.98.193:8005/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
@@ -68,7 +67,9 @@ export const GET_PRODUCTS_BASED_ON_CELEBRITYFILTER =
 export const GET_PRODUCTS_BASED_ON_CELEBRITY = getApiUrl('/celebrityProducts');
 export const PLACE_ORDER = getApiUrl('/place/order');
 export const GET_ORDER_DETAIL = getApiUrl('/order-detail');
-export const GET_ORDER_DETAIL_FOR_BILLING = getApiUrl('/order/orderDetails_for_notification/');
+export const GET_ORDER_DETAIL_FOR_BILLING = getApiUrl(
+  '/order/orderDetails_for_notification/',
+);
 export const GET_ALL_ORDERS = getApiUrl('/orders');
 export const GET_VENDOR_DETAIL = getApiUrl('/vendor/category/list');
 export const SEND_REFFERAL_CODE = getApiUrl('/send/referralcode');
@@ -124,3 +125,4 @@ export const MY_PENDING_ORDERS = getApiUrl('/my_pending_orders');
 export const DISPATCHER_URL = getApiUrl(
   '/pickup-delivery/order-tracking-details',
 );
+export const CART_PRODUCT_SCHEDULE = getApiUrl('/cart/product-schedule/update');

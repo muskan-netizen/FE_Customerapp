@@ -37,7 +37,9 @@ export default function WebPayment({navigation, route}) {
       bgColor={colors.backgroundGrey}
       statusBarColor={colors.white}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+        }
         centerTitle={paramData?.paymentTitle || ''}
         headerStyle={{backgroundColor: Colors.white}}
       />
@@ -45,7 +47,6 @@ export default function WebPayment({navigation, route}) {
       <WebView
         source={{uri: paramData?.paymentUrl}}
         onNavigationStateChange={(navState) => {
-          console.log(navState, 'navState>>>>>>>>>>>PAYMENT');
           if (
             navState.canGoBack &&
             navState.url.includes('payment/checkoutSuccess')

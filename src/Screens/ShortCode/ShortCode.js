@@ -65,7 +65,8 @@ export default function ShortCode({route, navigation}) {
               isShortcodePrefilled: true,
             });
           } else {
-            // updateState({shortCode: '', isShortcodePrefilled: false});
+            state;
+            //updateState({shortCode: 'd0a898', isShortcodePrefilled: true});
             if (shortCodeParam) {
               updateState({shortCode: '', isShortcodePrefilled: false});
             } else {
@@ -721,6 +722,67 @@ export default function ShortCode({route, navigation}) {
         case appIds.zestyclickz:
           updateState({
             shortCode: shortCodes.zestyclickz,
+            isShortcodePrefilled: true,
+          });
+          break;
+          break;
+        case appIds.bakesale:
+          updateState({
+            shortCode: shortCodes.bakesale,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.elcheregio:
+          updateState({
+            shortCode: shortCodes.elcheregio,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.yaawi:
+          updateState({
+            shortCode: shortCodes.yaawi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hosta:
+          updateState({
+            shortCode: shortCodes.hosta,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.somame:
+          updateState({
+            shortCode: shortCodes.somame,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.goodwheelz:
+          updateState({
+            shortCode: shortCodes.goodwheelz,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.tranznet:
+          updateState({
+            shortCode: shortCodes.tranznet,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sambiga:
+          updateState({
+            shortCode: shortCodes.sambiga,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.agrionline:
+          updateState({
+            shortCode: shortCodes.agrionline,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.quickquick:
+          updateState({
+            shortCode: shortCodes.quickquick,
             isShortcodePrefilled: true,
           });
           break;

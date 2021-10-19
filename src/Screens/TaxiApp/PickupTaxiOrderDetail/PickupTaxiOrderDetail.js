@@ -77,6 +77,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     isShowRating: false,
     getDispatchId: null,
     isVisible: false,
+    driverRating: 0,
   });
   const {
     isLoading,
@@ -96,6 +97,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     isShowRating,
     getDispatchId,
     isVisible,
+    driverRating,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -219,6 +221,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
           driverStatus: res?.data?.order_details?.dispatcher_status,
           productInfo: res?.data?.order_details?.products,
           getDispatchId: res?.data?.order?.id,
+          driverRating: res?.data?.avgrating,
         });
       })
       .catch(errorMethod);
@@ -463,6 +466,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         isShowRating={isShowRating}
         navigation={navigation}
         onStarRatingPress={onStarRatingPress}
+        driverRating={driverRating}
       />
     );
   };
@@ -496,18 +500,19 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     latitude: Number(coordinate?.latitude),
                     longitude: Number(coordinate?.longitude),
                   }}>
-                  <Callout style={styles.plainView}>
-                    <View>
-                      <Text style={styles.pickupDropOff}>
-                        {coordinate?.task_type_id == 1 ? 'Pick up' : 'Drop off'}
-                      </Text>
-                      <Text
-                        numberOfLines={1}
-                        style={styles.pickupDropOffAddress}>
-                        {coordinate?.address}
-                      </Text>
-                    </View>
-                  </Callout>
+                  <View
+                    style={[
+                      styles.plainView,
+                      {
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        paddingRight: 10,
+                      },
+                    ]}>
+                    <Text style={styles.pickupDropOff}>
+                      {index === 0 ? 'Pickup' : 'Drop'}
+                    </Text>
+                  </View>
                 </MapView.Marker>
               ))}
 
@@ -578,7 +583,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     ? () =>
                         navigation.navigate(navigationStrings.TAXIHOMESCREEN)
                     : paramData?.pickup_taxi
-                    ? ()=>navigation.navigate(navigationStrings.HOME)
+                    ? () => navigation.navigate(navigationStrings.HOME)
                     : () => navigation.goBack()
                   // () => navigation.navigate(navigationStrings.TAXIHOMESCREEN)
                 }>

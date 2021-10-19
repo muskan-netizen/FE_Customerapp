@@ -86,7 +86,7 @@ export default ({themeColors, fontFamily}) =>
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingHorizontal: moderateScale(8),
-      height: 42,
+      // height: 42,
       marginTop: StatusBarHeight - 10,
     },
 
@@ -195,5 +195,71 @@ export default ({themeColors, fontFamily}) =>
       opacity: 0.4,
       marginLeft: moderateScale(5),
       textAlign: 'left',
+    },
+    categoryStyle: {
+      paddingLeft: moderateScale(8),
+      paddingRight: moderateScale(8),
+      marginTop: moderateScaleVertical(5),
+    },
+
+    ///section list style
+    tabBar: {
+      backgroundColor: '#fff',
+      borderBottomColor: '#f4f4f4',
+      borderBottomWidth: 1,
+    },
+    tabContainer: {
+      borderBottomColor: '#090909',
+    },
+    tabText: {
+      padding: 15,
+      color: '#9e9e9e',
+      fontSize: 18,
+      fontWeight: '500',
+    },
+    separator: {
+      height: 0.5,
+      width: '96%',
+      alignSelf: 'flex-end',
+      backgroundColor: '#eaeaea',
+    },
+    sectionHeaderContainer: {
+      height: 10,
+      backgroundColor: '#f6f6f6',
+      borderTopColor: '#f4f4f4',
+      borderTopWidth: 1,
+      borderBottomColor: '#f4f4f4',
+      borderBottomWidth: 1,
+    },
+    sectionHeaderText: {
+      color: '#010101',
+      backgroundColor: '#fff',
+      fontSize: 23,
+      fontWeight: 'bold',
+      paddingTop: 25,
+      paddingBottom: 5,
+      paddingHorizontal: 15,
+    },
+    itemContainer: {
+      paddingVertical: 20,
+      paddingHorizontal: 15,
+      backgroundColor: '#fff',
+    },
+    itemTitle: {
+      flex: 1,
+      fontSize: 20,
+      color: '#131313',
+    },
+    itemPrice: {
+      fontSize: 18,
+      color: '#131313',
+    },
+    itemDescription: {
+      marginTop: 10,
+      color: '#b6b6b6',
+      fontSize: 16,
+    },
+    itemRow: {
+      flexDirection: 'row',
     },
   });

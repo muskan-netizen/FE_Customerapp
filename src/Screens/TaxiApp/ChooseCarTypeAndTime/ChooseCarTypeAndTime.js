@@ -12,7 +12,13 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
-import {height, width} from '../../../styles/responsiveSize';
+import {
+  height,
+  moderateScale,
+  moderateScaleVertical,
+  textScale,
+  width,
+} from '../../../styles/responsiveSize';
 import {showError} from '../../../utils/helperFunctions';
 import SelectCarModalView from './SelectCarModalView';
 import SelectPaymentModalView from './SelectPaymentModalView';
@@ -45,6 +51,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const userData = useSelector((state) => state?.auth?.userData);
 
   const fontFamily = appStyle?.fontSizeData;
+  const [refArr, setRefArr] = useState([]);
   const [state, setState] = useState({
     region: {
       latitude: paramData?.location[0]?.latitude
@@ -180,6 +187,10 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     (state) => state?.product?.walletData?.wallet_amount,
   );
 
+  const mapRef = useRef();
+
+  const markerRef = useRef(null);
+
   useFocusEffect(
     React.useCallback(() => {
       if (paramData && paramData?.selectedMethod) {
@@ -197,10 +208,11 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const _onRegionChange = (region) => {
     updateState({region: region});
     _getAddressBasedOnCoordinates(region);
+    markerRef.current.showCallout();
+
     // animate(region);
   };
-  const mapRef = useRef();
-  const viewRef2 = useRef();
+
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
@@ -313,7 +325,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             selectedVendor: {id: selectedCarOption?.vendor_id},
             orderDetail: res?.data,
             fromCab: paramData?.pickup_taxi ? false : true,
-            pickup_taxi:paramData?.pickup_taxi,
+            pickup_taxi: paramData?.pickup_taxi,
             totalDuration: totalDuration,
             selectedCarOption: selectedCarOption?.sku,
           });
@@ -570,6 +582,24 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     updateState({formatedTime: moment(value).format('hh:mm A')});
   };
 
+  // useEffect(() => {
+  //   console.log('check state ref array >>>', refArr);
+  //   refArr.forEach((element) => {
+  //     element.current.showCallout();
+  //   });
+  // }, [refArr]);
+
+  // const showRef = (_markerRef, index) => {
+  //   if (_markerRef) {
+  //     const temp = paramData?.tasks;
+  //     let newObj = temp[index];
+  //     newObj = {...newObj, markerRef: _markerRef};
+  //     temp[index] = newObj;
+  //     // state set
+  //     setRefArr(temp);
+  //   }
+  // };
+
   return (
     <View style={styles.container}>
       <MapView
@@ -585,9 +615,10 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         // liteMode={true}
         tracksViewChanges={false}
         // onPress={onMapPress}
-        onRegionChangeComplete={() =>
-          _onRegionChange(region, {isGesture: true})
-        }>
+        // onRegionChangeComplete={() =>
+        //   _onRegionChange(region, {isGesture: true})
+        // }
+      >
         {/* <Marker
             coordinate={paramData?.location[0]}
             image={imagePath.radioLocation}>
@@ -609,28 +640,35 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             </Callout>
           </Marker> */}
 
-        {paramData?.tasks.map((coordinate, index) => (
-          <MapView.Marker
-            tracksViewChanges={false}
-            zIndex={index}
-            key={`coordinate_${index}`}
-            image={imagePath.radioLocation}
-            coordinate={{
-              latitude: Number(coordinate?.latitude),
-              longitude: Number(coordinate?.longitude),
-            }}>
-            <Callout style={styles.plainView}>
-              <View>
-                <Text style={styles.pickupDropOff}>
-                  {index == 0 ? 'Pick up' : 'Drop off'}
-                </Text>
-                <Text numberOfLines={1} style={styles.pickupDropOffAddress}>
-                  {coordinate?.address}
-                </Text>
-              </View>
-            </Callout>
-          </MapView.Marker>
-        ))}
+        {paramData?.tasks.map((coordinate, index) => {
+          return (
+            <View>
+              <MapView.Marker
+                ref={markerRef}
+                zIndex={index}
+                key={`coordinate_${index}`}
+                image={imagePath.radioLocation}
+                coordinate={{
+                  latitude: Number(coordinate?.latitude),
+                  longitude: Number(coordinate?.longitude),
+                }}>
+                <View
+                  style={[
+                    styles.plainView,
+                    {
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      //paddingRight: 10,
+                    },
+                  ]}>
+                  <Text style={styles.pickupDropOff}>
+                    {index === 0 ? 'Pickup' : 'Drop'}
+                  </Text>
+                </View>
+              </MapView.Marker>
+            </View>
+          );
+        })}
 
         <MapViewDirections
           origin={paramData?.location[0]}

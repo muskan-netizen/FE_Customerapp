@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1023342030968-vcf8p04p6furte302i0semfr7jhelsvr.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1023342030968-vcf8p04p6furte302i0semfr7jhelsvr</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1023342030968-dj6ci75qs271okirvopa0l5k5ufnu26v.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBzCosW6JY1QbdMkd0u-71S0uzuzuRkxVM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1023342030968</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.elcheregio</string>
+	<key>PROJECT_ID</key>
+	<string>el-che-regio-b6951</string>
+	<key>STORAGE_BUCKET</key>
+	<string>el-che-regio-b6951.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1023342030968:ios:3fb4239a7ca8a28536bd8d</string>
+</dict>
+</plist>

@@ -69,8 +69,12 @@ export default function DashBoardFive({
     (state) => state?.initBoot,
   );
 
+  console.log("appDataappData", appData)
+
   const allCategory = appMainData?.categories;
-  const checkForBrand = allCategory && allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
+  const checkForBrand =
+    allCategory &&
+    allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
   // const {bannerRef} = useRef();
   const { slider1ActiveSlide, vendorsData } = state;
   const fontFamily = appStyle?.fontSizeData;
@@ -84,11 +88,15 @@ export default function DashBoardFive({
       updateState({
         vendorsData: appMainData?.vendors.filter((item, indx) => indx < 4),
       });
+      return;
     }
+    updateState({
+      vendorsData: [],
+    });
   }, [appMainData?.vendors]);
 
   const _renderItem = ({ item }) => (
-    <View style={{width: '25%'}}>
+    <View style={{ width: '25%' }}>
       <HomeCategoryCard2
         data={item}
         onPress={() => onPressCategory(item)}
@@ -111,11 +119,12 @@ export default function DashBoardFive({
 
   const renderBanners = ({ item }) => {
     const imageUrl = getImageUrl(
-      item.image_mobile.image_fit || item.image.image_fit,
-      item.image_mobile.image_path || item.image.image_path,
+      item.image.image_fit,
+      item.image.image_path,
       '500/1000',
     );
- 
+    console.log("Image url", imageUrl)
+
     return (
       <TouchableOpacity
         activeOpacity={0.8}
@@ -149,6 +158,7 @@ export default function DashBoardFive({
                 marginTop: moderateScaleVertical(10),
               }}>
               <FlatList
+                scrollEnabled={false}
                 numColumns={4}
                 data={appMainData?.categories}
                 keyExtractor={(item) => item.id.toString()}
@@ -161,11 +171,11 @@ export default function DashBoardFive({
             </View>
           )}
         <View style={{ marginTop: moderateScaleVertical(16) }}>
-          {!!appData?.banners?.length && (
+          {!!appData?.mobile_banners?.length && (
             <View>
               <FlatList
                 horizontal
-                data={appData?.banners}
+                data={appData?.mobile_banners}
                 keyExtractor={(item) => item.id.toString()}
                 showsHorizontalScrollIndicator={false}
                 renderItem={renderBanners}
@@ -392,8 +402,9 @@ export default function DashBoardFive({
           {vendorsData && !!vendorsData?.length && (
             <>
               <FlatList
+                scrollEnabled={false}
                 ListHeaderComponent={() =>
-                  listHeader(strings.EXPLORE_STORES, appMainData?.vendors, true)
+                  listHeader(strings.EXPLORE_STORES, appMainData.vendors, true)
                 }
                 showsVerticalScrollIndicator={false}
                 alwaysBounceVertical={true}
@@ -407,31 +418,33 @@ export default function DashBoardFive({
                 )}
               />
 
-              {checkForBrand  && <View style={{}}>
-                {appMainData &&
-                  appMainData?.brands &&
-                  !!appMainData?.brands.length && (
-                    <>
-                      <View>{listHeader(strings.POPULAR_BRANDS)}</View>
-                      <FlatList
-                        showsHorizontalScrollIndicator={false}
-                        horizontal
-                        data={appMainData?.brands}
-                        renderItem={renderBrands}
-                        keyExtractor={(item) => item.id.toString()}
-                        ItemSeparatorComponent={() => (
-                          <View style={{ marginRight: moderateScale(12) }} />
-                        )}
-                        ListHeaderComponent={() => (
-                          <View style={{ marginLeft: moderateScale(16) }} />
-                        )}
-                        ListFooterComponent={() => (
-                          <View style={{ marginRight: moderateScale(16) }} />
-                        )}
-                      />
-                    </>
-                  )}
-              </View>}
+              {checkForBrand && (
+                <View style={{}}>
+                  {appMainData &&
+                    appMainData?.brands &&
+                    !!appMainData?.brands.length && (
+                      <>
+                        <View>{listHeader(strings.POPULAR_BRANDS)}</View>
+                        <FlatList
+                          showsHorizontalScrollIndicator={false}
+                          horizontal
+                          data={appMainData?.brands}
+                          renderItem={renderBrands}
+                          keyExtractor={(item) => item.id.toString()}
+                          ItemSeparatorComponent={() => (
+                            <View style={{ marginRight: moderateScale(12) }} />
+                          )}
+                          ListHeaderComponent={() => (
+                            <View style={{ marginLeft: moderateScale(16) }} />
+                          )}
+                          ListFooterComponent={() => (
+                            <View style={{ marginRight: moderateScale(16) }} />
+                          )}
+                        />
+                      </>
+                    )}
+                </View>
+              )}
             </>
           )}
 
@@ -466,7 +479,7 @@ export default function DashBoardFive({
               appMainData?.new_products &&
               !!appMainData?.new_products.length && (
                 <>
-                  <View>{listHeader('New Products')}</View>
+                  <View>{listHeader(strings.NEW_PRODUCTS)}</View>
                   <FlatList
                     showsHorizontalScrollIndicator={false}
                     horizontal

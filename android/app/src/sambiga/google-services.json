@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "882015651588",
+    "project_id": "sambiga-a7a01",
+    "storage_bucket": "sambiga-a7a01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882015651588:android:4572c48b54ab333219f251",
+        "android_client_info": {
+          "package_name": "com.sambiga"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "882015651588-832fm9u69se9l3d4can3dhccb5c8c7oh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sambiga",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "882015651588-nut368tfos3lle4ppiqola1gbnkqdm7b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sambiga",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "882015651588-tgtjs2h9m9oi46mv9fsl0c5ktob7qqr9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sambiga",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "882015651588-h5o676blt32irpmqht0vtakm85984ul4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZcFovwYjx3vQAwrOJIx26HxnaGLUO3uk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "882015651588-h5o676blt32irpmqht0vtakm85984ul4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "882015651588-0laj4r7tf65mj3btd21di78dnqg896mf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sambiga"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

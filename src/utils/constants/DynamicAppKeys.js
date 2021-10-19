@@ -90,7 +90,9 @@ const shortCodes = {
   eboyo: '1d0fd3',
   share: 'bb8440',
   pickmeup: '87a4de',
+  taquick: '630e49',
   vecto: '39f6fd',
+  goody: '397840',
   grub: '2f3120',
   gusto: 'd1b1a0',
   gokab: 'fb78f0',
@@ -105,6 +107,16 @@ const shortCodes = {
   expressdelivery: '6098e4',
   booziedoozie: '9f5473',
   zestyclickz: '3046ca',
+  bakesale: '55534f',
+  elcheregio: '3154ed',
+  yaawi: '64a3e8',
+  hosta: '757287',
+  somame: '069701',
+  goodwheelz: 'ceab64',
+  tranznet: '02aad0',
+  sambiga: '4fadae',
+  agrionline: 'dd93ce',
+  quickquick: '9bd088',
 };
 
 const appIds = {
@@ -531,6 +543,46 @@ const appIds = {
   zestyclickz: Platform.select({
     ios: 'com.zestyclickz',
     android: 'com.zestyclickz',
+  }),
+  bakesale: Platform.select({
+    ios: 'com.bakesale',
+    android: 'com.bakesale',
+  }),
+  elcheregio: Platform.select({
+    ios: 'com.elcheregio',
+    android: 'com.elcheregio',
+  }),
+  yaawi: Platform.select({
+    ios: 'com.yaawi',
+    android: 'com.yaawi',
+  }),
+  hosta: Platform.select({
+    ios: 'com.hosta',
+    android: 'com.hosta',
+  }),
+  somame: Platform.select({
+    ios: 'com.somame',
+    android: 'com.somame',
+  }),
+  goodwheelz: Platform.select({
+    ios: 'com.goodwheelz',
+    android: 'com.goodwheelz',
+  }),
+  tranznet: Platform.select({
+    ios: 'com.tranznet',
+    android: 'com.tranznet',
+  }),
+  sambiga: Platform.select({
+    ios: 'com.sambiga',
+    android: 'com.sambiga',
+  }),
+  agrionline: Platform.select({
+    ios: 'com.agrionline',
+    android: 'com.agrionline',
+  }),
+  quickquick: Platform.select({
+    ios: 'com.quickquick',
+    android: 'com.quickquick',
   }),
 };
 

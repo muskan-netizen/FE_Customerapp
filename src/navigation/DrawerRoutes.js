@@ -28,7 +28,7 @@ export default function DrawerRoutes(props) {
   const {shortCodeStatus, appStyle, appData} = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(appStyle,"appStyle>appStyle>appStyle>appStyle>");
+ 
   const businessType = appStyle?.homePageLayout;  
 
   const allCategory = appMainData?.categories;

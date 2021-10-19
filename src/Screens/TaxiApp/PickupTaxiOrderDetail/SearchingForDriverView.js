@@ -44,6 +44,7 @@ export default function ({
   productRatings,
   isShowRating,
   navigation,
+  driverRating,
   onStarRatingPress = () => {},
 }) {
   //   console.log(selectedCarOption, 'selectedCarOption');
@@ -170,7 +171,7 @@ export default function ({
                           ? MyDarkTheme.colors.text
                           : colors.lightgray,
                       }}>
-                      4.5
+                      {driverRating}
                     </Text>
                   </View>
                   {totalDuration ? (

@@ -16,6 +16,7 @@ import {
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
 import {
+  getColorCodeWithOpactiyNumber,
   getImageUrl,
   pressInAnimation,
   pressOutAnimation,
@@ -35,6 +36,7 @@ export default function ProductCard3({
   isVisibleModal,
   selectedItemIndx,
   btnLoader,
+  categoryInfo = '',
 }) {
   // data['qty'] = 1
   const [state, setState] = useState({
@@ -76,16 +78,14 @@ export default function ProductCard3({
 
   let htmlText = data?.translation[0]?.body_html || null;
 
-
-  let typeId = data?.category?.category_detail?.type_id
-  // console.log("type id++++", typeId)
-
+  let typeId = data?.category?.category_detail?.type_id;
 
   return (
     <Animatable.View
-      animation={index > 8 ? '' : 'fadeInUp'}
-      delay={index > 8 ? 1 * 100 : index * 10}
-      pointerEvents={btnLoader ? 'none' : 'auto'}>
+      // animation={index > 8 ? '' : 'fadeInUp'}
+      // delay={index > 8 ? 1 * 100 : index * 10}
+      pointerEvents={btnLoader ? 'none' : 'auto'}
+    >
       <TouchableOpacity
         disabled
         activeOpacity={0.6}
@@ -111,8 +111,9 @@ export default function ProductCard3({
               ...commonStyles.shadowStyle,
               margin: 2,
               borderRadius: moderateScale(15),
+              height: moderateScale(100),
+              width: moderateScale(100),
             }}>
-
             <FastImage
               style={{
                 ...styles.imgStyle,
@@ -122,7 +123,6 @@ export default function ProductCard3({
               }}
               source={{ uri: getImage('800/400') }}
             />
-
           </TouchableOpacity>
         </Animatable.View>
 
@@ -230,7 +230,7 @@ export default function ProductCard3({
             </View>
           </Animatable.View>
 
-          {!!data?.variant[0]?.quantity || !!typeId && typeId == 8 ? (
+          {!!data?.variant[0]?.quantity || (!!typeId && typeId == 8) ? (
             <View
               style={{
                 marginTop:
@@ -252,8 +252,11 @@ export default function ProductCard3({
                     paddingHorizontal: moderateScale(8),
                   }}>
                   <TouchableOpacity
-                    disabled={selectedItemID == data?.id}
-                    style={{}}
+                    disabled={
+                      selectedItemID == data?.id || categoryInfo?.show_slot
+                        ? !categoryInfo?.show_slot
+                        : !!categoryInfo?.is_vendor_closed
+                    }
                     onPress={onDecrement}
                     activeOpacity={0.8}
                     hitSlop={hitSlopProp}>
@@ -266,7 +269,7 @@ export default function ProductCard3({
                       -
                     </Text>
                   </TouchableOpacity>
-                  <View style={{}}>
+                  <View>
                     {selectedItemIndx === index &&
                       selectedItemID == data?.id &&
                       btnLoader ? (
@@ -287,7 +290,11 @@ export default function ProductCard3({
                     )}
                   </View>
                   <TouchableOpacity
-                    disabled={selectedItemID == data?.id}
+                    disabled={
+                      selectedItemID == data?.id || categoryInfo?.show_slot
+                        ? !categoryInfo?.show_slot
+                        : !!categoryInfo?.is_vendor_closed
+                    }
                     activeOpacity={0.8}
                     hitSlop={hitSlopProp}
                     onPress={onIncrement}>
@@ -303,16 +310,22 @@ export default function ProductCard3({
                 </View>
               ) : (
                 <TouchableOpacity
-                  disabled={selectedItemID == data?.id}
+                  disabled={
+                    selectedItemID == data?.id || categoryInfo?.show_slot
+                      ? !categoryInfo?.show_slot
+                      : !!categoryInfo?.is_vendor_closed
+                  }
                   onPress={addToCart}
-                  style={styles.addBtnStyle}>
+                  style={{
+                    ...styles.addBtnStyle,
+                  }}>
                   {selectedItemID == data?.id ? (
                     <UIActivityIndicator
                       size={moderateScale(18)}
                       color={themeColors.primary_color}
                     />
                   ) : (
-                    <View style={{}}>
+                    <View>
                       <Text style={styles.addStyleText}>{strings.ADD}</Text>
                     </View>
                   )}

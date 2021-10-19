@@ -49,10 +49,11 @@ export default function WebLinks({navigation, route}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  console.log(route, 'route>>>');
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
+  console.log(route, 'route>>>');
+
   const paramData = route?.params;
   const [state, setState] = useState({
     isLoading: false,

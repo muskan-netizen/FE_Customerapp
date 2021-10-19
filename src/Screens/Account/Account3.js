@@ -45,8 +45,8 @@ export default function Account3({ navigation }) {
     (state) => state?.initBoot,
   );
 
-  const businessType = appStyle?.homePageLayout; 
-   const [state, setState] = useState({
+  const businessType = appStyle?.homePageLayout;
+  const [state, setState] = useState({
     isLoading: false,
   });
 
@@ -55,7 +55,6 @@ export default function Account3({ navigation }) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });
   const commonStyles = commonStylesFun({ fontFamily });
-
 
   //Navigation to specific screen
   const moveToNewScreen =
@@ -485,7 +484,7 @@ export default function Account3({ navigation }) {
 
           {!!userData?.auth_token &&
             !!appMainData?.is_admin &&
-            businessType === 4 && (
+            businessType != 4 && (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}
                 leftIconStyle={{ flex: 0.1, alignItems: 'center' }}

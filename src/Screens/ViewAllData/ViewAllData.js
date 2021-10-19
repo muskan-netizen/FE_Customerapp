@@ -71,6 +71,7 @@ export default function ViewAllData({ route, navigation }) {
                     id: item.id,
                     vendor: true,
                     name: item.name,
+                    isVendorList: true,
                 })();
         }
     };
