@@ -118,6 +118,7 @@ const shortCodes = {
   agrionline: 'dd93ce',
   quickquick: '9bd088',
   caribeclean: 'a6bf72',
+  stonses: '6acd69',
 };
 
 const appIds = {
@@ -588,6 +589,10 @@ const appIds = {
   caribeclean: Platform.select({
     ios: 'com.caribeclean',
     android: 'com.caribeclean',
+  }),
+  stonses: Platform.select({
+    ios: 'com.stonses',
+    android: 'com.stonses',
   }),
 };
 
