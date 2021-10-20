@@ -9,6 +9,7 @@ import {
   Share,
   Text,
   TouchableOpacity,
+  Vibration,
   View,
 } from 'react-native';
 import { useDarkMode } from 'react-native-dark-mode';
@@ -423,6 +424,7 @@ export default function Account3({ navigation }) {
           // iconRight={imagePath.goRight}
           // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
+          {/* (!!userData?.auth_token) && */}
           {((!!userData?.auth_token) && Platform.OS === 'android') &&
             (businessType == 'taxi' ? null : (
               <ListItemHorizontal
@@ -440,6 +442,13 @@ export default function Account3({ navigation }) {
                   }, (err) => {
                     err
                   });
+                  // const ONE_SECOND_IN_MS = 80;
+                  // const PATTERN = [
+                  //   1 * ONE_SECOND_IN_MS,
+                  //   2 * ONE_SECOND_IN_MS,
+                  //   3 * ONE_SECOND_IN_MS
+                  // ];
+                  // Vibration.vibrate(PATTERN)
 
                 }}
                 iconLeft={imagePath.printer}
