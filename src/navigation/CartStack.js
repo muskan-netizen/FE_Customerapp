@@ -9,6 +9,7 @@ import {
   Mobbex,
   Offers,
   OrderDetail,
+  Payfast,
   ProductDetail,
   ProductDetail2,
   ProductList,
@@ -99,6 +100,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.MOBBEX}
         component={Mobbex}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.PAYFAST}
+        component={Payfast}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

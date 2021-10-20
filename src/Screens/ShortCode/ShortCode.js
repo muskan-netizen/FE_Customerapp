@@ -786,6 +786,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.caribeclean:
+          updateState({
+            shortCode: shortCodes.caribeclean,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

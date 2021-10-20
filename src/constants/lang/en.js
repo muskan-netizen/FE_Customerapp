@@ -239,7 +239,7 @@ export default {
   PLS_SELECT_ONE: 'Please select any one option',
   APPLYSMALL: 'Apply',
   AREYOUSURE: 'Are you sure you want to clear your cart?',
-  ENTER_NEW_ADDRESS: 'Enter New Address',
+  ENTER_NEW_ADDRESS: 'new address',
   ENTER_STREET: 'Street (House no, Building,Street area)',
   STATE: 'State',
   PINCODE: 'Pincode',

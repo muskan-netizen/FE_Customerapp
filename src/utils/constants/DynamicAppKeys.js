@@ -117,6 +117,7 @@ const shortCodes = {
   sambiga: '4fadae',
   agrionline: 'dd93ce',
   quickquick: '9bd088',
+  caribeclean: 'a6bf72',
 };
 
 const appIds = {
@@ -337,8 +338,8 @@ const appIds = {
     android: 'com.ridemate',
   }),
   codiner: Platform.select({
-    ios: 'com.codiner',
-    android: 'com.codiner',
+    ios: 'com.app.codiner',
+    android: 'com.app.codiner',
   }),
   housekeeper: Platform.select({
     ios: 'com.housekeeper4hire',
@@ -583,6 +584,10 @@ const appIds = {
   quickquick: Platform.select({
     ios: 'com.quickquick',
     android: 'com.quickquick',
+  }),
+  caribeclean: Platform.select({
+    ios: 'com.caribeclean',
+    android: 'com.caribeclean',
   }),
 };
 

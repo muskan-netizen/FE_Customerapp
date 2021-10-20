@@ -1,27 +1,25 @@
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
-import { useSelector } from 'react-redux';
+import {SvgUri} from 'react-native-svg';
+import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 import commonStylesFun from '../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
 } from '../styles/responsiveSize';
+import {MyDarkTheme} from '../styles/theme';
 import {
   getImageUrl,
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../styles/theme';
-import BlurImages from './BlurImages';
-import { SvgUri } from 'react-native-svg';
 
-export default function BrandCard2({ data = {}, onPress = () => { } }) {
+export default function BrandCard2({data = {}, onPress = () => {}}) {
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -30,9 +28,9 @@ export default function BrandCard2({ data = {}, onPress = () => { } }) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const scaleInAnimated = new Animated.Value(0);
-  const { appStyle, themeColors } = useSelector((state) => state.initBoot);
+  const {appStyle, themeColors} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({ fontFamily });
+  const commonStyles = commonStylesFun({fontFamily});
 
   // console.log("svg data",data)
 
@@ -42,7 +40,6 @@ export default function BrandCard2({ data = {}, onPress = () => { } }) {
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
 
-  console.log(imageURI, 'is svg+++', isSVG);
   return (
     <View style={styles.imgContainer}>
       <TouchableOpacity
@@ -74,7 +71,7 @@ export default function BrandCard2({ data = {}, onPress = () => { } }) {
           />
         ) : (
           <FastImage
-            source={{ uri: imageURI, priority: FastImage.priority.high }}
+            source={{uri: imageURI, priority: FastImage.priority.high}}
             style={{
               ...styles.imgStyle,
               backgroundColor: isDarkMode
@@ -91,7 +88,7 @@ export default function BrandCard2({ data = {}, onPress = () => { } }) {
           fontFamily: fontFamily.regular,
           fontSize: textScale(10),
           textAlign: 'center',
-          marginTop:moderateScaleVertical(2)
+          marginTop: moderateScaleVertical(2),
         }}>
         {data?.name ? data?.name : data?.translation[0]?.title}
       </Text>

@@ -52,6 +52,7 @@ export default function OrderDetail({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
+  console.log(paramData, 'paramData==>');
 
   const [state, setState] = useState({
     isLoading: true,
@@ -134,7 +135,7 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoading: false, isLoadingC: false});
+    updateState({isLoading: false, isLoadingC: false});
     showError(error?.message || error?.error);
   };
 
@@ -995,7 +996,9 @@ export default function OrderDetail({navigation, route}) {
                           },
                         ]
                       : styles.orderLableStyle
-                  }>{cartData?.created_date}</Text>
+                  }>
+                  {cartData?.created_date}
+                </Text>
               </View>
             </View>
           </View>
