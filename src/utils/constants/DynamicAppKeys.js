@@ -338,8 +338,8 @@ const appIds = {
     android: 'com.ridemate',
   }),
   codiner: Platform.select({
-    ios: 'com.codiner',
-    android: 'com.codiner',
+    ios: 'com.app.codiner',
+    android: 'com.app.codiner',
   }),
   housekeeper: Platform.select({
     ios: 'com.housekeeper4hire',
