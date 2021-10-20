@@ -6,6 +6,7 @@ import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
@@ -47,6 +48,7 @@ export default function WebPayment({navigation, route}) {
       <WebView
         source={{uri: paramData?.paymentUrl}}
         onNavigationStateChange={(navState) => {
+          console.log(navState, 'webProps');
           if (
             navState.canGoBack &&
             navState.url.includes('payment/checkoutSuccess')
@@ -62,7 +64,7 @@ export default function WebPayment({navigation, route}) {
               });
             } else {
               setTimeout(() => {
-                alert('Payment successfull');
+                alert(strings.PAYMENT_SUCCESS);
                 navigation.navigate(navigationStrings.WALLET);
               }, 2000);
             }

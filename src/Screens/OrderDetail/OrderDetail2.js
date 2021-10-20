@@ -135,7 +135,7 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoading: false, isLoadingC: false});
+    updateState({isLoading: false, isLoadingC: false});
     showError(error?.message || error?.error);
   };
 

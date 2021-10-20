@@ -806,8 +806,8 @@ export default function Cart({navigation, route}) {
 
   const _webPayment = () => {
     let selectedMethod = selectedPayment.title.toLowerCase();
-    let returnUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
-    let cancelUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
+    let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
+    let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
 
     let queryData = `/${selectedMethod}?tip=${
       selectedTipAmount && selectedTipAmount != ''
@@ -831,6 +831,8 @@ export default function Cart({navigation, route}) {
         },
       )
       .then((res) => {
+        console.log(res, 'response===>');
+
         updateState({
           isLoadingB: false,
           isRefreshing: false,
