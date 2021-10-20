@@ -449,6 +449,7 @@ export default function Settings({route, navigation}) {
           <DropDownPicker
             items={appLanguages.all_languages}
             defaultValue={
+              appLanguages?.primary_language?.nativeName ||
               appLanguages?.primary_language?.name ||
               appLanguages?.primary_language?.label ||
               ''
@@ -576,6 +577,7 @@ export default function Settings({route, navigation}) {
           <DropDownPicker
             items={appLanguages.all_languages}
             defaultValue={
+              appLanguages?.primary_language?.nativeName ||
               appLanguages?.primary_language?.name ||
               appLanguages?.primary_language?.label ||
               ''
