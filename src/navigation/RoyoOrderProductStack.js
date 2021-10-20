@@ -5,6 +5,7 @@ import {
   OrderDetail,
   ProductDetail,
   ProductDetail2,
+  RoyoAddProduct,
   RoyoProducts,
   VendorList,
 } from '../Screens';
@@ -37,6 +38,11 @@ export default function () {
         component={
           appStyle?.homePageLayout === 2 ? ProductDetail2 : ProductDetail
         }
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.ROYO_ADD_PRODUCT}
+        component={RoyoAddProduct}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

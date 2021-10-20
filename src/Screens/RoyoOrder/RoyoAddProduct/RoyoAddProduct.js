@@ -14,7 +14,7 @@ import actions from '../../../redux/actions';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import DropDown from '../../../Components/DropDown';
 import fontFamily from '../../../styles/fontFamily';
-import {boxWidth} from '../../../utils/constants/constants';
+import {boxWidth, customMarginBottom} from '../../../utils/constants/constants';
 import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {androidCameraPermission} from '../../../utils/permissions';
@@ -345,7 +345,7 @@ export default RoyoAddProduct;
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: moderateScaleVertical(49),
+    marginBottom: customMarginBottom(),
     marginHorizontal: moderateScale(16),
     flexGrow: 1,
   },

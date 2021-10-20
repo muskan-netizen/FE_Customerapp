@@ -39,7 +39,6 @@ const RoyoOrder = (props) => {
   const {storeSelectedVendor} = useSelector((state) => state?.order);
 
   const [state, setState] = useState({
-    
     newOrder: [],
     completed: [],
     cancelled: [],
@@ -140,7 +139,7 @@ const RoyoOrder = (props) => {
         );
         updateState({
           newOrder: [...newOrder, ...newnewOrder],
-          confirmed: [...confirmed,...newconfirmed],
+          confirmed: [...confirmed, ...newconfirmed],
           cancelled: [...cancelled, ...newcancelled],
           completed: [...completed, ...newcompleted],
           activeOrders:
@@ -169,6 +168,7 @@ const RoyoOrder = (props) => {
     showError(error?.message || error?.error);
   };
 
+  
   const onPressViewEditAndReplace = (item) => {
     // navigation.navigate(navigationStrings.ORDER_DETAIL, {
     //   orderId: item?.id,
@@ -310,7 +310,7 @@ const RoyoOrder = (props) => {
                   onPress={() =>
                     navigation.navigate(navigationStrings.ORDER_DETAIL, {
                       data: item,
-                      updateOrderStatus: updateOrderStatus,
+                      selectedVendor,
                     })
                   }
                   item={item}
@@ -353,7 +353,7 @@ const RoyoOrder = (props) => {
                   onPress={() =>
                     navigation.navigate(navigationStrings.ORDER_DETAIL, {
                       data: item,
-                      updateOrderStatus: updateOrderStatus,
+                      selectedVendor,
                     })
                   }
                   updateOrderStatus={updateOrderStatus}
@@ -387,24 +387,27 @@ const RoyoOrder = (props) => {
                 </View>
               );
             }}
-            renderItem={({item, index}) => (
-              <View
-                style={{
-                  marginLeft: customMarginLeftForBox(index),
-                  flex: 1,
-                }}>
-                <OrderCard
-                  updateOrderStatus={updateOrderStatus}
-                  onPress={() =>
-                    navigation.navigate(navigationStrings.ORDER_DETAIL, {
-                      data: item,
-                      updateOrderStatus: updateOrderStatus,
-                    })
-                  }
-                  item={item}
-                />
-              </View>
-            )}
+            renderItem={({item, index}) => {
+              console.log(item, 'cancelled');
+              return (
+                <View
+                  style={{
+                    marginLeft: customMarginLeftForBox(index),
+                    flex: 1,
+                  }}>
+                  <OrderCard
+                    updateOrderStatus={updateOrderStatus}
+                    onPress={() =>
+                      navigation.navigate(navigationStrings.ORDER_DETAIL, {
+                        data: item,
+                        selectedVendor,
+                      })
+                    }
+                    item={item}
+                  />
+                </View>
+              );
+            }}
             keyExtractor={(item, key) => key}
           />
         ) : null}
@@ -431,24 +434,27 @@ const RoyoOrder = (props) => {
                 </View>
               );
             }}
-            renderItem={({item, index}) => (
-              <View
-                style={{
-                  marginLeft: customMarginLeftForBox(index),
-                  flex: 1,
-                }}>
-                <OrderCard
-                  updateOrderStatus={updateOrderStatus}
-                  onPress={() =>
-                    navigation.navigate(navigationStrings.ORDER_DETAIL, {
-                      data: item,
-                      updateOrderStatus: updateOrderStatus,
-                    })
-                  }
-                  item={item}
-                />
-              </View>
-            )}
+            renderItem={({item, index}) => {
+              console.log(item, 'cancelled');
+              return (
+                <View
+                  style={{
+                    marginLeft: customMarginLeftForBox(index),
+                    flex: 1,
+                  }}>
+                  <OrderCard
+                    updateOrderStatus={updateOrderStatus}
+                    onPress={() =>
+                      navigation.navigate(navigationStrings.ORDER_DETAIL, {
+                        data: item,
+                        selectedVendor,
+                      })
+                    }
+                    item={item}
+                  />
+                </View>
+              );
+            }}
             keyExtractor={(item, key) => key}
           />
         ) : null}

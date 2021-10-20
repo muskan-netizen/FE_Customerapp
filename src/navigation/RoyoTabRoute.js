@@ -13,6 +13,7 @@ import {RoyoAccounts, RoyoHome, RoyoOrder, RoyoProducts} from '../Screens';
 import navigationStrings from './navigationStrings';
 import RoyoOrderScreenStack from './RoyoOrderScreenStack';
 import RoyoOrderProductStack from './RoyoOrderProductStack';
+import RoyoOrderHomeStack from './RoyoOrderHomeStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -103,7 +104,7 @@ const RoyoTabRoute = ({barColor = colors.themeColor2}) => {
             );
           },
         }}
-        component={RoyoHome}
+        component={RoyoOrderHomeStack}
       />
 
       <Tab.Screen

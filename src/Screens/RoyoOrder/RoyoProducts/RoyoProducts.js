@@ -23,6 +23,7 @@ import staticStrings from '../../../constants/staticStrings';
 import {cloneDeep, debounce} from 'lodash';
 import actions from '../../../redux/actions';
 import {getImageUrl} from '../../../utils/helperFunctions';
+import HTMLView from 'react-native-htmlview';
 
 const RoyoProducts = (props) => {
   const {navigation} = props;
@@ -55,18 +56,19 @@ const RoyoProducts = (props) => {
           />
         </TouchableOpacity>
         <View style={{flex: 1}}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', }}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             {/* <View style={{flex: 1, }}> */}
-              <Text numberOfLines={1}
-                style={{
-                  flex: 1,
-                  fontSize: 16,
-                  fontFamily: fontFamily.medium,
-                  color: colors.black,
-                }}>
-                {item.translation[0]?.title}
-              </Text>
-              
+            <Text
+              numberOfLines={1}
+              style={{
+                flex: 1,
+                fontSize: 16,
+                fontFamily: fontFamily.medium,
+                color: colors.black,
+              }}>
+              {item.translation[0]?.title}
+            </Text>
+
             {/* </View> */}
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text style={styles.font16Semibold}>In Stock</Text>
@@ -83,14 +85,14 @@ const RoyoProducts = (props) => {
             {/* <Image style={{alignSelf: 'flex-end'}} source={imagePath.share} /> */}
           </View>
           <Text
-                style={{
-                  fontFamily: fontFamily.regular,
-                  fontSize: 13,
-                  color: colors.blackOpacity40,
-                }}>
-                in {categoryName}
-              </Text>
-          <Text
+            style={{
+              fontFamily: fontFamily.regular,
+              fontSize: 13,
+              color: colors.blackOpacity40,
+            }}>
+            in {categoryName}
+          </Text>
+          {/* <Text
             style={{
               fontSize: 14,
               fontFamily: fontFamily.regular,
@@ -98,7 +100,11 @@ const RoyoProducts = (props) => {
               marginTop: moderateScaleVertical(8),
             }}>
             {item.translation[0]?.body_html}
-          </Text>
+          </Text> */}
+          <View style={{marginTop: 10}}>
+            <HTMLView value={item?.translation[0]?.body_html} />
+            <View />
+          </View>
           <Text
             style={{
               fontFamily: fontFamily.bold,
@@ -301,7 +307,124 @@ const RoyoProducts = (props) => {
         imageAlongwithTitle={imagePath.dropdownTriangle}
         showImageAlongwithTitle
       />
-      
+      <View style={styles.container}>
+        <MultiScreen
+          tabTextStyle={{marginTop: moderateScaleVertical(0)}}
+          screenName={['Products', 'Categories', '', '', '']}
+          selectedScreen={(index) => selectedOrder(index)}
+          selectedScreenIndex={activeIndex}
+        />
+        {activeIndex == 0 ? (
+          <View style={{flex: 1}}>
+            <SwipeListView
+              ListEmptyComponent={() => {
+                return (
+                  <View style={styles.emptyCartBody}>
+                    <Image source={imagePath.emptyCartRoyo} />
+                  </View>
+                );
+              }}
+              bounces={false}
+              data={productListData}
+              renderItem={renderItem}
+              showsVerticalScrollIndicator={false}
+              renderHiddenItem={(data, rowMap) => (
+                <View style={styles.rowReverse}>
+                  <TouchableOpacity
+                    style={{
+                      ...styles.hiddenButton,
+                      backgroundColor: '#FFC8C8',
+                    }}>
+                    <Image source={imagePath.deleteRoyo} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      ...styles.hiddenButton,
+                      backgroundColor: '#C8F3FF',
+                    }}>
+                    <Image source={imagePath.editRoyo} />
+                  </TouchableOpacity>
+                </View>
+              )}
+              disableRightSwipe
+              rightOpenValue={-moderateScale(100)}
+            />
+            <ButtonWithLoader
+              onPress={() =>
+                navigation.navigate(navigationStrings.ROYO_ADD_PRODUCT)
+              }
+              btnStyle={styles.productBtn}
+              btnText="+  products"
+            />
+          </View>
+        ) : null}
+        {activeIndex == 1 ? (
+          <View
+            style={{
+              flex: 1,
+            }}>
+            <FlatList
+              data={category_list}
+              keyExtractor={(item, index) => index}
+              bounces={false}
+              showsVerticalScrollIndicator={false}
+              numColumns={width > 600 ? 5 : 3}
+              renderItem={({item, index}) => (
+                <View
+                  key={index}
+                  style={{
+                    marginBottom: moderateScaleVertical(16),
+                    marginLeft:
+                      width > 600
+                        ? index % 5
+                          ? moderateScale(10)
+                          : 0
+                        : index % 3
+                        ? moderateScale(10)
+                        : 0,
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => selectedCategory(item.id)}
+                    style={styles.categoryItem}>
+                    <Image
+                      style={{
+                        resizeMode: 'center',
+                        width:
+                          width > 600
+                            ? (width - moderateScale(173)) / 5
+                            : (width - moderateScale(112)) / 3,
+                        height:
+                          width > 600
+                            ? (width - moderateScale(203)) / 5
+                            : (width - moderateScale(152)) / 3,
+                      }}
+                      source={imagePath.testingImageRoyo}
+                    />
+                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      width:
+                        width > 600
+                          ? (width - moderateScale(173)) / 5
+                          : (width - moderateScale(112)) / 3,
+                    }}>
+                    {item.name}
+                  </Text>
+                </View>
+              )}
+            />
+
+            <ButtonWithLoader
+              onPress={() =>
+                navigation.navigate(navigationStrings.ROYO_ADD_PRODUCT)
+              }
+              btnStyle={styles.categoryBtn}
+              btnText="+  category"
+            />
+          </View>
+        ) : null}
+      </View>
     </WrapperContainer>
   );
 };

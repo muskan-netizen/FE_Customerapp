@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,8 @@ import {
   Image,
   ScrollView,
   Platform,
+  processColor,
+  RefreshControl,
 } from 'react-native';
 import {useState} from 'react';
 import WrapperContainer from '../../../Components/WrapperContainer';
@@ -30,7 +32,11 @@ import {
   customMarginLeftForBox,
 } from '../../../utils/constants/constants';
 import Header from '../../../Components/Header';
-import {TouchableOpacity} from 'react-native';
+import {useSelector} from 'react-redux';
+import actions from '../../../redux/actions';
+import moment from 'moment';
+import {showError} from '../../../utils/helperFunctions';
+import debounce from 'lodash.debounce';
 
 const commonStyle = commonStyles({
   fontFamily,
@@ -39,119 +45,8 @@ const commonStyle = commonStyles({
 
 const RoyoHome = (props) => {
   const {navigation} = props;
-  const [state, setState] = useState({status: true});
-  const {status} = state;
-  const updateState = (data) =>
-    setState((state) => {
-      return {...state, ...data};
-    });
 
-  const dashboardData = [
-    {
-      image: imagePath.timerRoyo,
-      header: 'Pending order',
-      text: '117 pending order',
-    },
-    {
-      image: imagePath.activeRoyo,
-      header: 'Active order',
-      text: '17 active orders',
-    },
-    {
-      image: imagePath.deliveredRoyo,
-      header: 'Delivered order',
-      text: '4 orders delivered',
-    },
-    {
-      image: imagePath.cancelledRoyo,
-      header: 'Cancelled order',
-      text: '7 orders cancelled',
-    },
-  ];
-  const data1 = '';
-  const data = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-    datasets: [
-      {
-        data: [100, 45, 58, 80, 99, 43, 100],
-        colors: [
-          (opacity = 1) => `rgba(4, 14, 22, ${opacity})`,
-          (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
-          (opacity = 1) => `rgba(174, 44, 242, ${opacity})`,
-          (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
-          (opacity = 1) => `rgba(7, 14, 242, ${opacity})`,
-          (opacity = 1) => `rgba(174, 144, 22, ${opacity})`,
-          (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
-        ],
-      },
-    ],
-  };
-  const orderData = [
-    imagePath.cabImage,
-    imagePath.contactIllustration,
-    imagePath.listViewIcon,
-    imagePath.icoTimeOrder,
-  ];
-  const chartConfig = {
-    barRadius: moderateScale(2.5),
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientToOpacity: 0,
-    fillShadowGradientOpacity: 0,
-    fillShadowGradient: colors.black,
-    yAxisInterval: 2,
-    barPercentage: 0.75,
-    decimalPlaces: 0, // optional, defaults to 2dp
-    color: (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
-    labelColor: (opacity = 0.61) => `rgba(40, 62, 58, ${opacity})`,
-    propsForDots: {
-      r: '6',
-      strokeWidth: '1',
-      stroke: colors.themeColor2,
-    },
-  };
-
-  const toggleStatus = () => updateState({status: !status});
-
-  const onPressAdd = () => {
-    navigation.navigate(navigationStrings.AddProduct);
-  };
-
-  const dashboard = (item, index) => {
-    const {image, header, text} = item;
-    return (
-      <View key={String(index)} style={styles.dashboardBox}>
-        <View
-          style={{
-            shadowColor: 'rgba(242,96,97,0.23)',
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.25,
-            flexShrink: 1,
-            shadowRadius: 3.84,
-
-            elevation: 19,
-          }}>
-          <Image source={image} />
-        </View>
-        <Text
-          style={{
-            ...commonStyle.boldFont14,
-            marginTop: moderateScaleVertical(18),
-          }}>
-          {header}
-        </Text>
-        <Text
-          style={{
-            ...styles.font14Regular,
-            marginVertical: moderateScaleVertical(4),
-          }}>
-          {text}
-        </Text>
-      </View>
-    );
-  };
+  
 
   return (
     <WrapperContainer
@@ -162,166 +57,165 @@ const RoyoHome = (props) => {
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
         onPressLeft={() => {}}
         leftIcon={imagePath.logoRoyo}
-        rightIcon={status?imagePath.onlineRoyo:imagePath.offlineRoyo}
+        rightIcon={status ? imagePath.onlineRoyo : imagePath.offlineRoyo}
         onPressRight={toggleStatus}
       />
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+            tintColor={colors.themeColor2}
+          />
+        }
         style={styles.container}
-        showsVerticalScrollIndicator={false}
-        bounces={false}>
-        {data1 ? (
-          <View style={styles.center}>
-            <Image source={imagePath.emptyCartRoyo} style={{}} />
-            <Text style={styles.emptyText}>
-              No product added. plaease add new product sto create digital
-              catalogue
-            </Text>
-            <ButtonWithLoader
-              btnText="+   Add a product"
-              btnTextStyle={styles.btnText}
-              btnStyle={styles.btnContainer}
-              //   onPress={onPressAdd}
+        showsVerticalScrollIndicator={false}>
+        <View>
+          <View style={styles.dashboard}>{dashboardData.map(dashboard)}</View>
+          <View style={styles.warningBox}>
+            <Image
+              source={imagePath.warningRoyo}
+              style={{marginTop: moderateScaleVertical(5)}}
             />
-          </View>
-        ) : (
-          <View>
-            <View style={styles.dashboard}>{dashboardData.map(dashboard)}</View>
-            <View style={styles.warningBox}>
-              <Image
-                source={imagePath.warningRoyo}
-                style={{marginTop: moderateScaleVertical(5)}}
-              />
-              <View style={{flex: 1, marginLeft: moderateScale(16)}}>
-                <Text
-                  style={{
-                    ...commonStyle.boldFont16,
-                    color: colors.black,
-                  }}>
-                  Complete your profile
-                </Text>
-                <Text
-                  style={{
-                    ...commonStyle.regularFont13,
-                    color: colors.black,
-                    letterSpacing: 1,
-                  }}>
-                  you have missing profile imformation.{' '}
-                  <Text style={styles.span}>Tap here</Text> to complete.
-                </Text>
-              </View>
-            </View>
-
-            {/* chart */}
-            <View style={styles.rowWrapSpace}>
-              <View>
-                <View style={styles.chartHeader}>
-                  <Text style={styles.font18Semibold}>Revenue</Text>
-                  <View style={{flexDirection: 'row'}}>
-                    <Text style={{...styles.font14Regular, color: '#2E3E3A5f'}}>
-                      This month{' '}
-                    </Text>
-                    <Image source={imagePath.dropdownTriangle} />
-                  </View>
-                </View>
-                <View style={styles.graphContainer}>
-                  <View style={styles.graphHeader}>
-                    <Text style={{...styles.font13Regular, color: '#2E3E3A5f'}}>
-                      Total revenue (Delivered order)
-                    </Text>
-                    <Text style={styles.font16Bold}>$123456</Text>
-                  </View>
-                  <BarChart
-                    withCustomBarColorFromData={true}
-                    style={{margin: 0, padding: 0, flex: 1, marginLeft: 0}}
-                    // yLabelsOffset={30}
-                    data={data}
-                    width={boxWidth()}
-                    height={moderateScaleVertical(220)}
-                    yAxisLabel="$"
-                    yAxisInterval={2}
-                    chartConfig={chartConfig}
-                    verticalLabelRotation={0}
-                    horizontalLabelRotation={0}
-                    withInnerLines={false}
-                    showBarTops={false}
-                    fromZero={true}
-                    flatColor={true}
-                  />
-                </View>
-              </View>
-              <View>
-                <View style={styles.chartHeader}>
-                  <Text style={styles.font18Semibold}>Revenue</Text>
-                  <View style={{flexDirection: 'row'}}>
-                    <Text style={{...styles.font14Regular, color: '#2E3E3A5f'}}>
-                      This month{' '}
-                    </Text>
-                    <Image source={imagePath.dropdownTriangle} />
-                  </View>
-                </View>
-                <View style={styles.graphContainer}>
-                  <View style={styles.graphHeader}>
-                    <Text style={styles.font13Regular}>
-                      Total orders placed
-                    </Text>
-                    <Text style={styles.font16Bold}>34565</Text>
-                  </View>
-                  <BarChart
-                    withCustomBarColorFromData={true}
-                    data={data}
-                    width={boxWidth()}
-                    height={moderateScaleVertical(220)}
-                    yAxisLabel="$"
-                    chartConfig={chartConfig}
-                    verticalLabelRotation={0}
-                    horizontalLabelRotation={0}
-                    withInnerLines={false}
-                    showBarTops={false}
-                    fromZero={true}
-                    flatColor={true}
-                  />
-                </View>
-              </View>
-            </View>
-
-            {/* new Order */}
-            <View>
+            <View style={{flex: 1, marginLeft: moderateScale(16)}}>
               <Text
                 style={{
-                  ...styles.font18Semibold,
-                  marginVertical: moderateScaleVertical(16),
+                  ...commonStyle.boldFont16,
+                  color: colors.black,
                 }}>
-                New Order
+                Complete your profile
               </Text>
-              <FlatList
-                data={['Cash', 'Card', 'Cash', 'Cash']}
-                numColumns={width > 600 ? 2 : 1}
-                renderItem={({item, index}) => {
-                  return (
-                    <View
-                      style={{
-                        marginLeft: customMarginLeftForBox(index),
-                        flex: 1,
-                      }}>
-                      <OrderCard
-                        onPress={() =>
-                          navigation.navigate(
-                            navigationStrings.ROYO_ORDER_DETAIL,
-                          )
-                        }
-                        data={orderData}
-                        index={index}
-                        mode={item}
-                      />
-                    </View>
-                  );
-                }}
-                keyExtractor={(item, key) => key}
-              />
+              <Text
+                style={{
+                  ...commonStyle.regularFont13,
+                  color: colors.black,
+                  letterSpacing: 1,
+                }}>
+                you have missing profile imformation.{' '}
+                <Text style={styles.span}>Tap here</Text> to complete.
+              </Text>
             </View>
           </View>
-        )}
+
+          {/* chart */}
+          <View style={styles.rowWrapSpace}>
+            <View>
+              <View style={styles.chartHeader}>
+                <Text style={styles.font18Semibold}>Revenue</Text>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{...styles.font14Regular, color: '#2E3E3A5f'}}>
+                    This month{' '}
+                  </Text>
+                  <Image source={imagePath.dropdownTriangle} />
+                </View>
+              </View>
+              <View style={styles.graphContainer}>
+                <View style={styles.graphHeader}>
+                  <Text style={{...styles.font13Regular, color: '#2E3E3A5f'}}>
+                    Total revenue (Delivered order)
+                  </Text>
+                  <Text style={styles.font16Bold}>${totalRevenue}</Text>
+                </View>
+                <BarChart
+                  withCustomBarColorFromData={true}
+                  style={{margin: 0, padding: 0, flex: 1, marginLeft: 0}}
+                  // yLabelsOffset={30}
+                  data={barData}
+                  width={boxWidth()}
+                  height={moderateScaleVertical(220)}
+                  yAxisLabel="$"
+                  yAxisInterval={2}
+                  chartConfig={chartConfig}
+                  verticalLabelRotation={0}
+                  horizontalLabelRotation={0}
+                  withInnerLines={false}
+                  showBarTops={false}
+                  fromZero={true}
+                  flatColor={true}
+                />
+              </View>
+            </View>
+            <View>
+              <View style={styles.chartHeader}>
+                <Text style={styles.font18Semibold}>Revenue</Text>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{...styles.font14Regular, color: '#2E3E3A5f'}}>
+                    This month{' '}
+                  </Text>
+                  <Image source={imagePath.dropdownTriangle} />
+                </View>
+              </View>
+              <View style={styles.graphContainer}>
+                <View style={styles.graphHeader}>
+                  <Text style={styles.font13Regular}>Total orders placed</Text>
+                  <Text style={styles.font16Bold}>34565</Text>
+                </View>
+                <BarChart
+                  withCustomBarColorFromData={true}
+                  data={barData}
+                  width={boxWidth()}
+                  height={moderateScaleVertical(220)}
+                  yAxisLabel="$"
+                  chartConfig={chartConfig}
+                  verticalLabelRotation={0}
+                  horizontalLabelRotation={0}
+                  withInnerLines={false}
+                  showBarTops={false}
+                  fromZero={true}
+                  flatColor={true}
+                />
+              </View>
+            </View>
+          </View>
+
+          {/* new Order */}
+          <View>
+            <Text
+              style={{
+                ...styles.font18Semibold,
+                marginVertical: moderateScaleVertical(16),
+              }}>
+              New Order
+            </Text>
+            <FlatList
+              onEndReached={onEndReachedDelayed}
+              onEndReachedThreshold={0.5}
+              data={newOrder}
+              showsVerticalScrollIndicator={false}
+              bounces={false}
+              numColumns={width > 600 ? 2 : 1}
+              ListEmptyComponent={() => {
+                return (
+                  <View style={styles.emptyCartBody}>
+                    <Image source={imagePath.emptyCartRoyo} />
+                  </View>
+                );
+              }}
+              renderItem={({item, index}) => {
+                return (
+                  <View
+                    style={{
+                      marginLeft: customMarginLeftForBox(index),
+                      flex: 1,
+                    }}>
+                    <OrderCard
+                      onPress={() =>
+                        navigation.navigate(navigationStrings.ORDER_DETAIL, {
+                          data: item,
+                          selectedVendor,
+                        })
+                      }
+                      updateOrderStatus={updateOrderStatus}
+                      item={item}
+                    />
+                  </View>
+                );
+              }}
+              keyExtractor={(item, key) => key}
+            />
+          </View>
+        </View>
       </ScrollView>
     </WrapperContainer>
   );
@@ -450,5 +344,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexGrow: 1,
+  },
+  emptyCartBody: {
+    flex: 1,
+    justifyContent: 'center',
+    height: 400,
+    alignItems: 'center',
   },
 });

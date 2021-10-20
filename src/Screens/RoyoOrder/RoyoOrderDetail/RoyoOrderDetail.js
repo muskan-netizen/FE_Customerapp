@@ -1,33 +1,92 @@
 import moment from 'moment';
-import React from 'react';
+import React, {useState} from 'react';
 import {Image} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {ScrollView} from 'react-native';
 import {FlatList} from 'react-native';
 import {View, Text} from 'react-native';
+import {useSelector} from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import Header from '../../../Components/Header';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
+import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import fontFamily from '../../../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../../../styles/responsiveSize';
 import {customMarginBottom} from '../../../utils/constants/constants';
 import {getImageUrl} from '../../../utils/helperFunctions';
 
 const RoyoOrderDetail = (props) => {
   const {navigation} = props;
-  const {data, updateOrderStatus} = props.route.params;
-  const updatedOrderStatus=(data, state)=>{
+  const {data, selectedVendor} = props.route.params;
+console.log(selectedVendor, 'selected vendor id')
+  const {appData, appStyle, currencies, languages} = useSelector(
+    (state) => state?.initBoot,
+  );
+  const updatedOrderStatus = (data, state) => {
+    updateState({showUpcomingStatus: false});
+
     updateOrderStatus(data, state);
-    navigation.goBack()
-  }
+    navigation.goBack();
+  };
+
+  const updateOrderStatus = (acceptRejectData, status) => {
+    let data = {};
+    data['order_id'] = acceptRejectData?.id;
+    data['vendor_id'] = selectedVendor?.id;
+    data['order_status_option_id'] = status;
+    updateState({isLoadingB: true});
+    actions
+      .updateOrderStatus(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        console.log(res, 'res>>>acceptRejectOrder and the hello');
+        updateState({
+          isLoadingB: false,
+        });
+        if (res && res.status == 'success') {
+          updateState({
+            showUpcomingStatus: false,
+            current_status:res.order_status.current_status,
+            upcoming_status: res.order_status.upcoming_status
+          })
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        updateState({
+          isLoadingB: false,
+        });
+      });
+  };
+
+  const [state, setState] = useState({
+    isLoadingB: false,
+    showUpcomingStatus: false,
+    current_status: data?.order_status.current_status,
+    upcoming_status: data?.order_status.upcoming_status,
+  });
+  const {showUpcomingStatus, current_status, upcoming_status, isLoadingB} =
+    state;
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const toggleUpcomingStatus = () => {
+    updateState({
+      showUpcomingStatus: !showUpcomingStatus,
+    });
+  };
   return (
     <WrapperContainer
+      isLoading={isLoadingB}
       bgColor="white"
       statusBarColor="white"
       barStyle="dark-content">
@@ -40,18 +99,36 @@ const RoyoOrderDetail = (props) => {
         style={styles.container}
         bounces={false}
         showsVerticalScrollIndicator={false}>
-        {data?.order_status?.current_status.id != 1 ? (
+        {current_status.id != 1 ? (
           <View>
             <Text style={styles.jobStatus}>Job Status</Text>
             <View style={styles.preparingBox}>
               <Text style={{...styles.font16Semibold, color: colors.white}}>
-                {data?.order_status.current_status.title}
+                {current_status.title}
               </Text>
-              <Image source={imagePath.dropdownTriangle} />
+              <TouchableOpacity
+                disabled={!data?.order_status?.upcoming_status}
+                onPress={toggleUpcomingStatus}>
+                <Image source={imagePath.dropdownTriangle} />
+              </TouchableOpacity>
             </View>
+            {showUpcomingStatus && upcoming_status ? (
+              <View style={styles.upcomingStatus}>
+                <Text style={{...styles.font16Semibold, color: colors.white}}>
+                  {upcoming_status.title}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => updateOrderStatus(data, upcoming_status.id)}>
+                  <Image
+                    style={{tintColor: colors.white}}
+                    source={imagePath.selectedRoyo}
+                  />
+                </TouchableOpacity>
+              </View>
+            ) : null}
           </View>
         ) : null}
-        <View style={styles.orderNumberBox}>
+        <View style={{...styles.orderNumberBox, zIndex: -1}}>
           <Text style={styles.orderNumber}>Order #{data.order_number}</Text>
           <Text style={styles.orderTime}>{`${moment(data?.date_time).format(
             'DD MMM,YYYY',
@@ -63,7 +140,6 @@ const RoyoOrderDetail = (props) => {
           data={data?.product_details}
           keyExtractor={(val, index) => index}
           renderItem={({item, index}) => {
-            console.log(item, 'item');
             return (
               <View style={styles.itemBox}>
                 <Image
@@ -106,7 +182,7 @@ const RoyoOrderDetail = (props) => {
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.font15Medium}>Total</Text>
             <Text style={{...styles.font15Semibold, color: colors.themeColor2}}>
-              {`$ ${data.payable_amount + 23}`}
+              {`$ ${parseFloat(data.payable_amount) + parseFloat(23)}`}
             </Text>
           </View>
         </View>
@@ -164,13 +240,13 @@ const RoyoOrderDetail = (props) => {
             </Text>
           </View>
         </View>
-        {data?.order_status?.current_status.id == 1 ? (
+        {current_status.id == 1 ? (
           <View style={styles.buttonBox}>
             <ButtonWithLoader
               btnText="Reject"
               btnTextStyle={styles.btnText}
               btnStyle={styles.btnContainer}
-              onPress={() => updatedOrderStatus(data, 8)}
+              onPress={() => updateOrderStatus(data, 8)}
             />
             <ButtonWithLoader
               btnText="Confirm"
@@ -180,7 +256,7 @@ const RoyoOrderDetail = (props) => {
                 backgroundColor: colors.themeColor2,
                 marginLeft: moderateScale(10),
               }}
-              onPress={() => updatedOrderStatus(data, 7)}
+              onPress={() => updateOrderStatus(data, 7)}
             />
           </View>
         ) : null}
@@ -249,10 +325,28 @@ const styles = StyleSheet.create({
     paddingVertical: moderateScaleVertical(15),
     borderRadius: moderateScale(5),
     backgroundColor: colors.themeColor2,
-    margin: moderateScaleVertical(16),
+    marginTop: moderateScaleVertical(16),
+    marginHorizontal: moderateScaleVertical(16),
     alignItems: 'center',
   },
+  upcomingStatus: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: moderateScale(20),
+    paddingVertical: moderateScaleVertical(15),
+    borderRadius: moderateScale(5),
+    backgroundColor: colors.themeColor2,
+    marginTop: moderateScaleVertical(16),
+    marginHorizontal: moderateScaleVertical(16),
+    alignItems: 'center',
+    marginTop: 0,
+    zIndex: 23,
+    position: 'absolute',
+    bottom: -moderateScaleVertical(48),
+    width: width - moderateScaleVertical(32),
+  },
   orderNumberBox: {
+    marginTop: moderateScaleVertical(16),
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: moderateScale(4),
