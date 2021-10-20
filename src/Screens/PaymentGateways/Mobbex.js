@@ -24,11 +24,12 @@ export default function Mobbex({navigation, route}) {
 
   const [state, setState] = useState({
     webUrl: '',
+    isLoading: true,
   });
 
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {webUrl} = state;
+  const {webUrl, isLoading} = state;
 
   useEffect(() => {
     apiHit();
@@ -51,6 +52,7 @@ export default function Mobbex({navigation, route}) {
           language: languages?.primary_language?.id,
         },
       );
+      console.log(res, 'responseMobbex');
       updateState({webUrl: res.data});
     } catch (error) {
       showError(error.message || error);
@@ -67,6 +69,7 @@ export default function Mobbex({navigation, route}) {
     const URL = queryString.parseUrl(url);
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
+    console.log(props, 'propsMobbex');
 
     setTimeout(() => {
       if (queryParams.status === '200') {
@@ -87,9 +90,11 @@ export default function Mobbex({navigation, route}) {
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.transparent}
       statusBarColor={colors.white}
-      source={loaderOne}>
+      source={loaderOne}
+      isLoadingB={isLoading}>
       {webUrl !== '' && (
         <WebView
+          onLoad={() => updateState({isLoading: false})}
           source={{uri: webUrl}}
           onNavigationStateChange={onNavigationStateChange}
         />

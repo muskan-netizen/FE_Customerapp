@@ -23,11 +23,12 @@ export default function Payfast({navigation, route}) {
 
   const [state, setState] = useState({
     webData: '',
+    isLoading: true,
   });
 
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {webData} = state;
+  const {webData, isLoading} = state;
 
   useEffect(() => {
     apiHit();
@@ -91,7 +92,8 @@ export default function Payfast({navigation, route}) {
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.transparent}
       statusBarColor={colors.white}
-      source={loaderOne}>
+      source={loaderOne}
+      isLoadingB={isLoading}>
       {webData !== '' && (
         <WebView
           showsVerticalScrollIndicator={false}
@@ -102,6 +104,7 @@ export default function Payfast({navigation, route}) {
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
           }}
           onNavigationStateChange={onNavigationStateChange}
+          onLoad={() => updateState({isLoading: false})}
         />
       )}
     </WrapperContainer>

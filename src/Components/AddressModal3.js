@@ -252,9 +252,9 @@ export default function AddressModal3({
       address: address ? address : '',
       street: street ? street : '',
       city: city ? city : '',
-      // states: states ? states : '',
+      states: states ? states : '',
       country: country ? country : '',
-      //pincode: pincode ? pincode : '',
+      pincode: pincode ? pincode : '',
     });
     if (error) {
       // showError(error);
