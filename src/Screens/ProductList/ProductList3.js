@@ -1802,7 +1802,7 @@ export default function Products({route, navigation}) {
               showsVerticalScrollIndicator={false}
               onScroll={onScroll}
               sections={sectionListData}
-              ListHeaderComponent={listHeaderComponent2}
+              ListHeaderComponent={listHeaderComponent2()}
               stickySectionHeadersEnabled={false}
               scrollToLocationOffset={50}
               maxToRenderPerBatch={18}
@@ -1839,7 +1839,7 @@ export default function Products({route, navigation}) {
             showsVerticalScrollIndicator={false}
             data={productListData}
             renderItem={renderProduct}
-            ListHeaderComponent={listHeaderComponent2}
+            ListHeaderComponent={listHeaderComponent2()}
             keyExtractor={(item, index) => String(index)}
             keyboardShouldPersistTaps="always"
             showsVerticalScrollIndicator={false}
