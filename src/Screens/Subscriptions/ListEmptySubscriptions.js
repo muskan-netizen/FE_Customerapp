@@ -13,9 +13,10 @@ export default function ListEmptySubscriptions({isLoading = false}) {
   if (isLoading) {
     return (
       <View>
-        {[1, 1, 1, 1, 1].map(() => {
+        {[1, 1, 1, 1, 1].map((i, inx) => {
           return (
             <HeaderLoader
+              key={String(inx)}
               isRight={false}
               widthLeft={width - moderateScale(30)}
               rectWidthLeft={width - moderateScale(30)}

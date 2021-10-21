@@ -48,6 +48,9 @@ export default function Signup({navigation}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+
+  // console.log(appData, 'appDataSignup');
+
   const [state, setState] = useState({
     isLoading: false,
     callingCode: appData?.profile.country?.phonecode
@@ -73,11 +76,13 @@ export default function Signup({navigation}) {
 
   const isValidData = () => {
     const error = validations({
-      email: email,
+      email: appData?.profile?.preferences?.verify_email ? email : 'emptyValid',
       password: password,
       name: name,
-      phoneNumber: phoneNumber,
       callingCode: callingCode,
+      phoneNumber: appData?.profile?.preferences?.verify_phone
+        ? phoneNumber
+        : 'emptyValid',
     });
     if (error) {
       showError(error);
@@ -87,8 +92,8 @@ export default function Signup({navigation}) {
   };
 
   /** SIGNUP API FUNCTION **/
-  const onSignup = async() => {
-    let fcmToken = await AsyncStorage.getItem('fcmToken')
+  const onSignup = async () => {
+    let fcmToken = await AsyncStorage.getItem('fcmToken');
 
     let {callingCode} = state;
     const checkValid = isValidData();
@@ -107,10 +112,9 @@ export default function Signup({navigation}) {
       device_type: Platform.OS,
       device_token: DeviceInfo.getUniqueId(),
       refferal_code: referralCode,
-      fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId()
+      fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
       // country_id: '1',
     };
-    console.log(data, 'signup--data');
     updateState({isLoading: true});
     actions
       .signUpApi(data, {
@@ -125,26 +129,32 @@ export default function Signup({navigation}) {
         updateState({isLoading: false});
 
         if (!!res.data) {
-          if (!!res.data?.client_preference?.verify_email &&
-            !!res.data?.client_preference?.verify_phone) {
-            if (!!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified) {
-              navigation.push(navigationStrings.DRAWER_ROUTES)
+          if (
+            !!res.data?.client_preference?.verify_email &&
+            !!res.data?.client_preference?.verify_phone
+          ) {
+            if (
+              !!res.data?.verify_details?.is_email_verified &&
+              !!res.data?.verify_details?.is_phone_verified
+            ) {
+              navigation.push(navigationStrings.DRAWER_ROUTES);
             } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
+              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
-          }
-          else if (!!res.data?.client_preference?.verify_email ||
-            !!res.data?.client_preference?.verify_phone) {
-            if (!!res.data?.verify_details?.is_email_verified ||
-              !!res.data?.verify_details?.is_phone_verified) {
-              navigation.push(navigationStrings.DRAWER_ROUTES)
+          } else if (
+            !!res.data?.client_preference?.verify_email ||
+            !!res.data?.client_preference?.verify_phone
+          ) {
+            if (
+              !!res.data?.verify_details?.is_email_verified ||
+              !!res.data?.verify_details?.is_phone_verified
+            ) {
+              navigation.push(navigationStrings.DRAWER_ROUTES);
             } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
+              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
-          }
-          else {
-            navigation.push(navigationStrings.DRAWER_ROUTES)
+          } else {
+            navigation.push(navigationStrings.DRAWER_ROUTES);
           }
         }
       })

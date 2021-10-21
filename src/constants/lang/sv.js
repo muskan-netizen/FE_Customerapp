@@ -536,4 +536,16 @@ export default {
   NORIDEAVAILABLE: 'No Ride Available',
   ON_SALE: 'On Sale',
   NEW_PRODUCTS: 'New Products',
+  SCHEDULED: 'Scheduled',
+  VERIFY_EMAIL_ADDRESS: 'Verify Email Address',
+  ENTER_CODE_SENT_TO_EMAIL:
+    'Enter the code we just sent you on your email address',
+  SAVE_SEND: 'Save & Send',
+  DONT_RECEIVE_CODE: "If you didn't receive a code?",
+  RESEND: 'RESEND',
+  VERIFY_CAPITAL: 'VERIFY',
+  VERIFY_PHONE_NUMBER: 'Verify Phone number',
+  ENTER_CODE_SENT_TO_MOBILE: 'Enter the code we just sent you on your mobile',
+  REJECT_REASON: 'Reject Reason',
+  ENTER_REASON_FOR_REJECTING_ORDER: 'Enter reason for rejecting the order.',
 };

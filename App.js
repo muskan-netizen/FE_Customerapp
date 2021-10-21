@@ -28,8 +28,8 @@ import {
 import {getItem, getUserData, setItem} from './src/utils/utils';
 import PushNotification from 'react-native-push-notification';
 
-export let appData = {}
-export let language = ''
+export let appData = {};
+export let language = '';
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
@@ -38,7 +38,6 @@ const App = () => {
   // deep linking
   console.log(appMainData, 'appMainData+++++++++');
   async function handleDynamicLink(deepLinkUrl) {
-    console.log(deepLinkUrl, 'deepLinkUrl');
     if (deepLinkUrl != null) {
       setItem('deepLinkUrl', deepLinkUrl);
       let routeName = getUrlRoutes(deepLinkUrl, 1);
@@ -109,7 +108,7 @@ const App = () => {
       }
 
       const getAppData = await getItem('appData');
-      appData = getAppData
+      appData = getAppData;
       dispatch({
         type: types.APP_INIT,
         payload: getAppData,
@@ -206,7 +205,7 @@ const App = () => {
 
       //Language
       const getLanguage = await getItem('language');
-      language = getLanguage
+      language = getLanguage;
       if (getLanguage) {
         strings.setLanguage(getLanguage);
       }
@@ -232,7 +231,6 @@ const App = () => {
 
   //Check internet connection
   useEffect(() => {
-  
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
       const netStatus = state.isConnected;
       setInternet(netStatus);
@@ -259,8 +257,6 @@ const App = () => {
       />
       <FlashMessage position="top" />
       <NoInternetModal show={!internetConnection} />
-
-
     </SafeAreaProvider>
   );
 };

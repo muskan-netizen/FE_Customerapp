@@ -133,6 +133,9 @@ export default function (data) {
   // }
 
   if (email !== undefined) {
+    if (email === 'emptyValid') {
+      return;
+    }
     let emptyValidationText = checkEmpty(email, strings.EMAIL);
     if (emptyValidationText !== '') {
       return emptyValidationText;
@@ -144,6 +147,9 @@ export default function (data) {
   }
 
   if (phoneNumber !== undefined) {
+    if (phoneNumber === 'emptyValid') {
+      return;
+    }
     // let emptyValidationText = checkEmpty(phoneNumber, strings.PHONE_NUMBER);
     // if (emptyValidationText !== '') {
     //   return emptyValidationText;

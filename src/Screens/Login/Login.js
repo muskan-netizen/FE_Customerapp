@@ -44,6 +44,12 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {mobile} from 'is_js';
 
 export default function Login({navigation}) {
+  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
+    (state) => state?.initBoot,
+  );
+  const {apple_login, fb_login, twitter_login, google_login} = useSelector(
+    (state) => state?.initBoot?.appData?.profile?.preferences,
+  );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -73,13 +79,6 @@ export default function Login({navigation}) {
       countryName: '',
     },
   });
-
-  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
-    (state) => state?.initBoot,
-  );
-  const {apple_login, fb_login, twitter_login, google_login} = useSelector(
-    (state) => state?.initBoot?.appData?.profile?.preferences,
-  );
 
   const fontFamily = appStyle?.fontSizeData;
   //CLone deep all the states
@@ -145,7 +144,6 @@ export default function Login({navigation}) {
       dialCode: mobilNo.focus ? mobilNo.callingCode : '',
       countryData: mobilNo.focus ? mobilNo.cca2 : '',
     };
-    console.log(data, 'dataaa');
     updateState({isLoading: true});
     actions
       .loginUsername(data, {
