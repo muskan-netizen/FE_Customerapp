@@ -34,8 +34,8 @@ const ForegroundHandler = (props) => {
         Platform.OS == 'ios' ?
           PushNotificationIOS.addNotificationRequest({
             id: messageId,
-            body: data?.message || '',
-            title: data?.type || '',
+            body: data?.body || '',
+            title: data?.title || '',
             sound: notification.sound,
           })
           :

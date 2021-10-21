@@ -103,7 +103,7 @@ export default function AllPaymentMethods({navigation, route}) {
         },
       )
       .then((res) => {
-        console.log(res, 'res>>pay');
+        console.log(res, 'allpayments gate');
         updateState({isLoading: false, isRefreshing: false});
         if (res && res?.data) {
           updateState({payementMethods: res?.data});
@@ -222,31 +222,32 @@ export default function AllPaymentMethods({navigation, route}) {
           selectedPaymentMethod?.off_site == 0 &&
           selectedPaymentMethod?.id != 1
         ) && (
-          <CardField
-            postalCodeEnabled={true}
-            placeholder={{
-              number: '4242 4242 4242 4242',
-            }}
-            cardStyle={{
-              backgroundColor: '#FFFFFF',
-              textColor: '#000000',
-            }}
-            style={{
-              width: '100%',
-              height: 50,
-              marginVertical: 10,
-            }}
-            onCardChange={(cardDetails) => {
-              console.log('cardDetails', cardDetails);
-              _onChangeStripeData(cardDetails);
-            }}
-            onFocus={(focusedField) => {
-              console.log('focusField', focusedField);
-            }}
-            onBlur={() => {
-              Keyboard.dismiss();
-            }}
-          />
+          <View>
+            <CardField
+              postalCodeEnabled={true}
+              placeholder={{
+                number: '4242 4242 4242 4242',
+              }}
+              cardStyle={{
+                backgroundColor: '#FFFFFF',
+                textColor: '#000000',
+              }}
+              style={{
+                width: '100%',
+                height: 50,
+                marginVertical: 10,
+              }}
+              onCardChange={(cardDetails) => {
+                _onChangeStripeData(cardDetails);
+              }}
+              onFocus={(focusedField) => {
+                console.log('focusField', focusedField);
+              }}
+              onBlur={() => {
+                Keyboard.dismiss();
+              }}
+            />
+          </View>
         )}
       </>
     );

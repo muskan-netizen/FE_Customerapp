@@ -401,7 +401,7 @@ export default function Products({route, navigation}) {
     // }
   };
 
-  /**********Get all list items by category filters */
+  /**********Get all list items category filters */
   const getAllProductsCategoryFilter = () => {
     console.log('api hit getAllProductsCategoryFilter');
     let data = {};
@@ -452,7 +452,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'res vendor products++++++');
+        console.log(res?.data, 'res vendor products++++++');
         if (res?.data?.vendor?.is_show_products_with_category) {
           var totalProduct = 1;
           let filterArray = res?.data?.categories?.map((val) => {
@@ -659,10 +659,14 @@ export default function Products({route, navigation}) {
   };
 
   const addSingleItem = async (item, section = null) => {
+    if (!categoryInfo?.show_slot && !!categoryInfo.is_vendor_closed) {
+      alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
+      return;
+    }
+
     let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
     updateState({selectedItemID: item?.id, btnLoader: true});
     let isSingleVendor = await checkSingleVendor(item.id);
-    console.log('is single vendor', isSingleVendor);
     if (
       isSingleVendor.isSingleVendorEnabled !== 0 &&
       isSingleVendor.otherVendorExists !== 0
@@ -780,6 +784,12 @@ export default function Products({route, navigation}) {
     categoryInfo?.is_show_products_with_category,
   );
   const addDeleteCartItems = (item, section = null, index, type) => {
+
+    if (!categoryInfo?.show_slot && !!categoryInfo.is_vendor_closed) {
+      alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
+      return;
+    }
+
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
     //!!data?.variant[0]?.check_if_in_cart_app && data?.variant[0]?.check_if_in_cart_app.length > 0 || !!data?.qty ?
@@ -1509,16 +1519,12 @@ export default function Products({route, navigation}) {
   };
 
   const onScroll = ({nativeEvent}) => {
-    if (!sectionListData?.length) {
+    if (
+      productListData &&
+      productListData.length &&
+      productListData.length < 6
+    ) {
       return;
-    } else {
-      if (
-        productListData &&
-        productListData.length &&
-        productListData.length < 6
-      ) {
-        return;
-      }
     }
 
     let offset = nativeEvent.contentOffset.y;

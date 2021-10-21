@@ -786,6 +786,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.caribeclean:
+          updateState({
+            shortCode: shortCodes.caribeclean,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -828,12 +834,13 @@ export default function ShortCode({route, navigation}) {
     }
 
     actions
-      .initApp({}, header)
+      .initApp({}, header, false, null, null, true)
       .then((res) => {
         updateState({changeInShortCode: false});
         if (getBundleId() == appIds.royoorder) {
           actions.saveShortCode(shortCode);
         }
+
         homeData(res.data);
       })
       .catch((error) => {

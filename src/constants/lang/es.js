@@ -554,4 +554,7 @@ personalizado`,
   VENDOR_NOT_ACCEPTING_ORDERS: 'Vendor is not accepting orders right now.',
   REJECTED: 'Rejected',
   NORIDEAVAILABLE: 'No Ride Available',
+  NOIHAVETHEM: 'No i have them',
+  SEHEDLEDFOR: 'Scheduled For',
+  BOOK_NOW_RIDE: 'Book Ride',
 };
