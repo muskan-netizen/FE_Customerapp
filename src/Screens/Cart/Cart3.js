@@ -152,7 +152,6 @@ export default function Cart({navigation, route}) {
   const userData = useSelector((state) => state?.auth?.userData);
   const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
-  console.log(appData, 'appDataCart');
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
@@ -627,7 +626,7 @@ export default function Cart({navigation, route}) {
             payment_option_id: selectedPayment?.id,
             orderDetail: res.data,
           });
-        } 
+        }
 
         // else if (
         //   (res?.data?.payment_option_id === 8 &&
@@ -649,7 +648,6 @@ export default function Cart({navigation, route}) {
         //   });
 
         // }
-        
         else {
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
             orderDetail: res.data,
@@ -698,9 +696,10 @@ export default function Cart({navigation, route}) {
       return;
     } else if (
       selectedPayment?.off_site == 1 &&
-      !!(selectedPayment?.id === 6 || selectedPayment?.id === 7 
+      !!(
+        (selectedPayment?.id === 6 || selectedPayment?.id === 7)
         // || selectedPayment?.id===8
-        )
+      )
     ) {
       updateState({placeLoader: true});
       _directOrderPlace();
@@ -1704,6 +1703,7 @@ export default function Cart({navigation, route}) {
                   {cartData?.tip.map((j, jnx) => {
                     return (
                       <TouchableOpacity
+                        key={String(jnx)}
                         style={[
                           styles.tipArrayStyle,
                           {
@@ -2285,7 +2285,6 @@ export default function Cart({navigation, route}) {
         });
     }
   }, [deepLinkUrl]);
-  // console.log(deepLinkUrl, 'deepLinkUrlCarts');
 
   const _onTableSelection = (item) => {
     const data = {

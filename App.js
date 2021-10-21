@@ -38,7 +38,6 @@ const App = () => {
   // deep linking
   console.log(appMainData, 'appMainData+++++++++');
   async function handleDynamicLink(deepLinkUrl) {
-    console.log(deepLinkUrl, 'deepLinkUrl');
     if (deepLinkUrl != null) {
       setItem('deepLinkUrl', deepLinkUrl);
       let routeName = getUrlRoutes(deepLinkUrl, 1);
