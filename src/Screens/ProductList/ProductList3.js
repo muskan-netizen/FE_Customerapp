@@ -452,7 +452,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'res vendor products++++++');
+        console.log(res?.data, 'res vendor products++++++');
         if (res?.data?.vendor?.is_show_products_with_category) {
           var totalProduct = 1;
           let filterArray = res?.data?.categories?.map((val) => {
