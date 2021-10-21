@@ -121,7 +121,7 @@ export default function DashBoardFive({
     const imageUrl = getImageUrl(
       item.image.image_fit,
       item.image.image_path,
-      '500/1000',
+      '400/600',
     );
 
     return (
