@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,10 +7,13 @@ import {
   TouchableOpacity,
   Share,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 import Header from '../../../Components/Header';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
+import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
+import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import fontFamily from '../../../styles/fontFamily';
 import {
@@ -18,31 +21,77 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../../styles/responsiveSize';
+import {showError} from '../../../utils/helperFunctions';
 
 const RoyoAccounts = (props) => {
   const {navigation} = props;
 
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        title:
-          'Share link of your digital store on social media to connect with more customers.',
-        url: 'www.google.com',
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+  const [state, setState] = useState({
+    selectedVendor: null,
+    vendor_list: [],
+    isLoading: false,
+    isRefreshing: false,
+  });
 
+  const {selectedVendor, vendor_list, isLoading, isRefreshing} = state;
+  const {appData, currencies, languages} = useSelector(
+    (state) => state?.initBoot,
+  );
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+
+  const {storeSelectedVendor} = useSelector((state) => state?.order);
+  useEffect(() => {
+    updateState({
+      // selectedTab: null,
+      selectedVendor: storeSelectedVendor,
+      // isLoading: true,
+    });
+  }, [storeSelectedVendor]);
+
+  useEffect(() => {
+    _getListOfVendor();
+  }, []);
+
+  const _reDirectToVendorList = () => {
+    navigation.navigate(navigationStrings.VENDORLIST, {
+      selectedVendor: selectedVendor,
+      allVendors: vendor_list,
+      screenType: navigationStrings.ROYO_ACCOUNT,
+    });
+  };
+  const _getListOfVendor = () => {
+    let vendordId = !!storeSelectedVendor?.id
+      ? storeSelectedVendor?.id
+      : selectedVendor?.id
+      ? selectedVendor?.id
+      : '';
+    actions
+      ._getListOfVendorOrders(
+        `?limit=${1}&page=${1}&selected_vendor_id=${vendordId}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log('vendor orders res', res);
+        updateState({
+          vendor_list: res.data.vendor_list,
+          selectedVendor: !!storeSelectedVendor?.id
+            ? storeSelectedVendor
+            : res.data.vendor_list.find((x) => x.is_selected),
+          isLoading: false,
+          isRefreshing: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+  const errorMethod = (error) => {
+    updateState({isLoading: false, isRefreshing: false});
+    showError(error?.message || error?.error);
+  };
   const data = [
     {
       text: 'Transactions',
@@ -66,17 +115,21 @@ const RoyoAccounts = (props) => {
     },
   ];
 
+ 
   return (
     <WrapperContainer
       bgColor="white"
       statusBarColor="white"
       barStyle="dark-content">
       <Header
-      headerStyle={{marginVertical: moderateScaleVertical(16)}}
+        headerStyle={{marginVertical: moderateScaleVertical(16)}}
         centerTitle="Accounts | Foodies hub  "
+        centerTitle={`Accounts | ${selectedVendor?.name} `}
         noLeftIcon
         imageAlongwithTitle={imagePath.dropdownTriangle}
         showImageAlongwithTitle
+        onPressCenterTitle={() => _reDirectToVendorList()}
+        onPressImageAlongwithTitle={() => _reDirectToVendorList()}
       />
       <View style={styles.container}>
         <View style={styles.header}>
@@ -92,7 +145,7 @@ const RoyoAccounts = (props) => {
             </Text>
           </View>
           <View style={{flex: 1, justifyContent: 'center'}}>
-            <Text style={styles.font16Semibold}>Foodies's Hub</Text>
+            <Text style={styles.font16Semibold}>{selectedVendor?.name}</Text>
             <Text
               style={{
                 fontSize: 13,

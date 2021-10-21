@@ -59,7 +59,9 @@ export default function VendorList({navigation, route}) {
         ? navigationStrings.VENDOR_ORDER
         : screenType == staticStrings.PRODUCTS
         ? navigationStrings.VENDOR_PRODUCT
-        : navigationStrings.VENDOR_REVENUE,
+        : screenType == staticStrings.REVENUE
+        ? navigationStrings.VENDOR_REVENUE
+        : navigationStrings.ROYO_ACCOUNT,
       {
         selectedVendorFrom: i,
       },

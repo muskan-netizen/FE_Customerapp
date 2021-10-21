@@ -58,8 +58,8 @@ const Header = ({
     <>
       <View
         style={{
-          ...headerStyle,
           ...styles.headerStyle,
+          ...headerStyle,
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',

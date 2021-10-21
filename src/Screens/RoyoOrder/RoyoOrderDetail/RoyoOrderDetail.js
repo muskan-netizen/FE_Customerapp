@@ -1,11 +1,7 @@
 import moment from 'moment';
 import React, {useState} from 'react';
-import {Image} from 'react-native';
-import {TouchableOpacity} from 'react-native';
-import {StyleSheet} from 'react-native';
-import {ScrollView} from 'react-native';
-import {FlatList} from 'react-native';
-import {View, Text} from 'react-native';
+import * as MyShare from 'react-native-share';
+import {View, Text,ScrollView,StyleSheet,Image, TouchableOpacity,Share, FlatList} from 'react-native';
 import {useSelector} from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import Header from '../../../Components/Header';
@@ -22,11 +18,12 @@ import {
 } from '../../../styles/responsiveSize';
 import {customMarginBottom} from '../../../utils/constants/constants';
 import {getImageUrl} from '../../../utils/helperFunctions';
+import {dialCall} from '../../../utils/openNativeApp';
 
 const RoyoOrderDetail = (props) => {
   const {navigation} = props;
   const {data, selectedVendor} = props.route.params;
-console.log(selectedVendor, 'selected vendor id')
+  console.log(selectedVendor, 'selected vendor id');
   const {appData, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
@@ -35,6 +32,26 @@ console.log(selectedVendor, 'selected vendor id')
 
     updateOrderStatus(data, state);
     navigation.goBack();
+  };
+
+  const shareOptions = {
+    title: 'Share via',
+    message: 'some message',
+    url: 'some share url',
+    social: 'WHATSAPP',
+    whatsAppNumber: '917543875613',
+  };
+
+  const fun = async () => {
+    MyShare.Share.shareSingle(shareOptions)
+      .then((res) => {
+        console.log(res, 'share response');
+        alert('successfully shared');
+      })
+      .catch((err) => {
+        err && console.log(err, 'share response');
+        alert('sorry for inconvenience , we are unable to share');
+      });
   };
 
   const updateOrderStatus = (acceptRejectData, status) => {
@@ -57,9 +74,9 @@ console.log(selectedVendor, 'selected vendor id')
         if (res && res.status == 'success') {
           updateState({
             showUpcomingStatus: false,
-            current_status:res.order_status.current_status,
-            upcoming_status: res.order_status.upcoming_status
-          })
+            current_status: res.order_status.current_status,
+            upcoming_status: res.order_status.upcoming_status,
+          });
         }
       })
       .catch((err) => {
@@ -194,21 +211,30 @@ console.log(selectedVendor, 'selected vendor id')
           <View style={styles.flexRow}>
             <Text style={styles.font14Semibold}>Delivery address</Text>
             <View style={{flexDirection: 'row'}}>
-              <Image source={imagePath.callRoyo} />
-              <Image
-                style={{
-                  marginLeft: moderateScaleVertical(10),
-                  // ...styles.shareImage,
-                }}
-                source={imagePath.whatsAppRoyo}
-              />
-              <Image
-                style={{
-                  marginLeft: moderateScaleVertical(10),
-                  // ...styles.shareImage,
-                }}
-                source={imagePath.shareRoyo}
-              />
+              <TouchableOpacity onPress={() => dialCall(1234567890)}>
+                <Image source={imagePath.callRoyo} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={fun}>
+                <Image
+                  style={{
+                    marginLeft: moderateScaleVertical(10),
+                    // ...styles.shareImage,
+                  }}
+                  source={imagePath.whatsAppRoyo}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => Share.share({
+                // message: 'https://www.google.com',
+                title: 'this is my title',
+                url: 'https://www.google.com',
+              })}>
+                <Image
+                  style={{
+                    marginLeft: moderateScaleVertical(10),
+                  }}
+                  source={imagePath.shareRoyo}
+                />
+              </TouchableOpacity>
             </View>
           </View>
 

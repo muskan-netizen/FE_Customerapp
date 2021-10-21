@@ -14,6 +14,7 @@ import navigationStrings from './navigationStrings';
 import RoyoOrderScreenStack from './RoyoOrderScreenStack';
 import RoyoOrderProductStack from './RoyoOrderProductStack';
 import RoyoOrderHomeStack from './RoyoOrderHomeStack';
+import RoyoOrderAccountStack from './RoyoOrderAccountStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -177,7 +178,7 @@ const RoyoTabRoute = ({barColor = colors.themeColor2}) => {
 
       <Tab.Screen
         name={navigationStrings.ROYO_ACCOUNT}
-        component={RoyoAccounts}
+        component={RoyoOrderAccountStack}
         options={{
           headerShown: false,
           tabBarIcon: ({focused}) => {

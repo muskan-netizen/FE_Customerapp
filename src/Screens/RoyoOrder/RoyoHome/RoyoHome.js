@@ -46,7 +46,305 @@ const commonStyle = commonStyles({
 const RoyoHome = (props) => {
   const {navigation} = props;
 
-  
+  const {storeSelectedVendor} = useSelector((state) => state?.order);
+  const {appData, currencies, languages} = useSelector(
+    (state) => state.initBoot,
+  );
+  const [state, setState] = useState({
+    status: true,
+    activeOrders: [],
+    pastOrders: [],
+    scheduledOrders: [],
+    pageActive: 1,
+    pagePastOrder: 1,
+    pageScheduleOrder: 1,
+    limit: 10,
+    isLoading: true,
+    isRefreshing: false,
+    vendor_list: [],
+    selectedVendor: null,
+    startDate: null,
+    endDate: null,
+    displayedDate: moment(),
+    totalPendingOrder: 0,
+    totalActiveOrder: 0,
+    totalCancelledOrder: 0,
+    totalCompletedOrder: 0,
+    selectedDate: null,
+    labels: [],
+    datasets: [],
+    newOrder: [],
+    totalRevenue,
+  });
+
+  const {
+    totalRevenue,
+    datasets,
+    labels,
+    status,
+    isLoading,
+    activeOrders,
+    pageActive,
+    limit,
+    isRefreshing,
+    vendor_list,
+    selectedVendor,
+    startDate,
+    endDate,
+    displayedDate,
+    selectedDate,
+    newOrder,
+    totalPendingOrder,
+    totalActiveOrder,
+    totalCancelledOrder,
+    totalCompletedOrder,
+  } = state;
+
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const _getListOfVendorOrders = () => {
+    let vendordId = !!storeSelectedVendor?.id
+      ? storeSelectedVendor?.id
+      : selectedVendor?.id
+      ? selectedVendor?.id
+      : '';
+    actions
+      ._getListOfVendorOrders(
+        `?limit=${200}&page=${1}&selected_vendor_id=${vendordId}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          // systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        console.log('vendor orders res', res);
+        const newnewOrder = res?.data?.order_list?.data?.filter(
+          (value, index) => value?.order_status?.current_status?.id == 1,
+        );
+        const newconfirmed = res?.data?.order_list?.data?.filter(
+          (value, index) =>
+            value?.order_status?.current_status?.id == 2 ||
+            value?.order_status?.current_status?.id == 4 ||
+            value?.order_status?.current_status?.id == 5,
+        );
+        const newcancelled = res?.data?.order_list?.data?.filter(
+          (value, index) => value?.order_status?.current_status?.id == 3,
+        );
+        const newcompleted = res?.data?.order_list?.data?.filter(
+          (value, index) => value?.order_status?.current_status?.id == 6,
+        );
+        updateState({
+          newOrder: newnewOrder,
+          totalPendingOrder: newconfirmed.length,
+          totalActiveOrder: newnewOrder.length,
+          totalCancelledOrder: newcancelled.length,
+          totalCompletedOrder: newcompleted.length,
+          selectedVendor: !!storeSelectedVendor?.id
+            ? storeSelectedVendor
+            : res.data.vendor_list.find((x) => x.is_selected),
+          isLoading: false,
+          isRefreshing: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+
+  // useEffect(() => {
+  //   if (isLoading) {
+  //     _getRevnueData();
+  //   }
+  // }, [isLoading]);
+
+  useEffect(() => {
+    _getListOfVendorOrders();
+    if (selectedVendor != null) {
+      _getRevnueData();
+    }
+  }, [selectedVendor, pageActive]);
+
+  const _getRevnueData = () => {
+    let data = {};
+    data['type'] = 'monthly';
+    data['vendor_id'] = selectedVendor ? selectedVendor?.id : '';
+    actions
+      .getRevenueData(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        console.log(res, 'res__getRevnueData>>>');
+        if (res?.data?.dates.length) {
+          let totalRevenue = res.data.revenue.reduce(
+            (partial_sum, a) => parseFloat(partial_sum) + parseFloat(a),
+            parseFloat(0),
+          );
+          updateState({
+            isRefreshing: false,
+            isLoading: false,
+            labels: res.data.dates,
+            datasets: res.data.revenue,
+            totalRevenue,
+          });
+        } else {
+          updateState({
+            isLoading: false,
+            isRefreshing: false,
+          });
+        }
+      })
+      .catch(errorMethod);
+  };
+
+  //error handling
+  const errorMethod = (error) => {
+    updateState({
+      isLoading: false,
+    });
+    showError(error?.message || error?.error);
+  };
+
+  useEffect(() => {
+    updateState({
+      selectedVendor: storeSelectedVendor,
+      isLoading: true,
+      pageActive: 1,
+    });
+  }, [storeSelectedVendor]);
+
+  const barData = {
+    labels: labels,
+    datasets: [
+      {
+        data: datasets,
+        colors: [
+          (opacity = 1) => `rgba(4, 14, 22, ${opacity})`,
+          (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
+          (opacity = 1) => `rgba(174, 44, 242, ${opacity})`,
+          (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
+          (opacity = 1) => `rgba(7, 14, 242, ${opacity})`,
+          (opacity = 1) => `rgba(174, 144, 22, ${opacity})`,
+          (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
+          (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
+          (opacity = 1) => `rgba(174, 44, 242, ${opacity})`,
+          (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
+          (opacity = 1) => `rgba(7, 14, 242, ${opacity})`,
+        ],
+      },
+    ],
+  };
+  const onEndReached = ({distanceFromEnd}) => {
+    updateState({pageActive: pageActive + 1});
+  };
+
+  const onEndReachedDelayed = debounce(onEndReached, 1000, {
+    leading: true,
+    trailing: false,
+  });
+  const dashboardData = [
+    {
+      image: imagePath.timerRoyo,
+      header: 'Pending order',
+      text: `${totalPendingOrder} pending order`,
+    },
+    {
+      image: imagePath.activeRoyo,
+      header: 'Active order',
+      text: `${totalActiveOrder} active orders`,
+    },
+    {
+      image: imagePath.deliveredRoyo,
+      header: 'Delivered order',
+      text: `${totalCompletedOrder} orders delivered`,
+    },
+    {
+      image: imagePath.cancelledRoyo,
+      header: 'Cancelled order',
+      text: `${totalCancelledOrder} orders cancelled`,
+    },
+  ];
+  const chartConfig = {
+    barRadius: moderateScale(2.5),
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientToOpacity: 0,
+    fillShadowGradientOpacity: 0,
+    fillShadowGradient: colors.black,
+    yAxisInterval: 2,
+    barPercentage: 0.75,
+    decimalPlaces: 0, // optional, defaults to 2dp
+    color: (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,
+    labelColor: (opacity = 0.61) => `rgba(40, 62, 58, ${opacity})`,
+    propsForDots: {
+      r: '6',
+      strokeWidth: '1',
+      stroke: colors.themeColor2,
+    },
+  };
+  const updateOrderStatus = (acceptRejectData, status) => {
+    let data = {};
+    data['order_id'] = acceptRejectData?.id;
+    data['vendor_id'] = selectedVendor?.id;
+    data['order_status_option_id'] = status;
+    console.log(data, 'data>>data');
+    updateState({isLoadingB: true});
+    actions
+      .updateOrderStatus(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res, 'res>>>acceptRejectOrder');
+        if (res && res.status == 'success') {
+          updateStatus(res, acceptRejectData);
+        }
+      })
+      .catch(errorMethod);
+  };
+  const toggleStatus = () => updateState({status: !status});
+
+  const handleRefresh = () => {
+    updateState({pageActive: 1, isRefreshing: true});
+  };
+  const dashboard = (item, index) => {
+    const {image, header, text} = item;
+    return (
+      <View key={String(index)} style={styles.dashboardBox}>
+        <View
+          style={{
+            shadowColor: 'rgba(242,96,97,0.23)',
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.25,
+            flexShrink: 1,
+            shadowRadius: 3.84,
+
+            elevation: 19,
+          }}>
+          <Image source={image} />
+        </View>
+        <Text
+          style={{
+            ...commonStyle.boldFont14,
+            marginTop: moderateScaleVertical(18),
+          }}>
+          {header}
+        </Text>
+        <Text
+          style={{
+            ...styles.font14Regular,
+            marginVertical: moderateScaleVertical(4),
+          }}>
+          {text}
+        </Text>
+      </View>
+    );
+  };
 
   return (
     <WrapperContainer

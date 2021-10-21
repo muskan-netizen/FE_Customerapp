@@ -43,7 +43,7 @@ const RoyoProducts = (props) => {
           flexDirection: 'row',
           marginBottom: moderateScaleVertical(16),
         }}>
-        <TouchableOpacity style={{alignSelf: 'center'}}>
+        <TouchableOpacity onPress={()=>navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})} style={{alignSelf: 'center'}}>
           <Image
             style={styles.imageStyle}
             source={{
