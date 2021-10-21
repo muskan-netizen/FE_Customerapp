@@ -107,26 +107,32 @@ export default function OuterScreen({navigation}) {
       .then((res) => {
         console.log(res, 'res>>>SOCIAL');
         if (!!res.data) {
-          if (!!res.data?.client_preference?.verify_email &&
-            !!res.data?.client_preference?.verify_phone) {
-            if (!!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified) {
-              navigation.push(navigationStrings.DRAWER_ROUTES)
+          if (
+            !!res.data?.client_preference?.verify_email &&
+            !!res.data?.client_preference?.verify_phone
+          ) {
+            if (
+              !!res.data?.verify_details?.is_email_verified &&
+              !!res.data?.verify_details?.is_phone_verified
+            ) {
+              navigation.push(navigationStrings.DRAWER_ROUTES);
             } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
+              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
-          }
-          else if (!!res.data?.client_preference?.verify_email ||
-            !!res.data?.client_preference?.verify_phone) {
-            if (!!res.data?.verify_details?.is_email_verified ||
-              !!res.data?.verify_details?.is_phone_verified) {
-              navigation.push(navigationStrings.DRAWER_ROUTES)
+          } else if (
+            !!res.data?.client_preference?.verify_email ||
+            !!res.data?.client_preference?.verify_phone
+          ) {
+            if (
+              !!res.data?.verify_details?.is_email_verified ||
+              !!res.data?.verify_details?.is_phone_verified
+            ) {
+              navigation.push(navigationStrings.DRAWER_ROUTES);
             } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
+              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
-          }
-          else {
-            navigation.push(navigationStrings.DRAWER_ROUTES)
+          } else {
+            navigation.push(navigationStrings.DRAWER_ROUTES);
           }
         }
         updateState({isLoading: false});
@@ -373,7 +379,9 @@ export default function OuterScreen({navigation}) {
               )}
 
               {!!apple_login && Platform.OS == 'ios' && (
-                <View style={{marginVertical: moderateScaleVertical(15)}}>
+                <View
+                // style={{marginVertical: moderateScaleVertical(15)}}
+                >
                   <TransparentButtonWithTxtAndIcon
                     icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
                     btnText={strings.CONTINUE_APPLE}

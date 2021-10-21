@@ -1390,6 +1390,46 @@ android {
             resValue "string", "app_name", "Caribe Clean"
             resValue "string", "host_name", ""
          }
+         stonses{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.stonses'
+            resValue "string", "app_name", "Stonses"
+            resValue "string", "host_name", ""
+         }
+          agbdeliveries{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.agbdeliveries'
+            resValue "string", "app_name", "AGB Deliveries"
+            resValue "string", "host_name", ""
+         }
+         twofinder{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.twofinder'
+            resValue "string", "app_name", "Two Finder"
+            resValue "string", "host_name", ""
+         }
+         bookem{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.bookem'
+            resValue "string", "app_name", "Bookem"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

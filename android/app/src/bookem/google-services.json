@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "867150667432",
+    "project_id": "bookem-7558f",
+    "storage_bucket": "bookem-7558f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867150667432:android:8cacdd0f71f6cc299d2c9d",
+        "android_client_info": {
+          "package_name": "com.bookem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "867150667432-2bmaesl9pdaut1sl98ncfq085lqvqp5m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bookem",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "867150667432-cj81g34ecr67peka5c97ir99q2499k8o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bookem",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "867150667432-e9jkbovb3lgeema41n94q9m5pph9hr54.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bookem",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "867150667432-jbni7ve4hod5vcb4f694oj2ekmj02qqq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIGmTaK1hkDG278uIOuC8Zi8BZrH5qVeU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "867150667432-jbni7ve4hod5vcb4f694oj2ekmj02qqq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "867150667432-npjnqfdpbmfj1fqvluvto8u41d0ru13j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bookem"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
