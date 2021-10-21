@@ -627,7 +627,30 @@ export default function Cart({navigation, route}) {
             payment_option_id: selectedPayment?.id,
             orderDetail: res.data,
           });
-        } else {
+        } 
+
+        // else if (
+        //   (res?.data?.payment_option_id === 8 &&
+        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
+        //   Number(selectedTipAmount) !== 0
+        // ){
+
+        //   navigation.navigate(navigationStrings.YOCO, {
+        //     selectedPayment: selectedPayment,
+        //     total_payable_amount: (
+        //       Number(cartData?.total_payable_amount) +
+        //       (selectedTipAmount != null && selectedTipAmount != ''
+        //         ? Number(selectedTipAmount)
+        //         : 0)
+        //     ).toFixed(2),
+
+        //     payment_option_id: selectedPayment?.id,
+        //     orderDetail: res.data,
+        //   });
+
+        // }
+        
+        else {
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
             orderDetail: res.data,
           })();
@@ -675,7 +698,9 @@ export default function Cart({navigation, route}) {
       return;
     } else if (
       selectedPayment?.off_site == 1 &&
-      !!(selectedPayment?.id === 6 || selectedPayment?.id === 7)
+      !!(selectedPayment?.id === 6 || selectedPayment?.id === 7 
+        // || selectedPayment?.id===8
+        )
     ) {
       updateState({placeLoader: true});
       _directOrderPlace();

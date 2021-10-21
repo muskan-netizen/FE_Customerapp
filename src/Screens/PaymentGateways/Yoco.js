@@ -13,7 +13,7 @@ import {moderateScaleVertical} from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {showError} from '../../utils/helperFunctions';
 
-export default function Mobbex({navigation, route}) {
+export default function Yoco({navigation, route}) {
   let paramsData = route?.params;
   console.log(paramsData, '===>paramsData');
 
@@ -42,6 +42,8 @@ export default function Mobbex({navigation, route}) {
       paramsData?.payment_option_id
     }&action=cart&order_number=${paramsData?.orderDetail?.order_number}`;
 
+    console.log(queryData, 'queryData');
+
     try {
       const res = await actions.openPaymentWebUrl(
         queryData,
@@ -52,14 +54,14 @@ export default function Mobbex({navigation, route}) {
           language: languages?.primary_language?.id,
         },
       );
-      console.log(res, 'responseMobbex');
+      console.log(res, 'responseYoco');
       updateState({webUrl: res.data});
     } catch (error) {
       updateState({isLoading: false});
-
       showError(error.message || error);
     }
   };
+
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
@@ -73,20 +75,20 @@ export default function Mobbex({navigation, route}) {
     const nonQueryURL = URL.url;
     console.log(props, 'propsMobbex');
 
-    setTimeout(() => {
-      if (queryParams.status === '200') {
-        moveToNewScreen(navigationStrings.ORDERSUCESS, {
-          orderDetail: {
-            order_number: queryParams.order,
-            id: paramsData?.orderDetail?.id,
-          },
-        })();
-      } else if (queryParams.status === '0') {
-        moveToNewScreen(navigationStrings.CART, {
-          queryURL: url.replace(`${nonQueryURL}?`, ''),
-        })();
-      }
-    }, 3000);
+    // setTimeout(() => {
+    //   if (queryParams.status === '200') {
+    //     moveToNewScreen(navigationStrings.ORDERSUCESS, {
+    //       orderDetail: {
+    //         order_number: queryParams.order,
+    //         id: paramsData?.orderDetail?.id,
+    //       },
+    //     })();
+    //   } else if (queryParams.status === '0') {
+    //     moveToNewScreen(navigationStrings.CART, {
+    //       queryURL: url.replace(`${nonQueryURL}?`, ''),
+    //     })();
+    //   }
+    // }, 3000);
   };
   return (
     <WrapperContainer

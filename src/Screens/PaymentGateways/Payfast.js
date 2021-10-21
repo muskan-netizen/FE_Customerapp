@@ -55,6 +55,7 @@ export default function Payfast({navigation, route}) {
 
       updateState({webData: res?.data});
     } catch (error) {
+      updateState({isLoading: false});
       showError(error.message || error);
     }
   };

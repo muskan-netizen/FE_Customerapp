@@ -9,8 +9,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useSelector } from 'react-redux';
-import { dummyUser } from '../constants/constants';
+import {useSelector} from 'react-redux';
+import {dummyUser} from '../constants/constants';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import staticStrings from '../constants/staticStrings';
@@ -27,8 +27,8 @@ import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../utils/helperFunctions';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function OrderCardVendorComponent({
   data = {},
@@ -41,7 +41,7 @@ export default function OrderCardVendorComponent({
   onPressReturnOrder,
 }) {
   let cardWidth = width - 21.5;
-  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
+  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
@@ -51,24 +51,78 @@ export default function OrderCardVendorComponent({
   const imageUrl =
     data && data.user_image
       ? getImageUrl(
-        data.user_image.image_fit,
-        data.user_image.image_path,
-        '200/200',
-      )
+          data.user_image.image_fit,
+          data.user_image.image_path,
+          '200/200',
+        )
       : dummyUser;
   const fontFamily = appStyle?.fontSizeData;
 
-  const styles = stylesFunc({ fontFamily, themeColors });
+  const styles = stylesFunc({fontFamily, themeColors});
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={1}
       style={{
         ...styles.cardStyle,
-        backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white
-      }}
-    >
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.lightDark
+          : colors.white,
+      }}>
+      {!!(data?.luxury_option_name || data?.scheduled_date_time) && (
+        <View
+          style={{
+            ...styles.ariveView,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.greyNew,
+          }}>
+          {!!data?.luxury_option_name && (
+            <View
+              style={{
+                ...styles.tagView,
+                backgroundColor: colors.blueLight,
+              }}>
+              <Text
+                style={{
+                  ...styles.ariveTextStyle,
+                  color: colors.white,
+                }}>
+                {data?.luxury_option_name || ''}
+              </Text>
+            </View>
+          )}
+
+          {data && data?.scheduled_date_time && (
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View
+                style={{
+                  ...styles.tagView,
+                  backgroundColor: colors.green,
+                }}>
+                <Text
+                  style={{
+                    ...styles.ariveTextStyle,
+                    color: colors.white,
+                  }}>
+                  {strings.SCHEDULED}
+                </Text>
+              </View>
+              <Text
+                style={{
+                  ...styles.dateTxt,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : themeColors.primary_color,
+                }}>
+                {'  '}
+                {data?.scheduled_date_time} {'  '}
+              </Text>
+            </View>
+          )}
+        </View>
+      )}
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View
           style={{
             flex: 0.7,
@@ -88,41 +142,41 @@ export default function OrderCardVendorComponent({
             <Text
               style={
                 isDarkMode
-                  ? [styles.userName, { color: MyDarkTheme.colors.text }]
+                  ? [styles.userName, {color: MyDarkTheme.colors.text}]
                   : styles.userName
               }>
               {data?.user_name || ''}
             </Text>
-            <View style={{ flexWrap: 'wrap' }}>
+            <View style={{flexWrap: 'wrap'}}>
               <Text
                 style={
                   isDarkMode
-                    ? [styles.orderLableStyle, { color: MyDarkTheme.colors.text }]
+                    ? [styles.orderLableStyle, {color: MyDarkTheme.colors.text}]
                     : styles.orderLableStyle
                 }>{`#${data?.order_number}`}</Text>
               <Text
                 style={
                   isDarkMode
-                    ? [styles.orderLableStyle, { color: MyDarkTheme.colors.text }]
+                    ? [styles.orderLableStyle, {color: MyDarkTheme.colors.text}]
                     : styles.orderLableStyle
                 }>{`${moment(data?.date_time).format('DD MMM,YYYY')} ${moment(
-                  data?.date_time,
-                ).format('LT')} `}</Text>
+                data?.date_time,
+              ).format('LT')} `}</Text>
             </View>
           </View>
         </View>
 
         <View
-          style={{ flex: 0.3, alignItems: 'center', padding: moderateScale(10) }}>
+          style={{flex: 0.3, alignItems: 'center', padding: moderateScale(10)}}>
           <Text
             style={
               isDarkMode
-                ? [styles.userName, { color: MyDarkTheme.colors.text }]
+                ? [styles.userName, {color: MyDarkTheme.colors.text}]
                 : [styles.userName]
             }>{`${currencies?.primary_currency?.symbol}${
-              // Number(i?.pvariant?.multiplier) *
-              Number(data?.payable_amount).toFixed(2)
-              }`}</Text>
+            // Number(i?.pvariant?.multiplier) *
+            Number(data?.payable_amount).toFixed(2)
+          }`}</Text>
         </View>
       </View>
 
@@ -152,9 +206,9 @@ export default function OrderCardVendorComponent({
                     style={
                       isDarkMode
                         ? [
-                          styles.qunatityText,
-                          { color: MyDarkTheme.colors.text },
-                        ]
+                            styles.qunatityText,
+                            {color: MyDarkTheme.colors.text},
+                          ]
                         : styles.qunatityText
                     }>{`x${i.qty}`}</Text>
                 </View>
@@ -171,19 +225,19 @@ export default function OrderCardVendorComponent({
           }}>
           <Image
             source={imagePath.iconPayments}
-            style={{ tintColor: colors.textGreyB }}
+            style={{tintColor: colors.textGreyB}}
           />
           <Text
             style={
               isDarkMode
                 ? [
-                  styles.lableOrders,
-                  {
-                    paddingLeft: moderateScale(5),
-                    color: MyDarkTheme.colors.text,
-                  },
-                ]
-                : [styles.lableOrders, { paddingLeft: moderateScale(5) }]
+                    styles.lableOrders,
+                    {
+                      paddingLeft: moderateScale(5),
+                      color: MyDarkTheme.colors.text,
+                    },
+                  ]
+                : [styles.lableOrders, {paddingLeft: moderateScale(5)}]
             }>
             {`${strings.PAYMENT} : `}
             <Text style={styles.valueOrders}>{data?.payment_option_title}</Text>
@@ -237,11 +291,11 @@ export default function OrderCardVendorComponent({
               </View>
             </View>
             {selectedTab &&
-              data?.dispatch_traking_url &&
-              data?.product_details[0]?.category_type !=
+            data?.dispatch_traking_url &&
+            data?.product_details[0]?.category_type !=
               staticStrings.PICKUPANDDELIEVRY &&
-              (selectedTab == strings.ACTIVE_ORDERS ||
-                selectedTab == strings.SCHEDULED_ORDERS) ? (
+            (selectedTab == strings.ACTIVE_ORDERS ||
+              selectedTab == strings.SCHEDULED_ORDERS) ? (
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate(navigationStrings.WEBVIEWSCREEN, {
@@ -263,11 +317,11 @@ export default function OrderCardVendorComponent({
             ) : null}
 
             {selectedTab &&
-              (selectedTab != strings.ACTIVE_ORDERS ||
-                selectedTab != strings.SCHEDULED_ORDERS) ? null : (
+            (selectedTab != strings.ACTIVE_ORDERS ||
+              selectedTab != strings.SCHEDULED_ORDERS) ? null : (
               <View style={styles.bottomSecondHalf}>
                 {data?.order_status?.current_status?.id == 1 ? (
-                  <View style={{ flexDirection: 'row' }}>
+                  <View style={{flexDirection: 'row'}}>
                     <TouchableOpacity
                       onPress={() => updateOrderStatus(data, 8)}
                       style={styles.orderReject}>
@@ -275,7 +329,7 @@ export default function OrderCardVendorComponent({
                         {strings.REJECT}
                       </Text>
                     </TouchableOpacity>
-                    <View style={{ width: moderateScale(10) }} />
+                    <View style={{width: moderateScale(10)}} />
                     <TouchableOpacity
                       onPress={() => updateOrderStatus(data, 7)}
                       style={styles.orderAccept}>
@@ -306,8 +360,8 @@ export default function OrderCardVendorComponent({
     </TouchableOpacity>
   );
 }
-export function stylesFunc({ fontFamily, themeColors }) {
-  const commonStyles = commonStylesFunc({ fontFamily });
+export function stylesFunc({fontFamily, themeColors}) {
+  const commonStyles = commonStylesFunc({fontFamily});
 
   let cardWidth = width - 21.5;
 
@@ -317,7 +371,6 @@ export function stylesFunc({ fontFamily, themeColors }) {
       // ...commonStyles.shadowStyle,
       marginHorizontal: 2,
       justifyContent: 'center',
-      padding: moderateScaleVertical(5),
       backgroundColor: colors.white,
       borderWidth: 1,
       borderColor: 'rgba(201,215,225,0.19)',
@@ -466,6 +519,27 @@ export function stylesFunc({ fontFamily, themeColors }) {
       justifyContent: 'center',
       // backgroundColor: 'black',
       // flexWrap:'wrap'
+    },
+    ariveView: {
+      padding: moderateScale(6),
+      borderTopRightRadius: moderateScale(6),
+      borderTopLeftRadius: moderateScale(6),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    ariveTextStyle: {
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(11),
+    },
+    tagView: {
+      paddingHorizontal: 7,
+      paddingVertical: 2,
+      borderRadius: moderateScale(7),
+    },
+    dateTxt: {
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(11),
     },
   });
   return styles;
