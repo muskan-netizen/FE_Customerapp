@@ -119,6 +119,9 @@ const shortCodes = {
   quickquick: '9bd088',
   caribeclean: 'a6bf72',
   stonses: '6acd69',
+  agbdeliveries: 'e0d849',
+  twofinder: '104a74',
+  bookem: 'f87d4c',
 };
 
 const appIds = {
@@ -593,6 +596,18 @@ const appIds = {
   stonses: Platform.select({
     ios: 'com.stonses',
     android: 'com.stonses',
+  }),
+  agbdeliveries: Platform.select({
+    ios: 'com.agbdeliveries',
+    android: 'com.agbdeliveries',
+  }),
+  twofinder: Platform.select({
+    ios: 'com.twofinder',
+    android: 'com.twofinder',
+  }),
+  bookem: Platform.select({
+    ios: 'com.bookem',
+    android: 'com.bookem',
   }),
 };
 
