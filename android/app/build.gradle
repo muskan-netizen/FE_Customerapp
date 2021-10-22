@@ -1430,6 +1430,26 @@ android {
             resValue "string", "app_name", "Bookem"
             resValue "string", "host_name", ""
          }
+         zip{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.zip'
+            resValue "string", "app_name", "Zip"
+            resValue "string", "host_name", ""
+         }
+         ridetci{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ridetci'
+            resValue "string", "app_name", "RIDE TCI"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

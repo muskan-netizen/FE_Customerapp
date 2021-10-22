@@ -384,7 +384,7 @@ export default {
   ALERT: 'Uyarı',
   CAMERA_PERMISSION_DENIED_MSG: 'Kamerayı açma izniniz yok',
   SELECT_CATEGORY: 'Kategori Seç',
-  EXPLORE_STORES: 'Mağazaları Keşfedin',
+  EXPLORE_STORES: 'Keşfetmek',
   SEARCH_HERE: 'Ne arıyorsunuz?',
   FSSAI_LICENSE: 'FSSAI Lisansı',
   SFC_LICENSE: 'SFC Lisansı',

@@ -351,7 +351,7 @@ export default {
   VIEW_ALL_VENDORS: 'Ver todos los comercios',
   CLOSE: 'Cerrado',
   SELECT_CATEGORY: 'Seleccionar categoría',
-  EXPLORE_STORES: 'Comercios disponibles',
+  EXPLORE_STORES: 'Explorar',
   OPEN: 'Abierto',
   SEARCH_HERE: '¿Qué estás buscando?',
   NOOFFERS: 'No hay ofertas',

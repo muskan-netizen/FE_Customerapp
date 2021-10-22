@@ -122,6 +122,8 @@ const shortCodes = {
   agbdeliveries: 'e0d849',
   twofinder: '104a74',
   bookem: 'f87d4c',
+  zip: '5ecbab',
+  ridetci: '89e246',
 };
 
 const appIds = {
@@ -608,6 +610,14 @@ const appIds = {
   bookem: Platform.select({
     ios: 'com.bookem',
     android: 'com.bookem',
+  }),
+  zip: Platform.select({
+    ios: 'com.customer.zip',
+    android: 'com.zip',
+  }),
+  ridetci: Platform.select({
+    ios: 'com.ridetci',
+    android: 'com.ridetci',
   }),
 };
 
