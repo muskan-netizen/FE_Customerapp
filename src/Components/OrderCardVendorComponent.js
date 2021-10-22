@@ -192,6 +192,7 @@ export default function OrderCardVendorComponent({
           {data?.product_details.map((i, inx) => {
             return (
               <ImageBackground
+              key={String(inx)}
                 source={{
                   uri: getImageUrl(
                     i?.image_path?.image_fit,

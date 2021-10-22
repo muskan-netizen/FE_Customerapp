@@ -293,6 +293,7 @@ export default function Settings({route, navigation}) {
           {selectedThemeOptions.map((i, inx) => {
             return (
               <TouchableOpacity
+              key={String(inx)}
                 onPress={() => {
                   _setApperance(i);
                 }}>
