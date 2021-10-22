@@ -816,6 +816,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.zip:
+          updateState({
+            shortCode: shortCodes.zip,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ridetci:
+          updateState({
+            shortCode: shortCodes.ridetci,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
