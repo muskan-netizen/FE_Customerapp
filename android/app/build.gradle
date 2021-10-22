@@ -141,11 +141,7 @@ android {
         abi {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
-<<<<<<< HEAD
             universalApk true  // If true, also generate a universal APK
-=======
-            universalApk true // If true, also generate a universal APK
->>>>>>> dev_girraj
             include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
     }
