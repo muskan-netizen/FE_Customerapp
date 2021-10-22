@@ -792,6 +792,30 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.stonses:
+          updateState({
+            shortCode: shortCodes.stonses,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.agbdeliveries:
+          updateState({
+            shortCode: shortCodes.agbdeliveries,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bookem:
+          updateState({
+            shortCode: shortCodes.bookem,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.twofinder:
+          updateState({
+            shortCode: shortCodes.twofinder,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
