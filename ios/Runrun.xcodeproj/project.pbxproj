@@ -10826,7 +10826,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					84314CC926FB576C005E3FC1 = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = 28BJWY9YW9;
 						ProvisioningStyle = Automatic;
 					};
 					84348D0E26CCC9D200DB8C18 = {
@@ -36186,7 +36186,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = 28BJWY9YW9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
