@@ -124,6 +124,8 @@
     "agbdeliveries": "react-native run-android --variant=agbdeliveriesDebug --appIdSuffix=agbdeliveries",
     "twofinder": "react-native run-android --variant=twofinderDebug --appIdSuffix=twofinder",
     "bookem": "react-native run-android --variant=bookemDebug --appIdSuffix=bookem",
+    "zip": "react-native run-android --variant=zipDebug --appIdSuffix=zip",
+    "ridetci": "react-native run-android --variant=ridetciDebug --appIdSuffix=ridetci",
 
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
@@ -246,6 +248,8 @@
     "agbdeliveriesRelease": "cd android && ./gradlew assembleAGBDeliveriesRelease",
     "twofinderRelease": "cd android && ./gradlew assembleTwoFinderRelease",
     "bookemRelease": "cd android && ./gradlew assembleBookemRelease",
+    "zipRelease": "cd android && ./gradlew assembleZipRelease",
+    "ridetciRelease": "cd android && ./gradlew assembleRIDETCIRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

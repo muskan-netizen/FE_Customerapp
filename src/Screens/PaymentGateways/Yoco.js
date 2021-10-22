@@ -58,7 +58,8 @@ export default function Yoco({navigation, route}) {
       updateState({webUrl: res.data});
     } catch (error) {
       updateState({isLoading: false});
-      showError(error.message || error);
+      console.log(error, 'errorerror');
+      // showError(error?.message || error);
     }
   };
 

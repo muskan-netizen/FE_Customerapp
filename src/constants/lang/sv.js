@@ -355,7 +355,7 @@ export default {
   VIEW_ALL_VENDORS: 'Visa alla leverantörer',
   CLOSE: 'Stängt',
   SELECT_CATEGORY: 'Välj kategori',
-  EXPLORE_STORES: 'Utforska butiker',
+  EXPLORE_STORES: 'Utforska',
   OPEN: 'Öppen',
   SEARCH_HERE: 'Vad letar du efter?',
   NOOFFERS: 'Inga erbjudanden',

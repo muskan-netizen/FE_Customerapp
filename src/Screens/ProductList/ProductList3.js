@@ -53,7 +53,7 @@ import stylesFunc from './styles';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
-
+  console.log(data, 'datadatadata');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const dineInType = useSelector((state) => state?.home?.dineInType);
@@ -278,7 +278,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'resz');
+        console.log(res, 'getProductByVendorCategoryId');
 
         updateState({
           isLoading: false,
@@ -341,7 +341,6 @@ export default function Products({route, navigation}) {
     });
   };
 
-  console.log('categoryInfo+++++', categoryInfo);
   const getProductBasedOnFilter = (
     minimumPrice,
     maximumPrice,
@@ -387,7 +386,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'res vendor filters');
+        console.log(res, 'getProductByVendorFilters');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -422,6 +421,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
+        console.log(res, 'getProductByVendorFilters');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -437,10 +437,11 @@ export default function Products({route, navigation}) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendor = () => {
-    console.log('api hit getAllProductsByVendor');
     actions
       .getProductByVendorId(
-        `/${productListId?.id}?limit=${limit}&page=${pageNo}`,
+        `/${productListId?.id}${
+          data?.category_slug ? `/${data?.category_slug}` : ''
+        }?limit=${limit}&page=${pageNo}`,
         {},
         {
           code: appData.profile.code,
@@ -452,7 +453,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res?.data, 'res vendor products++++++');
+        console.log(res?.data, 'getProductByVendorId');
         if (res?.data?.vendor?.is_show_products_with_category) {
           var totalProduct = 1;
           let filterArray = res?.data?.categories?.map((val) => {
@@ -465,7 +466,6 @@ export default function Products({route, navigation}) {
             delete newKey['products'];
             return newKey;
           });
-          console.log('filter array', filterArray);
           updateState({
             sectionListData: filterArray,
             isLoading: false,
@@ -511,7 +511,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log('getAllProducts res', res);
+        console.log(res, 'getProductByVendorId');
         console.log(
           res?.data?.listData?.data?.mode_of_service,
           'mode of Service',
@@ -564,6 +564,7 @@ export default function Products({route, navigation}) {
           },
         )
         .then((res) => {
+          console.log(res, 'updateProductWishListData');
           showSuccess(res.message);
           updateProductList(item);
         })
@@ -730,7 +731,7 @@ export default function Products({route, navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res.data, 'adddddddddd');
+        console.log(res.data, 'addProductsToCart');
         actions.cartItemQty(res);
         updateState({cartId: res.data.id});
         // showSuccess('Product successfully added');
@@ -779,12 +780,7 @@ export default function Products({route, navigation}) {
       .catch((error) => errorMethodSecond(error));
   };
 
-  console.log(
-    'categoryInfo?.is_show_products_with_category',
-    categoryInfo?.is_show_products_with_category,
-  );
   const addDeleteCartItems = (item, section = null, index, type) => {
-
     if (!categoryInfo?.show_slot && !!categoryInfo.is_vendor_closed) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
@@ -892,7 +888,6 @@ export default function Products({route, navigation}) {
       removeProductFromCart(itemToUpdate, section);
     }
   };
-  console.log('section list data', sectionListData);
   //decrementing/removeing products from cart
   const removeProductFromCart = (itemToUpdate, section = null) => {
     let data = {};
@@ -1544,8 +1539,6 @@ export default function Products({route, navigation}) {
     }
   };
 
-  console.log(categoryInfo, 'categoryInfo===>');
-
   let uri1 = categoryInfo?.banner?.image_fit || categoryInfo?.icon?.image_fit;
   let uri2 = categoryInfo?.banner?.image_path || categoryInfo?.icon?.image_path;
   let name =
@@ -1556,8 +1549,6 @@ export default function Products({route, navigation}) {
     categoryInfo?.desc ||
     (!!categoryInfo?.translation &&
       categoryInfo?.translation[0]?.meta_description);
-
-  console.log('sectionListData', sectionListData);
 
   var itemHeights = [];
   const getItemLayout = (data, index) => {
