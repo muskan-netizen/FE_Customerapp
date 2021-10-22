@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {Alert} from 'react-native';
 import {
   View,
   Text,
@@ -11,6 +12,7 @@ import {useSelector} from 'react-redux';
 import Header from '../../../Components/Header';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
 import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
@@ -37,6 +39,7 @@ const RoyoAccounts = (props) => {
   const {appData, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
+  const userData = useSelector((state) => state.auth.userData);
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const {storeSelectedVendor} = useSelector((state) => state?.order);
@@ -58,6 +61,28 @@ const RoyoAccounts = (props) => {
       allVendors: vendor_list,
       screenType: navigationStrings.ROYO_ACCOUNT,
     });
+  };
+
+  const userlogout = () => {
+    if (!!userData?.auth_token) {
+      Alert.alert('', strings.LOGOUT_SURE_MSG, [
+        {
+          text: strings.CANCEL,
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'destructive',
+        },
+        {
+          text: strings.CONFIRM,
+          onPress: () => {
+            actions.userLogout();
+            actions.cartItemQty('');
+            navigation.navigate(navigationStrings.OUTER_SCREEN);
+          },
+        },
+      ]);
+    } else {
+      navigation.navigate(navigationStrings.OUTER_SCREEN);
+    }
   };
   const _getListOfVendor = () => {
     let vendordId = !!storeSelectedVendor?.id
@@ -109,13 +134,11 @@ const RoyoAccounts = (props) => {
     {
       text: 'Signout',
       image: imagePath.signoutRoyo,
-      onPress: () => {
-        alert('Signout');
-      },
+      onPress:userlogout
+      
     },
   ];
 
- 
   return (
     <WrapperContainer
       bgColor="white"

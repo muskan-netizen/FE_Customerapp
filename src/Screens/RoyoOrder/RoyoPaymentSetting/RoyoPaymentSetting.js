@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
@@ -16,11 +16,19 @@ import {TouchableOpacity} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import Header from '../../../Components/Header';
+import { useSelector } from 'react-redux';
+import actions from '../../../redux/actions';
+import navigationStrings from '../../../navigation/navigationStrings';
+import { showMessage } from 'react-native-flash-message';
 
 const PaymentSettings = (props) => {
   const {navigation} = props;
 
   const [state, setState] = useState({
+    selectedVendor: null,
+    vendor_list: [],
+    isLoading: false,
+    isRefreshing: false,
     accountModalVisible: false,
     selectedBuisnessType: '',
     productName: '',
@@ -31,13 +39,75 @@ const PaymentSettings = (props) => {
   });
 
   const {
+    selectedVendor,
+    vendor_list,
+    isLoading,
+    isRefreshing,
     accountModalVisible,
     accountType,
     accouontNumber,
     AccountHolderName,
     ifsc,
   } = state;
+  const {appData, currencies, languages} = useSelector(
+    (state) => state?.initBoot,
+  );
   const updateState = (data) => setState((state) => ({...state, ...data}));
+
+  const {storeSelectedVendor} = useSelector((state) => state?.order);
+  useEffect(() => {
+    updateState({
+      // selectedTab: null,
+      selectedVendor: storeSelectedVendor,
+      // isLoading: true,
+    });
+  }, [storeSelectedVendor]);
+
+  useEffect(() => {
+    _getListOfVendor();
+  }, []);
+
+  const _reDirectToVendorList = () => {
+    navigation.navigate(navigationStrings.VENDORLIST, {
+      selectedVendor: selectedVendor,
+      allVendors: vendor_list,
+      screenType: navigationStrings.ROYO_PAYMENT_SETTINGS,
+    });
+  };
+  const _getListOfVendor = () => {
+    let vendordId = !!storeSelectedVendor?.id
+      ? storeSelectedVendor?.id
+      : selectedVendor?.id
+      ? selectedVendor?.id
+      : '';
+    actions
+      ._getListOfVendorOrders(
+        `?limit=${1}&page=${1}&selected_vendor_id=${vendordId}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log('vendor orders res', res);
+        updateState({
+          vendor_list: res.data.vendor_list,
+          selectedVendor: !!storeSelectedVendor?.id
+            ? storeSelectedVendor
+            : res.data.vendor_list.find((x) => x.is_selected),
+          isLoading: false,
+          isRefreshing: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+  const errorMethod = (error) => {
+    updateState({isLoading: false, isRefreshing: false});
+    showError(error?.message || error?.error);
+  };
+
   const toggleAccountModal = () => {
     updateState({accountModalVisible: !accountModalVisible});
   };
@@ -68,9 +138,11 @@ const PaymentSettings = (props) => {
       statusBarColor="white"
       barStyle="dark-content">
       <Header
-      headerStyle={{marginVertical: moderateScaleVertical(16)}}
+        headerStyle={{marginVertical: moderateScaleVertical(16)}}
         leftIcon={imagePath.backRoyo}
-        centerTitle="Payment settings | Foodies hub   "
+        centerTitle={'Payment settings | ' + selectedVendor?.name || ''}
+        onPressCenterTitle={() => _reDirectToVendorList()}
+        onPressImageAlongwithTitle={() => _reDirectToVendorList()}
         showImageAlongwithTitle
         imageAlongwithTitle={imagePath.dropdownTriangle}
       />
@@ -79,7 +151,9 @@ const PaymentSettings = (props) => {
           <Image source={imagePath.selectedRoyo} />
           <Text style={styles.cashOnDeliver}>{strings.CASH_ON_DELIVERY}</Text>
         </View>
-        <View style={{borderWidth: 0.5, borderColor: colors.lightGreyBgColor}} />
+        <View
+          style={{borderWidth: 0.5, borderColor: colors.lightGreyBgColor}}
+        />
         <View style={styles.cardBox}>
           <Image source={imagePath.deselectedRoyo} />
           <View style={{marginLeft: moderateScale(12), flex: 1}}>

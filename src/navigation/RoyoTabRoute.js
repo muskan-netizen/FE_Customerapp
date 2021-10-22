@@ -9,7 +9,6 @@ import colors from '../styles/colors';
 import imagePath from '../constants/imagePath';
 import fontFamily from '../styles/fontFamily';
 import {moderateScale, moderateScaleVertical, width} from '../styles/responsiveSize';
-import {RoyoAccounts, RoyoHome, RoyoOrder, RoyoProducts} from '../Screens';
 import navigationStrings from './navigationStrings';
 import RoyoOrderScreenStack from './RoyoOrderScreenStack';
 import RoyoOrderProductStack from './RoyoOrderProductStack';

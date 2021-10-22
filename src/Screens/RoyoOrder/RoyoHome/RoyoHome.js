@@ -21,7 +21,6 @@ import {
 import fontFamily from '../../../styles/fontFamily';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
-import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import {BarChart} from 'react-native-chart-kit';
 import {FlatList} from 'react-native';
 import OrderCard from '../../../Components/OrderCard';
@@ -37,6 +36,9 @@ import actions from '../../../redux/actions';
 import moment from 'moment';
 import {showError} from '../../../utils/helperFunctions';
 import debounce from 'lodash.debounce';
+import {cloneDeep} from 'lodash';
+import {TouchableOpacity} from 'react-native';
+import MonthPicker from 'react-native-month-year-picker';
 
 const commonStyle = commonStyles({
   fontFamily,
@@ -75,6 +77,10 @@ const RoyoHome = (props) => {
     datasets: [],
     newOrder: [],
     totalRevenue,
+    showRevenueDate: false,
+    showOrderDate: false,
+    revenueDate: new Date(),
+    orderDate: new Date(),
   });
 
   const {
@@ -98,6 +104,10 @@ const RoyoHome = (props) => {
     totalActiveOrder,
     totalCancelledOrder,
     totalCompletedOrder,
+    showOrderDate,
+    showRevenueDate,
+    orderDate,
+    revenueDate,
   } = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -120,27 +130,8 @@ const RoyoHome = (props) => {
       )
       .then((res) => {
         console.log('vendor orders res', res);
-        const newnewOrder = res?.data?.order_list?.data?.filter(
-          (value, index) => value?.order_status?.current_status?.id == 1,
-        );
-        const newconfirmed = res?.data?.order_list?.data?.filter(
-          (value, index) =>
-            value?.order_status?.current_status?.id == 2 ||
-            value?.order_status?.current_status?.id == 4 ||
-            value?.order_status?.current_status?.id == 5,
-        );
-        const newcancelled = res?.data?.order_list?.data?.filter(
-          (value, index) => value?.order_status?.current_status?.id == 3,
-        );
-        const newcompleted = res?.data?.order_list?.data?.filter(
-          (value, index) => value?.order_status?.current_status?.id == 6,
-        );
         updateState({
-          newOrder: newnewOrder,
-          totalPendingOrder: newconfirmed.length,
-          totalActiveOrder: newnewOrder.length,
-          totalCancelledOrder: newcancelled.length,
-          totalCompletedOrder: newcompleted.length,
+          activeOrders: res.data.order_list.data,
           selectedVendor: !!storeSelectedVendor?.id
             ? storeSelectedVendor
             : res.data.vendor_list.find((x) => x.is_selected),
@@ -151,11 +142,30 @@ const RoyoHome = (props) => {
       .catch(errorMethod);
   };
 
-  // useEffect(() => {
-  //   if (isLoading) {
-  //     _getRevnueData();
-  //   }
-  // }, [isLoading]);
+  useEffect(() => {
+    const newnewOrder = activeOrders.filter(
+      (value, index) => value?.order_status?.current_status?.id == 1,
+    );
+    const newconfirmed = activeOrders.filter(
+      (value, index) =>
+        value?.order_status?.current_status?.id == 2 ||
+        value?.order_status?.current_status?.id == 4 ||
+        value?.order_status?.current_status?.id == 5,
+    );
+    const newcancelled = activeOrders?.filter(
+      (value, index) => value?.order_status?.current_status?.id == 3,
+    );
+    const newcompleted = activeOrders?.filter(
+      (value, index) => value?.order_status?.current_status?.id == 6,
+    );
+    updateState({
+      newOrder: newnewOrder,
+      totalPendingOrder: newconfirmed.length,
+      totalActiveOrder: newnewOrder.length,
+      totalCancelledOrder: newcancelled.length,
+      totalCompletedOrder: newcompleted.length,
+    });
+  }, [activeOrders]);
 
   useEffect(() => {
     _getListOfVendorOrders();
@@ -164,9 +174,43 @@ const RoyoHome = (props) => {
     }
   }, [selectedVendor, pageActive]);
 
+  const toggleRevenueDate = () => {
+    updateState({
+      showRevenueDate: true,
+    });
+  };
+  const toggleOrderDate = () => {
+    updateState({
+      showOrderDate: true,
+    });
+  };
+  const onChangeOrderDate = (value, newDate) => {
+    if (newDate)
+      updateState({
+        orderDate: newDate,
+        showOrderDate: false,
+      });
+    else
+      updateState({
+        showOrderDate: false,
+      });
+  };
+  const onChageRevenueDate = (value, newDate) => {
+    if (newDate)
+      updateState({
+        revenueDate: newDate,
+        showRevenueDate: false,
+      });
+    else
+      updateState({
+        showRevenueDate: false,
+      });
+  };
   const _getRevnueData = () => {
     let data = {};
     data['type'] = 'monthly';
+    data['month'] = 'july';
+    data['year'] = '2021'
     data['vendor_id'] = selectedVendor ? selectedVendor?.id : '';
     actions
       .getRevenueData(data, {
@@ -304,6 +348,22 @@ const RoyoHome = (props) => {
       })
       .catch(errorMethod);
   };
+
+  const updateStatus = (res, acceptRejectData) => {
+    let clonedArrayOrderList = cloneDeep(activeOrders);
+
+    updateState({
+      isLoadingB: false,
+      activeOrders: clonedArrayOrderList.map((i, inx) => {
+        if (i?.id == acceptRejectData?.id) {
+          i.order_status = res.order_status;
+          return i;
+        } else {
+          return i;
+        }
+      }),
+    });
+  };
   const toggleStatus = () => updateState({status: !status});
 
   const handleRefresh = () => {
@@ -353,8 +413,11 @@ const RoyoHome = (props) => {
       barStyle="dark-content">
       <Header
         headerStyle={{marginVertical: moderateScaleVertical(16)}}
-        onPressLeft={() => {}}
-        leftIcon={imagePath.logoRoyo}
+        onPressLeft={() => {
+          navigation.navigate(navigationStrings.TAB_ROUTES);
+        }}
+        // leftIcon={imagePath.logoRoyo}
+        leftIcon={imagePath.back}
         rightIcon={status ? imagePath.onlineRoyo : imagePath.offlineRoyo}
         onPressRight={toggleStatus}
       />
@@ -401,14 +464,27 @@ const RoyoHome = (props) => {
             <View>
               <View style={styles.chartHeader}>
                 <Text style={styles.font18Semibold}>Revenue</Text>
-                <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity
+                  onPress={toggleRevenueDate}
+                  style={{flexDirection: 'row'}}>
                   <Text style={{...styles.font14Regular, color: '#2E3E3A5f'}}>
-                    This month{' '}
+                    {String(revenueDate).slice(4, 7)}{' '}
+                    {String(revenueDate).slice(11, 15)}
                   </Text>
+
                   <Image source={imagePath.dropdownTriangle} />
-                </View>
+                </TouchableOpacity>
+                {showRevenueDate && (
+                  <MonthPicker
+                    onChange={onChageRevenueDate}
+                    value={revenueDate}
+                    minimumDate={new Date(1999, 5)}
+                    maximumDate={new Date(2025, 5)}
+                    // locale="ko"
+                  />
+                )}
               </View>
-              <View style={styles.graphContainer}>
+              <View style={{...styles.graphContainer, zIndex: -1}}>
                 <View style={styles.graphHeader}>
                   <Text style={{...styles.font13Regular, color: '#2E3E3A5f'}}>
                     Total revenue (Delivered order)
@@ -437,12 +513,24 @@ const RoyoHome = (props) => {
             <View>
               <View style={styles.chartHeader}>
                 <Text style={styles.font18Semibold}>Revenue</Text>
-                <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity
+                  onPress={toggleOrderDate}
+                  style={{flexDirection: 'row'}}>
                   <Text style={{...styles.font14Regular, color: '#2E3E3A5f'}}>
-                    This month{' '}
+                    {String(orderDate).slice(4, 7)}{' '}
+                    {String(orderDate).slice(11, 15)}
                   </Text>
                   <Image source={imagePath.dropdownTriangle} />
-                </View>
+                </TouchableOpacity>
+                {showOrderDate && (
+                  <MonthPicker
+                    onChange={onChangeOrderDate}
+                    value={orderDate}
+                    minimumDate={new Date(1999, 5)}
+                    maximumDate={new Date(2025, 5)}
+                    // locale="ko"
+                  />
+                )}
               </View>
               <View style={styles.graphContainer}>
                 <View style={styles.graphHeader}>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
 import MultiScreen from '../../../Components/MultiScreen';
 import colors from '../../../styles/colors';
@@ -12,16 +12,83 @@ import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import {FlatList} from 'react-native';
 import Header from '../../../Components/Header';
+import {showMessage} from 'react-native-flash-message';
+import {showError} from '../../../utils/helperFunctions';
+import actions from '../../../redux/actions';
+import {useSelector} from 'react-redux';
+import navigationStrings from '../../../navigation/navigationStrings';
 
 const RoyoTransactions = (props) => {
   const {navigation} = props;
 
-  const [state, setState] = useState({activeIndex: 0});
-  const {activeIndex} = state;
-  const updateState = (data) =>
-    setState((state) => {
-      return {...state, ...data};
+  const [state, setState] = useState({
+    selectedVendor: null,
+    vendor_list: [],
+    isLoading: false,
+    isRefreshing: false,
+    activeIndex: 0,
+  });
+
+  const {selectedVendor, vendor_list, isLoading, isRefreshing, activeIndex} =
+    state;
+  const {appData, currencies, languages} = useSelector(
+    (state) => state?.initBoot,
+  );
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+
+  const {storeSelectedVendor} = useSelector((state) => state?.order);
+  useEffect(() => {
+    updateState({
+      // selectedTab: null,
+      selectedVendor: storeSelectedVendor,
+      // isLoading: true,
     });
+  }, [storeSelectedVendor]);
+
+  useEffect(() => {
+    _getListOfVendor();
+  }, []);
+
+  const _reDirectToVendorList = () => {
+    navigation.navigate(navigationStrings.VENDORLIST, {
+      selectedVendor: selectedVendor,
+      allVendors: vendor_list,
+      screenType: navigationStrings.ROYO_TRANSACTIONS,
+    });
+  };
+  const _getListOfVendor = () => {
+    let vendordId = !!storeSelectedVendor?.id
+      ? storeSelectedVendor?.id
+      : selectedVendor?.id
+      ? selectedVendor?.id
+      : '';
+    actions
+      ._getListOfVendorOrders(
+        `?limit=${1}&page=${1}&selected_vendor_id=${vendordId}`,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log('vendor orders res', res);
+        updateState({
+          vendor_list: res.data.vendor_list,
+          selectedVendor: !!storeSelectedVendor?.id
+            ? storeSelectedVendor
+            : res.data.vendor_list.find((x) => x.is_selected),
+          isLoading: false,
+          isRefreshing: false,
+        });
+      })
+      .catch(errorMethod);
+  };
+  const errorMethod = (error) => {
+    updateState({isLoading: false, isRefreshing: false});
+    showError(error?.message || error?.error);
+  };
 
   const data = [
     imagePath.cabImage,
@@ -37,7 +104,11 @@ const RoyoTransactions = (props) => {
   const transactions = (data) => {
     return (
       <View style={styles.transactionContainer}>
-        <View style={{minWidth: moderateScale(30 + data?.length * 11),...styles.transactionBody}}>
+        <View
+          style={{
+            minWidth: moderateScale(30 + data?.length * 11),
+            ...styles.transactionBody,
+          }}>
           {data?.map((val, index) => (
             <Image
               key={index}
@@ -63,11 +134,12 @@ const RoyoTransactions = (props) => {
       bgColor="white"
       statusBarColor="white"
       barStyle="dark-content">
-      
       <Header
-      headerStyle={{marginVertical: moderateScaleVertical(16)}}
+        headerStyle={{marginVertical: moderateScaleVertical(16)}}
         leftIcon={imagePath.backRoyo}
-        centerTitle="Transactions | Foodies hub   "
+        centerTitle={'Transactions | ' + selectedVendor?.name || ''}
+        onPressCenterTitle={() => _reDirectToVendorList()}
+        onPressImageAlongwithTitle={() => _reDirectToVendorList()}
         showImageAlongwithTitle
         imageAlongwithTitle={imagePath.dropdownTriangle}
       />
@@ -140,7 +212,6 @@ const styles = StyleSheet.create({
     marginVertical: moderateScaleVertical(10),
   },
   transactionBody: {
-    
     paddingTop: moderateScaleVertical(24),
     justifyContent: 'center',
   },

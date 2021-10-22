@@ -26,6 +26,7 @@ import actions from '../../../redux/actions';
 import strings from '../../../constants/lang';
 import {RefreshControl} from 'react-native';
 import staticStrings from '../../../constants/staticStrings';
+import {showError} from '../../../utils/helperFunctions';
 
 const RoyoOrder = (props) => {
   const {navigation} = props;
@@ -122,26 +123,8 @@ const RoyoOrder = (props) => {
       .then((res) => {
         console.log('vendor orders res', res);
         const data = res.data.order_list.data;
-        const newnewOrder = data.filter(
-          (value, index) => value?.order_status?.current_status?.id == 1,
-        );
-        const newconfirmed = data.filter(
-          (value, index) =>
-            value?.order_status?.current_status?.id == 2 ||
-            value?.order_status?.current_status?.id == 4 ||
-            value?.order_status?.current_status?.id == 5,
-        );
-        const newcancelled = data.filter(
-          (value, index) => value?.order_status?.current_status?.id == 3,
-        );
-        const newcompleted = data.filter(
-          (value, index) => value?.order_status?.current_status?.id == 6,
-        );
+
         updateState({
-          newOrder: [...newOrder, ...newnewOrder],
-          confirmed: [...confirmed, ...newconfirmed],
-          cancelled: [...cancelled, ...newcancelled],
-          completed: [...completed, ...newcompleted],
           activeOrders:
             pageActive == 1
               ? res.data.order_list.data
@@ -168,7 +151,6 @@ const RoyoOrder = (props) => {
     showError(error?.message || error?.error);
   };
 
-  
   const onPressViewEditAndReplace = (item) => {
     // navigation.navigate(navigationStrings.ORDER_DETAIL, {
     //   orderId: item?.id,
@@ -177,17 +159,6 @@ const RoyoOrder = (props) => {
     //   selectedVendor: selectedVendor,
     // });
   };
-
-  // const renderOrders = ({item, index}) => {
-  //   return (
-  //     <OrderCardVendorComponent
-  //       data={item}
-  //       // selectedTab={selectedTab}
-  //       onPress={() => onPressViewEditAndReplace(item)}
-  //       updateOrderStatus={(data, status) => updateOrderStatus(data, status)}
-  //     />
-  //   );
-  // };
 
   const updateOrderStatus = (acceptRejectData, status) => {
     let data = {};
@@ -231,6 +202,29 @@ const RoyoOrder = (props) => {
     _getListOfVendorOrders();
   }, [pageActive, isRefreshing]);
 
+  useEffect(() => {
+    const newnewOrder = activeOrders.filter(
+      (value, index) => value?.order_status?.current_status?.id == 1,
+    );
+    const newconfirmed = activeOrders.filter(
+      (value, index) =>
+        value?.order_status?.current_status?.id == 2 ||
+        value?.order_status?.current_status?.id == 4 ||
+        value?.order_status?.current_status?.id == 5,
+    );
+    const newcancelled = activeOrders.filter(
+      (value, index) => value?.order_status?.current_status?.id == 3,
+    );
+    const newcompleted = activeOrders.filter(
+      (value, index) => value?.order_status?.current_status?.id == 6,
+    );
+    updateState({
+      newOrder: [...newOrder, ...newnewOrder],
+      confirmed: [...confirmed, ...newconfirmed],
+      cancelled: [...cancelled, ...newcancelled],
+      completed: [...completed, ...newcompleted],
+    });
+  }, [activeOrders]);
   //Refresh screen
 
   //Pull to refresh
