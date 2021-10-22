@@ -612,7 +612,7 @@ const appIds = {
     android: 'com.bookem',
   }),
   zip: Platform.select({
-    ios: 'com.zip',
+    ios: 'com.customer.zip',
     android: 'com.zip',
   }),
   ridetci: Platform.select({
