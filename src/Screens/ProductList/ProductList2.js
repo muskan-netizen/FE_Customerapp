@@ -390,7 +390,9 @@ export default function Products({route, navigation}) {
   const getAllProductsByVendor = () => {
     actions
       .getProductByVendorId(
-        `/${productListId.id}?limit=${limit}&page=${pageNo}`,
+        `/${productListId.id} ${
+          data?.category_slug ? `/${data?.category_slug}` : ''
+        } ?limit=${limit}&page=${pageNo}`,
         {},
         {
           code: appData.profile.code,

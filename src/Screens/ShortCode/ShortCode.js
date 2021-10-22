@@ -70,7 +70,7 @@ export default function ShortCode({route, navigation}) {
             if (shortCodeParam) {
               updateState({shortCode: '', isShortcodePrefilled: false});
             } else {
-              updateState({shortCode: '245bae', isShortcodePrefilled: true});
+              updateState({shortCode: '649a9a', isShortcodePrefilled: true});
             }
           }
           break;

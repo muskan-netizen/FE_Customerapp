@@ -351,7 +351,7 @@ export default {
   VIEW_ALL_VENDORS: 'View all vendors',
   CLOSE: 'Closed',
   SELECT_CATEGORY: 'Select Category',
-  EXPLORE_STORES: 'Explore Stores',
+  EXPLORE_STORES: 'Explore',
   OPEN: 'Open',
   SEARCH_HERE: 'What are you looking for?',
   NOOFFERS: 'No Offers',

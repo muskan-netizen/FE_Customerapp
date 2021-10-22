@@ -358,7 +358,7 @@ export default {
   VIEW_ALL_VENDORS: 'عرض جميع البائعين',
   CLOSE: 'إغلاق',
   SELECT_CATEGORY: 'تحديد الفئة',
-  EXPLORE_STORES: 'استكشاف المتاجر',
+  EXPLORE_STORES: 'يكتشف',
   OPEN: 'فتح',
   SEARCH_HERE: 'ما الذي تبحث عنه؟',
   NOOFFERS: 'لا توجد عروض',

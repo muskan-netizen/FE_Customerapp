@@ -393,7 +393,7 @@ export default {
   ALERT: 'Alert',
   CAMERA_PERMISSION_DENIED_MSG: "Don't have permission to open camera",
   SELECT_CATEGORY: 'Select Category',
-  EXPLORE_STORES: 'Explore Stores',
+  EXPLORE_STORES: 'Explore',
   SEARCH_HERE: 'What are you looking for?',
   FSSAI_LICENSE: 'FSSAI License',
   SFC_LICENSE: 'SFC Licence',
