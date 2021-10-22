@@ -403,7 +403,11 @@ export default function DashBoardFive({
               <FlatList
                 scrollEnabled={false}
                 ListHeaderComponent={() =>
-                  listHeader(strings.EXPLORE_STORES, appMainData.vendors, true)
+                  listHeader(
+                    `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`,
+                    appMainData.vendors,
+                    true,
+                  )
                 }
                 showsVerticalScrollIndicator={false}
                 alwaysBounceVertical={true}

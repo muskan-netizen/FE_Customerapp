@@ -124,14 +124,7 @@ export default function Account({navigation}) {
               {strings.EDITCODE}
             </Text>
           )}
-          customRight={() => (
-            <Text
-              numberOfLines={2}
-              style={{color: colors.textGreyJ, opacity: 0.6}}>
-              {`${DeviceInfo.getVersion()}`}
-              <Text>{`(${DeviceInfo.getBuildNumber()})`}</Text>
-            </Text>
-          )}
+      
           // rightIcon={imagePath.cartShop}
           centerTitle={strings.MY_ACCOUNT}
         />

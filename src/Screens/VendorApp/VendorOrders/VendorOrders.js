@@ -63,6 +63,9 @@ export default function VendorOrders({navigation, route}) {
     vendor_list: [],
     selectedVendor: null,
     isRejectModal: false,
+    rejectReason: '',
+    acceptRejectData: '',
+    status: null,
   });
   const {
     isLoadingB,
@@ -75,6 +78,9 @@ export default function VendorOrders({navigation, route}) {
     vendor_list,
     selectedVendor,
     isRejectModal,
+    rejectReason,
+    acceptRejectData,
+    status,
   } = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -169,14 +175,24 @@ export default function VendorOrders({navigation, route}) {
   };
 
   const updateOrderStatus = (acceptRejectData, status) => {
+    updateState({
+      isLoadingB: status !== 8 ? true : false,
+      isRejectModal: status === 8 ? true : false,
+      acceptRejectData: acceptRejectData,
+      status: status,
+    });
+    if (status !== 8) {
+      _updateOrderStatus();
+    } else return;
+  };
+
+  const _updateOrderStatus = () => {
     let data = {};
     data['order_id'] = acceptRejectData?.id;
     data['vendor_id'] = selectedVendor?.id;
     data['order_status_option_id'] = status;
-    updateState({
-      isLoadingB: true,
-      // isRejectModal: status === 8 ? true : false,
-    });
+    data['reject_reason'] = rejectReason;
+
     actions
       .updateOrderStatus(data, {
         code: appData?.profile?.code,
@@ -185,7 +201,6 @@ export default function VendorOrders({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'res>>>acceptRejectOrder');
         if (res && res.status == 'success') {
           updateStatus(res, acceptRejectData);
         }
@@ -197,6 +212,7 @@ export default function VendorOrders({navigation, route}) {
     let clonedArrayOrderList = cloneDeep(activeOrders);
 
     updateState({
+      isRejectModal: false,
       isLoadingB: false,
       activeOrders: clonedArrayOrderList.map((i, inx) => {
         if (i?.id == acceptRejectData?.id) {
@@ -292,7 +308,7 @@ export default function VendorOrders({navigation, route}) {
         // ListEmptyComponent={<ListEmptyProduct />}
       />
 
-      {/* <Modal isVisible={isRejectModal}>
+      <Modal isVisible={isRejectModal}>
         <View
           style={{
             height: height / 2.35,
@@ -351,9 +367,8 @@ export default function VendorOrders({navigation, route}) {
               {strings.ENTER_REASON_FOR_REJECTING_ORDER}
             </Text>
             <BorderTextInput
-              // onChangeText={_onChangeText('message')}
+              onChangeText={(value) => updateState({rejectReason: value})}
               // placeholder={strings.MESSSAGE_FOR_US}
-              // value={message}
               containerStyle={{
                 height: moderateScaleVertical(190),
                 padding: 5,
@@ -369,6 +384,7 @@ export default function VendorOrders({navigation, route}) {
           </View>
           <TouchableOpacity
             activeOpacity={0.7}
+            onPress={_updateOrderStatus}
             style={{
               paddingHorizontal: moderateScale(20),
               paddingVertical: moderateScaleVertical(10),
@@ -387,7 +403,6 @@ export default function VendorOrders({navigation, route}) {
           </TouchableOpacity>
         </View>
       </Modal>
-   */}
     </WrapperContainer>
   );
 }

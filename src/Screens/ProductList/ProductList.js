@@ -358,7 +358,7 @@ export default function Products({route, navigation}) {
   /****Get all list items by vendor id */
   const getAllProductsByVendorCategory = () => {
     // alert("21312")
-    
+
     actions
       .getProductByVendorCategoryId(
         `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
@@ -390,7 +390,9 @@ export default function Products({route, navigation}) {
   const getAllProductsByVendor = () => {
     actions
       .getProductByVendorId(
-        `/${productListId.id}?limit=${limit}&page=${pageNo}`,
+        `/${productListId.id}${
+          data?.category_slug ? `/${data?.category_slug}` : ''
+        }?limit=${limit}&page=${pageNo}`,
         {},
         {
           code: appData.profile.code,

@@ -98,7 +98,6 @@ const App = () => {
     (async () => {
       const userData = await getUserData();
       notificationConfig();
-
       const {dispatch} = store;
       if (userData && !!userData.auth_token) {
         dispatch({
@@ -106,7 +105,6 @@ const App = () => {
           payload: userData,
         });
       }
-
       const getAppData = await getItem('appData');
       appData = getAppData;
       dispatch({
