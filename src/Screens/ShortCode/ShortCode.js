@@ -846,6 +846,24 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.seachangevending:
+          updateState({
+            shortCode: shortCodes.seachangevending,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ored:
+          updateState({
+            shortCode: shortCodes.ored,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.orderchekout:
+          updateState({
+            shortCode: shortCodes.orderchekout,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

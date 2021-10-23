@@ -127,6 +127,9 @@ const shortCodes = {
   noki: '779cb6',
   driveree: '1ead91',
   rxnow: '476dfb',
+  seachangevending: 'caacbc',
+  ored: 'fb0df5',
+  orderchekout: 'f6cd9d',
 };
 
 const appIds = {
@@ -633,6 +636,18 @@ const appIds = {
   rxnow: Platform.select({
     ios: 'com.rxnow',
     android: 'com.rxnow',
+  }),
+  seachangevending: Platform.select({
+    ios: 'com.seachangevending',
+    android: 'com.seachangevending',
+  }),
+  ored: Platform.select({
+    ios: 'com.ored',
+    android: 'com.ored',
+  }),
+  orderchekout: Platform.select({
+    ios: 'com.orderchekout',
+    android: 'com.orderchekout',
   }),
 };
 
