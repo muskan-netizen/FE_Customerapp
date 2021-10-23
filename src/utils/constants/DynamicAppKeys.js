@@ -124,6 +124,9 @@ const shortCodes = {
   bookem: 'f87d4c',
   zip: '5ecbab',
   ridetci: '89e246',
+  noki: '779cb6',
+  driveree: '1ead91',
+  rxnow: '476dfb',
 };
 
 const appIds = {
@@ -618,6 +621,18 @@ const appIds = {
   ridetci: Platform.select({
     ios: 'com.ridetci',
     android: 'com.ridetci',
+  }),
+  noki: Platform.select({
+    ios: 'com.noki',
+    android: 'com.noki',
+  }),
+  driveree: Platform.select({
+    ios: 'com.driveree',
+    android: 'com.driveree',
+  }),
+  rxnow: Platform.select({
+    ios: 'com.rxnow',
+    android: 'com.rxnow',
   }),
 };
 

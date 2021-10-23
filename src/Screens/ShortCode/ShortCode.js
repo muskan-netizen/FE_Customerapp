@@ -828,6 +828,24 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.noki:
+          updateState({
+            shortCode: shortCodes.noki,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.driveree:
+          updateState({
+            shortCode: shortCodes.driveree,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.rxnow:
+          updateState({
+            shortCode: shortCodes.rxnow,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
