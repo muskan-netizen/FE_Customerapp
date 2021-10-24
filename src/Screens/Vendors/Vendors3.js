@@ -46,6 +46,7 @@ export default function Vendors3({route, navigation}) {
 
   const {isLoading, pageNo, isRefreshing, limit} = state;
   const {data} = route.params;
+  console.log(data, 'datadatadatadata');
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -107,6 +108,8 @@ export default function Vendors3({route, navigation}) {
 
   //************Check the redirecton screen********/
   const _checkRedirectScreen = (item) => {
+    console.log(item, 'itemitemitem');
+
     {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
@@ -118,6 +121,7 @@ export default function Vendors3({route, navigation}) {
             id: item.id,
             vendor: true,
             name: item.name,
+            category_slug: data?.slug,
           })();
     }
   };

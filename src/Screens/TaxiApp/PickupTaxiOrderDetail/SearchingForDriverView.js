@@ -44,6 +44,7 @@ export default function ({
   productRatings,
   isShowRating,
   navigation,
+  driverRating,
   onStarRatingPress = () => {},
 }) {
   //   console.log(selectedCarOption, 'selectedCarOption');
@@ -152,27 +153,29 @@ export default function ({
                     }>
                     {!!agent_location ? orderDetail?.name || '' : ''}
                   </Text>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      marginVertical: moderateScaleVertical(10),
-                      marginHorizontal: moderateScale(20),
-                    }}>
-                    <Image
-                      style={{tintColor: colors.yellowB}}
-                      source={imagePath.star}
-                    />
-                    <Text
+                  {driverRating > 0 && (
+                    <View
                       style={{
-                        marginHorizontal: moderateScale(5),
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.lightgray,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginVertical: moderateScaleVertical(10),
+                        marginHorizontal: moderateScale(20),
                       }}>
-                      4.5
-                    </Text>
-                  </View>
+                      <Image
+                        style={{tintColor: colors.yellowB}}
+                        source={imagePath.star}
+                      />
+                      <Text
+                        style={{
+                          marginHorizontal: moderateScale(5),
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.lightgray,
+                        }}>
+                        {driverRating}
+                      </Text>
+                    </View>
+                  )}
                   {totalDuration ? (
                     <View
                       style={{

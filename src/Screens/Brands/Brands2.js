@@ -82,52 +82,6 @@ export default function Brand2({navigation}) {
       </View>
     );
   };
-
-  // if (true) {
-  //   return (
-  //     <WrapperContainer
-  //       bgColor={
-  //         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-  //       }
-  //       statusBarColor={
-  //         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-  //       }>
-  //       <View style={styles.loaderHeader}>
-  //         <CardLoader cardWidth={20} height={20} />
-  //         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-  //           <CardLoader cardWidth={20} height={20} />
-  //           <View style={{marginHorizontal: moderateScale(6)}} />
-  //           <CardLoader cardWidth={20} height={20} />
-  //         </View>
-  //       </View>
-  //       <CardLoader cardWidth={width} height={1} />
-  //       <ScrollView showsVerticalScrollIndicator={false}>
-  //         {[{}, {}, {}, {}, {}, {}].map((val, i) => {
-  //           return (
-  //             <View
-  //               style={{
-  //                 marginHorizontal: moderateScale(16),
-  //                 flexDirection: 'row',
-  //                 alignItems: 'center',
-  //               }}>
-  //               <View style={{flex: 1}}>
-  //                 <CardLoader cardWidth={'100%'} height={width / 3.5} />
-  //               </View>
-
-  //               <View style={{flex: 1, marginHorizontal: 10}}>
-  //                 <CardLoader cardWidth={'100%'} height={width / 3.5} />
-  //               </View>
-  //               <View style={{flex: 1}}>
-  //                 <CardLoader cardWidth={'100%'} height={width / 3.5} />
-  //               </View>
-  //             </View>
-  //           );
-  //         })}
-  //         <View style={{height: width / 8}} />
-  //       </ScrollView>
-  //     </WrapperContainer>
-  //   );
-  // }
   if (isLoading) {
     return (
       <WrapperContainer
@@ -161,6 +115,7 @@ export default function Brand2({navigation}) {
           {[{}, {}, {}, {}, {}, {}].map((val, i) => {
             return (
               <View
+                key={String(i)}
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',

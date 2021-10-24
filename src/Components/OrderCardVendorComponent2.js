@@ -311,19 +311,23 @@ export default function OrderCardVendorComponent2({
               </View>
             </View>
 
-            <TouchableOpacity
-              // onPress={onPressRateOrder}
-              onPress={onPressReturnOrder}
-              // style={{flex:0.6}}
-              style={styles.bottomSecondHalf}>
-              {businessType === 4 ? null : (
-                <View style={styles.orderAcceptAndReadyStyleSecond}>
-                  <Text style={styles.orderStatusStyleSecond}>
-                    {strings.RETURNORDER}
-                  </Text>
-                </View>
-              )}
-            </TouchableOpacity>
+            {data?.order_status?.current_status?.title !== strings.REJECTED ? (
+              <TouchableOpacity
+                // onPress={onPressRateOrder}
+                onPress={onPressReturnOrder}
+                // style={{flex:0.6}}
+                style={styles.bottomSecondHalf}>
+                {businessType === 4 ? null : (
+                  <View style={styles.orderAcceptAndReadyStyleSecond}>
+                    <Text style={styles.orderStatusStyleSecond}>
+                      {strings.RETURNORDER}
+                    </Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+            ) : (
+              <View style={{flex: 0.6}} />
+            )}
           </View>
         ) : (
           <View

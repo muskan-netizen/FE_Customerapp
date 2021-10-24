@@ -91,4 +91,6 @@ export default {
   TAXIHOMESCREEN: 'taxiHomeScreen',
   TAXITABROUTES: 'taxiTabRoutes',
   MOBBEX: 'mobbex',
+  PAYFAST: 'payfast',
+  YOCO: 'yoco',
 };

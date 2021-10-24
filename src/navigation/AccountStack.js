@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/core';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { useSelector } from 'react-redux';

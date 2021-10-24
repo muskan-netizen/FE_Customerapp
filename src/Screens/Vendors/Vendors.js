@@ -57,8 +57,6 @@ export default function Vendors({route, navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
 
-
-
   useEffect(() => {
     // let latlongObj = {};
     // if (appData?.profile?.preferences?.is_hyperlocal) {
@@ -122,6 +120,7 @@ export default function Vendors({route, navigation}) {
             id: item.id,
             vendor: true,
             name: item.name,
+            category_slug: data?.slug,
           })();
     }
   };

@@ -508,7 +508,9 @@ class PrinterScreen extends Component {
               <View style={styles.scanView}>
                 <Text style={[styles.title, { paddingLeft: 0 }]}>Found(Tap to connect):</Text>
                 {
-                  this.state.loading ? (<ActivityIndicator animating={true} />)
+                  this.state.loading ? (
+                      <ActivityIndicator animating={true} color="#000000" size="large" />
+                  )
                     : <TouchableOpacity
                       disabled={this.state.loading || !this.state.bleOpend} onPress={() => {
                         this._scan();

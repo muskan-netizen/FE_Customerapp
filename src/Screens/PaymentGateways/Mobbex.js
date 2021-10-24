@@ -1,20 +1,17 @@
-import React, {useEffect} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import WrapperContainer from '../../Components/WrapperContainer';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
-import {useSelector} from 'react-redux';
-import colors from '../../styles/colors';
-import imagePath from '../../constants/imagePath';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import Header from '../../Components/Header';
-import actions from '../../redux/actions';
-import {useState} from 'react';
-import {WebView} from 'react-native-webview';
 import queryString from 'query-string';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import {WebView} from 'react-native-webview';
+import {useSelector} from 'react-redux';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import WrapperContainer from '../../Components/WrapperContainer';
 import navigationStrings from '../../navigation/navigationStrings';
-import {showError} from '../../utils/helperFunctions';
+import actions from '../../redux/actions';
+import colors from '../../styles/colors';
 import {moderateScaleVertical} from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
+import {showError} from '../../utils/helperFunctions';
 
 export default function Mobbex({navigation, route}) {
   let paramsData = route?.params;
@@ -27,11 +24,12 @@ export default function Mobbex({navigation, route}) {
 
   const [state, setState] = useState({
     webUrl: '',
+    isLoading: true,
   });
 
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {webUrl} = state;
+  const {webUrl, isLoading} = state;
 
   useEffect(() => {
     apiHit();
@@ -54,8 +52,11 @@ export default function Mobbex({navigation, route}) {
           language: languages?.primary_language?.id,
         },
       );
+      console.log(res, 'responseMobbex');
       updateState({webUrl: res.data});
     } catch (error) {
+      updateState({isLoading: false});
+
       showError(error.message || error);
     }
   };
@@ -70,16 +71,17 @@ export default function Mobbex({navigation, route}) {
     const URL = queryString.parseUrl(url);
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
+    console.log(props, 'propsMobbex');
 
     setTimeout(() => {
-      if (queryParams.status === '200') {
+      if (queryParams.status == 200) {
         moveToNewScreen(navigationStrings.ORDERSUCESS, {
           orderDetail: {
             order_number: queryParams.order,
             id: paramsData?.orderDetail?.id,
           },
         })();
-      } else if (queryParams.status === '0') {
+      } else if (queryParams.status == 0) {
         moveToNewScreen(navigationStrings.CART, {
           queryURL: url.replace(`${nonQueryURL}?`, ''),
         })();
@@ -90,15 +92,11 @@ export default function Mobbex({navigation, route}) {
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.transparent}
       statusBarColor={colors.white}
-      source={loaderOne}>
-      <Header
-        leftIcon={
-          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
-        }
-        centerTitle={''}
-      />
+      source={loaderOne}
+      isLoadingB={isLoading}>
       {webUrl !== '' && (
         <WebView
+          onLoad={() => updateState({isLoading: false})}
           source={{uri: webUrl}}
           onNavigationStateChange={onNavigationStateChange}
         />

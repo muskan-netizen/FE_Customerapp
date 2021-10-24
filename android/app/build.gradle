@@ -141,7 +141,7 @@ android {
         abi {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
-            universalApk false  // If true, also generate a universal APK
+            universalApk true  // If true, also generate a universal APK
             include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
     }
@@ -759,7 +759,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.codiner'
+            applicationId 'com.app.codiner'
             resValue "string", "app_name", "Codiner"
             resValue "string", "host_name", "codiner.royoorders.com"
          }
@@ -1378,6 +1378,76 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.quickquick'
             resValue "string", "app_name", "Quick Quick"
+            resValue "string", "host_name", ""
+         }
+          caribeclean{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.caribeclean'
+            resValue "string", "app_name", "Caribe Clean"
+            resValue "string", "host_name", ""
+         }
+         stonses{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.stonses'
+            resValue "string", "app_name", "Stonses"
+            resValue "string", "host_name", ""
+         }
+          agbdeliveries{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.agbdeliveries'
+            resValue "string", "app_name", "AGB Deliveries"
+            resValue "string", "host_name", ""
+         }
+         twofinder{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.twofinder'
+            resValue "string", "app_name", "Two Finder"
+            resValue "string", "host_name", ""
+         }
+         bookem{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.bookem'
+            resValue "string", "app_name", "Bookem"
+            resValue "string", "host_name", ""
+         }
+         zip{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.zip'
+            resValue "string", "app_name", "Zip"
+            resValue "string", "host_name", ""
+         }
+         ridetci{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ridetci'
+            resValue "string", "app_name", "RIDE TCI"
             resValue "string", "host_name", ""
          }
     }

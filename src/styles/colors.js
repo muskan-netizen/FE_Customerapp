@@ -108,4 +108,5 @@ export default {
   greyA: '#C6C6C6',
   taxiCategoryGrayColor: '#C0C0C8',
   redD: '#FD4937',
+  blueLight: '#93DCEF',
 };

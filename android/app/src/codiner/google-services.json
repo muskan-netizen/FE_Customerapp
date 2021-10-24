@@ -1,64 +1,136 @@
 {
   "project_info": {
-    "project_number": "787332814468",
-    "project_id": "codiner-cd637",
-    "storage_bucket": "codiner-cd637.appspot.com"
+    "project_number": "347509297159",
+    "project_id": "e-observer-307209",
+    "storage_bucket": "e-observer-307209.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:787332814468:android:363dd31ade270866b794d1",
+        "mobilesdk_app_id": "1:347509297159:android:0094af575b2d672f269aa2",
         "android_client_info": {
-          "package_name": "com.codiner"
+          "package_name": "com.app.codiner"
         }
       },
       "oauth_client": [
         {
-          "client_id": "787332814468-46dll506g9d5r0fgpimn2ec665ihfu2r.apps.googleusercontent.com",
+          "client_id": "347509297159-6rgql2so7gbf8eivg9h9517qv0hqafd6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.codiner",
+            "package_name": "com.app.codiner",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "787332814468-g327sfu9ddronf4vqlc4oqjitbokr2sm.apps.googleusercontent.com",
+          "client_id": "347509297159-7sfjsec1d9pdf6m36bp4fdr8d3gd7joe.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.codiner",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "787332814468-m4fhf3a07n4lfm526g9lqpe2ohlblusa.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.codiner",
+            "package_name": "com.app.codiner",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "787332814468-a97h7vrcesoh9c93gd5u0qe1ndnfitnk.apps.googleusercontent.com",
+          "client_id": "347509297159-perk5226i31iiq2v124qla554rs4b4gn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.codiner",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "347509297159-tcoksqn1podv091vdffmlp8il065ht00.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA-6LI5Xugabu9DcvMxWojCpOpwGsHxsSc"
+          "current_key": "AIzaSyBsxS8E6wiWXaHUJfhcmK4BCypgQH5lCUA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "787332814468-a97h7vrcesoh9c93gd5u0qe1ndnfitnk.apps.googleusercontent.com",
+              "client_id": "347509297159-tcoksqn1podv091vdffmlp8il065ht00.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "787332814468-6ptn9bntf9ov45f9k5fs5i6nh6rljv0r.apps.googleusercontent.com",
+              "client_id": "347509297159-095t7069tsnuvock9l6gm0l0r5ufsv4e.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.codiner"
+                "bundle_id": "com.Restaurantchambery.Merchant"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347509297159:android:dced0ca3ecbe2e20269aa2",
+        "android_client_info": {
+          "package_name": "com.restaurantchambery.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347509297159-tcoksqn1podv091vdffmlp8il065ht00.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsxS8E6wiWXaHUJfhcmK4BCypgQH5lCUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347509297159-tcoksqn1podv091vdffmlp8il065ht00.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "347509297159-095t7069tsnuvock9l6gm0l0r5ufsv4e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Restaurantchambery.Merchant"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347509297159:android:5d259c757ddfa875269aa2",
+        "android_client_info": {
+          "package_name": "com.restaurantchambery.merchant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347509297159-tcoksqn1podv091vdffmlp8il065ht00.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsxS8E6wiWXaHUJfhcmK4BCypgQH5lCUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347509297159-tcoksqn1podv091vdffmlp8il065ht00.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "347509297159-095t7069tsnuvock9l6gm0l0r5ufsv4e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Restaurantchambery.Merchant"
               }
             }
           ]

@@ -152,7 +152,6 @@ export default function Cart({navigation, route}) {
   const userData = useSelector((state) => state?.auth?.userData);
   const {appData, allAddresss, themeColors, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
-  console.log(appData, 'appDataCart');
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
@@ -593,13 +592,24 @@ export default function Cart({navigation, route}) {
           placeLoader: false,
         });
 
-        console.log(
-          Number(cartData?.total_payable_amount),
-          Number(selectedTipAmount),
-          'payableAmout',
-        );
-
         if (
+          (res?.data?.payment_option_id === 6 &&
+            !!(Number(cartData?.total_payable_amount) !== 0)) ||
+          Number(selectedTipAmount) !== 0
+        ) {
+          navigation.navigate(navigationStrings.PAYFAST, {
+            selectedPayment: selectedPayment,
+            total_payable_amount: (
+              Number(cartData?.total_payable_amount) +
+              (selectedTipAmount != null && selectedTipAmount != ''
+                ? Number(selectedTipAmount)
+                : 0)
+            ).toFixed(2),
+
+            payment_option_id: selectedPayment?.id,
+            orderDetail: res.data,
+          });
+        } else if (
           (res?.data?.payment_option_id === 7 &&
             !!(Number(cartData?.total_payable_amount) !== 0)) ||
           Number(selectedTipAmount) !== 0
@@ -616,7 +626,29 @@ export default function Cart({navigation, route}) {
             payment_option_id: selectedPayment?.id,
             orderDetail: res.data,
           });
-        } else {
+        }
+
+        // else if (
+        //   (res?.data?.payment_option_id === 8 &&
+        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
+        //   Number(selectedTipAmount) !== 0
+        // ){
+
+        //   navigation.navigate(navigationStrings.YOCO, {
+        //     selectedPayment: selectedPayment,
+        //     total_payable_amount: (
+        //       Number(cartData?.total_payable_amount) +
+        //       (selectedTipAmount != null && selectedTipAmount != ''
+        //         ? Number(selectedTipAmount)
+        //         : 0)
+        //     ).toFixed(2),
+
+        //     payment_option_id: selectedPayment?.id,
+        //     orderDetail: res.data,
+        //   });
+
+        // }
+        else {
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
             orderDetail: res.data,
           })();
@@ -659,17 +691,21 @@ export default function Cart({navigation, route}) {
       updateState({placeLoader: true});
       _directOrderPlace();
       return;
-    }
-    if (selectedPayment?.off_site == 1 && selectedPayment?.id === 7) {
+    } else if (selectedPayment?.off_site == 1 && selectedPayment?.id === 3) {
+      _webPayment();
+      return;
+    } else if (
+      selectedPayment?.off_site == 1 &&
+      !!(
+        (selectedPayment?.id === 6 || selectedPayment?.id === 7)
+        // || selectedPayment?.id===8
+      )
+    ) {
       updateState({placeLoader: true});
       _directOrderPlace();
       return;
     }
-    if (selectedPayment?.off_site == 1 && selectedPayment?.id !== 7) {
-      // updateState({placeLoader: true});
-      _webPayment();
-      return;
-    }
+
     _offineLinePayment();
   };
 
@@ -794,8 +830,8 @@ export default function Cart({navigation, route}) {
 
   const _webPayment = () => {
     let selectedMethod = selectedPayment.title.toLowerCase();
-    let returnUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
-    let cancelUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
+    let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
+    let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
 
     let queryData = `/${selectedMethod}?tip=${
       selectedTipAmount && selectedTipAmount != ''
@@ -819,6 +855,8 @@ export default function Cart({navigation, route}) {
         },
       )
       .then((res) => {
+        console.log(res, 'response===>');
+
         updateState({
           isLoadingB: false,
           isRefreshing: false,
@@ -1665,6 +1703,7 @@ export default function Cart({navigation, route}) {
                   {cartData?.tip.map((j, jnx) => {
                     return (
                       <TouchableOpacity
+                        key={String(jnx)}
                         style={[
                           styles.tipArrayStyle,
                           {
@@ -2246,7 +2285,6 @@ export default function Cart({navigation, route}) {
         });
     }
   }, [deepLinkUrl]);
-  // console.log(deepLinkUrl, 'deepLinkUrlCarts');
 
   const _onTableSelection = (item) => {
     const data = {
