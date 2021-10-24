@@ -626,7 +626,7 @@ const appIds = {
     android: 'com.ridetci',
   }),
   noki: Platform.select({
-    ios: 'com.noki',
+    ios: 'com.customer.noki',
     android: 'com.noki',
   }),
   driveree: Platform.select({
