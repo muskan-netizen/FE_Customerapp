@@ -192,7 +192,7 @@ export default function OrderCardVendorComponent({
           {data?.product_details.map((i, inx) => {
             return (
               <ImageBackground
-              key={String(inx)}
+                key={String(inx)}
                 source={{
                   uri: getImageUrl(
                     i?.image_path?.image_fit,
@@ -324,7 +324,7 @@ export default function OrderCardVendorComponent({
                 {data?.order_status?.current_status?.id == 1 ? (
                   <View style={{flexDirection: 'row'}}>
                     <TouchableOpacity
-                      onPress={() => updateOrderStatus(data, 8)}
+                      onPress={() => updateOrderStatus(data, 3)}
                       style={styles.orderReject}>
                       <Text style={styles.orderStatusStyleSecond}>
                         {strings.REJECT}
@@ -332,27 +332,45 @@ export default function OrderCardVendorComponent({
                     </TouchableOpacity>
                     <View style={{width: moderateScale(10)}} />
                     <TouchableOpacity
-                      onPress={() => updateOrderStatus(data, 7)}
+                      onPress={() => updateOrderStatus(data, 2)}
                       style={styles.orderAccept}>
                       <Text style={styles.orderStatusStyleSecond}>
                         {strings.ACCEPT}
                       </Text>
                     </TouchableOpacity>
                   </View>
-                ) : data?.order_status?.upcoming_status ? (
-                  <TouchableOpacity
-                    onPress={() =>
-                      updateOrderStatus(
-                        data,
-                        data?.order_status?.upcoming_status?.id,
-                      )
-                    }
-                    style={styles.orderAcceptAndReadyStyleSecond}>
-                    <Text style={styles.orderStatusStyleSecond}>
-                      {data?.order_status?.upcoming_status?.title}
-                    </Text>
-                  </TouchableOpacity>
-                ) : null}
+                ) : (
+                  data?.order_status?.upcoming_status &&
+                  !!(
+                    data?.order_status?.current_status !== 3 &&
+                    data?.order_status?.current_status !== 6
+                  ) && (
+                    <>
+                      <View style={{flexDirection: 'row'}}>
+                        <TouchableOpacity
+                          onPress={() => updateOrderStatus(data, 3)}
+                          style={styles.orderReject}>
+                          <Text style={styles.orderStatusStyleSecond}>
+                            {strings.REJECT}
+                          </Text>
+                        </TouchableOpacity>
+                        <View style={{width: moderateScale(10)}} />
+                        <TouchableOpacity
+                          onPress={() =>
+                            updateOrderStatus(
+                              data,
+                              data?.order_status?.upcoming_status?.id,
+                            )
+                          }
+                          style={styles.orderAcceptAndReadyStyleSecond}>
+                          <Text style={styles.orderStatusStyleSecond}>
+                            {data?.order_status?.upcoming_status?.title}
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    </>
+                  )
+                )}
               </View>
             )}
           </View>
@@ -463,7 +481,7 @@ export function stylesFunc({fontFamily, themeColors}) {
       paddingHorizontal: moderateScale(10),
       paddingVertical: moderateScale(5),
       borderRadius: moderateScale(3),
-      alignItems: 'center',
+      justifyContent: 'center',
     },
     imageCardStyle: {
       height: width / 6,

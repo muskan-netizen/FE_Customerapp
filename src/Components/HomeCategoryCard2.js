@@ -1,25 +1,25 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
-import { moderateScale, textScale, width } from '../styles/responsiveSize';
-import { getImageUrl } from '../utils/helperFunctions';
-import { SvgUri } from 'react-native-svg';
+import {moderateScale, textScale, width} from '../styles/responsiveSize';
+import {getImageUrl} from '../utils/helperFunctions';
+import {SvgUri} from 'react-native-svg';
 import Elevations from 'react-native-elevation';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../styles/theme';
 
 export default function HomeCategoryCard2({
   data = {},
-  onPress = () => { },
+  onPress = () => {},
   isLoading = false,
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { appStyle } = useSelector((state) => state?.initBoot);
+  const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const imageURI = getImageUrl(
     data?.icon?.image_fit,
@@ -69,14 +69,14 @@ export default function HomeCategoryCard2({
           />
         )}
       </View>
-      <View style={{ flex: 0.2 }}>
+      <View style={{flex: 0.2}}>
         <Text
           numberOfLines={2}
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
             fontFamily: fontFamily.regular,
             fontSize: textScale(10),
-            textAlign: 'center'
+            textAlign: 'center',
           }}>
           {data.name}
         </Text>
