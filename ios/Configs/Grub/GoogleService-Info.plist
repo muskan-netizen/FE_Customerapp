@@ -20,16 +20,18 @@
 	<string>grub-2689a</string>
 	<key>STORAGE_BUCKET</key>
 	<string>grub-2689a.appspot.com</string>
+  <key>FirebaseAppDelegateProxyEnabled</key>
+  <false/>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:326481362111:ios:5fa19c643c403b68285a0a</string>
 </dict>
