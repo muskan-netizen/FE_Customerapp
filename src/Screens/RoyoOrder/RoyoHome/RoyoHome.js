@@ -5,8 +5,6 @@ import {
   StyleSheet,
   Image,
   ScrollView,
-  Platform,
-  processColor,
   RefreshControl,
 } from 'react-native';
 import {useState} from 'react';
@@ -15,7 +13,6 @@ import imagePath from '../../../constants/imagePath';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale,
   width,
 } from '../../../styles/responsiveSize';
 import fontFamily from '../../../styles/fontFamily';
@@ -88,17 +85,10 @@ const RoyoHome = (props) => {
     datasets,
     labels,
     status,
-    isLoading,
     activeOrders,
     pageActive,
-    limit,
     isRefreshing,
-    vendor_list,
     selectedVendor,
-    startDate,
-    endDate,
-    displayedDate,
-    selectedDate,
     newOrder,
     totalPendingOrder,
     totalActiveOrder,
@@ -125,7 +115,6 @@ const RoyoHome = (props) => {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
-          // systemuser: DeviceInfo.getUniqueId(),
         },
       )
       .then((res) => {
@@ -210,7 +199,7 @@ const RoyoHome = (props) => {
     let data = {};
     data['type'] = 'monthly';
     data['month'] = 'july';
-    data['year'] = '2021'
+    data['year'] = '2021';
     data['vendor_id'] = selectedVendor ? selectedVendor?.id : '';
     actions
       .getRevenueData(data, {
@@ -373,19 +362,7 @@ const RoyoHome = (props) => {
     const {image, header, text} = item;
     return (
       <View key={String(index)} style={styles.dashboardBox}>
-        <View
-          style={{
-            shadowColor: 'rgba(242,96,97,0.23)',
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.25,
-            flexShrink: 1,
-            shadowRadius: 3.84,
-
-            elevation: 19,
-          }}>
+        <View style={styles.dashboardImage}>
           <Image source={image} />
         </View>
         <Text
@@ -637,6 +614,18 @@ const styles = StyleSheet.create({
     marginBottom: customMarginBottom(18, 86),
     backgroundColor: 'transparent',
     backfaceVisibility: 'hidden',
+  },
+  dashboardImage: {
+    shadowColor: 'rgba(242,96,97,0.23)',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    flexShrink: 1,
+    shadowRadius: 3.84,
+
+    elevation: 19,
   },
   header: {
     flexDirection: 'row',

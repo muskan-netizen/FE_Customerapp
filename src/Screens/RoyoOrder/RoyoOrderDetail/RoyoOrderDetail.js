@@ -1,7 +1,16 @@
 import moment from 'moment';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import * as MyShare from 'react-native-share';
-import {View, Text,ScrollView,StyleSheet,Image, TouchableOpacity,Share, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Share,
+  FlatList,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import Header from '../../../Components/Header';
@@ -17,23 +26,14 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 import {customMarginBottom} from '../../../utils/constants/constants';
-import {getImageUrl} from '../../../utils/helperFunctions';
+import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import {dialCall} from '../../../utils/openNativeApp';
 
 const RoyoOrderDetail = (props) => {
-  const {navigation} = props;
   const {data, selectedVendor} = props.route.params;
-  console.log(selectedVendor, 'selected vendor id');
   const {appData, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
-  const updatedOrderStatus = (data, state) => {
-    updateState({showUpcomingStatus: false});
-
-    updateOrderStatus(data, state);
-    navigation.goBack();
-  };
-
   const shareOptions = {
     title: 'Share via',
     message: 'some message',
@@ -54,6 +54,39 @@ const RoyoOrderDetail = (props) => {
       });
   };
 
+  useEffect(() => {
+    _getOrderDetailScreen();
+  }, []);
+  const _getOrderDetailScreen = () => {
+    let collectedData = {};
+    collectedData['order_id'] = data?.id;
+    if (selectedVendor) {
+      collectedData['vendor_id'] = selectedVendor?.id;
+    }
+    console.log(data, '=====res');
+    updateState({isLoading: true});
+    actions
+      .getOrderDetail(collectedData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((res) => {
+        console.log(res.data.address, '=====res');
+        updateState({isLoading: false});
+        if (res?.data) {
+          updateState({
+            address: res.data.address,
+            isLoading: false,
+          });
+        }
+      })
+      .catch(errorMethod);
+  };
+  const errorMethod = (error) => {
+    updateState({isLoading: false, isLoading: false, isLoadingC: false});
+    showError(error?.message || error?.error);
+  };
   const updateOrderStatus = (acceptRejectData, status) => {
     let data = {};
     data['order_id'] = acceptRejectData?.id;
@@ -88,13 +121,19 @@ const RoyoOrderDetail = (props) => {
   };
 
   const [state, setState] = useState({
+    address: '',
     isLoadingB: false,
     showUpcomingStatus: false,
     current_status: data?.order_status.current_status,
     upcoming_status: data?.order_status.upcoming_status,
   });
-  const {showUpcomingStatus, current_status, upcoming_status, isLoadingB} =
-    state;
+  const {
+    showUpcomingStatus,
+    current_status,
+    upcoming_status,
+    isLoadingB,
+    address,
+  } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const toggleUpcomingStatus = () => {
     updateState({
@@ -223,11 +262,14 @@ const RoyoOrderDetail = (props) => {
                   source={imagePath.whatsAppRoyo}
                 />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => Share.share({
-                // message: 'https://www.google.com',
-                title: 'this is my title',
-                url: 'https://www.google.com',
-              })}>
+              <TouchableOpacity
+                onPress={() =>
+                  Share.share({
+                    // message: 'https://www.google.com',
+                    title: 'this is my title',
+                    url: 'https://www.google.com',
+                  })
+                }>
                 <Image
                   style={{
                     marginLeft: moderateScaleVertical(10),
@@ -241,9 +283,7 @@ const RoyoOrderDetail = (props) => {
           <View style={styles.locationBox}>
             <Image
               style={styles.locationImage}
-              source={{
-                uri: 'https://cdn.britannica.com/q:60/08/177308-050-94D9D6BE/Food-Pizza-Basil-Tomato.jpg',
-              }}
+              source={imagePath.icMap}
             />
             <View style={{justifyContent: 'space-evenly'}}>
               <Text style={{fontFamily: fontFamily.semiBold, fontSize: 16}}>
@@ -254,9 +294,9 @@ const RoyoOrderDetail = (props) => {
                   ...styles.font13Regular,
                   marginTop: moderateScaleVertical(5),
                 }}>
-                this is my address
+                {address?.street}
               </Text>
-              <Text style={styles.font13Regular}>this is my address</Text>
+              <Text style={styles.font13Regular}>{address?.city+", "+address?.country}</Text>
             </View>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>

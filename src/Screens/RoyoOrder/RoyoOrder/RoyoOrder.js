@@ -151,14 +151,6 @@ const RoyoOrder = (props) => {
     showError(error?.message || error?.error);
   };
 
-  const onPressViewEditAndReplace = (item) => {
-    // navigation.navigate(navigationStrings.ORDER_DETAIL, {
-    //   orderId: item?.id,
-    //   fromVendorApp: true,
-    //   showRating: false,
-    //   selectedVendor: selectedVendor,
-    // });
-  };
 
   const updateOrderStatus = (acceptRejectData, status) => {
     let data = {};

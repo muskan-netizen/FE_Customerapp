@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import WrapperContainer from '../../../Components/WrapperContainer';
@@ -21,9 +21,11 @@ import {androidCameraPermission} from '../../../utils/permissions';
 import ActionSheet from 'react-native-actionsheet';
 import {cameraHandler} from '../../../utils/commonFunction';
 import Header from '../../../Components/Header';
+import { useSelector } from 'react-redux';
 
 const RoyoAddProduct = (props) => {
   const {navigation} = props;
+  const {vendor_list} = props?.route?.params
   const [state, setState] = useState({
     selectedBuisnessType: '',
     productName: '',
@@ -50,13 +52,7 @@ const RoyoAddProduct = (props) => {
 
   const dropDownData = ['Buisness 1', 'Buisness 2', 'Buisness 3', 'Buisness 4'];
 
-  const showError = (message) => {
-    showMessage({
-      type: 'danger',
-      icon: 'danger',
-      message: message,
-    });
-  };
+
 
   const onChangeText = (key) => {
     return (value) => {
@@ -67,7 +63,7 @@ const RoyoAddProduct = (props) => {
   const onSelectBuisnessType = (data) => {
     updateState({selectedBuisnessType: data});
   };
-
+  const {storeSelectedVendor} = useSelector((state) => state?.order);
   let actionSheet = useRef();
   const cameraHandle = async (index) => {
     const permissionStatus = await androidCameraPermission();
@@ -89,27 +85,6 @@ const RoyoAddProduct = (props) => {
               type: 'jpg',
               avatar: res?.data,
             };
-
-            // actions
-            //   .uploadProfileImage(data, {
-            //     code: appData?.profile?.code,
-            //   })
-            //   .then((res) => {
-            //     const source = {
-            //       uri: getImageUrl(
-            //         res.data.proxy_url,
-            //         res.data.image_path,
-            //         '200/200',
-            //       ),
-            //     };
-            //     const image = {
-            //       source,
-            //     };
-            //     actions.updateProfile({...userData, ...image});
-            //     updateState({isLoading: false});
-            //     showSuccess(res.message);
-            //   })
-            //   .catch((err) => {});
           })
           .catch((res) => {});
       }
@@ -141,15 +116,6 @@ const RoyoAddProduct = (props) => {
         selectedImage: '',
       });
       {
-        // actions.addProduct({
-        //   selectedImage,
-        //   selectedBuisnessType,
-        //   productDetail,
-        //   productName,
-        //   mrp,
-        //   salePrice,
-        //   selectedImage,
-        // });
         navigation.navigate(navigationStrings.ROYO_ADD_PRODUCT);
       }
     } else
@@ -169,14 +135,7 @@ const RoyoAddProduct = (props) => {
       mrp &&
       salePrice
     ) {
-      //   actions.addProduct({
-      //     selectedImage,
-      //     selectedBuisnessType,
-      //     productDetail,
-      //     productName,
-      //     mrp,
-      //     salePrice,
-      //   });
+      
       navigation.navigate(navigationStrings.ROYO_HOME);
     } else
       showMessage({
@@ -186,6 +145,14 @@ const RoyoAddProduct = (props) => {
       });
   };
 
+
+  const _reDirectToVendorList = () => {
+    navigation.navigate(navigationStrings.VENDORLIST, {
+      selectedVendor: storeSelectedVendor,
+      allVendors: vendor_list,
+      screenType: navigationStrings.ROYO_ADD_PRODUCT,
+    });
+  };
   const deleteImage = (index) => {
     let newSelectedImageArary = [...selectedImage];
     newSelectedImageArary = newSelectedImageArary.filter(
@@ -201,8 +168,10 @@ const RoyoAddProduct = (props) => {
       <Header
       headerStyle={{marginVertical: moderateScaleVertical(16)}}
         leftIcon={imagePath.backRoyo}
-        centerTitle="Add product | Foodies hub   "
+        centerTitle={`Add product | ${storeSelectedVendor.name}`}
         showImageAlongwithTitle
+        onPressCenterTitle={() => _reDirectToVendorList()}
+        onPressImageAlongwithTitle={() => _reDirectToVendorList()}
         imageAlongwithTitle={imagePath.dropdownTriangle}
       />
       <KeyboardAwareScrollView

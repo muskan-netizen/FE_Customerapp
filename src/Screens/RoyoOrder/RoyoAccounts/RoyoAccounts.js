@@ -13,7 +13,6 @@ import Header from '../../../Components/Header';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
-import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
@@ -45,9 +44,7 @@ const RoyoAccounts = (props) => {
   const {storeSelectedVendor} = useSelector((state) => state?.order);
   useEffect(() => {
     updateState({
-      // selectedTab: null,
       selectedVendor: storeSelectedVendor,
-      // isLoading: true,
     });
   }, [storeSelectedVendor]);
 
@@ -123,19 +120,16 @@ const RoyoAccounts = (props) => {
       image: imagePath.transactionsRoyo,
       onPress: () => navigation.navigate(navigationStrings.ROYO_TRANSACTIONS),
     },
-
     {
       text: 'Payment Settings',
       image: imagePath.paymentSettinRoyo,
       onPress: () =>
         navigation.navigate(navigationStrings.ROYO_PAYMENT_SETTINGS),
     },
-
     {
       text: 'Signout',
       image: imagePath.signoutRoyo,
-      onPress:userlogout
-      
+      onPress: userlogout,
     },
   ];
 
@@ -159,11 +153,7 @@ const RoyoAccounts = (props) => {
           <View style={styles.cameraBox}>
             <Image source={imagePath.cameraRoyo} />
             <Text
-              style={{
-                fontFamily: fontFamily.regular,
-                fontSize: textScale(10),
-                color: colors.blackOpacity43,
-              }}>
+              style={styles.addLogo}>
               Add Logo
             </Text>
           </View>
@@ -222,6 +212,11 @@ const styles = StyleSheet.create({
     padding: moderateScale(12),
     alignItems: 'center',
     borderRadius: moderateScale(5),
+  },
+  addLogo: {
+    fontFamily: fontFamily.regular,
+    fontSize: textScale(10),
+    color: colors.blackOpacity43,
   },
   font16Semibold: {
     fontFamily: fontFamily.semiBold,
