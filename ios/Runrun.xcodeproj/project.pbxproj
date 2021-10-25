@@ -83,7 +83,10 @@
 		593677D91BC7FC364D54EB78 /* libPods-Shariff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAF7B6C8E82EBB1872A1CAC9 /* libPods-Shariff.a */; };
 		59CDAE26BA25D2BD7718AF90 /* libPods-Menus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF60BD5B2CC1C72B2848EA0 /* libPods-Menus.a */; };
 		5BA8D82BF2EC92E6ECAC40A1 /* libPods-ElCheRegio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06B7A09CA8C4B195B36A6E1C /* libPods-ElCheRegio.a */; };
+<<<<<<< HEAD
 		5C7C61DFD0853DD539DDABE4 /* libPods-Noki.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC42C5062CF5F11D905B704B /* libPods-Noki.a */; };
+=======
+>>>>>>> dev_gulsher2
 		5EA53C664CF2D96134393B29 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		60E464871967447BC31292FD /* libPods-IGoLux.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E9FF5EA8D1FC04F289F12A /* libPods-IGoLux.a */; };
 		61957433F78CB8E050EEF9F1 /* libPods-Sambiga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F1431960692AB4857321279 /* libPods-Sambiga.a */; };
@@ -103,7 +106,10 @@
 		72D6019998706BCE84D9DFE0 /* libPods-Cannabus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB2CFC03253EA5C090994F4B /* libPods-Cannabus.a */; };
 		740070B24C6D2862CD56E472 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		7472439BE80625049BC9B531 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+<<<<<<< HEAD
 		7613B80390546490477B5594 /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 512479773D62F5A2CD747D21 /* libPods-RoyoOrder.a */; };
+=======
+>>>>>>> dev_gulsher2
 		76693A5B269D9B87000F83B2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		76693A5D269D9B87000F83B2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		76693A63269D9B87000F83B2 /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
@@ -131,7 +137,10 @@
 		7A9BA0F4663D2368BEC5ED82 /* libPods-Voltaic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E976B350F132573C9B949B0 /* libPods-Voltaic.a */; };
 		7AB0DB3E9B92C83C44856D8D /* libPods-Capcorp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72830E7752A6C32500FC10A9 /* libPods-Capcorp.a */; };
 		7DBEE9998086014729DF57C3 /* libPods-MsTechy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 40CEEE53F9AD0EB752CB6F1F /* libPods-MsTechy.a */; };
+<<<<<<< HEAD
 		7E773A6768E37920BE7E6C5C /* libPods-RXNow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 724BA2F7314B8700926D65A4 /* libPods-RXNow.a */; };
+=======
+>>>>>>> dev_gulsher2
 		7EE39817E9CC1248E2CA3188 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		80ACC1DEAC6339C2AF643832 /* libPods-Stonses.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C8994C51D8D3A1FA47E8B484 /* libPods-Stonses.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -3918,7 +3927,10 @@
 		BD1A7AA148B75E77078F73DC /* libPods-FlyingHorse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 974D7AA9C33B2B09DE5B0FBB /* libPods-FlyingHorse.a */; };
 		BD4950B3406A009306D603E2 /* libPods-Zip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69521FB705ACD59E65EAE46D /* libPods-Zip.a */; };
 		BD5F067A81CFF25EEC241FF9 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+<<<<<<< HEAD
 		BFA548EDE8790A96709FFCE2 /* libPods-SeaChangeVending.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D0F37D24881DB5C127F844F /* libPods-SeaChangeVending.a */; };
+=======
+>>>>>>> dev_gulsher2
 		C0973C92715373A0B5853D4C /* libPods-LastMinuteDress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B03A6A4AFC40C46D85CD1D74 /* libPods-LastMinuteDress.a */; };
 		C7411EFB99C350C70CA7582F /* libPods-Autotek.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7471EE379BACBB8F59A1D64 /* libPods-Autotek.a */; };
 		C8170D158B04B3B4BC1AA25B /* libPods-Vecto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CFDBD08AC336518931581F49 /* libPods-Vecto.a */; };
@@ -4891,6 +4903,10 @@
 		84D4879A26C1632500EE9EB5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84D487BB26C1633700EE9EB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84D4889626C166A200EE9EB5 /* Specialhalal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Specialhalal.entitlements; sourceTree = "<group>"; };
+		84D5C0632726E08000564506 /* Grub.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Grub.entitlements; sourceTree = "<group>"; };
+		84D5C0E32726E2AE00564506 /* eBOYO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = eBOYO.entitlements; sourceTree = "<group>"; };
+		84D5C0E42726E2D000564506 /* Baytukom.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Baytukom.entitlements; sourceTree = "<group>"; };
+		84D5C0E52726E3B200564506 /* DoorStep.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DoorStep.entitlements; sourceTree = "<group>"; };
 		84D5F26526D76D7300C6E5DB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84D8C37B269F03220020B09A /* Yogo Food.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yogo Food.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D8C3C8269F04A70020B09A /* YogoFood(Production).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "YogoFood(Production).xcconfig"; sourceTree = "<group>"; };
@@ -6871,12 +6887,19 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				8400D4F627254CD6003BF24A /* Ored.entitlements */,
 				8400CB4227254927003BF24A /* Driveree.entitlements */,
 				8400C1A027254433003BF24A /* RXNow.entitlements */,
 				8400B89327253F65003BF24A /* Noki.entitlements */,
 				8472A61C27254C7C00CD25DC /* OrderChekout.entitlements */,
 				847170452725431D0049C1D5 /* SeaChangeVending.entitlements */,
+=======
+				84D5C0E52726E3B200564506 /* DoorStep.entitlements */,
+				84D5C0E42726E2D000564506 /* Baytukom.entitlements */,
+				84D5C0E32726E2AE00564506 /* eBOYO.entitlements */,
+				84D5C0632726E08000564506 /* Grub.entitlements */,
+>>>>>>> dev_gulsher2
 				84FE79822722E91B001F8A2F /* RIDETCI.entitlements */,
 				84FE70972722E263001F8A2F /* Zip.entitlements */,
 				840521552721A0FF002D52AF /* Bookem.entitlements */,
@@ -38334,6 +38357,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 6FXUMT5X23;
 				INFOPLIST_FILE = RunrunTests/Info.plist;
@@ -40684,7 +40708,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = DoorStep.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
@@ -40715,7 +40739,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = eBOYO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
@@ -40939,7 +40963,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = Baytukom.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
@@ -42851,7 +42875,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = Grub.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
@@ -42865,7 +42889,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.customer.grub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
 				PROJECT_ENTITLEMENT = "";
@@ -42918,10 +42942,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Gusto.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -42936,7 +42960,7 @@
 				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = Gusto;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
