@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>721884720904-qvtsasklp6al1jok3fn5sj2nvvhif0mv.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.721884720904-qvtsasklp6al1jok3fn5sj2nvvhif0mv</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>721884720904-57ui08mujkp60r03jhln8qrh273islml.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCn9wEmk5uwlxP83yhce-l5IxsZcMzS4ok</string>
+	<key>GCM_SENDER_ID</key>
+	<string>721884720904</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.customer.noki</string>
+	<key>PROJECT_ID</key>
+	<string>noki-726d5</string>
+	<key>STORAGE_BUCKET</key>
+	<string>noki-726d5.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:721884720904:ios:52c3ecd8429663f99e06bd</string>
+</dict>
+</plist>

@@ -230,7 +230,7 @@ export default function AddressModal2({
       city: city ? city : '',
       states: states ? states : '',
       country: country ? country : '',
-      pincode: pincode ? pincode : '',
+      // pincode: pincode ? pincode : '',
     });
     if (error) {
       // showError(error);

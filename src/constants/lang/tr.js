@@ -564,4 +564,5 @@ export default {
   ENTER_CODE_SENT_TO_MOBILE: 'Enter the code we just sent you on your mobile',
   REJECT_REASON: 'Reject Reason',
   ENTER_REASON_FOR_REJECTING_ORDER: 'Enter reason for rejecting the order.',
+  VIEW_MORE: 'View More',
 };

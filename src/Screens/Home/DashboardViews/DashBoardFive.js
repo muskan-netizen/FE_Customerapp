@@ -7,6 +7,7 @@ import {
   Text,
   View,
   Animated,
+  Image,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import AppLink from 'react-native-app-link';
@@ -30,6 +31,7 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
+  textScale,
 } from '../../../styles/responsiveSize';
 import {MyDarkTheme} from '../../../styles/theme';
 import stylesFunc from '../styles';
@@ -42,6 +44,7 @@ import {
 } from '../../../utils/helperFunctions';
 import {useScrollToTop} from '@react-navigation/native';
 import staticStrings from '../../../constants/staticStrings';
+import imagePath from '../../../constants/imagePath';
 
 export default function DashBoardFive({
   handleRefresh = () => {},
@@ -62,6 +65,7 @@ export default function DashBoardFive({
     newCategoryData: [],
     isVendorColumnList: false,
     vendorsData: [],
+    isViewMore: false,
   });
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
@@ -76,7 +80,7 @@ export default function DashBoardFive({
     allCategory &&
     allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
   // const {bannerRef} = useRef();
-  const {slider1ActiveSlide, vendorsData} = state;
+  const {slider1ActiveSlide, vendorsData, isViewMore} = state;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
 
@@ -95,15 +99,68 @@ export default function DashBoardFive({
     });
   }, [appMainData?.vendors]);
 
-  const _renderItem = ({item}) => (
-    <View style={{width: '25%'}}>
-      <HomeCategoryCard2
-        data={item}
-        onPress={() => onPressCategory(item)}
-        isLoading={isLoading}
-      />
-    </View>
-  );
+  const _renderItem = ({item, index}) => {
+    if (index >= 7 && !isViewMore) {
+      return (
+        <View style={{width: '25%'}}>
+          <TouchableOpacity
+            style={{
+              marginVertical: moderateScale(0),
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={() => updateState({isViewMore: true})}>
+            <View
+              style={{
+                flex: 0.8,
+                backgroundColor: isDarkMode
+                  ? colors.whiteOpacity15
+                  : colors.greyNew,
+                borderRadius: moderateScale(30),
+                width: moderateScale(60),
+                height: moderateScale(60),
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={imagePath.icViewMore}
+                style={{
+                  height: moderateScale(50),
+                  width: moderateScale(50),
+                  borderRadius: moderateScale(10),
+                }}
+                resizeMode={'contain'}
+              />
+            </View>
+            <View style={{flex: 0.2}}>
+              <Text
+                numberOfLines={2}
+                style={{
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity70,
+                  fontFamily: fontFamily.regular,
+                  fontSize: textScale(10),
+                  textAlign: 'center',
+                }}>
+                {strings.VIEW_MORE}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      );
+    } else {
+      return (
+        <View style={{width: '25%'}}>
+          <HomeCategoryCard2
+            data={item}
+            onPress={() => onPressCategory(item)}
+            isLoading={isLoading}
+          />
+        </View>
+      );
+    }
+  };
 
   const _renderVendors = ({item, index}) => (
     <View style={{marginHorizontal: moderateScale(16)}}>
@@ -159,7 +216,11 @@ export default function DashBoardFive({
               <FlatList
                 scrollEnabled={false}
                 numColumns={4}
-                data={appMainData?.categories}
+                data={
+                  isViewMore
+                    ? appMainData?.categories
+                    : appMainData?.categories.filter((item, indx) => indx <= 7)
+                }
                 keyExtractor={(item) => item.id.toString()}
                 showsHorizontalScrollIndicator={false}
                 renderItem={_renderItem}

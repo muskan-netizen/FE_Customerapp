@@ -53,7 +53,6 @@ import stylesFunc from './styles';
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
-  console.log(data, 'datadatadata');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const dineInType = useSelector((state) => state?.home?.dineInType);
@@ -512,10 +511,6 @@ export default function Products({route, navigation}) {
       )
       .then((res) => {
         console.log(res, 'getProductByVendorId');
-        console.log(
-          res?.data?.listData?.data?.mode_of_service,
-          'mode of Service',
-        );
         updateState({
           categoryInfo: categoryInfo ? categoryInfo : res.data.category,
           filterData: res?.data?.filterData,
