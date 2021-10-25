@@ -20,8 +20,6 @@
 	<string>grub-2689a</string>
 	<key>STORAGE_BUCKET</key>
 	<string>grub-2689a.appspot.com</string>
-  <key>FirebaseAppDelegateProxyEnabled</key>
-  <false/>
 	<key>IS_ADS_ENABLED</key>
 	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
