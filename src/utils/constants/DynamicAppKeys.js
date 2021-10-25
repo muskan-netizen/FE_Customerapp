@@ -646,7 +646,7 @@ const appIds = {
     android: 'com.ored',
   }),
   orderchekout: Platform.select({
-    ios: 'com.orderchekout',
+    ios: 'com.customer.orderchekout',
     android: 'com.orderchekout',
   }),
 };
