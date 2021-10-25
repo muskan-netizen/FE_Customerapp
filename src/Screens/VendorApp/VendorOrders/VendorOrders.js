@@ -176,13 +176,31 @@ export default function VendorOrders({navigation, route}) {
 
   const updateOrderStatus = (acceptRejectData, status) => {
     updateState({
-      isLoadingB: status !== 8 ? true : false,
-      isRejectModal: status === 8 ? true : false,
+      isLoadingB: status !== 3 ? true : false,
+      isRejectModal: status === 3 ? true : false,
       acceptRejectData: acceptRejectData,
       status: status,
     });
-    if (status !== 8) {
-      _updateOrderStatus();
+    if (status !== 3) {
+      let data = {};
+      data['order_id'] = acceptRejectData?.id;
+      data['vendor_id'] = selectedVendor?.id;
+      data['order_status_option_id'] = status;
+      data['reject_reason'] = rejectReason;
+
+      actions
+        .updateOrderStatus(data, {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          // systemuser: DeviceInfo.getUniqueId(),
+        })
+        .then((res) => {
+          if (res && res.status == 'success') {
+            updateStatus(res, acceptRejectData);
+          }
+        })
+        .catch(errorMethod);
     } else return;
   };
 
