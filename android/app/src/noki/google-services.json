@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "721884720904",
+    "project_id": "noki-726d5",
+    "storage_bucket": "noki-726d5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721884720904:android:8d1fe8f0619016699e06bd",
+        "android_client_info": {
+          "package_name": "com.noki"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "721884720904-57ui08mujkp60r03jhln8qrh273islml.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.noki",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "721884720904-6k2p6clgtbofa72n89h2i8km7f7kd1vf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.noki",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "721884720904-on5foe0i8tir4vg7mui7u2m5o3l7r0j2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.noki",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "721884720904-lqn81sb8ilnmt32ammh5reedlg5prard.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDJ5iWkU0OO5MzjcSk42Tj3ljNxygjFP4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "721884720904-lqn81sb8ilnmt32ammh5reedlg5prard.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "721884720904-58onnor9quiqhl8q6re3f6glu3b3e0dv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.noki"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

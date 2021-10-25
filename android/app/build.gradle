@@ -1450,6 +1450,66 @@ android {
             resValue "string", "app_name", "RIDE TCI"
             resValue "string", "host_name", ""
          }
+           noki{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.noki'
+            resValue "string", "app_name", "Noki"
+            resValue "string", "host_name", ""
+         }
+         driveree{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.driveree'
+            resValue "string", "app_name", "Driveree"
+            resValue "string", "host_name", ""
+         }
+          rxnow{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.rxnow'
+            resValue "string", "app_name", "RX Now"
+            resValue "string", "host_name", ""
+         }
+         seachangevending{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.seachangevending'
+            resValue "string", "app_name", "Sea Change Vending"
+            resValue "string", "host_name", ""
+         }
+           ored{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ored'
+            resValue "string", "app_name", "Ored"
+            resValue "string", "host_name", ""
+         }
+         orderchekout{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.orderchekout'
+            resValue "string", "app_name", "Order Chekout"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

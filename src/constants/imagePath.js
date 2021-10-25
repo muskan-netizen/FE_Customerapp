@@ -364,4 +364,5 @@ export default {
   blackSquare: require('../assets/images/TAXIAPPIMAGES/ic_square.png'),
   blackNav: require('../assets/images/TAXIAPPIMAGES/ic_nav.png'),
   plushRoundedBackground: require('../assets/images/TAXIAPPIMAGES/ic_plus.png'),
+  icViewMore: require('../assets/images/RoyoorderNewImages/ic_viewmore.png'),
 };
