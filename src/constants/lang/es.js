@@ -565,4 +565,5 @@ export default {
     'Ingrese el código que le acabamos de enviar en su móvil',
   REJECT_REASON: 'Razón del rechazo',
   ENTER_REASON_FOR_REJECTING_ORDER: 'Ingrese el motivo del rechazo del pedido.',
+  VIEW_MORE: 'View More',
 };

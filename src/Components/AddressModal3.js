@@ -254,7 +254,7 @@ export default function AddressModal3({
       city: city ? city : '',
       states: states ? states : '',
       country: country ? country : '',
-      pincode: pincode ? pincode : '',
+      // pincode: pincode ? pincode : '',
     });
     if (error) {
       // showError(error);

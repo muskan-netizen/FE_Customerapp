@@ -828,6 +828,42 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.noki:
+          updateState({
+            shortCode: shortCodes.noki,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.driveree:
+          updateState({
+            shortCode: shortCodes.driveree,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.rxnow:
+          updateState({
+            shortCode: shortCodes.rxnow,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.seachangevending:
+          updateState({
+            shortCode: shortCodes.seachangevending,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ored:
+          updateState({
+            shortCode: shortCodes.ored,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.orderchekout:
+          updateState({
+            shortCode: shortCodes.orderchekout,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
