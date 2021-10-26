@@ -374,7 +374,7 @@ const appIds = {
     android: 'com.loopwhole',
   }),
   vici: Platform.select({
-    ios: 'com.app.vici',
+    ios: 'com.customer.vici',
     android: 'com.app.vici',
   }),
   carhop: Platform.select({

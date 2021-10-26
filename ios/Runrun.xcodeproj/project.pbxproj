@@ -1829,7 +1829,6 @@
 		8472A41327254ADD00CD25DC /* OrderChekout(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8472A41227254ADD00CD25DC /* OrderChekout(Production).xcconfig */; };
 		8472A49627254AF600CD25DC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8472A49527254AF600CD25DC /* Images.xcassets */; };
 		8472A49827254B1800CD25DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8472A49727254B1700CD25DC /* GoogleService-Info.plist */; };
-		8472F4582727D7E300148DB2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8472F4572727D7E300148DB2 /* GoogleService-Info.plist */; };
 		8472F56427280C0200148DB2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8472F56327280C0200148DB2 /* GoogleService-Info.plist */; };
 		84780044270744F00083F24E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84780045270744F00083F24E /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -3559,6 +3558,7 @@
 		84E176DE26C6535A00E71F11 /* Drus(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84E176DD26C6535A00E71F11 /* Drus(Development).xcconfig */; };
 		84E1770D26C6537A00E71F11 /* Drus(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84E1770C26C6537A00E71F11 /* Drus(Production).xcconfig */; };
 		84E1773C26C653A500E71F11 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E1773B26C653A500E71F11 /* Images.xcassets */; };
+		84E1E1E42728354C0063649A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84E1E1E32728354B0063649A /* GoogleService-Info.plist */; };
 		84ECE25F26A7FA8F009A0F8C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84ECE26026A7FA8F009A0F8C /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		84ECE26126A7FA8F009A0F8C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -4508,7 +4508,6 @@
 		8472A49527254AF600CD25DC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8472A49727254B1700CD25DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8472A61C27254C7C00CD25DC /* OrderChekout.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OrderChekout.entitlements; sourceTree = "<group>"; };
-		8472F4572727D7E300148DB2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8472F56327280C0200148DB2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		847800A2270744F00083F24E /* Zest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		847801D7270746DB0083F24E /* Zest(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zest(Development).xcconfig"; sourceTree = "<group>"; };
@@ -4856,6 +4855,7 @@
 		84E176DD26C6535A00E71F11 /* Drus(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Drus(Development).xcconfig"; sourceTree = "<group>"; };
 		84E1770C26C6537A00E71F11 /* Drus(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Drus(Production).xcconfig"; sourceTree = "<group>"; };
 		84E1773B26C653A500E71F11 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		84E1E1E32728354B0063649A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84EA41CC26393E950078E919 /* libRNGoogleSignin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNGoogleSignin.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EA41CE26393EA70078E919 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		84EA41D026393EB30078E919 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
@@ -8500,7 +8500,7 @@
 		84FFF50C26D652CA00F2B059 /* Vici */ = {
 			isa = PBXGroup;
 			children = (
-				8472F4572727D7E300148DB2 /* GoogleService-Info.plist */,
+				84E1E1E32728354B0063649A /* GoogleService-Info.plist */,
 				84FFF54E26D652F500F2B059 /* Vici(Development).xcconfig */,
 				84FFF5D226D6532600F2B059 /* Vici(Production).xcconfig */,
 				84FFF61526D6535D00F2B059 /* Images.xcassets */,
@@ -11946,7 +11946,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					8491383526CB837E00AD4105 = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = SK88RSGS75;
 						ProvisioningStyle = Automatic;
 					};
 					849AE06626C5245800B6C20D = {
@@ -12115,7 +12115,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					84FFF3CA26D6520700F2B059 = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = Q4J4D67SCB;
 						ProvisioningStyle = Automatic;
 					};
 					84FFF94826D6652C00F2B059 = {
@@ -16486,7 +16486,7 @@
 				84FFF54F26D652F500F2B059 /* Vici(Development).xcconfig in Resources */,
 				84D1CE1A2703529D00C05E36 /* notification.wav in Resources */,
 				84FFF61626D6535D00F2B059 /* Images.xcassets in Resources */,
-				8472F4582727D7E300148DB2 /* GoogleService-Info.plist in Resources */,
+				84E1E1E42728354C0063649A /* GoogleService-Info.plist in Resources */,
 				84FFF5D326D6532600F2B059 /* Vici(Production).xcconfig in Resources */,
 				8455CA7626DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				84FFF3F626D6520700F2B059 /* Plists in Resources */,
@@ -43973,7 +43973,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = SK88RSGS75;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -46633,7 +46633,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = Q4J4D67SCB;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -46665,7 +46665,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = Q4J4D67SCB;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
