@@ -13,6 +13,7 @@ import {
   StatusBar,
   Text,
   TouchableOpacity,
+  Vibration,
   View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
@@ -51,8 +52,16 @@ import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
 import {removeItem} from '../../utils/utils';
 import stylesFunc from './styles';
 
+const ONE_SECOND_IN_MS = 50;
+const PATTERN = [
+  1 * ONE_SECOND_IN_MS,
+  2 * ONE_SECOND_IN_MS,
+  3 * ONE_SECOND_IN_MS
+];
+
 export default function Products({route, navigation}) {
   const {data} = route.params;
+
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const dineInType = useSelector((state) => state?.home?.dineInType);
@@ -546,6 +555,7 @@ export default function Products({route, navigation}) {
 
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
+    Vibration.vibrate(PATTERN)
     if (!!userData?.auth_token) {
       updateState({isLoadingB: true});
       actions
@@ -655,11 +665,8 @@ export default function Products({route, navigation}) {
   };
 
   const addSingleItem = async (item, section = null) => {
-    if (!categoryInfo?.show_slot && !!categoryInfo.is_vendor_closed) {
-      alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
-      return;
-    }
 
+Vibration.vibrate(PATTERN)
     let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
     updateState({selectedItemID: item?.id, btnLoader: true});
     let isSingleVendor = await checkSingleVendor(item.id);
@@ -776,11 +783,7 @@ export default function Products({route, navigation}) {
   };
 
   const addDeleteCartItems = (item, section = null, index, type) => {
-    if (!categoryInfo?.show_slot && !!categoryInfo.is_vendor_closed) {
-      alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
-      return;
-    }
-
+    Vibration.vibrate(PATTERN)
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
     //!!data?.variant[0]?.check_if_in_cart_app && data?.variant[0]?.check_if_in_cart_app.length > 0 || !!data?.qty ?

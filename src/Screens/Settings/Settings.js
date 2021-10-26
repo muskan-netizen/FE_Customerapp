@@ -35,6 +35,13 @@ import stylesFunc from './styles';
 import DeviceInfo from 'react-native-device-info';
 import { API_BASE_URL } from '../../config/urls';
 
+const ONE_SECOND_IN_MS = 80;
+const PATTERN = [
+  1 * ONE_SECOND_IN_MS,
+  2 * ONE_SECOND_IN_MS,
+  3 * ONE_SECOND_IN_MS
+];
+
 export default function Settings({ route, navigation }) {
   // const appData = useSelector(state => state?.initBoot?.appData);
 
@@ -180,7 +187,7 @@ export default function Settings({ route, navigation }) {
 
   const _toggleOnOff = (isOn) => {
     actions.setToggle(isOn);
-    Vibration.vibrate(40);
+    Vibration.vibrate(PATTERN);
     updateState({
       isOn: isOn ? true : false,
     });
@@ -303,6 +310,7 @@ export default function Settings({ route, navigation }) {
                 key={String(inx)}
                 onPress={() => {
                   _setApperance(i);
+                  Vibration.vibrate(PATTERN)
                 }}>
                 <Image source={i.image} />
                 <Text
