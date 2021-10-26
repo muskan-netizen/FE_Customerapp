@@ -290,7 +290,6 @@ export default function MyOrders({navigation}) {
   };
 
   const returnYourOrder = (item) => {
-    console.log('hhdhsdshdshdh');
     console.log(item, 'item>item>');
     updateState({isLoading: true});
     actions
@@ -477,7 +476,7 @@ export default function MyOrders({navigation}) {
         })
         .catch(errorMethod);
     } else {
-      showError('Please select the product to return');
+      showError(strings.PLEASE_SELECT_RETURN_ORDER);
     }
   };
 
@@ -522,6 +521,7 @@ export default function MyOrders({navigation}) {
       <FlatList
         ref={_scrollRef}
         data={orders}
+        extraData={orders}
         // data={activeOrders || pastOrders || scheduledOrders}
         // data={[1, 2, 3, 4]}
         renderItem={renderOrders}

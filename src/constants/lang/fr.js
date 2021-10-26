@@ -602,4 +602,7 @@ montant`,
   REJECT_REASON: 'Reject Reason',
   ENTER_REASON_FOR_REJECTING_ORDER: 'Enter reason for rejecting the order.',
   VIEW_MORE: 'View More',
+  ADD_TIP: 'Add Tip',
+  PLEASE_SELECT_RETURN_ORDER: 'Please select the product to return',
+  PLEASE_SELECT_VALID_OPTION: 'Please select a valid tip option',
 };

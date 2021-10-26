@@ -566,4 +566,7 @@ export default {
   REJECT_REASON: 'Razón del rechazo',
   ENTER_REASON_FOR_REJECTING_ORDER: 'Ingrese el motivo del rechazo del pedido.',
   VIEW_MORE: 'View More',
+  ADD_TIP: 'Add Tip',
+  PLEASE_SELECT_RETURN_ORDER: 'Please select the product to return',
+  PLEASE_SELECT_VALID_OPTION: 'Please select a valid tip option',
 };

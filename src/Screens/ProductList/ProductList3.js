@@ -56,7 +56,7 @@ const ONE_SECOND_IN_MS = 50;
 const PATTERN = [
   1 * ONE_SECOND_IN_MS,
   2 * ONE_SECOND_IN_MS,
-  3 * ONE_SECOND_IN_MS
+  3 * ONE_SECOND_IN_MS,
 ];
 
 export default function Products({route, navigation}) {
@@ -555,7 +555,7 @@ export default function Products({route, navigation}) {
 
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
-    Vibration.vibrate(PATTERN)
+    Vibration.vibrate(PATTERN);
     if (!!userData?.auth_token) {
       updateState({isLoadingB: true});
       actions
@@ -635,6 +635,7 @@ export default function Products({route, navigation}) {
           systemuser: DeviceInfo.getUniqueId(),
         })
         .then((res) => {
+          console.log('res check singel vendro==>>>>>>', res);
           resolve(res);
         })
         .catch((error) => {
@@ -665,8 +666,7 @@ export default function Products({route, navigation}) {
   };
 
   const addSingleItem = async (item, section = null) => {
-
-Vibration.vibrate(PATTERN)
+    // Vibration.vibrate(PATTERN)
     let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
     updateState({selectedItemID: item?.id, btnLoader: true});
     let isSingleVendor = await checkSingleVendor(item.id);
@@ -783,7 +783,7 @@ Vibration.vibrate(PATTERN)
   };
 
   const addDeleteCartItems = (item, section = null, index, type) => {
-    Vibration.vibrate(PATTERN)
+    Vibration.vibrate(PATTERN);
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
     //!!data?.variant[0]?.check_if_in_cart_app && data?.variant[0]?.check_if_in_cart_app.length > 0 || !!data?.qty ?

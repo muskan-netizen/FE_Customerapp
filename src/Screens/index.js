@@ -100,3 +100,4 @@ export {default as ViewAllData} from './ViewAllData/ViewAllData';
 export {default as Mobbex} from './PaymentGateways/Mobbex';
 export {default as Payfast} from './PaymentGateways/Payfast';
 export {default as Yoco} from './PaymentGateways/Yoco';
+export {default as TipPaymentOptions} from './TipPaymentOptions/TipPaymentOptions';
