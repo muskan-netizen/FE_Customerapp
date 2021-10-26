@@ -254,7 +254,7 @@ export default function AddressModal3({
       city: city ? city : '',
       states: states ? states : '',
       country: country ? country : '',
-      pincode: pincode ? pincode : '',
+      // pincode: pincode ? pincode : '',
     });
     if (error) {
       // showError(error);
@@ -603,9 +603,8 @@ export default function AddressModal3({
             <View style={styles.addressTypeView}>
               {addressTypeArray.map((item, index) => {
                 return (
-                  <>
+                  <View key={index}>
                     <TouchableOpacity
-                      key={index}
                       onPress={() => updateState({address_type: item.id})}
                       style={[
                         styles.addressHomeOrOfficeView,
@@ -643,7 +642,7 @@ export default function AddressModal3({
                         />
                       )}
                     </TouchableOpacity>
-                  </>
+                  </View>
                 );
               })}
             </View>

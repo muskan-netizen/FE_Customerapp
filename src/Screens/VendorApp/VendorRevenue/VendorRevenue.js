@@ -395,6 +395,7 @@ export default function VendorRevenue({navigation, route}) {
             {selectedTimeOptions.map((i, inx) => {
               return (
                 <TouchableOpacity
+                  key={String(inx)}
                   onPress={() => _selectTime(i)}
                   style={{
                     paddingHorizontal: 15,

@@ -792,6 +792,78 @@ export default function ShortCode({ route, navigation }) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.stonses:
+          updateState({
+            shortCode: shortCodes.stonses,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.agbdeliveries:
+          updateState({
+            shortCode: shortCodes.agbdeliveries,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bookem:
+          updateState({
+            shortCode: shortCodes.bookem,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.twofinder:
+          updateState({
+            shortCode: shortCodes.twofinder,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.zip:
+          updateState({
+            shortCode: shortCodes.zip,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ridetci:
+          updateState({
+            shortCode: shortCodes.ridetci,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.noki:
+          updateState({
+            shortCode: shortCodes.noki,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.driveree:
+          updateState({
+            shortCode: shortCodes.driveree,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.rxnow:
+          updateState({
+            shortCode: shortCodes.rxnow,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.seachangevending:
+          updateState({
+            shortCode: shortCodes.seachangevending,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ored:
+          updateState({
+            shortCode: shortCodes.ored,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.orderchekout:
+          updateState({
+            shortCode: shortCodes.orderchekout,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -834,12 +906,13 @@ export default function ShortCode({ route, navigation }) {
     }
 
     actions
-      .initApp({}, header)
+      .initApp({}, header, false, null, null, true)
       .then((res) => {
         updateState({ changeInShortCode: false });
         if (getBundleId() == appIds.royoorder) {
           actions.saveShortCode(shortCode);
         }
+
         homeData(res.data);
       })
       .catch((error) => {

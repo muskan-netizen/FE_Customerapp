@@ -118,6 +118,18 @@ const shortCodes = {
   agrionline: 'dd93ce',
   quickquick: '9bd088',
   caribeclean: 'a6bf72',
+  stonses: '6acd69',
+  agbdeliveries: 'e0d849',
+  twofinder: '104a74',
+  bookem: 'f87d4c',
+  zip: '5ecbab',
+  ridetci: '89e246',
+  noki: '779cb6',
+  driveree: '1ead91',
+  rxnow: '476dfb',
+  seachangevending: 'caacbc',
+  ored: 'fb0df5',
+  orderchekout: 'f6cd9d',
 };
 
 const appIds = {
@@ -588,6 +600,54 @@ const appIds = {
   caribeclean: Platform.select({
     ios: 'com.caribeclean',
     android: 'com.caribeclean',
+  }),
+  stonses: Platform.select({
+    ios: 'com.stonses',
+    android: 'com.stonses',
+  }),
+  agbdeliveries: Platform.select({
+    ios: 'com.agbdeliveries',
+    android: 'com.agbdeliveries',
+  }),
+  twofinder: Platform.select({
+    ios: 'com.twofinder',
+    android: 'com.twofinder',
+  }),
+  bookem: Platform.select({
+    ios: 'com.bookem',
+    android: 'com.bookem',
+  }),
+  zip: Platform.select({
+    ios: 'com.customer.zip',
+    android: 'com.zip',
+  }),
+  ridetci: Platform.select({
+    ios: 'com.ridetci',
+    android: 'com.ridetci',
+  }),
+  noki: Platform.select({
+    ios: 'com.customer.noki',
+    android: 'com.noki',
+  }),
+  driveree: Platform.select({
+    ios: 'com.driveree',
+    android: 'com.driveree',
+  }),
+  rxnow: Platform.select({
+    ios: 'com.rxnow',
+    android: 'com.rxnow',
+  }),
+  seachangevending: Platform.select({
+    ios: 'com.customer.seachangevending',
+    android: 'com.seachangevending',
+  }),
+  ored: Platform.select({
+    ios: 'com.ored',
+    android: 'com.ored',
+  }),
+  orderchekout: Platform.select({
+    ios: 'com.customer.orderchekout',
+    android: 'com.orderchekout',
   }),
 };
 

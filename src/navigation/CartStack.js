@@ -19,6 +19,7 @@ import {
   WebPayment,
   Wishlist,
   Wishlist2,
+  Yoco,
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
@@ -105,6 +106,12 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PAYFAST}
         component={Payfast}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.YOCO}
+        component={Yoco}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

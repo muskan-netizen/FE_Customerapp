@@ -92,5 +92,6 @@ export default {
   TAXITABROUTES: 'taxiTabRoutes',
   MOBBEX: 'mobbex',
   PAYFAST: 'payfast',
-  APP_INTRO: 'app_intro'
+  APP_INTRO: 'app_intro',
+  YOCO: 'yoco',
 };

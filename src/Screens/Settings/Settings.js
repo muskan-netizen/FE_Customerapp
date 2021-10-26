@@ -32,6 +32,8 @@ import {
 import { MyDarkTheme } from '../../styles/theme';
 import { setItem } from '../../utils/utils';
 import stylesFunc from './styles';
+import DeviceInfo from 'react-native-device-info';
+import { API_BASE_URL } from '../../config/urls';
 
 const ONE_SECOND_IN_MS = 80;
 const PATTERN = [
@@ -232,6 +234,11 @@ export default function Settings({ route, navigation }) {
     }
   };
 
+  // useEffect(()=>{
+  //   API_BASE_URL
+  //   console.log("API_BASE_URL")
+  // },[])
+
   return (
     <WrapperContainer
       bgColor={
@@ -300,6 +307,7 @@ export default function Settings({ route, navigation }) {
           {selectedThemeOptions.map((i, inx) => {
             return (
               <TouchableOpacity
+                key={String(inx)}
                 onPress={() => {
                   _setApperance(i);
                   Vibration.vibrate(PATTERN)
@@ -457,6 +465,7 @@ export default function Settings({ route, navigation }) {
           <DropDownPicker
             items={appLanguages.all_languages}
             defaultValue={
+              appLanguages?.primary_language?.nativeName ||
               appLanguages?.primary_language?.name ||
               appLanguages?.primary_language?.label ||
               ''
@@ -584,6 +593,7 @@ export default function Settings({ route, navigation }) {
           <DropDownPicker
             items={appLanguages.all_languages}
             defaultValue={
+              appLanguages?.primary_language?.nativeName ||
               appLanguages?.primary_language?.name ||
               appLanguages?.primary_language?.label ||
               ''
@@ -621,9 +631,31 @@ export default function Settings({ route, navigation }) {
             arrowColor={isDarkMode ? MyDarkTheme.colors.text : colors.black}
             onChangeItem={(item) => updateLanguage(item)}
           />
+
         </View>
       )}
       {/* </KeyboardAwareScrollView> */}
+      <View style={{
+        zIndex: -1,
+        flexDirection: 'row',
+        alignSelf: 'center',
+        marginVertical: moderateScaleVertical(24)
+      }}>
+        <Text style={{
+          ...commonStyles.regularFont11,
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+        }}>App Version </Text>
+        <Text
+          numberOfLines={2}
+          style={{
+            ...commonStyles.regularFont11,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+          }}>
+          {`${DeviceInfo.getVersion()}`}
+          <Text>{`(${DeviceInfo.getBuildNumber()})`}</Text>
+          <Text>{API_BASE_URL == 'https://api.rostaging.com/api/v1'? 'S': ''}</Text>
+        </Text>
+      </View>
     </WrapperContainer>
   );
 }

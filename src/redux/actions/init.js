@@ -12,6 +12,8 @@ import {
 import {LIST_OF_CMS, CMS_PAGE_DETAIL} from '../../config/urls';
 import store from '../store';
 import types from '../types';
+import {changeLaguage} from '../../constants/lang';
+import {I18nManager} from 'react-native';
 const {dispatch} = store;
 
 export function initApp(
@@ -20,18 +22,13 @@ export function initApp(
   reload = false,
   primary_curreny,
   primary_language,
+  refreshlang = false,
 ) {
   return new Promise((resolve, reject) => {
     apiPost(APP_INITIAL_SETTINGS, data, headers)
       .then(async (res) => {
         let data = res?.data;
-        console.log(primary_curreny, 'primary_curreny>>>>>>><<<<<<');
-        console.log(primary_language, 'primary_language>>>>>>><<<<<<');
-        console.log(
-          data?.languages.find((x) => x?.language?.id == primary_language?.id),
-        
-        );
-        console.log(data, 'data>>>>>>><<<<<<');
+
         const currencies = data?.currencies
           ? data.currencies.map((x) => {
               return {
@@ -128,11 +125,22 @@ export function initApp(
           // refreshScreen(languagesData?.primary_language?.sort_code);
         } else {
           const getPrimaryLanguage = await getItem('setPrimaryLanguage');
+
           if (getPrimaryLanguage) {
+            if (refreshlang) {
+              changeLaguage(getPrimaryLanguage?.primary_language?.sort_code);
+            }
+            if (
+              refreshlang &&
+              getPrimaryLanguage?.primary_language?.sort_code == 'ar'
+            ) {
+              I18nManager.forceRTL(true);
+            }
             setLanguage(getPrimaryLanguage);
           } else {
             setItem('setPrimaryLanguage', languagesData);
             setLanguage(languagesData);
+            changeLaguage(languagesData?.primary_language?.sort_code);
           }
         }
 
@@ -244,8 +252,6 @@ export function setAppTheme(res) {
 }
 
 export function setToggle(res) {
-  // console.log(JSON.stringify(res), 'response from toggle');
-
   setItem('istoggle', JSON.stringify(res));
   dispatch({
     type: types.THEME_TOGGLE,

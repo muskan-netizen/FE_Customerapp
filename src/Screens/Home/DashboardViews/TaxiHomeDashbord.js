@@ -260,6 +260,8 @@ export default function TaxiHomeDashbord({
       });
   };
 
+  console.log(appData, 'appDataappDataappData');
+
   const setModalVisible = (visible, type, id, data) => {
     if (!!userData?.auth_token) {
       updateState({
@@ -480,7 +482,7 @@ export default function TaxiHomeDashbord({
           <TaxiBannerHome
             bannerRef={bannerRef}
             slider1ActiveSlide={slider1ActiveSlide}
-            bannerData={[appData?.banners[0]]}
+            bannerData={[appData?.mobile_banners[0]]}
             sliderWidth={sliderWidth + 20}
             itemWidth={itemWidth + 20}
             onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}

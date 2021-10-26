@@ -36,7 +36,6 @@ const App = () => {
   // deep linking
   console.log(appMainData, 'appMainData+++++++++');
   async function handleDynamicLink(deepLinkUrl) {
-    console.log(deepLinkUrl, 'deepLinkUrl');
     if (deepLinkUrl != null) {
       setItem('deepLinkUrl', deepLinkUrl);
       let routeName = getUrlRoutes(deepLinkUrl, 1);
@@ -97,7 +96,6 @@ const App = () => {
     (async () => {
       const userData = await getUserData();
       notificationConfig();
-
       const {dispatch} = store;
       if (userData && !!userData.auth_token) {
         dispatch({
@@ -105,7 +103,6 @@ const App = () => {
           payload: userData,
         });
       }
-
       const getAppData = await getItem('appData');
       
       dispatch({
@@ -204,7 +201,6 @@ const App = () => {
 
       //Language
       const getLanguage = await getItem('language');
-
       if (getLanguage) {
         strings.setLanguage(getLanguage);
       }
@@ -230,7 +226,6 @@ const App = () => {
 
   //Check internet connection
   useEffect(() => {
-  
     const removeNetInfoSubscription = NetInfo.addEventListener((state) => {
       const netStatus = state.isConnected;
       setInternet(netStatus);
@@ -257,8 +252,6 @@ const App = () => {
       />
       <FlashMessage position="top" />
       <NoInternetModal show={!internetConnection} />
-
-
     </SafeAreaProvider>
   );
 };

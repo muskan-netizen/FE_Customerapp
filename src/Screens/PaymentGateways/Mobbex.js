@@ -55,6 +55,8 @@ export default function Mobbex({navigation, route}) {
       console.log(res, 'responseMobbex');
       updateState({webUrl: res.data});
     } catch (error) {
+      updateState({isLoading: false});
+
       showError(error.message || error);
     }
   };
@@ -72,14 +74,14 @@ export default function Mobbex({navigation, route}) {
     console.log(props, 'propsMobbex');
 
     setTimeout(() => {
-      if (queryParams.status === '200') {
+      if (queryParams.status == 200) {
         moveToNewScreen(navigationStrings.ORDERSUCESS, {
           orderDetail: {
             order_number: queryParams.order,
             id: paramsData?.orderDetail?.id,
           },
         })();
-      } else if (queryParams.status === '0') {
+      } else if (queryParams.status == 0) {
         moveToNewScreen(navigationStrings.CART, {
           queryURL: url.replace(`${nonQueryURL}?`, ''),
         })();
