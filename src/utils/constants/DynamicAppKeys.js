@@ -254,8 +254,8 @@ const appIds = {
     android: 'com.codebrew.rerak',
   }),
   yummiidash: Platform.select({
-    ios: 'com.yummiidash',
-    android: 'com.yummiidash',
+    ios: 'com.app.yummiidash',
+    android: 'com.app.yummiidash',
   }),
   yoho: Platform.select({
     ios: 'com.codebrewlab.yoho',

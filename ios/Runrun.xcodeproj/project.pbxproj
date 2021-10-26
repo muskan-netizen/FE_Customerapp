@@ -1830,6 +1830,7 @@
 		8472A49627254AF600CD25DC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8472A49527254AF600CD25DC /* Images.xcassets */; };
 		8472A49827254B1800CD25DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8472A49727254B1700CD25DC /* GoogleService-Info.plist */; };
 		8472F4582727D7E300148DB2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8472F4572727D7E300148DB2 /* GoogleService-Info.plist */; };
+		8472F56427280C0200148DB2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8472F56327280C0200148DB2 /* GoogleService-Info.plist */; };
 		84780044270744F00083F24E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84780045270744F00083F24E /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		84780046270744F00083F24E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -2449,7 +2450,6 @@
 		8493F5E926CB85F3006AD6AD /* Yummiidash(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8493F5E826CB85F3006AD6AD /* Yummiidash(Development).xcconfig */; };
 		8493F65326CB861E006AD6AD /* Yummiidash(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8493F65226CB861E006AD6AD /* Yummiidash(Production).xcconfig */; };
 		8493F68926CB863D006AD6AD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8493F68826CB863D006AD6AD /* Images.xcassets */; };
-		8493F6BF26CB874D006AD6AD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8493F6BE26CB874C006AD6AD /* GoogleService-Info.plist */; };
 		8496BC0826F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
 		8496BC0926F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
 		8496BC0A26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
@@ -4509,6 +4509,7 @@
 		8472A49727254B1700CD25DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8472A61C27254C7C00CD25DC /* OrderChekout.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OrderChekout.entitlements; sourceTree = "<group>"; };
 		8472F4572727D7E300148DB2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8472F56327280C0200148DB2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		847800A2270744F00083F24E /* Zest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		847801D7270746DB0083F24E /* Zest(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zest(Development).xcconfig"; sourceTree = "<group>"; };
 		847802A5270746F90083F24E /* Zest(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zest(Production).xcconfig"; sourceTree = "<group>"; };
@@ -4645,7 +4646,6 @@
 		8493F5E826CB85F3006AD6AD /* Yummiidash(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Yummiidash(Development).xcconfig"; sourceTree = "<group>"; };
 		8493F65226CB861E006AD6AD /* Yummiidash(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Yummiidash(Production).xcconfig"; sourceTree = "<group>"; };
 		8493F68826CB863D006AD6AD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		8493F6BE26CB874C006AD6AD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8493F7C426CB8BB0006AD6AD /* Yummiidash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Yummiidash.entitlements; sourceTree = "<group>"; };
 		8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Metropolis-Regular.otf"; sourceTree = "<group>"; };
 		8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Metropolis-SemiBold.otf"; sourceTree = "<group>"; };
@@ -8015,7 +8015,7 @@
 		8493F5B326CB85C3006AD6AD /* Yummiidash */ = {
 			isa = PBXGroup;
 			children = (
-				8493F6BE26CB874C006AD6AD /* GoogleService-Info.plist */,
+				8472F56327280C0200148DB2 /* GoogleService-Info.plist */,
 				8493F5E826CB85F3006AD6AD /* Yummiidash(Development).xcconfig */,
 				8493F65226CB861E006AD6AD /* Yummiidash(Production).xcconfig */,
 				8493F68826CB863D006AD6AD /* Images.xcassets */,
@@ -15107,8 +15107,8 @@
 				8491385726CB837E00AD4105 /* SFProText-Medium.ttf in Resources */,
 				84D1CE0E2703529D00C05E36 /* notification.wav in Resources */,
 				8493F68926CB863D006AD6AD /* Images.xcassets in Resources */,
+				8472F56427280C0200148DB2 /* GoogleService-Info.plist in Resources */,
 				8491385A26CB837E00AD4105 /* Plists in Resources */,
-				8493F6BF26CB874D006AD6AD /* GoogleService-Info.plist in Resources */,
 				8455CA6926DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
 				8491385B26CB837E00AD4105 /* Futura-Normal.ttf in Resources */,
 				8493F5E926CB85F3006AD6AD /* Yummiidash(Development).xcconfig in Resources */,
@@ -44005,7 +44005,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = SK88RSGS75;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -44018,7 +44018,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = Yummiidash;
+				PROVISIONING_PROFILE_SPECIFIER = YummiiDash;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
