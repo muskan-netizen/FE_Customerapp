@@ -1367,7 +1367,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.agrionline'
-            resValue "string", "app_name", "Agrionline"
+            resValue "string", "app_name", "AgriOnline"
             resValue "string", "host_name", ""
          }
          quickquick{

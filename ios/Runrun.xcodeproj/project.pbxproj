@@ -144,77 +144,6 @@
 		8400B09727253C87003BF24A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		8400B09827253C87003BF24A /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8400B09927253C87003BF24A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		8400B09B27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B09C27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B09D27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B09E27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B09F27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0A027253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0A127253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0A227253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0A327253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0A427253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0A527253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0A627253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0A727253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0A827253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0A927253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0AA27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0AB27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0AC27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0AD27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0AE27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0AF27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0B027253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0B127253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0B227253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0B327253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0B427253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0B527253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0B627253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0B727253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0B827253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0B927253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0BA27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0BB27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0BC27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0BD27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0BE27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0BF27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0C027253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0C127253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0C227253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0C327253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0C427253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0C527253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0C627253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0C727253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0C827253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0C927253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0CA27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0CB27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0CC27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0CD27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0CE27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0CF27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0D027253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0D127253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0D227253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0D327253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0D427253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0D527253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0D627253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0D727253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0D827253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0D927253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0DA27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0DB27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0DC27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0DE27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0DF27253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0E027253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0E127253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400B0E327253C87003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		8400B0E727253C87003BF24A /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
 		8400B0E827253C87003BF24A /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
 		8400B0E927253C87003BF24A /* Futura-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7902681E47100CC5BA2 /* Futura-Medium.ttf */; };
@@ -244,77 +173,6 @@
 		8400BB182725412F003BF24A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		8400BB192725412F003BF24A /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8400BB1A2725412F003BF24A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		8400BB1C2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB1D2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB1E2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB1F2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB202725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB212725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB222725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB232725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB242725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB252725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB262725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB272725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB282725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB292725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB2A2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB2B2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB2C2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB2D2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB2E2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB2F2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB302725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB312725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB322725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB332725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB342725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB352725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB362725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB372725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB382725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB392725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB3A2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB3B2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB3C2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB3D2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB3E2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB3F2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB402725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB412725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB422725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB432725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB442725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB452725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB462725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB472725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB482725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB492725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB4A2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB4B2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB4C2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB4D2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB4E2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB4F2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB502725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB512725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB522725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB532725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB542725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB552725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB562725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB572725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB582725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB592725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB5A2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB5B2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB5C2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB5D2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB5F2725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB602725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB612725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB622725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400BB642725412F003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		8400BB682725412F003BF24A /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
 		8400BB692725412F003BF24A /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
 		8400BB6A2725412F003BF24A /* Futura-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7902681E47100CC5BA2 /* Futura-Medium.ttf */; };
@@ -344,77 +202,6 @@
 		8400C32827254680003BF24A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		8400C32927254680003BF24A /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8400C32A27254680003BF24A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		8400C32C27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C32D27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C32E27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C32F27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C33027254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C33127254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C33227254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C33327254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C33427254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C33527254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C33627254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C33727254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C33827254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C33927254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C33A27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C33B27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C33C27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C33D27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C33E27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C33F27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C34027254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C34127254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C34227254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C34327254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C34427254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C34527254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C34627254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C34727254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C34827254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C34927254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C34A27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C34B27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C34C27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C34D27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C34E27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C34F27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C35027254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C35127254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C35227254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C35327254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C35427254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C35527254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C35627254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C35727254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C35827254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C35927254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C35A27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C35B27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C35C27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C35D27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C35E27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C35F27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C36027254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C36127254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C36227254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C36327254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C36427254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C36527254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C36627254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C36727254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C36827254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C36927254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C36A27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C36B27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C36C27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C36D27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C36F27254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C37027254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C37127254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C37227254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400C37427254680003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		8400C37827254680003BF24A /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
 		8400C37927254680003BF24A /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
 		8400C37A27254680003BF24A /* Futura-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7902681E47100CC5BA2 /* Futura-Medium.ttf */; };
@@ -444,77 +231,6 @@
 		8400CCCD27254A5C003BF24A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		8400CCCE27254A5C003BF24A /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8400CCCF27254A5C003BF24A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		8400CCD127254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCD227254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCD327254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCD427254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCD527254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCD627254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCD727254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCD827254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCD927254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCDA27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCDB27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCDC27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCDD27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCDE27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCDF27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCE027254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCE127254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCE227254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCE327254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCE427254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCE527254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCE627254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCE727254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCE827254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCE927254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCEA27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCEB27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCEC27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCED27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCEE27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCEF27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCF027254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCF127254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCF227254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCF327254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCF427254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCF527254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCF627254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCF727254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCF827254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCF927254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCFA27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCFB27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCFC27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCFD27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCFE27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CCFF27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD0027254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD0127254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD0227254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD0327254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD0427254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD0527254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD0627254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD0727254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD0827254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD0927254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD0A27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD0B27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD0C27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD0D27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD0E27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD0F27254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD1027254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD1127254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD1227254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD1427254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD1527254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD1627254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD1727254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		8400CD1927254A5C003BF24A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		8400CD1D27254A5C003BF24A /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
 		8400CD1E27254A5C003BF24A /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
 		8400CD1F27254A5C003BF24A /* Futura-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7902681E47100CC5BA2 /* Futura-Medium.ttf */; };
@@ -1076,6 +792,7 @@
 		84349CCB26CD076B00DB8C18 /* Senshive(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84349CCA26CD076B00DB8C18 /* Senshive(Production).xcconfig */; };
 		84349D0626CD078800DB8C18 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84349D0526CD078800DB8C18 /* Images.xcassets */; };
 		84349D4126CD09E800DB8C18 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84349D4026CD09E800DB8C18 /* GoogleService-Info.plist */; };
+		84397939272689DA00080A72 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84397938272689D900080A72 /* GoogleService-Info.plist */; };
 		843BA4FE26D63B1A0033721D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		843BA4FF26D63B1A0033721D /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		843BA50026D63B1A0033721D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -2108,7 +1825,6 @@
 		84716D3E272540A10049C1D5 /* SeaChangeVending(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84716D3D272540A10049C1D5 /* SeaChangeVending(Development).xcconfig */; };
 		84716DC0272540CD0049C1D5 /* SeaChangeVending(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84716DBF272540CD0049C1D5 /* SeaChangeVending(Production).xcconfig */; };
 		84716E42272541000049C1D5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84716E41272541000049C1D5 /* Images.xcassets */; };
-		84716EC42725416C0049C1D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84716EC32725416B0049C1D5 /* GoogleService-Info.plist */; };
 		8472A117272549FF00CD25DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		8472A118272549FF00CD25DC /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8472A119272549FF00CD25DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -4644,6 +4360,7 @@
 		84349D0526CD078800DB8C18 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84349D4026CD09E800DB8C18 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84349DED26CD0D1F00DB8C18 /* SenshiveRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SenshiveRelease.entitlements; sourceTree = "<group>"; };
+		84397938272689D900080A72 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		843BA53326D63B1A0033721D /* CarHop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarHop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		843DF04426BA99A3008210BD /* BustanFakieh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BustanFakieh.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		843DF07526BA9A51008210BD /* BustanFakieh(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BustanFakieh(Development).xcconfig"; sourceTree = "<group>"; };
@@ -4862,7 +4579,6 @@
 		84716D3D272540A10049C1D5 /* SeaChangeVending(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "SeaChangeVending(Development).xcconfig"; sourceTree = "<group>"; };
 		84716DBF272540CD0049C1D5 /* SeaChangeVending(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "SeaChangeVending(Production).xcconfig"; sourceTree = "<group>"; };
 		84716E41272541000049C1D5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		84716EC32725416B0049C1D5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		847170452725431D0049C1D5 /* SeaChangeVending.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SeaChangeVending.entitlements; sourceTree = "<group>"; };
 		8472A188272549FF00CD25DC /* OrderChekout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrderChekout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8472A38F27254AC500CD25DC /* OrderChekout(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "OrderChekout(Development).xcconfig"; sourceTree = "<group>"; };
@@ -5306,7 +5022,6 @@
 		84FFFFE326D6745600F2B059 /* YogoLift(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "YogoLift(Production).xcconfig"; sourceTree = "<group>"; };
 		84FFFFE526D6747700F2B059 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84FFFFE726D6754200F2B059 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		85C0D771DB9C2C784351B248 /* libPods-RoyoOrder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RoyoOrder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F8CD8FC92DE35C81DC6239 /* Pods-HelloDeliver.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HelloDeliver.debug.xcconfig"; path = "Target Support Files/Pods-HelloDeliver/Pods-HelloDeliver.debug.xcconfig"; sourceTree = "<group>"; };
 		8625CE03F385A0683D832792 /* Pods-CaribeClean.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaribeClean.debug.xcconfig"; path = "Target Support Files/Pods-CaribeClean/Pods-CaribeClean.debug.xcconfig"; sourceTree = "<group>"; };
 		86CAF39DCBDC5F5089F9D069 /* Pods-Elixir.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Elixir.debug.xcconfig"; path = "Target Support Files/Pods-Elixir/Pods-Elixir.debug.xcconfig"; sourceTree = "<group>"; };
@@ -5930,7 +5645,7 @@
 				6F482A6BFE70DAAD06698878 /* libPods-RoyoOrder.a in Frameworks */,
 				135D6DA27ABBDF0C2150BC23 /* (null) in Frameworks */,
 				F7BAF81B6826A33EAB6568A0 /* libPods-RoyoOrder.a in Frameworks */,
-				F6ED50236FC41B3DD73AA5AE /* libPods-RoyoOrder.a in Frameworks */,
+				F6ED50236FC41B3DD73AA5AE /* (null) in Frameworks */,
 				7613B80390546490477B5594 /* libPods-RoyoOrder.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8258,10 +7973,10 @@
 		84716CBC2725407F0049C1D5 /* SeaChangeVending */ = {
 			isa = PBXGroup;
 			children = (
+				84397938272689D900080A72 /* GoogleService-Info.plist */,
 				84716D3D272540A10049C1D5 /* SeaChangeVending(Development).xcconfig */,
 				84716DBF272540CD0049C1D5 /* SeaChangeVending(Production).xcconfig */,
 				84716E41272541000049C1D5 /* Images.xcassets */,
-				84716EC32725416B0049C1D5 /* GoogleService-Info.plist */,
 			);
 			path = SeaChangeVending;
 			sourceTree = "<group>";
@@ -12229,9 +11944,9 @@
 						ProvisioningStyle = Automatic;
 					};
 					8442C9EF265D1A7A00EDB001 = {
-						DevelopmentTeam = 6852A48TRM;
+						DevelopmentTeam = 67CYDVLY28;
 						LastSwiftMigration = 1240;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					8447E34D26DF950500A23425 = {
 						DevelopmentTeam = 6FXUMT5X23;
@@ -14822,7 +14537,7 @@
 				84716B2227253EF70049C1D5 /* SFProText-Medium.ttf in Resources */,
 				84716B2427253EF70049C1D5 /* notification.wav in Resources */,
 				84716B2627253EF70049C1D5 /* Plists in Resources */,
-				84716EC42725416C0049C1D5 /* GoogleService-Info.plist in Resources */,
+				84397939272689DA00080A72 /* GoogleService-Info.plist in Resources */,
 				84716D3E272540A10049C1D5 /* SeaChangeVending(Development).xcconfig in Resources */,
 				84716B2727253EF70049C1D5 /* Futura-Normal.ttf in Resources */,
 				84716DC0272540CD0049C1D5 /* SeaChangeVending(Production).xcconfig in Resources */,
@@ -40881,10 +40596,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Tranzit.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6852A48TRM;
+				DEVELOPMENT_TEAM = 67CYDVLY28;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -40898,7 +40613,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = Tranzitprovision;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tranzit-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -40975,7 +40690,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = DoorStep.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
@@ -41006,7 +40721,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = eBOYO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
@@ -41230,7 +40945,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = Baytukom.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
@@ -46263,10 +45978,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Yogo Food.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = XJ6L77VTV5;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -46279,7 +45994,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = YogoFoodApp;
 				SWIFT_OBJC_BRIDGING_HEADER = "Yogo Food-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

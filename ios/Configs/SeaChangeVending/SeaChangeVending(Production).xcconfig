@@ -1,12 +1,12 @@
 #include "Pods/Target Support Files/Pods-SeaChangeVending/Pods-SeaChangeVending.release.xcconfig"
 
-PROJECT_APPLE_ID =1591785414
-PROJECT_BUNDLE_ID = com.seachangevending
+PROJECT_APPLE_ID =1591874254
+PROJECT_BUNDLE_ID = com.customer.seachangevending
 PROJECT_APP_VERSION = 1.0
 PROJECT_BUILD_NUMBER = 1
 PROJECT_APP_NAME = Sea Change Vending
-PROJECT_GOOGLE_CLIENT_ID =73265460268-lnqgdst2ekiub1prsn8kl9osqe56run5.apps.googleusercontent.com
-PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.73265460268-lnqgdst2ekiub1prsn8kl9osqe56run5
+PROJECT_GOOGLE_CLIENT_ID =73265460268-qfm7kgujg4kv7kcav0kb7p6lhg5mqbpb.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID = com.googleusercontent.apps.73265460268-qfm7kgujg4kv7kcav0kb7p6lhg5mqbpb
 PROJECT_FACEBOOK_ID =346347067287045
 PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
 PROJECT_PLIST =SeaChangeVendingInfo

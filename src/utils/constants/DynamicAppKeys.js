@@ -638,7 +638,7 @@ const appIds = {
     android: 'com.rxnow',
   }),
   seachangevending: Platform.select({
-    ios: 'com.seachangevending',
+    ios: 'com.customer.seachangevending',
     android: 'com.seachangevending',
   }),
   ored: Platform.select({
