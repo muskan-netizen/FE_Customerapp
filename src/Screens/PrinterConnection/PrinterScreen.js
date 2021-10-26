@@ -28,6 +28,8 @@ import ModalView from '../../Components/Modal';
 import { moderateScale } from '../../styles/responsiveSize';
 import { getItem } from '../../utils/utils';
 
+export let appData = {}
+export let language = ''
 
 const styles = stylesFun();
 
@@ -100,6 +102,7 @@ class PrinterScreen extends Component {
     // StartPrinting({})
     const getAppData = await getItem('appData');
     appData = getAppData
+    
     const getLanguage = await getItem('language');
     language = getLanguage
 

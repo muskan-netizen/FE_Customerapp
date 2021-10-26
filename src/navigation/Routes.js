@@ -19,6 +19,9 @@ import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
 import UserInterfaceStyle from 'react-native-user-interface-style';
 import colors from '../styles/colors';
 import TaxiAppStack from './TaxiAppStack';
+import AsyncStorage from '@react-native-community/async-storage';
+import AppIntro from '../Screens/AppIntro';
+import { getItem } from '../utils/utils';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +35,29 @@ export function shortCode(Stack) {
       />
     </>
   );
+  // getItem('firstTime').then((el) => {
+  //   if (el && el !== null) {
+  //     return (
+  //       <>
+  //         <Stack.Screen
+  //           name={navigationStrings.SHORT_CODE}
+  //           component={ShortCode}
+  //           options={{ headerShown: false }}
+  //         />
+  //       </>
+  //     );
+  //   } else {
+  //     return (
+  //       <>
+  //         <Stack.Screen
+  //           name={navigationStrings.APP_INTRO}
+  //           component={AppIntro}
+  //           options={{ headerShown: false }}
+  //         />
+  //       </>
+  //     );
+  //   }
+  // })
 }
 
 export default function Routes() {
@@ -55,7 +81,7 @@ export default function Routes() {
   return (
     <AppearanceProvider>
       <NavigationContainer
-       
+
         theme={theme}
         // theme={scheme == 'dark' ? DarkTheme : DefaultTheme}
         ref={navigationRef}>
@@ -64,6 +90,12 @@ export default function Routes() {
           {AuthStack(Stack)}
           {CourierStack(Stack)}
           {TaxiAppStack(Stack)}
+
+          <Stack.Screen
+            name={navigationStrings.APP_INTRO}
+            component={AppIntro}
+            options={{ headerShown: false, gestureEnabled: false }}
+          />
 
           <Stack.Screen
             name={navigationStrings.DRAWER_ROUTES}
