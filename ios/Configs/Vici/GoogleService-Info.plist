@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>564884329661-nmdnj2lmgrv3j73pmgrnsothfqusb9bn.apps.googleusercontent.com</string>
+	<string>713200187855-qfu9ctfuejrrrmfgd0nggavkh1e4ka4s.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.564884329661-nmdnj2lmgrv3j73pmgrnsothfqusb9bn</string>
+	<string>com.googleusercontent.apps.713200187855-qfu9ctfuejrrrmfgd0nggavkh1e4ka4s</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>564884329661-o8g7v13tq32e0d430smg9pvmdtnnp7eu.apps.googleusercontent.com</string>
+	<string>713200187855-ki8l1ks4sb9s20l72b6ub5d5p93bfae1.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAftxcE-t4u5pPuuGILa3jZefl02qOqGoQ</string>
+	<string>AIzaSyCFyK4gIWPpozQ6oq9FrcXC7u2O05Nwmf8</string>
 	<key>GCM_SENDER_ID</key>
-	<string>564884329661</string>
+	<string>713200187855</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.vici</string>
+	<string>com.app.vici</string>
 	<key>PROJECT_ID</key>
-	<string>vici-aa1fd</string>
+	<string>skilled-display-323815</string>
 	<key>STORAGE_BUCKET</key>
-	<string>vici-aa1fd.appspot.com</string>
+	<string>skilled-display-323815.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:564884329661:ios:cdae3230f655e36e8b13d4</string>
+	<string>1:713200187855:ios:ce06d533a40bdfe6ec7aba</string>
 </dict>
 </plist>
