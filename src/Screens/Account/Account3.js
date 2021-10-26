@@ -9,6 +9,7 @@ import {
   Share,
   Text,
   TouchableOpacity,
+  Vibration,
   View,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';

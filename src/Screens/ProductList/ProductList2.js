@@ -7,6 +7,7 @@ import {
   RefreshControl,
   ScrollView,
   TouchableOpacity,
+  Vibration,
   View,
 } from 'react-native';
 import {useSelector} from 'react-redux';
@@ -32,6 +33,14 @@ import {
 import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+
+const ONE_SECOND_IN_MS = 50;
+const PATTERN = [
+  1 * ONE_SECOND_IN_MS,
+  2 * ONE_SECOND_IN_MS,
+  3 * ONE_SECOND_IN_MS
+];
+
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
@@ -452,6 +461,7 @@ export default function Products({route, navigation}) {
 
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
+    Vibration.vibrate(PATTERN)
     if (!!userData?.auth_token) {
       updateState({isLoadingB: true});
       actions
@@ -515,6 +525,7 @@ export default function Products({route, navigation}) {
 
   //Add product to cart
   const _addToCart = (item) => {
+    Vibration.vibrate(PATTERN)
     moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
   };
 
