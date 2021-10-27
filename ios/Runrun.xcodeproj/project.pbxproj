@@ -434,7 +434,6 @@
 		841597B126B416CD00FF20F4 /* GovaChow(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 841597B026B416CD00FF20F4 /* GovaChow(Development).xcconfig */; };
 		841597DD26B416E500FF20F4 /* GovaChow(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 841597DC26B416E500FF20F4 /* GovaChow(Production).xcconfig */; };
 		841597F426B416FB00FF20F4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 841597F326B416FB00FF20F4 /* Images.xcassets */; };
-		8415980B26B417FA00FF20F4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8415980A26B417FA00FF20F4 /* GoogleService-Info.plist */; };
 		8416E5EF26CD1FF600D9B686 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		8416E5F026CD1FF600D9B686 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8416E5F126CD1FF600D9B686 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -3178,6 +3177,7 @@
 		84C85489270747C000D6B750 /* Ace(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84C85488270747C000D6B750 /* Ace(Production).xcconfig */; };
 		84C8548B270747D000D6B750 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84C8548A270747D000D6B750 /* Images.xcassets */; };
 		84C854F32707483700D6B750 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84C854F22707483600D6B750 /* GoogleService-Info.plist */; };
+		84C9F5B027292AA500F016D7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84C9F5AF27292AA500F016D7 /* GoogleService-Info.plist */; };
 		84CDD7E726BC0A9A001FE3EE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84CDD7E826BC0A9A001FE3EE /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		84CDD7E926BC0A9A001FE3EE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -4204,7 +4204,6 @@
 		841597B026B416CD00FF20F4 /* GovaChow(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "GovaChow(Development).xcconfig"; sourceTree = "<group>"; };
 		841597DC26B416E500FF20F4 /* GovaChow(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "GovaChow(Production).xcconfig"; sourceTree = "<group>"; };
 		841597F326B416FB00FF20F4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		8415980A26B417FA00FF20F4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8415988A26B41A6100FF20F4 /* GovaChow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GovaChow.entitlements; sourceTree = "<group>"; };
 		8416E62326CD1FF600D9B686 /* Ridemate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ridemate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8416E74826CD235600D9B686 /* Ridemate(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Ridemate(Development).xcconfig"; sourceTree = "<group>"; };
@@ -4778,6 +4777,7 @@
 		84C8548A270747D000D6B750 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		84C854F22707483600D6B750 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84C856262707497500D6B750 /* Ace.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ace.entitlements; sourceTree = "<group>"; };
+		84C9F5AF27292AA500F016D7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84CDD81826BC0A9A001FE3EE /* Orbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Orbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84CDD84F26BC0BBC001FE3EE /* Orbit(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Orbit(Development).xcconfig"; sourceTree = "<group>"; };
 		84CDD88526BC0BDB001FE3EE /* Orbit(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Orbit(Production).xcconfig"; sourceTree = "<group>"; };
@@ -7064,7 +7064,7 @@
 		841597AF26B416B300FF20F4 /* GovaChow */ = {
 			isa = PBXGroup;
 			children = (
-				8415980A26B417FA00FF20F4 /* GoogleService-Info.plist */,
+				84C9F5AF27292AA500F016D7 /* GoogleService-Info.plist */,
 				841597B026B416CD00FF20F4 /* GovaChow(Development).xcconfig */,
 				841597DC26B416E500FF20F4 /* GovaChow(Production).xcconfig */,
 				841597F326B416FB00FF20F4 /* Images.xcassets */,
@@ -11659,7 +11659,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					8415975226B4169D00FF20F4 = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = SKB5RJ3Z8F;
 						ProvisioningStyle = Automatic;
 					};
 					8416E5EB26CD1FF600D9B686 = {
@@ -12742,6 +12742,7 @@
 				8415977026B4169D00FF20F4 /* SFProText-Regular.ttf in Resources */,
 				84D1CDEF2703529D00C05E36 /* notification.wav in Resources */,
 				8415977126B4169D00FF20F4 /* SFProText-SemiBold.ttf in Resources */,
+				84C9F5B027292AA500F016D7 /* GoogleService-Info.plist in Resources */,
 				8415977226B4169D00FF20F4 /* SFProText-Medium.ttf in Resources */,
 				8415977426B4169D00FF20F4 /* Plists in Resources */,
 				8455CA4A26DFBC2300C27F72 /* Eina02-Bold.ttf in Resources */,
@@ -12753,7 +12754,6 @@
 				8496BC1926F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				8415977926B4169D00FF20F4 /* CircularStd-Bold.ttf in Resources */,
 				8415977B26B4169D00FF20F4 /* SFProText-Bold.ttf in Resources */,
-				8415980B26B417FA00FF20F4 /* GoogleService-Info.plist in Resources */,
 				8455CA8D26DFBC2300C27F72 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -39357,7 +39357,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = SKB5RJ3Z8F;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -39389,7 +39389,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = SKB5RJ3Z8F;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

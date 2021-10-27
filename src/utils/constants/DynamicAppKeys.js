@@ -202,7 +202,7 @@ const appIds = {
     android: 'com.cannabus',
   }),
   govachow: Platform.select({
-    ios: 'com.codebrew.govachow',
+    ios: 'com.app.govachow',
     android: 'com.govachow',
   }),
   bustanfakieh: Platform.select({
