@@ -56,7 +56,7 @@ const ONE_SECOND_IN_MS = 50;
 const PATTERN = [
   1 * ONE_SECOND_IN_MS,
   2 * ONE_SECOND_IN_MS,
-  3 * ONE_SECOND_IN_MS
+  3 * ONE_SECOND_IN_MS,
 ];
 
 export default function Products({ route, navigation }) {
@@ -553,7 +553,7 @@ export default function Products({ route, navigation }) {
 
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
-    Vibration.vibrate(PATTERN)
+    Vibration.vibrate(PATTERN);
     if (!!userData?.auth_token) {
       updateState({ isLoadingB: true });
       actions
@@ -638,6 +638,7 @@ export default function Products({ route, navigation }) {
           systemuser: DeviceInfo.getUniqueId(),
         })
         .then((res) => {
+          console.log('res check singel vendro==>>>>>>', res);
           resolve(res);
         })
         .catch((error) => {

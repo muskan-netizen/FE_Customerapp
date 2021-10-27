@@ -123,3 +123,4 @@ export const DISPATCHER_URL = getApiUrl(
   '/pickup-delivery/order-tracking-details',
 );
 export const CART_PRODUCT_SCHEDULE = getApiUrl('/cart/product-schedule/update');
+export const TIP_AFTER_ORDER = getApiUrl('/orders/tip-after-order');

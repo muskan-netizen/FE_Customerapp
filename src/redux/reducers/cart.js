@@ -23,6 +23,14 @@ export default function (state = initial_state, action) {
       };
     }
 
+    case types.TIP_AFTER_ORDER: {
+      const data = action.payload;
+      return {
+        ...state,
+        selectedAddress: data,
+      };
+    }
+
     default: {
       return {...state};
     }

@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Alert} from 'react-native';
 import {View} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -62,6 +63,34 @@ export default function WebPayment({navigation, route}) {
                 selectedAddressData: paramData?.selectedAddressData,
                 selectedPayment: paramData?.selectedPayment,
               });
+            }
+
+            if (paramData?.redirectFrom == 'tip') {
+              actions
+                .tipAfterOrder(
+                  {
+                    tip_amount: paramData?.selectedTipAmount,
+                    order_number: paramData?.order_number,
+                  },
+                  {
+                    code: appData?.profile?.code,
+                    currency: currencies?.primary_currency?.id,
+                    language: languages?.primary_language?.id,
+                  },
+                )
+                .then((res) => {
+                  updateState({isLoading: false});
+                  if (res && res?.status == 'Success' && res?.data) {
+                    Alert.alert('', strings.PAYMENT_SUCCESS, [
+                      {
+                        text: strings.CANCEL,
+                        onPress: () => console.log('Cancel Pressed'),
+                      },
+                    ]);
+                  }
+                })
+                .catch(errorMethod);
+              navigation.navigate(navigationStrings.ORDER_DETAIL);
             } else {
               setTimeout(() => {
                 alert(strings.PAYMENT_SUCCESS);

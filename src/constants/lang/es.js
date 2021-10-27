@@ -314,7 +314,8 @@ export default {
   LINKS: 'MÃ¡s informaciÃ³n',
   LOCATION_DISABLED_MSG: `Tu UbicaciÃ³n estÃ¡ deshabilitada. Por favor activala desde la configuraciÃ³n.`,
   LOCATION_LIMITED: 'Tu ubicaciÃ³n no estÃ¡ pudiendo ser trackeada',
-  LOCATION_UNAVAILABLE: 'Tu ubicaciÃ³n actual no estÃ¡ disponible en tu telÃ©fono',
+  LOCATION_UNAVAILABLE:
+    'Tu ubicaciÃ³n actual no estÃ¡ disponible en tu telÃ©fono',
   YOUR_PHONE_NUMBER_SECOND: 'NÃºmero de Celular',
   ENTER_OTP: 'Ingresar cÃ³digo',
   CLEAR_CART: 'Borrar carrito',
