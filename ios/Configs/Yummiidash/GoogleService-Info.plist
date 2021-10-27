@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>32567487439-n5p0jbuasubvjg8sf54rv1mgtifj6oog.apps.googleusercontent.com</string>
+	<string>913631928039-ofbu9dia952lffe6c3kvhstumq0kuv85.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.32567487439-n5p0jbuasubvjg8sf54rv1mgtifj6oog</string>
+	<string>com.googleusercontent.apps.913631928039-ofbu9dia952lffe6c3kvhstumq0kuv85</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>32567487439-29l58nrsrd75jsg5ic5cgcq5teaigr6g.apps.googleusercontent.com</string>
+	<string>913631928039-21l31m2hhf5hteq341vuppgpu596nd67.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAchAhqEfPkQcBkPwBweiOrPJFF4T8mvIE</string>
+	<string>AIzaSyBsqYHdrz5ysdXz3CuEuLhPv475GNFG9hg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>32567487439</string>
+	<string>913631928039</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.yummiidash</string>
+	<string>com.app.yummiidash</string>
 	<key>PROJECT_ID</key>
-	<string>yummiidash</string>
+	<string>yummii-dash</string>
 	<key>STORAGE_BUCKET</key>
-	<string>yummiidash.appspot.com</string>
+	<string>yummii-dash.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:32567487439:ios:d308b5ce0ea9dc9d0ac0ba</string>
+	<string>1:913631928039:ios:460c8f5040de1d41a38c42</string>
 </dict>
 </plist>

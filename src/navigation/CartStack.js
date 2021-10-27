@@ -10,6 +10,7 @@ import {
   Offers,
   OrderDetail,
   Payfast,
+  Paylink,
   ProductDetail,
   ProductDetail2,
   ProductList,
@@ -112,6 +113,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.YOCO}
         component={Yoco}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.PAYLINK}
+        component={Paylink}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

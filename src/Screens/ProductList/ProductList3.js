@@ -48,7 +48,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
-import { getImageUrl, showError, showSuccess } from '../../utils/helperFunctions';
+import { checkEvenOdd, getImageUrl, showError, showSuccess } from '../../utils/helperFunctions';
 import { removeItem } from '../../utils/utils';
 import stylesFunc from './styles';
 
@@ -56,7 +56,7 @@ const ONE_SECOND_IN_MS = 50;
 const PATTERN = [
   1 * ONE_SECOND_IN_MS,
   2 * ONE_SECOND_IN_MS,
-  3 * ONE_SECOND_IN_MS
+  3 * ONE_SECOND_IN_MS,
 ];
 
 export default function Products({ route, navigation }) {
@@ -201,7 +201,7 @@ export default function Products({ route, navigation }) {
 
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
-  const styles = stylesFunc({ themeColors, fontFamily });
+  const styles = stylesFunc({ themeColors, fontFamily, isDarkMode, MyDarkTheme });
 
   //Saving the initial state
   const initialState = cloneDeep(state);
@@ -553,7 +553,7 @@ export default function Products({ route, navigation }) {
 
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
-    Vibration.vibrate(PATTERN)
+    Vibration.vibrate(PATTERN);
     if (!!userData?.auth_token) {
       updateState({ isLoadingB: true });
       actions
@@ -638,6 +638,7 @@ export default function Products({ route, navigation }) {
           systemuser: DeviceInfo.getUniqueId(),
         })
         .then((res) => {
+          console.log('res check singel vendro==>>>>>>', res);
           resolve(res);
         })
         .catch((error) => {
@@ -668,7 +669,10 @@ export default function Products({ route, navigation }) {
   };
 
   const addSingleItem = async (item, section = null) => {
-
+    if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot) {
+      alert(strings.VENDOR_NOT_ACCEPTING_ORDERS)
+      return;
+    }
     Vibration.vibrate(PATTERN)
     let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
     updateState({ selectedItemID: item?.id, btnLoader: true });
@@ -786,6 +790,10 @@ export default function Products({ route, navigation }) {
   };
 
   const addDeleteCartItems = (item, section = null, index, type) => {
+    if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot) {
+      alert(strings.VENDOR_NOT_ACCEPTING_ORDERS)
+      return;
+    }
     Vibration.vibrate(PATTERN)
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
@@ -1088,6 +1096,8 @@ export default function Products({ route, navigation }) {
     }
   }, [isLoadingC]);
 
+
+  console.log("categoryInfo", categoryInfo)
   const listHeaderComponent2 = () => {
     return (
       <View>
@@ -1224,19 +1234,33 @@ export default function Products({ route, navigation }) {
                     )}
                 </View>
                 {!!categoryInfo && !!categoryInfo?.categoriesList && (
-                  <Text
-                    numberOfLines={1}
-                    style={{
-                      ...styles.milesTxt,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                      marginRight: moderateScale(40),
-                      marginVertical: moderateScale(1),
-                      marginLeft: 0,
-                    }}>
-                    {categoryInfo?.categoriesList || ''}
-                  </Text>
+                  <View>
+                    <Text
+                      numberOfLines={1}
+                      style={{
+                        ...styles.milesTxt,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        marginRight: moderateScale(40),
+                        marginVertical: moderateScale(1),
+                        marginLeft: 0,
+                      }}>
+                      {categoryInfo?.categoriesList || ''}
+                    </Text>
+                    <Text
+                      numberOfLines={2}
+                      style={{
+                        ...styles.milesTxt,
+                        marginLeft: 0,
+                        fontSize: textScale(8),
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        marginVertical: moderateScaleVertical(4)
+                      }}>{desc}</Text>
+                  </View>
+
                 )}
                 {!!categoryInfo && !!categoryInfo?.lineOfSightDistance && (
                   <View
@@ -1247,11 +1271,8 @@ export default function Products({ route, navigation }) {
                     <View style={styles.milesView}>
                       <Image
                         source={imagePath.location2}
-                        style={{
-                          tintColor: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.black,
-                        }}
+                        style={styles.locTimeIcon}
+                        resizeMode="contain"
                       />
                       <Text
                         style={{
@@ -1260,16 +1281,31 @@ export default function Products({ route, navigation }) {
                             ? MyDarkTheme.colors.text
                             : colors.black,
                         }}>
-                        {categoryInfo.lineOfSightDistance}{' '}
-                        {!!categoryInfo.lineOfSightDistance &&
-                          !!categoryInfo.timeofLineOfSightDistance
-                          ? '|'
-                          : ''}{' '}
-                        {categoryInfo.timeofLineOfSightDistance}{' '}
-                        {!!categoryInfo.timeofLineOfSightDistance ? 'mins' : ''}
+                        {categoryInfo.lineOfSightDistance}
                       </Text>
+                      {!!categoryInfo.lineOfSightDistance &&
+                        !!categoryInfo.timeofLineOfSightDistance && (
+                          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Image
+                              source={imagePath.icTime2}
+                              style={{
+                                ...styles.locTimeIcon,
+                                marginLeft: moderateScale(4)
+                              }}
+                              resizeMode="contain"
+                            />
+                            <Text style={{
+                              ...styles.milesTxt,
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.black,
+                            }}>
+                              {checkEvenOdd(categoryInfo.timeofLineOfSightDistance)}-{checkEvenOdd(categoryInfo.timeofLineOfSightDistance + 5)}
+                              {' mins'}
+                            </Text>
+                          </View>
+                        )}
                     </View>
-
                     <Text
                       style={{
                         ...commonStyles.mediumFont14Normal,
@@ -1681,7 +1717,7 @@ export default function Products({ route, navigation }) {
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <RoundImg
                       img={getImageUrl(uri1, uri2, '400/400')}
-                      size={20}
+                      size={30}
                       isDarkMode={isDarkMode}
                       MyDarkTheme={MyDarkTheme}
                     />
@@ -1692,7 +1728,7 @@ export default function Products({ route, navigation }) {
                           color: isDarkMode
                             ? MyDarkTheme.colors.text
                             : colors.black,
-                          fontSize: moderateScale(12),
+                          fontSize: moderateScale(14),
                           fontFamily: fontFamily.medium,
 
                         }}>
@@ -1704,7 +1740,7 @@ export default function Products({ route, navigation }) {
 
                           color: isDarkMode
                             ? MyDarkTheme.colors.text
-                            : colors.blackOpacity86,
+                            : colors.blackOpacity43,
                           fontSize: moderateScale(12),
                           fontFamily: fontFamily.regular,
                           marginTop: moderateScaleVertical(2),

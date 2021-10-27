@@ -628,26 +628,47 @@ export default function Cart({navigation, route}) {
           });
         }
 
-        // else if (
-        //   (res?.data?.payment_option_id === 8 &&
-        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
-        //   Number(selectedTipAmount) !== 0
-        // ){
+        else if (
+          (res?.data?.payment_option_id === 8 &&
+            !!(Number(cartData?.total_payable_amount) !== 0)) ||
+          Number(selectedTipAmount) !== 0
+        ){
 
-        //   navigation.navigate(navigationStrings.YOCO, {
-        //     selectedPayment: selectedPayment,
-        //     total_payable_amount: (
-        //       Number(cartData?.total_payable_amount) +
-        //       (selectedTipAmount != null && selectedTipAmount != ''
-        //         ? Number(selectedTipAmount)
-        //         : 0)
-        //     ).toFixed(2),
+          navigation.navigate(navigationStrings.YOCO, {
+            selectedPayment: selectedPayment,
+            total_payable_amount: (
+              Number(cartData?.total_payable_amount) +
+              (selectedTipAmount != null && selectedTipAmount != ''
+                ? Number(selectedTipAmount)
+                : 0)
+            ).toFixed(2),
 
-        //     payment_option_id: selectedPayment?.id,
-        //     orderDetail: res.data,
-        //   });
+            payment_option_id: selectedPayment?.id,
+            orderDetail: res.data,
+          });
 
-        // }
+        }
+        else if (
+          (res?.data?.payment_option_id === 9 &&
+            !!(Number(cartData?.total_payable_amount) !== 0)) ||
+          Number(selectedTipAmount) !== 0
+        ){
+
+          navigation.navigate(navigationStrings.PAYLINK, {
+            selectedPayment: selectedPayment,
+            total_payable_amount: (
+              Number(cartData?.total_payable_amount) +
+              (selectedTipAmount != null && selectedTipAmount != ''
+                ? Number(selectedTipAmount)
+                : 0)
+            ).toFixed(2),
+
+            payment_option_id: selectedPayment?.id,
+            orderDetail: res.data,
+          });
+
+        }
+
         else {
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
             orderDetail: res.data,
@@ -698,7 +719,7 @@ export default function Cart({navigation, route}) {
       selectedPayment?.off_site == 1 &&
       !!(
         (selectedPayment?.id === 6 || selectedPayment?.id === 7)
-        // || selectedPayment?.id===8
+        || selectedPayment?.id===8 || selectedPayment?.id ===9
       )
     ) {
       updateState({placeLoader: true});
@@ -837,9 +858,12 @@ export default function Cart({navigation, route}) {
       selectedTipAmount && selectedTipAmount != ''
         ? Number(selectedTipAmount)
         : 0
-    }&amount=${
-      cartData?.total_payable_amount
-    }&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&address_id=${
+    }&amount=${(
+      Number(cartData?.total_payable_amount) +
+      (selectedTipAmount != null && selectedTipAmount != ''
+        ? Number(selectedTipAmount)
+        : 0)
+    ).toFixed(2)}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&address_id=${
       selectedAddressData?.id
     }&payment_option_id=${selectedPayment?.id}&action=cart`;
 
@@ -1563,6 +1587,7 @@ export default function Cart({navigation, route}) {
   //   });
   // };
   //Footer section in cart screen
+  console.log(cartData, 'cartDatacartData');
 
   const getFooter = () => {
     return (
@@ -1700,51 +1725,52 @@ export default function Cart({navigation, route}) {
                   horizontal
                   showsHorizontalScrollIndicator={false}
                   contentContainerStyle={{flexGrow: 1}}>
-                  {cartData?.tip.map((j, jnx) => {
-                    return (
-                      <TouchableOpacity
-                        key={String(jnx)}
-                        style={[
-                          styles.tipArrayStyle,
-                          {
-                            backgroundColor:
-                              selectedTipvalue?.value == j?.value
-                                ? themeColors.primary_color
-                                : 'transparent',
-                            flex: 0.18,
-                          },
-                        ]}
-                        onPress={() => selectedTip(j)}>
-                        <Text
-                          style={
-                            isDarkMode
-                              ? {
-                                  color:
-                                    selectedTipvalue?.value == j?.value
-                                      ? colors.white
-                                      : MyDarkTheme.colors.text,
-                                }
-                              : {
-                                  color:
-                                    selectedTipvalue?.value == j?.value
-                                      ? colors.white
-                                      : colors.black,
-                                }
-                          }>
-                          {`${currencies?.primary_currency?.symbol} ${j.value}`}
-                        </Text>
-                        <Text
-                          style={{
-                            color:
-                              selectedTipvalue?.value == j?.value
-                                ? colors.white
-                                : colors.textGreyB,
-                          }}>
-                          {j.label}
-                        </Text>
-                      </TouchableOpacity>
-                    );
-                  })}
+                  {cartData?.total_payable_amount !== 0 &&
+                    cartData?.tip.map((j, jnx) => {
+                      return (
+                        <TouchableOpacity
+                          key={String(jnx)}
+                          style={[
+                            styles.tipArrayStyle,
+                            {
+                              backgroundColor:
+                                selectedTipvalue?.value == j?.value
+                                  ? themeColors.primary_color
+                                  : 'transparent',
+                              flex: 0.18,
+                            },
+                          ]}
+                          onPress={() => selectedTip(j)}>
+                          <Text
+                            style={
+                              isDarkMode
+                                ? {
+                                    color:
+                                      selectedTipvalue?.value == j?.value
+                                        ? colors.white
+                                        : MyDarkTheme.colors.text,
+                                  }
+                                : {
+                                    color:
+                                      selectedTipvalue?.value == j?.value
+                                        ? colors.white
+                                        : colors.black,
+                                  }
+                            }>
+                            {`${currencies?.primary_currency?.symbol} ${j.value}`}
+                          </Text>
+                          <Text
+                            style={{
+                              color:
+                                selectedTipvalue?.value == j?.value
+                                  ? colors.white
+                                  : colors.textGreyB,
+                            }}>
+                            {j.label}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    })}
 
                   <TouchableOpacity
                     style={[

@@ -335,6 +335,10 @@ const timeInLocalLangauge = (value, selectedLanguage) => {
   })}`
 }
 
+const checkEvenOdd = (num) => {
+  return num % 2 === 0 ? num : num + 1
+}
+
 export {
   showError,
   showSuccess,
@@ -344,5 +348,6 @@ export {
   renameKey,
   getParameterByName,
   getUrlRoutes,
-  timeInLocalLangauge
+  timeInLocalLangauge,
+  checkEvenOdd
 };
