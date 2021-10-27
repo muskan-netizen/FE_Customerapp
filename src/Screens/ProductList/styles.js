@@ -87,7 +87,7 @@ export default ({themeColors, fontFamily}) =>
       alignItems: 'center',
       paddingHorizontal: moderateScale(8),
       // height: 42,
-      marginTop: StatusBarHeight - 10,
+      marginTop: StatusBarHeight,
     },
 
     HeaderInsideTextStyle: {
@@ -142,7 +142,7 @@ export default ({themeColors, fontFamily}) =>
       position: 'absolute',
       width: width - moderateScale(30),
       bottom: -42,
-      height: moderateScale(90),
+      minHeight: moderateScale(90),
       shadowOpacity: 0.3,
       shadowColor: '#000',
       shadowOffset: {height: 0, width: 0},
