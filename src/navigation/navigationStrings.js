@@ -95,4 +95,5 @@ export default {
   APP_INTRO: 'app_intro',
   YOCO: 'yoco',
   TIP_PAYMENT_OPTIONS: 'tipPaymentOptions',
+  PAYLINK: 'paylink',
 };

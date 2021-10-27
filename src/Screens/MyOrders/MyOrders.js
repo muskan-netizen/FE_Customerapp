@@ -134,9 +134,8 @@ export default function MyOrders({navigation}) {
     },
     isFocused ? 3000 : null,
   );
-
-  useFocusEffect(
-    React.useCallback(() => {
+  useEffect(() => {
+    const focus = navigation.addListener('focus', () => {
       if (userData && userData?.auth_token) {
         _getListOfOrders();
       } else {
@@ -144,14 +143,26 @@ export default function MyOrders({navigation}) {
           isLoading: false,
         });
       }
-    }, []),
-  );
+    });
+    const blur = navigation.addListener('blur', () => {
+      updateState({orders: []});
+    });
+    return focus, blur;
+  }, []);
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     if (userData && userData?.auth_token) {
+  //       _getListOfOrders();
+  //     } else {
+  //       updateState({
+  //         isLoading: false,
+  //       });
+  //     }
+  //   }, [])
+  // );
 
   //Get list of all orders api
   const _getListOfOrders = () => {
-    console.log(RNLocalize.getTimeZone(), 'RNLocalize.getTimeZone()');
-    console.log(tabType, 'tabType');
-    console.log(pageActive, 'pageActive');
     actions
       .getOrderListing(
         `?limit=${limit}&page=${pageActive}&type=${tabType}`,

@@ -104,7 +104,6 @@ export default function TipPaymentOptions({navigation, route}) {
         if (cardInfo) {
           await createToken(cardInfo)
             .then((res) => {
-              console.log(res, 'res>>');
               if (res && res?.token && res.token?.id) {
                 updateState({isLoading: false});
                 actions
@@ -124,11 +123,11 @@ export default function TipPaymentOptions({navigation, route}) {
                     if (res && res?.status == 'Success' && res?.data) {
                       Alert.alert('', strings.PAYMENT_SUCCESS, [
                         {
-                          text: strings.CANCEL,
+                          text: strings.OK,
                           onPress: () => console.log('Cancel Pressed'),
                         },
                       ]);
-                      //   navigation.navigate(navigationStrings.WALLET);
+                      navigation.navigate(navigationStrings.ORDER_DETAIL);
                     }
                   })
                   .catch(errorMethod);
@@ -138,7 +137,7 @@ export default function TipPaymentOptions({navigation, route}) {
             })
             .catch((err) => {
               updateState({isLoading: false});
-              console.log(err, 'err>>');
+              errorMethod;
             });
         } else {
           updateState({isLoading: false});

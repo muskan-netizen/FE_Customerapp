@@ -628,26 +628,47 @@ export default function Cart({navigation, route}) {
           });
         }
 
-        // else if (
-        //   (res?.data?.payment_option_id === 8 &&
-        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
-        //   Number(selectedTipAmount) !== 0
-        // ){
+        else if (
+          (res?.data?.payment_option_id === 8 &&
+            !!(Number(cartData?.total_payable_amount) !== 0)) ||
+          Number(selectedTipAmount) !== 0
+        ){
 
-        //   navigation.navigate(navigationStrings.YOCO, {
-        //     selectedPayment: selectedPayment,
-        //     total_payable_amount: (
-        //       Number(cartData?.total_payable_amount) +
-        //       (selectedTipAmount != null && selectedTipAmount != ''
-        //         ? Number(selectedTipAmount)
-        //         : 0)
-        //     ).toFixed(2),
+          navigation.navigate(navigationStrings.YOCO, {
+            selectedPayment: selectedPayment,
+            total_payable_amount: (
+              Number(cartData?.total_payable_amount) +
+              (selectedTipAmount != null && selectedTipAmount != ''
+                ? Number(selectedTipAmount)
+                : 0)
+            ).toFixed(2),
 
-        //     payment_option_id: selectedPayment?.id,
-        //     orderDetail: res.data,
-        //   });
+            payment_option_id: selectedPayment?.id,
+            orderDetail: res.data,
+          });
 
-        // }
+        }
+        else if (
+          (res?.data?.payment_option_id === 9 &&
+            !!(Number(cartData?.total_payable_amount) !== 0)) ||
+          Number(selectedTipAmount) !== 0
+        ){
+
+          navigation.navigate(navigationStrings.PAYLINK, {
+            selectedPayment: selectedPayment,
+            total_payable_amount: (
+              Number(cartData?.total_payable_amount) +
+              (selectedTipAmount != null && selectedTipAmount != ''
+                ? Number(selectedTipAmount)
+                : 0)
+            ).toFixed(2),
+
+            payment_option_id: selectedPayment?.id,
+            orderDetail: res.data,
+          });
+
+        }
+
         else {
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
             orderDetail: res.data,
@@ -698,7 +719,7 @@ export default function Cart({navigation, route}) {
       selectedPayment?.off_site == 1 &&
       !!(
         (selectedPayment?.id === 6 || selectedPayment?.id === 7)
-        // || selectedPayment?.id===8
+        || selectedPayment?.id===8 || selectedPayment?.id ===9
       )
     ) {
       updateState({placeLoader: true});

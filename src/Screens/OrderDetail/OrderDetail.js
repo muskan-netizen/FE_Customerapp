@@ -140,6 +140,7 @@ export default function OrderDetail({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        console.log(res, 'res===>');
         updateState({isLoading: false});
         if (res?.data) {
           updateState({
@@ -978,7 +979,10 @@ export default function OrderDetail({navigation, route}) {
             }}
           />
 
-          {!!appData?.profile?.preferences?.tip_after_order &&
+          {paramData?.orderStatus?.current_status?.title ===
+            strings.DELIVERED &&
+            !!appData?.profile?.preferences?.tip_after_order &&
+            cartData?.tip_amount == 0 &&
             !!cartData?.tip &&
             cartData?.tip.length && (
               <View
@@ -1126,37 +1130,35 @@ export default function OrderDetail({navigation, route}) {
                     />
                   </View>
                 )}
+                <TouchableOpacity
+                  // onPress={onPressRateOrder}
+                  onPress={_onAddTip}
+                  // style={{flex:0.6}}
+                  style={{
+                    justifyContent: 'center',
+                    backgroundColor: themeColors.primary_color,
+                    alignItems: 'center',
+                    borderRadius: moderateScale(10),
+                    paddingVertical: moderateScaleVertical(10),
+                    marginTop: moderateScaleVertical(10),
+                  }}>
+                  <Text
+                    style={{
+                      color: colors.white,
+                      fontFamily: fontFamily.medium,
+                      fontSize: textScale(10),
+                    }}>
+                    {strings.ADD_TIP}
+                  </Text>
+                </TouchableOpacity>
               </View>
             )}
 
-          {appData?.profile?.preferences?.tip_after_order && (
-            <TouchableOpacity
-              // onPress={onPressRateOrder}
-              onPress={_onAddTip}
-              // style={{flex:0.6}}
-              style={{
-                justifyContent: 'center',
-
-                backgroundColor: themeColors.primary_color,
-                alignItems: 'center',
-                borderRadius: moderateScale(10),
-                paddingVertical: moderateScaleVertical(10),
-                marginTop: moderateScaleVertical(10),
-              }}>
-              <Text
-                style={{
-                  color: colors.white,
-                  fontFamily: fontFamily.medium,
-                  fontSize: textScale(10),
-                }}>
-                {strings.ADD_TIP}
-              </Text>
-            </TouchableOpacity>
-          )}
           <View
             style={{
               height: moderateScaleVertical(40),
-            }}></View>
+            }}
+          />
         </View>
       </View>
     );
