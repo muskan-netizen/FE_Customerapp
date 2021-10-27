@@ -53,6 +53,13 @@
             {
               "client_id": "943322185851-kbbvvedhje6om62o7ni969o329ko2d3r.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "943322185851-2ff4d8dpc46sf45u2pf7e471erss5bkn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.codebrew.govachow"
+              }
             }
           ]
         }

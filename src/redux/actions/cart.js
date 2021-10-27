@@ -14,6 +14,7 @@ import {
   VENDOR_TABLE_CART,
   SCHEDULE_ORDER,
   CART_PRODUCT_SCHEDULE,
+  TIP_AFTER_ORDER,
 } from '../../config/urls';
 import {
   apiGet,
@@ -231,6 +232,18 @@ export const scheduledOrder = (data, headers = {}) => {
 export const cartProductSchedule = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(CART_PRODUCT_SCHEDULE, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const tipAfterOrder = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(TIP_AFTER_ORDER, data, headers)
       .then((res) => {
         resolve(res);
       })

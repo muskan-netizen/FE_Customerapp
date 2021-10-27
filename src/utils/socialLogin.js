@@ -74,7 +74,7 @@ export const fbLogin = (resCallback) => {
 
 //Apple Login
 export const handleAppleLogin = async () => {
-  await new Promise(async (resolve, reject) => {
+  return await new Promise(async (resolve, reject) => {
     const checkAppleSupport = appleAuth.isSupported;
     if (checkAppleSupport) {
       const appleAuthRequestResponse = await appleAuth.performRequest({
@@ -88,10 +88,11 @@ export const handleAppleLogin = async () => {
 
       // use credentialState response to ensure the user is authenticated
       if (credentialState === appleAuth.State.AUTHORIZED) {
+        console.log('checking apple login >>> ', appleAuthRequestResponse)
         // user is authenticated
-        return resolve(appleAuthRequestResponse);
+         resolve(appleAuthRequestResponse);
       } else {
-        return reject(credentialState);
+         reject(credentialState);
       }
     } else {
       reject('Apple login is not supproted to this device');

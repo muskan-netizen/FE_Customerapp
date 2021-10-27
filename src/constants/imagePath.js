@@ -221,6 +221,7 @@ export default {
   redLocation: require('../assets/images/ic_location.png'),
   location2: require('../assets/images/ic_location2.png'),
 
+
   homeRedActive: require('../assets/images/ic_home4.png'),
   homeRedInActive: require('../assets/images/ic_home_black4.png'),
   cartRedActive: require('../assets/images/ic_cart4.png'),
@@ -292,6 +293,7 @@ export default {
   icMark1: require('../assets/images/RoyoorderNewImages/ic_mark1.png'),
   icMark2: require('../assets/images/RoyoorderNewImages/ic_mark2.png'),
 
+  icTime2: require('../assets/images/RoyoorderNewImages/ic_time.png'),
   icBrandActive: require('../assets/images/RoyoorderNewImages/ic_tag2.png'),
   icBrandInActive: require('../assets/images/RoyoorderNewImages/ic_tag.png'),
   icCelebActive: require('../assets/images/RoyoorderNewImages/ic_celeb2.png'),

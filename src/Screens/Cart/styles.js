@@ -319,7 +319,6 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       borderWidth: 0.7,
       paddingHorizontal: 15,
       paddingVertical: 5,
-      borderColor: colors.textGreyB,
       marginLeft: 2,
       marginVertical: 20,
       borderRadius: moderateScale(5),

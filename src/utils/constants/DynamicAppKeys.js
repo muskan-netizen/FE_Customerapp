@@ -202,7 +202,7 @@ const appIds = {
     android: 'com.cannabus',
   }),
   govachow: Platform.select({
-    ios: 'com.codebrew.govachow',
+    ios: 'com.app.govachow',
     android: 'com.govachow',
   }),
   bustanfakieh: Platform.select({
@@ -254,8 +254,8 @@ const appIds = {
     android: 'com.codebrew.rerak',
   }),
   yummiidash: Platform.select({
-    ios: 'com.yummiidash',
-    android: 'com.yummiidash',
+    ios: 'com.app.yummiidash',
+    android: 'com.app.yummiidash',
   }),
   yoho: Platform.select({
     ios: 'com.codebrewlab.yoho',
@@ -374,8 +374,8 @@ const appIds = {
     android: 'com.loopwhole',
   }),
   vici: Platform.select({
-    ios: 'com.vici',
-    android: 'com.vici',
+    ios: 'com.customer.vici',
+    android: 'com.app.vici',
   }),
   carhop: Platform.select({
     ios: 'com.carhop',

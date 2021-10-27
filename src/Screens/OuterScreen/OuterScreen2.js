@@ -74,8 +74,8 @@ export default function OuterScreen2({navigation}) {
     };
 
   //Saving login user to backend
-  const _saveSocailLogin = async(socialLoginData, type) => {
-    let fcmToken = await AsyncStorage.getItem('fcmToken')
+  const _saveSocailLogin = async (socialLoginData, type) => {
+    let fcmToken = await AsyncStorage.getItem('fcmToken');
     let data = {};
     data['name'] = socialLoginData?.name || socialLoginData?.userName;
     data['auth_id'] = socialLoginData?.id || socialLoginData?.userID;
@@ -83,7 +83,7 @@ export default function OuterScreen2({navigation}) {
     data['email'] = socialLoginData?.email;
     data['device_type'] = Platform.OS;
     data['device_token'] = DeviceInfo.getUniqueId();
-    data['fcm_token'] = !!fcmToken ? fcmToken : DeviceInfo.getUniqueId()
+    data['fcm_token'] = !!fcmToken ? fcmToken : DeviceInfo.getUniqueId();
 
     let query = '';
     if (type == 'facebook' || type == 'twitter' || type == 'google') {
@@ -98,26 +98,32 @@ export default function OuterScreen2({navigation}) {
       })
       .then((res) => {
         if (!!res.data) {
-          if (!!res.data?.client_preference?.verify_email &&
-            !!res.data?.client_preference?.verify_phone) {
-            if (!!res.data?.verify_details?.is_email_verified &&
-              !!res.data?.verify_details?.is_phone_verified) {
-              navigation.push(navigationStrings.DRAWER_ROUTES)
+          if (
+            !!res.data?.client_preference?.verify_email &&
+            !!res.data?.client_preference?.verify_phone
+          ) {
+            if (
+              !!res.data?.verify_details?.is_email_verified &&
+              !!res.data?.verify_details?.is_phone_verified
+            ) {
+              navigation.push(navigationStrings.DRAWER_ROUTES);
             } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
+              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
-          }
-          else if (!!res.data?.client_preference?.verify_email ||
-            !!res.data?.client_preference?.verify_phone) {
-            if (!!res.data?.verify_details?.is_email_verified ||
-              !!res.data?.verify_details?.is_phone_verified) {
-              navigation.push(navigationStrings.DRAWER_ROUTES)
+          } else if (
+            !!res.data?.client_preference?.verify_email ||
+            !!res.data?.client_preference?.verify_phone
+          ) {
+            if (
+              !!res.data?.verify_details?.is_email_verified ||
+              !!res.data?.verify_details?.is_phone_verified
+            ) {
+              navigation.push(navigationStrings.DRAWER_ROUTES);
             } else {
-              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
+              moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
-          }
-          else {
-            navigation.push(navigationStrings.DRAWER_ROUTES)
+          } else {
+            navigation.push(navigationStrings.DRAWER_ROUTES);
           }
         }
         updateState({isLoading: false});
@@ -155,6 +161,7 @@ export default function OuterScreen2({navigation}) {
     handleAppleLogin()
       .then((res) => {
         updateState({isLoading: false});
+        console.log(res, 'responseresponseresponseresponse');
       })
       .catch((err) => {
         updateState({isLoading: false});
