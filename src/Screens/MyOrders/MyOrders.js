@@ -134,9 +134,8 @@ export default function MyOrders({navigation}) {
     },
     isFocused ? 3000 : null,
   );
-
-  useFocusEffect(
-    React.useCallback(() => {
+  useEffect(() => {
+    const focus = navigation.addListener('focus', () => {
       if (userData && userData?.auth_token) {
         _getListOfOrders();
       } else {
@@ -144,14 +143,26 @@ export default function MyOrders({navigation}) {
           isLoading: false,
         });
       }
-    }, []),
-  );
+    });
+    const blur = navigation.addListener('blur', () => {
+      updateState({orders: []});
+    });
+    return focus, blur;
+  }, []);
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     if (userData && userData?.auth_token) {
+  //       _getListOfOrders();
+  //     } else {
+  //       updateState({
+  //         isLoading: false,
+  //       });
+  //     }
+  //   }, [])
+  // );
 
   //Get list of all orders api
   const _getListOfOrders = () => {
-    console.log(RNLocalize.getTimeZone(), 'RNLocalize.getTimeZone()');
-    console.log(tabType, 'tabType');
-    console.log(pageActive, 'pageActive');
     actions
       .getOrderListing(
         `?limit=${limit}&page=${pageActive}&type=${tabType}`,
@@ -290,7 +301,6 @@ export default function MyOrders({navigation}) {
   };
 
   const returnYourOrder = (item) => {
-    console.log('hhdhsdshdshdh');
     console.log(item, 'item>item>');
     updateState({isLoading: true});
     actions
@@ -477,7 +487,7 @@ export default function MyOrders({navigation}) {
         })
         .catch(errorMethod);
     } else {
-      showError('Please select the product to return');
+      showError(strings.PLEASE_SELECT_RETURN_ORDER);
     }
   };
 
@@ -522,6 +532,7 @@ export default function MyOrders({navigation}) {
       <FlatList
         ref={_scrollRef}
         data={orders}
+        extraData={orders}
         // data={activeOrders || pastOrders || scheduledOrders}
         // data={[1, 2, 3, 4]}
         renderItem={renderOrders}
