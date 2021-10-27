@@ -163,27 +163,31 @@ export default function MarketCard3({
             {!!data?.lineOfSightDistance && (
               <View
                 style={{
-                  flexDirection: 'row',
+                  // flexDirection: 'row',
                 }}>
-                <Image
-                  style={{ tintColor: themeColors.primary_color }}
-                  source={imagePath.location2}
-                />
-                <Text
-                  numberOfLines={1}
-                  style={styles.distanceTimeStyle}>
-                  {data?.lineOfSightDistance}
-                </Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Image
+                    style={{ 
+                      tintColor: themeColors.primary_color,
+                     }}
+                    source={imagePath.location2}
+                  />
+                  <Text
+                    numberOfLines={1}
+                    style={styles.distanceTimeStyle}>
+                    {data?.lineOfSightDistance}
+                  </Text>
+                </View>
 
                 {!!data?.timeofLineOfSightDistance && (<View
-                  style={{ flexDirection: 'row', alignItems: 'center' }}
+                  style={{ flexDirection: 'row', alignItems: 'center', marginTop: moderateScaleVertical(8) }}
                 >
                   <Image
                     style={{ tintColor: themeColors.primary_color }}
                     source={imagePath.icTime2}
                   />
                   <Text style={styles.distanceTimeStyle}>
-                  {checkEvenOdd(data?.timeofLineOfSightDistance)}-{checkEvenOdd(data?.timeofLineOfSightDistance + 5)} {' mins'}
+                    {checkEvenOdd(data?.timeofLineOfSightDistance)}-{checkEvenOdd(data?.timeofLineOfSightDistance + 5)} {' mins'}
                   </Text>
                 </View>)}
               </View>

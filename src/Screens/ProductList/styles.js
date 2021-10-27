@@ -264,6 +264,6 @@ export default ({themeColors, fontFamily, isDarkMode,  MyDarkTheme}) =>
     locTimeIcon: {
       tintColor: isDarkMode
       ? MyDarkTheme.colors.text
-      : colors.grayOpacity3
+      : colors.grayOpacity51
     }
   });
