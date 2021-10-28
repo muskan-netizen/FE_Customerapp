@@ -132,6 +132,8 @@ const shortCodes = {
   orderchekout: 'f6cd9d',
   maxisdelivery: '1e1c90',
   donepacked: '4fc332',
+  careworks: '81c669',
+  thubaerides: '47f449',
 };
 
 const appIds = {
@@ -658,6 +660,14 @@ const appIds = {
   donepacked: Platform.select({
     ios: 'com.donepacked',
     android: 'com.donepacked',
+  }),
+  careworks: Platform.select({
+    ios: 'com.careworks',
+    android: 'com.careworks',
+  }),
+  thubaerides: Platform.select({
+    ios: 'com.thubaerides',
+    android: 'com.thubaerides',
   }),
 };
 

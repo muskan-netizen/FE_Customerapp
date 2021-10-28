@@ -876,6 +876,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.careworks:
+          updateState({
+            shortCode: shortCodes.careworks,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.thubaerides:
+          updateState({
+            shortCode: shortCodes.thubaerides,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

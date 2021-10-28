@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "883093041546",
+    "project_id": "thubaerides",
+    "storage_bucket": "thubaerides.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883093041546:android:aee32c0538699c635e5873",
+        "android_client_info": {
+          "package_name": "com.thubaerides"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883093041546-0q4eht2tbsm0fpal4qt0glbem4jj74n2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.thubaerides",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "883093041546-41d9vlsasc06dg81fghgtu4u9tjn8g26.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.thubaerides",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "883093041546-ohqcri7frmcj938bhe5t4puqa2m4b4bi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.thubaerides",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "883093041546-p0l8nlqtjb5b61g2ud3kiri9snenkqb3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChg3mDQQMhvIczBxg-JvJsxHrTwmTSrPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883093041546-p0l8nlqtjb5b61g2ud3kiri9snenkqb3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "883093041546-g2maqt6n56ms8neag8io6jte07m8nbht.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.thubaerides"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

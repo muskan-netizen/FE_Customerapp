@@ -23,6 +23,7 @@
 		0BAD6FB3EE84C25DEF60B6E4 /* libPods-Orbit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56B36429643D4A4954BE379F /* libPods-Orbit.a */; };
 		0BF64BBBD5DFA7F5B0331C48 /* libPods-Zest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A0901E10FC361AAAF69CA7D /* libPods-Zest.a */; };
 		0DB208742F1857F458AE5171 /* libPods-Senshive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB2592CE41958AE5DB02A63 /* libPods-Senshive.a */; };
+		0E044036F62AA636745907BD /* libPods-ThubaeRides.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B43D3A12BA06E6DF7964310D /* libPods-ThubaeRides.a */; };
 		0E4C17F2B7F3DAC5B4398417 /* libPods-Agrionline.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C15894EE5C2ADB8E96814E1 /* libPods-Agrionline.a */; };
 		0E973D8EE7F897F8BD322A7F /* libPods-HoganChef.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D755F19B052D06BDA9502FB2 /* libPods-HoganChef.a */; };
 		0F30F456A9753DF269675749 /* libPods-HemptiFy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A70885B423742D181EBA720 /* libPods-HemptiFy.a */; };
@@ -45,6 +46,7 @@
 		1E92EBFC67D734920543D6F9 /* libPods-Ace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C36EAB0B5FAC50A1083F415 /* libPods-Ace.a */; };
 		1F737E85E7B475F661E80A0D /* libPods-Share.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0230AD2B7BEB0BA32B0AA9C1 /* libPods-Share.a */; };
 		24C192BEF6955560187A7D55 /* libPods-Vecto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98AF6FD4F6BF37B191CF0A4A /* libPods-Vecto.a */; };
+		2CE6EE1C4F9170580C4F75E0 /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4776621547900ADA9DB58452 /* libPods-RoyoOrder.a */; };
 		2DB808CD465D750D900141FA /* libPods-Yummiidash.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D55EAB4E32B2C0573CB000EF /* libPods-Yummiidash.a */; };
 		313C4645D16F6638AAE4879D /* libPods-BLIP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF6D68BB4FF8C806D87B5B35 /* libPods-BLIP.a */; };
 		3300751EF9F815ACCB445111 /* libPods-FlyingHorse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD43257CAB34D94CE99D4C4 /* libPods-FlyingHorse.a */; };
@@ -74,7 +76,7 @@
 		57B5F7B68F33C48CD356E919 /* libPods-ZuzuClean.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50FA92EE74EF1D3BBBD49E7 /* libPods-ZuzuClean.a */; };
 		5B2B5FB275ABE53F0293B11C /* libPods-HelpNowRightNow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 899139B94191A56878D42319 /* libPods-HelpNowRightNow.a */; };
 		61544E9F432FED20DE79C11E /* libPods-SeaChangeVending.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85D9C34CE522014CE7AC5413 /* libPods-SeaChangeVending.a */; };
-		63305F6CF21399824D7E3912 /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8579BABF675C07DCF50D6617 /* libPods-RoyoOrder.a */; };
+		63305F6CF21399824D7E3912 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		63C9E43BA2445A8A0251848F /* libPods-GajaMove.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1563CFF20589ABCE2F6EAA /* libPods-GajaMove.a */; };
 		63D8BA397963061B378EA58E /* libPods-Bookem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FB8F939535444C8A544B88 /* libPods-Bookem.a */; };
 		646E24C7EBAC111271628555 /* libPods-Gusto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB16AE01A3628A1256748A68 /* libPods-Gusto.a */; };
@@ -677,6 +679,71 @@
 		8426884A27297F45001EFE96 /* MaxisDelivery(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8426884927297F45001EFE96 /* MaxisDelivery(Production).xcconfig */; };
 		842688D227297F79001EFE96 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842688D127297F78001EFE96 /* Images.xcassets */; };
 		842688D427297FF5001EFE96 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 842688D327297FF3001EFE96 /* GoogleService-Info.plist */; };
+		842BA227272A807400A2E1A2 /* Donepacked(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 842BA226272A807400A2E1A2 /* Donepacked(Development).xcconfig */; };
+		842BA337272A809600A2E1A2 /* Donepacked(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 842BA336272A809600A2E1A2 /* Donepacked(Production).xcconfig */; };
+		842BA339272A80A800A2E1A2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842BA338272A80A800A2E1A2 /* Images.xcassets */; };
+		842BA3C2272A81DF00A2E1A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 842BA3C1272A81DE00A2E1A2 /* GoogleService-Info.plist */; };
+		842BAA04272AA66C00A2E1A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		842BAA05272AA66C00A2E1A2 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
+		842BAA06272AA66C00A2E1A2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		842BAA0C272AA66C00A2E1A2 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		842BAA0D272AA66C00A2E1A2 /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
+		842BAA0E272AA66C00A2E1A2 /* Futura-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7902681E47100CC5BA2 /* Futura-Medium.ttf */; };
+		842BAA0F272AA66C00A2E1A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		842BAA10272AA66C00A2E1A2 /* CircularStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 844FDD1E2673989300C16835 /* CircularStd-Book.otf */; };
+		842BAA11272AA66C00A2E1A2 /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		842BAA12272AA66C00A2E1A2 /* Futura Hv BT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78E2681E47100CC5BA2 /* Futura Hv BT.ttf */; };
+		842BAA13272AA66C00A2E1A2 /* SFProText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78D2681E47000CC5BA2 /* SFProText-Regular.ttf */; };
+		842BAA14272AA66C00A2E1A2 /* SFProText-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78F2681E47100CC5BA2 /* SFProText-SemiBold.ttf */; };
+		842BAA15272AA66C00A2E1A2 /* SFProText-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7942681E47100CC5BA2 /* SFProText-Medium.ttf */; };
+		842BAA17272AA66C00A2E1A2 /* notification.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84D1CDDD2703529C00C05E36 /* notification.wav */; };
+		842BAA19272AA66C00A2E1A2 /* Plists in Resources */ = {isa = PBXBuildFile; fileRef = 84DD36D82653D9EF00E2097D /* Plists */; };
+		842BAA1A272AA66C00A2E1A2 /* Futura-Normal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7922681E47100CC5BA2 /* Futura-Normal.ttf */; };
+		842BAA1B272AA66C00A2E1A2 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		842BAA1C272AA66C00A2E1A2 /* Futura-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7932681E47100CC5BA2 /* Futura-Book.ttf */; };
+		842BAA1D272AA66C00A2E1A2 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 844FDD1D2673989300C16835 /* CircularStd-Medium.otf */; };
+		842BAA1E272AA66C00A2E1A2 /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		842BAA1F272AA66C00A2E1A2 /* FuturaBT-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78B2681E47000CC5BA2 /* FuturaBT-Heavy.ttf */; };
+		842BAA20272AA66C00A2E1A2 /* CircularStd-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844FDD1C2673989300C16835 /* CircularStd-Bold.ttf */; };
+		842BAA21272AA66C00A2E1A2 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		842BAA24272AA66C00A2E1A2 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
+		842BAA25272AA66C00A2E1A2 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		842BABC9272AA76700A2E1A2 /* CareWorks(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 842BABC8272AA76700A2E1A2 /* CareWorks(Development).xcconfig */; };
+		842BACDB272AA78600A2E1A2 /* CareWorks(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 842BACDA272AA78600A2E1A2 /* CareWorks(Production).xcconfig */; };
+		842BACDD272AA79F00A2E1A2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842BACDC272AA79F00A2E1A2 /* Images.xcassets */; };
+		842BAD67272AA8A400A2E1A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 842BAD66272AA8A300A2E1A2 /* GoogleService-Info.plist */; };
+		842BB3B3272AB8AF00A2E1A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		842BB3B4272AB8AF00A2E1A2 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
+		842BB3B5272AB8AF00A2E1A2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		842BB3B7272AB8AF00A2E1A2 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		842BB3B8272AB8AF00A2E1A2 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		842BB3B9272AB8AF00A2E1A2 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		842BB3BC272AB8AF00A2E1A2 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		842BB3BD272AB8AF00A2E1A2 /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
+		842BB3BE272AB8AF00A2E1A2 /* Futura-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7902681E47100CC5BA2 /* Futura-Medium.ttf */; };
+		842BB3BF272AB8AF00A2E1A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		842BB3C0272AB8AF00A2E1A2 /* CircularStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 844FDD1E2673989300C16835 /* CircularStd-Book.otf */; };
+		842BB3C1272AB8AF00A2E1A2 /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		842BB3C2272AB8AF00A2E1A2 /* Futura Hv BT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78E2681E47100CC5BA2 /* Futura Hv BT.ttf */; };
+		842BB3C3272AB8AF00A2E1A2 /* SFProText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78D2681E47000CC5BA2 /* SFProText-Regular.ttf */; };
+		842BB3C4272AB8AF00A2E1A2 /* SFProText-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78F2681E47100CC5BA2 /* SFProText-SemiBold.ttf */; };
+		842BB3C5272AB8AF00A2E1A2 /* SFProText-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7942681E47100CC5BA2 /* SFProText-Medium.ttf */; };
+		842BB3C7272AB8AF00A2E1A2 /* notification.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84D1CDDD2703529C00C05E36 /* notification.wav */; };
+		842BB3C9272AB8AF00A2E1A2 /* Plists in Resources */ = {isa = PBXBuildFile; fileRef = 84DD36D82653D9EF00E2097D /* Plists */; };
+		842BB3CA272AB8AF00A2E1A2 /* Futura-Normal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7922681E47100CC5BA2 /* Futura-Normal.ttf */; };
+		842BB3CB272AB8AF00A2E1A2 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		842BB3CC272AB8AF00A2E1A2 /* Futura-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7932681E47100CC5BA2 /* Futura-Book.ttf */; };
+		842BB3CD272AB8AF00A2E1A2 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 844FDD1D2673989300C16835 /* CircularStd-Medium.otf */; };
+		842BB3CE272AB8AF00A2E1A2 /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		842BB3CF272AB8AF00A2E1A2 /* FuturaBT-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78B2681E47000CC5BA2 /* FuturaBT-Heavy.ttf */; };
+		842BB3D0272AB8AF00A2E1A2 /* CircularStd-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844FDD1C2673989300C16835 /* CircularStd-Bold.ttf */; };
+		842BB3D1272AB8AF00A2E1A2 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		842BB3D4272AB8AF00A2E1A2 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
+		842BB3D5272AB8AF00A2E1A2 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		842BB4F3272AB9A900A2E1A2 /* ThubaeRides(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 842BB4F2272AB9A800A2E1A2 /* ThubaeRides(Development).xcconfig */; };
+		842BB691272ABA6100A2E1A2 /* ThubaeRides(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 842BB690272ABA6100A2E1A2 /* ThubaeRides(Production).xcconfig */; };
+		842BB693272ABA7300A2E1A2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842BB692272ABA7300A2E1A2 /* Images.xcassets */; };
+		842BB71E272ABB3400A2E1A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 842BB71D272ABB3300A2E1A2 /* GoogleService-Info.plist */; };
 		84314CCD26FB576C005E3FC1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84314CCE26FB576C005E3FC1 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		84314CCF26FB576C005E3FC1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -2821,6 +2888,31 @@
 		849D848D26DF5B9000347B00 /* Menus(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 849D848C26DF5B9000347B00 /* Menus(Production).xcconfig */; };
 		849D848F26DF5BA400347B00 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 849D848E26DF5BA400347B00 /* Images.xcassets */; };
 		849D84D926DF5FD400347B00 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849D84D826DF5FD300347B00 /* GoogleService-Info.plist */; };
+		849F7422272A7BFB001F2F79 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		849F7423272A7BFB001F2F79 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
+		849F7424272A7BFB001F2F79 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		849F7429272A7BFB001F2F79 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		849F742A272A7BFB001F2F79 /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
+		849F742B272A7BFB001F2F79 /* Futura-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7902681E47100CC5BA2 /* Futura-Medium.ttf */; };
+		849F742C272A7BFB001F2F79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		849F742D272A7BFB001F2F79 /* CircularStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 844FDD1E2673989300C16835 /* CircularStd-Book.otf */; };
+		849F742E272A7BFB001F2F79 /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		849F742F272A7BFB001F2F79 /* Futura Hv BT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78E2681E47100CC5BA2 /* Futura Hv BT.ttf */; };
+		849F7430272A7BFB001F2F79 /* SFProText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78D2681E47000CC5BA2 /* SFProText-Regular.ttf */; };
+		849F7431272A7BFB001F2F79 /* SFProText-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78F2681E47100CC5BA2 /* SFProText-SemiBold.ttf */; };
+		849F7432272A7BFB001F2F79 /* SFProText-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7942681E47100CC5BA2 /* SFProText-Medium.ttf */; };
+		849F7434272A7BFB001F2F79 /* notification.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84D1CDDD2703529C00C05E36 /* notification.wav */; };
+		849F7436272A7BFB001F2F79 /* Plists in Resources */ = {isa = PBXBuildFile; fileRef = 84DD36D82653D9EF00E2097D /* Plists */; };
+		849F7437272A7BFB001F2F79 /* Futura-Normal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7922681E47100CC5BA2 /* Futura-Normal.ttf */; };
+		849F7438272A7BFB001F2F79 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		849F7439272A7BFB001F2F79 /* Futura-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7932681E47100CC5BA2 /* Futura-Book.ttf */; };
+		849F743A272A7BFB001F2F79 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 844FDD1D2673989300C16835 /* CircularStd-Medium.otf */; };
+		849F743B272A7BFB001F2F79 /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		849F743C272A7BFB001F2F79 /* FuturaBT-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78B2681E47000CC5BA2 /* FuturaBT-Heavy.ttf */; };
+		849F743D272A7BFB001F2F79 /* CircularStd-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844FDD1C2673989300C16835 /* CircularStd-Bold.ttf */; };
+		849F743E272A7BFB001F2F79 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		849F7441272A7BFB001F2F79 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
+		849F7442272A7BFB001F2F79 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
 		849FC00926B17BAE006C8D91 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849FC00826B17BAE006C8D91 /* GoogleService-Info.plist */; };
 		84A1A23C269EE69D00A83511 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		84A1A23E269EE69D00A83511 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -3878,13 +3970,14 @@
 		89D5D49077F0FE3AC12B38DC /* libPods-InstaMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87A5C199E0F491284D2C22AD /* libPods-InstaMobile.a */; };
 		8B7CD2D2231A55DF641CD1DE /* libPods-GovaChow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FA27C95B21EDBA5B9A0216E /* libPods-GovaChow.a */; };
 		9086E7A37F1D7BFC92AA619A /* libPods-AfricanVillageMarket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24DA955EEDB4EC377DBBA7DA /* libPods-AfricanVillageMarket.a */; };
-		9126AD3463612FC0AC2707C9 /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF04227765B7A352E6BA56A2 /* libPods-RoyoOrder.a */; };
+		9126AD3463612FC0AC2707C9 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		93957F1D6DB74D8CB1747A6F /* libPods-DestinationOps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86301119CBCFB2CECDC95A31 /* libPods-DestinationOps.a */; };
 		9738D798BFC714E333481CE5 /* libPods-PartnerProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28098371553CDD0AA4C3A20C /* libPods-PartnerProject.a */; };
 		97FAD3F946B0D1DFCB5E67CD /* libPods-Noki.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DD8450557401A6ACC0E99604 /* libPods-Noki.a */; };
 		9AEDCCFB31AAAEFE8473C544 /* libPods-ClickEat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F1B766884E1058913E5D31 /* libPods-ClickEat.a */; };
 		9B4FF0F1875BC1E72EBD0D90 /* libPods-SMCompany.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA15FCDDCC1599219069F029 /* libPods-SMCompany.a */; };
 		9BC052C288B6C202981A99EC /* libPods-CaribeClean.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 060F9B6FC42016A7B47A610C /* libPods-CaribeClean.a */; };
+		9CFC2E1F2693A89BD2BE06E2 /* libPods-CareWorks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AFDE0B6365F4FAE315BBF8 /* libPods-CareWorks.a */; };
 		9DF51DFE8CF279F947D35196 /* libPods-Groupy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2180DA2A808411BC4E65101E /* libPods-Groupy.a */; };
 		A02DF387EA249A5867F90A97 /* libPods-eBOYO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4686E676D3491913D9AE9CB8 /* libPods-eBOYO.a */; };
 		A613225E6EF045A5158508AA /* libPods-Errand.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B78BA1CD1330D6F7B21C566B /* libPods-Errand.a */; };
@@ -3902,9 +3995,11 @@
 		B997F03C5A05E0C539E8EEC0 /* libPods-Servze.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AECDDDEC824BC6FD2349A9B /* libPods-Servze.a */; };
 		BD63FB896C23FB4D446DE393 /* libPods-Grub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1410DEB3975618F360ACBCFD /* libPods-Grub.a */; };
 		BE6A35B56CB5D57B883EE5B5 /* libPods-Rerak.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAE2B6FEA7CA801CE08E90F /* libPods-Rerak.a */; };
+		C0C83ABEB8528D5C1DE48FD9 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		C3AD01327855EC70BEEBF51E /* libPods-Tasmeem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C564A9E501B7411DC162D5 /* libPods-Tasmeem.a */; };
 		C731C3AB086066B33ECDBD84 /* libPods-BustanFakieh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F9B588CFB3BE264E026DCD0 /* libPods-BustanFakieh.a */; };
 		C73DB21B8FDCE620C02B1FC1 /* libPods-ZestyClickz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EC4E65B15694B7997E23EB5 /* libPods-ZestyClickz.a */; };
+		C9F11923DBAEECA4E0CEFA02 /* libPods-Donepacked.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAC08532427284B8A8495D20 /* libPods-Donepacked.a */; };
 		CAD933207014D64F475A825C /* libPods-Cabdelivr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF42DDFA0DFDC3CE838F77C /* libPods-Cabdelivr.a */; };
 		CE700B1F0457F25B0D844FC9 /* libPods-Carlitoo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E09316ADC46378D8A14BFF32 /* libPods-Carlitoo.a */; };
 		D6918CE3C652CC2A6BF591B2 /* libPods-SunshineRideshare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1B6FB8CDDE2D7421C9525F /* libPods-SunshineRideshare.a */; };
@@ -4288,6 +4383,22 @@
 		842688D127297F78001EFE96 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		842688D327297FF3001EFE96 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84268BF9272985DE001EFE96 /* MaxisDelivery.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MaxisDelivery.entitlements; sourceTree = "<group>"; };
+		842BA226272A807400A2E1A2 /* Donepacked(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Donepacked(Development).xcconfig"; sourceTree = "<group>"; };
+		842BA336272A809600A2E1A2 /* Donepacked(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Donepacked(Production).xcconfig"; sourceTree = "<group>"; };
+		842BA338272A80A800A2E1A2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		842BA3C1272A81DE00A2E1A2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		842BA666272A838700A2E1A2 /* Donepacked.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Donepacked.entitlements; sourceTree = "<group>"; };
+		842BAA2D272AA66C00A2E1A2 /* CareWorks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CareWorks.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		842BABC8272AA76700A2E1A2 /* CareWorks(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "CareWorks(Development).xcconfig"; sourceTree = "<group>"; };
+		842BACDA272AA78600A2E1A2 /* CareWorks(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "CareWorks(Production).xcconfig"; sourceTree = "<group>"; };
+		842BACDC272AA79F00A2E1A2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		842BAD66272AA8A300A2E1A2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		842BB3DD272AB8B000A2E1A2 /* ThubaeRides.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThubaeRides.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		842BB4F2272AB9A800A2E1A2 /* ThubaeRides(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ThubaeRides(Development).xcconfig"; sourceTree = "<group>"; };
+		842BB690272ABA6100A2E1A2 /* ThubaeRides(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ThubaeRides(Production).xcconfig"; sourceTree = "<group>"; };
+		842BB692272ABA7300A2E1A2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		842BB71D272ABB3300A2E1A2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		842BB943272ABC2600A2E1A2 /* ThubaeRides.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ThubaeRides.entitlements; sourceTree = "<group>"; };
 		842EEE7726DCD3EF00F121B5 /* RoyoOrder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RoyoOrder.entitlements; sourceTree = "<group>"; };
 		84314D2326FB576C005E3FC1 /* Codiner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Codiner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84314E9226FB588E005E3FC1 /* Codiner(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Codiner(Development).xcconfig"; sourceTree = "<group>"; };
@@ -4711,6 +4822,7 @@
 		849D848C26DF5B9000347B00 /* Menus(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Menus(Production).xcconfig"; sourceTree = "<group>"; };
 		849D848E26DF5BA400347B00 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		849D84D826DF5FD300347B00 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		849F744A272A7BFB001F2F79 /* Donepacked.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Donepacked.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		849FC00826B17BAE006C8D91 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84A08E5F26B3F3DA00216740 /* HelpNowRightNow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HelpNowRightNow.entitlements; sourceTree = "<group>"; };
 		84A1A25B269EE69D00A83511 /* Masa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Masa.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5004,6 +5116,7 @@
 		9194027C99AA15B7BBABEFF0 /* Pods-BustanFakieh.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BustanFakieh.debug.xcconfig"; path = "Target Support Files/Pods-BustanFakieh/Pods-BustanFakieh.debug.xcconfig"; sourceTree = "<group>"; };
 		93FDF9737C87C9BC57FBE479 /* libPods-BoozieDoozie.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BoozieDoozie.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		952EBFC0C406FEA0DE9088C9 /* Pods-GoKab.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoKab.debug.xcconfig"; path = "Target Support Files/Pods-GoKab/Pods-GoKab.debug.xcconfig"; sourceTree = "<group>"; };
+		9810F473D8CA3BBBEFD06C5C /* Pods-Donepacked.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Donepacked.debug.xcconfig"; path = "Target Support Files/Pods-Donepacked/Pods-Donepacked.debug.xcconfig"; sourceTree = "<group>"; };
 		98AF6FD4F6BF37B191CF0A4A /* libPods-Vecto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Vecto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		98CC440B3AFCA7FA6F6521EB /* libPods-QuickQuick.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QuickQuick.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		99413C00F85CE91FC2C07254 /* Pods-WeEat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeEat.release.xcconfig"; path = "Target Support Files/Pods-WeEat/Pods-WeEat.release.xcconfig"; sourceTree = "<group>"; };
@@ -5021,6 +5134,8 @@
 		A1858787FDAA3886BDD0C9EC /* Pods-Ored.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ored.debug.xcconfig"; path = "Target Support Files/Pods-Ored/Pods-Ored.debug.xcconfig"; sourceTree = "<group>"; };
 		A2758B40CC2E00C67E1CF9B4 /* Pods-Sharu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sharu.release.xcconfig"; path = "Target Support Files/Pods-Sharu/Pods-Sharu.release.xcconfig"; sourceTree = "<group>"; };
 		A31F7684EF701F5AE2855FCB /* Pods-SMCompany.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SMCompany.release.xcconfig"; path = "Target Support Files/Pods-SMCompany/Pods-SMCompany.release.xcconfig"; sourceTree = "<group>"; };
+		A45F91ACAF6497E27C0784EA /* Pods-ThubaeRides.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThubaeRides.debug.xcconfig"; path = "Target Support Files/Pods-ThubaeRides/Pods-ThubaeRides.debug.xcconfig"; sourceTree = "<group>"; };
+		A4AFDE0B6365F4FAE315BBF8 /* libPods-CareWorks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CareWorks.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A69227433B9780BAC0A411E7 /* Pods-CarHop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarHop.debug.xcconfig"; path = "Target Support Files/Pods-CarHop/Pods-CarHop.debug.xcconfig"; sourceTree = "<group>"; };
 		A79B46661CF2D913F3A15D4B /* Pods-Tranzit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tranzit.release.xcconfig"; path = "Target Support Files/Pods-Tranzit/Pods-Tranzit.release.xcconfig"; sourceTree = "<group>"; };
 		A8D6F9AB3A07A19CE4F8FE61 /* Pods-Sambiga.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sambiga.debug.xcconfig"; path = "Target Support Files/Pods-Sambiga/Pods-Sambiga.debug.xcconfig"; sourceTree = "<group>"; };
@@ -5035,6 +5150,7 @@
 		B37382A7BCC70642E1DFEFCF /* Pods-GoKab.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoKab.release.xcconfig"; path = "Target Support Files/Pods-GoKab/Pods-GoKab.release.xcconfig"; sourceTree = "<group>"; };
 		B3975B87CC09AE3816BFCC5E /* Pods-ArenaGrub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArenaGrub.debug.xcconfig"; path = "Target Support Files/Pods-ArenaGrub/Pods-ArenaGrub.debug.xcconfig"; sourceTree = "<group>"; };
 		B4383890819DFB59392187BE /* Pods-Toda.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Toda.debug.xcconfig"; path = "Target Support Files/Pods-Toda/Pods-Toda.debug.xcconfig"; sourceTree = "<group>"; };
+		B43D3A12BA06E6DF7964310D /* libPods-ThubaeRides.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ThubaeRides.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B527F5D8BE810541B59D6A10 /* libPods-Yoho.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Yoho.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B65E35D9402A1F1BCCF84778 /* libPods-Tranznet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tranznet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B69DB3B168281C857EE26F8B /* Pods-Share.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Share.release.xcconfig"; path = "Target Support Files/Pods-Share/Pods-Share.release.xcconfig"; sourceTree = "<group>"; };
@@ -5043,6 +5159,7 @@
 		B8E18EE44C4D06CECD698C90 /* libPods-BottomsUp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BottomsUp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B981CFEC973058B756095D54 /* Pods-Getme.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Getme.debug.xcconfig"; path = "Target Support Files/Pods-Getme/Pods-Getme.debug.xcconfig"; sourceTree = "<group>"; };
 		B9B9E38D2582B1F081561FF2 /* libPods-Vici.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Vici.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BAC08532427284B8A8495D20 /* libPods-Donepacked.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Donepacked.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC22ED44C31A32B364D98E2 /* Pods-GajaMove.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GajaMove.release.xcconfig"; path = "Target Support Files/Pods-GajaMove/Pods-GajaMove.release.xcconfig"; sourceTree = "<group>"; };
 		BC26BC5504B1669DD9688787 /* libPods-Hosta.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Hosta.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC55E89AACCA3EA43653A6D2 /* libPods-Masa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Masa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5050,6 +5167,7 @@
 		BF45B9270FB04E981C19D442 /* Pods-Senshive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Senshive.release.xcconfig"; path = "Target Support Files/Pods-Senshive/Pods-Senshive.release.xcconfig"; sourceTree = "<group>"; };
 		C015E83C3E382D2832BBE36E /* Pods-RoyoOrder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RoyoOrder.debug.xcconfig"; path = "Target Support Files/Pods-RoyoOrder/Pods-RoyoOrder.debug.xcconfig"; sourceTree = "<group>"; };
 		C068928C891A34EC1D79A8B9 /* Pods-ExpressDeliveryLLC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExpressDeliveryLLC.debug.xcconfig"; path = "Target Support Files/Pods-ExpressDeliveryLLC/Pods-ExpressDeliveryLLC.debug.xcconfig"; sourceTree = "<group>"; };
+		C15567957040A8075DC2C836 /* Pods-ThubaeRides.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThubaeRides.release.xcconfig"; path = "Target Support Files/Pods-ThubaeRides/Pods-ThubaeRides.release.xcconfig"; sourceTree = "<group>"; };
 		C17679A385D9D7702192209C /* libPods-Klickmat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Klickmat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1ADC4E13B1A47BC349E010F /* Pods-Tasmeem.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tasmeem.debug.xcconfig"; path = "Target Support Files/Pods-Tasmeem/Pods-Tasmeem.debug.xcconfig"; sourceTree = "<group>"; };
 		C2007AE13AB9A2A8136E7309 /* Pods-AGBDeliveries.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AGBDeliveries.debug.xcconfig"; path = "Target Support Files/Pods-AGBDeliveries/Pods-AGBDeliveries.debug.xcconfig"; sourceTree = "<group>"; };
@@ -5058,6 +5176,7 @@
 		C38D69149F8489C38B9859FD /* Pods-WeGotit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeGotit.release.xcconfig"; path = "Target Support Files/Pods-WeGotit/Pods-WeGotit.release.xcconfig"; sourceTree = "<group>"; };
 		C74EEA024034A6A10DB89C5A /* Pods-BLIP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BLIP.release.xcconfig"; path = "Target Support Files/Pods-BLIP/Pods-BLIP.release.xcconfig"; sourceTree = "<group>"; };
 		C76A45178BE50615D1BE8D92 /* libPods-MartiniOnWheels.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MartiniOnWheels.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7E377059C4DD8328B06D190 /* Pods-CareWorks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CareWorks.release.xcconfig"; path = "Target Support Files/Pods-CareWorks/Pods-CareWorks.release.xcconfig"; sourceTree = "<group>"; };
 		C847D4706C639220586360EC /* Pods-SeaChangeVending.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeaChangeVending.debug.xcconfig"; path = "Target Support Files/Pods-SeaChangeVending/Pods-SeaChangeVending.debug.xcconfig"; sourceTree = "<group>"; };
 		C85819ABDFC552D491F74669 /* Pods-GovaChow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GovaChow.debug.xcconfig"; path = "Target Support Files/Pods-GovaChow/Pods-GovaChow.debug.xcconfig"; sourceTree = "<group>"; };
 		C8EF282889C71E78EBC3FA34 /* Pods-Cannabus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cannabus.debug.xcconfig"; path = "Target Support Files/Pods-Cannabus/Pods-Cannabus.debug.xcconfig"; sourceTree = "<group>"; };
@@ -5068,7 +5187,6 @@
 		CC9C62703AB9CCADC645E422 /* Pods-CaribeClean.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaribeClean.release.xcconfig"; path = "Target Support Files/Pods-CaribeClean/Pods-CaribeClean.release.xcconfig"; sourceTree = "<group>"; };
 		CD7E3D4A741B9439E03B26A2 /* Pods-BoozieDoozie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoozieDoozie.release.xcconfig"; path = "Target Support Files/Pods-BoozieDoozie/Pods-BoozieDoozie.release.xcconfig"; sourceTree = "<group>"; };
 		CE67D0F9C27ACA16F2E25FCB /* libPods-Africanize.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Africanize.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CF04227765B7A352E6BA56A2 /* libPods-RoyoOrder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RoyoOrder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0A15C17A93C6C2B733FA049 /* Pods-Ublue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ublue.release.xcconfig"; path = "Target Support Files/Pods-Ublue/Pods-Ublue.release.xcconfig"; sourceTree = "<group>"; };
 		D0A2616198B8CE46825EB3B9 /* libPods-Yogo Food.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Yogo Food.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0D5AB16C4230CF185C8DF86 /* Pods-Klickmat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Klickmat.release.xcconfig"; path = "Target Support Files/Pods-Klickmat/Pods-Klickmat.release.xcconfig"; sourceTree = "<group>"; };
@@ -5082,6 +5200,7 @@
 		D755F19B052D06BDA9502FB2 /* libPods-HoganChef.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HoganChef.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D79DDF5C20A15C3B7DC2306E /* Pods-Carlitoo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Carlitoo.release.xcconfig"; path = "Target Support Files/Pods-Carlitoo/Pods-Carlitoo.release.xcconfig"; sourceTree = "<group>"; };
 		D889209F600AADEB1223EAAA /* Pods-Survuhs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Survuhs.release.xcconfig"; path = "Target Support Files/Pods-Survuhs/Pods-Survuhs.release.xcconfig"; sourceTree = "<group>"; };
+		D8DDA52B64E6FAF6433315BD /* Pods-CareWorks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CareWorks.debug.xcconfig"; path = "Target Support Files/Pods-CareWorks/Pods-CareWorks.debug.xcconfig"; sourceTree = "<group>"; };
 		D92D800F31992DD2AA2057BD /* Pods-Hmoobhub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hmoobhub.release.xcconfig"; path = "Target Support Files/Pods-Hmoobhub/Pods-Hmoobhub.release.xcconfig"; sourceTree = "<group>"; };
 		D959FEA1296A940E2A84D5B7 /* Pods-Zip.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zip.release.xcconfig"; path = "Target Support Files/Pods-Zip/Pods-Zip.release.xcconfig"; sourceTree = "<group>"; };
 		DA15FCDDCC1599219069F029 /* libPods-SMCompany.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SMCompany.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5090,6 +5209,7 @@
 		DB72370BCDF6651562EEE311 /* Pods-AfricanVillageMarket.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AfricanVillageMarket.debug.xcconfig"; path = "Target Support Files/Pods-AfricanVillageMarket/Pods-AfricanVillageMarket.debug.xcconfig"; sourceTree = "<group>"; };
 		DBAA88BCE8EE9135EEC064AF /* Pods-Grub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grub.release.xcconfig"; path = "Target Support Files/Pods-Grub/Pods-Grub.release.xcconfig"; sourceTree = "<group>"; };
 		DD8450557401A6ACC0E99604 /* libPods-Noki.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Noki.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD87C01B539C889F21FBF0FB /* Pods-Donepacked.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Donepacked.release.xcconfig"; path = "Target Support Files/Pods-Donepacked/Pods-Donepacked.release.xcconfig"; sourceTree = "<group>"; };
 		DDFDA3927401F7B679772550 /* Pods-MsTechy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MsTechy.debug.xcconfig"; path = "Target Support Files/Pods-MsTechy/Pods-MsTechy.debug.xcconfig"; sourceTree = "<group>"; };
 		DE83C5F98CD2AB0ACD03856B /* Pods-IGoLux.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IGoLux.debug.xcconfig"; path = "Target Support Files/Pods-IGoLux/Pods-IGoLux.debug.xcconfig"; sourceTree = "<group>"; };
 		DE9CB9EBF58F87439CD8A5AC /* libPods-Glamsouq.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Glamsouq.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5362,6 +5482,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		842BAA07272AA66C00A2E1A2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CFC2E1F2693A89BD2BE06E2 /* libPods-CareWorks.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		842BB3B6272AB8AF00A2E1A2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E044036F62AA636745907BD /* libPods-ThubaeRides.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84314CD026FB576C005E3FC1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -5478,8 +5614,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63305F6CF21399824D7E3912 /* libPods-RoyoOrder.a in Frameworks */,
-				9126AD3463612FC0AC2707C9 /* libPods-RoyoOrder.a in Frameworks */,
+				63305F6CF21399824D7E3912 /* BuildFile in Frameworks */,
+				9126AD3463612FC0AC2707C9 /* BuildFile in Frameworks */,
+				C0C83ABEB8528D5C1DE48FD9 /* BuildFile in Frameworks */,
+				2CE6EE1C4F9170580C4F75E0 /* libPods-RoyoOrder.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5904,6 +6042,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				51F2FDDBC8483AF289102609 /* libPods-Menus.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		849F7425272A7BFB001F2F79 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9F11923DBAEECA4E0CEFA02 /* libPods-Donepacked.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6500,6 +6646,12 @@
 				4047B307363E6E71C62131C3 /* Pods-eBOYO.release.xcconfig */,
 				4A4D21D0626B9EE6335055E8 /* Pods-MaxisDelivery.debug.xcconfig */,
 				88704A5D30E118F5DB2ECF5A /* Pods-MaxisDelivery.release.xcconfig */,
+				9810F473D8CA3BBBEFD06C5C /* Pods-Donepacked.debug.xcconfig */,
+				DD87C01B539C889F21FBF0FB /* Pods-Donepacked.release.xcconfig */,
+				D8DDA52B64E6FAF6433315BD /* Pods-CareWorks.debug.xcconfig */,
+				C7E377059C4DD8328B06D190 /* Pods-CareWorks.release.xcconfig */,
+				A45F91ACAF6497E27C0784EA /* Pods-ThubaeRides.debug.xcconfig */,
+				C15567957040A8075DC2C836 /* Pods-ThubaeRides.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -6677,7 +6829,9 @@
 				E50FA92EE74EF1D3BBBD49E7 /* libPods-ZuzuClean.a */,
 				4686E676D3491913D9AE9CB8 /* libPods-eBOYO.a */,
 				4DA97B4D8318E7D2F51874EF /* libPods-MaxisDelivery.a */,
-				CF04227765B7A352E6BA56A2 /* libPods-RoyoOrder.a */,
+				BAC08532427284B8A8495D20 /* libPods-Donepacked.a */,
+				A4AFDE0B6365F4FAE315BBF8 /* libPods-CareWorks.a */,
+				B43D3A12BA06E6DF7964310D /* libPods-ThubaeRides.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -6710,6 +6864,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				842BB943272ABC2600A2E1A2 /* ThubaeRides.entitlements */,
+				842BA666272A838700A2E1A2 /* Donepacked.entitlements */,
 				84268BF9272985DE001EFE96 /* MaxisDelivery.entitlements */,
 				8400D4F627254CD6003BF24A /* Ored.entitlements */,
 				8400CB4227254927003BF24A /* Driveree.entitlements */,
@@ -7001,6 +7157,9 @@
 				84716B3A27253EF70049C1D5 /* SeaChangeVending.app */,
 				8472A188272549FF00CD25DC /* OrderChekout.app */,
 				8426841427297DDF001EFE96 /* MaxisDelivery.app */,
+				849F744A272A7BFB001F2F79 /* Donepacked.app */,
+				842BAA2D272AA66C00A2E1A2 /* CareWorks.app */,
+				842BB3DD272AB8B000A2E1A2 /* ThubaeRides.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7221,6 +7380,39 @@
 			path = MaxisDelivery;
 			sourceTree = "<group>";
 		};
+		842BA19E272A804800A2E1A2 /* Donepacked */ = {
+			isa = PBXGroup;
+			children = (
+				842BA3C1272A81DE00A2E1A2 /* GoogleService-Info.plist */,
+				842BA226272A807400A2E1A2 /* Donepacked(Development).xcconfig */,
+				842BA336272A809600A2E1A2 /* Donepacked(Production).xcconfig */,
+				842BA338272A80A800A2E1A2 /* Images.xcassets */,
+			);
+			path = Donepacked;
+			sourceTree = "<group>";
+		};
+		842BABC7272AA73F00A2E1A2 /* CareWorks */ = {
+			isa = PBXGroup;
+			children = (
+				842BAD66272AA8A300A2E1A2 /* GoogleService-Info.plist */,
+				842BABC8272AA76700A2E1A2 /* CareWorks(Development).xcconfig */,
+				842BACDA272AA78600A2E1A2 /* CareWorks(Production).xcconfig */,
+				842BACDC272AA79F00A2E1A2 /* Images.xcassets */,
+			);
+			path = CareWorks;
+			sourceTree = "<group>";
+		};
+		842BB4F1272AB95800A2E1A2 /* ThubaeRides */ = {
+			isa = PBXGroup;
+			children = (
+				842BB71D272ABB3300A2E1A2 /* GoogleService-Info.plist */,
+				842BB4F2272AB9A800A2E1A2 /* ThubaeRides(Development).xcconfig */,
+				842BB690272ABA6100A2E1A2 /* ThubaeRides(Production).xcconfig */,
+				842BB692272ABA7300A2E1A2 /* Images.xcassets */,
+			);
+			path = ThubaeRides;
+			sourceTree = "<group>";
+		};
 		84314E3626FB5858005E3FC1 /* Codiner */ = {
 			isa = PBXGroup;
 			children = (
@@ -7313,6 +7505,9 @@
 		844804B42653CF490050AA67 /* Configs */ = {
 			isa = PBXGroup;
 			children = (
+				842BB4F1272AB95800A2E1A2 /* ThubaeRides */,
+				842BABC7272AA73F00A2E1A2 /* CareWorks */,
+				842BA19E272A804800A2E1A2 /* Donepacked */,
 				842686B427297EC9001EFE96 /* MaxisDelivery */,
 				8400D05227254AE9003BF24A /* Ored */,
 				8400C5A3272546FC003BF24A /* Driveree */,
@@ -9189,6 +9384,52 @@
 			productReference = 8426841427297DDF001EFE96 /* MaxisDelivery.app */;
 			productType = "com.apple.product-type.application";
 		};
+		842BAA00272AA66C00A2E1A2 /* CareWorks */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 842BAA2A272AA66C00A2E1A2 /* Build configuration list for PBXNativeTarget "CareWorks" */;
+			buildPhases = (
+				842BAA01272AA66C00A2E1A2 /* [CP] Check Pods Manifest.lock */,
+				842BAA02272AA66C00A2E1A2 /* Start Packager */,
+				842BAA03272AA66C00A2E1A2 /* Sources */,
+				842BAA07272AA66C00A2E1A2 /* Frameworks */,
+				842BAA0B272AA66C00A2E1A2 /* Resources */,
+				842BAA26272AA66C00A2E1A2 /* Bundle React Native code and images */,
+				842BAA27272AA66C00A2E1A2 /* [CP] Embed Pods Frameworks */,
+				842BAA28272AA66C00A2E1A2 /* [CP] Copy Pods Resources */,
+				842BAA29272AA66C00A2E1A2 /* [CP-User] [RNFB] Core Configuration */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CareWorks;
+			productName = Runrun;
+			productReference = 842BAA2D272AA66C00A2E1A2 /* CareWorks.app */;
+			productType = "com.apple.product-type.application";
+		};
+		842BB3AF272AB8AF00A2E1A2 /* ThubaeRides */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 842BB3DA272AB8AF00A2E1A2 /* Build configuration list for PBXNativeTarget "ThubaeRides" */;
+			buildPhases = (
+				842BB3B0272AB8AF00A2E1A2 /* [CP] Check Pods Manifest.lock */,
+				842BB3B1272AB8AF00A2E1A2 /* Start Packager */,
+				842BB3B2272AB8AF00A2E1A2 /* Sources */,
+				842BB3B6272AB8AF00A2E1A2 /* Frameworks */,
+				842BB3BB272AB8AF00A2E1A2 /* Resources */,
+				842BB3D6272AB8AF00A2E1A2 /* Bundle React Native code and images */,
+				842BB3D7272AB8AF00A2E1A2 /* [CP] Embed Pods Frameworks */,
+				842BB3D8272AB8AF00A2E1A2 /* [CP] Copy Pods Resources */,
+				842BB3D9272AB8AF00A2E1A2 /* [CP-User] [RNFB] Core Configuration */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ThubaeRides;
+			productName = Runrun;
+			productReference = 842BB3DD272AB8B000A2E1A2 /* ThubaeRides.app */;
+			productType = "com.apple.product-type.application";
+		};
 		84314CC926FB576C005E3FC1 /* Codiner */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84314D2026FB576C005E3FC1 /* Build configuration list for PBXNativeTarget "Codiner" */;
@@ -10754,6 +10995,29 @@
 			productReference = 849D82D726DF59FD00347B00 /* Menus.app */;
 			productType = "com.apple.product-type.application";
 		};
+		849F741E272A7BFB001F2F79 /* Donepacked */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 849F7447272A7BFB001F2F79 /* Build configuration list for PBXNativeTarget "Donepacked" */;
+			buildPhases = (
+				849F741F272A7BFB001F2F79 /* [CP] Check Pods Manifest.lock */,
+				849F7420272A7BFB001F2F79 /* Start Packager */,
+				849F7421272A7BFB001F2F79 /* Sources */,
+				849F7425272A7BFB001F2F79 /* Frameworks */,
+				849F7428272A7BFB001F2F79 /* Resources */,
+				849F7443272A7BFB001F2F79 /* Bundle React Native code and images */,
+				849F7444272A7BFB001F2F79 /* [CP] Embed Pods Frameworks */,
+				849F7445272A7BFB001F2F79 /* [CP] Copy Pods Resources */,
+				849F7446272A7BFB001F2F79 /* [CP-User] [RNFB] Core Configuration */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Donepacked;
+			productName = Runrun;
+			productReference = 849F744A272A7BFB001F2F79 /* Donepacked.app */;
+			productType = "com.apple.product-type.application";
+		};
 		84A1A238269EE69D00A83511 /* Masa */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84A1A258269EE69D00A83511 /* Build configuration list for PBXNativeTarget "Masa" */;
@@ -11787,6 +12051,14 @@
 						DevelopmentTeam = 6FXUMT5X23;
 						ProvisioningStyle = Automatic;
 					};
+					842BAA00272AA66C00A2E1A2 = {
+						DevelopmentTeam = 6FXUMT5X23;
+						ProvisioningStyle = Manual;
+					};
+					842BB3AF272AB8AF00A2E1A2 = {
+						DevelopmentTeam = 6FXUMT5X23;
+						ProvisioningStyle = Automatic;
+					};
 					84314CC926FB576C005E3FC1 = {
 						DevelopmentTeam = 28BJWY9YW9;
 						ProvisioningStyle = Automatic;
@@ -12055,6 +12327,10 @@
 						ProvisioningStyle = Automatic;
 					};
 					849D829526DF59FD00347B00 = {
+						ProvisioningStyle = Automatic;
+					};
+					849F741E272A7BFB001F2F79 = {
+						DevelopmentTeam = 6FXUMT5X23;
 						ProvisioningStyle = Automatic;
 					};
 					84A1A238269EE69D00A83511 = {
@@ -12368,6 +12644,9 @@
 				84716AC527253EF70049C1D5 /* SeaChangeVending */,
 				8472A113272549FF00CD25DC /* OrderChekout */,
 				842683E927297DDF001EFE96 /* MaxisDelivery */,
+				849F741E272A7BFB001F2F79 /* Donepacked */,
+				842BAA00272AA66C00A2E1A2 /* CareWorks */,
+				842BB3AF272AB8AF00A2E1A2 /* ThubaeRides */,
 			);
 		};
 /* End PBXProject section */
@@ -13146,6 +13425,72 @@
 				8426840827297DDF001EFE96 /* Metropolis-Regular.otf in Resources */,
 				8426840B27297DDF001EFE96 /* SFProText-Bold.ttf in Resources */,
 				8426840C27297DDF001EFE96 /* Eina02-SemiBold.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		842BAA0B272AA66C00A2E1A2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				842BAA0C272AA66C00A2E1A2 /* Eina02-Regular.ttf in Resources */,
+				842BAA0D272AA66C00A2E1A2 /* SFProDisplay-Regular.ttf in Resources */,
+				842BAA0E272AA66C00A2E1A2 /* Futura-Medium.ttf in Resources */,
+				842BAA0F272AA66C00A2E1A2 /* LaunchScreen.storyboard in Resources */,
+				842BAA10272AA66C00A2E1A2 /* CircularStd-Book.otf in Resources */,
+				842BAA11272AA66C00A2E1A2 /* Metropolis-Bold.otf in Resources */,
+				842BAA12272AA66C00A2E1A2 /* Futura Hv BT.ttf in Resources */,
+				842BAA13272AA66C00A2E1A2 /* SFProText-Regular.ttf in Resources */,
+				842BAA14272AA66C00A2E1A2 /* SFProText-SemiBold.ttf in Resources */,
+				842BAA15272AA66C00A2E1A2 /* SFProText-Medium.ttf in Resources */,
+				842BAA17272AA66C00A2E1A2 /* notification.wav in Resources */,
+				842BAA19272AA66C00A2E1A2 /* Plists in Resources */,
+				842BACDB272AA78600A2E1A2 /* CareWorks(Production).xcconfig in Resources */,
+				842BAA1A272AA66C00A2E1A2 /* Futura-Normal.ttf in Resources */,
+				842BAA1B272AA66C00A2E1A2 /* Eina02-Bold.ttf in Resources */,
+				842BAD67272AA8A400A2E1A2 /* GoogleService-Info.plist in Resources */,
+				842BAA1C272AA66C00A2E1A2 /* Futura-Book.ttf in Resources */,
+				842BAA1D272AA66C00A2E1A2 /* CircularStd-Medium.otf in Resources */,
+				842BAA1E272AA66C00A2E1A2 /* Metropolis-SemiBold.otf in Resources */,
+				842BAA1F272AA66C00A2E1A2 /* FuturaBT-Heavy.ttf in Resources */,
+				842BAA20272AA66C00A2E1A2 /* CircularStd-Bold.ttf in Resources */,
+				842BAA21272AA66C00A2E1A2 /* Metropolis-Regular.otf in Resources */,
+				842BABC9272AA76700A2E1A2 /* CareWorks(Development).xcconfig in Resources */,
+				842BACDD272AA79F00A2E1A2 /* Images.xcassets in Resources */,
+				842BAA24272AA66C00A2E1A2 /* SFProText-Bold.ttf in Resources */,
+				842BAA25272AA66C00A2E1A2 /* Eina02-SemiBold.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		842BB3BB272AB8AF00A2E1A2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				842BB3BC272AB8AF00A2E1A2 /* Eina02-Regular.ttf in Resources */,
+				842BB693272ABA7300A2E1A2 /* Images.xcassets in Resources */,
+				842BB3BD272AB8AF00A2E1A2 /* SFProDisplay-Regular.ttf in Resources */,
+				842BB3BE272AB8AF00A2E1A2 /* Futura-Medium.ttf in Resources */,
+				842BB4F3272AB9A900A2E1A2 /* ThubaeRides(Development).xcconfig in Resources */,
+				842BB3BF272AB8AF00A2E1A2 /* LaunchScreen.storyboard in Resources */,
+				842BB3C0272AB8AF00A2E1A2 /* CircularStd-Book.otf in Resources */,
+				842BB3C1272AB8AF00A2E1A2 /* Metropolis-Bold.otf in Resources */,
+				842BB3C2272AB8AF00A2E1A2 /* Futura Hv BT.ttf in Resources */,
+				842BB3C3272AB8AF00A2E1A2 /* SFProText-Regular.ttf in Resources */,
+				842BB3C4272AB8AF00A2E1A2 /* SFProText-SemiBold.ttf in Resources */,
+				842BB3C5272AB8AF00A2E1A2 /* SFProText-Medium.ttf in Resources */,
+				842BB3C7272AB8AF00A2E1A2 /* notification.wav in Resources */,
+				842BB71E272ABB3400A2E1A2 /* GoogleService-Info.plist in Resources */,
+				842BB3C9272AB8AF00A2E1A2 /* Plists in Resources */,
+				842BB3CA272AB8AF00A2E1A2 /* Futura-Normal.ttf in Resources */,
+				842BB3CB272AB8AF00A2E1A2 /* Eina02-Bold.ttf in Resources */,
+				842BB3CC272AB8AF00A2E1A2 /* Futura-Book.ttf in Resources */,
+				842BB3CD272AB8AF00A2E1A2 /* CircularStd-Medium.otf in Resources */,
+				842BB3CE272AB8AF00A2E1A2 /* Metropolis-SemiBold.otf in Resources */,
+				842BB3CF272AB8AF00A2E1A2 /* FuturaBT-Heavy.ttf in Resources */,
+				842BB3D0272AB8AF00A2E1A2 /* CircularStd-Bold.ttf in Resources */,
+				842BB3D1272AB8AF00A2E1A2 /* Metropolis-Regular.otf in Resources */,
+				842BB3D4272AB8AF00A2E1A2 /* SFProText-Bold.ttf in Resources */,
+				842BB691272ABA6100A2E1A2 /* ThubaeRides(Production).xcconfig in Resources */,
+				842BB3D5272AB8AF00A2E1A2 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15373,6 +15718,39 @@
 				849D82CC26DF59FD00347B00 /* CircularStd-Bold.ttf in Resources */,
 				8496BCF826F1B863001AAB4C /* Metropolis-Bold.otf in Resources */,
 				849D82CF26DF59FD00347B00 /* SFProText-Bold.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		849F7428272A7BFB001F2F79 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				849F7429272A7BFB001F2F79 /* Eina02-Regular.ttf in Resources */,
+				842BA339272A80A800A2E1A2 /* Images.xcassets in Resources */,
+				849F742A272A7BFB001F2F79 /* SFProDisplay-Regular.ttf in Resources */,
+				849F742B272A7BFB001F2F79 /* Futura-Medium.ttf in Resources */,
+				849F742C272A7BFB001F2F79 /* LaunchScreen.storyboard in Resources */,
+				842BA337272A809600A2E1A2 /* Donepacked(Production).xcconfig in Resources */,
+				849F742D272A7BFB001F2F79 /* CircularStd-Book.otf in Resources */,
+				849F742E272A7BFB001F2F79 /* Metropolis-Bold.otf in Resources */,
+				849F742F272A7BFB001F2F79 /* Futura Hv BT.ttf in Resources */,
+				849F7430272A7BFB001F2F79 /* SFProText-Regular.ttf in Resources */,
+				849F7431272A7BFB001F2F79 /* SFProText-SemiBold.ttf in Resources */,
+				849F7432272A7BFB001F2F79 /* SFProText-Medium.ttf in Resources */,
+				849F7434272A7BFB001F2F79 /* notification.wav in Resources */,
+				842BA3C2272A81DF00A2E1A2 /* GoogleService-Info.plist in Resources */,
+				849F7436272A7BFB001F2F79 /* Plists in Resources */,
+				849F7437272A7BFB001F2F79 /* Futura-Normal.ttf in Resources */,
+				842BA227272A807400A2E1A2 /* Donepacked(Development).xcconfig in Resources */,
+				849F7438272A7BFB001F2F79 /* Eina02-Bold.ttf in Resources */,
+				849F7439272A7BFB001F2F79 /* Futura-Book.ttf in Resources */,
+				849F743A272A7BFB001F2F79 /* CircularStd-Medium.otf in Resources */,
+				849F743B272A7BFB001F2F79 /* Metropolis-SemiBold.otf in Resources */,
+				849F743C272A7BFB001F2F79 /* FuturaBT-Heavy.ttf in Resources */,
+				849F743D272A7BFB001F2F79 /* CircularStd-Bold.ttf in Resources */,
+				849F743E272A7BFB001F2F79 /* Metropolis-Regular.otf in Resources */,
+				849F7441272A7BFB001F2F79 /* SFProText-Bold.ttf in Resources */,
+				849F7442272A7BFB001F2F79 /* Eina02-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -25933,6 +26311,318 @@
 			shellPath = /bin/sh;
 			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_JSON_ROOT=\"'react-native'\"\n_JSON_FILE_NAME='firebase.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"info:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"info:      '$1' already exists\"\n}\n\nfunction getFirebaseJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"info: -> RNFB build script started\"\necho \"info: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"info:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"info:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    _JSON_OUTPUT_BASE64=$(python -c 'import json,sys,base64;print(base64.b64encode(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"').read())['${_JSON_ROOT}'])))' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.app_data_collection_default_enabled\n  _APP_DATA_COLLECTION_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_data_collection_default_enabled\")\n  if [[ $_APP_DATA_COLLECTION_ENABLED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseDataCollectionDefaultEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_DATA_COLLECTION_ENABLED\")\")\n  fi\n\n  # config.analytics_auto_collection_enabled\n  _ANALYTICS_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_auto_collection_enabled\")\n  if [[ $_ANALYTICS_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_COLLECTION\")\")\n  fi\n\n  # config.analytics_collection_deactivated\n  _ANALYTICS_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_collection_deactivated\")\n  if [[ $_ANALYTICS_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_DEACTIVATED\")\")\n  fi\n\n  # config.analytics_idfv_collection_enabled\n  _ANALYTICS_IDFV_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_idfv_collection_enabled\")\n  if [[ $_ANALYTICS_IDFV_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_IDFV_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_IDFV_COLLECTION\")\")\n  fi\n\n  # config.analytics_default_allow_ad_personalization_signals\n  _ANALYTICS_PERSONALIZATION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_default_allow_ad_personalization_signals\")\n  if [[ $_ANALYTICS_PERSONALIZATION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_PERSONALIZATION\")\")\n  fi\n\n  # config.perf_auto_collection_enabled\n  _PERF_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_auto_collection_enabled\")\n  if [[ $_PERF_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_enabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_AUTO_COLLECTION\")\")\n  fi\n\n  # config.perf_collection_deactivated\n  _PERF_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_collection_deactivated\")\n  if [[ $_PERF_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_deactivated\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_DEACTIVATED\")\")\n  fi\n\n  # config.messaging_auto_init_enabled\n  _MESSAGING_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"messaging_auto_init_enabled\")\n  if [[ $_MESSAGING_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseMessagingAutoInitEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_MESSAGING_AUTO_INIT\")\")\n  fi\n\n  # config.in_app_messaging_auto_colllection_enabled\n  _FIAM_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"in_app_messaging_auto_collection_enabled\")\n  if [[ $_FIAM_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseInAppMessagingAutomaticDataCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_FIAM_AUTO_INIT\")\")\n  fi\n\n  # config.app_check_token_auto_refresh\n  _APP_CHECK_TOKEN_AUTO_REFRESH=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_check_token_auto_refresh\")\n  if [[ $_APP_CHECK_TOKEN_AUTO_REFRESH ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAppCheckTokenAutoRefreshEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_CHECK_TOKEN_AUTO_REFRESH\")\")\n  fi\n\n  # config.crashlytics_disable_auto_disabler - undocumented for now - mainly for debugging, document if becomes useful\n  _CRASHLYTICS_AUTO_DISABLE_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"crashlytics_disable_auto_disabler\")\n  if [[ $_CRASHLYTICS_AUTO_DISABLE_ENABLED == \"true\" ]]; then\n    echo \"Disabled Crashlytics auto disabler.\" # do nothing\n  else\n    _PLIST_ENTRY_KEYS+=(\"FirebaseCrashlyticsCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"NO\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"warning:   A firebase.json file was not found, whilst this file is optional it is recommended to include it to configure firebase services in React Native Firebase.\"\nfi;\n\necho \"info: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nfor plist in \"${_TARGET_PLIST}\" \"${_DSYM_PLIST}\" ; do\n  if [[ -f \"${plist}\" ]]; then\n\n    # paths with spaces break the call to setPlistValue. temporarily modify\n    # the shell internal field separator variable (IFS), which normally\n    # includes spaces, to consist only of line breaks\n    oldifs=$IFS\n    IFS=\"\n\"\n\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n\n    # restore the original internal field separator value\n    IFS=$oldifs\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"info: <- RNFB build script finished\"\n";
 		};
+		842BAA01272AA66C00A2E1A2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CareWorks-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		842BAA02272AA66C00A2E1A2 /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		842BAA26272AA66C00A2E1A2 /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		842BAA27272AA66C00A2E1A2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CareWorks/Pods-CareWorks-frameworks.sh",
+				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
+				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CareWorks/Pods-CareWorks-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		842BAA28272AA66C00A2E1A2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CareWorks/Pods-CareWorks-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core.common-CoreModulesHeaders/AccessibilityResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNImageCropPicker/QBImagePicker.bundle",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe3DS2.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
+				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework/TwitterKitResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Feather.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fontisto.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Foundation.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Ionicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialCommunityIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Stripe.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Stripe3DS2.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOCropViewControllerBundle.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TwitterKitResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CareWorks/Pods-CareWorks-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		842BAA29272AA66C00A2E1A2 /* [CP-User] [RNFB] Core Configuration */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "[CP-User] [RNFB] Core Configuration";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_JSON_ROOT=\"'react-native'\"\n_JSON_FILE_NAME='firebase.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"info:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"info:      '$1' already exists\"\n}\n\nfunction getFirebaseJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"info: -> RNFB build script started\"\necho \"info: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"info:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"info:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    _JSON_OUTPUT_BASE64=$(python -c 'import json,sys,base64;print(base64.b64encode(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"').read())['${_JSON_ROOT}'])))' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.app_data_collection_default_enabled\n  _APP_DATA_COLLECTION_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_data_collection_default_enabled\")\n  if [[ $_APP_DATA_COLLECTION_ENABLED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseDataCollectionDefaultEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_DATA_COLLECTION_ENABLED\")\")\n  fi\n\n  # config.analytics_auto_collection_enabled\n  _ANALYTICS_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_auto_collection_enabled\")\n  if [[ $_ANALYTICS_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_COLLECTION\")\")\n  fi\n\n  # config.analytics_collection_deactivated\n  _ANALYTICS_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_collection_deactivated\")\n  if [[ $_ANALYTICS_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_DEACTIVATED\")\")\n  fi\n\n  # config.analytics_idfv_collection_enabled\n  _ANALYTICS_IDFV_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_idfv_collection_enabled\")\n  if [[ $_ANALYTICS_IDFV_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_IDFV_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_IDFV_COLLECTION\")\")\n  fi\n\n  # config.analytics_default_allow_ad_personalization_signals\n  _ANALYTICS_PERSONALIZATION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_default_allow_ad_personalization_signals\")\n  if [[ $_ANALYTICS_PERSONALIZATION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_PERSONALIZATION\")\")\n  fi\n\n  # config.perf_auto_collection_enabled\n  _PERF_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_auto_collection_enabled\")\n  if [[ $_PERF_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_enabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_AUTO_COLLECTION\")\")\n  fi\n\n  # config.perf_collection_deactivated\n  _PERF_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_collection_deactivated\")\n  if [[ $_PERF_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_deactivated\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_DEACTIVATED\")\")\n  fi\n\n  # config.messaging_auto_init_enabled\n  _MESSAGING_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"messaging_auto_init_enabled\")\n  if [[ $_MESSAGING_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseMessagingAutoInitEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_MESSAGING_AUTO_INIT\")\")\n  fi\n\n  # config.in_app_messaging_auto_colllection_enabled\n  _FIAM_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"in_app_messaging_auto_collection_enabled\")\n  if [[ $_FIAM_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseInAppMessagingAutomaticDataCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_FIAM_AUTO_INIT\")\")\n  fi\n\n  # config.app_check_token_auto_refresh\n  _APP_CHECK_TOKEN_AUTO_REFRESH=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_check_token_auto_refresh\")\n  if [[ $_APP_CHECK_TOKEN_AUTO_REFRESH ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAppCheckTokenAutoRefreshEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_CHECK_TOKEN_AUTO_REFRESH\")\")\n  fi\n\n  # config.crashlytics_disable_auto_disabler - undocumented for now - mainly for debugging, document if becomes useful\n  _CRASHLYTICS_AUTO_DISABLE_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"crashlytics_disable_auto_disabler\")\n  if [[ $_CRASHLYTICS_AUTO_DISABLE_ENABLED == \"true\" ]]; then\n    echo \"Disabled Crashlytics auto disabler.\" # do nothing\n  else\n    _PLIST_ENTRY_KEYS+=(\"FirebaseCrashlyticsCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"NO\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"warning:   A firebase.json file was not found, whilst this file is optional it is recommended to include it to configure firebase services in React Native Firebase.\"\nfi;\n\necho \"info: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nfor plist in \"${_TARGET_PLIST}\" \"${_DSYM_PLIST}\" ; do\n  if [[ -f \"${plist}\" ]]; then\n\n    # paths with spaces break the call to setPlistValue. temporarily modify\n    # the shell internal field separator variable (IFS), which normally\n    # includes spaces, to consist only of line breaks\n    oldifs=$IFS\n    IFS=\"\n\"\n\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n\n    # restore the original internal field separator value\n    IFS=$oldifs\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"info: <- RNFB build script finished\"\n";
+		};
+		842BB3B0272AB8AF00A2E1A2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ThubaeRides-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		842BB3B1272AB8AF00A2E1A2 /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		842BB3D6272AB8AF00A2E1A2 /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		842BB3D7272AB8AF00A2E1A2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ThubaeRides/Pods-ThubaeRides-frameworks.sh",
+				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
+				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ThubaeRides/Pods-ThubaeRides-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		842BB3D8272AB8AF00A2E1A2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ThubaeRides/Pods-ThubaeRides-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core.common-CoreModulesHeaders/AccessibilityResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNImageCropPicker/QBImagePicker.bundle",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe3DS2.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
+				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework/TwitterKitResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Feather.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fontisto.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Foundation.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Ionicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialCommunityIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Stripe.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Stripe3DS2.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOCropViewControllerBundle.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TwitterKitResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ThubaeRides/Pods-ThubaeRides-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		842BB3D9272AB8AF00A2E1A2 /* [CP-User] [RNFB] Core Configuration */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "[CP-User] [RNFB] Core Configuration";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_JSON_ROOT=\"'react-native'\"\n_JSON_FILE_NAME='firebase.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"info:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"info:      '$1' already exists\"\n}\n\nfunction getFirebaseJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"info: -> RNFB build script started\"\necho \"info: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"info:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"info:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    _JSON_OUTPUT_BASE64=$(python -c 'import json,sys,base64;print(base64.b64encode(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"').read())['${_JSON_ROOT}'])))' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.app_data_collection_default_enabled\n  _APP_DATA_COLLECTION_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_data_collection_default_enabled\")\n  if [[ $_APP_DATA_COLLECTION_ENABLED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseDataCollectionDefaultEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_DATA_COLLECTION_ENABLED\")\")\n  fi\n\n  # config.analytics_auto_collection_enabled\n  _ANALYTICS_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_auto_collection_enabled\")\n  if [[ $_ANALYTICS_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_COLLECTION\")\")\n  fi\n\n  # config.analytics_collection_deactivated\n  _ANALYTICS_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_collection_deactivated\")\n  if [[ $_ANALYTICS_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_DEACTIVATED\")\")\n  fi\n\n  # config.analytics_idfv_collection_enabled\n  _ANALYTICS_IDFV_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_idfv_collection_enabled\")\n  if [[ $_ANALYTICS_IDFV_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_IDFV_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_IDFV_COLLECTION\")\")\n  fi\n\n  # config.analytics_default_allow_ad_personalization_signals\n  _ANALYTICS_PERSONALIZATION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_default_allow_ad_personalization_signals\")\n  if [[ $_ANALYTICS_PERSONALIZATION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_PERSONALIZATION\")\")\n  fi\n\n  # config.perf_auto_collection_enabled\n  _PERF_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_auto_collection_enabled\")\n  if [[ $_PERF_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_enabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_AUTO_COLLECTION\")\")\n  fi\n\n  # config.perf_collection_deactivated\n  _PERF_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_collection_deactivated\")\n  if [[ $_PERF_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_deactivated\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_DEACTIVATED\")\")\n  fi\n\n  # config.messaging_auto_init_enabled\n  _MESSAGING_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"messaging_auto_init_enabled\")\n  if [[ $_MESSAGING_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseMessagingAutoInitEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_MESSAGING_AUTO_INIT\")\")\n  fi\n\n  # config.in_app_messaging_auto_colllection_enabled\n  _FIAM_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"in_app_messaging_auto_collection_enabled\")\n  if [[ $_FIAM_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseInAppMessagingAutomaticDataCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_FIAM_AUTO_INIT\")\")\n  fi\n\n  # config.app_check_token_auto_refresh\n  _APP_CHECK_TOKEN_AUTO_REFRESH=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_check_token_auto_refresh\")\n  if [[ $_APP_CHECK_TOKEN_AUTO_REFRESH ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAppCheckTokenAutoRefreshEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_CHECK_TOKEN_AUTO_REFRESH\")\")\n  fi\n\n  # config.crashlytics_disable_auto_disabler - undocumented for now - mainly for debugging, document if becomes useful\n  _CRASHLYTICS_AUTO_DISABLE_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"crashlytics_disable_auto_disabler\")\n  if [[ $_CRASHLYTICS_AUTO_DISABLE_ENABLED == \"true\" ]]; then\n    echo \"Disabled Crashlytics auto disabler.\" # do nothing\n  else\n    _PLIST_ENTRY_KEYS+=(\"FirebaseCrashlyticsCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"NO\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"warning:   A firebase.json file was not found, whilst this file is optional it is recommended to include it to configure firebase services in React Native Firebase.\"\nfi;\n\necho \"info: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nfor plist in \"${_TARGET_PLIST}\" \"${_DSYM_PLIST}\" ; do\n  if [[ -f \"${plist}\" ]]; then\n\n    # paths with spaces break the call to setPlistValue. temporarily modify\n    # the shell internal field separator variable (IFS), which normally\n    # includes spaces, to consist only of line breaks\n    oldifs=$IFS\n    IFS=\"\n\"\n\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n\n    # restore the original internal field separator value\n    IFS=$oldifs\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"info: <- RNFB build script finished\"\n";
+		};
 		84314CCB26FB576C005E3FC1 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -28211,6 +28901,162 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		849F741F272A7BFB001F2F79 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Donepacked-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		849F7420272A7BFB001F2F79 /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		849F7443272A7BFB001F2F79 /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		849F7444272A7BFB001F2F79 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Donepacked/Pods-Donepacked-frameworks.sh",
+				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
+				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Donepacked/Pods-Donepacked-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		849F7445272A7BFB001F2F79 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Donepacked/Pods-Donepacked-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core.common-CoreModulesHeaders/AccessibilityResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNImageCropPicker/QBImagePicker.bundle",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe3DS2.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
+				"${PODS_ROOT}/TwitterKit5/iOS/TwitterKit.framework/TwitterKitResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Feather.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fontisto.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Foundation.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Ionicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialCommunityIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Stripe.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Stripe3DS2.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOCropViewControllerBundle.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TwitterKitResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Donepacked/Pods-Donepacked-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		849F7446272A7BFB001F2F79 /* [CP-User] [RNFB] Core Configuration */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "[CP-User] [RNFB] Core Configuration";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_JSON_ROOT=\"'react-native'\"\n_JSON_FILE_NAME='firebase.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"info:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"info:      '$1' already exists\"\n}\n\nfunction getFirebaseJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"info: -> RNFB build script started\"\necho \"info: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"info:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"info:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    _JSON_OUTPUT_BASE64=$(python -c 'import json,sys,base64;print(base64.b64encode(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"').read())['${_JSON_ROOT}'])))' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.app_data_collection_default_enabled\n  _APP_DATA_COLLECTION_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_data_collection_default_enabled\")\n  if [[ $_APP_DATA_COLLECTION_ENABLED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseDataCollectionDefaultEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_DATA_COLLECTION_ENABLED\")\")\n  fi\n\n  # config.analytics_auto_collection_enabled\n  _ANALYTICS_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_auto_collection_enabled\")\n  if [[ $_ANALYTICS_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_COLLECTION\")\")\n  fi\n\n  # config.analytics_collection_deactivated\n  _ANALYTICS_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_collection_deactivated\")\n  if [[ $_ANALYTICS_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_DEACTIVATED\")\")\n  fi\n\n  # config.analytics_idfv_collection_enabled\n  _ANALYTICS_IDFV_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_idfv_collection_enabled\")\n  if [[ $_ANALYTICS_IDFV_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_IDFV_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_IDFV_COLLECTION\")\")\n  fi\n\n  # config.analytics_default_allow_ad_personalization_signals\n  _ANALYTICS_PERSONALIZATION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_default_allow_ad_personalization_signals\")\n  if [[ $_ANALYTICS_PERSONALIZATION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_PERSONALIZATION\")\")\n  fi\n\n  # config.perf_auto_collection_enabled\n  _PERF_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_auto_collection_enabled\")\n  if [[ $_PERF_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_enabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_AUTO_COLLECTION\")\")\n  fi\n\n  # config.perf_collection_deactivated\n  _PERF_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_collection_deactivated\")\n  if [[ $_PERF_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_deactivated\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_DEACTIVATED\")\")\n  fi\n\n  # config.messaging_auto_init_enabled\n  _MESSAGING_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"messaging_auto_init_enabled\")\n  if [[ $_MESSAGING_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseMessagingAutoInitEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_MESSAGING_AUTO_INIT\")\")\n  fi\n\n  # config.in_app_messaging_auto_colllection_enabled\n  _FIAM_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"in_app_messaging_auto_collection_enabled\")\n  if [[ $_FIAM_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseInAppMessagingAutomaticDataCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_FIAM_AUTO_INIT\")\")\n  fi\n\n  # config.app_check_token_auto_refresh\n  _APP_CHECK_TOKEN_AUTO_REFRESH=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_check_token_auto_refresh\")\n  if [[ $_APP_CHECK_TOKEN_AUTO_REFRESH ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAppCheckTokenAutoRefreshEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_CHECK_TOKEN_AUTO_REFRESH\")\")\n  fi\n\n  # config.crashlytics_disable_auto_disabler - undocumented for now - mainly for debugging, document if becomes useful\n  _CRASHLYTICS_AUTO_DISABLE_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"crashlytics_disable_auto_disabler\")\n  if [[ $_CRASHLYTICS_AUTO_DISABLE_ENABLED == \"true\" ]]; then\n    echo \"Disabled Crashlytics auto disabler.\" # do nothing\n  else\n    _PLIST_ENTRY_KEYS+=(\"FirebaseCrashlyticsCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"NO\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"warning:   A firebase.json file was not found, whilst this file is optional it is recommended to include it to configure firebase services in React Native Firebase.\"\nfi;\n\necho \"info: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nfor plist in \"${_TARGET_PLIST}\" \"${_DSYM_PLIST}\" ; do\n  if [[ -f \"${plist}\" ]]; then\n\n    # paths with spaces break the call to setPlistValue. temporarily modify\n    # the shell internal field separator variable (IFS), which normally\n    # includes spaces, to consist only of line breaks\n    oldifs=$IFS\n    IFS=\"\n\"\n\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n\n    # restore the original internal field separator value\n    IFS=$oldifs\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"info: <- RNFB build script finished\"\n";
 		};
 		84A1A23A269EE69D00A83511 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -37280,6 +38126,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		842BAA03272AA66C00A2E1A2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				842BAA04272AA66C00A2E1A2 /* AppDelegate.m in Sources */,
+				842BAA05272AA66C00A2E1A2 /* Royo.swift in Sources */,
+				842BAA06272AA66C00A2E1A2 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		842BB3B2272AB8AF00A2E1A2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				842BB3B3272AB8AF00A2E1A2 /* AppDelegate.m in Sources */,
+				842BB3B4272AB8AF00A2E1A2 /* Royo.swift in Sources */,
+				842BB3B5272AB8AF00A2E1A2 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84314CCC26FB576C005E3FC1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -37957,6 +38823,16 @@
 				849D829926DF59FD00347B00 /* AppDelegate.m in Sources */,
 				849D829A26DF59FD00347B00 /* Royo.swift in Sources */,
 				849D829B26DF59FD00347B00 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		849F7421272A7BFB001F2F79 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				849F7422272A7BFB001F2F79 /* AppDelegate.m in Sources */,
+				849F7423272A7BFB001F2F79 /* Royo.swift in Sources */,
+				849F7424272A7BFB001F2F79 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40282,6 +41158,138 @@
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
 				PROVISIONING_PROFILE_SPECIFIER = MaxisDelivery;
+				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		842BAA2B272AA66C00A2E1A2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 842BABC8272AA76700A2E1A2 /* CareWorks(Development).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = "$(PROJECT_APP_VERSION)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
+				PROJECT_ENTITLEMENT = "";
+				PROJECT_PLIST = "$(PROJECT_PLIST)";
+				PROVISIONING_PROFILE_SPECIFIER = CareWorks;
+				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		842BAA2C272AA66C00A2E1A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 842BACDA272AA78600A2E1A2 /* CareWorks(Production).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = "$(PROJECT_APP_VERSION)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
+				PROJECT_ENTITLEMENT = "";
+				PROJECT_PLIST = "$(PROJECT_PLIST)";
+				PROVISIONING_PROFILE_SPECIFIER = CareWorks;
+				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		842BB3DB272AB8AF00A2E1A2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 842BB4F2272AB9A800A2E1A2 /* ThubaeRides(Development).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ThubaeRides.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = "$(PROJECT_APP_VERSION)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
+				PROJECT_ENTITLEMENT = "";
+				PROJECT_PLIST = "$(PROJECT_PLIST)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		842BB3DC272AB8AF00A2E1A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 842BB690272ABA6100A2E1A2 /* ThubaeRides(Production).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ThubaeRides.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = "$(PROJECT_APP_VERSION)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
+				PROJECT_ENTITLEMENT = "";
+				PROJECT_PLIST = "$(PROJECT_PLIST)";
+				PROVISIONING_PROFILE_SPECIFIER = ThubaeRides;
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -44636,6 +45644,72 @@
 			};
 			name = Release;
 		};
+		849F7448272A7BFB001F2F79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 842BA226272A807400A2E1A2 /* Donepacked(Development).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Donepacked.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = "$(PROJECT_APP_VERSION)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
+				PROJECT_ENTITLEMENT = "";
+				PROJECT_PLIST = "$(PROJECT_PLIST)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		849F7449272A7BFB001F2F79 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 842BA336272A809600A2E1A2 /* Donepacked(Production).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Donepacked.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = "$(PROJECT_APP_VERSION)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
+				PROJECT_ENTITLEMENT = "";
+				PROJECT_PLIST = "$(PROJECT_PLIST)";
+				PROVISIONING_PROFILE_SPECIFIER = Donepacked;
+				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
 		84A1A259269EE69D00A83511 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 84A1A267269EE71100A83511 /* Masa(Development).xcconfig */;
@@ -47414,6 +48488,24 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
+		842BAA2A272AA66C00A2E1A2 /* Build configuration list for PBXNativeTarget "CareWorks" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				842BAA2B272AA66C00A2E1A2 /* Debug */,
+				842BAA2C272AA66C00A2E1A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		842BB3DA272AB8AF00A2E1A2 /* Build configuration list for PBXNativeTarget "ThubaeRides" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				842BB3DB272AB8AF00A2E1A2 /* Debug */,
+				842BB3DC272AB8AF00A2E1A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		84314D2026FB576C005E3FC1 /* Build configuration list for PBXNativeTarget "Codiner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -48022,6 +49114,15 @@
 			buildConfigurations = (
 				849D82D526DF59FD00347B00 /* Debug */,
 				849D82D626DF59FD00347B00 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		849F7447272A7BFB001F2F79 /* Build configuration list for PBXNativeTarget "Donepacked" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				849F7448272A7BFB001F2F79 /* Debug */,
+				849F7449272A7BFB001F2F79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
