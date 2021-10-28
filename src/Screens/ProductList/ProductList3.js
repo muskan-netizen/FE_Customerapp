@@ -15,6 +15,7 @@ import {
   TouchableOpacity,
   Vibration,
   View,
+  ScrollView
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import DeviceInfo from 'react-native-device-info';
@@ -228,16 +229,16 @@ export default function Products({ route, navigation }) {
       }
     });
     return unsubscribe;
-  }, [navigation]);
+  }, [navigation, languages, currencies]);
 
-  useEffect(() => {
-    updateState({ pageNo: 1 });
-    getAllListItems();
-  }, [languages, currencies]);
+  // useEffect(() => {
+  //   updateState({ pageNo: 1 });
+  //   getAllListItems();
+  // }, [languages, currencies]);
 
-  useEffect(() => {
-    getAllListItems();
-  }, [pageNo, isRefreshing]);
+  // useEffect(() => {
+  //   getAllListItems();
+  // }, [pageNo, isRefreshing]);
 
   const getAllListItems = () => {
     let filterExist =
@@ -1097,7 +1098,21 @@ export default function Products({ route, navigation }) {
   }, [isLoadingC]);
 
 
-  console.log("categoryInfo", categoryInfo)
+  const onPressChildCards = (item) => {
+    console.log(item, 'item upload');
+
+    updateState({
+      selectedCategory: item,
+      // productListData: [],
+      productListId: item,
+      pageNo: 1,
+      limit: 12,
+      isLoadingC: true,
+    });
+
+    // navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
+  };
+
   const listHeaderComponent2 = () => {
     return (
       <View>
@@ -1248,7 +1263,7 @@ export default function Products({ route, navigation }) {
                       }}>
                       {categoryInfo?.categoriesList || ''}
                     </Text>
-                    {!!desc && (<Text
+                    <Text
                       numberOfLines={2}
                       style={{
                         ...styles.milesTxt,
@@ -1258,7 +1273,7 @@ export default function Products({ route, navigation }) {
                           ? MyDarkTheme.colors.text
                           : colors.black,
                         marginVertical: moderateScaleVertical(4)
-                      }}>{desc}</Text>)}
+                      }}>{desc}</Text>
                   </View>
 
                 )}
@@ -1331,22 +1346,59 @@ export default function Products({ route, navigation }) {
           </View>
         </View>
 
-        {/* {!!categoryInfo?.is_show_products_with_category && (
-          <>
-            <View style={{marginHorizontal: moderateScale(20)}}>
-              <FlatList
-                data={vendorCategories}
-                renderItem={_renderVendorCategories}
-                horizontal={true}
-                ItemSeparatorComponent={() => <View style={{width: 15}} />}
-              />
-            </View>
-          </>
-        )} */}
+        {!!categoryInfo && categoryInfo?.childs?.length > 0 && (
+          <View style={{ marginHorizontal: moderateScale(20) }}>
+            <ScrollView
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              style={{
+                // marginHorizontal: moderateScale(0),
+                marginTop: moderateScaleVertical(5),
+              }}>
+              {/* <View><Image source={imagePath.}/></View> */}
+              {categoryInfo.childs.map((item, inx) => {
+                return (
+                  <View key={inx}>
+                    <TouchableOpacity
+                      style={{
+                        padding: moderateScale(10),
+                        // backgroundColor: colors.lightGreyBg,
+                        marginRight: moderateScale(10),
+                        borderRadius: moderateScale(12),
+                        backgroundColor:
+                          selectedCategory && selectedCategory?.id == item?.id
+                            ? themeColors.primary_color
+                            : colors.lightGreyBg,
+                      }}
+                      onPress={() => onPressChildCards(item)}
+                    >
+                      <Text
+                        style={{
+                          color:
+                            selectedCategory && selectedCategory?.id == item?.id
+                              ? colors.white
+                              : colors.black,
+                          opacity:
+                            selectedCategory && selectedCategory?.id == item?.id
+                              ? 1
+                              : 0.61,
+                          fontSize: textScale(12),
+                          fontFamily: fontFamily.medium,
+                        }}>
+                        {item?.translation[0]?.name}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                );
+              })}
+            </ScrollView>
+          </View>
+        )}
       </View>
     );
   };
 
+  console.log("category info", categoryInfo)
   const _onVendorCategory = (itm, indx) => {
     updateState({
       vendorCategorySelectedIndx: indx,
