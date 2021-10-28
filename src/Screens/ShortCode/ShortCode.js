@@ -864,6 +864,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.maxisdelivery:
+          updateState({
+            shortCode: shortCodes.maxisdelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
