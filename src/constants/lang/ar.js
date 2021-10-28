@@ -280,6 +280,7 @@ export default {
   SENDREFFERAL: 'إرسال رمز الإحالة',
   SELECTPAYEMNTMETHOD: 'تحديد طريقة دفع',
   REJECT: 'رفض',
+  PRINT: 'مطبعة',
   ACCEPT: 'موافقة',
   EDITCODE: 'تعديل الرمز',
   MAX_25: 'حد أقصى 25',

@@ -2357,7 +2357,7 @@ export default function Cart({navigation, route}) {
             // backgroundColor: '#fff',
           }}>
           <FastImage
-            source={{uri: Image.resolveAssetSource(imagePath.icEmptyCartC).uri}}
+            source={{uri: Image.resolveAssetSource(imagePath.icEmptyCartD).uri}}
             style={{
               marginVertical: moderateScaleVertical(20),
               height: moderateScale(120),
@@ -2514,7 +2514,7 @@ export default function Cart({navigation, route}) {
             // backgroundColor: '#fff',
           }}>
           <FastImage
-            source={{uri: Image.resolveAssetSource(imagePath.icEmptyCartC).uri}}
+            source={{uri: Image.resolveAssetSource(imagePath.icEmptyCartD).uri}}
             style={{
               marginVertical: moderateScaleVertical(20),
               height: moderateScale(120),

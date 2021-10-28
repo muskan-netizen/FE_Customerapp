@@ -273,6 +273,7 @@ export default {
   SENDREFFERAL: 'Send Refferal',
   SELECTPAYEMNTMETHOD: 'Select a payment method',
   REJECT: 'REJECT',
+  PRINT: 'PRINT',
   ACCEPT: 'ACCEPT',
   EDITCODE: 'Edit code',
   MAX_25: 'Max. 25',

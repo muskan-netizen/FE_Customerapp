@@ -274,6 +274,7 @@ export default {
   SENDREFFERAL: 'Enviar código de referido',
   SELECTPAYEMNTMETHOD: 'Seleccionar método de pago',
   REJECT: 'RECHAZAR',
+  PRINT: 'IMPRESIÓN',
   ACCEPT: 'ACEPTAR',
   EDITCODE: 'Editar código',
   MAX_25: 'Máx. 25',

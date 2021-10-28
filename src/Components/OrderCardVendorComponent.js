@@ -29,6 +29,7 @@ import {
 } from '../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import { StartPrinting } from '../Screens/PrinterConnection/PrinteFunc';
 
 export default function OrderCardVendorComponent({
   data = {},
@@ -344,7 +345,7 @@ export default function OrderCardVendorComponent({
                   !!(
                     data?.order_status?.current_status !== 3 &&
                     data?.order_status?.current_status !== 6
-                  ) && (
+                  ) ? (
                     <>
                       <View style={{flexDirection: 'row'}}>
                         <TouchableOpacity
@@ -367,6 +368,19 @@ export default function OrderCardVendorComponent({
                             {data?.order_status?.upcoming_status?.title}
                           </Text>
                         </TouchableOpacity>
+                      </View>
+                    </>
+                  )
+                  : (
+                    <>
+                      <View style={{flexDirection: 'row'}}>
+                        <TouchableOpacity
+                          onPress={() => StartPrinting({ id: data?.id })}
+                          style={styles.orderPrint}>
+                          <Text style={styles.orderStatusStyleSecond}>
+                            {strings.PRINT}
+                          </Text>
+                        </TouchableOpacity>                        
                       </View>
                     </>
                   )
@@ -479,6 +493,13 @@ export function stylesFunc({fontFamily, themeColors}) {
     orderReject: {
       backgroundColor: colors.redColor,
       paddingHorizontal: moderateScale(10),
+      paddingVertical: moderateScale(5),
+      borderRadius: moderateScale(3),
+      justifyContent: 'center',
+    },
+    orderPrint: {
+      backgroundColor: colors.blueColor,
+      paddingHorizontal: moderateScale(15),
       paddingVertical: moderateScale(5),
       borderRadius: moderateScale(3),
       justifyContent: 'center',

@@ -201,7 +201,7 @@ class PrinterScreen extends Component {
             alert(e);
           })
 
-        printReciept()
+        // printReciept()
         StartPrinting({})
         // const getAppData = await getItem('appData');
         appData = appData

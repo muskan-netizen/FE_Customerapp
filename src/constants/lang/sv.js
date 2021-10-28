@@ -276,6 +276,7 @@ export default {
   SENDREFFERAL: 'Skicka referens',
   SELECTPAYEMNTMETHOD: 'Välj en betalningsmetod',
   REJECT: 'REJECT',
+  PRINT: 'SKRIVA UT',
   ACCEPT: 'ACCEPTERA',
   EDITCODE: 'Redigera kod',
   MAX_25: 'Max. 25 ',

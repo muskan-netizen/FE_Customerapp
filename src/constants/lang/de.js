@@ -279,6 +279,7 @@ export default {
   SENDREFFERAL: 'Empfehlung senden',
   SELECTPAYEMNTMETHOD: 'Zahlungsmethode auswählen ',
   REJECT: 'ABLEHNEN',
+  PRINT: 'DRUCKEN',
   ACCEPT: 'AKZEPTIEREN',
   EDITCODE: 'Code bearbeiten',
   MAX_25: 'Max. 25',

@@ -273,6 +273,7 @@ export default {
   SENDREFFERAL: ' Tavsiye Gönder',
   SELECTPAYEMNTMETHOD: 'Bir ödeme yöntemi seçin',
   REJECT: 'REDDET',
+  PRINT: 'YAZDIR',
   ACCEPT: 'KABUL ET',
   EDITCODE: 'DÜZENLEME KODU',
   MAX_25: 'Maks. 25',
