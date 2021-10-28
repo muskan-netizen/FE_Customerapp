@@ -131,6 +131,7 @@ const shortCodes = {
   ored: 'fb0df5',
   orderchekout: 'f6cd9d',
   maxisdelivery: '1e1c90',
+  donepacked: '4fc332',
 };
 
 const appIds = {
@@ -653,6 +654,10 @@ const appIds = {
   maxisdelivery: Platform.select({
     ios: 'com.maxisdelivery',
     android: 'com.maxisdelivery',
+  }),
+  donepacked: Platform.select({
+    ios: 'com.donepacked',
+    android: 'com.donepacked',
   }),
 };
 

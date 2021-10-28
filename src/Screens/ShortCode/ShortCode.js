@@ -870,6 +870,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.donepacked:
+          updateState({
+            shortCode: shortCodes.donepacked,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
