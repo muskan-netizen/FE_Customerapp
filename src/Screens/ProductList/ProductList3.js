@@ -201,7 +201,7 @@ export default function Products({ route, navigation }) {
 
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({ fontFamily });
-  const styles = stylesFunc({ themeColors, fontFamily });
+  const styles = stylesFunc({ themeColors, fontFamily, isDarkMode, MyDarkTheme });
 
   //Saving the initial state
   const initialState = cloneDeep(state);
@@ -1248,15 +1248,17 @@ export default function Products({ route, navigation }) {
                       }}>
                       {categoryInfo?.categoriesList || ''}
                     </Text>
-                    <Text style={{
-                      ...styles.milesTxt,
-                      marginLeft: 0,
-                      fontSize: textScale(9),
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                      marginVertical: moderateScaleVertical(4)
-                    }}>{desc}</Text>
+                    <Text
+                      numberOfLines={2}
+                      style={{
+                        ...styles.milesTxt,
+                        marginLeft: 0,
+                        fontSize: textScale(8),
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        marginVertical: moderateScaleVertical(4)
+                      }}>{desc}</Text>
                   </View>
 
                 )}
@@ -1269,11 +1271,8 @@ export default function Products({ route, navigation }) {
                     <View style={styles.milesView}>
                       <Image
                         source={imagePath.location2}
-                        style={{
-                          tintColor: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.black,
-                        }}
+                        style={styles.locTimeIcon}
+                        resizeMode="contain"
                       />
                       <Text
                         style={{
@@ -1282,16 +1281,31 @@ export default function Products({ route, navigation }) {
                             ? MyDarkTheme.colors.text
                             : colors.black,
                         }}>
-                        {categoryInfo.lineOfSightDistance}{' '}
-                        {!!categoryInfo.lineOfSightDistance &&
-                          !!categoryInfo.timeofLineOfSightDistance
-                          ? '|'
-                          : ''}{' '}
-                        {checkEvenOdd(categoryInfo.timeofLineOfSightDistance)}-{checkEvenOdd(categoryInfo.timeofLineOfSightDistance + 5)}
-                        {!!categoryInfo.timeofLineOfSightDistance ? ' mins' : ''}
+                        {categoryInfo.lineOfSightDistance}
                       </Text>
+                      {!!categoryInfo.lineOfSightDistance &&
+                        !!categoryInfo.timeofLineOfSightDistance && (
+                          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Image
+                              source={imagePath.icTime2}
+                              style={{
+                                ...styles.locTimeIcon,
+                                marginLeft: moderateScale(4)
+                              }}
+                              resizeMode="contain"
+                            />
+                            <Text style={{
+                              ...styles.milesTxt,
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.black,
+                            }}>
+                              {checkEvenOdd(categoryInfo.timeofLineOfSightDistance)}-{checkEvenOdd(categoryInfo.timeofLineOfSightDistance + 5)}
+                              {' mins'}
+                            </Text>
+                          </View>
+                        )}
                     </View>
-
                     <Text
                       style={{
                         ...commonStyles.mediumFont14Normal,
