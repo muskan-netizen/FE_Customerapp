@@ -1248,7 +1248,7 @@ export default function Products({ route, navigation }) {
                       }}>
                       {categoryInfo?.categoriesList || ''}
                     </Text>
-                    <Text
+                    {!!desc && (<Text
                       numberOfLines={2}
                       style={{
                         ...styles.milesTxt,
@@ -1258,7 +1258,7 @@ export default function Products({ route, navigation }) {
                           ? MyDarkTheme.colors.text
                           : colors.black,
                         marginVertical: moderateScaleVertical(4)
-                      }}>{desc}</Text>
+                      }}>{desc}</Text>)}
                   </View>
 
                 )}
