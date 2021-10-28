@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { showMessage } from 'react-native-flash-message';
+import {showMessage} from 'react-native-flash-message';
 import Geocoder from 'react-native-geocoder';
 import Geolocation from 'react-native-geolocation-service';
-import { BackHandler, Alert, Animated } from 'react-native';
+import {BackHandler, Alert, Animated} from 'react-native';
 import strings from './../constants/lang/index';
-import { callingCountries } from 'country-data';
+import {callingCountries} from 'country-data';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import * as NavigationService from '../navigation/NavigationService';
@@ -37,20 +37,20 @@ const getCurrentLocation = (type) =>
       (error) => {
         reject(error.message);
       },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
   });
 
 const getLocation = async (lat, lng, type) => {
   if (type == 'home') {
     try {
-      let res = await Geocoder.geocodePosition({ lat, lng });
+      let res = await Geocoder.geocodePosition({lat, lng});
       let addr = res[0].formattedAddress;
       return addr;
-    } catch (err) { }
+    } catch (err) {}
   } else if (type == 'address') {
     try {
-      let res = await Geocoder.geocodePosition({ lat, lng });
+      let res = await Geocoder.geocodePosition({lat, lng});
 
       let addr = res[0].formattedAddress;
 
@@ -76,7 +76,7 @@ const getLocation = async (lat, lng, type) => {
       };
 
       return data;
-    } catch (err) { }
+    } catch (err) {}
   }
 };
 
@@ -169,7 +169,7 @@ const androidBackButtonHandler = () => {
       onPress: () => null,
       style: 'cancel',
     },
-    { text: strings.YES, onPress: () => BackHandler.exitApp() },
+    {text: strings.YES, onPress: () => BackHandler.exitApp()},
   ]);
   return true;
 };
@@ -279,7 +279,7 @@ export const getScaleTransformationStyle = (
     outputRange: [startSize, endSize],
   });
   return {
-    transform: [{ scale: interpolation }],
+    transform: [{scale: interpolation}],
   };
 };
 
@@ -332,12 +332,12 @@ const timeInLocalLangauge = (value, selectedLanguage) => {
   })}, ${value.toLocaleTimeString(selectedLanguage, {
     hour: '2-digit',
     minute: '2-digit',
-  })}`
-}
+  })}`;
+};
 
 const checkEvenOdd = (num) => {
-  return num % 2 === 0 ? num : num + 1
-}
+  return num % 5 === 0 ? num : num - (num % 5);
+};
 
 export {
   showError,
@@ -349,5 +349,5 @@ export {
   getParameterByName,
   getUrlRoutes,
   timeInLocalLangauge,
-  checkEvenOdd
+  checkEvenOdd,
 };

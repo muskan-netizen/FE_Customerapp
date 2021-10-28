@@ -51,6 +51,7 @@ export default function OrderDetail({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
+  const dineInType = useSelector((state) => state?.home?.dineInType);
 
   const [state, setState] = useState({
     isLoading: true,
@@ -143,20 +144,54 @@ export default function OrderDetail({navigation, route}) {
         console.log(res, 'res===>');
         updateState({isLoading: false});
         if (res?.data) {
+          if (res?.data?.luxury_option_name !== strings.DELIVERY) {
+            updateState({
+              labels: [
+                strings.ACCEPTED,
+                strings.PROCESSING,
+                strings.ORDER_PREPARED,
+                strings.DELIVERED,
+              ],
+            });
+          }
+
           updateState({
             cartItems: res.data.vendors,
             cartData: res.data,
             isLoading: false,
+
             currentPosition: res.data.vendors[0].order_status
-              ? labels.indexOf(
-                  res.data.vendors[0].order_status?.current_status?.title
-                    .charAt(0)
-                    .toUpperCase() +
-                    res.data.vendors[0].order_status?.current_status?.title.slice(
-                      1,
-                    ),
-                )
+              ? res?.data?.luxury_option_name !== strings.DELIVERY
+                ? res.data.vendors[0].order_status?.current_status?.title ==
+                  strings.OUT_FOR_DELIVERY
+                  ? 2
+                  : labels.indexOf(
+                      res.data.vendors[0].order_status?.current_status?.title
+                        .charAt(0)
+                        .toUpperCase() +
+                        res.data.vendors[0].order_status?.current_status?.title.slice(
+                          1,
+                        ),
+                    )
+                : labels.indexOf(
+                    res.data.vendors[0].order_status?.current_status?.title
+                      .charAt(0)
+                      .toUpperCase() +
+                      res.data.vendors[0].order_status?.current_status?.title.slice(
+                        1,
+                      ),
+                  )
               : null,
+
+            // ? dineInType==="Delivery"? labels.indexOf(
+            //       res.data.vendors[0].order_status?.current_status?.title
+            //         .charAt(0)
+            //         .toUpperCase() +
+            //         res.data.vendors[0].order_status?.current_status?.title.slice(
+            //           1,
+            //         ),
+            //     ) :  res.data.vendors[0].order_status?.current_status?.title==="Order Predpared"? 3,
+
             orderStatus: res?.data?.vendors[0]?.order_status,
           });
         }
@@ -839,6 +874,7 @@ export default function OrderDetail({navigation, route}) {
                 : colors.blackOpacity86,
             }}
           />
+
           <LeftRightText
             leftText={strings.PAYMENT_METHOD}
             rightText={
@@ -898,6 +934,97 @@ export default function OrderDetail({navigation, route}) {
                   : colors.blackOpacity86,
               }}
             />
+          )}
+
+          {!!cartItems[0]?.vendor_dinein_table_id && (
+            <View>
+              <View
+                style={{
+                  height: 0.8,
+                  backgroundColor: 'grey',
+                  marginBottom: moderateScale(10),
+                  opacity: 0.5,
+                }}
+              />
+              <LeftRightText
+                leftText={'Table info'}
+                rightText={''}
+                isDarkMode={isDarkMode}
+                MyDarkTheme={MyDarkTheme}
+                leftTextStyle={{
+                  fontSize: textScale(12),
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity43,
+                }}
+                rightTextStyle={{
+                  fontSize: textScale(12),
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity86,
+                }}
+              />
+              {cartItems[0]?.dineInTableCategory && (
+                <LeftRightText
+                  leftText={'Category Name'}
+                  rightText={cartItems[0]?.dineInTableCategory}
+                  isDarkMode={isDarkMode}
+                  MyDarkTheme={MyDarkTheme}
+                  leftTextStyle={{
+                    fontSize: textScale(12),
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity43,
+                  }}
+                  rightTextStyle={{
+                    fontSize: textScale(12),
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity86,
+                  }}
+                />
+              )}
+              {cartItems[0]?.dineInTableName && (
+                <LeftRightText
+                  leftText={'Table Number'}
+                  rightText={cartItems[0]?.dineInTableName}
+                  isDarkMode={isDarkMode}
+                  MyDarkTheme={MyDarkTheme}
+                  leftTextStyle={{
+                    fontSize: textScale(12),
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity43,
+                  }}
+                  rightTextStyle={{
+                    fontSize: textScale(12),
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity86,
+                  }}
+                />
+              )}
+              {cartItems[0]?.dineInTableCapacity && (
+                <LeftRightText
+                  leftText={'Seat Capacity'}
+                  rightText={cartItems[0]?.dineInTableCapacity}
+                  isDarkMode={isDarkMode}
+                  MyDarkTheme={MyDarkTheme}
+                  leftTextStyle={{
+                    fontSize: textScale(12),
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity43,
+                  }}
+                  rightTextStyle={{
+                    fontSize: textScale(12),
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity86,
+                  }}
+                />
+              )}
+            </View>
           )}
         </View>
         <View

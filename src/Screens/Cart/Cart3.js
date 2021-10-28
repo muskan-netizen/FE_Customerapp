@@ -626,14 +626,11 @@ export default function Cart({navigation, route}) {
             payment_option_id: selectedPayment?.id,
             orderDetail: res.data,
           });
-        }
-
-        else if (
+        } else if (
           (res?.data?.payment_option_id === 8 &&
             !!(Number(cartData?.total_payable_amount) !== 0)) ||
           Number(selectedTipAmount) !== 0
-        ){
-
+        ) {
           navigation.navigate(navigationStrings.YOCO, {
             selectedPayment: selectedPayment,
             total_payable_amount: (
@@ -646,14 +643,11 @@ export default function Cart({navigation, route}) {
             payment_option_id: selectedPayment?.id,
             orderDetail: res.data,
           });
-
-        }
-        else if (
+        } else if (
           (res?.data?.payment_option_id === 9 &&
             !!(Number(cartData?.total_payable_amount) !== 0)) ||
           Number(selectedTipAmount) !== 0
-        ){
-
+        ) {
           navigation.navigate(navigationStrings.PAYLINK, {
             selectedPayment: selectedPayment,
             total_payable_amount: (
@@ -666,10 +660,7 @@ export default function Cart({navigation, route}) {
             payment_option_id: selectedPayment?.id,
             orderDetail: res.data,
           });
-
-        }
-
-        else {
+        } else {
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
             orderDetail: res.data,
           })();
@@ -718,8 +709,10 @@ export default function Cart({navigation, route}) {
     } else if (
       selectedPayment?.off_site == 1 &&
       !!(
-        (selectedPayment?.id === 6 || selectedPayment?.id === 7)
-        || selectedPayment?.id===8 || selectedPayment?.id ===9
+        selectedPayment?.id === 6 ||
+        selectedPayment?.id === 7 ||
+        selectedPayment?.id === 8 ||
+        selectedPayment?.id === 9
       )
     ) {
       updateState({placeLoader: true});
@@ -2314,7 +2307,7 @@ export default function Cart({navigation, route}) {
 
   const _onTableSelection = (item) => {
     const data = {
-      vendor_id: item.id,
+      vendor_id: item.vendor_id,
       table: item.table_number,
     };
     actions
@@ -2322,6 +2315,7 @@ export default function Cart({navigation, route}) {
         code: appData?.profile?.code,
       })
       .then((res) => {
+        console.log(res, 'selectedTableInfo', data);
         removeItem('deepLinkUrl');
         setItem('selectedTable', item?.label);
       })
