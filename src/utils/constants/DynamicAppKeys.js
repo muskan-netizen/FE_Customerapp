@@ -130,6 +130,7 @@ const shortCodes = {
   seachangevending: 'caacbc',
   ored: 'fb0df5',
   orderchekout: 'f6cd9d',
+  maxisdelivery: '1e1c90',
 };
 
 const appIds = {
@@ -648,6 +649,10 @@ const appIds = {
   orderchekout: Platform.select({
     ios: 'com.customer.orderchekout',
     android: 'com.orderchekout',
+  }),
+  maxisdelivery: Platform.select({
+    ios: 'com.maxisdelivery',
+    android: 'com.maxisdelivery',
   }),
 };
 
