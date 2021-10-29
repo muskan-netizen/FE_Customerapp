@@ -475,6 +475,7 @@ export default {
   DISCOUNT: 'Discount',
   TOTAL: 'Total',
   NO_ORDERS_FOUND: 'No Orders Found',
+  NOOFFERS_FOUND: 'Keine Angebote gefunden',
   PICKUP: 'PICKUP',
   PLEASE_ENTER_YOUR_PHONE_NUMBER: 'Please enter your phone number',
   PHONE_NUMBER_NOT_VALID: 'Phone number is not valid',
@@ -564,4 +565,5 @@ export default {
   REJECT_REASON: 'Reject Reason',
   ENTER_REASON_FOR_REJECTING_ORDER: 'Enter reason for rejecting the order.',
   VIEW_MORE: 'View More',
+  START: 'ANFANG'
 };

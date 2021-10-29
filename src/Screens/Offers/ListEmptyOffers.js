@@ -10,8 +10,11 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
+  scale,
   width,
 } from '../../styles/responsiveSize';
+import strings from '../../constants/lang';
+import colors from '../../styles/colors';
 
 export default function ListEmptyOffers({isLoading = false}) {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
@@ -32,6 +35,7 @@ export default function ListEmptyOffers({isLoading = false}) {
     <SafeAreaView>
       <View style={styles.containerStyle}>
         <Image source={imagePath.noOffers} style={{marginTop: height / 4}} />
+        <Text style={{ marginTop: scale(20), color: colors.textGreyOpcaity7, fontFamily: styles.textStyle.fontFamily }}>{strings.NOOFFERS_FOUND}</Text>
       </View>
     </SafeAreaView>
   );

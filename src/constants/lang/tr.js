@@ -352,6 +352,7 @@ export default {
   VIEW_ALL_VENDORS: 'Tüm satıcıları görüntüle',
   CLOSE: 'Kapat',
   NOOFFERS: 'Teklif Yok',
+  NOOFFERS_FOUND: 'Teklif bulunamadı',
   NOVARIANTPRODUCTAVAILABLE: 'Bu seçenek şu anda kullanılamıyor',
   REMOVE_CART_MSG:
     'Bu Değişiklik Sepet Ürünlerinizi Kaldıracaktır. Gerçekten Devam Etmek İstiyor musunuz?',
@@ -566,4 +567,5 @@ export default {
   REJECT_REASON: 'Reject Reason',
   ENTER_REASON_FOR_REJECTING_ORDER: 'Enter reason for rejecting the order.',
   VIEW_MORE: 'View More',
+  START: 'BAŞLAT'
 };

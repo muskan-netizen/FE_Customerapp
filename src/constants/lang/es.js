@@ -236,7 +236,7 @@ export default {
   SUCCESSFULLY: '¡Felicitaciones!',
   AWB_NUMBER: 'Tu número de envío es:',
   INPUT_AMOUNT: 'Monto de entrada',
-  QTY: 'QTY:',
+  QTY: 'CANTIDAD:',
   PLS_SELECT_ONE: 'Seleccionar una opción',
   APPLYSMALL: 'Aplicar',
   AREYOUSURE: '¿Seguro que deseas borrar tu carrito?',
@@ -356,6 +356,7 @@ export default {
   OPEN: 'Abierto',
   SEARCH_HERE: '¿Qué estás buscando?',
   NOOFFERS: 'No hay ofertas',
+  NOOFFERS_FOUND: 'No se encontraron ofertas',
   NOVARIANTPRODUCTAVAILABLE: 'Esta opción no está disponible actualmente',
   PERSONAL_DETAILS: 'Datos personales',
   STORE_DETAILS: 'Datos del Comercio',
@@ -567,4 +568,5 @@ export default {
   REJECT_REASON: 'Razón del rechazo',
   ENTER_REASON_FOR_REJECTING_ORDER: 'Ingrese el motivo del rechazo del pedido.',
   VIEW_MORE: 'View More',
+  START: 'COMIENZO'
 };

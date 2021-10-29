@@ -356,6 +356,7 @@ export default {
   OPEN: 'Open',
   SEARCH_HERE: 'What are you looking for?',
   NOOFFERS: 'No Offers',
+  NOOFFERS_FOUND: 'No offers found',
   NOVARIANTPRODUCTAVAILABLE: 'This option is currenty not available',
   PERSONAL_DETAILS: 'Personal Details',
   STORE_DETAILS: 'Store Details',
@@ -566,4 +567,5 @@ Amount`,
   REJECT_REASON: 'Reject Reason',
   ENTER_REASON_FOR_REJECTING_ORDER: 'Enter reason for rejecting the order.',
   VIEW_MORE: 'View More',
+  START: 'START'
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, Image, Dimensions, StatusBar } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import GradientButton from '../../Components/GradientButton';
+import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import colors from '../../styles/colors';
 import { setItem } from '../../utils/utils';
@@ -66,7 +67,7 @@ export default class AppIntro extends React.Component {
     _renderDoneButton = () => {
         return (
             <View style={styles.buttonCircle}>
-                <GradientButton btnText={'Start'} btnStyle={{ paddingHorizontal: 10 }} onPress={() => this.props.navigation.push(navigationStrings.DRAWER_ROUTES)} />
+                <GradientButton btnText={strings.START} btnStyle={{ paddingHorizontal: 10 }} onPress={() => this.props.navigation.push(navigationStrings.DRAWER_ROUTES)} />
             </View>
         );
     };

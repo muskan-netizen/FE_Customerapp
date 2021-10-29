@@ -363,6 +363,7 @@ export default {
   VIEW_ALL_VENDORS: 'Afficher tous les fournisseurs',
   CLOSE: 'Fermer',
   NOOFFERS: 'Pas d offres',
+  NOOFFERS_FOUND: 'Aucune offre trouvée',
   NOVARIANTPRODUCTAVAILABLE: 'Cette option nest actuellement pas disponible',
   REMOVE_CART_MSG:
     'Ce changement supprimera les produits de votre panier. Voulez-vous vraiment continuer ?',
@@ -603,4 +604,5 @@ montant`,
   REJECT_REASON: 'Reject Reason',
   ENTER_REASON_FOR_REJECTING_ORDER: 'Enter reason for rejecting the order.',
   VIEW_MORE: 'View More',
+  START: 'DÉBUT'
 };

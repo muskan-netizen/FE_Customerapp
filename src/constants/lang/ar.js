@@ -363,6 +363,7 @@ export default {
   OPEN: 'فتح',
   SEARCH_HERE: 'ما الذي تبحث عنه؟',
   NOOFFERS: 'لا توجد عروض',
+  NOOFFERS_FOUND: 'لم يتم العثور على عروض',
   NOVARIANTPRODUCTAVAILABLE: 'هذا الخيار غير متاح حاليًا',
   PERSONAL_DETAILS: 'تفاصيل شخصية',
   STORE_DETAILS: 'تفاصيل المتجر',
@@ -571,5 +572,5 @@ export default {
   REJECT_REASON: 'Reject Reason',
   ENTER_REASON_FOR_REJECTING_ORDER: 'Enter reason for rejecting the order.',
   VIEW_MORE: 'View More',
-
+  START: 'بداية'
 };

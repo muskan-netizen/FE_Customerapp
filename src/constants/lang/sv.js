@@ -360,6 +360,7 @@ export default {
   OPEN: 'Öppen',
   SEARCH_HERE: 'Vad letar du efter?',
   NOOFFERS: 'Inga erbjudanden',
+  NOOFFERS_FOUND: 'No se encontraron ofertas',
   NOVARIANTPRODUCTAVAILABLE:
     'Det här alternativet är för närvarande inte tillgängligt',
   PERSONAL_DETAILS: 'Personliga detaljer',
@@ -550,4 +551,5 @@ export default {
   REJECT_REASON: 'Reject Reason',
   ENTER_REASON_FOR_REJECTING_ORDER: 'Enter reason for rejecting the order.',
   VIEW_MORE: 'View More',
+  START: 'COMIENZO'
 };
