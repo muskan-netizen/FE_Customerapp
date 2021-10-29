@@ -238,8 +238,6 @@ export default function MyOrders({ navigation }) {
   };
 
   const onPressViewEditAndReplace = (item) => {
-    console.log('item',item)
-    // return;
     if (
       item?.dispatch_traking_url &&
       (item?.product_details[0]?.category_type ==

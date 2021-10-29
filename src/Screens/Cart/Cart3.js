@@ -667,13 +667,16 @@ export default function Cart({ navigation, route }) {
           });
         }
         else {
-          if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1) {
-            _getOrderDetail(res.data.vendors[0])
-          } else {
-            moveToNewScreen(navigationStrings.ORDERSUCESS, {
-              orderDetail: res.data,
-            })();
-          }
+          moveToNewScreen(navigationStrings.ORDERSUCESS, {
+            orderDetail: res.data,
+          })();
+          // if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1) {
+          //   _getOrderDetail(res.data.vendors[0])
+          // } else {
+          //   moveToNewScreen(navigationStrings.ORDERSUCESS, {
+          //     orderDetail: res.data,
+          //   })();
+          // }
         }
         showSuccess(res?.message);
       })
