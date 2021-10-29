@@ -494,6 +494,7 @@ export default function Home({ route, navigation }) {
           name: data.redirect_name,
         };
       }
+
       if (data.redirect_to == staticStrings.VENDOR) {
         data?.is_show_category
           ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
