@@ -665,20 +665,53 @@ export default function Cart({ navigation, route }) {
             payment_option_id: selectedPayment?.id,
             orderDetail: res.data,
           });
-
         }
         else {
-          moveToNewScreen(navigationStrings.ORDERSUCESS, {
-            orderDetail: res.data,
-          })();
-          // if (!!businessType && businessType == 'home_service') {
-          //   alert('oo yehh')
-          //   moveToNewScreen(navigationStrings.ORDERSUCESS, {
-          //     orderDetail: res.data,
-          //   })();
-          // }
+          if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1) {
+            _getOrderDetail(res.data.vendors[0])
+          } else {
+            moveToNewScreen(navigationStrings.ORDERSUCESS, {
+              orderDetail: res.data,
+            })();
+          }
         }
         showSuccess(res?.message);
+      })
+      .catch(errorMethod);
+  };
+
+  const _getOrderDetail = ({ order_id, vendor_id }) => {
+    // return;
+    let data = {};
+    data['order_id'] = order_id;
+    data['vendor_id'] = vendor_id;
+    // updateState({ isLoading: true });
+    actions
+      .getOrderDetail(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        timezone: RNLocalize.getTimeZone(),
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res, 'res===> order detail');
+        updateState({ isLoading: false });
+        if (res?.data) {
+          if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1 && res?.data?.vendors[0]?.dispatch_traking_url) {
+            navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
+              orderId: order_id,
+              fromVendorApp: true,
+              selectedVendor: { id: vendor_id },
+              orderDetail: res.data,
+              showRating: res.data.vendors[0]?.order_status?.current_status?.id != 6 ? false : true,
+            });
+          } else {
+            moveToNewScreen(navigationStrings.ORDERSUCESS, {
+              orderDetail: res.data,
+            })();
+          }
+        }
       })
       .catch(errorMethod);
   };
