@@ -501,14 +501,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     longitude: Number(coordinate?.longitude),
                   }}>
                   <View
-                    style={[
-                      styles.plainView,
-                      {
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        paddingRight: 10,
-                      },
-                    ]}>
+                    style={styles.plainView}>
                     <Text style={styles.pickupDropOff}>
                       {index === 0 ? 'Pickup' : 'Drop'}
                     </Text>

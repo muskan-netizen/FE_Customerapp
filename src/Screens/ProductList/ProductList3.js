@@ -1116,7 +1116,7 @@ export default function Products({ route, navigation }) {
   const listHeaderComponent2 = () => {
     return (
       <View>
-        <View style={{ ...styles.header2 }}>
+        {!!categoryInfo?.categoriesList ? <View style={{ ...styles.header2 }}>
           <StatusBar
             translucent
             barStyle={Platform.OS === 'ios' ? 'light-content' : 'dark-content'}
@@ -1264,7 +1264,7 @@ export default function Products({ route, navigation }) {
                       {categoryInfo?.categoriesList || ''}
                     </Text>
                     <Text
-                      numberOfLines={2}
+                      numberOfLines={1}
                       style={{
                         ...styles.milesTxt,
                         marginLeft: 0,
@@ -1345,6 +1345,135 @@ export default function Products({ route, navigation }) {
             </ImageBackground>
           </View>
         </View>
+          :
+          <Animatable.View
+              // key={AnimatedHeaderValue}
+              // duration={10}
+              animation={'fadeIn'}
+              style={{
+                ...styles.headerStyle,
+                marginBottom: moderateScale(12)
+                // height: 52
+              }}>
+              <View
+
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => navigation.goBack()}
+                  hitSlop={styles.hitSlopProp}>
+                  <Image
+                    style={{
+                      tintColor: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    }}
+                    source={imagePath.icBackb}
+                  />
+                </TouchableOpacity>
+
+                <View
+
+                  style={{ marginLeft: moderateScale(8), flex: 0.7 }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <RoundImg
+                      img={getImageUrl(uri1, uri2, '400/400')}
+                      size={30}
+                      isDarkMode={isDarkMode}
+                      MyDarkTheme={MyDarkTheme}
+                    />
+                    <View style={{ marginLeft: moderateScale(8) }}>
+                      <Text
+                        numberOfLines={1}
+                        style={{
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.black,
+                          fontSize: moderateScale(14),
+                          fontFamily: fontFamily.medium,
+
+                        }}>
+                        {name}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+
+              {isSearch ? (
+                <Animatable.View
+                // animation="fadeIn"
+                >
+                  <SearchBar
+                    containerStyle={{
+                      marginHorizontal: moderateScale(18),
+                      borderRadius: 8,
+                      width: width / 1.15,
+                      backgroundColor: isDarkMode
+                        ? colors.whiteOpacity15
+                        : colors.greyColor,
+                      height: moderateScaleVertical(37),
+                    }}
+                    searchValue={searchInput}
+                    placeholder={strings.SEARCH_ITEM}
+                    // onChangeText={(value) => onChangeText(value)}
+                    showRightIcon
+                    rightIconPress={() =>
+                      updateState({
+                        searchInput: '',
+                        isSearch: false,
+                        isLoading: false,
+                      })
+                    }
+                  />
+                </Animatable.View>
+              ) : (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    // onPress={() => updateState({isSearch: true})}
+                    onPress={moveToNewScreen(
+                      navigationStrings.SEARCHPRODUCTOVENDOR,
+                      {
+                        type: data?.vendor
+                          ? staticStrings.VENDOR
+                          : staticStrings.CATEGORY,
+                        id: data?.vendor ? data?.id : productListId?.id,
+                      },
+                    )}>
+                    <Image
+                      style={{
+                        tintColor: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                      }}
+                      source={!!data?.showAddToCart ? false : imagePath.icSearchb}
+                    />
+                  </TouchableOpacity>
+                  <View style={{ marginHorizontal: moderateScale(8) }} />
+                  <TouchableOpacity
+                    onPress={onShare}
+                    hitSlop={hitSlopProp}
+                    activeOpacity={0.8}>
+                    <Image
+                      style={{
+                        tintColor: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                      }}
+                      source={imagePath.icShareb}
+                    />
+                  </TouchableOpacity>
+                </View>
+              )}
+            </Animatable.View>
+        }
 
         {!!categoryInfo && categoryInfo?.childs?.length > 0 && (
           <View style={{ marginHorizontal: moderateScale(20) }}>
@@ -1465,27 +1594,29 @@ export default function Products({ route, navigation }) {
             ry={5}
             viewStyles={{ marginTop: moderateScale(10) }}
           />
-          <View
-            style={{
-              marginVertical: moderateScaleVertical(12),
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <CircularProfileLoader isDesc={false} />
-          </View>
-          <HeaderLoader
-            viewStyles={{
-              marginHorizontal: moderateScale(20),
-              marginBottom: moderateScale(10),
-            }}
-            widthLeft={width - moderateScale(40)}
-            rectWidthLeft={width - moderateScale(40)}
-            heightLeft={moderateScaleVertical(80)}
-            rectHeightLeft={moderateScaleVertical(80)}
-            isRight={false}
-            rx={8}
-            ry={8}
-          />
+          {!!categoryInfo?.categoriesList ? <View>
+            <View
+              style={{
+                marginVertical: moderateScaleVertical(12),
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <CircularProfileLoader isDesc={false} />
+            </View>
+            <HeaderLoader
+              viewStyles={{
+                marginHorizontal: moderateScale(20),
+                marginBottom: moderateScale(10),
+              }}
+              widthLeft={width - moderateScale(40)}
+              rectWidthLeft={width - moderateScale(40)}
+              heightLeft={moderateScaleVertical(80)}
+              rectHeightLeft={moderateScaleVertical(80)}
+              isRight={false}
+              rx={8}
+              ry={8}
+            />
+          </View> : <View style={{ marginBottom: moderateScaleVertical(16) }} />}
           <View style={{ marginHorizontal: moderateScale(16) }}>
             <ProductListLoader />
             <View style={{ marginBottom: moderateScaleVertical(12) }} />
@@ -1740,6 +1871,7 @@ export default function Products({ route, navigation }) {
               animation={'fadeIn'}
               style={{
                 ...styles.headerStyle,
+                marginBottom: moderateScale(12)
                 // height: 52
               }}>
               <View

@@ -410,7 +410,7 @@ export default {
   NEW_INCORRECT_PASSWORD: 'New Password is incorrect',
   CONFIRM_PASSWORD: 'Confirm Password',
   PASSWORD_NOT_MATCH: 'New Password and Confirm Password did not matched',
-  MESSAGE: 'message',
+  MESSAGE: 'Message',
   YOUR_ORDER_HAS_BEEN_SUBMITTED: 'Your order has been submitted!',
   YOUR_ORDER_NUMBER: 'Your order number is',
   ANY_RESTAURANT_REQUESTS:
