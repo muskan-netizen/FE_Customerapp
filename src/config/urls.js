@@ -4,7 +4,10 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 //export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
 // export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
+<<<<<<< HEAD
 // export const API_BASE_URL = 'http://192.168.96.20:8001/api/v1';
+=======
+>>>>>>> bac7ebe3ec0c539652c331e8b6c0a81f31a9f71a
 
 //export const API_BASE_URL = 'https://zuzuclean.alerthire.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';

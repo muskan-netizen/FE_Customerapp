@@ -128,7 +128,7 @@ export default function DashBoardFive({
                   height: moderateScale(50),
                   width: moderateScale(50),
                   borderRadius: moderateScale(10),
-                  tintColor: themeColors.primary_color
+                  tintColor: themeColors.primary_color,
                 }}
                 resizeMode={'contain'}
               />

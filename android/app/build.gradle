@@ -1514,6 +1514,16 @@ android {
             resValue "string", "app_name", "Order Chekout"
             resValue "string", "host_name", ""
          }
+         maxisdelivery{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.maxisdelivery'
+            resValue "string", "app_name", "Maxis Delivery"
+            resValue "string", "host_name", ""
+         }
     }
 }
 
