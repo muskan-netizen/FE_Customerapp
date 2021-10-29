@@ -34,7 +34,7 @@ export default function ListEmptyOffers({isLoading = false}) {
   return (
     <SafeAreaView>
       <View style={styles.containerStyle}>
-        <Image source={imagePath.noOffers} style={{marginTop: height / 4}} />
+        <Image source={imagePath.noOffers} style={{marginTop: height / 4 - 30}} />
         <Text style={{ marginTop: scale(20), color: colors.textGreyOpcaity7, fontFamily: styles.textStyle.fontFamily }}>{strings.NOOFFERS_FOUND}</Text>
       </View>
     </SafeAreaView>
