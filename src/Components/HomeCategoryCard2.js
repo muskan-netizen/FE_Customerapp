@@ -59,13 +59,13 @@ export default function HomeCategoryCard2({
             style={{
               height: moderateScale(50),
               width: moderateScale(50),
-              borderRadius: moderateScale(10),
+              borderRadius: moderateScale(25),
             }}
             source={{
               uri: imageURI,
               priority: FastImage.priority.high,
             }}
-            resizeMode="contain"
+            resizeMode="cover"
           />
         )}
       </View>

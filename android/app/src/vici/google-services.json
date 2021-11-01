@@ -1,64 +1,64 @@
 {
   "project_info": {
-    "project_number": "564884329661",
-    "project_id": "vici-aa1fd",
-    "storage_bucket": "vici-aa1fd.appspot.com"
+    "project_number": "713200187855",
+    "project_id": "skilled-display-323815",
+    "storage_bucket": "skilled-display-323815.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:564884329661:android:66019b5650c9a40f8b13d4",
+        "mobilesdk_app_id": "1:713200187855:android:e92fe3879200ef6cec7aba",
         "android_client_info": {
-          "package_name": "com.vici"
+          "package_name": "com.app.vici"
         }
       },
       "oauth_client": [
         {
-          "client_id": "564884329661-o8g7v13tq32e0d430smg9pvmdtnnp7eu.apps.googleusercontent.com",
+          "client_id": "713200187855-ki8l1ks4sb9s20l72b6ub5d5p93bfae1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.vici",
+            "package_name": "com.app.vici",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "564884329661-qi20e47scpo4kaoht856gdfc2fau181o.apps.googleusercontent.com",
+          "client_id": "713200187855-od1uv2rb9l0fdumse2nbvdms4c7b5v1f.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.vici",
+            "package_name": "com.app.vici",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "564884329661-qll1rdjbpj73m1b048mlbv5ei3vjihso.apps.googleusercontent.com",
+          "client_id": "713200187855-r6cg0r605tmq8odu8e7md5lvi4605f5f.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.vici",
+            "package_name": "com.app.vici",
             "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
-          "client_id": "564884329661-9ahf34mpahda8ekcdhoh67fttb25pgvo.apps.googleusercontent.com",
+          "client_id": "713200187855-18hvhm6d64o5nqqj5nkfr63fhqmi4dfd.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDqKV6iQRC8XlDcSPMa9_3E5iqC1_PDld0"
+          "current_key": "AIzaSyC0eiVmMcYirWiUdBTQVVEAkVWTHlAJBxM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "564884329661-9ahf34mpahda8ekcdhoh67fttb25pgvo.apps.googleusercontent.com",
+              "client_id": "713200187855-18hvhm6d64o5nqqj5nkfr63fhqmi4dfd.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "564884329661-nmdnj2lmgrv3j73pmgrnsothfqusb9bn.apps.googleusercontent.com",
+              "client_id": "713200187855-qfu9ctfuejrrrmfgd0nggavkh1e4ka4s.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.vici"
+                "bundle_id": "com.app.vici"
               }
             }
           ]

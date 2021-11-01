@@ -514,7 +514,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.yummiidash'
+            applicationId 'com.app.yummiidash'
             resValue "string", "app_name", "Yummiidash"
             resValue "string", "host_name", ""
         }
@@ -825,7 +825,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.vici'
+            applicationId 'com.app.vici'
             resValue "string", "app_name", "VICI"
             resValue "string", "host_name", ""
          }
@@ -1512,6 +1512,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.orderchekout'
             resValue "string", "app_name", "Order Chekout"
+            resValue "string", "host_name", ""
+         }
+         maxisdelivery{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.maxisdelivery'
+            resValue "string", "app_name", "Maxis Delivery"
             resValue "string", "host_name", ""
          }
     }

@@ -3,7 +3,16 @@ import {cloneDeep} from 'lodash';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
 import React, {useState} from 'react';
-import {Dimensions, FlatList, Image, Text, View} from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  TextInput,
+} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
 import StarRating from 'react-native-star-rating';
@@ -42,7 +51,8 @@ export default function OrderDetail({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  console.log('param data', paramData);
+  const dineInType = useSelector((state) => state?.home?.dineInType);
+
   const [state, setState] = useState({
     isLoading: true,
     cartItems: [],
@@ -63,9 +73,19 @@ export default function OrderDetail({navigation, route}) {
     // ],
     currentPosition: null,
     orderStatus: null,
+    selectedTipvalue: null,
+    selectedTipAmount: null,
   });
-  const {isLoading, cartItems, cartData, labels, currentPosition, orderStatus} =
-    state;
+  const {
+    isLoading,
+    cartItems,
+    cartData,
+    labels,
+    currentPosition,
+    orderStatus,
+    selectedTipvalue,
+    selectedTipAmount,
+  } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -74,8 +94,6 @@ export default function OrderDetail({navigation, route}) {
   );
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
-
-  console.log(strings.PROCESSING, 'strings.PROCESSING');
 
   const moveToNewScreen =
     (screenName, data = {}) =>
@@ -123,23 +141,57 @@ export default function OrderDetail({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, '=====res');
+        console.log(res, 'res===>');
         updateState({isLoading: false});
         if (res?.data) {
+          if (res?.data?.luxury_option_name !== strings.DELIVERY) {
+            updateState({
+              labels: [
+                strings.ACCEPTED,
+                strings.PROCESSING,
+                strings.ORDER_PREPARED,
+                strings.DELIVERED,
+              ],
+            });
+          }
+
           updateState({
             cartItems: res.data.vendors,
             cartData: res.data,
             isLoading: false,
+
             currentPosition: res.data.vendors[0].order_status
-              ? labels.indexOf(
-                  res.data.vendors[0].order_status?.current_status?.title
-                    .charAt(0)
-                    .toUpperCase() +
-                    res.data.vendors[0].order_status?.current_status?.title.slice(
-                      1,
-                    ),
-                )
+              ? res?.data?.luxury_option_name !== strings.DELIVERY
+                ? res.data.vendors[0].order_status?.current_status?.title ==
+                  strings.OUT_FOR_DELIVERY
+                  ? 2
+                  : labels.indexOf(
+                      res.data.vendors[0].order_status?.current_status?.title
+                        .charAt(0)
+                        .toUpperCase() +
+                        res.data.vendors[0].order_status?.current_status?.title.slice(
+                          1,
+                        ),
+                    )
+                : labels.indexOf(
+                    res.data.vendors[0].order_status?.current_status?.title
+                      .charAt(0)
+                      .toUpperCase() +
+                      res.data.vendors[0].order_status?.current_status?.title.slice(
+                        1,
+                      ),
+                  )
               : null,
+
+            // ? dineInType==="Delivery"? labels.indexOf(
+            //       res.data.vendors[0].order_status?.current_status?.title
+            //         .charAt(0)
+            //         .toUpperCase() +
+            //         res.data.vendors[0].order_status?.current_status?.title.slice(
+            //           1,
+            //         ),
+            //     ) :  res.data.vendors[0].order_status?.current_status?.title==="Order Predpared"? 3,
+
             orderStatus: res?.data?.vendors[0]?.order_status,
           });
         }
@@ -200,9 +252,6 @@ export default function OrderDetail({navigation, route}) {
   };
 
   const _renderItem = ({item, index}) => {
-    console.log(item, 'itemitem');
-    console.log(cartData, 'cartData');
-
     // return <OffersCard />;
     let {itemCount} = state;
     return (
@@ -825,6 +874,7 @@ export default function OrderDetail({navigation, route}) {
                 : colors.blackOpacity86,
             }}
           />
+
           <LeftRightText
             leftText={strings.PAYMENT_METHOD}
             rightText={
@@ -884,6 +934,97 @@ export default function OrderDetail({navigation, route}) {
                   : colors.blackOpacity86,
               }}
             />
+          )}
+
+          {!!cartItems[0]?.vendor_dinein_table_id && (
+            <View>
+              <View
+                style={{
+                  height: 0.8,
+                  backgroundColor: 'grey',
+                  marginBottom: moderateScale(10),
+                  opacity: 0.5,
+                }}
+              />
+              <LeftRightText
+                leftText={'Table info'}
+                rightText={''}
+                isDarkMode={isDarkMode}
+                MyDarkTheme={MyDarkTheme}
+                leftTextStyle={{
+                  fontSize: textScale(12),
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity43,
+                }}
+                rightTextStyle={{
+                  fontSize: textScale(12),
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity86,
+                }}
+              />
+              {cartItems[0]?.dineInTableCategory && (
+                <LeftRightText
+                  leftText={'Category Name'}
+                  rightText={cartItems[0]?.dineInTableCategory}
+                  isDarkMode={isDarkMode}
+                  MyDarkTheme={MyDarkTheme}
+                  leftTextStyle={{
+                    fontSize: textScale(12),
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity43,
+                  }}
+                  rightTextStyle={{
+                    fontSize: textScale(12),
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity86,
+                  }}
+                />
+              )}
+              {cartItems[0]?.dineInTableName && (
+                <LeftRightText
+                  leftText={'Table Number'}
+                  rightText={cartItems[0]?.dineInTableName}
+                  isDarkMode={isDarkMode}
+                  MyDarkTheme={MyDarkTheme}
+                  leftTextStyle={{
+                    fontSize: textScale(12),
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity43,
+                  }}
+                  rightTextStyle={{
+                    fontSize: textScale(12),
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity86,
+                  }}
+                />
+              )}
+              {cartItems[0]?.dineInTableCapacity && (
+                <LeftRightText
+                  leftText={'Seat Capacity'}
+                  rightText={cartItems[0]?.dineInTableCapacity}
+                  isDarkMode={isDarkMode}
+                  MyDarkTheme={MyDarkTheme}
+                  leftTextStyle={{
+                    fontSize: textScale(12),
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity43,
+                  }}
+                  rightTextStyle={{
+                    fontSize: textScale(12),
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity86,
+                  }}
+                />
+              )}
+            </View>
           )}
         </View>
         <View
@@ -964,10 +1105,215 @@ export default function OrderDetail({navigation, route}) {
                 : colors.blackOpacity86,
             }}
           />
-          <View style={{height: moderateScaleVertical(40)}}></View>
+
+          {paramData?.orderStatus?.current_status?.title ===
+            strings.DELIVERED &&
+            !!appData?.profile?.preferences?.tip_after_order &&
+            cartData?.tip_amount == 0 &&
+            !!cartData?.tip &&
+            cartData?.tip.length && (
+              <View
+                style={{
+                  flexDirection: 'column',
+                  marginTop: 20,
+                  justifyContent: 'space-between',
+                  marginVertical: moderateScaleVertical(5),
+                }}>
+                <Text
+                  style={{
+                    color: colors.textGreyB,
+                    fontFamily: fontFamily.regular,
+                    fontSize: textScale(12),
+                  }}>
+                  {strings.DOYOUWANTTOGIVEATIP}
+                </Text>
+
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={{flexGrow: 1}}>
+                  {cartData?.total_payable_amount !== 0 &&
+                    cartData?.tip.map((j, jnx) => {
+                      return (
+                        <TouchableOpacity
+                          key={String(jnx)}
+                          style={{
+                            backgroundColor:
+                              selectedTipvalue?.value == j?.value
+                                ? themeColors.primary_color
+                                : 'transparent',
+                            flex: 0.18,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderWidth: 0.7,
+                            paddingHorizontal: 10,
+                            paddingVertical: 5,
+                            marginRight: 5,
+                            marginVertical: 20,
+                            borderRadius: moderateScale(5),
+                            borderColor: themeColors.primary_color,
+                          }}
+                          onPress={() => selectedTip(j)}>
+                          <Text
+                            style={
+                              isDarkMode
+                                ? {
+                                    color:
+                                      selectedTipvalue?.value == j?.value
+                                        ? colors.white
+                                        : MyDarkTheme.colors.text,
+                                  }
+                                : {
+                                    color:
+                                      selectedTipvalue?.value == j?.value
+                                        ? colors.white
+                                        : colors.black,
+                                  }
+                            }>
+                            {`${currencies?.primary_currency?.symbol} ${j.value}`}
+                          </Text>
+                          <Text
+                            style={{
+                              color:
+                                selectedTipvalue?.value == j?.value
+                                  ? colors.white
+                                  : colors.textGreyB,
+                            }}>
+                            {j.label}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor:
+                        selectedTipvalue == 'custom'
+                          ? themeColors.primary_color
+                          : 'transparent',
+                      flex: cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      borderWidth: 0.7,
+                      paddingHorizontal: 15,
+                      paddingVertical: 5,
+                      marginLeft: 2,
+                      marginVertical: 20,
+                      borderRadius: moderateScale(5),
+                      borderColor: themeColors.primary_color,
+                    }}
+                    onPress={() => selectedTip('custom')}>
+                    <Text
+                      style={
+                        isDarkMode
+                          ? {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : MyDarkTheme.colors.text,
+                            }
+                          : {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : colors.black,
+                            }
+                      }>
+                      {strings.CUSTOM}
+                    </Text>
+                  </TouchableOpacity>
+                </ScrollView>
+
+                {!!selectedTipvalue && selectedTipvalue == 'custom' && (
+                  <View
+                    style={{
+                      borderRadius: 5,
+                      borderWidth: 0.5,
+                      borderColor: colors.textGreyB,
+                      height: 40,
+                    }}>
+                    <TextInput
+                      value={selectedTipAmount}
+                      onChangeText={(text) =>
+                        updateState({selectedTipAmount: text})
+                      }
+                      style={{
+                        height: 40,
+                        alignItems: 'center',
+                        paddingHorizontal: 10,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.textGreyOpcaity7,
+                      }}
+                      maxLength={5}
+                      returnKeyType={'done'}
+                      keyboardType={'number-pad'}
+                      placeholder={strings.ENTER_CUSTOM_AMOUNT}
+                      placeholderTextColor={
+                        isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.textGreyOpcaity7
+                      }
+                    />
+                  </View>
+                )}
+                <TouchableOpacity
+                  // onPress={onPressRateOrder}
+                  onPress={_onAddTip}
+                  // style={{flex:0.6}}
+                  style={{
+                    justifyContent: 'center',
+                    backgroundColor: themeColors.primary_color,
+                    alignItems: 'center',
+                    borderRadius: moderateScale(10),
+                    paddingVertical: moderateScaleVertical(10),
+                    marginTop: moderateScaleVertical(10),
+                  }}>
+                  <Text
+                    style={{
+                      color: colors.white,
+                      fontFamily: fontFamily.medium,
+                      fontSize: textScale(10),
+                    }}>
+                    {strings.ADD_TIP}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+
+          <View
+            style={{
+              height: moderateScaleVertical(40),
+            }}
+          />
         </View>
       </View>
     );
+  };
+
+  const selectedTip = (tip) => {
+    if (selectedTipvalue == 'custom') {
+      updateState({selectedTipvalue: tip, selectedTipAmount: null});
+    } else {
+      if (selectedTipvalue && selectedTipvalue?.value == tip?.value) {
+        updateState({selectedTipvalue: null, selectedTipAmount: null});
+      } else {
+        updateState({selectedTipvalue: tip, selectedTipAmount: tip?.value});
+      }
+    }
+  };
+
+  const _onAddTip = () => {
+    if (!selectedTipAmount) {
+      showError(strings.PLEASE_SELECT_VALID_OPTION);
+    } else if (!userData?.auth_token) {
+      moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+    } else {
+      moveToNewScreen(navigationStrings.TIP_PAYMENT_OPTIONS, {
+        selectedTipAmount: selectedTipAmount,
+        order_number: cartData?.order_number,
+      })();
+    }
   };
 
   const getHeader = () => {

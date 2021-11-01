@@ -412,7 +412,7 @@ export default {
   NEW_INCORRECT_PASSWORD: 'New Password is incorrect',
   CONFIRM_PASSWORD: 'Confirm Password',
   PASSWORD_NOT_MATCH: 'New Password and Confirm Password did not matched',
-  MESSAGE: 'message',
+  MESSAGE: 'Message',
   YOUR_ORDER_HAS_BEEN_SUBMITTED: 'Your order has been submitted!',
   YOUR_ORDER_NUMBER: 'Your order number is',
   ANY_RESTAURANT_REQUESTS:
@@ -567,5 +567,9 @@ Amount`,
   REJECT_REASON: 'Reject Reason',
   ENTER_REASON_FOR_REJECTING_ORDER: 'Enter reason for rejecting the order.',
   VIEW_MORE: 'View More',
-  START: 'START'
+  START: 'START',
+  ADD_TIP: 'Add Tip',
+  PLEASE_SELECT_RETURN_ORDER: 'Please select the product to return',
+  PLEASE_SELECT_VALID_OPTION: 'Please select a valid tip option',
+  ORDER_PREPARED:"Order Prepared"
 };

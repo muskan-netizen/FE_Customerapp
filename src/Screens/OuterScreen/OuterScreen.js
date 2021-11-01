@@ -70,14 +70,28 @@ export default function OuterScreen({navigation}) {
       navigation.navigate(screenName, {data});
     };
 
+
+console.log("@ device   ",DeviceInfo.getBundleId())
+ 
+//console.log(  userStaticName.split('.'),"userStaticNameuserStaticNameuserStaticName");
+
+  
+
+  
+
+
   //Saving login user to backend
   const _saveSocailLogin = async (socialLoginData, type) => {
+  
+ let userStaticName  =DeviceInfo.getBundleId();
+ userStaticName=userStaticName.split('.')
+    
     let fcmToken = await AsyncStorage.getItem('fcmToken');
     let data = {};
     data['name'] =
       socialLoginData?.name ||
       socialLoginData?.userName ||
-      socialLoginData?.fullName?.givenName;
+      socialLoginData?.fullName?.givenName || `${userStaticName[userStaticName.length-1]} user`;
     data['auth_id'] =
       socialLoginData?.id ||
       socialLoginData?.userID ||
@@ -171,6 +185,8 @@ export default function OuterScreen({navigation}) {
       .then((res) => {
         _saveSocailLogin(res, 'apple');
         // updateState({isLoading: false});
+
+        console.log(res,"appleappleappleappleappleapple");
       })
       .catch((err) => {
         updateState({isLoading: false});
