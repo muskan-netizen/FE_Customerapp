@@ -144,6 +144,7 @@ export default function CMSLinks({navigation}) {
           <View
             style={{
               marginTop: moderateScaleVertical(20),
+              marginBottom: moderateScaleVertical(80),
               marginHorizontal: moderateScale(20),
             }}>
             <FlatList

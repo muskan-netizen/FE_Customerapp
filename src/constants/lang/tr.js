@@ -273,6 +273,7 @@ export default {
   SENDREFFERAL: ' Tavsiye Gönder',
   SELECTPAYEMNTMETHOD: 'Bir ödeme yöntemi seçin',
   REJECT: 'REDDET',
+  PRINT: 'YAZDIR',
   ACCEPT: 'KABUL ET',
   EDITCODE: 'DÜZENLEME KODU',
   MAX_25: 'Maks. 25',
@@ -351,6 +352,7 @@ export default {
   VIEW_ALL_VENDORS: 'Tüm satıcıları görüntüle',
   CLOSE: 'Kapat',
   NOOFFERS: 'Teklif Yok',
+  NOOFFERS_FOUND: 'Teklif bulunamadı',
   NOVARIANTPRODUCTAVAILABLE: 'Bu seçenek şu anda kullanılamıyor',
   REMOVE_CART_MSG:
     'Bu Değişiklik Sepet Ürünlerinizi Kaldıracaktır. Gerçekten Devam Etmek İstiyor musunuz?',
@@ -565,7 +567,9 @@ export default {
   REJECT_REASON: 'Reject Reason',
   ENTER_REASON_FOR_REJECTING_ORDER: 'Enter reason for rejecting the order.',
   VIEW_MORE: 'View More',
+  START: 'BAŞLAT',
   ADD_TIP: 'Add Tip',
   PLEASE_SELECT_RETURN_ORDER: 'Please select the product to return',
   PLEASE_SELECT_VALID_OPTION: 'Please select a valid tip option',
+  ORDER_PREPARED: 'Order Prepared',
 };
