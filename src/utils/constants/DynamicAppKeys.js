@@ -130,6 +130,7 @@ const shortCodes = {
   seachangevending: 'caacbc',
   ored: 'fb0df5',
   orderchekout: 'f6cd9d',
+  maxisdelivery: '1e1c90',
 };
 
 const appIds = {
@@ -202,7 +203,7 @@ const appIds = {
     android: 'com.cannabus',
   }),
   govachow: Platform.select({
-    ios: 'com.codebrew.govachow',
+    ios: 'com.app.govachow',
     android: 'com.govachow',
   }),
   bustanfakieh: Platform.select({
@@ -254,8 +255,8 @@ const appIds = {
     android: 'com.codebrew.rerak',
   }),
   yummiidash: Platform.select({
-    ios: 'com.yummiidash',
-    android: 'com.yummiidash',
+    ios: 'com.app.yummiidash',
+    android: 'com.app.yummiidash',
   }),
   yoho: Platform.select({
     ios: 'com.codebrewlab.yoho',
@@ -374,8 +375,8 @@ const appIds = {
     android: 'com.loopwhole',
   }),
   vici: Platform.select({
-    ios: 'com.vici',
-    android: 'com.vici',
+    ios: 'com.customer.vici',
+    android: 'com.app.vici',
   }),
   carhop: Platform.select({
     ios: 'com.carhop',
@@ -648,6 +649,10 @@ const appIds = {
   orderchekout: Platform.select({
     ios: 'com.customer.orderchekout',
     android: 'com.orderchekout',
+  }),
+  maxisdelivery: Platform.select({
+    ios: 'com.maxisdelivery',
+    android: 'com.maxisdelivery',
   }),
 };
 

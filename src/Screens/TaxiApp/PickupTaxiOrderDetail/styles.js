@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import colors from '../../../styles/colors';
 import commonStylesFunc from '../../../styles/commonStyles';
 import {
@@ -9,8 +9,8 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 
-export default ({fontFamily}) => {
-  const commonStyles = commonStylesFunc({fontFamily});
+export default ({ fontFamily }) => {
+  const commonStyles = commonStylesFunc({ fontFamily });
   const styles = StyleSheet.create({
     scrollviewHorizontal: {
       borderTopWidth: 1,
@@ -157,18 +157,19 @@ export default ({fontFamily}) => {
     plainView: {
       alignItems: 'center',
       justifyContent: 'center',
-      width: moderateScale(100),
-
       backgroundColor: colors.textGreyLight,
-
       left: 20,
-      height: moderateScaleVertical(30),
+      borderRadius: moderateScale(4),
+      paddingVertical: moderateScale(2),
+      paddingHorizontal: moderateScale(4),
     },
     pickupDropOff: {
-      textAlign: 'left',
+      textAlign: 'center',
+      alignItems: 'center',
       color: colors.white,
       fontFamily: fontFamily.bold,
-      fontSize: textScale(12),
+      fontSize: textScale(10),
+      // padding:
     },
     pickupDropOffAddress: {
       textAlign: 'left',
@@ -337,7 +338,7 @@ export default ({fontFamily}) => {
       color: colors.lightGreyBgColor,
       fontSize: textScale(10),
     },
-    imageStyle: {height: width / 4.5, width: width / 4.5},
+    imageStyle: { height: width / 4.5, width: width / 4.5 },
     writeAReview: {
       fontFamily: fontFamily.bold,
       color: colors.lightGreyBgColor,
