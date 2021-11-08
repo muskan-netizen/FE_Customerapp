@@ -65,6 +65,8 @@ export default function DashBoardHeaderFive({
     '800/400',
   );
 
+  console.log(location, 'locationlocationlocation');
+
   useEffect(() => {
     addAllTabs();
     userSelectedtab();
@@ -73,7 +75,6 @@ export default function DashBoardHeaderFive({
   const checkSelectedTab = () => {
     const newTabs = [...tabs];
     newTabs.forEach((item, index) => {
-      console.log(item.label, dine_In_Type, 'dine_In_Type2');
       if (item.label === dine_In_Type) {
         newTabs[index].isActive = true;
         updateState({

@@ -556,4 +556,6 @@ export default {
   PLEASE_SELECT_RETURN_ORDER: 'Please select the product to return',
   PLEASE_SELECT_VALID_OPTION: 'Please select a valid tip option',
   ORDER_PREPARED: 'Order Prepared',
+  ENTER_PROMOCODE: 'Enter a promo code to apply',
+  PROMO_CODE: 'promo code',
 };
