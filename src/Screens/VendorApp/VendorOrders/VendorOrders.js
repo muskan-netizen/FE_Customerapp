@@ -33,6 +33,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import Modal from 'react-native-modal';
 import BorderTextInput from '../../../Components/BorderTextInput';
+import { StartPrinting } from '../../PrinterConnection/PrinteFunc';
 
 export default function VendorOrders({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -197,6 +198,9 @@ export default function VendorOrders({navigation, route}) {
         })
         .then((res) => {
           if (res && res.status == 'success') {
+            if(status == 7){
+              StartPrinting({ id: acceptRejectData?.id })
+            }
             updateStatus(res, acceptRejectData);
           }
         })

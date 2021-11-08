@@ -22,7 +22,7 @@ import commonStyles from '../../styles/commonStyles';
 import Header from '../../Components/Header';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import imagePath from '../../constants/imagePath';
-import { printReciept } from './PrinteFunc';
+import { printReciept, StartPrinting } from './PrinteFunc';
 import _ from 'lodash'
 import ModalView from '../../Components/Modal';
 import { moderateScale } from '../../styles/responsiveSize';
@@ -201,8 +201,14 @@ class PrinterScreen extends Component {
             alert(e);
           })
 
-        printReciept()
-
+        // printReciept()
+        StartPrinting({})
+        // const getAppData = await getItem('appData');
+        appData = appData
+        
+        // const getLanguage = await getItem('language');
+        language = language
+    
         // arr
         // canEnablePrinter = true
 

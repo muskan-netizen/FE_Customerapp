@@ -43,7 +43,7 @@ export default function MarketCard3({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
+  const { appStyle, themeColors, appData } = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily, extraStyles, MyDarkTheme, isDarkMode });
@@ -64,14 +64,41 @@ export default function MarketCard3({
       }}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
-      <FastImage
-        source={{ uri: imageUrl, priority: FastImage.priority.high }}
-        style={{
-          ...styles.mainImage,
-          ...fastImageStyle,
-        }}
-        resizeMode={FastImage.resizeMode.cover}
-      />
+      <View>
+        <FastImage
+          source={{ uri: imageUrl, priority: FastImage.priority.high }}
+          style={{
+            ...styles.mainImage,
+            ...fastImageStyle,
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+        {!appData?.profile?.preferences?.is_hyperlocal && (<View style={{
+          ...styles.ratingView,
+          position: 'absolute',
+          right: 10,
+          top: 10,
+          backgroundColor: colors.white
+        }}>
+          <Text
+            style={{
+              ...commonStyles.mediumFont14Normal,
+              fontSize: textScale(10),
+              textAlign: 'left',
+              color: data?.show_slot
+                ? colors.green
+                : data?.is_vendor_closed
+                  ? colors.redB
+                  : colors.green,
+            }}>
+            {data?.show_slot
+              ? strings.OPEN
+              : data?.is_vendor_closed
+                ? strings.CLOSE
+                : strings.OPEN}
+          </Text>
+        </View>)}
+      </View>
       {/* <BlurImages
         isDarkMode={isDarkMode}
         themeColor={themeColors.primary_color}
@@ -167,9 +194,9 @@ export default function MarketCard3({
                 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Image
-                    style={{ 
+                    style={{
                       tintColor: themeColors.primary_color,
-                     }}
+                    }}
                     source={imagePath.location2}
                   />
                   <Text
@@ -206,7 +233,7 @@ export default function MarketCard3({
             ) : null} */}
           </View>
 
-          <Text
+          {!!appData?.profile?.preferences?.is_hyperlocal && (<Text
             style={{
               ...commonStyles.mediumFont14Normal,
               fontSize: textScale(12),
@@ -222,7 +249,7 @@ export default function MarketCard3({
               : data?.is_vendor_closed
                 ? strings.CLOSE
                 : strings.OPEN}
-          </Text>
+          </Text>)}
         </View>
       </View>
     </TouchableOpacity>

@@ -1,6 +1,6 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, debounce} from 'lodash';
-import React, {Fragment, useEffect, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep, debounce } from 'lodash';
+import React, { Fragment, useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -10,13 +10,13 @@ import {
   Vibration,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import EmptyListLoader from '../../Components/EmptyListLoader';
 import Header from '../../Components/Header';
 import Header2 from '../../Components/Header2';
 
 import IconTextColumn from '../../Components/IconTextColumn';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import CardLoader from '../../Components/Loaders/CardLoader';
 import ProductLoader from '../../Components/Loaders/ProductLoader';
 import ProductCard from '../../Components/ProductCard';
@@ -34,10 +34,10 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
+import { getImageUrl, showError, showSuccess } from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../styles/theme';
 
 const ONE_SECOND_IN_MS = 50;
 const PATTERN = [
@@ -46,8 +46,8 @@ const PATTERN = [
   3 * ONE_SECOND_IN_MS
 ];
 
-export default function Products({route, navigation}) {
-  const {data} = route.params;
+export default function Products({ route, navigation }) {
+  const { data } = route.params;
   console.log(data, 'data>data >>>>PARAMS');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -69,6 +69,7 @@ export default function Products({route, navigation}) {
     filterData: [],
     brandData: [],
     allFilters: [],
+    categories: [],
     sortFilters: [
       {
         id: -2,
@@ -145,10 +146,11 @@ export default function Products({route, navigation}) {
     checkForMinimumPriceChange,
     checkForMaximumPriceChange,
     showFilterSlectedIcon,
+    categories
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFunc({fontFamily});
+  const commonStyles = commonStylesFunc({ fontFamily });
 
   //Saving the initial state
   const initialState = cloneDeep(state);
@@ -160,11 +162,11 @@ export default function Products({route, navigation}) {
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   // useFocusEffect(
   //   React.useCallback(() => {
@@ -174,21 +176,16 @@ export default function Products({route, navigation}) {
   //   }, []),
   // );
 
-  useEffect(() => {
-    updateState({pageNo: 1});
-    getAllListItems();
-  }, [languages, currencies]);
-
-  useEffect(() => {
-    // do something
-    getAllListItems();
-  }, [pageNo, isRefreshing]);
-
   useFocusEffect(
     React.useCallback(() => {
-      updateState({pageNo: 1});
+      updateState({ pageNo: 1 });
       getAllListItems();
+      console.log("run again")
     }, [
+      pageNo,
+      isRefreshing,
+      languages,
+      currencies,
       sleectdBrands,
       selectedOptions,
       slectedSortBy,
@@ -196,6 +193,29 @@ export default function Products({route, navigation}) {
       maximumPrice,
     ]),
   );
+
+  // useEffect(() => {
+  //   updateState({ pageNo: 1 });
+  //   getAllListItems();
+  // }, [languages, currencies]);
+
+  // useEffect(() => {
+  //   // do something
+  //   getAllListItems();
+  // }, [pageNo, isRefreshing]);
+
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     updateState({ pageNo: 1 });
+  //     getAllListItems();
+  //   }, [
+  //     sleectdBrands,
+  //     selectedOptions,
+  //     slectedSortBy,
+  //     minimumPrice,
+  //     maximumPrice,
+  //   ]),
+  // );
 
   const getAllListItems = () => {
     let filterExist =
@@ -210,8 +230,8 @@ export default function Products({route, navigation}) {
 
     {
       filterExist
-        ? updateState({showFilterSlectedIcon: true})
-        : updateState({showFilterSlectedIcon: false});
+        ? updateState({ showFilterSlectedIcon: true })
+        : updateState({ showFilterSlectedIcon: false });
     }
 
     if (data?.vendor) {
@@ -219,8 +239,8 @@ export default function Products({route, navigation}) {
         filterExist
           ? getAllProductsVendorFilter()
           : data?.vendorData
-          ? getAllProductsByVendorCategory()
-          : getAllProductsByVendor();
+            ? getAllProductsByVendorCategory()
+            : getAllProductsByVendor();
       }
     } else {
       {
@@ -301,6 +321,7 @@ export default function Products({route, navigation}) {
 
   /**********Get all list items by category filters */
   const getAllProductsVendorFilter = () => {
+    console.log("api hit getAllProductsCategoryFilter")
     let data = {};
     data['variants'] = selectedVariants;
     data['options'] = selectedOptions;
@@ -318,6 +339,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
+        console.log(res, "getAllProductsCategoryFilter")
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -333,6 +355,7 @@ export default function Products({route, navigation}) {
 
   /**********Get all list items by category filters */
   const getAllProductsCategoryFilter = () => {
+    console.log("api hit getAllProductsCategoryFilter")
     let data = {};
     data['variants'] = selectedVariants;
     data['options'] = selectedOptions;
@@ -366,7 +389,7 @@ export default function Products({route, navigation}) {
   /****Get all list items by vendor id */
   const getAllProductsByVendorCategory = () => {
     // alert("21312")
-
+    console.log("api hit getAllProductsByVendorCategory", data)
     actions
       .getProductByVendorCategoryId(
         `/${data?.vendorData.slug}/${data?.categoryInfo?.slug}?limit=${limit}&page=${pageNo}`,
@@ -378,7 +401,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'resz');
+        console.log(res, 'getAllProductsByVendorCategory');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -396,11 +419,10 @@ export default function Products({route, navigation}) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendor = () => {
+    console.log("api hit getAllProductsByVendor")
     actions
       .getProductByVendorId(
-        `/${productListId.id}${
-          data?.category_slug ? `/${data?.category_slug}` : ''
-        }?limit=${limit}&page=${pageNo}`,
+        `/${productListId.id}$?limit=${limit}&page=${pageNo}`,
         {},
         {
           code: appData.profile.code,
@@ -409,16 +431,27 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
+        console.log("getAllProductsByVendor res", res)
+        if (res.data.vendor.vendor_templete_id == 5) { //showing products with category
+          updateState({
+            selectedSbCategoryID: res.data.categories[0].id,
+            categories: res.data.categories,
+            productListData: res.data.categories[0].products
+          });
+        } else {
+          updateState({
+            productListData:
+              pageNo == 1
+                ? res.data.products.data
+                : [...productListData, ...res.data.products.data],
+          });
+        }
         updateState({
           isLoading: false,
           isRefreshing: false,
           categoryInfo: res.data.vendor,
           filterData: res.data.filterData,
-          productListData:
-            pageNo == 1
-              ? res.data.products.data
-              : [...productListData, ...res.data.products.data],
-        });
+        })
         updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
       .catch(errorMethod);
@@ -426,10 +459,10 @@ export default function Products({route, navigation}) {
 
   /**********Get all list items by category id */
   const getAllProducts = () => {
+    console.log("api hit getAllProducts")
     actions
       .getProductByCategoryId(
-        `/${productListId.id}?limit=${limit}&page=${pageNo}&product_list=${
-          data?.rootProducts ? true : false
+        `/${productListId.id}?limit=${limit}&page=${pageNo}&product_list=${data?.rootProducts ? true : false
         }`,
         {},
         {
@@ -439,7 +472,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'all list products');
+        console.log(res, 'getAllProducts');
         updateState({
           isLoading: false,
           isRefreshing: false,
@@ -460,7 +493,7 @@ export default function Products({route, navigation}) {
   const _onAddtoWishlist = (item) => {
     Vibration.vibrate(PATTERN)
     if (!!userData?.auth_token) {
-      updateState({isLoadingB: true});
+      updateState({ isLoadingB: true });
       actions
         .updateProductWishListData(
           `/${item.id}`,
@@ -478,7 +511,7 @@ export default function Products({route, navigation}) {
         .catch(errorMethod);
     } else {
       showError(strings.UNAUTHORIZED_MESSAGE);
-      updateState({isLoadingB: false});
+      updateState({ isLoadingB: false });
     }
   };
 
@@ -489,31 +522,33 @@ export default function Products({route, navigation}) {
       if (i.id == item.id) {
         if (item.inwishlist) {
           i.inwishlist = null;
-          return {...i, inwishlist: null};
+          return { ...i, inwishlist: null };
         } else {
-          return {...i, inwishlist: {product_id: i.id}};
+          return { ...i, inwishlist: { product_id: i.id } };
         }
       } else {
         return i;
       }
     });
-    updateState({productListData: newArray, isLoadingB: false});
+    updateState({ productListData: newArray, isLoadingB: false });
   };
 
   const errorMethod = (error) => {
     console.log(error, 'error');
-    updateState({isLoading: false, isRefreshing: false, isLoadingB: false});
+    updateState({ isLoading: false, isRefreshing: false, isLoadingB: false });
     showError(error?.message || error?.error);
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({pageNo: 1, isRefreshing: true});
+    updateState({ pageNo: 1, isRefreshing: true });
   };
 
   //pagination of data
-  const onEndReached = ({distanceFromEnd}) => {
-    updateState({pageNo: pageNo + 1});
+  const onEndReached = ({ distanceFromEnd }) => {
+    if (categoryInfo.vendor_templete_id !== 5) {
+      updateState({ pageNo: pageNo + 1 });
+    }
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -527,8 +562,8 @@ export default function Products({route, navigation}) {
     moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
   };
 
-  const renderProduct = ({item, index}) => {
-    const {isSelectItem} = state;
+  const renderProduct = ({ item, index }) => {
+    const { isSelectItem } = state;
     return (
       <ProductCard
         data={item}
@@ -540,15 +575,21 @@ export default function Products({route, navigation}) {
   };
 
   const openModal = () => {
-    updateState({isVisibleModal: true});
+    updateState({ isVisibleModal: true });
   };
   const closeModal = () => {
-    updateState({isVisibleModal: false});
+    updateState({ isVisibleModal: false });
   };
 
   const onPressChildCards = (item) => {
-    // updateState({selectedSbCategoryID: item.id});
-    navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
+    console.log("item++++", item)
+    updateState({
+      productListData: item.products,
+      selectedSbCategoryID: item.id
+    })
+    return;
+    updateState({ selectedSbCategoryID: item.id });
+    navigation.push(navigationStrings.PRODUCT_LIST, { data: item });
   };
 
   // we set the height of item is fixed
@@ -562,7 +603,7 @@ export default function Products({route, navigation}) {
   const listHeaderComponent = () => {
     return (
       <Fragment>
-        {categoryInfo && categoryInfo.childs && categoryInfo.childs.length ? (
+        {categories.length > 0 ? (
           <View>
             <ScrollView
               showsHorizontalScrollIndicator={false}
@@ -571,28 +612,28 @@ export default function Products({route, navigation}) {
                 marginHorizontal: moderateScale(16),
                 marginTop: moderateScaleVertical(10),
               }}>
-              <IconTextColumn
+              {/* <IconTextColumn
                 isActive={selectedSbCategoryID == -1 ? true : false}
                 icon={imagePath.allProducts}
                 text={strings.ALLPRODUCT}
-                onPress={() => updateState({selectedSbCategoryID: -1})}
-              />
-              {categoryInfo.childs.map((item, inx) => {
+                onPress={() => updateState({ selectedSbCategoryID: -1 })}
+              /> */}
+              {categories.map((item, inx) => {
                 return (
                   <View key={inx}>
                     <IconTextColumn
                       isActive={selectedSbCategoryID == item.id ? true : false}
                       icon={{
                         uri: getImageUrl(
-                          item.icon.proxy_url,
-                          item.icon.image_path,
+                          item.category.icon.proxy_url,
+                          item.category.icon.image_path,
                           '200/200',
                         ),
                       }}
-                      imageStyle={{height: 40, width: 40, borderRadius: 40 / 2}}
+                      imageStyle={{ height: 40, width: 40, borderRadius: 40 / 2 }}
                       // url={getImageUrl(item.icon.proxy_url, item.icon.image_path, '200/200') }
                       onPress={() => onPressChildCards(item)}
-                      text={item?.translation[0]?.name}
+                      text={item?.category.translation[0]?.name}
                     />
                   </View>
                 );
@@ -611,14 +652,14 @@ export default function Products({route, navigation}) {
           {/* <Text style={{ ...commonStyles.futuraBtHeavyFont16 }}>
       All Products
     </Text> */}
-          <View style={{flex: 0.4}} />
+          <View style={{ flex: 0.4 }} />
           <View
             style={{
               flex: 0.6,
               flexDirection: 'row',
               justifyContent: 'flex-end',
             }}>
-            <TouchableOpacity
+            {categories.length == 0 && (<TouchableOpacity
               // onPress={() => navigation.navigate(navigationStrings.FILTER)}
               onPress={moveToNewScreen(navigationStrings.FILTER, {
                 // brandData: brandData,
@@ -652,14 +693,14 @@ export default function Products({route, navigation}) {
                   ),
               })}>
               <Image
-                style={{tintColor: isDarkMode ? MyDarkTheme.colors.text : null}}
+                style={{ tintColor: isDarkMode ? MyDarkTheme.colors.text : null }}
                 source={
                   showFilterSlectedIcon
                     ? imagePath.filterSelected
                     : imagePath.filter
                 }
               />
-            </TouchableOpacity>
+            </TouchableOpacity>)}
 
             <TouchableOpacity
               onPress={moveToNewScreen(navigationStrings.SEARCHPRODUCTOVENDOR, {
@@ -668,15 +709,15 @@ export default function Products({route, navigation}) {
                   : staticStrings.CATEGORY,
                 id: data?.vendor ? data?.id : productListId?.id,
               })}
-              style={{marginLeft: 10}}>
+              style={{ marginLeft: 10 }}>
               <Image
-                style={{tintColor: isDarkMode ? MyDarkTheme.colors.text : null}}
+                style={{ tintColor: isDarkMode ? MyDarkTheme.colors.text : null }}
                 source={imagePath.search}
               />
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{marginTop: moderateScaleVertical(20)}} />
+        <View style={{ marginTop: moderateScaleVertical(20) }} />
       </Fragment>
     );
   };
@@ -699,7 +740,7 @@ export default function Products({route, navigation}) {
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }
       />
-      <View style={{...commonStyles.headerTopLine}} />
+      <View style={{ ...commonStyles.headerTopLine }} />
 
       <View
         style={{
@@ -720,11 +761,11 @@ export default function Products({route, navigation}) {
         keyboardShouldPersistTaps="always"
         numColumns={2}
         showsVerticalScrollIndicator={false}
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         contentContainerStyle={{
           flexGrow: 1,
         }}
-        ItemSeparatorComponent={() => <View style={{height: 20}} />}
+        ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
         columnWrapperStyle={{
           justifyContent: 'space-between',
           marginHorizontal: moderateScale(14),
@@ -744,7 +785,7 @@ export default function Products({route, navigation}) {
         onEndReached={onEndReachedDelayed}
         onEndReachedThreshold={0.5}
         ListFooterComponent={() => (
-          <View style={{height: moderateScaleVertical(65)}} />
+          <View style={{ height: moderateScaleVertical(65) }} />
         )}
         ListEmptyComponent={<EmptyListLoader />}
       />

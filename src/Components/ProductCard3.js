@@ -86,7 +86,7 @@ export default function ProductCard3({
       // delay={index > 8 ? 1 * 100 : index * 10}
       pointerEvents={btnLoader ? 'none' : 'auto'}>
       <TouchableOpacity
-        disabled
+        // disabled
         activeOpacity={0.6}
         onPress={onPress}
         onPressIn={() => pressInAnimation(scaleInAnimated)}

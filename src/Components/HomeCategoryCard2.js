@@ -59,23 +59,23 @@ export default function HomeCategoryCard2({
             style={{
               height: moderateScale(50),
               width: moderateScale(50),
-              borderRadius: moderateScale(10),
+              borderRadius: moderateScale(25),
             }}
             source={{
               uri: imageURI,
               priority: FastImage.priority.high,
             }}
-            resizeMode="contain"
+            resizeMode="cover"
           />
         )}
       </View>
       <View style={{flex: 0.2}}>
         <Text
-          numberOfLines={2}
+          numberOfLines={1}
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
             fontFamily: fontFamily.regular,
-            fontSize: textScale(10),
+            fontSize: textScale(9),
             textAlign: 'center',
           }}>
           {data.name}

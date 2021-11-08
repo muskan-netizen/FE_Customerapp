@@ -60,8 +60,8 @@ export default function RateOrder({navigation, route}) {
   const {appData, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
-  const businessType = appStyle?.homePageLayout; 
-   const {themeColors, themeLayouts} = currentTheme;
+  const businessType = appStyle?.homePageLayout;
+  const {themeColors, themeLayouts} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
 
   const styles = stylesFunc({themeColors, fontFamily});
@@ -265,7 +265,9 @@ export default function RateOrder({navigation, route}) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+        }
         centerTitle={strings.RATEORDER}
         headerStyle={{backgroundColor: colors.white}}
       />
