@@ -1,6 +1,6 @@
 #include "Pods/Target Support Files/Pods-PinkJet/Pods-PinkJet.release.xcconfig"
 
-PROJECT_APPLE_ID =1592485068
+PROJECT_APPLE_ID =1594187374
 PROJECT_BUNDLE_ID =com.pinkjet
 PROJECT_APP_VERSION = 1.0
 PROJECT_BUILD_NUMBER = 1

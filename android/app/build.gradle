@@ -1564,7 +1564,16 @@ android {
             resValue "string", "app_name", "PinkJet"
             resValue "string", "host_name", ""
          }
-
+        mokabfix{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.mokabfix'
+            resValue "string", "app_name", "MokabFix"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

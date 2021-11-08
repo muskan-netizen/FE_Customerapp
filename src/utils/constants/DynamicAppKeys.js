@@ -135,6 +135,7 @@ const shortCodes = {
   careworks: '81c669',
   thubaerides: '47f449',
   pinkjet: '7e0ff5',
+  mokabfix: '88d242',
 };
 
 const appIds = {
@@ -673,6 +674,10 @@ const appIds = {
   pinkjet: Platform.select({
     ios: 'com.pinkjet',
     android: 'com.pinkjet',
+  }),
+  mokabfix: Platform.select({
+    ios: 'com.mokabfix',
+    android: 'com.mokabfix',
   }),
 };
 

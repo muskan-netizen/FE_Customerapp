@@ -894,6 +894,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.mokabfix:
+          updateState({
+            shortCode: shortCodes.mokabfix,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
