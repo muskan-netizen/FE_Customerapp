@@ -1,7 +1,7 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
-import {Platform} from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
+import { Platform } from 'react-native';
 import {
   Alert,
   FlatList,
@@ -13,16 +13,16 @@ import {
   View,
   TouchableNativeFeedback,
 } from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import DeviceInfo from 'react-native-device-info';
 import HTMLView from 'react-native-htmlview';
-import {Pagination} from 'react-native-snap-carousel';
-import {useSelector} from 'react-redux';
+import { Pagination } from 'react-native-snap-carousel';
+import { useSelector } from 'react-redux';
 import Banner from '../../Components/Banner';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
 import GradientButton from '../../Components/GradientButton';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import ProductCard from '../../Components/ProductCard';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -38,25 +38,25 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {showError, showSuccess} from '../../utils/helperFunctions';
+import { showError, showSuccess } from '../../utils/helperFunctions';
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../styles/theme';
 
-export default function ProductDetail2({route, navigation}) {
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
+export default function ProductDetail2({ route, navigation }) {
+  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {productListData} = useSelector((state) => state?.product);
+  const { productListData } = useSelector((state) => state?.product);
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
-  const commonStyles = commonStylesFunc({fontFamily});
-  const {data} = route.params;
+  const styles = stylesFunc({ themeColors, fontFamily });
+  const commonStyles = commonStylesFunc({ fontFamily });
+  const { data } = route.params;
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     isLoading: true,
@@ -81,8 +81,8 @@ export default function ProductDetail2({route, navigation}) {
   const initialState = cloneDeep(state);
   const userData = useSelector((state) => state?.auth?.userData);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {bannerRef} = useRef();
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const { bannerRef } = useRef();
   const {
     productDetailData,
     productPriceData,
@@ -104,7 +104,7 @@ export default function ProductDetail2({route, navigation}) {
 
   const customRight = () => {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Image source={imagePath.search} />
       </View>
     );
@@ -115,9 +115,9 @@ export default function ProductDetail2({route, navigation}) {
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -200,7 +200,7 @@ export default function ProductDetail2({route, navigation}) {
           variantSet &&
           !variantSet.length
         ) {
-          updateState({variantSet: res.data.products.variant_set});
+          updateState({ variantSet: res.data.products.variant_set });
         }
       })
       .catch(errorMethod);
@@ -208,7 +208,7 @@ export default function ProductDetail2({route, navigation}) {
 
   //Get Product detail based on varint selection
   const getProductDetailBasedOnFilter = (variantSetData) => {
-    updateState({isLoadingC: true});
+    updateState({ isLoadingC: true });
     let data = {};
     data['variants'] = variantSetData.map((i) => i.variant_id);
     data['options'] = variantSetData.map((i) => i.optionId);
@@ -237,7 +237,7 @@ export default function ProductDetail2({route, navigation}) {
 
   const errorMethod = (error) => {
     if (error?.message?.alert == 1) {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
@@ -245,17 +245,17 @@ export default function ProductDetail2({route, navigation}) {
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        {text: strings.CLEAR_CART2, onPress: () => clearCart()},
+        { text: strings.CLEAR_CART2, onPress: () => clearCart() },
       ]);
     } else {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
       showError(error?.message || error?.error);
     }
   };
 
   const errorMethodSecond = (error, addonSet) => {
     if (error?.message?.alert == 1) {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
@@ -263,10 +263,10 @@ export default function ProductDetail2({route, navigation}) {
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        {text: strings.CLEAR_CART2, onPress: () => clearCart(addonSet)},
+        { text: strings.CLEAR_CART2, onPress: () => clearCart(addonSet) },
       ]);
     } else {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
       showError(error?.message || error?.error);
     }
   };
@@ -319,10 +319,10 @@ export default function ProductDetail2({route, navigation}) {
 
           if (item.inwishlist) {
             item.inwishlist = null;
-            updateState({productDetailData: item});
+            updateState({ productDetailData: item });
           } else {
-            item.inwishlist = {product_id: item.id};
-            updateState({productDetailData: item});
+            item.inwishlist = { product_id: item.id };
+            updateState({ productDetailData: item });
           }
         })
         .catch(errorMethod);
@@ -364,7 +364,7 @@ export default function ProductDetail2({route, navigation}) {
 
   const radioButtonView = (options) => {
     return (
-      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         {options.map((i, inx) => {
           return (
             <TouchableNativeFeedback
@@ -387,7 +387,7 @@ export default function ProductDetail2({route, navigation}) {
 
   const circularView = (options) => {
     return (
-      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         {options.map((i, inx) => {
           return (
             <TouchableNativeFeedback
@@ -408,7 +408,7 @@ export default function ProductDetail2({route, navigation}) {
 
                     borderColor:
                       i?.value &&
-                      (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
+                        (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
                         ? colors.textGrey
                         : i.hexacode,
                   },
@@ -431,7 +431,7 @@ export default function ProductDetail2({route, navigation}) {
       </View>
     );
   };
-  const variantSetValue = ({options, type}) => {
+  const variantSetValue = ({ options, type }) => {
     if (type == 1) {
       return <>{radioButtonView(options)}</>;
     }
@@ -458,7 +458,7 @@ export default function ProductDetail2({route, navigation}) {
           </Text>
         </View> */}
         <View
-          style={{marginVertical: 10, paddingHorizontal: moderateScale(15)}}>
+          style={{ marginVertical: 10, paddingHorizontal: moderateScale(15) }}>
           {variantSetData.map((i, inx) => {
             return (
               <View
@@ -469,7 +469,7 @@ export default function ProductDetail2({route, navigation}) {
                 <Text
                   style={[
                     styles.variantLable,
-                    {marginBottom: moderateScale(5)},
+                    { marginBottom: moderateScale(5) },
                   ]}>{`${i?.title}`}</Text>
                 {i?.options ? variantSetValue(i) : null}
               </View>
@@ -482,7 +482,7 @@ export default function ProductDetail2({route, navigation}) {
 
   useEffect(() => {
     if (data?.addonSetData && data?.randomValue) {
-      updateState({addonSet: data?.addonSetData});
+      updateState({ addonSet: data?.addonSetData });
       setTimeout(() => {
         _finalAddToCart(data?.addonSetData);
       }, 1000);
@@ -513,7 +513,7 @@ export default function ProductDetail2({route, navigation}) {
       data['addon_ids'] = addon_ids;
       data['addon_options'] = addon_options;
     }
-    updateState({isLoadingC: true, isVisibleAddonModal: false});
+    updateState({ isLoadingC: true, isVisibleAddonModal: false });
     actions
       .addProductsToCart(data, {
         code: appData.profile.code,
@@ -525,7 +525,7 @@ export default function ProductDetail2({route, navigation}) {
         actions.cartItemQty(res);
         showSuccess(strings.PRODUCT_ADDED_SUCCESS);
 
-        updateState({isLoadingC: false});
+        updateState({ isLoadingC: false });
         navigation.goBack();
       })
       .catch((error) => errorMethodSecond(error, addonSet));
@@ -534,7 +534,7 @@ export default function ProductDetail2({route, navigation}) {
   const addToCart = () => {
     {
       addonSet && addonSet.length
-        ? updateState({isVisibleAddonModal: true})
+        ? updateState({ isVisibleAddonModal: true })
         : _finalAddToCart(addonSet);
     }
     // _finalAddToCart()
@@ -561,18 +561,18 @@ export default function ProductDetail2({route, navigation}) {
     }
   };
 
-  const renderProduct = ({item, index}) => {
+  const renderProduct = ({ item, index }) => {
     item.showAddToCart = true;
     return (
       <ProductCard
         onPress={() =>
-          navigation.push(navigationStrings.PRODUCTDETAIL, {data: item})
+          navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
         }
         onAddtoWishlist={() => _onAddtoWishlist(item)}
         data={item}
-        cardStyle={{marginHorizontal: moderateScale(10)}}
+        cardStyle={{ marginHorizontal: moderateScale(10) }}
         addToCart={() =>
-          navigation.push(navigationStrings.PRODUCTDETAIL, {data: item})
+          navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
         }
         bottomText={strings.VIEW_DETAIL}
       />
@@ -580,11 +580,11 @@ export default function ProductDetail2({route, navigation}) {
   };
 
   const setModalVisibleForAddonModal = (visible) => {
-    updateState({isVisibleAddonModal: false});
+    updateState({ isVisibleAddonModal: false });
   };
 
   const onclickBanner = () => {
-    updateState({lightBox: true});
+    updateState({ lightBox: true });
   };
 
   return (
@@ -611,7 +611,7 @@ export default function ProductDetail2({route, navigation}) {
         visible={isLoadingC}
       />
       {isLoading && (
-        <View style={{marginTop: StatusBarHeight + moderateScale(40)}}>
+        <View style={{ marginTop: StatusBarHeight + moderateScale(40) }}>
           <ListEmptyProduct isLoading={isLoading} />
         </View>
       )}
@@ -672,7 +672,7 @@ export default function ProductDetail2({route, navigation}) {
           sliderWidth={width}
           itemWidth={width}
           pagination={false}
-          setActiveState={(index) => updateState({slider1ActiveSlide: index})}
+          setActiveState={(index) => updateState({ slider1ActiveSlide: index })}
           showLightbox={true}
           cardViewStyle={{
             alignItems: 'center',
@@ -693,7 +693,7 @@ export default function ProductDetail2({route, navigation}) {
                   marginHorizontal: moderateScale(10),
                 }}>
                 {productDetailData?.averageRating !== null && (
-                  <View style={{alignItems: 'flex-end'}}>
+                  <View style={{ alignItems: 'flex-end' }}>
                     <View
                       style={{
                         flexDirection: 'row',
@@ -713,18 +713,17 @@ export default function ProductDetail2({route, navigation}) {
                     </View>
                   </View>
                 )}
-                <TouchableNativeFeedback
+                <TouchableOpacity
+                  activeOpacity={0.9}
                   onPress={() => _onAddtoWishlist(productDetailData)}>
-                  {productDetailData?.is_wishlist ? (
-                    <View>
-                      {!!productDetailData?.inwishlist ? (
-                        <Image source={imagePath.blackFilledHeart} />
-                      ) : (
-                        <Image source={imagePath.fav} />
-                      )}
-                    </View>
-                  ) : null}
-                </TouchableNativeFeedback>
+                  <View>
+                    {!!productDetailData?.inwishlist ? (
+                      <Image source={imagePath.blackFilledHeart} />
+                    ) : (
+                      <Image source={imagePath.fav} />
+                    )}
+                  </View>
+                </TouchableOpacity>
               </View>
             </>
           }
@@ -763,7 +762,7 @@ export default function ProductDetail2({route, navigation}) {
             numberOfLines={2}
             style={
               isDarkMode
-                ? [styles.productName, {color: MyDarkTheme.colors.text}]
+                ? [styles.productName, { color: MyDarkTheme.colors.text }]
                 : styles.productName
             }>
             {productDetailData?.translation[0]?.title}
@@ -771,20 +770,20 @@ export default function ProductDetail2({route, navigation}) {
           {!!productTotalQuantity &&
             !!productTotalQuantity != 0 &&
             (!!data?.showAddToCart ? null : (
-              <View style={{flex: 0.5, justifyContent: 'center'}}>
+              <View style={{ flex: 0.5, justifyContent: 'center' }}>
                 <View style={styles.incDecBtnContainer2}>
                   <TouchableNativeFeedback
-                    style={{flex: 0.3, alignItems: 'center'}}
+                    style={{ flex: 0.3, alignItems: 'center' }}
                     onPress={() => productIncrDecreamentForCart(2)}>
                     <Text style={styles.cartItemValueBtn2}>-</Text>
                   </TouchableNativeFeedback>
-                  <View style={{flex: 0.4, alignItems: 'center'}}>
+                  <View style={{ flex: 0.4, alignItems: 'center' }}>
                     <Text style={styles.cartItemValue2}>
                       {productQuantityForCart}
                     </Text>
                   </View>
                   <TouchableNativeFeedback
-                    style={{flex: 0.3, alignItems: 'center'}}
+                    style={{ flex: 0.3, alignItems: 'center' }}
                     onPress={() => productIncrDecreamentForCart(1)}>
                     <Text style={styles.cartItemValueBtn2}>+</Text>
                   </TouchableNativeFeedback>
@@ -805,10 +804,10 @@ export default function ProductDetail2({route, navigation}) {
                 </TouchableNativeFeedback> */}
         </View>
         <ScrollView
-          style={{marginBottom: moderateScale(90)}}
+          style={{ marginBottom: moderateScale(90) }}
           showsVerticalScrollIndicator={false}>
           {plainHtml != null ? (
-            <View style={{paddingHorizontal: moderateScale(15)}}>
+            <View style={{ paddingHorizontal: moderateScale(15) }}>
               <HTMLView
                 value={
                   plainHtml.startsWith('<p>')
@@ -862,17 +861,16 @@ export default function ProductDetail2({route, navigation}) {
                 }}>
                 Total:{' '}
               </Text>
-              <Text style={styles.productPrice2}>{`${
-                currencies?.primary_currency.symbol
-              }${(
-                Number(productPriceData?.multiplier) *
-                Number(productPriceData?.price)
-              ).toFixed(2)}`}</Text>
+              <Text style={styles.productPrice2}>{`${currencies?.primary_currency.symbol
+                }${(
+                  Number(productPriceData?.multiplier) *
+                  Number(productPriceData?.price)
+                ).toFixed(2)}`}</Text>
             </View>
 
             {/* Out of stock view */}
 
-            <View style={{justifyContent: 'center'}}>
+            <View style={{ justifyContent: 'center' }}>
               <Text
                 style={{
                   color:
@@ -937,12 +935,12 @@ export default function ProductDetail2({route, navigation}) {
             keyExtractor={(item, index) => String(index)}
             keyboardShouldPersistTaps="always"
             showsHorizontalScrollIndicator={false}
-            style={{flex: 1, marginVertical: moderateScaleVertical(10)}}
-            contentContainerStyle={{flexGrow: 1}}
+            style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
+            contentContainerStyle={{ flexGrow: 1 }}
             horizontal
-            ItemSeparatorComponent={() => <View style={{height: 20}} />}
-            ListFooterComponent={() => <View style={{height: 20}} />}
-            // ListEmptyComponent={<ListEmptyProduct isLoading={state.isLoading}/>}
+            ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+            ListFooterComponent={() => <View style={{ height: 20 }} />}
+          // ListEmptyComponent={<ListEmptyProduct isLoading={state.isLoading}/>}
           />
           <AddonModal
             productdetail={productDetailData}
@@ -950,7 +948,7 @@ export default function ProductDetail2({route, navigation}) {
             onClose={() => setModalVisibleForAddonModal(false)}
             // onPress={(data) => alert('123')}
             addonSet={addonSet}
-            // onPress={currentLocation}
+          // onPress={currentLocation}
           />
         </ScrollView>
       </View>
