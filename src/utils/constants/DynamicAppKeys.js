@@ -134,6 +134,7 @@ const shortCodes = {
   donepacked: '4fc332',
   careworks: '81c669',
   thubaerides: '47f449',
+  pinkjet: '7e0ff5',
 };
 
 const appIds = {
@@ -668,6 +669,10 @@ const appIds = {
   thubaerides: Platform.select({
     ios: 'com.thubaerides',
     android: 'com.thubaerides',
+  }),
+  pinkjet: Platform.select({
+    ios: 'com.pinkjet',
+    android: 'com.pinkjet',
   }),
 };
 

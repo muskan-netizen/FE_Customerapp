@@ -888,6 +888,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.pinkjet:
+          updateState({
+            shortCode: shortCodes.pinkjet,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
