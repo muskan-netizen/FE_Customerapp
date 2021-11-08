@@ -560,6 +560,49 @@ export default function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
+
+  const checkPaymentOptions = (res) => {
+    updateState({ placeLoader: false })
+    let paymentId = res?.data?.payment_option_id
+    let paymentData = {
+      selectedPayment: selectedPayment,
+      total_payable_amount: (Number(cartData?.total_payable_amount) +
+        (selectedTipAmount != null && selectedTipAmount != '' ? Number(selectedTipAmount) : 0)).toFixed(2),
+      payment_option_id: selectedPayment?.id,
+      orderDetail: res.data,
+    }
+    switch (paymentId) {
+      case 6: case !!(Number(cartData?.total_payable_amount) !== 0): case Number(selectedTipAmount) !== 0: //Payfast Payment Getway
+        navigation.navigate(navigationStrings.PAYFAST, paymentData);
+        break;
+      case 7: case !!(Number(cartData?.total_payable_amount) !== 0): case Number(selectedTipAmount) !== 0: //Mobbex Payment Getway
+        navigation.navigate(navigationStrings.MOBBEX, paymentData);
+      case 8: case !!(Number(cartData?.total_payable_amount) !== 0): case Number(selectedTipAmount) !== 0: //Yoco Payment Getway
+        navigation.navigate(navigationStrings.YOCO, paymentData);
+        break;
+      case 9: case !!(Number(cartData?.total_payable_amount) !== 0): case Number(selectedTipAmount) !== 0: //Pyalink Payment Getway
+        navigation.navigate(navigationStrings.PAYLINK, paymentData);
+        break;
+      default:
+        if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1) {
+          console.log("success ressssssss", res.data)
+          setTimeout(() => {
+            _getOrderDetail(res.data.vendors[0])
+          }, 1500);
+        } else {
+          actions.cartItemQty({});
+          updateState({
+            cartItems: [],
+            cartData: {},
+            isLoadingB: false,
+            placeLoader: false,
+          })
+          moveToNewScreen(navigationStrings.ORDERSUCESS, { orderDetail: res.data })();
+        }
+        break;
+    }
+  }
+
   const _directOrderPlace = () => {
     let data = {};
     data['address_id'] =
@@ -592,93 +635,76 @@ export default function Cart({ navigation, route }) {
             placeLoader: false,
           })
         }
-        if (
-          (res?.data?.payment_option_id === 6 &&
-            !!(Number(cartData?.total_payable_amount) !== 0)) ||
-          Number(selectedTipAmount) !== 0
-        ) {
-          navigation.navigate(navigationStrings.PAYFAST, {
-            selectedPayment: selectedPayment,
-            total_payable_amount: (
-              Number(cartData?.total_payable_amount) +
-              (selectedTipAmount != null && selectedTipAmount != ''
-                ? Number(selectedTipAmount)
-                : 0)
-            ).toFixed(2),
+        checkPaymentOptions(res)
+        // if (
+        //   (res?.data?.payment_option_id === 6 &&
+        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
+        //   Number(selectedTipAmount) !== 0
+        // ) {
+        // navigation.navigate(navigationStrings.PAYFAST, {
+        //   selectedPayment: selectedPayment,
+        //   total_payable_amount: (
+        //     Number(cartData?.total_payable_amount) +
+        //     (selectedTipAmount != null && selectedTipAmount != ''
+        //       ? Number(selectedTipAmount)
+        //       : 0)
+        //   ).toFixed(2),
 
-            payment_option_id: selectedPayment?.id,
-            orderDetail: res.data,
-          });
-        } else if (
-          (res?.data?.payment_option_id === 7 &&
-            !!(Number(cartData?.total_payable_amount) !== 0)) ||
-          Number(selectedTipAmount) !== 0
-        ) {
-          navigation.navigate(navigationStrings.MOBBEX, {
-            selectedPayment: selectedPayment,
-            total_payable_amount: (
-              Number(cartData?.total_payable_amount) +
-              (selectedTipAmount != null && selectedTipAmount != ''
-                ? Number(selectedTipAmount)
-                : 0)
-            ).toFixed(2),
+        //   payment_option_id: selectedPayment?.id,
+        //   orderDetail: res.data,
+        // });
+        // } else if (
+        //   (res?.data?.payment_option_id === 7 &&
+        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
+        //   Number(selectedTipAmount) !== 0
+        // ) {
+        // navigation.navigate(navigationStrings.MOBBEX, {
+        //   selectedPayment: selectedPayment,
+        //   total_payable_amount: (
+        //     Number(cartData?.total_payable_amount) +
+        //     (selectedTipAmount != null && selectedTipAmount != ''
+        //       ? Number(selectedTipAmount)
+        //       : 0)
+        //   ).toFixed(2),
 
-            payment_option_id: selectedPayment?.id,
-            orderDetail: res.data,
-          });
-        } else if (
-          (res?.data?.payment_option_id === 8 &&
-            !!(Number(cartData?.total_payable_amount) !== 0)) ||
-          Number(selectedTipAmount) !== 0
-        ) {
-          navigation.navigate(navigationStrings.YOCO, {
-            selectedPayment: selectedPayment,
-            total_payable_amount: (
-              Number(cartData?.total_payable_amount) +
-              (selectedTipAmount != null && selectedTipAmount != ''
-                ? Number(selectedTipAmount)
-                : 0)
-            ).toFixed(2),
+        //   payment_option_id: selectedPayment?.id,
+        //   orderDetail: res.data,
+        // });
+        // } else if (
+        //   (res?.data?.payment_option_id === 8 &&
+        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
+        //   Number(selectedTipAmount) !== 0
+        // ) {
+        // navigation.navigate(navigationStrings.YOCO, {
+        //   selectedPayment: selectedPayment,
+        //   total_payable_amount: (
+        //     Number(cartData?.total_payable_amount) +
+        //     (selectedTipAmount != null && selectedTipAmount != ''
+        //       ? Number(selectedTipAmount)
+        //       : 0)
+        //   ).toFixed(2),
 
-            payment_option_id: selectedPayment?.id,
-            orderDetail: res.data,
-          });
-        } else if (
-          (res?.data?.payment_option_id === 9 &&
-            !!(Number(cartData?.total_payable_amount) !== 0)) ||
-          Number(selectedTipAmount) !== 0
-        ) {
-          navigation.navigate(navigationStrings.PAYLINK, {
-            selectedPayment: selectedPayment,
-            total_payable_amount: (
-              Number(cartData?.total_payable_amount) +
-              (selectedTipAmount != null && selectedTipAmount != ''
-                ? Number(selectedTipAmount)
-                : 0)
-            ).toFixed(2),
-            payment_option_id: selectedPayment?.id,
-            orderDetail: res.data,
-          });
-        } else {
-          if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1) {
-            console.log("success ressssssss", res.data)
-            // return;
-            setTimeout(() => {
-              _getOrderDetail(res.data.vendors[0])
-            }, 1500);
-          } else {
-            actions.cartItemQty({});
-            updateState({
-              cartItems: [],
-              cartData: {},
-              isLoadingB: false,
-              placeLoader: false,
-            })
-            moveToNewScreen(navigationStrings.ORDERSUCESS, {
-              orderDetail: res.data,
-            })();
-          }
-        }
+        //   payment_option_id: selectedPayment?.id,
+        //   orderDetail: res.data,
+        // });
+        // } else if (
+        //   (res?.data?.payment_option_id === 9 &&
+        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
+        //   Number(selectedTipAmount) !== 0
+        // ) {
+        // navigation.navigate(navigationStrings.PAYLINK, {
+        //   selectedPayment: selectedPayment,
+        //   total_payable_amount: (
+        //     Number(cartData?.total_payable_amount) +
+        //     (selectedTipAmount != null && selectedTipAmount != ''
+        //       ? Number(selectedTipAmount)
+        //       : 0)
+        //   ).toFixed(2),
+        //   payment_option_id: selectedPayment?.id,
+        //   orderDetail: res.data,
+        // });
+        // } else {
+        // }
         showSuccess(res?.message);
       })
       .catch(errorMethod);
@@ -774,7 +800,6 @@ export default function Cart({ navigation, route }) {
       _directOrderPlace();
       return;
     }
-
     _offineLinePayment();
   };
 
@@ -804,7 +829,6 @@ export default function Cart({ navigation, route }) {
       } else {
         if (!!userData) {
           console.log('user data', userData);
-
           if (!!userData) {
             if (
               !!userData?.client_preference?.verify_email &&
@@ -882,17 +906,8 @@ export default function Cart({ navigation, route }) {
         key={String(cartItems.length)}
         style={{
           ...styles.swipeView,
-          backgroundColor: getColorCodeWithOpactiyNumber(
-            themeColors.primary_color.substr(1),
-            15,
-          ),
-          marginBottom: moderateScaleVertical(12),
         }}>
-        {/* <TouchableOpacity
-          style={{justifyContent: 'center'}}
-          onPress={openDeleteView}>
-          <Image source={imagePath.deleteRed} />
-        </TouchableOpacity> */}
+        <Image source={imagePath.deleteRed} />
       </Animated.View>
     );
   };
@@ -1288,22 +1303,17 @@ export default function Cart({ navigation, route }) {
                               : null}
                           </View>
 
-                          <View
-                            pointerEvents={btnLoader ? 'none' : 'auto'}
-                            style={{
-                              flex: 0.3,
-                              paddingRight: moderateScale(8),
-                            }}>
+                          <View pointerEvents={btnLoader ? 'none' : 'auto'}>
                             <View style={styles.incDecBtnContainer}>
                               <TouchableOpacity
-                                style={{ flex: 0.3, alignItems: 'center' }}
-                                onPress={() => addDeleteCartItems(i, inx, 2)}>
-                                <Text style={styles.cartItemValueBtn}>-</Text>
+                                style={{ alignItems: 'center' }}
+                                onPress={() => addDeleteCartItems(i, inx, 1)}>
+                                <Text style={styles.cartItemValueBtn}>+</Text>
                               </TouchableOpacity>
-                              <View style={{ flex: 0.4, alignItems: 'center' }}>
+                              <View style={{ alignItems: 'center', width: moderateScale(20), height: moderateScale(20), justifyContent: 'center' }}>
                                 {btnLoadrId === i.id && btnLoader ? (
                                   <UIActivityIndicator
-                                    size={moderateScale(18)}
+                                    size={moderateScale(16)}
                                     color={colors.white}
                                   />
                                 ) : (
@@ -1313,14 +1323,13 @@ export default function Cart({ navigation, route }) {
                                 )}
                               </View>
                               <TouchableOpacity
-                                style={{ flex: 0.3, alignItems: 'center' }}
-                                onPress={() => addDeleteCartItems(i, inx, 1)}>
-                                <Text style={styles.cartItemValueBtn}>+</Text>
+                                style={{ alignItems: 'center' }}
+                                onPress={() => addDeleteCartItems(i, inx, 2)}>
+                                <Text style={styles.cartItemValueBtn}>-</Text>
                               </TouchableOpacity>
                             </View>
                           </View>
                         </View>
-
                         <View
                           style={{
                             flexDirection: 'row',
@@ -1406,8 +1415,8 @@ export default function Cart({ navigation, route }) {
                         <TouchableOpacity
                           style={{
                             alignSelf: 'flex-end',
-                            paddingRight: moderateScale(24),
-                            paddingTop: moderateScaleVertical(10),
+                            marginRight: moderateScale(14),
+                            marginTop: moderateScale(6)
                           }}
                           onPress={() => openDeleteView(i)}>
                           <Image source={imagePath.deleteRed} />
@@ -2208,7 +2217,7 @@ export default function Cart({ navigation, route }) {
               style={{
                 ...styles.addAddressTxt,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                marginTop:moderateScaleVertical(4)
+                marginTop: moderateScaleVertical(4)
               }}>
               {vendorAddress
                 ? vendorAddress
