@@ -221,7 +221,6 @@ export default {
   redLocation: require('../assets/images/ic_location.png'),
   location2: require('../assets/images/ic_location2.png'),
 
-
   homeRedActive: require('../assets/images/ic_home4.png'),
   homeRedInActive: require('../assets/images/ic_home_black4.png'),
   cartRedActive: require('../assets/images/ic_cart4.png'),
@@ -368,4 +367,6 @@ export default {
   blackNav: require('../assets/images/TAXIAPPIMAGES/ic_nav.png'),
   plushRoundedBackground: require('../assets/images/TAXIAPPIMAGES/ic_plus.png'),
   icViewMore: require('../assets/images/RoyoorderNewImages/ic_viewmore.png'),
+  msg: require('../assets/images/ic_msg.png'),
+  call2: require('../assets/images/ic_call2.png'),
 };

@@ -2,6 +2,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
+import {Linking, Platform} from 'react-native';
 import React, {useState} from 'react';
 import {
   Dimensions,
@@ -30,13 +31,18 @@ import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
+import Communications from 'react-native-communications';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {getImageUrl, showError} from '../../utils/helperFunctions';
+import {
+  getImageUrl,
+  getRandomColor,
+  showError,
+} from '../../utils/helperFunctions';
 import useInterval from '../../utils/useInterval';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
@@ -95,12 +101,19 @@ export default function OrderDetail({navigation, route}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
 
+  console.log(cartData, 'cartItemss');
+
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
       navigation.navigate(screenName, {data});
     };
-
+  const dialCall = (number, type = 'phone') => {
+    console.log(number, 'number');
+    type === 'phone'
+      ? Communications.phonecall(number.toString(), true)
+      : Communications.text(number.toString());
+  };
   const isFocused = useIsFocused();
   // useFocusEffect(
   //   React.useCallback(() => {
@@ -293,21 +306,94 @@ export default function OrderDetail({navigation, route}) {
               backgroundColor: isDarkMode
                 ? MyDarkTheme.colors.background
                 : colors.white,
-              marginVertical: moderateScale(10),
+              marginVertical: moderateScale(12),
+              flexDirection: 'row',
             }}>
-            <Text
-              style={{
-                ...styles.summaryText,
-                marginBottom: 0,
-                color: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.blackOpacity86,
+            {item?.vendor?.banner ? (
+              <FastImage
+                source={{
+                  uri: getImageUrl(
+                    item?.vendor?.banner?.image_fit,
+                    item?.vendor?.banner?.image_path,
+                    '300/300',
+                  ),
+                  priority: FastImage.priority.high,
+                }}
+                style={{
+                  height: moderateScale(50),
+                  width: moderateScale(50),
+                  borderRadius: moderateScale(25),
+                }}
+              />
+            ) : (
+              <View
+                style={{
+                  backgroundColor: getRandomColor(),
+                  height: moderateScale(50),
+                  width: moderateScale(50),
+                  borderRadius: moderateScale(25),
 
-                fontSize: textScale(13),
-                fontFamily: fontFamily.bold,
-              }}>
-              {item?.vendor_name}
-            </Text>
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Text
+                  style={{
+                    fontSize: textScale(20),
+                    textTransform: 'uppercase',
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.blackB,
+                  }}>
+                  {item?.vendor_name?.charAt(0)}
+                </Text>
+              </View>
+            )}
+
+            <View style={{marginHorizontal: moderateScale(18)}}>
+              <Text
+                style={{
+                  ...styles.summaryText,
+                  marginBottom: 0,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity86,
+
+                  fontSize: textScale(13),
+                  fontFamily: fontFamily.bold,
+                }}>
+                {item?.vendor_name}
+              </Text>
+
+              {item?.vendor?.phone_no && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: moderateScale(14),
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => dialCall(item?.vendor?.phone_no, 'phone')}>
+                    <Image
+                      source={imagePath.call2}
+                      style={{
+                        height: moderateScale(20),
+                        width: moderateScale(20),
+                        tintColor: themeColors.primary_color,
+                        marginRight: moderateScale(30),
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => dialCall(item?.vendor?.phone_no, 'text')}>
+                    <Image
+                      source={imagePath.msg}
+                      style={{
+                        height: moderateScale(20),
+                        width: moderateScale(20),
+                        tintColor: themeColors.primary_color,
+                      }}
+                    />
+                  </TouchableOpacity>
+                </View>
+              )}
+            </View>
           </View>
 
           {item?.products.length
@@ -851,7 +937,8 @@ export default function OrderDetail({navigation, route}) {
                     : colors.blackOpacity43,
                   flex: 1,
                 }}>
-                {cartData?.address?.address}
+                {cartData?.address?.address} {''}
+                {cartData?.address?.pincode}
               </Text>
             </View>
           </View>
