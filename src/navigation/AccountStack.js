@@ -46,6 +46,11 @@ import {
   WebviewScreen,
   Wishlist,
   Wishlist2,
+  //Pyament Screens
+  Mobbex,
+  Payfast,
+  Paylink,
+  Yoco,
 } from '../Screens';
 import navigationStrings from './navigationStrings';
 
@@ -269,6 +274,27 @@ export default function ({navigation}) {
       <Stack.Screen
         name={navigationStrings.TIP_PAYMENT_OPTIONS}
         component={TipPaymentOptions}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.MOBBEX}
+        component={Mobbex}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.PAYFAST}
+        component={Payfast}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.YOCO}
+        component={Yoco}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.PAYLINK}
+        component={Paylink}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

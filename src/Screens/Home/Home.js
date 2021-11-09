@@ -101,6 +101,7 @@ export default function Home({ route, navigation }) {
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
 
   const profileInfo = appData?.profile;
+  console.log("profile info",appData)
   const { profile } = appData;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ themeColors, fontFamily });

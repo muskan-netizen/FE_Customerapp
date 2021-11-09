@@ -11,11 +11,11 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import { moderateScaleVertical } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
+import Header from '../../Components/Header';
+import imagePath from '../../constants/imagePath';
 
 export default function Yoco({ navigation, route }) {
   let paramsData = route?.params;
-  console.log(paramsData, '===>paramsData');
-
   const { themeToggle, themeColor, appStyle, appData, currencies, languages } =
     useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
@@ -31,7 +31,16 @@ export default function Yoco({ navigation, route }) {
   const { webUrl, isLoading } = state;
 
   useEffect(() => {
-    apiHit();
+    if (!!paramsData?.walletTip) { //pay via wallet or tip
+      console.log(paramsData?.walletTip.paymentUrl, '===>paramsData');
+      updateState({
+        webUrl: paramsData?.walletTip.paymentUrl,
+        isLoading: false
+      })
+      return;
+    }
+    console.log(paramsData, '===>paramsData');
+    apiHit(); //pay via cart
   }, []);
 
   const apiHit = async () => {
@@ -69,12 +78,13 @@ export default function Yoco({ navigation, route }) {
     const URL = queryString.parseUrl(url);
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
-    console.log(props, 'propsMobbex');
-    console.log("queryParams",queryParams)
-    console.log("nonQueryURL",url.replace(`${nonQueryURL}?`, ''))
     // return;
     setTimeout(() => {
       if (queryParams.status == 200) {
+        if (!!paramsData?.walletTip) {
+          moveToNewScreen(paramsData?.walletTip?.screenName)();
+          return;
+        }
         moveToNewScreen(navigationStrings.ORDERSUCESS, {
           orderDetail: {
             order_number: queryParams.order,
@@ -82,11 +92,15 @@ export default function Yoco({ navigation, route }) {
           },
         })();
       } else if (queryParams.status == 0) {
+        if (!!paramsData?.walletTip) {
+          moveToNewScreen(paramsData?.walletTip?.screenName)();
+          return;
+        }
         moveToNewScreen(navigationStrings.CART, {
           queryURL: url.replace(`${nonQueryURL}?`, ''),
         })();
       }
-    }, 3000);
+    }, 1500);
   };
   return (
     <WrapperContainer
@@ -94,6 +108,13 @@ export default function Yoco({ navigation, route }) {
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
+      <Header
+        leftIcon={
+          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+        }
+        centerTitle={paramsData?.selectedPayment?.title || paramsData?.walletTip?.title}
+        headerStyle={{ backgroundColor: colors.white }}
+      />
       {webUrl !== '' && (
         <WebView
           onLoad={() => updateState({ isLoading: false })}
@@ -111,4 +132,3 @@ export default function Yoco({ navigation, route }) {
   );
 }
 
-const styles = StyleSheet.create({});

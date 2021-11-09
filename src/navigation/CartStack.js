@@ -6,11 +6,8 @@ import {
   Cart,
   Cart2,
   Cart3,
-  Mobbex,
   Offers,
   OrderDetail,
-  Payfast,
-  Paylink,
   ProductDetail,
   ProductDetail2,
   ProductList,
@@ -20,6 +17,10 @@ import {
   WebPayment,
   Wishlist,
   Wishlist2,
+  //Pyament Screens
+  Mobbex,
+  Payfast,
+  Paylink,
   Yoco,
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
