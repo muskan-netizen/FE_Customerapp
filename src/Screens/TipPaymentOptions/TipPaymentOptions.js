@@ -256,7 +256,7 @@ export default function TipPaymentOptions({ navigation, route }) {
       .then((res) => {
         updateState({ isLoading: false });
         if (res && res?.status == 'Success' && res?.data) {
-          console.log("generate payment url",res.data)
+          console.log("generate payment url", res.data)
           // updateState({allAvailAblePaymentMethods: res?.data});
           navigation.navigate(navigationStrings.WEBPAYMENTS, {
             paymentUrl: res?.data,

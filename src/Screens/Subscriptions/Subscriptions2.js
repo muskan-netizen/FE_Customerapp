@@ -95,6 +95,8 @@ export default function Subscriptions2({ navigation, route }) {
 
   const explosion = createRef();
 
+  console.log("currentSubscription", currentSubscription)
+
   useEffect(() => {
     updateState({ isLoadingB: true });
     getAllSubscriptions();
@@ -209,18 +211,32 @@ export default function Subscriptions2({ navigation, route }) {
   const renderProduct = ({ item, index }) => {
     const { isSelectItem } = state;
     return (
-      <SubscriptionComponent2
-        data={item}
-        clientCurrency={clientCurrency}
-        onPress={(item) => selectSpecificSubscriptionPlan(item)}
-        payNowUpcoming={() =>
-          selectSpecificSubscriptionPlan(currentSubscription?.plan)
-        }
-        cancelSubscription={() => cancelSubscription(item)}
-      // onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-      // onAddtoWishlist={() => _onAddtoWishlist(item)}
-      // addToCart={() => _addToCart(item)}
-      />
+      <>
+        {!!allSubscriptions.length && index == 0 && (
+          <View
+            style={{
+              marginTop: currentSubscription ? moderateScale(40) : null,
+              marginBottom: moderateScale(20),
+            }}>
+            <Text style={styles.subscriptionTitle}>
+              {currentSubscription
+                ? strings.OTHERSUBSCRIPTION
+                : strings.ALLSUBSCRIPTION}
+            </Text>
+          </View>
+        )}
+        <SubscriptionComponent2
+          data={item}
+          clientCurrency={clientCurrency}
+          onPress={(item) => selectSpecificSubscriptionPlan(item)}
+          payNowUpcoming={() =>
+            selectSpecificSubscriptionPlan(currentSubscription?.plan)
+          }
+          subscriptionData={currentSubscription}
+        // currentSubscription={item?.id == currentSubscription?.subscription_id}
+        // cancelSubscription={()=>cancelSubscription(item)}
+        />
+      </>
     );
   };
 
@@ -582,6 +598,7 @@ export default function Subscriptions2({ navigation, route }) {
       .catch(errorMethod);
   };
 
+
   const listHeaderComponent = () => {
     return (
       <>
@@ -600,6 +617,17 @@ export default function Subscriptions2({ navigation, route }) {
                 {strings.MYSUBSCRIPTION}
               </Text>
             </View>
+            <SubscriptionComponent2
+              data={currentSubscription?.plan}
+              subscriptionData={currentSubscription}
+              clientCurrency={clientCurrency}
+              allSubscriptions={allSubscriptions}
+              currentSubscription={true}
+              payNowUpcoming={() =>
+                selectSpecificSubscriptionPlan(currentSubscription?.plan)
+              }
+              cancelSubscription={() => cancelSubscription(currentSubscription)}
+            />
           </>
         )}
       </>
@@ -634,7 +662,7 @@ export default function Subscriptions2({ navigation, route }) {
         <FlatList
           data={(!isLoadingB && allSubscriptions) || []}
           renderItem={renderProduct}
-          // ListHeaderComponent={listHeaderComponent()}
+          ListHeaderComponent={listHeaderComponent()}
           keyExtractor={(item, index) => String(index)}
           keyboardShouldPersistTaps="always"
           showsVerticalScrollIndicator={false}
