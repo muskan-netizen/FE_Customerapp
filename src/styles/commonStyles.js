@@ -55,6 +55,18 @@ export default ({fontFamily, buttonTextColor}) => {
       fontFamily: fontFamily?.bold,
       textAlign: 'left',
     },
+    futuraBtHeavyFont18: {
+      fontSize: textScale(18),
+      color: colors.black,
+      fontFamily: fontFamily?.bold,
+      textAlign: 'left',
+    },
+    futuraBtHeavyFont20: {
+      fontSize: textScale(20),
+      color: colors.black,
+      fontFamily: fontFamily?.bold,
+      textAlign: 'left',
+    },
     futuraBtHeavyFont14: {
       fontSize: textScale(14),
       color: colors.black,

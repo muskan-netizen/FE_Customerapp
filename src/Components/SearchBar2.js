@@ -12,6 +12,7 @@ import {MyDarkTheme} from '../styles/theme';
 export default function SearchBar2({
   navigation,
   placeHolderTxt = strings.SEARCH_HERE,
+  containerStyle
 }) {
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -27,6 +28,7 @@ export default function SearchBar2({
       style={{
         ...styles.mainContainer,
         backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
+        ...containerStyle
       }}
       onPress={() =>
         navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)

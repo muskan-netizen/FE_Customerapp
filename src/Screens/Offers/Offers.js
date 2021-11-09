@@ -23,6 +23,8 @@ import {
   textScale,
 } from '../../styles/responsiveSize';
 import fontFamily from '../../styles/fontFamily';
+import BorderTextInput from '../../Components/BorderTextInput';
+import validator from '../../utils/validations';
 
 export default function Offer({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -34,17 +36,16 @@ export default function Offer({route, navigation}) {
     isLoading: true,
     allAvailableCoupons: [],
     isLoadingB: false,
+    promocode: '',
   });
 
   const vendorInfo = route?.params?.data;
   const {isTaxi} = vendorInfo;
-  console.log(isTaxi, 'isTaxiiii');
-  console.log(vendorInfo, '>>>>>>>>>>>>>>>>>>>');
   const {appData, appStyle, themeColors, themeLayouts, currencies, languages} =
     useSelector((state) => state.initBoot);
+  const fontFamily = appStyle?.fontSizeData;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  console.log(vendorInfo?.cabOrder, 'vendor infoooo');
   useEffect(() => {
     if (vendorInfo?.cabOrder) {
       _getAllPromoCodesForCabs();
@@ -107,7 +108,6 @@ export default function Offer({route, navigation}) {
     data['vendor_id'] = vendorInfo.vendor.id;
     data['cart_id'] = vendorInfo.cartId;
     data['coupon_id'] = item.id;
-    console.log(data, 'data-verify-promo');
     updateState({isLoadingB: true});
     actions
       .verifyPromocode(data, {
@@ -221,11 +221,10 @@ export default function Offer({route, navigation}) {
     }
   };
   const _headerComponent = () => {
-    {
+    if (!!allAvailableCoupons.length) {
       return appStyle?.homePageLayout === 3 ? (
         <View
           style={{
-            marginHorizontal: moderateScale(16),
             marginVertical: moderateScaleVertical(16),
           }}>
           <Text
@@ -240,9 +239,59 @@ export default function Offer({route, navigation}) {
       ) : (
         <View style={{height: 20}} />
       );
+    } else {
+      return <View></View>;
     }
   };
-  const {isLoading, allAvailableCoupons, isLoadingB} = state;
+
+  const isValidPromoCode = () => {
+    const error = validator({promocode: promocode});
+
+    if (error) {
+      showError(error);
+      return;
+    }
+    return true;
+  };
+
+  const _validatePromoCode = () => {
+    const checkValid = isValidPromoCode();
+    if (!checkValid) {
+      return;
+    }
+
+    const data = {};
+    data['vendor_id'] = vendorInfo.vendor.id;
+    data['cart_id'] = vendorInfo.cartId;
+    data['promocode'] = promocode;
+
+    updateState({isLoadingB: true});
+
+    actions
+      .validatePromocode(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        updateState({isLoadingB: false});
+        if (res) {
+          console.log(res, 'res==>');
+          showSuccess(res?.message || res?.error);
+          navigation.navigate(navigationStrings.CART, {
+            promocodeDetail: {
+              couponInfo: res?.data,
+              vendorInfo: vendorInfo,
+            },
+          });
+        }
+      })
+      .catch(errorMethod);
+  };
+
+  const {isLoading, allAvailableCoupons, isLoadingB, promocode} = state;
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -260,8 +309,48 @@ export default function Offer({route, navigation}) {
         }
       />
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
-
-      <View style={{flex: 1}}>
+      {!isLoading && (
+        <View
+          style={{
+            marginHorizontal: moderateScale(16),
+            marginTop: moderateScaleVertical(16),
+            flexDirection: 'row',
+          }}>
+          <BorderTextInput
+            marginBottom={0}
+            placeholder={strings.ENTER_PROMOCODE}
+            onChangeText={(txt) => updateState({promocode: txt})}
+            containerStyle={{
+              height: moderateScaleVertical(40),
+              flex: 1,
+              borderRadius: moderateScale(13),
+            }}></BorderTextInput>
+          <TouchableOpacity
+            style={{
+              backgroundColor: themeColors.primary_color,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginLeft: moderateScale(10),
+              borderRadius: moderateScale(13),
+              paddingHorizontal: moderateScale(15),
+            }}
+            onPress={_validatePromoCode}>
+            <Text
+              style={{
+                color: colors.white,
+                fontFamily: fontFamily.regular,
+                fontSize: textScale(11),
+              }}>
+              {strings.APPLY}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      <View
+        style={{
+          flex: 1,
+          marginHorizontal: moderateScale(16),
+        }}>
         <FlatList
           data={isLoading ? [] : allAvailableCoupons}
           showsVerticalScrollIndicator={false}

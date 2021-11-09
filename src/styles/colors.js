@@ -94,6 +94,7 @@ export default {
   iconGrey: '#A5A5A5',
   yellowOpacity10: 'rgba(247,215,123,0.1)',
   greyColor: '#F1F1F1',
+  greyMedium: '#E1E1E1',
   redOpacity12: 'rgba(236,88,55,0.12)',
   redOpacity52: 'rgba(250,215,208,0.52)',
   redC: '#EC5837',
@@ -109,4 +110,6 @@ export default {
   taxiCategoryGrayColor: '#C0C0C8',
   redD: '#FD4937',
   blueLight: '#93DCEF',
+  DarkBlue: '#0087AA',
+  paleRed: '#f6d2d6',
 };

@@ -89,6 +89,7 @@ export default function CMSLinks({navigation}) {
   };
 
   const _renderCmsLinks = ({item, index}) => {
+    console.log(item, 'itemitemitem');
     return (
       <TouchableOpacity
         onPress={() => navigation.navigate(navigationStrings.WEBLINKS, item)}
@@ -125,10 +126,11 @@ export default function CMSLinks({navigation}) {
       source={loaderOne}>
       <Header
         leftIcon={
-        appStyle?.homePageLayout === 2 ? 
-          imagePath.backArrow:appStyle?.homePageLayout === 3?
-          imagePath.icBackb :
-           imagePath.back
+          appStyle?.homePageLayout === 2
+            ? imagePath.backArrow
+            : appStyle?.homePageLayout === 3
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={strings.LINKS}
         headerStyle={

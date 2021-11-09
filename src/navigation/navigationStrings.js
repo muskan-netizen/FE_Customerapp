@@ -11,6 +11,7 @@ export default {
   ACCOUNTS: 'accounts',
   TAB_ROUTES: 'tabRoutes',
   DRAWER_ROUTES: 'drawerRoutes',
+  DRAWER_ROUTES_TOWFINDER: 'drawerRoutesTwoFinder',
   DELIVERY: 'delivery',
   VENDOR: 'vendor',
   SUPERMARKET: 'supermarket',
@@ -96,4 +97,5 @@ export default {
   YOCO: 'yoco',
   TIP_PAYMENT_OPTIONS: 'tipPaymentOptions',
   PAYLINK: 'paylink',
+  ADD_VEHICLE_DETAILS: 'addVehicleDetails'
 };

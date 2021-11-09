@@ -124,3 +124,4 @@ export const DISPATCHER_URL = getApiUrl(
 );
 export const CART_PRODUCT_SCHEDULE = getApiUrl('/cart/product-schedule/update');
 export const TIP_AFTER_ORDER = getApiUrl('/orders/tip-after-order');
+export const VALIDATE_PROMO_CODE = getApiUrl('/promo-code/validate_promo_code');
