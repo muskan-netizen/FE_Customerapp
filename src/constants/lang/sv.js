@@ -6,6 +6,7 @@ export default {
   VERIFY_NUMBER: 'Verifiera telefonnummer',
   JOIN_US: 'Skapa ett gratis konto och gå med oss!',
   CREATE_AN_ACCOUNT: 'SKAPA NYTT KONTO',
+  CREATE_NEW_ACCOUNT: "Crear una nueva cuenta",
   GUEST_LOGIN: 'GÄSTINLOGGNING',
   OR_SIGNUP_WITH: 'Eller registrera dig med',
   OR_LOGIN_WITH: 'Eller logga in med',
@@ -556,4 +557,11 @@ export default {
   PLEASE_SELECT_RETURN_ORDER: 'Please select the product to return',
   PLEASE_SELECT_VALID_OPTION: 'Please select a valid tip option',
   ORDER_PREPARED: 'Order Prepared',
+  OR_CONTINUE_WITH: "O continuar con",
+  ANYTIME_YOUR_CAR_BREAKS: "Anytime your car breaks down,\n we are there for you !",
+  ENTER_YOUR: "Enter your",
+  REGISTER: "Register",
+  ENTER_EMAIL_ADDRESS: "Enter your Email Id here",
+  ENTER_PHONE_NUMBER: "Enter your phone number here",
+  SERVICES: "Services"
 };

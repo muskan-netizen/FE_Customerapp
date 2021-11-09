@@ -6,6 +6,7 @@ export default {
   VERIFY_NUMBER: 'التحقق من رقم الهاتف',
   JOIN_US: 'قم بإنشاء حساب مجاني وانضم إلينا!',
   CREATE_AN_ACCOUNT: 'إنشاء حساب جديد',
+  CREATE_NEW_ACCOUNT: 'انشاء حساب جديد',
   GUEST_LOGIN: 'تسجيل دخول زائر',
   OR_SIGNUP_WITH: 'أو تسجيل اشتراك من خلال',
   OR_LOGIN_WITH: 'أو تسجيل دخول من خلال',
@@ -577,4 +578,11 @@ export default {
   PLEASE_SELECT_RETURN_ORDER: 'Please select the product to return',
   PLEASE_SELECT_VALID_OPTION: 'Please select a valid tip option',
   ORDER_PREPARED: 'Order Prepared',
+  OR_CONTINUE_WITH: "أو تواصل مع",
+  ANYTIME_YOUR_CAR_BREAKS: "Anytime your car breaks down,\n we are there for you !",
+  ENTER_YOUR: "Enter your",
+  REGISTER: "Register",
+  ENTER_EMAIL_ADDRESS: "Enter your Email Id here",
+  ENTER_PHONE_NUMBER: "Enter your phone number here",
+  SERVICES: "Services"
 };

@@ -6,6 +6,7 @@ export default {
   VERIFY_NUMBER: 'Verificar por TelÃ©fono',
   JOIN_US: 'Â¿CÃ³mo querÃ©s continuar?',
   CREATE_AN_ACCOUNT: 'Crear rÃ¡pido mi cuenta',
+  CREATE_NEW_ACCOUNT: "Crear una nueva cuenta",
   GUEST_LOGIN: 'Continuar sin registrarme',
   OR_SIGNUP_WITH: 'Continuar con:',
   OR_LOGIN_WITH: 'Continuar con:',
@@ -573,4 +574,11 @@ export default {
   PLEASE_SELECT_RETURN_ORDER: 'Please select the product to return',
   PLEASE_SELECT_VALID_OPTION: 'Please select a valid tip option',
   ORDER_PREPARED: 'Order Prepared',
+  OR_CONTINUE_WITH: "O continuar con",
+  ANYTIME_YOUR_CAR_BREAKS: "Anytime your car breaks down,\n we are there for you !",
+  ENTER_YOUR: "Enter your",
+  REGISTER: "Register",
+  ENTER_EMAIL_ADDRESS: "Enter your Email Id here",
+  ENTER_PHONE_NUMBER: "Enter your phone number here",
+  SERVICES: "Services"
 };

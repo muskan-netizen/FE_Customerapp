@@ -30,6 +30,7 @@ import { getImageUrl } from '../../utils/helperFunctions';
 import stylesFun from './styles';
 import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../../styles/theme';
+import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
 
 export default function Account2({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -362,6 +363,44 @@ export default function Account2({ navigation }) {
         // iconRight={imagePath.goRight}
         // rightIconStyle={{tintColor: colors.textGreyLight}}
         />
+
+        {!!userData?.auth_token &&
+          Platform.OS === 'android' &&
+          (businessType == 'taxi' ? null : (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={() => {
+                BluetoothManager.checkBluetoothEnabled().then(
+                  (enabled) => {
+                    if (Boolean(enabled)) {
+                      navigation.navigate(navigationStrings.ATTACH_PRINTER);
+                    } else {
+                      BluetoothManager.enableBluetooth()
+                        .then(() => {
+                          navigation.navigate(
+                            navigationStrings.ATTACH_PRINTER,
+                          );
+                        })
+                        .catch((err) => { });
+                    }
+                  },
+                  (err) => {
+                    err;
+                  },
+                );
+              }}
+              iconLeft={imagePath.printer}
+              centerHeading={strings.ATTACH_PRINTER}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          ))}
 
         {!!userData?.auth_token &&
           !!appMainData?.is_admin &&

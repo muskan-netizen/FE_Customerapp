@@ -41,6 +41,12 @@ export default ({fontFamily, themeColors}) => {
       backgroundColor: colors.textGrey,
       opacity: 0.6,
     },
+    hyphen2: {
+      width: 60,
+      height: 1,
+      backgroundColor: colors.textGrey,
+      opacity: 0.6,
+    },
     bottomContainer: {
       flex: 1,
       justifyContent: 'flex-end',
@@ -63,6 +69,15 @@ export default ({fontFamily, themeColors}) => {
       marginTop: 0,
       marginHorizontal: moderateScale(16),
     },
+    welcomeTxt: {
+      color: colors.black,
+      fontSize: textScale(16),
+      paddingHorizontal: moderateScale(24),
+      paddingTop: moderateScale(30),
+      width: '70%'
+      // fontFamily: fontFamily.bold,
+      // textAlign: 'center',
+    }
   });
   return styles;
 };
