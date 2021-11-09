@@ -102,3 +102,4 @@ export {default as Payfast} from './PaymentGateways/Payfast';
 export {default as Yoco} from './PaymentGateways/Yoco';
 export {default as TipPaymentOptions} from './TipPaymentOptions/TipPaymentOptions';
 export {default as Paylink} from './PaymentGateways/Paylink';
+export {default as OuterScreen4} from './OuterScreen/OuterScreen4';

@@ -44,6 +44,9 @@ const Header = ({
   leftIconStyle,
   isRightText = false,
   onPressRightTxt = () => {},
+  rightTxt = strings.CLEAR_CART2,
+  rightTxtContainerStyle = {},
+  rightTxtStyle = {},
 }) => {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
@@ -148,14 +151,18 @@ const Header = ({
 
         <View style={{flex: 0.3, alignItems: 'flex-end'}}>
           {isRightText ? (
-            <TouchableOpacity activeOpacity={0.7} onPress={onPressRightTxt}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={onPressRightTxt}
+              style={{...rightTxtContainerStyle}}>
               <Text
                 style={{
                   fontFamily: fontFamily.medium,
                   color: themeColors.primary_color,
                   fontSize: textScale(12),
+                  ...rightTxtStyle,
                 }}>
-                {strings.CLEAR_CART2}
+                {rightTxt}
               </Text>
             </TouchableOpacity>
           ) : !!rightIcon ? (

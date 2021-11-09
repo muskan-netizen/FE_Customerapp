@@ -15,6 +15,7 @@ import {
   SCHEDULE_ORDER,
   CART_PRODUCT_SCHEDULE,
   TIP_AFTER_ORDER,
+  VALIDATE_PROMO_CODE,
 } from '../../config/urls';
 import {
   apiGet,
@@ -241,9 +242,25 @@ export const cartProductSchedule = (data, headers = {}) => {
   });
 };
 
+// tip after order
+
 export const tipAfterOrder = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(TIP_AFTER_ORDER, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+//Validate Promo code
+
+export const validatePromocode = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(VALIDATE_PROMO_CODE, data, headers)
       .then((res) => {
         resolve(res);
       })
