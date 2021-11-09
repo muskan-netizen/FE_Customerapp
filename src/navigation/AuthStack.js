@@ -51,10 +51,9 @@ export default function (Stack) {
     <>
       <Stack.Screen
         name={navigationStrings.OUTER_SCREEN}
-        component={checkScreen(3)}
+        // component={checkScreen(3)}
         //appStyle?.homePageLayout === 2 ? OuterScreen2 : OuterScreen}
-        // component={appStyle?.homePageLayout === 2 ? OuterScreen2 : OuterScreen}
-
+        component={appStyle?.homePageLayout === 2 ? OuterScreen2 : OuterScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen
