@@ -37,6 +37,7 @@ const BannerWithText = ({
   onPress = () => {},
   childView = null,
   showLightbox = false,
+  tagline = '',
 }) => {
   const {themeColors, appStyle} = useSelector((state) => state?.initBoot);
 
@@ -115,9 +116,7 @@ const BannerWithText = ({
                 color: colors.black,
                 opacity: 0.65,
               }}>
-              {
-                'Get updates, play games, and stream favorite shows, all in Meem App.'
-              }
+              {tagline}
             </Text>
           </View>
 

@@ -17,6 +17,15 @@ export default ({fontFamily, themeColors}) => {
       fontFamily: fontFamily.bold,
       textAlign: 'center',
     },
+    headerContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingHorizontal: moderateScale(15),
+      marginTop: moderateScale(5),
+      alignItems: 'center',
+      paddingBottom: moderateScale(5),
+      flex: 0.06,
+    },
     txtSmall: {
       ...commonStyles.mediumFont14,
       lineHeight: 24,
@@ -48,7 +57,6 @@ export default ({fontFamily, themeColors}) => {
       opacity: 0.6,
     },
     bottomContainer: {
-      flex: 1,
       justifyContent: 'flex-end',
       marginBottom: moderateScaleVertical(30),
     },
@@ -74,10 +82,22 @@ export default ({fontFamily, themeColors}) => {
       fontSize: textScale(16),
       paddingHorizontal: moderateScale(24),
       paddingTop: moderateScale(30),
-      width: '70%'
+      width: '70%',
       // fontFamily: fontFamily.bold,
       // textAlign: 'center',
-    }
+    },
+    languageContainer: {
+      backgroundColor: colors.DarkBlue,
+      height: moderateScaleVertical(30),
+      width: moderateScale(30),
+      borderRadius: 15,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    selectedLanguageText: {
+      fontFamily: fontFamily.bold,
+      color: colors.white,
+    },
   });
   return styles;
 };

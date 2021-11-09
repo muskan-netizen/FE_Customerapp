@@ -4,14 +4,15 @@ import {
   ForgotPassword2,
   Location,
   Login,
-  OrbitOuterScreen,
   OtpVerification,
   OuterScreen,
   OuterScreen2,
+  OuterScreen4,
   ResetPassword,
   Signup,
   Signup2,
   VerifyAccount,
+  WebLinks,
 } from '../Screens';
 import ForgotPassword from '../Screens/ForgotPassword/ForgotPassword';
 import Login2 from '../Screens/Login/Login2';
@@ -34,7 +35,7 @@ export default function (Stack) {
         ScreenName = OuterScreen2;
         break;
       case 3:
-        ScreenName = OrbitOuterScreen;
+        ScreenName = OuterScreen4;
         break;
       case 4:
         ScreenName = OuterScreen3;
@@ -50,7 +51,7 @@ export default function (Stack) {
     <>
       <Stack.Screen
         name={navigationStrings.OUTER_SCREEN}
-        component={checkScreen(2)}
+        component={checkScreen(3)}
         //appStyle?.homePageLayout === 2 ? OuterScreen2 : OuterScreen}
         // component={appStyle?.homePageLayout === 2 ? OuterScreen2 : OuterScreen}
 
@@ -101,6 +102,11 @@ export default function (Stack) {
         component={ShortCode}
         options={{headerShown: false}}
       /> */}
+      <Stack.Screen
+        name={navigationStrings.WEBLINKS}
+        component={WebLinks}
+        options={{headerShown: false}}
+      />
     </>
   );
 }
