@@ -115,6 +115,7 @@ export default function Cart({ navigation, route }) {
     placeLoader: false,
     localeSheduledOrderDate: null,
     btnLoadrId: null,
+    instruction: ''
   });
   const {
     viewHeight,
@@ -146,6 +147,7 @@ export default function Cart({ navigation, route }) {
     placeLoader,
     localeSheduledOrderDate,
     btnLoadrId,
+    instruction
   } = state;
 
   //Redux store data
@@ -558,6 +560,49 @@ export default function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
+
+  const checkPaymentOptions = (res) => {
+    updateState({ placeLoader: false })
+    let paymentId = res?.data?.payment_option_id
+    let paymentData = {
+      selectedPayment: selectedPayment,
+      total_payable_amount: (Number(cartData?.total_payable_amount) +
+        (selectedTipAmount != null && selectedTipAmount != '' ? Number(selectedTipAmount) : 0)).toFixed(2),
+      payment_option_id: selectedPayment?.id,
+      orderDetail: res.data,
+    }
+    switch (paymentId) {
+      case 6: case !!(Number(cartData?.total_payable_amount) !== 0): case Number(selectedTipAmount) !== 0: //Payfast Payment Getway
+        navigation.navigate(navigationStrings.PAYFAST, paymentData);
+        break;
+      case 7: case !!(Number(cartData?.total_payable_amount) !== 0): case Number(selectedTipAmount) !== 0: //Mobbex Payment Getway
+        navigation.navigate(navigationStrings.MOBBEX, paymentData);
+      case 8: case !!(Number(cartData?.total_payable_amount) !== 0): case Number(selectedTipAmount) !== 0: //Yoco Payment Getway
+        navigation.navigate(navigationStrings.YOCO, paymentData);
+        break;
+      case 9: case !!(Number(cartData?.total_payable_amount) !== 0): case Number(selectedTipAmount) !== 0: //Pyalink Payment Getway
+        navigation.navigate(navigationStrings.PAYLINK, paymentData);
+        break;
+      default:
+        if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1) {
+          console.log("success ressssssss", res.data)
+          setTimeout(() => {
+            _getOrderDetail(res.data.vendors[0])
+          }, 1500);
+        } else {
+          actions.cartItemQty({});
+          updateState({
+            cartItems: [],
+            cartData: {},
+            isLoadingB: false,
+            placeLoader: false,
+          })
+          moveToNewScreen(navigationStrings.ORDERSUCESS, { orderDetail: res.data })();
+        }
+        break;
+    }
+  }
+
   const _directOrderPlace = () => {
     let data = {};
     data['address_id'] =
@@ -590,93 +635,76 @@ export default function Cart({ navigation, route }) {
             placeLoader: false,
           })
         }
-        if (
-          (res?.data?.payment_option_id === 6 &&
-            !!(Number(cartData?.total_payable_amount) !== 0)) ||
-          Number(selectedTipAmount) !== 0
-        ) {
-          navigation.navigate(navigationStrings.PAYFAST, {
-            selectedPayment: selectedPayment,
-            total_payable_amount: (
-              Number(cartData?.total_payable_amount) +
-              (selectedTipAmount != null && selectedTipAmount != ''
-                ? Number(selectedTipAmount)
-                : 0)
-            ).toFixed(2),
+        checkPaymentOptions(res)
+        // if (
+        //   (res?.data?.payment_option_id === 6 &&
+        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
+        //   Number(selectedTipAmount) !== 0
+        // ) {
+        // navigation.navigate(navigationStrings.PAYFAST, {
+        //   selectedPayment: selectedPayment,
+        //   total_payable_amount: (
+        //     Number(cartData?.total_payable_amount) +
+        //     (selectedTipAmount != null && selectedTipAmount != ''
+        //       ? Number(selectedTipAmount)
+        //       : 0)
+        //   ).toFixed(2),
 
-            payment_option_id: selectedPayment?.id,
-            orderDetail: res.data,
-          });
-        } else if (
-          (res?.data?.payment_option_id === 7 &&
-            !!(Number(cartData?.total_payable_amount) !== 0)) ||
-          Number(selectedTipAmount) !== 0
-        ) {
-          navigation.navigate(navigationStrings.MOBBEX, {
-            selectedPayment: selectedPayment,
-            total_payable_amount: (
-              Number(cartData?.total_payable_amount) +
-              (selectedTipAmount != null && selectedTipAmount != ''
-                ? Number(selectedTipAmount)
-                : 0)
-            ).toFixed(2),
+        //   payment_option_id: selectedPayment?.id,
+        //   orderDetail: res.data,
+        // });
+        // } else if (
+        //   (res?.data?.payment_option_id === 7 &&
+        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
+        //   Number(selectedTipAmount) !== 0
+        // ) {
+        // navigation.navigate(navigationStrings.MOBBEX, {
+        //   selectedPayment: selectedPayment,
+        //   total_payable_amount: (
+        //     Number(cartData?.total_payable_amount) +
+        //     (selectedTipAmount != null && selectedTipAmount != ''
+        //       ? Number(selectedTipAmount)
+        //       : 0)
+        //   ).toFixed(2),
 
-            payment_option_id: selectedPayment?.id,
-            orderDetail: res.data,
-          });
-        } else if (
-          (res?.data?.payment_option_id === 8 &&
-            !!(Number(cartData?.total_payable_amount) !== 0)) ||
-          Number(selectedTipAmount) !== 0
-        ) {
-          navigation.navigate(navigationStrings.YOCO, {
-            selectedPayment: selectedPayment,
-            total_payable_amount: (
-              Number(cartData?.total_payable_amount) +
-              (selectedTipAmount != null && selectedTipAmount != ''
-                ? Number(selectedTipAmount)
-                : 0)
-            ).toFixed(2),
+        //   payment_option_id: selectedPayment?.id,
+        //   orderDetail: res.data,
+        // });
+        // } else if (
+        //   (res?.data?.payment_option_id === 8 &&
+        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
+        //   Number(selectedTipAmount) !== 0
+        // ) {
+        // navigation.navigate(navigationStrings.YOCO, {
+        //   selectedPayment: selectedPayment,
+        //   total_payable_amount: (
+        //     Number(cartData?.total_payable_amount) +
+        //     (selectedTipAmount != null && selectedTipAmount != ''
+        //       ? Number(selectedTipAmount)
+        //       : 0)
+        //   ).toFixed(2),
 
-            payment_option_id: selectedPayment?.id,
-            orderDetail: res.data,
-          });
-        } else if (
-          (res?.data?.payment_option_id === 9 &&
-            !!(Number(cartData?.total_payable_amount) !== 0)) ||
-          Number(selectedTipAmount) !== 0
-        ) {
-          navigation.navigate(navigationStrings.PAYLINK, {
-            selectedPayment: selectedPayment,
-            total_payable_amount: (
-              Number(cartData?.total_payable_amount) +
-              (selectedTipAmount != null && selectedTipAmount != ''
-                ? Number(selectedTipAmount)
-                : 0)
-            ).toFixed(2),
-            payment_option_id: selectedPayment?.id,
-            orderDetail: res.data,
-          });
-        } else {
-          if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1) {
-            console.log("success ressssssss", res.data)
-            // return;
-            setTimeout(() => {
-              _getOrderDetail(res.data.vendors[0])
-            }, 1500);
-          } else {
-            actions.cartItemQty({});
-            updateState({
-              cartItems: [],
-              cartData: {},
-              isLoadingB: false,
-              placeLoader: false,
-            })
-            moveToNewScreen(navigationStrings.ORDERSUCESS, {
-              orderDetail: res.data,
-            })();
-          }
-        }
+        //   payment_option_id: selectedPayment?.id,
+        //   orderDetail: res.data,
+        // });
+        // } else if (
+        //   (res?.data?.payment_option_id === 9 &&
+        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
+        //   Number(selectedTipAmount) !== 0
+        // ) {
+        // navigation.navigate(navigationStrings.PAYLINK, {
+        //   selectedPayment: selectedPayment,
+        //   total_payable_amount: (
+        //     Number(cartData?.total_payable_amount) +
+        //     (selectedTipAmount != null && selectedTipAmount != ''
+        //       ? Number(selectedTipAmount)
+        //       : 0)
+        //   ).toFixed(2),
+        //   payment_option_id: selectedPayment?.id,
+        //   orderDetail: res.data,
+        // });
+        // } else {
+        // }
         showSuccess(res?.message);
       })
       .catch(errorMethod);
@@ -772,7 +800,6 @@ export default function Cart({ navigation, route }) {
       _directOrderPlace();
       return;
     }
-
     _offineLinePayment();
   };
 
@@ -802,7 +829,6 @@ export default function Cart({ navigation, route }) {
       } else {
         if (!!userData) {
           console.log('user data', userData);
-
           if (!!userData) {
             if (
               !!userData?.client_preference?.verify_email &&
@@ -880,17 +906,8 @@ export default function Cart({ navigation, route }) {
         key={String(cartItems.length)}
         style={{
           ...styles.swipeView,
-          backgroundColor: getColorCodeWithOpactiyNumber(
-            themeColors.primary_color.substr(1),
-            15,
-          ),
-          marginBottom: moderateScaleVertical(12),
         }}>
-        {/* <TouchableOpacity
-          style={{justifyContent: 'center'}}
-          onPress={openDeleteView}>
-          <Image source={imagePath.deleteRed} />
-        </TouchableOpacity> */}
+        <Image source={imagePath.deleteRed} />
       </Animated.View>
     );
   };
@@ -1136,11 +1153,10 @@ export default function Cart({ navigation, route }) {
           <View style={styles.vendorView}>
             <Text
               numberOfLines={1}
-              style={
-                isDarkMode
-                  ? [styles.vendorText, { color: MyDarkTheme.colors.text }]
-                  : styles.vendorText
-              }>
+              style={{
+                ...styles.priceItemLabel2,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+              }}>
               {item?.vendor?.name}
             </Text>
           </View>
@@ -1287,22 +1303,17 @@ export default function Cart({ navigation, route }) {
                               : null}
                           </View>
 
-                          <View
-                            pointerEvents={btnLoader ? 'none' : 'auto'}
-                            style={{
-                              flex: 0.3,
-                              paddingRight: moderateScale(8),
-                            }}>
+                          <View pointerEvents={btnLoader ? 'none' : 'auto'}>
                             <View style={styles.incDecBtnContainer}>
                               <TouchableOpacity
-                                style={{ flex: 0.3, alignItems: 'center' }}
-                                onPress={() => addDeleteCartItems(i, inx, 2)}>
-                                <Text style={styles.cartItemValueBtn}>-</Text>
+                                style={{ alignItems: 'center' }}
+                                onPress={() => addDeleteCartItems(i, inx, 1)}>
+                                <Text style={styles.cartItemValueBtn}>+</Text>
                               </TouchableOpacity>
-                              <View style={{ flex: 0.4, alignItems: 'center' }}>
+                              <View style={{ alignItems: 'center', width: moderateScale(20), height: moderateScale(20), justifyContent: 'center' }}>
                                 {btnLoadrId === i.id && btnLoader ? (
                                   <UIActivityIndicator
-                                    size={moderateScale(18)}
+                                    size={moderateScale(16)}
                                     color={colors.white}
                                   />
                                 ) : (
@@ -1312,14 +1323,13 @@ export default function Cart({ navigation, route }) {
                                 )}
                               </View>
                               <TouchableOpacity
-                                style={{ flex: 0.3, alignItems: 'center' }}
-                                onPress={() => addDeleteCartItems(i, inx, 1)}>
-                                <Text style={styles.cartItemValueBtn}>+</Text>
+                                style={{ alignItems: 'center' }}
+                                onPress={() => addDeleteCartItems(i, inx, 2)}>
+                                <Text style={styles.cartItemValueBtn}>-</Text>
                               </TouchableOpacity>
                             </View>
                           </View>
                         </View>
-
                         <View
                           style={{
                             flexDirection: 'row',
@@ -1405,8 +1415,8 @@ export default function Cart({ navigation, route }) {
                         <TouchableOpacity
                           style={{
                             alignSelf: 'flex-end',
-                            paddingRight: moderateScale(24),
-                            paddingTop: moderateScaleVertical(10),
+                            marginRight: moderateScale(14),
+                            marginTop: moderateScale(6)
                           }}
                           onPress={() => openDeleteView(i)}>
                           <Image source={imagePath.deleteRed} />
@@ -1486,93 +1496,381 @@ export default function Cart({ navigation, route }) {
               </View>
             )}
           </TouchableOpacity>
-          {!!item?.discount_amount && (
+          {/* start amount view       */}
+          <View style={{ marginHorizontal: moderateScale(4), marginTop: moderateScaleVertical(8) }}>
+            {!!item?.discount_amount && (
+              <View style={styles.itemPriceDiscountTaxView}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                        styles.priceItemLabel,
+                        {
+                          color: MyDarkTheme.colors.text,
+                        },
+                      ]
+                      : styles.priceItemLabel
+                  }>
+                  {strings.DISCOUNT}
+                </Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                        styles.priceItemLabel,
+                        {
+                          color: MyDarkTheme.colors.text,
+                        },
+                      ]
+                      : styles.priceItemLabel
+                  }>{`- ${currencies?.primary_currency?.symbol}${Number(
+                    item?.discount_amount ? item?.discount_amount : 0,
+                  ).toFixed(2)}`}</Text>
+              </View>
+            )}
+            {!!item?.deliver_charge && (
+              <View style={styles.itemPriceDiscountTaxView}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                        styles.priceItemLabel,
+                        {
+                          color: MyDarkTheme.colors.text,
+                        },
+                      ]
+                      : styles.priceItemLabel
+                  }>
+                  {strings.DELIVERY_CHARGES}
+                </Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                        styles.priceItemLabel,
+                        {
+                          color: MyDarkTheme.colors.text,
+                        },
+                      ]
+                      : styles.priceItemLabel
+                  }>{`${currencies?.primary_currency?.symbol}${Number(
+                    item?.deliver_charge ? item?.deliver_charge : 0,
+                  ).toFixed(2)}`}</Text>
+              </View>
+            )}
             <View style={styles.itemPriceDiscountTaxView}>
               <Text
                 style={
                   isDarkMode
-                    ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                      },
-                    ]
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                     : styles.priceItemLabel
                 }>
-                {strings.DISCOUNT}
+                {strings.AMOUNT}
               </Text>
               <Text
                 style={
                   isDarkMode
                     ? [
-                      styles.priceItemLabel,
+                      styles.priceItemLabel2,
                       {
                         color: MyDarkTheme.colors.text,
                       },
                     ]
-                    : styles.priceItemLabel
-                }>{`- ${currencies?.primary_currency?.symbol}${Number(
-                  item?.discount_amount ? item?.discount_amount : 0,
+                    : styles.priceItemLabel2
+                }>{`${currencies?.primary_currency?.symbol}${Number(
+                  item?.payable_amount ? item?.payable_amount : 0,
                 ).toFixed(2)}`}</Text>
             </View>
-          )}
-          {!!item?.deliver_charge && (
-            <View style={styles.itemPriceDiscountTaxView}>
+            <View style={styles.bottomTabLableValue}>
               <Text
                 style={
                   isDarkMode
-                    ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                      },
-                    ]
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                     : styles.priceItemLabel
                 }>
-                {strings.DELIVERY_CHARGES}
+                {strings.SUBTOTAL}
               </Text>
               <Text
                 style={
                   isDarkMode
-                    ? [
-                      styles.priceItemLabel,
-                      {
-                        color: MyDarkTheme.colors.text,
-                      },
-                    ]
+                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
                     : styles.priceItemLabel
                 }>{`${currencies?.primary_currency?.symbol}${Number(
-                  item?.deliver_charge ? item?.deliver_charge : 0,
+                  cartData?.gross_paybale_amount,
                 ).toFixed(2)}`}</Text>
             </View>
-          )}
-          <View style={styles.itemPriceDiscountTaxView}>
-            <Text
-              style={
-                isDarkMode
-                  ? [
-                    styles.priceItemLabel2,
-                    {
-                      color: MyDarkTheme.colors.text,
-                    },
-                  ]
-                  : styles.priceItemLabel2
-              }>
-              {strings.AMOUNT}
-            </Text>
-            <Text
-              style={
-                isDarkMode
-                  ? [
-                    styles.priceItemLabel2,
-                    {
-                      color: MyDarkTheme.colors.text,
-                    },
-                  ]
-                  : styles.priceItemLabel2
-              }>{`${currencies?.primary_currency?.symbol}${Number(
-                item?.payable_amount ? item?.payable_amount : 0,
-              ).toFixed(2)}`}</Text>
+            {!!cartData?.wallet_amount && (
+              <View style={styles.bottomTabLableValue}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      : styles.priceItemLabel
+                  }>
+                  {strings.WALLET}
+                </Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      : styles.priceItemLabel
+                  }>{`${currencies?.primary_currency?.symbol}${Number(
+                    cartData?.wallet_amount ? cartData?.wallet_amount : 0,
+                  ).toFixed(2)}`}</Text>
+              </View>
+            )}
+            {!!cartData?.loyalty_amount && (
+              <View style={styles.bottomTabLableValue}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      : styles.priceItemLabel
+                  }>
+                  {strings.LOYALTY}
+                </Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      : styles.priceItemLabel
+                  }>{`-${currencies?.primary_currency?.symbol}${Number(
+                    cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
+                  ).toFixed(2)}`}</Text>
+              </View>
+            )}
+
+            {!!cartData?.wallet_amount_used && (
+              <View style={styles.bottomTabLableValue}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      : styles.priceItemLabel
+                  }>
+                  {strings.WALLET}
+                </Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      : styles.priceItemLabel
+                  }>{`-${currencies?.primary_currency?.symbol}${Number(
+                    cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
+                  ).toFixed(2)}`}</Text>
+              </View>
+            )}
+            {!!cartData?.total_subscription_discount && (
+              <View style={styles.bottomTabLableValue}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      : styles.priceItemLabel
+                  }>
+                  {strings.TOTALSUBSCRIPTION}
+                </Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      : styles.priceItemLabel
+                  }>{`-${currencies?.primary_currency?.symbol}${Number(
+                    cartData?.total_subscription_discount,
+                  ).toFixed(2)}`}</Text>
+              </View>
+            )}
+
+            {/* {!!cartData?.total_discount_amount && (
+            <View style={styles.bottomTabLableValue}>
+              <Text style={styles.priceItemLabel}>
+                {strings.TOTAL_DISCOUNT}
+              </Text>
+              <Text style={styles.priceItemLabel}>{`-${
+                currencies?.primary_currency?.symbol
+              }${Number(cartData?.total_discount_amount).toFixed(2)}`}</Text>
+            </View>
+          )} */}
+
+
+            {!!appData?.profile?.preferences?.tip_before_order &&
+              !!cartData?.tip &&
+              cartData?.tip.length && (
+                <View
+                  style={[
+                    styles.bottomTabLableValue,
+                    { flexDirection: 'column', marginTop: moderateScaleVertical(8) },
+                  ]}>
+                  <Text
+                    style={
+                      isDarkMode
+                        ? [styles.priceTipLabel, { color: MyDarkTheme.colors.text }]
+                        : [styles.priceTipLabel]
+                    }>
+                    {strings.DOYOUWANTTOGIVEATIP}
+                  </Text>
+                  <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{ flexGrow: 1 }}>
+                    {cartData?.total_payable_amount !== 0 &&
+                      cartData?.tip.map((j, jnx) => {
+                        return (
+                          <TouchableOpacity
+                            key={String(jnx)}
+                            style={[
+                              styles.tipArrayStyle,
+                              {
+                                backgroundColor:
+                                  selectedTipvalue?.value == j?.value
+                                    ? themeColors.primary_color
+                                    : 'transparent',
+                                flex: 0.18,
+                              },
+                            ]}
+                            onPress={() => selectedTip(j)}>
+                            <Text
+                              style={
+                                isDarkMode
+                                  ? {
+                                    color:
+                                      selectedTipvalue?.value == j?.value
+                                        ? colors.white
+                                        : MyDarkTheme.colors.text,
+                                  }
+                                  : {
+                                    color:
+                                      selectedTipvalue?.value == j?.value
+                                        ? colors.white
+                                        : colors.black,
+                                  }
+                              }>
+                              {`${currencies?.primary_currency?.symbol} ${j.value}`}
+                            </Text>
+                            <Text
+                              style={{
+                                color:
+                                  selectedTipvalue?.value == j?.value
+                                    ? colors.white
+                                    : colors.textGreyB,
+                              }}>
+                              {j.label}
+                            </Text>
+                          </TouchableOpacity>
+                        );
+                      })}
+
+                    <TouchableOpacity
+                      style={[
+                        styles.tipArrayStyle2,
+                        {
+                          backgroundColor:
+                            selectedTipvalue == 'custom'
+                              ? themeColors.primary_color
+                              : 'transparent',
+                          flex: cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
+                        },
+                      ]}
+                      onPress={() => selectedTip('custom')}>
+                      <Text
+                        style={
+                          isDarkMode
+                            ? {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : MyDarkTheme.colors.text,
+                            }
+                            : {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : colors.black,
+                            }
+                        }>
+                        {strings.CUSTOM}
+                      </Text>
+                    </TouchableOpacity>
+                  </ScrollView>
+
+                  {!!selectedTipvalue && selectedTipvalue == 'custom' && (
+                    <View
+                      style={{
+                        borderRadius: 5,
+                        borderWidth: 0.5,
+                        borderColor: colors.textGreyB,
+                        height: 40,
+                        marginTop: moderateScaleVertical(8)
+                      }}>
+                      <TextInput
+                        value={selectedTipAmount}
+                        onChangeText={(text) =>
+                          updateState({ selectedTipAmount: text })
+                        }
+                        style={{
+                          height: 40,
+                          alignItems: 'center',
+                          paddingHorizontal: 10,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.textGreyOpcaity7,
+                        }}
+                        maxLength={5}
+                        returnKeyType={'done'}
+                        keyboardType={'number-pad'}
+                        placeholder={strings.ENTER_CUSTOM_AMOUNT}
+                        placeholderTextColor={
+                          isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.textGreyOpcaity7
+                        }
+                      />
+                    </View>
+                  )}
+                </View>
+              )}
+
+            {!!cartData?.total_tax && (
+              <View style={styles.bottomTabLableValue}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      : styles.priceItemLabel
+                  }>
+                  {strings.TAX_AMOUNT}
+                </Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      : styles.priceItemLabel
+                  }>{`${currencies?.primary_currency?.symbol}${Number(
+                    cartData?.total_tax ? cartData?.total_tax : 0,
+                  ).toFixed(2)}`}</Text>
+              </View>
+            )}
+
+            <View style={styles.amountPayable}>
+              <Text
+                style={{
+                  ...styles.priceItemLabel2,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                }}>
+                {strings.AMOUNT_PAYABLE}
+              </Text>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceItemLabel2, { color: MyDarkTheme.colors.text }]
+                    : styles.priceItemLabel2
+                }>{`${currencies?.primary_currency?.symbol}${(
+                  Number(cartData?.total_payable_amount) +
+                  (selectedTipAmount != null && selectedTipAmount != ''
+                    ? Number(selectedTipAmount)
+                    : 0)
+                ).toFixed(2)}`}</Text>
+            </View>
           </View>
         </View>
       </View>
@@ -1632,306 +1930,30 @@ export default function Cart({ navigation, route }) {
   const getFooter = () => {
     return (
       <>
-        <View style={styles.priceSection}>
-          <View style={[styles.bottomTabLableValue]}>
-            <Text
-              style={
-                isDarkMode
-                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
-                  : styles.priceItemLabel
-              }>
-              {strings.SUBTOTAL}
-            </Text>
-            <Text
-              style={
-                isDarkMode
-                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
-                  : styles.priceItemLabel
-              }>{`${currencies?.primary_currency?.symbol}${Number(
-                cartData?.gross_paybale_amount,
-              ).toFixed(2)}`}</Text>
-          </View>
-          {!!cartData?.wallet_amount && (
-            <View style={styles.bottomTabLableValue}>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
-                    : styles.priceItemLabel
-                }>
-                {strings.WALLET}
-              </Text>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
-                    : styles.priceItemLabel
-                }>{`${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.wallet_amount ? cartData?.wallet_amount : 0,
-                ).toFixed(2)}`}</Text>
-            </View>
-          )}
-          {!!cartData?.loyalty_amount && (
-            <View style={styles.bottomTabLableValue}>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
-                    : styles.priceItemLabel
-                }>
-                {strings.LOYALTY}
-              </Text>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
-                    : styles.priceItemLabel
-                }>{`-${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
-                ).toFixed(2)}`}</Text>
-            </View>
-          )}
-
-          {!!cartData?.wallet_amount_used && (
-            <View style={styles.bottomTabLableValue}>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
-                    : styles.priceItemLabel
-                }>
-                {strings.WALLET}
-              </Text>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
-                    : styles.priceItemLabel
-                }>{`-${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
-                ).toFixed(2)}`}</Text>
-            </View>
-          )}
-          {!!cartData?.total_subscription_discount && (
-            <View style={styles.bottomTabLableValue}>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
-                    : styles.priceItemLabel
-                }>
-                {strings.TOTALSUBSCRIPTION}
-              </Text>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
-                    : styles.priceItemLabel
-                }>{`-${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.total_subscription_discount,
-                ).toFixed(2)}`}</Text>
-            </View>
-          )}
-
-          {/* {!!cartData?.total_discount_amount && (
-            <View style={styles.bottomTabLableValue}>
-              <Text style={styles.priceItemLabel}>
-                {strings.TOTAL_DISCOUNT}
-              </Text>
-              <Text style={styles.priceItemLabel}>{`-${
-                currencies?.primary_currency?.symbol
-              }${Number(cartData?.total_discount_amount).toFixed(2)}`}</Text>
-            </View>
-          )} */}
-
-          {!!appData?.profile?.preferences?.tip_before_order &&
-            !!cartData?.tip &&
-            cartData?.tip.length && (
-              <View
-                style={[
-                  styles.bottomTabLableValue,
-                  { flexDirection: 'column', marginTop: 20 },
-                ]}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [styles.priceTipLabel, { color: MyDarkTheme.colors.text }]
-                      : [styles.priceTipLabel]
-                  }>
-                  {strings.DOYOUWANTTOGIVEATIP}
-                </Text>
-
-                <ScrollView
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={{ flexGrow: 1 }}>
-                  {cartData?.total_payable_amount !== 0 &&
-                    cartData?.tip.map((j, jnx) => {
-                      return (
-                        <TouchableOpacity
-                          key={String(jnx)}
-                          style={[
-                            styles.tipArrayStyle,
-                            {
-                              backgroundColor:
-                                selectedTipvalue?.value == j?.value
-                                  ? themeColors.primary_color
-                                  : 'transparent',
-                              flex: 0.18,
-                            },
-                          ]}
-                          onPress={() => selectedTip(j)}>
-                          <Text
-                            style={
-                              isDarkMode
-                                ? {
-                                  color:
-                                    selectedTipvalue?.value == j?.value
-                                      ? colors.white
-                                      : MyDarkTheme.colors.text,
-                                }
-                                : {
-                                  color:
-                                    selectedTipvalue?.value == j?.value
-                                      ? colors.white
-                                      : colors.black,
-                                }
-                            }>
-                            {`${currencies?.primary_currency?.symbol} ${j.value}`}
-                          </Text>
-                          <Text
-                            style={{
-                              color:
-                                selectedTipvalue?.value == j?.value
-                                  ? colors.white
-                                  : colors.textGreyB,
-                            }}>
-                            {j.label}
-                          </Text>
-                        </TouchableOpacity>
-                      );
-                    })}
-
-                  <TouchableOpacity
-                    style={[
-                      styles.tipArrayStyle2,
-                      {
-                        backgroundColor:
-                          selectedTipvalue == 'custom'
-                            ? themeColors.primary_color
-                            : 'transparent',
-                        flex: cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
-                      },
-                    ]}
-                    onPress={() => selectedTip('custom')}>
-                    <Text
-                      style={
-                        isDarkMode
-                          ? {
-                            color:
-                              selectedTipvalue == 'custom'
-                                ? colors.white
-                                : MyDarkTheme.colors.text,
-                          }
-                          : {
-                            color:
-                              selectedTipvalue == 'custom'
-                                ? colors.white
-                                : colors.black,
-                          }
-                      }>
-                      {strings.CUSTOM}
-                    </Text>
-                  </TouchableOpacity>
-                </ScrollView>
-
-                {!!selectedTipvalue && selectedTipvalue == 'custom' && (
-                  <View
-                    style={{
-                      borderRadius: 5,
-                      borderWidth: 0.5,
-                      borderColor: colors.textGreyB,
-                      height: 40,
-                    }}>
-                    <TextInput
-                      value={selectedTipAmount}
-                      onChangeText={(text) =>
-                        updateState({ selectedTipAmount: text })
-                      }
-                      style={{
-                        height: 40,
-                        alignItems: 'center',
-                        paddingHorizontal: 10,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.textGreyOpcaity7,
-                      }}
-                      maxLength={5}
-                      returnKeyType={'done'}
-                      keyboardType={'number-pad'}
-                      placeholder={strings.ENTER_CUSTOM_AMOUNT}
-                      placeholderTextColor={
-                        isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.textGreyOpcaity7
-                      }
-                    />
-                  </View>
-                )}
-              </View>
-            )}
-
-          {!!cartData?.total_tax && (
-            <View style={styles.bottomTabLableValue}>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
-                    : styles.priceItemLabel
-                }>
-                {strings.TAX_AMOUNT}
-              </Text>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
-                    : styles.priceItemLabel
-                }>{`${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.total_tax ? cartData?.total_tax : 0,
-                ).toFixed(2)}`}</Text>
-            </View>
-          )}
-
-          <View style={styles.amountPayable}>
-            <Text
-              style={
-                isDarkMode
-                  ? [styles.priceItemLabel2, { color: MyDarkTheme.colors.text }]
-                  : styles.priceItemLabel2
-              }>
-              {strings.AMOUNT_PAYABLE}
-            </Text>
-            <Text
-              style={
-                isDarkMode
-                  ? [styles.priceItemLabel2, { color: MyDarkTheme.colors.text }]
-                  : styles.priceItemLabel2
-              }>{`${currencies?.primary_currency?.symbol}${(
-                Number(cartData?.total_payable_amount) +
-                (selectedTipAmount != null && selectedTipAmount != ''
-                  ? Number(selectedTipAmount)
-                  : 0)
-              ).toFixed(2)}`}</Text>
-          </View>
-        </View>
-
         {/* Add instruction */}
-        {/* <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        {/* <TouchableOpacity
+          style={{ justifyContent: 'center', alignItems: 'center' }}
+        >
           <Text style={styles.addInstruction}>{strings.ADD_INSTRUCTIONS}</Text>
-        </View> */}
-        <View style={{ height: moderateScaleVertical(20) }} />
+        </TouchableOpacity> */}
+        <TextInput
+          value={instruction}
+          onChangeText={(instruction) => updateState({ instruction })}
+          multiline={true}
+          numberOfLines={4}
+          style={{
+            ...styles.instructionView,
+            backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
+          }}
+          placeholderTextColor={
+            isDarkMode ? colors.textGreyB : colors.textGreyB
+          }
+          // placeholder={strings.ANY_RESTAURANT_REQUESTS}
+          placeholder={'Special Instruction'}
+        />
+        {/* <View style={{ height: moderateScaleVertical(20) }} /> */}
 
-        <View style={{ height: 2 }} />
+
         {/* select payment method */}
         <TouchableOpacity
           onPress={() =>
@@ -1939,28 +1961,18 @@ export default function Cart({ navigation, route }) {
               ? moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
               : navigation.navigate(navigationStrings.OUTER_SCREEN, {})
           }
-          style={
-            isDarkMode
-              ? [
-                styles.paymentMainView,
-                {
-                  justifyContent: 'space-between',
-                  backgroundColor: MyDarkTheme.colors.lightDark,
-                },
-              ]
-              : [styles.paymentMainView, { justifyContent: 'space-between' }]
-          }>
+          style={styles.paymentMainView}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Image
               style={isDarkMode && { tintColor: MyDarkTheme.colors.text }}
               source={imagePath.paymentMethod}
             />
             <Text
-              style={
-                isDarkMode
-                  ? [styles.selectedMethod, { color: MyDarkTheme.colors.text }]
-                  : styles.selectedMethod
-              }>
+              style={{
+                ...styles.priceItemLabel2,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                marginLeft: moderateScale(4)
+              }}>
               {selectedPayment.title_lng
                 ? selectedPayment.title_lng
                 : selectedPayment.title
@@ -2205,6 +2217,7 @@ export default function Cart({ navigation, route }) {
               style={{
                 ...styles.addAddressTxt,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                marginTop: moderateScaleVertical(4)
               }}>
               {vendorAddress
                 ? vendorAddress
@@ -2424,7 +2437,7 @@ export default function Cart({ navigation, route }) {
             // backgroundColor: '#fff',
           }}>
           <FastImage
-            source={{uri: Image.resolveAssetSource(imagePath.icEmptyCartD).uri}}
+            source={{ uri: Image.resolveAssetSource(imagePath.icEmptyCartD).uri }}
             style={{
               marginVertical: moderateScaleVertical(20),
               height: moderateScale(120),
@@ -2581,7 +2594,7 @@ export default function Cart({ navigation, route }) {
             // backgroundColor: '#fff',
           }}>
           <FastImage
-            source={{uri: Image.resolveAssetSource(imagePath.icEmptyCartD).uri}}
+            source={{ uri: Image.resolveAssetSource(imagePath.icEmptyCartD).uri }}
             style={{
               marginVertical: moderateScaleVertical(20),
               height: moderateScale(120),

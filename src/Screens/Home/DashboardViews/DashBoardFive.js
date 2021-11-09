@@ -32,6 +32,7 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
 import stylesFunc from '../styles';
@@ -100,9 +101,18 @@ export default function DashBoardFive({
   }, [appMainData?.vendors]);
 
   const _renderItem = ({ item, index }) => {
+    return (
+      <View style={{ marginRight: moderateScale(8), width: width/6.2 }}>
+        <HomeCategoryCard2
+          data={item}
+          onPress={() => onPressCategory(item)}
+          isLoading={isLoading}
+        />
+      </View>
+    )
     if (index >= 7 && !isViewMore) {
       return (
-        <View style={{ width: '25%' }}>
+        <View style={{}}>
           <TouchableOpacity
             style={{
               marginVertical: moderateScale(0),
@@ -211,12 +221,11 @@ export default function DashBoardFive({
           !!appMainData?.categories.length && (
             <View
               style={{
-                marginHorizontal: moderateScale(8),
+                // marginHorizontal: moderateScale(8),
                 marginTop: moderateScaleVertical(10),
               }}>
               <FlatList
-                scrollEnabled={false}
-                numColumns={4}
+                horizontal
                 data={
                   isViewMore
                     ? appMainData?.categories
@@ -226,7 +235,13 @@ export default function DashBoardFive({
                 showsHorizontalScrollIndicator={false}
                 renderItem={_renderItem}
                 ItemSeparatorComponent={() => (
-                  <View style={{ height: moderateScale(10) }} />
+                  <View style={{ marginRight: moderateScale(12) }} />
+                )}
+                ListHeaderComponent={() => (
+                  <View style={{ marginLeft: moderateScale(12) }} />
+                )}
+                ListFooterComponent={() => (
+                  <View style={{ marginRight: moderateScale(12) }} />
                 )}
               />
             </View>
