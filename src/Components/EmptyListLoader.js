@@ -74,7 +74,7 @@ export default function EmptyListLoader({
   };
 
   return (
-    <View style={{width: '100%'}}>
+    <View style={{width: width - 5}}>
       {isRow ? (
         <View
           style={{

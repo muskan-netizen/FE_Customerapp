@@ -31,11 +31,16 @@ import {
 import { chekLocationPermission } from '../../utils/permissions';
 import { setItem } from '../../utils/utils';
 import {
+  DashBoardTwo,
+  DashBoardThree,
   DashBoardFive,
   DashBoardFour,
   DashBoardHeaderFive,
   DashBoardHeaderOne,
   DashBoardOne,
+  DashBoardHeaderFour,
+  DashBoardHeaderThree,
+  DashBoardSix,
 } from './DashboardViews/Index';
 import { MyDarkTheme, MyDefaultTheme } from '../../styles/theme';
 import { useDarkMode } from 'react-native-dark-mode';
@@ -54,6 +59,7 @@ navigator.geolocation = require('react-native-geolocation-service');
 import stylesFunc from './styles';
 import NotificationModal from '../../Components/NotificationModal';
 import AppLink from 'react-native-app-link';
+import DashBoardSeven from './DashboardViews/DashBoardSeven';
 
 export default function Home({ route, navigation }) {
   const paramData = route?.params;
@@ -627,7 +633,9 @@ export default function Home({ route, navigation }) {
   };
 
   const renderHomeScreen = () => {
+    const case_ = 5
     switch (appStyle?.homePageLayout) {
+    // switch (case_) {
       case 1:
         return (
           <>
@@ -690,6 +698,54 @@ export default function Home({ route, navigation }) {
             />
           </>
         );
+
+      case 4:
+        return (
+          <>
+            <DashBoardHeaderFour
+              navigation={navigation}
+              location={location}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              isLoading={isLoading}
+            />
+
+            <DashBoardSix
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              isDineInSelected={isDineInSelected}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              navigation={navigation}
+            />
+          </>
+        );
+      
+      case 5:
+        return(
+          <>
+           {/* <DashBoardSeven
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => {
+                onPressCategory(item);
+              }}
+              isDineInSelected={isDineInSelected}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              navigation={navigation}
+            /> */}
+          </>
+        )
     }
   };
 

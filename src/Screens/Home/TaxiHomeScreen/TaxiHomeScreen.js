@@ -1,15 +1,15 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
-import {Alert, BackHandler, View} from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, BackHandler, View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import WrapperContainer from '../../../Components/WrapperContainer';
 import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import {appIds, shortCodes} from '../../../utils/constants/DynamicAppKeys';
+import { appIds, shortCodes } from '../../../utils/constants/DynamicAppKeys';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
@@ -17,8 +17,8 @@ import {
   getUrlRoutes,
   showError,
 } from '../../../utils/helperFunctions';
-import {chekLocationPermission} from '../../../utils/permissions';
-import {setItem} from '../../../utils/utils';
+import { chekLocationPermission } from '../../../utils/permissions';
+import { setItem } from '../../../utils/utils';
 import {
   DashBoardFive,
   DashBoardFour,
@@ -27,14 +27,15 @@ import {
   DashBoardOne,
   TaxiHomeDashbord,
 } from '../DashboardViews/Index';
-import {MyDarkTheme, MyDefaultTheme} from '../../../styles/theme';
-import {useDarkMode} from 'react-native-dark-mode';
+import { MyDarkTheme, MyDefaultTheme } from '../../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
 import Geocoder from 'react-native-geocoding';
 import strings from '../../../constants/lang';
+import DashBoardSeven from '../DashboardViews/DashBoardSeven';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
-export default function TaxiHomeScreen({route, navigation}) {
+export default function TaxiHomeScreen({ route, navigation }) {
   const paramData = route?.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -72,7 +73,7 @@ export default function TaxiHomeScreen({route, navigation}) {
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
 
   const profileInfo = appData?.profile;
-  const {profile} = appData;
+  const { profile } = appData;
   const {
     updateTime,
     isLoading,
@@ -95,7 +96,7 @@ export default function TaxiHomeScreen({route, navigation}) {
   );
 
   useEffect(() => {
-    updateState({updatedData: appMainData?.categories});
+    updateState({ updatedData: appMainData?.categories });
   }, [appMainData]);
 
   useEffect(() => {
@@ -131,7 +132,7 @@ export default function TaxiHomeScreen({route, navigation}) {
         onPress: () => console.log('Cancel Pressed'),
         // style: 'destructive',
       },
-      {text: strings.CLEAR_CART2, onPress: () => clearCart(res)},
+      { text: strings.CLEAR_CART2, onPress: () => clearCart(res) },
     ]);
   };
 
@@ -155,7 +156,7 @@ export default function TaxiHomeScreen({route, navigation}) {
   };
 
   const updateLatLang = (res) => {
-    updateState({updateTime: Math.random()});
+    updateState({ updateTime: Math.random() });
     actions.locationData(res);
   };
   useEffect(() => {
@@ -164,7 +165,7 @@ export default function TaxiHomeScreen({route, navigation}) {
     }
   }, [updateTime]);
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+    Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
   }, []);
 
   useEffect(() => {
@@ -193,7 +194,7 @@ export default function TaxiHomeScreen({route, navigation}) {
                 }
               }
             })
-            .catch((err) => {});
+            .catch((err) => { });
         }
       })
       .catch((error) => console.log('error while accessing location', error));
@@ -308,7 +309,7 @@ export default function TaxiHomeScreen({route, navigation}) {
           }
         }
         setTimeout(() => {
-          updateState({isLoading: false, isRefreshing: false});
+          updateState({ isLoading: false, isRefreshing: false });
         }, 1000);
       })
       .catch(errorMethod);
@@ -317,21 +318,21 @@ export default function TaxiHomeScreen({route, navigation}) {
   //Error handling in screen
   const errorMethod = (error) => {
     console.log(error, 'error>>>>');
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({ isLoading: false, isLoadingB: false, isRefreshing: false });
     showError(error?.message || error?.error);
   };
 
   //update state
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
-  const {viewRef2, viewRef3, bannerRef} = useRef();
+  const { viewRef2, viewRef3, bannerRef } = useRef();
 
   //onPress Category
   const onPressCategory = (item) => {
@@ -342,7 +343,8 @@ export default function TaxiHomeScreen({route, navigation}) {
       item.redirect_to == staticStrings.CATEGORY ||
       item.redirect_to == staticStrings.ONDEMANDSERVICE
     ) {
-      moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
+      // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
+      moveToNewScreen(navigationStrings.ADD_VEHICLE_DETAILS, item)();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
         // if (item?.warning_page_id) {
@@ -372,19 +374,19 @@ export default function TaxiHomeScreen({route, navigation}) {
       moveToNewScreen(navigationStrings.BRANDS)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { item })();
     } else if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: item?.id,
-            vendor: true,
-            name: item?.name,
-          })();
+          id: item?.id,
+          vendor: true,
+          name: item?.name,
+        })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
@@ -411,15 +413,15 @@ export default function TaxiHomeScreen({route, navigation}) {
       if (data.redirect_to == staticStrings.VENDOR) {
         data?.is_show_category
           ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-              item,
-              rootProducts: true,
-              // categoryData: data,
-            })()
+            item,
+            rootProducts: true,
+            // categoryData: data,
+          })()
           : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-              id: data.redirect_id,
-              vendor: true,
-              name: data.redirect_name,
-            })();
+            id: data.redirect_id,
+            vendor: true,
+            name: data.redirect_name,
+          })();
       } else if (data.redirect_to == staticStrings.CATEGORY) {
         moveToNewScreen(navigationStrings.PRODUCT_LIST, {
           id: data.redirect_id,
@@ -458,18 +460,18 @@ export default function TaxiHomeScreen({route, navigation}) {
         // updateState({isRefreshing: false});
       })
       .catch((error) => {
-        updateState({isRefreshing: false});
+        updateState({ isRefreshing: false });
       });
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({isRefreshing: true});
+    updateState({ isRefreshing: true });
     initApiHit();
     // homeData();
   };
   const updateCircleData = (data) => {
-    updateState({updatedData: data});
+    updateState({ updatedData: data });
   };
 
   const selectedToggle = (type) => {
@@ -518,44 +520,66 @@ export default function TaxiHomeScreen({route, navigation}) {
     } else if (data.redirect_to == staticStrings.BRAND) {
       moveToNewScreen(navigationStrings.BRANDS)();
     } else if (data.redirect_to == staticStrings.SUBCATEGORY) {
-      // moveToNewScreen(navigationStrings.PRODUCT_LIST, data)();
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, data)();
 
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {data})();
+      // moveToNewScreen(navigationStrings.VENDOR_DETAIL, { data })();
     } else if (!data.is_show_category || data.is_show_category) {
       let item = data;
       data?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: data?.id,
-            vendor: true,
-            name: data?.name,
-          })();
+          id: data?.id,
+          vendor: true,
+          name: data?.name,
+        })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
 
   const renderHomeScreen = () => {
-    return (
-      <TaxiHomeDashbord
-        handleRefresh={() => handleRefresh()}
-        bannerPress={(item) => bannerPress(item)}
-        isLoading={isLoading}
-        isRefreshing={isRefreshing}
-        appMainData={appMainData}
-        onPressCategory={(item) => onPressCategory(item)}
-        selectedToggle={selectedToggle}
-        toggleData={appData}
-      />
-    );
+    const case_ = 5
+    switch (appStyle?.homePageLayout) {
+      // switch (case_) {
+        case 4:
+          return (
+            <TaxiHomeDashbord
+              handleRefresh={() => handleRefresh()}
+              bannerPress={(item) => bannerPress(item)}
+              isLoading={isLoading}
+              isRefreshing={isRefreshing}
+              appMainData={appMainData}
+              onPressCategory={(item) => onPressCategory(item)}
+              selectedToggle={selectedToggle}
+              toggleData={appData}
+            />
+          );
+          case 5:
+            return (
+              <DashBoardSeven
+                handleRefresh={() => handleRefresh()}
+                bannerPress={(item) => bannerPress(item)}
+                isLoading={isLoading}
+                isRefreshing={isRefreshing}
+                appMainData={appMainData}
+                onPressCategory={(item) => {
+                  onPressCategory(item);
+                }}
+                isDineInSelected={isDineInSelected}
+                selcetedToggle={false}
+                toggleData={appData}
+                navigation={navigation}
+              />
+            )
+      }
   };
   // console.log(appMainData, 'appMainData');
   return (
-    <View style={{flex: 1, backgroundColor: colors.white}}>
+    <View style={{ flex: 1, backgroundColor: colors.white }}>
       {renderHomeScreen()}
     </View>
   );

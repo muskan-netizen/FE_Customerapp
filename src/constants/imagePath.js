@@ -231,6 +231,7 @@ export default {
   accountRedActive: require('../assets/images/ic_account_red.png'),
   accountRedInActive: require('../assets/images/ic_account3.png'),
   search1: require('../assets/images/ic_search1.png'),
+  search2: require('../assets/images/orbitAssets/ic_search3.png'),
   backArrow1: require('../assets/images/ic_back1.png'),
   filter1: require('../assets/images/filter_ico.png'),
   greyRoundSearch: require('../assets/images/ic_search_round.png'),
@@ -368,4 +369,9 @@ export default {
   blackNav: require('../assets/images/TAXIAPPIMAGES/ic_nav.png'),
   plushRoundedBackground: require('../assets/images/TAXIAPPIMAGES/ic_plus.png'),
   icViewMore: require('../assets/images/RoyoorderNewImages/ic_viewmore.png'),
+
+  twoFinderOnBoard: require('../assets/images/TowFinder/ic_onboard.png'),
+  facebook: require('../assets/images/TowFinder/ic_fb.png'),
+  settings_icon: require('../assets/images/TowFinder/settings.png'),
+  settings_red_icon: require('../assets/images/TowFinder/ic_settings1.png'),
 };

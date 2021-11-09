@@ -6,8 +6,10 @@ export default {
   VERIFY_NUMBER: 'Phone Number Verify',
   JOIN_US: 'Create a  free account and join us!',
   CREATE_AN_ACCOUNT: 'CREATE NEW ACCOUNT',
+  CREATE_NEW_ACCOUNT: 'Create new Account',
   GUEST_LOGIN: 'GUEST LOGIN',
   OR_SIGNUP_WITH: 'Or signup with',
+  OR_CONTINUE_WITH: 'Or Continue with',
   OR_LOGIN_WITH: 'Or login with',
   ALREADY_HAVE_AN_ACCOUNT: 'Already have an account? ',
   LOGIN: 'Login',
@@ -571,5 +573,11 @@ Amount`,
   ADD_TIP: 'Add Tip',
   PLEASE_SELECT_RETURN_ORDER: 'Please select the product to return',
   PLEASE_SELECT_VALID_OPTION: 'Please select a valid tip option',
-  ORDER_PREPARED:"Order Prepared"
+  ORDER_PREPARED:"Order Prepared",
+  ANYTIME_YOUR_CAR_BREAKS: "Anytime your car breaks down,\n we are there for you !",
+  ENTER_YOUR: "Enter your",
+  REGISTER: "Register",
+  ENTER_EMAIL_ADDRESS: "Enter your Email Id here",
+  ENTER_PHONE_NUMBER: "Enter your phone number here",
+  SERVICES: "Services"
 };

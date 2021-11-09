@@ -44,6 +44,13 @@ export default ({themeColors, fontFamily}) => {
     bottomContainer: {
       marginBottom: moderateScaleVertical(30),
     },
+    bottomContainer2: {
+      position: 'absolute',
+      bottom: moderateScale(20),
+      alignItems: 'center',
+      width: '100%',
+      alignSelf: 'center'
+    },
     guestBtn: {
       marginTop: moderateScaleVertical(20),
       backgroundColor: colors.lightSky,
