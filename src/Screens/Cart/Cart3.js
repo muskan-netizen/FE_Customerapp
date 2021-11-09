@@ -572,15 +572,16 @@ export default function Cart({ navigation, route }) {
       orderDetail: res.data,
     }
     switch (paymentId) {
-      case 6: case !!(Number(cartData?.total_payable_amount) !== 0): case Number(selectedTipAmount) !== 0: //Payfast Payment Getway
+      case 6:  //Payfast Payment Getway
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
         break;
-      case 7: case !!(Number(cartData?.total_payable_amount) !== 0): case Number(selectedTipAmount) !== 0: //Mobbex Payment Getway
+      case 7: //Mobbex Payment Getway
         navigation.navigate(navigationStrings.MOBBEX, paymentData);
-      case 8: case !!(Number(cartData?.total_payable_amount) !== 0): case Number(selectedTipAmount) !== 0: //Yoco Payment Getway
+        break;
+      case 8: //Yoco Payment Getway
         navigation.navigate(navigationStrings.YOCO, paymentData);
         break;
-      case 9: case !!(Number(cartData?.total_payable_amount) !== 0): case Number(selectedTipAmount) !== 0: //Pyalink Payment Getway
+      case 9: //Pyalink Payment Getway
         navigation.navigate(navigationStrings.PAYLINK, paymentData);
         break;
       default:
@@ -635,7 +636,27 @@ export default function Cart({ navigation, route }) {
             placeLoader: false,
           })
         }
-        checkPaymentOptions(res)
+        if ((!!(Number(cartData?.total_payable_amount) !== 0)) || Number(selectedTipAmount) !== 0) {
+          checkPaymentOptions(res)
+          return;
+        }
+        if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1) {
+          console.log("success ressssssss", res.data)
+          setTimeout(() => {
+            _getOrderDetail(res.data.vendors[0])
+          }, 1500);
+        } else {
+          actions.cartItemQty({});
+          updateState({
+            cartItems: [],
+            cartData: {},
+            isLoadingB: false,
+            placeLoader: false,
+          })
+          moveToNewScreen(navigationStrings.ORDERSUCESS, { orderDetail: res.data })();
+        }
+
+        // checkPaymentOptions(res)
         // if (
         //   (res?.data?.payment_option_id === 6 &&
         //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
