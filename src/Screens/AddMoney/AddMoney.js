@@ -347,6 +347,7 @@ export default function AddMoney({ navigation }) {
             navigation.navigate(navigationStrings.WEBPAYMENTS, {
               paymentUrl: res?.data,
               paymentTitle: selectedPaymentMethod?.title,
+              redirectFrom: 'wallet',
             });
             return;
           }

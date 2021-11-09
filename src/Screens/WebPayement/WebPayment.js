@@ -12,6 +12,8 @@ import navigationStrings from '../../navigation/navigationStrings';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import stylesFun from './styles';
+import queryString from 'query-string';
+import actions from '../../redux/actions';
 
 export default function WebPayment({ navigation, route }) {
   const paramData = route?.params;
@@ -34,29 +36,40 @@ export default function WebPayment({ navigation, route }) {
     navigation.navigate(screenName, { data });
   };
 
+  console.log("paramData", paramData)
+
+
+
 
   const onNavigationStateChange = (navState) => {
-    if (
-      navState.canGoBack &&
-      navState.url.includes('payment/checkoutSuccess')
-    ) {
+    const URL = queryString.parseUrl(navState.url);
+    const queryParams = URL.query;
+    const nonQueryURL = URL.url;
+    console.log("state change query", queryParams)
+    let transId = '';
+    if (navState.canGoBack) {
       console.log("navState====", navState)
+      if (navState.url.includes('payment/checkoutSuccess')) {
+        transId = navState.url.substring(navState.url.lastIndexOf('/') + 1)
+      } else {
+        transId = queryParams?.transaction_id
+      }
       if (paramData?.redirectFrom == 'cart') {
         navigation.navigate(navigationStrings.CART, {
           redirectFrom: 'cart',
-          transactionId: navState.url.substring(
-            navState.url.lastIndexOf('/') + 1,
-          ),
+          transactionId: transId,
           selectedAddressData: paramData?.selectedAddressData,
           selectedPayment: paramData?.selectedPayment,
         });
+        return
       }
       if (paramData?.redirectFrom == 'tip') {
         actions
           .tipAfterOrder(
             {
-              tip_amount: paramData?.selectedTipAmount,
+              tip_amount: paramData?.tip_amount,
               order_number: paramData?.order_number,
+              transaction_id: transId,
             },
             {
               code: appData?.profile?.code,
@@ -65,19 +78,24 @@ export default function WebPayment({ navigation, route }) {
             },
           )
           .then((res) => {
+            console.log("tip res++++++", res)
             updateState({ isLoading: false });
             if (res && res?.status == 'Success' && res?.data) {
-              Alert.alert('', strings.PAYMENT_SUCCESS, [
-                {
-                  text: strings.CANCEL,
-                  onPress: () => console.log('Cancel Pressed'),
-                },
-              ]);
+              navigation.navigate(navigationStrings.ORDER_DETAIL);
             }
           })
-          .catch(errorMethod);
-        navigation.navigate(navigationStrings.ORDER_DETAIL);
-      } else {
+          .catch((error) => {
+            console.log("error riased", error)
+          });
+      }
+      if (paramData?.redirectFrom == "subscription") {
+        if (queryParams.status == "200") {
+          subscriptionApiHit(queryParams.transaction_id)
+        } else {
+          navigation.navigate(navigationStrings.SUBSCRIPTION);
+        }
+      }
+      else {
         setTimeout(() => {
           alert(strings.PAYMENT_SUCCESS);
           navigation.navigate(navigationStrings.WALLET);
@@ -94,6 +112,30 @@ export default function WebPayment({ navigation, route }) {
     // return;
 
   };
+
+  const subscriptionApiHit = (id) => {
+    actions
+      .purchaseSubscriptionPlan(
+        `/${paramData?.selectedPlanSlug}`,
+        {
+          payment_option_id: paramData?.selectedPaymentMethod?.id,
+          transaction_id: id,
+          // amount: selectedPlan?.id,
+        },
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        console.log("subscription res", res)
+        navigation.navigate(navigationStrings.SUBSCRIPTION);
+      })
+      .catch(error => {
+        console.log("error rraised", error)
+      });
+  }
 
   return (
     <WrapperContainer
