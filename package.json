@@ -274,7 +274,7 @@
     "thubaeridesRelease": "cd android && ./gradlew assembleThubaeRidesRelease",
     "pinkjetRelease": "cd android && ./gradlew assemblePinkJetRelease",
     "mokabfixRelease": "cd android && ./gradlew assembleMokabFixRelease",
-    "botseatsRelease": "cd android && ./gradlew assembleBotsEatsFixRelease",
+    "botseatsRelease": "cd android && ./gradlew assembleBotsEatsRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
