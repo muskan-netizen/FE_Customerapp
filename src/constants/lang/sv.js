@@ -6,6 +6,7 @@ export default {
   VERIFY_NUMBER: 'Verifiera telefonnummer',
   JOIN_US: 'Skapa ett gratis konto och gå med oss!',
   CREATE_AN_ACCOUNT: 'SKAPA NYTT KONTO',
+  CREATE_NEW_ACCOUNT: 'Crear una nueva cuenta',
   GUEST_LOGIN: 'GÄSTINLOGGNING',
   OR_SIGNUP_WITH: 'Eller registrera dig med',
   OR_LOGIN_WITH: 'Eller logga in med',
@@ -563,4 +564,16 @@ export default {
   WHICH_LANG_YOU_PREFER: 'Which language do you prefer?',
   CONTINUE_IN: 'Continue in',
 
+  OR_CONTINUE_WITH: 'O continuar con',
+  ANYTIME_YOUR_CAR_BREAKS:
+    'Anytime your car breaks down,\n we are there for you !',
+  ENTER_YOUR: 'Enter your',
+  REGISTER: 'Register',
+  ENTER_EMAIL_ADDRESS: 'Enter your Email Id here',
+  ENTER_PHONE_NUMBER: 'Enter your phone number here',
+  SERVICES: 'Services',
+  BY_LOGGING: 'By logging in or registering,you agree to our',
+  TERMS_OF_SERVICE: 'Terms of Service',
+  AND: 'and',
+  PRICACY_POLICY: 'Privacy Policy',
 };

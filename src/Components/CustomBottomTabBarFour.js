@@ -16,7 +16,6 @@ export default function CustomBottomTabBarFour({
   descriptors,
   navigation,
   bottomTabNotify,
-
   ...props
 }) {
   const insets = useSafeAreaInsets();

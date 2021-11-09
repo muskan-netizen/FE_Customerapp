@@ -83,8 +83,6 @@ export default function OuterScreen({navigation}) {
       navigation.navigate(screenName, {data});
     };
 
-  //console.log(  userStaticName.split('.'),"userStaticNameuserStaticNameuserStaticName");
-
   //Saving login user to backend
   const _saveSocailLogin = async (socialLoginData, type) => {
     let userStaticName = DeviceInfo.getBundleId();
