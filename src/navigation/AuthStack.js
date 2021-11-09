@@ -51,21 +51,21 @@ export default function (Stack) {
     <>
       <Stack.Screen
         name={navigationStrings.OUTER_SCREEN}
-        // component={checkScreen(3)}
+        // component={checkScreen(appStyle?.homePageLayout)}
         //appStyle?.homePageLayout === 2 ? OuterScreen2 : OuterScreen}
         component={appStyle?.homePageLayout === 2 ? OuterScreen2 : OuterScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.SIGN_UP}
-        // component={appStyle?.homePageLayout === 2 ? Signup2 : Signup}
-        component={SignupTemplateThree}
+        component={appStyle?.homePageLayout === 2 ? Signup2 : Signup}
+        // component={SignupTemplateThree}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.LOGIN}
-        // component={appStyle?.homePageLayout === 2 ? Login2 : Login}
-        component={LoginLayoutFour}
+        component={appStyle?.homePageLayout === 2 ? Login2 : Login}
+        // component={LoginLayoutFour}
         options={{headerShown: false}}
       />
       <Stack.Screen
