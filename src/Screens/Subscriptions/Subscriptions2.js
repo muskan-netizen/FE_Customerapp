@@ -310,7 +310,7 @@ export default function Subscriptions2({navigation, route}) {
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.off_site != 1 && (
             <CardField
-              postalCodeEnabled={true}
+              postalCodeEnabled={false}
               placeholder={{
                 number: '4242 4242 4242 4242',
               }}

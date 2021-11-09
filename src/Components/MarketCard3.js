@@ -190,13 +190,17 @@ export default function MarketCard3({
             {!!data?.lineOfSightDistance && (
               <View
                 style={{
-                  // flexDirection: 'row',
+                  flexDirection: 'row',
+                  alignItems: 'center'
                 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Image
                     style={{
                       tintColor: themeColors.primary_color,
+                      width: moderateScale(12),
+                      height: moderateScale(12)
                     }}
+                    resizeMode="contain"
                     source={imagePath.location2}
                   />
                   <Text
@@ -207,14 +211,19 @@ export default function MarketCard3({
                 </View>
 
                 {!!data?.timeofLineOfSightDistance && (<View
-                  style={{ flexDirection: 'row', alignItems: 'center', marginTop: moderateScaleVertical(8) }}
+                  style={{ flexDirection: 'row', alignItems: 'center' }}
                 >
                   <Image
-                    style={{ tintColor: themeColors.primary_color }}
+                    style={{
+                      tintColor: themeColors.primary_color,
+                      width: moderateScale(12),
+                      height: moderateScale(12)
+                    }}
+                    resizeMode="contain"
                     source={imagePath.icTime2}
                   />
                   <Text style={styles.distanceTimeStyle}>
-                    {checkEvenOdd(data?.timeofLineOfSightDistance)}-{checkEvenOdd(data?.timeofLineOfSightDistance + 5)} {' mins'}
+                    {checkEvenOdd(data?.timeofLineOfSightDistance)}-{checkEvenOdd(data?.timeofLineOfSightDistance + 5)}{' mins'}
                   </Text>
                 </View>)}
               </View>
@@ -236,7 +245,7 @@ export default function MarketCard3({
           {!!appData?.profile?.preferences?.is_hyperlocal && (<Text
             style={{
               ...commonStyles.mediumFont14Normal,
-              fontSize: textScale(12),
+              fontSize: textScale(10),
               textAlign: 'left',
               color: data?.show_slot
                 ? colors.green
@@ -308,7 +317,7 @@ export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme })
     },
     distanceTimeStyle: {
       color: colors.greyLight,
-      fontSize: textScale(10),
+      fontSize: textScale(9),
       fontFamily: fontFamily.regular,
       marginHorizontal: moderateScale(5),
       textAlign: 'left',

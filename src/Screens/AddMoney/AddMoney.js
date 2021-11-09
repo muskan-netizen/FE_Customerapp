@@ -41,6 +41,7 @@ import { showError } from '../../utils/helperFunctions';
 import stylesFun from './styles';
 import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../../styles/theme';
+import queryString from 'query-string';
 
 export default function AddMoney({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -111,7 +112,7 @@ export default function AddMoney({ navigation }) {
         },
       )
       .then((res) => {
-        console.log("payment list options",res.data)
+        console.log("payment list options", res.data)
         updateState({ isLoadingB: false, isRefreshing: false });
         if (res && res?.data) {
           updateState({ allAvailAblePaymentMethods: res?.data });
@@ -172,7 +173,7 @@ export default function AddMoney({ navigation }) {
                   ? [styles.chooseAddMoney, { color: MyDarkTheme.colors.text }]
                   : styles.chooseAddMoney
               }>
-              {'+ $'} {currencyNumberFormatter(item.amount)}
+              {`+ ${currencies?.primary_currency?.symbol}` } {currencyNumberFormatter(item.amount)}
             </Text>
           </View>
         </View>
@@ -234,32 +235,33 @@ export default function AddMoney({ navigation }) {
             //   onChange={_onChangeStripeData}
             //   inputContainerStyle={{backgroundColor: 'white'}}
             // />
-
-            <CardField
-              postalCodeEnabled={true}
-              placeholder={{
-                number: '4242 4242 4242 4242',
-              }}
-              cardStyle={{
-                backgroundColor: '#FFFFFF',
-                textColor: '#000000',
-              }}
-              style={{
-                width: '100%',
-                height: 50,
-                marginVertical: 10,
-              }}
-              onCardChange={(cardDetails) => {
-                // console.log('cardDetails', cardDetails);
-                _onChangeStripeData(cardDetails);
-              }}
-              onFocus={(focusedField) => {
-                console.log('focusField', focusedField);
-              }}
-              onBlur={() => {
-                Keyboard.dismiss();
-              }}
-            />
+            <View>
+              <CardField
+                postalCodeEnabled={true}
+                placeholder={{
+                  number: '4242 4242 4242 4242',
+                }}
+                cardStyle={{
+                  backgroundColor: '#FFFFFF',
+                  textColor: '#000000',
+                }}
+                style={{
+                  width: '100%',
+                  height: 50,
+                  marginVertical: 10,
+                }}
+                onCardChange={(cardDetails) => {
+                  // console.log('cardDetails', cardDetails);
+                  _onChangeStripeData(cardDetails);
+                }}
+                onFocus={(focusedField) => {
+                  console.log('focusField', focusedField);
+                }}
+                onBlur={() => {
+                  Keyboard.dismiss();
+                }}
+              />
+            </View>
           )}
       </>
     );
@@ -285,6 +287,7 @@ export default function AddMoney({ navigation }) {
     } else if (!selectedPaymentMethod) {
       showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
     } else {
+      // console.log("selectedPaymentMethod",selectedPaymentMethod)
       if (selectedPaymentMethod?.off_site == 1) {
         _webPayment();
       } else {
@@ -292,6 +295,31 @@ export default function AddMoney({ navigation }) {
       }
     }
   };
+
+
+  const checkPaymentOptions = (selectedPaymentMethod, paymentUrl) => {
+    let obj = {
+      id: selectedPaymentMethod.id,
+      title: selectedPaymentMethod.title,
+      screenName: navigationStrings.WALLET,
+      paymentUrl: paymentUrl
+    }
+    switch (selectedPaymentMethod.id) {
+      case 6:  //Payfast Payment Getway
+        navigation.navigate(navigationStrings.PAYFAST, { walletTip: obj });
+        break;
+      case 7:  //Mobbex Payment Getway
+        navigation.navigate(navigationStrings.MOBBEX, { walletTip: obj });
+      case 8: //Yoco Payment Getway
+        navigation.navigate(navigationStrings.YOCO, { walletTip: obj });
+        break;
+      case 9: //Pyalink Payment Getway
+        navigation.navigate(navigationStrings.PAYLINK, { walletTip: obj });
+        break;
+      default:
+        break;
+    }
+  }
 
   const _webPayment = () => {
     let selectedMethod = selectedPaymentMethod.title.toLowerCase();
@@ -311,12 +339,19 @@ export default function AddMoney({ navigation }) {
       )
       .then((res) => {
         updateState({ isLoadingB: false, isRefreshing: false });
+        // console.log("res==>>>>",res)
+        const URL = queryString.parseUrl(res.data);
+        console.log("res==>>>>", res)
         if (res && res?.status == 'Success' && res?.data) {
+          if (selectedPaymentMethod.id == 3) {
+            navigation.navigate(navigationStrings.WEBPAYMENTS, {
+              paymentUrl: res?.data,
+              paymentTitle: selectedPaymentMethod?.title,
+            });
+            return;
+          }
+          checkPaymentOptions(selectedPaymentMethod, res?.data)
           // updateState({allAvailAblePaymentMethods: res?.data});
-          navigation.navigate(navigationStrings.WEBPAYMENTS, {
-            paymentUrl: res?.data,
-            paymentTitle: selectedPaymentMethod?.title,
-          });
         }
       })
       .catch(errorMethod);
@@ -449,7 +484,7 @@ export default function AddMoney({ navigation }) {
                     ? [styles.currencySymble, { color: MyDarkTheme.colors.text }]
                     : styles.currencySymble
                 }>
-                {'$'}
+                {currencies?.primary_currency?.symbol}
               </Text>
               <TextInput
                 style={
