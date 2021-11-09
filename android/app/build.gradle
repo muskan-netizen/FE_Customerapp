@@ -1574,6 +1574,16 @@ android {
             resValue "string", "app_name", "MokabFix"
             resValue "string", "host_name", ""
          }
+          botseats{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.botseats'
+            resValue "string", "app_name", "BotsEats"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

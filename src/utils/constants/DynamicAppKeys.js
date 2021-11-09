@@ -136,6 +136,7 @@ const shortCodes = {
   thubaerides: '47f449',
   pinkjet: '7e0ff5',
   mokabfix: '88d242',
+  botseats: 'fe9076',
 };
 
 const appIds = {
@@ -678,6 +679,10 @@ const appIds = {
   mokabfix: Platform.select({
     ios: 'com.mokabfix',
     android: 'com.mokabfix',
+  }),
+  botseats: Platform.select({
+    ios: 'com.botseats',
+    android: 'com.botseats',
   }),
 };
 

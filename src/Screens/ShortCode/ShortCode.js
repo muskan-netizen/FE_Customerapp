@@ -900,6 +900,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.botseats:
+          updateState({
+            shortCode: shortCodes.botseats,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
