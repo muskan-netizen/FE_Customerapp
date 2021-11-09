@@ -558,4 +558,9 @@ export default {
   ORDER_PREPARED: 'Order Prepared',
   ENTER_PROMOCODE: 'Enter a promo code to apply',
   PROMO_CODE: 'promo code',
+  POPULAR_BRANDS: 'Popular Brands',
+  FEATURED_PRODUCTS: 'Featured products',
+  WHICH_LANG_YOU_PREFER: 'Which language do you prefer?',
+  CONTINUE_IN: 'Continue in',
+
 };

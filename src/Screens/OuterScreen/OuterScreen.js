@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
+  I18nManager,
   Image,
   Platform,
   ScrollView,
@@ -13,11 +14,12 @@ import GradientButton from '../../Components/GradientButton';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
-import strings from '../../constants/lang/index';
+import strings, {changeLaguage} from '../../constants/lang/index';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {hitSlopProp} from '../../styles/commonStyles';
+import RNRestart from 'react-native-restart';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -37,6 +39,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-community/async-storage';
+import LanguageModal from '../../Components/LanguageModal';
+import {setItem} from '../../utils/utils';
 
 export default function OuterScreen({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -46,6 +50,9 @@ export default function OuterScreen({navigation}) {
   const [state, setState] = useState({
     getLanguage: '',
     isLoading: false,
+    isSelectLanguageModal: false,
+    isLangSelected: false,
+    allLangs: [],
   });
   const {
     appData,
@@ -59,7 +66,13 @@ export default function OuterScreen({navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});
 
-  const {getLanguage, isLoading} = state;
+  const {
+    getLanguage,
+    isLoading,
+    isSelectLanguageModal,
+    isLangSelected,
+    allLangs,
+  } = state;
   const {apple_login, fb_login, twitter_login, google_login} =
     appData?.profile?.preferences;
 
@@ -69,8 +82,6 @@ export default function OuterScreen({navigation}) {
     () => {
       navigation.navigate(screenName, {data});
     };
-
-  console.log('@ device   ', DeviceInfo.getBundleId());
 
   //console.log(  userStaticName.split('.'),"userStaticNameuserStaticNameuserStaticName");
 
@@ -241,6 +252,95 @@ export default function OuterScreen({navigation}) {
     getCartDetail();
     navigation.push(navigationStrings.DRAWER_ROUTES);
   };
+
+  const _selectLang = () => {
+    updateState({isSelectLanguageModal: true});
+  };
+
+  const _onBackdropPress = () => {
+    updateState({isSelectLanguageModal: false});
+  };
+
+  useEffect(() => {
+    const all_languages = [...languages.all_languages];
+    all_languages.forEach((itm, indx) => {
+      if (languages?.primary_language?.id === itm?.id) {
+        all_languages[indx].isActive = true;
+        updateState({
+          allLangs: [...all_languages],
+        });
+      } else {
+        all_languages[indx].isActive = false;
+        updateState({
+          allLangs: [...all_languages],
+        });
+      }
+    });
+  }, []);
+
+  const _onLangSelect = (item, indx) => {
+    const langs = [...allLangs];
+    langs.forEach((item, index) => {
+      if (index === indx) {
+        langs[index].isActive = true;
+        updateState({
+          allLangs: [...langs],
+        });
+      } else {
+        langs[index].isActive = false;
+        updateState({
+          allLangs: [...langs],
+        });
+      }
+    });
+  };
+
+  const selectedLangTitle = allLangs.find((itm) => itm.isActive === true);
+
+  //Update language
+  const updateLanguage = (item) => {
+    const data = languages.all_languages.filter((x) => x.id == item.id)[0];
+
+    if (data.sort_code !== languages.primary_language.sort_code) {
+      let languagesData = {
+        ...languages,
+        primary_language: data,
+      };
+
+      // updateState({isLoading: true});
+      setItem('setPrimaryLanguage', languagesData);
+      setTimeout(() => {
+        updateState({isSelectLanguageModal: false});
+        actions.updateLanguage(data);
+        onSubmitLang(data.sort_code, languagesData);
+      }, 1000);
+    }
+  };
+
+  //update language all over the app
+  const onSubmitLang = async (lang, languagesData) => {
+    if (lang == '') {
+      showAlertMessageError(strings.SELECT);
+      return;
+    } else {
+      if (lang === 'ar') {
+        I18nManager.forceRTL(true);
+        setItem('language', lang);
+        changeLaguage(lang);
+        RNRestart.Restart();
+      } else {
+        I18nManager.forceRTL(false);
+        setItem('language', lang);
+        changeLaguage(lang);
+        RNRestart.Restart();
+      }
+    }
+  };
+
+  const _updateLang = (selectedLangTitle) => {
+    updateLanguage(selectedLangTitle);
+  };
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -261,7 +361,22 @@ export default function OuterScreen({navigation}) {
             // })
             navigation.goBack()
           }
-          // rightIcon={imagePath.cartShop}
+          isRightText
+          rightTxt={
+            !!selectedLangTitle
+              ? selectedLangTitle.sort_code
+              : languages?.primary_language?.sort_code
+          }
+          rightTxtContainerStyle={{
+            backgroundColor: themeColors.primary_color,
+            height: moderateScale(30),
+            width: moderateScale(30),
+            borderRadius: moderateScale(30),
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onPressRightTxt={_selectLang}
+          rightTxtStyle={{color: colors.white, textTransform: 'uppercase'}}
           headerStyle={
             isDarkMode
               ? {backgroundColor: MyDarkTheme.colors.background}
@@ -441,6 +556,16 @@ export default function OuterScreen({navigation}) {
           </View>
         </View>
       </ScrollView>
+      {isSelectLanguageModal && (
+        <LanguageModal
+          isSelectLanguageModal={isSelectLanguageModal}
+          onBackdropPress={_onBackdropPress}
+          _onLangSelect={_onLangSelect}
+          isLangSelected={isLangSelected}
+          allLangs={allLangs}
+          _updateLang={_updateLang}
+        />
+      )}
     </WrapperContainer>
   );
 }

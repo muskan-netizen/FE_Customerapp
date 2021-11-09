@@ -65,8 +65,6 @@ export default function DashBoardHeaderFive({
     '800/400',
   );
 
-  console.log(location, 'locationlocationlocation');
-
   useEffect(() => {
     addAllTabs();
     userSelectedtab();

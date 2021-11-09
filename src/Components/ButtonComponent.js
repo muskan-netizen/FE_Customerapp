@@ -30,6 +30,7 @@ const TransparentButtonWithTxtAndIcon = ({
         borderWidth: 0,
         marginTop,
         marginBottom,
+        backgroundColor: 'green',
 
         ...containerStyle,
       }}
@@ -49,7 +50,9 @@ const TransparentButtonWithTxtAndIcon = ({
         {placeLoader ? (
           <UIActivityIndicator size={loaderSize} color={loaderColor} />
         ) : (
-          <Text style={{...commonStyles.buttonTextWhite, ...textStyle}}>
+          <Text
+            numberOfLines={1}
+            style={{...commonStyles.buttonTextWhite, ...textStyle}}>
             {btnText}
           </Text>
         )}
