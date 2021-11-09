@@ -4,6 +4,7 @@ import {
   ForgotPassword2,
   Location,
   Login,
+  OrbitOuterScreen,
   OtpVerification,
   OuterScreen,
   OuterScreen2,
@@ -19,11 +20,35 @@ import navigationStrings from './navigationStrings';
 
 export default function (Stack) {
   const {appData, appStyle} = useSelector((state) => state?.initBoot);
+
+  const checkScreen = (id) => {
+    let ScreenName = OuterScreen;
+    switch (id) {
+      case 1:
+        ScreenName = OuterScreen2;
+        break;
+      case 2:
+        ScreenName = OrbitOuterScreen;
+        break;
+      case 3:
+        ScreenName = OuterScreen2;
+        break;
+      case 4:
+        ScreenName = OuterScreen2;
+        break;
+      case 5:
+        ScreenName = OuterScreen;
+        break;
+    }
+    return ScreenName;
+  };
+
   return (
     <>
       <Stack.Screen
         name={navigationStrings.OUTER_SCREEN}
-        component={appStyle?.homePageLayout === 2 ? OuterScreen2 : OuterScreen}
+        component={checkScreen(2)}
+        //appStyle?.homePageLayout === 2 ? OuterScreen2 : OuterScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen

@@ -109,4 +109,5 @@ export default {
   taxiCategoryGrayColor: '#C0C0C8',
   redD: '#FD4937',
   blueLight: '#93DCEF',
+  DarkBlue: '#0087AA',
 };
