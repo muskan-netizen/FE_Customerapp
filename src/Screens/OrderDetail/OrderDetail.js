@@ -172,7 +172,8 @@ export default function OrderDetail({navigation, route}) {
             cartItems: res.data.vendors,
             cartData: res.data,
             isLoading: false,
-
+            selectedTipvalue:
+              res.data.payable_amount == '0.00' ? 'custom' : null,
             currentPosition: res.data.vendors[0].order_status
               ? res?.data?.luxury_option_name !== strings.DELIVERY
                 ? res.data.vendors[0].order_status?.current_status?.title ==
@@ -1133,11 +1134,11 @@ export default function OrderDetail({navigation, route}) {
             {strings.PAYMENT_SUMMARY}
           </Text>
 
-          {!!cartData?.subtotal_amount && (
+          {!!cartData?.total_amount && (
             <LeftRightText
               leftText={strings.SUBTOTAL}
               rightText={`${currencies?.primary_currency?.symbol}${Number(
-                cartData?.subtotal_amount,
+                cartData?.total_amount,
               ).toFixed(2)}`}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
@@ -1148,6 +1149,26 @@ export default function OrderDetail({navigation, route}) {
               leftText={strings.DELIVERY_FEE}
               rightText={`${currencies?.primary_currency?.symbol}${Number(
                 cartData?.total_delivery_fee,
+              ).toFixed(2)}`}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+            />
+          )}
+          {!!cartData?.wallet_amount_used && (
+            <LeftRightText
+              leftText={strings.WALLET}
+              rightText={`${currencies?.primary_currency?.symbol}${Number(
+                cartData?.wallet_amount_used,
+              ).toFixed(2)}`}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+            />
+          )}
+          {!!cartData?.loyalty_amount_saved && (
+            <LeftRightText
+              leftText={strings.LOYALTY}
+              rightText={`${currencies?.primary_currency?.symbol}${Number(
+                cartData?.loyalty_amount_saved,
               ).toFixed(2)}`}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
@@ -1171,11 +1192,10 @@ export default function OrderDetail({navigation, route}) {
                 : colors.lightGreyBgColor,
             }}
           />
-
           <LeftRightText
             leftText={strings.TOTAL}
             rightText={`${currencies?.primary_currency?.symbol}${Number(
-              cartData?.total_amount,
+              cartData?.payable_amount,
             ).toFixed(2)}`}
             isDarkMode={isDarkMode}
             MyDarkTheme={MyDarkTheme}
@@ -1219,7 +1239,7 @@ export default function OrderDetail({navigation, route}) {
                   horizontal
                   showsHorizontalScrollIndicator={false}
                   contentContainerStyle={{flexGrow: 1}}>
-                  {cartData?.total_payable_amount !== 0 &&
+                  {cartData?.payable_amount !== '0.00' &&
                     cartData?.tip.map((j, jnx) => {
                       return (
                         <TouchableOpacity
@@ -1272,43 +1292,45 @@ export default function OrderDetail({navigation, route}) {
                       );
                     })}
 
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor:
-                        selectedTipvalue == 'custom'
-                          ? themeColors.primary_color
-                          : 'transparent',
-                      flex: cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      borderWidth: 0.7,
-                      paddingHorizontal: 15,
-                      paddingVertical: 5,
-                      marginLeft: 2,
-                      marginVertical: 20,
-                      borderRadius: moderateScale(5),
-                      borderColor: themeColors.primary_color,
-                    }}
-                    onPress={() => selectedTip('custom')}>
-                    <Text
-                      style={
-                        isDarkMode
-                          ? {
-                              color:
-                                selectedTipvalue == 'custom'
-                                  ? colors.white
-                                  : MyDarkTheme.colors.text,
-                            }
-                          : {
-                              color:
-                                selectedTipvalue == 'custom'
-                                  ? colors.white
-                                  : colors.black,
-                            }
-                      }>
-                      {strings.CUSTOM}
-                    </Text>
-                  </TouchableOpacity>
+                  {cartData?.payable_amount !== '0.00' && (
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor:
+                          selectedTipvalue == 'custom'
+                            ? themeColors.primary_color
+                            : 'transparent',
+                        flex: cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderWidth: 0.7,
+                        paddingHorizontal: 15,
+                        paddingVertical: 5,
+                        marginLeft: 2,
+                        marginVertical: 20,
+                        borderRadius: moderateScale(5),
+                        borderColor: themeColors.primary_color,
+                      }}
+                      onPress={() => selectedTip('custom')}>
+                      <Text
+                        style={
+                          isDarkMode
+                            ? {
+                                color:
+                                  selectedTipvalue == 'custom'
+                                    ? colors.white
+                                    : MyDarkTheme.colors.text,
+                              }
+                            : {
+                                color:
+                                  selectedTipvalue == 'custom'
+                                    ? colors.white
+                                    : colors.black,
+                              }
+                        }>
+                        {strings.CUSTOM}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
                 </ScrollView>
 
                 {!!selectedTipvalue && selectedTipvalue == 'custom' && (
@@ -1318,6 +1340,7 @@ export default function OrderDetail({navigation, route}) {
                       borderWidth: 0.5,
                       borderColor: colors.textGreyB,
                       height: 40,
+                      marginTop: moderateScaleVertical(12),
                     }}>
                     <TextInput
                       value={selectedTipAmount}

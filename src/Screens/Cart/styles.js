@@ -196,10 +196,10 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     },
     incDecBtnContainer: {
       backgroundColor: themeColors.primary_color,
-      borderRadius: moderateScale(5),
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-      paddingVertical: moderateScaleVertical(3),
+      borderRadius: moderateScale(16),
+      paddingHorizontal: moderateScale(4),
+      paddingVertical: moderateScaleVertical(4),
+      marginRight: moderateScale(8)
     },
     cartItemRatting: {
       tintColor: colors.orange,
@@ -219,9 +219,8 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     },
     cartItemValue: {
       fontFamily: fontFamily.bold,
-      fontSize: moderateScale(14),
+      fontSize: moderateScale(12),
       color: colors.white,
-      marginTop: moderateScaleVertical(5),
     },
     cartItemLine: {
       height: 1,
@@ -369,9 +368,13 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     swipeView: {
       justifyContent: 'center',
       alignItems: 'center',
-      paddingHorizontal: moderateScale(20),
+      paddingHorizontal: moderateScale(16),
       borderRadius: moderateScale(8),
-      width: width,
+      backgroundColor: '#FFC8C8',
+      marginBottom: moderateScaleVertical(12),
+      // alignItems:'flex-end',
+      width: moderateScale(42),
+      // width: width,
     },
     commTextStyle: {
       color: colors.white,

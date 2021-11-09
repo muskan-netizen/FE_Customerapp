@@ -235,7 +235,7 @@ export default function Account2({ navigation }) {
             />
           ))}
 
-        {!!userData?.auth_token && (
+        {!!userData?.auth_token && !!appData && !!appData?.profile && appData?.profile?.preferences?.subscription_mode == 1 && (
           <ListItemHorizontal
             centerContainerStyle={{ flexDirection: 'row' }}
             leftIconStyle={{ flex: 0.1, alignItems: 'center' }}

@@ -625,9 +625,9 @@ export default function Home({route, navigation}) {
   };
 
   const renderHomeScreen = () => {
-    const case_ = 5
+    const case_ = 5;
     switch (appStyle?.homePageLayout) {
-    // switch (case_) {
+      // switch (case_) {
       case 1:
         return (
           <>
@@ -718,11 +718,11 @@ export default function Home({route, navigation}) {
             />
           </>
         );
-      
+
       case 5:
-        return(
+        return (
           <>
-           {/* <DashBoardSeven
+            {/* <DashBoardSeven
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}
               isLoading={isLoading}
@@ -737,7 +737,7 @@ export default function Home({route, navigation}) {
               navigation={navigation}
             /> */}
           </>
-        )
+        );
     }
   };
 
