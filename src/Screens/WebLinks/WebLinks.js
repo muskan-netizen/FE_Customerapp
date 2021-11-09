@@ -52,9 +52,9 @@ export default function WebLinks({navigation, route}) {
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(route, 'route>>>');
 
   const paramData = route?.params;
+  console.log(paramData, 'paramData>>>');
   const [state, setState] = useState({
     isLoading: false,
     htmlContent: null,

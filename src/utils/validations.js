@@ -36,6 +36,7 @@ export default function (data) {
     states,
     country,
     callingCode,
+    promocode,
   } = data;
   console.log(message, 'message');
   if (username !== undefined) {
@@ -241,6 +242,22 @@ export default function (data) {
       return emptyValidationText;
     } else {
       let minLengthValidation = checkMinLength(message, 6, strings.MESSAGE);
+      if (minLengthValidation !== '') {
+        return minLengthValidation;
+      }
+    }
+  }
+
+  if (promocode !== undefined) {
+    let emptyValidationText = checkEmpty(promocode, strings.PROMO_CODE);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    } else {
+      let minLengthValidation = checkMinLength(
+        promocode,
+        3,
+        strings.PROMO_CODE,
+      );
       if (minLengthValidation !== '') {
         return minLengthValidation;
       }

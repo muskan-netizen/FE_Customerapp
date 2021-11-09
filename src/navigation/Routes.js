@@ -22,6 +22,7 @@ import TaxiAppStack from './TaxiAppStack';
 import AsyncStorage from '@react-native-community/async-storage';
 import AppIntro from '../Screens/AppIntro';
 import { getItem } from '../utils/utils';
+import DrawerRoutesTwoFinder from './DrawerRoutesTwoFinder';
 
 const Stack = createStackNavigator();
 
@@ -100,6 +101,12 @@ export default function Routes() {
           <Stack.Screen
             name={navigationStrings.DRAWER_ROUTES}
             component={DrawerRoutes}
+            options={{ headerShown: false, gestureEnabled: false }}
+          />
+
+          <Stack.Screen
+            name={navigationStrings.DRAWER_ROUTES_TOWFINDER}
+            component={DrawerRoutesTwoFinder}
             options={{ headerShown: false, gestureEnabled: false }}
           />
 

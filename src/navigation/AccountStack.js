@@ -47,6 +47,7 @@ import {
   Wishlist,
   Wishlist2,
 } from '../Screens';
+import AccountTemplateFour from '../Screens/Account/AccountTemplateFour';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
@@ -63,6 +64,7 @@ export default function ({navigation}) {
             ? Account3
             : Account
         }
+        // component={AccountTemplateFour}
         name={navigationStrings.ACCOUNTS}
         options={{headerShown: false}}
       />

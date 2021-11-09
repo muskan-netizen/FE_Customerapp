@@ -4543,6 +4543,7 @@
 		8442CA0D265D1A7A00EDB001 /* Tranzit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tranzit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8442CA29265D1C7900EDB001 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8442CAA1265D257700EDB001 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		84451812273949DD00B2EFA8 /* Runrun copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Runrun copy-Info.plist"; path = "/Users/admin/Desktop/Royo%20Orders%202%20React%20Native/ios/Runrun copy-Info.plist"; sourceTree = "<absolute>"; };
 		84468BF426734BFC00AEA0F1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8447E25926DF636B00A23425 /* MenusDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MenusDebug.entitlements; sourceTree = "<group>"; };
 		8447E39026DF950500A23425 /* DoorStep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoorStep.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -7201,6 +7202,7 @@
 				84F4679326A7F27400D378D5 /* Masa-Bridging-Header.h */,
 				84F4679426A7F27400D378D5 /* Yogo Food-Bridging-Header.h */,
 				84F4679526A7F27400D378D5 /* BottomsUp-Bridging-Header.h */,
+				84451812273949DD00B2EFA8 /* Runrun copy-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";

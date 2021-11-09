@@ -15,6 +15,11 @@ export default ({fontFamily}) => {
       fontFamily: fontFamily.bold,
       textAlign: 'center',
     },
+    header2: {
+      color: colors.black,
+      fontSize: moderateScale(24),
+      fontFamily: fontFamily.bold,
+    },
     txtSmall: {
       ...commonStyles.mediumFont14,
       lineHeight: 24,
@@ -27,6 +32,13 @@ export default ({fontFamily}) => {
       flex: 1,
       justifyContent: 'flex-end',
       marginBottom: moderateScaleVertical(30),
+    },
+    bottomContainer2: {
+      position: 'absolute',
+      bottom: moderateScale(80),
+      alignItems: 'center',
+      width: '100%',
+      alignSelf: 'center'
     },
     guestBtn: {
       marginTop: moderateScaleVertical(20),

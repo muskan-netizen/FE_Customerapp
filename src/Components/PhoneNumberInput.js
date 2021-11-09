@@ -26,6 +26,10 @@ export default function PhoneNumberInput({
   containerStyle,
   color,
   autoFocus = false,
+  showCountryCode = true,
+  TxtInputStyle,
+  flagSize,
+  downArrowStyle
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -68,7 +72,8 @@ export default function PhoneNumberInput({
           width: moderateScale(88),
         }}
         onPress={_openCountryPicker}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        {showCountryCode &&
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text> +</Text>
           <Text
             style={{
@@ -79,13 +84,13 @@ export default function PhoneNumberInput({
             }}>
             {callingCode}
           </Text>
-        </View>
+        </View>}
 
         <View style={{marginRight: moderateScale(-10)}}>
-          <Flag countryCode={cca2} />
+          <Flag countryCode={cca2} flagSize={flagSize} />
         </View>
 
-        <Image source={imagePath.dropdownTriangle} />
+        <Image source={imagePath.dropdownTriangle} style={{ ...downArrowStyle }} />
       </TouchableOpacity>
       <TextInput
         selectionColor={colors.black}
@@ -110,6 +115,7 @@ export default function PhoneNumberInput({
           marginVertical: 8,
           paddingHorizontal: 10,
           textAlign: I18nManager.isRTL ? 'right' : 'left',
+          ...TxtInputStyle
         }}
         autoFocus={autoFocus}
       />
