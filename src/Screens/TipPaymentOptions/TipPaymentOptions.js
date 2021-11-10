@@ -245,7 +245,7 @@ export default function TipPaymentOptions({ navigation, route }) {
     updateState({ isLoading: true });
     actions
       .openPaymentWebUrl(
-        `/${selectedMethod}?amount=${data?.selectedTipAmount}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&payment_option_id=${selectedPaymentMethod?.id}&action=wallet`,
+        `/${selectedMethod}?amount=${data?.selectedTipAmount}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&payment_option_id=${selectedPaymentMethod?.id}&action=tip&order_number=${data?.order_number}`,
         {},
         {
           code: appData?.profile?.code,
@@ -256,6 +256,7 @@ export default function TipPaymentOptions({ navigation, route }) {
       .then((res) => {
         updateState({ isLoading: false });
         if (res && res?.status == 'Success' && res?.data) {
+          console.log("generate payment url", res.data)
           // updateState({allAvailAblePaymentMethods: res?.data});
           navigation.navigate(navigationStrings.WEBPAYMENTS, {
             paymentUrl: res?.data,

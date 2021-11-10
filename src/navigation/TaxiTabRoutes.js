@@ -103,7 +103,7 @@ export default function TaxiTabRoutes(props) {
         component={MyOrders}
         name={navigationStrings.MY_ORDERS}
         options={{
-          tabBarLabel: strings.MYRIDES,
+          tabBarLabel: appStyle?.tabBarLayout === 6 ? strings.SERVICES : strings.MYRIDES,
           tabBarIcon: ({ focused, tintColor }) => {
             let tabIconColor = tintColor && appStyle?.tabBarLayout == 4 ? {
               tintColor: focused
@@ -111,9 +111,11 @@ export default function TaxiTabRoutes(props) {
                 : colors.black
             } :
 
-              { tintColor: focused
-                ? colors.white
-                : getColorCodeWithOpactiyNumber(colors.white.substr(1),60)}
+              {
+                tintColor: focused
+                  ? colors.white
+                  : getColorCodeWithOpactiyNumber(colors.white.substr(1), 60)
+              }
             return <Image
               style={[
                 {
@@ -123,17 +125,21 @@ export default function TaxiTabRoutes(props) {
                 },
               ]}
               source={
-                appStyle?.tabBarLayout === 5
+                appStyle?.tabBarLayout === 6
                   ? focused
-                    ? imagePath.ride
-                    : imagePath.ride
-                  : appStyle?.tabBarLayout === 4
+                    ? imagePath.settings_red_icon
+                    : imagePath.settings_icon
+                  : appStyle?.tabBarLayout === 5
                     ? focused
                       ? imagePath.ride
                       : imagePath.ride
-                    : focused
-                      ? imagePath.ride
-                      : imagePath.ride
+                    : appStyle?.tabBarLayout === 4
+                      ? focused
+                        ? imagePath.ride
+                        : imagePath.ride
+                      : focused
+                        ? imagePath.ride
+                        : imagePath.ride
               }
             />
           },

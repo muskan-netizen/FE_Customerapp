@@ -18,7 +18,6 @@ export default function OffersCard({data = {}, onPress = () => {}}) {
       onPress={onPress}
       activeOpacity={1}
       style={{
-        marginHorizontal: moderateScale(16),
         borderRadius: 3,
         ...commonStyles.shadowStyle,
       }}>

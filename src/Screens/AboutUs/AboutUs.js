@@ -11,7 +11,6 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import stylesFun from './styles';
 
 export default function AboutUs({navigation}) {

@@ -42,10 +42,14 @@ export default function VerifyAccount({navigation, route}) {
     timer2: 0,
     timer: 0,
     isLoading: false,
-    callingCode: appData?.profile?.country?.phonecode
+    callingCode: userData?.dial_code
+      ? userData?.dial_code
+      : appData?.profile?.country?.phonecode
       ? appData?.profile?.country?.phonecode
       : '91',
-    cca2: appData?.profile?.country?.code
+    cca2: userData?.cca2
+      ? userData?.cca2
+      : appData?.profile?.country?.code
       ? appData?.profile?.country?.code
       : 'IN',
     name: '',
@@ -102,10 +106,12 @@ export default function VerifyAccount({navigation, route}) {
         code: appData?.profile?.code,
       })
       .then((res) => {
-        console.log(res, 'res>>>');
+        console.log(res, 'resresres');
         showSuccess(res.message);
         if (type == 'phone') {
-          updateState({editablePhone: false});
+          updateState({
+            editablePhone: false,
+          });
         } else {
           updateState({editableEmail: false});
         }
@@ -282,7 +288,6 @@ export default function VerifyAccount({navigation, route}) {
     }
   };
 
-  console.log('verify account+++');
   const otpView = (type, value) => {
     return (
       <SmoothPinCodeInput

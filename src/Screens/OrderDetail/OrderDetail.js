@@ -2,7 +2,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { cloneDeep } from 'lodash';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
-import React, { useState } from 'react';
+import { Linking, Platform } from 'react-native';
+import React, { useRef, useState } from 'react';
 import {
   Dimensions,
   FlatList,
@@ -12,6 +13,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  StyleSheet
 } from 'react-native';
 import { useDarkMode } from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
@@ -30,19 +32,25 @@ import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
+import Communications from 'react-native-communications';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
-import { getImageUrl, showError } from '../../utils/helperFunctions';
+import {
+  getImageUrl,
+  getRandomColor,
+  showError,
+} from '../../utils/helperFunctions';
 import useInterval from '../../utils/useInterval';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
 import { useIsFocused } from '@react-navigation/native';
 import * as RNLocalize from 'react-native-localize';
-
+import MapView, { Marker } from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
 const { height, width } = Dimensions.get('window');
 
 export default function OrderDetail({ navigation, route }) {
@@ -95,12 +103,19 @@ export default function OrderDetail({ navigation, route }) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily });
 
+  console.log(cartData, 'cartItemss');
+
   const moveToNewScreen =
     (screenName, data = {}) =>
       () => {
         navigation.navigate(screenName, { data });
       };
-
+  const dialCall = (number, type = 'phone') => {
+    console.log(number, 'number');
+    type === 'phone'
+      ? Communications.phonecall(number.toString(), true)
+      : Communications.text(number.toString());
+  };
   const isFocused = useIsFocused();
   // useFocusEffect(
   //   React.useCallback(() => {
@@ -159,7 +174,8 @@ export default function OrderDetail({ navigation, route }) {
             cartItems: res.data.vendors,
             cartData: res.data,
             isLoading: false,
-            selectedTipvalue: res.data.payable_amount == '0.00' ? 'custom' : null,
+            selectedTipvalue:
+              res.data.payable_amount == '0.00' ? 'custom' : null,
             currentPosition: res.data.vendors[0].order_status
               ? res?.data?.luxury_option_name !== strings.DELIVERY
                 ? res.data.vendors[0].order_status?.current_status?.title ==
@@ -293,21 +309,131 @@ export default function OrderDetail({ navigation, route }) {
               backgroundColor: isDarkMode
                 ? MyDarkTheme.colors.background
                 : colors.white,
-              marginVertical: moderateScale(10),
+              marginVertical: moderateScale(12),
+              flexDirection: 'row',
             }}>
-            <Text
-              style={{
-                ...styles.summaryText,
-                marginBottom: 0,
-                color: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.blackOpacity86,
+            {item?.vendor?.banner ? (
+              <FastImage
+                source={{
+                  uri: getImageUrl(
+                    item?.vendor?.banner?.image_fit,
+                    item?.vendor?.banner?.image_path,
+                    '300/300',
+                  ),
+                  priority: FastImage.priority.high,
+                }}
+                style={{
+                  height: moderateScale(50),
+                  width: moderateScale(50),
+                  borderRadius: moderateScale(4),
+                }}
+              />
+            ) : (
+              <View
+                style={{
+                  backgroundColor: getRandomColor(),
+                  height: moderateScale(50),
+                  width: moderateScale(50),
+                  borderRadius: moderateScale(25),
 
-                fontSize: textScale(13),
-                fontFamily: fontFamily.bold,
-              }}>
-              {item?.vendor_name}
-            </Text>
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Text
+                  style={{
+                    fontSize: textScale(20),
+                    textTransform: 'uppercase',
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.blackB,
+                  }}>
+                  {item?.vendor_name?.charAt(0)}
+                </Text>
+              </View>
+            )}
+
+            <View style={{
+              flexDirection: 'row',
+              marginHorizontal: moderateScale(18),
+              justifyContent: 'space-between',
+              //  backgroundColor: 'red',
+              flex: 1
+            }}>
+              <Text
+                style={{
+                  ...styles.summaryText,
+                  marginBottom: 0,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity86,
+
+                  fontSize: textScale(13),
+                  fontFamily: fontFamily.bold,
+                  flex: 1
+                }}>
+                {item?.vendor_name}
+              </Text>
+
+              {/* <View
+                style={{
+                  flexDirection: 'row',
+
+                }}>
+                <TouchableOpacity
+                  onPress={() => dialCall('919796728709', 'phone')}>
+                  <Image
+                    source={imagePath.call2}
+                    style={{
+                      height: moderateScale(20),
+                      width: moderateScale(20),
+                      tintColor: themeColors.primary_color,
+                      marginRight: moderateScale(10),
+                    }}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => dialCall('919796728709', 'text')}>
+                  <Image
+                    source={imagePath.msg}
+                    style={{
+                      height: moderateScale(20),
+                      width: moderateScale(20),
+                      tintColor: themeColors.primary_color,
+                    }}
+                  />
+                </TouchableOpacity>
+              </View> */}
+
+              {item?.vendor?.phone_no && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: moderateScale(14),
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => dialCall(item?.vendor?.phone_no, 'phone')}>
+                    <Image
+                      source={imagePath.call2}
+                      style={{
+                        height: moderateScale(20),
+                        width: moderateScale(20),
+                        tintColor: themeColors.primary_color,
+                        marginRight: moderateScale(30),
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => dialCall(item?.vendor?.phone_no, 'text')}>
+                    <Image
+                      source={imagePath.msg}
+                      style={{
+                        height: moderateScale(20),
+                        width: moderateScale(20),
+                        tintColor: themeColors.primary_color,
+                      }}
+                    />
+                  </TouchableOpacity>
+                </View>
+              )}
+            </View>
           </View>
 
           {item?.products.length
@@ -851,7 +977,8 @@ export default function OrderDetail({ navigation, route }) {
                     : colors.blackOpacity43,
                   flex: 1,
                 }}>
-                {cartData?.address?.address}
+                {cartData?.address?.address} {''}
+                {cartData?.address?.pincode}
               </Text>
             </View>
           </View>
@@ -1080,7 +1207,17 @@ export default function OrderDetail({ navigation, route }) {
             <LeftRightText
               leftText={strings.LOYALTY}
               rightText={`${currencies?.primary_currency?.symbol}${Number(
-                cartData?.loyalty_amount_saved
+                cartData?.loyalty_amount_saved,
+              ).toFixed(2)}`}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+            />
+          )}
+          {!!cartData?.tip_amount && cartData?.tip_amount !== "0.00" && (
+            <LeftRightText
+              leftText={strings.TIP_AMOUNT}
+              rightText={`${currencies?.primary_currency?.symbol}${Number(
+                cartData?.tip_amount
               ).toFixed(2)}`}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
@@ -1128,7 +1265,7 @@ export default function OrderDetail({ navigation, route }) {
           {paramData?.orderStatus?.current_status?.title ===
             strings.DELIVERED &&
             !!appData?.profile?.preferences?.tip_after_order &&
-            cartData?.tip_amount == 0 &&
+            (cartData?.tip_amount == 0 || cartData?.tip_amount == null) &&
             !!cartData?.tip &&
             cartData?.tip.length && (
               <View
@@ -1204,43 +1341,45 @@ export default function OrderDetail({ navigation, route }) {
                       );
                     })}
 
-                  {cartData?.payable_amount !== '0.00' && (<TouchableOpacity
-                    style={{
-                      backgroundColor:
-                        selectedTipvalue == 'custom'
-                          ? themeColors.primary_color
-                          : 'transparent',
-                      flex: cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      borderWidth: 0.7,
-                      paddingHorizontal: 15,
-                      paddingVertical: 5,
-                      marginLeft: 2,
-                      marginVertical: 20,
-                      borderRadius: moderateScale(5),
-                      borderColor: themeColors.primary_color,
-                    }}
-                    onPress={() => selectedTip('custom')}>
-                    <Text
-                      style={
-                        isDarkMode
-                          ? {
-                            color:
-                              selectedTipvalue == 'custom'
-                                ? colors.white
-                                : MyDarkTheme.colors.text,
-                          }
-                          : {
-                            color:
-                              selectedTipvalue == 'custom'
-                                ? colors.white
-                                : colors.black,
-                          }
-                      }>
-                      {strings.CUSTOM}
-                    </Text>
-                  </TouchableOpacity>)}
+                  {cartData?.payable_amount !== '0.00' && (
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor:
+                          selectedTipvalue == 'custom'
+                            ? themeColors.primary_color
+                            : 'transparent',
+                        flex: cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderWidth: 0.7,
+                        paddingHorizontal: 15,
+                        paddingVertical: 5,
+                        marginLeft: 2,
+                        marginVertical: 20,
+                        borderRadius: moderateScale(5),
+                        borderColor: themeColors.primary_color,
+                      }}
+                      onPress={() => selectedTip('custom')}>
+                      <Text
+                        style={
+                          isDarkMode
+                            ? {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : MyDarkTheme.colors.text,
+                            }
+                            : {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : colors.black,
+                            }
+                        }>
+                        {strings.CUSTOM}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
                 </ScrollView>
 
                 {!!selectedTipvalue && selectedTipvalue == 'custom' && (
@@ -1250,7 +1389,7 @@ export default function OrderDetail({ navigation, route }) {
                       borderWidth: 0.5,
                       borderColor: colors.textGreyB,
                       height: 40,
-                      marginTop: moderateScaleVertical(12)
+                      marginTop: moderateScaleVertical(12),
                     }}>
                     <TextInput
                       value={selectedTipAmount}
@@ -1311,6 +1450,8 @@ export default function OrderDetail({ navigation, route }) {
     );
   };
 
+  const mapRef = useRef(null)
+
   const selectedTip = (tip) => {
     if (selectedTipvalue == 'custom') {
       updateState({ selectedTipvalue: tip, selectedTipAmount: null });
@@ -1345,6 +1486,77 @@ export default function OrderDetail({ navigation, route }) {
 
     return (
       <>
+        {/* <View style={{ width: '100%', height: height / 2.8 }}>
+          <MapView
+            ref={mapRef}
+            style={StyleSheet.absoluteFillObject}
+            initialRegion={{
+              latitude: 30.7173,
+              longitude: 76.8035,
+              latitudeDelta: 0.0222,
+              longitudeDelta: 0.0320,
+            }}
+          >
+            <MapViewDirections
+              origin={{
+                latitude: 30.7173,
+                longitude: 76.8035,
+                latitudeDelta: 0.0222,
+                longitudeDelta: 0.0320,
+              }}
+              destination={{
+                latitude: 30.7411,
+                longitude: 76.8035,
+                latitudeDelta: 0.0222,
+                longitudeDelta: 0.0320,
+              }}
+              apikey={appData.profile?.preferences?.map_key}
+              strokeWidth={2}
+              strokeColor={themeColors.primary_color}
+              optimizeWaypoints={true}
+              onStart={(params) => { }}
+              precision={'high'}
+              timePrecision={'now'}
+              mode={'DRIVING'}
+              // maxZoomLevel={20}
+              onReady={(result) => {
+                // updateState({
+                //   totalDistance: result.distance.toFixed(2),
+                //   totalDuration: result.duration.toFixed(2),
+                // });
+                mapRef.current.fitToCoordinates(result.coordinates, {
+                  edgePadding: {
+                    right: width / 20,
+                    bottom: height / 20,
+                    left: width / 20,
+                    top: height / 20,
+                  },
+                });
+              }}
+              onError={(errorMessage) => {
+                //
+              }}
+            />
+            <Marker
+              coordinate={{
+                latitude: 30.7411,
+                longitude: 76.8035,
+                latitudeDelta: 0.0222,
+                longitudeDelta: 0.0320,
+              }}
+              image={imagePath.icDestination}
+            />
+            <Marker
+              coordinate={{
+                latitude: 30.7173,
+                longitude: 76.8035,
+                latitudeDelta: 0.0222,
+                longitudeDelta: 0.0320,
+              }}
+              image={imagePath.icScooter}
+            />
+          </MapView>
+        </View> */}
         {!!orderStatus && orderStatus?.current_status?.title == 'Placed' && (
           <View
             style={{
@@ -1446,6 +1658,7 @@ export default function OrderDetail({ navigation, route }) {
               />
             </View>
           )}
+
         {/* {!orderStatus &&
           paramData?.orderStatus?.current_status?.title != 'Rejected' &&
           paramData?.orderStatus?.current_status?.title != 'Placed' && (
