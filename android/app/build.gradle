@@ -1554,11 +1554,38 @@ android {
             resValue "string", "app_name", "ThubaeRides"
             resValue "string", "host_name", ""
          }
-
+           pinkjet{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.pinkjet'
+            resValue "string", "app_name", "PinkJet"
+            resValue "string", "host_name", ""
+         }
+        mokabfix{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.mokabfix'
+            resValue "string", "app_name", "MokabFix"
+            resValue "string", "host_name", ""
+         }
+          botseats{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.botseats'
+            resValue "string", "app_name", "BotsEats"
+            resValue "string", "host_name", ""
+         }
     }
 }
-
-
 
 dependencies {
    

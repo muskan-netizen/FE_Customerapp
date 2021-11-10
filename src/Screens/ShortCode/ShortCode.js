@@ -888,6 +888,24 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.pinkjet:
+          updateState({
+            shortCode: shortCodes.pinkjet,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mokabfix:
+          updateState({
+            shortCode: shortCodes.mokabfix,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.botseats:
+          updateState({
+            shortCode: shortCodes.botseats,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

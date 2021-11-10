@@ -1527,7 +1527,6 @@ export default function Products({ route, navigation }) {
     );
   };
 
-  console.log("category info", categoryInfo)
   const _onVendorCategory = (itm, indx) => {
     updateState({
       vendorCategorySelectedIndx: indx,

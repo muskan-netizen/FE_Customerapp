@@ -63,12 +63,6 @@ export default function ({
   const styles = stylesFun({fontFamily, themeColors});
   const commonStyles = commonStylesFun({fontFamily});
   const {profile} = appData;
-  console.log(productDetail, 'productDetail>>>');
-  console.log(orderDetail, 'orderDetail>>>');
-  console.log(agent_image, 'agent_image>>>');
-  console.log(agent_location, 'agent_location');
-  console.log(productRatings, 'productRatings>>>>>>>>>>>>>>>>>>>');
-  console.log(totalDuration, 'totalDuration');
 
   //give review and update the rate
 
