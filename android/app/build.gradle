@@ -1591,7 +1591,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.gumastas'
-            resValue "string", "app_name", "Gumasta's"
+            resValue "string", "app_name", "Gumastas"
             resValue "string", "host_name", ""
          }
     }
