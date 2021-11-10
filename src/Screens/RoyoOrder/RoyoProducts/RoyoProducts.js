@@ -150,7 +150,7 @@ const RoyoProducts = (props) => {
     if (isLoading || isRefreshing) {
       getAllProducts();
     }
-  }, [languages, currencies, isRefreshing, isLoading]);
+  }, [isRefreshing]);
 
   useEffect(() => {
     updateState({
