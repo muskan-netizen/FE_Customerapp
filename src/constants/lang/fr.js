@@ -630,4 +630,7 @@ montant`,
   AND: 'et',
   PRICACY_POLICY: 'Politique de confidentialité',
   TIP_AMOUNT: 'Tip Amount',
+  NOIHAVETHEM: 'No i have them',
+  SEHEDLEDFOR: 'Scheduled For',
+  BOOK_NOW_RIDE: 'Book Ride',
 };
