@@ -1361,37 +1361,32 @@ export default function Cart({navigation, route}) {
                                 : null}
                             </View>
 
-                            <View
-                              pointerEvents={btnLoader ? 'none' : 'auto'}
-                              style={{
-                                flex: 0.3,
-                                paddingRight: moderateScale(8),
-                              }}>
-                              <View style={styles.incDecBtnContainer}>
-                                <TouchableOpacity
-                                  style={{flex: 0.3, alignItems: 'center'}}
-                                  onPress={() => addDeleteCartItems(i, inx, 2)}>
-                                  <Text style={styles.cartItemValueBtn}>-</Text>
-                                </TouchableOpacity>
-                                <View style={{flex: 0.4, alignItems: 'center'}}>
-                                  {btnLoadrId === i.id && btnLoader ? (
-                                    <UIActivityIndicator
-                                      size={moderateScale(18)}
-                                      color={colors.white}
-                                    />
-                                  ) : (
-                                    <Text style={styles.cartItemValue}>
-                                      {i?.quantity}
-                                    </Text>
-                                  )}
-                                </View>
-                                <TouchableOpacity
-                                  style={{flex: 0.3, alignItems: 'center'}}
-                                  onPress={() => addDeleteCartItems(i, inx, 1)}>
-                                  <Text style={styles.cartItemValueBtn}>+</Text>
-                                </TouchableOpacity>
+                            <View pointerEvents={btnLoader ? 'none' : 'auto'}>
+                            <View style={styles.incDecBtnContainer}>
+                              <TouchableOpacity
+                                style={{ alignItems: 'center' }}
+                                onPress={() => addDeleteCartItems(i, inx, 1)}>
+                                <Text style={styles.cartItemValueBtn}>+</Text>
+                              </TouchableOpacity>
+                              <View style={{ alignItems: 'center', width: moderateScale(20), height: moderateScale(20), justifyContent: 'center' }}>
+                                {btnLoadrId === i.id && btnLoader ? (
+                                  <UIActivityIndicator
+                                    size={moderateScale(16)}
+                                    color={colors.white}
+                                  />
+                                ) : (
+                                  <Text style={styles.cartItemValue}>
+                                    {i?.quantity}
+                                  </Text>
+                                )}
                               </View>
+                              <TouchableOpacity
+                                style={{ alignItems: 'center' }}
+                                onPress={() => addDeleteCartItems(i, inx, 2)}>
+                                <Text style={styles.cartItemValueBtn}>-</Text>
+                              </TouchableOpacity>
                             </View>
+                          </View>
                           </View>
 
                           <View
@@ -1478,14 +1473,14 @@ export default function Cart({navigation, route}) {
                             </View>
                           </View>
                           <TouchableOpacity
-                            style={{
-                              alignSelf: 'flex-end',
-                              paddingRight: moderateScale(24),
-                              paddingTop: moderateScaleVertical(10),
-                            }}
-                            onPress={() => openDeleteView(i)}>
-                            <Image source={imagePath.deleteRed} />
-                          </TouchableOpacity>
+                          style={{
+                            alignSelf: 'flex-end',
+                            marginRight: moderateScale(14),
+                            marginTop: moderateScale(6)
+                          }}
+                          onPress={() => openDeleteView(i)}>
+                          <Image source={imagePath.deleteRed} />
+                        </TouchableOpacity>
                         </View>
                       </View>
 
