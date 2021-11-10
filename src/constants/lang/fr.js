@@ -629,5 +629,5 @@ montant`,
   TERMS_OF_SERVICE: 'Conditions d’utilisation',
   AND: 'et',
   PRICACY_POLICY: 'Politique de confidentialité',
-  TIP_AMOUNT: 'Tip Amount',
+  TIP_AMOUNT: 'Montant du pourboire',
 };

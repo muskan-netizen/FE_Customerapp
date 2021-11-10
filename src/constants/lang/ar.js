@@ -598,5 +598,5 @@ export default {
   TERMS_OF_SERVICE: 'شروط الخدمة',
   AND: 'و',
   PRICACY_POLICY: 'سياسة الخصوصية',
-  TIP_AMOUNT: 'Tip Amount',
+  TIP_AMOUNT: 'مبلغ تلميح',
 };
