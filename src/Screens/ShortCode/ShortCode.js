@@ -906,6 +906,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.gumastas:
+          updateState({
+            shortCode: shortCodes.gumastas,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
