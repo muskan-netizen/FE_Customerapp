@@ -1594,6 +1594,16 @@ android {
             resValue "string", "app_name", "Gumastas"
             resValue "string", "host_name", ""
          }
+          dishefs{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.dishefs'
+            resValue "string", "app_name", "Dishefs"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

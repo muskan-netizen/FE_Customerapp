@@ -912,6 +912,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.dishefs:
+          updateState({
+            shortCode: shortCodes.dishefs,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
