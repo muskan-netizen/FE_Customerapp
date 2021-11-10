@@ -79,8 +79,9 @@ export default function ForgotPassword({navigation}) {
       .then((res) => {
         showSuccess(res.success);
         updateState({isLoading: false});
-        console.log(res, 'forget password responses ');
-        moveToNewScreen(navigationStrings.RESET_PASSWORD, {email: email})();
+
+        // moveToNewScreen(navigationStrings.RESET_PASSWORD, {email: email})();
+        moveToNewScreen(navigationStrings.LOGIN)();
       })
       .catch((error) => {
         updateState({isLoading: false});
