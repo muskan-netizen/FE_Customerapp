@@ -648,6 +648,7 @@ export default function Cart({navigation, route}) {
         }
         if ((!!(Number(cartData?.total_payable_amount) !== 0)) || Number(selectedTipAmount) !== 0) {
           checkPaymentOptions(res)
+          // _webPayment()
           return;
         }
         if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1) {
