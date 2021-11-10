@@ -589,4 +589,5 @@ export default {
   TERMS_OF_SERVICE: 'Kullanım Şartları',
   AND: 've',
   PRICACY_POLICY: 'Gizlilik Politikası',
+  TIP_AMOUNT: 'Tip Amount',
 };

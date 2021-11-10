@@ -1174,6 +1174,16 @@ export default function OrderDetail({navigation, route}) {
               MyDarkTheme={MyDarkTheme}
             />
           )}
+          {!!cartData?.tip_amount && cartData?.tip_amount !== "0.00" && (
+            <LeftRightText
+              leftText={strings.TIP_AMOUNT}
+              rightText={`${currencies?.primary_currency?.symbol}${Number(
+                cartData?.tip_amount
+              ).toFixed(2)}`}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+            />
+          )}
           {!!cartData?.total_discount && (
             <LeftRightText
               leftText={strings.DISCOUNT}
@@ -1216,7 +1226,7 @@ export default function OrderDetail({navigation, route}) {
           {paramData?.orderStatus?.current_status?.title ===
             strings.DELIVERED &&
             !!appData?.profile?.preferences?.tip_after_order &&
-            cartData?.tip_amount == 0 &&
+            (cartData?.tip_amount == 0 || cartData?.tip_amount == null) &&
             !!cartData?.tip &&
             cartData?.tip.length && (
               <View

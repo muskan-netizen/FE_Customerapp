@@ -587,7 +587,6 @@ export default {
   PROMO_CODE: 'رمز ترويجي',
   WHICH_LANG_YOU_PREFER: 'اي لغة تفضل؟',
   CONTINUE_IN: 'تواصل في',
-
   OR_CONTINUE_WITH: 'أو تواصل مع',
   ANYTIME_YOUR_CAR_BREAKS: 'في أي وقت تتعطل سيارتك ، نحن هنا من أجلك!',
   ENTER_YOUR: 'أدخل',
@@ -599,4 +598,5 @@ export default {
   TERMS_OF_SERVICE: 'شروط الخدمة',
   AND: 'و',
   PRICACY_POLICY: 'سياسة الخصوصية',
+  TIP_AMOUNT: 'Tip Amount',
 };

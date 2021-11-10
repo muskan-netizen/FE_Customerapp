@@ -235,68 +235,68 @@ export default function SubscriptionComponent2({
                   </Text>
                 </View>
               )}
-
-              {/* {
-                // !currentSubscription ? null : (
-                <>
-                  {subscriptionData?.cancelled_at ||
-                  currentDateValue == subscriptionEndDateValue ||
-                  currentTimeValue > subscriptionEndTimeValue ? null : (
-                  <View
-                    style={{
-                      marginTop: moderateScale(10),
-                      flexDirection: 'row',
-                    }}>
-                    <GradientButton
-                      colorsArray={[
-                        themeColors.primary_color,
-                        themeColors.primary_color,
-                      ]}
-                      textStyle={styles.textStyle}
-                      onPress={() => onPress(data)}
-                      marginTop={moderateScaleVertical(10)}
-                      marginBottom={moderateScaleVertical(10)}
-                      borderRadius={moderateScale(5)}
-                      containerStyle={{
-                        marginHorizontal: moderateScale(10),
-                        width: width / 2,
-                      }}
-                      onPress={payNowUpcoming}
-                      btnText={`${strings.PAYNOW} (${data?.price})`}
-                    />
-                    <GradientButton
-                      colorsArray={[
-                        getColorCodeWithOpactiyNumber(
-                          themeColors?.primary_color.substr(1),
-                          20,
-                        ),
-                        getColorCodeWithOpactiyNumber(
-                          themeColors?.primary_color.substr(1),
-                          20,
-                        ),
-                      ]}
-                      textStyle={styles.textStyle2}
-                      onPress={() => onPress(data)}
-                      marginTop={moderateScaleVertical(10)}
-                      marginBottom={moderateScaleVertical(10)}
-                      borderRadius={moderateScale(5)}
-                      containerStyle={{
-                        marginHorizontal: moderateScale(10),
-                        width: width / 3,
-                        backgroundColor: 'white',
-                      }}
-                      onPress={cancelSubscription}
-                      btnText={strings.CANCEL}
-                    />
-                  </View>
-                 )} 
-                </>
-                // )
-              } */}
             </View>
           )}
         </View>
       </ImageBackground>
+
+      {
+        subscriptionData?.subscription_id === data?.id && (
+          <View>
+            {subscriptionData?.cancelled_at ||
+              currentDateValue == subscriptionEndDateValue ||
+              currentTimeValue > subscriptionEndTimeValue ? null : (
+              <View
+                style={{
+                  marginTop: moderateScale(10),
+                  flexDirection: 'row',
+                }}>
+                <GradientButton
+                  colorsArray={[
+                    themeColors.primary_color,
+                    themeColors.primary_color,
+                  ]}
+                  textStyle={styles.textStyle}
+                  onPress={() => onPress(data)}
+                  marginTop={moderateScaleVertical(10)}
+                  marginBottom={moderateScaleVertical(10)}
+                  borderRadius={moderateScale(5)}
+                  containerStyle={{
+                    marginHorizontal: moderateScale(10),
+                    width: width / 2,
+                  }}
+                  onPress={payNowUpcoming}
+                  btnText={`${strings.PAYNOW} (${data?.price})`}
+                />
+                <GradientButton
+                  colorsArray={[
+                    getColorCodeWithOpactiyNumber(
+                      themeColors?.primary_color.substr(1),
+                      20,
+                    ),
+                    getColorCodeWithOpactiyNumber(
+                      themeColors?.primary_color.substr(1),
+                      20,
+                    ),
+                  ]}
+                  textStyle={styles.textStyle2}
+                  onPress={() => onPress(data)}
+                  marginTop={moderateScaleVertical(10)}
+                  marginBottom={moderateScaleVertical(10)}
+                  borderRadius={moderateScale(5)}
+                  containerStyle={{
+                    marginHorizontal: moderateScale(10),
+                    width: width / 3,
+                    backgroundColor: 'white',
+                  }}
+                  onPress={cancelSubscription}
+                  btnText={strings.CANCEL}
+                />
+              </View>
+            )}
+          </View>
+        )
+      }
     </TouchableOpacity>
   );
 }
@@ -347,7 +347,7 @@ export function stylesFunc({ fontFamily, themeColors }) {
     },
     imageBackground: {
       width: '100%',
-      height: moderateScaleVertical(166),
+      minHeight: moderateScaleVertical(166),
       borderRadius: moderateScale(15),
     },
     titleBagView: {

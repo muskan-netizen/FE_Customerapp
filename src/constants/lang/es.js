@@ -590,4 +590,5 @@ export default {
   TERMS_OF_SERVICE: 'Términos de servicio',
   AND: 'y',
   PRICACY_POLICY: 'Política de Privacidad',
+  TIP_AMOUNT: 'Tip Amount',
 };
