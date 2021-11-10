@@ -587,7 +587,6 @@ export default {
   PROMO_CODE: 'رمز ترويجي',
   WHICH_LANG_YOU_PREFER: 'اي لغة تفضل؟',
   CONTINUE_IN: 'تواصل في',
-
   OR_CONTINUE_WITH: 'أو تواصل مع',
   ANYTIME_YOUR_CAR_BREAKS:
     'Anytime your car breaks down,\n we are there for you !',
@@ -600,4 +599,9 @@ export default {
   TERMS_OF_SERVICE: 'Terms of Service',
   AND: 'and',
   PRICACY_POLICY: 'Privacy Policy',
+  ADD_TIP: 'Add Tip',
+  PLEASE_SELECT_RETURN_ORDER: 'Please select the product to return',
+  PLEASE_SELECT_VALID_OPTION: 'Please select a valid tip option',
+  ORDER_PREPARED: 'Order Prepared',
+  TIP_AMOUNT:"Tip Amount",
 };
