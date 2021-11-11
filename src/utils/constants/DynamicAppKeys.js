@@ -139,6 +139,8 @@ const shortCodes = {
   botseats: 'fe9076',
   gumastas: '2cdae8',
   dishefs: '4c13fd',
+  bilionza: '9a8793',
+  doleypharmacy: 'e925ef',
 };
 
 const appIds = {
@@ -693,6 +695,14 @@ const appIds = {
   dishefs: Platform.select({
     ios: 'com.dishefs',
     android: 'com.dishefs',
+  }),
+  bilionza: Platform.select({
+    ios: 'com.bilionza',
+    android: 'com.bilionza',
+  }),
+  doleypharmacy: Platform.select({
+    ios: 'com.doleypharmacy',
+    android: 'com.doleypharmacy',
   }),
 };
 

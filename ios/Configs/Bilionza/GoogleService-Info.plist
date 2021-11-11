@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>565854845109-01t12duc447uksi79h7ft7jbohjmjfe5.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.565854845109-01t12duc447uksi79h7ft7jbohjmjfe5</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>565854845109-64ib0dm8qu27h94hbod8mhtski4qfn4q.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC2v1ACUSgkRCTm8WNhEVehvuSnorcMR4w</string>
+	<key>GCM_SENDER_ID</key>
+	<string>565854845109</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.bilionza</string>
+	<key>PROJECT_ID</key>
+	<string>bilionza</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bilionza.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:565854845109:ios:91da87d8f55250bd41e6fc</string>
+</dict>
+</plist>
