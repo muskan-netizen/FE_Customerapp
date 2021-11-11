@@ -278,6 +278,8 @@ export default {
   processingInactive: require('../assets/images/TrackOrderImages/ic_processing2.png'),
   icScooter: require('../assets/images/TrackOrderImages/ic_scooter.png'),
   icDestination: require('../assets/images/ic_destination.png'),
+  gifImg: require('../assets/images/5ef9d70b03d22b1acd145b9422d3a33f.gif'),
+  // 5ef9d70b03d22b1acd145b9422d3a33f.gif
   //royoorder new images
   wishlist: require('../assets/images/RoyoorderNewImages/ic_wishlist.png'),
   share1: require('../assets/images/RoyoorderNewImages/ic_share.png'),

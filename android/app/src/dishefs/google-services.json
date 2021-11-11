@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "1095413450840",
+    "project_id": "dishefs-e479e",
+    "storage_bucket": "dishefs-e479e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095413450840:android:1827ed242de74eb727e22d",
+        "android_client_info": {
+          "package_name": "com.dishefs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1095413450840-eim21ikjnftscnhm8ibe7jc139gded4l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dishefs",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1095413450840-huk3pot9ar7uq6anhq74cj33dr3fbmen.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dishefs",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "1095413450840-jmd92g847cu7ausm6cjqkss11es8tsmo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dishefs",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "1095413450840-1hf8m2098l22h5tkbhjiae5npq2clfg0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGgUHvpdkZnxX3oDEmHxDIy3HIFmfQnSA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1095413450840-1hf8m2098l22h5tkbhjiae5npq2clfg0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1095413450840-hcn1bhnm9unqg9tnalbs4i38vqbonsb8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dishefs"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

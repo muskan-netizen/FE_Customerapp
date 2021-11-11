@@ -137,6 +137,8 @@ const shortCodes = {
   pinkjet: '7e0ff5',
   mokabfix: '88d242',
   botseats: 'fe9076',
+  gumastas: '2cdae8',
+  dishefs: '4c13fd',
 };
 
 const appIds = {
@@ -683,6 +685,14 @@ const appIds = {
   botseats: Platform.select({
     ios: 'com.botseats',
     android: 'com.botseats',
+  }),
+  gumastas: Platform.select({
+    ios: 'com.gumastas',
+    android: 'com.gumastas',
+  }),
+  dishefs: Platform.select({
+    ios: 'com.dishefs',
+    android: 'com.dishefs',
   }),
 };
 

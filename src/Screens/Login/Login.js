@@ -144,7 +144,6 @@ export default function Login({navigation}) {
       dialCode: mobilNo.focus ? mobilNo.callingCode : '',
       countryData: mobilNo.focus ? mobilNo.cca2 : '',
     };
-    console.log(data, 'datadata=>');
     updateState({isLoading: true});
     actions
       .loginUsername(data, {
@@ -154,7 +153,6 @@ export default function Login({navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'res===>phone');
         if (!!res.data) {
           res.data.is_phone
             ? navigation.navigate(navigationStrings.OTP_VERIFICATION, {
@@ -315,7 +313,8 @@ export default function Login({navigation}) {
       mobilNo: {
         phoneNo: mobilNo.phoneNo,
         cca2: data.cca2,
-        callingCode: data.callingCode,
+        callingCode: data.callingCode.toString(),
+        focus: true,
       },
       // cca2: data.cca2,
       // callingCode: data.mobilNo.callingCode[0],
@@ -329,6 +328,7 @@ export default function Login({navigation}) {
     let c = re.test(data);
 
     if (c) {
+      console.log(mobilNo.focus, 'mobilNo');
       updateState({
         phoneInput: true,
         mobilNo: {
@@ -355,6 +355,9 @@ export default function Login({navigation}) {
       });
     }
   };
+
+  console.log(mobilNo.focus, 'mobilNo');
+
   /*************************** On Text Change
    */ const textChangeHandler = (type, data, value = 'value') => {
     updateState((preState) => {

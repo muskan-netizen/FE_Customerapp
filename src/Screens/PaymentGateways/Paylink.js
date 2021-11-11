@@ -60,7 +60,7 @@ export default function Paylink({ navigation, route }) {
     } catch (error) {
       updateState({ isLoading: false });
       console.log(error, 'errorerror');
-      // showError(error?.message || error);
+      showError(error?.message || error);
     }
   };
 
@@ -75,22 +75,22 @@ export default function Paylink({ navigation, route }) {
     const URL = queryString.parseUrl(url);
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
-    console.log(props, 'propsMobbex');
+    console.log(queryParams, 'query state');
 
-    // setTimeout(() => {
-    //   if (queryParams.status === '200') {
-    //     moveToNewScreen(navigationStrings.ORDERSUCESS, {
-    //       orderDetail: {
-    //         order_number: queryParams.order,
-    //         id: paramsData?.orderDetail?.id,
-    //       },
-    //     })();
-    //   } else if (queryParams.status === '0') {
-    //     moveToNewScreen(navigationStrings.CART, {
-    //       queryURL: url.replace(`${nonQueryURL}?`, ''),
-    //     })();
-    //   }
-    // }, 3000);
+    setTimeout(() => {
+      if (queryParams.status === '200') {
+        moveToNewScreen(navigationStrings.ORDERSUCESS, {
+          orderDetail: {
+            order_number: queryParams.order,
+            id: paramsData?.orderDetail?.id,
+          },
+        })();
+      } else if (queryParams.status === '0') {
+        moveToNewScreen(navigationStrings.CART, {
+          queryURL: url.replace(`${nonQueryURL}?`, ''),
+        })();
+      }
+    }, 1500);
   };
   return (
     <WrapperContainer

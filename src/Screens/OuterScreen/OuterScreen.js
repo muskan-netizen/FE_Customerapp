@@ -308,7 +308,6 @@ export default function OuterScreen({navigation}) {
       // updateState({isLoading: true});
       setItem('setPrimaryLanguage', languagesData);
       setTimeout(() => {
-        updateState({isSelectLanguageModal: false});
         actions.updateLanguage(data);
         onSubmitLang(data.sort_code, languagesData);
       }, 1000);
@@ -336,6 +335,7 @@ export default function OuterScreen({navigation}) {
   };
 
   const _updateLang = (selectedLangTitle) => {
+    updateState({isSelectLanguageModal: false});
     updateLanguage(selectedLangTitle);
   };
 
@@ -344,7 +344,7 @@ export default function OuterScreen({navigation}) {
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       isLoadingB={isLoading}
       source={loaderOne}>
-      {shortCodeStatus && (
+      {shortCodeStatus ? (
         <Header
           leftIcon={
             appStyle?.homePageLayout === 2
@@ -359,6 +359,31 @@ export default function OuterScreen({navigation}) {
             // })
             navigation.goBack()
           }
+          isRightText
+          rightTxt={
+            !!selectedLangTitle
+              ? selectedLangTitle.sort_code
+              : languages?.primary_language?.sort_code
+          }
+          rightTxtContainerStyle={{
+            backgroundColor: themeColors.primary_color,
+            height: moderateScale(30),
+            width: moderateScale(30),
+            borderRadius: moderateScale(30),
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onPressRightTxt={_selectLang}
+          rightTxtStyle={{color: colors.white, textTransform: 'uppercase'}}
+          headerStyle={
+            isDarkMode
+              ? {backgroundColor: MyDarkTheme.colors.background}
+              : {backgroundColor: colors.white}
+          }
+        />
+      ) : (
+        <Header
+          noLeftIcon
           isRightText
           rightTxt={
             !!selectedLangTitle
