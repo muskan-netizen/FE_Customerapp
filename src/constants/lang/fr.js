@@ -633,4 +633,5 @@ montant`,
   NOIHAVETHEM: 'No i have them',
   SEHEDLEDFOR: 'Scheduled For',
   BOOK_NOW_RIDE: 'Book Ride',
+  SPECIAL_INSTRUCTION: 'Special Instruction',
 };

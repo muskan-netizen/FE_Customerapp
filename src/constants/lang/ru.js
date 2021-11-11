@@ -576,4 +576,5 @@ export default {
   AND: 'и',
   PRICACY_POLICY: 'Политика конфиденциальности',
   TIP_AMOUNT: 'Tip Amount',
+  SPECIAL_INSTRUCTION: 'Special Instruction',
 };

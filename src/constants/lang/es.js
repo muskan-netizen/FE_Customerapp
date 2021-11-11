@@ -591,4 +591,5 @@ export default {
   AND: 'y',
   PRICACY_POLICY: 'Política de Privacidad',
   TIP_AMOUNT: 'Cantidad de propina',
+  SPECIAL_INSTRUCTION: 'Special Instruction',
 };

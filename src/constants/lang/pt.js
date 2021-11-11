@@ -566,4 +566,5 @@ export default {
   AND: 'e',
   PRICACY_POLICY: 'Privacy Policy',
   TIP_AMOUNT: 'Tip Amount',
+  SPECIAL_INSTRUCTION: 'Special Instruction',
 };

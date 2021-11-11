@@ -599,4 +599,6 @@ export default {
   AND: 'و',
   PRICACY_POLICY: 'سياسة الخصوصية',
   TIP_AMOUNT: 'مبلغ تلميح',
+  SPECIAL_INSTRUCTION:"تعليمات خاصة"
+
 };

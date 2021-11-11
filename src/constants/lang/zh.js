@@ -548,4 +548,5 @@ export default {
   AND: '和',
   PRICACY_POLICY: '隐私策略',
   TIP_AMOUNT: 'Tip Amount',
+  SPECIAL_INSTRUCTION: 'Special Instruction',
 };

@@ -24,6 +24,7 @@ export function initApp(
   primary_language,
   refreshlang = false,
 ) {
+  console.log(data, headers, 'headerheaderheader');
   return new Promise((resolve, reject) => {
     apiPost(APP_INITIAL_SETTINGS, data, headers)
       .then(async (res) => {
@@ -105,6 +106,7 @@ export function initApp(
         // setPrimaryCurrency
 
         if (reload) {
+          alert('1');
           setItem('setPrimaryCurrent', currenciesData);
           setCurrentcy(currenciesData);
         } else {
@@ -120,6 +122,8 @@ export function initApp(
         //Set Language
 
         if (reload) {
+          alert('2');
+
           setItem('setPrimaryLanguage', languagesData);
           setLanguage(languagesData);
           // refreshScreen(languagesData?.primary_language?.sort_code);

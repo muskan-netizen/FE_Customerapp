@@ -590,4 +590,5 @@ export default {
   AND: 've',
   PRICACY_POLICY: 'Gizlilik Politikası',
   TIP_AMOUNT: 'Tip Amount',
+  SPECIAL_INSTRUCTION: 'Special Instruction',
 };
