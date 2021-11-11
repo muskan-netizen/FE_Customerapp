@@ -3,7 +3,7 @@ import { cloneDeep } from 'lodash';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
 import { Linking, Platform } from 'react-native';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   Dimensions,
   FlatList,
@@ -40,6 +40,7 @@ import {
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import {
+  getCurrentLocation,
   getImageUrl,
   getRandomColor,
   showError,
@@ -49,9 +50,11 @@ import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
 import { useIsFocused } from '@react-navigation/native';
 import * as RNLocalize from 'react-native-localize';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
+import { locationPermission } from '../../utils/permissions';
 const { height, width } = Dimensions.get('window');
+import Geolocation from 'react-native-geolocation-service';
 
 export default function OrderDetail({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -83,6 +86,19 @@ export default function OrderDetail({ navigation, route }) {
     orderStatus: null,
     selectedTipvalue: null,
     selectedTipAmount: null,
+    headingAngle: 0,
+    curLoc: {
+      latitude: 30.7173,
+      longitude: 76.8035,
+      latitudeDelta: 0.0222,
+      longitudeDelta: 0.0320,
+    },
+    coordinate: {
+      latitude: 30.7173,
+      longitude: 76.8035,
+      latitudeDelta: 0.0222,
+      longitudeDelta: 0.0320,
+    },
   });
   const {
     isLoading,
@@ -93,6 +109,8 @@ export default function OrderDetail({ navigation, route }) {
     orderStatus,
     selectedTipvalue,
     selectedTipAmount,
+    coordinate,
+    curLoc
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -102,6 +120,9 @@ export default function OrderDetail({ navigation, route }) {
   );
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily });
+
+  const mapRef = useRef(null)
+  const markerRef = useRef(null)
 
   console.log(cartData, 'cartItemss');
 
@@ -132,11 +153,12 @@ export default function OrderDetail({ navigation, route }) {
     () => {
       if (!!userData?.auth_token) {
         _getOrderDetailScreen();
+        // getLiveLocation()
       } else {
         showError(strings.UNAUTHORIZED_MESSAGE);
       }
     },
-    isFocused ? 3000 : null,
+    isFocused ? 5000 : null,
   );
 
   /*********Get order detail screen********* */
@@ -311,6 +333,8 @@ export default function OrderDetail({ navigation, route }) {
                 : colors.white,
               marginVertical: moderateScale(12),
               flexDirection: 'row',
+              marginHorizontal: moderateScale(4),
+              // alignItems:"center"
             }}>
             {item?.vendor?.banner ? (
               <FastImage
@@ -318,14 +342,14 @@ export default function OrderDetail({ navigation, route }) {
                   uri: getImageUrl(
                     item?.vendor?.banner?.image_fit,
                     item?.vendor?.banner?.image_path,
-                    '300/300',
+                    '600/600',
                   ),
                   priority: FastImage.priority.high,
                 }}
                 style={{
                   height: moderateScale(50),
                   width: moderateScale(50),
-                  borderRadius: moderateScale(4),
+                  borderRadius: moderateScale(25),
                 }}
               />
             ) : (
@@ -335,7 +359,6 @@ export default function OrderDetail({ navigation, route }) {
                   height: moderateScale(50),
                   width: moderateScale(50),
                   borderRadius: moderateScale(25),
-
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
@@ -1450,7 +1473,7 @@ export default function OrderDetail({ navigation, route }) {
     );
   };
 
-  const mapRef = useRef(null)
+
 
   const selectedTip = (tip) => {
     if (selectedTipvalue == 'custom') {
@@ -1483,10 +1506,9 @@ export default function OrderDetail({ navigation, route }) {
       cartData?.user_image?.image_path,
       '500/500',
     );
-
     return (
       <>
-        {/* <View style={{ width: '100%', height: height / 2.8 }}>
+        {/* <View style={{ width: '100%', height: height / 2.5 }}>
           <MapView
             ref={mapRef}
             style={StyleSheet.absoluteFillObject}
@@ -1496,14 +1518,10 @@ export default function OrderDetail({ navigation, route }) {
               latitudeDelta: 0.0222,
               longitudeDelta: 0.0320,
             }}
+            rotateEnabled={true}
           >
             <MapViewDirections
-              origin={{
-                latitude: 30.7173,
-                longitude: 76.8035,
-                latitudeDelta: 0.0222,
-                longitudeDelta: 0.0320,
-              }}
+              origin={curLoc}
               destination={{
                 latitude: 30.7411,
                 longitude: 76.8035,
@@ -1511,7 +1529,7 @@ export default function OrderDetail({ navigation, route }) {
                 longitudeDelta: 0.0320,
               }}
               apikey={appData.profile?.preferences?.map_key}
-              strokeWidth={2}
+              strokeWidth={3}
               strokeColor={themeColors.primary_color}
               optimizeWaypoints={true}
               onStart={(params) => { }}
@@ -1545,16 +1563,20 @@ export default function OrderDetail({ navigation, route }) {
                 longitudeDelta: 0.0320,
               }}
               image={imagePath.icDestination}
+
             />
             <Marker
-              coordinate={{
-                latitude: 30.7173,
-                longitude: 76.8035,
-                latitudeDelta: 0.0222,
-                longitudeDelta: 0.0320,
-              }}
-              image={imagePath.icScooter}
-            />
+              ref={markerRef}
+              coordinate={coordinate}
+              flat
+            >
+              <Image
+                source={imagePath.icScooter}
+                style={{
+                  transform: [{ rotate: `${state.headingAngle + 110}deg` }]
+                }}
+              />
+            </Marker>
           </MapView>
         </View> */}
         {!!orderStatus && orderStatus?.current_status?.title == 'Placed' && (
@@ -1676,6 +1698,87 @@ export default function OrderDetail({ navigation, route }) {
       </>
     );
   };
+
+
+  const getLiveLocation = async () => {
+    const locPermissionDenied = await locationPermission()
+    console.log("loc permsss", locPermissionDenied)
+    if (locPermissionDenied) {
+      const { latitude, longitude } = await getCurrentLocation('home')
+      console.log(longitude, "get live location after 4 second", latitude)
+      // animate(latitude, longitude);
+      updateState({
+        curLoc: {
+          latitude,
+          longitude,
+          latitudeDelta: 0.0222,
+          longitudeDelta: 0.0320,
+        },
+      })
+
+      // setState({
+      //   ...state,
+      //   curLoc: {
+      //     latitude,
+      //     longitude,
+      //     latitudeDelta: 0.0222,
+      //     longitudeDelta: 0.0320,
+      //   },
+      //   coordinate: {
+      //     latitude: latitude,
+      //     longitude: longitude,
+      //     latitudeDelta: 0.0222,
+      //     longitudeDelta: 0.0320,
+      //   }
+      // })
+    }
+  }
+
+  // useEffect(() => {
+  //   const _watchId = Geolocation.watchPosition(
+  //     position => {
+  //       console.log("watch position", position)
+  //       updateState({ headingAngle: position.coords.heading })
+  //       const { latitude, longitude } = position.coords;
+  //       animate(latitude, longitude);
+  //       updateState({
+  //         coordinate: {
+  //           latitude: latitude,
+  //           longitude: longitude,
+  //           latitudeDelta: 0.0222,
+  //           longitudeDelta: 0.0320,
+  //         }
+  //       })
+  //       // setLocation({latitude, longitude});
+  //     },
+  //     error => {
+  //       console.log(error);
+  //     },
+  //     {
+  //       enableHighAccuracy: true,
+  //       distanceFilter: 20,
+  //       interval: 8000,
+  //       fastestInterval: 1000,
+  //     },
+  //   );
+  //   return () => {
+  //     if (_watchId) {
+  //       Geolocation.clearWatch(_watchId);
+  //     }
+  //   };
+  // }, []);
+
+  const animate = (latitude, longitude) => {
+    const newCoordinate = { latitude, longitude };
+    if (Platform.OS == 'android') {
+      if (markerRef.current) {
+        markerRef.current.animateMarkerToCoordinate(newCoordinate, 7000);
+      }
+    } else {
+      // alert('yaho')
+      coordinate.timing(newCoordinate).start();
+    }
+  }
 
   return (
     <WrapperContainer
