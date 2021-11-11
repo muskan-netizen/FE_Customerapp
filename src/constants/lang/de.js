@@ -598,4 +598,6 @@ export default {
   AND: 'und',
   PRICACY_POLICY: 'Datenschutzrichtlinie',
   TIP_AMOUNT: 'Trinkgeldbetrag',
+  CONFIRM_DESTINATION: 'Confirm Destination',
+  CONFIRM_VEHICLE: 'Confirm Vehicle',
 };

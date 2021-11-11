@@ -576,4 +576,6 @@ export default {
   AND: 'и',
   PRICACY_POLICY: 'Политика конфиденциальности',
   TIP_AMOUNT: 'Tip Amount',
+  CONFIRM_DESTINATION: 'Confirm Destination',
+  CONFIRM_VEHICLE: 'Confirm Vehicle',
 };

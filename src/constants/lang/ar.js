@@ -599,4 +599,6 @@ export default {
   AND: 'و',
   PRICACY_POLICY: 'سياسة الخصوصية',
   TIP_AMOUNT: 'مبلغ تلميح',
+  CONFIRM_DESTINATION: 'Confirm Destination',
+  CONFIRM_VEHICLE: 'Confirm Vehicle',
 };
