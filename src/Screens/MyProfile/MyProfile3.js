@@ -7,6 +7,7 @@ import {
   Text,
   TouchableWithoutFeedback,
   View,
+  ImageBackground,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import FastImage from 'react-native-fast-image';
@@ -926,15 +927,27 @@ export default function MyProfile3({route, navigation}) {
                 // alignItems: 'center',
                 // justifyContent: '',
               }}>
-              <Image
+              <View
                 style={{
-                  height: 30,
-                  width: 30,
-                  // tintColor: 'green',
+                  height: moderateScale(30),
+                  width: moderateScale(30),
+                  backgroundColor: themeColors.primary_color,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: moderateScale(30),
                 }}
                 resizeMode="contain"
-                source={imagePath?.camera}
-              />
+                source={imagePath?.camera}>
+                <Image
+                  source={imagePath.ic_cameraColored}
+                  resizeMode="contain"
+                  style={{
+                    height: moderateScale(20),
+                    width: moderateScale(20),
+                    tintColor: colors.white,
+                  }}
+                />
+              </View>
             </View>
           </View>
         </TouchableWithoutFeedback>

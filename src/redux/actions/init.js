@@ -15,6 +15,7 @@ import types from '../types';
 import {changeLaguage} from '../../constants/lang';
 import {I18nManager} from 'react-native';
 const {dispatch} = store;
+import RNRestart from 'react-native-restart';
 
 export function initApp(
   data = {},
@@ -24,7 +25,6 @@ export function initApp(
   primary_language,
   refreshlang = false,
 ) {
-  console.log(data, headers, 'headerheaderheader');
   return new Promise((resolve, reject) => {
     apiPost(APP_INITIAL_SETTINGS, data, headers)
       .then(async (res) => {
@@ -106,7 +106,6 @@ export function initApp(
         // setPrimaryCurrency
 
         if (reload) {
-          alert('1');
           setItem('setPrimaryCurrent', currenciesData);
           setCurrentcy(currenciesData);
         } else {
@@ -122,8 +121,6 @@ export function initApp(
         //Set Language
 
         if (reload) {
-          alert('2');
-
           setItem('setPrimaryLanguage', languagesData);
           setLanguage(languagesData);
           // refreshScreen(languagesData?.primary_language?.sort_code);
@@ -139,12 +136,24 @@ export function initApp(
               getPrimaryLanguage?.primary_language?.sort_code == 'ar'
             ) {
               I18nManager.forceRTL(true);
+              // alert(JSON.stringify(I18nManager), 'I18nManager');
             }
             setLanguage(getPrimaryLanguage);
           } else {
+            let primaryLang = data.languages.filter((x) => x.is_primary)[0]
+              .language;
+
+            // alert(JSON.stringify(I18nManager), 'I18nManager');
             setItem('setPrimaryLanguage', languagesData);
             setLanguage(languagesData);
             changeLaguage(languagesData?.primary_language?.sort_code);
+
+            if (primaryLang.sort_code == 'ar') {
+              if (!I18nManager.isRTL) {
+                I18nManager.forceRTL(true);
+                RNRestart.Restart();
+              }
+            }
           }
         }
 

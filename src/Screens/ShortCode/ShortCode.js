@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {I18nManager, Image, Text, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import {getBundleId} from 'react-native-device-info';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import {useSelector} from 'react-redux';
@@ -948,7 +948,6 @@ export default function ShortCode({route, navigation}) {
 
   const initApiHit = () => {
     let header = {};
-
     if (languages?.primary_language?.id) {
       header = {
         code: shortCode,
@@ -957,7 +956,6 @@ export default function ShortCode({route, navigation}) {
     } else {
       header = {
         code: shortCode,
-        languages: 8,
       };
     }
 
@@ -968,6 +966,7 @@ export default function ShortCode({route, navigation}) {
         if (getBundleId() == appIds.royoorder) {
           actions.saveShortCode(shortCode);
         }
+
         homeData(res.data);
       })
       .catch((error) => {
