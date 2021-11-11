@@ -82,12 +82,14 @@ export default function Mobbex({ navigation, route }) {
             id: paramsData?.orderDetail?.id,
           },
         })();
-      } else if (queryParams.status == 0) {
+      }
+      if (queryParams.status == 0) {
         moveToNewScreen(navigationStrings.CART, {
           queryURL: url.replace(`${nonQueryURL}?`, ''),
         })();
       }
     }, 3000);
+    
   };
   return (
     <WrapperContainer
