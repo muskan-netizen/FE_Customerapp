@@ -439,6 +439,18 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       color: isDarkMode ? colors.white : colors.black,
       textAlign: I18nManager.isRTL ? 'right' : 'left',
     },
+    laundrySection:{
+      backgroundColor:isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
+      padding:moderateScale(10),
+      marginHorizontal: moderateScale(10),
+      borderRadius: moderateScale(5),
+
+    },
+    LaundryApppriceItemLabel: {
+      color: colors.textGreyB,
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(10),
+    },
   });
   return styles;
 };

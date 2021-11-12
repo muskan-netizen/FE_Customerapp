@@ -406,7 +406,8 @@ export default function Home({route, navigation}) {
     } else if (
       item.redirect_to == staticStrings.PRODUCT ||
       item.redirect_to == staticStrings.CATEGORY ||
-      item.redirect_to == staticStrings.ONDEMANDSERVICE
+      item.redirect_to == staticStrings.ONDEMANDSERVICE ||
+      item?.redirect_to == staticStrings.LAUNDRY
     ) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {

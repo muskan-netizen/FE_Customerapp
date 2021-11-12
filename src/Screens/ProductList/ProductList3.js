@@ -478,16 +478,16 @@ export default function Products({ route, navigation }) {
             sectionListData: filterArray,
             isLoading: false,
             isRefreshing: false,
-            categoryInfo: res.data.vendor,
-            filterData: res.data.filterData,
+            categoryInfo: res?.data?.vendor,
+            filterData: res?.data?.filterData,
             vendorCategories: res?.data?.categories,
           });
         } else {
           updateState({
             isLoading: false,
             isRefreshing: false,
-            categoryInfo: res.data.vendor,
-            filterData: res.data.filterData,
+            categoryInfo: res?.data?.vendor,
+            filterData: res?.data?.filterData,
             productListData: res?.data?.vendor?.is_show_products_with_category
               ? res?.data?.categories[0]?.products
               : pageNo == 1

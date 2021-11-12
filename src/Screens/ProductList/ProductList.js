@@ -253,7 +253,7 @@ export default function Products({ route, navigation }) {
     var brandDatas = [];
     var filterDataNew = [];
 
-    if (allBrands.length) {
+    if (allBrands?.length) {
       brandDatas = [
         {
           id: -1,
@@ -272,7 +272,7 @@ export default function Products({ route, navigation }) {
     }
 
     // Price filter
-    if (filterData.length) {
+    if (filterData?.length) {
       filterDataNew = filterData.map((i, inx) => {
         return {
           id: i.variant_type_id,
@@ -422,7 +422,7 @@ export default function Products({ route, navigation }) {
     console.log("api hit getAllProductsByVendor")
     actions
       .getProductByVendorId(
-        `/${productListId.id}$?limit=${limit}&page=${pageNo}`,
+        `/${productListId.id}?limit=${limit}&page=${pageNo}`,
         {},
         {
           code: appData.profile.code,
@@ -432,7 +432,7 @@ export default function Products({ route, navigation }) {
       )
       .then((res) => {
         console.log("getAllProductsByVendor res", res)
-        if (res.data.vendor.vendor_templete_id == 5) { //showing products with category
+        if (res?.data?.vendor?.vendor_templete_id == 5) { //showing products with category
           updateState({
             selectedSbCategoryID: res.data.categories[0].id,
             categories: res.data.categories,
@@ -442,17 +442,17 @@ export default function Products({ route, navigation }) {
           updateState({
             productListData:
               pageNo == 1
-                ? res.data.products.data
-                : [...productListData, ...res.data.products.data],
+                ? res?.data?.products?.data
+                : [...productListData, ...res?.data?.products?.data],
           });
         }
         updateState({
           isLoading: false,
           isRefreshing: false,
-          categoryInfo: res.data.vendor,
-          filterData: res.data.filterData,
+          categoryInfo: res?.data?.vendor,
+          filterData: res?.data?.filterData,
         })
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        updateBrandAndCategoryFilter(res?.data?.filterData, appMainData.brands);
       })
       .catch(errorMethod);
   };

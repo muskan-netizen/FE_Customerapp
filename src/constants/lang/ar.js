@@ -602,4 +602,6 @@ export default {
   CONFIRM_DESTINATION: 'Confirm Destination',
   CONFIRM_VEHICLE: 'Confirm Vehicle',
   SPECIAL_INSTRUCTION: 'تعليمات خاصة',
+  SCEDULEPICKUP:"Schedule Pickup",
+  SCEDULEDROP:"Schedule Dropoff"
 };
