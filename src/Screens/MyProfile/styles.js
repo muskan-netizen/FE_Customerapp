@@ -6,7 +6,7 @@ import {
   textScale,
 } from '../../styles/responsiveSize';
 
-export default ({fontFamily}) => {
+export default ({themeColors, fontFamily}) => {
   const styles = StyleSheet.create({
     containerStyle: {
       paddingVertical: 0,
@@ -32,7 +32,7 @@ export default ({fontFamily}) => {
     },
     cameraView: {
       position: 'absolute',
-      right: -20,
+      right: -15,
     },
     userName: {
       fontSize: textScale(13),
@@ -97,6 +97,14 @@ export default ({fontFamily}) => {
       color: colors.textGreyC,
       fontFamily: fontFamily.regular,
       lineHeight: moderateScaleVertical(20),
+    },
+    roundViewCamera: {
+      height: moderateScale(30),
+      width: moderateScale(30),
+      backgroundColor: themeColors.primary_color,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: moderateScale(30),
     },
   });
   return styles;
