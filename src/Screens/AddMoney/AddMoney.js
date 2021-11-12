@@ -173,7 +173,7 @@ export default function AddMoney({ navigation }) {
                   ? [styles.chooseAddMoney, { color: MyDarkTheme.colors.text }]
                   : styles.chooseAddMoney
               }>
-              {`+ ${currencies?.primary_currency?.symbol}` } {currencyNumberFormatter(item.amount)}
+              {`+ ${currencies?.primary_currency?.symbol}`} {currencyNumberFormatter(item.amount)}
             </Text>
           </View>
         </View>
@@ -296,31 +296,6 @@ export default function AddMoney({ navigation }) {
     }
   };
 
-
-  const checkPaymentOptions = (selectedPaymentMethod, paymentUrl) => {
-    let obj = {
-      id: selectedPaymentMethod.id,
-      title: selectedPaymentMethod.title,
-      screenName: navigationStrings.WALLET,
-      paymentUrl: paymentUrl
-    }
-    switch (selectedPaymentMethod.id) {
-      case 6:  //Payfast Payment Getway
-        navigation.navigate(navigationStrings.PAYFAST, { walletTip: obj });
-        break;
-      case 7:  //Mobbex Payment Getway
-        navigation.navigate(navigationStrings.MOBBEX, { walletTip: obj });
-      case 8: //Yoco Payment Getway
-        navigation.navigate(navigationStrings.YOCO, { walletTip: obj });
-        break;
-      case 9: //Pyalink Payment Getway
-        navigation.navigate(navigationStrings.PAYLINK, { walletTip: obj });
-        break;
-      default:
-        break;
-    }
-  }
-
   const _webPayment = () => {
     let selectedMethod = selectedPaymentMethod.title.toLowerCase();
     let returnUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
@@ -343,16 +318,14 @@ export default function AddMoney({ navigation }) {
         const URL = queryString.parseUrl(res.data);
         console.log("res==>>>>", res)
         if (res && res?.status == 'Success' && res?.data) {
-          if (selectedPaymentMethod.id == 3) {
-            navigation.navigate(navigationStrings.WEBPAYMENTS, {
-              paymentUrl: res?.data,
-              paymentTitle: selectedPaymentMethod?.title,
-              redirectFrom: 'wallet',
-            });
-            return;
+          let sendingData = {
+            id: selectedPaymentMethod.id,
+            title: selectedPaymentMethod.title,
+            screenName: navigationStrings.WALLET,
+            paymentUrl: res.data,
+            action: 'wallet'
           }
-          checkPaymentOptions(selectedPaymentMethod, res?.data)
-          // updateState({allAvailAblePaymentMethods: res?.data});
+          navigation.navigate(navigationStrings.ALL_IN_ONE_PAYMENTS, { data: sendingData })
         }
       })
       .catch(errorMethod);
@@ -581,9 +554,7 @@ export default function AddMoney({ navigation }) {
   };
   return (
     <WrapperContainer
-      bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-      }
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey}
       statusBarColor={colors.white}
       isLoadingB={isLoadingB}
       source={loaderOne}>

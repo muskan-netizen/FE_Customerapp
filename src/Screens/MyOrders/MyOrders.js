@@ -134,21 +134,21 @@ export default function MyOrders({ navigation }) {
     },
     isFocused ? 3000 : null,
   );
-  useEffect(() => {
-    const focus = navigation.addListener('focus', () => {
-      if (userData && userData?.auth_token) {
-        _getListOfOrders();
-      } else {
-        updateState({
-          isLoading: false,
-        });
-      }
-    });
-    const blur = navigation.addListener('blur', () => {
-      updateState({ orders: [] });
-    });
-    return focus, blur;
-  }, []);
+  // useEffect(() => {
+  //   const focus = navigation.addListener('focus', () => {
+  //     if (userData && userData?.auth_token) {
+  //       _getListOfOrders();
+  //     } else {
+  //       updateState({
+  //         isLoading: false,
+  //       });
+  //     }
+  //   });
+  //   const blur = navigation.addListener('blur', () => {
+  //     updateState({ orders: [] });
+  //   });
+  //   return focus, blur;
+  // }, []);
   // useFocusEffect(
   //   React.useCallback(() => {
   //     if (userData && userData?.auth_token) {

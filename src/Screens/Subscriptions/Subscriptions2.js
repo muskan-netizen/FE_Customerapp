@@ -79,9 +79,7 @@ export default function Subscriptions2({ navigation, route }) {
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Redux Store Data
-  const { appData, themeColors, appStyle, currencies, languages } = useSelector(
-    (state) => state?.initBoot,
-  );
+  const { appData, themeColors, appStyle, currencies, languages } = useSelector((state) => state?.initBoot,);
   const { preferences } = appData?.profile;
   const userData = useSelector((state) => state.auth.userData);
   const fontFamily = appStyle?.fontSizeData;
@@ -451,13 +449,13 @@ export default function Subscriptions2({ navigation, route }) {
 
   const _webPayment = () => {
     let selectedMethod = selectedPaymentMethod.title.toLowerCase();
-    let returnUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
-    let cancelUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
-
+    let returnUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/`;
+    let cancelUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/subscription`;
+    let queryData = `/${selectedMethod}?amount=${planPrice}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&subscription_id=${selectedPlan?.slug}&payment_option_id=${selectedPaymentMethod?.id}&action=subscription`
     updateState({ isLoading: true });
-    actions
-      .openPaymentWebUrl(
-        `/${selectedMethod}?amount=${planPrice}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&payment_option_id=${selectedPaymentMethod?.id}&action=subscription`,
+    console.log("query data",queryData)
+    actions.openPaymentWebUrl(
+        queryData,
         {},
         {
           code: appData?.profile?.code,
@@ -469,14 +467,22 @@ export default function Subscriptions2({ navigation, route }) {
         updateState({ isLoading: false });
         if (res && res?.status == 'Success' && res?.data) {
           console.log("generate payment url", res.data)
-          // updateState({allAvailAblePaymentMethods: res?.data});
-          navigation.navigate(navigationStrings.WEBPAYMENTS, {
+          let sendingData = {
+            id: selectedPaymentMethod.id,
+            title: selectedPaymentMethod.title,
+            screenName: navigationStrings.SUBSCRIPTION,
             paymentUrl: res?.data,
-            paymentTitle: selectedPaymentMethod?.title,
-            redirectFrom: 'subscription',
-            selectedPaymentMethod: selectedPaymentMethod,
+            action: 'subscription',
             selectedPlanSlug: selectedPlan?.slug
-          });
+          }
+          navigation.navigate(navigationStrings.ALL_IN_ONE_PAYMENTS, { data: sendingData })
+          // navigation.navigate(navigationStrings.WEBPAYMENTS, {
+          //   paymentUrl: res?.data,
+          //   paymentTitle: selectedPaymentMethod?.title,
+          //   redirectFrom: 'subscription',
+          //   selectedPaymentMethod: selectedPaymentMethod,
+          // selectedPlanSlug: selectedPlan?.slug
+          // });
         }
       })
       .catch(errorMethod);

@@ -97,5 +97,6 @@ export default {
   YOCO: 'yoco',
   TIP_PAYMENT_OPTIONS: 'tipPaymentOptions',
   PAYLINK: 'paylink',
-  ADD_VEHICLE_DETAILS: 'addVehicleDetails'
+  ADD_VEHICLE_DETAILS: 'addVehicleDetails',
+  ALL_IN_ONE_PAYMENTS:"allInOnePayments",
 };

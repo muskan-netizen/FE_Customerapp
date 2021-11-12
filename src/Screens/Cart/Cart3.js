@@ -574,6 +574,24 @@ export default function Cart({ navigation, route }) {
       orderDetail: res.data,
       redirectFrom: 'cart'
     }
+    if (paymentId) {
+      return;
+    }
+    if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1) {
+      console.log("success ressssssss", res.data)
+      setTimeout(() => {
+        _getOrderDetail(res.data.vendors[0])
+      }, 1500);
+    } else {
+      actions.cartItemQty({});
+      updateState({
+        cartItems: [],
+        cartData: {},
+        isLoadingB: false,
+        placeLoader: false,
+      })
+      moveToNewScreen(navigationStrings.ORDERSUCESS, { orderDetail: res.data })();
+    }
     switch (paymentId) {
       case 6:  //Payfast Payment Getway
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
@@ -588,21 +606,6 @@ export default function Cart({ navigation, route }) {
         navigation.navigate(navigationStrings.PAYLINK, paymentData);
         break;
       default:
-        if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1) {
-          console.log("success ressssssss", res.data)
-          setTimeout(() => {
-            _getOrderDetail(res.data.vendors[0])
-          }, 1500);
-        } else {
-          actions.cartItemQty({});
-          updateState({
-            cartItems: [],
-            cartData: {},
-            isLoadingB: false,
-            placeLoader: false,
-          })
-          moveToNewScreen(navigationStrings.ORDERSUCESS, { orderDetail: res.data })();
-        }
         break;
     }
   }
@@ -643,8 +646,8 @@ export default function Cart({ navigation, route }) {
           });
         }
         if ((!!(Number(cartData?.total_payable_amount) !== 0)) || Number(selectedTipAmount) !== 0) {
-          checkPaymentOptions(res)
-          // _webPayment()
+          // checkPaymentOptions(res)
+          _webPayment()
           return;
         }
         if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1) {
@@ -998,14 +1001,22 @@ export default function Cart({ navigation, route }) {
           placeLoader: false,
         });
         if (res && res?.status == 'Success' && res?.data) {
+          let sendingData = {
+            id: selectedPayment.id,
+            title: selectedPayment.title,
+            screenName: navigationStrings.CART,
+            paymentUrl: res.data,
+            action: 'cart'
+          }
+          navigation.navigate(navigationStrings.ALL_IN_ONE_PAYMENTS, { data: sendingData })
           // updateState({allAvailAblePaymentMethods: res?.data});
-          navigation.navigate(navigationStrings.WEBPAYMENTS, {
-            paymentUrl: res?.data,
-            paymentTitle: selectedPayment?.title,
-            redirectFrom: 'cart',
-            selectedAddressData: selectedAddressData,
-            selectedPayment: selectedPayment,
-          });
+          // navigation.navigate(navigationStrings.WEBPAYMENTS, {
+          //   paymentUrl: res?.data,
+          //   paymentTitle: selectedPayment?.title,
+          //   redirectFrom: 'cart',
+          //   selectedAddressData: selectedAddressData,
+          //   selectedPayment: selectedPayment,
+          // });
         }
       })
       .catch(errorMethod);
