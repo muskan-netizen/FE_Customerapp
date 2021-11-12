@@ -142,6 +142,8 @@ const shortCodes = {
   bilionza: '9a8793',
   doleypharmacy: 'e925ef',
   bezalio: 'c1ab2b',
+  youchillax: 'a2c90d',
+  instashop: 'cb6671',
 };
 
 const appIds = {
@@ -708,6 +710,14 @@ const appIds = {
   bezalio: Platform.select({
     ios: 'com.bezalio',
     android: 'com.bezalio',
+  }),
+  youchillax: Platform.select({
+    ios: 'com.youchillax',
+    android: 'com.youchillax',
+  }),
+  instashop: Platform.select({
+    ios: 'com.customer.instashop',
+    android: 'com.instashop',
   }),
 };
 
