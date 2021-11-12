@@ -593,4 +593,5 @@ export default {
   TIP_AMOUNT: 'Cantidad de propina',
   CONFIRM_DESTINATION: 'Confirm Destination',
   CONFIRM_VEHICLE: 'Confirm Vehicle',
+  SPECIAL_INSTRUCTION: 'Special Instruction',
 };

@@ -401,7 +401,11 @@ export default function Addaddress({navigation, route}) {
   }, [paramData?.type]);
 
   const _moveToNextScreen = (type) => {
-    navigation.navigate(navigationStrings.PINADDRESSONMAP, {data: type});
+
+    navigation.navigate(navigationStrings.PINADDRESSONMAP, {
+      data: type,
+      pickUpLocationLatLng: type==="pickup"?pickUpLocationLatLng:dropOffLocationLatLng,
+    });
   };
   const renderbtn = () => {
     switch (getBundleId()) {
@@ -755,9 +759,10 @@ export default function Addaddress({navigation, route}) {
                   }
                   rowStyle={styles.address}
                   renderCustomRow={(itm) => _rendorCustomRow(itm)}
-                  updateTheAddress={(details, addressType) =>
-                    updateTheAddress(details, addressType, 'pickUpLocation')
-                  }
+                  updateTheAddress={(details, addressType) => {
+                    console.log(details, 'detailsdetails');
+                    updateTheAddress(details, addressType, 'pickUpLocation');
+                  }}
                   // ListHeaderComponent={() =>
                   //   _renderBottomComponent('pickUpLocation', 'pickup')
                   // }
