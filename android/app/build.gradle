@@ -619,7 +619,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.cabdelivr'
+            applicationId 'com.app.cabdelivr'
             resValue "string", "app_name", "Cabdelivr"
             resValue "string", "host_name", ""
          }

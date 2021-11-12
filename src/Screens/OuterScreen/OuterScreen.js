@@ -82,7 +82,6 @@ export default function OuterScreen({navigation}) {
     () => {
       navigation.navigate(screenName, {data});
     };
-
   //Saving login user to backend
   const _saveSocailLogin = async (socialLoginData, type) => {
     let userStaticName = DeviceInfo.getBundleId();
@@ -488,7 +487,7 @@ export default function OuterScreen({navigation}) {
                 </View>
               )}
               {!!fb_login && (
-                <View style={{marginVertical: moderateScaleVertical(15)}}>
+                <View style={{marginTop: moderateScaleVertical(15)}}>
                   <TransparentButtonWithTxtAndIcon
                     icon={imagePath.ic_fb2}
                     btnText={strings.CONTINUE_FACEBOOK}
@@ -508,26 +507,28 @@ export default function OuterScreen({navigation}) {
                 </View>
               )}
               {!!twitter_login && (
-                <TransparentButtonWithTxtAndIcon
-                  icon={imagePath.ic_twitter2}
-                  btnText={strings.CONTINUE_TWITTER}
-                  containerStyle={{
-                    backgroundColor: isDarkMode
-                      ? MyDarkTheme.colors.lightDark
-                      : colors.white,
-                    borderColor: colors.borderColorD,
-                    borderWidth: 1,
-                  }}
-                  textStyle={{
-                    color: isDarkMode ? colors.white : colors.textGreyB,
-                    marginHorizontal: moderateScale(10),
-                  }}
-                  nPress={() => openTwitterLogin()}
-                />
+                <View style={{marginTop: moderateScaleVertical(15)}}>
+                  <TransparentButtonWithTxtAndIcon
+                    icon={imagePath.ic_twitter2}
+                    btnText={strings.CONTINUE_TWITTER}
+                    containerStyle={{
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : colors.white,
+                      borderColor: colors.borderColorD,
+                      borderWidth: 1,
+                    }}
+                    textStyle={{
+                      color: isDarkMode ? colors.white : colors.textGreyB,
+                      marginHorizontal: moderateScale(10),
+                    }}
+                    nPress={() => openTwitterLogin()}
+                  />
+                </View>
               )}
 
               {!!apple_login && Platform.OS == 'ios' && (
-                <View style={{marginVertical: moderateScaleVertical(15)}}>
+                <View style={{marginTop: moderateScaleVertical(15)}}>
                   <TransparentButtonWithTxtAndIcon
                     icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
                     btnText={strings.CONTINUE_APPLE}

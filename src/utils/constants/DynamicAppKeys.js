@@ -308,8 +308,8 @@ const appIds = {
     android: 'com.travo',
   }),
   cabdelivr: Platform.select({
-    ios: 'com.cabdelivr',
-    android: 'com.cabdelivr',
+    ios: 'com.app.cabdelivr',
+    android: 'com.app.cabdelivr',
   }),
   drus: Platform.select({
     ios: 'com.drus.customer',
