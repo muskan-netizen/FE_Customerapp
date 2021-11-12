@@ -960,16 +960,16 @@ export default function ShortCode({route, navigation}) {
 
   const initApiHit = () => {
     let header = {};
-    if (languages?.primary_language?.id) {
-      header = {
-        code: shortCode,
-        language: languages?.primary_language?.id,
-      };
-    } else {
-      header = {
-        code: shortCode,
-      };
-    }
+    // if (languages?.primary_language?.id) {
+    //   header = {
+    //     code: shortCode,
+    //     language: languages?.primary_language?.id,
+    //   };
+    // } else {
+    header = {
+      code: shortCode,
+    };
+    // }
 
     actions
       .initApp({}, header, false, null, null, true)
