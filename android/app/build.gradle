@@ -1624,6 +1624,16 @@ android {
             resValue "string", "app_name", "Doley Pharmacy"
             resValue "string", "host_name", ""
          }
+          bezalio{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.bezalio'
+            resValue "string", "app_name", "Bezalio"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

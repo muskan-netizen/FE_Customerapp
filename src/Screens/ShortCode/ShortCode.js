@@ -930,6 +930,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.bezalio:
+          updateState({
+            shortCode: shortCodes.bezalio,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
