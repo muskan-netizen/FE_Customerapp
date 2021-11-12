@@ -41,8 +41,7 @@ export default ({fontFamily, themeColors}) => {
     },
     container: {
       flex: 1,
-      justifyContent: 'flex-end',
-      alignItems: 'center',
+      backgroundColor: '#fff',
     },
     map: {
       ...StyleSheet.absoluteFillObject,
@@ -78,10 +77,8 @@ export default ({fontFamily, themeColors}) => {
     },
     bottomView: {
       backgroundColor: colors.white,
-      borderTopLeftRadius: moderateScale(25),
-      borderTopRightRadius: moderateScale(25),
-      overflow: 'hidden',
-      height: height / 2,
+
+      minHeight: height / 2,
       width: width,
     },
     bottomView3: {

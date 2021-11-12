@@ -23,6 +23,8 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
+import {getBundleId} from 'react-native-device-info';
+import {appIds, shortCodes} from '../../../utils/constants/DynamicAppKeys';
 import {
   height,
   moderateScale,
@@ -399,9 +401,58 @@ export default function Addaddress({navigation, route}) {
   }, [paramData?.type]);
 
   const _moveToNextScreen = (type) => {
-    navigation.navigate(navigationStrings.PINADDRESSONMAP, {data: type});
-  };
 
+    navigation.navigate(navigationStrings.PINADDRESSONMAP, {
+      data: type,
+      pickUpLocationLatLng: type==="pickup"?pickUpLocationLatLng:dropOffLocationLatLng,
+    });
+  };
+  const renderbtn = () => {
+    switch (getBundleId()) {
+      case appIds.yoho:
+        return (
+          <View
+            style={{
+              marginVertical: moderateScaleVertical(10),
+              marginHorizontal: moderateScale(20),
+              justifyContent: 'flex-end',
+            }}>
+            <GradientButton
+              colorsArray={[
+                themeColors.primary_color,
+                themeColors.primary_color,
+              ]}
+              textStyle={{textTransform: 'none', fontSize: textScale(16)}}
+              onPress={saveAddressAndRedirect}
+              marginTop={moderateScaleVertical(10)}
+              marginBottom={moderateScaleVertical(10)}
+              btnText={strings.DONE}
+            />
+          </View>
+        );
+      default:
+        return (
+          <View
+            style={{
+              marginVertical: moderateScaleVertical(10),
+              marginHorizontal: moderateScale(20),
+              justifyContent: 'flex-end',
+            }}>
+            <GradientButton
+              colorsArray={[
+                themeColors.primary_color,
+                themeColors.primary_color,
+              ]}
+              textStyle={{textTransform: 'none', fontSize: textScale(16)}}
+              onPress={saveAddressAndRedirect}
+              marginTop={moderateScaleVertical(10)}
+              marginBottom={moderateScaleVertical(10)}
+              btnText={strings.DONE}
+            />
+          </View>
+        );
+    }
+  };
   const renderDotContainer = () => {
     return (
       <>
@@ -708,9 +759,10 @@ export default function Addaddress({navigation, route}) {
                   }
                   rowStyle={styles.address}
                   renderCustomRow={(itm) => _rendorCustomRow(itm)}
-                  updateTheAddress={(details, addressType) =>
-                    updateTheAddress(details, addressType, 'pickUpLocation')
-                  }
+                  updateTheAddress={(details, addressType) => {
+                    console.log(details, 'detailsdetails');
+                    updateTheAddress(details, addressType, 'pickUpLocation');
+                  }}
                   // ListHeaderComponent={() =>
                   //   _renderBottomComponent('pickUpLocation', 'pickup')
                   // }
@@ -876,7 +928,7 @@ export default function Addaddress({navigation, route}) {
           {/* </View> */}
         </View>
 
-        <View
+        {/* <View
           style={{
             marginVertical: moderateScaleVertical(10),
             marginHorizontal: moderateScale(20),
@@ -890,7 +942,8 @@ export default function Addaddress({navigation, route}) {
             marginBottom={moderateScaleVertical(10)}
             btnText={strings.DONE}
           />
-        </View>
+        </View> */}
+        {renderbtn()}
       </View>
 
       <AddressModal3

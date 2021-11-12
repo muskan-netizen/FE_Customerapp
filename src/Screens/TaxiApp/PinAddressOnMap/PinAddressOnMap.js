@@ -44,7 +44,7 @@ export default function HomeScreenTaxi({navigation, route}) {
   const mapRef = React.createRef();
   const paramData = route?.params;
 
-  console.log(paramData?.data, 'paramData>paramData>paramData');
+  console.log(paramData, 'paramData>paramData>paramData');
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -52,14 +52,18 @@ export default function HomeScreenTaxi({navigation, route}) {
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     region: {
-      latitude: 30.7191,
-      longitude: 76.8107,
+      latitude:
+        parseFloat(paramData?.pickUpLocationLatLng?.latitude) || 30.7333,
+      longitude:
+        parseFloat(paramData?.pickUpLocationLatLng?.longitude) || 76.7794,
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
     coordinate: {
-      latitude: 30.7191,
-      longitude: 76.8107,
+      latitude:
+        parseFloat(paramData?.pickUpLocationLatLng?.latitude) || 30.7333,
+      longitude:
+        parseFloat(paramData?.pickUpLocationLatLng?.longitude) || 76.7794,
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
@@ -67,25 +71,11 @@ export default function HomeScreenTaxi({navigation, route}) {
     details: {},
     addressLabel: 'Glenpark',
     formattedAddress: '8502 Preston Rd. Inglewood, Maine 98380',
-    locationListData: [
-      {id: 1, location: 'ISBT,Sector43'},
-      {id: 1, location: 'Shukna Lake'},
-      {id: 1, location: 'Green View Tower'},
-      {id: 1, location: 'Sector 28'},
-    ],
+
     userCurrentLongitude: null,
     userCurrentLatitude: null,
     isVisible: false,
     task_type_id: null,
-    task_type_id1: null,
-    formattedAddress1: null,
-    formattedAddress2: null,
-    pickuplocationlat: null,
-    pickuplocationlong: null,
-    pickuplocationshortname: null,
-    droplocationshortname: null,
-    pickup_post_code: null,
-    drop_post_code: null,
   });
 
   const {
@@ -95,12 +85,10 @@ export default function HomeScreenTaxi({navigation, route}) {
     formattedAddress,
     region,
     coordinate,
-    locationListData,
     userCurrentLongitude,
     userCurrentLatitude,
     isVisible,
     task_type_id,
-    task_type_id1,
     details,
   } = state;
 
@@ -120,6 +108,8 @@ export default function HomeScreenTaxi({navigation, route}) {
     _getAddressBasedOnCoordinates(region);
     // animate(region);
   };
+
+  console.log(region, 'regionregion');
 
   const _getAddressBasedOnCoordinates = (region) => {
     Geocoder.from({

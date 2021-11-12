@@ -2044,7 +2044,7 @@ export default function Cart({ navigation, route }) {
             isDarkMode ? colors.textGreyB : colors.textGreyB
           }
           // placeholder={strings.ANY_RESTAURANT_REQUESTS}
-          placeholder={'Special Instruction'}
+          placeholder={strings.SPECIAL_INSTRUCTION}
         />
         {/* <View style={{ height: moderateScaleVertical(20) }} /> */}
 

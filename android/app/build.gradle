@@ -1604,6 +1604,26 @@ android {
             resValue "string", "app_name", "Dishefs"
             resValue "string", "host_name", ""
          }
+          bilionza{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.bilionza'
+            resValue "string", "app_name", "Bilionza"
+            resValue "string", "host_name", ""
+         }
+         doleypharmacy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.doleypharmacy'
+            resValue "string", "app_name", "Doley Pharmacy"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

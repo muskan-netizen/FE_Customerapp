@@ -590,4 +590,7 @@ export default {
   AND: 've',
   PRICACY_POLICY: 'Gizlilik Politikası',
   TIP_AMOUNT: 'Tip Amount',
+  CONFIRM_DESTINATION: 'Confirm Destination',
+  CONFIRM_VEHICLE: 'Confirm Vehicle',
+  SPECIAL_INSTRUCTION: 'Special Instruction',
 };

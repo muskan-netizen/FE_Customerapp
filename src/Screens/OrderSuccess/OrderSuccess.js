@@ -64,7 +64,11 @@ export default function OrderSuccess({navigation, route}) {
         <View style={styles.doneIconView}>
           <Image
             source={imagePath.successfulIcon}
-            style={{marginBottom: moderateScaleVertical(30)}}
+            style={{
+              marginBottom: moderateScaleVertical(30),
+              tintColor: 'green',
+              opacity: 0.5,
+            }}
           />
           <Text
             style={

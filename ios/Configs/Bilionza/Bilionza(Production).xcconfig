@@ -1,0 +1,13 @@
+#include "Pods/Target Support Files/Pods-Bilionza/Pods-Bilionza.release.xcconfig"
+
+PROJECT_APPLE_ID =1594825910
+PROJECT_BUNDLE_ID =com.bilionza
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 1
+PROJECT_APP_NAME =Bilionza
+PROJECT_GOOGLE_CLIENT_ID =565854845109-01t12duc447uksi79h7ft7jbohjmjfe5.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.565854845109-01t12duc447uksi79h7ft7jbohjmjfe5
+PROJECT_FACEBOOK_ID =909792136306397
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =BilionzaInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4

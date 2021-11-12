@@ -240,6 +240,7 @@ export default function Account3({navigation}) {
                         : colors.textGreyJ,
                       fontFamily: fontFamily.medium,
                       fontSize: textScale(14),
+                      textAlign: 'left',
                     }}>
                     {userData?.name}
                   </Text>
@@ -251,6 +252,7 @@ export default function Account3({navigation}) {
                         ? MyDarkTheme.colors.text
                         : colors.textGreyJ,
                       marginTop: moderateScaleVertical(5),
+                      textAlign: 'left',
                     }}>
                     {userData?.email}
                   </Text>

@@ -1,6 +1,13 @@
 import moment from 'moment';
 import React, {useEffect, useRef, useState} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import MapView, {Callout, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from 'react-native-maps-directions';
@@ -16,6 +23,7 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
+  StatusBarHeight,
   textScale,
   width,
 } from '../../../styles/responsiveSize';
@@ -601,25 +609,36 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   // };
 
   return (
-    <View style={styles.container}>
-      <MapView
-        //   provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-        ref={mapRef}
-        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-        customMapStyle={mapStyleGrey}
-        style={styles.map}
-        region={region}
-        initialRegion={region}
-        //   customMapStyle={mapStyle}
-        // ref={mapRef}
-        // liteMode={true}
-        tracksViewChanges={false}
-        // onPress={onMapPress}
-        // onRegionChangeComplete={() =>
-        //   _onRegionChange(region, {isGesture: true})
-        // }
-      >
-        {/* <Marker
+    <View style={{...styles.container}}>
+      <View style={{height: StatusBarHeight}} />
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+        }}>
+        <View
+          style={{
+            width: '100%',
+            height: height / 2.5,
+          }}>
+          <MapView
+            //   provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            ref={mapRef}
+            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            customMapStyle={mapStyleGrey}
+            // style={styles.map}
+            style={StyleSheet.absoluteFillObject}
+            region={region}
+            initialRegion={region}
+            //   customMapStyle={mapStyle}
+            // ref={mapRef}
+            // liteMode={true}
+            tracksViewChanges={false}
+            // onPress={onMapPress}
+            // onRegionChangeComplete={() =>
+            //   _onRegionChange(region, {isGesture: true})
+            // }
+          >
+            {/* <Marker
             coordinate={paramData?.location[0]}
             image={imagePath.radioLocation}>
             <Callout style={styles.plainView}>
@@ -640,78 +659,86 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             </Callout>
           </Marker> */}
 
-        {paramData?.tasks.map((coordinate, index) => {
-          return (
-            <View>
-              <MapView.Marker
-                ref={markerRef}
-                zIndex={index}
-                key={`coordinate_${index}`}
-                image={imagePath.radioLocation}
-                coordinate={{
-                  latitude: Number(coordinate?.latitude),
-                  longitude: Number(coordinate?.longitude),
-                }}>
-                <View
-                  style={[
-                    styles.plainView,
-                    {
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      //paddingRight: 10,
-                    },
-                  ]}>
-                  <Text style={styles.pickupDropOff}>
-                    {index === 0 ? 'Pickup' : 'Drop'}
-                  </Text>
+            {paramData?.tasks.map((coordinate, index) => {
+              return (
+                <View>
+                  <MapView.Marker
+                    ref={markerRef}
+                    zIndex={index}
+                    key={`coordinate_${index}`}
+                    image={imagePath.radioLocation}
+                    coordinate={{
+                      latitude: Number(coordinate?.latitude),
+                      longitude: Number(coordinate?.longitude),
+                    }}>
+                    <View
+                      style={[
+                        styles.plainView,
+                        {
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          //paddingRight: 10,
+                        },
+                      ]}>
+                      <Text style={styles.pickupDropOff}>
+                        {index === 0 ? 'Pickup' : 'Drop'}
+                      </Text>
+                    </View>
+                  </MapView.Marker>
                 </View>
-              </MapView.Marker>
-            </View>
-          );
-        })}
+              );
+            })}
 
-        <MapViewDirections
-          origin={paramData?.location[0]}
-          waypoints={
-            paramData?.location.length > 2
-              ? paramData?.location.slice(1, -1)
-              : []
-          }
-          destination={paramData?.location[paramData?.location.length - 1]}
-          apikey={profile?.preferences?.map_key}
-          strokeWidth={3}
-          strokeColor={themeColors.primary_color}
-          optimizeWaypoints={true}
-          onStart={(params) => {
-            // console.log(Started routing between "${params.origin}" and "${params.destination}");
-          }}
-          precision={'high'}
-          timePrecision={'now'}
-          mode={'DRIVING'}
-          // maxZoomLevel={20}
-          onReady={(result) => {
-            console.log(`Distance: ${result.distance} km`);
-            console.log(`Duration: ${result.duration} min.`);
-            updateState({
-              totalDistance: result.distance.toFixed(2),
-              totalDuration: result.duration.toFixed(2),
-            });
-            mapRef.current.fitToCoordinates(result.coordinates, {
-              edgePadding: {
-                right: width / 20,
-                bottom: height / 20,
-                left: width / 20,
-                top: height / 20,
-              },
-            });
-          }}
-          onError={(errorMessage) => {
-            // console.log('GOT AN ERROR');
-          }}
-        />
-      </MapView>
+            <MapViewDirections
+              origin={paramData?.location[0]}
+              waypoints={
+                paramData?.location.length > 2
+                  ? paramData?.location.slice(1, -1)
+                  : []
+              }
+              destination={paramData?.location[paramData?.location.length - 1]}
+              apikey={profile?.preferences?.map_key}
+              strokeWidth={3}
+              strokeColor={themeColors.primary_color}
+              optimizeWaypoints={true}
+              onStart={(params) => {
+                // console.log(Started routing between "${params.origin}" and "${params.destination}");
+              }}
+              precision={'high'}
+              timePrecision={'now'}
+              mode={'DRIVING'}
+              // maxZoomLevel={20}
+              onReady={(result) => {
+                console.log(`Distance: ${result.distance} km`);
+                console.log(`Duration: ${result.duration} min.`);
+                updateState({
+                  totalDistance: result.distance.toFixed(2),
+                  totalDuration: result.duration.toFixed(2),
+                });
+                mapRef.current.fitToCoordinates(result.coordinates, {
+                  edgePadding: {
+                    right: width / 20,
+                    bottom: height / 20,
+                    left: width / 20,
+                    top: height / 20,
+                  },
+                });
+              }}
+              onError={(errorMessage) => {
+                // console.log('GOT AN ERROR');
+              }}
+            />
+          </MapView>
 
-      {/* Top View */}
+          {/* Top View */}
+        </View>
+
+        {/* BottomView */}
+        {/* {!!showVendorModal && _selectVendorModalView()} */}
+        {!!showCarModal && _selectCarModalView()}
+        {!!showTimeModal && _selectTimeView()}
+        {!!showPaymentModal && _selectPaymentView()}
+      </ScrollView>
       <View style={styles.topView}>
         <TouchableOpacity
           style={[
@@ -732,12 +759,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           />
         </TouchableOpacity>
       </View>
-
-      {/* BottomView */}
-      {/* {!!showVendorModal && _selectVendorModalView()} */}
-      {!!showCarModal && _selectCarModalView()}
-      {!!showTimeModal && _selectTimeView()}
-      {!!showPaymentModal && _selectPaymentView()}
 
       <PaymentProcessingModal
         isModalVisible={isModalVisible}
