@@ -62,6 +62,7 @@ export default function OrderDetail({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
+  console.log(paramData, "paramData");
   const dineInType = useSelector((state) => state?.home?.dineInType);
 
   const [state, setState] = useState({
@@ -99,6 +100,7 @@ export default function OrderDetail({ navigation, route }) {
       latitudeDelta: 0.0222,
       longitudeDelta: 0.0320,
     },
+    driverStatus: null
   });
   const {
     isLoading,
@@ -110,7 +112,8 @@ export default function OrderDetail({ navigation, route }) {
     selectedTipvalue,
     selectedTipAmount,
     coordinate,
-    curLoc
+    curLoc,
+    driverStatus
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -161,6 +164,15 @@ export default function OrderDetail({ navigation, route }) {
     isFocused ? 5000 : null,
   );
 
+  const new_dispatch_traking_url = paramData?.orderDetail?.dispatch_traking_url
+    ? (paramData?.orderDetail?.dispatch_traking_url).replace(
+      '/order/',
+      '/order-details/',
+    )
+    : null;
+
+  console.log(new_dispatch_traking_url, "new_dispatch_traking_url");
+
   /*********Get order detail screen********* */
   const _getOrderDetailScreen = () => {
     let data = {};
@@ -168,6 +180,8 @@ export default function OrderDetail({ navigation, route }) {
     if (paramData?.selectedVendor) {
       data['vendor_id'] = paramData?.selectedVendor.id;
     }
+    data['new_dispatch_traking_url'] = new_dispatch_traking_url
+    console.log("new dispatch+++", data)
     // updateState({ isLoading: true });
     actions
       .getOrderDetail(data, {
@@ -196,6 +210,8 @@ export default function OrderDetail({ navigation, route }) {
             cartItems: res.data.vendors,
             cartData: res.data,
             isLoading: false,
+            driverStatus: !!res?.data?.order_data && !!res?.data?.order_data ? res?.data?.order_data : null,
+            // driverDetail: 
             selectedTipvalue:
               res.data.payable_amount == '0.00' ? 'custom' : null,
             currentPosition: res.data.vendors[0].order_status
@@ -237,7 +253,7 @@ export default function OrderDetail({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  console.log("current order status",orderStatus)
+  console.log("current order status", orderStatus)
 
   const errorMethod = (error) => {
     updateState({ isLoading: false, isLoading: false, isLoadingC: false });
@@ -1510,23 +1526,29 @@ export default function OrderDetail({ navigation, route }) {
     );
     return (
       <>
-        {/* <View style={{ width: '100%', height: height / 2.5 }}>
+
+        {!!driverStatus && orderStatus?.current_status?.id == 5 && (<View style={{ width: '100%', height: height / 2.5 }}>
           <MapView
             ref={mapRef}
             style={StyleSheet.absoluteFillObject}
             initialRegion={{
-              latitude: 30.7173,
-              longitude: 76.8035,
+              latitude: Number(driverStatus.tasks[0]?.latitude),
+              longitude: Number(driverStatus.tasks[0]?.longitude),
               latitudeDelta: 0.0222,
               longitudeDelta: 0.0320,
             }}
             rotateEnabled={true}
           >
             <MapViewDirections
-              origin={curLoc}
+              origin={{
+                latitude: Number(driverStatus.tasks[0]?.latitude),
+                longitude: Number(driverStatus.tasks[0]?.longitude),
+                latitudeDelta: 0.0222,
+                longitudeDelta: 0.0320,
+              }}
               destination={{
-                latitude: 30.7411,
-                longitude: 76.8035,
+                latitude: Number(driverStatus.tasks[1]?.latitude),
+                longitude: Number(driverStatus.tasks[1]?.longitude),
                 latitudeDelta: 0.0222,
                 longitudeDelta: 0.0320,
               }}
@@ -1559,8 +1581,8 @@ export default function OrderDetail({ navigation, route }) {
             />
             <Marker
               coordinate={{
-                latitude: 30.7411,
-                longitude: 76.8035,
+                latitude: Number(driverStatus.tasks[0]?.latitude),
+                longitude: Number(driverStatus.tasks[0]?.longitude),
                 latitudeDelta: 0.0222,
                 longitudeDelta: 0.0320,
               }}
@@ -1569,7 +1591,12 @@ export default function OrderDetail({ navigation, route }) {
             />
             <Marker
               ref={markerRef}
-              coordinate={coordinate}
+              coordinate={{
+                latitude: Number(driverStatus?.agent_location?.lat),
+                longitude: Number(driverStatus?.agent_location?.long),
+                latitudeDelta: 0.0222,
+                longitudeDelta: 0.0320,
+              }}
               flat
             >
               <Image
@@ -1580,7 +1607,8 @@ export default function OrderDetail({ navigation, route }) {
               />
             </Marker>
           </MapView>
-        </View> */}
+        </View>)}
+
         {!!orderStatus && orderStatus?.current_status?.title == 'Placed' && (
           <View
             style={{
@@ -1813,6 +1841,7 @@ export default function OrderDetail({ navigation, route }) {
             ? MyDarkTheme.colors.background
             : colors.greyColor,
         }}>
+      
         <FlatList
           data={cartItems}
           extraData={cartItems}

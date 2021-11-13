@@ -256,6 +256,7 @@ export default function MyOrders({ navigation }) {
       navigation.navigate(navigationStrings.ORDER_DETAIL, {
         orderId: item?.order_id,
         fromVendorApp: true,
+        orderDetail: item,
         orderStatus: item?.order_status,
         selectedVendor: { id: item?.vendor_id },
         showRating: item?.order_status?.current_status?.id != 6 ? false : true,
