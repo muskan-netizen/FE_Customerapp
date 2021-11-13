@@ -1,5 +1,5 @@
-import { cloneDeep } from 'lodash';
-import React, { useEffect, useState, useRef } from 'react';
+import {cloneDeep} from 'lodash';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   I18nManager,
   Image,
@@ -10,11 +10,11 @@ import {
   TextInput,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useSelector } from 'react-redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useSelector} from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -28,8 +28,9 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../../styles/responsiveSize';
-import { showError } from '../../utils/helperFunctions';
+import {showError} from '../../utils/helperFunctions';
 import {
   fbLogin,
   googleLogin,
@@ -38,17 +39,19 @@ import {
 } from '../../utils/socialLogin';
 import validator from '../../utils/validations';
 import stylesFunc from './styles';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import AsyncStorage from '@react-native-community/async-storage';
-import { mobile } from 'is_js';
+import {mobile} from 'is_js';
+import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
+import PhoneNumberInputWithUnderline from '../../Components/PhoneNumberInputWithUnderline';
 
-export default function LoginLayoutFour({ navigation }) {
-  const { appData, themeColors, currencies, languages, appStyle } = useSelector(
+export default function LoginLayoutFour({navigation}) {
+  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-  const { apple_login, fb_login, twitter_login, google_login } = useSelector(
+  const {apple_login, fb_login, twitter_login, google_login} = useSelector(
     (state) => state?.initBoot?.appData?.profile?.preferences,
   );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -79,7 +82,7 @@ export default function LoginLayoutFour({ navigation }) {
       focus: false,
       countryName: '',
     },
-    isInputOptionVisible: false
+    isInputOptionVisible: false,
   });
 
   const fontFamily = appStyle?.fontSizeData;
@@ -89,9 +92,9 @@ export default function LoginLayoutFour({ navigation }) {
   }, []);
 
   //Update states
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
   //Styles in app
-  const styles = stylesFunc({ themeColors, fontFamily });
+  const styles = stylesFunc({themeColors, fontFamily});
 
   //all states used in this screen
   const {
@@ -106,21 +109,21 @@ export default function LoginLayoutFour({ navigation }) {
 
   //Naviagtion to specific screen
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, { data });
+    navigation.navigate(screenName, {data});
   };
   //On change textinput
   const _onChangeText = (key) => (val) => {
-    updateState({ [key]: val });
+    updateState({[key]: val});
   };
 
   //Validate form
   const isValidData = () => {
     const error = email.focus
-      ? validator({ email: email.value, password })
+      ? validator({email: email.value, password})
       : validator({
-        phoneNumber: mobilNo.phoneNo,
-        callingCode: mobilNo.callingCode,
-      });
+          phoneNumber: mobilNo.phoneNo,
+          callingCode: mobilNo.callingCode,
+        });
     if (error) {
       showError(error);
       return;
@@ -146,7 +149,7 @@ export default function LoginLayoutFour({ navigation }) {
       dialCode: mobilNo.focus ? mobilNo.callingCode : '',
       countryData: mobilNo.focus ? mobilNo.cca2 : '',
     };
-    updateState({ isLoading: true });
+    updateState({isLoading: true});
     actions
       .loginUsername(data, {
         code: appData?.profile?.code,
@@ -158,19 +161,19 @@ export default function LoginLayoutFour({ navigation }) {
         if (!!res.data) {
           res.data.is_phone
             ? navigation.navigate(navigationStrings.OTP_VERIFICATION, {
-              username: mobilNo?.phoneNo,
-              dialCode: mobilNo?.callingCode,
-              countryData: mobilNo?.cca2,
-            })
+                username: mobilNo?.phoneNo,
+                dialCode: mobilNo?.callingCode,
+                countryData: mobilNo?.cca2,
+              })
             : !!res.data?.client_preference?.verify_email ||
               !!res.data?.client_preference?.verify_phone
-              ? !!res.data?.verify_details?.is_email_verified &&
-                !!res.data?.verify_details?.is_phone_verified
-                ? navigation.push(navigationStrings.DRAWER_ROUTES)
-                : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-              : navigation.push(navigationStrings.DRAWER_ROUTES);
+            ? !!res.data?.verify_details?.is_email_verified &&
+              !!res.data?.verify_details?.is_phone_verified
+              ? navigation.push(navigationStrings.DRAWER_ROUTES)
+              : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
+            : navigation.push(navigationStrings.DRAWER_ROUTES);
         }
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
         getCartDetail();
       })
       .catch(errorMethod);
@@ -191,11 +194,11 @@ export default function LoginLayoutFour({ navigation }) {
       .then((res) => {
         actions.cartItemQty(res);
       })
-      .catch((error) => { });
+      .catch((error) => {});
   };
   //Error handling in api
   const errorMethod = (error) => {
-    updateState({ isLoading: false });
+    updateState({isLoading: false});
 
     setTimeout(() => {
       showError(error?.message || error?.error);
@@ -240,14 +243,14 @@ export default function LoginLayoutFour({ navigation }) {
         console.log(res, 'res>>>SOCIAL');
         if (!!res.data) {
           !!res.data?.client_preference?.verify_email ||
-            !!res.data?.client_preference?.verify_phone
+          !!res.data?.client_preference?.verify_phone
             ? !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
               ? navigation.push(navigationStrings.DRAWER_ROUTES)
               : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
             : navigation.push(navigationStrings.DRAWER_ROUTES);
         }
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
         getCartDetail();
       })
       .catch(errorMethod);
@@ -255,44 +258,44 @@ export default function LoginLayoutFour({ navigation }) {
 
   //Apple Login Support
   const openAppleLogin = () => {
-    updateState({ isLoading: false });
+    updateState({isLoading: false});
     handleAppleLogin()
       .then((res) => {
         _saveSocailLogin(res, 'apple');
         // updateState({isLoading: false});
       })
       .catch((err) => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
       });
   };
 
   //Gmail Login Support
   const openGmailLogin = () => {
-    updateState({ isLoading: true });
+    updateState({isLoading: true});
     googleLogin()
       .then((res) => {
         console.log(res, 'google');
         if (res?.user) {
           _saveSocailLogin(res.user, 'google');
         } else {
-          updateState({ isLoading: false });
+          updateState({isLoading: false});
         }
       })
       .catch((err) => {
         console.log(err, 'error in gmail login');
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
       });
   };
   const _responseInfoCallback = (error, result) => {
-    updateState({ isLoading: true });
+    updateState({isLoading: true});
     if (error) {
-      updateState({ isLoading: false });
+      updateState({isLoading: false});
     } else {
       if (result && result?.id) {
         console.log(result, 'fbresult');
         _saveSocailLogin(result, 'facebook');
       } else {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
       }
     }
   };
@@ -309,7 +312,7 @@ export default function LoginLayoutFour({ navigation }) {
           _saveSocailLogin(res, 'twitter');
         }
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
   const _onCountryChange = (data) => {
     updateState({
@@ -367,7 +370,7 @@ export default function LoginLayoutFour({ navigation }) {
           ...email,
           focus: false,
         },
-        isInputOptionVisible: false
+        isInputOptionVisible: false,
       });
     } else {
       updateState({
@@ -379,10 +382,10 @@ export default function LoginLayoutFour({ navigation }) {
           ...mobilNo,
           focus: false,
         },
-        isInputOptionVisible: false
+        isInputOptionVisible: false,
       });
     }
-  }
+  };
   /*************************** On Text Change
    */ const textChangeHandler = (type, data, value = 'value') => {
     updateState((preState) => {
@@ -403,16 +406,16 @@ export default function LoginLayoutFour({ navigation }) {
       <View style={styles.headerContainer}>
         <TouchableOpacity
           onPress={() => navigation.goBack(null)}
-          style={{ alignSelf: 'flex-start' }}>
+          style={{alignSelf: 'flex-start'}}>
           <Image
             source={imagePath.backArrow}
             style={
               isDarkMode
                 ? {
-                  transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
-                  tintColor: MyDarkTheme.colors.text,
-                }
-                : { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    tintColor: MyDarkTheme.colors.text,
+                  }
+                : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
             }
           />
         </TouchableOpacity>
@@ -424,46 +427,107 @@ export default function LoginLayoutFour({ navigation }) {
           flex: 1,
           marginHorizontal: moderateScale(24),
         }}>
-        <View style={{ height: moderateScaleVertical(28) }} />
+        <View style={{height: moderateScaleVertical(28)}} />
 
-        <View style={{ zIndex: 99999999, position: 'absolute' }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{zIndex: 99999999, position: 'absolute'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text
               style={
                 isDarkMode
-                  ? [styles.header, { color: MyDarkTheme.colors.text }]
+                  ? [styles.header, {color: MyDarkTheme.colors.text}]
                   : styles.header
               }>
               {strings.ENTER_YOUR}
             </Text>
-            <TouchableOpacity onPress={() => updateState({ isInputOptionVisible: !state.isInputOptionVisible })} style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <TouchableOpacity
+              onPress={() =>
+                updateState({isInputOptionVisible: !state.isInputOptionVisible})
+              }
+              style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text
                 style={
                   isDarkMode
-                    ? [styles.header, { color: MyDarkTheme.colors.text, fontSize: textScale(22), textDecorationLine: 'underline', marginHorizontal: moderateScale(7) }]
-                    : [styles.header, { fontSize: textScale(22), textDecorationLine: 'underline', marginHorizontal: moderateScale(7) }]
-                }
-              >{ state.phoneInput ? 'Phone number' : 'Email address'}</Text>
+                    ? [
+                        styles.header,
+                        {
+                          color: MyDarkTheme.colors.text,
+                          fontSize: textScale(22),
+                          textDecorationLine: 'underline',
+                          marginHorizontal: moderateScale(7),
+                        },
+                      ]
+                    : [
+                        styles.header,
+                        {
+                          fontSize: textScale(22),
+                          textDecorationLine: 'underline',
+                          marginHorizontal: moderateScale(7),
+                        },
+                      ]
+                }>
+                {state.phoneInput ? 'Phone number' : 'Email address'}
+              </Text>
               <Image source={imagePath.dropDownNew} />
             </TouchableOpacity>
-
           </View>
-          {state.isInputOptionVisible &&
-            <View style={{ width: moderateScale(150), borderRadius: 10, backgroundColor: '#dadee3', elevation: 3, alignSelf: 'flex-end' }}>
-              <View styl={{ zIndex: 999999 }}>
+
+          {state.isInputOptionVisible && (
+            <View
+              style={{
+                width: moderateScale(150),
+                borderRadius: 10,
+                backgroundColor: '#dadee3',
+                elevation: 3,
+                alignSelf: 'flex-end',
+              }}>
+              <View styl={{zIndex: 999999}}>
                 <TouchableOpacity onPress={() => onToggle(false)}>
-                  <Text style={{ fontSize: textScale(16), textAlign: 'center', marginVertical: 10 }}>Email address</Text>
+                  <Text
+                    style={{
+                      fontSize: textScale(16),
+                      textAlign: 'center',
+                      marginVertical: 10,
+                    }}>
+                    Email address
+                  </Text>
                 </TouchableOpacity>
               </View>
-              <View style={{ height: 1, width: moderateScale(120), backgroundColor: '#000', alignSelf: 'center', opacity: 0.1 }} />
+              <View
+                style={{
+                  height: 1,
+                  width: moderateScale(120),
+                  backgroundColor: '#000',
+                  alignSelf: 'center',
+                  opacity: 0.1,
+                }}
+              />
 
               <TouchableOpacity onPress={() => onToggle(true)}>
-                <Text style={{ fontSize: textScale(16), textAlign: 'center', marginVertical: 10 }}>Phone number</Text>
+                <Text
+                  style={{
+                    fontSize: textScale(16),
+                    textAlign: 'center',
+                    marginVertical: 10,
+                  }}>
+                  Phone number
+                </Text>
               </TouchableOpacity>
-            </View>}
+            </View>
+          )}
         </View>
 
-        <View style={{ height: moderateScaleVertical(30), zIndex: -1 }} />
+        <Text
+          style={{
+            marginVertical: moderateScaleVertical(20),
+            fontSize: textScale(12),
+            color: colors.black,
+            opacity: 0.65,
+          }}>
+          {phoneInput
+            ? strings.ENTER_YOUR_PHONE_NUMBER
+            : strings.ENTER_YOUR_EMAIL_PASSWORD}
+        </Text>
+        <View style={{height: moderateScaleVertical(18), zIndex: -1}} />
         {/* <BorderTextInput
             onChangeText={_onChangeText('email')}
             placeholder={strings.YOUR_EMAIL}
@@ -473,42 +537,115 @@ export default function LoginLayoutFour({ navigation }) {
           /> */}
         {!phoneInput && (
           <>
-            <BorderTextInput
-              onChangeText={(data) => checkInputHandler(data)}
-              placeholder={strings.ENTER_EMAIL_ADDRESS}
-              value={email.value}
-              keyboardType={'email-address'}
-              autoCapitalize={'none'}
-              autoFocus={true}
-              containerStyle={{ backgroundColor: colors.greyColor, borderWidth: 0 }}
-            />
-            <BorderTextInput
-              onChangeText={_onChangeText('password')}
-              placeholder={strings.ENTER_PASSWORD}
-              value={password}
-              secureTextEntry={true}
-              containerStyle={{ backgroundColor: colors.greyColor, borderWidth: 0 }}
-            />
+            {true ? (
+              <TextInputWithUnderlineAndLabel
+                onChangeText={(data) => checkInputHandler(data)}
+                value={email}
+                label={`${strings.EMAIL} *`}
+                autoCapitalize={'none'}
+                containerStyle={{marginVertical: moderateScaleVertical(10)}}
+                txtInputStyle={{
+                  fontFamily: fontFamily.regular,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}
+                undnerlinecolor={colors.textGreyB}
+                labelStyle={{
+                  color: colors.black,
+                  textTransform: 'uppercase',
+                  fontSize: textScale(12),
+                }}
+              />
+            ) : (
+              <BorderTextInput
+                onChangeText={(data) => checkInputHandler(data)}
+                placeholder={strings.ENTER_EMAIL_ADDRESS}
+                value={email.value}
+                keyboardType={'email-address'}
+                autoCapitalize={'none'}
+                autoFocus={true}
+                containerStyle={{
+                  backgroundColor: colors.greyColor,
+                  borderWidth: 0,
+                }}
+              />
+            )}
+
+            {true ? (
+              <TextInputWithUnderlineAndLabel
+                onChangeText={(data) => checkInputHandler(data)}
+                value={password}
+                label={`${strings.PASSWORD} *`}
+                autoCapitalize={'none'}
+                containerStyle={{marginVertical: moderateScaleVertical(10)}}
+                txtInputStyle={{
+                  fontFamily: fontFamily.regular,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}
+                undnerlinecolor={colors.textGreyB}
+                labelStyle={{
+                  color: colors.black,
+                  textTransform: 'uppercase',
+                  fontSize: textScale(12),
+                }}
+              />
+            ) : (
+              <BorderTextInput
+                onChangeText={_onChangeText('password')}
+                placeholder={strings.ENTER_PASSWORD}
+                value={password}
+                secureTextEntry={true}
+                containerStyle={{
+                  backgroundColor: colors.greyColor,
+                  borderWidth: 0,
+                }}
+              />
+            )}
           </>
         )}
         {phoneInput && (
-          <View style={{ marginBottom: moderateScale(18) }}>
-            <PhoneNumberInput
-              onCountryChange={_onCountryChange}
-              onChangePhone={(data) => checkInputHandler(data)}
-              cca2={mobilNo.cca2}
-              phoneNumber={mobilNo.phoneNo}
-              callingCode={mobilNo.callingCode}
-              placeholder={strings.ENTER_PHONE_NUMBER}
-              keyboardType={'phone-pad'}
-              color={isDarkMode ? MyDarkTheme.colors.text : null}
-              autoFocus={true}
-              showCountryCode={false}
-              containerStyle={{ borderWidth: 0, backgroundColor: colors.greyColor }}
-              TxtInputStyle={{ borderLeftWidth: 0 }}
-              flagSize={24}
-              downArrowStyle={{ opacity: 0.4 }}
-            />
+          <View style={{marginBottom: moderateScale(18)}}>
+            {true ? (
+              <PhoneNumberInputWithUnderline
+                onCountryChange={_onCountryChange}
+                placeholder={`${strings.PHONE_NUMBER} *`}
+                onChangePhone={(data) => checkInputHandler(data)}
+                cca2={mobilNo.cca2}
+                phoneNumber={mobilNo.phoneNo}
+                callingCode={mobilNo.callingCode}
+                undnerlineColor={colors.textGreyB}
+                textInputStyle={{
+                  fontFamily: fontFamily.regular,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  fontSize: textScale(14),
+                  backgroundColor: colors.white,
+                }}
+                labelStyle={{
+                  color: colors.black,
+                  textTransform: 'uppercase',
+                  fontSize: textScale(12),
+                }}
+              />
+            ) : (
+              <PhoneNumberInput
+                onCountryChange={_onCountryChange}
+                onChangePhone={(data) => checkInputHandler(data)}
+                cca2={mobilNo.cca2}
+                phoneNumber={mobilNo.phoneNo}
+                callingCode={mobilNo.callingCode}
+                placeholder={strings.ENTER_PHONE_NUMBER}
+                keyboardType={'phone-pad'}
+                color={isDarkMode ? MyDarkTheme.colors.text : null}
+                autoFocus={true}
+                showCountryCode={false}
+                containerStyle={{
+                  borderWidth: 0,
+                  backgroundColor: colors.greyColor,
+                }}
+                TxtInputStyle={{borderLeftWidth: 0}}
+                flagSize={24}
+                downArrowStyle={{opacity: 0.4}}
+              />
+            )}
           </View>
         )}
 
@@ -524,8 +661,7 @@ export default function LoginLayoutFour({ navigation }) {
           </Text>
         </View> */}
 
-
-        <View style={{ marginTop: moderateScaleVertical(30) }}>
+        <View style={{marginTop: moderateScaleVertical(30)}}>
           {/* {!!google_login || !!fb_login || !!twitter_login || !!apple_login ? (
             <View style={styles.socialRow}>
               <View style={styles.hyphen} />
@@ -656,30 +792,61 @@ export default function LoginLayoutFour({ navigation }) {
             )}
           </View> */}
         </View>
-
       </KeyboardAwareScrollView>
       <View style={styles.bottomContainer2}>
-        <GradientButton
-          containerStyle={{ marginBottom: moderateScaleVertical(30), width: '85%' }}
-          onPress={_onLogin}
-          btnText={strings.CONTINUE}
-        />
+        {true ? (
+          <View
+            style={{
+              width: moderateScale(width - 40),
+              alignItems: 'flex-end',
+              justifyContent: 'center',
+              paddingHorizontal: moderateScale(10),
+            }}>
+            <TouchableOpacity
+              style={{
+                width: moderateScale(54),
+                height: moderateScaleVertical(54),
+                borderRadius: 27,
+                backgroundColor: themeColors?.primary_color,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onPress={_onLogin}>
+              <Image
+                style={{
+                  tintColor: colors.white,
+                  transform: [{rotate: '180deg'}],
+                }}
+                source={imagePath?.backArrow}
+              />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <GradientButton
+            containerStyle={{
+              marginBottom: moderateScaleVertical(30),
+              width: '85%',
+            }}
+            onPress={_onLogin}
+            btnText={strings.CONTINUE}
+          />
+        )}
         <Text
           style={
             isDarkMode
-              ? { ...styles.txtSmall, color: MyDarkTheme.colors.text }
-              : { ...styles.txtSmall, color: colors.textGreyLight }
+              ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
+              : {...styles.txtSmall, color: colors.textGreyLight}
           }>
-          {strings.ALREADY_HAVE_AN_ACCOUNT}
+          {true ? '' : strings.ALREADY_HAVE_AN_ACCOUNT}
           <Text
             onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
             style={{
               fontFamily: fontFamily.bold,
               color: themeColors.primary_color,
-              textDecorationLine: 'underline'
+              textDecorationLine: 'underline',
             }}>
             {' '}
-            {strings.REGISTER}
+            {true ? '' : strings.REGISTER}
           </Text>
         </Text>
       </View>

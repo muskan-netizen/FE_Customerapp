@@ -97,6 +97,7 @@ export default ({fontFamily, themeColors}) => {
     selectedLanguageText: {
       fontFamily: fontFamily.bold,
       color: colors.white,
+      textTransform: 'uppercase',
     },
   });
   return styles;

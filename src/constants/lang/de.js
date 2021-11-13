@@ -587,4 +587,8 @@ export default {
   TERMS_OF_SERVICE: 'Terms of Service',
   AND: 'and',
   PRICACY_POLICY: 'Privacy Policy',
+  IM_NEW_SIGNUP: "I'm new,sign me up",
+  ENTER_YOUR_PHONE_NUMBER: 'Enter your registered phone number to login',
+  ENTER_YOUR_EMAIL_PASSWORD: 'Enter your email and password to login',
+  REFERRAL_CODE_OPTIONAL: 'referral code (optional)',
 };

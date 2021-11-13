@@ -167,7 +167,7 @@
 //   );
 // }
 
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Image,
   Platform,
@@ -213,6 +213,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import BannerWithText from '../../Components/BannerWithText';
 import ScaledImage from 'react-native-scalable-image';
 import {getImageUrl} from '../../utils/helperFunctions';
+import LanguageModal from '../../Components/LanguageModal';
+import {setItem} from '../../utils/utils';
 
 export default function OuterScreen3({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -223,6 +225,9 @@ export default function OuterScreen3({navigation}) {
     getLanguage: '',
     isLoading: false,
     slider1ActiveSlide: 0,
+    isSelectLanguageModal: false,
+    isLangSelected: false,
+    allLangs: [],
   });
   const {
     appData,
@@ -236,7 +241,14 @@ export default function OuterScreen3({navigation}) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});
 
-  const {getLanguage, isLoading, slider1ActiveSlide} = state;
+  const {
+    getLanguage,
+    isLoading,
+    slider1ActiveSlide,
+    isSelectLanguageModal,
+    isLangSelected,
+    allLangs,
+  } = state;
   const {apple_login, fb_login, twitter_login, google_login} =
     appData?.profile?.preferences;
 
@@ -422,6 +434,95 @@ export default function OuterScreen3({navigation}) {
     getCartDetail();
     navigation.push(navigationStrings.DRAWER_ROUTES);
   };
+
+  const _selectLang = () => {
+    updateState({isSelectLanguageModal: true});
+  };
+
+  const _onBackdropPress = () => {
+    updateState({isSelectLanguageModal: false});
+  };
+
+  useEffect(() => {
+    const all_languages = [...languages.all_languages];
+    all_languages.forEach((itm, indx) => {
+      if (languages?.primary_language?.id === itm?.id) {
+        all_languages[indx].isActive = true;
+        updateState({
+          allLangs: [...all_languages],
+        });
+      } else {
+        all_languages[indx].isActive = false;
+        updateState({
+          allLangs: [...all_languages],
+        });
+      }
+    });
+  }, []);
+
+  const _onLangSelect = (item, indx) => {
+    const langs = [...allLangs];
+    langs.forEach((item, index) => {
+      if (index === indx) {
+        langs[index].isActive = true;
+        updateState({
+          allLangs: [...langs],
+        });
+      } else {
+        langs[index].isActive = false;
+        updateState({
+          allLangs: [...langs],
+        });
+      }
+    });
+  };
+
+  const selectedLangTitle = allLangs?.find((itm) => itm.isActive === true);
+
+  //Update language
+  const updateLanguage = (item) => {
+    const data = languages.all_languages.filter((x) => x.id == item.id)[0];
+
+    if (data.sort_code !== languages.primary_language.sort_code) {
+      let languagesData = {
+        ...languages,
+        primary_language: data,
+      };
+
+      // updateState({isLoading: true});
+      setItem('setPrimaryLanguage', languagesData);
+      setTimeout(() => {
+        updateState({isSelectLanguageModal: false});
+        actions.updateLanguage(data);
+        onSubmitLang(data.sort_code, languagesData);
+      }, 1000);
+    }
+  };
+
+  //update language all over the app
+  const onSubmitLang = async (lang, languagesData) => {
+    if (lang == '') {
+      showAlertMessageError(strings.SELECT);
+      return;
+    } else {
+      if (lang === 'ar') {
+        I18nManager.forceRTL(true);
+        setItem('language', lang);
+        changeLaguage(lang);
+        RNRestart.Restart();
+      } else {
+        I18nManager.forceRTL(false);
+        setItem('language', lang);
+        changeLaguage(lang);
+        RNRestart.Restart();
+      }
+    }
+  };
+
+  const _updateLang = (selectedLangTitle) => {
+    updateLanguage(selectedLangTitle);
+  };
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -458,38 +559,16 @@ export default function OuterScreen3({navigation}) {
             />
           ) : null}
 
-          <View style={styles.languageContainer}>
-            <Text style={styles.selectedLanguageText}>EN</Text>
-          </View>
+          <TouchableOpacity
+            style={styles.languageContainer}
+            onPress={_selectLang}>
+            <Text style={styles.selectedLanguageText}>
+              {!!selectedLangTitle
+                ? selectedLangTitle.sort_code
+                : languages?.primary_language?.sort_code}
+            </Text>
+          </TouchableOpacity>
         </View>
-
-        {/* <Modal
-          isVisible={isModalVisible}
-          style={{
-            justifyContent: 'flex-end',
-            margin: 0,
-          }}
-          onBackdropPress={() => updateState({isModalVisible: false})}>
-          <View>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => updateState({isModalVisible: false})}>
-              <Image source={imagePath.crossC} resizeMode="contain" />
-            </TouchableOpacity>
-
-            <View
-              style={[
-                styles.modalMainViewContainer,
-                {
-                  backgroundColor: isDarkMode
-                    ? MyDarkTheme.colors.background
-                    : colors.white,
-                },
-              ]}>
-
-            </View>
-          </View>
-        </Modal> */}
       </View>
 
       <View style={{flex: 0.94}}>
@@ -518,7 +597,7 @@ export default function OuterScreen3({navigation}) {
           <View style={{marginVertical: moderateScaleVertical(20)}}>
             <GradientButton
               btnStyle={{borderRadius: 30}}
-              btnText={'Login'}
+              btnText={strings.LOGIN}
               onPress={moveToNewScreen(navigationStrings.LOGIN)}
             />
           </View>
@@ -538,7 +617,7 @@ export default function OuterScreen3({navigation}) {
               backgroundColor: colors.white,
             }}
             textStyle={{color: themeColors?.primary_color}}
-            btnText={"I'm new,sign me up"}
+            btnText={strings.IM_NEW_SIGNUP}
             onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
           />
 
@@ -617,6 +696,16 @@ export default function OuterScreen3({navigation}) {
           </View>
         </View>
       </View>
+      {isSelectLanguageModal && (
+        <LanguageModal
+          isSelectLanguageModal={isSelectLanguageModal}
+          onBackdropPress={_onBackdropPress}
+          _onLangSelect={_onLangSelect}
+          isLangSelected={isLangSelected}
+          allLangs={allLangs}
+          _updateLang={_updateLang}
+        />
+      )}
     </WrapperContainer>
   );
 }
