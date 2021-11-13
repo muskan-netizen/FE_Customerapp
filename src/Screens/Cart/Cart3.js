@@ -1211,7 +1211,10 @@ export default function Cart({ navigation, route }) {
               ? MyDarkTheme.colors.background
               : colors.white,
           }}>
-          <View style={styles.vendorView}>
+          <View style={{
+            ...styles.vendorView,
+            paddingHorizontal: moderateScale(8)
+            }}>
             <Text
               numberOfLines={1}
               style={{
@@ -2624,8 +2627,10 @@ export default function Cart({ navigation, route }) {
           marginVertical: moderateScale(7),
           justifyContent: 'space-between',
         }}>
-        <View style={{ flexDirection: 'row', flex: 0.85 }}>
-          <Image source={imagePath.icMap} />
+        <View style={{ flexDirection: 'row', flex: 0.85,paddingHorizontal: moderateScale(8) }}>
+          <Image style={{
+        
+          }} source={imagePath.icMap} />
           <View style={styles.addressView}>
             <Text
               style={{
