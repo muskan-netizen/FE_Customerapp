@@ -948,6 +948,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.shoorafresh:
+          updateState({
+            shortCode: shortCodes.shoorafresh,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>21155558340-cg413r3r5jm2vf13sa6h5sblui6tpahn.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.21155558340-cg413r3r5jm2vf13sa6h5sblui6tpahn</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>21155558340-di3l2ujad9cn402mfkohtlp2uojucat0.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBlIJpI9QjTapIc0XIjShUUkKi0pq9l62E</string>
+	<key>GCM_SENDER_ID</key>
+	<string>21155558340</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.shoorafresh</string>
+	<key>PROJECT_ID</key>
+	<string>shoora-fresh</string>
+	<key>STORAGE_BUCKET</key>
+	<string>shoora-fresh.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:21155558340:ios:bf1069dc6f945a4f85aa91</string>
+</dict>
+</plist>

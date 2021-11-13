@@ -144,6 +144,7 @@ const shortCodes = {
   bezalio: 'c1ab2b',
   youchillax: 'a2c90d',
   instashop: 'cb6671',
+  shoorafresh: 'bd4fe8',
 };
 
 const appIds = {
@@ -718,6 +719,10 @@ const appIds = {
   instashop: Platform.select({
     ios: 'com.customer.instashop',
     android: 'com.instashop',
+  }),
+  shoorafresh: Platform.select({
+    ios: 'com.shoorafresh',
+    android: 'com.shoorafresh',
   }),
 };
 
