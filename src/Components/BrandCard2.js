@@ -11,6 +11,7 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
 import {
@@ -99,8 +100,8 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
 const styles = StyleSheet.create({
   imgContainer: {
     // flex: 1,
-    marginRight: '3%',
-    width: '31%',
+    marginHorizontal: moderateScale(8),
+    width: width / 3 - moderateScale(16),
   },
   imgStyle: {
     height: moderateScale(80),
