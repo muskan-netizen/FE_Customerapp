@@ -102,7 +102,7 @@ export default {
   workActive: require('../assets/images/ic_work_active.png'),
   workInActive: require('../assets/images/ic_work_unactice.png'),
   emptyCart2: require('../assets/images/ic_empty-card.png'),
-  noDataFound2: require('../assets/images/ic_nodatafound.png'),
+  noDataFound2: require('../assets/images/ic_placeholderbeeNew.png'),
   icCamIcon: require('../assets/images/ic_capture.png'),
   icRemoveIcon: require('../assets/images/ic_remove_product.png'),
   noOffers: require('../assets/images/ic_nooffers.png'),
@@ -379,5 +379,5 @@ export default {
   settings_icon: require('../assets/images/TowFinder/settings.png'),
   settings_red_icon: require('../assets/images/TowFinder/ic_settings1.png'),
   ic_cameraColored: require('../assets/images/ic_cameraColored.png'),
-  ic_placeholderbeeNew: require('../assets/images/ic_placeholderbeeNew.png'),
+  // ic_placeholderbeeNew: require('../assets/images/ic_placeholderbeeNew.png'),
 };
