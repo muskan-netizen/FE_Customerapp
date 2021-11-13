@@ -150,7 +150,7 @@ const RoyoProducts = (props) => {
     if (isLoading || isRefreshing) {
       getAllProducts();
     }
-  }, [isRefreshing]);
+  }, [isRefreshing, selectedVendor]);
 
   useEffect(() => {
     updateState({
@@ -223,8 +223,10 @@ const RoyoProducts = (props) => {
     trailing: false,
   });
 
-  const selectedCategory = (index) => {
-    getAllProducts(index);
+  const selectedCategory = async(index) => {
+    updateState({pageNo: 0})
+    setTimeout(()=>getAllProducts(index), 1000)
+    
   };
 
   const renderCatogry = ({item, index}) => (
@@ -281,6 +283,7 @@ const RoyoProducts = (props) => {
 
   return (
     <WrapperContainer
+    // isLoading={isLoading}
       bgColor="white"
       statusBarColor="white"
       barStyle="dark-content">
