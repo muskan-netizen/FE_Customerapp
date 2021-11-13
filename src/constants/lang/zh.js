@@ -548,4 +548,7 @@ export default {
   AND: '和',
   PRICACY_POLICY: '隐私策略',
   TIP_AMOUNT: 'Tip Amount',
+  CONFIRM_DESTINATION: 'Confirm Destination',
+  CONFIRM_VEHICLE: 'Confirm Vehicle',
+  SPECIAL_INSTRUCTION: 'Special Instruction',
 };

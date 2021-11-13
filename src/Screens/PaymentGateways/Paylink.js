@@ -75,23 +75,45 @@ export default function Paylink({ navigation, route }) {
     const URL = queryString.parseUrl(url);
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
-    console.log(queryParams, 'query state');
+    console.log(props, 'query state');
 
     setTimeout(() => {
-      if (queryParams.status === '200') {
+      if (queryParams.status == 200) {
         moveToNewScreen(navigationStrings.ORDERSUCESS, {
           orderDetail: {
             order_number: queryParams.order,
             id: paramsData?.orderDetail?.id,
           },
         })();
-      } else if (queryParams.status === '0') {
+      }
+      if (queryParams.status == 0) {
         moveToNewScreen(navigationStrings.CART, {
           queryURL: url.replace(`${nonQueryURL}?`, ''),
         })();
       }
-    }, 1500);
+    }, 2500);
   };
+
+  const checkPaymentOptions = (res) => {
+    let paymentData = {}
+    switch (paymentId) {
+      case 6:  //Payfast Payment Getway
+        navigation.navigate(navigationStrings.PAYFAST, paymentData);
+        break;
+      case 7: //Mobbex Payment Getway
+        navigation.navigate(navigationStrings.MOBBEX, paymentData);
+        break;
+      case 8: //Yoco Payment Getway
+        navigation.navigate(navigationStrings.YOCO, paymentData);
+        break;
+      case 9: //Pyalink Payment Getway
+        navigation.navigate(navigationStrings.PAYLINK, paymentData);
+        break;
+      default:
+        break;
+    }
+  }
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.transparent}

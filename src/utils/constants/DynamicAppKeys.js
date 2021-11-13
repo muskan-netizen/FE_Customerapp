@@ -139,6 +139,11 @@ const shortCodes = {
   botseats: 'fe9076',
   gumastas: '2cdae8',
   dishefs: '4c13fd',
+  bilionza: '9a8793',
+  doleypharmacy: 'e925ef',
+  bezalio: 'c1ab2b',
+  youchillax: 'a2c90d',
+  instashop: 'cb6671',
 };
 
 const appIds = {
@@ -303,8 +308,8 @@ const appIds = {
     android: 'com.travo',
   }),
   cabdelivr: Platform.select({
-    ios: 'com.cabdelivr',
-    android: 'com.cabdelivr',
+    ios: 'com.app.cabdelivr',
+    android: 'com.app.cabdelivr',
   }),
   drus: Platform.select({
     ios: 'com.drus.customer',
@@ -693,6 +698,26 @@ const appIds = {
   dishefs: Platform.select({
     ios: 'com.dishefs',
     android: 'com.dishefs',
+  }),
+  bilionza: Platform.select({
+    ios: 'com.bilionza',
+    android: 'com.bilionza',
+  }),
+  doleypharmacy: Platform.select({
+    ios: 'com.doleypharmacy',
+    android: 'com.doleypharmacy',
+  }),
+  bezalio: Platform.select({
+    ios: 'com.bezalio',
+    android: 'com.bezalio',
+  }),
+  youchillax: Platform.select({
+    ios: 'com.youchillax',
+    android: 'com.youchillax',
+  }),
+  instashop: Platform.select({
+    ios: 'com.customer.instashop',
+    android: 'com.instashop',
   }),
 };
 

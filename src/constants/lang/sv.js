@@ -573,5 +573,8 @@ export default {
   TERMS_OF_SERVICE: 'Terms of Service',
   AND: 'and',
   PRICACY_POLICY: 'Privacy Policy',
-  TIP_AMOUNT:"Tip Amount",
+  TIP_AMOUNT: 'Tip Amount',
+  CONFIRM_DESTINATION: 'Confirm Destination',
+  CONFIRM_VEHICLE: 'Confirm Vehicle',
+  SPECIAL_INSTRUCTION: 'Special Instruction',
 };

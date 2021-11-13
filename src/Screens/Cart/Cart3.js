@@ -209,33 +209,6 @@ export default function Cart({navigation, route}) {
     ]),
   );
 
-  // useEffect(() => {
-  //   if (paramsData && paramsData?.selectedMethod) {
-  //     updateState({ selectedPayment: paramsData?.selectedMethod });
-  //   }
-
-  //   // alert('run')
-  //   // updateState({ isLoadingB: true });
-  //   if (!!cartItems) {
-  //     getCartDetail();
-  //     return
-  //   }
-  //   if (!!userData?.auth_token) {
-  //     getAllWishListData();
-  //     return
-  //   }
-
-  // }, [
-  //   currencies,
-  //   languages,
-  //   route?.params?.promocodeDetail,
-  //   allAddresss,
-  //   selectedAddress,
-  //   paramsData,
-  //   isRefreshing,
-  //   cartItems,
-  // ])
-
   useEffect(() => {
     if (!!checkCartItem?.data) {
       checkforAddressUpdate();
@@ -346,7 +319,8 @@ export default function Cart({navigation, route}) {
               : {id: 1, title: strings.NOW, type: 'now'},
         });
         if (res && res.data) {
-          if (res.data.vendor_details.vendor_tables) {
+          if (!!res.data.vendor_details.vendor_tables && res.data.vendor_details.vendor_tables.length>0) {
+           
             res.data.vendor_details.vendor_tables.forEach(
               (item, indx) =>
                 (tableData[indx] = {
@@ -374,6 +348,11 @@ export default function Cart({navigation, route}) {
                 tableData: tableData,
               }),
             );
+            const data = {
+              vendor_id: tableData[0].vendor_id,
+              table: tableData[0].table_number,
+            };
+            _vendorTableCart(data, tableData[0])
           }
           updateState({
             cartItems: res.data.products,
@@ -381,6 +360,8 @@ export default function Cart({navigation, route}) {
             cartData: res.data,
             isLoadingB: false,
             isRefreshing: false,
+            selectedTipvalue:
+              res?.data?.total_payable_amount == 0 ? 'custom' : null,
           });
           if (!res.data.schedule_type) {
             //if schedule type is null then hit the api again with now option
@@ -408,10 +389,6 @@ export default function Cart({navigation, route}) {
       });
   };
 
-  // useEffect(() => {
-  //   getAllWishListData()
-  // }, [])
-
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     let quanitity = null;
@@ -436,6 +413,7 @@ export default function Cart({navigation, route}) {
           systemuser: DeviceInfo.getUniqueId(),
         })
         .then((res) => {
+          console.log('cart detail', res);
           actions.cartItemQty(res);
           updateState({
             cartItems: res.data.products,
@@ -567,19 +545,23 @@ export default function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
-
   const checkPaymentOptions = (res) => {
-    updateState({ placeLoader: false })
-    let paymentId = res?.data?.payment_option_id
+    updateState({placeLoader: false});
+    let paymentId = res?.data?.payment_option_id;
     let paymentData = {
       selectedPayment: selectedPayment,
-      total_payable_amount: (Number(cartData?.total_payable_amount) +
-        (selectedTipAmount != null && selectedTipAmount != '' ? Number(selectedTipAmount) : 0)).toFixed(2),
+      total_payable_amount: (
+        Number(cartData?.total_payable_amount) +
+        (selectedTipAmount != null && selectedTipAmount != ''
+          ? Number(selectedTipAmount)
+          : 0)
+      ).toFixed(2),
       payment_option_id: selectedPayment?.id,
       orderDetail: res.data,
-    }
+      redirectFrom: 'cart',
+    };
     switch (paymentId) {
-      case 6:  //Payfast Payment Getway
+      case 6: //Payfast Payment Getway
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
         break;
       case 7: //Mobbex Payment Getway
@@ -592,10 +574,14 @@ export default function Cart({navigation, route}) {
         navigation.navigate(navigationStrings.PAYLINK, paymentData);
         break;
       default:
-        if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1) {
-          console.log("success ressssssss", res.data)
+        if (
+          !!businessType &&
+          businessType == 'home_service' &&
+          res?.data?.vendors.length == 1
+        ) {
+          console.log('success ressssssss', res.data);
           setTimeout(() => {
-            _getOrderDetail(res.data.vendors[0])
+            _getOrderDetail(res.data.vendors[0]);
           }, 1500);
         } else {
           actions.cartItemQty({});
@@ -604,12 +590,14 @@ export default function Cart({navigation, route}) {
             cartData: {},
             isLoadingB: false,
             placeLoader: false,
-          })
-          moveToNewScreen(navigationStrings.ORDERSUCESS, { orderDetail: res.data })();
+          });
+          moveToNewScreen(navigationStrings.ORDERSUCESS, {
+            orderDetail: res.data,
+          })();
         }
         break;
     }
-  }
+  };
 
   const _directOrderPlace = () => {
     let data = {};
@@ -646,15 +634,22 @@ export default function Cart({navigation, route}) {
             placeLoader: false,
           });
         }
-        if ((!!(Number(cartData?.total_payable_amount) !== 0)) || Number(selectedTipAmount) !== 0) {
-          checkPaymentOptions(res)
+        if (
+          !!(Number(cartData?.total_payable_amount) !== 0) ||
+          Number(selectedTipAmount) !== 0
+        ) {
+          checkPaymentOptions(res);
           // _webPayment()
           return;
         }
-        if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1) {
-          console.log("success ressssssss", res.data)
+        if (
+          !!businessType &&
+          businessType == 'home_service' &&
+          res?.data?.vendors.length == 1
+        ) {
+          console.log('success ressssssss', res.data);
           setTimeout(() => {
-            _getOrderDetail(res.data.vendors[0])
+            _getOrderDetail(res.data.vendors[0]);
           }, 1500);
         } else {
           if (
@@ -1029,11 +1024,15 @@ export default function Cart({navigation, route}) {
             selectedTipAmount && selectedTipAmount != ''
               ? Number(selectedTipAmount)
               : 0
-          }&amount=${cartData?.total_payable_amount}&auth_token=${
-            userData?.auth_token
-          }&address_id=${selectedAddressData?.id}&payment_option_id=${
-            selectedPayment?.id
-          }&action=cart&stripe_token=${paramsData?.tokenInfo}`,
+          }&amount=${
+            cartData?.total_payable_amount == 0
+              ? selectedTipAmount
+              : cartData?.total_payable_amount
+          }&auth_token=${userData?.auth_token}&address_id=${
+            selectedAddressData?.id
+          }&payment_option_id=${selectedPayment?.id}&action=cart&stripe_token=${
+            paramsData?.tokenInfo
+          }`,
           {},
           {
             code: appData?.profile?.code,
@@ -1161,7 +1160,8 @@ export default function Cart({navigation, route}) {
           <View style={Platform.OS === 'ios' ? {zIndex: 5000} : {}}>
             {dineInType === 'dine_in' &&
               userData?.auth_token &&
-              !!cartData?.vendor_details?.vendor_tables && (
+              !!cartData?.vendor_details?.vendor_tables &&
+              cartData?.vendor_details?.vendor_tables.length > 0 && (
                 <DropDownPicker
                   items={tableData}
                   onOpen={() => updateState({isTableDropDown: true})}
@@ -1363,31 +1363,37 @@ export default function Cart({navigation, route}) {
                             </View>
 
                             <View pointerEvents={btnLoader ? 'none' : 'auto'}>
-                            <View style={styles.incDecBtnContainer}>
-                              <TouchableOpacity
-                                style={{ alignItems: 'center' }}
-                                onPress={() => addDeleteCartItems(i, inx, 1)}>
-                                <Text style={styles.cartItemValueBtn}>+</Text>
-                              </TouchableOpacity>
-                              <View style={{ alignItems: 'center', width: moderateScale(20), height: moderateScale(20), justifyContent: 'center' }}>
-                                {btnLoadrId === i.id && btnLoader ? (
-                                  <UIActivityIndicator
-                                    size={moderateScale(16)}
-                                    color={colors.white}
-                                  />
-                                ) : (
-                                  <Text style={styles.cartItemValue}>
-                                    {i?.quantity}
-                                  </Text>
-                                )}
+                              <View style={styles.incDecBtnContainer}>
+                                <TouchableOpacity
+                                  style={{alignItems: 'center'}}
+                                  onPress={() => addDeleteCartItems(i, inx, 1)}>
+                                  <Text style={styles.cartItemValueBtn}>+</Text>
+                                </TouchableOpacity>
+                                <View
+                                  style={{
+                                    alignItems: 'center',
+                                    width: moderateScale(20),
+                                    height: moderateScale(20),
+                                    justifyContent: 'center',
+                                  }}>
+                                  {btnLoadrId === i.id && btnLoader ? (
+                                    <UIActivityIndicator
+                                      size={moderateScale(16)}
+                                      color={colors.white}
+                                    />
+                                  ) : (
+                                    <Text style={styles.cartItemValue}>
+                                      {i?.quantity}
+                                    </Text>
+                                  )}
+                                </View>
+                                <TouchableOpacity
+                                  style={{alignItems: 'center'}}
+                                  onPress={() => addDeleteCartItems(i, inx, 2)}>
+                                  <Text style={styles.cartItemValueBtn}>-</Text>
+                                </TouchableOpacity>
                               </View>
-                              <TouchableOpacity
-                                style={{ alignItems: 'center' }}
-                                onPress={() => addDeleteCartItems(i, inx, 2)}>
-                                <Text style={styles.cartItemValueBtn}>-</Text>
-                              </TouchableOpacity>
                             </View>
-                          </View>
                           </View>
 
                           <View
@@ -1474,14 +1480,14 @@ export default function Cart({navigation, route}) {
                             </View>
                           </View>
                           <TouchableOpacity
-                          style={{
-                            alignSelf: 'flex-end',
-                            marginRight: moderateScale(14),
-                            marginTop: moderateScale(6)
-                          }}
-                          onPress={() => openDeleteView(i)}>
-                          <Image source={imagePath.deleteRed} />
-                        </TouchableOpacity>
+                            style={{
+                              alignSelf: 'flex-end',
+                              marginRight: moderateScale(14),
+                              marginTop: moderateScale(6),
+                            }}
+                            onPress={() => openDeleteView(i)}>
+                            <Image source={imagePath.deleteRed} />
+                          </TouchableOpacity>
                         </View>
                       </View>
 
@@ -2054,7 +2060,7 @@ export default function Cart({navigation, route}) {
             isDarkMode ? colors.textGreyB : colors.textGreyB
           }
           // placeholder={strings.ANY_RESTAURANT_REQUESTS}
-          placeholder={'Special Instruction'}
+          placeholder={strings.SPECIAL_INSTRUCTION}
         />
         {/* <View style={{ height: moderateScaleVertical(20) }} /> */}
 
@@ -2231,37 +2237,39 @@ export default function Cart({navigation, route}) {
                     );
                   })}
 
-                <TouchableOpacity
-                  style={[
-                    styles.tipArrayStyle2,
-                    {
-                      backgroundColor:
-                        selectedTipvalue == 'custom'
-                          ? themeColors.primary_color
-                          : 'transparent',
-                      flex: cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
-                    },
-                  ]}
-                  onPress={() => selectedTip('custom')}>
-                  <Text
-                    style={
-                      isDarkMode
-                        ? {
-                            color:
-                              selectedTipvalue == 'custom'
-                                ? colors.white
-                                : MyDarkTheme.colors.text,
-                          }
-                        : {
-                            color:
-                              selectedTipvalue == 'custom'
-                                ? colors.white
-                                : colors.black,
-                          }
-                    }>
-                    {strings.CUSTOM}
-                  </Text>
-                </TouchableOpacity>
+                {cartData?.total_payable_amount !== 0 && (
+                  <TouchableOpacity
+                    style={[
+                      styles.tipArrayStyle2,
+                      {
+                        backgroundColor:
+                          selectedTipvalue == 'custom'
+                            ? themeColors.primary_color
+                            : 'transparent',
+                        flex: cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
+                      },
+                    ]}
+                    onPress={() => selectedTip('custom')}>
+                    <Text
+                      style={
+                        isDarkMode
+                          ? {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : MyDarkTheme.colors.text,
+                            }
+                          : {
+                              color:
+                                selectedTipvalue == 'custom'
+                                  ? colors.white
+                                  : colors.black,
+                            }
+                      }>
+                      {strings.CUSTOM}
+                    </Text>
+                  </TouchableOpacity>
+                )}
               </ScrollView>
 
               {!!selectedTipvalue && selectedTipvalue == 'custom' && (
@@ -2786,17 +2794,22 @@ export default function Cart({navigation, route}) {
     }
   }, [deepLinkUrl]);
 
+ 
+
   const _onTableSelection = (item) => {
     const data = {
       vendor_id: item.vendor_id,
       table: item.table_number,
     };
+    _vendorTableCart(data, item);
+  };
+
+  const _vendorTableCart = (data, item) => {
     actions
       .vendorTableCart(data, {
         code: appData?.profile?.code,
       })
       .then((res) => {
-        console.log(res, 'selectedTableInfo', data);
         removeItem('deepLinkUrl');
         setItem('selectedTable', item?.label);
       })

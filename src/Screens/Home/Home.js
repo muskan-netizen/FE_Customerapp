@@ -524,7 +524,6 @@ export default function Home({route, navigation}) {
   //Reloads the screen
   const initApiHit = () => {
     let header = {};
-    // console.log(languages?.primary_language?.id, 'languageID');
     header = {
       code: appData?.profile?.code,
       language: languages?.primary_language?.id,

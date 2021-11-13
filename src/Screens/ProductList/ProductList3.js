@@ -504,7 +504,7 @@ export default function Products({ route, navigation }) {
 
   /**********Get all list items by category id */
   const getAllProducts = () => {
-    console.log('api hit getAllProducts+++', data);
+    console.log('api hit getProductByCategoryId', data);
     actions
       .getProductByCategoryId(
         `/${productListId?.id}?limit=${limit}&page=${pageNo}&product_list=${data?.rootProducts ? true : false

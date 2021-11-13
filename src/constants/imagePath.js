@@ -378,4 +378,5 @@ export default {
   facebook: require('../assets/images/TowFinder/ic_fb.png'),
   settings_icon: require('../assets/images/TowFinder/settings.png'),
   settings_red_icon: require('../assets/images/TowFinder/ic_settings1.png'),
+  ic_cameraColored: require('../assets/images/ic_cameraColored.png'),
 };

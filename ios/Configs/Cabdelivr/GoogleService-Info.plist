@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>314630832921-dbufplld847lvnfdgnnm5l4aujtonegi.apps.googleusercontent.com</string>
+	<string>314630832921-190kmbhpuk08qfiio657tpf24vatdrct.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.314630832921-dbufplld847lvnfdgnnm5l4aujtonegi</string>
+	<string>com.googleusercontent.apps.314630832921-190kmbhpuk08qfiio657tpf24vatdrct</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>314630832921-mgda8ute8q91k1ae0ntofig0jedjqg49.apps.googleusercontent.com</string>
+	<string>314630832921-fp1n5tepbqo8s4qr2mighkrkabqt2bqo.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyA-PZhGmaLizg7q1Xm9_ho0MgPmL0n9__k</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.cabdelivr</string>
+	<string>com.app.cabdelivr</string>
 	<key>PROJECT_ID</key>
 	<string>cabdelivr</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:314630832921:ios:04bb5587b56f5638897b88</string>
+	<string>1:314630832921:ios:18f22ccabd393af2897b88</string>
 </dict>
 </plist>
