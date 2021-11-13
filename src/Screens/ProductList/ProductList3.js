@@ -2114,6 +2114,7 @@ export default function Products({ route, navigation }) {
               onClose={() =>
                 updateState({ isVisibleModal: false, showShimmer: true })
               }
+              typeId={typeId}
               showShimmer={showShimmer}
               shimmerClose={(val) => updateState({ showShimmer: val })}
               updateCartItems={updateCartItems}

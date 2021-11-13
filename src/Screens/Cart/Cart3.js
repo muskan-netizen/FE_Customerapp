@@ -364,10 +364,6 @@ export default function Cart({navigation, route}) {
               selectedLanguage,
             ),
           });
-        } else {
-          updateState({
-            localePickupDate: null,
-          });
         }
 
         if (!!checkDateDropOFf) {
@@ -378,18 +374,20 @@ export default function Cart({navigation, route}) {
               selectedLanguage,
             ),
           });
-        } else {
-          updateState({
-            localeDropOffDate: null,
-          });
         }
 
         updateState({
           isRefreshing: false,
           isLoadingB: false,
-          pickupDriverComment: res?.data?.comment_for_pickup_driver,
-          dropOffDriverComment: res?.data?.comment_for_dropoff_driver,
-          vendorComment: res?.data?.comment_for_vendor,
+          pickupDriverComment: res?.data?.comment_for_pickup_driver
+            ? res?.data?.comment_for_pickup_driver
+            : pickupDriverComment,
+          dropOffDriverComment: res?.data?.comment_for_dropoff_driver
+            ? res?.data?.comment_for_dropoff_driver
+            : dropOffDriverComment,
+          vendorComment: res?.data?.comment_for_vendor
+            ? res?.data?.comment_for_vendor
+            : vendorComment,
           sheduledorderdate: res?.data?.scheduled_date_time,
           sheduleddropoffdate: res?.data?.schedule_dropoff,
           sheduledpickupdate: res?.data?.schedule_pickup,
@@ -827,6 +825,16 @@ export default function Cart({navigation, route}) {
         // });
         // } else {
         // }
+        updateState({
+          pickupDriverComment: null,
+          dropOffDriverComment: null,
+          vendorComment: null,
+          localePickupDate: null,
+          localeDropOffDate: null,
+          modalType: null,
+          sheduledpickupdate: null,
+          sheduleddropoffdate: null,
+        });
         showSuccess(res?.message);
       })
       .catch(errorMethod);
@@ -1111,11 +1119,18 @@ export default function Cart({navigation, route}) {
       )
       .then((res) => {
         console.log(res, 'response===>');
-
         updateState({
           isLoadingB: false,
           isRefreshing: false,
           placeLoader: false,
+          pickupDriverComment: null,
+          dropOffDriverComment: null,
+          vendorComment: null,
+          localePickupDate: null,
+          localeDropOffDate: null,
+          modalType: null,
+          sheduledpickupdate: null,
+          sheduleddropoffdate: null,
         });
         if (res && res?.status == 'Success' && res?.data) {
           // updateState({allAvailAblePaymentMethods: res?.data});
@@ -1169,6 +1184,14 @@ export default function Cart({navigation, route}) {
               cartData: {},
               isLoadingB: false,
               placeLoader: false,
+              pickupDriverComment: null,
+              dropOffDriverComment: null,
+              vendorComment: null,
+              localePickupDate: null,
+              localeDropOffDate: null,
+              modalType: null,
+              sheduledpickupdate: null,
+              sheduleddropoffdate: null,
             });
             moveToNewScreen(navigationStrings.ORDERSUCESS, {
               orderDetail: res.data,
