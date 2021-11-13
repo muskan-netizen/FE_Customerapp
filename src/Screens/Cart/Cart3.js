@@ -319,8 +319,10 @@ export default function Cart({navigation, route}) {
               : {id: 1, title: strings.NOW, type: 'now'},
         });
         if (res && res.data) {
-          if (!!res.data.vendor_details.vendor_tables && res.data.vendor_details.vendor_tables.length>0) {
-           
+          if (
+            !!res.data.vendor_details.vendor_tables &&
+            res.data.vendor_details.vendor_tables.length > 0
+          ) {
             res.data.vendor_details.vendor_tables.forEach(
               (item, indx) =>
                 (tableData[indx] = {
@@ -350,9 +352,9 @@ export default function Cart({navigation, route}) {
             );
             const data = {
               vendor_id: tableData[0].vendor_id,
-              table: tableData[0].table_number,
+              table: tableData[0].id,
             };
-            _vendorTableCart(data, tableData[0])
+            _vendorTableCart(data, tableData[0]);
           }
           updateState({
             cartItems: res.data.products,
@@ -2794,17 +2796,17 @@ export default function Cart({navigation, route}) {
     }
   }, [deepLinkUrl]);
 
- 
-
   const _onTableSelection = (item) => {
+    console.log(item, 'itemitemitem');
     const data = {
       vendor_id: item.vendor_id,
-      table: item.table_number,
+      table: item?.id,
     };
     _vendorTableCart(data, item);
   };
 
   const _vendorTableCart = (data, item) => {
+    console.log(data, "selectedTable")
     actions
       .vendorTableCart(data, {
         code: appData?.profile?.code,
