@@ -595,5 +595,13 @@ Amount`,
   CONFIRM_VEHICLE: 'Confirm Vehicle',
   SPECIAL_INSTRUCTION: 'Special Instruction',
   SCEDULEPICKUP:"Schedule Pickup",
-  SCEDULEDROP:"Schedule Dropoff"
+  SCEDULEDROP:"Schedule Dropoff",
+  COMMENTFORPICKUPDRIVER:"Comment for Pickup Driver",
+  COMMENTFORDROPUPDRIVER:"Comment for Dropoff Driver",
+  COMMENTFORVENDOR:"Comment for Vendor",
+  PLACEHOLDERCOMMENTFORPICKUPDRIVER:"Eg. Please reach before time if possible",
+  PLACEHOLDERCOMMENTFORDROPUPDRIVER:"Eg. Do call me before drop off",
+  PLACEHOLDERCOMMENTFORVENDOR:"Eg. Please do the whites separately"
+
+
 };

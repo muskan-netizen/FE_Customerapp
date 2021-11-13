@@ -173,6 +173,7 @@ export default function Cart({navigation, route}) {
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
+  console.log('appData', appData);
 
   const selectedAddressData = useSelector(
     (state) => state?.cart?.selectedAddress,
@@ -335,6 +336,7 @@ export default function Cart({navigation, route}) {
         actions.cartItemQty(res);
         console.log(res.data, 'cart details>>>');
         let checkDate = !!res?.data?.scheduled_date_time;
+
         if (!!checkDate && res.data.schedule_type == 'schedule') {
           let formatDate = new Date(res?.data?.scheduled_date_time);
           updateState({
@@ -349,10 +351,48 @@ export default function Cart({navigation, route}) {
             localeSheduledOrderDate: null,
           });
         }
+
+        //schedule date for pickup and  dropoff
+        let checkDateDropOFf = !!res?.data?.schedule_dropoff;
+        let checkDatePickUp = !!res?.data?.schedule_pickup;
+
+        if (!!checkDatePickUp) {
+          let formatDate2 = new Date(res?.data?.schedule_pickup);
+          updateState({
+            localePickupDate: timeInLocalLangauge(
+              formatDate2,
+              selectedLanguage,
+            ),
+          });
+        } else {
+          updateState({
+            localePickupDate: null,
+          });
+        }
+
+        if (!!checkDateDropOFf) {
+          let formatDate3 = new Date(res?.data?.schedule_dropoff);
+          updateState({
+            localeDropOffDate: timeInLocalLangauge(
+              formatDate3,
+              selectedLanguage,
+            ),
+          });
+        } else {
+          updateState({
+            localeDropOffDate: null,
+          });
+        }
+
         updateState({
           isRefreshing: false,
           isLoadingB: false,
+          pickupDriverComment: res?.data?.comment_for_pickup_driver,
+          dropOffDriverComment: res?.data?.comment_for_dropoff_driver,
+          vendorComment: res?.data?.comment_for_vendor,
           sheduledorderdate: res?.data?.scheduled_date_time,
+          sheduleddropoffdate: res?.data?.schedule_dropoff,
+          sheduledpickupdate: res?.data?.schedule_pickup,
           scheduleType: res?.data?.schedule_type,
           selectedTimeOption:
             res?.data?.schedule_type == 'now'
@@ -400,7 +440,7 @@ export default function Cart({navigation, route}) {
             selectedTipvalue:
               res?.data?.total_payable_amount == 0 ? 'custom' : null,
           });
-          if (!res.data.schedule_type) {
+          if (!res?.data?.schedule_type) {
             //if schedule type is null then hit the api again with now option
             setDateAndTimeSchedule();
           }
@@ -842,37 +882,33 @@ export default function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
-  const setDateAndTimeSchedule = () => {
+  const setDateAndTimeSchedule = (toHitApiForPlaceOrder) => {
     if (!userData?.auth_token) {
       return;
     }
-    if (businessType == 'laundry') {
-      {
-        let formatDate2 = new Date(sheduledpickupdate);
-        let formatDate3 = new Date(sheduleddropoffdate);
-        modalType == 'pickup'
-          ? updateState({
-              localePickupDate: timeInLocalLangauge(
-                formatDate2,
-                selectedLanguage,
-              ),
-            })
-          : updateState({
-              localeDropOffDate: timeInLocalLangauge(
-                formatDate3,
-                selectedLanguage,
-              ),
-            });
-      }
-      return;
-    }
-    let data = {};
-    data['task_type'] = scheduleType;
-    data['schedule_dt'] =
-      scheduleType != 'now' && sheduledorderdate
-        ? new Date(sheduledorderdate).toISOString()
-        : null;
 
+    let data = {};
+
+    if (businessType == 'laundry' && toHitApiForPlaceOrder) {
+      data['comment_for_pickup_driver'] = pickupDriverComment;
+      data['comment_for_dropoff_driver'] = dropOffDriverComment;
+      data['comment_for_vendor'] = vendorComment;
+      data['schedule_pickup'] = sheduledpickupdate
+        ? new Date(sheduledpickupdate).toISOString()
+        : null;
+      data['schedule_dropoff'] = sheduleddropoffdate
+        ? new Date(sheduleddropoffdate).toISOString()
+        : null;
+    } else {
+      data['task_type'] = scheduleType;
+      data['schedule_dt'] =
+        scheduleType != 'now' && sheduledorderdate
+          ? new Date(sheduledorderdate).toISOString()
+          : null;
+    }
+
+    console.log(data, 'setDateAndTimeSchedule>>>DATA');
+    // updateState({isLoading: false});
     actions
       .scheduledOrder(data, {
         code: appData?.profile?.code,
@@ -881,12 +917,22 @@ export default function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        console.log(res, 'res>>>');
+        if (res && res?.status == 'Success') {
+          if (toHitApiForPlaceOrder && businessType == 'laundry') {
+            _finalPayment();
+          }
+          updateState({
+            isLoadingB: toHitApiForPlaceOrder ? true : false,
+          });
+        } else {
+          updateState({
+            isLoadingB: false,
+          });
+        }
         // getCartDetail();
-        updateState({
-          isLoadingB: false,
-        });
-      })
-      .catch(errorMethod);
+      });
+    //   .catch(errorMethod);
   };
 
   const _finalPayment = () => {
@@ -948,7 +994,11 @@ export default function Cart({navigation, route}) {
                 !!userData?.verify_details?.is_email_verified &&
                 !!userData?.verify_details?.is_phone_verified
               ) {
-                _finalPayment();
+                if (businessType == 'laundry') {
+                  setDateAndTimeSchedule(true);
+                } else {
+                  _finalPayment();
+                }
               } else {
                 moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
                   formCart: true,
@@ -962,14 +1012,22 @@ export default function Cart({navigation, route}) {
                 !!userData?.verify_details?.is_email_verified ||
                 !!userData?.verify_details?.is_phone_verified
               ) {
-                _finalPayment();
+                if (businessType == 'laundry') {
+                  setDateAndTimeSchedule(true);
+                } else {
+                  _finalPayment();
+                }
               } else {
                 moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
                   formCart: true,
                 })();
               }
             } else {
-              _finalPayment();
+              if (businessType == 'laundry') {
+                setDateAndTimeSchedule(true);
+              } else {
+                _finalPayment();
+              }
             }
           }
           // !!userData?.client_preference?.verify_email ||
@@ -1170,9 +1228,13 @@ export default function Cart({navigation, route}) {
 
   const selectOrderDate = () => {
     onClose();
-    updateState({
-      scheduleType: 'schedule',
-    });
+
+    if (modalType != 'schedule' && businessType != 'laundry') {
+      updateState({
+        scheduleType: 'schedule',
+      });
+    }
+
     setDateAndTimeSchedule();
   };
 
@@ -2248,7 +2310,7 @@ export default function Cart({navigation, route}) {
         {/* Laundry Section only */}
         {!!(businessType == 'laundry') && (
           <View style={styles.laundrySection}>
-            <View style={{flexDirection: 'row'}}>
+            <View>
               <View style={{flex: 0.5, flexWrap: 'wrap'}}>
                 <Text
                   style={
@@ -2259,15 +2321,17 @@ export default function Cart({navigation, route}) {
                         ]
                       : styles.LaundryApppriceItemLabel
                   }>
-                  {'Comment for pickup driver'}
+                  {strings.COMMENTFORPICKUPDRIVER}
                 </Text>
               </View>
-              <View style={{flex: 0.5}}>
+              <View style={{flex: 0.5, marginTop: moderateScale(5)}}>
                 <TextInput
                   value={pickupDriverComment}
                   onChangeText={(text) =>
                     updateState({pickupDriverComment: text})
                   }
+                  placeholder={strings.PLACEHOLDERCOMMENTFORPICKUPDRIVER}
+                  placeholderTextColor={colors.textGreyOpcaity6}
                   style={{
                     height: 40,
                     alignItems: 'center',
@@ -2286,7 +2350,7 @@ export default function Cart({navigation, route}) {
                 />
               </View>
             </View>
-            <View style={{flexDirection: 'row', marginTop: moderateScale(10)}}>
+            <View style={{marginTop: moderateScale(15)}}>
               <View style={{flex: 0.5, flexWrap: 'wrap'}}>
                 <Text
                   style={
@@ -2297,15 +2361,17 @@ export default function Cart({navigation, route}) {
                         ]
                       : styles.LaundryApppriceItemLabel
                   }>
-                  {'Comment for dropoff driver'}
+                  {strings.COMMENTFORDROPUPDRIVER}
                 </Text>
               </View>
-              <View style={{flex: 0.5}}>
+              <View style={{flex: 0.5, marginTop: moderateScale(5)}}>
                 <TextInput
                   value={dropOffDriverComment}
                   onChangeText={(text) =>
                     updateState({dropOffDriverComment: text})
                   }
+                  placeholderTextColor={colors.textGreyOpcaity6}
+                  placeholder={strings.PLACEHOLDERCOMMENTFORDROPUPDRIVER}
                   style={{
                     height: 40,
                     alignItems: 'center',
@@ -2324,7 +2390,7 @@ export default function Cart({navigation, route}) {
                 />
               </View>
             </View>
-            <View style={{flexDirection: 'row', marginTop: moderateScale(10)}}>
+            <View style={{marginTop: moderateScale(15)}}>
               <View style={{flex: 0.5, flexWrap: 'wrap'}}>
                 <Text
                   style={
@@ -2335,11 +2401,13 @@ export default function Cart({navigation, route}) {
                         ]
                       : styles.LaundryApppriceItemLabel
                   }>
-                  {'Comment for vendor'}
+                  {strings.COMMENTFORVENDOR}
                 </Text>
               </View>
-              <View style={{flex: 0.5}}>
+              <View style={{flex: 0.5, marginTop: moderateScale(5)}}>
                 <TextInput
+                  placeholderTextColor={colors.textGreyOpcaity6}
+                  placeholder={strings.PLACEHOLDERCOMMENTFORVENDOR}
                   value={vendorComment}
                   onChangeText={(text) => updateState({vendorComment: text})}
                   style={{
@@ -2367,66 +2435,74 @@ export default function Cart({navigation, route}) {
                 marginTop: moderateScale(20),
                 justifyContent: 'space-between',
               }}>
-              <View style={{flex: 0.5}}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.LaundryApppriceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.LaundryApppriceItemLabel
-                  }>
-                  {strings.SCEDULEPICKUP}
-                </Text>
-                <ButtonComponent
-                  onPress={() => _selectTimeLaundry('pickup')}
-                  btnText={
-                    localePickupDate ? localePickupDate : strings.SCEDULEPICKUP
-                  }
-                  borderRadius={moderateScale(13)}
-                  textStyle={{color: themeColors.primary_color}}
-                  containerStyle={{
-                    ...styles.placeOrderButtonStyle,
-                    backgroundColor: colors.transparent,
-                    borderColor: themeColors.primary_color,
-                    borderWidth: 0.8,
-                    borderRadius: 5,
-                    marginTop: moderateScale(10),
-                  }}
-                />
-              </View>
+              <TouchableOpacity
+                onPress={() => _selectTimeLaundry('pickup')}
+                style={{flex: 0.5, flexDirection: 'row'}}>
+                <Image source={imagePath.pickUpSchedule} />
+                <View>
+                  <Text
+                    style={
+                      isDarkMode
+                        ? [
+                            styles.LaundryApppriceItemLabel2,
+                            {color: MyDarkTheme.colors.text},
+                          ]
+                        : styles.LaundryApppriceItemLabel2
+                    }>
+                    {strings.SCEDULEPICKUP}
+                  </Text>
+                  {localePickupDate && (
+                    <Text
+                      numberOfLines={2}
+                      style={
+                        isDarkMode
+                          ? [
+                              styles.LaundryApppriceItemLabel3,
+                              {color: MyDarkTheme.colors.text},
+                            ]
+                          : styles.LaundryApppriceItemLabel3
+                      }>
+                      {localePickupDate ? localePickupDate : ''}
+                    </Text>
+                  )}
+                </View>
+              </TouchableOpacity>
 
-              <View style={{flex: 0.5}}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.LaundryApppriceItemLabel,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.LaundryApppriceItemLabel
-                  }>
-                  {strings.SCEDULEDROP}
-                </Text>
-                <ButtonComponent
-                  onPress={() => _selectTimeLaundry('dropoff')}
-                  btnText={
-                    localeDropOffDate ? localeDropOffDate : strings.SCEDULEDROP
-                  }
-                  borderRadius={moderateScale(13)}
-                  textStyle={{color: themeColors.primary_color}}
-                  containerStyle={{
-                    ...styles.placeOrderButtonStyle,
-                    backgroundColor: colors.transparent,
-                    borderColor: themeColors.primary_color,
-                    borderWidth: 0.8,
-                    borderRadius: 5,
-                    marginTop: moderateScale(10),
-                    // width:width/3
-                  }}
-                />
-              </View>
+              <TouchableOpacity
+                onPress={() => _selectTimeLaundry('dropoff')}
+                style={{flex: 0.5, flexDirection: 'row'}}>
+                <Image source={imagePath.dropOffSchedule} />
+                <View>
+                  <Text
+                    style={
+                      isDarkMode
+                        ? [
+                            styles.LaundryApppriceItemLabel2,
+                            {color: MyDarkTheme.colors.text},
+                          ]
+                        : styles.LaundryApppriceItemLabel2
+                    }>
+                    {strings.SCEDULEDROP}
+                  </Text>
+
+                  {localeDropOffDate && (
+                    <Text
+                      numberOfLines={2}
+                      style={
+                        isDarkMode
+                          ? [
+                              styles.LaundryApppriceItemLabel3,
+                              {color: MyDarkTheme.colors.text},
+                            ]
+                          : styles.LaundryApppriceItemLabel3
+                      }>
+                      {localeDropOffDate
+                        ? localeDropOffDate
+                        : strings.SCEDULEDROP}
+                    </Text>
+                  )}
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
         )}
@@ -3022,40 +3098,23 @@ export default function Cart({navigation, route}) {
     });
   };
 
-  const onDateChange = (value) => {
-    if (
-      businessType == 'laundry' &&
-      (modalType != 'pickup' || modalType != 'dropoff')
-    ) {
-      if (modalType == 'pickup') {
-        updateState({
-          sheduledpickupdate: value,
-          localePickupDate: `${value.toLocaleDateString(selectedLanguage, {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          })}, ${value.toLocaleTimeString(selectedLanguage, {
-            hour: '2-digit',
-            minute: '2-digit',
-          })}`,
-        });
-      } else {
-        updateState({
-          sheduleddropoffdate: value,
-          localeDropOffDate: `${value.toLocaleDateString(selectedLanguage, {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          })}, ${value.toLocaleTimeString(selectedLanguage, {
-            hour: '2-digit',
-            minute: '2-digit',
-          })}`,
-        });
-      }
+  const onDateChangeSecond = (value) => {
+    if (modalType == 'pickup') {
+      updateState({
+        sheduledpickupdate: value,
+        localePickupDate: `${value.toLocaleDateString(selectedLanguage, {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        })}, ${value.toLocaleTimeString(selectedLanguage, {
+          hour: '2-digit',
+          minute: '2-digit',
+        })}`,
+      });
     } else {
       updateState({
-        sheduledorderdate: value,
-        localeSheduledOrderDate: `${value.toLocaleDateString(selectedLanguage, {
+        sheduleddropoffdate: value,
+        localeDropOffDate: `${value.toLocaleDateString(selectedLanguage, {
           year: 'numeric',
           month: 'short',
           day: 'numeric',
@@ -3065,6 +3124,20 @@ export default function Cart({navigation, route}) {
         })}`,
       });
     }
+  };
+
+  const onDateChange = (value) => {
+    updateState({
+      sheduledorderdate: value,
+      localeSheduledOrderDate: `${value.toLocaleDateString(selectedLanguage, {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      })}, ${value.toLocaleTimeString(selectedLanguage, {
+        hour: '2-digit',
+        minute: '2-digit',
+      })}`,
+    });
   };
 
   // console.log(
@@ -3643,26 +3716,67 @@ export default function Cart({navigation, route}) {
               </Text>
             </View>
 
-            <View
-              style={{
-                alignItems: 'center',
-                height: height / 3.5,
-              }}>
-              <DatePicker
-                locale={selectedLanguage}
-                date={
-                  new Date()
-                  // sheduledorderdate ? new Date(sheduledorderdate) : new Date()
-                }
-                textColor={isDarkMode ? colors.white : colors.blackB}
-                mode="datetime"
-                // minimumDate={undefined}
-                // maximumDate={undefined}
-                style={styles.datetimePickerText}
-                // onDateChange={setDate}
-                onDateChange={(value) => onDateChange(value)}
-              />
-            </View>
+            {businessType == 'laundry' && modalType != 'schedule' ? (
+              <View
+                style={{
+                  alignItems: 'center',
+                  height: height / 3.5,
+                }}>
+                {modalType == 'pickup' ? (
+                  <DatePicker
+                    locale={selectedLanguage}
+                    date={
+                      sheduledpickupdate
+                        ? new Date(sheduledpickupdate)
+                        : new Date()
+                    }
+                    textColor={isDarkMode ? colors.white : colors.blackB}
+                    mode="datetime"
+                    minimumDate={new Date()}
+                    maximumDate={undefined}
+                    style={styles.datetimePickerText}
+                    // onDateChange={setDate}
+                    onDateChange={(value) => onDateChangeSecond(value)}
+                  />
+                ) : (
+                  <DatePicker
+                    locale={selectedLanguage}
+                    date={
+                      sheduleddropoffdate
+                        ? new Date(sheduleddropoffdate)
+                        : new Date()
+                    }
+                    textColor={isDarkMode ? colors.white : colors.blackB}
+                    mode="datetime"
+                    minimumDate={new Date()}
+                    maximumDate={undefined}
+                    style={styles.datetimePickerText}
+                    // onDateChange={setDate}
+                    onDateChange={(value) => onDateChangeSecond(value)}
+                  />
+                )}
+              </View>
+            ) : (
+              <View
+                style={{
+                  alignItems: 'center',
+                  height: height / 3.5,
+                }}>
+                <DatePicker
+                  locale={selectedLanguage}
+                  date={
+                    sheduledorderdate ? new Date(sheduledorderdate) : new Date()
+                  }
+                  textColor={isDarkMode ? colors.white : colors.blackB}
+                  mode="datetime"
+                  minimumDate={new Date()}
+                  maximumDate={undefined}
+                  style={styles.datetimePickerText}
+                  // onDateChange={setDate}
+                  onDateChange={(value) => onDateChange(value)}
+                />
+              </View>
+            )}
           </ScrollView>
           <View
             style={[

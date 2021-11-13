@@ -36,11 +36,12 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.CART}
         component={
-          appStyle?.homePageLayout === 2
-            ? Cart2
-            : appStyle?.homePageLayout === 3
-            ? Cart3
-            : Cart
+          // appStyle?.homePageLayout === 2
+          //   ? Cart2
+          //   : appStyle?.homePageLayout === 3
+          //   ? Cart3
+          //   : Cart
+          Cart3
         }
         options={{headerShown: false}}
       />

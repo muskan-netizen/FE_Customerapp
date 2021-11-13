@@ -449,7 +449,21 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     LaundryApppriceItemLabel: {
       color: colors.textGreyB,
       fontFamily: fontFamily.regular,
-      fontSize: textScale(10),
+      fontSize: textScale(12),
+    },
+    LaundryApppriceItemLabel2: {
+      marginLeft:moderateScale(5),
+      color: themeColors?.primary_color,
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(12),
+      opacity:0.6
+    },
+    LaundryApppriceItemLabel3: {
+      marginLeft:moderateScale(5),
+      color: colors.black,
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(12),
+      opacity:0.6
     },
   });
   return styles;
