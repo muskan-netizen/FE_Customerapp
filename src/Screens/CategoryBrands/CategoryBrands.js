@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, View, ScrollView} from 'react-native';
+import {FlatList, View, ScrollView, RefreshControl} from 'react-native';
 import {useSelector} from 'react-redux';
 import BrandCard2 from '../../Components/BrandCard2';
 import Header from '../../Components/Header';
@@ -20,6 +20,8 @@ import CardLoader from '../../Components/Loaders/CardLoader';
 import stylesFunc from './styles';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import actions from '../../redux/actions';
+import {showError} from '../../utils/helperFunctions';
+import {debounce} from 'lodash';
 
 export default function CategoryBrands({navigation, route}) {
   const {data} = route.params;
@@ -29,17 +31,21 @@ export default function CategoryBrands({navigation, route}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
-
+  const {appStyle, appData, themeColors, fontFamily, languages} = useSelector(
+    (state) => state.initBoot,
+  );
+  const appMainData = useSelector((state) => state?.home?.appMainData);
+  const styles = stylesFunc({themeColors, fontFamily});
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const categoryData = useSelector((state) => state?.vendor?.categoryData);
+
   const [state, setState] = useState({
     isLoading: true,
-    categoryBrands: [],
+    pageNo: 1,
+    limit: 5,
+    isRefreshing: false,
   });
-  useEffect(() => {
-    setTimeout(() => {
-      updateState({isLoading: false});
-    }, 500);
-  }, []);
+
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   //Naviagtion to specific screen
@@ -49,34 +55,63 @@ export default function CategoryBrands({navigation, route}) {
       navigation.navigate(screenName, {data});
     };
 
-  const {isLoading, categoryBrands} = state;
+  const {isLoading, limit, pageNo, isRefreshing} = state;
   //Redux store data
-  const {appStyle, appData, themeColors, fontFamily} = useSelector(
-    (state) => state.initBoot,
-  );
-  const appMainData = useSelector((state) => state?.home?.appMainData);
-  const styles = stylesFunc({themeColors, fontFamily});
 
   useEffect(() => {
     actions
       .getDataByCategoryId(
-        `/${data.id}?type=${dine_In_Type}`,
+        `/${data.id}?limit=${limit}&page=${pageNo}&type=${dine_In_Type}`,
         {},
         {
           code: appData.profile.code,
           latitude: location?.latitude.toString() || '',
           longitude: location?.longitude.toString() || '',
+          language: languages?.primary_language?.id,
         },
       )
       .then((res) => {
-        console.log(res?.data, 'brandsData');
         updateState({
-          categoryBrandsData: res?.data,
+          isRefreshing: false,
+          isLoading: false,
         });
+
+        const vendorData = {
+          category: res.data.category,
+          listData:
+            pageNo == 1
+              ? res?.data.listData.data
+              : [...categoryData?.listData, ...res.data.listData.data],
+        };
+        actions.saveVendorListingAndCategoryInfo(vendorData);
       })
-      .catch((err) => console.log(err, 'errrrr'));
-  }, []);
-  //Brand data
+      .catch(errorMethod);
+  }, [isRefreshing, pageNo]);
+
+  const errorMethod = (error) => {
+    console.log(error, 'error');
+    updateState({
+      isRefreshing: false,
+      isLoading: false,
+    });
+    showError(error?.message || error?.error);
+  };
+
+  //Pull to refresh
+  const handleRefresh = () => {
+    updateState({pageNo: 1, isRefreshing: true});
+  };
+
+  //pagination of data
+  const onEndReached = ({distanceFromEnd}) => {
+    updateState({pageNo: pageNo + 1});
+  };
+
+  const onEndReachedDelayed = debounce(onEndReached, 1000, {
+    leading: true,
+    trailing: false,
+  });
+
   const _renderItem = ({item, index}) => {
     return (
       <BrandCard2
@@ -86,27 +121,13 @@ export default function CategoryBrands({navigation, route}) {
     );
   };
 
-  let renderShimmer = () => {
-    return (
-      <View
-        style={{
-          marginHorizontal: moderateScale(16),
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
-        <View style={{flex: 1}}>
-          <CardLoader cardWidth={'100%'} height={width / 3.5} />
-        </View>
+  // we set the height of item is fixed
+  const getItemLayout = (data, index) => ({
+    length: width - moderateScale(32),
+    offset: (width - moderateScale(32)) * index,
+    index,
+  });
 
-        <View style={{flex: 1, marginHorizontal: 10}}>
-          <CardLoader cardWidth={'100%'} height={width / 3.5} />
-        </View>
-        <View style={{flex: 1}}>
-          <CardLoader cardWidth={'100%'} height={width / 3.5} />
-        </View>
-      </View>
-    );
-  };
   if (isLoading) {
     return (
       <WrapperContainer
@@ -194,6 +215,9 @@ export default function CategoryBrands({navigation, route}) {
       </WrapperContainer>
     );
   }
+
+  console.log(categoryData, 'categoryDatacategoryData');
+
   return (
     <WrapperContainer
       bgColor={
@@ -224,7 +248,7 @@ export default function CategoryBrands({navigation, route}) {
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
 
       <FlatList
-        data={isLoading ? [] : categoryBrands?.listData?.data}
+        data={categoryData?.listData}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={<View style={{height: 10}} />}
         keyExtractor={(item, index) => String(index)}
@@ -232,9 +256,23 @@ export default function CategoryBrands({navigation, route}) {
         ItemSeparatorComponent={() => (
           <View style={{height: moderateScaleVertical(10)}} />
         )}
+        // getItemLayout={getItemLayout}
         numColumns={3}
-        // ListEmptyComponent={<ListEmptyBrands isLoading={isLoading} />}
         renderItem={_renderItem}
+        refreshing={isRefreshing}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+            tintColor={themeColors.primary_color}
+            // titleColor="#fff"
+          />
+        }
+        initialNumToRender={5}
+        maxToRenderPerBatch={10}
+        windowSize={10}
+        onEndReached={onEndReachedDelayed}
+        onEndReachedThreshold={0.5}
       />
     </WrapperContainer>
   );
