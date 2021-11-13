@@ -257,6 +257,7 @@ export default {
   REVENUE: '收入',
   RATEORDER: '费率顺序',
   UPLOAD_IMAGE: '上传图像',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: '撰写评论',
   ENTERREFERALCODE: '输入转介代码',
   SENDREFFERAL: '发送雷弗拉尔',

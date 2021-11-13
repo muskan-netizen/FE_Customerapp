@@ -319,8 +319,10 @@ export default function Cart({navigation, route}) {
               : {id: 1, title: strings.NOW, type: 'now'},
         });
         if (res && res.data) {
-          if (!!res.data.vendor_details.vendor_tables && res.data.vendor_details.vendor_tables.length>0) {
-           
+          if (
+            !!res.data.vendor_details.vendor_tables &&
+            res.data.vendor_details.vendor_tables.length > 0
+          ) {
             res.data.vendor_details.vendor_tables.forEach(
               (item, indx) =>
                 (tableData[indx] = {
@@ -352,7 +354,7 @@ export default function Cart({navigation, route}) {
               vendor_id: tableData[0].vendor_id,
               table: tableData[0].table_number,
             };
-            _vendorTableCart(data, tableData[0])
+            _vendorTableCart(data, tableData[0]);
           }
           updateState({
             cartItems: res.data.products,
@@ -560,6 +562,28 @@ export default function Cart({navigation, route}) {
       orderDetail: res.data,
       redirectFrom: 'cart',
     };
+    if (paymentId) {
+      return;
+    }
+    if (
+      !!businessType &&
+      businessType == 'home_service' &&
+      res?.data?.vendors.length == 1
+    ) {
+      console.log('success ressssssss', res.data);
+      setTimeout(() => {
+        _getOrderDetail(res.data.vendors[0]);
+      }, 1500);
+    } else {
+      actions.cartItemQty({});
+      updateState({
+        cartItems: [],
+        cartData: {},
+        isLoadingB: false,
+        placeLoader: false,
+      });
+      moveToNewScreen(navigationStrings.ORDERSUCESS, {orderDetail: res.data})();
+    }
     switch (paymentId) {
       case 6: //Payfast Payment Getway
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
@@ -638,8 +662,8 @@ export default function Cart({navigation, route}) {
           !!(Number(cartData?.total_payable_amount) !== 0) ||
           Number(selectedTipAmount) !== 0
         ) {
-          checkPaymentOptions(res);
-          // _webPayment()
+          // checkPaymentOptions(res)
+          _webPayment();
           return;
         }
         if (
@@ -999,14 +1023,24 @@ export default function Cart({navigation, route}) {
           placeLoader: false,
         });
         if (res && res?.status == 'Success' && res?.data) {
-          // updateState({allAvailAblePaymentMethods: res?.data});
-          navigation.navigate(navigationStrings.WEBPAYMENTS, {
-            paymentUrl: res?.data,
-            paymentTitle: selectedPayment?.title,
-            redirectFrom: 'cart',
-            selectedAddressData: selectedAddressData,
-            selectedPayment: selectedPayment,
+          let sendingData = {
+            id: selectedPayment.id,
+            title: selectedPayment.title,
+            screenName: navigationStrings.CART,
+            paymentUrl: res.data,
+            action: 'cart',
+          };
+          navigation.navigate(navigationStrings.ALL_IN_ONE_PAYMENTS, {
+            data: sendingData,
           });
+          // updateState({allAvailAblePaymentMethods: res?.data});
+          // navigation.navigate(navigationStrings.WEBPAYMENTS, {
+          //   paymentUrl: res?.data,
+          //   paymentTitle: selectedPayment?.title,
+          //   redirectFrom: 'cart',
+          //   selectedAddressData: selectedAddressData,
+          //   selectedPayment: selectedPayment,
+          // });
         }
       })
       .catch(errorMethod);
@@ -1209,7 +1243,11 @@ export default function Cart({navigation, route}) {
               ? MyDarkTheme.colors.background
               : colors.white,
           }}>
-          <View style={styles.vendorView}>
+          <View
+            style={{
+              ...styles.vendorView,
+              paddingHorizontal: moderateScale(8),
+            }}>
             <Text
               numberOfLines={1}
               style={{
@@ -2631,8 +2669,13 @@ export default function Cart({navigation, route}) {
           marginVertical: moderateScale(7),
           justifyContent: 'space-between',
         }}>
-        <View style={{flexDirection: 'row', flex: 0.85}}>
-          <Image source={imagePath.icMap} />
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 0.85,
+            paddingHorizontal: moderateScale(8),
+          }}>
+          <Image style={{}} source={imagePath.icMap} />
           <View style={styles.addressView}>
             <Text
               style={{
@@ -2793,8 +2836,6 @@ export default function Cart({navigation, route}) {
         });
     }
   }, [deepLinkUrl]);
-
- 
 
   const _onTableSelection = (item) => {
     const data = {

@@ -104,3 +104,4 @@ export {default as TipPaymentOptions} from './TipPaymentOptions/TipPaymentOption
 export {default as Paylink} from './PaymentGateways/Paylink';
 export {default as OuterScreen4} from './OuterScreen/OuterScreen4';
 export {default as CategoryBrands} from './CategoryBrands/CategoryBrands';
+export {default as AllinonePyments} from './AllinonePyments/AllinonePyments';

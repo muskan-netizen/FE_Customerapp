@@ -261,6 +261,7 @@ export default {
   REVENUE: 'Receita',
   RATEORDER: 'Ordem de taxa',
   UPLOAD_IMAGE: 'Enviar imagem',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: 'Escrever revisão',
   ENTERREFERALCODE: 'Digite código de referência',
   SENDREFFERAL: 'Enviar Refferal',

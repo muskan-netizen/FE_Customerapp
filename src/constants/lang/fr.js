@@ -275,6 +275,7 @@ export default {
   REVENUE: 'Revenu',
   RATEORDER: ' Tar Order',
   UPLOAD_IMAGE: 'Télécharger l image',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: 'Écrire un avis',
   ENTERREFERALCODE: 'Entrez le code de parrainage ',
   SENDREFFERAL: 'Envoyer une référence ',

@@ -270,6 +270,7 @@ export default {
   REVENUE: 'Revenue',
   RATEORDER: 'Rate Order',
   UPLOAD_IMAGE: 'Upload Image',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: 'Write review',
   ENTERREFERALCODE: 'Enter referral code',
   SENDREFFERAL: 'Send Refferal',
@@ -594,4 +595,5 @@ Amount`,
   CONFIRM_DESTINATION: 'Confirm Destination',
   CONFIRM_VEHICLE: 'Confirm Vehicle',
   SPECIAL_INSTRUCTION: 'Special Instruction',
+  ADD_TIP: 'Add Tip',
 };

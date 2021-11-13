@@ -51,6 +51,7 @@ import {
   Payfast,
   Paylink,
   Yoco,
+  AllinonePyments
 } from '../Screens';
 import AccountTemplateFour from '../Screens/Account/AccountTemplateFour';
 import navigationStrings from './navigationStrings';
@@ -299,6 +300,12 @@ export default function ({navigation}) {
         component={Paylink}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name={navigationStrings.ALL_IN_ONE_PAYMENTS}
+        component={AllinonePyments}
+        options={{headerShown: false}}
+      />
+      
     </Stack.Navigator>
   );
 }

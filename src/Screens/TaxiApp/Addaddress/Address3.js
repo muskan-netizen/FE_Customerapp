@@ -9,6 +9,7 @@ import {
   ScrollView,
   View,
   Keyboard,
+  FlatList
 } from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import { abs } from 'react-native-reanimated';
@@ -42,6 +43,10 @@ import stylesFun from './styles';
 import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../../../styles/theme';
 import AddressModal3 from '../../../Components/AddressModal3';
+import SearchPlaces from '../../../Components/SearchPlaces';
+import { getPlaceDetails } from '../../../utils/googlePlaceApi';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 
 export default function Addaddress({ navigation, route }) {
   const paramData = route?.params;
@@ -90,6 +95,21 @@ export default function Addaddress({ navigation, route }) {
     indicator: false,
     type: 'addAddress',
     del: false,
+    searchResult: {},
+    pickupLocationAddress: '',
+    dropLocationAddress: '',
+    dropLocationData: [
+      {
+        address: '',
+        lat: 0,
+        lng: 0
+      },
+      {
+        address: '',
+        lat: 0,
+        lng: 0
+      },
+    ],
   });
   const {
     pickUpLocationAddressData,
@@ -125,6 +145,10 @@ export default function Addaddress({ navigation, route }) {
     indicator,
     type,
     del,
+    searchResult,
+    pickupLocationAddress,
+    dropLocationAddress,
+    dropLocationData
   } = state;
 
   useEffect(() => {
@@ -630,338 +654,167 @@ export default function Addaddress({ navigation, route }) {
       })
     );
   };
+
+  const updateAddress = (value) => {
+    switch (searchResult?.inx) {
+      case 0:
+        updateState({ pickupLocationAddress: value, searchResult: [] })
+        break;
+      case 1:
+        updateState({ dropLocationAddress: value, searchResult: [] })
+        break;
+      case 2:
+        updateState({ pickupLocationAddress: value, searchResult: [] })
+        break;
+      case 3:
+        updateState({ pickupLocationAddress: value, searchResult: [] })
+        break;
+      case 4:
+        updateState({ pickupLocationAddress: value, searchResult: [] })
+        break;
+      default:
+        break;
+    }
+  }
+
+  const onPressAddress = async (place) => {
+    console.log("selected item", place)
+    // cloneArr[searchResult.currentIndex].address = place?.description
+    if (place.place_id) {
+      // updateAddress(place.description)
+      let res = await getPlaceDetails(place.place_id, profile?.preferences?.map_key);
+      console.log("res====>>>", res)
+      const cloneArr = dropLocationData
+      cloneArr[searchResult.currentIndex].lat = '0.02'
+      cloneArr[searchResult.currentIndex].lng = '0.055'
+      cloneArr[searchResult.currentIndex].address = place?.description
+      updateState({ dropLocationData: cloneArr })
+      console.log('res===', res)
+    } else {
+      alert('Place Id not found')
+    }
+  }
+
+  const renderSearchItem = (item) => {
+    return (
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => onPressAddress(item)}
+        style={{ marginBottom: 16 }}
+      >
+        <Text>{item?.description}</Text>
+      </TouchableOpacity>
+    )
+  }
+
+  const addRemove = (isAddd) => {
+    let x = []
+    x.push({
+      address: '',
+      lat: 0,
+      lng: 0
+    })
+    updateState({ dropLocationData: [...dropLocationData, ...x] })
+  }
+
+  const updateCurValues = (text, i) => {
+    console.log("dropLocationData+++", dropLocationData[i])
+    const cloneArr = dropLocationData
+    cloneArr[i].address = text
+    updateState({ dropLocationData: cloneArr })
+  }
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}>
-      <View style={{ flex: 1 }}>
-        <Header
-          rightViewStyle={{
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.lightDark
-              : colors.greyColor,
-            alignItems: 'center',
-            paddingVertical: moderateScaleVertical(8),
-            borderRadius: 14,
-            flex: 0.15,
-          }}
-          leftIcon={imagePath.backArrowCourier}
-          centerTitle={strings.ADD_ADDRESS}
-          // rightIcon={imagePath.cartShop}
-          headerStyle={{
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.background
-              : colors.white,
-            marginVertical: moderateScaleVertical(10),
-            rightViewStyle: { backgroundColor: colors.greyColor },
-          }}
-        />
 
-        <View style={{ flex: 1 }}>
-          <View
-            onLayout={(event) => {
-              updateState({ viewHeight: event.nativeEvent.layout.height });
-            }}
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-            }}>
-            <View
-              style={{
-                flex: 0.15,
-                alignItems: 'center',
-                marginVertical: moderateScaleVertical(30),
-              }}>
-              <View
-                style={{
-                  flex: 0.3,
-                  zIndex: -1000,
-                  // height: getHeight(),
-                  marginTop: moderateScaleVertical(8),
-                  alignItems: 'center',
-                }}>
-                <Image source={imagePath.grayDot} />
-                {renderDotContainer()}
-                {showDropOfTwo ? renderDotContainer() : null}
-              </View>
-            </View>
-            <View
-              style={{
-                flex: 0.7,
-                zIndex: -1000,
-                paddingVertical: 10,
-              }}>
-              <View
-                style={{
-                  height: 48,
-                  alignItems: 'center',
-                }}>
-                <GooglePlaceInput
-                  selectionColor={themeColors.primary_color}
-                  placeholder={strings.PICKUP_LOCATION}
-                  autoFocus={pickUpLocationFocus}
-                  getDefaultValue={pickUpLocation}
-                  type={'Pickup'}
-                  navigation={navigation}
-                  addressType={'pickup'}
-                  googleApiKey={profile?.preferences?.map_key}
-                  placeholderTextColor={
-                    isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7
-                  }
-                  textInputContainer={styles.textGoogleInputContainerAddress}
-                  listView={
-                    stylesFun({
-                      fontFamily,
-                      themeColors,
-                      viewHeight: viewHeight,
-                      type: 'pickup',
-                    }).listView
-                  }
-                  onFocus={() => updateState({ pickUpLocationFocus: true })}
-                  textInput={
-                    isDarkMode
-                      ? {
-                        height: moderateScaleVertical(30),
-                        borderRadius: 13,
-                        color: colors.white,
-                        backgroundColor: MyDarkTheme.colors.background,
-                      }
-                      : {
-                        height: moderateScaleVertical(30),
-                        borderRadius: 13,
-
-                        backgroundColor: colors.white,
-                      }
-                  }
-                  addressHelper={(results) => addressHelper(results)}
-                  handleAddressOnKeyUp={(text) =>
-                    handleAddressOnKeyUp(text, 'pickUpLocation')
-                  }
-                  onBlur={() => {
-                    if (pickUpLocation == '') {
-                      updateState({
-                        pickUpLocation: '',
-                        pickUpLocationLatLng: false,
-                        pickUpLocationFocus: false,
-                      });
-                    } else {
-                      updateState({
-                        pickUpLocationFocus: false,
-                      });
-                    }
-                  }}
-                  showList={true}
-                  showListOutside={(results, dataSource) =>
-                    showListOutside(results, 'pickUpLocation', dataSource)
-                  }
-                  rowStyle={styles.address}
-                  renderCustomRow={(itm) => _rendorCustomRow(itm)}
-                  updateTheAddress={(details, addressType) => {
-                    console.log(details, 'detailsdetails');
-                    updateTheAddress(details, addressType, 'pickUpLocation');
-                  }}
-                // ListHeaderComponent={() =>
-                //   _renderBottomComponent('pickUpLocation', 'pickup')
-                // }
-                />
-                <View
-                  style={{
-                    backgroundColor: colors.textGreyLight,
-                    height: 0.5,
-                    width: width - 100,
-                    marginLeft: moderateScale(40),
-                  }}
-                />
-              </View>
-
-              <View style={{ height: 5 }}></View>
-              <View
-                style={{
-                  height: 48,
-                  alignItems: 'center',
-                }}>
-                <GooglePlaceInput
-                  selectionColor={themeColors.primary_color}
-                  autoFocus={dropOffLocationFocus}
-                  getDefaultValue={dropOffLocation}
-                  type={'Pickup'}
-                  navigation={navigation}
-                  addressType={'dropoff'}
-                  placeholderTextColor={
-                    isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7
-                  }
-                  placeholder={strings.DROPOFFLOCATION}
-                  googleApiKey={profile?.preferences?.map_key}
-                  textInputContainer={styles.textGoogleInputContainerAddress}
-                  listView={styles.listView}
-                  listView={
-                    stylesFun({
-                      fontFamily,
-                      themeColors,
-                      viewHeight: viewHeight,
-                      type: 'dropOffLocation',
-                    }).listView
-                  }
-                  onFocus={() => updateState({ dropOffLocationFocus: true })}
-                  onBlur={() => {
-                    if (dropOffLocation == '') {
-                      updateState({
-                        dropOffLocation: '',
-                        dropOffLocationLatLng: false,
-                        dropOffLocationFocus: false,
-                      });
-                    }
-                  }}
-                  textInput={
-                    isDarkMode
-                      ? {
-                        height: moderateScaleVertical(30),
-                        borderRadius: 13,
-                        color: MyDarkTheme.colors.text,
-                        backgroundColor: MyDarkTheme.colors.background,
-                      }
-                      : {
-                        height: moderateScaleVertical(30),
-                        borderRadius: 13,
-                        backgroundColor: colors.white,
-                      }
-                  }
-                  addressHelper={(results) => addressHelper(results)}
-                  handleAddressOnKeyUp={(text) =>
-                    handleAddressOnKeyUp(text, 'dropOffLocation')
-                  }
-                  showList={true}
-                  showListOutside={(results, dataSource) =>
-                    showListOutside(results, 'dropOffLocation', dataSource)
-                  }
-                  rowStyle={styles.address}
-                  renderCustomRow={(itm) => _rendorCustomRow(itm)}
-                  updateTheAddress={(details, addressType) =>
-                    updateTheAddress(details, addressType, 'dropOffLocation')
-                  }
-                // ListHeaderComponent={() =>
-                //   _renderBottomComponent('dropOffLocation', 'dropoff')
-                // }
-                />
-                <View
-                  style={{
-                    backgroundColor: colors.textGreyLight,
-                    height: 0.5,
-                    width: width - 100,
-                    marginLeft: moderateScale(40),
-                    marginTop: moderateScaleVertical(5),
-                  }}
-                />
-              </View>
-            </View>
-            <View style={{ flex: 0.1, zIndex: -1000, paddingVertical: 10 }}>
-              <View style={{ height: moderateScale(48) }} />
-              {renderCross('dropOffLocation')}
-              {showDropOfTwo ? renderCross('dropOffLocationTwo') : null}
-              {/* {showDropOfThree ? renderCross('dropOffLocationThree') : null} */}
-            </View>
-            <View style={{ position: 'absolute', end: 28, top: 27 }}>
-              <TouchableOpacity onPress={() => _moveToNextScreen('pickup')}>
-                <Image
-                  style={{
-                    height: 25,
-                    width: 25,
-                  }}
-                  source={imagePath.blackNav}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          {/* <View style={{flex: 0.7, zIndex: -1000}}> */}
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            horizontal={false}
-            scrollEnabled={false}
-            keyboardShouldPersistTaps={'handled'}
-            style={[styles.modalMainViewContainer]}>
-            {!!(allSavedAddress && allSavedAddress.length) ? (
-              <>
-                <View style={styles.savedAddressView}>
-                  <Image
-                    style={{ marginHorizontal: moderateScale(12) }}
-                    source={imagePath.starRoundedBackground}
-                  />
-                  <Text
-                    numberOfLines={1}
-                    style={
-                      isDarkMode
-                        ? [
-                          styles.addresssLableName,
-                          { color: MyDarkTheme.colors.text },
-                        ]
-                        : styles.addresssLableName
-                    }>
-                    {strings.SAVED_LOCATIONS}
-                  </Text>
-                </View>
-
-                {addressView(imagePath.RecentLocationImage)}
-              </>
-            ) : (
-              <View style={styles.savedAddressView}>
-                <Text
-                  numberOfLines={1}
-                  style={
-                    isDarkMode
-                      ? [
-                        styles.addresssLableName,
-                        { color: MyDarkTheme.colors.text },
-                      ]
-                      : styles.addresssLableName
-                  }>
-                  {/* {strings.SAVED_ADDRESS} */}
-                </Text>
-              </View>
-            )}
-          </ScrollView>
-          {/* </View> */}
-        </View>
-
-        {/* <View
-          style={{
-            marginVertical: moderateScaleVertical(10),
-            marginHorizontal: moderateScale(20),
-            justifyContent: 'flex-end',
-          }}>
-          <GradientButton
-            colorsArray={[themeColors.primary_color, themeColors.primary_color]}
-            textStyle={{textTransform: 'none', fontSize: textScale(16)}}
-            onPress={saveAddressAndRedirect}
-            marginTop={moderateScaleVertical(10)}
-            marginBottom={moderateScaleVertical(10)}
-            btnText={strings.DONE}
-          />
-        </View> */}
-        {renderbtn()}
-      </View>
-
-      <AddressModal3
-        navigation={navigation}
-        updateData={updateData}
-        isVisible={isVisible}
-        indicator={indicator}
-        onClose={() => setModalVisible(false)}
-        type={type}
-        passLocation={(data) => addUpdateLocation(data)}
-      // onPress={currentLocation}
+      <Header
+        rightViewStyle={{
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.lightDark
+            : colors.greyColor,
+          alignItems: 'center',
+          paddingVertical: moderateScaleVertical(8),
+          borderRadius: 14,
+          flex: 0.15,
+        }}
+        leftIcon={imagePath.backArrowCourier}
+        centerTitle={strings.ADD_ADDRESS}
+        // rightIcon={imagePath.cartShop}
+        headerStyle={{
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.white,
+          marginVertical: moderateScaleVertical(10),
+          rightViewStyle: { backgroundColor: colors.greyColor },
+        }}
       />
+      <KeyboardAwareScrollView
+        keyboardShouldPersistTaps="handled"
 
-      {/* <SearchPlaces
-          mapKey={profile?.preferences?.map_key}
-          placeData={placeData}
-          fetchArrayResult={(data)=> console.log("my data print",data)}
-        //  previousLocationOfCreatedAd={}
+        showsVerticalScrollIndicator={false}
+        style={{
+          flex: 1
+        }}>
+        <View style={{ flex: 1, marginHorizontal: moderateScale(16) }}>
+          {/* <SearchPlaces
+          placeHolder={strings.PICKUP_LOCATION}
+          value={pickupLocationAddress} // instant update search value
+          mapKey={profile?.preferences?.map_key} //send here google Key
+          fetchArrayResult={(data) => updateState({ searchResult: { data: data, inx: 0 } })}
+          setValue={text => updateState({ pickupLocationAddress: text })} //return & update on change text value
         /> */}
+          {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ flex: 1 }}>
+            <SearchPlaces
+              placeHolder={strings.DROPOFFLOCATION}
+              value={dropLocationAddress} // instant update search value
+              mapKey={profile?.preferences?.map_key} //send here google Key
+              fetchArrayResult={(data) => updateState({ searchResult: { data: data, inx: 1 } })}
+              setValue={text => updateState({ dropLocationAddress: text })} //return & update on change text value
+            />
+          </View>
+          <View style={{ marginHorizontal: 8 }} />
+          <TouchableOpacity style={{
+            flex: 0.2
+          }}
+            onPress={() => addRemove(true)}
+          >
+            <Text>{'Add+'}</Text>
+          </TouchableOpacity>
+        </View> */}
+
+          {dropLocationData.map((val, i) => {
+            return (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ flex: 1 }}>
+                  <SearchPlaces
+                    placeHolder={i == 0 ? strings.PICKUP_LOCATION : strings.DROPOFFLOCATION}
+                    value={val.address} // instant update search value
+                    mapKey={profile?.preferences?.map_key} //send here google Key
+                    fetchArrayResult={(data) => updateState({ searchResult: { data: data, currentIndex: i } })}
+                    setValue={(text) => updateCurValues(text, i)} //return & update on change text value
+                  />
+                </View>
+                <View style={{ marginHorizontal: 8 }} />
+                {i >= 1 && (<TouchableOpacity style={{
+                  flex: 0.2
+                }}
+                  onPress={() => addRemove(false, i)}
+                >
+                  <Text>{dropLocationData.length - 1 == i ? 'Add' : 'Mins'}</Text>
+                </TouchableOpacity>)}
+              </View>
+            )
+          })}
+
+
+          {/* render search address results */}
+          {!!searchResult?.data && searchResult?.data.map((item, i) => {
+            return renderSearchItem(item)
+          })}
+        </View>
+      </KeyboardAwareScrollView>
 
     </WrapperContainer>
   );
