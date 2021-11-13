@@ -272,6 +272,7 @@ export default {
   REVENUE: 'Intäkter',
   RATEORDER: 'Rate Order',
   UPLOAD_IMAGE: 'Ladda upp bild',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: 'Skriv recension',
   ENTERREFERALCODE: 'Ange hänvisningskod',
   SENDREFFERAL: 'Skicka referens',

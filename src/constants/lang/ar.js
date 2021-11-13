@@ -276,6 +276,7 @@ export default {
   REVENUE: 'الإيرادات',
   RATEORDER: 'تقييم الطلب',
   UPLOAD_IMAGE: 'تحميل صورة',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: 'اكتب تعليق',
   ENTERREFERALCODE: 'إدخال رمز الإحالة',
   SENDREFFERAL: 'إرسال رمز الإحالة',

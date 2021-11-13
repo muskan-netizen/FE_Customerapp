@@ -27,7 +27,7 @@ export default ({fontFamily, themeColors}) => {
       //   themeColors.primary_color.substr(1),
       //   20,
       // ),
-      paddingVertical: moderateScaleVertical(15),
+      paddingVertical: moderateScaleVertical(10),
       paddingHorizontal: moderateScaleVertical(10),
       marginVertical: moderateScaleVertical(10),
       flexDirection: 'row',

@@ -269,6 +269,7 @@ export default {
   REVENUE: 'Ingresos',
   RATEORDER: 'Calificar pedido',
   UPLOAD_IMAGE: 'Subir imagen',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: 'Escribir una reseÃ±a',
   ENTERREFERALCODE: 'Ingresar cÃ³digo de referido',
   SENDREFFERAL: 'Enviar cÃ³digo de referido',

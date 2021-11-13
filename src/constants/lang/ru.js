@@ -265,6 +265,7 @@ export default {
   REVENUE: 'Доход',
   RATEORDER: 'Тарифный заказ',
   UPLOAD_IMAGE: 'Загрузить изображение',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: 'Написать отзыв',
   ENTERREFERALCODE: 'Введите реферальный код',
   SENDREFFERAL: 'Отправить ссылку',

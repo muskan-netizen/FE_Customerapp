@@ -270,6 +270,7 @@ export default {
   REVENUE: 'Revenue',
   RATEORDER: 'Rate Order',
   UPLOAD_IMAGE: 'Upload Image',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: 'Write review',
   ENTERREFERALCODE: 'Enter referral code',
   SENDREFFERAL: 'Send Refferal',

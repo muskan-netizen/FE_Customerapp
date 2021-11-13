@@ -1,97 +1,37 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { getPlaceDetails, googlePlacesApi } from '../utils/googlePlaceApi';
+import React from 'react';
+import { StyleSheet, TextInput, View } from 'react-native';
+import { googlePlacesApi } from '../utils/googlePlaceApi';
 
 const SearchPlaces = ({
-    placeData,
-    previousLocation,
     containerStyle = {},
     inputStyle = {},
-    position = 'relative',
-    icon,
-    dropDownStyle = {},
-    resultTextStyle = {},
-    address = '',
-    mapKey="",
-    fetchArrayResult = () => {}
+    mapKey = "",
+    fetchArrayResult = () => { },
+    value = '',
+    setValue = () => { },
+    placeHolder,
 }) => {
-
-
-
     console.log(mapKey, 'in MapPlaceComp map key')
 
-    const [placesData, setPlacesData] = useState([]);
-    const [value, setValue] = useState(address);
-
-    /****************** Google Api Places
-     */const textChangeHandler = async (data) => {
-       
+    const textChangeHandler = async (data) => {
         setValue(data)
         let res = await googlePlacesApi(data, mapKey);
         if (res && res.predictions) {
-            setPlacesData(res.predictions)
             fetchArrayResult(res.predictions)
-        }
-    }
-/****************** Render Google Api Places
-     */ const renderPlaces = () => {
-        if (placesData && placesData.length > 0) {
-            return placesData.map(x => <TouchableOpacity onPress={() => placePress(x)} style={styles.placeCont} key={x.place_id}>
-                <Text style={{
-                    ...styles.placeText,
-                    ...resultTextStyle,
-                }}>{x.description}</Text>
-            </TouchableOpacity>)
-        } else {
-            return null
-        }
-    }
-
-    const placePress = async (place) => {
-        console.log('placess')
-        setValue(place.description);
-        setPlacesData([]);
-        if (place.place_id) {
-            let res = await getPlaceDetails(place.place_id, mapKey);
-            // setValue(res.result.name);
-            placeData(res)
-        } else {
-            alert('Place Id not found')
         }
     }
     return (
         <View style={{ ...styles.container, ...containerStyle }}>
-            <View style={{
-                ...styles.subCont,
-                ...inputStyle,
-            }}>
+            <View style={{...styles.subCont,...inputStyle}}>
                 <View style={{ flex: 1 }}>
                     <TextInput
                         value={value}
-                        placeholder={'Search address'}
+                        placeholder={placeHolder}
                         onChangeText={textChangeHandler}
                         style={styles.text}
                     />
                 </View>
-                {/* <TouchableOpacity
-                    style={{ flex: 0.1 }}
-                    activeOpacity={0.8}
-                    style={{ backgroundColor: 'red' }}
-                >
-                    <Image source={imagePath.icd} />
-                </TouchableOpacity> */}
             </View>
-            <View style={{ width: '100%' }}>
-                <View style={{
-                    ...styles.dropDown,
-                    ...dropDownStyle,
-                    position: position
-                }}>
-                    {renderPlaces()}
-                </View>
-            </View>
-
         </View>
     );
 }
@@ -99,7 +39,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
 
     },
     subCont: {
@@ -109,7 +49,8 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: 'black',
         backgroundColor: 'white',
-        height: 48
+        height: 48,
+        marginBottom: 10
     },
     text: {
         width: '100%',

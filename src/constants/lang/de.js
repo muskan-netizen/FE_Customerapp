@@ -275,6 +275,7 @@ export default {
   REVENUE: 'Einnahmen',
   RATEORDER: 'Rate bestellen ',
   UPLOAD_IMAGE: 'Bild hochladen ',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: 'Rezension schreiben',
   ENTERREFERALCODE: 'Empfehlungscode eingeben',
   SENDREFFERAL: 'Empfehlung senden',
