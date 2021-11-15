@@ -290,7 +290,7 @@ export default function Cart({navigation, route}) {
       )
       .then((res) => {
         actions.cartItemQty(res);
-        console.log(res.data, 'cart details>>>');
+        console.log(res.data, 'cart details>>>', cartItems);
         let checkDate = !!res?.data?.scheduled_date_time;
         if (!!checkDate && res.data.schedule_type == 'schedule') {
           let formatDate = new Date(res?.data?.scheduled_date_time);
@@ -372,6 +372,7 @@ export default function Cart({navigation, route}) {
         } else {
           updateState({
             cartData: {},
+            cartItems: [],
             vendorAddress: '',
             isLoadingB: false,
             isRefreshing: false,
