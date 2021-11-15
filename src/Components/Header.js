@@ -95,18 +95,13 @@ const Header = ({
                 <Image
                   resizeMode="contain"
                   source={leftIcon}
-                  style={
-                    isDarkMode
-                      ? {
-                          transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                          ...leftIconStyle,
-                          tintColor: MyDarkTheme.colors.text,
-                        }
-                      : {
-                          transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                          ...leftIconStyle,
-                        }
-                  }
+                  style={{
+                    ...leftIconStyle,
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
                 />
               </TouchableOpacity>
             ))}
@@ -122,20 +117,11 @@ const Header = ({
             <Text
               onPress={onPressCenterTitle}
               numberOfLines={1}
-              style={
-                isDarkMode
-                  ? {
-                      ...styles.textStyle,
-                      ...textStyle,
-                      color: MyDarkTheme.colors.text,
-                      // width: moderateScale(150),
-                    }
-                  : {
-                      ...styles.textStyle,
-                      ...textStyle,
-                      // width: moderateScale(150),
-                    }
-              }>
+              style={{
+                ...styles.textStyle,
+                ...textStyle,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
               {centerTitle}
             </Text>
             {!!showImageAlongwithTitle && (

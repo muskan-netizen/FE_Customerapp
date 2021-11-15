@@ -88,7 +88,6 @@ const showError = (message) => {
     type: 'danger',
     icon: 'danger',
     message,
-    statusBarHeight: StatusBarHeight,
   });
   // Toast.show(message);
 };
@@ -98,7 +97,6 @@ const showSuccess = (message) => {
     type: 'success',
     icon: 'success',
     message,
-    statusBarHeight: StatusBarHeight,
   });
 
   // Toast.show(message);
@@ -108,7 +106,6 @@ const showInfo = (message) => {
     type: 'info',
     icon: 'info',
     message,
-    statusBarHeight: StatusBarHeight,
   });
   // Toast.show(message);
 };

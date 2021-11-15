@@ -199,7 +199,6 @@ export default function AddressModal3({
 
   /*************************** On Text Change
    */ const addressHelper = (results) => {
-    console.log(results, 'resultsresultsresults');
     let clonedArrayData = {...state};
     clonedArrayData = {...clonedArrayData, ...results, showDialogBox: false};
     updateState(clonedArrayData);

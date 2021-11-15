@@ -1122,12 +1122,12 @@ export default function Products({route, navigation}) {
       <View>
         {!!categoryInfo?.categoriesList ? (
           <View style={{...styles.header2}}>
-            <StatusBar
+            {/* <StatusBar
               translucent
               barStyle={
                 Platform.OS === 'ios' ? 'light-content' : 'dark-content'
               }
-            />
+            /> */}
             <View style={{height: '80%'}}>
               <ImageBackground
                 source={{
