@@ -47,6 +47,7 @@ import {
   Wishlist,
   Wishlist2,
 } from '../Screens';
+import AccountTemplateFive from '../Screens/Account/AccountTemplateFive';
 import AccountTemplateFour from '../Screens/Account/AccountTemplateFour';
 import navigationStrings from './navigationStrings';
 
@@ -57,14 +58,14 @@ export default function ({navigation}) {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        component={
-          appStyle?.homePageLayout === 2
-            ? Account2
-            : appStyle?.homePageLayout === 3
-            ? Account3
-            : Account
-        }
-        // component={AccountTemplateFour}
+        // component={
+        //   appStyle?.homePageLayout === 2
+        //     ? Account2
+        //     : appStyle?.homePageLayout === 3
+        //     ? Account3
+        //     : Account
+        // }
+        component={AccountTemplateFive}
         name={navigationStrings.ACCOUNTS}
         options={{headerShown: false}}
       />

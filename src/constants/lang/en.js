@@ -593,4 +593,6 @@ Amount`,
   ENTER_YOUR_PHONE_NUMBER: 'Enter your registered phone number to login',
   ENTER_YOUR_EMAIL_PASSWORD: 'Enter your email and password to login',
   REFERRAL_CODE_OPTIONAL: 'referral code (optional)',
+  CHOOSE_FROM_CUISINES: 'Choose from cuisines',
+  OTP_SENT: 'OTP code sent'
 };

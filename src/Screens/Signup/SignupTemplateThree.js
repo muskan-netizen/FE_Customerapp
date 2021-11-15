@@ -109,7 +109,7 @@ export default function SignupTemplateThree({navigation}) {
     let data = {
       name: name,
       // phone_number: '+' + callingCode + phoneNumber,
-      phone_number: phoneNumber,
+      phone_number: phoneNumber.phoneNumber,
       dial_code: callingCode.toString(),
       country_code: cca2,
       email: email,
@@ -174,6 +174,37 @@ export default function SignupTemplateThree({navigation}) {
   const _onChangeText = (key) => (val) => {
     updateState({[key]: val});
   };
+
+  const checkInputHandler = (data = '') => {
+    let re = /^[0-9]{1,45}$/;
+    let c = re.test(data);
+
+    if (c) {
+      updateState({
+        phoneNumber: {
+          ...phoneNumber,
+          phoneNo: data,
+          focus: true,
+        },
+        email: {
+          ...email,
+          focus: false,
+        },
+      });
+    } else {
+      updateState({
+        email: {
+          value: data,
+          focus: true,
+        },
+        phoneNumber: {
+          ...phoneNumber,
+          focus: false,
+        },
+      });
+    }
+  };
+
 
   const {
     phoneNumber,
@@ -275,7 +306,7 @@ export default function SignupTemplateThree({navigation}) {
                 }}
               />
               <TextInputWithUnderlineAndLabel
-                onChangeText={(data) => checkInputHandler(data)}
+                onChangeText={(data) => updateState({ email: data })}
                 value={email}
                 label={`${strings.EMAIL} *`}
                 autoCapitalize={'none'}
@@ -316,8 +347,8 @@ export default function SignupTemplateThree({navigation}) {
               </View>
               <View style={{marginVertical: moderateScaleVertical(25)}}>
                 <TextInputWithUnderlineAndLabel
-                  onChangeText={(data) => checkInputHandler(data)}
-                  value={email}
+                  onChangeText={(data) => updateState({ referralCode: data })}
+                  value={referralCode}
                   label={strings.REFERRAL_CODE_OPTIONAL}
                   autoCapitalize={'none'}
                   containerStyle={{marginVertical: moderateScaleVertical(10)}}

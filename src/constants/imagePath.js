@@ -370,6 +370,12 @@ export default {
   plushRoundedBackground: require('../assets/images/TAXIAPPIMAGES/ic_plus.png'),
   icViewMore: require('../assets/images/RoyoorderNewImages/ic_viewmore.png'),
 
+  inviteFriend: require('../assets/images/orbitAssets/ic_invite.png'),
+  changeLanguage: require('../assets/images/orbitAssets/ic_changelang.png'),
+  myOrders: require('../assets/images/orbitAssets/ic_myotrders.png'),
+  saved: require('../assets/images/orbitAssets/ic_saved.png'),
+  roundPercentage: require('../assets/images/orbitAssets/ic_paymentmethods.png'),
+
   twoFinderOnBoard: require('../assets/images/TowFinder/ic_onboard.png'),
   facebook: require('../assets/images/TowFinder/ic_fb.png'),
   settings_icon: require('../assets/images/TowFinder/settings.png'),
