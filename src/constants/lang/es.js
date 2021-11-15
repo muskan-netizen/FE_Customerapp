@@ -269,6 +269,7 @@ export default {
   REVENUE: 'Ingresos',
   RATEORDER: 'Calificar pedido',
   UPLOAD_IMAGE: 'Subir imagen',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: 'Escribir una reseÃ±a',
   ENTERREFERALCODE: 'Ingresar cÃ³digo de referido',
   SENDREFFERAL: 'Enviar cÃ³digo de referido',
@@ -591,4 +592,8 @@ export default {
   AND: 'y',
   PRICACY_POLICY: 'Política de Privacidad',
   TIP_AMOUNT: 'Cantidad de propina',
+  CONFIRM_DESTINATION: 'Confirm Destination',
+  CONFIRM_VEHICLE: 'Confirm Vehicle',
+  SPECIAL_INSTRUCTION: 'Special Instruction',
+  TAP_HERE_ADD_ADDRESS: 'Tap here to add address',
 };

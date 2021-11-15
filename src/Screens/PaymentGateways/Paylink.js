@@ -18,8 +18,6 @@ import imagePath from '../../constants/imagePath';
 
 export default function Paylink({ navigation, route }) {
   let paramsData = route?.params;
-  console.log(paramsData, '===>paramsData');
-
   const { themeToggle, themeColor, appStyle, appData, currencies, languages } =
     useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
@@ -35,16 +33,23 @@ export default function Paylink({ navigation, route }) {
   const { webUrl, isLoading } = state;
 
   useEffect(() => {
-    apiHit();
+    if (!!paramsData?.walletTip) { //pay via wallet or tip
+      console.log(paramsData?.walletTip.paymentUrl, '===>paramsData');
+      updateState({
+        webUrl: paramsData?.walletTip.paymentUrl,
+        isLoading: false
+      })
+      return;
+    }
+    console.log(paramsData, '===>paramsData');
+    apiHit(); //hit this function if user select paypal getway because paypal have different queries 
   }, []);
 
   const apiHit = async () => {
     let queryData = `/${paramsData?.selectedPayment?.title?.toLowerCase()}?amount=${paramsData?.total_payable_amount
       }&payment_option_id=${paramsData?.payment_option_id
-      }&action=cart&order_number=${paramsData?.orderDetail?.order_number}`;
-
+      }&action=${paramsData?.action}&order_number=${paramsData?.orderDetail?.order_number}`;
     console.log(queryData, 'queryData');
-
     try {
       const res = await actions.openPaymentWebUrl(
         queryData,
@@ -75,23 +80,31 @@ export default function Paylink({ navigation, route }) {
     const URL = queryString.parseUrl(url);
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
-    console.log(queryParams, 'query state');
-
+    // return;
     setTimeout(() => {
-      if (queryParams.status === '200') {
+      if (queryParams.status == 200) {
+        if (!!paramsData?.walletTip) {
+          moveToNewScreen(paramsData?.walletTip?.screenName)();
+          return;
+        }
         moveToNewScreen(navigationStrings.ORDERSUCESS, {
           orderDetail: {
             order_number: queryParams.order,
             id: paramsData?.orderDetail?.id,
           },
         })();
-      } else if (queryParams.status === '0') {
+      } else if (queryParams.status == 0) {
+        if (!!paramsData?.walletTip) {
+          moveToNewScreen(paramsData?.walletTip?.screenName)();
+          return;
+        }
         moveToNewScreen(navigationStrings.CART, {
           queryURL: url.replace(`${nonQueryURL}?`, ''),
         })();
       }
     }, 1500);
   };
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.transparent}

@@ -265,6 +265,7 @@ export default {
   REVENUE: 'Доход',
   RATEORDER: 'Тарифный заказ',
   UPLOAD_IMAGE: 'Загрузить изображение',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: 'Написать отзыв',
   ENTERREFERALCODE: 'Введите реферальный код',
   SENDREFFERAL: 'Отправить ссылку',
@@ -576,4 +577,8 @@ export default {
   AND: 'и',
   PRICACY_POLICY: 'Политика конфиденциальности',
   TIP_AMOUNT: 'Tip Amount',
+  CONFIRM_DESTINATION: 'Confirm Destination',
+  CONFIRM_VEHICLE: 'Confirm Vehicle',
+  SPECIAL_INSTRUCTION: 'Special Instruction',
+  TAP_HERE_ADD_ADDRESS: 'Tap here to add address',
 };

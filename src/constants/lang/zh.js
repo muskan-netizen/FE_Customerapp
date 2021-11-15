@@ -257,6 +257,7 @@ export default {
   REVENUE: '收入',
   RATEORDER: '费率顺序',
   UPLOAD_IMAGE: '上传图像',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: '撰写评论',
   ENTERREFERALCODE: '输入转介代码',
   SENDREFFERAL: '发送雷弗拉尔',
@@ -548,4 +549,8 @@ export default {
   AND: '和',
   PRICACY_POLICY: '隐私策略',
   TIP_AMOUNT: 'Tip Amount',
+  CONFIRM_DESTINATION: 'Confirm Destination',
+  CONFIRM_VEHICLE: 'Confirm Vehicle',
+  SPECIAL_INSTRUCTION: 'Special Instruction',
+  TAP_HERE_ADD_ADDRESS: 'Tap here to add address',
 };

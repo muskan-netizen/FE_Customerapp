@@ -272,6 +272,7 @@ export default {
   REVENUE: 'Intäkter',
   RATEORDER: 'Rate Order',
   UPLOAD_IMAGE: 'Ladda upp bild',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: 'Skriv recension',
   ENTERREFERALCODE: 'Ange hänvisningskod',
   SENDREFFERAL: 'Skicka referens',
@@ -573,5 +574,9 @@ export default {
   TERMS_OF_SERVICE: 'Terms of Service',
   AND: 'and',
   PRICACY_POLICY: 'Privacy Policy',
-  TIP_AMOUNT:"Tip Amount",
+  TIP_AMOUNT: 'Tip Amount',
+  CONFIRM_DESTINATION: 'Confirm Destination',
+  CONFIRM_VEHICLE: 'Confirm Vehicle',
+  SPECIAL_INSTRUCTION: 'Special Instruction',
+  TAP_HERE_ADD_ADDRESS: 'Tap here to add address',
 };

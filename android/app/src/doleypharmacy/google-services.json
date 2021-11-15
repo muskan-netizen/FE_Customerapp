@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "1030820921144",
+    "project_id": "doley-pharmacy",
+    "storage_bucket": "doley-pharmacy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030820921144:android:1e8d7812dcd748ab0dcbcd",
+        "android_client_info": {
+          "package_name": "com.doleypharmacy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030820921144-dj1ocib67nnvab2m0te8e1s4dblkmc4j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doleypharmacy",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "1030820921144-h2i4upcp5bnfah3ahnc3o9dtag5jol9t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doleypharmacy",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1030820921144-r6i27iad3f33t25s52pf3u7806dgallo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doleypharmacy",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "1030820921144-bvgjq4628dtodqost3qlm5m7bb4g1nfh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMrbg4CyVaWJIgHSkiKAD04bFvBmyuCto"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1030820921144-bvgjq4628dtodqost3qlm5m7bb4g1nfh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1030820921144-08s2u2b3r7aqsmjnt0ig8186eo8lc8oj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doleypharmacy"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

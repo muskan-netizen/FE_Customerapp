@@ -257,14 +257,23 @@ export default function TipPaymentOptions({ navigation, route }) {
         updateState({ isLoading: false });
         if (res && res?.status == 'Success' && res?.data) {
           console.log("generate payment url", res.data)
-          // updateState({allAvailAblePaymentMethods: res?.data});
-          navigation.navigate(navigationStrings.WEBPAYMENTS, {
-            paymentUrl: res?.data,
-            paymentTitle: selectedPaymentMethod?.title,
-            redirectFrom: 'tip',
+          let sendingData = {
+            id: selectedPaymentMethod?.id,
+            title: selectedPaymentMethod?.title,
+            screenName: navigationStrings.ORDER_DETAIL,
+            paymentUrl: res.data,
+            action: 'tip',
             tip_amount: data?.selectedTipAmount,
             order_number: data?.order_number,
-          });
+          }
+          navigation.navigate(navigationStrings.ALL_IN_ONE_PAYMENTS, { data: sendingData })
+          // navigation.navigate(navigationStrings.WEBPAYMENTS, {
+          //   paymentUrl: res?.data,
+          //   paymentTitle: selectedPaymentMethod?.title,
+          //   redirectFrom: 'tip',
+          // tip_amount: data?.selectedTipAmount,
+          // order_number: data?.order_number,
+          // });
         }
       })
       .catch(errorMethod);

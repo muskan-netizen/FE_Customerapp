@@ -269,6 +269,7 @@ export default {
   REVENUE: 'Oran Sıralaması',
   RATEORDER: 'DEĞERLENDİRİCİ',
   UPLOAD_IMAGE: 'Resim Yükle',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: 'İnceleme yaz',
   ENTERREFERALCODE: 'Referans kodunu girin',
   SENDREFFERAL: ' Tavsiye Gönder',
@@ -590,4 +591,8 @@ export default {
   AND: 've',
   PRICACY_POLICY: 'Gizlilik Politikası',
   TIP_AMOUNT: 'Tip Amount',
+  CONFIRM_DESTINATION: 'Confirm Destination',
+  CONFIRM_VEHICLE: 'Confirm Vehicle',
+  SPECIAL_INSTRUCTION: 'Special Instruction',
+  TAP_HERE_ADD_ADDRESS: 'Tap here to add address',
 };

@@ -1,11 +1,18 @@
 import moment from 'moment';
-import React, {useEffect, useRef, useState} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import Geocoder from 'react-native-geocoding';
-import MapView, {Callout, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapView, { Callout, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from 'react-native-maps-directions';
-import {useSelector} from 'react-redux';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import { useSelector } from 'react-redux';
+import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
@@ -16,36 +23,37 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
+  StatusBarHeight,
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {showError} from '../../../utils/helperFunctions';
+import { showError } from '../../../utils/helperFunctions';
 import SelectCarModalView from './SelectCarModalView';
 import SelectPaymentModalView from './SelectPaymentModalView';
 import SelectTimeModalView from './SelectTimeModalView';
 import SelectVendorModalView from './SelectVendorModalView';
 import stylesFun from './styles';
 import * as RNLocalize from 'react-native-localize';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../../styles/theme';
 import strings from '../../../constants/lang';
 import PaymentProcessingModal from '../../CourierService/PaymentProcessingModal';
-import {BlurView} from '@react-native-community/blur';
-import {useFocusEffect} from '@react-navigation/native';
-import {mapStyleGrey} from '../../../utils/constants/MapStyle';
+import { BlurView } from '@react-native-community/blur';
+import { useFocusEffect } from '@react-navigation/native';
+import { mapStyleGrey } from '../../../utils/constants/MapStyle';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-export default function ChooseCarTypeAndTime({navigation, route}) {
+export default function ChooseCarTypeAndTime({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
   console.log(paramData, 'paramData>>>>>');
-  const {appData, currencies, languages, themeColors, appStyle} = useSelector(
+  const { appData, currencies, languages, themeColors, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state?.auth?.userData);
@@ -120,6 +128,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       : null,
     pageNo: 1,
     limit: 12,
+    uploadImages: [],
     isLoadingB: false,
     totalDistance: 0,
     totalDuration: 0,
@@ -136,7 +145,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     pickedUpDate: paramData?.datetime?.slectedDate
       ? paramData?.datetime?.slectedDate
       : moment().format('YYYY-MM-DD'),
-    selectedPayment: {id: 1, title: 'Cash On Delivery', image: imagePath.cash},
+    selectedPayment: { id: 1, title: 'Cash On Delivery', image: imagePath.cash },
   });
   const {
     selectedPayment,
@@ -176,12 +185,13 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     pickedUpTime,
     selectedDate,
     pickedUpDate,
+    uploadImages
   } = state;
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
-  const styles = stylesFun({fontFamily, themeColors});
-  const commonStyles = commonStylesFun({fontFamily});
-  const {profile} = appData;
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const styles = stylesFun({ fontFamily, themeColors });
+  const commonStyles = commonStylesFun({ fontFamily });
+  const { profile } = appData;
 
   const walletAmount = useSelector(
     (state) => state?.product?.walletData?.wallet_amount,
@@ -194,19 +204,19 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   useFocusEffect(
     React.useCallback(() => {
       if (paramData && paramData?.selectedMethod) {
-        updateState({selectedPayment: paramData?.selectedMethod});
+        updateState({ selectedPayment: paramData?.selectedMethod });
       }
       // updateState({isLoadingB: true});
     }, [paramData]),
   );
   console.log(selectedPayment, 'selectedPayment');
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
+    Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
   }, []);
 
-  const _confirmAddress = (addressType) => {};
+  const _confirmAddress = (addressType) => { };
   const _onRegionChange = (region) => {
-    updateState({region: region});
+    updateState({ region: region });
     _getAddressBasedOnCoordinates(region);
     markerRef.current.showCallout();
 
@@ -216,9 +226,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   useEffect(() => {
     {
@@ -238,11 +248,11 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   //Get list of all orders api
   const _getAllCarAndPrices = () => {
-    updateState({isLoading: true, showVendorModal: false, showCarModal: true});
+    updateState({ isLoading: true, showVendorModal: false, showCarModal: true });
     actions
       .getAllCarAndPrices(
         `/${selectedVendorOption?.id}?page=${pageNo}&limit=${limit}`,
-        {locations: paramData?.location},
+        { locations: paramData?.location },
         {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
@@ -295,7 +305,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   };
 
   const _selectTime = () => {
-    updateState({showTimeModal: false, showPaymentModal: true});
+    updateState({ showTimeModal: false, showPaymentModal: true });
   };
 
   const _finalPayment = (data) => {
@@ -322,7 +332,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
             orderId: res?.data?.id,
             fromVendorApp: true,
-            selectedVendor: {id: selectedCarOption?.vendor_id},
+            selectedVendor: { id: selectedCarOption?.vendor_id },
             orderDetail: res?.data,
             fromCab: paramData?.pickup_taxi ? false : true,
             pickup_taxi: paramData?.pickup_taxi,
@@ -363,6 +373,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     data['product_id'] = selectedCarOption?.id;
     data['currency_id'] = currencies?.primary_currency?.id;
     data['tasks'] = paramData?.tasks;
+    data['images_array'] = uploadImages
     if (couponInfo) {
       data['coupon_id'] = couponInfo?.id;
     }
@@ -371,13 +382,13 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
     if (!!userData) {
       !!userData?.client_preference?.verify_email ||
-      !!userData?.client_preference?.verify_phone
+        !!userData?.client_preference?.verify_phone
         ? !!userData?.verify_details?.is_email_verified &&
           !!userData?.verify_details?.is_phone_verified
           ? _finalPayment(data)
           : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
-              formCart: true,
-            })()
+            formCart: true,
+          })()
         : _finalPayment(data);
     } else {
       _finalPayment();
@@ -391,13 +402,13 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       <SelectTimeModalView
         date={date}
         onPressBack={() =>
-          updateState({showTimeModal: false, showCarModal: true})
+          updateState({ showTimeModal: false, showCarModal: true })
         }
         _onDateChange={_onNewDateChange}
         availAbleTimes={availAbleTimes}
         selectedAvailableTimeOption={selectedAvailableTimeOption}
         selectAvailAbleTime={(i) =>
-          updateState({selectedAvailableTimeOption: i})
+          updateState({ selectedAvailableTimeOption: i })
         }
         _selectTime={_selectTime}
         navigation={navigation}
@@ -423,7 +434,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     return (
       <SelectVendorModalView
         onPressAvailableVendor={(item) =>
-          updateState({selectedVendorOption: item})
+          updateState({ selectedVendorOption: item })
         }
         selectedVendorOption={selectedVendorOption}
         _select={() => {
@@ -450,27 +461,27 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   const _selectCarModalView = () => {
     return (
       <SelectCarModalView
-        onPressAvailableCar={(item) => updateState({selectedCarOption: item})}
+        onPressAvailableCar={(item) => updateState({ selectedCarOption: item })}
         selectedCarOption={selectedCarOption}
         onPressPickUpNow={() => {
           selectedCarOption
             ? updateState({
-                // pickUpTimeType: 'now',
-                showPaymentModal: true,
-                redirectFromNow: true,
-                showCarModal: false,
-              })
+              // pickUpTimeType: 'now',
+              showPaymentModal: true,
+              redirectFromNow: true,
+              showCarModal: false,
+            })
             : showError(strings.PLEASE_SELECT_CAR);
         }}
         isLoading={isLoading}
         onPressPickUplater={() => {
           selectedCarOption
             ? updateState({
-                // pickUpTimeType: 'schedule',
-                showTimeModal: true,
-                redirectFromNow: false,
-                showCarModal: false,
-              })
+              // pickUpTimeType: 'schedule',
+              showTimeModal: true,
+              redirectFromNow: false,
+              showCarModal: false,
+            })
             : showError(strings.PLEASE_SELECT_CAR);
         }}
         availableCarList={availableCarList}
@@ -493,6 +504,38 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       screenName: strings.PAYMENT,
     })();
   };
+
+  console.log("app data")
+
+
+  const uploadImage = async (img) => {
+    console.log('selected image', img)
+
+    const imgData = new FormData();
+    imgData.append("upload_photo", {
+      uri: img,
+      name: "image.png",
+      fileName: 'image',
+      type: 'image/png'
+    })
+    try {
+      const res = await actions.imageUpload(imgData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      console.log("image upload res", res)
+      updateState({
+        uploadImages: [...uploadImages, ...[res.image]]
+      })
+    } catch (error) {
+      console.log("erro rraised", error)
+      showError(error?.error || error?.message)
+    }
+  }
+
+  console.log("image uploaded res", uploadImages)
+
   const _selectPaymentView = () => {
     return (
       <SelectPaymentModalView
@@ -504,8 +547,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         date={date}
         onPressBack={() =>
           redirectFromNow
-            ? updateState({showCarModal: true, showPaymentModal: false})
-            : updateState({showTimeModal: true, showPaymentModal: false})
+            ? updateState({ showCarModal: true, showPaymentModal: false })
+            : updateState({ showTimeModal: true, showPaymentModal: false })
         }
         totalDistance={totalDistance}
         totalDuration={totalDuration}
@@ -519,6 +562,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         redirectToPayement={() => _redirectToPayement()}
         selectedPayment={selectedPayment}
         pickup_taxi={paramData?.pickup_taxi}
+        uploadImage={uploadImage}
       />
     );
   };
@@ -549,7 +593,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   const _updateState = () => {
     // navigationStrings.CABDRIVERLOCATIONANDDETAIL
-    updateState({isModalVisible: false});
+    updateState({ isModalVisible: false });
     navigation.navigate(navigationStrings.CABDRIVERLOCATIONANDDETAIL, {});
   };
 
@@ -560,15 +604,15 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   };
 
   const _pickerOpen = (value) => {
-    updateState({[value]: true});
+    updateState({ [value]: true });
   };
 
   const _pickerCancel = (value) => {
-    updateState({[value]: false});
+    updateState({ [value]: false });
   };
 
   const _onDayPress = (value) => {
-    updateState({selectedDate: value.dateString});
+    updateState({ selectedDate: value.dateString });
   };
 
   const _modalOkPress = (value1, value2) => {
@@ -579,7 +623,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   };
 
   const _onNewDateChange = (value) => {
-    updateState({formatedTime: moment(value).format('hh:mm A')});
+    updateState({ formatedTime: moment(value).format('hh:mm A') });
   };
 
   // useEffect(() => {
@@ -601,25 +645,36 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   // };
 
   return (
-    <View style={styles.container}>
-      <MapView
-        //   provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-        ref={mapRef}
-        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-        customMapStyle={mapStyleGrey}
-        style={styles.map}
-        region={region}
-        initialRegion={region}
-        //   customMapStyle={mapStyle}
-        // ref={mapRef}
-        // liteMode={true}
-        tracksViewChanges={false}
-        // onPress={onMapPress}
-        // onRegionChangeComplete={() =>
-        //   _onRegionChange(region, {isGesture: true})
-        // }
-      >
-        {/* <Marker
+    <View style={{ ...styles.container }}>
+      <View style={{ height: StatusBarHeight }} />
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+        }}>
+        <View
+          style={{
+            width: '100%',
+            height: height / 2.5,
+          }}>
+          <MapView
+            //   provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            ref={mapRef}
+            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            customMapStyle={mapStyleGrey}
+            // style={styles.map}
+            style={StyleSheet.absoluteFillObject}
+            region={region}
+            initialRegion={region}
+            //   customMapStyle={mapStyle}
+            // ref={mapRef}
+            // liteMode={true}
+            tracksViewChanges={false}
+          // onPress={onMapPress}
+          // onRegionChangeComplete={() =>
+          //   _onRegionChange(region, {isGesture: true})
+          // }
+          >
+            {/* <Marker
             coordinate={paramData?.location[0]}
             image={imagePath.radioLocation}>
             <Callout style={styles.plainView}>
@@ -640,78 +695,86 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             </Callout>
           </Marker> */}
 
-        {paramData?.tasks.map((coordinate, index) => {
-          return (
-            <View>
-              <MapView.Marker
-                ref={markerRef}
-                zIndex={index}
-                key={`coordinate_${index}`}
-                image={imagePath.radioLocation}
-                coordinate={{
-                  latitude: Number(coordinate?.latitude),
-                  longitude: Number(coordinate?.longitude),
-                }}>
-                <View
-                  style={[
-                    styles.plainView,
-                    {
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      //paddingRight: 10,
-                    },
-                  ]}>
-                  <Text style={styles.pickupDropOff}>
-                    {index === 0 ? 'Pickup' : 'Drop'}
-                  </Text>
+            {paramData?.tasks.map((coordinate, index) => {
+              return (
+                <View>
+                  <MapView.Marker
+                    ref={markerRef}
+                    zIndex={index}
+                    key={`coordinate_${index}`}
+                    image={imagePath.radioLocation}
+                    coordinate={{
+                      latitude: Number(coordinate?.latitude),
+                      longitude: Number(coordinate?.longitude),
+                    }}>
+                    <View
+                      style={[
+                        styles.plainView,
+                        {
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          //paddingRight: 10,
+                        },
+                      ]}>
+                      <Text style={styles.pickupDropOff}>
+                        {index === 0 ? 'Pickup' : 'Drop'}
+                      </Text>
+                    </View>
+                  </MapView.Marker>
                 </View>
-              </MapView.Marker>
-            </View>
-          );
-        })}
+              );
+            })}
 
-        <MapViewDirections
-          origin={paramData?.location[0]}
-          waypoints={
-            paramData?.location.length > 2
-              ? paramData?.location.slice(1, -1)
-              : []
-          }
-          destination={paramData?.location[paramData?.location.length - 1]}
-          apikey={profile?.preferences?.map_key}
-          strokeWidth={3}
-          strokeColor={themeColors.primary_color}
-          optimizeWaypoints={true}
-          onStart={(params) => {
-            // console.log(Started routing between "${params.origin}" and "${params.destination}");
-          }}
-          precision={'high'}
-          timePrecision={'now'}
-          mode={'DRIVING'}
-          // maxZoomLevel={20}
-          onReady={(result) => {
-            console.log(`Distance: ${result.distance} km`);
-            console.log(`Duration: ${result.duration} min.`);
-            updateState({
-              totalDistance: result.distance.toFixed(2),
-              totalDuration: result.duration.toFixed(2),
-            });
-            mapRef.current.fitToCoordinates(result.coordinates, {
-              edgePadding: {
-                right: width / 20,
-                bottom: height / 20,
-                left: width / 20,
-                top: height / 20,
-              },
-            });
-          }}
-          onError={(errorMessage) => {
-            // console.log('GOT AN ERROR');
-          }}
-        />
-      </MapView>
+            <MapViewDirections
+              origin={paramData?.location[0]}
+              waypoints={
+                paramData?.location.length > 2
+                  ? paramData?.location.slice(1, -1)
+                  : []
+              }
+              destination={paramData?.location[paramData?.location.length - 1]}
+              apikey={profile?.preferences?.map_key}
+              strokeWidth={3}
+              strokeColor={themeColors.primary_color}
+              optimizeWaypoints={true}
+              onStart={(params) => {
+                // console.log(Started routing between "${params.origin}" and "${params.destination}");
+              }}
+              precision={'high'}
+              timePrecision={'now'}
+              mode={'DRIVING'}
+              // maxZoomLevel={20}
+              onReady={(result) => {
+                console.log(`Distance: ${result.distance} km`);
+                console.log(`Duration: ${result.duration} min.`);
+                updateState({
+                  totalDistance: result.distance.toFixed(2),
+                  totalDuration: result.duration.toFixed(2),
+                });
+                mapRef.current.fitToCoordinates(result.coordinates, {
+                  edgePadding: {
+                    right: width / 20,
+                    bottom: height / 20,
+                    left: width / 20,
+                    top: height / 20,
+                  },
+                });
+              }}
+              onError={(errorMessage) => {
+                // console.log('GOT AN ERROR');
+              }}
+            />
+          </MapView>
 
-      {/* Top View */}
+          {/* Top View */}
+        </View>
+
+        {/* BottomView */}
+        {/* {!!showVendorModal && _selectVendorModalView()} */}
+        {!!showCarModal && _selectCarModalView()}
+        {!!showTimeModal && _selectTimeView()}
+        {!!showPaymentModal && _selectPaymentView()}
+      </ScrollView>
       <View style={styles.topView}>
         <TouchableOpacity
           style={[
@@ -728,16 +791,10 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           }>
           <Image
             source={imagePath.backArrowCourier}
-            style={{tintColor: isDarkMode ? colors.white : colors.black}}
+            style={{ tintColor: isDarkMode ? colors.white : colors.black }}
           />
         </TouchableOpacity>
       </View>
-
-      {/* BottomView */}
-      {/* {!!showVendorModal && _selectVendorModalView()} */}
-      {!!showCarModal && _selectCarModalView()}
-      {!!showTimeModal && _selectTimeView()}
-      {!!showPaymentModal && _selectPaymentView()}
 
       <PaymentProcessingModal
         isModalVisible={isModalVisible}

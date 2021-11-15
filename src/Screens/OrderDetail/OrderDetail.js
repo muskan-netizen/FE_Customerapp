@@ -55,6 +55,7 @@ import MapViewDirections from 'react-native-maps-directions';
 import { locationPermission } from '../../utils/permissions';
 const { height, width } = Dimensions.get('window');
 import Geolocation from 'react-native-geolocation-service';
+import UserDetail from '../../Components/UserDetail';
 
 export default function OrderDetail({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -62,6 +63,7 @@ export default function OrderDetail({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
+  console.log(paramData, "paramData");
   const dineInType = useSelector((state) => state?.home?.dineInType);
 
   const [state, setState] = useState({
@@ -99,6 +101,13 @@ export default function OrderDetail({ navigation, route }) {
       latitudeDelta: 0.0222,
       longitudeDelta: 0.0320,
     },
+    animateDriver: new AnimatedRegion({
+      latitude: 30.7173,
+      longitude: 76.8035,
+      latitudeDelta: 0.0222,
+      longitudeDelta: 0.0320,
+    }),
+    driverStatus: null
   });
   const {
     isLoading,
@@ -110,7 +119,8 @@ export default function OrderDetail({ navigation, route }) {
     selectedTipvalue,
     selectedTipAmount,
     coordinate,
-    curLoc
+    curLoc,
+    driverStatus
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -153,13 +163,21 @@ export default function OrderDetail({ navigation, route }) {
     () => {
       if (!!userData?.auth_token) {
         _getOrderDetailScreen();
-        // getLiveLocation()
       } else {
         showError(strings.UNAUTHORIZED_MESSAGE);
       }
     },
     isFocused ? 5000 : null,
   );
+
+  const new_dispatch_traking_url = paramData?.orderDetail?.dispatch_traking_url
+    ? (paramData?.orderDetail?.dispatch_traking_url).replace(
+      '/order/',
+      '/order-details/',
+    )
+    : null;
+
+  console.log(new_dispatch_traking_url, "new_dispatch_traking_url");
 
   /*********Get order detail screen********* */
   const _getOrderDetailScreen = () => {
@@ -168,6 +186,8 @@ export default function OrderDetail({ navigation, route }) {
     if (paramData?.selectedVendor) {
       data['vendor_id'] = paramData?.selectedVendor.id;
     }
+    data['new_dispatch_traking_url'] = new_dispatch_traking_url
+    console.log("new dispatch+++", data)
     // updateState({ isLoading: true });
     actions
       .getOrderDetail(data, {
@@ -191,11 +211,22 @@ export default function OrderDetail({ navigation, route }) {
               ],
             });
           }
+          let checkDriver = !!res?.data?.order_data && !!res?.data?.order_data ? res?.data?.order_data : null
+          if (!!checkDriver?.agent_location?.lat && !!checkDriver?.agent_location?.lat) {
+            let lat = Number(driverStatus?.agent_location?.lat)
+            let lng = Number(driverStatus?.agent_location?.long)
+            if (!!lat && !!lng) {
+              console.log(lat, "updated lat lng", lng)
+              animate(lat, lng)
+            }
+          }
 
           updateState({
             cartItems: res.data.vendors,
             cartData: res.data,
             isLoading: false,
+            driverStatus: !!res?.data?.order_data && !!res?.data?.order_data ? res?.data?.order_data : null,
+            // driverDetail: 
             selectedTipvalue:
               res.data.payable_amount == '0.00' ? 'custom' : null,
             currentPosition: res.data.vendors[0].order_status
@@ -236,6 +267,8 @@ export default function OrderDetail({ navigation, route }) {
       })
       .catch(errorMethod);
   };
+
+  console.log("current order status", orderStatus)
 
   const errorMethod = (error) => {
     updateState({ isLoading: false, isLoading: false, isLoadingC: false });
@@ -322,142 +355,11 @@ export default function OrderDetail({ navigation, route }) {
               </Text>
             </View>
           )}
-        <View
-          style={{
-            paddingHorizontal: moderateScale(10),
-          }}>
-          <View
-            style={{
-              backgroundColor: isDarkMode
-                ? MyDarkTheme.colors.background
-                : colors.white,
-              marginVertical: moderateScale(12),
-              flexDirection: 'row',
-              marginHorizontal: moderateScale(4),
-              // alignItems:"center"
-            }}>
-            {item?.vendor?.banner ? (
-              <FastImage
-                source={{
-                  uri: getImageUrl(
-                    item?.vendor?.banner?.image_fit,
-                    item?.vendor?.banner?.image_path,
-                    '600/600',
-                  ),
-                  priority: FastImage.priority.high,
-                }}
-                style={{
-                  height: moderateScale(50),
-                  width: moderateScale(50),
-                  borderRadius: moderateScale(25),
-                }}
-              />
-            ) : (
-              <View
-                style={{
-                  backgroundColor: getRandomColor(),
-                  height: moderateScale(50),
-                  width: moderateScale(50),
-                  borderRadius: moderateScale(25),
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={{
-                    fontSize: textScale(20),
-                    textTransform: 'uppercase',
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.blackB,
-                  }}>
-                  {item?.vendor_name?.charAt(0)}
-                </Text>
-              </View>
-            )}
-
-            <View style={{
-              flexDirection: 'row',
-              marginHorizontal: moderateScale(18),
-              justifyContent: 'space-between',
-              //  backgroundColor: 'red',
-              flex: 1
-            }}>
-              <Text
-                style={{
-                  ...styles.summaryText,
-                  marginBottom: 0,
-                  color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.blackOpacity86,
-
-                  fontSize: textScale(13),
-                  fontFamily: fontFamily.bold,
-                  flex: 1
-                }}>
-                {item?.vendor_name}
-              </Text>
-
-              {/* <View
-                style={{
-                  flexDirection: 'row',
-
-                }}>
-                <TouchableOpacity
-                  onPress={() => dialCall('919796728709', 'phone')}>
-                  <Image
-                    source={imagePath.call2}
-                    style={{
-                      height: moderateScale(20),
-                      width: moderateScale(20),
-                      tintColor: themeColors.primary_color,
-                      marginRight: moderateScale(10),
-                    }}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => dialCall('919796728709', 'text')}>
-                  <Image
-                    source={imagePath.msg}
-                    style={{
-                      height: moderateScale(20),
-                      width: moderateScale(20),
-                      tintColor: themeColors.primary_color,
-                    }}
-                  />
-                </TouchableOpacity>
-              </View> */}
-
-              {item?.vendor?.phone_no && (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    marginTop: moderateScale(14),
-                  }}>
-                  <TouchableOpacity
-                    onPress={() => dialCall(item?.vendor?.phone_no, 'phone')}>
-                    <Image
-                      source={imagePath.call2}
-                      style={{
-                        height: moderateScale(20),
-                        width: moderateScale(20),
-                        tintColor: themeColors.primary_color,
-                        marginRight: moderateScale(30),
-                      }}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => dialCall(item?.vendor?.phone_no, 'text')}>
-                    <Image
-                      source={imagePath.msg}
-                      style={{
-                        height: moderateScale(20),
-                        width: moderateScale(20),
-                        tintColor: themeColors.primary_color,
-                      }}
-                    />
-                  </TouchableOpacity>
-                </View>
-              )}
-            </View>
-          </View>
+        <View style={{ paddingHorizontal: moderateScale(10) }}>
+          <UserDetail
+            data={item}
+            type="Vendor"
+          />
 
           {item?.products.length
             ? item?.products.map((i, inx) => {
@@ -1196,7 +1098,7 @@ export default function OrderDetail({ navigation, route }) {
             {strings.PAYMENT_SUMMARY}
           </Text>
 
-          {!!cartData?.total_amount && (
+          {!!cartData?.total_amount && cartData?.total_amount !== '0.00' && (
             <LeftRightText
               leftText={strings.SUBTOTAL}
               rightText={`${currencies?.primary_currency?.symbol}${Number(
@@ -1206,7 +1108,7 @@ export default function OrderDetail({ navigation, route }) {
               MyDarkTheme={MyDarkTheme}
             />
           )}
-          {!!cartData?.total_delivery_fee && (
+          {!!cartData?.total_delivery_fee && cartData?.total_delivery_fee !== '0.00' && (
             <LeftRightText
               leftText={strings.DELIVERY_FEE}
               rightText={`${currencies?.primary_currency?.symbol}${Number(
@@ -1216,7 +1118,7 @@ export default function OrderDetail({ navigation, route }) {
               MyDarkTheme={MyDarkTheme}
             />
           )}
-          {!!cartData?.wallet_amount_used && (
+          {!!cartData?.wallet_amount_used && cartData?.wallet_amount_used !== '0.00' && (
             <LeftRightText
               leftText={strings.WALLET}
               rightText={`${currencies?.primary_currency?.symbol}${Number(
@@ -1226,7 +1128,7 @@ export default function OrderDetail({ navigation, route }) {
               MyDarkTheme={MyDarkTheme}
             />
           )}
-          {!!cartData?.loyalty_amount_saved && (
+          {!!cartData?.loyalty_amount_saved && cartData?.loyalty_amount_saved !== '0.00' && (
             <LeftRightText
               leftText={strings.LOYALTY}
               rightText={`${currencies?.primary_currency?.symbol}${Number(
@@ -1246,7 +1148,7 @@ export default function OrderDetail({ navigation, route }) {
               MyDarkTheme={MyDarkTheme}
             />
           )}
-          {!!cartData?.total_discount && (
+          {!!cartData?.total_discount && cartData?.total_discount !== '0.00' && (
             <LeftRightText
               leftText={strings.DISCOUNT}
               rightText={`-${currencies?.primary_currency?.symbol}${Number(
@@ -1500,6 +1402,31 @@ export default function OrderDetail({ navigation, route }) {
     }
   };
 
+
+  const onCenter = () => {
+    mapRef.current.fitToCoordinates([
+      {
+        latitude: Number(driverStatus?.agent_location?.lat),
+        longitude: Number(driverStatus?.agent_location?.long),
+      },
+      {
+        latitude: Number(driverStatus.tasks[1]?.latitude),
+        longitude: Number(driverStatus.tasks[1]?.longitude),
+      },
+    ],
+      {
+        edgePadding: {
+          right: width / 20,
+          bottom: height / 20,
+          left: width / 20,
+          top: height / 20,
+        },
+      }
+    )
+  }
+
+
+
   const getHeader = () => {
     let getUserImage = getImageUrl(
       cartData?.user_image?.image_fit,
@@ -1507,24 +1434,39 @@ export default function OrderDetail({ navigation, route }) {
       '500/500',
     );
     return (
-      <>
-        {/* <View style={{ width: '100%', height: height / 2.5 }}>
+      <View>
+        {!!driverStatus?.order && driverStatus?.order.status == 'assigned' && orderStatus?.current_status?.id == 5 && (
+
+          <UserDetail
+            data={driverStatus}
+            type="Driver"
+            containerStyle={{ paddingHorizontal: moderateScale(8) }}
+          />
+        )}
+        {!!driverStatus && orderStatus?.current_status?.id == 5 && (<View style={{ width: '100%', height: height / 2.2 }}>
           <MapView
             ref={mapRef}
             style={StyleSheet.absoluteFillObject}
             initialRegion={{
-              latitude: 30.7173,
-              longitude: 76.8035,
+              latitude: Number(driverStatus.tasks[0]?.latitude),
+              longitude: Number(driverStatus.tasks[0]?.longitude),
               latitudeDelta: 0.0222,
               longitudeDelta: 0.0320,
             }}
             rotateEnabled={true}
           >
             <MapViewDirections
-              origin={curLoc}
+              origin={{
+                // latitude: Number(driverStatus.tasks[0]?.latitude),
+                // longitude: Number(driverStatus.tasks[0]?.longitude),
+                latitude: Number(driverStatus?.agent_location?.lat),
+                longitude: Number(driverStatus?.agent_location?.long),
+                latitudeDelta: 0.0222,
+                longitudeDelta: 0.0320,
+              }}
               destination={{
-                latitude: 30.7411,
-                longitude: 76.8035,
+                latitude: Number(driverStatus.tasks[1]?.latitude),
+                longitude: Number(driverStatus.tasks[1]?.longitude),
                 latitudeDelta: 0.0222,
                 longitudeDelta: 0.0320,
               }}
@@ -1557,17 +1499,17 @@ export default function OrderDetail({ navigation, route }) {
             />
             <Marker
               coordinate={{
-                latitude: 30.7411,
-                longitude: 76.8035,
+                latitude: Number(driverStatus.tasks[1]?.latitude),
+                longitude: Number(driverStatus.tasks[1]?.longitude),
                 latitudeDelta: 0.0222,
                 longitudeDelta: 0.0320,
               }}
               image={imagePath.icDestination}
 
             />
-            <Marker
+            {!!driverStatus.agent_location.lat && (<Marker.Animated
               ref={markerRef}
-              coordinate={coordinate}
+              coordinate={state.animateDriver}
               flat
             >
               <Image
@@ -1576,9 +1518,29 @@ export default function OrderDetail({ navigation, route }) {
                   transform: [{ rotate: `${state.headingAngle + 110}deg` }]
                 }}
               />
-            </Marker>
+            </Marker.Animated>)}
           </MapView>
-        </View> */}
+          <TouchableOpacity
+            style={{
+              position: 'absolute',
+              bottom: 10,
+              right: 10
+            }}
+            onPress={onCenter}
+          >
+
+            <Image
+              style={{
+                width: 34,
+                height: 34,
+                borderRadius: 34 / 2,
+              }}
+              source={imagePath.mapNavigation}
+            />
+          </TouchableOpacity>
+        </View>
+        )}
+
         {!!orderStatus && orderStatus?.current_status?.title == 'Placed' && (
           <View
             style={{
@@ -1695,44 +1657,11 @@ export default function OrderDetail({ navigation, route }) {
               />
             </View>
           )} */}
-      </>
+      </View>
     );
   };
 
 
-  const getLiveLocation = async () => {
-    const locPermissionDenied = await locationPermission()
-    console.log("loc permsss", locPermissionDenied)
-    if (locPermissionDenied) {
-      const { latitude, longitude } = await getCurrentLocation('home')
-      console.log(longitude, "get live location after 4 second", latitude)
-      // animate(latitude, longitude);
-      updateState({
-        curLoc: {
-          latitude,
-          longitude,
-          latitudeDelta: 0.0222,
-          longitudeDelta: 0.0320,
-        },
-      })
-
-      // setState({
-      //   ...state,
-      //   curLoc: {
-      //     latitude,
-      //     longitude,
-      //     latitudeDelta: 0.0222,
-      //     longitudeDelta: 0.0320,
-      //   },
-      //   coordinate: {
-      //     latitude: latitude,
-      //     longitude: longitude,
-      //     latitudeDelta: 0.0222,
-      //     longitudeDelta: 0.0320,
-      //   }
-      // })
-    }
-  }
 
   // useEffect(() => {
   //   const _watchId = Geolocation.watchPosition(
@@ -1770,15 +1699,16 @@ export default function OrderDetail({ navigation, route }) {
 
   const animate = (latitude, longitude) => {
     const newCoordinate = { latitude, longitude };
+    console.log("animated coorindate ++++", state.animateDriver)
     if (Platform.OS == 'android') {
       if (markerRef.current) {
-        markerRef.current.animateMarkerToCoordinate(newCoordinate, 7000);
+        markerRef.current.animateMarkerToCoordinate(newCoordinate, 3000);
       }
     } else {
-      // alert('yaho')
-      coordinate.timing(newCoordinate).start();
+      state.animateDriver?.timing(newCoordinate).start();
     }
   }
+
 
   return (
     <WrapperContainer
@@ -1794,7 +1724,7 @@ export default function OrderDetail({ navigation, route }) {
               ? imagePath.icBackb
               : imagePath.back
         }
-        centerTitle={strings.ORDER_DETAILS}
+        centerTitle={`Order ${'#'}${cartData?.order_number || ''}`}
       />
       <View
         style={{
@@ -1811,10 +1741,11 @@ export default function OrderDetail({ navigation, route }) {
             ? MyDarkTheme.colors.background
             : colors.greyColor,
         }}>
+
         <FlatList
           data={cartItems}
           extraData={cartItems}
-          ListHeaderComponent={cartItems.length ? getHeader() : null}
+          ListHeaderComponent={getHeader()}
           ListFooterComponent={cartItems.length ? getFooter() : null}
           showsVerticalScrollIndicator={false}
           style={{ backgroundColor: colors.backgroundGrey }}

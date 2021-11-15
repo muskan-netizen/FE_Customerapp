@@ -28,11 +28,12 @@ import {
   CANCEL_SPECIFIC_PLAN,
   LOGIN_BY_USERNAME,
   PHONE_LOGIN_OTP,
+  UPLOAD_PHOTO,
 } from '../../config/urls';
-import {apiGet, apiPost, clearUserData, setUserData} from '../../utils/utils';
+import { apiGet, apiPost, clearUserData, setUserData } from '../../utils/utils';
 import store from '../store';
 import types from '../types';
-const {dispatch} = store;
+const { dispatch } = store;
 
 export const saveUserData = (data) => {
   dispatch({
@@ -211,11 +212,11 @@ export const getViewData = (data) => {
 
 export const editProfile = (data) => {
   return new Promise((resolve, reject) => {
-    const headers = {'Content-Type': 'multipart/form-data'};
+    const headers = { 'Content-Type': 'multipart/form-data' };
     apiPost(EDIT_PROFILE, data, headers)
       .then((res) => {
         const userData = store.getState().auth.userData;
-        const updatedUserData = {...userData, ...res.data};
+        const updatedUserData = { ...userData, ...res.data };
         saveUserData(updatedUserData);
         setUserData(updatedUserData);
         resolve(res);
@@ -231,7 +232,7 @@ export const getCurrentUser = () => {
     apiGet(GET_CURRENT_USER)
       .then((res) => {
         const userData = store.getState().auth.userData;
-        const updatedUserData = {...userData, ...res.data};
+        const updatedUserData = { ...userData, ...res.data };
         saveUserData(updatedUserData);
         setUserData(updatedUserData);
         resolve(res);
@@ -342,7 +343,7 @@ export function forgotPassword(data) {
 }
 
 export function logout() {
-  dispatch({type: types.CLEAR_REDUX_STATE});
+  dispatch({ type: types.CLEAR_REDUX_STATE });
   clearUserData();
 }
 
@@ -437,4 +438,8 @@ export function getLoyaltyInfo(data = {}, headers = {}) {
         reject(error);
       });
   });
+}
+
+export function imageUpload(data = {}, headers = {}) {
+  return apiPost(UPLOAD_PHOTO, data, headers);
 }

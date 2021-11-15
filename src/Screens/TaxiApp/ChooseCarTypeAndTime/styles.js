@@ -27,7 +27,7 @@ export default ({fontFamily, themeColors}) => {
       //   themeColors.primary_color.substr(1),
       //   20,
       // ),
-      paddingVertical: moderateScaleVertical(15),
+      paddingVertical: moderateScaleVertical(10),
       paddingHorizontal: moderateScaleVertical(10),
       marginVertical: moderateScaleVertical(10),
       flexDirection: 'row',
@@ -41,8 +41,7 @@ export default ({fontFamily, themeColors}) => {
     },
     container: {
       flex: 1,
-      justifyContent: 'flex-end',
-      alignItems: 'center',
+      backgroundColor: '#fff',
     },
     map: {
       ...StyleSheet.absoluteFillObject,
@@ -78,10 +77,8 @@ export default ({fontFamily, themeColors}) => {
     },
     bottomView: {
       backgroundColor: colors.white,
-      borderTopLeftRadius: moderateScale(25),
-      borderTopRightRadius: moderateScale(25),
-      overflow: 'hidden',
-      height: height / 2,
+
+      minHeight: height / 2,
       width: width,
     },
     bottomView3: {

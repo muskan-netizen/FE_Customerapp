@@ -261,6 +261,7 @@ export default {
   REVENUE: 'Receita',
   RATEORDER: 'Ordem de taxa',
   UPLOAD_IMAGE: 'Enviar imagem',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: 'Escrever revisão',
   ENTERREFERALCODE: 'Digite código de referência',
   SENDREFFERAL: 'Enviar Refferal',
@@ -566,4 +567,8 @@ export default {
   AND: 'e',
   PRICACY_POLICY: 'Privacy Policy',
   TIP_AMOUNT: 'Tip Amount',
+  CONFIRM_DESTINATION: 'Confirm Destination',
+  CONFIRM_VEHICLE: 'Confirm Vehicle',
+  SPECIAL_INSTRUCTION: 'Special Instruction',
+  TAP_HERE_ADD_ADDRESS: 'Tap here to add address',
 };

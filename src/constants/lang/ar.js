@@ -276,6 +276,7 @@ export default {
   REVENUE: 'الإيرادات',
   RATEORDER: 'تقييم الطلب',
   UPLOAD_IMAGE: 'تحميل صورة',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: 'اكتب تعليق',
   ENTERREFERALCODE: 'إدخال رمز الإحالة',
   SENDREFFERAL: 'إرسال رمز الإحالة',
@@ -599,4 +600,8 @@ export default {
   AND: 'و',
   PRICACY_POLICY: 'سياسة الخصوصية',
   TIP_AMOUNT: 'مبلغ تلميح',
+  CONFIRM_DESTINATION: 'Confirm Destination',
+  CONFIRM_VEHICLE: 'Confirm Vehicle',
+  SPECIAL_INSTRUCTION: 'تعليمات خاصة',
+  TAP_HERE_ADD_ADDRESS: 'انقر هنا لإضافة العنوان',
 };
