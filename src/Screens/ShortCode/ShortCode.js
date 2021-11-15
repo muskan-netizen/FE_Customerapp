@@ -930,6 +930,49 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.bezalio:
+          updateState({
+            shortCode: shortCodes.bezalio,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.youchillax:
+          updateState({
+            shortCode: shortCodes.youchillax,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.instashop:
+          updateState({
+            shortCode: shortCodes.instashop,
+            isShortcodePrefilled: true,
+          });
+          s;
+          break;
+        case appIds.shoorafresh:
+          updateState({
+            shortCode: shortCodes.shoorafresh,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.click2deliver:
+          updateState({
+            shortCode: shortCodes.click2deliver,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.trucktirenow:
+          updateState({
+            shortCode: shortCodes.trucktirenow,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.yeboy:
+          updateState({
+            shortCode: shortCodes.yeboy,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -960,16 +1003,16 @@ export default function ShortCode({route, navigation}) {
 
   const initApiHit = () => {
     let header = {};
-    if (languages?.primary_language?.id) {
-      header = {
-        code: shortCode,
-        language: languages?.primary_language?.id,
-      };
-    } else {
-      header = {
-        code: shortCode,
-      };
-    }
+    // if (languages?.primary_language?.id) {
+    //   header = {
+    //     code: shortCode,
+    //     language: languages?.primary_language?.id,
+    //   };
+    // } else {
+    header = {
+      code: shortCode,
+    };
+    // }
 
     actions
       .initApp({}, header, false, null, null, true)

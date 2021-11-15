@@ -98,5 +98,6 @@ export default {
   TIP_PAYMENT_OPTIONS: 'tipPaymentOptions',
   PAYLINK: 'paylink',
   ADD_VEHICLE_DETAILS: 'addVehicleDetails',
-  ALL_IN_ONE_PAYMENTS:"allInOnePayments",
+  CATEGORY_BRANDS: 'categoryBrands',
+  ALL_IN_ONE_PAYMENTS: 'allInOnePayments',
 };

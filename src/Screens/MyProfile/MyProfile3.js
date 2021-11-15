@@ -917,25 +917,9 @@ export default function MyProfile3({route, navigation}) {
                 borderRadius: moderateScale(12),
               }}
             />
-            <View
-              style={{
-                position: 'absolute',
-                right: -15,
-                // borderRadius: 15,
-                // height: 35,
-                // width: 35,
-                // alignItems: 'center',
-                // justifyContent: '',
-              }}>
+            <View style={styles.cameraView}>
               <View
-                style={{
-                  height: moderateScale(30),
-                  width: moderateScale(30),
-                  backgroundColor: themeColors.primary_color,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: moderateScale(30),
-                }}
+                style={styles.roundViewCamera}
                 resizeMode="contain"
                 source={imagePath?.camera}>
                 <Image

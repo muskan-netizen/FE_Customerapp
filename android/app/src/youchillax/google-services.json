@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "990245512949",
+    "project_id": "youchillax-e8c27",
+    "storage_bucket": "youchillax-e8c27.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:990245512949:android:011366d8c1ef5d521d07bc",
+        "android_client_info": {
+          "package_name": "com.youchillax"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "990245512949-3lrdd4ftjqa4i8fe2cqbnqe8k0g597au.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.youchillax",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "990245512949-i8nnu0geqnemm62diclh42huprlld33u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.youchillax",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "990245512949-otvsgq5cq6enf5l3rpft1fhon92m795q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.youchillax",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "990245512949-ap243ma6n5tcjtuhnusvjhipjl68i3ja.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgN1354m29U1oA_sdmxZ-LMp9FfunHW78"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "990245512949-ap243ma6n5tcjtuhnusvjhipjl68i3ja.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "990245512949-75vfbasvd5ru0gteaksvrmbum09mj6l6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.youchillax"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

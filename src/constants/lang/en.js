@@ -596,4 +596,5 @@ Amount`,
   CONFIRM_VEHICLE: 'Confirm Vehicle',
   SPECIAL_INSTRUCTION: 'Special Instruction',
   ADD_TIP: 'Add Tip',
+  TAP_HERE_ADD_ADDRESS: 'Tap here to add address',
 };

@@ -1,6 +1,6 @@
 import {debounce} from 'lodash';
 import React, {useEffect, useState} from 'react';
-import {FlatList, RefreshControl, View} from 'react-native';
+import {FlatList, RefreshControl, View, Text} from 'react-native';
 import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import ProductCard from '../../Components/ProductCard';
@@ -172,6 +172,7 @@ export default function Wishlist2({navigation}) {
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }
       statusBarColor={colors.backgroundGrey}>
+      {/* <Text>Helo</Text> */}
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2
@@ -195,14 +196,16 @@ export default function Wishlist2({navigation}) {
         data={wishlistArray}
         renderItem={renderProduct}
         keyExtractor={(item, index) => String(index)}
-        ListHeaderComponent={<View style={{height: 20}} />}
+        ListHeaderComponent={
+          <View style={{height: !wishlistArray.length > 0 ? 20 : 0}} />
+        }
         keyboardShouldPersistTaps="always"
         // numColumns={2}
         showsVerticalScrollIndicator={false}
         // style={{ flex: 1 }}
-        // contentContainerStyle={{
-        //   flexGrow: 1,
-        // }}
+        contentContainerStyle={{
+          flexGrow: 1,
+        }}
         // ItemSeparatorComponent={() => <View style={{ height: 1 }} />}
         // columnWrapperStyle={{
         //   justifyContent: 'space-between',

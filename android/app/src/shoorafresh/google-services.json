@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "21155558340",
+    "project_id": "shoora-fresh",
+    "storage_bucket": "shoora-fresh.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:21155558340:android:500146a858f6e90f85aa91",
+        "android_client_info": {
+          "package_name": "com.shoorafresh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "21155558340-di3l2ujad9cn402mfkohtlp2uojucat0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shoorafresh",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "21155558340-ofri3el4kl6vkip5ejiahpnm83614hnb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shoorafresh",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "21155558340-vp3g2ch2l0ucggbunu925gbnlkk7bltb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shoorafresh",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "21155558340-6o5o5avqcjrk85p18nj85eb8ddsel88g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiBGv0ycNJAG4AerCu0Grplyl98EEeskM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "21155558340-6o5o5avqcjrk85p18nj85eb8ddsel88g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "21155558340-cg413r3r5jm2vf13sa6h5sblui6tpahn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.shoorafresh"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
