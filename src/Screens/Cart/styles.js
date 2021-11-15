@@ -199,7 +199,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(4),
       paddingVertical: moderateScaleVertical(4),
-      marginRight: moderateScale(8)
+      marginRight: moderateScale(8),
     },
     cartItemRatting: {
       tintColor: colors.orange,
@@ -415,7 +415,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     },
     dropDownContainerStyle: {
       height: 40,
-      marginTop: moderateScaleVertical(10),
+      marginVertical: moderateScaleVertical(10),
       // zIndex: 10,
     },
     mainViewRednderItem: {
