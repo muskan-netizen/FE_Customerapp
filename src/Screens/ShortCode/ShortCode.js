@@ -947,10 +947,23 @@ export default function ShortCode({route, navigation}) {
             shortCode: shortCodes.instashop,
             isShortcodePrefilled: true,
           });
+          s;
           break;
         case appIds.shoorafresh:
           updateState({
             shortCode: shortCodes.shoorafresh,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.click2deliver:
+          updateState({
+            shortCode: shortCodes.click2deliver,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.trucktirenow:
+          updateState({
+            shortCode: shortCodes.trucktirenow,
             isShortcodePrefilled: true,
           });
           break;

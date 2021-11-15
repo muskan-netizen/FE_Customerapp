@@ -145,6 +145,8 @@ const shortCodes = {
   youchillax: 'a2c90d',
   instashop: 'cb6671',
   shoorafresh: 'bd4fe8',
+  click2deliver: '6483c6',
+  trucktirenow: '82c016',
 };
 
 const appIds = {
@@ -723,6 +725,14 @@ const appIds = {
   shoorafresh: Platform.select({
     ios: 'com.shoorafresh',
     android: 'com.shoorafresh',
+  }),
+  click2deliver: Platform.select({
+    ios: 'com.click2deliver',
+    android: 'com.click2deliver',
+  }),
+  trucktirenow: Platform.select({
+    ios: 'com.trucktirenow',
+    android: 'com.trucktirenow',
   }),
 };
 
