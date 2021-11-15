@@ -352,7 +352,7 @@ export default function Cart({navigation, route}) {
             );
             const data = {
               vendor_id: tableData[0].vendor_id,
-              table: tableData[0].table_number,
+              table: tableData[0].id,
             };
             _vendorTableCart(data, tableData[0]);
           }
@@ -2663,7 +2663,9 @@ export default function Cart({navigation, route}) {
   //Header section of cart screen
   const getHeader = () => {
     return (
-      <View
+      <TouchableOpacity
+        disabled={!!vendorAddress}
+        onPress={() => setModalVisible(true)}
         style={{
           ...styles.topLable,
           marginVertical: moderateScale(7),
@@ -2682,7 +2684,11 @@ export default function Cart({navigation, route}) {
                 ...styles.homeTxt,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
-              {strings.HOME}
+              {vendorAddress
+                ? strings.HOME
+                : selectedAddressData
+                ? strings.HOME
+                : strings.ADD_ADDRESS}
             </Text>
             <Text
               numberOfLines={2}
@@ -2695,7 +2701,7 @@ export default function Cart({navigation, route}) {
                 ? vendorAddress
                 : selectedAddressData
                 ? selectedAddressData?.address
-                : strings.ADD_ADDRESS}
+                : strings.TAP_HERE_ADD_ADDRESS}
             </Text>
           </View>
         </View>
@@ -2710,7 +2716,7 @@ export default function Cart({navigation, route}) {
             />
           </TouchableOpacity>
         )}
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -2838,14 +2844,16 @@ export default function Cart({navigation, route}) {
   }, [deepLinkUrl]);
 
   const _onTableSelection = (item) => {
+    console.log(item, 'itemitemitem');
     const data = {
       vendor_id: item.vendor_id,
-      table: item.table_number,
+      table: item?.id,
     };
     _vendorTableCart(data, item);
   };
 
   const _vendorTableCart = (data, item) => {
+    console.log(data, 'selectedTable');
     actions
       .vendorTableCart(data, {
         code: appData?.profile?.code,

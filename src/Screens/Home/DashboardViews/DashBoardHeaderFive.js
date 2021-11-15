@@ -92,7 +92,9 @@ export default function DashBoardHeaderFive({
 
     if (toggleData?.profile?.preferences?.delivery_check == 1) {
       localTabsArray.push({
-        value: strings.DELIVERY,
+        value:
+          toggleData?.profile?.preferences?.delivery_nomenclature ||
+          strings.DELIVERY,
         label: 'delivery',
         icon: imagePath.delivery,
         iconInActive: imagePath.deliveryInActive,
@@ -107,7 +109,9 @@ export default function DashBoardHeaderFive({
     }
     if (toggleData?.profile?.preferences?.dinein_check == 1) {
       localTabsArray.push({
-        value: strings.DINE_IN,
+        value:
+          toggleData?.profile?.preferences?.dinein_nomenclature ||
+          strings.DINE_IN,
         label: 'dine_in',
         icon: imagePath.dineIn,
         isActive: false,
@@ -155,7 +159,11 @@ export default function DashBoardHeaderFive({
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        setUserSelectedTab(strings.DINE_IN, 'dine_in');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.dinein_nomenclature ||
+            strings.DINE_IN,
+          'dine_in',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
@@ -171,9 +179,17 @@ export default function DashBoardHeaderFive({
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        setUserSelectedTab(strings.DINE_IN, 'dine_in');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.dinein_nomenclature ||
+            strings.DINE_IN,
+          'dine_in',
+        );
       } else {
-        setUserSelectedTab(strings.DELIVERY, 'delivery');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.delivery_nomenclature ||
+            strings.DELIVERY,
+          'delivery',
+        );
       }
     } else if (dine_In_Type === 'dine_in') {
       if (
@@ -181,7 +197,11 @@ export default function DashBoardHeaderFive({
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        setUserSelectedTab(strings.DINE_IN, 'dine_in');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.dinein_nomenclature ||
+            strings.DINE_IN,
+          'dine_in',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
@@ -197,27 +217,47 @@ export default function DashBoardHeaderFive({
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        setUserSelectedTab(strings.DINE_IN, 'dine_in');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.dinein_nomenclature ||
+            strings.DINE_IN,
+          'dine_in',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 1
       ) {
-        setUserSelectedTab(strings.DELIVERY, 'delivery');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.delivery_nomenclature ||
+            strings.DELIVERY,
+          'delivery',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        setUserSelectedTab(strings.DELIVERY, 'delivery');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.delivery_nomenclature ||
+            strings.DELIVERY,
+          'delivery',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        setUserSelectedTab(strings.DELIVERY, 'delivery');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.delivery_nomenclature ||
+            strings.DELIVERY,
+          'delivery',
+        );
       } else {
-        setUserSelectedTab(strings.DINE_IN, 'dine_in');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.dinein_nomenclature ||
+            strings.DINE_IN,
+          'dine_in',
+        );
       }
     } else {
       if (
@@ -255,19 +295,31 @@ export default function DashBoardHeaderFive({
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        setUserSelectedTab(strings.DINE_IN, 'dine_in');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.dinein_nomenclature ||
+            strings.DINE_IN,
+          'dine_in',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 1 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        setUserSelectedTab(strings.DELIVERY, 'delivery');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.delivery_nomenclature ||
+            strings.DELIVERY,
+          'delivery',
+        );
       } else if (
         toggleData?.profile?.preferences?.delivery_check == 1 &&
         toggleData?.profile?.preferences?.dinein_check == 0 &&
         toggleData?.profile?.preferences?.takeaway_check == 0
       ) {
-        setUserSelectedTab(strings.DELIVERY, 'delivery');
+        setUserSelectedTab(
+          toggleData?.profile?.preferences?.delivery_nomenclature ||
+            strings.DELIVERY,
+          'delivery',
+        );
       } else {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
@@ -484,12 +536,6 @@ export default function DashBoardHeaderFive({
                     : colors.white,
                 },
               ]}>
-              {/* <BlurView
-                blurType="light"
-                style={styles.blurView}
-                blurAmount={32}
-              /> */}
-
               <View style={{padding: moderateScale(10)}}>
                 {tabs.map((item, indx) => {
                   return (

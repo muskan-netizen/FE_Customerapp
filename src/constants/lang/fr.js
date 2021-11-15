@@ -637,4 +637,5 @@ montant`,
   CONFIRM_DESTINATION: 'Confirm Destination',
   CONFIRM_VEHICLE: 'Confirm Vehicle',
   SPECIAL_INSTRUCTION: 'Special Instruction',
+  TAP_HERE_ADD_ADDRESS: 'Tap here to add address',
 };

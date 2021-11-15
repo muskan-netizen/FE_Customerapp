@@ -603,4 +603,5 @@ export default {
   CONFIRM_DESTINATION: 'Confirm Destination',
   CONFIRM_VEHICLE: 'Confirm Vehicle',
   SPECIAL_INSTRUCTION: 'تعليمات خاصة',
+  TAP_HERE_ADD_ADDRESS: 'Tap here to add address',
 };
