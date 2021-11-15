@@ -37,7 +37,7 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
 
   const imageURI = data?.icon
     ? getImageUrl(data.icon.image_fit, data.icon.image_path, '400/400')
-    : getImageUrl(data.image.proxy_url, data.image.image_path, '40/40');
+    : getImageUrl(data.image.image_fit, data.image.image_path, '400/400');
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
 
