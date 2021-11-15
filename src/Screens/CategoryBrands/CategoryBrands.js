@@ -22,22 +22,28 @@ import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import actions from '../../redux/actions';
 import {showError} from '../../utils/helperFunctions';
 import {debounce} from 'lodash';
+import NoDataFound from '../../Components/NoDataFound';
 
 export default function CategoryBrands({navigation, route}) {
-  const {data} = route.params;
+  const {data} = route?.params;
   console.log(data, 'paramsData');
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const location = useSelector((state) => state?.home?.location);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
-  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
-  const {appStyle, appData, themeColors, fontFamily, languages} = useSelector(
-    (state) => state.initBoot,
+  const {location, appMainData, dineInType} = useSelector(
+    (state) => state?.home,
   );
-  const appMainData = useSelector((state) => state?.home?.appMainData);
-  const styles = stylesFunc({themeColors, fontFamily});
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const {
+    appStyle,
+    appData,
+    themeColors,
+    fontFamily,
+    languages,
+    themeColor,
+    themeToggle,
+  } = useSelector((state) => state.initBoot);
   const categoryData = useSelector((state) => state?.vendor?.categoryData);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
+  const styles = stylesFunc({themeColors, fontFamily});
 
   const [state, setState] = useState({
     isLoading: true,
@@ -45,6 +51,7 @@ export default function CategoryBrands({navigation, route}) {
     limit: 5,
     isRefreshing: false,
   });
+  const {isLoading, limit, pageNo, isRefreshing} = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -55,13 +62,12 @@ export default function CategoryBrands({navigation, route}) {
       navigation.navigate(screenName, {data});
     };
 
-  const {isLoading, limit, pageNo, isRefreshing} = state;
   //Redux store data
 
   useEffect(() => {
     actions
       .getDataByCategoryId(
-        `/${data.id}?limit=${limit}&page=${pageNo}&type=${dine_In_Type}`,
+        `/${data.id}?limit=${limit}&page=${pageNo}&type=${dineInType}`,
         {},
         {
           code: appData.profile.code,
@@ -120,13 +126,6 @@ export default function CategoryBrands({navigation, route}) {
       />
     );
   };
-
-  // we set the height of item is fixed
-  const getItemLayout = (data, index) => ({
-    length: width - moderateScale(32),
-    offset: (width - moderateScale(32)) * index,
-    index,
-  });
 
   if (isLoading) {
     return (
@@ -216,8 +215,6 @@ export default function CategoryBrands({navigation, route}) {
     );
   }
 
-  console.log(categoryData, 'categoryDatacategoryData');
-
   return (
     <WrapperContainer
       bgColor={
@@ -256,7 +253,6 @@ export default function CategoryBrands({navigation, route}) {
         ItemSeparatorComponent={() => (
           <View style={{height: moderateScaleVertical(10)}} />
         )}
-        // getItemLayout={getItemLayout}
         numColumns={3}
         renderItem={_renderItem}
         refreshing={isRefreshing}
@@ -265,7 +261,6 @@ export default function CategoryBrands({navigation, route}) {
             refreshing={isRefreshing}
             onRefresh={handleRefresh}
             tintColor={themeColors.primary_color}
-            // titleColor="#fff"
           />
         }
         initialNumToRender={5}
@@ -273,6 +268,9 @@ export default function CategoryBrands({navigation, route}) {
         windowSize={10}
         onEndReached={onEndReachedDelayed}
         onEndReachedThreshold={0.5}
+        ListEmptyComponent={
+          <NoDataFound isLoading={isLoading} containerStyle={{}} />
+        }
       />
     </WrapperContainer>
   );

@@ -9,6 +9,7 @@ import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import * as NavigationService from '../navigation/NavigationService';
 import Toast from 'react-native-simple-toast';
+import {StatusBarHeight} from '../styles/responsiveSize';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -87,6 +88,7 @@ const showError = (message) => {
     type: 'danger',
     icon: 'danger',
     message,
+    statusBarHeight: StatusBarHeight,
   });
   // Toast.show(message);
 };
@@ -96,6 +98,7 @@ const showSuccess = (message) => {
     type: 'success',
     icon: 'success',
     message,
+    statusBarHeight: StatusBarHeight,
   });
 
   // Toast.show(message);
@@ -105,6 +108,7 @@ const showInfo = (message) => {
     type: 'info',
     icon: 'info',
     message,
+    statusBarHeight: StatusBarHeight,
   });
   // Toast.show(message);
 };

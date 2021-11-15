@@ -36,7 +36,7 @@ export default function Celebrity({navigation}) {
       'MNOP',
       'QRST',
       'UVWX',
-      'YX',
+      'YZ',
     ],
     selectedTab: 'All',
     pageIndex: 0,
