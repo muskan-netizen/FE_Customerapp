@@ -128,6 +128,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       : null,
     pageNo: 1,
     limit: 12,
+    uploadImages: [],
     isLoadingB: false,
     totalDistance: 0,
     totalDuration: 0,
@@ -184,6 +185,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     pickedUpTime,
     selectedDate,
     pickedUpDate,
+    uploadImages
   } = state;
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -371,6 +373,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     data['product_id'] = selectedCarOption?.id;
     data['currency_id'] = currencies?.primary_currency?.id;
     data['tasks'] = paramData?.tasks;
+    data['images_array'] = uploadImages
     if (couponInfo) {
       data['coupon_id'] = couponInfo?.id;
     }
@@ -501,9 +504,38 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       screenName: strings.PAYMENT,
     })();
   };
-  const uploadImage = (img) => {
-    console.log("img++++++", img)
+
+  console.log("app data")
+
+
+  const uploadImage = async (img) => {
+    console.log('selected image', img)
+
+    const imgData = new FormData();
+    imgData.append("upload_photo", {
+      uri: img,
+      name: "image.png",
+      fileName: 'image',
+      type: 'image/png'
+    })
+    try {
+      const res = await actions.imageUpload(imgData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      console.log("image upload res", res)
+      updateState({
+        uploadImages: [...uploadImages, ...[res.image]]
+      })
+    } catch (error) {
+      console.log("erro rraised", error)
+      showError(error?.error || error?.message)
+    }
   }
+
+  console.log("image uploaded res", uploadImages)
+
   const _selectPaymentView = () => {
     return (
       <SelectPaymentModalView

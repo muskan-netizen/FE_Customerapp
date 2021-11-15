@@ -7,7 +7,8 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Alert
+  Alert,
+  FlatList
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
@@ -71,7 +72,7 @@ export default function SelectPaymentModalView({
   const { profile } = appData;
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const userData = useSelector((state) => state?.auth?.userData);
-  const [image, setImage] = useState('')
+  const [image, setImage] = useState([])
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -99,8 +100,8 @@ export default function SelectPaymentModalView({
         'Upload Image ',
         'Choose an option',
         [
-          { text: 'Camera', onPress: onCamera },
-          { text: 'Gallery', onPress: onGallery },
+          { text: 'Camera', onPress: () => onCamera() },
+          { text: 'Gallery', onPress: () => onGallery() },
           { text: 'Cancel', onPress: () => { } },
         ],
         { cancelable: true },
@@ -108,18 +109,27 @@ export default function SelectPaymentModalView({
     }
   };
 
+
+  const removeImage = (inx) => {
+    let res = image.filter((val, i) => {
+      if (i !== inx) {
+        return val
+      }
+    })
+    setImage(res)
+  }
   const onGallery = async () => {
     try {
-      let image = await ImagePicker.openPicker({
+      let imageRes = await ImagePicker.openPicker({
         width: 300,
         height: 400,
         multiple: false,
         cropping: true,
         mediaType: 'photo',
       })
-      console.log("Image path", image)
-      uploadImage(image.path)
-      setImage(image.path)
+      console.log("Image path", imageRes)
+      uploadImage(imageRes.path)
+      setImage([...image, ...[imageRes?.path]])
     } catch (error) {
       console.log(error)
     }
@@ -128,7 +138,7 @@ export default function SelectPaymentModalView({
 
   const onCamera = async (index) => {
     try {
-      let image = await ImagePicker.openCamera({
+      let imageRes = await ImagePicker.openCamera({
         width: 100,
         height: 100,
         useFrontCamera: true,
@@ -136,14 +146,16 @@ export default function SelectPaymentModalView({
         mediaType: 'photo',
 
       })
-      console.log("Image path", image)
-      uploadImage(image.path)
-      setImage(image.path)
+      console.log("Image path", imageRes)
+      uploadImage(imageRes.path)
+      setImage([...image, ...[imageRes?.path]])
     }
     catch (error) {
       console.log('Image Picker error: ', error)
     }
   };
+
+  console.log("image,image", image)
 
 
   return (
@@ -501,109 +513,130 @@ export default function SelectPaymentModalView({
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => _getAllOffers(selectedCarOption, '')}
+        <View
+
           style={{
             ...styles.offersViewB,
             marginHorizontal: moderateScale(17),
+            flexDirection: 'row'
             // backgroundColor: 'black'
           }}>
-          {couponInfo ? (
-            <View
-              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <View
-                style={{ flex: 0.7, flexDirection: 'row', alignItems: 'center' }}>
+          <TouchableOpacity
+            onPress={() => _getAllOffers(selectedCarOption, '')}
+            style={{ flex: 1 }}>
+            {couponInfo ? (
+              <TouchableOpacity
+
+                style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View
+                  style={{ flex: 0.7, flexDirection: 'row', alignItems: 'center' }}>
+                  <Image
+                    style={{ tintColor: themeColors.primary_color }}
+                    source={imagePath.percent2}
+                  />
+                  <Text
+                    numberOfLines={1}
+                    style={[styles.viewOffers, { marginLeft: moderateScale(10) }]}>
+                    {`${strings.CODE} ${couponInfo?.name} ${strings.APPLYED}`}
+                  </Text>
+                </View>
+                <View style={{ flex: 0.3, alignItems: 'flex-end' }}>
+                  <Text
+                    onPress={removeCoupon}
+                    style={[styles.removeCoupon, { color: colors.cartItemPrice }]}>
+                    {strings.REMOVE}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                flex: 1,
+              }}
+                onPress={() => _getAllOffers(selectedCarOption, '')}
+              >
                 <Image
-                  style={{ tintColor: themeColors.primary_color }}
+                  style={{ tintColor: themeColors.primary_color, }}
                   source={imagePath.percent2}
                 />
                 <Text
-                  numberOfLines={1}
                   style={[styles.viewOffers, { marginLeft: moderateScale(10) }]}>
-                  {`${strings.CODE} ${couponInfo?.name} ${strings.APPLYED}`}
+                  {strings.APPLY_PROMO_CODE}
                 </Text>
-              </View>
-              <View style={{ flex: 0.3, alignItems: 'flex-end' }}>
-                <Text
-                  onPress={removeCoupon}
-                  style={[styles.removeCoupon, { color: colors.cartItemPrice }]}>
-                  {strings.REMOVE}
-                </Text>
-              </View>
-            </View>
-          ) : (
-            <View style={{
-              flexDirection: 'row',
-              alignItems: 'center',
+              </TouchableOpacity>
+            )}
+          </TouchableOpacity>
 
-            }}>
-              <Image
-                style={{ tintColor: themeColors.primary_color, }}
-                source={imagePath.percent2}
-              />
-              <Text
-                style={[styles.viewOffers, { marginLeft: moderateScale(10) }]}>
-                {strings.APPLY_PROMO_CODE}
-              </Text>
-            </View>
-          )}
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={{
-            ...styles.offersViewB,
-            marginVertical: 0,
-            paddingVertical: 0,
-            marginBottom: moderateScaleVertical(10),
-
+          <TouchableOpacity style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginLeft: moderateScale(8),
           }}
-          onPress={onImageUpload}
-        >
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Image
-              style={{ tintColor: themeColors.primary_color }}
-              source={imagePath.icUpload}
-            />
-            <Text
-              style={[styles.viewOffers, { marginLeft: moderateScale(10) }]}>
-              {image == '' ? strings.UPLOAD_IMAGE : strings.CHANGE_IMAGE}
-            </Text>
-          </View>
-        </TouchableOpacity>
-
-        {image !== '' && <View
-          style={{
-            ...styles.offersViewB,
-            marginVertical: 0,
-            paddingVertical: 0,
-            alignSelf: 'flex-start',
-          }}
-        >
-          <Image
-            source={{ uri: image }}
-            style={{
-              width: moderateScale(40),
-              height: moderateScale(40),
-              borderRadius: moderateScale(8)
-            }}
-          />
-          <TouchableOpacity
-            onPress={() => setImage('')}
-            style={{
-              position: 'absolute',
-              top: -4,
-              right: 0,
-            }}>
+            onPress={onImageUpload}
+          >
             <Image
               style={{
+                tintColor: themeColors.primary_color,
                 width: moderateScale(16),
                 height: moderateScale(16),
-                borderRadius: moderateScale(10)
               }}
               resizeMode="contain"
-              source={imagePath.icClose3}
+              source={imagePath.icUpload}
             />
+
           </TouchableOpacity>
+        </View>
+
+        {image.length !== 0 && <View
+          style={{
+            ...styles.offersViewB,
+            marginVertical: 0,
+            paddingVertical: 0,
+            // alignSelf: 'flex-start',
+            overflow: 'visible'
+          }}
+        >
+          <FlatList
+            horizontal
+            data={image}
+            ItemSeparatorComponent={() => <View style={{ marginLeft: 8 }} />}
+            renderItem={({ item, index }) => {
+              return (
+                <View style={{ alignItems: 'center' }}>
+                  <View>
+                    <Image
+                      source={{ uri: item }}
+                      style={{
+                        width: moderateScale(40),
+                        height: moderateScale(40),
+                        borderRadius: moderateScale(8)
+                      }}
+                    />
+                    <TouchableOpacity
+                      onPress={() => removeImage(index)}
+                      style={{
+                        position: 'absolute',
+                        right: 0
+                      }}>
+                      <Image
+                        style={{
+                          width: moderateScale(16),
+                          height: moderateScale(16),
+                          borderRadius: moderateScale(10)
+                        }}
+                        resizeMode="contain"
+                        source={imagePath.icClose3}
+                      />
+                    </TouchableOpacity>
+                  </View>
+
+                </View>
+              )
+            }}
+
+          />
+
         </View>}
 
         <View

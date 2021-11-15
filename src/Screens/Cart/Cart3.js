@@ -622,8 +622,8 @@ export default function Cart({ navigation, route }) {
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
     }
-    actions
-      .placeOrder(data, {
+    console.log("sending data...",data)
+    actions.placeOrder(data, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,

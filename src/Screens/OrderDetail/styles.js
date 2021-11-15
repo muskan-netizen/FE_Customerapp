@@ -287,12 +287,17 @@ export default ({fontFamily}) => {
       color: colors.lightGreyBgColor,
       fontSize: textScale(10),
     },
-    imageStyle: {height: width / 4.5, width: width / 4.5},
+    imageStyle: {
+      height: width / 4.5, 
+      width: width / 4.5,
+      borderRadius:moderateScale(8)
+    },
     writeAReview: {
       fontFamily: fontFamily.bold,
       color: colors.lightGreyBgColor,
       fontSize: textScale(10),
       textAlign: 'left',
+
     },
     containerStyle: {
       flex: 1,

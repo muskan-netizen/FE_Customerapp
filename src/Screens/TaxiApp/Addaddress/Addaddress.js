@@ -162,6 +162,8 @@ export default function Addaddress({ navigation, route }) {
     }
   }, [paramData]);
 
+  console.log("param data", paramData)
+
   //get All address
   const getAllAddress = () => {
     actions
