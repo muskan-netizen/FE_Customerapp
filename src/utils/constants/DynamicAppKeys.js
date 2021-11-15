@@ -147,6 +147,7 @@ const shortCodes = {
   shoorafresh: 'bd4fe8',
   click2deliver: '6483c6',
   trucktirenow: '82c016',
+  yeboy: 'e4ec39',
 };
 
 const appIds = {
@@ -733,6 +734,10 @@ const appIds = {
   trucktirenow: Platform.select({
     ios: 'com.trucktirenow',
     android: 'com.trucktirenow',
+  }),
+  yeboy: Platform.select({
+    ios: 'com.yeboy',
+    android: 'com.yeboy',
   }),
 };
 

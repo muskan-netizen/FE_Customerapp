@@ -1684,6 +1684,16 @@ android {
             resValue "string", "app_name", "TruckTireNow"
             resValue "string", "host_name", ""
          }
+         yeboy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.yeboy'
+            resValue "string", "app_name", "Yeboy"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

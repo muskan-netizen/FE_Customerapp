@@ -967,6 +967,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.yeboy:
+          updateState({
+            shortCode: shortCodes.yeboy,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
