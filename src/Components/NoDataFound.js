@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import commonStylesFunc from '../styles/commonStyles';
-import {textScale} from '../styles/responsiveSize';
+import {moderateScaleVertical, textScale} from '../styles/responsiveSize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 import colors from '../styles/colors';
@@ -54,7 +54,9 @@ export function stylesData(params) {
     },
     textStyle: {
       ...commonStyles.mediumFont16,
-      fontSize: textScale(18),
+      fontSize: textScale(16),
+      fontFamily: fontFamily?.regular,
+      marginTop: moderateScaleVertical(5),
     },
   });
   return styles;

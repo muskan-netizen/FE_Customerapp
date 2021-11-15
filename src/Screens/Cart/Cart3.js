@@ -2627,7 +2627,9 @@ export default function Cart({navigation, route}) {
   //Header section of cart screen
   const getHeader = () => {
     return (
-      <View
+      <TouchableOpacity
+        disabled={!!vendorAddress}
+        onPress={() => setModalVisible(true)}
         style={{
           ...styles.topLable,
           marginVertical: moderateScale(7),
@@ -2641,7 +2643,11 @@ export default function Cart({navigation, route}) {
                 ...styles.homeTxt,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
-              {strings.HOME}
+              {vendorAddress
+                ? strings.HOME
+                : selectedAddressData
+                ? strings.HOME
+                : strings.ADD_ADDRESS}
             </Text>
             <Text
               numberOfLines={2}
@@ -2654,7 +2660,7 @@ export default function Cart({navigation, route}) {
                 ? vendorAddress
                 : selectedAddressData
                 ? selectedAddressData?.address
-                : strings.ADD_ADDRESS}
+                : strings.TAP_HERE_ADD_ADDRESS}
             </Text>
           </View>
         </View>
@@ -2669,7 +2675,7 @@ export default function Cart({navigation, route}) {
             />
           </TouchableOpacity>
         )}
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -2806,7 +2812,7 @@ export default function Cart({navigation, route}) {
   };
 
   const _vendorTableCart = (data, item) => {
-    console.log(data, "selectedTable")
+    console.log(data, 'selectedTable');
     actions
       .vendorTableCart(data, {
         code: appData?.profile?.code,

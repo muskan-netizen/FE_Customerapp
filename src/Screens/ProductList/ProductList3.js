@@ -278,7 +278,6 @@ export default function Products({route, navigation}) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendorCategory = () => {
-    // alert("21312")
     console.log('api hit getAllProductsByVendorCategory', data);
     actions
       .getProductByVendorCategoryId(
@@ -524,7 +523,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'getProductByVendorId');
+        console.log(res, 'getProductByCategoryId');
         updateState({
           categoryInfo: categoryInfo ? categoryInfo : res.data.category,
           filterData: res?.data?.filterData,
