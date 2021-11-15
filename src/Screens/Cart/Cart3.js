@@ -636,8 +636,9 @@ export default function Cart({navigation, route}) {
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
     }
-    console.log("sending data...",data)
-    actions.placeOrder(data, {
+    console.log('sending data...', data);
+    actions
+      .placeOrder(data, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
@@ -659,14 +660,15 @@ export default function Cart({navigation, route}) {
             placeLoader: false,
           });
         }
-        if (
-          !!(Number(cartData?.total_payable_amount) !== 0) ||
-          Number(selectedTipAmount) !== 0
-        ) {
-          // checkPaymentOptions(res)
-          _webPayment();
-          return;
-        }
+        // if (
+        //   !!(Number(cartData?.total_payable_amount) !== 0) ||
+        //   Number(selectedTipAmount) !== 0
+        // ) {
+        //   alert("cashon")
+        //   // checkPaymentOptions(res)
+        //   _webPayment();
+        //   return;
+        // }
         if (
           !!businessType &&
           businessType == 'home_service' &&
@@ -987,6 +989,7 @@ export default function Cart({navigation, route}) {
   };
 
   const _webPayment = () => {
+
     let selectedMethod = selectedPayment.title.toLowerCase();
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
@@ -1049,6 +1052,7 @@ export default function Cart({navigation, route}) {
 
   //Offline payments
   const _offineLinePayment = async () => {
+    alert('off');
     if (paramsData?.tokenInfo) {
       updateState({placeLoader: true});
       let selectedMethod = selectedPayment.title.toLowerCase();
