@@ -664,7 +664,6 @@ export default function Cart({navigation, route}) {
         //   !!(Number(cartData?.total_payable_amount) !== 0) ||
         //   Number(selectedTipAmount) !== 0
         // ) {
-        //   alert("cashon")
         //   // checkPaymentOptions(res)
         //   _webPayment();
         //   return;
@@ -1052,7 +1051,6 @@ export default function Cart({navigation, route}) {
 
   //Offline payments
   const _offineLinePayment = async () => {
-    alert('off');
     if (paramsData?.tokenInfo) {
       updateState({placeLoader: true});
       let selectedMethod = selectedPayment.title.toLowerCase();
