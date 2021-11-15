@@ -230,7 +230,6 @@ const App = () => {
       setInternet(netStatus);
       updateInternetConnection(netStatus);
     });
-
     return () => removeNetInfoSubscription();
   }, []);
   const {blurRef} = useRef();
