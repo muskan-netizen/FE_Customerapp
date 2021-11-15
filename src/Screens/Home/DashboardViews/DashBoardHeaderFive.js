@@ -389,8 +389,6 @@ export default function DashBoardHeaderFive({
     updateState({isModalVisible: true});
   };
 
-  const viewRef2 = useRef();
-
   if (isLoading) {
     return (
       <HeaderLoader
@@ -494,9 +492,17 @@ export default function DashBoardHeaderFive({
             onPress={_onTableLabel}>
             <Image
               source={
-                checked === strings.DELIVERY
+                !!(
+                  checked ==
+                    toggleData?.profile?.preferences?.delivery_nomenclature ||
+                  checked == strings.DELIVERY
+                )
                   ? imagePath.delivery
-                  : checked === strings.DINE_IN
+                  : !!(
+                      checked ==
+                        toggleData?.profile?.preferences?.dinein_nomenclature ||
+                      checked == strings.DINE_IN
+                    )
                   ? imagePath.dineIn
                   : imagePath.takeaway
               }

@@ -170,43 +170,98 @@ export default function Vendors3({route, navigation}) {
           source={imagePath.filter1}
         /> */}
       {/* </View> */}
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={(!isLoading && categoryData?.listData) || []}
-        ItemSeparatorComponent={() => <View style={{height: 8}} />}
-        keyExtractor={(item, index) => String(index)}
-        renderItem={_renderItem}
-        refreshing={isRefreshing}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={handleRefresh}
-            tintColor={themeColors.primary_color}
-            // titleColor="#fff"
+      {!!isLoading ? (
+        <View style={{alignItems: 'center'}}>
+          <HeaderLoader
+            viewStyles={{marginTop: 5}}
+            widthLeft={width - moderateScaleVertical(40)}
+            rectWidthLeft={width - moderateScaleVertical(40)}
+            heightLeft={moderateScaleVertical(170)}
+            rectHeightLeft={moderateScaleVertical(170)}
+            isRight={false}
+            rx={15}
+            ry={15}
           />
-        }
-        getItemLayout={getItemLayout}
-        initialNumToRender={5}
-        maxToRenderPerBatch={10}
-        windowSize={10}
-        onEndReached={onEndReachedDelayed}
-        onEndReachedThreshold={0.5}
-        // onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
-        ListEmptyComponent={
-          !isLoading && (
-            <View
-              style={{
-                flex: 1,
-                marginTop: moderateScaleVertical(width / 2),
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <NoDataFound isLoading={state.isLoading} />
-            </View>
-          )
-        }
-        ListFooterComponent={() => <View style={{height: 100}} />}
-      />
+          <HeaderLoader
+            viewStyles={{marginTop: 15}}
+            widthLeft={width - moderateScaleVertical(40)}
+            rectWidthLeft={width - moderateScaleVertical(40)}
+            heightLeft={moderateScaleVertical(170)}
+            rectHeightLeft={moderateScaleVertical(170)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{marginTop: 15}}
+            widthLeft={width - moderateScaleVertical(40)}
+            rectWidthLeft={width - moderateScaleVertical(40)}
+            heightLeft={moderateScaleVertical(170)}
+            rectHeightLeft={moderateScaleVertical(170)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{marginTop: 15}}
+            widthLeft={width - moderateScaleVertical(40)}
+            rectWidthLeft={width - moderateScaleVertical(40)}
+            heightLeft={moderateScaleVertical(170)}
+            rectHeightLeft={moderateScaleVertical(170)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{marginTop: 15}}
+            widthLeft={width - moderateScaleVertical(40)}
+            rectWidthLeft={width - moderateScaleVertical(40)}
+            heightLeft={moderateScaleVertical(170)}
+            rectHeightLeft={moderateScaleVertical(170)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+        </View>
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={(!isLoading && categoryData?.listData) || []}
+          ItemSeparatorComponent={() => <View style={{height: 8}} />}
+          keyExtractor={(item, index) => String(index)}
+          renderItem={_renderItem}
+          refreshing={isRefreshing}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              tintColor={themeColors.primary_color}
+              // titleColor="#fff"
+            />
+          }
+          getItemLayout={getItemLayout}
+          initialNumToRender={5}
+          maxToRenderPerBatch={10}
+          windowSize={10}
+          onEndReached={onEndReachedDelayed}
+          onEndReachedThreshold={0.5}
+          // onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
+          ListEmptyComponent={
+            !isLoading && (
+              <View
+                style={{
+                  flex: 1,
+                  marginTop: moderateScaleVertical(width / 2),
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <NoDataFound isLoading={state.isLoading} />
+              </View>
+            )
+          }
+          ListFooterComponent={() => <View style={{height: 100}} />}
+        />
+      )}
     </WrapperContainer>
 
     //<VendorsDesign1 />
