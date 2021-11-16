@@ -973,6 +973,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.kel360:
+          updateState({
+            shortCode: shortCodes.kel360,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.moboserrandsservice:
+          updateState({
+            shortCode: shortCodes.moboserrandsservice,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
