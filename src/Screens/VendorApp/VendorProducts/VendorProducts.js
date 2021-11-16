@@ -93,9 +93,7 @@ export default function VendorProducts({route, navigation}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   useEffect(() => {
-    if (isLoading) {
-      getAllListItems();
-    }
+    getAllListItems();
   }, [languages, currencies, isRefreshing, isLoading]);
 
   useEffect(() => {

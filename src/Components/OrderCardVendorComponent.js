@@ -3,18 +3,21 @@ import React from 'react';
 import {
   Image,
   ImageBackground,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
 import {dummyUser} from '../constants/constants';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import staticStrings from '../constants/staticStrings';
 import navigationStrings from '../navigation/navigationStrings';
+import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {
@@ -23,15 +26,11 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
+import {MyDarkTheme} from '../styles/theme';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
-import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
-import {Platform} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 
 export default function OrderCardVendorComponent({
   data = {},
@@ -42,6 +41,7 @@ export default function OrderCardVendorComponent({
   onPressRateOrder,
   updateOrderStatus,
   onPressReturnOrder,
+  isBleDevice = false,
 }) {
   let cardWidth = width - 21.5;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
@@ -342,24 +342,19 @@ export default function OrderCardVendorComponent({
                       </Text>
                     </TouchableOpacity>
 
-                    {Platform.OS === 'android' &&
-                      AsyncStorage.getItem('BleDevice').then((res) => {
-                        if (res) {
-                          return (
-                            <>
-                              <View style={{width: moderateScale(10)}} />
+                    {!!(Platform.OS === 'android' && isBleDevice) && (
+                      <>
+                        <View style={{width: moderateScale(10)}} />
 
-                              <TouchableOpacity
-                                onPress={() => StartPrinting({id: data?.id})}
-                                style={styles.orderPrint}>
-                                <Text style={styles.orderStatusStyleSecond}>
-                                  {strings.PRINT}
-                                </Text>
-                              </TouchableOpacity>
-                            </>
-                          );
-                        }
-                      })}
+                        <TouchableOpacity
+                          onPress={() => StartPrinting({id: data?.id})}
+                          style={styles.orderPrint}>
+                          <Text style={styles.orderStatusStyleSecond}>
+                            {strings.PRINT}
+                          </Text>
+                        </TouchableOpacity>
+                      </>
+                    )}
                   </View>
                 ) : data?.order_status?.upcoming_status &&
                   !!(
@@ -389,34 +384,9 @@ export default function OrderCardVendorComponent({
                         </Text>
                       </TouchableOpacity>
 
-                      {Platform.OS === 'android' &&
-                        AsyncStorage.getItem('BleDevice').then((res) => {
-                          if (res) {
-                            return (
-                              <>
-                                <View style={{width: moderateScale(10)}} />
-
-                                <TouchableOpacity
-                                  onPress={() => StartPrinting({id: data?.id})}
-                                  style={styles.orderPrint}>
-                                  <Text style={styles.orderStatusStyleSecond}>
-                                    {strings.PRINT}
-                                  </Text>
-                                </TouchableOpacity>
-                              </>
-                            );
-                          }
-                        })}
-                    </View>
-                  </>
-                ) : (
-                  Platform.OS === 'android' &&
-                  AsyncStorage.getItem('BleDevice').then((res) => {
-                    if (res) {
-                      return (
+                      {!!(Platform.OS === 'android' && isBleDevice) && (
                         <>
                           <View style={{width: moderateScale(10)}} />
-
                           <TouchableOpacity
                             onPress={() => StartPrinting({id: data?.id})}
                             style={styles.orderPrint}>
@@ -425,9 +395,22 @@ export default function OrderCardVendorComponent({
                             </Text>
                           </TouchableOpacity>
                         </>
-                      );
-                    }
-                  })
+                      )}
+                    </View>
+                  </>
+                ) : (
+                  !!(Platform.OS === 'android' && isBleDevice) && (
+                    <>
+                      <View style={{width: moderateScale(10)}} />
+                      <TouchableOpacity
+                        onPress={() => StartPrinting({id: data?.id})}
+                        style={styles.orderPrint}>
+                        <Text style={styles.orderStatusStyleSecond}>
+                          {strings.PRINT}
+                        </Text>
+                      </TouchableOpacity>
+                    </>
+                  )
                 )}
               </View>
             )}
@@ -511,6 +494,7 @@ export function stylesFunc({fontFamily, themeColors}) {
       color: colors.white,
       fontFamily: fontFamily.medium,
       fontSize: textScale(10),
+      textAlign: 'center',
     },
     orderAcceptAndReadyStyle: {
       backgroundColor: themeColors.primary_color,
