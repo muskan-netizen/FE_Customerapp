@@ -852,23 +852,40 @@ export default function Cart({ navigation, route }) {
       updateState({ placeLoader: true });
       _directOrderPlace();
       return;
-    } else if (selectedPayment?.off_site == 1 && selectedPayment?.id === 3) {
-      _webPayment();
-      return;
-    } else if (
-      selectedPayment?.off_site == 1 &&
-      !!(
-        selectedPayment?.id === 6 ||
-        selectedPayment?.id === 7 ||
-        selectedPayment?.id === 8 ||
-        selectedPayment?.id === 9
-      )
-    ) {
-      updateState({ placeLoader: true });
-      _directOrderPlace();
+    }
+    if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
+      _offineLinePayment()
       return;
     }
-    _offineLinePayment();
+    if (Number(cartData?.total_payable_amount + Number(selectedTipAmount)) !== 0) {
+      _webPayment()
+    }
+    else {
+      _directOrderPlace();
+    }
+
+    // !!(Number(cartData?.total_payable_amount) !== 0) ||
+    //   Number(selectedTipAmount) !== 0) {
+    //   _webPayment()
+    // }
+
+    // else if (selectedPayment?.off_site == 1 && selectedPayment?.id === 3) {
+    //   _webPayment();
+    //   return;
+    // } else if (
+    //   selectedPayment?.off_site == 1 &&
+    //   !!(
+    //     selectedPayment?.id === 6 ||
+    //     selectedPayment?.id === 7 ||
+    //     selectedPayment?.id === 8 ||
+    //     selectedPayment?.id === 9
+    //   )
+    // ) {
+    //   updateState({ placeLoader: true });
+    //   _directOrderPlace();
+    //   return;
+    // }
+    // _offineLinePayment();
   };
 
   // console.log("sheduledorderdate", sheduledorderdate)
@@ -997,6 +1014,7 @@ export default function Cart({ navigation, route }) {
       ).toFixed(2)}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&address_id=${selectedAddressData?.id
       }&payment_option_id=${selectedPayment?.id}&action=cart`;
 
+    console.log("query data", queryData)
     updateState({ placeLoader: true });
     actions
       .openPaymentWebUrl(
