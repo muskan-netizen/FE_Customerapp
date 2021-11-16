@@ -180,6 +180,7 @@ export default function Cart({ navigation, route }) {
 
   useFocusEffect(
     React.useCallback(() => {
+      console.log("paramsData?.tokenInfo", paramsData?.tokenInfo)
       if (paramsData && paramsData?.selectedMethod) {
         updateState({ selectedPayment: paramsData?.selectedMethod });
       }
@@ -276,7 +277,6 @@ export default function Cart({ navigation, route }) {
       .getCartDetail(
         `/?type=${dineInType}${paramsData?.data?.queryURL ? `&${paramsData?.data?.queryURL}` : '' //for webPayment method- Mobbex,
         }`,
-
         {},
         {
           code: appData?.profile?.code,
@@ -1092,13 +1092,28 @@ export default function Cart({ navigation, route }) {
               cartData: {},
               isLoadingB: false,
               placeLoader: false,
+              selectedPayment: {
+                id: 1,
+                off_site: 0,
+                title: 'Cash On Delivery',
+                title_lng: strings.CASH_ON_DELIVERY,
+              },
             });
             moveToNewScreen(navigationStrings.ORDERSUCESS, {
               orderDetail: res.data,
             })();
             showSuccess(res?.message);
           } else {
-            updateState({ isLoadingB: false, placeLoader: false });
+            updateState({
+              isLoadingB: false,
+              placeLoader: false,
+              selectedPayment: {
+                id: 1,
+                off_site: 0,
+                title: 'Cash On Delivery',
+                title_lng: strings.CASH_ON_DELIVERY,
+              },
+            });
           }
         })
         .catch(errorMethod);

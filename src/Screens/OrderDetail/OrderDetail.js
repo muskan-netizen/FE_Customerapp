@@ -1528,12 +1528,11 @@ export default function OrderDetail({ navigation, route }) {
             }}
             onPress={onCenter}
           >
-
             <Image
               style={{
-                width: 34,
-                height: 34,
-                borderRadius: 34 / 2,
+                width: moderateScale(34),
+                height: moderateScale(34),
+                borderRadius: moderateScale(34/2),
               }}
               source={imagePath.mapNavigation}
             />

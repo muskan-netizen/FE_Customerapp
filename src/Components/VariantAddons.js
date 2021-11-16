@@ -220,7 +220,7 @@ export default function VariantAddons({
     //   .catch(errorMethod);
   };
 
-  console.log("typeId++",typeId)
+  console.log("typeId++", typeId)
   useEffect(() => {
     getProductDetail();
   }, [productdetail, isVisible]);
@@ -404,15 +404,28 @@ export default function VariantAddons({
                       ? MyDarkTheme.colors.text
                       : colors.textGrey,
                   }}>{`${strings.CHOICE_OF} ${i?.title}`}</Text>
+
                 <Text
                   style={{
                     ...styles.chooseOption,
                     color: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.grayOpacity51,
+                    fontSize: textScale(10),
                   }}>
-                  {strings.PLS_SELECT_ONE}
+                  {`Min ${i?.min_select} and Max ${i?.max_select} Selections allowed`}
                 </Text>
+
+                {!!i.errorShow && (<Text
+                  style={{
+                    color: colors.redColor,
+                    fontSize: textScale(8),
+                    fontFamily: fontFamily.medium,
+                    textAlign: 'left'
+                  }}>
+                  {`Minimum ${i?.min_select} required`}
+                </Text>)}
+
                 {i?.setoptions ? checkBoxButtonViewAddons(i) : null}
                 <View
                   style={{
@@ -622,54 +635,82 @@ export default function VariantAddons({
     );
   };
 
+  const checkIfMaxReached = (minVal, Arr) => {
+    const SelectedItems = Arr.filter(el => el.value)
+    if (SelectedItems.length >= minVal) {
+      return true
+    }
+    return false
+  }
+
+
+
+
   const addToCart = (addonSet) => {
-    console.log('add on set', addonSet);
+
+    console.log("add on set", addonSet)
     const addon_ids = [];
     const addon_options = [];
+
+
     addonSet.map((i, inx) => {
-      i.setoptions.map((j, jnx) => {
-        console.log(j, 'J');
-        if (j?.value == true) {
-          addon_ids.push(j?.addon_id);
-          addon_options.push(j?.id);
-        }
-      });
+      const temp = checkIfMaxReached(i.min_select, i.setoptions)
+      console.log("temp value", temp)
+      if (temp) {
+        i.setoptions.map((j, jnx) => {
+          if (j?.value == true) {
+            addon_ids.push(j?.addon_id);
+            addon_options.push(j?.id);
+          }
+        });
+        let CloneArr = addonSet
+        CloneArr[inx] = { ...CloneArr[inx], errorShow: false }
+        updateState({ addonSet: CloneArr })
+      } else {
+        let CloneArr = addonSet
+        CloneArr[inx] = { ...CloneArr[inx], errorShow: true }
+        updateState({ addonSet: CloneArr })
+      }
     });
-    console.log(addonSet, 'addonSet');
-    let data = {};
-    data['sku'] = productSku;
-    data['quantity'] = productQuantityForCart;
-    data['product_variant_id'] = productVariantId;
-    data['type'] = dine_In_Type;
-    console.log(addon_ids, 'addon_ids');
-    console.log(addon_options, 'addon_options');
-    if (addonSet && addonSet.length) {
-      // console.log(addonSetData, 'addonSetData');
-      data['addon_ids'] = addon_ids;
-      data['addon_options'] = addon_options;
+
+    const checkIsError = addonSet.findIndex(el => el.errorShow)
+
+    if (checkIsError == -1) {
+      let data = {};
+      data['sku'] = productSku;
+      data['quantity'] = productQuantityForCart;
+      data['product_variant_id'] = productVariantId;
+      data['type'] = dine_In_Type;
+      console.log(addon_ids, 'addon_ids');
+      console.log(addon_options, 'addon_options');
+      if (addonSet && addonSet.length) {
+        // console.log(addonSetData, 'addonSetData');
+        data['addon_ids'] = addon_ids;
+        data['addon_options'] = addon_options;
+      }
+      console.log(data, 'data for cart');
+      updateState({ btnLoader: true });
+      actions
+        .addProductsToCart(data, {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        })
+        .then((res) => {
+          actions.cartItemQty(res);
+          showSuccess(strings.PRODUCT_ADDED_SUCCESS);
+          updateState({ isLoadingC: false, btnLoader: false });
+          updateCartItems(
+            productdetail,
+            productQuantityForCart,
+            res.data.cart_product_id,
+            res.data.id,
+          );
+          onClose();
+        })
+        .catch((error) => errorMethodSecond(error, addonSet));
     }
-    console.log(data, 'data for cart');
-    updateState({ btnLoader: true });
-    actions
-      .addProductsToCart(data, {
-        code: appData.profile.code,
-        currency: currencies.primary_currency.id,
-        language: languages.primary_language.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      })
-      .then((res) => {
-        actions.cartItemQty(res);
-        showSuccess(strings.PRODUCT_ADDED_SUCCESS);
-        updateState({ isLoadingC: false, btnLoader: false });
-        updateCartItems(
-          productdetail,
-          productQuantityForCart,
-          res.data.cart_product_id,
-          res.data.id,
-        );
-        onClose();
-      })
-      .catch((error) => errorMethodSecond(error, addonSet));
   };
 
   const errorMethodSecond = (error, addonSet) => {

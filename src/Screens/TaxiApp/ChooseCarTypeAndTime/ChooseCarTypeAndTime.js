@@ -626,6 +626,14 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     updateState({ formatedTime: moment(value).format('hh:mm A') });
   };
 
+
+  useEffect(() => {
+    setTimeout(() => {
+      coordinatesFit()
+    }, 2000);
+  }, [])
+
+  console.log("paramData?.location", paramData?.location)
   // useEffect(() => {
   //   console.log('check state ref array >>>', refArr);
   //   refArr.forEach((element) => {
@@ -643,6 +651,22 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   //     setRefArr(temp);
   //   }
   // };
+
+
+  const coordinatesFit = () => {
+    if (paramData?.location.length > 0 && !!mapRef?.current?.fitToCoordinates) {
+      mapRef.current.fitToCoordinates(paramData?.location,
+        {
+          edgePadding: {
+            right: width / 20,
+            bottom: height / 20,
+            left: width / 20,
+            top: height / 20,
+          },
+        }
+      )
+    }
+  }
 
   return (
     <View style={{ ...styles.container }}>
@@ -708,14 +732,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
                       longitude: Number(coordinate?.longitude),
                     }}>
                     <View
-                      style={[
-                        styles.plainView,
-                        {
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          //paddingRight: 10,
-                        },
-                      ]}>
+                      style={styles.plainView}>
                       <Text style={styles.pickupDropOff}>
                         {index === 0 ? 'Pickup' : 'Drop'}
                       </Text>
@@ -765,6 +782,25 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
               }}
             />
           </MapView>
+
+
+          <TouchableOpacity
+            onPress={coordinatesFit}
+            style={{
+              position: 'absolute',
+              bottom: 10,
+              right: 10
+            }}
+          >
+            <Image
+              style={{
+                width: moderateScale(34),
+                height: moderateScale(34),
+                borderRadius: moderateScale(34 / 2),
+              }}
+              source={imagePath.mapNavigation}
+            />
+          </TouchableOpacity>
 
           {/* Top View */}
         </View>
