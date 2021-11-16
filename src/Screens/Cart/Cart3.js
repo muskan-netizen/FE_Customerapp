@@ -115,7 +115,7 @@ export default function Cart({ navigation, route }) {
     placeLoader: false,
     localeSheduledOrderDate: null,
     btnLoadrId: null,
-    instruction: ''
+    instruction: '',
   });
   const {
     viewHeight,
@@ -147,7 +147,7 @@ export default function Cart({ navigation, route }) {
     placeLoader,
     localeSheduledOrderDate,
     btnLoadrId,
-    instruction
+    instruction,
   } = state;
 
   //Redux store data
@@ -208,33 +208,6 @@ export default function Cart({ navigation, route }) {
       checkCartItem?.data?.item_count,
     ]),
   );
-
-  // useEffect(() => {
-  //   if (paramsData && paramsData?.selectedMethod) {
-  //     updateState({ selectedPayment: paramsData?.selectedMethod });
-  //   }
-
-  //   // alert('run')
-  //   // updateState({ isLoadingB: true });
-  //   if (!!cartItems) {
-  //     getCartDetail();
-  //     return
-  //   }
-  //   if (!!userData?.auth_token) {
-  //     getAllWishListData();
-  //     return
-  //   }
-
-  // }, [
-  //   currencies,
-  //   languages,
-  //   route?.params?.promocodeDetail,
-  //   allAddresss,
-  //   selectedAddress,
-  //   paramsData,
-  //   isRefreshing,
-  //   cartItems,
-  // ])
 
   useEffect(() => {
     if (!!checkCartItem?.data) {
@@ -316,7 +289,7 @@ export default function Cart({ navigation, route }) {
       )
       .then((res) => {
         actions.cartItemQty(res);
-        console.log(res.data, 'cart details>>>');
+        console.log(res.data, 'cart details>>>', cartItems);
         let checkDate = !!res?.data?.scheduled_date_time;
         if (!!checkDate && res.data.schedule_type == 'schedule') {
           let formatDate = new Date(res?.data?.scheduled_date_time);
@@ -345,7 +318,10 @@ export default function Cart({ navigation, route }) {
                 : { id: 1, title: strings.NOW, type: 'now' },
         });
         if (res && res.data) {
-          if (res.data.vendor_details.vendor_tables) {
+          if (
+            !!res.data.vendor_details.vendor_tables &&
+            res.data.vendor_details.vendor_tables.length > 0
+          ) {
             res.data.vendor_details.vendor_tables.forEach(
               (item, indx) =>
               (tableData[indx] = {
@@ -367,6 +343,11 @@ export default function Cart({ navigation, route }) {
                 tableData: tableData,
               }),
             );
+            const data = {
+              vendor_id: tableData[0].vendor_id,
+              table: tableData[0].id,
+            };
+            _vendorTableCart(data, tableData[0]);
           }
           updateState({
             cartItems: res.data.products,
@@ -374,6 +355,8 @@ export default function Cart({ navigation, route }) {
             cartData: res.data,
             isLoadingB: false,
             isRefreshing: false,
+            selectedTipvalue:
+              res?.data?.total_payable_amount == 0 ? 'custom' : null,
           });
           if (!res.data.schedule_type) {
             //if schedule type is null then hit the api again with now option
@@ -382,6 +365,7 @@ export default function Cart({ navigation, route }) {
         } else {
           updateState({
             cartData: {},
+            cartItems: [],
             vendorAddress: '',
             isLoadingB: false,
             isRefreshing: false,
@@ -400,10 +384,6 @@ export default function Cart({ navigation, route }) {
         showError(error.message);
       });
   };
-
-  // useEffect(() => {
-  //   getAllWishListData()
-  // }, [])
 
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
@@ -429,6 +409,7 @@ export default function Cart({ navigation, route }) {
           systemuser: DeviceInfo.getUniqueId(),
         })
         .then((res) => {
+          console.log('cart detail', res);
           actions.cartItemQty(res);
           updateState({
             cartItems: res.data.products,
@@ -560,6 +541,82 @@ export default function Cart({ navigation, route }) {
       .catch(errorMethod);
   };
 
+  const checkPaymentOptions = (res) => {
+    updateState({ placeLoader: false });
+    let paymentId = res?.data?.payment_option_id;
+    let paymentData = {
+      selectedPayment: selectedPayment,
+      total_payable_amount: (
+        Number(cartData?.total_payable_amount) +
+        (selectedTipAmount != null && selectedTipAmount != ''
+          ? Number(selectedTipAmount)
+          : 0)
+      ).toFixed(2),
+      payment_option_id: selectedPayment?.id,
+      orderDetail: res.data,
+      redirectFrom: 'cart',
+    };
+    if (paymentId) {
+      return;
+    }
+    if (
+      !!businessType &&
+      businessType == 'home_service' &&
+      res?.data?.vendors.length == 1
+    ) {
+      console.log('success ressssssss', res.data);
+      setTimeout(() => {
+        _getOrderDetail(res.data.vendors[0]);
+      }, 1500);
+    } else {
+      actions.cartItemQty({});
+      updateState({
+        cartItems: [],
+        cartData: {},
+        isLoadingB: false,
+        placeLoader: false,
+      });
+      moveToNewScreen(navigationStrings.ORDERSUCESS, { orderDetail: res.data })();
+    }
+    switch (paymentId) {
+      case 6: //Payfast Payment Getway
+        navigation.navigate(navigationStrings.PAYFAST, paymentData);
+        break;
+      case 7: //Mobbex Payment Getway
+        navigation.navigate(navigationStrings.MOBBEX, paymentData);
+        break;
+      case 8: //Yoco Payment Getway
+        navigation.navigate(navigationStrings.YOCO, paymentData);
+        break;
+      case 9: //Pyalink Payment Getway
+        navigation.navigate(navigationStrings.PAYLINK, paymentData);
+        break;
+      default:
+        if (
+          !!businessType &&
+          businessType == 'home_service' &&
+          res?.data?.vendors.length == 1
+        ) {
+          console.log('success ressssssss', res.data);
+          setTimeout(() => {
+            _getOrderDetail(res.data.vendors[0]);
+          }, 1500);
+        } else {
+          actions.cartItemQty({});
+          updateState({
+            cartItems: [],
+            cartData: {},
+            isLoadingB: false,
+            placeLoader: false,
+          });
+          moveToNewScreen(navigationStrings.ORDERSUCESS, {
+            orderDetail: res.data,
+          })();
+        }
+        break;
+    }
+  };
+
   const _directOrderPlace = () => {
     let data = {};
     data['address_id'] =
@@ -572,6 +629,7 @@ export default function Cart({ navigation, route }) {
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
     }
+    console.log('sending data...', data);
     actions
       .placeOrder(data, {
         code: appData?.profile?.code,
@@ -583,88 +641,45 @@ export default function Cart({ navigation, route }) {
       })
       .then((res) => {
         console.log(res, 'orderResponse');
-        if (businessType !== 'home_service' && res?.data?.vendors.length !== 1) {
+        if (
+          businessType !== 'home_service' &&
+          res?.data?.vendors.length !== 1
+        ) {
           actions.cartItemQty({});
           updateState({
             cartItems: [],
             cartData: {},
             isLoadingB: false,
             placeLoader: false,
-          })
+          });
         }
+        // if (
+        //   !!(Number(cartData?.total_payable_amount) !== 0) ||
+        //   Number(selectedTipAmount) !== 0
+        // ) {
+        //   // checkPaymentOptions(res)
+        //   _webPayment();
+        //   return;
+        // }
         if (
-          (res?.data?.payment_option_id === 6 &&
-            !!(Number(cartData?.total_payable_amount) !== 0)) ||
-          Number(selectedTipAmount) !== 0
+          !!businessType &&
+          businessType == 'home_service' &&
+          res?.data?.vendors.length == 1
         ) {
-          navigation.navigate(navigationStrings.PAYFAST, {
-            selectedPayment: selectedPayment,
-            total_payable_amount: (
-              Number(cartData?.total_payable_amount) +
-              (selectedTipAmount != null && selectedTipAmount != ''
-                ? Number(selectedTipAmount)
-                : 0)
-            ).toFixed(2),
-
-            payment_option_id: selectedPayment?.id,
-            orderDetail: res.data,
-          });
-        } else if (
-          (res?.data?.payment_option_id === 7 &&
-            !!(Number(cartData?.total_payable_amount) !== 0)) ||
-          Number(selectedTipAmount) !== 0
-        ) {
-          navigation.navigate(navigationStrings.MOBBEX, {
-            selectedPayment: selectedPayment,
-            total_payable_amount: (
-              Number(cartData?.total_payable_amount) +
-              (selectedTipAmount != null && selectedTipAmount != ''
-                ? Number(selectedTipAmount)
-                : 0)
-            ).toFixed(2),
-
-            payment_option_id: selectedPayment?.id,
-            orderDetail: res.data,
-          });
-        } else if (
-          (res?.data?.payment_option_id === 8 &&
-            !!(Number(cartData?.total_payable_amount) !== 0)) ||
-          Number(selectedTipAmount) !== 0
-        ) {
-          navigation.navigate(navigationStrings.YOCO, {
-            selectedPayment: selectedPayment,
-            total_payable_amount: (
-              Number(cartData?.total_payable_amount) +
-              (selectedTipAmount != null && selectedTipAmount != ''
-                ? Number(selectedTipAmount)
-                : 0)
-            ).toFixed(2),
-
-            payment_option_id: selectedPayment?.id,
-            orderDetail: res.data,
-          });
-        } else if (
-          (res?.data?.payment_option_id === 9 &&
-            !!(Number(cartData?.total_payable_amount) !== 0)) ||
-          Number(selectedTipAmount) !== 0
-        ) {
-          navigation.navigate(navigationStrings.PAYLINK, {
-            selectedPayment: selectedPayment,
-            total_payable_amount: (
-              Number(cartData?.total_payable_amount) +
-              (selectedTipAmount != null && selectedTipAmount != ''
-                ? Number(selectedTipAmount)
-                : 0)
-            ).toFixed(2),
-            payment_option_id: selectedPayment?.id,
-            orderDetail: res.data,
-          });
+          console.log('success ressssssss', res.data);
+          setTimeout(() => {
+            _getOrderDetail(res.data.vendors[0]);
+          }, 1500);
         } else {
-          if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1) {
-            console.log("success ressssssss", res.data)
+          if (
+            !!businessType &&
+            businessType == 'home_service' &&
+            res?.data?.vendors.length == 1
+          ) {
+            console.log('success ressssssss', res.data);
             // return;
             setTimeout(() => {
-              _getOrderDetail(res.data.vendors[0])
+              _getOrderDetail(res.data.vendors[0]);
             }, 1500);
           } else {
             actions.cartItemQty({});
@@ -673,12 +688,83 @@ export default function Cart({ navigation, route }) {
               cartData: {},
               isLoadingB: false,
               placeLoader: false,
-            })
+            });
             moveToNewScreen(navigationStrings.ORDERSUCESS, {
               orderDetail: res.data,
             })();
           }
         }
+
+        // checkPaymentOptions(res)
+        // if (
+        //   (res?.data?.payment_option_id === 6 &&
+        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
+        //   Number(selectedTipAmount) !== 0
+        // ) {
+        // navigation.navigate(navigationStrings.PAYFAST, {
+        //   selectedPayment: selectedPayment,
+        //   total_payable_amount: (
+        //     Number(cartData?.total_payable_amount) +
+        //     (selectedTipAmount != null && selectedTipAmount != ''
+        //       ? Number(selectedTipAmount)
+        //       : 0)
+        //   ).toFixed(2),
+
+        //   payment_option_id: selectedPayment?.id,
+        //   orderDetail: res.data,
+        // });
+        // } else if (
+        //   (res?.data?.payment_option_id === 7 &&
+        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
+        //   Number(selectedTipAmount) !== 0
+        // ) {
+        // navigation.navigate(navigationStrings.MOBBEX, {
+        //   selectedPayment: selectedPayment,
+        //   total_payable_amount: (
+        //     Number(cartData?.total_payable_amount) +
+        //     (selectedTipAmount != null && selectedTipAmount != ''
+        //       ? Number(selectedTipAmount)
+        //       : 0)
+        //   ).toFixed(2),
+
+        //   payment_option_id: selectedPayment?.id,
+        //   orderDetail: res.data,
+        // });
+        // } else if (
+        //   (res?.data?.payment_option_id === 8 &&
+        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
+        //   Number(selectedTipAmount) !== 0
+        // ) {
+        // navigation.navigate(navigationStrings.YOCO, {
+        //   selectedPayment: selectedPayment,
+        //   total_payable_amount: (
+        //     Number(cartData?.total_payable_amount) +
+        //     (selectedTipAmount != null && selectedTipAmount != ''
+        //       ? Number(selectedTipAmount)
+        //       : 0)
+        //   ).toFixed(2),
+
+        //   payment_option_id: selectedPayment?.id,
+        //   orderDetail: res.data,
+        // });
+        // } else if (
+        //   (res?.data?.payment_option_id === 9 &&
+        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
+        //   Number(selectedTipAmount) !== 0
+        // ) {
+        // navigation.navigate(navigationStrings.PAYLINK, {
+        //   selectedPayment: selectedPayment,
+        //   total_payable_amount: (
+        //     Number(cartData?.total_payable_amount) +
+        //     (selectedTipAmount != null && selectedTipAmount != ''
+        //       ? Number(selectedTipAmount)
+        //       : 0)
+        //   ).toFixed(2),
+        //   payment_option_id: selectedPayment?.id,
+        //   orderDetail: res.data,
+        // });
+        // } else {
+        // }
         showSuccess(res?.message);
       })
       .catch(errorMethod);
@@ -706,15 +792,23 @@ export default function Cart({ navigation, route }) {
           cartData: {},
           isLoadingB: false,
           placeLoader: false,
-        })
+        });
         if (res?.data) {
-          if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1 && res?.data?.vendors[0]?.dispatch_traking_url) {
+          if (
+            !!businessType &&
+            businessType == 'home_service' &&
+            res?.data?.vendors.length == 1 &&
+            res?.data?.vendors[0]?.dispatch_traking_url
+          ) {
             navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
               orderId: order_id,
               fromVendorApp: true,
               selectedVendor: { id: vendor_id },
               orderDetail: res.data.vendors[0],
-              showRating: res.data.vendors[0]?.order_status?.current_status?.id != 6 ? false : true,
+              showRating:
+                res.data.vendors[0]?.order_status?.current_status?.id != 6
+                  ? false
+                  : true,
             });
           } else {
             moveToNewScreen(navigationStrings.ORDERSUCESS, {
@@ -758,24 +852,40 @@ export default function Cart({ navigation, route }) {
       updateState({ placeLoader: true });
       _directOrderPlace();
       return;
-    } else if (selectedPayment?.off_site == 1 && selectedPayment?.id === 3) {
-      _webPayment();
-      return;
-    } else if (
-      selectedPayment?.off_site == 1 &&
-      !!(
-        selectedPayment?.id === 6 ||
-        selectedPayment?.id === 7 ||
-        selectedPayment?.id === 8 ||
-        selectedPayment?.id === 9
-      )
-    ) {
-      updateState({ placeLoader: true });
-      _directOrderPlace();
+    }
+    if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
+      _offineLinePayment()
       return;
     }
+    if (Number(cartData?.total_payable_amount + Number(selectedTipAmount)) !== 0) {
+      _webPayment()
+    }
+    else {
+      _directOrderPlace();
+    }
 
-    _offineLinePayment();
+    // !!(Number(cartData?.total_payable_amount) !== 0) ||
+    //   Number(selectedTipAmount) !== 0) {
+    //   _webPayment()
+    // }
+
+    // else if (selectedPayment?.off_site == 1 && selectedPayment?.id === 3) {
+    //   _webPayment();
+    //   return;
+    // } else if (
+    //   selectedPayment?.off_site == 1 &&
+    //   !!(
+    //     selectedPayment?.id === 6 ||
+    //     selectedPayment?.id === 7 ||
+    //     selectedPayment?.id === 8 ||
+    //     selectedPayment?.id === 9
+    //   )
+    // ) {
+    //   updateState({ placeLoader: true });
+    //   _directOrderPlace();
+    //   return;
+    // }
+    // _offineLinePayment();
   };
 
   // console.log("sheduledorderdate", sheduledorderdate)
@@ -804,7 +914,6 @@ export default function Cart({ navigation, route }) {
       } else {
         if (!!userData) {
           console.log('user data', userData);
-
           if (!!userData) {
             if (
               !!userData?.client_preference?.verify_email &&
@@ -882,22 +991,14 @@ export default function Cart({ navigation, route }) {
         key={String(cartItems.length)}
         style={{
           ...styles.swipeView,
-          backgroundColor: getColorCodeWithOpactiyNumber(
-            themeColors.primary_color.substr(1),
-            15,
-          ),
-          marginBottom: moderateScaleVertical(12),
         }}>
-        {/* <TouchableOpacity
-          style={{justifyContent: 'center'}}
-          onPress={openDeleteView}>
-          <Image source={imagePath.deleteRed} />
-        </TouchableOpacity> */}
+        <Image source={imagePath.deleteRed} />
       </Animated.View>
     );
   };
 
   const _webPayment = () => {
+
     let selectedMethod = selectedPayment.title.toLowerCase();
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
@@ -913,6 +1014,7 @@ export default function Cart({ navigation, route }) {
       ).toFixed(2)}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&address_id=${selectedAddressData?.id
       }&payment_option_id=${selectedPayment?.id}&action=cart`;
 
+    console.log("query data", queryData)
     updateState({ placeLoader: true });
     actions
       .openPaymentWebUrl(
@@ -933,14 +1035,24 @@ export default function Cart({ navigation, route }) {
           placeLoader: false,
         });
         if (res && res?.status == 'Success' && res?.data) {
-          // updateState({allAvailAblePaymentMethods: res?.data});
-          navigation.navigate(navigationStrings.WEBPAYMENTS, {
-            paymentUrl: res?.data,
-            paymentTitle: selectedPayment?.title,
-            redirectFrom: 'cart',
-            selectedAddressData: selectedAddressData,
-            selectedPayment: selectedPayment,
+          let sendingData = {
+            id: selectedPayment.id,
+            title: selectedPayment.title,
+            screenName: navigationStrings.CART,
+            paymentUrl: res.data,
+            action: 'cart',
+          };
+          navigation.navigate(navigationStrings.ALL_IN_ONE_PAYMENTS, {
+            data: sendingData,
           });
+          // updateState({allAvailAblePaymentMethods: res?.data});
+          // navigation.navigate(navigationStrings.WEBPAYMENTS, {
+          //   paymentUrl: res?.data,
+          //   paymentTitle: selectedPayment?.title,
+          //   redirectFrom: 'cart',
+          //   selectedAddressData: selectedAddressData,
+          //   selectedPayment: selectedPayment,
+          // });
         }
       })
       .catch(errorMethod);
@@ -957,9 +1069,12 @@ export default function Cart({ navigation, route }) {
           `/${selectedMethod}?tip=${selectedTipAmount && selectedTipAmount != ''
             ? Number(selectedTipAmount)
             : 0
-          }&amount=${cartData?.total_payable_amount}&auth_token=${userData?.auth_token
-          }&address_id=${selectedAddressData?.id}&payment_option_id=${selectedPayment?.id
-          }&action=cart&stripe_token=${paramsData?.tokenInfo}`,
+          }&amount=${cartData?.total_payable_amount == 0
+            ? selectedTipAmount
+            : cartData?.total_payable_amount
+          }&auth_token=${userData?.auth_token}&address_id=${selectedAddressData?.id
+          }&payment_option_id=${selectedPayment?.id}&action=cart&stripe_token=${paramsData?.tokenInfo
+          }`,
           {},
           {
             code: appData?.profile?.code,
@@ -1087,7 +1202,8 @@ export default function Cart({ navigation, route }) {
           <View style={Platform.OS === 'ios' ? { zIndex: 5000 } : {}}>
             {dineInType === 'dine_in' &&
               userData?.auth_token &&
-              !!cartData?.vendor_details?.vendor_tables && (
+              !!cartData?.vendor_details?.vendor_tables &&
+              cartData?.vendor_details?.vendor_tables.length > 0 && (
                 <DropDownPicker
                   items={tableData}
                   onOpen={() => updateState({ isTableDropDown: true })}
@@ -1135,12 +1251,16 @@ export default function Cart({ navigation, route }) {
               ? MyDarkTheme.colors.background
               : colors.white,
           }}>
-          <View style={styles.vendorView}>
+          <View
+            style={{
+              ...styles.vendorView,
+              paddingHorizontal: moderateScale(8),
+            }}>
             <Text
               numberOfLines={1}
               style={{
                 ...styles.priceItemLabel2,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
               {item?.vendor?.name}
             </Text>
@@ -1288,22 +1408,23 @@ export default function Cart({ navigation, route }) {
                               : null}
                           </View>
 
-                          <View
-                            pointerEvents={btnLoader ? 'none' : 'auto'}
-                            style={{
-                              flex: 0.3,
-                              paddingRight: moderateScale(8),
-                            }}>
+                          <View pointerEvents={btnLoader ? 'none' : 'auto'}>
                             <View style={styles.incDecBtnContainer}>
                               <TouchableOpacity
-                                style={{ flex: 0.3, alignItems: 'center' }}
-                                onPress={() => addDeleteCartItems(i, inx, 2)}>
-                                <Text style={styles.cartItemValueBtn}>-</Text>
+                                style={{ alignItems: 'center' }}
+                                onPress={() => addDeleteCartItems(i, inx, 1)}>
+                                <Text style={styles.cartItemValueBtn}>+</Text>
                               </TouchableOpacity>
-                              <View style={{ flex: 0.4, alignItems: 'center' }}>
+                              <View
+                                style={{
+                                  alignItems: 'center',
+                                  width: moderateScale(20),
+                                  height: moderateScale(20),
+                                  justifyContent: 'center',
+                                }}>
                                 {btnLoadrId === i.id && btnLoader ? (
                                   <UIActivityIndicator
-                                    size={moderateScale(18)}
+                                    size={moderateScale(16)}
                                     color={colors.white}
                                   />
                                 ) : (
@@ -1313,9 +1434,9 @@ export default function Cart({ navigation, route }) {
                                 )}
                               </View>
                               <TouchableOpacity
-                                style={{ flex: 0.3, alignItems: 'center' }}
-                                onPress={() => addDeleteCartItems(i, inx, 1)}>
-                                <Text style={styles.cartItemValueBtn}>+</Text>
+                                style={{ alignItems: 'center' }}
+                                onPress={() => addDeleteCartItems(i, inx, 2)}>
+                                <Text style={styles.cartItemValueBtn}>-</Text>
                               </TouchableOpacity>
                             </View>
                           </View>
@@ -1406,8 +1527,8 @@ export default function Cart({ navigation, route }) {
                         <TouchableOpacity
                           style={{
                             alignSelf: 'flex-end',
-                            paddingRight: moderateScale(24),
-                            paddingTop: moderateScaleVertical(10),
+                            marginRight: moderateScale(14),
+                            marginTop: moderateScale(6),
                           }}
                           onPress={() => openDeleteView(i)}>
                           <Image source={imagePath.deleteRed} />
@@ -1488,7 +1609,11 @@ export default function Cart({ navigation, route }) {
             )}
           </TouchableOpacity>
           {/* start amount view       */}
-          <View style={{ marginHorizontal: moderateScale(4), marginTop: moderateScaleVertical(8) }}>
+          <View
+            style={{
+              marginHorizontal: moderateScale(4),
+              marginTop: moderateScaleVertical(8),
+            }}>
             {!!item?.discount_amount && (
               <View style={styles.itemPriceDiscountTaxView}>
                 <Text
@@ -1572,11 +1697,11 @@ export default function Cart({ navigation, route }) {
                   item?.payable_amount ? item?.payable_amount : 0,
                 ).toFixed(2)}`}</Text>
             </View>
-            <View style={styles.bottomTabLableValue}>
+            {/* <View style={styles.bottomTabLableValue}>
               <Text
                 style={
                   isDarkMode
-                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                     : styles.priceItemLabel
                 }>
                 {strings.SUBTOTAL}
@@ -1584,18 +1709,21 @@ export default function Cart({ navigation, route }) {
               <Text
                 style={
                   isDarkMode
-                    ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                    ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                     : styles.priceItemLabel
                 }>{`${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.gross_paybale_amount,
-                ).toFixed(2)}`}</Text>
+                cartData?.gross_paybale_amount,
+              ).toFixed(2)}`}</Text>
             </View>
             {!!cartData?.wallet_amount && (
               <View style={styles.bottomTabLableValue}>
                 <Text
                   style={
                     isDarkMode
-                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      ? [
+                          styles.priceItemLabel,
+                          {color: MyDarkTheme.colors.text},
+                        ]
                       : styles.priceItemLabel
                   }>
                   {strings.WALLET}
@@ -1603,11 +1731,14 @@ export default function Cart({ navigation, route }) {
                 <Text
                   style={
                     isDarkMode
-                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      ? [
+                          styles.priceItemLabel,
+                          {color: MyDarkTheme.colors.text},
+                        ]
                       : styles.priceItemLabel
                   }>{`${currencies?.primary_currency?.symbol}${Number(
-                    cartData?.wallet_amount ? cartData?.wallet_amount : 0,
-                  ).toFixed(2)}`}</Text>
+                  cartData?.wallet_amount ? cartData?.wallet_amount : 0,
+                ).toFixed(2)}`}</Text>
               </View>
             )}
             {!!cartData?.loyalty_amount && (
@@ -1615,7 +1746,10 @@ export default function Cart({ navigation, route }) {
                 <Text
                   style={
                     isDarkMode
-                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      ? [
+                          styles.priceItemLabel,
+                          {color: MyDarkTheme.colors.text},
+                        ]
                       : styles.priceItemLabel
                   }>
                   {strings.LOYALTY}
@@ -1623,11 +1757,14 @@ export default function Cart({ navigation, route }) {
                 <Text
                   style={
                     isDarkMode
-                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      ? [
+                          styles.priceItemLabel,
+                          {color: MyDarkTheme.colors.text},
+                        ]
                       : styles.priceItemLabel
                   }>{`-${currencies?.primary_currency?.symbol}${Number(
-                    cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
-                  ).toFixed(2)}`}</Text>
+                  cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
+                ).toFixed(2)}`}</Text>
               </View>
             )}
 
@@ -1636,7 +1773,10 @@ export default function Cart({ navigation, route }) {
                 <Text
                   style={
                     isDarkMode
-                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      ? [
+                          styles.priceItemLabel,
+                          {color: MyDarkTheme.colors.text},
+                        ]
                       : styles.priceItemLabel
                   }>
                   {strings.WALLET}
@@ -1644,11 +1784,16 @@ export default function Cart({ navigation, route }) {
                 <Text
                   style={
                     isDarkMode
-                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      ? [
+                          styles.priceItemLabel,
+                          {color: MyDarkTheme.colors.text},
+                        ]
                       : styles.priceItemLabel
                   }>{`-${currencies?.primary_currency?.symbol}${Number(
-                    cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
-                  ).toFixed(2)}`}</Text>
+                  cartData?.wallet_amount_used
+                    ? cartData?.wallet_amount_used
+                    : 0,
+                ).toFixed(2)}`}</Text>
               </View>
             )}
             {!!cartData?.total_subscription_discount && (
@@ -1656,7 +1801,10 @@ export default function Cart({ navigation, route }) {
                 <Text
                   style={
                     isDarkMode
-                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      ? [
+                          styles.priceItemLabel,
+                          {color: MyDarkTheme.colors.text},
+                        ]
                       : styles.priceItemLabel
                   }>
                   {strings.TOTALSUBSCRIPTION}
@@ -1664,13 +1812,16 @@ export default function Cart({ navigation, route }) {
                 <Text
                   style={
                     isDarkMode
-                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      ? [
+                          styles.priceItemLabel,
+                          {color: MyDarkTheme.colors.text},
+                        ]
                       : styles.priceItemLabel
                   }>{`-${currencies?.primary_currency?.symbol}${Number(
-                    cartData?.total_subscription_discount,
-                  ).toFixed(2)}`}</Text>
+                  cartData?.total_subscription_discount,
+                ).toFixed(2)}`}</Text>
               </View>
-            )}
+            )} */}
 
             {/* {!!cartData?.total_discount_amount && (
             <View style={styles.bottomTabLableValue}>
@@ -1683,19 +1834,24 @@ export default function Cart({ navigation, route }) {
             </View>
           )} */}
 
-
-            {!!appData?.profile?.preferences?.tip_before_order &&
+            {/* {!!appData?.profile?.preferences?.tip_before_order &&
               !!cartData?.tip &&
               cartData?.tip.length && (
                 <View
                   style={[
                     styles.bottomTabLableValue,
-                    { flexDirection: 'column', marginTop: moderateScaleVertical(8) },
+                    {
+                      flexDirection: 'column',
+                      marginTop: moderateScaleVertical(8),
+                    },
                   ]}>
                   <Text
                     style={
                       isDarkMode
-                        ? [styles.priceTipLabel, { color: MyDarkTheme.colors.text }]
+                        ? [
+                            styles.priceTipLabel,
+                            {color: MyDarkTheme.colors.text},
+                          ]
                         : [styles.priceTipLabel]
                     }>
                     {strings.DOYOUWANTTOGIVEATIP}
@@ -1703,7 +1859,7 @@ export default function Cart({ navigation, route }) {
                   <ScrollView
                     horizontal
                     showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={{ flexGrow: 1 }}>
+                    contentContainerStyle={{flexGrow: 1}}>
                     {cartData?.total_payable_amount !== 0 &&
                       cartData?.tip.map((j, jnx) => {
                         return (
@@ -1724,17 +1880,17 @@ export default function Cart({ navigation, route }) {
                               style={
                                 isDarkMode
                                   ? {
-                                    color:
-                                      selectedTipvalue?.value == j?.value
-                                        ? colors.white
-                                        : MyDarkTheme.colors.text,
-                                  }
+                                      color:
+                                        selectedTipvalue?.value == j?.value
+                                          ? colors.white
+                                          : MyDarkTheme.colors.text,
+                                    }
                                   : {
-                                    color:
-                                      selectedTipvalue?.value == j?.value
-                                        ? colors.white
-                                        : colors.black,
-                                  }
+                                      color:
+                                        selectedTipvalue?.value == j?.value
+                                          ? colors.white
+                                          : colors.black,
+                                    }
                               }>
                               {`${currencies?.primary_currency?.symbol} ${j.value}`}
                             </Text>
@@ -1759,7 +1915,8 @@ export default function Cart({ navigation, route }) {
                             selectedTipvalue == 'custom'
                               ? themeColors.primary_color
                               : 'transparent',
-                          flex: cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
+                          flex:
+                            cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
                         },
                       ]}
                       onPress={() => selectedTip('custom')}>
@@ -1767,17 +1924,17 @@ export default function Cart({ navigation, route }) {
                         style={
                           isDarkMode
                             ? {
-                              color:
-                                selectedTipvalue == 'custom'
-                                  ? colors.white
-                                  : MyDarkTheme.colors.text,
-                            }
+                                color:
+                                  selectedTipvalue == 'custom'
+                                    ? colors.white
+                                    : MyDarkTheme.colors.text,
+                              }
                             : {
-                              color:
-                                selectedTipvalue == 'custom'
-                                  ? colors.white
-                                  : colors.black,
-                            }
+                                color:
+                                  selectedTipvalue == 'custom'
+                                    ? colors.white
+                                    : colors.black,
+                              }
                         }>
                         {strings.CUSTOM}
                       </Text>
@@ -1791,12 +1948,12 @@ export default function Cart({ navigation, route }) {
                         borderWidth: 0.5,
                         borderColor: colors.textGreyB,
                         height: 40,
-                        marginTop: moderateScaleVertical(8)
+                        marginTop: moderateScaleVertical(8),
                       }}>
                       <TextInput
                         value={selectedTipAmount}
                         onChangeText={(text) =>
-                          updateState({ selectedTipAmount: text })
+                          updateState({selectedTipAmount: text})
                         }
                         style={{
                           height: 40,
@@ -1819,14 +1976,17 @@ export default function Cart({ navigation, route }) {
                     </View>
                   )}
                 </View>
-              )}
+              )} */}
 
-            {!!cartData?.total_tax && (
+            {/* {!!cartData?.total_tax && (
               <View style={styles.bottomTabLableValue}>
                 <Text
                   style={
                     isDarkMode
-                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      ? [
+                          styles.priceItemLabel,
+                          {color: MyDarkTheme.colors.text},
+                        ]
                       : styles.priceItemLabel
                   }>
                   {strings.TAX_AMOUNT}
@@ -1834,11 +1994,14 @@ export default function Cart({ navigation, route }) {
                 <Text
                   style={
                     isDarkMode
-                      ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                      ? [
+                          styles.priceItemLabel,
+                          {color: MyDarkTheme.colors.text},
+                        ]
                       : styles.priceItemLabel
                   }>{`${currencies?.primary_currency?.symbol}${Number(
-                    cartData?.total_tax ? cartData?.total_tax : 0,
-                  ).toFixed(2)}`}</Text>
+                  cartData?.total_tax ? cartData?.total_tax : 0,
+                ).toFixed(2)}`}</Text>
               </View>
             )}
 
@@ -1846,22 +2009,22 @@ export default function Cart({ navigation, route }) {
               <Text
                 style={{
                   ...styles.priceItemLabel2,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 }}>
                 {strings.AMOUNT_PAYABLE}
               </Text>
               <Text
                 style={
                   isDarkMode
-                    ? [styles.priceItemLabel2, { color: MyDarkTheme.colors.text }]
+                    ? [styles.priceItemLabel2, {color: MyDarkTheme.colors.text}]
                     : styles.priceItemLabel2
                 }>{`${currencies?.primary_currency?.symbol}${(
-                  Number(cartData?.total_payable_amount) +
-                  (selectedTipAmount != null && selectedTipAmount != ''
-                    ? Number(selectedTipAmount)
-                    : 0)
-                ).toFixed(2)}`}</Text>
-            </View>
+                Number(cartData?.total_payable_amount) +
+                (selectedTipAmount != null && selectedTipAmount != ''
+                  ? Number(selectedTipAmount)
+                  : 0)
+              ).toFixed(2)}`}</Text>
+            </View> */}
           </View>
         </View>
       </View>
@@ -1934,41 +2097,42 @@ export default function Cart({ navigation, route }) {
           numberOfLines={4}
           style={{
             ...styles.instructionView,
-            backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
+            backgroundColor: isDarkMode
+              ? colors.whiteOpacity15
+              : colors.greyNew,
           }}
           placeholderTextColor={
             isDarkMode ? colors.textGreyB : colors.textGreyB
           }
           // placeholder={strings.ANY_RESTAURANT_REQUESTS}
-          placeholder={'Special Instruction'}
+          placeholder={strings.SPECIAL_INSTRUCTION}
         />
         {/* <View style={{ height: moderateScaleVertical(20) }} /> */}
 
-
         {/* select payment method */}
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() =>
             !!userData?.auth_token
               ? moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
               : navigation.navigate(navigationStrings.OUTER_SCREEN, {})
           }
           style={styles.paymentMainView}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Image
-              style={isDarkMode && { tintColor: MyDarkTheme.colors.text }}
+              style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
               source={imagePath.paymentMethod}
             />
             <Text
               style={{
                 ...styles.priceItemLabel2,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                marginLeft: moderateScale(4)
+                marginLeft: moderateScale(4),
               }}>
               {selectedPayment.title_lng
                 ? selectedPayment.title_lng
                 : selectedPayment.title
-                  ? selectedPayment.title
-                  : strings.SELECT_PAYMENT_METHOD}
+                ? selectedPayment.title
+                : strings.SELECT_PAYMENT_METHOD}
             </Text>
           </View>
           <View>
@@ -1977,14 +2141,14 @@ export default function Cart({ navigation, route }) {
               style={
                 isDarkMode
                   ? {
-                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
-                    tintColor: MyDarkTheme.colors.text,
-                  }
-                  : { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }
+                      transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                      tintColor: MyDarkTheme.colors.text,
+                    }
+                  : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
               }
             />
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* {payment submit button} */}
         {/* {userData ? (
@@ -2048,7 +2212,326 @@ export default function Cart({ navigation, route }) {
             </View>
           </View>
         ) : null} */}
+        {!!appData?.profile?.preferences?.tip_before_order &&
+          !!cartData?.tip &&
+          cartData?.tip.length && (
+            <View
+              style={[
+                styles.bottomTabLableValue,
+                {
+                  flexDirection: 'column',
+                  marginTop: moderateScaleVertical(8),
+                },
+              ]}>
+              <Text
+                style={
+                  isDarkMode
+                    ? [styles.priceTipLabel, { color: MyDarkTheme.colors.text }]
+                    : [styles.priceTipLabel]
+                }>
+                {strings.DOYOUWANTTOGIVEATIP}
+              </Text>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ flexGrow: 1 }}>
+                {cartData?.total_payable_amount !== 0 &&
+                  cartData?.tip.map((j, jnx) => {
+                    return (
+                      <TouchableOpacity
+                        key={String(jnx)}
+                        style={[
+                          styles.tipArrayStyle,
+                          {
+                            backgroundColor:
+                              selectedTipvalue?.value == j?.value
+                                ? themeColors.primary_color
+                                : 'transparent',
+                            flex: 0.18,
+                          },
+                        ]}
+                        onPress={() => selectedTip(j)}>
+                        <Text
+                          style={
+                            isDarkMode
+                              ? {
+                                color:
+                                  selectedTipvalue?.value == j?.value
+                                    ? colors.white
+                                    : MyDarkTheme.colors.text,
+                              }
+                              : {
+                                color:
+                                  selectedTipvalue?.value == j?.value
+                                    ? colors.white
+                                    : colors.black,
+                              }
+                          }>
+                          {`${currencies?.primary_currency?.symbol} ${j.value}`}
+                        </Text>
+                        <Text
+                          style={{
+                            color:
+                              selectedTipvalue?.value == j?.value
+                                ? colors.white
+                                : colors.textGreyB,
+                          }}>
+                          {j.label}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
 
+                {cartData?.total_payable_amount !== 0 && (
+                  <TouchableOpacity
+                    style={[
+                      styles.tipArrayStyle2,
+                      {
+                        backgroundColor:
+                          selectedTipvalue == 'custom'
+                            ? themeColors.primary_color
+                            : 'transparent',
+                        flex: cartData?.total_payable_amount !== 0 ? 0.45 : 0.2,
+                      },
+                    ]}
+                    onPress={() => selectedTip('custom')}>
+                    <Text
+                      style={
+                        isDarkMode
+                          ? {
+                            color:
+                              selectedTipvalue == 'custom'
+                                ? colors.white
+                                : MyDarkTheme.colors.text,
+                          }
+                          : {
+                            color:
+                              selectedTipvalue == 'custom'
+                                ? colors.white
+                                : colors.black,
+                          }
+                      }>
+                      {strings.CUSTOM}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </ScrollView>
+
+              {!!selectedTipvalue && selectedTipvalue == 'custom' && (
+                <View
+                  style={{
+                    borderRadius: 5,
+                    borderWidth: 0.5,
+                    borderColor: colors.textGreyB,
+                    height: 40,
+                    marginTop: moderateScaleVertical(8),
+                  }}>
+                  <TextInput
+                    value={selectedTipAmount}
+                    onChangeText={(text) =>
+                      updateState({ selectedTipAmount: text })
+                    }
+                    style={{
+                      height: 40,
+                      alignItems: 'center',
+                      paddingHorizontal: 10,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyOpcaity7,
+                    }}
+                    maxLength={5}
+                    returnKeyType={'done'}
+                    keyboardType={'number-pad'}
+                    placeholder={strings.ENTER_CUSTOM_AMOUNT}
+                    placeholderTextColor={
+                      isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyOpcaity7
+                    }
+                  />
+                </View>
+              )}
+            </View>
+          )}
+        <View style={styles.bottomTabLableValue}>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                : styles.priceItemLabel
+            }>
+            {strings.SUBTOTAL}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                : styles.priceItemLabel
+            }>{`${currencies?.primary_currency?.symbol}${Number(
+              cartData?.gross_paybale_amount,
+            ).toFixed(2)}`}</Text>
+        </View>
+        {!!cartData?.wallet_amount && (
+          <View style={styles.bottomTabLableValue}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel
+              }>
+              {strings.WALLET}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel
+              }>{`${currencies?.primary_currency?.symbol}${Number(
+                cartData?.wallet_amount ? cartData?.wallet_amount : 0,
+              ).toFixed(2)}`}</Text>
+          </View>
+        )}
+        {!!cartData?.loyalty_amount && (
+          <View style={styles.bottomTabLableValue}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel
+              }>
+              {strings.LOYALTY}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel
+              }>{`-${currencies?.primary_currency?.symbol}${Number(
+                cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
+              ).toFixed(2)}`}</Text>
+          </View>
+        )}
+
+        {!!cartData?.wallet_amount_used && (
+          <View style={styles.bottomTabLableValue}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel
+              }>
+              {strings.WALLET}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel
+              }>{`-${currencies?.primary_currency?.symbol}${Number(
+                cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
+              ).toFixed(2)}`}</Text>
+          </View>
+        )}
+        {!!cartData?.total_subscription_discount && (
+          <View style={styles.bottomTabLableValue}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel
+              }>
+              {strings.TOTALSUBSCRIPTION}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel
+              }>{`-${currencies?.primary_currency?.symbol}${Number(
+                cartData?.total_subscription_discount,
+              ).toFixed(2)}`}</Text>
+          </View>
+        )}
+        {!!cartData?.total_tax && (
+          <View style={styles.bottomTabLableValue}>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel
+              }>
+              {strings.TAX_AMOUNT}
+            </Text>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.priceItemLabel, { color: MyDarkTheme.colors.text }]
+                  : styles.priceItemLabel
+              }>{`${currencies?.primary_currency?.symbol}${Number(
+                cartData?.total_tax ? cartData?.total_tax : 0,
+              ).toFixed(2)}`}</Text>
+          </View>
+        )}
+
+        <View style={styles.amountPayable}>
+          <Text
+            style={{
+              ...styles.priceItemLabel2,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}>
+            {strings.AMOUNT_PAYABLE}
+          </Text>
+          <Text
+            style={
+              isDarkMode
+                ? [styles.priceItemLabel2, { color: MyDarkTheme.colors.text }]
+                : styles.priceItemLabel2
+            }>{`${currencies?.primary_currency?.symbol}${(
+              Number(cartData?.total_payable_amount) +
+              (selectedTipAmount != null && selectedTipAmount != ''
+                ? Number(selectedTipAmount)
+                : 0)
+            ).toFixed(2)}`}</Text>
+        </View>
+        <TouchableOpacity
+          onPress={() =>
+            !!userData?.auth_token
+              ? moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)()
+              : navigation.navigate(navigationStrings.OUTER_SCREEN, {})
+          }
+          style={styles.paymentMainView}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Image
+              style={isDarkMode && { tintColor: MyDarkTheme.colors.text }}
+              source={imagePath.paymentMethod}
+            />
+            <Text
+              style={{
+                ...styles.priceItemLabel2,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                marginLeft: moderateScale(4),
+              }}>
+              {selectedPayment.title_lng
+                ? selectedPayment.title_lng
+                : selectedPayment.title
+                  ? selectedPayment.title
+                  : strings.SELECT_PAYMENT_METHOD}
+            </Text>
+          </View>
+          <View>
+            <Image
+              source={imagePath.goRight}
+              style={
+                isDarkMode
+                  ? {
+                    transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                    tintColor: MyDarkTheme.colors.text,
+                  }
+                  : { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }
+              }
+            />
+          </View>
+        </TouchableOpacity>
         {!!(
           userData?.auth_token &&
           !appData?.profile?.preferences?.off_scheduling_at_cart
@@ -2187,34 +2670,45 @@ export default function Cart({ navigation, route }) {
   //Header section of cart screen
   const getHeader = () => {
     return (
-      <View
+      <TouchableOpacity
+        disabled={!!vendorAddress}
+        onPress={() => setModalVisible(true)}
         style={{
           ...styles.topLable,
           marginVertical: moderateScale(7),
           justifyContent: 'space-between',
         }}>
-        <View style={{ flexDirection: 'row', flex: 0.85 }}>
-          <Image source={imagePath.icMap} />
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 0.85,
+            paddingHorizontal: moderateScale(8),
+          }}>
+          <Image style={{}} source={imagePath.icMap} />
           <View style={styles.addressView}>
             <Text
               style={{
                 ...styles.homeTxt,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
-              {strings.HOME}
+              {vendorAddress
+                ? strings.HOME
+                : selectedAddressData
+                  ? strings.HOME
+                  : strings.ADD_ADDRESS}
             </Text>
             <Text
               numberOfLines={2}
               style={{
                 ...styles.addAddressTxt,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                marginTop:moderateScaleVertical(4)
+                marginTop: moderateScaleVertical(4),
               }}>
               {vendorAddress
                 ? vendorAddress
                 : selectedAddressData
                   ? selectedAddressData?.address
-                  : strings.ADD_ADDRESS}
+                  : strings.TAP_HERE_ADD_ADDRESS}
             </Text>
           </View>
         </View>
@@ -2229,7 +2723,7 @@ export default function Cart({ navigation, route }) {
             />
           </TouchableOpacity>
         )}
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -2357,16 +2851,21 @@ export default function Cart({ navigation, route }) {
   }, [deepLinkUrl]);
 
   const _onTableSelection = (item) => {
+    console.log(item, 'itemitemitem');
     const data = {
       vendor_id: item.vendor_id,
-      table: item.table_number,
+      table: item?.id,
     };
+    _vendorTableCart(data, item);
+  };
+
+  const _vendorTableCart = (data, item) => {
+    console.log(data, 'selectedTable');
     actions
       .vendorTableCart(data, {
         code: appData?.profile?.code,
       })
       .then((res) => {
-        console.log(res, 'selectedTableInfo', data);
         removeItem('deepLinkUrl');
         setItem('selectedTable', item?.label);
       })

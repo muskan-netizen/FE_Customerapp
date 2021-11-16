@@ -1,4 +1,4 @@
-import { I18nManager, Platform, StyleSheet } from 'react-native';
+import {I18nManager, Platform, StyleSheet} from 'react-native';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
@@ -8,10 +8,10 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { getColorCodeWithOpactiyNumber } from '../../utils/helperFunctions';
+import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
 
-export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
-  const commonStyles = commonStylesFun({ fontFamily });
+export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
+  const commonStyles = commonStylesFun({fontFamily});
   const styles = StyleSheet.create({
     scrollviewHorizontal: {
       borderTopWidth: 1,
@@ -59,7 +59,7 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
       paddingHorizontal: moderateScale(2),
       // borderBottomWidth: moderateScaleVertical(0.5),
       borderBottomColor: colors.borderLight,
-      marginVertical: moderateScaleVertical(8)
+      marginVertical: moderateScaleVertical(8),
     },
     clearCart: {
       ...commonStyles.mediumFont14,
@@ -129,7 +129,7 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
     priceItemLabel2: {
       fontFamily: fontFamily.regular,
       fontSize: textScale(14),
-      color: colors.black
+      color: colors.black,
     },
     addInstruction: {
       color: colors.textGreyB,
@@ -151,7 +151,7 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
       paddingVertical: moderateScaleVertical(10),
       backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
       marginHorizontal: 16,
-      borderRadius: moderateScale(10)
+      borderRadius: moderateScale(10),
     },
 
     // cart item design start from here
@@ -196,10 +196,10 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
     },
     incDecBtnContainer: {
       backgroundColor: themeColors.primary_color,
-      borderRadius: moderateScale(5),
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-      paddingVertical: moderateScaleVertical(3),
+      borderRadius: moderateScale(16),
+      paddingHorizontal: moderateScale(4),
+      paddingVertical: moderateScaleVertical(4),
+      marginRight: moderateScale(8),
     },
     cartItemRatting: {
       tintColor: colors.orange,
@@ -219,9 +219,8 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
     },
     cartItemValue: {
       fontFamily: fontFamily.bold,
-      fontSize: moderateScale(14),
+      fontSize: moderateScale(12),
       color: colors.white,
-      marginTop: moderateScaleVertical(5),
     },
     cartItemLine: {
       height: 1,
@@ -248,11 +247,14 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
     bottomTabLableValue: {
       flexDirection: 'row',
       justifyContent: 'space-between',
+      marginHorizontal: moderateScale(18),
+      marginVertical: moderateScale(8),
     },
     amountPayable: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       marginVertical: moderateScaleVertical(8),
+      marginHorizontal: moderateScale(18),
     },
     paymentView: {
       marginVertical:
@@ -292,7 +294,7 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
     imageStyle: {
       height: width / 4.5,
       width: width / 4.5,
-      borderRadius: moderateScale(8)
+      borderRadius: moderateScale(8),
     },
 
     containerStyle: {
@@ -366,9 +368,13 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
     swipeView: {
       justifyContent: 'center',
       alignItems: 'center',
-      paddingHorizontal: moderateScale(20),
+      paddingHorizontal: moderateScale(16),
       borderRadius: moderateScale(8),
-      width: width,
+      backgroundColor: '#FFC8C8',
+      marginBottom: moderateScaleVertical(12),
+      // alignItems:'flex-end',
+      width: moderateScale(42),
+      // width: width,
     },
     commTextStyle: {
       color: colors.white,
@@ -409,7 +415,7 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
     },
     dropDownContainerStyle: {
       height: 40,
-      marginTop: moderateScaleVertical(10),
+      marginVertical: moderateScaleVertical(10),
       // zIndex: 10,
     },
     mainViewRednderItem: {

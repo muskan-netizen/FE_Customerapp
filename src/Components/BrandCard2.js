@@ -11,6 +11,7 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
 import {
@@ -36,7 +37,7 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
 
   const imageURI = data?.icon
     ? getImageUrl(data.icon.image_fit, data.icon.image_path, '400/400')
-    : getImageUrl(data.image.proxy_url, data.image.image_path, '40/40');
+    : getImageUrl(data.image.image_fit, data.image.image_path, '400/400');
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
 
@@ -99,8 +100,8 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
 const styles = StyleSheet.create({
   imgContainer: {
     // flex: 1,
-    marginRight: '3%',
-    width: '31%',
+    marginHorizontal: moderateScale(8),
+    width: width / 3 - moderateScale(16),
   },
   imgStyle: {
     height: moderateScale(80),

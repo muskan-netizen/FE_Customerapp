@@ -45,11 +45,13 @@ export default function Account3({navigation}) {
   const {themeColors, appStyle, appData, shortCodeStatus} = useSelector(
     (state) => state?.initBoot,
   );
-
   const businessType = appStyle?.homePageLayout;
   const [state, setState] = useState({
     isLoading: false,
   });
+
+  // const profileInfo = appData?.profile;
+  // console.log("account profile info",profileInfo)
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -180,6 +182,7 @@ export default function Account3({navigation}) {
                     : colors.white,
                   paddingVertical: moderateScaleVertical(12),
                   borderRadius: 12,
+                  // flex: 1,
                 }}>
                 {userData?.source ? (
                   <FastImage
@@ -228,7 +231,7 @@ export default function Account3({navigation}) {
                 <View
                   style={{
                     flexDirection: 'column',
-                    marginHorizontal: moderateScale(25),
+                    flex: 1,
                   }}>
                   <Text
                     style={{
@@ -237,6 +240,7 @@ export default function Account3({navigation}) {
                         : colors.textGreyJ,
                       fontFamily: fontFamily.medium,
                       fontSize: textScale(14),
+                      textAlign: 'left',
                     }}>
                     {userData?.name}
                   </Text>
@@ -248,6 +252,7 @@ export default function Account3({navigation}) {
                         ? MyDarkTheme.colors.text
                         : colors.textGreyJ,
                       marginTop: moderateScaleVertical(5),
+                      textAlign: 'left',
                     }}>
                     {userData?.email}
                   </Text>
@@ -296,22 +301,25 @@ export default function Account3({navigation}) {
               />
             ))}
 
-          {!!userData?.auth_token && (
-            <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-              onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
-              iconLeft={imagePath.subscription}
-              centerHeading={strings.SUBSCRIPTION}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
-            />
-          )}
+          {!!userData?.auth_token &&
+            !!appData &&
+            !!appData?.profile &&
+            appData?.profile?.preferences?.subscription_mode == 1 && (
+              <ListItemHorizontal
+                centerContainerStyle={{flexDirection: 'row'}}
+                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
+                iconLeft={imagePath.subscription}
+                centerHeading={strings.SUBSCRIPTION}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+                // iconRight={imagePath.goRight}
+                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              />
+            )}
 
           {!!userData?.auth_token && (
             <ListItemHorizontal

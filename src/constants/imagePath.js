@@ -72,6 +72,8 @@ export default {
   ic_package4: require('../assets/images/ic_package4.png'),
   ic_calendar: require('../assets/images/ic_calendar.png'),
   percent: require('../assets/images/ic_percent2.png'),
+  percent2: require('../assets/images/ic_percentage.png'),
+  icUpload: require('../assets/images/ic_upload.png'),
   paymentMethod: require('../assets/images/ic_pay.png'),
   clientLogo: require('../assets/images/ic_logo.png'),
   cartActive: require('../assets/images/ic_cartactive.png'),
@@ -97,12 +99,13 @@ export default {
   deleteRed: require('../assets/images/ic_delete.png'),
   editBlue: require('../assets/images/ic_edit.png'),
   crossB: require('../assets/images/ic_close_4.png'),
+  icClose3: require('../assets/images/ic_close_3.png'),
   check: require('../assets/images/ic_check.png'),
   unCheck: require('../assets/images/ic_uncheck.png'),
   workActive: require('../assets/images/ic_work_active.png'),
   workInActive: require('../assets/images/ic_work_unactice.png'),
   emptyCart2: require('../assets/images/ic_empty-card.png'),
-  noDataFound2: require('../assets/images/ic_nodatafound.png'),
+  noDataFound2: require('../assets/images/ic_placeholderbeeNew.png'),
   icCamIcon: require('../assets/images/ic_capture.png'),
   icRemoveIcon: require('../assets/images/ic_remove_product.png'),
   noOffers: require('../assets/images/ic_nooffers.png'),
@@ -221,7 +224,6 @@ export default {
   redLocation: require('../assets/images/ic_location.png'),
   location2: require('../assets/images/ic_location2.png'),
 
-
   homeRedActive: require('../assets/images/ic_home4.png'),
   homeRedInActive: require('../assets/images/ic_home_black4.png'),
   cartRedActive: require('../assets/images/ic_cart4.png'),
@@ -277,7 +279,10 @@ export default {
 
   processingActive: require('../assets/images/TrackOrderImages/ic_processing1.png'),
   processingInactive: require('../assets/images/TrackOrderImages/ic_processing2.png'),
-
+  icScooter: require('../assets/images/TrackOrderImages/ic_scooter.png'),
+  icDestination: require('../assets/images/ic_destination.png'),
+  gifImg: require('../assets/images/5ef9d70b03d22b1acd145b9422d3a33f.gif'),
+  // 5ef9d70b03d22b1acd145b9422d3a33f.gif
   //royoorder new images
   wishlist: require('../assets/images/RoyoorderNewImages/ic_wishlist.png'),
   share1: require('../assets/images/RoyoorderNewImages/ic_share.png'),
@@ -369,9 +374,13 @@ export default {
   blackNav: require('../assets/images/TAXIAPPIMAGES/ic_nav.png'),
   plushRoundedBackground: require('../assets/images/TAXIAPPIMAGES/ic_plus.png'),
   icViewMore: require('../assets/images/RoyoorderNewImages/ic_viewmore.png'),
+  msg: require('../assets/images/ic_msg.png'),
+  call2: require('../assets/images/ic_call2.png'),
 
   twoFinderOnBoard: require('../assets/images/TowFinder/ic_onboard.png'),
   facebook: require('../assets/images/TowFinder/ic_fb.png'),
   settings_icon: require('../assets/images/TowFinder/settings.png'),
   settings_red_icon: require('../assets/images/TowFinder/ic_settings1.png'),
+  ic_cameraColored: require('../assets/images/ic_cameraColored.png'),
+  // ic_placeholderbeeNew: require('../assets/images/ic_placeholderbeeNew.png'),
 };

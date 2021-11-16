@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   I18nManager,
   Image,
+  Platform,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
+  Alert,
+  FlatList,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
@@ -26,6 +29,8 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import moment from 'moment';
 import {string} from 'prop-types';
+import {androidCameraPermission} from '../../../utils/permissions';
+import ImagePicker from 'react-native-image-crop-picker';
 
 export default function SelectPaymentModalView({
   isLoading = false,
@@ -44,7 +49,8 @@ export default function SelectPaymentModalView({
   pickUpTimeType = '',
   redirectToPayement,
   selectedPayment = null,
-  pickup_taxi=false
+  pickup_taxi = false,
+  uploadImage,
 }) {
   console.log(pickUpTimeType, 'pickUpTimeType');
   console.log(selectedTime, 'selectedTime');
@@ -66,6 +72,7 @@ export default function SelectPaymentModalView({
   const {profile} = appData;
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const userData = useSelector((state) => state?.auth?.userData);
+  const [image, setImage] = useState([]);
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -84,6 +91,66 @@ export default function SelectPaymentModalView({
       // cartId: cartData.id,
     })();
   };
+
+  const onImageUpload = async (index) => {
+    const permissionStatus = await androidCameraPermission();
+    if (permissionStatus || Platform.OS === 'ios') {
+      Alert.alert(
+        'Upload Image ',
+        'Choose an option',
+        [
+          {text: 'Camera', onPress: () => onCamera()},
+          {text: 'Gallery', onPress: () => onGallery()},
+          {text: 'Cancel', onPress: () => {}},
+        ],
+        {cancelable: true},
+      );
+    }
+  };
+
+  const removeImage = (inx) => {
+    let res = image.filter((val, i) => {
+      if (i !== inx) {
+        return val;
+      }
+    });
+    setImage(res);
+  };
+  const onGallery = async () => {
+    try {
+      let imageRes = await ImagePicker.openPicker({
+        width: 300,
+        height: 400,
+        multiple: false,
+        cropping: true,
+        mediaType: 'photo',
+      });
+      console.log('Image path', imageRes);
+      uploadImage(imageRes.path);
+      setImage([...image, ...[imageRes?.path]]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onCamera = async (index) => {
+    try {
+      let imageRes = await ImagePicker.openCamera({
+        width: 100,
+        height: 100,
+        useFrontCamera: true,
+        multiple: false,
+        mediaType: 'photo',
+      });
+      console.log('Image path', imageRes);
+      uploadImage(imageRes.path);
+      setImage([...image, ...[imageRes?.path]]);
+    } catch (error) {
+      console.log('Image Picker error: ', error);
+    }
+  };
+
+  console.log('image,image', image);
 
   return (
     <View
@@ -441,45 +508,136 @@ export default function SelectPaymentModalView({
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => _getAllOffers(selectedCarOption, '')}
-          style={styles.offersViewB}>
-          {couponInfo ? (
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View
-                style={{flex: 0.7, flexDirection: 'row', alignItems: 'center'}}>
+        <View
+          style={{
+            ...styles.offersViewB,
+            marginHorizontal: moderateScale(17),
+            flexDirection: 'row',
+            // backgroundColor: 'black'
+          }}>
+          <TouchableOpacity
+            onPress={() => _getAllOffers(selectedCarOption, '')}
+            style={{flex: 1}}>
+            {couponInfo ? (
+              <TouchableOpacity
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View
+                  style={{
+                    flex: 0.7,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    style={{tintColor: themeColors.primary_color}}
+                    source={imagePath.percent2}
+                  />
+                  <Text
+                    numberOfLines={1}
+                    style={[
+                      styles.viewOffers,
+                      {marginLeft: moderateScale(10)},
+                    ]}>
+                    {`${strings.CODE} ${couponInfo?.name} ${strings.APPLYED}`}
+                  </Text>
+                </View>
+                <View style={{flex: 0.3, alignItems: 'flex-end'}}>
+                  <Text
+                    onPress={removeCoupon}
+                    style={[
+                      styles.removeCoupon,
+                      {color: colors.cartItemPrice},
+                    ]}>
+                    {strings.REMOVE}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  flex: 1,
+                }}
+                onPress={() => _getAllOffers(selectedCarOption, '')}>
                 <Image
                   style={{tintColor: themeColors.primary_color}}
-                  source={imagePath.percent}
+                  source={imagePath.percent2}
                 />
                 <Text
-                  numberOfLines={1}
                   style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
-                  {`${strings.CODE} ${couponInfo?.name} ${strings.APPLYED}`}
+                  {strings.APPLY_PROMO_CODE}
                 </Text>
-              </View>
-              <View style={{flex: 0.3, alignItems: 'flex-end'}}>
-                <Text
-                  onPress={removeCoupon}
-                  style={[styles.removeCoupon, {color: colors.cartItemPrice}]}>
-                  {strings.REMOVE}
-                </Text>
-              </View>
-            </View>
-          ) : (
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image
-                style={{tintColor: themeColors.primary_color}}
-                source={imagePath.percent}
-              />
-              <Text
-                style={[styles.viewOffers, {marginLeft: moderateScale(10)}]}>
-                {strings.APPLY_PROMO_CODE}
-              </Text>
-            </View>
-          )}
-        </TouchableOpacity>
+              </TouchableOpacity>
+            )}
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginLeft: moderateScale(8),
+            }}
+            onPress={onImageUpload}>
+            <Image
+              style={{
+                tintColor: themeColors.primary_color,
+                width: moderateScale(16),
+                height: moderateScale(16),
+              }}
+              resizeMode="contain"
+              source={imagePath.icUpload}
+            />
+          </TouchableOpacity>
+        </View>
+
+        {image.length !== 0 && (
+          <View
+            style={{
+              ...styles.offersViewB,
+              marginVertical: 0,
+              paddingVertical: 0,
+              // alignSelf: 'flex-start',
+              overflow: 'visible',
+            }}>
+            <FlatList
+              horizontal
+              data={image}
+              ItemSeparatorComponent={() => <View style={{marginLeft: 8}} />}
+              renderItem={({item, index}) => {
+                return (
+                  <View style={{alignItems: 'center'}}>
+                    <View>
+                      <Image
+                        source={{uri: item}}
+                        style={{
+                          width: moderateScale(40),
+                          height: moderateScale(40),
+                          borderRadius: moderateScale(8),
+                        }}
+                      />
+                      <TouchableOpacity
+                        onPress={() => removeImage(index)}
+                        style={{
+                          position: 'absolute',
+                          right: 0,
+                        }}>
+                        <Image
+                          style={{
+                            width: moderateScale(16),
+                            height: moderateScale(16),
+                            borderRadius: moderateScale(10),
+                          }}
+                          resizeMode="contain"
+                          source={imagePath.icClose3}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                );
+              }}
+            />
+          </View>
+        )}
 
         <View
           style={{
@@ -495,10 +653,9 @@ export default function SelectPaymentModalView({
             // marginBottom={moderateScaleVertical(5)}
             // btnText={`${slectedDate}  -  ${selectedTime}`}
             btnText={
-              pickup_taxi?
-              strings.BOOK_NOW_RIDE
-              :
-              pickUpTimeType === 'now'
+              pickup_taxi
+                ? strings.BOOK_NOW_RIDE
+                : pickUpTimeType === 'now' || pickUpTimeType == null
                 ? strings.BOOK_NOW
                 : strings.SCHEDULE_RIDE_FOR +
                   `${moment(slectedDate).format('DD MMM')} ${selectedTime} `

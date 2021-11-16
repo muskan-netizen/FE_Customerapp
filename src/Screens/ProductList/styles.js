@@ -10,7 +10,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 
-export default ({themeColors, fontFamily, isDarkMode,  MyDarkTheme}) =>
+export default ({themeColors, fontFamily, isDarkMode, MyDarkTheme}) =>
   StyleSheet.create({
     topHeaderView: {
       flexDirection: 'row',
@@ -87,7 +87,7 @@ export default ({themeColors, fontFamily, isDarkMode,  MyDarkTheme}) =>
       alignItems: 'center',
       paddingHorizontal: moderateScale(8),
       // height: 42,
-      marginTop: StatusBarHeight,
+      marginTop: Platform.OS === 'ios' ? StatusBarHeight : 5,
     },
 
     HeaderInsideTextStyle: {
@@ -125,7 +125,7 @@ export default ({themeColors, fontFamily, isDarkMode,  MyDarkTheme}) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       width: width - moderateScale(20),
-      marginTop: StatusBarHeight + 5,
+      marginTop: Platform.OS === 'ios' ? StatusBarHeight : moderateScale(25),
       flex: 1,
     },
     hdrCompRoundImg: {
@@ -262,8 +262,6 @@ export default ({themeColors, fontFamily, isDarkMode,  MyDarkTheme}) =>
       flexDirection: 'row',
     },
     locTimeIcon: {
-      tintColor: isDarkMode
-      ? MyDarkTheme.colors.text
-      : colors.grayOpacity51
-    }
+      tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51,
+    },
   });

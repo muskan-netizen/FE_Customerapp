@@ -28,7 +28,6 @@ import {
 import {getItem, getUserData, setItem} from './src/utils/utils';
 import PushNotification from 'react-native-push-notification';
 
-
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
   // const appMainData = useSelector((state) => state?.home?.appMainData);
@@ -76,7 +75,7 @@ const App = () => {
     //stop splahs screen from loading
     setTimeout(() => {
       SplashScreen.hide();
-    }, 1500);
+    }, 3000);
   }, []);
 
   const notificationConfig = () => {
@@ -104,7 +103,7 @@ const App = () => {
         });
       }
       const getAppData = await getItem('appData');
-      
+
       dispatch({
         type: types.APP_INIT,
         payload: getAppData,
@@ -231,7 +230,6 @@ const App = () => {
       setInternet(netStatus);
       updateInternetConnection(netStatus);
     });
-
     return () => removeNetInfoSubscription();
   }, []);
   const {blurRef} = useRef();

@@ -218,14 +218,21 @@ export default function ProductCard3({
               </Text>
             </View>
             <View style={{ width: width / 2 }}>
-              {!!htmlText && (
+              <Text style={{
+                 fontSize: textScale(9),
+                 fontFamily: fontFamily.regular,
+                 lineHeight: moderateScale(14),
+                 color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyE,
+                 textAlign: 'left',
+              }}>{data?.translation_description}</Text>
+              {/* {!!htmlText && (
                 <HtmlViewComp
                   plainHtml={htmlText}
                   nodeComponentProps={{
                     numberOfLines: 2,
                   }}
                 />
-              )}
+              )} */}
             </View>
           </Animatable.View>
 

@@ -888,6 +888,91 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.pinkjet:
+          updateState({
+            shortCode: shortCodes.pinkjet,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mokabfix:
+          updateState({
+            shortCode: shortCodes.mokabfix,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.botseats:
+          updateState({
+            shortCode: shortCodes.botseats,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.gumastas:
+          updateState({
+            shortCode: shortCodes.gumastas,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.dishefs:
+          updateState({
+            shortCode: shortCodes.dishefs,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bilionza:
+          updateState({
+            shortCode: shortCodes.bilionza,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.doleypharmacy:
+          updateState({
+            shortCode: shortCodes.doleypharmacy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bezalio:
+          updateState({
+            shortCode: shortCodes.bezalio,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.youchillax:
+          updateState({
+            shortCode: shortCodes.youchillax,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.instashop:
+          updateState({
+            shortCode: shortCodes.instashop,
+            isShortcodePrefilled: true,
+          });
+          s;
+          break;
+        case appIds.shoorafresh:
+          updateState({
+            shortCode: shortCodes.shoorafresh,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.click2deliver:
+          updateState({
+            shortCode: shortCodes.click2deliver,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.trucktirenow:
+          updateState({
+            shortCode: shortCodes.trucktirenow,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.yeboy:
+          updateState({
+            shortCode: shortCodes.yeboy,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -916,12 +1001,15 @@ export default function ShortCode({route, navigation}) {
     }, 1000);
   };
 
-  const initApiHit = () => {
+  const initApiHit = async () => {
+    const res = await getItem('setPrimaryLanguage');
+
     let header = {};
-    if (languages?.primary_language?.id) {
+
+    if (!!res?.primary_language?.id) {
       header = {
         code: shortCode,
-        language: languages?.primary_language?.id,
+        language: res?.primary_language?.id,
       };
     } else {
       header = {

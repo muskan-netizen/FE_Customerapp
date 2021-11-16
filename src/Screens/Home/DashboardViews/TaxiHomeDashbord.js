@@ -210,8 +210,8 @@ export default function TaxiHomeDashbord({
       });
   };
 
-  const continueWithNaxtScreen = (item) => {
-    onPressCategory(item);
+  const continueWithNaxtScreen = (item, tasktype) => {
+    onPressCategory(item, tasktype);
   };
 
   const _modalClose = () => {
@@ -279,7 +279,7 @@ export default function TaxiHomeDashbord({
     return (
       <TaxiHomeCategoryCard
         data={item}
-        onPress={() => continueWithNaxtScreen(item)}
+        onPress={() => continueWithNaxtScreen(item, 'now')}
       />
     );
   };
@@ -357,10 +357,13 @@ export default function TaxiHomeDashbord({
                 marginLeft: moderateScale(20),
                 width: width - 60,
               }}
-              onPress={moveToNewScreen(
-                navigationStrings.ADDADDRESS,
-                appMainData?.categories[0],
-              )}>
+              onPress={() => {
+                navigation.navigate(navigationStrings.ADDADDRESS, {
+                  cat: appMainData?.categories[0],
+                  datetime: {slectedDate, selectedTime},
+                  pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
+                });
+              }}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -463,6 +466,8 @@ export default function TaxiHomeDashbord({
     );
   };
 
+  console.log(slectedDate, 'selectedTimeselectedTime');
+
   return (
     <>
       <ScrollView
@@ -536,7 +541,7 @@ export default function TaxiHomeDashbord({
                         cat: appMainData?.categories[0],
                         datetime: {slectedDate, selectedTime},
                         pickUpTimeType:
-                          slectedDate || selectedTime ? '' : 'now',
+                          slectedDate != null || selectedTime ? '' : 'now',
                       })
                     : navigation.navigate(navigationStrings.LOGIN);
                 }}>
@@ -671,12 +676,14 @@ export default function TaxiHomeDashbord({
           </>
         )}
 
-        <BottomViewModal
-          isDatetimePicker={true}
-          show={isVisible}
-          mainContainView={_ModalMainView}
-          closeModal={_modalClose}
-        />
+        {isVisible && (
+          <BottomViewModal
+            isDatetimePicker={true}
+            show={isVisible}
+            mainContainView={_ModalMainView}
+            closeModal={_modalClose}
+          />
+        )}
 
         <View style={{height: moderateScaleVertical(65)}} />
       </ScrollView>

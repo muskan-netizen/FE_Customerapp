@@ -619,7 +619,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.cabdelivr'
+            applicationId 'com.app.cabdelivr'
             resValue "string", "app_name", "Cabdelivr"
             resValue "string", "host_name", ""
          }
@@ -1554,13 +1554,148 @@ android {
             resValue "string", "app_name", "ThubaeRides"
             resValue "string", "host_name", ""
          }
-
-
-
+           pinkjet{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.pinkjet'
+            resValue "string", "app_name", "PinkJet"
+            resValue "string", "host_name", ""
+         }
+        mokabfix{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.mokabfix'
+            resValue "string", "app_name", "MokabFix"
+            resValue "string", "host_name", ""
+         }
+          botseats{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.botseats'
+            resValue "string", "app_name", "BotsEats"
+            resValue "string", "host_name", ""
+         }
+           gumastas{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.gumastas'
+            resValue "string", "app_name", "Gumastas"
+            resValue "string", "host_name", ""
+         }
+          dishefs{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.dishefs'
+            resValue "string", "app_name", "Dishefs"
+            resValue "string", "host_name", ""
+         }
+          bilionza{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.bilionza'
+            resValue "string", "app_name", "Bilionza"
+            resValue "string", "host_name", ""
+         }
+         doleypharmacy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.doleypharmacy'
+            resValue "string", "app_name", "Doley Pharmacy"
+            resValue "string", "host_name", ""
+         }
+          bezalio{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.bezalio'
+            resValue "string", "app_name", "Bezalio"
+            resValue "string", "host_name", ""
+         }
+         youchillax{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.youchillax'
+            resValue "string", "app_name", "YouChillax"
+            resValue "string", "host_name", ""
+         }
+          instashop{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.instashop'
+            resValue "string", "app_name", "InstaShop"
+            resValue "string", "host_name", ""
+         }
+         shoorafresh{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.shoorafresh'
+            resValue "string", "app_name", "Shoora Fresh"
+            resValue "string", "host_name", ""
+         }
+          click2deliver{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.click2deliver'
+            resValue "string", "app_name", "Click2Deliver"
+            resValue "string", "host_name", ""
+         }
+      trucktirenow{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.trucktirenow'
+            resValue "string", "app_name", "TruckTireNow"
+            resValue "string", "host_name", ""
+         }
+         yeboy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.yeboy'
+            resValue "string", "app_name", "Yeboy"
+            resValue "string", "host_name", ""
+         }
     }
 }
-
-
 
 dependencies {
    

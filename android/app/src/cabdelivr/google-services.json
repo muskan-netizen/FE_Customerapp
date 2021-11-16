@@ -7,36 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:314630832921:android:ddbe4f616c882d9e897b88",
+        "mobilesdk_app_id": "1:314630832921:android:96069e41be876d4d897b88",
         "android_client_info": {
-          "package_name": "com.cabdelivr"
+          "package_name": "com.app.cabdelivr"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "314630832921-mgda8ute8q91k1ae0ntofig0jedjqg49.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.cabdelivr",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "314630832921-pe4ihiuidq779kv7nnhkv2ordlivs8oa.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.cabdelivr",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "314630832921-u65cnesqqhcgu35v95alsj2gvovodi6d.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.cabdelivr",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
         {
           "client_id": "314630832921-ntko99trll74qr11d4jcfkc7li8c1tf1.apps.googleusercontent.com",
           "client_type": 3
@@ -55,10 +31,10 @@
               "client_type": 3
             },
             {
-              "client_id": "314630832921-dbufplld847lvnfdgnnm5l4aujtonegi.apps.googleusercontent.com",
+              "client_id": "314630832921-190kmbhpuk08qfiio657tpf24vatdrct.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.cabdelivr"
+                "bundle_id": "com.app.cabdelivr"
               }
             }
           ]

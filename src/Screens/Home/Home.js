@@ -444,7 +444,7 @@ export default function Home({route, navigation}) {
     } else if (item.redirect_to == staticStrings.CELEBRITY) {
       moveToNewScreen(navigationStrings.CELEBRITY)();
     } else if (item.redirect_to == staticStrings.BRAND) {
-      moveToNewScreen(navigationStrings.BRANDS)();
+      moveToNewScreen(navigationStrings.CATEGORY_BRANDS, item)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
       moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
@@ -524,7 +524,6 @@ export default function Home({route, navigation}) {
   //Reloads the screen
   const initApiHit = () => {
     let header = {};
-    // console.log(languages?.primary_language?.id, 'languageID');
     header = {
       code: appData?.profile?.code,
       language: languages?.primary_language?.id,
@@ -625,9 +624,9 @@ export default function Home({route, navigation}) {
   };
 
   const renderHomeScreen = () => {
-    const case_ = 5
+    const case_ = 5;
     switch (appStyle?.homePageLayout) {
-    // switch (case_) {
+      // switch (case_) {
       case 1:
         return (
           <>
@@ -718,11 +717,11 @@ export default function Home({route, navigation}) {
             />
           </>
         );
-      
+
       case 5:
-        return(
+        return (
           <>
-           {/* <DashBoardSeven
+            {/* <DashBoardSeven
               handleRefresh={() => handleRefresh()}
               bannerPress={(item) => bannerPress(item)}
               isLoading={isLoading}
@@ -737,7 +736,7 @@ export default function Home({route, navigation}) {
               navigation={navigation}
             /> */}
           </>
-        )
+        );
     }
   };
 

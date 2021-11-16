@@ -82,7 +82,6 @@ export default function OuterScreen({navigation}) {
     () => {
       navigation.navigate(screenName, {data});
     };
-
   //Saving login user to backend
   const _saveSocailLogin = async (socialLoginData, type) => {
     let userStaticName = DeviceInfo.getBundleId();
@@ -308,7 +307,6 @@ export default function OuterScreen({navigation}) {
       // updateState({isLoading: true});
       setItem('setPrimaryLanguage', languagesData);
       setTimeout(() => {
-        updateState({isSelectLanguageModal: false});
         actions.updateLanguage(data);
         onSubmitLang(data.sort_code, languagesData);
       }, 1000);
@@ -336,6 +334,7 @@ export default function OuterScreen({navigation}) {
   };
 
   const _updateLang = (selectedLangTitle) => {
+    updateState({isSelectLanguageModal: false});
     updateLanguage(selectedLangTitle);
   };
 
@@ -344,7 +343,7 @@ export default function OuterScreen({navigation}) {
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       isLoadingB={isLoading}
       source={loaderOne}>
-      {shortCodeStatus && (
+      {shortCodeStatus ? (
         <Header
           leftIcon={
             appStyle?.homePageLayout === 2
@@ -359,6 +358,31 @@ export default function OuterScreen({navigation}) {
             // })
             navigation.goBack()
           }
+          isRightText
+          rightTxt={
+            !!selectedLangTitle
+              ? selectedLangTitle.sort_code
+              : languages?.primary_language?.sort_code
+          }
+          rightTxtContainerStyle={{
+            backgroundColor: themeColors.primary_color,
+            height: moderateScale(30),
+            width: moderateScale(30),
+            borderRadius: moderateScale(30),
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onPressRightTxt={_selectLang}
+          rightTxtStyle={{color: colors.white, textTransform: 'uppercase'}}
+          headerStyle={
+            isDarkMode
+              ? {backgroundColor: MyDarkTheme.colors.background}
+              : {backgroundColor: colors.white}
+          }
+        />
+      ) : (
+        <Header
+          noLeftIcon
           isRightText
           rightTxt={
             !!selectedLangTitle
@@ -463,7 +487,7 @@ export default function OuterScreen({navigation}) {
                 </View>
               )}
               {!!fb_login && (
-                <View style={{marginVertical: moderateScaleVertical(15)}}>
+                <View style={{marginTop: moderateScaleVertical(15)}}>
                   <TransparentButtonWithTxtAndIcon
                     icon={imagePath.ic_fb2}
                     btnText={strings.CONTINUE_FACEBOOK}
@@ -483,26 +507,28 @@ export default function OuterScreen({navigation}) {
                 </View>
               )}
               {!!twitter_login && (
-                <TransparentButtonWithTxtAndIcon
-                  icon={imagePath.ic_twitter2}
-                  btnText={strings.CONTINUE_TWITTER}
-                  containerStyle={{
-                    backgroundColor: isDarkMode
-                      ? MyDarkTheme.colors.lightDark
-                      : colors.white,
-                    borderColor: colors.borderColorD,
-                    borderWidth: 1,
-                  }}
-                  textStyle={{
-                    color: isDarkMode ? colors.white : colors.textGreyB,
-                    marginHorizontal: moderateScale(10),
-                  }}
-                  nPress={() => openTwitterLogin()}
-                />
+                <View style={{marginTop: moderateScaleVertical(15)}}>
+                  <TransparentButtonWithTxtAndIcon
+                    icon={imagePath.ic_twitter2}
+                    btnText={strings.CONTINUE_TWITTER}
+                    containerStyle={{
+                      backgroundColor: isDarkMode
+                        ? MyDarkTheme.colors.lightDark
+                        : colors.white,
+                      borderColor: colors.borderColorD,
+                      borderWidth: 1,
+                    }}
+                    textStyle={{
+                      color: isDarkMode ? colors.white : colors.textGreyB,
+                      marginHorizontal: moderateScale(10),
+                    }}
+                    nPress={() => openTwitterLogin()}
+                  />
+                </View>
               )}
 
               {!!apple_login && Platform.OS == 'ios' && (
-                <View style={{marginVertical: moderateScaleVertical(15)}}>
+                <View style={{marginTop: moderateScaleVertical(15)}}>
                   <TransparentButtonWithTxtAndIcon
                     icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
                     btnText={strings.CONTINUE_APPLE}

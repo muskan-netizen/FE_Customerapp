@@ -134,6 +134,20 @@ const shortCodes = {
   donepacked: '4fc332',
   careworks: '81c669',
   thubaerides: '47f449',
+  pinkjet: '7e0ff5',
+  mokabfix: '88d242',
+  botseats: 'fe9076',
+  gumastas: '2cdae8',
+  dishefs: '4c13fd',
+  bilionza: '9a8793',
+  doleypharmacy: 'e925ef',
+  bezalio: 'c1ab2b',
+  youchillax: 'a2c90d',
+  instashop: 'cb6671',
+  shoorafresh: 'bd4fe8',
+  click2deliver: '6483c6',
+  trucktirenow: '82c016',
+  yeboy: 'e4ec39',
 };
 
 const appIds = {
@@ -298,8 +312,8 @@ const appIds = {
     android: 'com.travo',
   }),
   cabdelivr: Platform.select({
-    ios: 'com.cabdelivr',
-    android: 'com.cabdelivr',
+    ios: 'com.app.cabdelivr',
+    android: 'com.app.cabdelivr',
   }),
   drus: Platform.select({
     ios: 'com.drus.customer',
@@ -668,6 +682,62 @@ const appIds = {
   thubaerides: Platform.select({
     ios: 'com.thubaerides',
     android: 'com.thubaerides',
+  }),
+  pinkjet: Platform.select({
+    ios: 'com.pinkjet',
+    android: 'com.pinkjet',
+  }),
+  mokabfix: Platform.select({
+    ios: 'com.mokabfix',
+    android: 'com.mokabfix',
+  }),
+  botseats: Platform.select({
+    ios: 'com.botseats',
+    android: 'com.botseats',
+  }),
+  gumastas: Platform.select({
+    ios: 'com.gumastas',
+    android: 'com.gumastas',
+  }),
+  dishefs: Platform.select({
+    ios: 'com.dishefs',
+    android: 'com.dishefs',
+  }),
+  bilionza: Platform.select({
+    ios: 'com.bilionza',
+    android: 'com.bilionza',
+  }),
+  doleypharmacy: Platform.select({
+    ios: 'com.doleypharmacy',
+    android: 'com.doleypharmacy',
+  }),
+  bezalio: Platform.select({
+    ios: 'com.bezalio',
+    android: 'com.bezalio',
+  }),
+  youchillax: Platform.select({
+    ios: 'com.youchillax',
+    android: 'com.youchillax',
+  }),
+  instashop: Platform.select({
+    ios: 'com.customer.instashop',
+    android: 'com.instashop',
+  }),
+  shoorafresh: Platform.select({
+    ios: 'com.shoorafresh',
+    android: 'com.shoorafresh',
+  }),
+  click2deliver: Platform.select({
+    ios: 'com.click2deliver',
+    android: 'com.click2deliver',
+  }),
+  trucktirenow: Platform.select({
+    ios: 'com.trucktirenow',
+    android: 'com.trucktirenow',
+  }),
+  yeboy: Platform.select({
+    ios: 'com.yeboy',
+    android: 'com.yeboy',
   }),
 };
 

@@ -53,7 +53,7 @@ export default function LanguageModal({
             ...styles.mainContainer,
 
             backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.background
+              ? MyDarkTheme.colors.lightDark
               : colors.white,
           }}>
           <View
@@ -62,8 +62,18 @@ export default function LanguageModal({
               paddingVertical: moderateScaleVertical(25),
               flex: 1,
             }}>
-            <Text style={styles.changeLangTxt}>{strings.CHANGE_LANG}</Text>
-            <Text style={styles.preferLangTxt}>
+            <Text
+              style={{
+                ...styles.changeLangTxt,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
+              {strings.CHANGE_LANG}
+            </Text>
+            <Text
+              style={{
+                ...styles.preferLangTxt,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
               {strings.WHICH_LANG_YOU_PREFER}
             </Text>
             <ScrollView
@@ -78,6 +88,9 @@ export default function LanguageModal({
                         borderBottomWidth: 0.7,
                         flexDirection: 'row',
                         paddingVertical: moderateScaleVertical(13),
+                        borderBottomColor: isDarkMode
+                          ? MyDarkTheme.colors.white
+                          : colors.black,
                       }}
                       onPress={(itm) => _onLangSelect(item, indx)}>
                       <View
@@ -108,6 +121,8 @@ export default function LanguageModal({
                             width: moderateScale(20),
                             tintColor: item?.isActive
                               ? themeColors.primary_color
+                              : isDarkMode
+                              ? MyDarkTheme.colors.text
                               : colors.blackOpacity43,
                           }}
                         />
