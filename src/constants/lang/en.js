@@ -590,6 +590,7 @@ Amount`,
   TERMS_OF_SERVICE: 'Terms of Service',
   AND: 'and',
   PRICACY_POLICY: 'Privacy Policy',
+<<<<<<< HEAD
   ORDER_PREPARED: 'Order Prepared',
   TIP_AMOUNT: 'Tip Amount',
   CONFIRM_DESTINATION: 'Confirm Destination',
@@ -597,4 +598,12 @@ Amount`,
   SPECIAL_INSTRUCTION: 'Special Instruction',
   ADD_TIP: 'Add Tip',
   TAP_HERE_ADD_ADDRESS: 'Tap here to add address',
+=======
+  IM_NEW_SIGNUP: "I'm new,sign me up",
+  ENTER_YOUR_PHONE_NUMBER: 'Enter your registered phone number to login',
+  ENTER_YOUR_EMAIL_PASSWORD: 'Enter your email and password to login',
+  REFERRAL_CODE_OPTIONAL: 'referral code (optional)',
+  CHOOSE_FROM_CUISINES: 'Choose from cuisines',
+  OTP_SENT: 'OTP code sent'
+>>>>>>> 884f6141f07cacdf2d38f768a5ee69b0f7d411a6
 };

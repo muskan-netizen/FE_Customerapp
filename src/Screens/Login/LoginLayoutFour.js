@@ -480,7 +480,7 @@ export default function LoginLayoutFour({navigation}) {
                 elevation: 3,
                 alignSelf: 'flex-end',
               }}>
-              <View styl={{zIndex: 999999}}>
+              <View styl={{zIndex: 2}}>
                 <TouchableOpacity onPress={() => onToggle(false)}>
                   <Text
                     style={{
@@ -570,7 +570,7 @@ export default function LoginLayoutFour({navigation}) {
               />
             )}
 
-            {true ? (
+            {/* {true ? (
               <TextInputWithUnderlineAndLabel
                 onChangeText={(data) => checkInputHandler(data)}
                 value={password}
@@ -599,7 +599,7 @@ export default function LoginLayoutFour({navigation}) {
                   borderWidth: 0,
                 }}
               />
-            )}
+            )} */}
           </>
         )}
         {phoneInput && (
@@ -811,7 +811,8 @@ export default function LoginLayoutFour({navigation}) {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
-              onPress={_onLogin}>
+              // onPress={_onLogin}>
+              onPress={() => navigation.navigate(navigationStrings.OTP_VERIFICATION)}>
               <Image
                 style={{
                   tintColor: colors.white,

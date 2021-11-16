@@ -210,8 +210,8 @@ export default function TaxiHomeDashbord({
       });
   };
 
-  const continueWithNaxtScreen = (item, tasktype) => {
-    onPressCategory(item, tasktype);
+  const continueWithNaxtScreen = (item) => {
+    onPressCategory(item);
   };
 
   const _modalClose = () => {
@@ -279,7 +279,7 @@ export default function TaxiHomeDashbord({
     return (
       <TaxiHomeCategoryCard
         data={item}
-        onPress={() => continueWithNaxtScreen(item, 'now')}
+        onPress={() => continueWithNaxtScreen(item)}
       />
     );
   };
