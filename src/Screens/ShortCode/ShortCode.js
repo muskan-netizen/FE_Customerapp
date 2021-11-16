@@ -22,7 +22,7 @@ import {showError} from '../../utils/helperFunctions';
 import {getItem} from '../../utils/utils';
 import styles from './styles';
 import RNFetchBlob from 'rn-fetch-blob-v2';
-import { BarIndicator } from 'react-native-indicators';
+import { MaterialIndicator  } from 'react-native-indicators';
 
 const fs = RNFetchBlob.fs
 
@@ -1133,8 +1133,8 @@ export default function ShortCode({route, navigation}) {
       {isShortcodePrefilled ? (
         <View style={{ flex: 1 }}>
         <View style={{ flex: 1, position: 'absolute', zIndex: 99, alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5' }}>
-          <View style={{ position: 'absolute', bottom: moderateScale(40) }}>
-            <BarIndicator size={50} color={colors.greyMedium} />
+          <View style={{ position: 'absolute', bottom: moderateScale(100) }}>
+            <MaterialIndicator size={50} color={colors.greyMedium} />
           </View>
         </View>
         <Image source={{ uri: 'Splash' }} style={{ flex: 1, zIndex: -1 }} />
