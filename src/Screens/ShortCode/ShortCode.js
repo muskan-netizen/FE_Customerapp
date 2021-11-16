@@ -1001,18 +1001,21 @@ export default function ShortCode({route, navigation}) {
     }, 1000);
   };
 
-  const initApiHit = () => {
+  const initApiHit = async () => {
+    const res = await getItem('setPrimaryLanguage');
+
     let header = {};
-    // if (languages?.primary_language?.id) {
-    //   header = {
-    //     code: shortCode,
-    //     language: languages?.primary_language?.id,
-    //   };
-    // } else {
-    header = {
-      code: shortCode,
-    };
-    // }
+
+    if (!!res?.primary_language?.id) {
+      header = {
+        code: shortCode,
+        language: res?.primary_language?.id,
+      };
+    } else {
+      header = {
+        code: shortCode,
+      };
+    }
 
     actions
       .initApp({}, header, false, null, null, true)
