@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 import Modal from 'react-native-modal';
 import imagePath from '../constants/imagePath';
@@ -14,7 +14,7 @@ import {
 export default function BottomViewModal({
   show,
   mainContainView,
-  closeModal = () => {},
+  closeModal = () => { },
   isDatetimePicker = false,
 }) {
   return (
@@ -22,21 +22,28 @@ export default function BottomViewModal({
       isVisible={show}
       style={
         isDatetimePicker
-          ? [styles.modal, {justifyContent: 'flex-end'}]
+          ? [styles.modal, { justifyContent: 'flex-end' }]
           : styles.modal
       }
       animationInTiming={600}>
       <View
         style={[
           styles.modalContainer,
-          {width: isDatetimePicker ? width : width - 50},
+          { width: isDatetimePicker ? width : width - 50 },
         ]}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           // hitSlop={{top: 200, left: 200, right: 200, bottom: 200}}
-          style={{alignSelf: 'flex-end'}}
+          style={{ alignSelf: 'flex-end' }}
           onPress={() => closeModal()}>
-          <Image source={imagePath.crossC} />
-        </TouchableOpacity>
+          <Image
+            source={imagePath.crossC}
+            resizeMode="contain"
+          />
+        </TouchableOpacity> */}
+        <Text style={{
+          fontSize: textScale(16),
+          fontFamily: fontFamily.regular
+        }}>Schedule a trip </Text>
         {isDatetimePicker ? null : (
           <View
             style={{
@@ -45,7 +52,7 @@ export default function BottomViewModal({
 
               alignItems: 'center',
             }}>
-            <Text style={{fontSize: textScale(14)}}>{'Rate Your Ride'}</Text>
+            <Text style={{ fontSize: textScale(14) }}>{'Rate Your Ride'}</Text>
           </View>
         )}
         {mainContainView()}

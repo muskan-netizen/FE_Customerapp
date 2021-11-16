@@ -300,39 +300,68 @@ export default function TaxiHomeDashbord({
               minimumDate={new Date()}
               style={{
                 width: width - 20,
-                height: height / 4.1,
+                height: height / 4.4,
               }}
               // onDateChange={setDate}
               onDateChange={(value) => onDateChange(value)}
             />
-            <TouchableOpacity
-              style={{
-                width: width - 40,
-                height: 40,
-                backgroundColor: themeColors.primary_color,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              onPress={() => {
-                updateState({
-                  isVisible: false,
-                  isLoadingModal: true,
-                });
 
-                setTimeout(() => {
-                  updateState({ isLoadingModal: false });
-                  navigation.navigate(navigationStrings.ADDADDRESS, {
-                    cat: appMainData?.categories[0],
-                    datetime: { slectedDate, selectedTime },
-                    pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
+            <View style={{
+              flexDirection: 'row', alignItems: 'center',
+              marginHorizontal: 16,
+              marginBottom: 24
+            }}>
+
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  height: 40,
+                  backgroundColor: themeColors.primary_color,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: moderateScale(10)
+                }}
+                onPress={_modalClose}
+              >
+                <Text
+                  style={{ color: colors.white, fontFamily: fontFamily.regular }}>
+                  {'Cancel'}
+                </Text>
+              </TouchableOpacity>
+
+              <View style={{ marginHorizontal: 4 }} />
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  height: 40,
+                  backgroundColor: themeColors.primary_color,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: moderateScale(10)
+                }}
+                onPress={() => {
+                  updateState({
+                    isVisible: false,
+                    isLoadingModal: true,
                   });
-                }, 2000);
-              }}>
-              <Text
-                style={{ color: colors.white, fontFamily: fontFamily.regular }}>
-                {strings.SETPICKUPTIME}
-              </Text>
-            </TouchableOpacity>
+
+                  setTimeout(() => {
+                    updateState({ isLoadingModal: false });
+                    navigation.navigate(navigationStrings.ADDADDRESS, {
+                      cat: appMainData?.categories[0],
+                      datetime: { slectedDate, selectedTime },
+                      pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
+                    });
+                  }, 2000);
+                }}>
+                <Text
+                  style={{ color: colors.white, fontFamily: fontFamily.regular }}>
+                  {'Set'}
+                </Text>
+              </TouchableOpacity>
+
+            </View>
+
           </View>
         </View>
       </View>
@@ -357,7 +386,7 @@ export default function TaxiHomeDashbord({
                 marginLeft: moderateScale(20),
                 width: width - 60,
               }}
-              onPress={()=>{
+              onPress={() => {
                 navigation.navigate(navigationStrings.ADDADDRESS, {
                   cat: appMainData?.categories[0],
                   datetime: { slectedDate, selectedTime },
@@ -500,19 +529,10 @@ export default function TaxiHomeDashbord({
           data={appMainData?.categories}
           style={{
             marginTop: moderateScaleVertical(10),
-            marginHorizontal: moderateScale(10),
+            // marginHorizontal: moderateScale(10),
           }}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.id.toString()}
-          ItemSeparatorComponent={() => {
-            return (
-              <View
-                style={{
-                  height: moderateScaleVertical(20),
-                  marginLeft: moderateScale(10),
-                }}></View>
-            );
-          }}
           renderItem={_renderItem}
         />
 

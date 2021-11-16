@@ -784,7 +784,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           </MapView>
 
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={coordinatesFit}
             style={{
               position: 'absolute',
@@ -800,7 +800,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
               }}
               source={imagePath.mapNavigation}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           {/* Top View */}
         </View>

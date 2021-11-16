@@ -9,6 +9,7 @@ import {
   ScrollView,
   View,
   Keyboard,
+  FlatList
 } from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import { abs } from 'react-native-reanimated';
@@ -34,14 +35,17 @@ import {
 } from '../../../styles/responsiveSize';
 import {
   getAddressComponent,
+  getCurrentLocation,
   showError,
   showSuccess,
 } from '../../../utils/helperFunctions';
-import { chekLocationPermission } from '../../../utils/permissions';
+import { chekLocationPermission, locationPermission } from '../../../utils/permissions';
 import stylesFun from './styles';
 import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../../../styles/theme';
 import AddressModal3 from '../../../Components/AddressModal3';
+import { getCurrentLocationFromApi, nearbySearch } from '../../../utils/googlePlaceApi';
+import { relativeTimeRounding } from 'moment';
 
 export default function Addaddress({ navigation, route }) {
   const paramData = route?.params;
@@ -90,6 +94,7 @@ export default function Addaddress({ navigation, route }) {
     indicator: false,
     type: 'addAddress',
     del: false,
+    nearByAddressess: [],
   });
   const {
     pickUpLocationAddressData,
@@ -125,6 +130,7 @@ export default function Addaddress({ navigation, route }) {
     indicator,
     type,
     del,
+    nearByAddressess
   } = state;
 
   useEffect(() => {
@@ -325,6 +331,7 @@ export default function Addaddress({ navigation, route }) {
   };
 
   const updateTheAddress = (details, addressType, type) => {
+    console.log('checking address details >>>', details )
     const address = details?.formatted_address || details?.address;
     let latlng = {
       latitude: details?.geometry?.location?.lat
@@ -586,6 +593,9 @@ export default function Addaddress({ navigation, route }) {
   //All Saved address
 
   const selectAddress = (address) => {
+
+    console.log("selected address", address)
+
     if (pickUpLocationFocus) {
       updateTheAddress(address, 'pickup', 'pickUpLocation');
     }
@@ -609,7 +619,7 @@ export default function Addaddress({ navigation, route }) {
             <TouchableOpacity
               key={inx}
               style={{
-                marginTop: moderateScaleVertical(10),
+                // marginTop: moderateScaleVertical(10),
                 flexDirection: 'row',
                 alignItems: 'center',
                 paddingVertical: 10,
@@ -630,6 +640,76 @@ export default function Addaddress({ navigation, route }) {
       })
     );
   };
+
+
+  useEffect(() => {
+    getLiveLocation()
+  }, [])
+
+
+  const getLiveLocation = async () => {
+    const locPermissionDenied = await locationPermission()
+    if (locPermissionDenied) {
+      const { latitude, longitude } = await getCurrentLocationFromApi()
+      // console.log("get live location after 4 second")
+      getNearByAddress(`${latitude}, ${longitude}`)
+
+    }
+  }
+
+  const getNearByAddress = async (latlng) => {
+    try {
+      const res = await nearbySearch(latlng, profile?.preferences?.map_key)
+      console.log("res+++++", res)
+      updateState({
+        nearByAddressess: res.results
+      })
+    } catch (error) {
+      console.log("error raised", error)
+    }
+  }
+
+  const getFullAddress = (detail) => {
+
+    Geocoder.from({
+      latitude: detail.geometry.location.lat,
+      longitude: detail.geometry.location.lng,
+    })
+      .then((json) => {
+        console.log(json, 'json');
+
+      })
+      .catch((error) => console.log(error, 'errro geocode'));
+  }
+
+  const renderAddressess = (item) => {
+    return (
+      <TouchableOpacity
+        style={{
+          // marginTop: moderateScaleVertical(10),
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingVertical: 10,
+          marginHorizontal: moderateScale(10),
+        }}
+        onPress={() =>  updateTheAddress(item, 'pickup', 'pickUpLocation')}
+      >
+        <View style={{ flex: 0.15 }}>
+          <Image source={imagePath.RecentLocationImage} />
+        </View>
+        <View style={{ flex: 0.9 }}>
+          <Text numberOfLines={2} style={{
+            fontSize: textScale(12),
+            color: colors.textGreyJ,
+            fontFamily: fontFamily.regular,
+            lineHeight: moderateScaleVertical(20),
+          }}>
+            {item?.vicinity}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    )
+  }
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -646,7 +726,7 @@ export default function Addaddress({ navigation, route }) {
             flex: 0.15,
           }}
           leftIcon={imagePath.backArrowCourier}
-          centerTitle={strings.ADD_ADDRESS}
+          centerTitle={'Select Locations'}
           // rightIcon={imagePath.cartShop}
           headerStyle={{
             backgroundColor: isDarkMode
@@ -760,6 +840,7 @@ export default function Addaddress({ navigation, route }) {
                   renderCustomRow={(itm) => _rendorCustomRow(itm)}
                   updateTheAddress={(details, addressType) => {
                     console.log(details, 'detailsdetails');
+                    console.log(addressType, 'checking address tyoe');
                     updateTheAddress(details, addressType, 'pickUpLocation');
                   }}
                 // ListHeaderComponent={() =>
@@ -794,7 +875,7 @@ export default function Addaddress({ navigation, route }) {
                       ? MyDarkTheme.colors.text
                       : colors.textGreyOpcaity7
                   }
-                  placeholder={strings.DROPOFFLOCATION}
+                  placeholder={'Where to?'}
                   googleApiKey={profile?.preferences?.map_key}
                   textInputContainer={styles.textGoogleInputContainerAddress}
                   listView={styles.listView}
@@ -881,7 +962,7 @@ export default function Addaddress({ navigation, route }) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             horizontal={false}
-            scrollEnabled={false}
+            // scrollEnabled={false}
             keyboardShouldPersistTaps={'handled'}
             style={[styles.modalMainViewContainer]}>
             {!!(allSavedAddress && allSavedAddress.length) ? (
@@ -923,8 +1004,37 @@ export default function Addaddress({ navigation, route }) {
                 </Text>
               </View>
             )}
+            <View style={{ ...styles.savedAddressView }}>
+              <Image
+                style={{ marginHorizontal: moderateScale(12) }}
+                source={imagePath.starRoundedBackground}
+              />
+              <Text
+                numberOfLines={1}
+                style={
+                  isDarkMode
+                    ? [
+                      styles.addresssLableName,
+                      { color: MyDarkTheme.colors.text },
+                    ]
+                    : styles.addresssLableName
+                }>
+                {'Nearby Locations'}
+              </Text>
+            </View>
+
+
+            {nearByAddressess.slice(0, 5).map((val) => {
+              return renderAddressess(val)
+            })}
+            {/* <FlatList
+              data={nearByAddressess.slice(0, 5)}
+              renderItem={renderAddressess}
+            /> */}
+
           </ScrollView>
-          {/* </View> */}
+
+
         </View>
 
         {/* <View

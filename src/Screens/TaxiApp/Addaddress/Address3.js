@@ -786,8 +786,8 @@ export default function Addaddress({ navigation, route }) {
 
           {dropLocationData.map((val, i) => {
             return (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View style={{ flex: 1 }}>
+              <View style={{ }}>
+          
                   <SearchPlaces
                     placeHolder={i == 0 ? strings.PICKUP_LOCATION : strings.DROPOFFLOCATION}
                     value={val.address} // instant update search value
@@ -795,15 +795,15 @@ export default function Addaddress({ navigation, route }) {
                     fetchArrayResult={(data) => updateState({ searchResult: { data: data, currentIndex: i } })}
                     setValue={(text) => updateCurValues(text, i)} //return & update on change text value
                   />
-                </View>
-                <View style={{ marginHorizontal: 8 }} />
-                {i >= 1 && (<TouchableOpacity style={{
+           
+            
+                {/* {i >= 1 && (<TouchableOpacity style={{
                   flex: 0.2
                 }}
                   onPress={() => addRemove(false, i)}
                 >
                   <Text>{dropLocationData.length - 1 == i ? 'Add' : 'Mins'}</Text>
-                </TouchableOpacity>)}
+                </TouchableOpacity>)} */}
               </View>
             )
           })}
@@ -815,7 +815,7 @@ export default function Addaddress({ navigation, route }) {
           })}
         </View>
       </KeyboardAwareScrollView>
-
+      {renderbtn()}
     </WrapperContainer>
   );
 }

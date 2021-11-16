@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput, View, TouchableOpacity,Image } from 'react-native';
+import imagePath from '../constants/imagePath';
 import { googlePlacesApi } from '../utils/googlePlaceApi';
 
 const SearchPlaces = ({
@@ -22,14 +23,23 @@ const SearchPlaces = ({
     }
     return (
         <View style={{ ...styles.container, ...containerStyle }}>
-            <View style={{...styles.subCont,...inputStyle}}>
-                <View style={{ flex: 1 }}>
+            <View style={{ ...styles.subCont, ...inputStyle }}>
+                <View style={{  flexDirection: 'row' }}>
                     <TextInput
                         value={value}
                         placeholder={placeHolder}
                         onChangeText={textChangeHandler}
                         style={styles.text}
                     />
+                    <TouchableOpacity onPress={() => _moveToNextScreen('pickup')}>
+                        <Image
+                            style={{
+                                height: 25,
+                                width: 25,
+                            }}
+                            source={imagePath.blackNav}
+                        />
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -46,11 +56,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderRadius: 8,
-        borderWidth: 0.5,
+        borderBottomWidth: 0.2,
         borderColor: 'black',
         backgroundColor: 'white',
         height: 48,
-        marginBottom: 10
+        // marginBottom: 10
     },
     text: {
         width: '100%',

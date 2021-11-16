@@ -657,30 +657,23 @@ export default function Cart({ navigation, route }) {
         //   !!(Number(cartData?.total_payable_amount) !== 0) ||
         //   Number(selectedTipAmount) !== 0
         // ) {
-        //   // checkPaymentOptions(res)
+         // checkPaymentOptions(res)
         //   _webPayment();
         //   return;
         // }
-        if (
-          !!businessType &&
-          businessType == 'home_service' &&
-          res?.data?.vendors.length == 1
-        ) {
+        if (!!businessType && businessType == 'home_service' && res?.data?.vendors.length == 1) {
           console.log('success ressssssss', res.data);
           setTimeout(() => {
             _getOrderDetail(res.data.vendors[0]);
           }, 1500);
-        } else {
-          if (
-            !!businessType &&
-            businessType == 'home_service' &&
-            res?.data?.vendors.length == 1
-          ) {
+          return;
+        } 
+          if (!!businessType &&businessType == 'home_service' &&res?.data?.vendors.length == 1) {
             console.log('success ressssssss', res.data);
-            // return;
             setTimeout(() => {
               _getOrderDetail(res.data.vendors[0]);
             }, 1500);
+            return;
           } else {
             actions.cartItemQty({});
             updateState({
@@ -693,7 +686,7 @@ export default function Cart({ navigation, route }) {
               orderDetail: res.data,
             })();
           }
-        }
+        
 
         // checkPaymentOptions(res)
         // if (
@@ -1034,6 +1027,8 @@ export default function Cart({ navigation, route }) {
           isRefreshing: false,
           placeLoader: false,
         });
+
+        return;
         if (res && res?.status == 'Success' && res?.data) {
           let sendingData = {
             id: selectedPayment.id,
