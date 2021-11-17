@@ -80,7 +80,7 @@ export default class AppIntro extends React.Component {
 
     render() {
         return (
-            <>
+            <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <StatusBar translucent backgroundColor="transparent" />
                 <AppIntroSlider
                     data={this.state.slides}
@@ -91,7 +91,7 @@ export default class AppIntro extends React.Component {
                     onSlideChange={(el, i) => this.onSlideChange(el, i)}
                     onScroll={() => this.onScroll()}
                 />
-            </>
+            </View>
         );
     }
 }
