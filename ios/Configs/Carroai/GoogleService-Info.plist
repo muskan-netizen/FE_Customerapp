@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>693998026316-sodpr46kr0ct23lgpvqkirue63hhurv9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.693998026316-sodpr46kr0ct23lgpvqkirue63hhurv9</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>693998026316-6c5faps8vuepbl5mt73fgji39klij4hn.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBZwnbvPbRq2wXXvBv8md5WPyDHZ589Vz4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>693998026316</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.carroai</string>
+	<key>PROJECT_ID</key>
+	<string>carroai</string>
+	<key>STORAGE_BUCKET</key>
+	<string>carroai.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:693998026316:ios:fc4a41411ef6923c7f3ee9</string>
+</dict>
+</plist>

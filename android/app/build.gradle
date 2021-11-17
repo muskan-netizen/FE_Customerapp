@@ -1715,6 +1715,37 @@ android {
             resValue "string", "host_name", ""
          }
         
+        cabway{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.cabway'
+            resValue "string", "app_name", "CabWay"
+            resValue "string", "host_name", ""
+         }
+         tajammul{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.tajammul'
+            resValue "string", "app_name", "Tajammul"
+            resValue "string", "host_name", ""
+         }
+         carroai{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.carroai'
+            resValue "string", "app_name", "Carroai"
+            resValue "string", "host_name", ""
+         }
+        
     }
 }
 

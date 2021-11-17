@@ -989,6 +989,25 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.cabway:
+          updateState({
+            shortCode: shortCodes.cabway,
+            isShortcodePrefilled: true,
+          });
+          break;
+          break;
+        case appIds.tajammul:
+          updateState({
+            shortCode: shortCodes.tajammul,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.carroai:
+          updateState({
+            shortCode: shortCodes.carroai,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
