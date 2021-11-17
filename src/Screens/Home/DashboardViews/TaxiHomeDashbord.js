@@ -657,7 +657,10 @@ export default function TaxiHomeDashbord({
                     <Image source={imagePath.plushRoundedBackground} />
                   </View>
                   <View style={{ marginHorizontal: moderateScale(10) }}>
-                    <Text numberOfLines={2} style={[styles.address]}>
+                    <Text numberOfLines={2} style={{
+                            ...styles.addressTitle,
+                            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    }}>
                       {'Add new address'}
                     </Text>
                   </View>
