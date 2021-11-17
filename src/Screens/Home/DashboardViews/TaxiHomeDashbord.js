@@ -376,7 +376,7 @@ export default function TaxiHomeDashbord({
         longitude: Number(details?.longitude),
         latitude: Number(details?.latitude),
         address: details?.address,
-        task_type_id: 0,
+        task_type_id: 1,
       }
     }
     navigation.navigate(navigationStrings.ADDADDRESS, {
@@ -421,10 +421,16 @@ export default function TaxiHomeDashbord({
                   style={{
                     marginHorizontal: moderateScale(10),
                   }}>
-                  <Text numberOfLines={2} style={[styles.addressTitle]}>
+                  <Text numberOfLines={2} style={{
+                    ...styles.addressTitle,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    }}>
                     {itm?.street}
                   </Text>
-                  <Text numberOfLines={2} style={[styles.address]}>
+                  <Text numberOfLines={2} style={{
+                    ...styles.address,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    }}>
                     {itm?.address}
                   </Text>
                 </View>
@@ -481,7 +487,10 @@ export default function TaxiHomeDashbord({
               <Image source={image} />
             </View>
             <View style={{ marginHorizontal: moderateScale(10) }}>
-              <Text numberOfLines={2} style={[styles.address]}>
+              <Text numberOfLines={2} style={{
+                ...styles.address,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
                 {strings.CHOOSESAVEDPLACE}
               </Text>
             </View>
@@ -509,7 +518,10 @@ export default function TaxiHomeDashbord({
   };
 
   return (
-    <>
+    <View style={{
+      flex: 1,
+      backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white
+    }}>
       <ScrollView
         // bounces={false}
         refreshing={isRefreshing}
@@ -726,6 +738,6 @@ export default function TaxiHomeDashbord({
         passLocation={(data) => addUpdateLocation(data)}
       // onPress={currentLocation}
       />
-    </>
+    </View>
   );
 }

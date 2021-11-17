@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import fontFamily from '../styles/fontFamily';
-import { moderateScale, textScale } from '../styles/responsiveSize';
+import { moderateScale, moderateScaleVertical, textScale } from '../styles/responsiveSize';
 import { googlePlacesApi } from '../utils/googlePlaceApi';
 
 const SearchPlaces = ({
@@ -65,8 +65,9 @@ const SearchPlaces = ({
             >
                 <Image
                     style={{
-                        height: 25,
-                        width: 25,
+                        height: moderateScale(20),
+                        width: moderateScale(20),
+                        borderRadius: moderateScale(10),
                     }}
                     source={imagePath.blackNav}
                 />
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontFamily: fontFamily.medium,
         textAlign: I18nManager.isRTL ? 'right' : 'left',
-        fontSize: textScale(12),
+        fontSize: textScale(11),
     }
 
 })

@@ -814,14 +814,11 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       </ScrollView>
       <View style={styles.topView}>
         <TouchableOpacity
-          style={[
-            styles.backButtonView,
-            {
-              backgroundColor: isDarkMode
-                ? MyDarkTheme.colors.background
-                : colors.white,
-            },
-          ]}
+          style={{
+            height: moderateScale(40),
+            width: moderateScale(40),
+            marginTop: moderateScaleVertical(20),
+          }}
           onPress={() =>
             // navigation.navigate(navigationStrings.PICKUPLOCATION)
             navigation.goBack()
