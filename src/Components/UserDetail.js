@@ -33,10 +33,9 @@ const UserDetail = ({data, type, containerStyle, imgStyle}) => {
   const fontFamily = appStyle?.fontSizeData;
 
   const dialCall = (number, type = 'phone') => {
-    console.log(number, 'number');
     type === 'phone'
-      ? Communications.phonecall(number.toString(), true)
-      : Communications.text(number.toString());
+      ? Linking.openURL(`tel:${number}`)
+      : Linking.openURL(`sms:${number}`);
   };
 
   return (
