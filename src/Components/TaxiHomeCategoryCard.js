@@ -42,7 +42,7 @@ export default function TaxiHomeCategoryCard({
       activeOpacity={0.9}
       style={{
         // shadowOpacity: 0.5,
-        width: (width - moderateScale(-5)) / 4,
+        width: (width - moderateScale(-5)) / 4.5,
         marginVertical: moderateScale(10),
         flexDirection: 'column',
         justifyContent: 'center',
@@ -95,7 +95,7 @@ export default function TaxiHomeCategoryCard({
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             fontFamily: fontFamily.regular,
             marginTop: moderateScaleVertical(8),
-            fontSize: textScale(10),
+            fontSize: textScale(9),
           }}>
           {data.name}
         </Text>

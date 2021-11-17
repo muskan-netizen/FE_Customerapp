@@ -52,7 +52,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  console.log(paramData, 'paramData>>>>>');
+  console.log('my route',paramData);
+  
   const { appData, currencies, languages, themeColors, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
@@ -633,7 +634,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     }, 2000);
   }, [])
 
-  console.log("paramData?.location", paramData?.location)
+  console.log("paramData?.location", paramData)
   // useEffect(() => {
   //   console.log('check state ref array >>>', refArr);
   //   refArr.forEach((element) => {
@@ -784,7 +785,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           </MapView>
 
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={coordinatesFit}
             style={{
               position: 'absolute',
@@ -800,7 +801,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
               }}
               source={imagePath.mapNavigation}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           {/* Top View */}
         </View>
@@ -813,14 +814,11 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       </ScrollView>
       <View style={styles.topView}>
         <TouchableOpacity
-          style={[
-            styles.backButtonView,
-            {
-              backgroundColor: isDarkMode
-                ? MyDarkTheme.colors.background
-                : colors.white,
-            },
-          ]}
+          style={{
+            height: moderateScale(40),
+            width: moderateScale(40),
+            marginTop: moderateScaleVertical(20),
+          }}
           onPress={() =>
             // navigation.navigate(navigationStrings.PICKUPLOCATION)
             navigation.goBack()

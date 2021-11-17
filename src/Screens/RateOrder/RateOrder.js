@@ -28,14 +28,14 @@ import {
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
 import {cameraHandler} from '../../utils/commonFunction';
-import {getImageUrl, showError} from '../../utils/helperFunctions';
+import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
 // import OrderCardComponent from './OrderCardComponent';
 import stylesFunc from './styles';
 
 export default function RateOrder({navigation, route}) {
   const ratingData = route?.params?.item?.product_rating;
 
-  console.log(ratingData, 'ratingData');
+  console.log(route?.params, 'route?.params');
   const [state, setState] = useState({
     isLoading: false,
     rating: 0,
@@ -184,7 +184,9 @@ export default function RateOrder({navigation, route}) {
       })
       .then((res) => {
         updateState({isLoading: false});
-        navigation.navigate(navigationStrings.TAXIHOMESCREEN);
+        // navigation.navigate(navigationStrings.TAXIHOMESCREEN);
+        navigation.goBack();
+        showSuccess(res?.message);
       })
       .catch(errorMethod);
   };

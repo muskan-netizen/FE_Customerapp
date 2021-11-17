@@ -67,8 +67,8 @@ export default ({
       fontSize: textScale(12),
       color: colors.black,
       fontFamily: fontFamily.medium,
-      lineHeight: moderateScaleVertical(20),
-      marginLeft: moderateScale(10),
+
+      marginLeft: moderateScale(6),
     },
     saveAddressLabel: {
       fontSize: textScale(14),
@@ -154,9 +154,9 @@ export default ({
     },
     savedAddressView: {
       flexDirection: 'row',
-
-      width: width - 30,
-
+      // width: width - 30,
+      marginBottom:moderateScaleVertical(8),
+      alignItems:'center'
       // shadowColor: '#000',
       // shadowOffset: {
       //   width: 0,
@@ -164,6 +164,14 @@ export default ({
       // },
       // elevation: 3,
     },
+    addressViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: 10,
+      paddingHorizontal: moderateScale(10),
+      borderBottomWidth: 0.5,
+      marginBottom: moderateScaleVertical(4),
+    }
   });
   return styles;
 };

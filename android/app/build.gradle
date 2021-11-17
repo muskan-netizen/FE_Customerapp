@@ -1694,6 +1694,26 @@ android {
             resValue "string", "app_name", "Yeboy"
             resValue "string", "host_name", ""
          }
+         kel360{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.kel'
+            resValue "string", "app_name", "360kel"
+            resValue "string", "host_name", ""
+         }
+         moboserrandsservice{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.moboserrandsservice'
+            resValue "string", "app_name", "Mobo's Errands Service"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

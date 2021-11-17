@@ -188,7 +188,7 @@ export default ({ fontFamily, themeColors }) => {
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: colors.textGreyLight,
-      left: 20,
+      // left: 20,
       borderRadius: moderateScale(4),
       paddingVertical: moderateScale(2),
       paddingHorizontal: moderateScale(4),

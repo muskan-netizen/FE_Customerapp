@@ -197,7 +197,7 @@ export default function TaxiHomeDashbord({
       )
       .then((res) => {
         // actions.saveAllUserAddress(res.data);
-        console.log(res, 'res?>>>>>>>>>>>>>>');
+        console.log('res?>>>>>>>>>>>>>>', res);
         updateState({
           allSavedAddress: res.data,
           isLoading: false,
@@ -300,44 +300,92 @@ export default function TaxiHomeDashbord({
               minimumDate={new Date()}
               style={{
                 width: width - 20,
-                height: height / 4.1,
+                height: height / 4.4,
               }}
               // onDateChange={setDate}
               onDateChange={(value) => onDateChange(value)}
             />
-            <TouchableOpacity
-              style={{
-                width: width - 40,
-                height: 40,
-                backgroundColor: themeColors.primary_color,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              onPress={() => {
-                updateState({
-                  isVisible: false,
-                  isLoadingModal: true,
-                });
 
-                setTimeout(() => {
-                  updateState({ isLoadingModal: false });
-                  navigation.navigate(navigationStrings.ADDADDRESS, {
-                    cat: appMainData?.categories[0],
-                    datetime: { slectedDate, selectedTime },
-                    pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
+            <View style={{
+              flexDirection: 'row', alignItems: 'center',
+              marginHorizontal: 16,
+              marginBottom: 24
+            }}>
+
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  height: 40,
+                  backgroundColor: themeColors.primary_color,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: moderateScale(10)
+                }}
+                onPress={_modalClose}
+              >
+                <Text
+                  style={{ color: colors.white, fontFamily: fontFamily.regular }}>
+                  {'Cancel'}
+                </Text>
+              </TouchableOpacity>
+
+              <View style={{ marginHorizontal: 4 }} />
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  height: 40,
+                  backgroundColor: themeColors.primary_color,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: moderateScale(10)
+                }}
+                onPress={() => {
+                  updateState({
+                    isVisible: false,
+                    isLoadingModal: true,
                   });
-                }, 2000);
-              }}>
-              <Text
-                style={{ color: colors.white, fontFamily: fontFamily.regular }}>
-                {strings.SETPICKUPTIME}
-              </Text>
-            </TouchableOpacity>
+
+                  setTimeout(() => {
+                    updateState({ isLoadingModal: false });
+                    navigation.navigate(navigationStrings.ADDADDRESS, {
+                      cat: appMainData?.categories[0],
+                      datetime: { slectedDate, selectedTime },
+                      pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
+                    });
+                  }, 2000);
+                }}>
+                <Text
+                  style={{ color: colors.white, fontFamily: fontFamily.regular }}>
+                  {'Set'}
+                </Text>
+              </TouchableOpacity>
+
+            </View>
+
           </View>
         </View>
       </View>
     );
   };
+
+
+  const moveToScreen = (details) => {
+    let prefillAdress = null
+    if (!!details) {
+      prefillAdress = {
+        longitude: Number(details?.longitude),
+        latitude: Number(details?.latitude),
+        address: details?.address,
+        task_type_id: 1,
+      }
+    }
+    navigation.navigate(navigationStrings.ADDADDRESS, {
+      cat: appMainData?.categories[0],
+      datetime: { slectedDate, selectedTime },
+      pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
+      data: !!prefillAdress ? prefillAdress : null
+    })
+  }
 
   const addressView = (image) => {
     return (
@@ -357,13 +405,7 @@ export default function TaxiHomeDashbord({
                 marginLeft: moderateScale(20),
                 width: width - 60,
               }}
-              onPress={()=>{
-                navigation.navigate(navigationStrings.ADDADDRESS, {
-                  cat: appMainData?.categories[0],
-                  datetime: { slectedDate, selectedTime },
-                  pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
-                })
-              }}>
+              onPress={() => moveToScreen(itm)}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -379,10 +421,16 @@ export default function TaxiHomeDashbord({
                   style={{
                     marginHorizontal: moderateScale(10),
                   }}>
-                  <Text numberOfLines={2} style={[styles.addressTitle]}>
+                  <Text numberOfLines={2} style={{
+                    ...styles.addressTitle,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    }}>
                     {itm?.street}
                   </Text>
-                  <Text numberOfLines={2} style={[styles.address]}>
+                  <Text numberOfLines={2} style={{
+                    ...styles.address,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    }}>
                     {itm?.address}
                   </Text>
                 </View>
@@ -439,7 +487,10 @@ export default function TaxiHomeDashbord({
               <Image source={image} />
             </View>
             <View style={{ marginHorizontal: moderateScale(10) }}>
-              <Text numberOfLines={2} style={[styles.address]}>
+              <Text numberOfLines={2} style={{
+                ...styles.address,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
                 {strings.CHOOSESAVEDPLACE}
               </Text>
             </View>
@@ -467,7 +518,10 @@ export default function TaxiHomeDashbord({
   };
 
   return (
-    <>
+    <View style={{
+      flex: 1,
+      backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white
+    }}>
       <ScrollView
         // bounces={false}
         refreshing={isRefreshing}
@@ -500,19 +554,10 @@ export default function TaxiHomeDashbord({
           data={appMainData?.categories}
           style={{
             marginTop: moderateScaleVertical(10),
-            marginHorizontal: moderateScale(10),
+            // marginHorizontal: moderateScale(10),
           }}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.id.toString()}
-          ItemSeparatorComponent={() => {
-            return (
-              <View
-                style={{
-                  height: moderateScaleVertical(20),
-                  marginLeft: moderateScale(10),
-                }}></View>
-            );
-          }}
           renderItem={_renderItem}
         />
 
@@ -693,6 +738,6 @@ export default function TaxiHomeDashbord({
         passLocation={(data) => addUpdateLocation(data)}
       // onPress={currentLocation}
       />
-    </>
+    </View>
   );
 }
