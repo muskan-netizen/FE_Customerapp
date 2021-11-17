@@ -596,4 +596,8 @@ export default {
   CONFIRM_VEHICLE: 'Confirm Vehicle',
   SPECIAL_INSTRUCTION: 'Special Instruction',
   TAP_HERE_ADD_ADDRESS: 'Tap here to add address',
+  NO_RIDE_FOUND:"No Ride Founds",
+  SELECT_LOCATION:"Select Locations",
+  NEARBY_LOCATION:"Nearby Locations",
+  SEARCHED_RESULTS:"Searched Results",
 };
