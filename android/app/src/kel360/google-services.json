@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "579845930787",
+    "project_id": "kel-3be16",
+    "storage_bucket": "kel-3be16.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579845930787:android:a6b162d964943654315696",
+        "android_client_info": {
+          "package_name": "com.kel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "579845930787-72mt07jjl6s7pbrmiljaj8ri20ek4d5f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kel",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "579845930787-uepa4gk5dgqee60hrtcusji0u0cgrk36.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kel",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "579845930787-vptoden1r4al193f283fftddtcq9rkb0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kel",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "579845930787-0ungtkmf27cjv6fj9vmv1n7g6e4fkrjs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARR4HxqvhytVU8Q4DxdlDcuXkJ6zr1vkk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "579845930787-0ungtkmf27cjv6fj9vmv1n7g6e4fkrjs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "579845930787-1o1or9m14uju8nioavbbk9ubhkbpi1vn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kel"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
