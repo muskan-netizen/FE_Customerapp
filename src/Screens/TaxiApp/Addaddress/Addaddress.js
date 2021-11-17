@@ -665,7 +665,11 @@ export default function Addaddress({ navigation, route }) {
         })}
       >
         <View style={{ flex: 0.12 }}>
-          <Image source={imagePath.RecentLocationImage} />
+          <Image style={{
+            height: moderateScale(24),
+            width: moderateScale(24),
+            borderRadius: moderateScale(12),
+          }} source={imagePath.RecentLocationImage} />
         </View>
         <View style={{ flex: 0.9 }}>
           <Text numberOfLines={2} style={{
@@ -923,7 +927,7 @@ export default function Addaddress({ navigation, route }) {
                       ]
                       : styles.addresssLableName
                   }>
-                  {'Search Results'}
+                  {'Searched Results'}
                 </Text>
               </View>
               {searchResult?.data.map((item, i) => {
