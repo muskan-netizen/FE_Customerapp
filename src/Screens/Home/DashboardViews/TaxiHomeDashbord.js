@@ -197,7 +197,7 @@ export default function TaxiHomeDashbord({
       )
       .then((res) => {
         // actions.saveAllUserAddress(res.data);
-        console.log(res, 'res?>>>>>>>>>>>>>>');
+        console.log('res?>>>>>>>>>>>>>>', res);
         updateState({
           allSavedAddress: res.data,
           isLoading: false,
@@ -368,6 +368,25 @@ export default function TaxiHomeDashbord({
     );
   };
 
+
+  const moveToScreen = (details) => {
+    let prefillAdress = null
+    if (!!details) {
+      prefillAdress = {
+        longitude: Number(details?.longitude),
+        latitude: Number(details?.latitude),
+        address: details?.address,
+        task_type_id: 0,
+      }
+    }
+    navigation.navigate(navigationStrings.ADDADDRESS, {
+      cat: appMainData?.categories[0],
+      datetime: { slectedDate, selectedTime },
+      pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
+      data: !!prefillAdress ? prefillAdress : null
+    })
+  }
+
   const addressView = (image) => {
     return (
       allSavedAddress &&
@@ -386,13 +405,7 @@ export default function TaxiHomeDashbord({
                 marginLeft: moderateScale(20),
                 width: width - 60,
               }}
-              onPress={() => {
-                navigation.navigate(navigationStrings.ADDADDRESS, {
-                  cat: appMainData?.categories[0],
-                  datetime: { slectedDate, selectedTime },
-                  pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
-                })
-              }}>
+              onPress={() => moveToScreen(itm)}>
               <View
                 style={{
                   flexDirection: 'row',

@@ -68,7 +68,7 @@ export default ({
       color: colors.black,
       fontFamily: fontFamily.medium,
       lineHeight: moderateScaleVertical(20),
-      marginLeft: moderateScale(10),
+      marginLeft: moderateScale(6),
     },
     saveAddressLabel: {
       fontSize: textScale(14),
@@ -154,9 +154,8 @@ export default ({
     },
     savedAddressView: {
       flexDirection: 'row',
-
-      width: width - 30,
-
+      // width: width - 30,
+      marginBottom:moderateScaleVertical(8)
       // shadowColor: '#000',
       // shadowOffset: {
       //   width: 0,

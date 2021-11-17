@@ -52,7 +52,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  console.log(paramData, 'paramData>>>>>');
+  console.log('my route',paramData);
+  
   const { appData, currencies, languages, themeColors, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
@@ -633,7 +634,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     }, 2000);
   }, [])
 
-  console.log("paramData?.location", paramData?.location)
+  console.log("paramData?.location", paramData)
   // useEffect(() => {
   //   console.log('check state ref array >>>', refArr);
   //   refArr.forEach((element) => {

@@ -44,7 +44,7 @@ export default function HomeScreenTaxi({navigation, route}) {
   const mapRef = React.createRef();
   const paramData = route?.params;
 
-  console.log(paramData, 'paramData>paramData>paramData');
+  console.log('param data+++',paramData.pickUpLocationLatLng);
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -224,17 +224,16 @@ export default function HomeScreenTaxi({navigation, route}) {
   console.log(paramData, 'paramDataparamDataparamDataparamDataparamData');
 
   const _modeToNextScreen = () => {
-    const pickuplocationAllData = [
-      {
+    const pickuplocationAllData = {
         longitude: details?.geometry?.location?.lng,
         latitude: details?.geometry?.location?.lat,
         address: details?.formatted_address,
-        task_type_id: paramData?.data === 'drop' ? 2 : 1,
-      },
-    ];
+        task_type_id: paramData?.task_id,
+      }
+    
     console.log(pickuplocationAllData, 'pickuplocationAllData');
     navigation.navigate(navigationStrings.ADDADDRESS, {
-      data: {pickuplocationAllData, id: paramData?.data?.id},
+      data: pickuplocationAllData,
     });
     //   }
   };

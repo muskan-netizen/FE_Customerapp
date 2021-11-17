@@ -20,7 +20,7 @@ export const googlePlacesApi = async (data, key) => {
 
 export const getPlaceDetails = async (id, key) => {
     try {
-        let res = await fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${id}&fields=name,formatted_address,geometry,rating,formatted_phone_number&key=${key}`, {
+        let res = await fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${id}&key=${key}`, {
             method: 'GET',
         });
         let response = await res.json();
@@ -44,7 +44,7 @@ export const placesGeoCoding = async (lat, long) => {
 
 export const nearbySearch = async (latlng, key) => {
     try {
-        let res = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latlng}&types=city&rankby=distance&key=${key}`, {
+        let res = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latlng}&types=city&radius=5000&key=${key}`, {
             method: 'GET',
         });
         let response = await res.json();
