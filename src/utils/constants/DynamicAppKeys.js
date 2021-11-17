@@ -147,8 +147,8 @@ const shortCodes = {
   shoorafresh: 'bd4fe8',
   click2deliver: '6483c6',
   trucktirenow: '82c016',
+  kel360: '9087f6',
   yeboy: 'e4ec39',
-
   moboserrandsservice: '3d2e75',
 };
 
@@ -741,7 +741,7 @@ const appIds = {
     ios: 'com.yeboy',
     android: 'com.yeboy',
   }),
-  moboserrandsservice: Platform.select({
+  kel360: Platform.select({
     ios: 'com.kel',
     android: 'com.kel',
   }),
