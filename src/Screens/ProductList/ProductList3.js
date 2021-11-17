@@ -1,5 +1,5 @@
-import { cloneDeep, debounce } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { cloneDeep, debounce, update } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -64,6 +64,10 @@ const PATTERN = [
   2 * ONE_SECOND_IN_MS,
   3 * ONE_SECOND_IN_MS,
 ];
+
+let timeOut = undefined
+
+var tempQty = 0
 
 export default function Products({ route, navigation }) {
   const { data } = route.params;
@@ -149,6 +153,7 @@ export default function Products({ route, navigation }) {
     vendorCategorySelectedIndx: 0,
     vendorCategoryItms: null,
     sectionListData: [],
+    numberOfQtyToBeAdd: 0
   });
 
   const {
@@ -203,6 +208,7 @@ export default function Products({ route, navigation }) {
     typeId,
     sectionListData,
     selectedSection,
+    numberOfQtyToBeAdd
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -794,6 +800,7 @@ export default function Products({ route, navigation }) {
       .catch((error) => errorMethodSecond(error));
   };
 
+
   const addDeleteCartItems = (item, section = null, index, type) => {
     if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
@@ -819,89 +826,119 @@ export default function Products({ route, navigation }) {
         ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
         : cartId;
 
-    console.log('item', item);
     console.log('exist qty', isExistqty);
-    // return;
+
+    if (timeOut) {
+      clearTimeout(timeOut)
+    }
+
+    tempQty = tempQty + 1
+
     if (type == 1) {
       quanitity = Number(isExistqty) + 1;
     } else {
       quanitity = Number(isExistqty) - 1;
     }
-    if (quanitity) {
-      updateState({
-        selectedItemID: itemToUpdate.id,
-        btnLoader: true,
-        selectedItemIndx: index,
-      });
-      let data = {};
-      data['cart_id'] = isExistCartId;
-      data['quantity'] = quanitity;
-      data['cart_product_id'] = isExistproductId;
-      data['type'] = dineInType;
-      console.log('sending api data', data);
-      actions
-        .increaseDecreaseItemQty(data, {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        })
-        .then((res) => {
-          actions.cartItemQty(res);
-          updateState({
-            cartItems: res.data.products,
-            cartData: res.data,
-            updateQtyLoader: false,
-            selectedItemID: -1,
-            btnLoader: false,
+
+    updateLocally(section, quanitity, item, isExistproductId)
+
+    timeOut = setTimeout(() => {
+      console.log('hit set time out functions')
+      // return;
+      if (quanitity) {
+        updateState({
+          selectedItemID: itemToUpdate.id,
+          btnLoader: true,
+          selectedItemIndx: index,
+        });
+        let data = {};
+        data['cart_id'] = isExistCartId;
+        data['quantity'] = quanitity;
+        data['cart_product_id'] = isExistproductId;
+        data['type'] = dineInType;
+        console.log('sending api data', data);
+
+        actions
+          .increaseDecreaseItemQty(data, {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+            systemuser: DeviceInfo.getUniqueId(),
+          })
+          .then((res) => {
+            tempQty = 0
+            actions.cartItemQty(res);
+            updateState({
+              cartItems: res.data.products,
+              cartData: res.data,
+              updateQtyLoader: false,
+              selectedItemID: -1,
+              btnLoader: false,
+            });
+
+          })
+          .catch(async () => {
+            errorMethod()
+            if (type == 1) {
+              quanitity = quanitity - tempQty ;
+            } else {
+              quanitity = quanitity + tempQty;
+            }
+            await updateLocally(section, quanitity, item, isExistproductId)
+            tempQty = 0
           });
-          if (!!section) {
-            let updatedSection = section.data.map((x, xnx) => {
-              if (x?.id == item?.id) {
-                return {
-                  ...x,
-                  qty: quanitity,
-                  cart_product_id: isExistproductId,
-                  isRemove: false,
-                };
-              }
-              return x;
-            });
-            section['data'] = updatedSection;
-            updateState({
-              sectionListData: sectionListData.map((f, fnx) => {
-                if (f?.id == section?.id) {
-                  return section;
-                }
-                return f;
-              }),
-              selectedItemID: -1,
-            });
-          } else {
-            let updateArray = productListData.map((val, i) => {
-              if (val.id == item.id) {
-                return {
-                  ...val,
-                  qty: quanitity,
-                  cart_product_id: isExistproductId,
-                  isRemove: false,
-                };
-              }
-              return val;
-            });
-            updateState({
-              productListData: updateArray,
-              selectedItemID: -1,
-            });
-          }
-        })
-        .catch(errorMethod);
-    } else {
-      updateState({ selectedItemID: itemToUpdate?.id, btnLoader: false });
-      removeItem('selectedTable');
-      removeProductFromCart(itemToUpdate, section);
-    }
+      } else {
+        updateState({ selectedItemID: itemToUpdate?.id, btnLoader: false });
+        removeItem('selectedTable');
+        removeProductFromCart(itemToUpdate, section);
+      }
+    }, 1500);
+
   };
+
+  const updateLocally = (section, quanitity, item, isExistproductId) => {
+    if (!!section) {
+      let updatedSection = section.data.map((x, xnx) => {
+        if (x?.id == item?.id) {
+          return {
+            ...x,
+            qty: quanitity,
+            cart_product_id: isExistproductId,
+            isRemove: false,
+          };
+        }
+        return x;
+      });
+      section['data'] = updatedSection;
+      updateState({
+        ...state,
+        sectionListData: sectionListData.map((f, fnx) => {
+          if (f?.id == section?.id) {
+            return section;
+          }
+          return f;
+        }),
+        selectedItemID: -1,
+      });
+    } else {
+      let updateArray = productListData.map((val, i) => {
+        if (val.id == item.id) {
+          return {
+            ...val,
+            qty: quanitity,
+            cart_product_id: isExistproductId,
+            isRemove: false,
+          };
+        }
+        return val;
+      });
+      updateState({
+        productListData: updateArray,
+        selectedItemID: -1,
+      });
+    }
+  }
+
   //decrementing/removeing products from cart
   const removeProductFromCart = (itemToUpdate, section = null) => {
     let data = {};

@@ -564,7 +564,10 @@ export default function MyOrders({ navigation }) {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <NoDataFound isLoading={state.isLoading} />
+              <NoDataFound
+                isLoading={state.isLoading}
+                text={businessType === 4 ? strings.NO_RIDE_FOUND : strings.NODATAFOUND}
+              />
             </View>
           )
         }

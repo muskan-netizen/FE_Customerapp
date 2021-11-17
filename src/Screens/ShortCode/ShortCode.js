@@ -679,6 +679,7 @@ export default function ShortCode({route, navigation}) {
         case appIds.zest:
           updateState({
             shortCode: shortCodes.zest,
+            isShortcodePrefilled: true,
           });
           break;
         case appIds.gokab:

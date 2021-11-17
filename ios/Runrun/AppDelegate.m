@@ -17,6 +17,24 @@
  
 @implementation AppDelegate
 
+
+//- (void)documentsPathForFileName
+//{
+//  UIImage *image = [UIImage imageNamed:@"Splash"];
+//  NSData *pngData = UIImagePNGRepresentation(image);
+//  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//  NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
+//  NSString *filePath = [documentsPath stringByAppendingPathComponent:@"Splash.png"]; //Add the file name
+//  [pngData writeToFile:filePath atomically:YES]; //Write the file
+//
+//  NSArray *paths_ = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//  NSString *documentsPath_ = [paths objectAtIndex:0];
+//
+//  NSString *tt = [documentsPath_ stringByAppendingPathComponent:@"Splash.png"];
+//  
+//  NSLog(@"Checking Image splash image path >>>  :: %@", tt);
+//}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   if ([FIRApp defaultApp] == nil) {
@@ -27,7 +45,7 @@
   [GMSPlacesClient provideAPIKey:googlePlacesKey];
   [GMSServices provideAPIKey:googlePlacesKey];
   
-
+//  [self documentsPathForFileName];
   
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
@@ -59,6 +77,7 @@
  // Define UNUserNotificationCenter
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
+  
   return YES;
 }
 
