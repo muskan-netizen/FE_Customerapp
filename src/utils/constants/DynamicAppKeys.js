@@ -148,6 +148,8 @@ const shortCodes = {
   click2deliver: '6483c6',
   trucktirenow: '82c016',
   yeboy: 'e4ec39',
+
+  moboserrandsservice: '3d2e75',
 };
 
 const appIds = {
@@ -738,6 +740,14 @@ const appIds = {
   yeboy: Platform.select({
     ios: 'com.yeboy',
     android: 'com.yeboy',
+  }),
+  moboserrandsservice: Platform.select({
+    ios: 'com.kel',
+    android: 'com.kel',
+  }),
+  moboserrandsservice: Platform.select({
+    ios: 'com.moboserrandsservice',
+    android: 'com.moboserrandsservice',
   }),
 };
 
