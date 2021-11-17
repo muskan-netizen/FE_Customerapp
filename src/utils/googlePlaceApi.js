@@ -2,11 +2,12 @@
 import Geocoder from 'react-native-geocoder';
 import Geolocation from 'react-native-geolocation-service';
 
-export const googlePlacesApi = async (data, key) => {
-    console.log("key", key)
+export const googlePlacesApi = async (data, key, latLng) => {
+    // console.log("key", key)
     try {
         // AIzaSyD0nhmGVsfQ3JwVaJeSa-yRKovdzMrEvwM
-        let res = await fetch(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${data}&types=geocode&key=${key}`, {
+        // location=30.7173%2C-76.8035
+        let res = await fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${data}&location=${latLng}&key=${key}`, {
             method: 'GET',
         });
 
@@ -30,7 +31,7 @@ export const getPlaceDetails = async (id, key) => {
     }
 }
 
-export const placesGeoCoding = async (lat, long) => {
+export const placesGeoCoding = async (lat, long, key) => {
     try {
         let res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${key}`, {
             method: 'GET',
@@ -59,7 +60,7 @@ export const getCurrentLocationFromApi = () =>
     new Promise((resolve, reject) => {
         Geolocation.getCurrentPosition(
             position => {
-                console.log("posisition",position)
+                console.log("posisition", position)
                 const cords = {
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude,
