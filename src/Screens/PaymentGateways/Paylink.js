@@ -1,24 +1,23 @@
 import queryString from 'query-string';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
-import { WebView } from 'react-native-webview';
-import { useSelector } from 'react-redux';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import {WebView} from 'react-native-webview';
+import {useSelector} from 'react-redux';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import { moderateScaleVertical } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
-import { showError } from '../../utils/helperFunctions';
+import {moderateScaleVertical} from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
+import {showError} from '../../utils/helperFunctions';
 import Header from '../../Components/Header';
 import imagePath from '../../constants/imagePath';
 
-
-export default function Paylink({ navigation, route }) {
+export default function Paylink({navigation, route}) {
   let paramsData = route?.params;
-  const { themeToggle, themeColor, appStyle, appData, currencies, languages } =
+  const {themeToggle, themeColor, appStyle, appData, currencies, languages} =
     useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -29,26 +28,29 @@ export default function Paylink({ navigation, route }) {
   });
 
   //Update states on screens
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
-  const { webUrl, isLoading } = state;
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const {webUrl, isLoading} = state;
 
   useEffect(() => {
-    if (!!paramsData?.walletTip) { //pay via wallet or tip
+    if (!!paramsData?.walletTip) {
+      //pay via wallet or tip
       console.log(paramsData?.walletTip.paymentUrl, '===>paramsData');
       updateState({
         webUrl: paramsData?.walletTip.paymentUrl,
-        isLoading: false
-      })
+        isLoading: false,
+      });
       return;
     }
     console.log(paramsData, '===>paramsData');
-    apiHit(); //hit this function if user select paypal getway because paypal have different queries 
+    apiHit(); //hit this function if user select paypal getway because paypal have different queries
   }, []);
 
   const apiHit = async () => {
-    let queryData = `/${paramsData?.selectedPayment?.title?.toLowerCase()}?amount=${paramsData?.total_payable_amount
-      }&payment_option_id=${paramsData?.payment_option_id
-      }&action=${paramsData?.action}&order_number=${paramsData?.orderDetail?.order_number}`;
+    let queryData = `/${paramsData?.selectedPayment?.title?.toLowerCase()}?amount=${
+      paramsData?.total_payable_amount
+    }&payment_option_id=${paramsData?.payment_option_id}&action=${
+      paramsData?.redirectFrom
+    }&order_number=${paramsData?.orderDetail?.order_number}`;
     console.log(queryData, 'queryData');
     try {
       const res = await actions.openPaymentWebUrl(
@@ -61,9 +63,9 @@ export default function Paylink({ navigation, route }) {
         },
       );
       console.log(res, 'responseYoco');
-      updateState({ webUrl: res.data });
+      updateState({webUrl: res.data});
     } catch (error) {
-      updateState({ isLoading: false });
+      updateState({isLoading: false});
       console.log(error, 'errorerror');
       showError(error?.message || error);
     }
@@ -71,12 +73,12 @@ export default function Paylink({ navigation, route }) {
 
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   const onNavigationStateChange = (props) => {
-    const { url } = props;
+    const {url} = props;
     const URL = queryString.parseUrl(url);
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
@@ -115,13 +117,15 @@ export default function Paylink({ navigation, route }) {
         leftIcon={
           appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
         }
-        centerTitle={paramsData?.selectedPayment?.title || paramsData?.walletTip?.title}
-        headerStyle={{ backgroundColor: colors.white }}
+        centerTitle={
+          paramsData?.selectedPayment?.title || paramsData?.walletTip?.title
+        }
+        headerStyle={{backgroundColor: colors.white}}
       />
       {webUrl !== '' && (
         <WebView
-          onLoad={() => updateState({ isLoading: false })}
-          source={{ uri: webUrl }}
+          onLoad={() => updateState({isLoading: false})}
+          source={{uri: webUrl}}
           onNavigationStateChange={onNavigationStateChange}
         />
       )}
