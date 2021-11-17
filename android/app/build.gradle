@@ -1704,16 +1704,17 @@ android {
             resValue "string", "app_name", "360kel"
             resValue "string", "host_name", ""
          }
-         moboserrandsservice{
+          moboserrandsservice{
             dimension "appType"
             versionCode 1
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.moboserrandsservice'
-            resValue "string", "app_name", "Mobo's Errands Service"
+            resValue "string", "app_name", "MobosErrandsService"
             resValue "string", "host_name", ""
          }
+        
     }
 }
 

@@ -604,4 +604,8 @@ export default {
   CONFIRM_VEHICLE: 'Confirm Vehicle',
   SPECIAL_INSTRUCTION: 'تعليمات خاصة',
   TAP_HERE_ADD_ADDRESS: 'انقر هنا لإضافة العنوان',
+  NO_RIDE_FOUND:"No Ride Founds",
+  SELECT_LOCATION:"Select Locations",
+  NEARBY_LOCATION:"Nearby Locations",
+  SEARCHED_RESULTS:"Searched Results",
 };

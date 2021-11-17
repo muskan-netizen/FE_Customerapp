@@ -597,4 +597,8 @@ Amount`,
   SPECIAL_INSTRUCTION: 'Special Instruction',
   ADD_TIP: 'Add Tip',
   TAP_HERE_ADD_ADDRESS: 'Tap here to add address',
+  NO_RIDE_FOUND:"No Ride Founds",
+  SELECT_LOCATION:"Select Locations",
+  NEARBY_LOCATION:"Nearby Locations",
+  SEARCHED_RESULTS:"Searched Results",
 };
