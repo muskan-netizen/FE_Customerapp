@@ -828,6 +828,8 @@ export default function Products({ route, navigation }) {
 
     console.log('exist qty', isExistqty);
 
+    /** This will restring unneccessary api call , only hit api once user wait for 1.5 seconds ***/
+
     if (timeOut) {
       clearTimeout(timeOut)
     }
@@ -892,7 +894,7 @@ export default function Products({ route, navigation }) {
         removeItem('selectedTable');
         removeProductFromCart(itemToUpdate, section);
       }
-    }, 1500);
+    }, quanitity === 1 ? 0 : 1500);
 
   };
 
