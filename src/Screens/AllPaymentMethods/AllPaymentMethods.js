@@ -224,7 +224,7 @@ export default function AllPaymentMethods({navigation, route}) {
         ) && (
           <View>
             <CardField
-              postalCodeEnabled={true}
+              postalCodeEnabled={false}
               placeholder={{
                 number: '4242 4242 4242 4242',
               }}

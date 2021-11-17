@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput, View, TouchableOpacity, Image, Keyboard, I18nManager } from 'react-native';
+import { useDarkMode } from 'react-native-dark-mode';
+import { useSelector } from 'react-redux';
+import imagePath from '../constants/imagePath';
+import colors from '../styles/colors';
+import fontFamily from '../styles/fontFamily';
+import { moderateScale } from '../styles/responsiveSize';
 import { googlePlacesApi } from '../utils/googlePlaceApi';
 
 const SearchPlaces = ({
@@ -10,8 +16,18 @@ const SearchPlaces = ({
     value = '',
     setValue = () => { },
     placeHolder,
+    onFocus = () => { },
+    autoFocus = false,
+    _moveToNextScreen = () => { }
 }) => {
-    console.log(mapKey, 'in MapPlaceComp map key')
+    // console.log(mapKey, 'in MapPlaceComp map key')
+
+    const theme = useSelector((state) => state?.initBoot?.themeColor);
+
+    const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+    const darkthemeusingDevice = useDarkMode();
+    const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+    const { appStyle } = useSelector((state) => state?.initBoot);
 
     const textChangeHandler = async (data) => {
         setValue(data)
@@ -20,58 +36,60 @@ const SearchPlaces = ({
             fetchArrayResult(res.predictions)
         }
     }
+
+
     return (
-        <View style={{ ...styles.container, ...containerStyle }}>
-            <View style={{...styles.subCont,...inputStyle}}>
-                <View style={{ flex: 1 }}>
-                    <TextInput
-                        value={value}
-                        placeholder={placeHolder}
-                        onChangeText={textChangeHandler}
-                        style={styles.text}
-                    />
-                </View>
-            </View>
+        <View style={{
+            ...styles.container,
+            ...containerStyle,
+            backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
+        }}>
+            <TextInput
+                // multiline
+                autoFocus={autoFocus}
+                value={value}
+                placeholder={placeHolder}
+                onChangeText={textChangeHandler}
+                style={{
+                    ...styles.text,
+                    color: isDarkMode ? colors.textGreyB : colors.black
+                }}
+                onSubmitEditing={Keyboard.dismiss}
+                onFocus={onFocus}
+                placeholderTextColor={
+                    isDarkMode ? colors.textGreyB : colors.black
+                }
+            />
+            <TouchableOpacity
+                onPress={_moveToNextScreen}
+            >
+                <Image
+                    style={{
+                        height: 25,
+                        width: 25,
+                    }}
+                    source={imagePath.blackNav}
+                />
+            </TouchableOpacity>
         </View>
     );
 }
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-
-    },
-    subCont: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderRadius: 8,
-        borderWidth: 0.5,
-        borderColor: 'black',
-        backgroundColor: 'white',
-        height: 48,
-        marginBottom: 10
+        justifyContent: 'space-between',
+        height: moderateScale(40),
+        backgroundColor: 'gray',
+        borderRadius: moderateScale(4),
+        paddingHorizontal: moderateScale(8),
     },
     text: {
-        width: '100%',
-        paddingHorizontal: 8
-    },
-    dropDown: {
-        position: 'relative',
-        marginTop: 6,
-        width: '100%',
-    },
-    placeCont: {
-        borderBottomWidth: 0.5,
-        paddingVertical: 2,
-
-    },
-    placeText: {
-        padding: 10,
-        fontSize: 12,
-        color: 'black',
-        opacity: 0.8
+        flex: 1,
+        fontFamily: fontFamily.medium,
+        textAlign: I18nManager.isRTL ? 'right' : 'left',
     }
+
 })
 
 export default SearchPlaces;
