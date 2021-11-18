@@ -380,7 +380,7 @@ export default function TaxiHomeDashbord({
 
 
   const moveToScreen = (details) => {
-    updateState({fullMapShow: false})
+    updateState({ fullMapShow: false })
     let prefillAdress = null
     if (!!details) {
       prefillAdress = {
@@ -779,7 +779,7 @@ export default function TaxiHomeDashbord({
               region={region}
               // initialRegion={region}
               showsUserLocation={true}
-              // onRegionChangeComplete={_onRegionChange}
+            // onRegionChangeComplete={_onRegionChange}
             // showsMyLocationButton={true}
             // pointerEvents={'none'}
             />
@@ -787,10 +787,21 @@ export default function TaxiHomeDashbord({
               <TouchableOpacity
                 onPress={() => updateState({ fullMapShow: false })}
                 style={{
-                  margin: 16,
-                  tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                  marginTop: moderateScaleVertical(24),
+                  height: moderateScale(40),
+                  width: moderateScale(40),
+                  borderRadius: moderateScale(16),
+                  backgroundColor: colors.white,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginLeft: moderateScale(24)
                 }}>
-                <Image source={imagePath.backArrowCourier} />
+                <Image
+                  style={{
+                    tintColor: colors.black,
+                  }}
+                  source={imagePath.backArrowCourier}
+                />
               </TouchableOpacity>
             </SafeAreaView>
           </View>
@@ -813,7 +824,7 @@ export default function TaxiHomeDashbord({
                   fontFamily: fontFamily.regular,
                   fontSize: textScale(16),
                   textAlign: 'left',
-                  color: isDarkMode ? MyDarkTheme.colors.text: colors.black
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black
                 }}>Where to ?</Text>
               </TouchableOpacity>
             </SafeAreaView>

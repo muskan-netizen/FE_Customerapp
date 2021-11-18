@@ -565,6 +565,7 @@ export default function MyOrders({ navigation }) {
                 alignItems: 'center',
               }}>
               <NoDataFound
+                image={businessType === 4? imagePath.noRides:imagePath.noDataFound2 }
                 isLoading={state.isLoading}
                 text={businessType === 4 ? strings.NO_RIDE_FOUND : strings.NODATAFOUND}
               />

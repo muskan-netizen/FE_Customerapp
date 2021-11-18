@@ -501,7 +501,10 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     longitude: Number(coordinate?.longitude),
                   }}>
                   <View
-                    style={styles.plainView}>
+                    style={{
+                      ...styles.plainView,
+                      backgroundColor: themeColors.primary_color
+                    }}>
                     <Text style={styles.pickupDropOff}>
                       {index === 0 ? 'Pickup' : 'Drop'}
                     </Text>
