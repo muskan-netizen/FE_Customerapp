@@ -262,7 +262,8 @@ export default function HomeScreenTaxi({ navigation, route }) {
         initialRegion={region}
         customMapStyle={mapStyleGrey}
         // pointerEvents={'none'}
-        onRegionChangeComplete={_onRegionChange}>
+        onRegionChangeComplete={_onRegionChange}
+        >
         {/* <Marker
             ref={markerRef}
             // pointerEvents={'none'}
