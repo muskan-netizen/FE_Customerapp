@@ -285,63 +285,6 @@ export default function TaxiHomeDashbord({
   };
 
 
-  useEffect(() => {
-    (async () => {
-      getLiveLocation()
-    })();
-  }, [])
-
-  const getLiveLocation = async () => {
-    const locPermissionDenied = await locationPermission()
-    console.log("loc permision", locPermissionDenied)
-    if (locPermissionDenied) {
-      // alert('eys')
-      const { latitude, longitude } = await getCurrentLocationFromApi()
-      const res = await getAddressFromLatLong(`${latitude}, ${longitude}`, appData.profile.preferences?.map_key)
-      console.log("ohh hes", res)
-      updateState({
-        region: {
-          latitude,
-          longitude,
-          latitudeDelta: 0.015,
-          longitudeDelta: 0.0121,
-        }
-      })
-
-    }
-  }
-
-  const onCenter = () => {
-    mapRef.current.fitToCoordinates(
-      [{
-        latitude: Number(region?.latitude),
-        longitude: Number(region?.longitude),
-        latitudeDelta: 0.015,
-        longitudeDelta: 0.0121,
-      }],
-      {
-        edgePadding: {
-          right: width / 20,
-          bottom: height / 20,
-          left: width / 20,
-          top: height / 20,
-        },
-      },
-    );
-  }
-
-  const _onRegionChange = (region) => {
-    // updateState({
-    //   region: {
-    //     ...region,
-    //     latitude: region.latitude,
-    //     longitude: region.longitude
-    //   }
-    // });
-    // _getAddressBasedOnCoordinates(region);
-    // animate(region);
-  };
-
   const _renderItem = ({ item }) => {
     return (
       <TaxiHomeCategoryCard
@@ -437,6 +380,7 @@ export default function TaxiHomeDashbord({
 
 
   const moveToScreen = (details) => {
+    updateState({fullMapShow: false})
     let prefillAdress = null
     if (!!details) {
       prefillAdress = {
@@ -451,7 +395,7 @@ export default function TaxiHomeDashbord({
       cat: appMainData?.categories[0],
       datetime: { slectedDate, selectedTime },
       pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
-      data: !!prefillAdress ? prefillAdress : null
+      prefillAdress: !!prefillAdress ? prefillAdress : null
     })
   }
 
@@ -835,7 +779,7 @@ export default function TaxiHomeDashbord({
               region={region}
               // initialRegion={region}
               showsUserLocation={true}
-              onRegionChangeComplete={_onRegionChange}
+              // onRegionChangeComplete={_onRegionChange}
             // showsMyLocationButton={true}
             // pointerEvents={'none'}
             />
@@ -849,20 +793,10 @@ export default function TaxiHomeDashbord({
                 <Image source={imagePath.backArrowCourier} />
               </TouchableOpacity>
             </SafeAreaView>
-
-            <TouchableOpacity
-              onPress={onCenter}
-              style={{
-                position: 'absolute',
-                bottom: 20,
-                right: 20,
-              }}>
-              <Image source={imagePath.blackNav} />
-            </TouchableOpacity>
           </View>
           <View style={{
             height: moderateScale(100),
-            backgroundColor: 'white'
+            backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white
           }}>
             <SafeAreaView>
               <TouchableOpacity
@@ -878,7 +812,8 @@ export default function TaxiHomeDashbord({
                 <Text style={{
                   fontFamily: fontFamily.regular,
                   fontSize: textScale(16),
-                  textAlign: 'left'
+                  textAlign: 'left',
+                  color: isDarkMode ? MyDarkTheme.colors.text: colors.black
                 }}>Where to ?</Text>
               </TouchableOpacity>
             </SafeAreaView>

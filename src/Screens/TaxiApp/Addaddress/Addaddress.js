@@ -22,7 +22,7 @@ import {
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import { getCurrentLocationFromApi, getPlaceDetails, nearbySearch } from '../../../utils/googlePlaceApi';
+import { getAddressFromLatLong, getCurrentLocationFromApi, getPlaceDetails, nearbySearch } from '../../../utils/googlePlaceApi';
 import {
   getAddressComponent,
   showError
@@ -99,25 +99,25 @@ export default function Addaddress({ navigation, route }) {
   } = state;
 
   useEffect(() => {
-    if (!!paramData?.data) {
+    if (!!paramData?.prefillAdress) {
       console.log("param data address", paramData)
-      const { data } = paramData
+      const { prefillAdress } = paramData
       const cloneArr = dropLocationData
-      cloneArr[searchResult.currentIndex].pre_address = data?.pre_address
-      cloneArr[searchResult.currentIndex].latitude = data?.latitude
-      cloneArr[searchResult.currentIndex].longitude = data?.longitude
-      cloneArr[searchResult.currentIndex].task_type_id = data?.task_type_id
+      cloneArr[searchResult.currentIndex].pre_address = prefillAdress?.pre_address
+      cloneArr[searchResult.currentIndex].latitude = prefillAdress?.latitude
+      cloneArr[searchResult.currentIndex].longitude = prefillAdress?.longitude
+      cloneArr[searchResult.currentIndex].task_type_id = prefillAdress?.task_type_id
       // cloneArr[searchResult.currentIndex].post_code = addressData?.pincode
       // cloneArr[searchResult.currentIndex].short_name = addressData?.states || addressData?.state
-      cloneArr[searchResult?.currentIndex].address = data?.address
+      cloneArr[searchResult?.currentIndex].address = prefillAdress?.address
       updateState({ dropLocationData: cloneArr, searchResult: { currentIndex: searchResult?.currentIndex, data: [] } })
       console.log("clone array result", cloneArr)
     }
-
     if (!!(userData && userData?.auth_token)) {
       getAllAddress();
     }
   }, [paramData]);
+
 
   //get All address
   const getAllAddress = () => {
@@ -303,7 +303,6 @@ export default function Addaddress({ navigation, route }) {
       datetime: paramData?.datetime,
       pickUpTimeType: paramData?.pickUpTimeType,
     });
-
   };
 
   useEffect(() => {
@@ -317,6 +316,18 @@ export default function Addaddress({ navigation, route }) {
       // console.log("get live location after 4 second")
       updateState({ curLatLng: { latitude, longitude } })
       getNearByAddress(`${latitude}, ${longitude}`)
+      if (!paramData?.prefillAdress) {
+        const res = await getAddressFromLatLong(`${latitude}, ${longitude}`, appData.profile.preferences?.map_key)
+        console.log("get address+++++", res)
+        // alert("inner")
+        let cloneArr = dropLocationData
+        cloneArr[0].pre_address = res.address
+        cloneArr[0].address = res.address
+        cloneArr[0].latitude = latitude
+        cloneArr[0].longitude = longitude
+        cloneArr[0].task_type_id = 1
+        updateState({ dropLocationData: cloneArr })
+      }
     }
   }
 
@@ -469,7 +480,16 @@ export default function Addaddress({ navigation, route }) {
         height: moderateScale(40),
         marginHorizontal: moderateScale(16)
       }}>
-        <TouchableOpacity style={{ flex: 0.5 }} onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          style={{ flex: 0.5 }}
+          onPress={() => navigation.goBack()}
+          hitSlop={{
+            top: 30,
+            right: 30,
+            left: 30,
+            bottom: 30,
+          }}
+        >
           <Image style={{
             tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           }} source={imagePath.backArrowCourier} />
@@ -489,7 +509,7 @@ export default function Addaddress({ navigation, route }) {
             ...commonStyles.shadowStyle,
             backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
             paddingBottom: moderateScaleVertical(8),
-            shadowOffset: {width: 0, height: moderateScale(6)},
+            shadowOffset: { width: 0, height: moderateScale(6) },
             borderRadius: 0
           }}>
             {dropLocationData.map((val, i) => {
@@ -504,10 +524,10 @@ export default function Addaddress({ navigation, route }) {
                   <View style={{ flex: 0.05, alignItems: 'center' }}>
                     {renderDotContainer(i)}
                   </View>
-                  <View style={{ flex: 0.9,marginLeft: moderateScale(20) }}>
+                  <View style={{ flex: 0.9, marginLeft: moderateScale(20) }}>
                     <SearchPlaces
                       curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
-                      autoFocus={i == 0 ? true : false}
+                      autoFocus={i == 1 ? true : false}
                       placeHolder={i == 0 ? strings.PICKUP_LOCATION : i == 1 ? 'Where to?' : 'Add a stop'}
                       value={val.pre_address} // instant update search value
                       mapKey={profile?.preferences?.map_key} //send here google Key
@@ -521,6 +541,12 @@ export default function Addaddress({ navigation, route }) {
                   <View style={{ flex: 0.1 }}>
                     {i >= 1 && (
                       <TouchableOpacity
+                        hitSlop={{
+                          top: 30,
+                          right: 30,
+                          left: 30,
+                          bottom: 30,
+                        }}
                         onPress={() => addRemove(dropLocationData.length - 1 == i ? true : false, i)}
                         activeOpacity={1}
                       >
@@ -552,7 +578,7 @@ export default function Addaddress({ navigation, route }) {
                   <Text
                     numberOfLines={1}
                     style={{ ...styles.addresssLableName, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>
-                    {strings.SELECT_LOCATION}
+                    {strings.SEARCHED_RESULTS}
                   </Text>
                 </View>
                 {searchResult?.data.map((item, i) => { return renderSearchItem(item) })}
