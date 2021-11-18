@@ -153,7 +153,6 @@
     "yeboy": "react-native run-android --variant=yeboyDebug --appIdSuffix=yeboy",
     "kel360": "react-native run-android --variant=kel360Debug --appIdSuffix=kel360",
     "moboserrandsservice": "react-native run-android --variant=moboserrandsserviceDebug --appIdSuffix=moboserrandsservice",
-   
     "runrunRelease": "cd android && ./gradlew assembleRunrunRelease",
     "royoorderRelease": "cd android && ./gradlew assembleRoyoorderRelease",
     "bustanfakiehRelease": "cd android && ./gradlew assembleBustanFakiehRelease",
@@ -302,7 +301,6 @@
     "yeboyRelease": "cd android && ./gradlew assembleYeboyRelease",
     "kel360Release": "cd android && ./gradlew assembleKel360Release",
     "moboserrandsserviceRelease": "cd android && ./gradlew assembleMobosErrandsServiceRelease",
-    
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
@@ -337,6 +335,7 @@
     "axios": "^0.21.1",
     "country-data": "0.0.31",
     "entities": "^2.2.0",
+    "geolib": "^3.3.3",
     "immer": "^8.0.1",
     "is_js": "^0.9.0",
     "libphonenumber-js": "^1.9.34",

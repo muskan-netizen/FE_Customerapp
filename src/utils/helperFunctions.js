@@ -10,6 +10,7 @@ import actions from '../redux/actions';
 import * as NavigationService from '../navigation/NavigationService';
 import Toast from 'react-native-simple-toast';
 import {StatusBarHeight} from '../styles/responsiveSize';
+import {getDistance} from 'geolib';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -336,6 +337,20 @@ const timeInLocalLangauge = (value, selectedLanguage) => {
   })}`;
 };
 
+const getNearestLocation = (currentLocation, savedLocations) => {
+  const lowest = 0;
+  const latLongDis = [];
+  savedLocations.map((item, indx) => {
+    const distance = getDistance(
+      {
+        latitude: currentLocation?.latitude,
+        longitude: currentLocation?.longitude,
+      },
+      {latitude: item?.latitude, longitude: item?.longitude},
+    );
+  });
+};
+
 const checkEvenOdd = (num) => {
   return num % 5 === 0 ? num : num - (num % 5);
 };
@@ -351,4 +366,5 @@ export {
   getUrlRoutes,
   timeInLocalLangauge,
   checkEvenOdd,
+  getNearestLocation,
 };
