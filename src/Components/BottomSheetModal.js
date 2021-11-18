@@ -15,7 +15,8 @@ export default function BottomSheetModal({
       ref={sheetRef}
       snapPoints={[minSnapPoint, maxSnapPoint]}
       index={index}
-      enableContentPanningGesture={enableContentPanningGesture}>
+      enableContentPanningGesture={enableContentPanningGesture}
+      >
       {children}
     </BottomSheet>
   );
