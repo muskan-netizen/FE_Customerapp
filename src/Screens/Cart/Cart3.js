@@ -1,6 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
-import moment from 'moment';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
@@ -34,7 +33,6 @@ import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
 import HorizontalLine from '../../Components/HorizontalLine';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import ProductListLoader from '../../Components/Loaders/ProductListLoader';
 import MarketCard3 from '../../Components/MarketCard3';
@@ -55,7 +53,6 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {
-  getColorCodeWithOpactiyNumber,
   getImageUrl,
   getParameterByName,
   showError,
@@ -176,11 +173,9 @@ export default function Cart({navigation, route}) {
 
   let businessType = appData?.profile?.preferences?.business_type || null;
 
-  console.log('businessType', businessType);
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log('paramsData?.tokenInfo', paramsData?.tokenInfo);
       if (paramsData && paramsData?.selectedMethod) {
         updateState({selectedPayment: paramsData?.selectedMethod});
       }
@@ -387,9 +382,7 @@ export default function Cart({navigation, route}) {
           defaultSelectedTable: res,
         });
       })
-      .catch((error) => {
-        showError(error.message);
-      });
+      .catch(errorMethod);
   };
 
   //add /delete products from cart
@@ -505,7 +498,7 @@ export default function Cart({navigation, route}) {
       btnLoader: false,
       placeLoader: false,
     });
-    showError(error?.message || error?.error);
+    showError(error?.message || error?.error || error);
   };
 
   //Get list of all offers
@@ -620,7 +613,6 @@ export default function Cart({navigation, route}) {
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
     }
-    console.log('sending data...', data);
     actions
       .placeOrder(data, {
         code: appData?.profile?.code,
@@ -791,7 +783,6 @@ export default function Cart({navigation, route}) {
   };
 
   const _finalPayment = () => {
- 
     if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
       _offineLinePayment();
       return;
@@ -807,7 +798,6 @@ export default function Cart({navigation, route}) {
       _webPayment();
       return;
     } else {
-
       _directOrderPlace();
     }
 
@@ -834,8 +824,6 @@ export default function Cart({navigation, route}) {
     // _offineLinePayment();
   };
 
-  // console.log("sheduledorderdate", sheduledorderdate)
-  // console.log("sheduledorderdate", selectedTimeOption)
   //Clear cart
   const placeOrder = () => {
     updateState({placeLoader: true});
@@ -846,21 +834,11 @@ export default function Cart({navigation, route}) {
         // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
       } else if (!selectedPayment) {
-        showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
-      }
-      // else if (!(sheduledorderdate && selectedTimeOption)) {
-      //   showError(strings.PLEASE_SELECT_ORDER_TYPE);
-      // } else if (d1.getTime() >= d2.getTime()) {
-      //   showError(strings.INVALID_SCHEDULED_DATE);
-      // }
-      else if (false) {
-        //(!(sheduledorderdate && selectedTimeOption))
-        showError(strings.PLEASE_SELECT_ORDER_TYPE);
+        errorMethod(strings.PLEASE_SELECT_PAYMENT_METHOD);
       } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
-        showError(strings.INVALID_SCHEDULED_DATE);
+        errorMethod(strings.INVALID_SCHEDULED_DATE);
       } else {
         if (!!userData) {
-          console.log('user data', userData);
           if (!!userData) {
             if (
               !!userData?.client_preference?.verify_email &&
@@ -962,7 +940,6 @@ export default function Cart({navigation, route}) {
       selectedAddressData?.id
     }&payment_option_id=${selectedPayment?.id}&action=cart`;
 
-    console.log('query data', queryData);
     actions
       .openPaymentWebUrl(
         queryData,
@@ -975,7 +952,6 @@ export default function Cart({navigation, route}) {
       )
       .then((res) => {
         console.log(res, 'response===>');
-
         updateState({
           isLoadingB: false,
           isRefreshing: false,
@@ -1057,7 +1033,7 @@ export default function Cart({navigation, route}) {
         })
         .catch(errorMethod);
     } else {
-      showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
+      errorMethod(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
   };
 
@@ -1081,7 +1057,6 @@ export default function Cart({navigation, route}) {
 
   const _selectTime = (item) => {
     updateState({
-      scheduleType: 'schedule',
       isVisibleTimeModal: true,
     });
   };
@@ -2028,23 +2003,10 @@ export default function Cart({navigation, route}) {
     }
   };
 
-  // const onPressPickUplater = () => {
-  //   updateState({
-  //     isVisibleTimeModal: true,
-  //   });
-  // };
-  //Footer section in cart screen
-  console.log(cartData, 'cartDatacartData');
 
   const getFooter = () => {
     return (
       <>
-        {/* Add instruction */}
-        {/* <TouchableOpacity
-          style={{ justifyContent: 'center', alignItems: 'center' }}
-        >
-          <Text style={styles.addInstruction}>{strings.ADD_INSTRUCTIONS}</Text>
-        </TouchableOpacity> */}
         <TextInput
           value={instruction}
           onChangeText={(instruction) => updateState({instruction})}
@@ -2059,7 +2021,6 @@ export default function Cart({navigation, route}) {
           placeholderTextColor={
             isDarkMode ? colors.textGreyB : colors.textGreyB
           }
-          // placeholder={strings.ANY_RESTAURANT_REQUESTS}
           placeholder={strings.SPECIAL_INSTRUCTION}
         />
         {/* <View style={{ height: moderateScaleVertical(20) }} /> */}
@@ -2491,7 +2452,7 @@ export default function Cart({navigation, route}) {
           userData?.auth_token &&
           !appData?.profile?.preferences?.off_scheduling_at_cart
         ) &&
-          scheduleType == 'schedule' && (
+          !!(scheduleType == 'schedule' && localeSheduledOrderDate) && (
             <TouchableOpacity
               style={{
                 marginTop: moderateScale(16),
@@ -2711,10 +2672,7 @@ export default function Cart({navigation, route}) {
             selectedAddress: address,
           });
         })
-        .catch((error) => {
-          updateState({isLoadingB: false});
-          showError(error?.message || error?.error);
-        });
+        .catch(errorMethod);
     }
   };
 
@@ -2770,6 +2728,7 @@ export default function Cart({navigation, route}) {
 
   const onDateChange = (value) => {
     updateState({
+      scheduleType: 'schedule',
       sheduledorderdate: value,
       localeSheduledOrderDate: `${value.toLocaleDateString(selectedLanguage, {
         year: 'numeric',
@@ -2782,31 +2741,22 @@ export default function Cart({navigation, route}) {
     });
   };
 
-  // console.log(
-  //   moment(selectOrderDate)
-  //     .format('DD MMM, YYYY HH:mm')
-  //     .toLocaleDateString('fr-FR'),
-  //   'djkjfjdfkdkj',
-  // );
+
 
   useEffect(() => {
     if (!!checkCartItem?.data) {
       getItem('deepLinkUrl')
         .then((res) => {
-          console.log(res, 'response is');
           if (res) {
             let table_number = getParameterByName('table', res);
             updateState({deepLinkUrl: table_number});
           }
         })
-        .catch((error) => {
-          showError(error.message);
-        });
+        .catch(errorMethod);
     }
   }, [deepLinkUrl]);
 
   const _onTableSelection = (item) => {
-    console.log(item, 'itemitemitem');
     const data = {
       vendor_id: item.vendor_id,
       table: item?.id,
@@ -2815,7 +2765,6 @@ export default function Cart({navigation, route}) {
   };
 
   const _vendorTableCart = (data, item) => {
-    console.log(data, 'selectedTable');
     actions
       .vendorTableCart(data, {
         code: appData?.profile?.code,
@@ -2824,13 +2773,7 @@ export default function Cart({navigation, route}) {
         removeItem('deepLinkUrl');
         setItem('selectedTable', item?.label);
       })
-      .catch((error) => {
-        updateState({
-          isLoading: false,
-          isLoadingB: false,
-        });
-        showError(error?.message || error?.error);
-      });
+      .catch(errorMethod);
   };
 
   const onPressRecommendedVendors = (item) => {
