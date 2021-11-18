@@ -1009,6 +1009,30 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.ssuum:
+          updateState({
+            shortCode: shortCodes.ssuum,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.blacnetwork:
+          updateState({
+            shortCode: shortCodes.blacnetwork,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.threadagain:
+          updateState({
+            shortCode: shortCodes.threadagain,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ezmobilefuel:
+          updateState({
+            shortCode: shortCodes.ezmobilefuel,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

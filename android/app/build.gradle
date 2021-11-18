@@ -821,7 +821,7 @@ android {
          }
          vici{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -1743,6 +1743,46 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.carroai'
             resValue "string", "app_name", "Carroai"
+            resValue "string", "host_name", ""
+         }
+          ssuum{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ssuum'
+            resValue "string", "app_name", "Ssuum"
+            resValue "string", "host_name", ""
+         }
+         blacnetwork{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.blacnetwork'
+            resValue "string", "app_name", "Blac Network"
+            resValue "string", "host_name", ""
+         }
+          threadagain{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.threadagain'
+            resValue "string", "app_name", "ThreadAgain"
+            resValue "string", "host_name", ""
+         }
+         ezmobilefuel{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ezmobilefuel'
+            resValue "string", "app_name", "EzMobileFuel"
             resValue "string", "host_name", ""
          }
         
