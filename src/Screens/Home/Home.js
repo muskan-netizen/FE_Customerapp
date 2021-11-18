@@ -445,7 +445,7 @@ export default function Home({route, navigation}) {
     } else if (item.redirect_to == staticStrings.CELEBRITY) {
       moveToNewScreen(navigationStrings.CELEBRITY)();
     } else if (item.redirect_to == staticStrings.BRAND) {
-      moveToNewScreen(navigationStrings.BRANDS)();
+      moveToNewScreen(navigationStrings.CATEGORY_BRANDS, item)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
       moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();

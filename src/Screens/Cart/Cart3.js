@@ -1,6 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
-import moment from 'moment';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
@@ -34,7 +33,6 @@ import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
 import HorizontalLine from '../../Components/HorizontalLine';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import ProductListLoader from '../../Components/Loaders/ProductListLoader';
 import MarketCard3 from '../../Components/MarketCard3';
@@ -55,7 +53,6 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {
-  getColorCodeWithOpactiyNumber,
   getImageUrl,
   getParameterByName,
   showError,
@@ -173,7 +170,6 @@ export default function Cart({navigation, route}) {
   const selectedLanguage = languages?.primary_language?.sort_code;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors, isDarkMode, MyDarkTheme});
-  console.log('appData', appData);
 
   const selectedAddressData = useSelector(
     (state) => state?.cart?.selectedAddress,
@@ -192,8 +188,6 @@ export default function Cart({navigation, route}) {
     };
 
   let businessType = appData?.profile?.preferences?.business_type || null;
-
-  console.log('businessType', businessType);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -225,33 +219,6 @@ export default function Cart({navigation, route}) {
       checkCartItem?.data?.item_count,
     ]),
   );
-
-  // useEffect(() => {
-  //   if (paramsData && paramsData?.selectedMethod) {
-  //     updateState({ selectedPayment: paramsData?.selectedMethod });
-  //   }
-
-  //   // alert('run')
-  //   // updateState({ isLoadingB: true });
-  //   if (!!cartItems) {
-  //     getCartDetail();
-  //     return
-  //   }
-  //   if (!!userData?.auth_token) {
-  //     getAllWishListData();
-  //     return
-  //   }
-
-  // }, [
-  //   currencies,
-  //   languages,
-  //   route?.params?.promocodeDetail,
-  //   allAddresss,
-  //   selectedAddress,
-  //   paramsData,
-  //   isRefreshing,
-  //   cartItems,
-  // ])
 
   useEffect(() => {
     if (!!checkCartItem?.data) {
@@ -321,7 +288,6 @@ export default function Cart({navigation, route}) {
         `/?type=${dineInType}${
           paramsData?.data?.queryURL ? `&${paramsData?.data?.queryURL}` : '' //for webPayment method- Mobbex,
         }`,
-
         {},
         {
           code: appData?.profile?.code,
@@ -334,7 +300,7 @@ export default function Cart({navigation, route}) {
       )
       .then((res) => {
         actions.cartItemQty(res);
-        console.log(res.data, 'cart details>>>');
+        console.log(res.data, 'cart details>>>', cartItems);
         let checkDate = !!res?.data?.scheduled_date_time;
 
         if (!!checkDate && res.data.schedule_type == 'schedule') {
@@ -400,7 +366,10 @@ export default function Cart({navigation, route}) {
               : {id: 1, title: strings.NOW, type: 'now'},
         });
         if (res && res.data) {
-          if (res.data.vendor_details.vendor_tables) {
+          if (
+            !!res.data.vendor_details.vendor_tables &&
+            res.data.vendor_details.vendor_tables.length > 0
+          ) {
             res.data.vendor_details.vendor_tables.forEach(
               (item, indx) =>
                 (tableData[indx] = {
@@ -428,6 +397,11 @@ export default function Cart({navigation, route}) {
                 tableData: tableData,
               }),
             );
+            const data = {
+              vendor_id: tableData[0].vendor_id,
+              table: tableData[0].id,
+            };
+            _vendorTableCart(data, tableData[0]);
           }
           updateState({
             cartItems: res.data.products,
@@ -445,6 +419,7 @@ export default function Cart({navigation, route}) {
         } else {
           updateState({
             cartData: {},
+            cartItems: [],
             vendorAddress: '',
             isLoadingB: false,
             isRefreshing: false,
@@ -459,14 +434,8 @@ export default function Cart({navigation, route}) {
           defaultSelectedTable: res,
         });
       })
-      .catch((error) => {
-        showError(error.message);
-      });
+      .catch(errorMethod);
   };
-
-  // useEffect(() => {
-  //   getAllWishListData()
-  // }, [])
 
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
@@ -581,7 +550,7 @@ export default function Cart({navigation, route}) {
       btnLoader: false,
       placeLoader: false,
     });
-    showError(error?.message || error?.error);
+    showError(error?.message || error?.error || error);
   };
 
   //Get list of all offers
@@ -639,6 +608,20 @@ export default function Cart({navigation, route}) {
       orderDetail: res.data,
       redirectFrom: 'cart',
     };
+
+    if (
+      !!paymentId &&
+      !!(
+        Number(cartData?.total_payable_amount) + Number(selectedTipAmount) ===
+        0
+      )
+    ) {
+      alert();
+      moveToNewScreen(navigationStrings.ORDERSUCESS, {
+        orderDetail: res.data,
+      })();
+      return;
+    }
     switch (paymentId) {
       case 6: //Payfast Payment Getway
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
@@ -658,18 +641,10 @@ export default function Cart({navigation, route}) {
           businessType == 'home_service' &&
           res?.data?.vendors.length == 1
         ) {
-          console.log('success ressssssss', res.data);
           setTimeout(() => {
             _getOrderDetail(res.data.vendors[0]);
           }, 1500);
         } else {
-          actions.cartItemQty({});
-          updateState({
-            cartItems: [],
-            cartData: {},
-            isLoadingB: false,
-            placeLoader: false,
-          });
           moveToNewScreen(navigationStrings.ORDERSUCESS, {
             orderDetail: res.data,
           })();
@@ -700,62 +675,14 @@ export default function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'orderResponse');
-        if (
-          businessType !== 'home_service' &&
-          res?.data?.vendors.length !== 1
-        ) {
-          actions.cartItemQty({});
-          updateState({
-            cartItems: [],
-            cartData: {},
-            isLoadingB: false,
-            placeLoader: false,
-          });
-        }
-        if (
-          !!(Number(cartData?.total_payable_amount) !== 0) ||
-          Number(selectedTipAmount) !== 0
-        ) {
-          checkPaymentOptions(res);
-          // _webPayment()
-          return;
-        }
-        if (
-          !!businessType &&
-          businessType == 'home_service' &&
-          res?.data?.vendors.length == 1
-        ) {
-          console.log('success ressssssss', res.data);
-          setTimeout(() => {
-            _getOrderDetail(res.data.vendors[0]);
-          }, 1500);
-        } else {
-          if (
-            !!businessType &&
-            businessType == 'home_service' &&
-            res?.data?.vendors.length == 1
-          ) {
-            console.log('success ressssssss', res.data);
-            // return;
-            setTimeout(() => {
-              _getOrderDetail(res.data.vendors[0]);
-            }, 1500);
-          } else {
-            actions.cartItemQty({});
-            updateState({
-              cartItems: [],
-              cartData: {},
-              isLoadingB: false,
-              placeLoader: false,
-            });
-            moveToNewScreen(navigationStrings.ORDERSUCESS, {
-              orderDetail: res.data,
-            })();
-          }
-        }
-
-        // checkPaymentOptions(res)
+        actions.cartItemQty({});
+        updateState({
+          cartItems: [],
+          cartData: {},
+          isLoadingB: false,
+          placeLoader: false,
+        });
+        checkPaymentOptions(res);
         // if (
         //   (res?.data?.payment_option_id === 6 &&
         //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
@@ -944,33 +871,50 @@ export default function Cart({navigation, route}) {
   };
 
   const _finalPayment = () => {
-    if (selectedPayment?.id == 1 && selectedPayment?.off_site == 0) {
-      updateState({placeLoader: true});
-      _directOrderPlace();
-      return;
-    } else if (selectedPayment?.off_site == 1 && selectedPayment?.id === 3) {
-      _webPayment();
-      return;
-    } else if (
-      selectedPayment?.off_site == 1 &&
-      !!(
-        selectedPayment?.id === 6 ||
-        selectedPayment?.id === 7 ||
-        selectedPayment?.id === 8 ||
-        selectedPayment?.id === 9
-      )
-    ) {
-      updateState({placeLoader: true});
-      _directOrderPlace();
+    if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
+      _offineLinePayment();
       return;
     }
-    _offineLinePayment();
+    if (
+      selectedPayment?.id === 3 &&
+      selectedPayment?.off_site === 1 &&
+      !!(
+        Number(cartData?.total_payable_amount) + Number(selectedTipAmount) !==
+        0
+      )
+    ) {
+      _webPayment();
+      return;
+    } else {
+      _directOrderPlace();
+    }
+
+    // !!(Number(cartData?.total_payable_amount) !== 0) ||
+    //   Number(selectedTipAmount) !== 0) {
+    //   _webPayment()
+    // }
+
+    // else if (selectedPayment?.off_site == 1 && selectedPayment?.id === 3) {
+    //   _webPayment();
+    //   return;
+    // } else if (
+    //   selectedPayment?.off_site == 1 &&
+    //   !!(
+    //     selectedPayment?.id === 6 ||
+    //     selectedPayment?.id === 7 ||
+    //     selectedPayment?.id === 8 ||
+    //     selectedPayment?.id === 9
+    //   )
+    // ) {
+    //   _directOrderPlace();
+    //   return;
+    // }
+    // _offineLinePayment();
   };
 
-  // console.log("sheduledorderdate", sheduledorderdate)
-  // console.log("sheduledorderdate", selectedTimeOption)
   //Clear cart
   const placeOrder = () => {
+    updateState({placeLoader: true});
     var d1 = new Date();
     var d2 = new Date(sheduledorderdate);
     if (!!userData?.auth_token) {
@@ -978,21 +922,11 @@ export default function Cart({navigation, route}) {
         // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
       } else if (!selectedPayment) {
-        showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
-      }
-      // else if (!(sheduledorderdate && selectedTimeOption)) {
-      //   showError(strings.PLEASE_SELECT_ORDER_TYPE);
-      // } else if (d1.getTime() >= d2.getTime()) {
-      //   showError(strings.INVALID_SCHEDULED_DATE);
-      // }
-      else if (false) {
-        //(!(sheduledorderdate && selectedTimeOption))
-        showError(strings.PLEASE_SELECT_ORDER_TYPE);
+        errorMethod(strings.PLEASE_SELECT_PAYMENT_METHOD);
       } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
-        showError(strings.INVALID_SCHEDULED_DATE);
+        errorMethod(strings.INVALID_SCHEDULED_DATE);
       } else {
         if (!!userData) {
-          console.log('user data', userData);
           if (!!userData) {
             if (
               !!userData?.client_preference?.verify_email &&
@@ -1106,7 +1040,6 @@ export default function Cart({navigation, route}) {
       selectedAddressData?.id
     }&payment_option_id=${selectedPayment?.id}&action=cart`;
 
-    updateState({placeLoader: true});
     actions
       .openPaymentWebUrl(
         queryData,
@@ -1149,9 +1082,7 @@ export default function Cart({navigation, route}) {
   //Offline payments
   const _offineLinePayment = async () => {
     if (paramsData?.tokenInfo) {
-      updateState({placeLoader: true});
       let selectedMethod = selectedPayment.title.toLowerCase();
-      updateState({placeLoader: true});
       actions
         .openPaymentWebUrl(
           `/${selectedMethod}?tip=${
@@ -1192,18 +1123,33 @@ export default function Cart({navigation, route}) {
               modalType: null,
               sheduledpickupdate: null,
               sheduleddropoffdate: null,
+              selectedPayment: {
+                id: 1,
+                off_site: 0,
+                title: 'Cash On Delivery',
+                title_lng: strings.CASH_ON_DELIVERY,
+              },
             });
             moveToNewScreen(navigationStrings.ORDERSUCESS, {
               orderDetail: res.data,
             })();
             showSuccess(res?.message);
           } else {
-            updateState({isLoadingB: false, placeLoader: false});
+            updateState({
+              isLoadingB: false,
+              placeLoader: false,
+              selectedPayment: {
+                id: 1,
+                off_site: 0,
+                title: 'Cash On Delivery',
+                title_lng: strings.CASH_ON_DELIVERY,
+              },
+            });
           }
         })
         .catch(errorMethod);
     } else {
-      showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
+      errorMethod(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
   };
 
@@ -1228,7 +1174,6 @@ export default function Cart({navigation, route}) {
   const _selectTime = (item) => {
     updateState({
       modalType: 'schedule',
-      scheduleType: 'schedule',
       isVisibleTimeModal: true,
     });
   };
@@ -1323,7 +1268,8 @@ export default function Cart({navigation, route}) {
           <View style={Platform.OS === 'ios' ? {zIndex: 5000} : {}}>
             {dineInType === 'dine_in' &&
               userData?.auth_token &&
-              !!cartData?.vendor_details?.vendor_tables && (
+              !!cartData?.vendor_details?.vendor_tables &&
+              cartData?.vendor_details?.vendor_tables.length > 0 && (
                 <DropDownPicker
                   items={tableData}
                   onOpen={() => updateState({isTableDropDown: true})}
@@ -1371,7 +1317,11 @@ export default function Cart({navigation, route}) {
               ? MyDarkTheme.colors.background
               : colors.white,
           }}>
-          <View style={styles.vendorView}>
+          <View
+            style={{
+              ...styles.vendorView,
+              paddingHorizontal: moderateScale(8),
+            }}>
             <Text
               numberOfLines={1}
               style={{
@@ -2190,23 +2140,9 @@ export default function Cart({navigation, route}) {
     }
   };
 
-  // const onPressPickUplater = () => {
-  //   updateState({
-  //     isVisibleTimeModal: true,
-  //   });
-  // };
-  //Footer section in cart screen
-  console.log(cartData, 'cartDatacartData');
-
   const getFooter = () => {
     return (
       <>
-        {/* Add instruction */}
-        {/* <TouchableOpacity
-          style={{ justifyContent: 'center', alignItems: 'center' }}
-        >
-          <Text style={styles.addInstruction}>{strings.ADD_INSTRUCTIONS}</Text>
-        </TouchableOpacity> */}
         <TextInput
           value={instruction}
           onChangeText={(instruction) => updateState({instruction})}
@@ -2221,7 +2157,6 @@ export default function Cart({navigation, route}) {
           placeholderTextColor={
             isDarkMode ? colors.textGreyB : colors.textGreyB
           }
-          // placeholder={strings.ANY_RESTAURANT_REQUESTS}
           placeholder={strings.SPECIAL_INSTRUCTION}
         />
         {/* <View style={{ height: moderateScaleVertical(20) }} /> */}
@@ -2855,7 +2790,7 @@ export default function Cart({navigation, route}) {
           userData?.auth_token &&
           !appData?.profile?.preferences?.off_scheduling_at_cart
         ) &&
-          scheduleType == 'schedule' && (
+          !!(scheduleType == 'schedule' && localeSheduledOrderDate) && (
             <TouchableOpacity
               style={{
                 marginTop: moderateScale(16),
@@ -2989,7 +2924,9 @@ export default function Cart({navigation, route}) {
   //Header section of cart screen
   const getHeader = () => {
     return (
-      <View
+      <TouchableOpacity
+        disabled={!!vendorAddress}
+        onPress={() => setModalVisible(true)}
         style={{
           ...styles.topLable,
           marginVertical: moderateScale(7),
@@ -3003,7 +2940,11 @@ export default function Cart({navigation, route}) {
                 ...styles.homeTxt,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
-              {strings.HOME}
+              {vendorAddress
+                ? strings.HOME
+                : selectedAddressData
+                ? strings.HOME
+                : strings.ADD_ADDRESS}
             </Text>
             <Text
               numberOfLines={2}
@@ -3016,7 +2957,7 @@ export default function Cart({navigation, route}) {
                 ? vendorAddress
                 : selectedAddressData
                 ? selectedAddressData?.address
-                : strings.ADD_ADDRESS}
+                : strings.TAP_HERE_ADD_ADDRESS}
             </Text>
           </View>
         </View>
@@ -3031,7 +2972,7 @@ export default function Cart({navigation, route}) {
             />
           </TouchableOpacity>
         )}
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -3064,10 +3005,7 @@ export default function Cart({navigation, route}) {
             selectedAddress: address,
           });
         })
-        .catch((error) => {
-          updateState({isLoadingB: false});
-          showError(error?.message || error?.error);
-        });
+        .catch(errorMethod);
     }
   };
 
@@ -3151,6 +3089,7 @@ export default function Cart({navigation, route}) {
 
   const onDateChange = (value) => {
     updateState({
+      scheduleType: 'schedule',
       sheduledorderdate: value,
       localeSheduledOrderDate: `${value.toLocaleDateString(selectedLanguage, {
         year: 'numeric',
@@ -3163,50 +3102,37 @@ export default function Cart({navigation, route}) {
     });
   };
 
-  // console.log(
-  //   moment(selectOrderDate)
-  //     .format('DD MMM, YYYY HH:mm')
-  //     .toLocaleDateString('fr-FR'),
-  //   'djkjfjdfkdkj',
-  // );
-
   useEffect(() => {
     if (!!checkCartItem?.data) {
       getItem('deepLinkUrl')
         .then((res) => {
-          console.log(res, 'response is');
           if (res) {
             let table_number = getParameterByName('table', res);
             updateState({deepLinkUrl: table_number});
           }
         })
-        .catch((error) => {
-          showError(error.message);
-        });
+        .catch(errorMethod);
     }
   }, [deepLinkUrl]);
 
   const _onTableSelection = (item) => {
     const data = {
       vendor_id: item.vendor_id,
-      table: item.table_number,
+      table: item?.id,
     };
+    _vendorTableCart(data, item);
+  };
+
+  const _vendorTableCart = (data, item) => {
     actions
       .vendorTableCart(data, {
         code: appData?.profile?.code,
       })
       .then((res) => {
-        console.log(res, 'selectedTableInfo', data);
         removeItem('deepLinkUrl');
         setItem('selectedTable', item?.label);
       })
-      .catch((error) => {
-        updateState({
-          isLoading: false,
-          isLoadingB: false,
-        });
-        showError(error?.message || error?.error);
-      });
+      .catch(errorMethod);
   };
 
   const onPressRecommendedVendors = (item) => {

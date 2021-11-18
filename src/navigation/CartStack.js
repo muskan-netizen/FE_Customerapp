@@ -22,6 +22,7 @@ import {
   Payfast,
   Paylink,
   Yoco,
+  AllinonePyments,
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
@@ -36,12 +37,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.CART}
         component={
-          // appStyle?.homePageLayout === 2
-          //   ? Cart2
-          //   : appStyle?.homePageLayout === 3
-          //   ? Cart3
-          //   : Cart
-          Cart3
+          appStyle?.homePageLayout === 2
+            ? Cart2
+            : appStyle?.homePageLayout === 3
+            ? Cart3
+            : Cart
         }
         options={{headerShown: false}}
       />
@@ -120,6 +120,11 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.PAYLINK}
         component={Paylink}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.ALL_IN_ONE_PAYMENTS}
+        component={AllinonePyments}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

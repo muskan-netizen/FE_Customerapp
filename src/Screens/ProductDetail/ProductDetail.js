@@ -694,18 +694,15 @@ export default function ProductDetail({route, navigation}) {
                             {!!productDetailData?.inwishlist ? (
                               <Image
                                 style={
-                                  isDarkMode
-                                    ? {tintColor: MyDarkTheme.colors.text}
-                                    : {tintColor: colors.white}
+                                  {tintColor:isDarkMode ? MyDarkTheme.colors.text: themeColors.primary_color}
+                                   
                                 }
                                 source={imagePath.whiteFilledHeart}
                               />
                             ) : (
                               <Image
                                 style={
-                                  isDarkMode
-                                    ? {tintColor: MyDarkTheme.colors.text}
-                                    : {tintColor: colors.white}
+                                  {tintColor:isDarkMode ? MyDarkTheme.colors.text: themeColors.primary_color}
                                 }
                                 source={imagePath.heart2}
                               />
@@ -810,9 +807,7 @@ export default function ProductDetail({route, navigation}) {
                   )}
                 </View>
 
-                {((!!productTotalQuantity && !!productTotalQuantity != 0) ||
-                  (!!typeId && typeId == 8) ||
-                  !!productDetailData?.sell_when_out_of_stock) && (
+                {productTotalQuantity == 0 && !!typeId && typeId !== 8 && (
                   <View style={{justifyContent: 'center'}}>
                     <Text
                       style={

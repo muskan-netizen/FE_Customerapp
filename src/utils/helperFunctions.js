@@ -9,6 +9,7 @@ import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import * as NavigationService from '../navigation/NavigationService';
 import Toast from 'react-native-simple-toast';
+import {StatusBarHeight} from '../styles/responsiveSize';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {

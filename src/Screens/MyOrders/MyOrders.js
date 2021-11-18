@@ -134,21 +134,21 @@ export default function MyOrders({ navigation }) {
     },
     isFocused ? 3000 : null,
   );
-  useEffect(() => {
-    const focus = navigation.addListener('focus', () => {
-      if (userData && userData?.auth_token) {
-        _getListOfOrders();
-      } else {
-        updateState({
-          isLoading: false,
-        });
-      }
-    });
-    const blur = navigation.addListener('blur', () => {
-      updateState({ orders: [] });
-    });
-    return focus, blur;
-  }, []);
+  // useEffect(() => {
+  //   const focus = navigation.addListener('focus', () => {
+  //     if (userData && userData?.auth_token) {
+  //       _getListOfOrders();
+  //     } else {
+  //       updateState({
+  //         isLoading: false,
+  //       });
+  //     }
+  //   });
+  //   const blur = navigation.addListener('blur', () => {
+  //     updateState({ orders: [] });
+  //   });
+  //   return focus, blur;
+  // }, []);
   // useFocusEffect(
   //   React.useCallback(() => {
   //     if (userData && userData?.auth_token) {
@@ -256,6 +256,7 @@ export default function MyOrders({ navigation }) {
       navigation.navigate(navigationStrings.ORDER_DETAIL, {
         orderId: item?.order_id,
         fromVendorApp: true,
+        orderDetail: item,
         orderStatus: item?.order_status,
         selectedVendor: { id: item?.vendor_id },
         showRating: item?.order_status?.current_status?.id != 6 ? false : true,
@@ -563,7 +564,10 @@ export default function MyOrders({ navigation }) {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <NoDataFound isLoading={state.isLoading} />
+              <NoDataFound
+                isLoading={state.isLoading}
+                text={businessType === 4 ? strings.NO_RIDE_FOUND : strings.NODATAFOUND}
+              />
             </View>
           )
         }

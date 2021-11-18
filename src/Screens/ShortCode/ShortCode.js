@@ -21,6 +21,10 @@ import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {showError} from '../../utils/helperFunctions';
 import {getItem} from '../../utils/utils';
 import styles from './styles';
+import RNFetchBlob from 'rn-fetch-blob-v2';
+import {MaterialIndicator} from 'react-native-indicators';
+
+const fs = RNFetchBlob.fs;
 
 export default function ShortCode({route, navigation}) {
   const shortCodeParam = route?.params?.shortCodeParam;
@@ -675,6 +679,7 @@ export default function ShortCode({route, navigation}) {
         case appIds.zest:
           updateState({
             shortCode: shortCodes.zest,
+            isShortcodePrefilled: true,
           });
           break;
         case appIds.gokab:
@@ -930,6 +935,61 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.bezalio:
+          updateState({
+            shortCode: shortCodes.bezalio,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.youchillax:
+          updateState({
+            shortCode: shortCodes.youchillax,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.instashop:
+          updateState({
+            shortCode: shortCodes.instashop,
+            isShortcodePrefilled: true,
+          });
+          s;
+          break;
+        case appIds.shoorafresh:
+          updateState({
+            shortCode: shortCodes.shoorafresh,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.click2deliver:
+          updateState({
+            shortCode: shortCodes.click2deliver,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.trucktirenow:
+          updateState({
+            shortCode: shortCodes.trucktirenow,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.yeboy:
+          updateState({
+            shortCode: shortCodes.yeboy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kel360:
+          updateState({
+            shortCode: shortCodes.kel360,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.moboserrandsservice:
+          updateState({
+            shortCode: shortCodes.moboserrandsservice,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -958,12 +1018,15 @@ export default function ShortCode({route, navigation}) {
     }, 1000);
   };
 
-  const initApiHit = () => {
+  const initApiHit = async () => {
+    const res = await getItem('setPrimaryLanguage');
+
     let header = {};
-    if (languages?.primary_language?.id) {
+
+    if (!!res?.primary_language?.id) {
       header = {
         code: shortCode,
-        language: languages?.primary_language?.id,
+        language: res?.primary_language?.id,
       };
     } else {
       header = {
@@ -1063,6 +1126,17 @@ export default function ShortCode({route, navigation}) {
     }
   }, [shortCode, isLoading]);
 
+  // let image = ''
+  // if (Platform.OS === 'android') {
+  //   image = require('../../../android/app/src/CareWorks/res/drawable-xxxhdpi/splash.png')
+  // } else {
+  //   image = require('../../../ios/Configs/CareWorks/Images.xcassets/Splash.imageset/ic_splash.png')
+  //   // image = {uri: "file://" + fs.dirs.DocumentDir + '/Splash.png'}
+  //   // image = {uri: "file:///Users/admin/Library/Developer/CoreSimulator/Devices/84EAA354-7A24-49DC-8CDC-8C02976A69B9/data/Containers/Data/Application/FE01C2A0-4CEA-44D5-B2D3-A052319D316E/Documents/Splash.png", scale: 1}
+  //   image = { uri: 'Splash' }
+  //   console.log('checking image >>>>>', image, themeColors)
+  // }
+
   return (
     <WrapperContainer
       statusBarColor={colors.white}
@@ -1070,7 +1144,24 @@ export default function ShortCode({route, navigation}) {
       isLoadingB={isLoading}
       source={loaderOne}>
       {isShortcodePrefilled ? (
-        <View style={{flex: 1}}></View>
+        <View style={{flex: 1}}>
+          <View
+            style={{
+              flex: 1,
+              position: 'absolute',
+              zIndex: 99,
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'rgba(0,0,0,0.5',
+            }}>
+            <View style={{position: 'absolute', bottom: moderateScale(100)}}>
+              <MaterialIndicator size={50} color={colors.greyMedium} />
+            </View>
+          </View>
+          <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
+        </View>
       ) : (
         <View
           style={{

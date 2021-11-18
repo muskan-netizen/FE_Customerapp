@@ -403,15 +403,30 @@ export default function VariantAddons({
                       ? MyDarkTheme.colors.text
                       : colors.textGrey,
                   }}>{`${strings.CHOICE_OF} ${i?.title}`}</Text>
+
                 <Text
                   style={{
                     ...styles.chooseOption,
                     color: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.grayOpacity51,
+                    fontSize: textScale(10),
                   }}>
-                  {strings.PLS_SELECT_ONE}
+                  {`Min ${i?.min_select} and Max ${i?.max_select} Selections allowed`}
                 </Text>
+
+                {!!i.errorShow && (
+                  <Text
+                    style={{
+                      color: colors.redColor,
+                      fontSize: textScale(8),
+                      fontFamily: fontFamily.medium,
+                      textAlign: 'left',
+                    }}>
+                    {`Minimum ${i?.min_select} required`}
+                  </Text>
+                )}
+
                 {i?.setoptions ? checkBoxButtonViewAddons(i) : null}
                 <View
                   style={{
@@ -621,31 +636,76 @@ export default function VariantAddons({
     );
   };
 
+  const checkIfMaxReached = (minVal, Arr) => {
+    const SelectedItems = Arr.filter((el) => el.value);
+    if (SelectedItems.length >= minVal) {
+      return true;
+    }
+    return false;
+  };
+
   const addToCart = (addonSet) => {
     console.log('add on set', addonSet);
     const addon_ids = [];
     const addon_options = [];
+
     addonSet.map((i, inx) => {
-      i.setoptions.map((j, jnx) => {
-        console.log(j, 'J');
-        if (j?.value == true) {
-          addon_ids.push(j?.addon_id);
-          addon_options.push(j?.id);
-        }
-      });
+      const temp = checkIfMaxReached(i.min_select, i.setoptions);
+      console.log('temp value', temp);
+      if (temp) {
+        i.setoptions.map((j, jnx) => {
+          if (j?.value == true) {
+            addon_ids.push(j?.addon_id);
+            addon_options.push(j?.id);
+          }
+        });
+        let CloneArr = addonSet;
+        CloneArr[inx] = {...CloneArr[inx], errorShow: false};
+        updateState({addonSet: CloneArr});
+      } else {
+        let CloneArr = addonSet;
+        CloneArr[inx] = {...CloneArr[inx], errorShow: true};
+        updateState({addonSet: CloneArr});
+      }
     });
-    console.log(addonSet, 'addonSet');
-    let data = {};
-    data['sku'] = productSku;
-    data['quantity'] = productQuantityForCart;
-    data['product_variant_id'] = productVariantId;
-    data['type'] = dine_In_Type;
-    console.log(addon_ids, 'addon_ids');
-    console.log(addon_options, 'addon_options');
-    if (addonSet && addonSet.length) {
-      // console.log(addonSetData, 'addonSetData');
-      data['addon_ids'] = addon_ids;
-      data['addon_options'] = addon_options;
+
+    const checkIsError = addonSet.findIndex((el) => el.errorShow);
+
+    if (checkIsError == -1) {
+      let data = {};
+      data['sku'] = productSku;
+      data['quantity'] = productQuantityForCart;
+      data['product_variant_id'] = productVariantId;
+      data['type'] = dine_In_Type;
+      console.log(addon_ids, 'addon_ids');
+      console.log(addon_options, 'addon_options');
+      if (addonSet && addonSet.length) {
+        // console.log(addonSetData, 'addonSetData');
+        data['addon_ids'] = addon_ids;
+        data['addon_options'] = addon_options;
+      }
+      console.log(data, 'data for cart');
+      updateState({btnLoader: true});
+      actions
+        .addProductsToCart(data, {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        })
+        .then((res) => {
+          actions.cartItemQty(res);
+          showSuccess(strings.PRODUCT_ADDED_SUCCESS);
+          updateState({isLoadingC: false, btnLoader: false});
+          updateCartItems(
+            productdetail,
+            productQuantityForCart,
+            res.data.cart_product_id,
+            res.data.id,
+          );
+          onClose();
+        })
+        .catch((error) => errorMethodSecond(error, addonSet));
     }
     console.log(data, 'data for cart');
     updateState({btnLoader: true});
@@ -1022,99 +1082,100 @@ export default function VariantAddons({
             ) : null}
           </ScrollView>
 
-          {((!showErrorMessageTitle && productTotalQuantity != 0) ||
-            (!!typeId && typeId == 8)) || !!productDetailData?.sell_when_out_of_stock && (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                paddingHorizontal: moderateScale(16),
-                paddingBottom: moderateScaleVertical(16),
-                backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.background
-                  : '#fff',
-              }}>
-              <View style={{flex: 0.25}}>
-                <View
-                  style={{
-                    ...commonStyles.buttonRect,
-                    ...styles.incDecBtnStyle,
-                    backgroundColor: getColorCodeWithOpactiyNumber(
-                      themeColors.primary_color.substr(1),
-                      15,
-                    ),
-                    borderColor: themeColors?.primary_color,
-                    height: moderateScale(38),
-                  }}
-                  // onPress={onPress}
-                >
-                  <TouchableOpacity
-                    onPress={() => productIncrDecreamentForCart(2)}
-                    hitSlop={hitSlopProp}>
-                    <Text
-                      style={{
-                        ...commonStyles.mediumFont14,
-                        color: themeColors?.primary_color,
-                        fontFamily: fontFamily.bold,
-                      }}>
-                      -
-                    </Text>
-                  </TouchableOpacity>
-                  <Text
+          {(!showErrorMessageTitle && productTotalQuantity != 0) ||
+            (!!typeId && typeId == 8) ||
+            (!!productDetailData?.sell_when_out_of_stock && (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  paddingHorizontal: moderateScale(16),
+                  paddingBottom: moderateScaleVertical(16),
+                  backgroundColor: isDarkMode
+                    ? MyDarkTheme.colors.background
+                    : '#fff',
+                }}>
+                <View style={{flex: 0.25}}>
+                  <View
                     style={{
-                      ...commonStyles.mediumFont14,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    {productQuantityForCart}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => productIncrDecreamentForCart(1)}
-                    hitSlop={hitSlopProp}>
+                      ...commonStyles.buttonRect,
+                      ...styles.incDecBtnStyle,
+                      backgroundColor: getColorCodeWithOpactiyNumber(
+                        themeColors.primary_color.substr(1),
+                        15,
+                      ),
+                      borderColor: themeColors?.primary_color,
+                      height: moderateScale(38),
+                    }}
+                    // onPress={onPress}
+                  >
+                    <TouchableOpacity
+                      onPress={() => productIncrDecreamentForCart(2)}
+                      hitSlop={hitSlopProp}>
+                      <Text
+                        style={{
+                          ...commonStyles.mediumFont14,
+                          color: themeColors?.primary_color,
+                          fontFamily: fontFamily.bold,
+                        }}>
+                        -
+                      </Text>
+                    </TouchableOpacity>
                     <Text
                       style={{
                         ...commonStyles.mediumFont14,
-                        color: themeColors?.primary_color,
-                        fontFamily: fontFamily.bold,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
                       }}>
-                      +
+                      {productQuantityForCart}
                     </Text>
-                  </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => productIncrDecreamentForCart(1)}
+                      hitSlop={hitSlopProp}>
+                      <Text
+                        style={{
+                          ...commonStyles.mediumFont14,
+                          color: themeColors?.primary_color,
+                          fontFamily: fontFamily.bold,
+                        }}>
+                        +
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                <View style={{marginHorizontal: 8}} />
+                <View
+                  pointerEvents={btnLoader ? 'none' : 'auto'}
+                  style={{flex: 0.75}}>
+                  <GradientButton
+                    indicator={btnLoader}
+                    indicatorColor={colors.white}
+                    colorsArray={[
+                      themeColors.primary_color,
+                      themeColors.primary_color,
+                    ]}
+                    textStyle={{
+                      fontFamily: fontFamily.medium,
+                      textTransform: 'capitalize',
+                    }}
+                    onPress={() => addToCart(addonSet)}
+                    btnText={`${strings.ADD_ITEM} - ${
+                      currencies?.primary_currency?.symbol
+                    }${(
+                      Number(productPriceData?.multiplier) *
+                      Number(productPriceData?.price)
+                    ).toFixed(2)}`}
+                    btnStyle={{
+                      borderRadius: moderateScale(4),
+                      height: moderateScale(38),
+                    }}
+                  />
                 </View>
               </View>
-
-              <View style={{marginHorizontal: 8}} />
-              <View
-                pointerEvents={btnLoader ? 'none' : 'auto'}
-                style={{flex: 0.75}}>
-                <GradientButton
-                  indicator={btnLoader}
-                  indicatorColor={colors.white}
-                  colorsArray={[
-                    themeColors.primary_color,
-                    themeColors.primary_color,
-                  ]}
-                  textStyle={{
-                    fontFamily: fontFamily.medium,
-                    textTransform: 'capitalize',
-                  }}
-                  onPress={() => addToCart(addonSet)}
-                  btnText={`${strings.ADD_ITEM} - ${
-                    currencies?.primary_currency?.symbol
-                  }${(
-                    Number(productPriceData?.multiplier) *
-                    Number(productPriceData?.price)
-                  ).toFixed(2)}`}
-                  btnStyle={{
-                    borderRadius: moderateScale(4),
-                    height: moderateScale(38),
-                  }}
-                />
-              </View>
-            </View>
-          )}
+            ))}
         </Animatable.View>
       )}
     </Modal>

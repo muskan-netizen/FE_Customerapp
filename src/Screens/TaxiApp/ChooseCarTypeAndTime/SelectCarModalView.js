@@ -315,6 +315,7 @@ export default function SelectCarModalView({
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     marginHorizontal: 20,
+                    marginBottom: moderateScaleVertical(24)
                   }}>
                   <GradientButton
                     // endcolor={{x: 0.0, y: 0.25}}
@@ -339,7 +340,7 @@ export default function SelectCarModalView({
                     }
                     btnText={
                       selectedCarOption?.variant[0]?.price > 0
-                        ? strings.BOOK_NOW
+                        ? strings.CONFIRM
                         : strings.NORIDEAVAILABLE
                     }
                     containerStyle={{flex: 1}}
@@ -367,6 +368,7 @@ export default function SelectCarModalView({
             else return <></>;
           }}
         />
+
         {/* </ScrollView> */}
       </View>
     </View>

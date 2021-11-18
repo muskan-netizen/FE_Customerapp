@@ -141,6 +141,15 @@ const shortCodes = {
   dishefs: '4c13fd',
   bilionza: '9a8793',
   doleypharmacy: 'e925ef',
+  bezalio: 'c1ab2b',
+  youchillax: 'a2c90d',
+  instashop: 'cb6671',
+  shoorafresh: 'bd4fe8',
+  click2deliver: '6483c6',
+  trucktirenow: '82c016',
+  kel360: '9087f6',
+  yeboy: 'e4ec39',
+  moboserrandsservice: '3d2e75',
 };
 
 const appIds = {
@@ -305,8 +314,8 @@ const appIds = {
     android: 'com.travo',
   }),
   cabdelivr: Platform.select({
-    ios: 'com.cabdelivr',
-    android: 'com.cabdelivr',
+    ios: 'com.app.cabdelivr',
+    android: 'com.app.cabdelivr',
   }),
   drus: Platform.select({
     ios: 'com.drus.customer',
@@ -703,6 +712,42 @@ const appIds = {
   doleypharmacy: Platform.select({
     ios: 'com.doleypharmacy',
     android: 'com.doleypharmacy',
+  }),
+  bezalio: Platform.select({
+    ios: 'com.bezalio',
+    android: 'com.bezalio',
+  }),
+  youchillax: Platform.select({
+    ios: 'com.youchillax',
+    android: 'com.youchillax',
+  }),
+  instashop: Platform.select({
+    ios: 'com.customer.instashop',
+    android: 'com.instashop',
+  }),
+  shoorafresh: Platform.select({
+    ios: 'com.shoorafresh',
+    android: 'com.shoorafresh',
+  }),
+  click2deliver: Platform.select({
+    ios: 'com.click2deliver',
+    android: 'com.click2deliver',
+  }),
+  trucktirenow: Platform.select({
+    ios: 'com.trucktirenow',
+    android: 'com.trucktirenow',
+  }),
+  yeboy: Platform.select({
+    ios: 'com.yeboy',
+    android: 'com.yeboy',
+  }),
+  kel360: Platform.select({
+    ios: 'com.kel',
+    android: 'com.kel',
+  }),
+  moboserrandsservice: Platform.select({
+    ios: 'com.moboserrandsservice',
+    android: 'com.moboserrandsservice',
   }),
 };
 

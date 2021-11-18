@@ -59,6 +59,7 @@ export default ({fontFamily, themeColors}) => {
     bottomContainer: {
       justifyContent: 'flex-end',
       marginBottom: moderateScaleVertical(30),
+      marginTop: moderateScaleVertical(15),
     },
     guestBtn: {
       marginTop: moderateScaleVertical(20),

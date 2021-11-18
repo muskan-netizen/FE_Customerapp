@@ -619,7 +619,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.cabdelivr'
+            applicationId 'com.app.cabdelivr'
             resValue "string", "app_name", "Cabdelivr"
             resValue "string", "host_name", ""
          }
@@ -1624,6 +1624,97 @@ android {
             resValue "string", "app_name", "Doley Pharmacy"
             resValue "string", "host_name", ""
          }
+          bezalio{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.bezalio'
+            resValue "string", "app_name", "Bezalio"
+            resValue "string", "host_name", ""
+         }
+         youchillax{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.youchillax'
+            resValue "string", "app_name", "YouChillax"
+            resValue "string", "host_name", ""
+         }
+          instashop{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.instashop'
+            resValue "string", "app_name", "InstaShop"
+            resValue "string", "host_name", ""
+         }
+         shoorafresh{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.shoorafresh'
+            resValue "string", "app_name", "Shoora Fresh"
+            resValue "string", "host_name", ""
+         }
+          click2deliver{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.click2deliver'
+            resValue "string", "app_name", "Click2Deliver"
+            resValue "string", "host_name", ""
+         }
+      trucktirenow{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.trucktirenow'
+            resValue "string", "app_name", "TruckTireNow"
+            resValue "string", "host_name", ""
+         }
+         yeboy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.yeboy'
+            resValue "string", "app_name", "Yeboy"
+            resValue "string", "host_name", ""
+         }
+         kel360{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.kel'
+            resValue "string", "app_name", "360kel"
+            resValue "string", "host_name", ""
+         }
+          moboserrandsservice{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.moboserrandsservice'
+            resValue "string", "app_name", "MobosErrandsService"
+            resValue "string", "host_name", ""
+         }
+        
     }
 }
 

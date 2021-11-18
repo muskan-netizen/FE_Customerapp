@@ -269,6 +269,7 @@ export default {
   REVENUE: 'Oran Sıralaması',
   RATEORDER: 'DEĞERLENDİRİCİ',
   UPLOAD_IMAGE: 'Resim Yükle',
+  CHANGE_IMAGE: 'Change Image',
   REVIEW: 'İnceleme yaz',
   ENTERREFERALCODE: 'Referans kodunu girin',
   SENDREFFERAL: ' Tavsiye Gönder',
@@ -600,5 +601,10 @@ export default {
   COMMENTFORVENDOR:"Comment for Vendor",
   PLACEHOLDERCOMMENTFORPICKUPDRIVER:"Please reach before time if possible",
   PLACEHOLDERCOMMENTFORDROPUPDRIVER:"Do call me before drop off",
-  PLACEHOLDERCOMMENTFORVENDOR:"Please do the whites separately"
+  PLACEHOLDERCOMMENTFORVENDOR:"Please do the whites separately",
+  TAP_HERE_ADD_ADDRESS: 'Tap here to add address',
+  NO_RIDE_FOUND:"No Ride Founds",
+  SELECT_LOCATION:"Select Locations",
+  NEARBY_LOCATION:"Nearby Locations",
+  SEARCHED_RESULTS:"Searched Results",
 };

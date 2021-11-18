@@ -3,18 +3,21 @@ import React from 'react';
 import {
   Image,
   ImageBackground,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
 import {dummyUser} from '../constants/constants';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import staticStrings from '../constants/staticStrings';
 import navigationStrings from '../navigation/navigationStrings';
+import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {
@@ -23,13 +26,11 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
+import {MyDarkTheme} from '../styles/theme';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
-import { StartPrinting } from '../Screens/PrinterConnection/PrinteFunc';
 
 export default function OrderCardVendorComponent({
   data = {},
@@ -40,12 +41,13 @@ export default function OrderCardVendorComponent({
   onPressRateOrder,
   updateOrderStatus,
   onPressReturnOrder,
+  isBleDevice = false,
 }) {
   let cardWidth = width - 21.5;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-
+  console.log(data, 'datata');
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
@@ -321,7 +323,7 @@ export default function OrderCardVendorComponent({
             {selectedTab &&
             (selectedTab != strings.ACTIVE_ORDERS ||
               selectedTab != strings.SCHEDULED_ORDERS) ? null : (
-              <View style={styles.bottomSecondHalf}>
+              <View style={[styles.bottomSecondHalf, {flex: 1.4}]}>
                 {data?.order_status?.current_status?.id == 1 ? (
                   <View style={{flexDirection: 'row'}}>
                     <TouchableOpacity
@@ -339,49 +341,74 @@ export default function OrderCardVendorComponent({
                         {strings.ACCEPT}
                       </Text>
                     </TouchableOpacity>
-                  </View>
-                ) : (
-                  data?.order_status?.upcoming_status &&
-                  !!(
-                    data?.order_status?.current_status !== 3 &&
-                    data?.order_status?.current_status !== 6
-                  ) ? (
-                    <>
-                      <View style={{flexDirection: 'row'}}>
-                        <TouchableOpacity
-                          onPress={() => updateOrderStatus(data, 3)}
-                          style={styles.orderReject}>
-                          <Text style={styles.orderStatusStyleSecond}>
-                            {strings.REJECT}
-                          </Text>
-                        </TouchableOpacity>
+
+                    {!!(Platform.OS === 'android' && isBleDevice) && (
+                      <>
                         <View style={{width: moderateScale(10)}} />
+
                         <TouchableOpacity
-                          onPress={() =>
-                            updateOrderStatus(
-                              data,
-                              data?.order_status?.upcoming_status?.id,
-                            )
-                          }
-                          style={styles.orderAcceptAndReadyStyleSecond}>
-                          <Text style={styles.orderStatusStyleSecond}>
-                            {data?.order_status?.upcoming_status?.title}
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    </>
-                  )
-                  : (
-                    <>
-                      <View style={{flexDirection: 'row'}}>
-                        <TouchableOpacity
-                          onPress={() => StartPrinting({ id: data?.id })}
+                          onPress={() => StartPrinting({id: data?.id})}
                           style={styles.orderPrint}>
                           <Text style={styles.orderStatusStyleSecond}>
                             {strings.PRINT}
                           </Text>
-                        </TouchableOpacity>                        
-                      </View>
+                        </TouchableOpacity>
+                      </>
+                    )}
+                  </View>
+                ) : data?.order_status?.upcoming_status &&
+                  !!(
+                    data?.order_status?.current_status !== 3 &&
+                    data?.order_status?.current_status !== 6
+                  ) ? (
+                  <>
+                    <View style={{flexDirection: 'row'}}>
+                      <TouchableOpacity
+                        onPress={() => updateOrderStatus(data, 3)}
+                        style={styles.orderReject}>
+                        <Text style={styles.orderStatusStyleSecond}>
+                          {strings.REJECT}
+                        </Text>
+                      </TouchableOpacity>
+                      <View style={{width: moderateScale(10)}} />
+                      <TouchableOpacity
+                        onPress={() =>
+                          updateOrderStatus(
+                            data,
+                            data?.order_status?.upcoming_status?.id,
+                          )
+                        }
+                        style={styles.orderAcceptAndReadyStyleSecond}>
+                        <Text style={styles.orderStatusStyleSecond}>
+                          {data?.order_status?.upcoming_status?.title}
+                        </Text>
+                      </TouchableOpacity>
+
+                      {!!(Platform.OS === 'android' && isBleDevice) && (
+                        <>
+                          <View style={{width: moderateScale(10)}} />
+                          <TouchableOpacity
+                            onPress={() => StartPrinting({id: data?.id})}
+                            style={styles.orderPrint}>
+                            <Text style={styles.orderStatusStyleSecond}>
+                              {strings.PRINT}
+                            </Text>
+                          </TouchableOpacity>
+                        </>
+                      )}
+                    </View>
+                  </>
+                ) : (
+                  !!(Platform.OS === 'android' && isBleDevice) && (
+                    <>
+                      <View style={{width: moderateScale(10)}} />
+                      <TouchableOpacity
+                        onPress={() => StartPrinting({id: data?.id})}
+                        style={styles.orderPrint}>
+                        <Text style={styles.orderStatusStyleSecond}>
+                          {strings.PRINT}
+                        </Text>
+                      </TouchableOpacity>
                     </>
                   )
                 )}
@@ -467,6 +494,7 @@ export function stylesFunc({fontFamily, themeColors}) {
       color: colors.white,
       fontFamily: fontFamily.medium,
       fontSize: textScale(10),
+      textAlign: 'center',
     },
     orderAcceptAndReadyStyle: {
       backgroundColor: themeColors.primary_color,

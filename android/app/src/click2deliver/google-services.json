@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "896798245087",
+    "project_id": "click2deliver-ef20b",
+    "storage_bucket": "click2deliver-ef20b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:896798245087:android:1f0215de06474aa14ca96a",
+        "android_client_info": {
+          "package_name": "com.click2deliver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "896798245087-ea80bc52b8f3gj26dc9n9t3ejlic58u5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.click2deliver",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "896798245087-j0cc3aqn4cduqpv5eki1dbpv7on2a9mm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.click2deliver",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "896798245087-sbdfr2e0r2nvfhb9d47ng6t9q35uso2u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.click2deliver",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "896798245087-1r6p93l4pku5a4mpel6p1e7fbucdtgg2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxE6wumv0I1fLyHQ2CZ4PpxarqvP-UxrE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "896798245087-1r6p93l4pku5a4mpel6p1e7fbucdtgg2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "896798245087-22kiqlq6k3s9d89ap2gc6d1ubt1trn24.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.click2deliver"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

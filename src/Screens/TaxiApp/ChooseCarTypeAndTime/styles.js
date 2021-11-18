@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import store from '../../../redux/store';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
@@ -11,10 +11,10 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {getColorCodeWithOpactiyNumber} from '../../../utils/helperFunctions';
+import { getColorCodeWithOpactiyNumber } from '../../../utils/helperFunctions';
 
-export default ({fontFamily, themeColors}) => {
-  const commonStyles = commonStylesFun({fontFamily});
+export default ({ fontFamily, themeColors }) => {
+  const commonStyles = commonStylesFun({ fontFamily });
   const styles = StyleSheet.create({
     titleAbout: {
       ...commonStyles.futuraBtHeavyFont14,
@@ -27,7 +27,7 @@ export default ({fontFamily, themeColors}) => {
       //   themeColors.primary_color.substr(1),
       //   20,
       // ),
-      paddingVertical: moderateScaleVertical(15),
+      paddingVertical: moderateScaleVertical(10),
       paddingHorizontal: moderateScaleVertical(10),
       marginVertical: moderateScaleVertical(10),
       flexDirection: 'row',
@@ -187,18 +187,18 @@ export default ({fontFamily, themeColors}) => {
     plainView: {
       alignItems: 'center',
       justifyContent: 'center',
-      width: moderateScale(100),
-
       backgroundColor: colors.textGreyLight,
-
-      left: 20,
-      height: moderateScaleVertical(30),
+      // left: 20,
+      borderRadius: moderateScale(4),
+      paddingVertical: moderateScale(2),
+      paddingHorizontal: moderateScale(4),
     },
     pickupDropOff: {
       textAlign: 'center',
+      alignItems: 'center',
       color: colors.white,
       fontFamily: fontFamily.bold,
-      fontSize: textScale(12),
+      fontSize: textScale(10),
     },
     pickupDropOffAddress: {
       textAlign: 'left',
