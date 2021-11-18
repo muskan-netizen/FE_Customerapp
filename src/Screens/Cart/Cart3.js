@@ -675,84 +675,11 @@ export default function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        actions.cartItemQty({});
         updateState({
           cartItems: [],
           cartData: {},
           isLoadingB: false,
           placeLoader: false,
-        });
-        checkPaymentOptions(res);
-        // if (
-        //   (res?.data?.payment_option_id === 6 &&
-        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
-        //   Number(selectedTipAmount) !== 0
-        // ) {
-        // navigation.navigate(navigationStrings.PAYFAST, {
-        //   selectedPayment: selectedPayment,
-        //   total_payable_amount: (
-        //     Number(cartData?.total_payable_amount) +
-        //     (selectedTipAmount != null && selectedTipAmount != ''
-        //       ? Number(selectedTipAmount)
-        //       : 0)
-        //   ).toFixed(2),
-
-        //   payment_option_id: selectedPayment?.id,
-        //   orderDetail: res.data,
-        // });
-        // } else if (
-        //   (res?.data?.payment_option_id === 7 &&
-        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
-        //   Number(selectedTipAmount) !== 0
-        // ) {
-        // navigation.navigate(navigationStrings.MOBBEX, {
-        //   selectedPayment: selectedPayment,
-        //   total_payable_amount: (
-        //     Number(cartData?.total_payable_amount) +
-        //     (selectedTipAmount != null && selectedTipAmount != ''
-        //       ? Number(selectedTipAmount)
-        //       : 0)
-        //   ).toFixed(2),
-
-        //   payment_option_id: selectedPayment?.id,
-        //   orderDetail: res.data,
-        // });
-        // } else if (
-        //   (res?.data?.payment_option_id === 8 &&
-        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
-        //   Number(selectedTipAmount) !== 0
-        // ) {
-        // navigation.navigate(navigationStrings.YOCO, {
-        //   selectedPayment: selectedPayment,
-        //   total_payable_amount: (
-        //     Number(cartData?.total_payable_amount) +
-        //     (selectedTipAmount != null && selectedTipAmount != ''
-        //       ? Number(selectedTipAmount)
-        //       : 0)
-        //   ).toFixed(2),
-
-        //   payment_option_id: selectedPayment?.id,
-        //   orderDetail: res.data,
-        // });
-        // } else if (
-        //   (res?.data?.payment_option_id === 9 &&
-        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
-        //   Number(selectedTipAmount) !== 0
-        // ) {
-        // navigation.navigate(navigationStrings.PAYLINK, {
-        //   selectedPayment: selectedPayment,
-        //   total_payable_amount: (
-        //     Number(cartData?.total_payable_amount) +
-        //     (selectedTipAmount != null && selectedTipAmount != ''
-        //       ? Number(selectedTipAmount)
-        //       : 0)
-        //   ).toFixed(2),
-        //   payment_option_id: selectedPayment?.id,
-        //   orderDetail: res.data,
-        // });
-        // } else {
-        // }
-        updateState({
           pickupDriverComment: null,
           dropOffDriverComment: null,
           vendorComment: null,
@@ -762,6 +689,8 @@ export default function Cart({navigation, route}) {
           sheduledpickupdate: null,
           sheduleddropoffdate: null,
         });
+        actions.cartItemQty({});
+        checkPaymentOptions(res);
         showSuccess(res?.message);
       })
       .catch(errorMethod);
@@ -840,6 +769,7 @@ export default function Cart({navigation, route}) {
         scheduleType != 'now' && sheduledorderdate
           ? new Date(sheduledorderdate).toISOString()
           : null;
+      data['comment_for_vendor'] = instruction;
     }
 
     console.log(data, 'setDateAndTimeSchedule>>>DATA');
@@ -936,11 +866,10 @@ export default function Cart({navigation, route}) {
                 !!userData?.verify_details?.is_email_verified &&
                 !!userData?.verify_details?.is_phone_verified
               ) {
-                if (businessType == 'laundry') {
-                  setDateAndTimeSchedule(true);
-                } else {
+                setDateAndTimeSchedule(true);
+                setTimeout(() => {
                   _finalPayment();
-                }
+                }, 500);
               } else {
                 moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
                   formCart: true,
@@ -954,22 +883,20 @@ export default function Cart({navigation, route}) {
                 !!userData?.verify_details?.is_email_verified ||
                 !!userData?.verify_details?.is_phone_verified
               ) {
-                if (businessType == 'laundry') {
-                  setDateAndTimeSchedule(true);
-                } else {
+                setDateAndTimeSchedule(true);
+                setTimeout(() => {
                   _finalPayment();
-                }
+                }, 500);
               } else {
                 moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
                   formCart: true,
                 })();
               }
             } else {
-              if (businessType == 'laundry') {
-                setDateAndTimeSchedule(true);
-              } else {
+              setDateAndTimeSchedule(true);
+              setTimeout(() => {
                 _finalPayment();
-              }
+              }, 500);
             }
           }
           // !!userData?.client_preference?.verify_email ||
