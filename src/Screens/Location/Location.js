@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import Geocoder from 'react-native-geocoding';
 import {useSelector} from 'react-redux';
 import GooglePlaceInput from '../../Components/GooglePlaceInput';
@@ -9,13 +10,11 @@ import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import colors from '../../styles/colors';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {chekLocationPermission} from '../../utils/permissions';
-import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
 import {moderateScale} from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
 import {getCurrentLocation} from '../../utils/helperFunctions';
+import {checkLocationPermission} from '../../utils/permissions';
+import stylesFun from './styles';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -58,7 +57,7 @@ export default function Location({route, navigation}) {
 
   //Get Your current location
   const getCurrentLocate = () => {
-    chekLocationPermission()
+    checkLocationPermission()
       .then((result) => {
         if (result !== 'goback') {
           getCurrentPosition();
@@ -183,7 +182,7 @@ export default function Location({route, navigation}) {
                   height: moderateScale(16),
                   width: moderateScale(16),
                 }}
-                source={imagePath.icLocation1}
+                source={imagePath.redLocation}
                 resizeMode="contain"
               />
               <Text

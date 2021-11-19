@@ -3526,7 +3526,10 @@ export default function Cart({navigation, route}) {
       )}
       <ChooseAddressModal
         isVisible={isVisible}
-        onClose={() => setModalVisible(false)}
+        onClose={() => {
+          updateState({placeLoader: false});
+          setModalVisible(false);
+        }}
         openAddressModal={() =>
           setModalVisibleForAddessModal(true, 'addAddress')
         }

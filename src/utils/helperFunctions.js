@@ -11,6 +11,7 @@ import * as NavigationService from '../navigation/NavigationService';
 import Toast from 'react-native-simple-toast';
 import {StatusBarHeight} from '../styles/responsiveSize';
 import {getDistance} from 'geolib';
+import {min} from 'moment';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -338,9 +339,7 @@ const timeInLocalLangauge = (value, selectedLanguage) => {
 };
 
 const getNearestLocation = (currentLocation, savedLocations) => {
-  const lowest = 0;
-  const latLongDis = [];
-  savedLocations.map((item, indx) => {
+  const points = savedLocations.map((item, indx) => {
     const distance = getDistance(
       {
         latitude: currentLocation?.latitude,
@@ -348,7 +347,24 @@ const getNearestLocation = (currentLocation, savedLocations) => {
       },
       {latitude: item?.latitude, longitude: item?.longitude},
     );
+    var latLongPoints = Object.assign({}, indx);
+    latLongPoints.distance = distance;
+    latLongPoints.latitude = parseFloat(item.latitude);
+    latLongPoints.longitude = parseFloat(item.longitude);
+    latLongPoints.address = item.address;
+    return latLongPoints;
   });
+  console.log(points, 'pointspoints');
+
+  const minDistance = Math.min.apply(
+    null,
+    points.map(function (item) {
+      return item.distance;
+    }),
+  );
+
+  const nearestAddress = points.find((x) => x.distance === minDistance);
+  return nearestAddress;
 };
 
 const checkEvenOdd = (num) => {

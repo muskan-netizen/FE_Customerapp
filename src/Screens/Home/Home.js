@@ -20,7 +20,7 @@ import {
   getNearestLocation,
   showError,
 } from '../../utils/helperFunctions';
-import {chekLocationPermission} from '../../utils/permissions';
+import {checkLocationPermission} from '../../utils/permissions';
 import {
   DashBoardFive,
   DashBoardFour,
@@ -30,7 +30,6 @@ import {
   DashBoardOne,
   DashBoardSix,
 } from './DashboardViews/Index';
-import {getDistance} from 'geolib';
 
 // navigator.geolocation = require('react-native-geolocation-service');
 
@@ -68,6 +67,7 @@ export default function Home({route, navigation}) {
     isDineInSelected: false,
     pageActive: 1,
     currentLocation: '',
+    saveAllUserAddress,
   });
 
   const {
@@ -77,6 +77,7 @@ export default function Home({route, navigation}) {
     selectedTabType,
     pageActive,
     currentLocation,
+    saveAllUserAddress,
   } = state;
 
   const {profile} = appData;
@@ -91,18 +92,7 @@ export default function Home({route, navigation}) {
   );
 
   useEffect(() => {
-    console.log(
-      getDistance(
-        {latitude: 51.5103, longitude: 7.49347},
-        {latitude: 51.52, longitude: 7.48},
-      ),
-      'distanceBetweenTwo',
-    );
-  }, []);
-
-  useEffect(() => {
     updateState({updatedData: appMainData?.categories});
-    console.log(appMainData, 'appMainData');
   }, [appMainData]);
 
   useEffect(() => {
@@ -163,6 +153,7 @@ export default function Home({route, navigation}) {
 
   const updateLatLang = (res) => {
     updateState({updateTime: Math.random()});
+    console.log();
     actions.locationData(res);
   };
   useEffect(() => {
@@ -174,23 +165,13 @@ export default function Home({route, navigation}) {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
 
-  console.log(appData?.profile?.preferences?.is_hyperlocal, 'locationlocation');
-  console.log(location, 'locationlocationlocation');
-
   useEffect(() => {
-    chekLocationPermission()
+    checkLocationPermission()
       .then((result) => {
         if (result !== 'goback') {
           getCurrentLocation('home')
             .then((res) => {
-              console.log(
-                'chekLocationPermission',
-                res,
-                'allAddresss',
-                allAddresss,
-              );
-              getNearestLocation(res, allAddresss);
-
+              console.log(res, 'userCurrentLocation');
               if (
                 appMainData &&
                 typeof appMainData?.reqData == 'object' &&
@@ -205,8 +186,14 @@ export default function Home({route, navigation}) {
                 actions.locationData(data);
               } else {
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
-                  actions.locationData(res);
-                  return;
+                  if (!!userData?.auth_token && !paramData?.details) {
+                    const nearAddress = getNearestLocation(
+                      res,
+                      saveAllUserAddress,
+                    );
+                    actions.locationData(nearAddress);
+                    return;
+                  }
                 }
               }
             })
@@ -214,7 +201,7 @@ export default function Home({route, navigation}) {
         }
       })
       .catch((error) => console.log('error while accessing location', error));
-  }, [isRefreshing]);
+  }, [isRefreshing, userData?.auth_token, saveAllUserAddress]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -245,6 +232,7 @@ export default function Home({route, navigation}) {
           });
           if (res.data) {
             actions.saveAllUserAddress(res.data);
+            updateState({saveAllUserAddress: res?.data});
           }
         })
         .catch(errorMethod);
@@ -539,7 +527,7 @@ export default function Home({route, navigation}) {
 
   useEffect(() => {
     homeData();
-  }, [selectedTabType, appData, dineInType]);
+  }, [selectedTabType, appData, dineInType, location]);
 
   ///onPressCategory2
   const onPressCategory2 = (data) => {
