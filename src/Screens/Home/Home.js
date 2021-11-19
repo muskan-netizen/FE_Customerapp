@@ -427,6 +427,11 @@ export default function Home({route, navigation}) {
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
+  useEffect(() => {
+    if (!saveAllUserAddress) {
+      homeData();
+    }
+  }, [location]);
 
   //On Press banner
   const bannerPress = (data) => {
@@ -528,6 +533,7 @@ export default function Home({route, navigation}) {
   useEffect(() => {
     homeData();
   }, [selectedTabType, appData, dineInType, location]);
+  // location
 
   ///onPressCategory2
   const onPressCategory2 = (data) => {
