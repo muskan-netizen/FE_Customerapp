@@ -315,7 +315,6 @@
     "blacnetworkRelease": "cd android && ./gradlew assembleBlacNetworkRelease",
     "threadagainRelease": "cd android && ./gradlew assembleThreadAgainRelease",
     "ezmobilefuelRelease": "cd android && ./gradlew assembleEzMobileFuelRelease",
-  
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
