@@ -381,22 +381,26 @@ export default function TaxiHomeDashbord({
 
   const moveToScreen = (details) => {
     updateState({ fullMapShow: false })
-    let prefillAdress = null
-    if (!!details) {
-      prefillAdress = {
-        longitude: Number(details?.longitude),
-        latitude: Number(details?.latitude),
-        address: details?.address,
-        task_type_id: 1,
-        pre_address: details?.address
+    if (!!userData?.auth_token) {
+      let prefillAdress = null
+      if (!!details) {
+        prefillAdress = {
+          longitude: Number(details?.longitude),
+          latitude: Number(details?.latitude),
+          address: details?.address,
+          task_type_id: 1,
+          pre_address: details?.address
+        }
       }
+      navigation.navigate(navigationStrings.ADDADDRESS, {
+        cat: appMainData?.categories[0],
+        datetime: { slectedDate, selectedTime },
+        pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
+        prefillAdress: !!prefillAdress ? prefillAdress : null
+      })
+    } else {
+      navigation.navigate(navigationStrings.LOGIN)
     }
-    navigation.navigate(navigationStrings.ADDADDRESS, {
-      cat: appMainData?.categories[0],
-      datetime: { slectedDate, selectedTime },
-      pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
-      prefillAdress: !!prefillAdress ? prefillAdress : null
-    })
   }
 
   const addressView = (image) => {
