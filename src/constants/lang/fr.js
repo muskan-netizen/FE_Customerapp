@@ -166,7 +166,7 @@ export default {
   DESCRIPTION: 'Description',
   BRANDS: 'Marques',
   CELEBRITIES: 'Personnalités',
-  CASH_ON_DELIVERY: 'Payer à la li vraison',
+  CASH_ON_DELIVERY: 'Payer à la livraison',
   SELECT_PAYMENT_METHOD: 'Sélectionner le paiement',
   CLEAR: 'CLAIR',
   SEARCH_PRODUCT_VENDOR_ITEM: 'Rechercher un produit, un restaurant, …',
