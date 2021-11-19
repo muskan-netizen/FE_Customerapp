@@ -150,6 +150,13 @@ const shortCodes = {
   kel360: '9087f6',
   yeboy: 'e4ec39',
   moboserrandsservice: '3d2e75',
+  cabway: '7c4e0b',
+  tajammul: '7c4e0b',
+  carroai: '0d6852',
+  ssuum: 'b3cc0b',
+  blacnetwork: 'e51092',
+  threadagain: 'a4543c',
+  ezmobilefuel: 'a024bd',
 };
 
 const appIds = {
@@ -748,6 +755,34 @@ const appIds = {
   moboserrandsservice: Platform.select({
     ios: 'com.moboserrandsservice',
     android: 'com.moboserrandsservice',
+  }),
+  cabway: Platform.select({
+    ios: 'com.cabway',
+    android: 'com.cabway',
+  }),
+  tajammul: Platform.select({
+    ios: 'com.tajammul',
+    android: 'com.tajammul',
+  }),
+  carroai: Platform.select({
+    ios: 'com.carroai',
+    android: 'com.carroai',
+  }),
+  ssuum: Platform.select({
+    ios: 'com.ssuum',
+    android: 'com.ssuum',
+  }),
+  blacnetwork: Platform.select({
+    ios: 'com.blacnetwork',
+    android: 'com.blacnetwork',
+  }),
+  threadagain: Platform.select({
+    ios: 'com.threadagain',
+    android: 'com.threadagain',
+  }),
+  ezmobilefuel: Platform.select({
+    ios: 'com.ezmobilefuel',
+    android: 'com.ezmobilefuel',
   }),
 };
 

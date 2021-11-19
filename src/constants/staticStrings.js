@@ -16,4 +16,5 @@ export default {
   RETURNREQUEST: 'Return Request',
   ONDEMANDSERVICE: 'On Demand Service',
   VIEW_ALL_VENDORS: 'veiwAllVendors',
+  LAUNDRY:"Laundry"
 };

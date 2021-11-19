@@ -85,7 +85,7 @@ export const locationPermission = () =>
     }
   });
 
-export const chekLocationPermission = () =>
+export const checkLocationPermission = () =>
   new Promise(async (resolve, reject) => {
     try {
       check(

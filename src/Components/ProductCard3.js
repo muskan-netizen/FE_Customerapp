@@ -236,7 +236,7 @@ export default function ProductCard3({
             </View>
           </Animatable.View>
 
-          {!!data?.variant[0]?.quantity || (!!typeId && typeId == 8) ? (
+          {!!data?.variant[0]?.quantity || (!!typeId && typeId == 8) ||  !!data?.sell_when_out_of_stock? (
             <View
               style={{
                 marginTop:

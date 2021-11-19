@@ -387,5 +387,6 @@ export default {
   settings_icon: require('../assets/images/TowFinder/settings.png'),
   settings_red_icon: require('../assets/images/TowFinder/ic_settings1.png'),
   ic_cameraColored: require('../assets/images/ic_cameraColored.png'),
-  // ic_placeholderbeeNew: require('../assets/images/ic_placeholderbeeNew.png'),
+  pickUpSchedule: require('../assets/images/ic_pickup.png'),
+  dropOffSchedule: require('../assets/images/ic_order.png'),
 };
