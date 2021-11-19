@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1036563889902-7i1vvlvkmb98281j1l64b1os6avdsals.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1036563889902-7i1vvlvkmb98281j1l64b1os6avdsals</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1036563889902-0v8ca1jm897bd2fvt3r1oot21flnmkjg.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAnQRBSQZM3-SviqbYvT3cCDJexANuftts</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1036563889902</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.blacnetwork</string>
+	<key>PROJECT_ID</key>
+	<string>blac-network-97223</string>
+	<key>STORAGE_BUCKET</key>
+	<string>blac-network-97223.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1036563889902:ios:6dc0df89513dc27953bdff</string>
+</dict>
+</plist>

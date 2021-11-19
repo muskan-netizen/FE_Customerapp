@@ -11,6 +11,7 @@ export default {
   lightSkyB: '#3CA2E4',
   borderLight: 'rgba(30,36,40,.2)',
   textGreyOpcaity7: 'rgba(30,36,40,.7)',
+  textGreyOpcaity6: 'rgba(30,36,40,.6)',
   bottomBarGradientA: 'rgba(50,181,252,1)',
   bottomBarGradientB: 'rgba(97,160,242,1)',
   transparent: 'transparent',
