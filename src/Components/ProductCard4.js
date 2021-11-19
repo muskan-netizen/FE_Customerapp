@@ -39,9 +39,9 @@ export default function ProductCard4({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-  const {appStyle} = useSelector((state) => state?.initBoot);
+  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
-  const {themeColors, themeLayouts} = currentTheme;
+  const {themeLayouts} = currentTheme;
   const commonStyles = commonStylesFunc({fontFamily});
   const cardWidthNew = cardWidth ? cardWidth : width * 0.5 - 21.5;
   const url1 = data?.media[0]?.image?.path.proxy_url;
@@ -60,7 +60,6 @@ export default function ProductCard4({
       style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
         flex: 1,
         marginHorizontal: moderateScale(16),
       }}>
@@ -87,8 +86,7 @@ export default function ProductCard4({
             style={{
               // height: 30,
               marginHorizontal: moderateScale(16),
-              marginTop: moderateScale(6),
-              width: width - moderateScale(180),
+              width: width - moderateScale(220),
             }}>
             <Text
               numberOfLines={1}
@@ -122,22 +120,29 @@ export default function ProductCard4({
           </View>
         </View>
       </View>
-      {/* <View
+
+      <TouchableOpacity
         style={{
-          height: moderateScale(30),
-          width: moderateScale(30),
-          borderRadius: moderateScale(15),
-          backgroundColor: '#E8E8E8',
-          justifyContent: 'center',
+          borderColor: themeColors.primary_color,
+          borderRadius: 10,
           alignItems: 'center',
+          borderWidth: 0.6,
+          width: 79,
+          height: 35,
+          paddingVertical: 10,
         }}>
-        <Image
-          source={imagePath.add}
+        {/* <Text>+</Text> */}
+        <Text
           style={{
-            tintColor: colors.white,
-          }}
-        />
-      </View> */}
+            fontSize: textScale(10),
+            color: themeColors.primary_color,
+            fontFamily: fontFamily.bold,
+            alignSelf: 'center',
+          }}>
+          ADD
+        </Text>
+        {/* <Text>-</Text> */}
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 }

@@ -1,4 +1,5 @@
 
+import axios from 'axios';
 import Geocoder from 'react-native-geocoder';
 import Geolocation from 'react-native-geolocation-service';
 
@@ -73,3 +74,30 @@ export const getCurrentLocationFromApi = () =>
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
         )
     })
+
+
+export const getAddressFromLatLong = (latlng, mapKey) =>
+    axios({
+        url: 'https://maps.googleapis.com/maps/api/geocode/json',
+        params: {
+            latlng,
+            key: mapKey,
+            language: 'en',
+        },
+    })
+        .then(response => {
+            // console.log("success resp==>>", response)
+            if (response.data.results && response.data.results.length > 0) {
+          
+                const dataToSend = {
+                    address: response.data.results[0].formatted_address,
+                };
+
+                return dataToSend;
+            }
+            return '';
+        })
+        .catch(error => {
+            error;
+            console.log("error==>>>", error)
+        });

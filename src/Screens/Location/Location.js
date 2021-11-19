@@ -13,7 +13,7 @@ import colors from '../../styles/colors';
 import {moderateScale} from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {getCurrentLocation} from '../../utils/helperFunctions';
-import {checkLocationPermission} from '../../utils/permissions';
+import {chekLocationPermission} from '../../utils/permissions';
 import stylesFun from './styles';
 
 navigator.geolocation = require('react-native-geolocation-service');
@@ -57,7 +57,7 @@ export default function Location({route, navigation}) {
 
   //Get Your current location
   const getCurrentLocate = () => {
-    checkLocationPermission()
+    chekLocationPermission()
       .then((result) => {
         if (result !== 'goback') {
           getCurrentPosition();

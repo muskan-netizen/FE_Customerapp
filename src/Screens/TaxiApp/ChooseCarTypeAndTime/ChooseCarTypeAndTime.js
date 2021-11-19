@@ -27,7 +27,7 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import { showError } from '../../../utils/helperFunctions';
+import { getColorCodeWithOpactiyNumber, showError } from '../../../utils/helperFunctions';
 import SelectCarModalView from './SelectCarModalView';
 import SelectPaymentModalView from './SelectPaymentModalView';
 import SelectTimeModalView from './SelectTimeModalView';
@@ -41,6 +41,15 @@ import PaymentProcessingModal from '../../CourierService/PaymentProcessingModal'
 import { BlurView } from '@react-native-community/blur';
 import { useFocusEffect } from '@react-navigation/native';
 import { mapStyleGrey } from '../../../utils/constants/MapStyle';
+import BottomSheet, {
+  BottomSheetFlatList,
+  BottomSheetScrollView,
+  BottomSheetSectionList,
+  BottomSheetVirtualizedList,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
+import AvailableDriver from './AvailableDriver';
+import GradientButton from '../../../Components/GradientButton';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -52,8 +61,9 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
-  console.log('my route',paramData);
-  
+  console.log('my route', paramData);
+  const bottomSheetRef = useRef(null)
+
   const { appData, currencies, languages, themeColors, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
@@ -459,9 +469,79 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     });
   };
   //Modal to select car
+
+  const carModalHeader = () => {
+    if (!!showPaymentModal) {
+      return (
+        <View style={{
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.background
+            : colors.white,
+          padding: moderateScale(16),
+          // alignItems: 'center',
+          borderRadius: 8,
+          borderBottomLeftRadius: 0,
+          borderBottomRightRadius: 0,
+        }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <TouchableOpacity
+              onPress={() => redirectFromNow
+                ? updateState({ showCarModal: true, showPaymentModal: false })
+                : updateState({ showTimeModal: true, showPaymentModal: false })}
+            >
+              <Image
+                style={isDarkMode && { tintColor: MyDarkTheme.colors.text }}
+                source={imagePath.backArrowCourier}
+              />
+            </TouchableOpacity>
+            <View style={{
+              backgroundColor: isDarkMode
+                ? colors.whiteOpacity77
+                : colors.black,
+              width: moderateScale(40),
+              height: moderateScale(4),
+              borderRadius: 8,
+              marginRight: moderateScale(34)
+            }} />
+            <Text />
+          </View>
+        </View>
+      )
+    }
+    return (
+      <View style={{
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.background
+          : colors.white,
+        padding: moderateScale(16),
+        alignItems: 'center',
+        borderRadius: 8,
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+      }}>
+        <View style={{
+          backgroundColor: isDarkMode
+            ? colors.whiteOpacity77
+            : colors.black,
+          width: moderateScale(40),
+          height: moderateScale(4),
+          borderRadius: 8,
+          marginRight: moderateScale(34)
+        }} />
+        <Text style={{
+          fontFamily: fontFamily.regular,
+          color: isDarkMode
+            ? colors.whiteOpacity77
+            : colors.black,
+          marginTop: moderateScaleVertical(8)
+        }}>Choose a trip or swipe up for more</Text>
+      </View>
+    )
+  }
+
   const _selectCarModalView = () => {
     return (
-      <SelectCarModalView
+      <AvailableDriver
         onPressAvailableCar={(item) => updateState({ selectedCarOption: item })}
         selectedCarOption={selectedCarOption}
         onPressPickUpNow={() => {
@@ -669,155 +749,175 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     }
   }
 
+  const onPressPickUpNow = () => {
+    selectedCarOption
+      ? updateState({
+        // pickUpTimeType: 'now',
+        showPaymentModal: true,
+        redirectFromNow: true,
+        showCarModal: false,
+      })
+      : showError(strings.PLEASE_SELECT_CAR);
+  }
+
   return (
     <View style={{ ...styles.container }}>
       <View style={{ height: StatusBarHeight }} />
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
+      <View
+        style={{
+          flex: 1
         }}>
-        <View
-          style={{
-            width: '100%',
-            height: height / 2.5,
-          }}>
-          <MapView
-            //   provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-            ref={mapRef}
-            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-            customMapStyle={mapStyleGrey}
-            // style={styles.map}
-            style={StyleSheet.absoluteFillObject}
-            region={region}
-            initialRegion={region}
-            //   customMapStyle={mapStyle}
-            // ref={mapRef}
-            // liteMode={true}
-            tracksViewChanges={false}
-          // onPress={onMapPress}
-          // onRegionChangeComplete={() =>
-          //   _onRegionChange(region, {isGesture: true})
-          // }
-          >
-            {/* <Marker
-            coordinate={paramData?.location[0]}
-            image={imagePath.radioLocation}>
-            <Callout style={styles.plainView}>
-              <View>
-                <Text style={styles.pickupDropOff}>{'Pick up'}</Text>
-                <Text numberOfLines={1} style={styles.pickupDropOffAddress}>{paramData?.tasks[0]?.address}</Text>
-              </View>
-            </Callout>
-          </Marker>
-          <Marker
-            coordinate={paramData?.location[paramData?.location.length - 1]}
-            image={imagePath.radioLocation}>
-            <Callout  style={styles.plainView}>
-              <View>
-              <Text style={styles.pickupDropOff}>{'Drop off'}</Text>
-              <Text numberOfLines={1} style={styles.pickupDropOffAddress}>{paramData?.tasks[paramData?.tasks.length-1]?.address}</Text>
-              </View>
-            </Callout>
-          </Marker> */}
+        <MapView
+          ref={mapRef}
+          provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+          customMapStyle={mapStyleGrey}
+          // style={styles.map}
+          style={StyleSheet.absoluteFillObject}
+          region={region}
+          initialRegion={region}
+          //   customMapStyle={mapStyle}
+          // ref={mapRef}
+          // liteMode={true}
+          tracksViewChanges={false}
+        // onPress={onMapPress}
+        // onRegionChangeComplete={() =>
+        //   _onRegionChange(region, {isGesture: true})
+        // }
+        >
 
-            {paramData?.tasks.map((coordinate, index) => {
-              return (
-                <View>
-                  <MapView.Marker
-                    ref={markerRef}
-                    zIndex={index}
-                    key={`coordinate_${index}`}
-                    image={imagePath.radioLocation}
-                    coordinate={{
-                      latitude: Number(coordinate?.latitude),
-                      longitude: Number(coordinate?.longitude),
+          {paramData?.tasks.map((coordinate, index) => {
+            return (
+              <View>
+                <MapView.Marker
+                  ref={markerRef}
+                  zIndex={index}
+                  key={`coordinate_${index}`}
+                  image={imagePath.radioLocation}
+                  coordinate={{
+                    latitude: Number(coordinate?.latitude),
+                    longitude: Number(coordinate?.longitude),
+                  }}>
+                  <View
+                    style={{
+                      ...styles.plainView,
+                      backgroundColor: themeColors.primary_color
                     }}>
-                    <View
-                      style={styles.plainView}>
-                      <Text style={styles.pickupDropOff}>
-                        {index === 0 ? 'Pickup' : 'Drop'}
-                      </Text>
-                    </View>
-                  </MapView.Marker>
-                </View>
-              );
-            })}
+                    <Text style={styles.pickupDropOff}>
+                      {index === 0 ? 'Pickup' : 'Drop'}
+                    </Text>
+                  </View>
+                </MapView.Marker>
+              </View>
+            );
+          })}
 
-            <MapViewDirections
-              origin={paramData?.location[0]}
-              waypoints={
-                paramData?.location.length > 2
-                  ? paramData?.location.slice(1, -1)
-                  : []
-              }
-              destination={paramData?.location[paramData?.location.length - 1]}
-              apikey={profile?.preferences?.map_key}
-              strokeWidth={3}
-              strokeColor={themeColors.primary_color}
-              optimizeWaypoints={true}
-              onStart={(params) => {
-                // console.log(Started routing between "${params.origin}" and "${params.destination}");
-              }}
-              precision={'high'}
-              timePrecision={'now'}
-              mode={'DRIVING'}
-              // maxZoomLevel={20}
-              onReady={(result) => {
-                console.log(`Distance: ${result.distance} km`);
-                console.log(`Duration: ${result.duration} min.`);
-                updateState({
-                  totalDistance: result.distance.toFixed(2),
-                  totalDuration: result.duration.toFixed(2),
-                });
-                mapRef.current.fitToCoordinates(result.coordinates, {
-                  edgePadding: {
-                    right: width / 20,
-                    bottom: height / 20,
-                    left: width / 20,
-                    top: height / 20,
-                  },
-                });
-              }}
-              onError={(errorMessage) => {
-                // console.log('GOT AN ERROR');
-              }}
-            />
-          </MapView>
-
-
-          {/* <TouchableOpacity
-            onPress={coordinatesFit}
-            style={{
-              position: 'absolute',
-              bottom: 10,
-              right: 10
+          <MapViewDirections
+            origin={paramData?.location[0]}
+            waypoints={
+              paramData?.location.length > 2
+                ? paramData?.location.slice(1, -1)
+                : []
+            }
+            destination={paramData?.location[paramData?.location.length - 1]}
+            apikey={profile?.preferences?.map_key}
+            strokeWidth={3}
+            strokeColor={themeColors.primary_color}
+            optimizeWaypoints={true}
+            onStart={(params) => {
+              // console.log(Started routing between "${params.origin}" and "${params.destination}");
             }}
-          >
-            <Image
-              style={{
-                width: moderateScale(34),
-                height: moderateScale(34),
-                borderRadius: moderateScale(34 / 2),
-              }}
-              source={imagePath.mapNavigation}
-            />
-          </TouchableOpacity> */}
+            precision={'high'}
+            timePrecision={'now'}
+            mode={'DRIVING'}
+            // maxZoomLevel={20}
+            onReady={(result) => {
+              console.log(`Distance: ${result.distance} km`);
+              console.log(`Duration: ${result.duration} min.`);
+              updateState({
+                totalDistance: result.distance.toFixed(2),
+                totalDuration: result.duration.toFixed(2),
+              });
+              mapRef.current.fitToCoordinates(result.coordinates, {
+                edgePadding: {
+                  right: width / 20,
+                  bottom: height / 20,
+                  left: width / 20,
+                  top: height / 20,
+                },
+              });
+            }}
+            onError={(errorMessage) => {
+              // console.log('GOT AN ERROR');
+            }}
+          />
+        </MapView>
+        <BottomSheet
+          ref={bottomSheetRef}
+          index={1}
+          snapPoints={['25%', '50%']}
+          activeOffsetY={[-1, 1]}
+          failOffsetX={[-5, 5]}
+          animateOnMount={true}
+          handleComponent={carModalHeader}
+        >
+          <View style={{
+            flex: 1,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.white,
+          }}>
+            {!!showCarModal && _selectCarModalView()}
+            {/* {!!showTimeModal && _selectTimeView()} */}
+            {!!showPaymentModal && _selectPaymentView()}
+          </View>
+        </BottomSheet>
+        {!showPaymentModal && (<View style={{
+          width: '90%',
+          position: 'absolute',
+          bottom: 20,
+          marginHorizontal: moderateScale(16),
 
-          {/* Top View */}
-        </View>
+        }}>
 
-        {/* BottomView */}
-        {/* {!!showVendorModal && _selectVendorModalView()} */}
-        {!!showCarModal && _selectCarModalView()}
-        {!!showTimeModal && _selectTimeView()}
-        {!!showPaymentModal && _selectPaymentView()}
-      </ScrollView>
+          {availableCarList.length > 0 && (<GradientButton
+            // endcolor={{x: 0.0, y: 0.25}}
+            // startcolor={{x: 0.0, y: 0.0}}
+            colorsArray={[
+              themeColors.primary_color,
+
+              themeColors.primary_color,
+            ]}
+            textStyle={{ textTransform: 'none', fontSize: textScale(14) }}
+            onPress={
+              selectedCarOption?.variant[0]?.price > 0
+                ? onPressPickUpNow
+                : () => { }
+            }
+            btnText={
+              selectedCarOption?.variant[0]?.price > 0
+                ? `${strings.CONFIRM} ${selectedCarOption?.translation[0]?.title} `
+                : strings.NORIDEAVAILABLE
+            }
+            containerStyle={{ flex: 1 }}
+          />)}
+        </View>)}
+
+      </View>
+
+      {/* BottomView */}
+
+
       <View style={styles.topView}>
         <TouchableOpacity
           style={{
+            marginTop: moderateScaleVertical(24),
             height: moderateScale(40),
             width: moderateScale(40),
-            marginTop: moderateScaleVertical(20),
+            borderRadius: moderateScale(16),
+            backgroundColor: colors.white,
+            alignItems: 'center',
+            justifyContent: 'center',
+
           }}
           onPress={() =>
             // navigation.navigate(navigationStrings.PICKUPLOCATION)
@@ -825,7 +925,9 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           }>
           <Image
             source={imagePath.backArrowCourier}
-            style={{ tintColor: isDarkMode ? colors.white : colors.black }}
+            style={{
+              tintColor: colors.black,
+            }}
           />
         </TouchableOpacity>
       </View>

@@ -187,7 +187,6 @@ export default ({ fontFamily, themeColors }) => {
     plainView: {
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: colors.textGreyLight,
       // left: 20,
       borderRadius: moderateScale(4),
       paddingVertical: moderateScale(2),

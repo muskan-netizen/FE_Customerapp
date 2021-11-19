@@ -213,7 +213,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         },
       )
       .then((res) => {
-        console.log(res?.data?.order_details?.dispatcher_status, 'res---agent');
+        // console.log(res?.data?.order_details?.dispatcher_status, 'res---agent');
+        console.log('agent location',res?.data?.agent_location?.lat)
         updateState({
           agent_location: res?.data?.agent_location,
           orderDetail: res?.data?.order,
@@ -501,7 +502,10 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     longitude: Number(coordinate?.longitude),
                   }}>
                   <View
-                    style={styles.plainView}>
+                    style={{
+                      ...styles.plainView,
+                      backgroundColor: themeColors.primary_color
+                    }}>
                     <Text style={styles.pickupDropOff}>
                       {index === 0 ? 'Pickup' : 'Drop'}
                     </Text>
@@ -522,7 +526,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                   }}>
                   <Image
                     style={{ height: 35, width: 35 }}
-                    source={imagePath.driver}
+                    source={imagePath.icScooter}
                   />
                 </MapView.Marker>
               )}
@@ -533,7 +537,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 waypoints={tasks.length > 2 ? tasks.slice(1, -1) : []}
                 destination={tasks[tasks.length - 1]}
                 apikey={profile?.preferences?.map_key}
-                strokeWidth={2}
+                strokeWidth={5}
                 strokeColor={themeColors.primary_color}
                 optimizeWaypoints={true}
                 onStart={(params) => { }}

@@ -20,7 +20,7 @@ import {
   getNearestLocation,
   showError,
 } from '../../utils/helperFunctions';
-import {checkLocationPermission} from '../../utils/permissions';
+import {chekLocationPermission} from '../../utils/permissions';
 import {
   DashBoardFive,
   DashBoardFour,
@@ -166,7 +166,7 @@ export default function Home({route, navigation}) {
   }, []);
 
   useEffect(() => {
-    checkLocationPermission()
+    chekLocationPermission()
       .then((result) => {
         if (result !== 'goback') {
           getCurrentLocation('home')
@@ -427,6 +427,11 @@ export default function Home({route, navigation}) {
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
+  useEffect(() => {
+    if (!saveAllUserAddress) {
+      homeData();
+    }
+  }, [location]);
 
   //On Press banner
   const bannerPress = (data) => {
@@ -528,6 +533,7 @@ export default function Home({route, navigation}) {
   useEffect(() => {
     homeData();
   }, [selectedTabType, appData, dineInType, location]);
+  // location
 
   ///onPressCategory2
   const onPressCategory2 = (data) => {
