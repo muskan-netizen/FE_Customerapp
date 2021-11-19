@@ -20,7 +20,7 @@ import {
   getNearestLocation,
   showError,
 } from '../../utils/helperFunctions';
-import {checkLocationPermission} from '../../utils/permissions';
+import {chekLocationPermission} from '../../utils/permissions';
 import {
   DashBoardFive,
   DashBoardFour,
@@ -166,7 +166,7 @@ export default function Home({route, navigation}) {
   }, []);
 
   useEffect(() => {
-    checkLocationPermission()
+    chekLocationPermission()
       .then((result) => {
         if (result !== 'goback') {
           getCurrentLocation('home')
