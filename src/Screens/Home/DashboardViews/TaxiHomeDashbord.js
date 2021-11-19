@@ -377,6 +377,7 @@ export default function TaxiHomeDashbord({
         latitude: Number(details?.latitude),
         address: details?.address,
         task_type_id: 1,
+        pre_address: details?.address
       }
     }
     navigation.navigate(navigationStrings.ADDADDRESS, {
@@ -424,13 +425,13 @@ export default function TaxiHomeDashbord({
                   <Text numberOfLines={2} style={{
                     ...styles.addressTitle,
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                    }}>
+                  }}>
                     {itm?.street}
                   </Text>
                   <Text numberOfLines={2} style={{
                     ...styles.address,
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                    }}>
+                  }}>
                     {itm?.address}
                   </Text>
                 </View>
@@ -490,7 +491,7 @@ export default function TaxiHomeDashbord({
               <Text numberOfLines={2} style={{
                 ...styles.address,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
+              }}>
                 {strings.CHOOSESAVEDPLACE}
               </Text>
             </View>
@@ -658,8 +659,8 @@ export default function TaxiHomeDashbord({
                   </View>
                   <View style={{ marginHorizontal: moderateScale(10) }}>
                     <Text numberOfLines={2} style={{
-                            ...styles.addressTitle,
-                            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      ...styles.addressTitle,
+                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                     }}>
                       {'Add new address'}
                     </Text>
