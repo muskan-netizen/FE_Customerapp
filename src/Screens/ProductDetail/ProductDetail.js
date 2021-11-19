@@ -817,7 +817,10 @@ export default function ProductDetail({route, navigation}) {
                           productTotalQuantity,
                         }).productTypeAndBrandValue
                       }>
-                      {productTotalQuantity && productTotalQuantity != 0
+                      {(!!productTotalQuantity &&
+                        !!productTotalQuantity != 0) ||
+                      (!!typeId && typeId == 8) ||
+                      !!productDetailData?.sell_when_out_of_stock
                         ? ''
                         : strings.OUT_OF_STOCK}
                     </Text>
@@ -879,7 +882,8 @@ export default function ProductDetail({route, navigation}) {
               ) : null}
               {/* Add to Cart button */}
               {((!!productTotalQuantity && !!productTotalQuantity != 0) ||
-                (!!typeId && typeId == 8)) &&
+                (!!typeId && typeId == 8) ||
+                !!productDetailData?.sell_when_out_of_stock) &&
                 (!!data?.showAddToCart ? null : showErrorMessageTitle ? null : (
                   <View
                     style={{

@@ -1,131 +1,86 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {
-  Alert,
-  BackHandler,
-  View,
-  Text,
-  ScrollView,
-  FlatList,
-  Linking,
-} from 'react-native';
+import {Alert, BackHandler, Linking} from 'react-native';
+import AppLink from 'react-native-app-link';
+import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
+import Geocoder from 'react-native-geocoding';
 import {useSelector} from 'react-redux';
-import {cloneDeep, debounce} from 'lodash';
-import OpenApplication from 'react-native-open-application';
-
 import WrapperContainer from '../../Components/WrapperContainer';
+import strings from '../../constants/lang';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
+import {MyDarkTheme} from '../../styles/theme';
+import {shortCodes} from '../../utils/constants/DynamicAppKeys';
 import {
   androidBackButtonHandler,
-  getColorCodeWithOpactiyNumber,
   getCurrentLocation,
-  getParameterByName,
-  getUrlRoutes,
+  getNearestLocation,
   showError,
 } from '../../utils/helperFunctions';
 import {chekLocationPermission} from '../../utils/permissions';
-import {setItem} from '../../utils/utils';
 import {
-  DashBoardTwo,
-  DashBoardThree,
   DashBoardFive,
   DashBoardFour,
   DashBoardHeaderFive,
+  DashBoardHeaderFour,
   DashBoardHeaderOne,
   DashBoardOne,
-  DashBoardHeaderFour,
-  DashBoardHeaderThree,
   DashBoardSix,
 } from './DashboardViews/Index';
-import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
-import {useDarkMode} from 'react-native-dark-mode';
-import Geocoder from 'react-native-geocoding';
-import strings from '../../constants/lang';
-import BottomSheet from 'reanimated-bottom-sheet';
-import {
-  height,
-  moderateScale,
-  moderateScaleVertical,
-} from '../../styles/responsiveSize';
-import OrderCardVendorComponent from '../../Components/OrderCardVendorComponent';
-import PendingOrderCard from '../../Components/PendingOrderCard';
-import {BlurView} from '@react-native-community/blur';
-navigator.geolocation = require('react-native-geolocation-service');
-import stylesFunc from './styles';
-import NotificationModal from '../../Components/NotificationModal';
-import AppLink from 'react-native-app-link';
-import DashBoardSeven from './DashboardViews/DashBoardSeven';
+
+// navigator.geolocation = require('react-native-geolocation-service');
 
 export default function Home({route, navigation}) {
   const paramData = route?.params;
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
+
+  const {
+    appData,
+    currencies,
+    languages,
+    appStyle,
+    isDineInSelected,
+    themeColor,
+    themeToggle,
+    allAddresss,
+  } = useSelector((state) => state?.initBoot);
+  const {location, appMainData, dineInType} = useSelector(
+    (state) => state?.home,
+  );
+  const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
+
+  const userData = useSelector((state) => state?.auth?.userData);
   const pendingNotifications = useSelector(
     (state) => state?.pendingNotifications?.pendingNotifications,
   );
 
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
-  const location = useSelector((state) => state?.home?.location);
   const [state, setState] = useState({
     isLoading: true,
-    latitude: location?.latitude,
-    longitude: location?.longitude,
-    slider1ActiveSlide: 0,
-    // location: [],
     isRefreshing: false,
-    updatedData: [],
     selectedTabType: '',
     updateTime: 0,
     isDineInSelected: false,
     pageActive: 1,
-    acceptLoader: false,
-    rejectLoader: false,
-    selectedOrder: null,
+    currentLocation: '',
+    saveAllUserAddress,
   });
-  const appMainData = useSelector((state) => state?.home?.appMainData);
-  const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
-  const {
-    appData,
-    themeColors,
-    themeLayouts,
-    currencies,
-    languages,
-    internetConnection,
-    appStyle,
-    isDineInSelected,
-  } = useSelector((state) => state?.initBoot);
-
-  const initData = useSelector((state) => state?.initBoot);
-  const userData = useSelector((state) => state?.auth?.userData);
-  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
-
-  const profileInfo = appData?.profile;
-  const {profile} = appData;
-  const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
 
   const {
     updateTime,
     isLoading,
-    longitude,
-    latitude,
-    slider1ActiveSlide,
     isRefreshing,
-    themeLayout,
-    updatedData,
     selectedTabType,
     pageActive,
-    acceptLoader,
-    rejectLoader,
-    selectedOrder,
+    currentLocation,
+    saveAllUserAddress,
   } = state;
+
+  const {profile} = appData;
   useFocusEffect(
     React.useCallback(() => {
       const backHandler = BackHandler.addEventListener(
@@ -138,7 +93,6 @@ export default function Home({route, navigation}) {
 
   useEffect(() => {
     updateState({updatedData: appMainData?.categories});
-    console.log(appMainData, 'appMainData');
   }, [appMainData]);
 
   useEffect(() => {
@@ -199,6 +153,7 @@ export default function Home({route, navigation}) {
 
   const updateLatLang = (res) => {
     updateState({updateTime: Math.random()});
+    console.log();
     actions.locationData(res);
   };
   useEffect(() => {
@@ -216,7 +171,7 @@ export default function Home({route, navigation}) {
         if (result !== 'goback') {
           getCurrentLocation('home')
             .then((res) => {
-              console.log('chekLocationPermission', res);
+              console.log(res, 'userCurrentLocation');
               if (
                 appMainData &&
                 typeof appMainData?.reqData == 'object' &&
@@ -230,9 +185,14 @@ export default function Home({route, navigation}) {
                 };
                 actions.locationData(data);
               } else {
-                if (appData?.profile?.preferences?.is_hyperlocal) {
-                  if (!location?.address) {
-                    actions.locationData(res);
+                if (!!appData?.profile?.preferences?.is_hyperlocal) {
+                  if (!!userData?.auth_token && !paramData?.details) {
+                    const nearAddress = getNearestLocation(
+                      res,
+                      saveAllUserAddress,
+                    );
+                    actions.locationData(nearAddress);
+                    return;
                   }
                 }
               }
@@ -241,7 +201,7 @@ export default function Home({route, navigation}) {
         }
       })
       .catch((error) => console.log('error while accessing location', error));
-  }, []);
+  }, [isRefreshing, userData?.auth_token, saveAllUserAddress]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -272,6 +232,7 @@ export default function Home({route, navigation}) {
           });
           if (res.data) {
             actions.saveAllUserAddress(res.data);
+            updateState({saveAllUserAddress: res?.data});
           }
         })
         .catch(errorMethod);
@@ -301,7 +262,7 @@ export default function Home({route, navigation}) {
         ? actions
             .homeData(
               {
-                type: dine_In_Type ? dine_In_Type : dine_In_Type,
+                type: dineInType ? dineInType : dineInType,
                 ...latlongObj,
               },
               {
@@ -406,7 +367,8 @@ export default function Home({route, navigation}) {
     } else if (
       item.redirect_to == staticStrings.PRODUCT ||
       item.redirect_to == staticStrings.CATEGORY ||
-      item.redirect_to == staticStrings.ONDEMANDSERVICE
+      item.redirect_to == staticStrings.ONDEMANDSERVICE ||
+      item?.redirect_to == staticStrings.LAUNDRY
     ) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
@@ -465,6 +427,11 @@ export default function Home({route, navigation}) {
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
+  useEffect(() => {
+    if (!saveAllUserAddress) {
+      homeData();
+    }
+  }, [location]);
 
   //On Press banner
   const bannerPress = (data) => {
@@ -565,7 +532,8 @@ export default function Home({route, navigation}) {
 
   useEffect(() => {
     homeData();
-  }, [selectedTabType, appData, dine_In_Type]);
+  }, [selectedTabType, appData, dineInType, location]);
+  // location
 
   ///onPressCategory2
   const onPressCategory2 = (data) => {
@@ -671,6 +639,7 @@ export default function Home({route, navigation}) {
               selcetedToggle={selcetedToggle}
               toggleData={appData}
               isLoading={isLoading}
+              currentLocation={currentLocation}
             />
 
             <DashBoardFive
