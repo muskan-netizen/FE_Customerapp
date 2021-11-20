@@ -157,6 +157,8 @@ const shortCodes = {
   blacnetwork: 'e51092',
   threadagain: 'a4543c',
   ezmobilefuel: 'a024bd',
+  runaround: 'f2a962',
+  swiftandvalu: 'f89822',
 };
 
 const appIds = {
@@ -783,6 +785,14 @@ const appIds = {
   ezmobilefuel: Platform.select({
     ios: 'com.ezmobilefuel',
     android: 'com.ezmobilefuel',
+  }),
+  runaround: Platform.select({
+    ios: 'com.runaround',
+    android: 'com.runaround',
+  }),
+  swiftandvalu: Platform.select({
+    ios: 'com.customer.swiftandvalu',
+    android: 'com.swiftandvalu',
   }),
 };
 
