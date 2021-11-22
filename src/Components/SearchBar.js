@@ -20,6 +20,7 @@ export default function SearchBar({
   showRightIcon = false,
   rightIconPress = () => {},
   searchValue = '',
+  rightIconStyle
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
@@ -67,7 +68,7 @@ export default function SearchBar({
       </View>
       {showRightIcon && (
         <TouchableOpacity onPress={rightIconPress}>
-          <Image source={imagePath.crossBlueB} />
+          <Image source={imagePath.crossBlueB} style={{ ...rightIconStyle }} />
         </TouchableOpacity>
       )}
     </View>

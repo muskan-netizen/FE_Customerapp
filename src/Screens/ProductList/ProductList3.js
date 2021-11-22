@@ -23,7 +23,9 @@ import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import SectionList from 'react-native-tabs-section-list';
 import { useSelector } from 'react-redux';
+import BottomSheetModal from '../../Components/BottomSheetModal';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
+import GradientCartView from '../../Components/GradientCartView';
 import HomeServiceVariantAddons from '../../Components/HomeServiceVariantAddons';
 import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
@@ -75,6 +77,7 @@ export default function Products({ route, navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const dineInType = useSelector((state) => state?.home?.dineInType);
+  const CartItems = useSelector((state) => state?.cart?.cartItemCount);
 
   const isDarkMode = theme;
   const [state, setState] = useState({
@@ -153,7 +156,9 @@ export default function Products({ route, navigation }) {
     vendorCategorySelectedIndx: 0,
     vendorCategoryItms: null,
     sectionListData: [],
-    numberOfQtyToBeAdd: 0
+    numberOfQtyToBeAdd: 0,
+    searchedRecords: [],
+    cloneSectionList: []
   });
 
   const {
@@ -165,6 +170,7 @@ export default function Products({ route, navigation }) {
     internetConnection,
     appStyle,
   } = useSelector((state) => state?.initBoot);
+  { console.log('checking GlobalState >>> ', currencies) }
   const {
     selectedCategory,
     isLoadingC,
@@ -207,8 +213,10 @@ export default function Products({ route, navigation }) {
     vendorCategoryItms,
     typeId,
     sectionListData,
+    cloneSectionList,
     selectedSection,
-    numberOfQtyToBeAdd
+    numberOfQtyToBeAdd,
+    searchedRecords
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -486,6 +494,7 @@ export default function Products({ route, navigation }) {
           });
           updateState({
             sectionListData: filterArray,
+            cloneSectionList: filterArray,
             isLoading: false,
             isRefreshing: false,
             categoryInfo: res.data.vendor,
@@ -680,6 +689,8 @@ export default function Products({ route, navigation }) {
   };
 
   const addSingleItem = async (item, section = null) => {
+    console.log('checking section >>>', section)
+    // return;
     if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
@@ -767,6 +778,12 @@ export default function Products({ route, navigation }) {
           section['data'] = updatedSection;
           updateState({
             sectionListData: sectionListData.map((f, fnx) => {
+              if (f?.id == section?.id) {
+                return section;
+              }
+              return f;
+            }),
+            cloneSectionList: cloneSectionList.map((f, fnx) => {
               if (f?.id == section?.id) {
                 return section;
               }
@@ -882,7 +899,7 @@ export default function Products({ route, navigation }) {
           .catch(async () => {
             errorMethod()
             if (type == 1) {
-              quanitity = quanitity - tempQty ;
+              quanitity = quanitity - tempQty;
             } else {
               quanitity = quanitity + tempQty;
             }
@@ -915,6 +932,12 @@ export default function Products({ route, navigation }) {
       updateState({
         ...state,
         sectionListData: sectionListData.map((f, fnx) => {
+          if (f?.id == section?.id) {
+            return section;
+          }
+          return f;
+        }),
+        cloneSectionList: cloneSectionList.map((f, fnx) => {
           if (f?.id == section?.id) {
             return section;
           }
@@ -986,6 +1009,12 @@ export default function Products({ route, navigation }) {
           section['data'] = updatedSection;
           updateState({
             sectionListData: sectionListData.map((f, fnx) => {
+              if (f?.id == section?.id) {
+                return section;
+              }
+              return f;
+            }),
+            cloneSectionList: cloneSectionList.map((f, fnx) => {
               if (f?.id == section?.id) {
                 return section;
               }
@@ -1113,6 +1142,12 @@ export default function Products({ route, navigation }) {
           }
           return f;
         }),
+        cloneSectionList: cloneSectionList.map((f, fnx) => {
+          if (f?.id == selectedSection?.id) {
+            return selectedSection;
+          }
+          return f;
+        }),
         cartId: cartID,
       });
     } else {
@@ -1155,11 +1190,61 @@ export default function Products({ route, navigation }) {
     // navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
   };
 
+  const onSearchWithinMenu = (text) => {
+    updateState({ searchInput: text })
+    let Arr = []
+    if(text){
+      const newArr = sectionListData.map(el => {
+        const records = el.data && el.data.filter(item => {
+          return item?.translation[0]?.title.toLowerCase().includes(text.toLowerCase())
+        })
+        const newObj = {
+          ...el
+        }
+
+        newObj.data = records
+        return newObj
+        // console.log('checking products >>>>>', records)
+        // Arr.push(...records)
+      })
+      updateState({ cloneSectionList: newArr })
+    } else {
+      getAllProductsByVendor();
+      // updateState({ cloneSectionList: sectionListData })
+    }
+  }
+
+  const fetchOffers = () => {
+    // console.log(productListId?.id)
+    // // return;
+    //   let data = {};
+    //   data['vendor_id'] = 2;
+    //   // data['vendor_id'] = productListId?.id;
+    //   // data['cart_id'] = vendorInfo.cartId;
+    //   console.log(data, 'vendor_id');
+    //   actions
+    //     .getAllPromoCodesForProductList(data, {
+    //       code: appData?.profile?.code,
+    //       currency: currencies?.primary_currency?.id,
+    //       language: languages?.primary_language?.id,
+    //       systemuser: DeviceInfo.getUniqueId(),
+    //     })
+    //     .then((res) => {
+    //       console.log('res >>>>>>>', res);
+    //       // updateState({isLoading: false});
+  
+    //       // if (res && res.data) {
+    //       //   updateState({allAvailableCoupons: res.data});
+    //       // }
+    //     })
+    //     .catch(errorMethod);
+  }
+
   const listHeaderComponent2 = () => {
     return (
       <View>
         {!!categoryInfo?.categoriesList ? (
-          <View style={{ ...styles.header2 }}>
+          <View style={{ ...styles.header2, height: height * 0.29 }}>
             {/* <StatusBar
               translucent
               barStyle={
@@ -1189,7 +1274,7 @@ export default function Products({ route, navigation }) {
                 <LinearGradient
                   style={styles.linearGradientHdr}
                   colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0.7)']}>
-                  <View style={styles.hdrCompHeader}>
+                  <View style={[styles.hdrCompHeader, { flex: 0, width: '100%' }]}>
                     <TouchableOpacity
                       hitSlop={styles.hitSlopProp}
                       onPress={() => navigation.goBack()}
@@ -1203,7 +1288,7 @@ export default function Products({ route, navigation }) {
                         }}
                       />
                     </TouchableOpacity>
-                    <FastImage
+                    {/* <FastImage
                       source={{
                         uri: getImageUrl(
                           categoryInfo?.banner?.image_fit ||
@@ -1215,9 +1300,9 @@ export default function Products({ route, navigation }) {
                         priority: FastImage.priority.low,
                       }}
                       style={styles.hdrCompRoundImg}
-                    />
+                    /> */}
 
-                    <View style={styles.rightViewOfShareSearch}>
+                    {/* <View style={styles.rightViewOfShareSearch}>
                       <TouchableOpacity
                         activeOpacity={0.8}
                         onPress={moveToNewScreen(
@@ -1256,17 +1341,91 @@ export default function Products({ route, navigation }) {
                           source={imagePath.icShareb}
                         />
                       </TouchableOpacity>
+                    </View> */}
+                  </View>
+                  <View style={{ width: width, paddingLeft: moderateScale(13) }}>
+                    <View style={{ marginTop: moderateScale(20), flexDirection: 'row', justifyContent: 'space-between' }}>
+                      <Text
+                        numberOfLines={2}
+                        style={{
+                          ...styles.hdrTitleTxt,
+                          flex: 0,
+                          textAlign: 'left',
+                          fontSize: textScale(15),
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.white,
+                        }}>
+                        {data?.name || categoryInfo?.name || ''}
+                      </Text>
+                      {!!categoryInfo &&
+                        !!categoryInfo?.product_avg_average_rating && (
+                          <View style={[styles.hdrRatingTxtView, { backgroundColor: colors.yellowC, width: moderateScale(50), justifyContent: 'center', height: moderateScale(20) }]}>
+                            <Text style={[styles.ratingTxt, { fontSize: textScale(9.5) }]}>
+                              {Number(
+                                categoryInfo?.product_avg_average_rating,
+                              ).toFixed(1)}
+                            </Text>
+                            <Image
+                              style={styles.starImg}
+                              source={imagePath.star}
+                              resizeMode="contain"
+                            />
+                          </View>
+                        )}
+                    </View>
+                    <View style={{ marginTop: moderateScale(5), flexDirection: 'row', justifyContent: 'space-between' }}>
+                      <Text
+                        numberOfLines={2}
+                        style={{
+                          ...styles.hdrTitleTxt,
+                          flex: 0,
+                          fontSize: textScale(12.5),
+                          fontFamily: fontFamily.regular,
+                          textAlign: 'left',
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.white,
+                        }}>
+                        {console.log('cehcking data', categoryInfo)}
+                        {categoryInfo?.address || ''}
+                      </Text>
+
+                      {!!categoryInfo &&
+                        !!categoryInfo?.product_avg_average_rating && (
+                          <View style={[styles.hdrRatingTxtView, { width: moderateScale(50), justifyContent: 'center', height: moderateScale(20) }]}>
+                            <Text
+                              style={{
+                                ...styles.ratingTxt,
+                                color: categoryInfo?.show_slot
+                                  ? colors.white
+                                  : categoryInfo?.is_vendor_closed
+                                    ? colors.redB
+                                    : colors.white,
+                                fontSize: textScale(9.5)
+                              }}>
+                              {categoryInfo?.show_slot
+                                ? strings.OPEN
+                                : categoryInfo?.is_vendor_closed
+                                  ? strings.CLOSE
+                                  : strings.OPEN}
+                            </Text>
+                          </View>
+                        )}
                     </View>
                   </View>
                 </LinearGradient>
+
+                {/* ****************************************/}
                 <View
                   style={{
                     ...styles.hdrAbsoluteView,
                     backgroundColor: isDarkMode
                       ? MyDarkTheme.colors.lightDark
                       : colors.white,
+                    minHeight: moderateScale(80),
                   }}>
-                  <View style={styles.hdrNameRatingView}>
+                  {/* <View style={styles.hdrNameRatingView}>
                     <Text
                       numberOfLines={2}
                       style={{
@@ -1292,7 +1451,7 @@ export default function Products({ route, navigation }) {
                           />
                         </View>
                       )}
-                  </View>
+                  </View> */}
                   {!!categoryInfo && !!categoryInfo?.categoriesList && (
                     <View>
                       <Text
@@ -1305,25 +1464,28 @@ export default function Products({ route, navigation }) {
                           marginRight: moderateScale(40),
                           marginVertical: moderateScale(1),
                           marginLeft: 0,
+                          fontSize: textScale(12),
+                          opacity: 0.8,
+                          fontFamily: fontFamily.medium
                         }}>
                         {categoryInfo?.categoriesList || ''}
                       </Text>
                       <Text
-                        numberOfLines={1}
+                        numberOfLines={2}
                         style={{
                           ...styles.milesTxt,
                           marginLeft: 0,
-                          fontSize: textScale(8),
                           color: isDarkMode
                             ? MyDarkTheme.colors.text
                             : colors.black,
                           marginVertical: moderateScaleVertical(4),
+                          fontSize: textScale(9.5)
                         }}>
                         {desc}
                       </Text>
                     </View>
                   )}
-                  {!!categoryInfo && !!categoryInfo?.lineOfSightDistance && (
+                  {/* {!!categoryInfo && !!categoryInfo?.lineOfSightDistance && (
                     <View
                       style={{
                         ...styles.hdrNameRatingView,
@@ -1397,7 +1559,7 @@ export default function Products({ route, navigation }) {
                             : strings.OPEN}
                       </Text>
                     </View>
-                  )}
+                  )} */}
                 </View>
               </ImageBackground>
             </View>
@@ -1528,6 +1690,92 @@ export default function Products({ route, navigation }) {
           </Animatable.View>
         )}
 
+        <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: width / 1.11, alignSelf: 'center', borderBottomWidth: 1, borderBottomColor: colors.greyMedium, marginBottom: moderateScale(20), paddingBottom: moderateScaleVertical(10), paddingHorizontal: moderateScale(10) }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ backgroundColor: colors.greyColor, width: moderateScale(30), height: moderateScale(30), borderRadius: moderateScale(30), alignItems: 'center', justifyContent: 'center' }} >
+              <Image source={imagePath.ic_pinIcon} />
+            </View>
+            {!!categoryInfo.lineOfSightDistance &&
+              <Text
+                style={{
+                  ...styles.milesTxt,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.black,
+                  opacity: 1,
+                  fontSize: textScale(10)
+                }}>
+                {categoryInfo.lineOfSightDistance}
+              </Text>
+            }
+          </View>
+
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ backgroundColor: colors.greyColor, width: moderateScale(30), height: moderateScale(30), borderRadius: moderateScale(30), alignItems: 'center', justifyContent: 'center' }} >
+              <Image source={imagePath.ic_timeIcon} />
+            </View>
+            {!!categoryInfo.lineOfSightDistance &&
+              <Text
+                style={{
+                  ...styles.milesTxt,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.black,
+                  opacity: 1,
+                  fontSize: textScale(10)
+                }}>
+                {checkEvenOdd(
+                  categoryInfo.timeofLineOfSightDistance,
+                )}
+                -
+                {checkEvenOdd(
+                  categoryInfo.timeofLineOfSightDistance + 5,
+                )}
+                {' mins'}
+              </Text>
+            }
+          </View>
+
+          <TouchableOpacity onPress={() => {
+            fetchOffers()
+          }} activeOpacity={0.7} style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ backgroundColor: colors.greyColor, width: moderateScale(30), height: moderateScale(30), borderRadius: moderateScale(30), alignItems: 'center', justifyContent: 'center' }} >
+              <Image source={imagePath.ic_offersIcon} />
+            </View>
+            <Text
+              style={{
+                ...styles.milesTxt,
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.black,
+                opacity: 1,
+                fontSize: textScale(10)
+              }}>
+              {'Offers'}
+            </Text>
+            <Image source={imagePath.icBackb} style={{ transform: [{ rotate: '-90deg' }], width: moderateScale(11), height: moderateScale(11), resizeMode: 'contain', marginLeft: moderateScale(6) }} />
+          </TouchableOpacity>
+        </View>
+        <SearchBar
+          containerStyle={{
+            alignSelf: 'center',
+            // marginHorizontal: moderateScale(18),
+            borderRadius: 8,
+            width: width / 1.10,
+            backgroundColor: isDarkMode
+              ? colors.whiteOpacity15
+              : colors.greyColor,
+            height: moderateScaleVertical(37),
+          }}
+          searchValue={searchInput}
+          placeholder={strings.SEARCH_WITHIN_MENU}
+          onChangeText={(value) => onSearchWithinMenu(value)}
+          showRightIcon
+          rightIconStyle={{ tintColor: themeColors.secondary_color }}
+          rightIconPress={() =>
+            onSearchWithinMenu('')
+          }
+        />
         {!!categoryInfo && categoryInfo?.childs?.length > 0 && (
           <View style={{ marginHorizontal: moderateScale(20) }}>
             <ScrollView
@@ -1777,6 +2025,7 @@ export default function Products({ route, navigation }) {
           btnLoader={btnLoader}
           selectedItemIndx={selectedItemIndx}
         />
+        <View style={{ width: '100%', height: 2, backgroundColor: colors.greyColor }} />
       </View>
     );
   };
@@ -2056,11 +2305,12 @@ export default function Products({ route, navigation }) {
           )}
         {/* <View style={{height: moderateScale(10)}} /> */}
         {!!categoryInfo?.is_show_products_with_category ? (
-          <View style={{ flex: 1 }}>
+           (
+            <View style={{ flex: 1 }}>
             <SectionList
               showsVerticalScrollIndicator={false}
               onScroll={onScroll}
-              sections={sectionListData}
+              sections={cloneSectionList}
               ListHeaderComponent={listHeaderComponent2()}
               stickySectionHeadersEnabled={false}
               scrollToLocationOffset={50}
@@ -2091,6 +2341,7 @@ export default function Products({ route, navigation }) {
               }
             />
           </View>
+          )
         ) : (
           <FlatList
             onScroll={onScroll}
@@ -2184,6 +2435,15 @@ export default function Products({ route, navigation }) {
         ]}
         visible={updateQtyLoader}
       />
+
+      {CartItems && CartItems.data.item_count &&
+        <GradientCartView
+          onPress={() => navigation.navigate(navigationStrings.CART)}
+          btnText={`${CartItems.data.item_count} ${CartItems.data.item_count > 1 ? strings.ITEM : strings.ITEMS} | ${currencies.primary_currency.symbol}${CartItems.data.total_payable_amount}`}
+        />
+      }
+
+    <BottomSheetModal />
     </View>
   );
 }

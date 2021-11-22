@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FastImage from 'react-native-fast-image';
 import { UIActivityIndicator } from 'react-native-indicators';
 import StarRating from 'react-native-star-rating';
 import { useSelector } from 'react-redux';
+import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStylesFunc, { hitSlopProp } from '../styles/commonStyles';
@@ -119,6 +120,7 @@ export default function ProductCard3({
           >
             {/* Title View */}
             <View>
+              {/* <Image source={imagePath.icVeg} style={{ marginLeft: moderateScale(1), marginBottom: moderateScale(5) }} /> */}
               <Text
                 // numberOfLines={1}
                 style={{
@@ -129,6 +131,7 @@ export default function ProductCard3({
                   fontFamily: fontFamily.regular,
                   fontSize: textScale(12),
                   width: width / 2.5,
+                  textTransform: 'capitalize'
                   // flex:1
                 }}>
                 {data?.translation[0]?.title}
@@ -217,7 +220,6 @@ export default function ProductCard3({
             alignItems: 'center',
             // marginRight: url1 ? 0 :  moderateScale(60)
           }}>
-
             {url1 &&
               <Animatable.View
                 key={selectedIndex}

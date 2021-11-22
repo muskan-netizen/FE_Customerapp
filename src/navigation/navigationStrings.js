@@ -11,7 +11,6 @@ export default {
   ACCOUNTS: 'accounts',
   TAB_ROUTES: 'tabRoutes',
   DRAWER_ROUTES: 'drawerRoutes',
-  DRAWER_ROUTES_TOWFINDER: 'drawerRoutesTwoFinder',
   DELIVERY: 'delivery',
   VENDOR: 'vendor',
   SUPERMARKET: 'supermarket',
