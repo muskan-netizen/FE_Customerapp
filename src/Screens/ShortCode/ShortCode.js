@@ -1051,6 +1051,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.paysic:
+          updateState({
+            shortCode: shortCodes.paysic,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

@@ -1815,6 +1815,16 @@ android {
             resValue "string", "app_name", "Trucxi"
             resValue "string", "host_name", ""
          }
+          paysic{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.paysic'
+            resValue "string", "app_name", "PaySic"
+            resValue "string", "host_name", ""
+         }
         
     }
 }

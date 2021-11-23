@@ -160,6 +160,7 @@ const shortCodes = {
   runaround: 'f2a962',
   swiftandvalu: 'f89822',
   trucxi: '3096b7',
+  paysic: '786133',
 };
 
 const appIds = {
@@ -798,6 +799,10 @@ const appIds = {
   trucxi: Platform.select({
     ios: 'com.trucxi',
     android: 'com.trucxi',
+  }),
+  paysic: Platform.select({
+    ios: 'com.paysic',
+    android: 'com.paysic',
   }),
 };
 
