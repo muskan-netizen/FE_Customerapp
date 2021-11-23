@@ -364,7 +364,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.helpnowrightnow'
-            resValue "string", "app_name", "Help Now Right Now"
+            resValue "string", "app_name", "HelpNow!"
             resValue "string", "host_name", ""
         }
         cannabus{
