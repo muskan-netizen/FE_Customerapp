@@ -347,19 +347,20 @@ const getNearestLocation = (currentLocation, savedLocations) => {
       },
       {latitude: item?.latitude, longitude: item?.longitude},
     );
-    var latLongPoints = Object.assign({}, indx);
-    latLongPoints.distance = distance;
-    latLongPoints.latitude = parseFloat(item.latitude);
-    latLongPoints.longitude = parseFloat(item.longitude);
-    latLongPoints.address = item.address;
-    return latLongPoints;
+    var newAddressArray = Object.assign({}, indx);
+    newAddressArray.distance = distance;
+    newAddressArray.latitude = parseFloat(item?.latitude);
+    newAddressArray.longitude = parseFloat(item?.longitude);
+    newAddressArray.address = item?.address;
+    newAddressArray.type = item?.type;
+
+    return newAddressArray;
   });
-  console.log(points, 'pointspoints');
 
   const minDistance = Math.min.apply(
     null,
     points.map(function (item) {
-      return item.distance;
+      return item?.distance;
     }),
   );
 

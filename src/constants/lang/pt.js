@@ -583,4 +583,5 @@ export default {
   SELECT_LOCATION: 'Select Locations',
   NEARBY_LOCATION: 'Nearby Locations',
   SEARCHED_RESULTS: 'Searched Results',
+  OTHERS: 'Others',
 };

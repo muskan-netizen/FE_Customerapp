@@ -402,10 +402,17 @@ export default ({themeColors, fontFamily}) => {
     },
     locationTxt: {
       fontFamily: fontFamily.medium,
-      fontSize: moderateScale(15),
+      fontSize: moderateScale(12),
+      marginLeft: 2,
     },
     locationView: {
       marginLeft: 5,
+    },
+    locationTypeTxt: {
+      fontFamily: fontFamily.bold,
+      fontSize: moderateScale(15),
+      marginLeft: 2,
+      color: themeColors.primary_color,
     },
   });
 
