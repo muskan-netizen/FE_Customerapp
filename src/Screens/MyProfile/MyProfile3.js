@@ -254,7 +254,7 @@ export default function MyProfile3({route, navigation}) {
         .then((res) => {
           updateState({del: del ? false : true});
           showSuccess(res.message);
-          console.log(res.message, 'jsdkfjhsdjfhkjsdfh');
+          console.log(res.message, 'responseSave');
 
           // setTimeout(() => {
           //   getAllAddress();
@@ -381,6 +381,7 @@ export default function MyProfile3({route, navigation}) {
                 code: appData?.profile?.code,
               })
               .then((res) => {
+                console.log(res, 'resresres');
                 const source = {
                   uri: getImageUrl(
                     res.data.proxy_url,

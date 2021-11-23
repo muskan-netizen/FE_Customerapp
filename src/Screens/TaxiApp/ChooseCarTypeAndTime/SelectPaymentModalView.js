@@ -170,7 +170,7 @@ export default function SelectPaymentModalView({
           ]
           : styles.bottomView
       }>
-      <ScrollView scrollEnabled={false}>
+      <ScrollView >
         {/* <View
           style={{
             width: moderateScale(35),
@@ -649,7 +649,7 @@ export default function SelectPaymentModalView({
           style={{
             marginTop: moderateScale(10),
             marginHorizontal: moderateScale(20),
-            marginBottom: moderateScale(20),
+            marginBottom: moderateScale(32),
           }}>
           <GradientButton
             colorsArray={[themeColors.primary_color, themeColors.primary_color]}
