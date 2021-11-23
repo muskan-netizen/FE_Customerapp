@@ -314,7 +314,7 @@ export default function Home({route, navigation}) {
                     latitude: '',
                     longitude: '',
                   };
-                  actions.locationData(data);
+                  // actions.locationData(data);
                 }
               }
               setTimeout(() => {
@@ -543,7 +543,7 @@ export default function Home({route, navigation}) {
 
   useEffect(() => {
     homeData();
-  }, [selectedTabType, appData, dineInType, location]);
+  }, [selectedTabType, appData, dineInType]);
   // location
 
   ///onPressCategory2

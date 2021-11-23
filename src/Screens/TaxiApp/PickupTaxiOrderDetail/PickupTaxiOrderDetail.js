@@ -40,12 +40,14 @@ import useInterval from '../../../utils/useInterval';
 import { cloneDeep } from 'lodash';
 import BottomViewModal from '../../../Components/BottomViewModal';
 import FastImage from 'react-native-fast-image';
+
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../../styles/responsiveSize';
 import StarRating from 'react-native-star-rating';
 import { mapStyleGrey } from '../../../utils/constants/MapStyle';
+import StepIndicators from '../../../Components/StepIndicator';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -78,6 +80,12 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     getDispatchId: null,
     isVisible: false,
     driverRating: 0,
+    labels: [
+      'Accepted',
+      'Arrival',
+      strings.OUT_FOR_DELIVERY,
+      strings.DELIVERED,
+    ],
   });
   const {
     isLoading,
@@ -98,6 +106,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     getDispatchId,
     isVisible,
     driverRating,
+    labels
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -214,7 +223,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       )
       .then((res) => {
         // console.log(res?.data?.order_details?.dispatcher_status, 'res---agent');
-        console.log('agent location',res?.data?.agent_location?.lat)
+        console.log('agent location', res?.data?.agent_location?.lat)
         updateState({
           agent_location: res?.data?.agent_location,
           orderDetail: res?.data?.order,
@@ -489,7 +498,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               ref={mapRef}
               // cacheEnabled={true}
               customMapStyle={mapStyleGrey}
-              showsMyLocationButton={true}
+              // showsMyLocationButton={true}
               userLocationFastestInterval={10000}
               onRegionChangeComplete={_onRegionChange}>
               {/* pick and drop all locations */}
@@ -565,7 +574,17 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               />
             </MapView>
 
-            <View style={styles.topView}>
+            <View style={{
+              ...styles.topView,
+              // width: '100%',
+              // marginBottom: 36
+            }}>
+
+              {/* <StepIndicators
+                labels={labels}
+                currentPosition={'Accepted'}
+                themeColor={themeColors}
+              /> */}
               <TouchableOpacity
                 style={[
                   styles.backButtonView,
