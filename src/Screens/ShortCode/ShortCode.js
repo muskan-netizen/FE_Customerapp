@@ -1057,6 +1057,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.chipetaxi:
+          updateState({
+            shortCode: shortCodes.chipetaxi,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
