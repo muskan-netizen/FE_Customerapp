@@ -134,7 +134,6 @@ export default function BrandProducts2({route, navigation}) {
     useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state?.auth?.userData);
   const fontFamily = appStyle?.fontSizeData;
-
   //Screen styling
   const styles = stylesFunc({themeColors, fontFamily});
 
