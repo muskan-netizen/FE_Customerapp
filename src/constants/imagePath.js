@@ -162,6 +162,7 @@ export default {
   iconItems: require('../assets/images/VendorAppImages/ic_items.png'),
   iconPayments: require('../assets/images/VendorAppImages/ic_payment.png'),
   myStoreIcon: require('../assets/images/VendorAppImages/ic_my_store.png'),
+  icAttachments: require('../assets/images/ic_attachment.png'),
 
   frameorder: require('../assets/images/Courier/Frameorder.png'),
 
