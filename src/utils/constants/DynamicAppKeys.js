@@ -159,6 +159,7 @@ const shortCodes = {
   ezmobilefuel: 'a024bd',
   runaround: 'f2a962',
   swiftandvalu: 'f89822',
+  trucxi: '3096b7',
 };
 
 const appIds = {
@@ -793,6 +794,10 @@ const appIds = {
   swiftandvalu: Platform.select({
     ios: 'com.customer.swiftandvalu',
     android: 'com.swiftandvalu',
+  }),
+  trucxi: Platform.select({
+    ios: 'com.trucxi',
+    android: 'com.trucxi',
   }),
 };
 

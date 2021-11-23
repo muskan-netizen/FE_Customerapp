@@ -1805,6 +1805,16 @@ android {
             resValue "string", "app_name", "Swift and Valu"
             resValue "string", "host_name", ""
          }
+        trucxi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.trucxi'
+            resValue "string", "app_name", "Trucxi"
+            resValue "string", "host_name", ""
+         }
         
     }
 }
