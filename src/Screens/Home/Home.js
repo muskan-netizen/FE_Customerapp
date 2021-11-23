@@ -183,7 +183,7 @@ export default function Home({route, navigation}) {
                   latitude: appMainData?.reqData?.latitude,
                   longitude: appMainData?.reqData?.longitude,
                 };
-                actions.locationData(data);
+                actions.locationData(res);
               } else {
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
                   if (!!userData?.auth_token && !paramData?.details) {
@@ -191,8 +191,16 @@ export default function Home({route, navigation}) {
                       res,
                       saveAllUserAddress,
                     );
-                    console.log(nearestAddress, '<==nearestAddress');
-                    actions.locationData(nearestAddress);
+
+                    if (!!nearestAddress) {
+                      actions.locationData(nearestAddress);
+                      return;
+                    } else {
+                      actions.locationData(res);
+                      return;
+                    }
+                  } else {
+                    actions.locationData(res);
                     return;
                   }
                 }
@@ -291,6 +299,7 @@ export default function Home({route, navigation}) {
                     latitude: res?.data?.reqData?.latitude,
                     longitude: res?.data?.reqData?.longitude,
                   };
+
                   actions.locationData(data);
                 }
               } else {

@@ -88,7 +88,8 @@ export default function AddressModal3({
         lable: strings.HOME,
         icon: imagePath.home,
       },
-      {id: 2, lable: 'Work', icon: imagePath.workInActive},
+      {id: 2, lable: strings.WORK, icon: imagePath.workInActive},
+      {id: 3, lable: strings.OTHERS, icon: imagePath.workInActive},
     ],
     address_type: 1,
     country_code: '',
@@ -99,6 +100,7 @@ export default function AddressModal3({
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
     },
+    customAddress: '',
   });
 
   const styles = stylesData({fontFamily, themeColors});
@@ -140,6 +142,7 @@ export default function AddressModal3({
     is_primary,
     viewHeight,
     region,
+    customAddress,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -176,10 +179,11 @@ export default function AddressModal3({
         addressTypeArray: [
           {
             id: 1,
-            lable: 'Home',
+            lable: strings.HOME,
             icon: imagePath.home,
           },
-          {id: 2, lable: 'Work', icon: imagePath.workInActive},
+          {id: 2, lable: strings.WORK, icon: imagePath.workInActive},
+          {id: 3, lable: strings.OTHERS, icon: imagePath.workInActive},
         ],
         address_type: 1,
       });
@@ -282,6 +286,7 @@ export default function AddressModal3({
       country_code: country_code,
       is_primary: type == 'addAddress' ? 1 : is_primary,
       address_type: address_type,
+      customAddress: address_type === 3 ? customAddress : '',
     };
     if (type == 'Home1') {
       navigation.navigate(navigationStrings.HOME, {
@@ -613,16 +618,6 @@ export default function AddressModal3({
                             : colors.white,
                         },
                       ]}>
-                      {/* <Image
-                    source={item.icon}
-                    style={{
-                      tintColor:
-                        address_type == item.id
-                          ? themeColors.primary_color
-                          : colors.textGreyG,
-                    }}
-                  /> */}
-
                       <Text
                         style={[
                           {
@@ -645,6 +640,19 @@ export default function AddressModal3({
                 );
               })}
             </View>
+            {address_type === 3 && (
+              <BorderTextInputWithLable
+                onChangeText={_onChangeText('customAddress')}
+                placeholder={'Enter a address type'}
+                textInputStyle={getTextInputStyle(city)}
+                borderWidth={0}
+                marginBottomTxt={0}
+                containerStyle={{
+                  borderBottomWidth: 1,
+                  marginTop: moderateScale(5),
+                }}
+              />
+            )}
           </View>
 
           <GradientButton
