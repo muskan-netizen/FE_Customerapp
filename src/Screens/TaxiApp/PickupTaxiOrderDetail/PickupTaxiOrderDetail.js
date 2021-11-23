@@ -80,6 +80,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     getDispatchId: null,
     isVisible: false,
     driverRating: 0,
+    orderStatus: '',
     labels: [
       'Accepted',
       'Arrival',
@@ -106,7 +107,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     getDispatchId,
     isVisible,
     driverRating,
-    labels
+    labels,
+    orderStatus
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -162,6 +164,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   );
   const mapRef = useRef();
 
+  console.log("driverStatusdriverStatus", orderStatus)
+
   useInterval(
     () => {
       if (urlValue) {
@@ -170,7 +174,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         updateState({ isLoading: false });
       }
     },
-    isFocused && driverStatus != 'Completed' ? 3000 : null,
+    isFocused && orderStatus != 'completed' ? 3000 : null,
   );
 
   useEffect(() => {
@@ -188,7 +192,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       driverStatus != undefined
     ) {
       console.log(driverStatus, 'driverStatus');
-      if (driverStatus === 'Completed') {
+      if (orderStatus === 'completed') {
         showSuccess(driverStatus);
         updateState({
           isShowRating: true,
@@ -223,7 +227,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       )
       .then((res) => {
         // console.log(res?.data?.order_details?.dispatcher_status, 'res---agent');
-        console.log('agent location', res?.data?.agent_location?.lat)
+        console.log('agent location', res?.data)
         updateState({
           agent_location: res?.data?.agent_location,
           orderDetail: res?.data?.order,
@@ -232,6 +236,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           productInfo: res?.data?.order_details?.products,
           getDispatchId: res?.data?.order?.id,
           driverRating: res?.data?.avgrating,
+          orderStatus: res?.data?.order?.status
         });
       })
       .catch(errorMethod);
@@ -283,7 +288,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           agent_image: res?.data?.agent_image,
           driverStatus: res?.data?.order_details?.dispatcher_status,
           isShowRating:
-            res?.data?.order_details?.dispatcher_status == 'Completed'
+            res?.data?.order?.status == 'completed'
               ? true
               : false,
           productInfo: res?.data?.order_details?.products,
@@ -523,7 +528,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               ))}
 
               {/* driver location */}
-              {agent_location && driverStatus != 'Completed' && (
+              {agent_location && orderStatus != 'completed' && (
                 <MapView.Marker
                   key={`coordinate_${agent_location?.lat}`}
                   //   image={imagePath.driver}

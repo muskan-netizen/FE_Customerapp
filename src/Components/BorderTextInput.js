@@ -7,16 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 import {hitSlopProp} from '../styles/commonStyles';
-import {
-  moderateScaleVertical,
-  textScale,
-  width,
-} from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dark-mode';
+import {moderateScaleVertical, textScale} from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
 
 export default function BorderTextInput({
@@ -65,6 +60,7 @@ export default function BorderTextInput({
         borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.borderLight,
         marginBottom,
         overflow: 'hidden',
+
         ...containerStyle,
       }}>
       {leftIcon && (

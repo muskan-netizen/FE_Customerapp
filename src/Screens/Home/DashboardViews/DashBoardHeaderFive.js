@@ -454,19 +454,28 @@ export default function DashBoardHeaderFive({
                 source={imagePath.redLocation}
                 resizeMode="contain"
               />
-
-              <Text
-                numberOfLines={1}
-                style={[
-                  styles.locationTxt,
-                  {
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGrey,
-                  },
-                ]}>
-                {location?.address}
-              </Text>
+              <View>
+                {!!location?.type && (
+                  <Text numberOfLines={1} style={styles.locationTypeTxt}>
+                    {location?.type === 1
+                      ? 'Home'
+                      : // ? location?.type === 2
+                        'Work'}
+                  </Text>
+                )}
+                <Text
+                  numberOfLines={1}
+                  style={[
+                    styles.locationTxt,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGrey,
+                    },
+                  ]}>
+                  {location?.address}
+                </Text>
+              </View>
             </TouchableOpacity>
           )}
         </View>
