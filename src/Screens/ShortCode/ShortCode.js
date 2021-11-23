@@ -1033,6 +1033,30 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.runaround:
+          updateState({
+            shortCode: shortCodes.runaround,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.swiftandvalu:
+          updateState({
+            shortCode: shortCodes.swiftandvalu,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.trucxi:
+          updateState({
+            shortCode: shortCodes.trucxi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.paysic:
+          updateState({
+            shortCode: shortCodes.paysic,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
