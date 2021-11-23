@@ -324,6 +324,7 @@ export default function VariantAddons({
         {setoptions.map((i, inx) => {
           return (
             <TouchableOpacity
+              key={inx}
               activeOpacity={1}
               onPress={() => {
                 selectSpecificOptionsForAddions(setoptions, i, inx);
@@ -535,6 +536,7 @@ export default function VariantAddons({
         {options.map((i, inx) => {
           return (
             <TouchableOpacity
+              key={inx}
               // disabled={options && options.length == 1 ? true : false}
               onPress={() => selectSpecificOptions(options, i, inx)}
               style={{
@@ -568,6 +570,7 @@ export default function VariantAddons({
         {options.map((i, inx) => {
           return (
             <TouchableNativeFeedback
+              key={inx}
               // disabled={options && options.length == 1 ? true : false}
               onPress={() => selectSpecificOptions(options, i, inx)}
               style={{
@@ -670,15 +673,13 @@ export default function VariantAddons({
     });
 
     const checkIsError = addonSet.findIndex((el) => el.errorShow);
+    let data = {};
 
     if (checkIsError == -1) {
-      let data = {};
       data['sku'] = productSku;
       data['quantity'] = productQuantityForCart;
       data['product_variant_id'] = productVariantId;
       data['type'] = dine_In_Type;
-      console.log(addon_ids, 'addon_ids');
-      console.log(addon_options, 'addon_options');
       if (addonSet && addonSet.length) {
         // console.log(addonSetData, 'addonSetData');
         data['addon_ids'] = addon_ids;
@@ -1081,101 +1082,107 @@ export default function VariantAddons({
               </Text>
             ) : null}
           </ScrollView>
-
-          {(!showErrorMessageTitle && productTotalQuantity != 0) ||
+          {console.log(
+            showErrorMessageTitle,
+            'showErrorMessageTitle',
+            productDetailData?.sell_when_out_of_stock,
+          )}
+          {!!(
+            (!showErrorMessageTitle && productTotalQuantity > 0) ||
             (!!typeId && typeId == 8) ||
-            (!!productDetailData?.sell_when_out_of_stock && (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  paddingHorizontal: moderateScale(16),
-                  paddingBottom: moderateScaleVertical(16),
-                  backgroundColor: isDarkMode
-                    ? MyDarkTheme.colors.background
-                    : '#fff',
-                }}>
-                <View style={{flex: 0.25}}>
-                  <View
-                    style={{
-                      ...commonStyles.buttonRect,
-                      ...styles.incDecBtnStyle,
-                      backgroundColor: getColorCodeWithOpactiyNumber(
-                        themeColors.primary_color.substr(1),
-                        15,
-                      ),
-                      borderColor: themeColors?.primary_color,
-                      height: moderateScale(38),
-                    }}
-                    // onPress={onPress}
-                  >
-                    <TouchableOpacity
-                      onPress={() => productIncrDecreamentForCart(2)}
-                      hitSlop={hitSlopProp}>
-                      <Text
-                        style={{
-                          ...commonStyles.mediumFont14,
-                          color: themeColors?.primary_color,
-                          fontFamily: fontFamily.bold,
-                        }}>
-                        -
-                      </Text>
-                    </TouchableOpacity>
+            !!productDetailData?.sell_when_out_of_stock
+          ) && (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingHorizontal: moderateScale(16),
+                paddingBottom: moderateScaleVertical(16),
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.background
+                  : '#fff',
+              }}>
+              <View style={{flex: 0.25}}>
+                <View
+                  style={{
+                    ...commonStyles.buttonRect,
+                    ...styles.incDecBtnStyle,
+                    backgroundColor: getColorCodeWithOpactiyNumber(
+                      themeColors.primary_color.substr(1),
+                      15,
+                    ),
+                    borderColor: themeColors?.primary_color,
+                    height: moderateScale(38),
+                  }}
+                  // onPress={onPress}
+                >
+                  <TouchableOpacity
+                    onPress={() => productIncrDecreamentForCart(2)}
+                    hitSlop={hitSlopProp}>
                     <Text
                       style={{
                         ...commonStyles.mediumFont14,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
+                        color: themeColors?.primary_color,
+                        fontFamily: fontFamily.bold,
                       }}>
-                      {productQuantityForCart}
+                      -
                     </Text>
-                    <TouchableOpacity
-                      onPress={() => productIncrDecreamentForCart(1)}
-                      hitSlop={hitSlopProp}>
-                      <Text
-                        style={{
-                          ...commonStyles.mediumFont14,
-                          color: themeColors?.primary_color,
-                          fontFamily: fontFamily.bold,
-                        }}>
-                        +
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-
-                <View style={{marginHorizontal: 8}} />
-                <View
-                  pointerEvents={btnLoader ? 'none' : 'auto'}
-                  style={{flex: 0.75}}>
-                  <GradientButton
-                    indicator={btnLoader}
-                    indicatorColor={colors.white}
-                    colorsArray={[
-                      themeColors.primary_color,
-                      themeColors.primary_color,
-                    ]}
-                    textStyle={{
-                      fontFamily: fontFamily.medium,
-                      textTransform: 'capitalize',
-                    }}
-                    onPress={() => addToCart(addonSet)}
-                    btnText={`${strings.ADD_ITEM} - ${
-                      currencies?.primary_currency?.symbol
-                    }${(
-                      Number(productPriceData?.multiplier) *
-                      Number(productPriceData?.price)
-                    ).toFixed(2)}`}
-                    btnStyle={{
-                      borderRadius: moderateScale(4),
-                      height: moderateScale(38),
-                    }}
-                  />
+                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      ...commonStyles.mediumFont14,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
+                    {productQuantityForCart}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => productIncrDecreamentForCart(1)}
+                    hitSlop={hitSlopProp}>
+                    <Text
+                      style={{
+                        ...commonStyles.mediumFont14,
+                        color: themeColors?.primary_color,
+                        fontFamily: fontFamily.bold,
+                      }}>
+                      +
+                    </Text>
+                  </TouchableOpacity>
                 </View>
               </View>
-            ))}
+
+              <View style={{marginHorizontal: 8}} />
+              <View
+                pointerEvents={btnLoader ? 'none' : 'auto'}
+                style={{flex: 0.75}}>
+                <GradientButton
+                  indicator={btnLoader}
+                  indicatorColor={colors.white}
+                  colorsArray={[
+                    themeColors.primary_color,
+                    themeColors.primary_color,
+                  ]}
+                  textStyle={{
+                    fontFamily: fontFamily.medium,
+                    textTransform: 'capitalize',
+                  }}
+                  onPress={() => addToCart(addonSet)}
+                  btnText={`${strings.ADD_ITEM} - ${
+                    currencies?.primary_currency?.symbol
+                  }${(
+                    Number(productPriceData?.multiplier) *
+                    Number(productPriceData?.price)
+                  ).toFixed(2)}`}
+                  btnStyle={{
+                    borderRadius: moderateScale(4),
+                    height: moderateScale(38),
+                  }}
+                />
+              </View>
+            </View>
+          )}
         </Animatable.View>
       )}
     </Modal>

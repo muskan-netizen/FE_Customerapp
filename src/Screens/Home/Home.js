@@ -187,11 +187,12 @@ export default function Home({route, navigation}) {
               } else {
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
                   if (!!userData?.auth_token && !paramData?.details) {
-                    const nearAddress = getNearestLocation(
+                    const nearestAddress = getNearestLocation(
                       res,
                       saveAllUserAddress,
                     );
-                    actions.locationData(nearAddress);
+                    console.log(nearestAddress, '<==nearestAddress');
+                    actions.locationData(nearestAddress);
                     return;
                   }
                 }
@@ -227,6 +228,7 @@ export default function Home({route, navigation}) {
           },
         )
         .then((res) => {
+          console.log(res, 'resresres');
           updateState({
             isLoadingB: false,
           });

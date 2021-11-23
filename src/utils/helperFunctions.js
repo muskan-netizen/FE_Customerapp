@@ -354,7 +354,7 @@ const getNearestLocation = (currentLocation, savedLocations) => {
     latLongPoints.address = item.address;
     return latLongPoints;
   });
-  console.log(points, 'pointspoints');
+  console.log(points, '<===points');
 
   const minDistance = Math.min.apply(
     null,
