@@ -353,9 +353,10 @@ const getNearestLocation = (currentLocation, savedLocations) => {
     newAddressArray.longitude = parseFloat(item?.longitude);
     newAddressArray.address = item?.address;
     newAddressArray.type = item?.type;
-
+    newAddressArray.type_name = item?.type_name;
     return newAddressArray;
   });
+
 
   const minDistance = Math.min.apply(
     null,

@@ -457,10 +457,11 @@ export default function DashBoardHeaderFive({
               <View>
                 {!!location?.type && (
                   <Text numberOfLines={1} style={styles.locationTypeTxt}>
-                    {location?.type === 1
-                      ? 'Home'
-                      : // ? location?.type === 2
-                        'Work'}
+                    {location?.type === 3
+                      ? location?.type_name
+                      : location?.type === 2
+                      ? strings.WORK
+                      : strings.HOME}
                   </Text>
                 )}
                 <Text

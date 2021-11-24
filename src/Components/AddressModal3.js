@@ -286,7 +286,7 @@ export default function AddressModal3({
       country_code: country_code,
       is_primary: type == 'addAddress' ? 1 : is_primary,
       address_type: address_type,
-      customAddress: address_type === 3 ? customAddress : '',
+      type_name: address_type === 3 && customAddress,
     };
     if (type == 'Home1') {
       navigation.navigate(navigationStrings.HOME, {
