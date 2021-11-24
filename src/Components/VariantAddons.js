@@ -648,6 +648,11 @@ export default function VariantAddons({
   };
 
   const addToCart = (addonSet) => {
+
+    let updateQty = productdetail?.qty + 1 || //localy update cart quanity
+    productdetail?.variant[0]?.check_if_in_cart_app[0]?.quantity + 1 || productQuantityForCart
+    console.log('update qty',updateQty)
+    
     console.log('add on set', addonSet);
     const addon_ids = [];
     const addon_options = [];
@@ -677,7 +682,7 @@ export default function VariantAddons({
 
     if (checkIsError == -1) {
       data['sku'] = productSku;
-      data['quantity'] = productQuantityForCart;
+      data['quantity'] = updateQty;
       data['product_variant_id'] = productVariantId;
       data['type'] = dine_In_Type;
       if (addonSet && addonSet.length) {
@@ -700,13 +705,14 @@ export default function VariantAddons({
           updateState({isLoadingC: false, btnLoader: false});
           updateCartItems(
             productdetail,
-            productQuantityForCart,
+            updateQty,
             res.data.cart_product_id,
             res.data.id,
           );
           onClose();
         })
         .catch((error) => errorMethodSecond(error, addonSet));
+        return;
     }
     console.log(data, 'data for cart');
     updateState({btnLoader: true});
@@ -723,7 +729,7 @@ export default function VariantAddons({
         updateState({isLoadingC: false, btnLoader: false});
         updateCartItems(
           productdetail,
-          productQuantityForCart,
+          updateQty,
           res.data.cart_product_id,
           res.data.id,
         );
