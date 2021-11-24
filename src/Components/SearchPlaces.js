@@ -18,7 +18,8 @@ const SearchPlaces = ({
     placeHolder,
     onFocus = () => { },
     autoFocus = false,
-    _moveToNextScreen = () => { }
+    _moveToNextScreen = () => { },
+    curLatLng = {}
 }) => {
     // console.log(mapKey, 'in MapPlaceComp map key')
 
@@ -31,9 +32,10 @@ const SearchPlaces = ({
 
     const textChangeHandler = async (data) => {
         setValue(data)
-        let res = await googlePlacesApi(data, mapKey);
-        if (res && res.predictions) {
-            fetchArrayResult(res.predictions)
+        let res = await googlePlacesApi(data, mapKey, curLatLng);
+
+        if (res && !!res.results) {
+            fetchArrayResult(res.results)
         }
     }
 

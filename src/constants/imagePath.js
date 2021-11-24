@@ -373,7 +373,7 @@ export default {
   bluetooth: require('../assets/images/RoyoorderNewImages/bluetooth.png'),
   rightArrowAngle: require('../assets/images/RoyoorderNewImages/right-arrow-angle.png'),
   car5: require('../assets/images/TAXIAPPIMAGES/ic_car1.png'),
-  ride: require('../assets/images/TAXIAPPIMAGES/ic_ride_icon.png'),
+  ride: require('../assets/images/TAXIAPPIMAGES/ic_ride.png'),
   taxiOrders: require('../assets/images/TAXIAPPIMAGES/ic_orders.png'),
   icAdd: require('../assets/images/TAXIAPPIMAGES/ic_add.png'),
   icNearby: require('../assets/images/TAXIAPPIMAGES/ic_nearby.png'),
@@ -384,6 +384,8 @@ export default {
   grayDot: require('../assets/images/TAXIAPPIMAGES/ic_dot.png'),
   blackSquare: require('../assets/images/TAXIAPPIMAGES/ic_square.png'),
   blackNav: require('../assets/images/TAXIAPPIMAGES/ic_nav.png'),
+  rideFilled: require('../assets/images/TAXIAPPIMAGES/ic_ridefilled.png'),
+
   plushRoundedBackground: require('../assets/images/TAXIAPPIMAGES/ic_plus.png'),
   icViewMore: require('../assets/images/RoyoorderNewImages/ic_viewmore.png'),
   msg: require('../assets/images/ic_msg.png'),

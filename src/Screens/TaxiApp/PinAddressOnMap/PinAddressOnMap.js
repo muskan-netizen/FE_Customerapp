@@ -122,6 +122,7 @@ export default function HomeScreenTaxi({ navigation, route }) {
           formattedAddress: json.results[0].formatted_address,
         });
         let detail = {};
+        console.log("scroll detail",json.results[0])
         detail = {
           formatted_address: json.results[0].formatted_address,
           geometry: {
@@ -224,11 +225,13 @@ export default function HomeScreenTaxi({ navigation, route }) {
   console.log(paramData, 'paramDataparamDataparamDataparamDataparamData');
 
   const _modeToNextScreen = () => {
+
     const pickuplocationAllData = {
       longitude: details?.geometry?.location?.lng,
       latitude: details?.geometry?.location?.lat,
       address: details?.formatted_address,
       task_type_id: paramData?.task_id,
+      pre_address: details?.formatted_address
     }
 
     console.log(pickuplocationAllData, 'pickuplocationAllData');
