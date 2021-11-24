@@ -2805,7 +2805,7 @@ export default function Products({route, navigation}) {
                 }`
               : ''
           }
-          ifCartShow={CartItems && CartItems.data && CartItems.data.item_count}
+          ifCartShow={CartItems && CartItems.data && CartItems.data.item_count ? true: false}
           onMenuTap={() => updateState({MenuModalVisible: !MenuModalVisible})}
         />
       )}
