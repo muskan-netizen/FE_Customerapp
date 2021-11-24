@@ -162,6 +162,7 @@ export default {
   iconItems: require('../assets/images/VendorAppImages/ic_items.png'),
   iconPayments: require('../assets/images/VendorAppImages/ic_payment.png'),
   myStoreIcon: require('../assets/images/VendorAppImages/ic_my_store.png'),
+  icAttachments: require('../assets/images/ic_attachment.png'),
 
   frameorder: require('../assets/images/Courier/Frameorder.png'),
 
@@ -324,6 +325,7 @@ export default {
   brandsInActive1: require('../assets/images/ic_tagGrey1.png'),
   taxiUserAccount: require('../assets/images/TAXIAPPIMAGES/ic_account.png'),
   savedLocationImage: require('../assets/images/TAXIAPPIMAGES/ic_fav.png'),
+  noRides: require('../assets/images/TAXIAPPIMAGES/ic_norides.png'),
   RecentLocationImage: require('../assets/images/TAXIAPPIMAGES/ic_saved.png'),
   mapNavigation: require('../assets/images/TAXIAPPIMAGES/ic_nav.png'),
   locationPin: require('../assets/images/TAXIAPPIMAGES/ic_pin.png'),
@@ -396,5 +398,6 @@ export default {
   settings_icon: require('../assets/images/TowFinder/settings.png'),
   settings_red_icon: require('../assets/images/TowFinder/ic_settings1.png'),
   ic_cameraColored: require('../assets/images/ic_cameraColored.png'),
-  // ic_placeholderbeeNew: require('../assets/images/ic_placeholderbeeNew.png'),
+  pickUpSchedule: require('../assets/images/ic_pickup.png'),
+  dropOffSchedule: require('../assets/images/ic_order.png'),
 };

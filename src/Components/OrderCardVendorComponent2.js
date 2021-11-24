@@ -1,16 +1,15 @@
 import moment from 'moment';
-import React from 'react';
+import React, { useState } from 'react';
 import {
-  Image,
-  ImageBackground,
-  ScrollView,
+  Image, ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import {dummyUser} from '../constants/constants';
+import { useDarkMode } from 'react-native-dark-mode';
+import { useSelector } from 'react-redux';
+import { dummyUser } from '../constants/constants';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import staticStrings from '../constants/staticStrings';
@@ -18,18 +17,17 @@ import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
 import {
-  getColorCodeWithOpactiyNumber,
-  getImageUrl,
+  getImageUrl
 } from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
-import {color} from 'react-native-reanimated';
+import Modal from 'react-native-modal';
 
 export default function OrderCardVendorComponent2({
   data = {},
@@ -44,9 +42,8 @@ export default function OrderCardVendorComponent2({
   cardStyle,
 }) {
   let cardWidth = width - 21.5;
-
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
-    useSelector((state) => state?.initBoot);
+  const [showModal, setModal] = useState(false)
+  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const businessType = appStyle?.homePageLayout;
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -55,14 +52,14 @@ export default function OrderCardVendorComponent2({
   const imageUrl =
     data && data.vendor
       ? getImageUrl(
-          data.vendor.logo.image_fit,
-          data.vendor.logo.image_path,
-          '200/200',
-        )
+        data.vendor.logo.image_fit,
+        data.vendor.logo.image_path,
+        '200/200',
+      )
       : dummyUser;
   const fontFamily = appStyle?.fontSizeData;
 
-  const styles = stylesFunc({fontFamily, themeColors});
+  const styles = stylesFunc({ fontFamily, themeColors });
 
   return (
     <TouchableOpacity
@@ -93,7 +90,7 @@ export default function OrderCardVendorComponent2({
             </Text>
           </View>
         )}
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <View
           style={{
             flex: 1,
@@ -109,7 +106,7 @@ export default function OrderCardVendorComponent2({
               flex: 1,
             }}>
             <Image
-              source={{uri: imageUrl}}
+              source={{ uri: imageUrl }}
               style={{
                 height: moderateScale(35),
                 width: moderateScale(35),
@@ -121,7 +118,7 @@ export default function OrderCardVendorComponent2({
               numberOfLines={2}
               style={
                 isDarkMode
-                  ? [styles.userName, {color: MyDarkTheme.colors.text}]
+                  ? [styles.userName, { color: MyDarkTheme.colors.text }]
                   : styles.userName
               }>
               {data?.vendor?.name || ''}
@@ -129,11 +126,11 @@ export default function OrderCardVendorComponent2({
           </View>
 
           <View>
-            <View style={{width: moderateScale(130)}}>
+            <View style={{ width: moderateScale(130) }}>
               <Text
                 style={
                   isDarkMode
-                    ? [styles.orderLableStyle, {color: MyDarkTheme.colors.text}]
+                    ? [styles.orderLableStyle, { color: MyDarkTheme.colors.text }]
                     : styles.orderLableStyle
                 }>
                 {`${strings.ORDER_ID}: #${data?.order_number}`}
@@ -142,22 +139,22 @@ export default function OrderCardVendorComponent2({
                 style={
                   isDarkMode
                     ? [
-                        styles.orderLableStyle,
-                        {
-                          color: MyDarkTheme.colors.text,
-                          marginVertical: moderateScaleVertical(5),
-                        },
-                      ]
+                      styles.orderLableStyle,
+                      {
+                        color: MyDarkTheme.colors.text,
+                        marginVertical: moderateScaleVertical(5),
+                      },
+                    ]
                     : [
-                        styles.orderLableStyle,
-                        {
-                          marginVertical: moderateScaleVertical(5),
-                          color: colors.black,
-                        },
-                      ]
+                      styles.orderLableStyle,
+                      {
+                        marginVertical: moderateScaleVertical(5),
+                        color: colors.black,
+                      },
+                    ]
                 }>{`${moment(data?.date_time).format('DD MMM, YYYY')} ${moment(
-                data?.date_time,
-              ).format('LT')} `}</Text>
+                  data?.date_time,
+                ).format('LT')} `}</Text>
             </View>
           </View>
         </View>
@@ -178,22 +175,36 @@ export default function OrderCardVendorComponent2({
       <View
         style={[
           styles.borderStyle,
-          {marginHorizontal: moderateScale(10)},
+          { marginHorizontal: moderateScale(10) },
         ]}></View>
       <View
         style={{
           borderColor: colors.borderColorB,
           padding: moderateScale(10),
         }}>
-        <Text
-          style={{
-            fontFamily: fontFamily.semiBold,
-            fontSize: textScale(14),
-            marginVertical: moderateScaleVertical(10),
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-          }}>
-          {`${strings.TOTAL_ITEMS}: ${data?.product_details?.length}`}
-        </Text>
+
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: moderateScaleVertical(10), }}>
+          <Text
+            style={{
+              fontFamily: fontFamily.semiBold,
+              fontSize: textScale(14),
+
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}>
+            {`${strings.TOTAL_ITEMS}: ${data?.product_details?.length}`}
+          </Text>
+          {data?.order_status?.current_status?.title == strings.DELIVERED && (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => setModal(true)}
+            >
+              <Image
+                style={{ tintColor: themeColors.primary_color }}
+                source={imagePath.icAttachments}
+              />
+            </TouchableOpacity>)}
+        </View>
         <ScrollView bounces={true}>
           {data?.product_details.map((i, inx) => {
             return (
@@ -209,9 +220,9 @@ export default function OrderCardVendorComponent2({
                       style={
                         isDarkMode
                           ? [
-                              styles.orderLableStyle,
-                              {color: MyDarkTheme.colors.text},
-                            ]
+                            styles.orderLableStyle,
+                            { color: MyDarkTheme.colors.text },
+                          ]
                           : styles.orderLableStyle
                       }>
                       {i?.title || ''}
@@ -222,13 +233,13 @@ export default function OrderCardVendorComponent2({
                       style={
                         isDarkMode
                           ? [
-                              styles.qtyViewStyle,
-                              {
-                                color: MyDarkTheme.colors.text,
-                                fontSize: textScale(10),
-                              },
-                            ]
-                          : [styles.qtyViewStyle, {fontSize: textScale(10)}]
+                            styles.qtyViewStyle,
+                            {
+                              color: MyDarkTheme.colors.text,
+                              fontSize: textScale(10),
+                            },
+                          ]
+                          : [styles.qtyViewStyle, { fontSize: textScale(10) }]
                       }>
                       {`x ${i?.qty || ''}`}
                     </Text>
@@ -253,19 +264,19 @@ export default function OrderCardVendorComponent2({
             }}>
             <Image
               source={imagePath.iconPayments}
-              style={{tintColor: colors.textGreyB}}
+              style={{ tintColor: colors.textGreyB }}
             />
             <Text
               style={
                 isDarkMode
                   ? [
-                      styles.lableOrders,
-                      {
-                        paddingLeft: moderateScale(5),
-                        color: MyDarkTheme.colors.text,
-                      },
-                    ]
-                  : [styles.lableOrders, {paddingLeft: moderateScale(5)}]
+                    styles.lableOrders,
+                    {
+                      paddingLeft: moderateScale(5),
+                      color: MyDarkTheme.colors.text,
+                    },
+                  ]
+                  : [styles.lableOrders, { paddingLeft: moderateScale(5) }]
               }>
               {`${strings.PAYMENT} : `}
               <Text style={styles.valueOrders}>
@@ -279,13 +290,13 @@ export default function OrderCardVendorComponent2({
                 color: themeColors.primary_color,
                 marginHorizontal: moderateScale(10),
               }}>{`${currencies?.primary_currency?.symbol}${
-              // Number(i?.pvariant?.multiplier) *
-              Number(data?.payable_amount).toFixed(2)
-            }`}</Text>
+                // Number(i?.pvariant?.multiplier) *
+                Number(data?.payable_amount).toFixed(2)
+                }`}</Text>
           </View>
         </View>
 
-        <View style={[styles.borderStyle, {marginHorizontal: -15}]}></View>
+        <View style={[styles.borderStyle, { marginHorizontal: -15 }]}></View>
 
         {selectedTab && selectedTab == strings.PAST_ORDERS ? (
           <View
@@ -326,7 +337,7 @@ export default function OrderCardVendorComponent2({
                 )}
               </TouchableOpacity>
             ) : (
-              <View style={{flex: 0.6}} />
+              <View style={{ flex: 0.6 }} />
             )}
           </View>
         ) : (
@@ -353,11 +364,11 @@ export default function OrderCardVendorComponent2({
               </View>
             </View>
             {selectedTab &&
-            data?.dispatch_traking_url &&
-            data?.product_details[0]?.category_type !=
+              data?.dispatch_traking_url &&
+              data?.product_details[0]?.category_type !=
               staticStrings.PICKUPANDDELIEVRY &&
-            (selectedTab == strings.ACTIVE_ORDERS ||
-              selectedTab == strings.SCHEDULED_ORDERS) ? (
+              (selectedTab == strings.ACTIVE_ORDERS ||
+                selectedTab == strings.SCHEDULED_ORDERS) ? (
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate(navigationStrings.WEBVIEWSCREEN, {
@@ -379,11 +390,11 @@ export default function OrderCardVendorComponent2({
             ) : null}
 
             {selectedTab &&
-            (selectedTab != strings.ACTIVE_ORDERS ||
-              selectedTab != strings.SCHEDULED_ORDERS) ? null : (
+              (selectedTab != strings.ACTIVE_ORDERS ||
+                selectedTab != strings.SCHEDULED_ORDERS) ? null : (
               <View style={styles.bottomSecondHalf}>
                 {data?.order_status?.current_status?.id == 1 ? (
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{ flexDirection: 'row' }}>
                     <TouchableOpacity
                       onPress={() => updateOrderStatus(data, 8)}
                       style={styles.orderReject}>
@@ -391,7 +402,7 @@ export default function OrderCardVendorComponent2({
                         {strings.REJECT}
                       </Text>
                     </TouchableOpacity>
-                    <View style={{width: moderateScale(10)}} />
+                    <View style={{ width: moderateScale(10) }} />
                     <TouchableOpacity
                       onPress={() => updateOrderStatus(data, 7)}
                       style={styles.orderAccept}>
@@ -419,11 +430,54 @@ export default function OrderCardVendorComponent2({
           </View>
         )}
       </View>
+      <Modal
+        isVisible={showModal}
+        onBackdropPress={() => setModal(false)}
+        animationIn="zoomIn"
+        animationOut="zoomOut"
+      >
+        <View style={{
+          backgroundColor: isDarkMode ? colors.whiteOpacity50 : colors.white,
+          borderRadius: moderateScale(8),
+          overflow: 'hidden'
+          // paddingVertical: moderateScale(12)
+        }}>
+
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: moderateScale(6)
+          }}>
+            <Text />
+            <Text style={{
+              fontSize: textScale(16),
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              alignSelf: 'center',
+              fontFamily: fontFamily.medium
+            }}>Proof</Text>
+            <TouchableOpacity
+              onPress={() => setModal(false)}
+            >
+              <Image source={imagePath.closeButton} />
+            </TouchableOpacity>
+          </View>
+          <Image
+            source={{ uri: 'https://www.digitalcreed.in/wp-content/uploads/2016/04/driver.jpg' }}
+            style={{
+              width: '100%',
+              height: height / 3,
+              backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.blackOpacity10,
+              // borderRadius: 8,
+            }}
+          />
+        </View>
+      </Modal>
     </TouchableOpacity>
   );
 }
-export function stylesFunc({fontFamily, themeColors}) {
-  const commonStyles = commonStylesFunc({fontFamily});
+export function stylesFunc({ fontFamily, themeColors }) {
+  const commonStyles = commonStylesFunc({ fontFamily });
 
   let cardWidth = width - 21.5;
 

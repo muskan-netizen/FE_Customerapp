@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 import CardLoader from '../../../Components/Loaders/CardLoader';
 import colors from '../../../styles/colors';
 import {
@@ -9,14 +9,14 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 
-export default function ListEmptyCar({isLoading = false}) {
+export default function ListEmptyCar({ isLoading = false }) {
   if (isLoading) {
     return (
       <View>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <CardLoader
-            cardWidth={width / 12}
-            height={moderateScaleVertical(30)}
+            cardWidth={width / 6}
+            height={moderateScaleVertical(40)}
             listSize={1}
             containerStyle={{
               marginLeft: moderateScale(16),
@@ -26,8 +26,8 @@ export default function ListEmptyCar({isLoading = false}) {
           />
           <View>
             <CardLoader
-              cardWidth={50}
-              height={moderateScaleVertical(20)}
+              cardWidth={width / 4}
+              height={moderateScaleVertical(10)}
               listSize={1}
               containerStyle={{
                 marginLeft: moderateScale(16),
@@ -36,7 +36,7 @@ export default function ListEmptyCar({isLoading = false}) {
             />
             <CardLoader
               cardWidth={width / 2}
-              height={moderateScaleVertical(16)}
+              height={moderateScaleVertical(10)}
               listSize={1}
               containerStyle={{
                 marginLeft: moderateScale(16),
@@ -47,7 +47,7 @@ export default function ListEmptyCar({isLoading = false}) {
 
           <CardLoader
             cardWidth={width / 6}
-            height={moderateScaleVertical(25)}
+            height={moderateScaleVertical(20)}
             listSize={1}
             containerStyle={{
               marginLeft: moderateScale(16),

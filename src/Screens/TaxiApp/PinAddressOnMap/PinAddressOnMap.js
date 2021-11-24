@@ -122,7 +122,7 @@ export default function HomeScreenTaxi({ navigation, route }) {
           formattedAddress: json.results[0].formatted_address,
         });
         let detail = {};
-        console.log("scroll detail",json.results[0])
+        console.log("scroll detail", json.results[0])
         detail = {
           formatted_address: json.results[0].formatted_address,
           geometry: {
@@ -236,7 +236,7 @@ export default function HomeScreenTaxi({ navigation, route }) {
 
     console.log(pickuplocationAllData, 'pickuplocationAllData');
     navigation.navigate(navigationStrings.ADDADDRESS, {
-      data: pickuplocationAllData,
+      prefillAdress: pickuplocationAllData,
     });
     //   }
   };
@@ -262,7 +262,8 @@ export default function HomeScreenTaxi({ navigation, route }) {
         initialRegion={region}
         customMapStyle={mapStyleGrey}
         // pointerEvents={'none'}
-        onRegionChangeComplete={_onRegionChange}>
+        onRegionChangeComplete={_onRegionChange}
+      >
         {/* <Marker
             ref={markerRef}
             // pointerEvents={'none'}

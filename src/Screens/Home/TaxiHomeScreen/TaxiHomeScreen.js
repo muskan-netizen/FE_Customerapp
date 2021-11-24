@@ -361,7 +361,10 @@ export default function TaxiHomeScreen({ route, navigation }) {
         //     moveToNewScreen(navigationStrings.ADDADDRESS, item)();
         //   }
         // }
-        moveToNewScreen(navigationStrings.ADDADDRESS, item)();
+        moveToNewScreen(navigationStrings.ADDADDRESS, {
+          ...item,
+          pickUpTimeType: 'now',
+        })();
       } else {
         // showError(strings.UNAUTHORIZED_MESSAGE);
         moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
@@ -545,37 +548,37 @@ export default function TaxiHomeScreen({ route, navigation }) {
     const case_ = 5
     switch (appStyle?.homePageLayout) {
       // switch (case_) {
-        case 4:
-          return (
-            <TaxiHomeDashbord
-              handleRefresh={() => handleRefresh()}
-              bannerPress={(item) => bannerPress(item)}
-              isLoading={isLoading}
-              isRefreshing={isRefreshing}
-              appMainData={appMainData}
-              onPressCategory={(item) => onPressCategory(item)}
-              selectedToggle={selectedToggle}
-              toggleData={appData}
-            />
-          );
-          case 5:
-            return (
-              <DashBoardSeven
-                handleRefresh={() => handleRefresh()}
-                bannerPress={(item) => bannerPress(item)}
-                isLoading={isLoading}
-                isRefreshing={isRefreshing}
-                appMainData={appMainData}
-                onPressCategory={(item) => {
-                  onPressCategory(item);
-                }}
-                isDineInSelected={isDineInSelected}
-                selcetedToggle={false}
-                toggleData={appData}
-                navigation={navigation}
-              />
-            )
-      }
+      case 4:
+        return (
+          <TaxiHomeDashbord
+            handleRefresh={() => handleRefresh()}
+            bannerPress={(item) => bannerPress(item)}
+            isLoading={isLoading}
+            isRefreshing={isRefreshing}
+            appMainData={appMainData}
+            onPressCategory={(item) => onPressCategory(item)}
+            selectedToggle={selectedToggle}
+            toggleData={appData}
+          />
+        );
+      case 5:
+        return (
+          <DashBoardSeven
+            handleRefresh={() => handleRefresh()}
+            bannerPress={(item) => bannerPress(item)}
+            isLoading={isLoading}
+            isRefreshing={isRefreshing}
+            appMainData={appMainData}
+            onPressCategory={(item) => {
+              onPressCategory(item);
+            }}
+            isDineInSelected={isDineInSelected}
+            selcetedToggle={false}
+            toggleData={appData}
+            navigation={navigation}
+          />
+        )
+    }
   };
   // console.log(appMainData, 'appMainData');
   return (

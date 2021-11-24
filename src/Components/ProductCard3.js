@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import { Animated, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FastImage from 'react-native-fast-image';
-import { UIActivityIndicator } from 'react-native-indicators';
+import {UIActivityIndicator} from 'react-native-indicators';
 import StarRating from 'react-native-star-rating';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import commonStylesFunc, { hitSlopProp } from '../styles/commonStyles';
+import commonStylesFunc, {hitSlopProp} from '../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
+import {MyDarkTheme} from '../styles/theme';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -27,8 +27,8 @@ import HtmlViewComp from './HtmlViewComp';
 
 export default function ProductCard3({
   data = {},
-  onPress = () => { },
-  addToCart = () => { },
+  onPress = () => {},
+  addToCart = () => {},
   index,
   onIncrement,
   onDecrement,
@@ -44,22 +44,22 @@ export default function ProductCard3({
     selectedIndex: -1,
     selectedIndexForCartIcon: -1,
   });
-  const { selectedIndex, selectedIndexForCartIcon } = state;
+  const {selectedIndex, selectedIndexForCartIcon} = state;
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const isDarkMode = theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
+  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = styleData({ themeColors, fontFamily });
+  const styles = styleData({themeColors, fontFamily});
 
-  const { themeLayouts } = currentTheme;
-  const commonStyles = commonStylesFunc({ fontFamily });
+  const {themeLayouts} = currentTheme;
+  const commonStyles = commonStylesFunc({fontFamily});
 
   const url1 = data?.media[0]?.image?.path.image_fit;
   const url2 = data?.media[0]?.image?.path.image_path;
@@ -69,12 +69,12 @@ export default function ProductCard3({
 
   const changePosition = () => {
     let i = selectedIndex == -1 ? index : -1;
-    updateState({ selectedIndex: i });
+    updateState({selectedIndex: i});
   };
 
   const changePositionForCartIcon = () => {
     let i = selectedIndexForCartIcon == -1 ? index : -1;
-    updateState({ selectedIndexForCartIcon: i });
+    updateState({selectedIndexForCartIcon: i});
   };
 
   let htmlText = data?.translation[0]?.body_html || null;
@@ -100,7 +100,6 @@ export default function ProductCard3({
           paddingHorizontal: 16,
         }}>
 
-
         <View
           style={{
             marginLeft: moderateScale(10),
@@ -116,7 +115,7 @@ export default function ProductCard3({
               flex: 1,
               marginTop: selectedIndex == index ? moderateScaleVertical(8) : 0,
             }}
-          // animation={selectedIndex == index ? 'fadeInDown' : 'fadeInLeft'}
+            // animation={selectedIndex == index ? 'fadeInDown' : 'fadeInLeft'}
           >
             {/* Title View */}
             <View>
@@ -169,7 +168,7 @@ export default function ProductCard3({
                   rating={Number(parseInt(data?.averageRating).toFixed(1))}
                   fullStarColor={colors.yellowB}
                   starSize={8}
-                  containerStyle={{ width: width / 9 }}
+                  containerStyle={{width: width / 9}}
                 />
               </View>
             )}
@@ -374,7 +373,7 @@ export default function ProductCard3({
   );
 }
 
-function styleData({ themeColors, fontFamily }) {
+function styleData({themeColors, fontFamily}) {
   const styles = StyleSheet.create({
     outOfStock: {
       color: colors.orangeB,

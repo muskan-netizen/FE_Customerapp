@@ -9,6 +9,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  SafeAreaView
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import BannerHome from '../../../Components/BannerHome';
@@ -60,6 +61,11 @@ import AddressModal3 from '../../../Components/AddressModal3';
 import AddressModal from '../../../Components/AddressModal';
 import Loader from '../../../Components/Loader';
 import staticStrings from '../../../constants/staticStrings';
+import Modal from 'react-native-modal';
+import Geocoder from 'react-native-geocoding';
+import { locationPermission } from '../../../utils/permissions';
+import { getAddressFromLatLong, getCurrentLocationFromApi } from '../../../utils/googlePlaceApi';
+
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => { },
@@ -122,6 +128,8 @@ export default function TaxiHomeDashbord({
     slectedDate: null,
     newAddressAdded: null,
     isLoadingModal: false,
+    fullMapShow: false,
+    pickupAddress: {}
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
   console.log(appMainData, 'appMainData>new');
@@ -155,6 +163,8 @@ export default function TaxiHomeDashbord({
     type,
     del,
     isLoadingModal,
+    fullMapShow,
+    pickupAddress
   } = state;
   const styles = stylesFunc({ themeColors, fontFamily });
 
@@ -245,10 +255,9 @@ export default function TaxiHomeDashbord({
     console.log(childData, 'childData>childData');
     updateState({ isLoading: true });
 
-    actions
-      .addAddress(childData, {
-        code: appData?.profile?.code,
-      })
+    actions.addAddress(childData, {
+      code: appData?.profile?.code,
+    })
       .then((res) => {
         console.log(res, 'res>res>res');
         updateState({ del: del ? false : true });
@@ -274,6 +283,7 @@ export default function TaxiHomeDashbord({
       showError(strings.UNAUTHORIZED_MESSAGE);
     }
   };
+
 
   const _renderItem = ({ item }) => {
     return (
@@ -370,22 +380,27 @@ export default function TaxiHomeDashbord({
 
 
   const moveToScreen = (details) => {
-    let prefillAdress = null
-    if (!!details) {
-      prefillAdress = {
-        longitude: Number(details?.longitude),
-        latitude: Number(details?.latitude),
-        address: details?.address,
-        task_type_id: 1,
-        pre_address: details?.address
+    updateState({ fullMapShow: false })
+    if (!!userData?.auth_token) {
+      let prefillAdress = null
+      if (!!details) {
+        prefillAdress = {
+          longitude: Number(details?.longitude),
+          latitude: Number(details?.latitude),
+          address: details?.address,
+          task_type_id: 1,
+          pre_address: details?.address
+        }
       }
+      navigation.navigate(navigationStrings.ADDADDRESS, {
+        cat: appMainData?.categories[0],
+        datetime: { slectedDate, selectedTime },
+        pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
+        prefillAdress: !!prefillAdress ? prefillAdress : null
+      })
+    } else {
+      navigation.navigate(navigationStrings.LOGIN)
     }
-    navigation.navigate(navigationStrings.ADDADDRESS, {
-      cat: appMainData?.categories[0],
-      datetime: { slectedDate, selectedTime },
-      pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
-      data: !!prefillAdress ? prefillAdress : null
-    })
   }
 
   const addressView = (image) => {
@@ -517,6 +532,8 @@ export default function TaxiHomeDashbord({
       </ScrollView>
     );
   };
+
+
 
   return (
     <View style={{
@@ -695,30 +712,36 @@ export default function TaxiHomeDashbord({
                 {strings.AROUNDYOU}
               </Text>
 
-              <View
-                style={{
-                  height: height / 4,
-                  width: width - 45,
-                  borderRadius: 12,
-                  marginTop: moderateScaleVertical(20),
-                  alignItems: 'center',
-                }}>
-                <MapView
-                  ref={mapRef}
-                  provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                  customMapStyle={mapStyleGrey}
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => updateState({ fullMapShow: true })}
+              >
+                <View
+                  pointerEvents="none"
                   style={{
-                    ...StyleSheet.absoluteFillObject,
+                    height: height / 4,
+                    width: width - 45,
                     borderRadius: 12,
-                  }}
-                  // provider={MapView.PROVIDER_GOOGLE}
-                  region={region}
-                  initialRegion={region}
-                  showsUserLocation={true}
-                //showsMyLocationButton={true}
-                // pointerEvents={'none'}
-                ></MapView>
-              </View>
+                    marginTop: moderateScaleVertical(20),
+                    alignItems: 'center',
+                  }}>
+                  <MapView
+                    ref={mapRef}
+                    provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                    customMapStyle={mapStyleGrey}
+                    style={{
+                      ...StyleSheet.absoluteFillObject,
+                      borderRadius: 12,
+                    }}
+                    // provider={MapView.PROVIDER_GOOGLE}
+                    region={region}
+                    // initialRegion={region}
+                    showsUserLocation={true}
+                  //showsMyLocationButton={true}
+                  // pointerEvents={'none'}
+                  />
+                </View>
+              </TouchableOpacity>
             </View>
           </>
         )}
@@ -742,6 +765,76 @@ export default function TaxiHomeDashbord({
         passLocation={(data) => addUpdateLocation(data)}
       // onPress={currentLocation}
       />
+
+      <Modal
+        isVisible={fullMapShow}
+        style={{
+          margin: 0
+        }}
+        animationInTiming={600}>
+
+        <View style={{ flex: 1 }}>
+          <View style={{ flex: 1 }}>
+            <MapView
+              ref={mapRef}
+              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+              customMapStyle={mapStyleGrey}
+              style={{ ...StyleSheet.absoluteFillObject }}
+              region={region}
+              // initialRegion={region}
+              showsUserLocation={true}
+            // onRegionChangeComplete={_onRegionChange}
+            // showsMyLocationButton={true}
+            // pointerEvents={'none'}
+            />
+            <SafeAreaView>
+              <TouchableOpacity
+                onPress={() => updateState({ fullMapShow: false })}
+                style={{
+                  marginTop: moderateScaleVertical(24),
+                  height: moderateScale(40),
+                  width: moderateScale(40),
+                  borderRadius: moderateScale(16),
+                  backgroundColor: colors.white,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginLeft: moderateScale(24)
+                }}>
+                <Image
+                  style={{
+                    tintColor: colors.black,
+                  }}
+                  source={imagePath.backArrowCourier}
+                />
+              </TouchableOpacity>
+            </SafeAreaView>
+          </View>
+          <View style={{
+            height: moderateScale(100),
+            backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white
+          }}>
+            <SafeAreaView>
+              <TouchableOpacity
+                onPress={() => moveToScreen()}
+                style={{
+                  height: moderateScale(48),
+                  backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
+                  justifyContent: 'center',
+                  paddingHorizontal: moderateScale(16),
+                  margin: moderateScale(16)
+                }}
+              >
+                <Text style={{
+                  fontFamily: fontFamily.regular,
+                  fontSize: textScale(16),
+                  textAlign: 'left',
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                }}>Where to ?</Text>
+              </TouchableOpacity>
+            </SafeAreaView>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }

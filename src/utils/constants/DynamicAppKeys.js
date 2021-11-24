@@ -150,6 +150,18 @@ const shortCodes = {
   kel360: '9087f6',
   yeboy: 'e4ec39',
   moboserrandsservice: '3d2e75',
+  cabway: '7c4e0b',
+  tajammul: '7c4e0b',
+  carroai: '0d6852',
+  ssuum: 'b3cc0b',
+  blacnetwork: 'e51092',
+  threadagain: 'a4543c',
+  ezmobilefuel: 'a024bd',
+  runaround: 'f2a962',
+  swiftandvalu: 'f89822',
+  trucxi: '3096b7',
+  paysic: '786133',
+  chipetaxi: '29790b',
 };
 
 const appIds = {
@@ -451,7 +463,7 @@ const appIds = {
   }),
   toda: Platform.select({
     ios: 'com.toda.orders',
-    android: 'com.toda',
+    android: 'com.toda.orders',
   }),
   mobi: Platform.select({
     ios: 'com.mobi.customer',
@@ -748,6 +760,54 @@ const appIds = {
   moboserrandsservice: Platform.select({
     ios: 'com.moboserrandsservice',
     android: 'com.moboserrandsservice',
+  }),
+  cabway: Platform.select({
+    ios: 'com.cabway',
+    android: 'com.cabway',
+  }),
+  tajammul: Platform.select({
+    ios: 'com.tajammul',
+    android: 'com.tajammul',
+  }),
+  carroai: Platform.select({
+    ios: 'com.carroai',
+    android: 'com.carroai',
+  }),
+  ssuum: Platform.select({
+    ios: 'com.ssuum',
+    android: 'com.ssuum',
+  }),
+  blacnetwork: Platform.select({
+    ios: 'com.blacnetwork',
+    android: 'com.blacnetwork',
+  }),
+  threadagain: Platform.select({
+    ios: 'com.threadagain',
+    android: 'com.threadagain',
+  }),
+  ezmobilefuel: Platform.select({
+    ios: 'com.ezmobilefuel',
+    android: 'com.ezmobilefuel',
+  }),
+  runaround: Platform.select({
+    ios: 'com.runaround',
+    android: 'com.runaround',
+  }),
+  swiftandvalu: Platform.select({
+    ios: 'com.customer.swiftandvalu',
+    android: 'com.swiftandvalu',
+  }),
+  trucxi: Platform.select({
+    ios: 'com.trucxi',
+    android: 'com.trucxi',
+  }),
+  paysic: Platform.select({
+    ios: 'com.paysic',
+    android: 'com.paysic',
+  }),
+  chipetaxi: Platform.select({
+    ios: 'com.chipetaxi',
+    android: 'com.chipetaxi',
   }),
 };
 

@@ -605,6 +605,31 @@ export default function OrderDetail({navigation, route}) {
               ).toFixed(2)}`}</Text>
             </View>
           )}
+
+          {!!cartData?.comment_for_vendor && (
+            <View style={{marginHorizontal: moderateScale(10)}}>
+              <LeftRightText
+                leftText={strings.SPECIAL_INSTRUCTION}
+                rightText={cartData?.comment_for_vendor}
+                isDarkMode={isDarkMode}
+                MyDarkTheme={MyDarkTheme}
+                leftTextStyle={{
+                  fontSize: textScale(12),
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity43,
+                }}
+                rightTextStyle={{
+                  flex: 1,
+                  textAlign: 'right',
+                  fontSize: textScale(12),
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity86,
+                }}
+              />
+            </View>
+          )}
           {!!Number(item?.delivery_fee) && (
             <View style={styles.itemPriceDiscountTaxView}>
               <Text
@@ -971,6 +996,7 @@ export default function OrderDetail({navigation, route}) {
                 : colors.blackOpacity86,
             }}
           />
+
           {!!cartData?.scheduled_date_time && (
             <LeftRightText
               leftText={strings.SEHEDLEDFOR}
@@ -1486,7 +1512,7 @@ export default function OrderDetail({navigation, route}) {
                 // maxZoomLevel={20}
                 onReady={(result) => {
                   // updateState({
-                  //   totalDistance: result.distance.toFixed(2),
+                  //   totalDistance: result.distance.toFixed(2),v
                   //   totalDuration: result.duration.toFixed(2),
                   // });
                   mapRef.current.fitToCoordinates(result.coordinates, {

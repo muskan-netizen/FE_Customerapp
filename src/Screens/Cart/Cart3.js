@@ -1,6 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
-import moment from 'moment';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
@@ -34,7 +33,6 @@ import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
 import HorizontalLine from '../../Components/HorizontalLine';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import ProductListLoader from '../../Components/Loaders/ProductListLoader';
 import MarketCard3 from '../../Components/MarketCard3';
@@ -55,7 +53,6 @@ import {
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {
-  getColorCodeWithOpactiyNumber,
   getImageUrl,
   getParameterByName,
   showError,
@@ -108,6 +105,8 @@ export default function Cart({navigation, route}) {
     ],
     selectedTimeOption: null,
     sheduledorderdate: null,
+    sheduledpickupdate: null,
+    sheduleddropoffdate: null,
     scheduleType: null,
     swipeKey: 'randomStrings',
     wishlistArray: [],
@@ -116,6 +115,12 @@ export default function Cart({navigation, route}) {
     localeSheduledOrderDate: null,
     btnLoadrId: null,
     instruction: '',
+    pickupDriverComment: null,
+    dropOffDriverComment: null,
+    vendorComment: null,
+    localePickupDate: null,
+    localeDropOffDate: null,
+    modalType: null,
   });
   const {
     viewHeight,
@@ -148,6 +153,14 @@ export default function Cart({navigation, route}) {
     localeSheduledOrderDate,
     btnLoadrId,
     instruction,
+    pickupDriverComment,
+    dropOffDriverComment,
+    vendorComment,
+    localePickupDate,
+    localeDropOffDate,
+    modalType,
+    sheduledpickupdate,
+    sheduleddropoffdate,
   } = state;
 
   //Redux store data
@@ -176,11 +189,8 @@ export default function Cart({navigation, route}) {
 
   let businessType = appData?.profile?.preferences?.business_type || null;
 
-  console.log('businessType', businessType);
-
   useFocusEffect(
     React.useCallback(() => {
-      console.log('paramsData?.tokenInfo', paramsData?.tokenInfo);
       if (paramsData && paramsData?.selectedMethod) {
         updateState({selectedPayment: paramsData?.selectedMethod});
       }
@@ -292,6 +302,7 @@ export default function Cart({navigation, route}) {
         actions.cartItemQty(res);
         console.log(res.data, 'cart details>>>', cartItems);
         let checkDate = !!res?.data?.scheduled_date_time;
+
         if (!!checkDate && res.data.schedule_type == 'schedule') {
           let formatDate = new Date(res?.data?.scheduled_date_time);
           updateState({
@@ -306,10 +317,46 @@ export default function Cart({navigation, route}) {
             localeSheduledOrderDate: null,
           });
         }
+
+        //schedule date for pickup and  dropoff
+        let checkDateDropOFf = !!res?.data?.schedule_dropoff;
+        let checkDatePickUp = !!res?.data?.schedule_pickup;
+
+        if (!!checkDatePickUp) {
+          let formatDate2 = new Date(res?.data?.schedule_pickup);
+          updateState({
+            localePickupDate: timeInLocalLangauge(
+              formatDate2,
+              selectedLanguage,
+            ),
+          });
+        }
+
+        if (!!checkDateDropOFf) {
+          let formatDate3 = new Date(res?.data?.schedule_dropoff);
+          updateState({
+            localeDropOffDate: timeInLocalLangauge(
+              formatDate3,
+              selectedLanguage,
+            ),
+          });
+        }
+
         updateState({
           isRefreshing: false,
           isLoadingB: false,
+          pickupDriverComment: res?.data?.comment_for_pickup_driver
+            ? res?.data?.comment_for_pickup_driver
+            : pickupDriverComment,
+          dropOffDriverComment: res?.data?.comment_for_dropoff_driver
+            ? res?.data?.comment_for_dropoff_driver
+            : dropOffDriverComment,
+          vendorComment: res?.data?.comment_for_vendor
+            ? res?.data?.comment_for_vendor
+            : vendorComment,
           sheduledorderdate: res?.data?.scheduled_date_time,
+          sheduleddropoffdate: res?.data?.schedule_dropoff,
+          sheduledpickupdate: res?.data?.schedule_pickup,
           scheduleType: res?.data?.schedule_type,
           selectedTimeOption:
             res?.data?.schedule_type == 'now'
@@ -365,7 +412,7 @@ export default function Cart({navigation, route}) {
             selectedTipvalue:
               res?.data?.total_payable_amount == 0 ? 'custom' : null,
           });
-          if (!res.data.schedule_type) {
+          if (!res?.data?.schedule_type) {
             //if schedule type is null then hit the api again with now option
             setDateAndTimeSchedule();
           }
@@ -387,9 +434,7 @@ export default function Cart({navigation, route}) {
           defaultSelectedTable: res,
         });
       })
-      .catch((error) => {
-        showError(error.message);
-      });
+      .catch(errorMethod);
   };
 
   //add /delete products from cart
@@ -505,7 +550,7 @@ export default function Cart({navigation, route}) {
       btnLoader: false,
       placeLoader: false,
     });
-    showError(error?.message || error?.error);
+    showError(error?.message || error?.error || error);
   };
 
   //Get list of all offers
@@ -620,7 +665,6 @@ export default function Cart({navigation, route}) {
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
     }
-    console.log('sending data...', data);
     actions
       .placeOrder(data, {
         code: appData?.profile?.code,
@@ -631,83 +675,22 @@ export default function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        actions.cartItemQty({});
         updateState({
           cartItems: [],
           cartData: {},
           isLoadingB: false,
           placeLoader: false,
+          pickupDriverComment: null,
+          dropOffDriverComment: null,
+          vendorComment: null,
+          localePickupDate: null,
+          localeDropOffDate: null,
+          modalType: null,
+          sheduledpickupdate: null,
+          sheduleddropoffdate: null,
         });
+        actions.cartItemQty({});
         checkPaymentOptions(res);
-        // if (
-        //   (res?.data?.payment_option_id === 6 &&
-        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
-        //   Number(selectedTipAmount) !== 0
-        // ) {
-        // navigation.navigate(navigationStrings.PAYFAST, {
-        //   selectedPayment: selectedPayment,
-        //   total_payable_amount: (
-        //     Number(cartData?.total_payable_amount) +
-        //     (selectedTipAmount != null && selectedTipAmount != ''
-        //       ? Number(selectedTipAmount)
-        //       : 0)
-        //   ).toFixed(2),
-
-        //   payment_option_id: selectedPayment?.id,
-        //   orderDetail: res.data,
-        // });
-        // } else if (
-        //   (res?.data?.payment_option_id === 7 &&
-        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
-        //   Number(selectedTipAmount) !== 0
-        // ) {
-        // navigation.navigate(navigationStrings.MOBBEX, {
-        //   selectedPayment: selectedPayment,
-        //   total_payable_amount: (
-        //     Number(cartData?.total_payable_amount) +
-        //     (selectedTipAmount != null && selectedTipAmount != ''
-        //       ? Number(selectedTipAmount)
-        //       : 0)
-        //   ).toFixed(2),
-
-        //   payment_option_id: selectedPayment?.id,
-        //   orderDetail: res.data,
-        // });
-        // } else if (
-        //   (res?.data?.payment_option_id === 8 &&
-        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
-        //   Number(selectedTipAmount) !== 0
-        // ) {
-        // navigation.navigate(navigationStrings.YOCO, {
-        //   selectedPayment: selectedPayment,
-        //   total_payable_amount: (
-        //     Number(cartData?.total_payable_amount) +
-        //     (selectedTipAmount != null && selectedTipAmount != ''
-        //       ? Number(selectedTipAmount)
-        //       : 0)
-        //   ).toFixed(2),
-
-        //   payment_option_id: selectedPayment?.id,
-        //   orderDetail: res.data,
-        // });
-        // } else if (
-        //   (res?.data?.payment_option_id === 9 &&
-        //     !!(Number(cartData?.total_payable_amount) !== 0)) ||
-        //   Number(selectedTipAmount) !== 0
-        // ) {
-        // navigation.navigate(navigationStrings.PAYLINK, {
-        //   selectedPayment: selectedPayment,
-        //   total_payable_amount: (
-        //     Number(cartData?.total_payable_amount) +
-        //     (selectedTipAmount != null && selectedTipAmount != ''
-        //       ? Number(selectedTipAmount)
-        //       : 0)
-        //   ).toFixed(2),
-        //   payment_option_id: selectedPayment?.id,
-        //   orderDetail: res.data,
-        // });
-        // } else {
-        // }
         showSuccess(res?.message);
       })
       .catch(errorMethod);
@@ -763,17 +746,34 @@ export default function Cart({navigation, route}) {
       .catch(errorMethod);
   };
 
-  const setDateAndTimeSchedule = () => {
+  const setDateAndTimeSchedule = (toHitApiForPlaceOrder) => {
     if (!userData?.auth_token) {
       return;
     }
-    let data = {};
-    data['task_type'] = scheduleType;
-    data['schedule_dt'] =
-      scheduleType != 'now' && sheduledorderdate
-        ? new Date(sheduledorderdate).toISOString()
-        : null;
 
+    let data = {};
+
+    if (businessType == 'laundry' && toHitApiForPlaceOrder) {
+      data['comment_for_pickup_driver'] = pickupDriverComment;
+      data['comment_for_dropoff_driver'] = dropOffDriverComment;
+      data['comment_for_vendor'] = vendorComment;
+      data['schedule_pickup'] = sheduledpickupdate
+        ? new Date(sheduledpickupdate).toISOString()
+        : null;
+      data['schedule_dropoff'] = sheduleddropoffdate
+        ? new Date(sheduleddropoffdate).toISOString()
+        : null;
+    } else {
+      data['task_type'] = scheduleType;
+      data['schedule_dt'] =
+        scheduleType != 'now' && sheduledorderdate
+          ? new Date(sheduledorderdate).toISOString()
+          : null;
+      data['comment_for_vendor'] = instruction;
+    }
+
+    console.log(data, 'setDateAndTimeSchedule>>>DATA');
+    // updateState({isLoading: false});
     actions
       .scheduledOrder(data, {
         code: appData?.profile?.code,
@@ -782,16 +782,25 @@ export default function Cart({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
+        console.log(res, 'res>>>');
+        if (res && res?.status == 'Success') {
+          if (toHitApiForPlaceOrder && businessType == 'laundry') {
+            _finalPayment();
+          }
+          updateState({
+            isLoadingB: toHitApiForPlaceOrder ? true : false,
+          });
+        } else {
+          updateState({
+            isLoadingB: false,
+          });
+        }
         // getCartDetail();
-        updateState({
-          isLoadingB: false,
-        });
-      })
-      .catch(errorMethod);
+      });
+    //   .catch(errorMethod);
   };
 
   const _finalPayment = () => {
- 
     if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
       _offineLinePayment();
       return;
@@ -807,7 +816,6 @@ export default function Cart({navigation, route}) {
       _webPayment();
       return;
     } else {
-
       _directOrderPlace();
     }
 
@@ -834,8 +842,6 @@ export default function Cart({navigation, route}) {
     // _offineLinePayment();
   };
 
-  // console.log("sheduledorderdate", sheduledorderdate)
-  // console.log("sheduledorderdate", selectedTimeOption)
   //Clear cart
   const placeOrder = () => {
     updateState({placeLoader: true});
@@ -846,21 +852,11 @@ export default function Cart({navigation, route}) {
         // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
       } else if (!selectedPayment) {
-        showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
-      }
-      // else if (!(sheduledorderdate && selectedTimeOption)) {
-      //   showError(strings.PLEASE_SELECT_ORDER_TYPE);
-      // } else if (d1.getTime() >= d2.getTime()) {
-      //   showError(strings.INVALID_SCHEDULED_DATE);
-      // }
-      else if (false) {
-        //(!(sheduledorderdate && selectedTimeOption))
-        showError(strings.PLEASE_SELECT_ORDER_TYPE);
+        errorMethod(strings.PLEASE_SELECT_PAYMENT_METHOD);
       } else if (scheduleType == 'schedule' && d1.getTime() >= d2.getTime()) {
-        showError(strings.INVALID_SCHEDULED_DATE);
+        errorMethod(strings.INVALID_SCHEDULED_DATE);
       } else {
         if (!!userData) {
-          console.log('user data', userData);
           if (!!userData) {
             if (
               !!userData?.client_preference?.verify_email &&
@@ -870,7 +866,10 @@ export default function Cart({navigation, route}) {
                 !!userData?.verify_details?.is_email_verified &&
                 !!userData?.verify_details?.is_phone_verified
               ) {
-                _finalPayment();
+                setDateAndTimeSchedule(true);
+                setTimeout(() => {
+                  _finalPayment();
+                }, 500);
               } else {
                 moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
                   formCart: true,
@@ -884,14 +883,20 @@ export default function Cart({navigation, route}) {
                 !!userData?.verify_details?.is_email_verified ||
                 !!userData?.verify_details?.is_phone_verified
               ) {
-                _finalPayment();
+                setDateAndTimeSchedule(true);
+                setTimeout(() => {
+                  _finalPayment();
+                }, 500);
               } else {
                 moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
                   formCart: true,
                 })();
               }
             } else {
-              _finalPayment();
+              setDateAndTimeSchedule(true);
+              setTimeout(() => {
+                _finalPayment();
+              }, 500);
             }
           }
           // !!userData?.client_preference?.verify_email ||
@@ -962,7 +967,6 @@ export default function Cart({navigation, route}) {
       selectedAddressData?.id
     }&payment_option_id=${selectedPayment?.id}&action=cart`;
 
-    console.log('query data', queryData);
     actions
       .openPaymentWebUrl(
         queryData,
@@ -975,11 +979,18 @@ export default function Cart({navigation, route}) {
       )
       .then((res) => {
         console.log(res, 'response===>');
-
         updateState({
           isLoadingB: false,
           isRefreshing: false,
           placeLoader: false,
+          pickupDriverComment: null,
+          dropOffDriverComment: null,
+          vendorComment: null,
+          localePickupDate: null,
+          localeDropOffDate: null,
+          modalType: null,
+          sheduledpickupdate: null,
+          sheduleddropoffdate: null,
         });
         if (res && res?.status == 'Success' && res?.data) {
           // updateState({allAvailAblePaymentMethods: res?.data});
@@ -1031,6 +1042,14 @@ export default function Cart({navigation, route}) {
               cartData: {},
               isLoadingB: false,
               placeLoader: false,
+              pickupDriverComment: null,
+              dropOffDriverComment: null,
+              vendorComment: null,
+              localePickupDate: null,
+              localeDropOffDate: null,
+              modalType: null,
+              sheduledpickupdate: null,
+              sheduleddropoffdate: null,
               selectedPayment: {
                 id: 1,
                 off_site: 0,
@@ -1057,7 +1076,7 @@ export default function Cart({navigation, route}) {
         })
         .catch(errorMethod);
     } else {
-      showError(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
+      errorMethod(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
   };
 
@@ -1081,16 +1100,36 @@ export default function Cart({navigation, route}) {
 
   const _selectTime = (item) => {
     updateState({
-      scheduleType: 'schedule',
+      modalType: 'schedule',
       isVisibleTimeModal: true,
     });
+  };
+  //Select Time Laundry
+  const _selectTimeLaundry = (item) => {
+    if (item == 'dropoff') {
+      updateState({
+        modalType: 'dropoff',
+        // scheduleType: 'dropoff',
+        isVisibleTimeModal: true,
+      });
+    } else {
+      updateState({
+        modalType: 'pickup',
+        // scheduleType: 'pickup',
+        isVisibleTimeModal: true,
+      });
+    }
   };
 
   const selectOrderDate = () => {
     onClose();
-    updateState({
-      scheduleType: 'schedule',
-    });
+
+    if (modalType != 'schedule' && businessType != 'laundry') {
+      updateState({
+        scheduleType: 'schedule',
+      });
+    }
+
     setDateAndTimeSchedule();
   };
 
@@ -2028,23 +2067,9 @@ export default function Cart({navigation, route}) {
     }
   };
 
-  // const onPressPickUplater = () => {
-  //   updateState({
-  //     isVisibleTimeModal: true,
-  //   });
-  // };
-  //Footer section in cart screen
-  console.log(cartData, 'cartDatacartData');
-
   const getFooter = () => {
     return (
       <>
-        {/* Add instruction */}
-        {/* <TouchableOpacity
-          style={{ justifyContent: 'center', alignItems: 'center' }}
-        >
-          <Text style={styles.addInstruction}>{strings.ADD_INSTRUCTIONS}</Text>
-        </TouchableOpacity> */}
         <TextInput
           value={instruction}
           onChangeText={(instruction) => updateState({instruction})}
@@ -2059,7 +2084,6 @@ export default function Cart({navigation, route}) {
           placeholderTextColor={
             isDarkMode ? colors.textGreyB : colors.textGreyB
           }
-          // placeholder={strings.ANY_RESTAURANT_REQUESTS}
           placeholder={strings.SPECIAL_INSTRUCTION}
         />
         {/* <View style={{ height: moderateScaleVertical(20) }} /> */}
@@ -2167,6 +2191,207 @@ export default function Cart({navigation, route}) {
             </View>
           </View>
         ) : null} */}
+
+        {/* Laundry Section only */}
+        {!!(businessType == 'laundry') && (
+          <View style={styles.laundrySection}>
+            <View>
+              <View style={{flex: 0.5, flexWrap: 'wrap'}}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.LaundryApppriceItemLabel,
+                          {color: MyDarkTheme.colors.text},
+                        ]
+                      : styles.LaundryApppriceItemLabel
+                  }>
+                  {strings.COMMENTFORPICKUPDRIVER}
+                </Text>
+              </View>
+              <View style={{flex: 0.5, marginTop: moderateScale(5)}}>
+                <TextInput
+                  value={pickupDriverComment}
+                  onChangeText={(text) =>
+                    updateState({pickupDriverComment: text})
+                  }
+                  placeholder={strings.PLACEHOLDERCOMMENTFORPICKUPDRIVER}
+                  placeholderTextColor={colors.textGreyOpcaity6}
+                  style={{
+                    height: 40,
+                    alignItems: 'center',
+                    paddingHorizontal: 10,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
+                    backgroundColor: colors.white,
+                  }}
+                  returnKeyType={'done'}
+                  placeholderTextColor={
+                    isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7
+                  }
+                />
+              </View>
+            </View>
+            <View style={{marginTop: moderateScale(15)}}>
+              <View style={{flex: 0.5, flexWrap: 'wrap'}}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.LaundryApppriceItemLabel,
+                          {color: MyDarkTheme.colors.text},
+                        ]
+                      : styles.LaundryApppriceItemLabel
+                  }>
+                  {strings.COMMENTFORDROPUPDRIVER}
+                </Text>
+              </View>
+              <View style={{flex: 0.5, marginTop: moderateScale(5)}}>
+                <TextInput
+                  value={dropOffDriverComment}
+                  onChangeText={(text) =>
+                    updateState({dropOffDriverComment: text})
+                  }
+                  placeholderTextColor={colors.textGreyOpcaity6}
+                  placeholder={strings.PLACEHOLDERCOMMENTFORDROPUPDRIVER}
+                  style={{
+                    height: 40,
+                    alignItems: 'center',
+                    paddingHorizontal: 10,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
+                    backgroundColor: colors.white,
+                  }}
+                  returnKeyType={'done'}
+                  placeholderTextColor={
+                    isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7
+                  }
+                />
+              </View>
+            </View>
+            <View style={{marginTop: moderateScale(15)}}>
+              <View style={{flex: 0.5, flexWrap: 'wrap'}}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [
+                          styles.LaundryApppriceItemLabel,
+                          {color: MyDarkTheme.colors.text},
+                        ]
+                      : styles.LaundryApppriceItemLabel
+                  }>
+                  {strings.COMMENTFORVENDOR}
+                </Text>
+              </View>
+              <View style={{flex: 0.5, marginTop: moderateScale(5)}}>
+                <TextInput
+                  placeholderTextColor={colors.textGreyOpcaity6}
+                  placeholder={strings.PLACEHOLDERCOMMENTFORVENDOR}
+                  value={vendorComment}
+                  onChangeText={(text) => updateState({vendorComment: text})}
+                  style={{
+                    height: 40,
+                    alignItems: 'center',
+                    paddingHorizontal: 10,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
+                    backgroundColor: colors.white,
+                  }}
+                  returnKeyType={'done'}
+                  placeholderTextColor={
+                    isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7
+                  }
+                />
+              </View>
+            </View>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: moderateScale(20),
+                justifyContent: 'space-between',
+              }}>
+              <TouchableOpacity
+                onPress={() => _selectTimeLaundry('pickup')}
+                style={{flex: 0.5, flexDirection: 'row'}}>
+                <Image source={imagePath.pickUpSchedule} />
+                <View>
+                  <Text
+                    style={
+                      isDarkMode
+                        ? [
+                            styles.LaundryApppriceItemLabel2,
+                            {color: MyDarkTheme.colors.text},
+                          ]
+                        : styles.LaundryApppriceItemLabel2
+                    }>
+                    {strings.SCEDULEPICKUP}
+                  </Text>
+                  {localePickupDate && (
+                    <Text
+                      numberOfLines={2}
+                      style={
+                        isDarkMode
+                          ? [
+                              styles.LaundryApppriceItemLabel3,
+                              {color: MyDarkTheme.colors.text},
+                            ]
+                          : styles.LaundryApppriceItemLabel3
+                      }>
+                      {localePickupDate ? localePickupDate : ''}
+                    </Text>
+                  )}
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => _selectTimeLaundry('dropoff')}
+                style={{flex: 0.5, flexDirection: 'row'}}>
+                <Image source={imagePath.dropOffSchedule} />
+                <View>
+                  <Text
+                    style={
+                      isDarkMode
+                        ? [
+                            styles.LaundryApppriceItemLabel2,
+                            {color: MyDarkTheme.colors.text},
+                          ]
+                        : styles.LaundryApppriceItemLabel2
+                    }>
+                    {strings.SCEDULEDROP}
+                  </Text>
+
+                  {localeDropOffDate && (
+                    <Text
+                      numberOfLines={2}
+                      style={
+                        isDarkMode
+                          ? [
+                              styles.LaundryApppriceItemLabel3,
+                              {color: MyDarkTheme.colors.text},
+                            ]
+                          : styles.LaundryApppriceItemLabel3
+                      }>
+                      {localeDropOffDate
+                        ? localeDropOffDate
+                        : strings.SCEDULEDROP}
+                    </Text>
+                  )}
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+
         {!!appData?.profile?.preferences?.tip_before_order &&
           !!cartData?.tip &&
           cartData?.tip.length && (
@@ -2448,6 +2673,7 @@ export default function Cart({navigation, route}) {
               : 0)
           ).toFixed(2)}`}</Text>
         </View>
+
         <TouchableOpacity
           onPress={() =>
             !!userData?.auth_token
@@ -2491,7 +2717,7 @@ export default function Cart({navigation, route}) {
           userData?.auth_token &&
           !appData?.profile?.preferences?.off_scheduling_at_cart
         ) &&
-          scheduleType == 'schedule' && (
+          !!(scheduleType == 'schedule' && localeSheduledOrderDate) && (
             <TouchableOpacity
               style={{
                 marginTop: moderateScale(16),
@@ -2633,13 +2859,8 @@ export default function Cart({navigation, route}) {
           marginVertical: moderateScale(7),
           justifyContent: 'space-between',
         }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            flex: 0.85,
-            paddingHorizontal: moderateScale(8),
-          }}>
-          <Image style={{}} source={imagePath.icMap} />
+        <View style={{flexDirection: 'row', flex: 0.85}}>
+          <Image source={imagePath.icMap} />
           <View style={styles.addressView}>
             <Text
               style={{
@@ -2711,10 +2932,7 @@ export default function Cart({navigation, route}) {
             selectedAddress: address,
           });
         })
-        .catch((error) => {
-          updateState({isLoadingB: false});
-          showError(error?.message || error?.error);
-        });
+        .catch(errorMethod);
     }
   };
 
@@ -2768,8 +2986,37 @@ export default function Cart({navigation, route}) {
     });
   };
 
+  const onDateChangeSecond = (value) => {
+    if (modalType == 'pickup') {
+      updateState({
+        sheduledpickupdate: value,
+        localePickupDate: `${value.toLocaleDateString(selectedLanguage, {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        })}, ${value.toLocaleTimeString(selectedLanguage, {
+          hour: '2-digit',
+          minute: '2-digit',
+        })}`,
+      });
+    } else {
+      updateState({
+        sheduleddropoffdate: value,
+        localeDropOffDate: `${value.toLocaleDateString(selectedLanguage, {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        })}, ${value.toLocaleTimeString(selectedLanguage, {
+          hour: '2-digit',
+          minute: '2-digit',
+        })}`,
+      });
+    }
+  };
+
   const onDateChange = (value) => {
     updateState({
+      scheduleType: 'schedule',
       sheduledorderdate: value,
       localeSheduledOrderDate: `${value.toLocaleDateString(selectedLanguage, {
         year: 'numeric',
@@ -2782,31 +3029,20 @@ export default function Cart({navigation, route}) {
     });
   };
 
-  // console.log(
-  //   moment(selectOrderDate)
-  //     .format('DD MMM, YYYY HH:mm')
-  //     .toLocaleDateString('fr-FR'),
-  //   'djkjfjdfkdkj',
-  // );
-
   useEffect(() => {
     if (!!checkCartItem?.data) {
       getItem('deepLinkUrl')
         .then((res) => {
-          console.log(res, 'response is');
           if (res) {
             let table_number = getParameterByName('table', res);
             updateState({deepLinkUrl: table_number});
           }
         })
-        .catch((error) => {
-          showError(error.message);
-        });
+        .catch(errorMethod);
     }
   }, [deepLinkUrl]);
 
   const _onTableSelection = (item) => {
-    console.log(item, 'itemitemitem');
     const data = {
       vendor_id: item.vendor_id,
       table: item?.id,
@@ -2815,7 +3051,6 @@ export default function Cart({navigation, route}) {
   };
 
   const _vendorTableCart = (data, item) => {
-    console.log(data, 'selectedTable');
     actions
       .vendorTableCart(data, {
         code: appData?.profile?.code,
@@ -2824,13 +3059,7 @@ export default function Cart({navigation, route}) {
         removeItem('deepLinkUrl');
         setItem('selectedTable', item?.label);
       })
-      .catch((error) => {
-        updateState({
-          isLoading: false,
-          isLoadingB: false,
-        });
-        showError(error?.message || error?.error);
-      });
+      .catch(errorMethod);
   };
 
   const onPressRecommendedVendors = (item) => {
@@ -3297,7 +3526,10 @@ export default function Cart({navigation, route}) {
       )}
       <ChooseAddressModal
         isVisible={isVisible}
-        onClose={() => setModalVisible(false)}
+        onClose={() => {
+          updateState({placeLoader: false});
+          setModalVisible(false);
+        }}
         openAddressModal={() =>
           setModalVisibleForAddessModal(true, 'addAddress')
         }
@@ -3363,25 +3595,67 @@ export default function Cart({navigation, route}) {
               </Text>
             </View>
 
-            <View
-              style={{
-                alignItems: 'center',
-                height: height / 3.5,
-              }}>
-              <DatePicker
-                locale={selectedLanguage}
-                date={
-                  sheduledorderdate ? new Date(sheduledorderdate) : new Date()
-                }
-                textColor={isDarkMode ? colors.white : colors.blackB}
-                mode="datetime"
-                minimumDate={new Date()}
-                maximumDate={undefined}
-                style={styles.datetimePickerText}
-                // onDateChange={setDate}
-                onDateChange={(value) => onDateChange(value)}
-              />
-            </View>
+            {businessType == 'laundry' && modalType != 'schedule' ? (
+              <View
+                style={{
+                  alignItems: 'center',
+                  height: height / 3.5,
+                }}>
+                {modalType == 'pickup' ? (
+                  <DatePicker
+                    locale={selectedLanguage}
+                    date={
+                      sheduledpickupdate
+                        ? new Date(sheduledpickupdate)
+                        : new Date()
+                    }
+                    textColor={isDarkMode ? colors.white : colors.blackB}
+                    mode="datetime"
+                    minimumDate={new Date()}
+                    maximumDate={undefined}
+                    style={styles.datetimePickerText}
+                    // onDateChange={setDate}
+                    onDateChange={(value) => onDateChangeSecond(value)}
+                  />
+                ) : (
+                  <DatePicker
+                    locale={selectedLanguage}
+                    date={
+                      sheduleddropoffdate
+                        ? new Date(sheduleddropoffdate)
+                        : new Date()
+                    }
+                    textColor={isDarkMode ? colors.white : colors.blackB}
+                    mode="datetime"
+                    minimumDate={new Date()}
+                    maximumDate={undefined}
+                    style={styles.datetimePickerText}
+                    // onDateChange={setDate}
+                    onDateChange={(value) => onDateChangeSecond(value)}
+                  />
+                )}
+              </View>
+            ) : (
+              <View
+                style={{
+                  alignItems: 'center',
+                  height: height / 3.5,
+                }}>
+                <DatePicker
+                  locale={selectedLanguage}
+                  date={
+                    sheduledorderdate ? new Date(sheduledorderdate) : new Date()
+                  }
+                  textColor={isDarkMode ? colors.white : colors.blackB}
+                  mode="datetime"
+                  minimumDate={new Date()}
+                  maximumDate={undefined}
+                  style={styles.datetimePickerText}
+                  // onDateChange={setDate}
+                  onDateChange={(value) => onDateChange(value)}
+                />
+              </View>
+            )}
           </ScrollView>
           <View
             style={[

@@ -364,7 +364,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.helpnowrightnow'
-            resValue "string", "app_name", "Help Now Right Now"
+            resValue "string", "app_name", "HelpNow!"
             resValue "string", "host_name", ""
         }
         cannabus{
@@ -510,7 +510,7 @@ android {
         }
         yummiidash{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -759,7 +759,7 @@ android {
          }
           codiner{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -821,8 +821,8 @@ android {
          }
          vici{
             dimension "appType"
-            versionCode 1
-            versionName "1.0"
+            versionCode 3
+            versionName "1.1"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.app.vici'
@@ -967,7 +967,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.toda'
+            applicationId 'com.toda.orders'
             resValue "string", "app_name", "Toda"
             resValue "string", "host_name", ""
          }
@@ -1712,6 +1712,127 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.moboserrandsservice'
             resValue "string", "app_name", "MobosErrandsService"
+            resValue "string", "host_name", ""
+         }
+        
+        cabway{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.cabway'
+            resValue "string", "app_name", "CabWay"
+            resValue "string", "host_name", ""
+         }
+         tajammul{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.tajammul'
+            resValue "string", "app_name", "Tajammul"
+            resValue "string", "host_name", ""
+         }
+         carroai{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.carroai'
+            resValue "string", "app_name", "Carroai"
+            resValue "string", "host_name", ""
+         }
+          ssuum{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ssuum'
+            resValue "string", "app_name", "Ssuum"
+            resValue "string", "host_name", ""
+         }
+         blacnetwork{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.blacnetwork'
+            resValue "string", "app_name", "Blac Network"
+            resValue "string", "host_name", ""
+         }
+          threadagain{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.threadagain'
+            resValue "string", "app_name", "ThreadAgain"
+            resValue "string", "host_name", ""
+         }
+         ezmobilefuel{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ezmobilefuel'
+            resValue "string", "app_name", "EzMobileFuel"
+            resValue "string", "host_name", ""
+         }
+          runaround{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.runaround'
+            resValue "string", "app_name", "Run-a-Round"
+            resValue "string", "host_name", ""
+         }
+        swiftandvalu{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.swiftandvalu'
+            resValue "string", "app_name", "Swift and Valu"
+            resValue "string", "host_name", ""
+         }
+        trucxi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.trucxi'
+            resValue "string", "app_name", "Trucxi"
+            resValue "string", "host_name", ""
+         }
+          paysic{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.paysic'
+            resValue "string", "app_name", "PaySic"
+            resValue "string", "host_name", ""
+         }
+         chipetaxi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.chipetaxi'
+            resValue "string", "app_name", "Chipe Taxi"
             resValue "string", "host_name", ""
          }
         

@@ -2,20 +2,26 @@ import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep, debounce} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   RefreshControl,
   Text,
-  TouchableOpacity,
+  Vibration,
   View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import DeviceInfo from 'react-native-device-info';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
+import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
 import DisplayModal from '../../Components/DisplayModal';
 import Header from '../../Components/Header';
+import HomeServiceVariantAddons from '../../Components/HomeServiceVariantAddons';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import NoDataFound from '../../Components/NoDataFound';
-import ProductCard4 from '../../Components/ProductCard4';
+import ProductCard3 from '../../Components/ProductCard3';
+import VariantAddons from '../../Components/VariantAddons';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -28,17 +34,17 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {
-  getColorCodeWithOpactiyNumber,
-  getImageUrl,
-  showError,
-  showSuccess,
-} from '../../utils/helperFunctions';
+import {MyDarkTheme} from '../../styles/theme';
+import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+
+const ONE_SECOND_IN_MS = 50;
+const PATTERN = [
+  1 * ONE_SECOND_IN_MS,
+  2 * ONE_SECOND_IN_MS,
+  3 * ONE_SECOND_IN_MS,
+];
 
 export default function BrandProducts2({route, navigation}) {
   const {data} = route.params;
@@ -102,6 +108,19 @@ export default function BrandProducts2({route, navigation}) {
       },
     ],
     sortFilterMap: [],
+    btnLoader: false,
+    selectedItemID: -1,
+    selectedItemIndx: null,
+    categoryInfo: null,
+    updateQtyLoader: false,
+    isVisibleModal: false,
+    typeId: null,
+    selectedCartItem: null,
+    selectedSection: null,
+    cartId: null,
+    sectionListData: [],
+    productListData: [],
+    showShimmer: true,
   });
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -127,6 +146,19 @@ export default function BrandProducts2({route, navigation}) {
     sortFilters,
     isSelected,
     sortFilterMap,
+    btnLoader,
+    selectedItemID,
+    selectedItemIndx,
+    categoryInfo,
+    updateQtyLoader,
+    isVisibleModal,
+    typeId,
+    selectedCartItem,
+    selectedSection,
+    cartId,
+    sectionListData,
+    productListData,
+    showShimmer,
   } = state;
 
   //Redux Store data
@@ -134,7 +166,6 @@ export default function BrandProducts2({route, navigation}) {
     useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state?.auth?.userData);
   const fontFamily = appStyle?.fontSizeData;
-
   //Screen styling
   const styles = stylesFunc({themeColors, fontFamily});
 
@@ -250,6 +281,7 @@ export default function BrandProducts2({route, navigation}) {
         },
       )
       .then((res) => {
+        console.log(res, '===>res');
         updateState({
           isLoading: false,
           isLoadingB: false,
@@ -329,19 +361,441 @@ export default function BrandProducts2({route, navigation}) {
   //render Products list based on brand ID
   const renderProduct = ({item, index}) => {
     return (
-      <ProductCard4
+      // <ProductCard4
+      //   data={item}
+      //   onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+      //   onAddtoWishlist={() => _onAddtoWishlist(item)}
+      //   addToCart={() => _addToCart(item)}
+      // />
+      <ProductCard3
         data={item}
+        index={index}
         onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
         onAddtoWishlist={() => _onAddtoWishlist(item)}
-        addToCart={() => _addToCart(item)}
+        addToCart={() => addSingleItem(item, null, index)}
+        onIncrement={() => addDeleteCartItems(item, null, index, 1)}
+        onDecrement={() => addDeleteCartItems(item, null, index, 2)}
+        selectedItemID={selectedItemID}
+        btnLoader={btnLoader}
+        selectedItemIndx={selectedItemIndx}
+        categoryInfo={categoryInfo}
       />
     );
   };
 
-  /* ADD-REMOVE ITEM TO WISHLIST FUNCTION  */
+  const addSingleItem = async (item, section = null) => {
+    if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot) {
+      alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
+      return;
+    }
+    Vibration.vibrate(PATTERN);
+    let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
+    updateState({selectedItemID: item?.id, btnLoader: true});
+    let isSingleVendor = await checkSingleVendor(item.id);
+    if (
+      isSingleVendor.isSingleVendorEnabled !== 0 &&
+      isSingleVendor.otherVendorExists !== 0
+    ) {
+      updateState({
+        updateQtyLoader: false,
+        selectedItemID: -1,
+        btnLoader: false,
+      });
+      Alert.alert('', strings.ALREADY_EXIST, [
+        {
+          text: strings.CANCEL,
+          onPress: () => {},
+        },
+        {
+          text: strings.CONFIRM,
+          onPress: () => clearCartAndAddProduct(item, section),
+        },
+      ]);
+      return;
+    }
+
+    console.log(item, 'itemitem', item?.variantSet, item?.add_on);
+
+    if (item?.add_on?.length > 0 || item?.variantSet?.length > 0) {
+      updateState({
+        updateQtyLoader: false,
+        typeId: getTypeId,
+        isVisibleModal: true,
+        selectedCartItem: item,
+        selectedSection: section,
+        selectedItemID: -1,
+        btnLoader: false,
+      });
+      return;
+    }
+    if (item?.add_on?.length === 0 && item?.mode_of_service === 'schedule') {
+      updateState({
+        updateQtyLoader: false,
+        typeId: getTypeId,
+        isVisibleModal: true,
+        selectedCartItem: item,
+        selectedSection: section,
+        selectedItemID: -1,
+        btnLoader: false,
+      });
+      return;
+    }
+
+    let data = {};
+    data['sku'] = item.sku;
+    data['quantity'] = 1;
+    data['product_variant_id'] = item?.variant[0]?.id;
+    data['type'] = dine_In_Type;
+    actions
+      .addProductsToCart(data, {
+        code: appData.profile.code,
+        currency: currencies.primary_currency.id,
+        language: languages.primary_language.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res.data, 'addProductsToCart');
+        actions.cartItemQty(res);
+        updateState({cartId: res.data.id});
+        if (!!section) {
+          let updatedSection = section.data.map((x, xnx) => {
+            if (x?.id == item?.id) {
+              x['qty'] = 1;
+              x['cart_product_id'] = res.data.cart_product_id;
+              return x;
+            }
+            return x;
+          });
+          section['data'] = updatedSection;
+          updateState({
+            sectionListData: sectionListData.map((f, fnx) => {
+              if (f?.id == section?.id) {
+                return section;
+              }
+              return f;
+            }),
+          });
+        } else {
+          let updateArray = productListData.map((val, i) => {
+            if (val.id == item.id) {
+              return {
+                ...val,
+                qty: 1,
+                cart_product_id: res.data.cart_product_id,
+                isRemove: false,
+              };
+            }
+            return val;
+          });
+          updateState({
+            productListData: updateArray,
+          });
+        }
+        updateState({
+          selectedCartItem: item,
+          updateQtyLoader: false,
+          selectedSection: section,
+          selectedItemID: -1,
+          btnLoader: false,
+        });
+      })
+      .catch((error) => errorMethodSecond(error));
+  };
+
+  const addDeleteCartItems = (item, section = null, index, type) => {
+    if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot) {
+      alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
+      return;
+    }
+    Vibration.vibrate(PATTERN);
+    let quanitity = null;
+    let itemToUpdate = cloneDeep(item);
+    //!!data?.variant[0]?.check_if_in_cart_app && data?.variant[0]?.check_if_in_cart_app.length > 0 || !!data?.qty ?
+
+    let isExistqty = itemToUpdate?.qty
+      ? itemToUpdate?.qty
+      : !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
+        itemToUpdate.variant[0]?.check_if_in_cart_app[0].quantity;
+    let isExistproductId =
+      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
+      itemToUpdate.variant[0]?.check_if_in_cart_app.length
+        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].id
+        : itemToUpdate?.cart_product_id;
+    let isExistCartId =
+      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
+      itemToUpdate.variant[0]?.check_if_in_cart_app.length
+        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
+        : cartId;
+
+    console.log('exist qty', isExistqty);
+
+    if (timeOut) {
+      clearTimeout(timeOut);
+    }
+
+    tempQty = tempQty + 1;
+
+    if (type == 1) {
+      quanitity = Number(isExistqty) + 1;
+    } else {
+      quanitity = Number(isExistqty) - 1;
+    }
+
+    updateLocally(section, quanitity, item, isExistproductId);
+
+    timeOut = setTimeout(() => {
+      console.log('hit set time out functions');
+      // return;
+      if (quanitity) {
+        updateState({
+          selectedItemID: itemToUpdate.id,
+          btnLoader: true,
+          selectedItemIndx: index,
+        });
+        let data = {};
+        data['cart_id'] = isExistCartId;
+        data['quantity'] = quanitity;
+        data['cart_product_id'] = isExistproductId;
+        data['type'] = dineInType;
+        console.log('sending api data', data);
+
+        actions
+          .increaseDecreaseItemQty(data, {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+            systemuser: DeviceInfo.getUniqueId(),
+          })
+          .then((res) => {
+            tempQty = 0;
+            actions.cartItemQty(res);
+            updateState({
+              cartItems: res.data.products,
+              cartData: res.data,
+              updateQtyLoader: false,
+              selectedItemID: -1,
+              btnLoader: false,
+            });
+          })
+          .catch(async () => {
+            errorMethod();
+            if (type == 1) {
+              quanitity = quanitity - tempQty;
+            } else {
+              quanitity = quanitity + tempQty;
+            }
+            await updateLocally(section, quanitity, item, isExistproductId);
+            tempQty = 0;
+          });
+      } else {
+        updateState({selectedItemID: itemToUpdate?.id, btnLoader: false});
+        removeItem('selectedTable');
+        removeProductFromCart(itemToUpdate, section);
+      }
+    }, 1500);
+  };
+
+  const checkSingleVendor = async (id) => {
+    let vendorData = {vendor_id: categoryInfo?.id};
+    updateState({selectedItemID: id});
+    return new Promise((resolve, reject) => {
+      actions
+        .checkSingleVendor(vendorData, {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        })
+        .then((res) => {
+          console.log('res check singel vendro==>>>>>>', res);
+          resolve(res);
+        })
+        .catch((error) => {
+          reject(error);
+          updateState({selectedItemID: -1});
+        });
+    });
+  };
+
+  const errorMethodSecond = (error, addonSet = []) => {
+    console.log(error.message.alert, 'Error>>>>>');
+    updateState({updateQtyLoader: false});
+    if (error?.message?.alert == 1) {
+      updateState({
+        isLoading: false,
+        isLoadingB: false,
+        isLoadingC: false,
+        selectedItemID: -1,
+        btnLoader: false,
+      });
+      // showError(error?.message?.error || error?.error);
+      Alert.alert('', error?.message?.error, [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          // style: 'destructive',
+        },
+        {text: 'Clear Cart', onPress: () => clearCart(addonSet)},
+      ]);
+    } else {
+      updateState({
+        isLoading: false,
+        isLoadingB: false,
+        isLoadingC: false,
+        selectedItemID: -1,
+        btnLoader: false,
+      });
+      showError(error?.message || error?.error);
+    }
+  };
+
+  const clearCart = async (addonSet = []) => {
+    actions
+      .clearCart(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        actions.cartItemQty(res);
+        if (addonSet) {
+        } else {
+          // addToCart();
+        }
+        // showSuccess(res?.message);
+      })
+      .catch(errorMethod);
+  };
+
+  const updateLocally = (section, quanitity, item, isExistproductId) => {
+    if (!!section) {
+      let updatedSection = section.data.map((x, xnx) => {
+        if (x?.id == item?.id) {
+          return {
+            ...x,
+            qty: quanitity,
+            cart_product_id: isExistproductId,
+            isRemove: false,
+          };
+        }
+        return x;
+      });
+      section['data'] = updatedSection;
+      updateState({
+        ...state,
+        sectionListData: sectionListData.map((f, fnx) => {
+          if (f?.id == section?.id) {
+            return section;
+          }
+          return f;
+        }),
+        selectedItemID: -1,
+      });
+    } else {
+      let updateArray = productListData.map((val, i) => {
+        if (val.id == item.id) {
+          return {
+            ...val,
+            qty: quanitity,
+            cart_product_id: isExistproductId,
+            isRemove: false,
+          };
+        }
+        return val;
+      });
+      updateState({
+        productListData: updateArray,
+        selectedItemID: -1,
+      });
+    }
+  };
+
+  const removeProductFromCart = (itemToUpdate, section = null) => {
+    let data = {};
+    let isExistproductId =
+      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
+      itemToUpdate.variant[0]?.check_if_in_cart_app.length > 0
+        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].id
+        : itemToUpdate?.cart_product_id;
+    let isExistCartId =
+      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
+      itemToUpdate.variant[0]?.check_if_in_cart_app.length > 0
+        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
+        : cartId;
+    console.log('item', itemToUpdate);
+
+    data['cart_id'] = isExistCartId;
+    data['cart_product_id'] = isExistproductId;
+    data['type'] = dineInType;
+    updateState({btnLoader: true});
+    actions
+      .removeProductFromCart(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        actions.cartItemQty(res);
+        if (!!section) {
+          let updatedSection = section.data.map((x, xnx) => {
+            if (x?.id == itemToUpdate?.id) {
+              return {
+                ...x,
+                qty: null,
+                cart_product_id: res.data.cart_product_id,
+                variant: itemToUpdate?.variant.map((val, i) => {
+                  return {...val, check_if_in_cart_app: []};
+                }),
+              };
+            }
+            return x;
+          });
+          section['data'] = updatedSection;
+          updateState({
+            sectionListData: sectionListData.map((f, fnx) => {
+              if (f?.id == section?.id) {
+                return section;
+              }
+              return f;
+            }),
+            updateQtyLoader: false,
+            selectedItemID: -1,
+            btnLoader: false,
+          });
+        } else {
+          let updateArray = productListData.map((val, i) => {
+            if (val.id == itemToUpdate.id) {
+              return {
+                ...val,
+                qty: null,
+                cart_product_id: res.data.cart_product_id,
+                variant: itemToUpdate?.variant.map((val, i) => {
+                  return {...val, check_if_in_cart_app: []};
+                }),
+              };
+            }
+            return val;
+          });
+          updateState({
+            productListData: updateArray,
+            updateQtyLoader: false,
+            selectedItemID: -1,
+            btnLoader: false,
+          });
+        }
+      })
+      .catch(errorMethod);
+  };
+
   const _onAddtoWishlist = (item) => {
+    Vibration.vibrate(PATTERN);
     if (!!userData?.auth_token) {
-      // updateState({isLoadingB: true});
+      updateState({isLoadingB: true});
       actions
         .updateProductWishListData(
           `/${item.id}`,
@@ -353,14 +807,35 @@ export default function BrandProducts2({route, navigation}) {
           },
         )
         .then((res) => {
+          console.log(res, 'updateProductWishListData');
           showSuccess(res.message);
           updateProductList(item);
         })
         .catch(errorMethod);
     } else {
       showError(strings.UNAUTHORIZED_MESSAGE);
-      // updateState({isLoadingB: false});
+      updateState({isLoadingB: false});
     }
+  };
+
+  const clearCartAndAddProduct = async (item, section = null) => {
+    updateState({updateQtyLoader: true});
+    actions
+      .clearCart(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        actions.cartItemQty(res);
+        addSingleItem(item, section);
+        // showSuccess(res?.message);
+      })
+      .catch(errorMethod);
   };
 
   /*******Upadte products in wishlist>*********/
@@ -472,6 +947,48 @@ export default function BrandProducts2({route, navigation}) {
     offset: (width * 0.5 - 21.5) * index,
     index,
   });
+
+  const updateCartItems = (item, quanitity, productId, cartID) => {
+    if (!!selectedSection) {
+      let updatedSection = selectedSection.data.map((x, xnx) => {
+        if (x?.id == item?.id) {
+          return {
+            ...x,
+            qty: quanitity,
+            cart_product_id: productId,
+            isRemove: false,
+          };
+        }
+        return x;
+      });
+      selectedSection['data'] = updatedSection;
+      updateState({
+        sectionListData: sectionListData.map((f, fnx) => {
+          if (f?.id == selectedSection?.id) {
+            return selectedSection;
+          }
+          return f;
+        }),
+        cartId: cartID,
+      });
+    } else {
+      let updateArray = productListData.map((val, i) => {
+        if (val.id == item.id) {
+          return {
+            ...val,
+            qty: quanitity,
+            cart_product_id: productId,
+            isRemove: false,
+          };
+        }
+        return val;
+      });
+      updateState({
+        cartId: cartID,
+        productListData: updateArray,
+      });
+    }
+  };
 
   return (
     <WrapperContainer
@@ -709,6 +1226,58 @@ export default function BrandProducts2({route, navigation}) {
           </>
         )}
       </KeyboardAwareScrollView>
+
+      {!!typeId && typeId == 8 ? (
+        <View>
+          {isVisibleModal && (
+            <HomeServiceVariantAddons
+              addonSet={selectedCartItem?.add_on}
+              variantData={selectedCartItem?.variantSet}
+              isVisible={isVisibleModal}
+              productdetail={selectedCartItem}
+              onClose={() =>
+                updateState({isVisibleModal: false, showShimmer: true})
+              }
+              showShimmer={showShimmer}
+              shimmerClose={(val) => updateState({showShimmer: val})}
+              updateCartItems={updateCartItems}
+              // modeOfService={selectedCartItem?.mode_of_service}
+            />
+          )}
+        </View>
+      ) : (
+        <View>
+          {isVisibleModal && (
+            <VariantAddons
+              addonSet={selectedCartItem?.add_on}
+              variantData={selectedCartItem?.variantSet}
+              isVisible={isVisibleModal}
+              productdetail={selectedCartItem}
+              onClose={() =>
+                updateState({isVisibleModal: false, showShimmer: true})
+              }
+              typeId={typeId}
+              showShimmer={showShimmer}
+              shimmerClose={(val) => updateState({showShimmer: val})}
+              updateCartItems={updateCartItems}
+            />
+          )}
+        </View>
+      )}
+
+      <CustomAnimatedLoader
+        source={loaderOne}
+        loaderTitle="Loading"
+        containerColor={colors.white}
+        loadercolor={themeColors.primary_color}
+        animationStyle={[
+          {
+            height: moderateScaleVertical(40),
+            width: moderateScale(40),
+          },
+        ]}
+        visible={updateQtyLoader}
+      />
     </WrapperContainer>
   );
 }

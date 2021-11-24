@@ -40,12 +40,14 @@ import useInterval from '../../../utils/useInterval';
 import { cloneDeep } from 'lodash';
 import BottomViewModal from '../../../Components/BottomViewModal';
 import FastImage from 'react-native-fast-image';
+
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../../styles/responsiveSize';
 import StarRating from 'react-native-star-rating';
 import { mapStyleGrey } from '../../../utils/constants/MapStyle';
+import StepIndicators from '../../../Components/StepIndicator';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -78,6 +80,13 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     getDispatchId: null,
     isVisible: false,
     driverRating: 0,
+    orderStatus: '',
+    labels: [
+      'Accepted',
+      'Arrival',
+      strings.OUT_FOR_DELIVERY,
+      strings.DELIVERED,
+    ],
   });
   const {
     isLoading,
@@ -98,6 +107,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     getDispatchId,
     isVisible,
     driverRating,
+    labels,
+    orderStatus
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -153,6 +164,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   );
   const mapRef = useRef();
 
+  console.log("driverStatusdriverStatus", orderStatus)
+
   useInterval(
     () => {
       if (urlValue) {
@@ -161,7 +174,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         updateState({ isLoading: false });
       }
     },
-    isFocused && driverStatus != 'Completed' ? 3000 : null,
+    isFocused && orderStatus != 'completed' ? 3000 : null,
   );
 
   useEffect(() => {
@@ -179,7 +192,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       driverStatus != undefined
     ) {
       console.log(driverStatus, 'driverStatus');
-      if (driverStatus === 'Completed') {
+      if (orderStatus === 'completed') {
         showSuccess(driverStatus);
         updateState({
           isShowRating: true,
@@ -213,7 +226,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         },
       )
       .then((res) => {
-        console.log(res?.data?.order_details?.dispatcher_status, 'res---agent');
+        // console.log(res?.data?.order_details?.dispatcher_status, 'res---agent');
+        console.log('agent location', res?.data)
         updateState({
           agent_location: res?.data?.agent_location,
           orderDetail: res?.data?.order,
@@ -222,6 +236,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           productInfo: res?.data?.order_details?.products,
           getDispatchId: res?.data?.order?.id,
           driverRating: res?.data?.avgrating,
+          orderStatus: res?.data?.order?.status
         });
       })
       .catch(errorMethod);
@@ -273,7 +288,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           agent_image: res?.data?.agent_image,
           driverStatus: res?.data?.order_details?.dispatcher_status,
           isShowRating:
-            res?.data?.order_details?.dispatcher_status == 'Completed'
+            res?.data?.order?.status == 'completed'
               ? true
               : false,
           productInfo: res?.data?.order_details?.products,
@@ -488,7 +503,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               ref={mapRef}
               // cacheEnabled={true}
               customMapStyle={mapStyleGrey}
-              showsMyLocationButton={true}
+              // showsMyLocationButton={true}
               userLocationFastestInterval={10000}
               onRegionChangeComplete={_onRegionChange}>
               {/* pick and drop all locations */}
@@ -501,7 +516,10 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     longitude: Number(coordinate?.longitude),
                   }}>
                   <View
-                    style={styles.plainView}>
+                    style={{
+                      ...styles.plainView,
+                      backgroundColor: themeColors.primary_color
+                    }}>
                     <Text style={styles.pickupDropOff}>
                       {index === 0 ? 'Pickup' : 'Drop'}
                     </Text>
@@ -510,7 +528,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               ))}
 
               {/* driver location */}
-              {agent_location && driverStatus != 'Completed' && (
+              {agent_location && orderStatus != 'completed' && (
                 <MapView.Marker
                   key={`coordinate_${agent_location?.lat}`}
                   //   image={imagePath.driver}
@@ -522,7 +540,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                   }}>
                   <Image
                     style={{ height: 35, width: 35 }}
-                    source={imagePath.driver}
+                    source={imagePath.icScooter}
                   />
                 </MapView.Marker>
               )}
@@ -533,7 +551,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 waypoints={tasks.length > 2 ? tasks.slice(1, -1) : []}
                 destination={tasks[tasks.length - 1]}
                 apikey={profile?.preferences?.map_key}
-                strokeWidth={2}
+                strokeWidth={5}
                 strokeColor={themeColors.primary_color}
                 optimizeWaypoints={true}
                 onStart={(params) => { }}
@@ -561,7 +579,17 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               />
             </MapView>
 
-            <View style={styles.topView}>
+            <View style={{
+              ...styles.topView,
+              // width: '100%',
+              // marginBottom: 36
+            }}>
+
+              {/* <StepIndicators
+                labels={labels}
+                currentPosition={'Accepted'}
+                themeColor={themeColors}
+              /> */}
               <TouchableOpacity
                 style={[
                   styles.backButtonView,

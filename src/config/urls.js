@@ -1,12 +1,14 @@
-// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.20:8020/api/v1';
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+//  export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.103.73:8006/api/v1';
-export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
+// export const API_BASE_URL = 'http://192.168.96.20:8020/api/v1';
 // export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
 //export const API_BASE_URL = 'https://zuzuclean.alerthire.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
+// export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
+// export const API_BASE_URL = 'http://192.168.100.198:8020/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
@@ -53,7 +55,9 @@ export const SEARCH_BY_VENDOR = getApiUrl('/search/vendor');
 export const SEARCH_BY_BRAND = getApiUrl('/search/brand');
 export const UPDATE_ADDRESS = getApiUrl('/user/address');
 export const GET_ALL_PROMO_CODES = getApiUrl('/promo-code/list');
-export const GET_ALL_PROMO_CODES_FOR_PRODUCTLIST = getApiUrl('/promo-code/vendor_promo_code');
+export const GET_ALL_PROMO_CODES_FOR_PRODUCTLIST = getApiUrl(
+  '/promo-code/vendor_promo_code',
+);
 export const VERIFY_PROMO_CODE = getApiUrl('/promo-code/verify');
 export const RESET_PASSWORD = getApiUrl('/auth/resetPassword');
 export const REMOVE_PROMO_CODE = getApiUrl('/promo-code/remove');

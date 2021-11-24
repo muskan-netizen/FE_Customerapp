@@ -170,8 +170,8 @@ export default function SelectPaymentModalView({
           ]
           : styles.bottomView
       }>
-      <ScrollView>
-        <View
+      <ScrollView >
+        {/* <View
           style={{
             width: moderateScale(35),
             backgroundColor: isDarkMode
@@ -181,8 +181,23 @@ export default function SelectPaymentModalView({
             marginTop: moderateScale(10),
             alignSelf: 'center',
           }}
-        />
-        <View
+        /> */}
+
+        <Text
+          style={{
+            fontSize: textScale(26),
+            fontFamily: fontFamily.medium,
+            // marginVertical: moderateScale(10),
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            alignSelf: 'center'
+          }}>
+          {selectedCarOption
+            ? `${currencies?.primary_currency?.symbol}${Number(
+              selectedCarOption?.variant[0]?.price,
+            ).toFixed(2)}`
+            : ''}
+        </Text>
+        {/* <View
           style={{
             // justifyContent: 'center',
             // alignItems: 'center',
@@ -224,17 +239,8 @@ export default function SelectPaymentModalView({
               </Text>
             </View>
           </View>
-          {/* <Text
-            style={{
-              fontFamily: fontFamily.reguler,
-              opacity: 0.5,
-              marginBottom: moderateScale(20),
-              alignSelf: 'center',
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            }}>
-            {strings.ESTIMATION_ONLY}
-          </Text> */}
-        </View>
+        </View> */}
+
         <View
           style={{
             paddingHorizontal: moderateScale(20),
@@ -643,7 +649,7 @@ export default function SelectPaymentModalView({
           style={{
             marginTop: moderateScale(10),
             marginHorizontal: moderateScale(20),
-            marginBottom: moderateScale(20),
+            marginBottom: moderateScale(32),
           }}>
           <GradientButton
             colorsArray={[themeColors.primary_color, themeColors.primary_color]}
