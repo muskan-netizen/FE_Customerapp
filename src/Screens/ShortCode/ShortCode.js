@@ -1075,6 +1075,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.nadelivery:
+          updateState({
+            shortCode: shortCodes.nadelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

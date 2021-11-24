@@ -164,6 +164,7 @@ const shortCodes = {
   chipetaxi: '29790b',
   laundryorders: '995951',
   ineed: '10d0dd',
+  nadelivery: '9aee12',
 };
 
 const appIds = {
@@ -818,6 +819,10 @@ const appIds = {
   ineed: Platform.select({
     ios: 'com.customer.ineed',
     android: 'com.customer.ineed',
+  }),
+  nadelivery: Platform.select({
+    ios: 'com.nadelivery',
+    android: 'com.nadelivery',
   }),
 };
 
