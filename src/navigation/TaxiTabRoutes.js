@@ -119,10 +119,11 @@ export default function TaxiTabRoutes(props) {
                 style={[
                   {
                     ...tabIconColor,
-                    height: 21,
-                    width: 21,
+                    height: 25,
+                    width: 25,
                   },
                 ]}
+                resizeMode="contain"
                 source={
                   appStyle?.tabBarLayout === 6
                     ? focused

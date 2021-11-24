@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {
   FlatList,
   RefreshControl,
@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import BannerHome2 from '../../../Components/BannerHome2';
 import EmptyListLoader from '../../../Components/EmptyListLoader';
 import CardLoader from '../../../Components/Loaders/CardLoader';
@@ -23,22 +23,22 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import { getUserData } from '../../../utils/utils';
+import {getUserData} from '../../../utils/utils';
 import stylesFunc from '../styles';
 import ToggleTabBar from './ToggleTabBar';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 import SearchBar from '../../../Components/SearchBar3';
 import CategoryCard from '../../../Components/CategoryCard';
 import ServiceCategoryCard from '../../../Components/ServiceCategoryCard';
 
 export default function DashBoardSeven({
-  handleRefresh = () => { },
-  bannerPress = () => { },
+  handleRefresh = () => {},
+  bannerPress = () => {},
   //   appMainData = {},
   isLoading = true,
   isRefreshing = false,
-  onPressCategory = () => { },
+  onPressCategory = () => {},
   selcetedToggle,
   toggleData,
 }) {
@@ -52,36 +52,35 @@ export default function DashBoardSeven({
     isVendorColumnList: false,
   });
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  const { appData, themeColors, appStyle } = useSelector(
+  const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state?.auth?.userData);
 
   const fontFamily = appStyle?.fontSizeData;
-  const { bannerRef } = useRef();
-  const { slider1ActiveSlide, newCategoryData, isVendorColumnList } = state;
-  const styles = stylesFunc({ themeColors, fontFamily });
-
+  const {bannerRef} = useRef();
+  const {slider1ActiveSlide, newCategoryData, isVendorColumnList} = state;
+  const styles = stylesFunc({themeColors, fontFamily});
   //update state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
-  const _renderItem = ({ item }) => (
+  const _renderItem = ({item}) => (
     <ServiceCategoryCard data={item} onPress={() => onPressCategory(item)} />
   );
 
-  const _renderVendors = ({ item }) => (
+  const _renderVendors = ({item}) => (
     <MarketCard2 data={item} onPress={() => onPressCategory(item)} />
   );
   const _changeVendorListStyle = () =>
-    updateState({ isVendorColumnList: !isVendorColumnList });
+    updateState({isVendorColumnList: !isVendorColumnList});
 
   return (
     <ScrollView
-    style={{
-      flex: 1,
-      // paddingHorizontal: moderateScale(15),
-    }}
-    refreshing={isRefreshing}
+      style={{
+        flex: 1,
+        // paddingHorizontal: moderateScale(15),
+      }}
+      refreshing={isRefreshing}
       refreshControl={
         <RefreshControl
           refreshing={isRefreshing}
@@ -90,9 +89,8 @@ export default function DashBoardSeven({
         />
       }
       alwaysBounceVertical={true}
-      showsVerticalScrollIndicator={false}
-    >
-     {/* <SearchBar
+      showsVerticalScrollIndicator={false}>
+      {/* <SearchBar
         containerStyle={{
           marginHorizontal: moderateScale(10),
           borderRadius: 50,
@@ -123,18 +121,27 @@ export default function DashBoardSeven({
         />
       ) : null} */}
 
-      <Text style={[styles.greetingMsg,{ fontFamily: fontFamily.semiBold, marginTop: moderateScale(40), marginBottom: moderateScale(20) }]}>
+      <Text
+        style={[
+          styles.greetingMsg,
+          {
+            fontFamily: fontFamily.semiBold,
+            marginTop: moderateScale(40),
+            marginBottom: moderateScale(20),
+          },
+        ]}>
         Please select your service
       </Text>
-      
-    <View
-      style={{
-        // flex: 1,
-        // paddingHorizontal: moderateScale(15),
-      }}>
-     
-      {/* <ToggleTabBar toggleData={toggleData} selcetedToggle={selcetedToggle} /> */}
-      {/* {userData?.auth_token && (
+
+      <View
+        style={
+          {
+            // flex: 1,
+            // paddingHorizontal: moderateScale(15),
+          }
+        }>
+        {/* <ToggleTabBar toggleData={toggleData} selcetedToggle={selcetedToggle} /> */}
+        {/* {userData?.auth_token && (
         <>
           <Text
             style={[
@@ -152,15 +159,27 @@ export default function DashBoardSeven({
           </Text>
         </>
       )} */}
-      {isLoading && (
-        <>
-        <EmptyListLoader isLoading={isLoading} listSize={1} cardWidth={moderateScale(120)} isRow containerStyle={{ width: '60%' }} />
-        <EmptyListLoader isLoading={isLoading} listSize={1} cardWidth={moderateScale(120)} isRow containerStyle={{ width: '60%' }} />
-        </>
-      )}
+        {isLoading && (
+          <>
+            <EmptyListLoader
+              isLoading={isLoading}
+              listSize={1}
+              cardWidth={moderateScale(120)}
+              isRow
+              containerStyle={{width: '60%'}}
+            />
+            <EmptyListLoader
+              isLoading={isLoading}
+              listSize={1}
+              cardWidth={moderateScale(120)}
+              isRow
+              containerStyle={{width: '60%'}}
+            />
+          </>
+        )}
 
-      {/* {isLoading && <ProductLoader2 isLoading={isLoading} isProductList />} */}
-      {/* {!isLoading &&
+        {/* {isLoading && <ProductLoader2 isLoading={isLoading} isProductList />} */}
+        {/* {!isLoading &&
         appMainData &&
         appMainData?.categories &&
         appMainData?.categories.length ? (
@@ -178,38 +197,36 @@ export default function DashBoardSeven({
           />
         </View>
       ) : null} */}
-      {!isLoading &&
+        {!isLoading &&
         appMainData &&
         appMainData?.categories &&
         appMainData?.categories.length ? (
-        <View
-          style={{
-            marginTop: moderateScaleVertical(10),
-           
-          }}>
-          <FlatList
-          contentContainerStyle={{
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-            width: '100%',
-            // marginHorizontal: moderateScale(10)
-            // backgroundColor: 'red'
-            // justifyContent: 'center'
-           }}
-            data={[...appMainData?.categories]}
-            // keyExtractor={(item) => item.id.toString()}
-            keyExtractor={(item) => item.toString()}
-            showsHorizontalScrollIndicator={false}
-            renderItem={_renderItem}
-            ItemSeparatorComponent={() => <View style={{ width: 6 }} />}
-          />
-        </View>
-      ) : null}
-      <View style={{ height: moderateScale(25) }} />
+          <View
+            style={{
+              marginTop: moderateScaleVertical(10),
+            }}>
+            <FlatList
+              contentContainerStyle={{
+                flexWrap: 'wrap',
+                flexDirection: 'row',
+                width: '100%',
+                // marginHorizontal: moderateScale(10)
+                // backgroundColor: 'red'
+                // justifyContent: 'center'
+              }}
+              data={[...appMainData?.categories]}
+              // keyExtractor={(item) => item.id.toString()}
+              keyExtractor={(item) => item.toString()}
+              showsHorizontalScrollIndicator={false}
+              renderItem={_renderItem}
+              ItemSeparatorComponent={() => <View style={{width: 6}} />}
+            />
+          </View>
+        ) : null}
+        <View style={{height: moderateScale(25)}} />
 
-
-      <View style={{ height: moderateScaleVertical(65) }} />
-    </View>
+        <View style={{height: moderateScaleVertical(65)}} />
+      </View>
     </ScrollView>
   );
 }
