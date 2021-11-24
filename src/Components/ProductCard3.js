@@ -64,6 +64,7 @@ export default function ProductCard3({
   const url1 = data?.media[0]?.image?.path.image_fit;
   const url2 = data?.media[0]?.image?.path.image_path;
   const getImage = (quality) => getImageUrl(url1, url2, quality);
+  const getIconImage = (url1, url2, quality) => getImageUrl(url1, url2, quality);
 
   const scaleInAnimated = new Animated.Value(0);
 
@@ -119,7 +120,11 @@ export default function ProductCard3({
           >
             {/* Title View */}
             <View>
-              {/* <Image source={imagePath.icVeg} style={{ marginLeft: moderateScale(1), marginBottom: moderateScale(5) }} /> */}
+              {
+              !!data?.tags &&  data?.tags.length > 0 && (
+                  <Image source={{ uri: getIconImage(data.tags[0].tag.icon.image_fit,data?.tags[0]?.tag.icon.image_path, '50/50') }} style={{ marginLeft: moderateScale(1), marginBottom: moderateScale(5), width: moderateScale(17), height: moderateScale(17) }} />
+                )
+              }
               <Text
                 // numberOfLines={1}
                 style={{
