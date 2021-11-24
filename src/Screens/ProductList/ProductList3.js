@@ -23,7 +23,10 @@ import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import SectionList from 'react-native-tabs-section-list';
 import { useSelector } from 'react-redux';
+import ToggleSwitch from 'toggle-switch-react-native';
 import BottomSheetModal from '../../Components/BottomSheetModal';
+import BottomSlideModal from '../../Components/BottomSlideModal';
+import BrowseMenuButton from '../../Components/BrowseMenuButton';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
 import GradientCartView from '../../Components/GradientCartView';
 import HomeServiceVariantAddons from '../../Components/HomeServiceVariantAddons';
@@ -71,6 +74,8 @@ let timeOut = undefined
 
 var tempQty = 0
 
+let activeIdx = 0
+
 export default function Products({ route, navigation }) {
   const { data } = route.params;
 
@@ -79,6 +84,7 @@ export default function Products({ route, navigation }) {
   const dineInType = useSelector((state) => state?.home?.dineInType);
   const CartItems = useSelector((state) => state?.cart?.cartItemCount);
 
+  let sectionListRef = useRef(null);
   const isDarkMode = theme;
   const [state, setState] = useState({
     isVisibleModal: false,
@@ -158,7 +164,11 @@ export default function Products({ route, navigation }) {
     sectionListData: [],
     numberOfQtyToBeAdd: 0,
     searchedRecords: [],
-    cloneSectionList: []
+    cloneSectionList: [],
+    offersModalVisible: false,
+    MenuModalVisible: false,
+    isVegEnabled: true,
+    ProductTags: []
   });
 
   const {
@@ -170,7 +180,7 @@ export default function Products({ route, navigation }) {
     internetConnection,
     appStyle,
   } = useSelector((state) => state?.initBoot);
-  { console.log('checking GlobalState >>> ', currencies) }
+
   const {
     selectedCategory,
     isLoadingC,
@@ -216,7 +226,11 @@ export default function Products({ route, navigation }) {
     cloneSectionList,
     selectedSection,
     numberOfQtyToBeAdd,
-    searchedRecords
+    searchedRecords,
+    offersModalVisible,
+    isVegEnabled,
+    MenuModalVisible,
+    ProductTags
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -240,11 +254,15 @@ export default function Products({ route, navigation }) {
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
+    getAllProductTags();
     const unsubscribe = navigation.addListener('focus', () => {
       updateState({ pageNo: 1 });
       getAllListItems();
+      getAllProductTags();
       if (isLoadingC) {
         getAllProducts(true);
+        fetchOffers();
+        getAllProductTags();
       }
     });
     return unsubscribe;
@@ -258,6 +276,38 @@ export default function Products({ route, navigation }) {
   // useEffect(() => {
   //   getAllListItems();
   // }, [pageNo, isRefreshing]);
+
+  const getAllProductTags = () => {
+    actions
+      .getAllProductTags('', {}, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+
+        // code: '245bae',
+        // currency: 1,
+        // language: 1,
+        // systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        const productTagsArr = res?.data?.map(el => {
+          return {
+            ...el,
+            isSelected: false
+          }
+        })
+        updateState({ ProductTags: productTagsArr });
+
+        // if (res && res.data) {
+        //   updateState({allAvailableCoupons: res.data});
+        // }
+      })
+      // .catch(errorMethod);
+      .catch((error) => {
+        console.log('tags api error >>>>>', error)
+      });
+  }
 
   const getAllListItems = () => {
     let filterExist =
@@ -479,7 +529,7 @@ export default function Products({ route, navigation }) {
         },
       )
       .then((res) => {
-        console.log(res?.data, 'getProductByVendorId');
+
         if (res?.data?.vendor?.is_show_products_with_category) {
           var totalProduct = 1;
           let filterArray = res?.data?.categories?.map((val) => {
@@ -622,6 +672,7 @@ export default function Products({ route, navigation }) {
   };
 
   const errorMethod = (error) => {
+    console.log('checking error >>>>><<<<<<', error)
     updateState({
       updateQtyLoader: false,
       selectedItemID: -1,
@@ -1172,6 +1223,8 @@ export default function Products({ route, navigation }) {
   useEffect(() => {
     if (isLoadingC) {
       getAllProducts(true);
+      fetchOffers();
+      getAllProductTags();
     }
   }, [isLoadingC]);
 
@@ -1193,7 +1246,7 @@ export default function Products({ route, navigation }) {
   const onSearchWithinMenu = (text) => {
     updateState({ searchInput: text })
     let Arr = []
-    if(text){
+    if (text) {
       const newArr = sectionListData.map(el => {
         const records = el.data && el.data.filter(item => {
           return item?.translation[0]?.title.toLowerCase().includes(text.toLowerCase())
@@ -1232,12 +1285,70 @@ export default function Products({ route, navigation }) {
     //     .then((res) => {
     //       console.log('res >>>>>>>', res);
     //       // updateState({isLoading: false});
-  
+
     //       // if (res && res.data) {
     //       //   updateState({allAvailableCoupons: res.data});
     //       // }
     //     })
     //     .catch(errorMethod);
+  }
+
+  const RenderMenuView = () => {
+    return (
+      <View>
+        {/* <View style={{ paddingHorizontal: moderateScale(15), width: '100%', borderBottomColor: colors.greyMedium, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: textScale(14), fontFamily: fontFamily.regular }}>Recommended</Text>
+        <Text style={{ fontSize: textScale(14), fontFamily: fontFamily.regular }}>2</Text>
+                </View> */}
+        <ScrollView style={{ width: '100%' }}>
+          <Text style={{ paddingHorizontal: moderateScale(16), fontSize: textScale(14), fontFamily: fontFamily.medium }}>Menu</Text>
+          <View style={{ width: '100%', height: 1, marginVertical: moderateScaleVertical(10) }} />
+          {
+            cloneSectionList.map((el, index) => {
+              const idx = index + 1
+              return (
+                <TouchableOpacity key={index} onPress={() => {
+                  updateState({ MenuModalVisible: !MenuModalVisible })
+                  sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo({ x: (height / 7.5 * idx) * idx, y: (height / 7.5 * idx) * idx, animated: true })
+                }} style={{ borderBottomWidth: 0, paddingHorizontal: moderateScale(15), width: '100%', borderBottomColor: colors.greyMedium, marginBottom: moderateScale(10), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <Text style={{ fontSize: activeIdx === index ? textScale(13.5) : textScale(13), marginBottom: moderateScale(5), fontFamily: activeIdx === index ? fontFamily.medium : fontFamily.regular }}>{el.title}</Text>
+                  <Text style={{ fontSize: activeIdx === index ? textScale(13.5) : textScale(13), marginBottom: moderateScale(5), fontFamily: activeIdx === index ? fontFamily.medium : fontFamily.regular }}>{el.data.length}</Text>
+                </TouchableOpacity>
+              )
+            })
+          }
+        </ScrollView>
+      </View>
+    )
+  }
+
+  const RenderOfferView = () => {
+    return (
+      <View>
+        <Text style={{ fontSize: textScale(14), paddingHorizontal: moderateScale(15), fontFamily: fontFamily.regular }}>Available Offers</Text>
+        <View style={{ width: '100%', height: 1, backgroundColor: colors.greyMedium, marginVertical: moderateScaleVertical(10) }} />
+        <ScrollView style={{ width: '100%' }}>
+          {
+            [1, 2, 3].map((el, indx) => {
+              return (
+                <View key={indx} style={{ borderBottomWidth: 1, paddingHorizontal: moderateScale(15), width: '100%', borderBottomColor: colors.greyMedium, marginBottom: moderateScale(10), }}>
+                  <Text style={{ fontSize: textScale(13), marginBottom: moderateScale(5), fontFamily: fontFamily.regular }}>Get 20% OFF up to $50</Text>
+                  <Text style={{ fontSize: textScale(11), marginBottom: moderateScale(5), color: colors.textGreyOpcaity7, fontFamily: fontFamily.regular }}>Valid on orders with items worth $159 or more.</Text>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', borderTopWidth: 1, borderTopColor: colors.greyMedium, alignItems: 'center', paddingTop: moderateScaleVertical(15), marginTop: moderateScale(8), paddingBottom: moderateScale(15) }}>
+                    <View style={{ borderWidth: 1, borderColor: themeColors.primary_color, borderRadius: moderateScale(3), paddingHorizontal: moderateScale(7), paddingVertical: moderateScale(4), borderStyle: 'dashed', justifyContent: 'center', alignItems: 'center' }}>
+                      <Text style={{ fontSize: textScale(11), fontFamily: fontFamily.regular }}>TASTY</Text>
+                    </View>
+                    <TouchableOpacity>
+                      <Text style={{ fontSize: textScale(11), color: themeColors.primary_color, fontFamily: fontFamily.regular }}>TAP TO COPY</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )
+            })
+          }
+        </ScrollView>
+      </View>
+    )
   }
 
   const listHeaderComponent2 = () => {
@@ -1387,7 +1498,6 @@ export default function Products({ route, navigation }) {
                             ? MyDarkTheme.colors.text
                             : colors.white,
                         }}>
-                        {console.log('cehcking data', categoryInfo)}
                         {categoryInfo?.address || ''}
                       </Text>
 
@@ -1690,12 +1800,12 @@ export default function Products({ route, navigation }) {
           </Animatable.View>
         )}
 
-        <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: width / 1.11, alignSelf: 'center', borderBottomWidth: 1, borderBottomColor: colors.greyMedium, marginBottom: moderateScale(20), paddingBottom: moderateScaleVertical(10), paddingHorizontal: moderateScale(10) }}>
+        <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: width / 1.11, alignSelf: 'center', borderBottomWidth: 1, borderBottomColor: colors.greyMedium, marginBottom: moderateScale(15), paddingBottom: moderateScaleVertical(10), paddingHorizontal: moderateScale(10) }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ backgroundColor: colors.greyColor, width: moderateScale(30), height: moderateScale(30), borderRadius: moderateScale(30), alignItems: 'center', justifyContent: 'center' }} >
               <Image source={imagePath.ic_pinIcon} />
             </View>
-            {!!categoryInfo.lineOfSightDistance &&
+            {(categoryInfo.lineOfSightDistance != undefined && categoryInfo.lineOfSightDistance != null) &&
               <Text
                 style={{
                   ...styles.milesTxt,
@@ -1714,7 +1824,7 @@ export default function Products({ route, navigation }) {
             <View style={{ backgroundColor: colors.greyColor, width: moderateScale(30), height: moderateScale(30), borderRadius: moderateScale(30), alignItems: 'center', justifyContent: 'center' }} >
               <Image source={imagePath.ic_timeIcon} />
             </View>
-            {!!categoryInfo.lineOfSightDistance &&
+            {(categoryInfo.lineOfSightDistance != undefined && categoryInfo.lineOfSightDistance != null) &&
               <Text
                 style={{
                   ...styles.milesTxt,
@@ -1736,9 +1846,7 @@ export default function Products({ route, navigation }) {
             }
           </View>
 
-          <TouchableOpacity onPress={() => {
-            fetchOffers()
-          }} activeOpacity={0.7} style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <TouchableOpacity onPress={() => updateState({ offersModalVisible: !offersModalVisible })} activeOpacity={0.7} style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ backgroundColor: colors.greyColor, width: moderateScale(30), height: moderateScale(30), borderRadius: moderateScale(30), alignItems: 'center', justifyContent: 'center' }} >
               <Image source={imagePath.ic_offersIcon} />
             </View>
@@ -1756,6 +1864,40 @@ export default function Products({ route, navigation }) {
             <Image source={imagePath.icBackb} style={{ transform: [{ rotate: '-90deg' }], width: moderateScale(11), height: moderateScale(11), resizeMode: 'contain', marginLeft: moderateScale(6) }} />
           </TouchableOpacity>
         </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ paddingHorizontal: moderateScale(20), marginBottom: moderateScale(15) }} contentContainerStyle={{ alignItems: 'center' }}>
+          {ProductTags.map((el, index) => {
+            return (
+              <View key={index} style={{ flexDirection: 'row' }}>
+                <ToggleSwitch
+                  isOn={el.isSelected}
+                  onColor={colors.green}
+                  offColor={
+                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                  }
+                  size="small"
+                  onToggle={() => {
+                    const updatedArr = ProductTags.map((el, idx) => {
+                      console.log(el)
+                      if (idx === index) {
+                        let newObj = el
+                        newObj.isSelected = !newObj.isSelected
+                        return newObj
+                      } else {
+                        return el
+                      }
+                    })
+                    updateState({ ProductTags: updatedArr })
+                  }}
+                />
+                <Text style={{ fontSize: textScale(11), fontFamily: fontFamily.regular, marginLeft: moderateScale(7) }}>
+                  {el.translations[0].name}
+                </Text>
+                <View style={{ width: moderateScale(20) }} />
+              </View>
+            )
+          })
+          }
+        </ScrollView>
         <SearchBar
           containerStyle={{
             alignSelf: 'center',
@@ -1965,7 +2107,12 @@ export default function Products({ route, navigation }) {
   };
 
   const renderSectionTab = (props) => {
+    console.log('check all datya >>> ', props)
     const { title, isActive } = props;
+
+    if (isActive) {
+      activeIdx = props.index
+    }
     if (!AnimatedHeaderValue) {
       return <View style={{ width: 40 }} />;
     }
@@ -1993,7 +2140,8 @@ export default function Products({ route, navigation }) {
     );
   };
 
-  const renderSectionHeader = ({ section }) => {
+  const renderSectionHeader = (props) => {
+    const { section } = props
     return (
       <View
         style={{
@@ -2305,42 +2453,43 @@ export default function Products({ route, navigation }) {
           )}
         {/* <View style={{height: moderateScale(10)}} /> */}
         {!!categoryInfo?.is_show_products_with_category ? (
-           (
+          (
             <View style={{ flex: 1 }}>
-            <SectionList
-              showsVerticalScrollIndicator={false}
-              onScroll={onScroll}
-              sections={cloneSectionList}
-              ListHeaderComponent={listHeaderComponent2()}
-              stickySectionHeadersEnabled={false}
-              scrollToLocationOffset={50}
-              maxToRenderPerBatch={18}
-              windowSize={18}
-              initialNumToRender={18}
-              removeClippedSubviews={true}
-              extraData={sectionListData}
-              keyExtractor={(item, index) => index}
-              // tabBarStyle={styles.tabBar}
-              // ItemSeparatorComponent={() => <View style={styles.separator} />}
-              getItemLayout={(data, index) => {
-                // console.log(data,`getItemLayout called with index: ${index}`);
-                return {
-                  length: height / 10,
-                  offset: (height / 10) * index,
-                  index: index,
-                };
-              }}
-              renderTab={renderSectionTab}
-              renderItem={renderSectionItem}
-              ListFooterComponent={() => (
-                <View style={{ height: moderateScale(60) }} />
-              )}
-              renderSectionHeader={renderSectionHeader}
-              ListEmptyComponent={
-                <NoDataFound isLoading={state.isLoading} containerStyle={{}} />
-              }
-            />
-          </View>
+              <SectionList
+                ref={sectionListRef}
+                showsVerticalScrollIndicator={false}
+                onScroll={onScroll}
+                sections={cloneSectionList}
+                ListHeaderComponent={listHeaderComponent2()}
+                stickySectionHeadersEnabled={false}
+                scrollToLocationOffset={10}
+                maxToRenderPerBatch={18}
+                windowSize={18}
+                initialNumToRender={18}
+                removeClippedSubviews={true}
+                extraData={sectionListData}
+                keyExtractor={(item, index) => index}
+                // tabBarStyle={styles.tabBar}
+                // ItemSeparatorComponent={() => <View style={styles.separator} />}
+                getItemLayout={(data, index) => {
+
+                  return {
+                    length: height / 10,
+                    offset: (height / 10) * index,
+                    index: index,
+                  };
+                }}
+                renderTab={renderSectionTab}
+                renderItem={renderSectionItem}
+                ListFooterComponent={() => (
+                  <View style={{ height: moderateScale(60) }} />
+                )}
+                renderSectionHeader={renderSectionHeader}
+                ListEmptyComponent={
+                  <NoDataFound isLoading={state.isLoading} containerStyle={{}} />
+                }
+              />
+            </View>
           )
         ) : (
           <FlatList
@@ -2436,14 +2585,32 @@ export default function Products({ route, navigation }) {
         visible={updateQtyLoader}
       />
 
-      {CartItems && CartItems.data.item_count &&
+      {
+        !searchInput &&
         <GradientCartView
           onPress={() => navigation.navigate(navigationStrings.CART)}
-          btnText={`${CartItems.data.item_count} ${CartItems.data.item_count > 1 ? strings.ITEM : strings.ITEMS} | ${currencies.primary_currency.symbol}${CartItems.data.total_payable_amount}`}
+          btnText={CartItems && CartItems.data && CartItems.data.item_count ? `${CartItems.data.item_count} ${CartItems.data.item_count > 1 ? strings.ITEM : strings.ITEMS} | ${currencies.primary_currency.symbol}${CartItems.data.total_payable_amount}` : ''}
+          ifCartShow={CartItems && CartItems.data && CartItems.data.item_count}
+          onMenuTap={() => updateState({ MenuModalVisible: !MenuModalVisible })}
         />
       }
 
-    <BottomSheetModal />
+      <BottomSlideModal
+        mainContainView={RenderOfferView}
+        isModalVisible={offersModalVisible}
+        mainContainerStyle={{ width: '100%', paddingHorizontal: 0, marginHorizontal: 0, maxHeight: moderateScale(450) }}
+        innerViewContainerStyle={{ width: '100%', paddingHorizontal: 0, marginHorizontal: 0 }}
+        onBackdropPress={() => updateState({ offersModalVisible: !offersModalVisible })}
+      />
+
+      <BottomSlideModal
+        mainContainView={RenderMenuView}
+        isModalVisible={MenuModalVisible}
+        mainContainerStyle={{ width: '100%', paddingHorizontal: moderateScale(15), marginHorizontal: 0, height: moderateScale(250), backgroundColor: 'transparent', }}
+        innerViewContainerStyle={{ width: '100%', paddingHorizontal: 0, marginHorizontal: 0, backgroundColor: 'white', borderRadius: moderateScale(10) }}
+        onBackdropPress={() => updateState({ MenuModalVisible: !MenuModalVisible })}
+      />
+
     </View>
   );
 }

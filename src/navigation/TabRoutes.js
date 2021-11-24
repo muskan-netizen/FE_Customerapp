@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/core';
 import React, { useState } from 'react';
 import { Image, StyleSheet, Text } from 'react-native';
 import { View } from 'react-native-animatable';
@@ -23,6 +24,8 @@ import navigationStrings from './navigationStrings';
 
 const Tab = createBottomTabNavigator();
 
+let showBottomBar_ = true;
+
 export default function TabRoutes(props) {
   const [showBottomBar, setShowBottomBar] = useState(true)
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
@@ -46,16 +49,19 @@ export default function TabRoutes(props) {
 
   const getTabBarVisibility = (route, screen) => {
   
-    const routeName = route.state
-      ? route.state.routes[route.state.index].name
-      : '';
-  
-      console.log('checking route name >>>>', routeName, screen.includes(routeName))
-    if (screen.includes(routeName)) {
-      setShowBottomBar(false)
+    // const routeName = route.state
+    //   ? route.state.routes[route.state.index].name
+    //   : '';
+      
+      const route_name = getFocusedRouteNameFromRoute(route)
+      // console.log('checking route name >>>>', route_name, screen.includes(route_name))
+    if (screen.includes(route_name)) {
+      // setShowBottomBar(false)
+      showBottomBar_ = false
       return false;
     }
-    setShowBottomBar(true)
+    // setShowBottomBar(true)
+    showBottomBar_ = true
     return true;
   }
 
@@ -132,7 +138,7 @@ export default function TabRoutes(props) {
     <Tab.Navigator
       backBehavior={'initialRoute'}
       tabBar={(props) => {
-        if(showBottomBar){
+        if(showBottomBar_){
           switch (appStyle?.tabBarLayout) {
             case 1:
               return <CustomBottomTabBar {...props} />;

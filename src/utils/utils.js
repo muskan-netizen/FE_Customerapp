@@ -110,6 +110,7 @@ export async function apiReq(
       ...headers,
     };
 
+    console.log(headers, '<<<<<<<<< headers');
     if (method === 'get' || method === 'delete') {
       data = {
         ...requestOptions,

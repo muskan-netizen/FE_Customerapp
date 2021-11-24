@@ -7,6 +7,7 @@ import colors from '../styles/colors';
 import commonStylesFun from '../styles/commonStyles';
 import { moderateScale } from '../styles/responsiveSize';
 import * as Animatable from 'react-native-animatable'
+import BrowseMenuButton from './BrowseMenuButton';
 
 const GradientCartView = ({
   containerStyle,
@@ -24,11 +25,13 @@ const GradientCartView = ({
   colorsArray = null,
   indicatorColor = '#0000ff',
   disabled = false,
+  onMenuTap,
+  ifCartShow
 }) => {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;
-  console.log('checking theme colors >>>',themeColors)
+
   const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
   const [zoomIn, setZoomIn] = useState(true)
   const [showText, setShowText] = useState(false)
@@ -97,8 +100,42 @@ const GradientCartView = ({
     
   }
 
+  const menuBtnAnimation= {
+    0: {
+      marginBottom: -70
+    },
+    0.5: {
+      marginBottom: -40
+    },
+    1: {
+      marginBottom: 0
+    },
+  }
+
+  const menuBtnAnimationReverse= {
+    0: {
+      marginBottom: 80
+    },
+    0.5: {
+      marginBottom: 40
+    },
+    1: {
+      marginBottom: 0
+    },
+  }
+
   return (
-    <Animatable.View
+    <View>
+      <Animatable.View duration={400} animation={ifCartShow ? menuBtnAnimation: menuBtnAnimationReverse}>
+      <BrowseMenuButton
+      fontFamily={fontFamily}
+      onMenuTap={onMenuTap}
+      // containerStyle={{ marginBottom: moderateScale(-58) }}
+      />
+      </Animatable.View>
+    
+    {ifCartShow &&
+      <Animatable.View
       style={{
         ...commonStyles.buttonRect,
         borderWidth: 0,
@@ -143,7 +180,8 @@ const GradientCartView = ({
             </TouchableOpacity>
           </Animatable.View>
       </LinearGradient>
-    </Animatable.View>
+    </Animatable.View>}
+    </View>
   );
 };
 

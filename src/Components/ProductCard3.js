@@ -166,7 +166,7 @@ export default function ProductCard3({
                 <StarRating
                   disabled={false}
                   maxStars={5}
-                  rating={Number(data?.averageRating).toFixed(1)}
+                  rating={Number(parseInt(data?.averageRating).toFixed(1))}
                   fullStarColor={colors.yellowB}
                   starSize={8}
                   containerStyle={{ width: width / 9 }}

@@ -1,8 +1,8 @@
-import React, {createRef, useEffect, useRef, useState} from 'react';
-import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
+import React, { createRef, useEffect, useRef, useState } from 'react';
+import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
 import deviceInfoModule from 'react-native-device-info';
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
@@ -14,19 +14,19 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {getImageUrl, showSuccess} from '../../../utils/helperFunctions';
+import { getImageUrl, showSuccess } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
-import {RadioButton} from 'react-native-paper';
+import { RadioButton } from 'react-native-paper';
 
 import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../../styles/theme';
 import strings from '../../../constants/lang';
-import {string} from 'prop-types';
-import {BlurView} from '@react-native-community/blur';
+import { string } from 'prop-types';
+import { BlurView } from '@react-native-community/blur';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import ScaledImage from 'react-native-scalable-image';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 export default function DashBoardHeaderFive({
   // navigation = {},
@@ -42,7 +42,7 @@ export default function DashBoardHeaderFive({
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
-  const {appData, themeColors, appStyle, currencies, languages} = useSelector(
+  const { appData, themeColors, appStyle, currencies, languages } = useSelector(
     (state) => state?.initBoot,
   );
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
@@ -53,12 +53,12 @@ export default function DashBoardHeaderFive({
     setSelectedTab: 0,
   });
 
-  const {isModalVisible, checked, tabs} = state;
+  const { isModalVisible, checked, tabs } = state;
 
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({themeColors, fontFamily});
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const styles = stylesFunc({ themeColors, fontFamily });
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const imageURI = getImageUrl(
     profileInfo?.logo?.image_fit,
     profileInfo?.logo?.image_path,
@@ -161,7 +161,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.dinein_nomenclature ||
-            strings.DINE_IN,
+          strings.DINE_IN,
           'dine_in',
         );
       } else if (
@@ -171,7 +171,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-            strings.TAKEAWAY,
+          strings.TAKEAWAY,
           'takeaway',
         );
       } else if (
@@ -181,13 +181,13 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.dinein_nomenclature ||
-            strings.DINE_IN,
+          strings.DINE_IN,
           'dine_in',
         );
       } else {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.delivery_nomenclature ||
-            strings.DELIVERY,
+          strings.DELIVERY,
           'delivery',
         );
       }
@@ -199,7 +199,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.dinein_nomenclature ||
-            strings.DINE_IN,
+          strings.DINE_IN,
           'dine_in',
         );
       } else if (
@@ -209,7 +209,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-            strings.TAKEAWAY,
+          strings.TAKEAWAY,
           'takeaway',
         );
       } else if (
@@ -219,7 +219,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.dinein_nomenclature ||
-            strings.DINE_IN,
+          strings.DINE_IN,
           'dine_in',
         );
       } else if (
@@ -229,7 +229,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.delivery_nomenclature ||
-            strings.DELIVERY,
+          strings.DELIVERY,
           'delivery',
         );
       } else if (
@@ -239,7 +239,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.delivery_nomenclature ||
-            strings.DELIVERY,
+          strings.DELIVERY,
           'delivery',
         );
       } else if (
@@ -249,13 +249,13 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.delivery_nomenclature ||
-            strings.DELIVERY,
+          strings.DELIVERY,
           'delivery',
         );
       } else {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.dinein_nomenclature ||
-            strings.DINE_IN,
+          strings.DINE_IN,
           'dine_in',
         );
       }
@@ -267,7 +267,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-            strings.TAKEAWAY,
+          strings.TAKEAWAY,
           'takeaway',
         );
       } else if (
@@ -277,7 +277,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-            strings.TAKEAWAY,
+          strings.TAKEAWAY,
           'takeaway',
         );
       } else if (
@@ -287,7 +287,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-            strings.TAKEAWAY,
+          strings.TAKEAWAY,
           'takeaway',
         );
       } else if (
@@ -297,7 +297,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.dinein_nomenclature ||
-            strings.DINE_IN,
+          strings.DINE_IN,
           'dine_in',
         );
       } else if (
@@ -307,7 +307,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.delivery_nomenclature ||
-            strings.DELIVERY,
+          strings.DELIVERY,
           'delivery',
         );
       } else if (
@@ -317,13 +317,13 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.delivery_nomenclature ||
-            strings.DELIVERY,
+          strings.DELIVERY,
           'delivery',
         );
       } else {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-            strings.TAKEAWAY,
+          strings.TAKEAWAY,
           'takeaway',
         );
       }
@@ -336,7 +336,7 @@ export default function DashBoardHeaderFive({
         text: strings.CANCEL,
         onPress: () => console.log('Cancel Pressed'),
       },
-      {text: strings.CLEAR_CART2, onPress: clearCart},
+      { text: strings.CLEAR_CART2, onPress: clearCart },
     ]);
   };
 
@@ -354,13 +354,13 @@ export default function DashBoardHeaderFive({
       .then((res) => {
         showSuccess(res?.message);
         actions.cartItemQty(res);
-        updateState({isModalVisible: false});
+        updateState({ isModalVisible: false });
       })
       .catch(errorMethod);
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({ isLoading: false, isLoadingB: false, isRefreshing: false });
     showError(error?.message || error?.error);
   };
 
@@ -386,7 +386,7 @@ export default function DashBoardHeaderFive({
 
   const _onTableLabel = () => {
     checkSelectedTab();
-    updateState({isModalVisible: true});
+    updateState({ isModalVisible: true });
   };
 
   if (isLoading) {
@@ -397,19 +397,29 @@ export default function DashBoardHeaderFive({
         heightRight={moderateScaleVertical(20)}
         rectHeightRight={moderateScaleVertical(20)}
         isRight
-        viewStyles={{marginVertical: moderateScaleVertical(10)}}
+        viewStyles={{ marginVertical: moderateScaleVertical(10) }}
       />
     );
   }
 
   return (
-    <>
+    <View
+    style={{
+      borderBottomWidth: 0.8,
+      borderBottomColor: isDarkMode
+        ? colors.whiteOpacity22
+        : colors.borderColorD,
+        paddingBottom: moderateScale(5) 
+    }}
+    >
       <View
         style={{
           ...styles.headerContainer,
           borderBottomColor: isDarkMode
             ? colors.whiteOpacity22
             : colors.borderColorD,
+            borderBottomWidth: 0,
+            
         }}>
         <View
           style={{
@@ -425,12 +435,12 @@ export default function DashBoardHeaderFive({
               source={
                 profileInfo && profileInfo?.logo
                   ? {
-                      uri: getImageUrl(
-                        profileInfo.logo.image_fit,
-                        profileInfo.logo.image_path,
-                        '1000/1000',
-                      ),
-                    }
+                    uri: getImageUrl(
+                      profileInfo.logo.image_fit,
+                      profileInfo.logo.image_path,
+                      '1000/1000',
+                    ),
+                  }
                   : imagePath.logo
               }
             />
@@ -472,16 +482,16 @@ export default function DashBoardHeaderFive({
         </View>
 
         <TouchableOpacity
-          style={{marginHorizontal: moderateScale(8)}}
+          style={{ marginHorizontal: moderateScale(8) }}
           onPress={() =>
             navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
           }>
           <Image
-            style={{tintColor: themeColors.primary_color}}
+            style={{ tintColor: themeColors.primary_color }}
             source={imagePath.search1}
           />
         </TouchableOpacity>
-        {tabs.length > 1 && (
+        {/* {tabs.length > 1 && (
           <TouchableOpacity
             activeOpacity={0.7}
             style={{
@@ -494,17 +504,17 @@ export default function DashBoardHeaderFive({
               source={
                 !!(
                   checked ==
-                    toggleData?.profile?.preferences?.delivery_nomenclature ||
+                  toggleData?.profile?.preferences?.delivery_nomenclature ||
                   checked == strings.DELIVERY
                 )
                   ? imagePath.delivery
                   : !!(
-                      checked ==
-                        toggleData?.profile?.preferences?.dinein_nomenclature ||
-                      checked == strings.DINE_IN
-                    )
-                  ? imagePath.dineIn
-                  : imagePath.takeaway
+                    checked ==
+                    toggleData?.profile?.preferences?.dinein_nomenclature ||
+                    checked == strings.DINE_IN
+                  )
+                    ? imagePath.dineIn
+                    : imagePath.takeaway
               }
               style={styles.deliveryIcon}
               resizeMode="contain"
@@ -518,18 +528,18 @@ export default function DashBoardHeaderFive({
               resizeMode="contain"
             />
           </TouchableOpacity>
-        )}
+        )} */}
         <Modal
           isVisible={isModalVisible}
           style={{
             justifyContent: 'flex-end',
             margin: 0,
           }}
-          onBackdropPress={() => updateState({isModalVisible: false})}>
+          onBackdropPress={() => updateState({ isModalVisible: false })}>
           <View>
             <TouchableOpacity
               style={styles.closeButton}
-              onPress={() => updateState({isModalVisible: false})}>
+              onPress={() => updateState({ isModalVisible: false })}>
               <Image source={imagePath.crossC} resizeMode="contain" />
             </TouchableOpacity>
 
@@ -542,7 +552,7 @@ export default function DashBoardHeaderFive({
                     : colors.white,
                 },
               ]}>
-              <View style={{padding: moderateScale(10)}}>
+              <View style={{ padding: moderateScale(10) }}>
                 {tabs.map((item, indx) => {
                   return (
                     <TouchableOpacity
@@ -594,8 +604,8 @@ export default function DashBoardHeaderFive({
                             color: item.isActive
                               ? themeColors.primary_color
                               : isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.blackOpacity43,
+                                ? MyDarkTheme.colors.text
+                                : colors.blackOpacity43,
                             fontSize: textScale(12),
                             marginHorizontal: moderateScale(10),
                           }}>
@@ -610,8 +620,8 @@ export default function DashBoardHeaderFive({
                           tintColor: item.isActive
                             ? themeColors.primary_color
                             : isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.blackOpacity66,
+                              ? MyDarkTheme.colors.text
+                              : colors.blackOpacity66,
                           alignSelf: 'flex-end',
                         }}
                         resizeMode="contain"
@@ -624,6 +634,43 @@ export default function DashBoardHeaderFive({
           </View>
         </Modal>
       </View>
-    </>
+      <View style={{ width:width - 24, alignSelf: 'center', borderRadius: moderateScale(10), flexDirection: 'row', marginTop: moderateScale(10) }}>
+        {
+          tabs.map((item, indx) => {
+            return (
+              <TouchableOpacity
+              activeOpacity={1}
+              onPress={() =>
+                !(
+                  cartItemCount?.message == null &&
+                  cartItemCount?.data?.item_count > 0
+                )
+                  ? _onTableItm(item, indx)
+                  : dineInFunction()
+              }
+              key={indx} style={{ width: width / 3 - 8, borderBottomColor: item.isActive ? themeColors.primary_color : colors.greyColor1, borderBottomWidth: 2,  height: moderateScale(40), alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+                 <Image
+                        source={item.icon}
+                        style={{
+                          height: moderateScale(16),
+                          width: moderateScale(16),
+                          tintColor: item.isActive
+                            ? themeColors.primary_color
+                            : isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.blackOpacity66,
+                              marginRight: moderateScale(3),
+                              tintColor: item.isActive ? themeColors.primary_color : colors.textGreyOpcaity7
+                          // alignSelf: 'flex-end',
+                        }}
+                        resizeMode="contain"
+                      />
+                <Text style={{ marginLeft: moderateScale(3), fontSize: textScale(14), fontFamily: fontFamily.regular, color: item.isActive ? themeColors.primary_color : colors.textGreyOpcaity7, textTransform: 'capitalize' }}>{item.value}</Text>
+              </TouchableOpacity>
+            )
+          })
+        }
+      </View>
+    </View>
   );
 }

@@ -559,5 +559,6 @@ export default {
   SEARCHED_RESULTS:"Searched Results",
   ITEM: 'Item',
   ITEMS: 'Items',
-  SEARCH_WITHIN_MENU: 'Search within the menu'
+  SEARCH_WITHIN_MENU: 'Search within the menu',
+  GET_STARTED: "Get started"
 };
