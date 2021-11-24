@@ -161,6 +161,7 @@ const shortCodes = {
   swiftandvalu: 'f89822',
   trucxi: '3096b7',
   paysic: '786133',
+  chipetaxi: '29790b',
 };
 
 const appIds = {
@@ -462,7 +463,7 @@ const appIds = {
   }),
   toda: Platform.select({
     ios: 'com.toda.orders',
-    android: 'com.toda',
+    android: 'com.toda.orders',
   }),
   mobi: Platform.select({
     ios: 'com.mobi.customer',
@@ -803,6 +804,10 @@ const appIds = {
   paysic: Platform.select({
     ios: 'com.paysic',
     android: 'com.paysic',
+  }),
+  chipetaxi: Platform.select({
+    ios: 'com.chipetaxi',
+    android: 'com.chipetaxi',
   }),
 };
 

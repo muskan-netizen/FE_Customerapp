@@ -7,34 +7,34 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:450567746106:android:6363b8ae28b6814dde7b03",
+        "mobilesdk_app_id": "1:450567746106:android:fa3cbbd7467d72bbde7b03",
         "android_client_info": {
-          "package_name": "com.toda"
+          "package_name": "com.toda.orders"
         }
       },
       "oauth_client": [
         {
-          "client_id": "450567746106-2n4dqb2rq3j8er2oloj1c0d02dh37fbk.apps.googleusercontent.com",
+          "client_id": "450567746106-do4u0psf6gct34m87a5hcghe9fk6drr7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.toda",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+            "package_name": "com.toda.orders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "450567746106-cfnch2bd8tq2oe10shfu5t43sjqnp6au.apps.googleusercontent.com",
+          "client_id": "450567746106-edpjlbhgpc8sa3nl14mlmvncl1a931bp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.toda",
+            "package_name": "com.toda.orders",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "450567746106-igan5g8ovqhdfhdpqbuj7lkt47igpfbq.apps.googleusercontent.com",
+          "client_id": "450567746106-iv21t15vupikspaahed67lvjt2ir1s2q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.toda",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+            "package_name": "com.toda.orders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
           }
         },
         {
@@ -55,10 +55,10 @@
               "client_type": 3
             },
             {
-              "client_id": "450567746106-q5frai653asd7a2lqbn4f9u3q9kmo0a1.apps.googleusercontent.com",
+              "client_id": "450567746106-71ijiv4btiflroemr9e9v2r46tgbhqaf.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.toda"
+                "bundle_id": "com.toda.orders"
               }
             }
           ]
