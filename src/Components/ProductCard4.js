@@ -121,7 +121,7 @@ export default function ProductCard4({
         </View>
       </View>
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={{
           borderColor: themeColors.primary_color,
           borderRadius: 10,
@@ -131,7 +131,7 @@ export default function ProductCard4({
           height: 35,
           paddingVertical: 10,
         }}>
-        {/* <Text>+</Text> */}
+        
         <Text
           style={{
             fontSize: textScale(10),
@@ -141,8 +141,8 @@ export default function ProductCard4({
           }}>
           ADD
         </Text>
-        {/* <Text>-</Text> */}
-      </TouchableOpacity>
+        
+      </TouchableOpacity> */}
     </TouchableOpacity>
   );
 }

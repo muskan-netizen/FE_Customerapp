@@ -121,7 +121,7 @@ export default function ProductCard3({
             {/* Title View */}
             <View>
               {
-                data?.tags.length > 0 && (
+              !!data?.tags &&  data?.tags.length > 0 && (
                   <Image source={{ uri: getIconImage(data.tags[0].tag.icon.image_fit,data?.tags[0]?.tag.icon.image_path, '50/50') }} style={{ marginLeft: moderateScale(1), marginBottom: moderateScale(5), width: moderateScale(17), height: moderateScale(17) }} />
                 )
               }

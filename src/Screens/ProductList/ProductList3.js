@@ -18,7 +18,7 @@ import {
   ScrollView,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
@@ -1237,24 +1237,27 @@ export default function Products({route, navigation}) {
   }, [isLoadingC]);
 
   const checkIfItemExist = (item, tags) => {
-    let result = false
-    tags.forEach(el => {
-      if(el.id === item.tag_id){
-        result = true
+    let result = false;
+    tags.forEach((el) => {
+      if (el.id === item.tag_id) {
+        result = true;
       }
-    })
-    return result
-  }
+    });
+    return result;
+  };
 
   useEffect(() => {
-    let EnabledTags = ProductTags.filter(el => el.isSelected)
+    let EnabledTags = ProductTags.filter((el) => el.isSelected);
     if (EnabledTags.length > 0) {
       const newArr = cloneSectionList.map((el) => {
         const records =
           el.data &&
           el.data.filter((item) => {
-            if(item.tags.length > 0 && checkIfItemExist(item.tags[0], EnabledTags))
-            return item
+            if (
+              item.tags.length > 0 &&
+              checkIfItemExist(item.tags[0], EnabledTags)
+            )
+              return item;
           });
         const newObj = {
           ...el,
@@ -1266,7 +1269,7 @@ export default function Products({route, navigation}) {
     } else {
       getAllProductsByVendor();
     }
-  }, [ProductTags])
+  }, [ProductTags]);
 
   const onPressChildCards = (item) => {
     console.log(item, 'item upload');
@@ -1788,7 +1791,7 @@ export default function Products({route, navigation}) {
                         {desc}
                       </Text>
                     </View>
-                  ): null}
+                  ) : null}
                   {/* {!!categoryInfo && !!categoryInfo?.lineOfSightDistance && (
                     <View
                       style={{
@@ -2018,18 +2021,18 @@ export default function Products({route, navigation}) {
               }}>
               <Image source={imagePath.ic_pinIcon} />
             </View>
-            {(categoryInfo.lineOfSightDistance != undefined &&
-              categoryInfo.lineOfSightDistance != null) ? (
-                <Text
-                  style={{
-                    ...styles.milesTxt,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                    opacity: 1,
-                    fontSize: textScale(10),
-                  }}>
-                  {categoryInfo.lineOfSightDistance}
-                </Text>
-              ): null}
+            {categoryInfo.lineOfSightDistance != undefined &&
+            categoryInfo.lineOfSightDistance != null ? (
+              <Text
+                style={{
+                  ...styles.milesTxt,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  opacity: 1,
+                  fontSize: textScale(10),
+                }}>
+                {categoryInfo.lineOfSightDistance}
+              </Text>
+            ) : null}
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -2044,20 +2047,20 @@ export default function Products({route, navigation}) {
               }}>
               <Image source={imagePath.ic_timeIcon} />
             </View>
-            {(categoryInfo.lineOfSightDistance != undefined &&
-              categoryInfo.lineOfSightDistance != null) ? (
-                <Text
-                  style={{
-                    ...styles.milesTxt,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                    opacity: 1,
-                    fontSize: textScale(10),
-                  }}>
-                  {checkEvenOdd(categoryInfo.timeofLineOfSightDistance)}-
-                  {checkEvenOdd(categoryInfo.timeofLineOfSightDistance + 5)}
-                  {' mins'}
-                </Text>
-              ): null}
+            {categoryInfo.lineOfSightDistance != undefined &&
+            categoryInfo.lineOfSightDistance != null ? (
+              <Text
+                style={{
+                  ...styles.milesTxt,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  opacity: 1,
+                  fontSize: textScale(10),
+                }}>
+                {checkEvenOdd(categoryInfo.timeofLineOfSightDistance)}-
+                {checkEvenOdd(categoryInfo.timeofLineOfSightDistance + 5)}
+                {' mins'}
+              </Text>
+            ) : null}
           </View>
 
           <TouchableOpacity
@@ -2135,7 +2138,9 @@ export default function Products({route, navigation}) {
                     fontSize: textScale(11),
                     fontFamily: fontFamily.regular,
                     marginLeft: moderateScale(7),
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGrey,
                   }}>
                   {el.translations[0].name}
                 </Text>
@@ -2841,7 +2846,11 @@ export default function Products({route, navigation}) {
                 }`
               : ''
           }
-          ifCartShow={CartItems && CartItems.data && CartItems.data.item_count ? true : false}
+          ifCartShow={
+            CartItems && CartItems.data && CartItems.data.item_count
+              ? true
+              : false
+          }
           onMenuTap={() => updateState({MenuModalVisible: !MenuModalVisible})}
         />
       )}
