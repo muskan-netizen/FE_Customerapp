@@ -71,7 +71,6 @@ export default function SearchProductVendorItem2({navigation, route}) {
 
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
-
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
