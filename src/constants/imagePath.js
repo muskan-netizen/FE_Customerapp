@@ -284,6 +284,7 @@ export default {
   icDestination: require('../assets/images/ic_destination.png'),
   gifImg: require('../assets/images/5ef9d70b03d22b1acd145b9422d3a33f.gif'),
   // 5ef9d70b03d22b1acd145b9422d3a33f.gif
+
   //royoorder new images
   wishlist: require('../assets/images/RoyoorderNewImages/ic_wishlist.png'),
   share1: require('../assets/images/RoyoorderNewImages/ic_share.png'),
@@ -299,6 +300,12 @@ export default {
   trending: require('../assets/images/RoyoorderNewImages/ic_trending.png'),
   icMark1: require('../assets/images/RoyoorderNewImages/ic_mark1.png'),
   icMark2: require('../assets/images/RoyoorderNewImages/ic_mark2.png'),
+  icStarIcon: require('../assets/images/RoyoorderNewImages/ic_starIcon.png'),
+  ic_timeIcon: require('../assets/images/RoyoorderNewImages/ic_timeIcon.png'),
+  ic_pinIcon: require('../assets/images/RoyoorderNewImages/ic_pinIcon.png'),
+  ic_offersIcon: require('../assets/images/RoyoorderNewImages/ic_offersIcon.png'),
+  ic_nonveg: require('../assets/images/RoyoorderNewImages/ic_nonveg.png'),
+  ic_veg: require('../assets/images/RoyoorderNewImages/ic_veg.png'),
 
   icTime2: require('../assets/images/RoyoorderNewImages/ic_time.png'),
   icBrandActive: require('../assets/images/RoyoorderNewImages/ic_tag2.png'),
@@ -339,6 +346,8 @@ export default {
   newfilter: require('../assets/images/RoyoorderNewImages/ic_filter.png'),
   newsort: require('../assets/images/RoyoorderNewImages/sort.png'),
   icBagA: require('../assets/images/RoyoorderNewImages/ic_bag2.png'),
+  cartIcon: require('../assets/images/RoyoorderNewImages/ic_cart.png'),
+
   cash: require('../assets/images/TAXIAPPIMAGES/ic_cash.png'),
   card: require('../assets/images/TAXIAPPIMAGES/ic_card.png'),
   upi: require('../assets/images/TAXIAPPIMAGES/ic_upi.png'),

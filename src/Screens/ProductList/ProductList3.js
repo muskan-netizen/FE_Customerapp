@@ -23,7 +23,12 @@ import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import SectionList from 'react-native-tabs-section-list';
 import {useSelector} from 'react-redux';
+import ToggleSwitch from 'toggle-switch-react-native';
+import BottomSheetModal from '../../Components/BottomSheetModal';
+import BottomSlideModal from '../../Components/BottomSlideModal';
+import BrowseMenuButton from '../../Components/BrowseMenuButton';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
+import GradientCartView from '../../Components/GradientCartView';
 import HomeServiceVariantAddons from '../../Components/HomeServiceVariantAddons';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
@@ -69,13 +74,17 @@ let timeOut = undefined;
 
 var tempQty = 0;
 
+let activeIdx = 0;
+
 export default function Products({route, navigation}) {
   const {data} = route.params;
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const dineInType = useSelector((state) => state?.home?.dineInType);
+  const CartItems = useSelector((state) => state?.cart?.cartItemCount);
 
+  let sectionListRef = useRef(null);
   const isDarkMode = theme;
   const [state, setState] = useState({
     isVisibleModal: false,
@@ -154,6 +163,12 @@ export default function Products({route, navigation}) {
     vendorCategoryItms: null,
     sectionListData: [],
     numberOfQtyToBeAdd: 0,
+    searchedRecords: [],
+    cloneSectionList: [],
+    offersModalVisible: false,
+    MenuModalVisible: false,
+    isVegEnabled: true,
+    ProductTags: [],
   });
 
   const {
@@ -165,6 +180,7 @@ export default function Products({route, navigation}) {
     internetConnection,
     appStyle,
   } = useSelector((state) => state?.initBoot);
+
   const {
     selectedCategory,
     isLoadingC,
@@ -207,8 +223,14 @@ export default function Products({route, navigation}) {
     vendorCategoryItms,
     typeId,
     sectionListData,
+    cloneSectionList,
     selectedSection,
     numberOfQtyToBeAdd,
+    searchedRecords,
+    offersModalVisible,
+    isVegEnabled,
+    MenuModalVisible,
+    ProductTags,
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -232,11 +254,15 @@ export default function Products({route, navigation}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   useEffect(() => {
+    getAllProductTags();
     const unsubscribe = navigation.addListener('focus', () => {
       updateState({pageNo: 1});
       getAllListItems();
+      getAllProductTags();
       if (isLoadingC) {
         getAllProducts(true);
+        fetchOffers();
+        getAllProductTags();
       }
     });
     return unsubscribe;
@@ -250,6 +276,42 @@ export default function Products({route, navigation}) {
   // useEffect(() => {
   //   getAllListItems();
   // }, [pageNo, isRefreshing]);
+
+  const getAllProductTags = () => {
+    actions
+      .getAllProductTags(
+        '',
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+
+          // code: '245bae',
+          // currency: 1,
+          // language: 1,
+          // systemuser: DeviceInfo.getUniqueId(),
+        },
+      )
+      .then((res) => {
+        const productTagsArr = res?.data?.map((el) => {
+          return {
+            ...el,
+            isSelected: false,
+          };
+        });
+        updateState({ProductTags: productTagsArr});
+
+        // if (res && res.data) {
+        //   updateState({allAvailableCoupons: res.data});
+        // }
+      })
+      // .catch(errorMethod);
+      .catch((error) => {
+        console.log('tags api error >>>>>', error);
+      });
+  };
 
   const getAllListItems = () => {
     let filterExist =
@@ -471,7 +533,6 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res?.data, 'getProductByVendorId');
         if (res?.data?.vendor?.is_show_products_with_category) {
           var totalProduct = 1;
           let filterArray = res?.data?.categories?.map((val) => {
@@ -486,6 +547,7 @@ export default function Products({route, navigation}) {
           });
           updateState({
             sectionListData: filterArray,
+            cloneSectionList: filterArray,
             isLoading: false,
             isRefreshing: false,
             categoryInfo: res?.data?.vendor,
@@ -614,6 +676,7 @@ export default function Products({route, navigation}) {
   };
 
   const errorMethod = (error) => {
+    console.log('checking error >>>>><<<<<<', error);
     updateState({
       updateQtyLoader: false,
       selectedItemID: -1,
@@ -681,6 +744,8 @@ export default function Products({route, navigation}) {
   };
 
   const addSingleItem = async (item, section = null) => {
+    console.log('checking section >>>', section);
+    // return;
     if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
@@ -773,6 +838,12 @@ export default function Products({route, navigation}) {
               }
               return f;
             }),
+            cloneSectionList: cloneSectionList.map((f, fnx) => {
+              if (f?.id == section?.id) {
+                return section;
+              }
+              return f;
+            }),
           });
         } else {
           let updateArray = productListData.map((val, i) => {
@@ -828,6 +899,8 @@ export default function Products({route, navigation}) {
 
     console.log('exist qty', isExistqty);
 
+    /** This will restring unneccessary api call , only hit api once user wait for 1.5 seconds ***/
+
     if (timeOut) {
       clearTimeout(timeOut);
     }
@@ -842,56 +915,59 @@ export default function Products({route, navigation}) {
 
     updateLocally(section, quanitity, item, isExistproductId);
 
-    timeOut = setTimeout(() => {
-      console.log('hit set time out functions');
-      // return;
-      if (quanitity) {
-        updateState({
-          selectedItemID: itemToUpdate.id,
-          btnLoader: true,
-          selectedItemIndx: index,
-        });
-        let data = {};
-        data['cart_id'] = isExistCartId;
-        data['quantity'] = quanitity;
-        data['cart_product_id'] = isExistproductId;
-        data['type'] = dineInType;
-        console.log('sending api data', data);
-
-        actions
-          .increaseDecreaseItemQty(data, {
-            code: appData?.profile?.code,
-            currency: currencies?.primary_currency?.id,
-            language: languages?.primary_language?.id,
-            systemuser: DeviceInfo.getUniqueId(),
-          })
-          .then((res) => {
-            tempQty = 0;
-            actions.cartItemQty(res);
-            updateState({
-              cartItems: res.data.products,
-              cartData: res.data,
-              updateQtyLoader: false,
-              selectedItemID: -1,
-              btnLoader: false,
-            });
-          })
-          .catch(async () => {
-            errorMethod();
-            if (type == 1) {
-              quanitity = quanitity - tempQty;
-            } else {
-              quanitity = quanitity + tempQty;
-            }
-            await updateLocally(section, quanitity, item, isExistproductId);
-            tempQty = 0;
+    timeOut = setTimeout(
+      () => {
+        console.log('hit set time out functions');
+        // return;
+        if (quanitity) {
+          updateState({
+            selectedItemID: itemToUpdate.id,
+            btnLoader: true,
+            selectedItemIndx: index,
           });
-      } else {
-        updateState({selectedItemID: itemToUpdate?.id, btnLoader: false});
-        removeItem('selectedTable');
-        removeProductFromCart(itemToUpdate, section);
-      }
-    }, 1500);
+          let data = {};
+          data['cart_id'] = isExistCartId;
+          data['quantity'] = quanitity;
+          data['cart_product_id'] = isExistproductId;
+          data['type'] = dineInType;
+          console.log('sending api data', data);
+
+          actions
+            .increaseDecreaseItemQty(data, {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+              systemuser: DeviceInfo.getUniqueId(),
+            })
+            .then((res) => {
+              tempQty = 0;
+              actions.cartItemQty(res);
+              updateState({
+                cartItems: res.data.products,
+                cartData: res.data,
+                updateQtyLoader: false,
+                selectedItemID: -1,
+                btnLoader: false,
+              });
+            })
+            .catch(async () => {
+              errorMethod();
+              if (type == 1) {
+                quanitity = quanitity - tempQty;
+              } else {
+                quanitity = quanitity + tempQty;
+              }
+              await updateLocally(section, quanitity, item, isExistproductId);
+              tempQty = 0;
+            });
+        } else {
+          updateState({selectedItemID: itemToUpdate?.id, btnLoader: false});
+          removeItem('selectedTable');
+          removeProductFromCart(itemToUpdate, section);
+        }
+      },
+      quanitity === 1 ? 0 : 1500,
+    );
   };
 
   const updateLocally = (section, quanitity, item, isExistproductId) => {
@@ -911,6 +987,12 @@ export default function Products({route, navigation}) {
       updateState({
         ...state,
         sectionListData: sectionListData.map((f, fnx) => {
+          if (f?.id == section?.id) {
+            return section;
+          }
+          return f;
+        }),
+        cloneSectionList: cloneSectionList.map((f, fnx) => {
           if (f?.id == section?.id) {
             return section;
           }
@@ -982,6 +1064,12 @@ export default function Products({route, navigation}) {
           section['data'] = updatedSection;
           updateState({
             sectionListData: sectionListData.map((f, fnx) => {
+              if (f?.id == section?.id) {
+                return section;
+              }
+              return f;
+            }),
+            cloneSectionList: cloneSectionList.map((f, fnx) => {
               if (f?.id == section?.id) {
                 return section;
               }
@@ -1109,6 +1197,12 @@ export default function Products({route, navigation}) {
           }
           return f;
         }),
+        cloneSectionList: cloneSectionList.map((f, fnx) => {
+          if (f?.id == selectedSection?.id) {
+            return selectedSection;
+          }
+          return f;
+        }),
         cartId: cartID,
       });
     } else {
@@ -1133,6 +1227,8 @@ export default function Products({route, navigation}) {
   useEffect(() => {
     if (isLoadingC) {
       getAllProducts(true);
+      fetchOffers();
+      getAllProductTags();
     }
   }, [isLoadingC]);
 
@@ -1151,11 +1247,242 @@ export default function Products({route, navigation}) {
     // navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
   };
 
+  const onSearchWithinMenu = (text) => {
+    updateState({searchInput: text});
+    let Arr = [];
+    if (text) {
+      const newArr = sectionListData.map((el) => {
+        const records =
+          el.data &&
+          el.data.filter((item) => {
+            return item?.translation[0]?.title
+              .toLowerCase()
+              .includes(text.toLowerCase());
+          });
+        const newObj = {
+          ...el,
+        };
+
+        newObj.data = records;
+        return newObj;
+        // console.log('checking products >>>>>', records)
+        // Arr.push(...records)
+      });
+      updateState({cloneSectionList: newArr});
+    } else {
+      getAllProductsByVendor();
+      // updateState({ cloneSectionList: sectionListData })
+    }
+  };
+
+  const fetchOffers = () => {
+    // console.log(productListId?.id)
+    // // return;
+    //   let data = {};
+    //   data['vendor_id'] = 2;
+    //   // data['vendor_id'] = productListId?.id;
+    //   // data['cart_id'] = vendorInfo.cartId;
+    //   console.log(data, 'vendor_id');
+    //   actions
+    //     .getAllPromoCodesForProductList(data, {
+    //       code: appData?.profile?.code,
+    //       currency: currencies?.primary_currency?.id,
+    //       language: languages?.primary_language?.id,
+    //       systemuser: DeviceInfo.getUniqueId(),
+    //     })
+    //     .then((res) => {
+    //       console.log('res >>>>>>>', res);
+    //       // updateState({isLoading: false});
+    //       // if (res && res.data) {
+    //       //   updateState({allAvailableCoupons: res.data});
+    //       // }
+    //     })
+    //     .catch(errorMethod);
+  };
+
+  const RenderMenuView = () => {
+    return (
+      <View>
+        {/* <View style={{ paddingHorizontal: moderateScale(15), width: '100%', borderBottomColor: colors.greyMedium, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: textScale(14), fontFamily: fontFamily.regular }}>Recommended</Text>
+        <Text style={{ fontSize: textScale(14), fontFamily: fontFamily.regular }}>2</Text>
+                </View> */}
+        <ScrollView style={{width: '100%'}}>
+          <Text
+            style={{
+              paddingHorizontal: moderateScale(16),
+              fontSize: textScale(14),
+              fontFamily: fontFamily.medium,
+            }}>
+            Menu
+          </Text>
+          <View
+            style={{
+              width: '100%',
+              height: 1,
+              marginVertical: moderateScaleVertical(10),
+            }}
+          />
+          {cloneSectionList.map((el, index) => {
+            const idx = index + 1;
+            return (
+              <TouchableOpacity
+                key={index}
+                onPress={() => {
+                  updateState({MenuModalVisible: !MenuModalVisible});
+                  sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
+                    {
+                      x: (height / 7.5) * idx * idx,
+                      y: (height / 7.5) * idx * idx,
+                      animated: true,
+                    },
+                  );
+                }}
+                style={{
+                  borderBottomWidth: 0,
+                  paddingHorizontal: moderateScale(15),
+                  width: '100%',
+                  borderBottomColor: colors.greyMedium,
+                  marginBottom: moderateScale(10),
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <Text
+                  style={{
+                    fontSize:
+                      activeIdx === index ? textScale(13.5) : textScale(13),
+                    marginBottom: moderateScale(5),
+                    fontFamily:
+                      activeIdx === index
+                        ? fontFamily.medium
+                        : fontFamily.regular,
+                  }}>
+                  {el.title}
+                </Text>
+                <Text
+                  style={{
+                    fontSize:
+                      activeIdx === index ? textScale(13.5) : textScale(13),
+                    marginBottom: moderateScale(5),
+                    fontFamily:
+                      activeIdx === index
+                        ? fontFamily.medium
+                        : fontFamily.regular,
+                  }}>
+                  {el.data.length}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      </View>
+    );
+  };
+
+  const RenderOfferView = () => {
+    return (
+      <View>
+        <Text
+          style={{
+            fontSize: textScale(14),
+            paddingHorizontal: moderateScale(15),
+            fontFamily: fontFamily.regular,
+          }}>
+          Available Offers
+        </Text>
+        <View
+          style={{
+            width: '100%',
+            height: 1,
+            backgroundColor: colors.greyMedium,
+            marginVertical: moderateScaleVertical(10),
+          }}
+        />
+        <ScrollView style={{width: '100%'}}>
+          {[1, 2, 3].map((el, indx) => {
+            return (
+              <View
+                key={indx}
+                style={{
+                  borderBottomWidth: 1,
+                  paddingHorizontal: moderateScale(15),
+                  width: '100%',
+                  borderBottomColor: colors.greyMedium,
+                  marginBottom: moderateScale(10),
+                }}>
+                <Text
+                  style={{
+                    fontSize: textScale(13),
+                    marginBottom: moderateScale(5),
+                    fontFamily: fontFamily.regular,
+                  }}>
+                  Get 20% OFF up to $50
+                </Text>
+                <Text
+                  style={{
+                    fontSize: textScale(11),
+                    marginBottom: moderateScale(5),
+                    color: colors.textGreyOpcaity7,
+                    fontFamily: fontFamily.regular,
+                  }}>
+                  Valid on orders with items worth $159 or more.
+                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                    borderTopWidth: 1,
+                    borderTopColor: colors.greyMedium,
+                    alignItems: 'center',
+                    paddingTop: moderateScaleVertical(15),
+                    marginTop: moderateScale(8),
+                    paddingBottom: moderateScale(15),
+                  }}>
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      borderColor: themeColors.primary_color,
+                      borderRadius: moderateScale(3),
+                      paddingHorizontal: moderateScale(7),
+                      paddingVertical: moderateScale(4),
+                      borderStyle: 'dashed',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: textScale(11),
+                        fontFamily: fontFamily.regular,
+                      }}>
+                      TASTY
+                    </Text>
+                  </View>
+                  <TouchableOpacity>
+                    <Text
+                      style={{
+                        fontSize: textScale(11),
+                        color: themeColors.primary_color,
+                        fontFamily: fontFamily.regular,
+                      }}>
+                      TAP TO COPY
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            );
+          })}
+        </ScrollView>
+      </View>
+    );
+  };
+
   const listHeaderComponent2 = () => {
     return (
       <View>
         {!!categoryInfo?.categoriesList ? (
-          <View style={{...styles.header2}}>
+          <View style={{...styles.header2, height: height * 0.29}}>
             {/* <StatusBar
               translucent
               barStyle={
@@ -1185,7 +1512,8 @@ export default function Products({route, navigation}) {
                 <LinearGradient
                   style={styles.linearGradientHdr}
                   colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0.7)']}>
-                  <View style={styles.hdrCompHeader}>
+                  <View
+                    style={[styles.hdrCompHeader, {flex: 0, width: '100%'}]}>
                     <TouchableOpacity
                       hitSlop={styles.hitSlopProp}
                       onPress={() => navigation.goBack()}
@@ -1199,7 +1527,7 @@ export default function Products({route, navigation}) {
                         }}
                       />
                     </TouchableOpacity>
-                    <FastImage
+                    {/* <FastImage
                       source={{
                         uri: getImageUrl(
                           categoryInfo?.banner?.image_fit ||
@@ -1211,9 +1539,9 @@ export default function Products({route, navigation}) {
                         priority: FastImage.priority.low,
                       }}
                       style={styles.hdrCompRoundImg}
-                    />
+                    /> */}
 
-                    <View style={styles.rightViewOfShareSearch}>
+                    {/* <View style={styles.rightViewOfShareSearch}>
                       <TouchableOpacity
                         activeOpacity={0.8}
                         onPress={moveToNewScreen(
@@ -1252,17 +1580,121 @@ export default function Products({route, navigation}) {
                           source={imagePath.icShareb}
                         />
                       </TouchableOpacity>
+                    </View> */}
+                  </View>
+                  <View style={{width: width, paddingLeft: moderateScale(13)}}>
+                    <View
+                      style={{
+                        marginTop: moderateScale(20),
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
+                      <Text
+                        numberOfLines={2}
+                        style={{
+                          ...styles.hdrTitleTxt,
+                          flex: 0,
+                          textAlign: 'left',
+                          fontSize: textScale(15),
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.white,
+                        }}>
+                        {data?.name || categoryInfo?.name || ''}
+                      </Text>
+                      {!!categoryInfo &&
+                        !!categoryInfo?.product_avg_average_rating && (
+                          <View
+                            style={[
+                              styles.hdrRatingTxtView,
+                              {
+                                backgroundColor: colors.yellowC,
+                                width: moderateScale(50),
+                                justifyContent: 'center',
+                                height: moderateScale(20),
+                              },
+                            ]}>
+                            <Text
+                              style={[
+                                styles.ratingTxt,
+                                {fontSize: textScale(9.5)},
+                              ]}>
+                              {Number(
+                                categoryInfo?.product_avg_average_rating,
+                              ).toFixed(1)}
+                            </Text>
+                            <Image
+                              style={styles.starImg}
+                              source={imagePath.star}
+                              resizeMode="contain"
+                            />
+                          </View>
+                        )}
+                    </View>
+                    <View
+                      style={{
+                        marginTop: moderateScale(5),
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
+                      <Text
+                        numberOfLines={2}
+                        style={{
+                          ...styles.hdrTitleTxt,
+                          flex: 0,
+                          fontSize: textScale(12.5),
+                          fontFamily: fontFamily.regular,
+                          textAlign: 'left',
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.white,
+                        }}>
+                        {categoryInfo?.address || ''}
+                      </Text>
+
+                      {!!categoryInfo &&
+                        !!categoryInfo?.product_avg_average_rating && (
+                          <View
+                            style={[
+                              styles.hdrRatingTxtView,
+                              {
+                                width: moderateScale(50),
+                                justifyContent: 'center',
+                                height: moderateScale(20),
+                              },
+                            ]}>
+                            <Text
+                              style={{
+                                ...styles.ratingTxt,
+                                color: categoryInfo?.show_slot
+                                  ? colors.white
+                                  : categoryInfo?.is_vendor_closed
+                                  ? colors.redB
+                                  : colors.white,
+                                fontSize: textScale(9.5),
+                              }}>
+                              {categoryInfo?.show_slot
+                                ? strings.OPEN
+                                : categoryInfo?.is_vendor_closed
+                                ? strings.CLOSE
+                                : strings.OPEN}
+                            </Text>
+                          </View>
+                        )}
                     </View>
                   </View>
                 </LinearGradient>
+
+                {/* ****************************************/}
                 <View
                   style={{
                     ...styles.hdrAbsoluteView,
                     backgroundColor: isDarkMode
                       ? MyDarkTheme.colors.lightDark
                       : colors.white,
+                    minHeight: moderateScale(80),
                   }}>
-                  <View style={styles.hdrNameRatingView}>
+                  {/* <View style={styles.hdrNameRatingView}>
                     <Text
                       numberOfLines={2}
                       style={{
@@ -1288,7 +1720,7 @@ export default function Products({route, navigation}) {
                           />
                         </View>
                       )}
-                  </View>
+                  </View> */}
                   {!!categoryInfo && !!categoryInfo?.categoriesList && (
                     <View>
                       <Text
@@ -1301,25 +1733,28 @@ export default function Products({route, navigation}) {
                           marginRight: moderateScale(40),
                           marginVertical: moderateScale(1),
                           marginLeft: 0,
+                          fontSize: textScale(12),
+                          opacity: 0.8,
+                          fontFamily: fontFamily.medium,
                         }}>
                         {categoryInfo?.categoriesList || ''}
                       </Text>
                       <Text
-                        numberOfLines={1}
+                        numberOfLines={2}
                         style={{
                           ...styles.milesTxt,
                           marginLeft: 0,
-                          fontSize: textScale(8),
                           color: isDarkMode
                             ? MyDarkTheme.colors.text
                             : colors.black,
                           marginVertical: moderateScaleVertical(4),
+                          fontSize: textScale(9.5),
                         }}>
                         {desc}
                       </Text>
                     </View>
                   )}
-                  {!!categoryInfo && !!categoryInfo?.lineOfSightDistance && (
+                  {/* {!!categoryInfo && !!categoryInfo?.lineOfSightDistance && (
                     <View
                       style={{
                         ...styles.hdrNameRatingView,
@@ -1393,7 +1828,7 @@ export default function Products({route, navigation}) {
                           : strings.OPEN}
                       </Text>
                     </View>
-                  )}
+                  )} */}
                 </View>
               </ImageBackground>
             </View>
@@ -1524,6 +1959,173 @@ export default function Products({route, navigation}) {
           </Animatable.View>
         )}
 
+        <View
+          style={{
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            width: width / 1.11,
+            alignSelf: 'center',
+            borderBottomWidth: 1,
+            borderBottomColor: colors.greyMedium,
+            marginBottom: moderateScale(15),
+            paddingBottom: moderateScaleVertical(10),
+            paddingHorizontal: moderateScale(10),
+          }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View
+              style={{
+                backgroundColor: colors.greyColor,
+                width: moderateScale(30),
+                height: moderateScale(30),
+                borderRadius: moderateScale(30),
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Image source={imagePath.ic_pinIcon} />
+            </View>
+            {categoryInfo.lineOfSightDistance != undefined &&
+              categoryInfo.lineOfSightDistance != null && (
+                <Text
+                  style={{
+                    ...styles.milesTxt,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    opacity: 1,
+                    fontSize: textScale(10),
+                  }}>
+                  {categoryInfo.lineOfSightDistance}
+                </Text>
+              )}
+          </View>
+
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View
+              style={{
+                backgroundColor: colors.greyColor,
+                width: moderateScale(30),
+                height: moderateScale(30),
+                borderRadius: moderateScale(30),
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Image source={imagePath.ic_timeIcon} />
+            </View>
+            {categoryInfo.lineOfSightDistance != undefined &&
+              categoryInfo.lineOfSightDistance != null && (
+                <Text
+                  style={{
+                    ...styles.milesTxt,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    opacity: 1,
+                    fontSize: textScale(10),
+                  }}>
+                  {checkEvenOdd(categoryInfo.timeofLineOfSightDistance)}-
+                  {checkEvenOdd(categoryInfo.timeofLineOfSightDistance + 5)}
+                  {' mins'}
+                </Text>
+              )}
+          </View>
+
+          <TouchableOpacity
+            onPress={() =>
+              updateState({offersModalVisible: !offersModalVisible})
+            }
+            activeOpacity={0.7}
+            style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View
+              style={{
+                backgroundColor: colors.greyColor,
+                width: moderateScale(30),
+                height: moderateScale(30),
+                borderRadius: moderateScale(30),
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Image source={imagePath.ic_offersIcon} />
+            </View>
+            <Text
+              style={{
+                ...styles.milesTxt,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                opacity: 1,
+                fontSize: textScale(10),
+              }}>
+              {'Offers'}
+            </Text>
+            <Image
+              source={imagePath.icBackb}
+              style={{
+                transform: [{rotate: '-90deg'}],
+                width: moderateScale(11),
+                height: moderateScale(11),
+                resizeMode: 'contain',
+                marginLeft: moderateScale(6),
+              }}
+            />
+          </TouchableOpacity>
+        </View>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{
+            paddingHorizontal: moderateScale(20),
+            marginBottom: moderateScale(15),
+          }}
+          contentContainerStyle={{alignItems: 'center'}}>
+          {ProductTags.map((el, index) => {
+            return (
+              <View key={index} style={{flexDirection: 'row'}}>
+                <ToggleSwitch
+                  isOn={el.isSelected}
+                  onColor={colors.green}
+                  offColor={
+                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                  }
+                  size="small"
+                  onToggle={() => {
+                    const updatedArr = ProductTags.map((el, idx) => {
+                      console.log(el);
+                      if (idx === index) {
+                        let newObj = el;
+                        newObj.isSelected = !newObj.isSelected;
+                        return newObj;
+                      } else {
+                        return el;
+                      }
+                    });
+                    updateState({ProductTags: updatedArr});
+                  }}
+                />
+                <Text
+                  style={{
+                    fontSize: textScale(11),
+                    fontFamily: fontFamily.regular,
+                    marginLeft: moderateScale(7),
+                  }}>
+                  {el.translations[0].name}
+                </Text>
+                <View style={{width: moderateScale(20)}} />
+              </View>
+            );
+          })}
+        </ScrollView>
+        <SearchBar
+          containerStyle={{
+            alignSelf: 'center',
+            // marginHorizontal: moderateScale(18),
+            borderRadius: 8,
+            width: width / 1.1,
+            backgroundColor: isDarkMode
+              ? colors.whiteOpacity15
+              : colors.greyColor,
+            height: moderateScaleVertical(37),
+          }}
+          searchValue={searchInput}
+          placeholder={strings.SEARCH_WITHIN_MENU}
+          onChangeText={(value) => onSearchWithinMenu(value)}
+          showRightIcon
+          rightIconStyle={{tintColor: themeColors.secondary_color}}
+          rightIconPress={() => onSearchWithinMenu('')}
+        />
         {!!categoryInfo && categoryInfo?.childs?.length > 0 && (
           <View style={{marginHorizontal: moderateScale(20)}}>
             <ScrollView
@@ -1713,7 +2315,12 @@ export default function Products({route, navigation}) {
   };
 
   const renderSectionTab = (props) => {
+    console.log('check all datya >>> ', props);
     const {title, isActive} = props;
+
+    if (isActive) {
+      activeIdx = props.index;
+    }
     if (!AnimatedHeaderValue) {
       return <View style={{width: 40}} />;
     }
@@ -1741,7 +2348,8 @@ export default function Products({route, navigation}) {
     );
   };
 
-  const renderSectionHeader = ({section}) => {
+  const renderSectionHeader = (props) => {
+    const {section} = props;
     return (
       <View
         style={{
@@ -1772,6 +2380,9 @@ export default function Products({route, navigation}) {
           selectedItemID={selectedItemID}
           btnLoader={btnLoader}
           selectedItemIndx={selectedItemIndx}
+        />
+        <View
+          style={{width: '100%', height: 2, backgroundColor: colors.greyColor}}
         />
       </View>
     );
@@ -2054,12 +2665,13 @@ export default function Products({route, navigation}) {
         {!!categoryInfo?.is_show_products_with_category ? (
           <View style={{flex: 1}}>
             <SectionList
+              ref={sectionListRef}
               showsVerticalScrollIndicator={false}
               onScroll={onScroll}
-              sections={sectionListData}
+              sections={cloneSectionList}
               ListHeaderComponent={listHeaderComponent2()}
               stickySectionHeadersEnabled={false}
-              scrollToLocationOffset={50}
+              scrollToLocationOffset={10}
               maxToRenderPerBatch={18}
               windowSize={18}
               initialNumToRender={18}
@@ -2069,7 +2681,6 @@ export default function Products({route, navigation}) {
               // tabBarStyle={styles.tabBar}
               // ItemSeparatorComponent={() => <View style={styles.separator} />}
               getItemLayout={(data, index) => {
-                // console.log(data,`getItemLayout called with index: ${index}`);
                 return {
                   length: height / 10,
                   offset: (height / 10) * index,
@@ -2180,6 +2791,64 @@ export default function Products({route, navigation}) {
           },
         ]}
         visible={updateQtyLoader}
+      />
+
+      {!searchInput && (
+        <GradientCartView
+          onPress={() => navigation.navigate(navigationStrings.CART)}
+          btnText={
+            CartItems && CartItems.data && CartItems.data.item_count
+              ? `${CartItems.data.item_count} ${
+                  CartItems.data.item_count > 1 ? strings.ITEM : strings.ITEMS
+                } | ${currencies.primary_currency.symbol}${
+                  CartItems.data.total_payable_amount
+                }`
+              : ''
+          }
+          ifCartShow={CartItems && CartItems.data && CartItems.data.item_count}
+          onMenuTap={() => updateState({MenuModalVisible: !MenuModalVisible})}
+        />
+      )}
+
+      <BottomSlideModal
+        mainContainView={RenderOfferView}
+        isModalVisible={offersModalVisible}
+        mainContainerStyle={{
+          width: '100%',
+          paddingHorizontal: 0,
+          marginHorizontal: 0,
+          maxHeight: moderateScale(450),
+        }}
+        innerViewContainerStyle={{
+          width: '100%',
+          paddingHorizontal: 0,
+          marginHorizontal: 0,
+        }}
+        onBackdropPress={() =>
+          updateState({offersModalVisible: !offersModalVisible})
+        }
+      />
+
+      <BottomSlideModal
+        mainContainView={RenderMenuView}
+        isModalVisible={MenuModalVisible}
+        mainContainerStyle={{
+          width: '100%',
+          paddingHorizontal: moderateScale(15),
+          marginHorizontal: 0,
+          height: moderateScale(250),
+          backgroundColor: 'transparent',
+        }}
+        innerViewContainerStyle={{
+          width: '100%',
+          paddingHorizontal: 0,
+          marginHorizontal: 0,
+          backgroundColor: 'white',
+          borderRadius: moderateScale(10),
+        }}
+        onBackdropPress={() =>
+          updateState({MenuModalVisible: !MenuModalVisible})
+        }
       />
     </View>
   );

@@ -16,6 +16,7 @@ import {
   CART_PRODUCT_SCHEDULE,
   TIP_AFTER_ORDER,
   VALIDATE_PROMO_CODE,
+  GET_ALL_PROMO_CODES_FOR_PRODUCTLIST
 } from '../../config/urls';
 import {
   apiGet,
@@ -110,6 +111,20 @@ export const getAllPromoCodes = (data, headers = {}) => {
       });
   });
 };
+
+//Get all promo codes for product list
+export const getAllPromoCodesForProductList = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_ALL_PROMO_CODES_FOR_PRODUCTLIST, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
 
 //Get all promo codes for cab
 export const getAllPromoCodesForCaB = (data, headers = {}) => {

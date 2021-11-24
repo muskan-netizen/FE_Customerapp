@@ -963,7 +963,7 @@ export default function VariantAddons({
                 }
                 showLightbox={true}
                 cardViewStyle={styles.cardViewStyle}
-                resizeMode="contain"
+                // resizeMode="contain"
               />
               <View style={{paddingTop: 5}}>
                 <Pagination
@@ -1302,7 +1302,7 @@ const styles = StyleSheet.create({
   },
   cardViewStyle: {
     alignItems: 'center',
-    height: width * 0.7,
+    height: width * 0.6,
     width: width,
     // marginRight: 20
   },

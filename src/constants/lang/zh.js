@@ -565,5 +565,10 @@ export default {
   SELECT_LOCATION: 'Select Locations',
   NEARBY_LOCATION: 'Nearby Locations',
   SEARCHED_RESULTS: 'Searched Results',
+  ITEM: 'Item',
+  ITEMS: 'Items',
+  SEARCH_WITHIN_MENU: 'Search within the menu',
+  GET_STARTED: 'Get started',
   OTHERS: 'Others',
+  UNKNOWN: 'Unknown',
 };

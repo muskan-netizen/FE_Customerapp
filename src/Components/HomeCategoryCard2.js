@@ -21,10 +21,11 @@ export default function HomeCategoryCard2({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
+
   const imageURI = getImageUrl(
     data?.icon?.image_fit,
     data?.icon?.image_path,
-    '200/200',
+    '150/150',
   );
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
