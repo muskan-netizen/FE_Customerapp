@@ -162,6 +162,8 @@ const shortCodes = {
   trucxi: '3096b7',
   paysic: '786133',
   chipetaxi: '29790b',
+  laundryorders: '995951',
+  ineed: '10d0dd',
 };
 
 const appIds = {
@@ -808,6 +810,14 @@ const appIds = {
   chipetaxi: Platform.select({
     ios: 'com.chipetaxi',
     android: 'com.chipetaxi',
+  }),
+  laundryorders: Platform.select({
+    ios: 'com.laundryorders',
+    android: 'com.laundryorders',
+  }),
+  ineed: Platform.select({
+    ios: 'com.customer.ineed',
+    android: 'com.customer.ineed',
   }),
 };
 

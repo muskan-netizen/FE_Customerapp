@@ -1063,6 +1063,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.laundryorders:
+          updateState({
+            shortCode: shortCodes.laundryorders,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ineed:
+          updateState({
+            shortCode: shortCodes.ineed,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
