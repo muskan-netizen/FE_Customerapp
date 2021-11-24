@@ -129,7 +129,6 @@ export default function BrandProducts2({route, navigation}) {
     selectedSection: null,
     cartId: null,
     sectionListData: [],
-    productListData: [],
     showShimmer: true,
   });
 
@@ -167,7 +166,6 @@ export default function BrandProducts2({route, navigation}) {
     selectedSection,
     cartId,
     sectionListData,
-    productListData,
     showShimmer,
   } = state;
 
@@ -484,7 +482,7 @@ export default function BrandProducts2({route, navigation}) {
             }),
           });
         } else {
-          let updateArray = productListData.map((val, i) => {
+          let updateArray = brandData.map((val, i) => {
             if (val.id == item.id) {
               return {
                 ...val,
@@ -496,7 +494,7 @@ export default function BrandProducts2({route, navigation}) {
             return val;
           });
           updateState({
-            productListData: updateArray,
+            brandData: updateArray,
           });
         }
         updateState({
@@ -752,7 +750,7 @@ export default function BrandProducts2({route, navigation}) {
             btnLoader: false,
           });
         } else {
-          let updateArray = productListData.map((val, i) => {
+          let updateArray = brandData.map((val, i) => {
             if (val.id == itemToUpdate.id) {
               return {
                 ...val,
@@ -766,7 +764,7 @@ export default function BrandProducts2({route, navigation}) {
             return val;
           });
           updateState({
-            productListData: updateArray,
+            brandData: updateArray,
             updateQtyLoader: false,
             selectedItemID: -1,
             btnLoader: false,
@@ -1168,7 +1166,7 @@ export default function BrandProducts2({route, navigation}) {
                   containerStyle={{marginTop: moderateScaleVertical(width / 8)}}
                 />
               }
-              ListFooterComponent={() => <View style={{height: 20}} />}
+              ListFooterComponent={() => <View style={{height: 40}} />}
             />
             <View>
               {isSortEnabled && (
