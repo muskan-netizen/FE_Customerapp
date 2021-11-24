@@ -150,7 +150,7 @@ const shortCodes = {
   kel360: '9087f6',
   yeboy: 'e4ec39',
   moboserrandsservice: '3d2e75',
-  cabway: '7c4e0b',
+  cabway: 'e1331a',
   tajammul: '7c4e0b',
   carroai: '0d6852',
   ssuum: 'b3cc0b',
