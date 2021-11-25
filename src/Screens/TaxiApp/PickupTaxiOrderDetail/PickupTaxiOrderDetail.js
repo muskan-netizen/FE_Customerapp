@@ -18,6 +18,14 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
+import * as Animatable from 'react-native-animatable'
+import BottomSheet, {
+  BottomSheetFlatList,
+  BottomSheetScrollView,
+  BottomSheetSectionList,
+  BottomSheetVirtualizedList,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
 import {
   getImageUrl,
   showError,
@@ -95,6 +103,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     ],
     orderFullDetail: null,
     showModal: false,
+    hideShowBack: 0
   });
   const {
     isLoading,
@@ -118,7 +127,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     labels,
     orderStatus,
     orderFullDetail,
-    showModal
+    showModal,
+    hideShowBack
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -127,6 +137,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     (state) => state.initBoot,
   );
   const isFocused = useIsFocused();
+  const bottomSheetRef = useRef(null)
 
   const { profile } = appData;
 
@@ -520,7 +531,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       },
     );
   };
-  
+
 
   const renderDotContainer = (i) => {
     return (
@@ -562,258 +573,299 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black
           }}>Invoice</Text>
         </View>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-        >
-          {!isLoading && (
-            <MapView
-              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-              style={{
-                height: 200,
-                width: '100%'
-              }}
-              region={region}
-              // initialRegion={region}
-              ref={mapRef}
-              // cacheEnabled={true}
-              customMapStyle={mapStyleGrey}
-            // showsMyLocationButton={true}
-            // userLocationFastestInterval={10000}
-            // onRegionChangeComplete={_onRegionChange}
-            >
-              {/* pick and drop all locations */}
-              {tasks.map((coordinate, index) => (
-                <MapView.Marker
-                  key={`coordinate_${index}`}
-                  image={imagePath.radioLocation}
-                  coordinate={{
-                    latitude: Number(coordinate?.latitude),
-                    longitude: Number(coordinate?.longitude),
+
+
+
+        {!isLoading && (
+          <MapView
+            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            style={{
+              height: '30%',
+              width: '100%'
+            }}
+            region={region}
+            // initialRegion={region}
+            ref={mapRef}
+            // cacheEnabled={true}
+            customMapStyle={mapStyleGrey}
+          // showsMyLocationButton={true}
+          // userLocationFastestInterval={10000}
+          // onRegionChangeComplete={_onRegionChange}
+          >
+            {/* pick and drop all locations */}
+            {tasks.map((coordinate, index) => (
+              <MapView.Marker
+                key={`coordinate_${index}`}
+                image={imagePath.radioLocation}
+                coordinate={{
+                  latitude: Number(coordinate?.latitude),
+                  longitude: Number(coordinate?.longitude),
+                }}>
+                <View
+                  style={{
+                    ...styles.plainView,
+                    backgroundColor: themeColors.primary_color
                   }}>
-                  <View
-                    style={{
-                      ...styles.plainView,
-                      backgroundColor: themeColors.primary_color
-                    }}>
-                    <Text style={styles.pickupDropOff}>
-                      {index === 0 ? 'Pickup' : 'Drop'}
-                    </Text>
-                  </View>
-                </MapView.Marker>
-              ))}
-
-              {/* driver location */}
-              {!!agent_location && !!agent_location?.lat && orderStatus != 'completed' && (
-                <MapView.Marker
-                  key={`coordinate_${agent_location?.lat}`}
-                  //   image={imagePath.driver}
-                  coordinate={{
-                    latitude: Number(agent_location?.lat),
-                    longitude: Number(
-                      agent_location?.long || agent_location?.lng,
-                    ),
-                  }}>
-                  <Image
-                    style={{ height: 35, width: 35 }}
-                    source={imagePath.icScooter}
-                  />
-                </MapView.Marker>
-              )}
-
-              {/* Directions and paths */}
-              <MapViewDirections
-                origin={tasks[0]}
-                waypoints={tasks.length > 2 ? tasks.slice(1, -1) : []}
-                destination={tasks[tasks.length - 1]}
-                apikey={profile?.preferences?.map_key}
-                strokeWidth={5}
-                strokeColor={themeColors.primary_color}
-                optimizeWaypoints={true}
-                onStart={(params) => { }}
-                precision={'high'}
-                timePrecision={'now'}
-                mode={'DRIVING'}
-                // maxZoomLevel={20}
-                onReady={(result) => {
-                  updateState({
-                    totalDistance: result.distance.toFixed(2),
-                    totalDuration: result.duration.toFixed(2),
-                  });
-                  mapRef.current.fitToCoordinates(result.coordinates, {
-                    edgePadding: {
-                      right: width / 20,
-                      bottom: height / 20,
-                      left: width / 20,
-                      top: height / 60,
-                    },
-                  });
-                }}
-                onError={(errorMessage) => {
-                  //
-                }}
-              />
-            </MapView>)}
-
-          {!!orderFullDetail && <View style={{ marginBottom: moderateScaleVertical(16) }}>
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginTop: moderateScaleVertical(16),
-              marginBottom: moderateScaleVertical(24)
-            }}>
-              <View style={{ flex: 0.5 }}>
-                <Text style={styles.datePriceText}>July 28  ·  01:52 PM</Text>
-                <Text style={{ ...styles.statusText, marginTop: moderateScaleVertical(4) }}>id:9888</Text>
-              </View>
-              <View style={{ flex: 0.5, alignItems: 'flex-end' }}>
-                <Text style={styles.statusText}> {currencies?.primary_currency?.symbol} {orderFullDetail.order_details?.payable_amount}</Text>
-                <Text style={{
-                  ...styles.statusText,
-                  color: themeColors.primary_color,
-                  marginTop: moderateScaleVertical(4),
-                  textTransform: 'capitalize'
-                }}>{orderFullDetail?.order.status}</Text>
-              </View>
-            </View>
-
-            {orderFullDetail?.tasks.map((val, i) => {
-              return (
-                <View>
-                  <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
-                    <View style={{ marginRight: moderateScaleVertical(8) }}>
-                      {renderDotContainer(i)}
-                    </View>
-                    <View style={{ flex: 1 }}>
-                      <Text style={{
-                        ...styles.statusText,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.blackOpacity66,
-
-                      }}>{val?.address || ''}</Text>
-                    </View>
-                  </View>
-                  {orderFullDetail.tasks.length - 1 !== i && (<View
-                    style={{
-                      borderBottomWidth: 0.8,
-                      borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.lightGreyBg,
-                      marginVertical: moderateScaleVertical(8),
-                      marginHorizontal: 16
-                    }}
-                  />)}
+                  <Text style={styles.pickupDropOff}>
+                    {index === 0 ? 'Pickup' : 'Drop'}
+                  </Text>
                 </View>
-              )
-            })}
+              </MapView.Marker>
+            ))}
 
-            {!!orderFullDetail?.agent_location ? <View style={{
-              backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.greyNew,
-              marginVertical: moderateScaleVertical(24),
-              padding: moderateScale(12),
-              borderRadius: moderateScale(8)
-            }}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <RoundImg
-                    img={orderFullDetail?.agent_image}
-                    size={34}
-                  />
+            {/* driver location */}
+            {!!agent_location && !!agent_location?.lat && orderStatus != 'completed' && (
+              <MapView.Marker
+                key={`coordinate_${agent_location?.lat}`}
+                //   image={imagePath.driver}
+                coordinate={{
+                  latitude: Number(agent_location?.lat),
+                  longitude: Number(
+                    agent_location?.long || agent_location?.lng,
+                  ),
+                }}>
+                <Image
+                  style={{ height: 35, width: 35 }}
+                  source={imagePath.icScooter}
+                />
+              </MapView.Marker>
+            )}
+
+            {/* Directions and paths */}
+            <MapViewDirections
+              origin={tasks[0]}
+              waypoints={tasks.length > 2 ? tasks.slice(1, -1) : []}
+              destination={tasks[tasks.length - 1]}
+              apikey={profile?.preferences?.map_key}
+              strokeWidth={5}
+              strokeColor={themeColors.primary_color}
+              optimizeWaypoints={true}
+              onStart={(params) => { }}
+              precision={'high'}
+              timePrecision={'now'}
+              mode={'DRIVING'}
+              // maxZoomLevel={20}
+              onReady={(result) => {
+                updateState({
+                  totalDistance: result.distance.toFixed(2),
+                  totalDuration: result.duration.toFixed(2),
+                });
+                mapRef.current.fitToCoordinates(result.coordinates, {
+                  edgePadding: {
+                    right: width / 20,
+                    bottom: height / 20,
+                    left: width / 20,
+                    top: height / 60,
+                  },
+                });
+              }}
+              onError={(errorMessage) => {
+                //
+              }}
+            />
+          </MapView>)}
+        <BottomSheet
+          ref={bottomSheetRef}
+          index={0}
+          snapPoints={['60%', '100%']}
+          animateOnMount={true}
+          onChange={(inx) => updateState({ hideShowBack: inx })}
+
+          handleComponent={() => <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              height: moderateScale(42),
+              justifyContent: 'space-between'
+            }}
+          >
+
+            <Animatable.View
+            // duration={200}
+            // animation="fadeIn"
+            // easing="linear"
+            >
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+              >
+                <Image style={{
+                  tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  opacity: hideShowBack
+                }} source={imagePath.backArrowCourier} />
+              </TouchableOpacity>
+            </Animatable.View>
+            <View
+              style={{
+                backgroundColor: isDarkMode
+                  ? colors.whiteOpacity77
+                  : colors.black,
+                width: moderateScale(40),
+                height: moderateScale(4),
+                marginRight: moderateScale(34)
+              }} />
+            <Text />
+          </View>}
+        >
+          <BottomSheetScrollView showsVerticalScrollIndicator={false}>
+            {!!orderFullDetail && <View style={{ marginBottom: moderateScaleVertical(16) }}>
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginTop: moderateScaleVertical(16),
+                marginBottom: moderateScaleVertical(24)
+              }}>
+                <View style={{ flex: 0.5 }}>
+                  <Text style={styles.datePriceText}>July 28  ·  01:52 PM</Text>
+                  <Text style={{ ...styles.statusText, marginTop: moderateScaleVertical(4) }}>id:9888</Text>
+                </View>
+                <View style={{ flex: 0.5, alignItems: 'flex-end' }}>
+                  <Text style={styles.statusText}> {currencies?.primary_currency?.symbol} {orderFullDetail.order_details?.payable_amount}</Text>
                   <Text style={{
                     ...styles.statusText,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
-                    marginLeft: moderateScale(10)
-                  }}>{orderFullDetail?.order?.name || ''}</Text>
+                    color: themeColors.primary_color,
+                    marginTop: moderateScaleVertical(4),
+                    textTransform: 'capitalize'
+                  }}>{orderFullDetail?.order.status}</Text>
                 </View>
-                <StarRating
-                  disabled={true}
-                  maxStars={5}
-                  rating={3}
-                  selectedStar={(rating) => onStarRatingPress(item, rating)}
-                  fullStarColor={'#DD812E'}
-                  starSize={15}
-                />
               </View>
-              <Text style={styles.deliveryProof}>Delivery Proof</Text>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => updateState({ showModal: true })}
-              >
-                <Image
-                  source={{ uri: 'https://static.independent.co.uk/s3fs-public/thumbnails/image/2018/05/10/13/man-flashy-car.jpg?width=1200' }}
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 4,
-                  }}
+
+              {orderFullDetail?.tasks.map((val, i) => {
+                return (
+                  <View>
+                    <View style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                      <View style={{ marginRight: moderateScaleVertical(8) }}>
+                        {renderDotContainer(i)}
+                      </View>
+                      <View style={{ flex: 1 }}>
+                        <Text style={{
+                          ...styles.statusText,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.blackOpacity66,
+
+                        }}>{val?.address || ''}</Text>
+                      </View>
+                    </View>
+                    {orderFullDetail.tasks.length - 1 !== i && (<View
+                      style={{
+                        borderBottomWidth: 0.8,
+                        borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.lightGreyBg,
+                        marginVertical: moderateScaleVertical(8),
+                        marginHorizontal: 16
+                      }}
+                    />)}
+                  </View>
+                )
+              })}
+
+              {!!orderFullDetail?.agent_location ? <View style={{
+                backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.greyNew,
+                marginVertical: moderateScaleVertical(24),
+                padding: moderateScale(12),
+                borderRadius: moderateScale(8)
+              }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <RoundImg
+                      img={orderFullDetail?.agent_image}
+                      size={34}
+                    />
+                    <Text style={{
+                      ...styles.statusText,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                      marginLeft: moderateScale(10)
+                    }}>{orderFullDetail?.order?.name || ''}</Text>
+                  </View>
+                  <StarRating
+                    disabled={true}
+                    maxStars={5}
+                    rating={3}
+                    selectedStar={(rating) => onStarRatingPress(item, rating)}
+                    fullStarColor={'#DD812E'}
+                    starSize={15}
+                  />
+                </View>
+                <Text style={styles.deliveryProof}>Delivery Proof</Text>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => updateState({ showModal: true })}
+                >
+                  <Image
+                    source={{ uri: 'https://static.independent.co.uk/s3fs-public/thumbnails/image/2018/05/10/13/man-flashy-car.jpg?width=1200' }}
+                    style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: 4,
+                    }}
+                  />
+                </TouchableOpacity>
+              </View> :
+                <View style={{ marginBottom: moderateScaleVertical(24) }} />
+              }
+
+              {!!orderFullDetail?.order_details?.delivery_fee && orderFullDetail?.order_details?.delivery_fee !== '0.00' && (<View>
+                <LeftRightText
+                  leftText={strings.DELIVERYFEE}
+                  rightText={` ${currencies?.primary_currency?.symbol} ${orderFullDetail?.order_details?.delivery_fee}`}
+                  isDarkMode={isDarkMode}
+                  MyDarkTheme={MyDarkTheme}
+                  marginBottom={0}
                 />
-              </TouchableOpacity>
-            </View> :
-              <View style={{ marginBottom: moderateScaleVertical(24) }} />
+                <View style={styles.horizontalLine} />
+              </View>)}
+
+              {!!orderFullDetail?.order_details?.discount_amount && orderFullDetail?.order_details?.discount_amount !== '0.00' && (<View>
+                <LeftRightText
+                  leftText={strings.DISCOUNT}
+                  rightText={` ${currencies?.primary_currency?.symbol} ${orderFullDetail?.order_details?.discount_amount}`}
+                  leftTextStyle={{ color: themeColors.primary_color }}
+                  rightTextStyle={{ color: themeColors.primary_color }}
+                  isDarkMode={isDarkMode}
+                  MyDarkTheme={MyDarkTheme}
+                  marginBottom={0}
+                />
+                <View style={styles.horizontalLine} />
+              </View>)}
+              {!!orderFullDetail?.order_details?.taxable_amount && orderFullDetail?.order_details?.taxable_amount !== '0.00' && (<View>
+                <LeftRightText
+                  leftText={strings.TAX_AMOUNT}
+                  rightText={` ${currencies?.primary_currency?.symbol} ${orderFullDetail?.order_details?.taxable_amount}`}
+                  isDarkMode={isDarkMode}
+                  isDarkMode={isDarkMode}
+                  MyDarkTheme={MyDarkTheme}
+                  marginBottom={0}
+                />
+                <View style={styles.horizontalLine} />
+              </View>)}
+              {!!orderFullDetail?.order_details?.subtotal_amount && orderFullDetail?.order_details?.subtotal_amount !== '0.00' && (<View>
+                <LeftRightText
+                  leftText={strings.SUBTOTAL}
+                  rightText={` ${currencies?.primary_currency?.symbol} ${orderFullDetail?.order_details?.subtotal_amount}`}
+                  isDarkMode={isDarkMode}
+                  MyDarkTheme={MyDarkTheme}
+                  marginBottom={0}
+                />
+                <View style={styles.horizontalLine} />
+              </View>)}
+
+              {!!orderFullDetail?.order_details?.payable_amount && orderFullDetail?.order_details?.payable_amount !== '0.00' && (<View>
+                <LeftRightText
+                  leftText={strings.TOTAL}
+                  rightText={` ${currencies?.primary_currency?.symbol} ${orderFullDetail?.order_details?.payable_amount}`}
+                  isDarkMode={isDarkMode}
+                  MyDarkTheme={MyDarkTheme}
+                  marginBottom={0}
+                />
+              </View>)}
+            </View>
             }
-
-            {!!orderFullDetail?.order_details?.delivery_fee && orderFullDetail?.order_details?.delivery_fee !== '0.00' && (<View>
-              <LeftRightText
-                leftText={strings.DELIVERYFEE}
-                rightText={` ${currencies?.primary_currency?.symbol} ${orderFullDetail?.order_details?.delivery_fee}`}
-                isDarkMode={isDarkMode}
-                MyDarkTheme={MyDarkTheme}
-                marginBottom={0}
-              />
-              <View style={styles.horizontalLine} />
-            </View>)}
-
-            {!!orderFullDetail?.order_details?.discount_amount && orderFullDetail?.order_details?.discount_amount !== '0.00' && (<View>
-              <LeftRightText
-                leftText={strings.DISCOUNT}
-                rightText={` ${currencies?.primary_currency?.symbol} ${orderFullDetail?.order_details?.discount_amount}`}
-                leftTextStyle={{ color: themeColors.primary_color }}
-                rightTextStyle={{ color: themeColors.primary_color }}
-                isDarkMode={isDarkMode}
-                MyDarkTheme={MyDarkTheme}
-                marginBottom={0}
-              />
-              <View style={styles.horizontalLine} />
-            </View>)}
-            {!!orderFullDetail?.order_details?.taxable_amount && orderFullDetail?.order_details?.taxable_amount !== '0.00' && (<View>
-              <LeftRightText
-                leftText={strings.TAX_AMOUNT}
-                rightText={` ${currencies?.primary_currency?.symbol} ${orderFullDetail?.order_details?.taxable_amount}`}
-                isDarkMode={isDarkMode}
-                isDarkMode={isDarkMode}
-                MyDarkTheme={MyDarkTheme}
-                marginBottom={0}
-              />
-              <View style={styles.horizontalLine} />
-            </View>)}
-            {!!orderFullDetail?.order_details?.subtotal_amount && orderFullDetail?.order_details?.subtotal_amount !== '0.00' && (<View>
-              <LeftRightText
-                leftText={strings.SUBTOTAL}
-                rightText={` ${currencies?.primary_currency?.symbol} ${orderFullDetail?.order_details?.subtotal_amount}`}
-                isDarkMode={isDarkMode}
-                MyDarkTheme={MyDarkTheme}
-                marginBottom={0}
-              />
-              <View style={styles.horizontalLine} />
-            </View>)}
-
-            {!!orderFullDetail?.order_details?.payable_amount && orderFullDetail?.order_details?.payable_amount !== '0.00' && (<View>
-              <LeftRightText
-                leftText={strings.TOTAL}
-                rightText={orderFullDetail?.order_details?.payable_amount}
-                isDarkMode={isDarkMode}
-                MyDarkTheme={MyDarkTheme}
-                marginBottom={0}
-              />
-            </View>)}
-          </View>
-
-          }
-
-        </ScrollView>
+          </BottomSheetScrollView>
+        </BottomSheet>
       </View>
       <BottomViewModal
         show={isVisible}
