@@ -67,6 +67,8 @@ import {removeItem} from '../../utils/utils';
 import stylesFunc from './styles';
 import _ from 'lodash';
 import ProductListLoader3 from '../../Components/Loaders/ProductListLoader3';
+import Clipboard from '@react-native-community/clipboard';
+import Toast from 'react-native-simple-toast';
 
 const ONE_SECOND_IN_MS = 50;
 const PATTERN = [
@@ -551,7 +553,7 @@ export default function Products({route, navigation}) {
             let newKey = {
               ...val,
               ['data']: val.products,
-              title: val.category.translation[0].name,
+              title: val?.category && val.category.translation[0].name,
               totalProduct: totalProduct + val.products.length,
             };
             delete newKey['products'];
@@ -1392,6 +1394,7 @@ export default function Products({route, navigation}) {
               <TouchableOpacity
                 key={index}
                 onPress={() => {
+                  Vibration.vibrate(PATTERN);
                   updateState({MenuModalVisible: !MenuModalVisible});
                   sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
                     {
@@ -1525,7 +1528,11 @@ export default function Products({route, navigation}) {
                         {el.name ? el.name : ''}
                       </Text>
                     </View>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Clipboard.setString(`${el.name ? el.name : ''}`);
+                        Toast.show(`Copied`);
+                      }}>
                       <Text
                         style={{
                           fontSize: textScale(11),
@@ -2913,7 +2920,10 @@ export default function Products({route, navigation}) {
               ? true
               : false
           }
-          onMenuTap={() => updateState({MenuModalVisible: !MenuModalVisible})}
+          onMenuTap={() => {
+            Vibration.vibrate(PATTERN);
+            updateState({MenuModalVisible: !MenuModalVisible});
+          }}
         />
       )}
 
@@ -2953,9 +2963,9 @@ export default function Products({route, navigation}) {
           backgroundColor: 'white',
           borderRadius: moderateScale(10),
         }}
-        onBackdropPress={() =>
-          updateState({MenuModalVisible: !MenuModalVisible})
-        }
+        onBackdropPress={() => {
+          updateState({MenuModalVisible: !MenuModalVisible});
+        }}
       />
     </View>
   );
