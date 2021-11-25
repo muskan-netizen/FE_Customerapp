@@ -27,6 +27,8 @@ import {BlurView} from '@react-native-community/blur';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import ScaledImage from 'react-native-scalable-image';
 import {useNavigation} from '@react-navigation/native';
+import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 
 export default function DashBoardHeaderFive({
   // navigation = {},
@@ -34,6 +36,8 @@ export default function DashBoardHeaderFive({
   selcetedToggle,
   toggleData,
   isLoading = false,
+  isLoadingB = false,
+  updateLoader = () => {},
 }) {
   const navigation = useNavigation();
   const pickerRef = createRef();
@@ -330,17 +334,17 @@ export default function DashBoardHeaderFive({
     }
   };
 
-  const dineInFunction = () => {
+  const dineInFunction = (item, indx) => {
     Alert.alert('', strings.REMOVE_CART_MSG, [
       {
         text: strings.CANCEL,
         onPress: () => console.log('Cancel Pressed'),
       },
-      {text: strings.CLEAR_CART2, onPress: clearCart},
+      {text: strings.CLEAR_CART2, onPress: () => clearCart(item, indx)},
     ]);
   };
 
-  const clearCart = () => {
+  const clearCart = (item, indx) => {
     actions
       .clearCart(
         {},
@@ -354,18 +358,21 @@ export default function DashBoardHeaderFive({
       .then((res) => {
         showSuccess(res?.message);
         actions.cartItemQty(res);
+        _onTableItm(item, indx);
         updateState({isModalVisible: false});
       })
       .catch(errorMethod);
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({isLoading: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
 
   const _onTableItm = (item, indx) => {
     const newTabs = [...tabs];
+    updateLoader();
+
     newTabs.forEach((item, index) => {
       if (index === indx) {
         selcetedToggle(item.label);
@@ -468,7 +475,7 @@ export default function DashBoardHeaderFive({
                     {location?.type === 3
                       ? !!location?.type_name
                         ? location?.type_name
-                        : 'Unknown'
+                        : strings.UNKNOWN
                       : location?.type === 2
                       ? strings.WORK
                       : strings.HOME}
@@ -568,6 +575,7 @@ export default function DashBoardHeaderFive({
                     return (
                       <TouchableOpacity
                         key={indx}
+                        disabled={!!item.isActive}
                         style={{
                           borderColor: item.isActive
                             ? themeColors.primary_color
@@ -587,7 +595,7 @@ export default function DashBoardHeaderFive({
                             cartItemCount?.data?.item_count > 0
                           )
                             ? _onTableItm(item, indx)
-                            : dineInFunction()
+                            : dineInFunction(item, indx)
                         }>
                         <View
                           style={{
@@ -658,13 +666,14 @@ export default function DashBoardHeaderFive({
             return (
               <TouchableOpacity
                 activeOpacity={1}
+                disabled={item.isActive}
                 onPress={() =>
                   !(
                     cartItemCount?.message == null &&
                     cartItemCount?.data?.item_count > 0
                   )
                     ? _onTableItm(item, indx)
-                    : dineInFunction()
+                    : dineInFunction(item, indx)
                 }
                 key={indx}
                 style={{
@@ -725,6 +734,21 @@ export default function DashBoardHeaderFive({
             );
           })}
       </View>
+      <CustomAnimatedLoader
+        source={loaderOne}
+        loaderTitle={strings.LOADING}
+        containerColor={
+          isDarkMode ? MyDarkTheme.colors.lightDark : colors.white
+        }
+        loadercolor={themeColors.primary_color}
+        animationStyle={[
+          {
+            height: moderateScaleVertical(40),
+            width: moderateScale(40),
+          },
+        ]}
+        visible={isLoadingB}
+      />
     </View>
   );
 }

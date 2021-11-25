@@ -1516,9 +1516,12 @@ export default function Cart({navigation, route}) {
                                           }
                                           numberOfLines={1}>{` ${
                                           currencies?.primary_currency?.symbol
-                                        }${(
-                                          currencyNumberFormatter( Number(j.price) * Number(j.multiplier)
-                                        ).toFixed(2))} `}</Text>
+                                        }${currencyNumberFormatter(
+                                          (
+                                            Number(j.price) *
+                                            Number(j.multiplier)
+                                          ).toFixed(2),
+                                        )} `}</Text>
                                       </View>
                                     );
                                   })
@@ -1640,9 +1643,13 @@ export default function Cart({navigation, route}) {
                           },
                         ]
                       : styles.priceItemLabel
-                  }>{`- ${currencies?.primary_currency?.symbol}${currencyNumberFormatter(Number(
-                  item?.discount_amount ? item?.discount_amount : 0,
-                ).toFixed(2))}`}</Text>
+                  }>{`- ${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(
+                    item?.discount_amount ? item?.discount_amount : 0,
+                  ).toFixed(2),
+                )}`}</Text>
               </View>
             )}
             {!!item?.deliver_charge && (
@@ -1670,9 +1677,13 @@ export default function Cart({navigation, route}) {
                           },
                         ]
                       : styles.priceItemLabel
-                  }>{`${currencies?.primary_currency?.symbol}${currencyNumberFormatter(Number(
-                  item?.deliver_charge ? item?.deliver_charge : 0,
-                ).toFixed(2))}`}</Text>
+                  }>{`${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(
+                    item?.deliver_charge ? item?.deliver_charge : 0,
+                  ).toFixed(2),
+                )}`}</Text>
               </View>
             )}
             <View style={styles.itemPriceDiscountTaxView}>
