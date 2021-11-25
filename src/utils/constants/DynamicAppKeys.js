@@ -165,6 +165,7 @@ const shortCodes = {
   laundryorders: '995951',
   ineed: '10d0dd',
   nadelivery: '9aee12',
+  marasym: 'af735a',
 };
 
 const appIds = {
@@ -823,6 +824,10 @@ const appIds = {
   nadelivery: Platform.select({
     ios: 'com.nadelivery',
     android: 'com.nadelivery',
+  }),
+  marasym: Platform.select({
+    ios: 'com.marasym',
+    android: 'com.marasym',
   }),
 };
 
