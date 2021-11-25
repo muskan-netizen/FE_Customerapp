@@ -2226,7 +2226,7 @@ export default function Products({route, navigation}) {
           searchValue={searchInput}
           placeholder={strings.SEARCH_WITHIN_MENU}
           onChangeText={(value) => onSearchWithinMenu(value)}
-          showRightIcon
+          showRightIcon={searchInput ? true : false}
           rightIconStyle={{tintColor: themeColors.secondary_color}}
           rightIconPress={() => onSearchWithinMenu('')}
         />
