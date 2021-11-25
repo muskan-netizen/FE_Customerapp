@@ -73,8 +73,6 @@ export default function DashBoardFive({
     (state) => state?.initBoot,
   );
 
-  console.log('appDataappData', appData);
-
   const allCategory = appMainData?.categories;
   const checkForBrand =
     allCategory &&

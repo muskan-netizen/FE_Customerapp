@@ -2835,7 +2835,7 @@ export default function Products({route, navigation}) {
         visible={updateQtyLoader}
       />
 
-      {!searchInput && (
+      {!!categoryInfo?.is_show_products_with_category && !searchInput && (
         <GradientCartView
           onPress={() => navigation.navigate(navigationStrings.CART)}
           btnText={
