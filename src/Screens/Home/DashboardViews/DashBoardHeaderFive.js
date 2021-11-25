@@ -563,7 +563,7 @@ export default function DashBoardHeaderFive({
                 },
               ]}>
               <View style={{padding: moderateScale(10)}}>
-                {tabs.map((item, indx) => {
+                {tabs.length >1 && tabs.map((item, indx) => {
                   return (
                     <TouchableOpacity
                       key={indx}
@@ -652,7 +652,7 @@ export default function DashBoardHeaderFive({
           flexDirection: 'row',
           marginTop: moderateScale(10),
         }}>
-        {tabs.map((item, indx) => {
+        {tabs.length>1 && tabs.map((item, indx) => {
           return (
             <TouchableOpacity
               activeOpacity={1}
@@ -667,9 +667,14 @@ export default function DashBoardHeaderFive({
               key={indx}
               style={{
                 width: width / 3 - 8,
-                borderBottomColor: item.isActive
-                  ? themeColors.primary_color
-                  : colors.greyColor1,
+                borderBottomColor:
+                  item.isActive && isDarkMode
+                    ? MyDarkTheme.colors.white
+                    : item.isActive && !isDarkMode
+                    ? themeColors.primary_color
+                    : isDarkMode
+                    ? colors.blackOpacity0
+                    : colors.greyColor1,
                 borderBottomWidth: 2,
                 height: moderateScale(40),
                 alignItems: 'center',
@@ -681,15 +686,20 @@ export default function DashBoardHeaderFive({
                 style={{
                   height: moderateScale(16),
                   width: moderateScale(16),
-                  tintColor: item.isActive
-                    ? themeColors.primary_color
-                    : isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.blackOpacity66,
+                  tintColor:
+                    item.isActive && isDarkMode
+                      ? MyDarkTheme.colors.white
+                      : item.isActive && !isDarkMode
+                      ? themeColors.primary_color
+                      : colors.greyLight,
+                  // ? themeColors.primary_color
+                  // : isDarkMode
+                  // ? MyDarkTheme.colors.text
+                  // : colors.blackOpacity66,
                   marginRight: moderateScale(3),
-                  tintColor: item.isActive
-                    ? themeColors.primary_color
-                    : colors.textGreyOpcaity7,
+                  // tintColor: item.isActive
+                  //   ? themeColors.primary_color
+                  //   : colors.textGreyOpcaity7,
                   // alignSelf: 'flex-end',
                 }}
                 resizeMode="contain"
@@ -699,9 +709,12 @@ export default function DashBoardHeaderFive({
                   marginLeft: moderateScale(3),
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
-                  color: item.isActive
-                    ? themeColors.primary_color
-                    : colors.textGreyOpcaity7,
+                  color:
+                    item.isActive && isDarkMode
+                      ? MyDarkTheme.colors.white
+                      : item.isActive && !isDarkMode
+                      ? themeColors.primary_color
+                      : colors.greyLight,
                   textTransform: 'capitalize',
                 }}>
                 {item.value}

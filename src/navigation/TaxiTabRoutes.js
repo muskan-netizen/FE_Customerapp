@@ -85,6 +85,7 @@ export default function TaxiTabRoutes(props) {
           // unmountOnBlur: true,
         }}
       />
+      {console.log(appStyle?.tabBarLayout, 'appStyle?.tabBarLayout')}
       <Tab.Screen
         component={MyOrders}
         name={navigationStrings.MY_ORDERS}
@@ -103,6 +104,8 @@ export default function TaxiTabRoutes(props) {
                       ? colors.whiteOpacity77
                       : colors.black,
                   }
+                : appStyle?.tabBarLayout == 5
+                ? null
                 : {
                     tintColor: focused
                       ? colors.white
@@ -116,15 +119,20 @@ export default function TaxiTabRoutes(props) {
                 style={[
                   {
                     ...tabIconColor,
-                    height: 23,
-                    width: 23,
+                    height: 25,
+                    width: 25,
                   },
                 ]}
+                resizeMode="contain"
                 source={
                   appStyle?.tabBarLayout === 6
                     ? focused
                       ? imagePath.settings_red_icon
                       : imagePath.settings_icon
+                    : appStyle?.tabBarLayout === 5
+                    ? focused
+                      ? imagePath.icMyRideActive
+                      : imagePath.icMyRideInActive
                     : focused
                     ? imagePath.rideFilled
                     : imagePath.ride

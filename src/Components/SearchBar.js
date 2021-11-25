@@ -20,7 +20,7 @@ export default function SearchBar({
   showRightIcon = false,
   rightIconPress = () => {},
   searchValue = '',
-  rightIconStyle
+  rightIconStyle,
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
@@ -53,7 +53,7 @@ export default function SearchBar({
             paddingTop: 0,
             paddingBottom: 0,
             fontFamily: fontFamily.medium,
-            color: colors.textGrey,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
             textAlign: I18nManager.isRTL ? 'right' : 'left',
           }}
           value={searchValue}
@@ -62,13 +62,13 @@ export default function SearchBar({
           onChangeText={onChangeText}
           //onChange={onChangeText}
           placeholderTextColor={
-            isDarkMode ? colors.textGreyB : colors.textGreyB
+            isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB
           }
         />
       </View>
       {showRightIcon && (
         <TouchableOpacity onPress={rightIconPress}>
-          <Image source={imagePath.crossBlueB} style={{ ...rightIconStyle }} />
+          <Image source={imagePath.crossBlueB} style={{...rightIconStyle}} />
         </TouchableOpacity>
       )}
     </View>

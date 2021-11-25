@@ -91,7 +91,7 @@ export default function AddressModal3({
       {id: 2, lable: strings.WORK, icon: imagePath.workInActive},
       {id: 3, lable: strings.OTHERS, icon: imagePath.workInActive},
     ],
-    address_type: 1,
+    address_type: updateData?.type ? updateData?.type : 1,
     country_code: '',
     viewHeight: 0,
     region: {
@@ -121,6 +121,7 @@ export default function AddressModal3({
       phonecode: updateData?.phonecode ? updateData?.phonecode : '',
       country_code: updateData?.country_code ? updateData?.country_code : '',
       is_primary: updateData?.is_primary ? updateData?.is_primary : '',
+      address_type: updateData?.type,
     });
   }, [updateData]);
 
@@ -185,7 +186,7 @@ export default function AddressModal3({
           {id: 2, lable: strings.WORK, icon: imagePath.workInActive},
           {id: 3, lable: strings.OTHERS, icon: imagePath.workInActive},
         ],
-        address_type: 1,
+        address_type: updateData?.type ? updateData?.type : 1,
       });
     }, 1000);
   };
