@@ -13,7 +13,6 @@ import Toast from 'react-native-simple-toast';
 import {StatusBarHeight} from '../styles/responsiveSize';
 import {getDistance} from 'geolib';
 import {min} from 'moment';
-import NumberFormat from 'react-number-format';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -374,21 +373,21 @@ const checkEvenOdd = (num) => {
   return num % 5 === 0 ? num : num - (num % 5);
 };
 
-export function numberFormat(formatableObj = {}) {
-  return (
-    <NumberFormat
-      value={formatableObj?.number}
-      displayType={'text'}
-      thousandSeparator={true}
-      prefix={formatableObj?.currencySign}
-      renderText={(formattedValue) => (
-        <Text numberOfLines={1} style={formatableObj?.textStyle}>
-          {formattedValue}
-        </Text>
-      )}
-    />
-  );
-}
+// export function numberFormat(formatableObj = {}) {
+//   return (
+//     <NumberFormat
+//       value={formatableObj?.number}
+//       displayType={'text'}
+//       thousandSeparator={true}
+//       prefix={formatableObj?.currencySign}
+//       renderText={(formattedValue) => (
+//         <Text numberOfLines={1} style={formatableObj?.textStyle}>
+//           {formattedValue}
+//         </Text>
+//       )}
+//     />
+//   );
+// }
 
 export {
   showError,
