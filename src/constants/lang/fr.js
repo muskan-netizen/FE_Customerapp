@@ -322,7 +322,7 @@ export default {
   PLEASE_ENTER_OR_SELECT_AMOUNT:
     'Veuillez sélectionner ou saisir un montant spécifique ',
   PLEASE_SELECT_PAYMENT_METHOD: 'Veuillez sélectionner un mode de paiement ',
-  LINKS: 'Enregistrement et mentions légales',
+  LINKS: 'Inscription et mentions légales',
   LOCATION_DISABLED_MSG:
     ' Autorisation de localisation définitivement désactivée ! Veuillez autoriser à partir des paramètres',
   LOCATION_LIMITED:
