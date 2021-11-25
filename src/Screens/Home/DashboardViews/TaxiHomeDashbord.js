@@ -133,6 +133,8 @@ export default function TaxiHomeDashbord({
     fullMapShow: false,
     pickupAddress: {},
   });
+  console.log(location, 'loaction');
+  console.log(region, 'region');
   const appMainData = useSelector((state) => state?.home?.appMainData);
   console.log(appMainData, 'appMainData>new');
   let findCabCategory = appMainData?.categories?.find(
@@ -744,7 +746,12 @@ export default function TaxiHomeDashbord({
                       borderRadius: 12,
                     }}
                     // provider={MapView.PROVIDER_GOOGLE}
-                    region={region}
+                    region={{
+                      latitude: parseFloat(location?.latitude),
+                      longitude: parseFloat(location?.longitude),
+                      latitudeDelta: 0.015,
+                      longitudeDelta: 0.0121,
+                    }}
                     // initialRegion={region}
                     showsUserLocation={true}
                     //showsMyLocationButton={true}
@@ -791,7 +798,12 @@ export default function TaxiHomeDashbord({
               provider={PROVIDER_GOOGLE} // remove if not using Google Maps
               customMapStyle={mapStyleGrey}
               style={{...StyleSheet.absoluteFillObject}}
-              region={region}
+              region={{
+                latitude: parseFloat(location?.latitude),
+                longitude: parseFloat(location?.longitude),
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.0121,
+              }}
               // initialRegion={region}
               showsUserLocation={true}
               // onRegionChangeComplete={_onRegionChange}
