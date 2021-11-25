@@ -37,6 +37,7 @@ const App = () => {
   async function handleDynamicLink(deepLinkUrl) {
     if (deepLinkUrl != null) {
       setItem('deepLinkUrl', deepLinkUrl);
+      ('https://sales.royoorders.com/vendor/la-fresca-de-italia?id=2&name=La%20Fresca%20de%20Italia&table=2');
       let routeName = getUrlRoutes(deepLinkUrl, 1);
       if (routeName === 'vendor') {
         return;
@@ -52,7 +53,13 @@ const App = () => {
           params: {
             screen: navigationStrings.PRODUCT_LIST,
             params: {
-              data: sendingData,
+              data: {
+                category_slug: 'Restaurants',
+                id: 2,
+                name: 'La Fresca de Italia',
+                vendor: true,
+                table_id: sendingData,
+              },
             },
           },
         });

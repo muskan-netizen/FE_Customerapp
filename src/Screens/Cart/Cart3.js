@@ -915,6 +915,7 @@ export default function Cart({navigation, route}) {
       }
     } else {
       // showError(strings.UNAUTHORIZED_MESSAGE);
+      updateState({placeLoader: false});
       moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     }
   };
@@ -3051,15 +3052,19 @@ export default function Cart({navigation, route}) {
   };
 
   const _vendorTableCart = (data, item) => {
-    actions
-      .vendorTableCart(data, {
-        code: appData?.profile?.code,
-      })
-      .then((res) => {
-        removeItem('deepLinkUrl');
-        setItem('selectedTable', item?.label);
-      })
-      .catch(errorMethod);
+    if (!!userData?.auth_token) {
+      actions
+        .vendorTableCart(data, {
+          code: appData?.profile?.code,
+        })
+        .then((res) => {
+          removeItem('deepLinkUrl');
+          setItem('selectedTable', item?.label);
+        })
+        .catch(errorMethod);
+      return;
+    }
+    return;
   };
 
   const onPressRecommendedVendors = (item) => {

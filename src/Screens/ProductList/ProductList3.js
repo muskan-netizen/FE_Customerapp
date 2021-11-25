@@ -2022,7 +2022,8 @@ export default function Products({route, navigation}) {
               }}>
               <Image source={imagePath.ic_pinIcon} />
             </View>
-            {categoryInfo.lineOfSightDistance != undefined &&
+
+            {categoryInfo?.lineOfSightDistance != undefined &&
             categoryInfo.lineOfSightDistance != null ? (
               <Text
                 style={{
@@ -2048,7 +2049,7 @@ export default function Products({route, navigation}) {
               }}>
               <Image source={imagePath.ic_timeIcon} />
             </View>
-            {categoryInfo.lineOfSightDistance != undefined &&
+            {categoryInfo?.lineOfSightDistance != undefined &&
             categoryInfo.lineOfSightDistance != null ? (
               <Text
                 style={{
@@ -2357,7 +2358,6 @@ export default function Products({route, navigation}) {
   };
 
   const renderSectionTab = (props) => {
-    console.log('check all datya >>> ', props);
     const {title, isActive} = props;
 
     if (isActive) {
