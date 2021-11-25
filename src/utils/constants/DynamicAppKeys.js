@@ -166,6 +166,7 @@ const shortCodes = {
   ineed: '10d0dd',
   nadelivery: '9aee12',
   marasym: 'af735a',
+  silvestre: '5fa7f3',
 };
 
 const appIds = {
@@ -828,6 +829,10 @@ const appIds = {
   marasym: Platform.select({
     ios: 'com.marasym',
     android: 'com.marasym',
+  }),
+  silvestre: Platform.select({
+    ios: 'com.silvestre',
+    android: 'com.silvestre',
   }),
 };
 
