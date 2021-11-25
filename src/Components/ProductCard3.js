@@ -12,7 +12,6 @@ import FastImage from 'react-native-fast-image';
 import {UIActivityIndicator} from 'react-native-indicators';
 import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
-import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStylesFunc, {hitSlopProp} from '../styles/commonStyles';
@@ -23,14 +22,12 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
+import {currencyNumberFormatter} from '../utils/commonFunction';
 import {
-  getColorCodeWithOpactiyNumber,
   getImageUrl,
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-import BlurImages from './BlurImages';
-import HtmlViewComp from './HtmlViewComp';
 
 export default function ProductCard3({
   data = {},
@@ -211,11 +208,15 @@ export default function ProductCard3({
                   fontSize: textScale(12),
                   fontFamily: fontFamily.regular,
                 }}>
-                {`${currencies?.primary_currency?.symbol}${(
-                  Number(
-                    data?.variant[0]?.multiplier || data?.variant_multiplier,
-                  ) * Number(data?.variant[0]?.price)
-                ).toFixed(2)}`}
+                {`${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  (
+                    Number(
+                      data?.variant[0]?.multiplier || data?.variant_multiplier,
+                    ) * Number(data?.variant[0]?.price)
+                  ).toFixed(2),
+                )}`}
               </Text>
             </View>
             <View style={{width: width / 2}}>

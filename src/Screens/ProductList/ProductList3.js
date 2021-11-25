@@ -55,6 +55,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
+import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {
   checkEvenOdd,
   getImageUrl,
@@ -2146,7 +2147,9 @@ export default function Products({route, navigation}) {
                         ? MyDarkTheme.colors.text
                         : colors.textGrey,
                     }}>
-                    {!!el?.translations?.length>0 ? el.translations[0].name : ''}
+                    {!!el?.translations?.length > 0
+                      ? el.translations[0].name
+                      : ''}
                   </Text>
                   <View style={{width: moderateScale(20)}} />
                 </View>
@@ -2844,9 +2847,11 @@ export default function Products({route, navigation}) {
             CartItems && CartItems.data && CartItems.data.item_count
               ? `${CartItems.data.item_count} ${
                   CartItems.data.item_count > 1 ? strings.ITEM : strings.ITEMS
-                } | ${currencies.primary_currency.symbol}${
-                  CartItems.data.total_payable_amount
-                }`
+                } | ${
+                  currencies.primary_currency.symbol
+                }${currencyNumberFormatter(
+                  Number(CartItems.data.total_payable_amount).toFixed(2),
+                )}`
               : ''
           }
           ifCartShow={

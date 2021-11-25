@@ -1,10 +1,7 @@
 import React from 'react';
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import ScaledImage from 'react-native-scalable-image';
 import {useSelector} from 'react-redux';
-import GradientButton from '../../../Components/GradientButton';
-import TransparentButtonWithTxtAndIcon from '../../../Components/TransparentButtonWithTxtAndIcon';
-import {dummyUser} from '../../../constants/constants';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
@@ -13,9 +10,9 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
-  textScale,
   width,
 } from '../../../styles/responsiveSize';
+import {currencyNumberFormatter} from '../../../utils/commonFunction';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import stylesFun from './styles';
 
@@ -138,9 +135,13 @@ export default function CabAndOrderDetail({
                     {paramData &&
                     paramData?.orderDetail &&
                     paramData?.orderDetail?.payable_amount
-                      ? `${currencies?.primary_currency?.symbol}${Number(
-                          paramData?.orderDetail?.payable_amount,
-                        ).toFixed(2)}`
+                      ? `${
+                          currencies?.primary_currency?.symbol
+                        }${currencyNumberFormatter(
+                          Number(
+                            paramData?.orderDetail?.payable_amount,
+                          ).toFixed(2),
+                        )}`
                       : '--'}
                   </Text>
                   {/* <TouchableOpacity

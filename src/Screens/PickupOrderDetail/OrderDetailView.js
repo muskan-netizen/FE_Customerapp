@@ -1,5 +1,6 @@
 import React from 'react';
 import {ScrollView, Text, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
 import ScaledImage from 'react-native-scalable-image';
 import {useSelector} from 'react-redux';
@@ -17,10 +18,10 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
+import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {getImageUrl} from '../../utils/helperFunctions';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
 
 export default function OrderDetailView({
   isLoading = false,
@@ -243,9 +244,11 @@ export default function OrderDetailView({
                         : styles.distanceDurationDeliveryValue
                     }>
                     {productDetail && productDetail?.payable_amount
-                      ? `${currencies?.primary_currency?.symbol}${Number(
-                          productDetail?.payable_amount,
-                        ).toFixed(2)}`
+                      ? `${
+                          currencies?.primary_currency?.symbol
+                        }${currencyNumberFormatter(
+                          Number(productDetail?.payable_amount).toFixed(2),
+                        )}`
                       : '--'}
                   </Text>
                   {/* <TouchableOpacity

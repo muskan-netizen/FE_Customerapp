@@ -1,25 +1,26 @@
 import React from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-  Image,
   Animated,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
+import strings from '../constants/lang';
+import colors from '../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../styles/responsiveSize';
-import colors from '../styles/colors';
-import strings from '../constants/lang';
-import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import {currencyNumberFormatter} from '../utils/commonFunction';
 import {
   getImageUrl,
   getScaleTransformationStyle,
@@ -142,9 +143,11 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 }}>
                 <Text>
-                  {`${currencies?.primary_currency?.symbol} ${Number(
-                    variant[0]?.price,
-                  ).toFixed(2)}`}
+                  {`${
+                    currencies?.primary_currency?.symbol
+                  } ${currencyNumberFormatter(
+                    Number(variant[0]?.price).toFixed(2),
+                  )}`}
                 </Text>
               </Text>
             </View>

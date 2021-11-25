@@ -382,7 +382,9 @@ export function numberFormat(formatableObj = {}) {
       thousandSeparator={true}
       prefix={formatableObj?.currencySign}
       renderText={(formattedValue) => (
-        <Text style={formatableObj?.textStyle}>{formattedValue}</Text>
+        <Text numberOfLines={1} style={formatableObj?.textStyle}>
+          {formattedValue}
+        </Text>
       )}
     />
   );

@@ -1,8 +1,8 @@
 import React from 'react';
-import {Animated, Text, TouchableOpacity, View, Image} from 'react-native';
+import {Animated, Image, Text, TouchableOpacity, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
-import {transparentProductImage} from '../constants/constants';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -12,14 +12,13 @@ import {
   moderateScaleVertical,
   width,
 } from '../styles/responsiveSize';
+import {currencyNumberFormatter} from '../utils/commonFunction';
 import {
   getImageUrl,
   getScaleTransformationStyle,
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
 
 export default function ProductCard({
   data = {},
@@ -111,10 +110,12 @@ export default function ProductCard({
               // marginTop: 3,
               color: themeColors.currencyRed,
             }}>
-            {`${currencies?.primary_currency?.symbol}${(
-              Number(data?.variant[0]?.multiplier) *
-              Number(data?.variant[0]?.price)
-            ).toFixed(2)}`}
+            {`${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
+              (
+                Number(data?.variant[0]?.multiplier) *
+                Number(data?.variant[0]?.price)
+              ).toFixed(2),
+            )}`}
           </Text>
         </View>
 

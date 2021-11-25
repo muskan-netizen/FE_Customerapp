@@ -1,32 +1,33 @@
+import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  Alert,
+  FlatList,
+  I18nManager,
   Image,
-  Keyboard,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableNativeFeedback,
   TouchableOpacity,
   View,
-  ImageBackground,
-  TouchableNativeFeedback,
-  Alert,
-  TextInput,
-  I18nManager,
-  FlatList,
 } from 'react-native';
-import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
-import GradientButton from './GradientButton';
-import imagePath from '../constants/imagePath';
-import strings from '../constants/lang';
-import colors from '../styles/colors';
-import commonStylesFun, {hitSlopProp} from '../styles/commonStyles';
-import fontFamily from '../styles/fontFamily';
-import Banner from './Banner';
+import * as Animatable from 'react-native-animatable';
+import CalanderStrip from 'react-native-calendar-strip';
 import DeviceInfo from 'react-native-device-info';
 import * as RNLocalize from 'react-native-localize';
-import moment from 'moment';
+import Modal from 'react-native-modal';
+import Toast from 'react-native-simple-toast';
+import {Pagination} from 'react-native-snap-carousel';
+import StarRating from 'react-native-star-rating';
+import {useSelector} from 'react-redux';
+import imagePath from '../constants/imagePath';
+import strings from '../constants/lang';
+import actions from '../redux/actions';
+import colors from '../styles/colors';
+import commonStylesFun from '../styles/commonStyles';
+import fontFamily from '../styles/fontFamily';
 import {
   height,
   moderateScale,
@@ -34,25 +35,14 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {
-  getColorCodeWithOpactiyNumber,
-  getImageUrl,
-  showError,
-  showSuccess,
-} from '../utils/helperFunctions';
-import {useNavigation, useFocusEffect} from '@react-navigation/native';
-import navigationStrings from '../navigation/navigationStrings';
-import HTMLView from 'react-native-htmlview';
-import HtmlViewComp from './HtmlViewComp';
 import {MyDarkTheme} from '../styles/theme';
-import * as Animatable from 'react-native-animatable';
-import actions from '../redux/actions';
-import {Pagination} from 'react-native-snap-carousel';
-import CardLoader from './Loaders/CardLoader';
-import StarRating from 'react-native-star-rating';
-import CalanderStrip from 'react-native-calendar-strip';
+import {currencyNumberFormatter} from '../utils/commonFunction';
 import {timeforMarkedQuestion} from '../utils/constants/ConstantValues';
-import Toast from 'react-native-simple-toast';
+import {showError, showSuccess} from '../utils/helperFunctions';
+import Banner from './Banner';
+import GradientButton from './GradientButton';
+import HtmlViewComp from './HtmlViewComp';
+import CardLoader from './Loaders/CardLoader';
 
 export default function HomeServiceVariantAddons({
   productdetail = {},
@@ -486,9 +476,11 @@ export default function HomeServiceVariantAddons({
                         : colors.black,
                     },
                   ]}>
-                  {`${currencies?.primary_currency?.symbol}${(
-                    Number(i?.multiplier) * Number(i?.price)
-                  ).toFixed(2)}`}
+                  {`${
+                    currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
+                    (Number(i?.multiplier) * Number(i?.price)).toFixed(2),
+                  )}`}
                 </Text>
                 <View style={{paddingLeft: moderateScale(5)}}>
                   <Image

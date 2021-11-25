@@ -1,4 +1,3 @@
-import moment from 'moment';
 import React from 'react';
 import {
   Image,
@@ -27,6 +26,7 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
+import {currencyNumberFormatter} from '../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -177,7 +177,7 @@ export default function OrderCardVendorComponent({
                 : [styles.userName]
             }>{`${currencies?.primary_currency?.symbol}${
             // Number(i?.pvariant?.multiplier) *
-            Number(data?.payable_amount).toFixed(2)
+            currencyNumberFormatter(Number(data?.payable_amount).toFixed(2))
           }`}</Text>
         </View>
       </View>
