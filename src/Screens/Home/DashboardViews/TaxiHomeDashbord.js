@@ -846,11 +846,7 @@ export default function TaxiHomeDashbord({
                     textAlign: 'left',
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}>
-<<<<<<< HEAD
-                  Where to ?
-=======
                   {strings.WHERETO}
->>>>>>> 6ef0727142d9723b8a4f5d4b95b5c9246f0bd2e1
                 </Text>
               </TouchableOpacity>
             </SafeAreaView>
