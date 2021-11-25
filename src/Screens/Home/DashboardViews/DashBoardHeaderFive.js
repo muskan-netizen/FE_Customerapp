@@ -27,6 +27,8 @@ import {BlurView} from '@react-native-community/blur';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import ScaledImage from 'react-native-scalable-image';
 import {useNavigation} from '@react-navigation/native';
+import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 
 export default function DashBoardHeaderFive({
   // navigation = {},
@@ -51,9 +53,10 @@ export default function DashBoardHeaderFive({
     checked: '',
     tabs: [],
     setSelectedTab: 0,
+    isLoadingB: false,
   });
 
-  const {isModalVisible, checked, tabs} = state;
+  const {isModalVisible, checked, tabs, isLoadingB} = state;
 
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
@@ -330,17 +333,17 @@ export default function DashBoardHeaderFive({
     }
   };
 
-  const dineInFunction = () => {
+  const dineInFunction = (item, indx) => {
     Alert.alert('', strings.REMOVE_CART_MSG, [
       {
         text: strings.CANCEL,
         onPress: () => console.log('Cancel Pressed'),
       },
-      {text: strings.CLEAR_CART2, onPress: clearCart},
+      {text: strings.CLEAR_CART2, onPress: () => clearCart(item, indx)},
     ]);
   };
 
-  const clearCart = () => {
+  const clearCart = (item, indx) => {
     actions
       .clearCart(
         {},
@@ -354,6 +357,7 @@ export default function DashBoardHeaderFive({
       .then((res) => {
         showSuccess(res?.message);
         actions.cartItemQty(res);
+        _onTableItm(item, indx);
         updateState({isModalVisible: false});
       })
       .catch(errorMethod);
@@ -365,23 +369,28 @@ export default function DashBoardHeaderFive({
   };
 
   const _onTableItm = (item, indx) => {
+    updateState({isLoadingB: true});
     const newTabs = [...tabs];
-    newTabs.forEach((item, index) => {
-      if (index === indx) {
-        selcetedToggle(item.label);
-        newTabs[index].isActive = true;
-        updateState({
-          tabs: [...newTabs],
-          checked: item.value,
-          isModalVisible: false,
-        });
-      } else {
-        newTabs[index].isActive = false;
-        updateState({
-          tabs: [...newTabs],
-        });
-      }
-    });
+    setTimeout(() => {
+      newTabs.forEach((item, index) => {
+        if (index === indx) {
+          selcetedToggle(item.label);
+          newTabs[index].isActive = true;
+          updateState({
+            tabs: [...newTabs],
+            checked: item.value,
+            isModalVisible: false,
+            isLoadingB: false,
+          });
+        } else {
+          newTabs[index].isActive = false;
+          updateState({
+            tabs: [...newTabs],
+            isLoadingB: false,
+          });
+        }
+      });
+    }, 700);
   };
 
   const _onTableLabel = () => {
@@ -468,7 +477,7 @@ export default function DashBoardHeaderFive({
                     {location?.type === 3
                       ? !!location?.type_name
                         ? location?.type_name
-                        : 'Unknown'
+                        : strings.UNKNOWN
                       : location?.type === 2
                       ? strings.WORK
                       : strings.HOME}
@@ -587,7 +596,7 @@ export default function DashBoardHeaderFive({
                             cartItemCount?.data?.item_count > 0
                           )
                             ? _onTableItm(item, indx)
-                            : dineInFunction()
+                            : dineInFunction(item, indx)
                         }>
                         <View
                           style={{
@@ -664,7 +673,7 @@ export default function DashBoardHeaderFive({
                     cartItemCount?.data?.item_count > 0
                   )
                     ? _onTableItm(item, indx)
-                    : dineInFunction()
+                    : dineInFunction(item, indx)
                 }
                 key={indx}
                 style={{
@@ -725,6 +734,21 @@ export default function DashBoardHeaderFive({
             );
           })}
       </View>
+      <CustomAnimatedLoader
+        source={loaderOne}
+        loaderTitle={strings.LOADING}
+        containerColor={
+          isDarkMode ? MyDarkTheme.colors.lightDark : colors.white
+        }
+        loadercolor={themeColors.primary_color}
+        animationStyle={[
+          {
+            height: moderateScaleVertical(40),
+            width: moderateScale(40),
+          },
+        ]}
+        visible={isLoadingB}
+      />
     </View>
   );
 }
