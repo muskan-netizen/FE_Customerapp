@@ -36,6 +36,8 @@ export default function DashBoardHeaderFive({
   selcetedToggle,
   toggleData,
   isLoading = false,
+  isLoadingB = false,
+  updateLoader = () => {},
 }) {
   const navigation = useNavigation();
   const pickerRef = createRef();
@@ -53,10 +55,9 @@ export default function DashBoardHeaderFive({
     checked: '',
     tabs: [],
     setSelectedTab: 0,
-    isLoadingB: false,
   });
 
-  const {isModalVisible, checked, tabs, isLoadingB} = state;
+  const {isModalVisible, checked, tabs} = state;
 
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
@@ -364,33 +365,30 @@ export default function DashBoardHeaderFive({
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({isLoading: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
 
   const _onTableItm = (item, indx) => {
-    updateState({isLoadingB: true});
     const newTabs = [...tabs];
-    setTimeout(() => {
-      newTabs.forEach((item, index) => {
-        if (index === indx) {
-          selcetedToggle(item.label);
-          newTabs[index].isActive = true;
-          updateState({
-            tabs: [...newTabs],
-            checked: item.value,
-            isModalVisible: false,
-            isLoadingB: false,
-          });
-        } else {
-          newTabs[index].isActive = false;
-          updateState({
-            tabs: [...newTabs],
-            isLoadingB: false,
-          });
-        }
-      });
-    }, 700);
+    updateLoader();
+
+    newTabs.forEach((item, index) => {
+      if (index === indx) {
+        selcetedToggle(item.label);
+        newTabs[index].isActive = true;
+        updateState({
+          tabs: [...newTabs],
+          checked: item.value,
+          isModalVisible: false,
+        });
+      } else {
+        newTabs[index].isActive = false;
+        updateState({
+          tabs: [...newTabs],
+        });
+      }
+    });
   };
 
   const _onTableLabel = () => {
@@ -577,6 +575,7 @@ export default function DashBoardHeaderFive({
                     return (
                       <TouchableOpacity
                         key={indx}
+                        disabled={!!item.isActive}
                         style={{
                           borderColor: item.isActive
                             ? themeColors.primary_color
@@ -667,6 +666,7 @@ export default function DashBoardHeaderFive({
             return (
               <TouchableOpacity
                 activeOpacity={1}
+                disabled={item.isActive}
                 onPress={() =>
                   !(
                     cartItemCount?.message == null &&
