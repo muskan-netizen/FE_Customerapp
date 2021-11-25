@@ -504,7 +504,7 @@ export default function MyOrders({ navigation }) {
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3
               ? imagePath.icBackb
-              : imagePath.back
+              : imagePath.backArrowCourier
         }
         centerTitle={businessType === 4 ? strings.MYRIDES : strings.MY_ORDERS}
         headerStyle={
