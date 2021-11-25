@@ -610,6 +610,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               flexDirection: 'row',
               justifyContent: 'space-between',
               marginTop: moderateScaleVertical(16),
+              marginBottom:moderateScaleVertical(24)
             }}>
               <View style={{ flex: 0.5 }}>
                 <Text style={styles.datePriceText}>July 28  ·  01:52 PM</Text>
@@ -626,12 +627,16 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
 
             {orderFullDetail?.tasks.map((val, i) => {
               return (
+                <View>
+                  <Text style={{}}>{val?.address || ''}</Text>
                 <View
                   style={{
                     borderBottomWidth: 0.5,
-                    borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.lightGreyBg
+                    borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.lightGreyBg,
+                    marginVertical:moderateScaleVertical(8)
                   }}
                 />
+                </View>
               )
             })}
           </View>}
