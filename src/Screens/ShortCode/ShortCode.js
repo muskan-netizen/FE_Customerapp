@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image, Text, View} from 'react-native';
+import {Image, Linking, Text, View} from 'react-native';
 import {getBundleId} from 'react-native-device-info';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import {useSelector} from 'react-redux';
@@ -18,11 +18,12 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {showError} from '../../utils/helperFunctions';
-import {getItem} from '../../utils/utils';
+import {getUrlRoutes, showError} from '../../utils/helperFunctions';
+import {getItem, setItem} from '../../utils/utils';
 import styles from './styles';
 import RNFetchBlob from 'rn-fetch-blob-v2';
 import {MaterialIndicator} from 'react-native-indicators';
+import * as NavigationService from '../../navigation/NavigationService';
 
 const fs = RNFetchBlob.fs;
 
@@ -37,6 +38,7 @@ export default function ShortCode({route, navigation}) {
     isBtnDisabled: true,
     isLoading: false,
     changeInShortCode: false,
+    LoadingScreen: true,
   });
   const {dispatch} = store;
 
@@ -46,6 +48,7 @@ export default function ShortCode({route, navigation}) {
     isBtnDisabled,
     isLoading,
     isShortcodePrefilled,
+    LoadingScreen,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {appData, appStyle, currencies, languages} = useSelector(
@@ -1163,6 +1166,43 @@ export default function ShortCode({route, navigation}) {
 
   //Home data
 
+  async function handleDynamicLink(deepLinkUrl) {
+    console.log('checking deep link >>> ', decodeURI(deepLinkUrl));
+    if (deepLinkUrl != null) {
+      setItem('deepLinkUrl', deepLinkUrl);
+      let routeName = getUrlRoutes(deepLinkUrl, 1);
+      var data = deepLinkUrl?.split('=').pop();
+      console.log('checking deep link data >>> ', data);
+      let removePer = decodeURI(data);
+      let sendingData = JSON.parse(removePer);
+
+      let decodedUri = decodeURI(deepLinkUrl);
+      let vendorName = decodedUri.split('?')[1].split('&')[1].split('=')[1];
+      let vendorId = decodedUri.split('?')[1].split('&')[0].split('=')[1];
+
+      // return;
+      setTimeout(() => {
+        NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+          screen: navigationStrings.HOMESTACK,
+          params: {
+            screen: navigationStrings.PRODUCT_LIST,
+            params: {
+              data: {
+                category_slug: 'Restaurants',
+                id: vendorId,
+                name: vendorName,
+                vendor: true,
+                table_id: sendingData,
+              },
+            },
+          },
+        });
+      }, 1800);
+    } else {
+      navigation.push(navigationStrings.DRAWER_ROUTES);
+    }
+  }
+
   const navigateToNextScreen = (res) => {
     getItem('firstTime').then((el) => {
       if (!el && res.dynamic_tutorial && res.dynamic_tutorial.length > 0) {
@@ -1170,7 +1210,14 @@ export default function ShortCode({route, navigation}) {
           images: res.dynamic_tutorial,
         });
       } else {
-        navigation.push(navigationStrings.DRAWER_ROUTES);
+        // navigation.push(navigationStrings.DRAWER_ROUTES);
+        Linking.getInitialURL()
+          .then((link) => {
+            handleDynamicLink(link);
+          })
+          .catch((err) => {
+            console.log('checking deep link >>> 3232sdsd', err);
+          });
       }
     });
   };
@@ -1186,7 +1233,7 @@ export default function ShortCode({route, navigation}) {
         },
       )
       .then(() => {
-        updateState({isLoading: false});
+        updateState({isLoading: false, LoadingScreen: false});
         navigateToNextScreen(res);
       })
       .catch((error) => {
@@ -1260,7 +1307,9 @@ export default function ShortCode({route, navigation}) {
               backgroundColor: 'rgba(0,0,0,0.5',
             }}>
             <View style={{position: 'absolute', bottom: moderateScale(100)}}>
-              <MaterialIndicator size={50} color={colors.greyMedium} />
+              {LoadingScreen && (
+                <MaterialIndicator size={50} color={colors.greyMedium} />
+              )}
             </View>
           </View>
           <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />

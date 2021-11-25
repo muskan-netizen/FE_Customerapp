@@ -269,8 +269,8 @@ export default function ContactUs({navigation}) {
             <Image source={imagePath.contactIllustration} />
           </View>
         </View>
-        {/* <View style={styles.bottomSection}>{basicInfoView()}</View> */}
-        <View style={styles.bottomSection}>{basicInfoViewTemplateTwo()}</View>
+        <View style={styles.bottomSection}>{basicInfoView()}</View>
+        {/* <View style={styles.bottomSection}>{basicInfoViewTemplateTwo()}</View> */}
       </KeyboardAwareScrollView>
     </WrapperContainer>
   );

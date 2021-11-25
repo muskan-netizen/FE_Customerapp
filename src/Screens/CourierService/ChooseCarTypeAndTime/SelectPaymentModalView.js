@@ -1,5 +1,6 @@
 import React from 'react';
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
 import imagePath from '../../../constants/imagePath';
@@ -12,10 +13,10 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../../styles/responsiveSize';
+import {MyDarkTheme} from '../../../styles/theme';
+import {currencyNumberFormatter} from '../../../utils/commonFunction';
 import {getImageUrl} from '../../../utils/helperFunctions';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../../styles/theme';
 
 export default function SelectPaymentModalView({
   isLoading = false,
@@ -204,10 +205,14 @@ export default function SelectPaymentModalView({
                       ]
                 }>
                 {selectedCarOption
-                  ? `${currencies?.primary_currency?.symbol}${(
-                      Number(selectedCarOption?.variant[0]?.multiplier) *
-                      Number(selectedCarOption?.variant[0]?.price)
-                    ).toFixed(2)}`
+                  ? `${
+                      currencies?.primary_currency?.symbol
+                    }${currencyNumberFormatter(
+                      (
+                        Number(selectedCarOption?.variant[0]?.multiplier) *
+                        Number(selectedCarOption?.variant[0]?.price)
+                      ).toFixed(2),
+                    )}`
                   : ''}
               </Text>
               {updatedPrice && (
@@ -220,16 +225,18 @@ export default function SelectPaymentModalView({
                         ]
                       : styles.distanceDurationDeliveryValue
                   }>
-                  {`${currencies?.primary_currency?.symbol}${
+                  {`${
+                    currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
                     Number(selectedCarOption.tags_price) -
                       Number(updatedPrice) >
-                    0
+                      0
                       ? (
                           Number(selectedCarOption.tags_price) -
                           Number(updatedPrice)
                         ).toFixed(2)
-                      : 0
-                  }`}
+                      : 0,
+                  )}`}
                 </Text>
               )}
               {/* <TouchableOpacity
@@ -351,10 +358,14 @@ export default function SelectPaymentModalView({
                       {color: MyDarkTheme.colors.text},
                     ]
                   : styles.distanceDurationDeliveryValue
-              }>{`-${currencies?.primary_currency?.symbol}${(
-              Number(selectedCarOption?.variant[0]?.multiplier) *
-              Number(loyalityAmount)
-            ).toFixed(2)}`}</Text>
+              }>{`-${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              (
+                Number(selectedCarOption?.variant[0]?.multiplier) *
+                Number(loyalityAmount)
+              ).toFixed(2),
+            )}`}</Text>
           </View>
         )}
 

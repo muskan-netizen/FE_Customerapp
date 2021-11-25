@@ -403,13 +403,21 @@ export default function DashBoardHeaderFive({
   }
 
   return (
-    <>
+    <View
+      style={{
+        borderBottomWidth: 0.8,
+        borderBottomColor: isDarkMode
+          ? colors.whiteOpacity22
+          : colors.borderColorD,
+        paddingBottom: moderateScale(5),
+      }}>
       <View
         style={{
           ...styles.headerContainer,
           borderBottomColor: isDarkMode
             ? colors.whiteOpacity22
             : colors.borderColorD,
+          borderBottomWidth: 0,
         }}>
         <View
           style={{
@@ -458,7 +466,9 @@ export default function DashBoardHeaderFive({
                 {!!location?.type && (
                   <Text numberOfLines={1} style={styles.locationTypeTxt}>
                     {location?.type === 3
-                      ? location?.type_name
+                      ? !!location?.type_name
+                        ? location?.type_name
+                        : 'Unknown'
                       : location?.type === 2
                       ? strings.WORK
                       : strings.HOME}
@@ -491,7 +501,7 @@ export default function DashBoardHeaderFive({
             source={imagePath.search1}
           />
         </TouchableOpacity>
-        {tabs.length > 1 && (
+        {/* {tabs.length > 1 && (
           <TouchableOpacity
             activeOpacity={0.7}
             style={{
@@ -504,17 +514,17 @@ export default function DashBoardHeaderFive({
               source={
                 !!(
                   checked ==
-                    toggleData?.profile?.preferences?.delivery_nomenclature ||
+                  toggleData?.profile?.preferences?.delivery_nomenclature ||
                   checked == strings.DELIVERY
                 )
                   ? imagePath.delivery
                   : !!(
-                      checked ==
-                        toggleData?.profile?.preferences?.dinein_nomenclature ||
-                      checked == strings.DINE_IN
-                    )
-                  ? imagePath.dineIn
-                  : imagePath.takeaway
+                    checked ==
+                    toggleData?.profile?.preferences?.dinein_nomenclature ||
+                    checked == strings.DINE_IN
+                  )
+                    ? imagePath.dineIn
+                    : imagePath.takeaway
               }
               style={styles.deliveryIcon}
               resizeMode="contain"
@@ -528,7 +538,7 @@ export default function DashBoardHeaderFive({
               resizeMode="contain"
             />
           </TouchableOpacity>
-        )}
+        )} */}
         <Modal
           isVisible={isModalVisible}
           style={{
@@ -553,87 +563,168 @@ export default function DashBoardHeaderFive({
                 },
               ]}>
               <View style={{padding: moderateScale(10)}}>
-                {tabs.map((item, indx) => {
-                  return (
-                    <TouchableOpacity
-                      key={indx}
-                      style={{
-                        borderColor: item.isActive
-                          ? themeColors.primary_color
-                          : colors.transparent,
-                        borderWidth: 0.7,
-                        flexDirection: 'row',
-                        paddingVertical: moderateScaleVertical(15),
-                        margin: moderateScale(5),
-                        borderRadius: moderateScale(10),
-                        alignItems: 'center',
-                        paddingHorizontal: moderateScale(20),
-                        justifyContent: 'space-between',
-                      }}
-                      onPress={() =>
-                        !(
-                          cartItemCount?.message == null &&
-                          cartItemCount?.data?.item_count > 0
-                        )
-                          ? _onTableItm(item, indx)
-                          : dineInFunction()
-                      }>
-                      <View
+                {tabs.length > 1 &&
+                  tabs.map((item, indx) => {
+                    return (
+                      <TouchableOpacity
+                        key={indx}
                         style={{
+                          borderColor: item.isActive
+                            ? themeColors.primary_color
+                            : colors.transparent,
+                          borderWidth: 0.7,
                           flexDirection: 'row',
-                          justifyContent: 'center',
+                          paddingVertical: moderateScaleVertical(15),
+                          margin: moderateScale(5),
+                          borderRadius: moderateScale(10),
                           alignItems: 'center',
-                        }}>
+                          paddingHorizontal: moderateScale(20),
+                          justifyContent: 'space-between',
+                        }}
+                        onPress={() =>
+                          !(
+                            cartItemCount?.message == null &&
+                            cartItemCount?.data?.item_count > 0
+                          )
+                            ? _onTableItm(item, indx)
+                            : dineInFunction()
+                        }>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <Image
+                            source={
+                              item.isActive
+                                ? imagePath.radioNewActive
+                                : imagePath.radioNewInActive
+                            }
+                            style={{
+                              height: moderateScale(20),
+                              width: moderateScale(20),
+                              tintColor: item.isActive
+                                ? themeColors.primary_color
+                                : colors.blackOpacity43,
+                            }}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: fontFamily.medium,
+                              color: item.isActive
+                                ? themeColors.primary_color
+                                : isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.blackOpacity43,
+                              fontSize: textScale(12),
+                              marginHorizontal: moderateScale(10),
+                            }}>
+                            {item.value}
+                          </Text>
+                        </View>
                         <Image
-                          source={
-                            item.isActive
-                              ? imagePath.radioNewActive
-                              : imagePath.radioNewInActive
-                          }
+                          source={item.icon}
                           style={{
-                            height: moderateScale(20),
-                            width: moderateScale(20),
+                            height: moderateScale(22),
+                            width: moderateScale(22),
                             tintColor: item.isActive
-                              ? themeColors.primary_color
-                              : colors.blackOpacity43,
-                          }}
-                        />
-                        <Text
-                          style={{
-                            fontFamily: fontFamily.medium,
-                            color: item.isActive
                               ? themeColors.primary_color
                               : isDarkMode
                               ? MyDarkTheme.colors.text
-                              : colors.blackOpacity43,
-                            fontSize: textScale(12),
-                            marginHorizontal: moderateScale(10),
-                          }}>
-                          {item.value}
-                        </Text>
-                      </View>
-                      <Image
-                        source={item.icon}
-                        style={{
-                          height: moderateScale(22),
-                          width: moderateScale(22),
-                          tintColor: item.isActive
-                            ? themeColors.primary_color
-                            : isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.blackOpacity66,
-                          alignSelf: 'flex-end',
-                        }}
-                        resizeMode="contain"
-                      />
-                    </TouchableOpacity>
-                  );
-                })}
+                              : colors.blackOpacity66,
+                            alignSelf: 'flex-end',
+                          }}
+                          resizeMode="contain"
+                        />
+                      </TouchableOpacity>
+                    );
+                  })}
               </View>
             </View>
           </View>
         </Modal>
       </View>
-    </>
+      <View
+        style={{
+          width: width - 24,
+          alignSelf: 'center',
+          borderRadius: moderateScale(10),
+          flexDirection: 'row',
+          marginTop: moderateScale(10),
+        }}>
+        {tabs.length > 1 &&
+          tabs.map((item, indx) => {
+            return (
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() =>
+                  !(
+                    cartItemCount?.message == null &&
+                    cartItemCount?.data?.item_count > 0
+                  )
+                    ? _onTableItm(item, indx)
+                    : dineInFunction()
+                }
+                key={indx}
+                style={{
+                  width: width / 3 - 8,
+                  borderBottomColor:
+                    item.isActive && isDarkMode
+                      ? MyDarkTheme.colors.white
+                      : item.isActive && !isDarkMode
+                      ? themeColors.primary_color
+                      : isDarkMode
+                      ? colors.blackOpacity0
+                      : colors.greyColor1,
+                  borderBottomWidth: 2,
+                  height: moderateScale(40),
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexDirection: 'row',
+                }}>
+                <Image
+                  source={item.icon}
+                  style={{
+                    height: moderateScale(16),
+                    width: moderateScale(16),
+                    tintColor:
+                      item.isActive && isDarkMode
+                        ? MyDarkTheme.colors.white
+                        : item.isActive && !isDarkMode
+                        ? themeColors.primary_color
+                        : colors.greyLight,
+                    // ? themeColors.primary_color
+                    // : isDarkMode
+                    // ? MyDarkTheme.colors.text
+                    // : colors.blackOpacity66,
+                    marginRight: moderateScale(3),
+                    // tintColor: item.isActive
+                    //   ? themeColors.primary_color
+                    //   : colors.textGreyOpcaity7,
+                    // alignSelf: 'flex-end',
+                  }}
+                  resizeMode="contain"
+                />
+                <Text
+                  style={{
+                    marginLeft: moderateScale(3),
+                    fontSize: textScale(14),
+                    fontFamily: fontFamily.regular,
+                    color:
+                      item.isActive && isDarkMode
+                        ? MyDarkTheme.colors.white
+                        : item.isActive && !isDarkMode
+                        ? themeColors.primary_color
+                        : colors.greyLight,
+                    textTransform: 'capitalize',
+                  }}>
+                  {item.value}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+      </View>
+    </View>
   );
 }

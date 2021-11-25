@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React from 'react';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/core';
+import React, { useState } from 'react';
 import { Image, StyleSheet, Text } from 'react-native';
 import { View } from 'react-native-animatable';
 import { useSelector } from 'react-redux';
@@ -23,7 +24,10 @@ import navigationStrings from './navigationStrings';
 
 const Tab = createBottomTabNavigator();
 
+let showBottomBar_ = true;
+
 export default function TabRoutes(props) {
+  const [showBottomBar, setShowBottomBar] = useState(true)
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
   const appMainData = useSelector((state) => state?.home?.appMainData);
   const { appStyle, appData } = useSelector((state) => state?.initBoot);
@@ -42,6 +46,25 @@ export default function TabRoutes(props) {
 
   var celebTab = null;
   var brandTab = null;
+
+  const getTabBarVisibility = (route, screen) => {
+  
+    // const routeName = route.state
+    //   ? route.state.routes[route.state.index].name
+    //   : '';
+      
+      const route_name = getFocusedRouteNameFromRoute(route)
+      // console.log('checking route name >>>>', route_name, screen.includes(route_name))
+    if (screen.includes(route_name)) {
+      // setShowBottomBar(false)
+      showBottomBar_ = false
+      return false;
+    }
+    // setShowBottomBar(true)
+    showBottomBar_ = true
+    return true;
+  }
+
   if (checkForCeleb) {
     celebTab = (
       <Tab.Screen
@@ -115,17 +138,19 @@ export default function TabRoutes(props) {
     <Tab.Navigator
       backBehavior={'initialRoute'}
       tabBar={(props) => {
-        switch (appStyle?.tabBarLayout) {
-          case 1:
-            return <CustomBottomTabBar {...props} />;
-          case 2:
-            return <CustomBottomTabBarTwo {...props} />;
-          case 3:
-            return <CustomBottomTabBarThree {...props} />;
-          case 4:
-            return <CustomBottomTabBarFour {...props} />;
-          case 5:
-            return <CustomBottomTabBarFive {...props} />;
+        if(showBottomBar_){
+          switch (appStyle?.tabBarLayout) {
+            case 1:
+              return <CustomBottomTabBar {...props} />;
+            case 2:
+              return <CustomBottomTabBarTwo {...props} />;
+            case 3:
+              return <CustomBottomTabBarThree {...props} />;
+            case 4:
+              return <CustomBottomTabBarFour {...props} />;
+            case 5:
+              return <CustomBottomTabBarFive {...props} />;
+          }
         }
       }}
       tabBarOptions={{
@@ -135,13 +160,14 @@ export default function TabRoutes(props) {
           fontSize: textScale(12),
           color: colors.white,
         },
-
+        
         // showLabel: false,
       }}>
       <Tab.Screen
         component={HomeStack}
         name={navigationStrings.HOMESTACK}
-        options={{
+        options={({ route }) => ({
+          tabBarVisible: getTabBarVisibility(route,['productList', 'productDetail']),
           tabBarLabel: strings.HOME,
           tabBarIcon: ({ focused, tintColor }) => (
             <Image
@@ -164,8 +190,9 @@ export default function TabRoutes(props) {
               }
             />
           ),
+
           // unmountOnBlur: true,
-        }}
+        })}
       />
       <Tab.Screen
         component={CartStack}

@@ -27,8 +27,25 @@ import {
 } from './src/utils/notificationService';
 import {getItem, getUserData, setItem} from './src/utils/utils';
 import PushNotification from 'react-native-push-notification';
+import PrinterScreen from './src/Screens/PrinterConnection/PrinterScreen';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const App = () => {
+  const ConnectBTFunction = async () => {
+    await AsyncStorage.removeItem('autoConnectEnabled');
+
+    const temp = new PrinterScreen();
+    AsyncStorage.getItem('BleDevice2').then((res) => {
+      console.log('check bt data >>> ', res);
+      const tt = JSON.parse(res);
+      temp.connectBTFunc({
+        address: tt.boundAddress,
+        name: tt.name,
+      });
+    });
+    AsyncStorage.removeItem('BleDevice2');
+  };
+
   const [internetConnection, setInternet] = useState(true);
   // const appMainData = useSelector((state) => state?.home?.appMainData);
   const appMainData = store.getState().home;
@@ -37,6 +54,7 @@ const App = () => {
   async function handleDynamicLink(deepLinkUrl) {
     if (deepLinkUrl != null) {
       setItem('deepLinkUrl', deepLinkUrl);
+      ('https://sales.royoorders.com/vendor/la-fresca-de-italia?id=2&name=La%20Fresca%20de%20Italia&table=2');
       let routeName = getUrlRoutes(deepLinkUrl, 1);
       if (routeName === 'vendor') {
         return;
@@ -52,7 +70,13 @@ const App = () => {
           params: {
             screen: navigationStrings.PRODUCT_LIST,
             params: {
-              data: sendingData,
+              data: {
+                category_slug: 'Restaurants',
+                id: 2,
+                name: 'La Fresca de Italia',
+                vendor: true,
+                table_id: sendingData,
+              },
             },
           },
         });
@@ -76,6 +100,13 @@ const App = () => {
     setTimeout(() => {
       SplashScreen.hide();
     }, 3000);
+
+    AsyncStorage.getItem('autoConnectEnabled').then((res) => {
+      if (res !== null) {
+        console.log('hit connect funcions >>>>');
+        ConnectBTFunction();
+      }
+    });
   }, []);
 
   const notificationConfig = () => {
