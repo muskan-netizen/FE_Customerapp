@@ -2167,48 +2167,6 @@ export default function Products({ route, navigation }) {
             paddingHorizontal: moderateScale(20),
             marginBottom: moderateScale(15),
           }}
-<<<<<<< HEAD
-          contentContainerStyle={{ alignItems: 'center' }}>
-          {ProductTags.map((el, index) => {
-            return (
-              <View key={index} style={{ flexDirection: 'row' }}>
-                <ToggleSwitch
-                  isOn={el.isSelected}
-                  onColor={colors.green}
-                  offColor={
-                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
-                  }
-                  size="small"
-                  onToggle={() => {
-                    const updatedArr = ProductTags.map((el, idx) => {
-                      console.log(el);
-                      if (idx === index) {
-                        let newObj = el;
-                        newObj.isSelected = !newObj.isSelected;
-                        return newObj;
-                      } else {
-                        return el;
-                      }
-                    });
-                    updateState({ ProductTags: updatedArr });
-                  }}
-                />
-                <Text
-                  style={{
-                    fontSize: textScale(11),
-                    fontFamily: fontFamily.regular,
-                    marginLeft: moderateScale(7),
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGrey,
-                  }}>
-                  {el.translations[0].name}
-                </Text>
-                <View style={{ width: moderateScale(20) }} />
-              </View>
-            );
-          })}
-=======
           contentContainerStyle={{alignItems: 'center'}}>
           {ProductTags &&
             ProductTags.map((el, index) => {
@@ -2253,7 +2211,6 @@ export default function Products({ route, navigation }) {
                 </View>
               );
             })}
->>>>>>> 927f038dfaba00e9cef98c2d3e5d73758806b5b4
         </ScrollView>
         <SearchBar
           containerStyle={{
