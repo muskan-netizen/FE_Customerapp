@@ -1,6 +1,6 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Animated,
@@ -13,18 +13,18 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dark-mode';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo from 'react-native-device-info';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import {UIActivityIndicator} from 'react-native-indicators';
+import { UIActivityIndicator } from 'react-native-indicators';
 import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import AddressModal3 from '../../Components/AddressModal3';
 import ButtonComponent from '../../Components/ButtonComponent';
 import ChooseAddressModal from '../../Components/ChooseAddressModal';
@@ -32,7 +32,7 @@ import ConfirmationModal from '../../Components/ConfirmationModal';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
 import HorizontalLine from '../../Components/HorizontalLine';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import ProductListLoader from '../../Components/Loaders/ProductListLoader';
 import MarketCard3 from '../../Components/MarketCard3';
@@ -49,17 +49,18 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
+import { MyDarkTheme } from '../../styles/theme';
 import {
   getImageUrl,
   getParameterByName,
+  numberFormat,
   showError,
   showSuccess,
-  timeInLocalLangauge,
+  timeInLocalLangauge
 } from '../../utils/helperFunctions';
-import {getItem, removeItem, setItem} from '../../utils/utils';
+import { getItem, removeItem, setItem } from '../../utils/utils';
 import stylesFun from './styles';
 
 export default function Cart({navigation, route}) {
@@ -1678,7 +1679,33 @@ export default function Cart({navigation, route}) {
                 }>
                 {strings.AMOUNT}
               </Text>
-              <Text
+
+              {numberFormat({
+                number: Number(
+                  item?.payable_amount ? item?.payable_amount : 0,
+                ).toFixed(2),
+                currencySign: currencies?.primary_currency?.symbol,
+                textStyle: isDarkMode
+                  ? [
+                      styles.priceItemLabel2,
+                      {
+                        color: MyDarkTheme.colors.text,
+                      },
+                    ]
+                  : styles.priceItemLabel2,
+              })}
+
+              {/* <NumberFormat
+                thousandsGroupStyle="thousand"
+                value={2456981}
+                prefix="$"
+                decimalSeparator="."
+                displayType="input"
+                type="text"
+                thousandSeparator={true}
+                allowNegative={true}
+              /> */}
+              {/* <Text
                 style={
                   isDarkMode
                     ? [
@@ -1690,7 +1717,7 @@ export default function Cart({navigation, route}) {
                     : styles.priceItemLabel2
                 }>{`${currencies?.primary_currency?.symbol}${Number(
                 item?.payable_amount ? item?.payable_amount : 0,
-              ).toFixed(2)}`}</Text>
+              ).toFixed(2)}`}</Text> */}
             </View>
             {/* <View style={styles.bottomTabLableValue}>
               <Text
