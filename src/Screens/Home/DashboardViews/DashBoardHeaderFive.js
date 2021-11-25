@@ -563,82 +563,83 @@ export default function DashBoardHeaderFive({
                 },
               ]}>
               <View style={{padding: moderateScale(10)}}>
-                {tabs.length >1 && tabs.map((item, indx) => {
-                  return (
-                    <TouchableOpacity
-                      key={indx}
-                      style={{
-                        borderColor: item.isActive
-                          ? themeColors.primary_color
-                          : colors.transparent,
-                        borderWidth: 0.7,
-                        flexDirection: 'row',
-                        paddingVertical: moderateScaleVertical(15),
-                        margin: moderateScale(5),
-                        borderRadius: moderateScale(10),
-                        alignItems: 'center',
-                        paddingHorizontal: moderateScale(20),
-                        justifyContent: 'space-between',
-                      }}
-                      onPress={() =>
-                        !(
-                          cartItemCount?.message == null &&
-                          cartItemCount?.data?.item_count > 0
-                        )
-                          ? _onTableItm(item, indx)
-                          : dineInFunction()
-                      }>
-                      <View
+                {tabs.length > 1 &&
+                  tabs.map((item, indx) => {
+                    return (
+                      <TouchableOpacity
+                        key={indx}
                         style={{
+                          borderColor: item.isActive
+                            ? themeColors.primary_color
+                            : colors.transparent,
+                          borderWidth: 0.7,
                           flexDirection: 'row',
-                          justifyContent: 'center',
+                          paddingVertical: moderateScaleVertical(15),
+                          margin: moderateScale(5),
+                          borderRadius: moderateScale(10),
                           alignItems: 'center',
-                        }}>
+                          paddingHorizontal: moderateScale(20),
+                          justifyContent: 'space-between',
+                        }}
+                        onPress={() =>
+                          !(
+                            cartItemCount?.message == null &&
+                            cartItemCount?.data?.item_count > 0
+                          )
+                            ? _onTableItm(item, indx)
+                            : dineInFunction()
+                        }>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <Image
+                            source={
+                              item.isActive
+                                ? imagePath.radioNewActive
+                                : imagePath.radioNewInActive
+                            }
+                            style={{
+                              height: moderateScale(20),
+                              width: moderateScale(20),
+                              tintColor: item.isActive
+                                ? themeColors.primary_color
+                                : colors.blackOpacity43,
+                            }}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: fontFamily.medium,
+                              color: item.isActive
+                                ? themeColors.primary_color
+                                : isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.blackOpacity43,
+                              fontSize: textScale(12),
+                              marginHorizontal: moderateScale(10),
+                            }}>
+                            {item.value}
+                          </Text>
+                        </View>
                         <Image
-                          source={
-                            item.isActive
-                              ? imagePath.radioNewActive
-                              : imagePath.radioNewInActive
-                          }
+                          source={item.icon}
                           style={{
-                            height: moderateScale(20),
-                            width: moderateScale(20),
+                            height: moderateScale(22),
+                            width: moderateScale(22),
                             tintColor: item.isActive
-                              ? themeColors.primary_color
-                              : colors.blackOpacity43,
-                          }}
-                        />
-                        <Text
-                          style={{
-                            fontFamily: fontFamily.medium,
-                            color: item.isActive
                               ? themeColors.primary_color
                               : isDarkMode
                               ? MyDarkTheme.colors.text
-                              : colors.blackOpacity43,
-                            fontSize: textScale(12),
-                            marginHorizontal: moderateScale(10),
-                          }}>
-                          {item.value}
-                        </Text>
-                      </View>
-                      <Image
-                        source={item.icon}
-                        style={{
-                          height: moderateScale(22),
-                          width: moderateScale(22),
-                          tintColor: item.isActive
-                            ? themeColors.primary_color
-                            : isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.blackOpacity66,
-                          alignSelf: 'flex-end',
-                        }}
-                        resizeMode="contain"
-                      />
-                    </TouchableOpacity>
-                  );
-                })}
+                              : colors.blackOpacity66,
+                            alignSelf: 'flex-end',
+                          }}
+                          resizeMode="contain"
+                        />
+                      </TouchableOpacity>
+                    );
+                  })}
               </View>
             </View>
           </View>
@@ -652,76 +653,77 @@ export default function DashBoardHeaderFive({
           flexDirection: 'row',
           marginTop: moderateScale(10),
         }}>
-        {tabs.length>1 && tabs.map((item, indx) => {
-          return (
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() =>
-                !(
-                  cartItemCount?.message == null &&
-                  cartItemCount?.data?.item_count > 0
-                )
-                  ? _onTableItm(item, indx)
-                  : dineInFunction()
-              }
-              key={indx}
-              style={{
-                width: width / 3 - 8,
-                borderBottomColor:
-                  item.isActive && isDarkMode
-                    ? MyDarkTheme.colors.white
-                    : item.isActive && !isDarkMode
-                    ? themeColors.primary_color
-                    : isDarkMode
-                    ? colors.blackOpacity0
-                    : colors.greyColor1,
-                borderBottomWidth: 2,
-                height: moderateScale(40),
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'row',
-              }}>
-              <Image
-                source={item.icon}
+        {tabs.length > 1 &&
+          tabs.map((item, indx) => {
+            return (
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() =>
+                  !(
+                    cartItemCount?.message == null &&
+                    cartItemCount?.data?.item_count > 0
+                  )
+                    ? _onTableItm(item, indx)
+                    : dineInFunction()
+                }
+                key={indx}
                 style={{
-                  height: moderateScale(16),
-                  width: moderateScale(16),
-                  tintColor:
+                  width: width / 3 - 8,
+                  borderBottomColor:
                     item.isActive && isDarkMode
                       ? MyDarkTheme.colors.white
                       : item.isActive && !isDarkMode
                       ? themeColors.primary_color
-                      : colors.greyLight,
-                  // ? themeColors.primary_color
-                  // : isDarkMode
-                  // ? MyDarkTheme.colors.text
-                  // : colors.blackOpacity66,
-                  marginRight: moderateScale(3),
-                  // tintColor: item.isActive
-                  //   ? themeColors.primary_color
-                  //   : colors.textGreyOpcaity7,
-                  // alignSelf: 'flex-end',
-                }}
-                resizeMode="contain"
-              />
-              <Text
-                style={{
-                  marginLeft: moderateScale(3),
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily.regular,
-                  color:
-                    item.isActive && isDarkMode
-                      ? MyDarkTheme.colors.white
-                      : item.isActive && !isDarkMode
-                      ? themeColors.primary_color
-                      : colors.greyLight,
-                  textTransform: 'capitalize',
+                      : isDarkMode
+                      ? colors.blackOpacity0
+                      : colors.greyColor1,
+                  borderBottomWidth: 2,
+                  height: moderateScale(40),
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexDirection: 'row',
                 }}>
-                {item.value}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
+                <Image
+                  source={item.icon}
+                  style={{
+                    height: moderateScale(16),
+                    width: moderateScale(16),
+                    tintColor:
+                      item.isActive && isDarkMode
+                        ? MyDarkTheme.colors.white
+                        : item.isActive && !isDarkMode
+                        ? themeColors.primary_color
+                        : colors.greyLight,
+                    // ? themeColors.primary_color
+                    // : isDarkMode
+                    // ? MyDarkTheme.colors.text
+                    // : colors.blackOpacity66,
+                    marginRight: moderateScale(3),
+                    // tintColor: item.isActive
+                    //   ? themeColors.primary_color
+                    //   : colors.textGreyOpcaity7,
+                    // alignSelf: 'flex-end',
+                  }}
+                  resizeMode="contain"
+                />
+                <Text
+                  style={{
+                    marginLeft: moderateScale(3),
+                    fontSize: textScale(14),
+                    fontFamily: fontFamily.regular,
+                    color:
+                      item.isActive && isDarkMode
+                        ? MyDarkTheme.colors.white
+                        : item.isActive && !isDarkMode
+                        ? themeColors.primary_color
+                        : colors.greyLight,
+                    textTransform: 'capitalize',
+                  }}>
+                  {item.value}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
       </View>
     </View>
   );

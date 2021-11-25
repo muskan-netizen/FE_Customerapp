@@ -55,7 +55,12 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
+<<<<<<< HEAD
 import { MyDarkTheme } from '../../styles/theme';
+=======
+import {MyDarkTheme} from '../../styles/theme';
+import {currencyNumberFormatter} from '../../utils/commonFunction';
+>>>>>>> 927f038dfaba00e9cef98c2d3e5d73758806b5b4
 import {
   checkEvenOdd,
   getImageUrl,
@@ -1738,6 +1743,7 @@ export default function Products({ route, navigation }) {
                           color: isDarkMode
                             ? MyDarkTheme.colors.text
                             : colors.white,
+                          width: width / 1.5,
                         }}>
                         {categoryInfo?.address || ''}
                       </Text>
@@ -2073,7 +2079,8 @@ export default function Products({ route, navigation }) {
               }}>
               <Image source={imagePath.ic_pinIcon} />
             </View>
-            {categoryInfo.lineOfSightDistance != undefined &&
+
+            {categoryInfo?.lineOfSightDistance != undefined &&
             categoryInfo.lineOfSightDistance != null ? (
               <Text
                 style={{
@@ -2099,7 +2106,7 @@ export default function Products({ route, navigation }) {
               }}>
               <Image source={imagePath.ic_timeIcon} />
             </View>
-            {categoryInfo.lineOfSightDistance != undefined &&
+            {categoryInfo?.lineOfSightDistance != undefined &&
             categoryInfo.lineOfSightDistance != null ? (
               <Text
                 style={{
@@ -2160,6 +2167,7 @@ export default function Products({ route, navigation }) {
             paddingHorizontal: moderateScale(20),
             marginBottom: moderateScale(15),
           }}
+<<<<<<< HEAD
           contentContainerStyle={{ alignItems: 'center' }}>
           {ProductTags.map((el, index) => {
             return (
@@ -2200,6 +2208,52 @@ export default function Products({ route, navigation }) {
               </View>
             );
           })}
+=======
+          contentContainerStyle={{alignItems: 'center'}}>
+          {ProductTags &&
+            ProductTags.map((el, index) => {
+              console.log(el, 'elelelelelelel');
+              return (
+                <View key={index} style={{flexDirection: 'row'}}>
+                  <ToggleSwitch
+                    isOn={el.isSelected}
+                    onColor={colors.green}
+                    offColor={
+                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                    }
+                    size="small"
+                    onToggle={() => {
+                      const updatedArr = ProductTags.map((el, idx) => {
+                        console.log(el);
+                        if (idx === index) {
+                          let newObj = el;
+                          newObj.isSelected = !newObj.isSelected;
+                          return newObj;
+                        } else {
+                          return el;
+                        }
+                      });
+                      updateState({ProductTags: updatedArr});
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: textScale(11),
+                      fontFamily: fontFamily.regular,
+                      marginLeft: moderateScale(7),
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGrey,
+                    }}>
+                    {!!el?.translations?.length > 0
+                      ? el.translations[0].name
+                      : ''}
+                  </Text>
+                  <View style={{width: moderateScale(20)}} />
+                </View>
+              );
+            })}
+>>>>>>> 927f038dfaba00e9cef98c2d3e5d73758806b5b4
         </ScrollView>
         <SearchBar
           containerStyle={{
@@ -2408,8 +2462,12 @@ export default function Products({ route, navigation }) {
   };
 
   const renderSectionTab = (props) => {
+<<<<<<< HEAD
     console.log('check all datya >>> ', props);
     const { title, isActive } = props;
+=======
+    const {title, isActive} = props;
+>>>>>>> 927f038dfaba00e9cef98c2d3e5d73758806b5b4
 
     if (isActive) {
       activeIdx = props.index;
@@ -2908,15 +2966,25 @@ export default function Products({ route, navigation }) {
         visible={updateQtyLoader}
       />
 
-      {!searchInput && (
+      {!!categoryInfo?.is_show_products_with_category && !searchInput && (
         <GradientCartView
           // colorsArray={}
           onPress={() => navigation.navigate(navigationStrings.CART)}
           btnText={
             CartItems && CartItems.data && CartItems.data.item_count
+<<<<<<< HEAD
               ? `${CartItems.data.item_count} ${CartItems.data.item_count > 1 ? strings.ITEMS : strings.ITEM
               } | ${currencies.primary_currency.symbol}${CartItems.data.total_payable_amount
               }`
+=======
+              ? `${CartItems.data.item_count} ${
+                  CartItems.data.item_count > 1 ? strings.ITEM : strings.ITEMS
+                } | ${
+                  currencies.primary_currency.symbol
+                }${currencyNumberFormatter(
+                  Number(CartItems.data.total_payable_amount).toFixed(2),
+                )}`
+>>>>>>> 927f038dfaba00e9cef98c2d3e5d73758806b5b4
               : ''
           }
           ifCartShow={

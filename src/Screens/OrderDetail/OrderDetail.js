@@ -1,22 +1,26 @@
-import {useFocusEffect} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
-import {Linking, Platform} from 'react-native';
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   Dimensions,
   FlatList,
   Image,
-  Text,
-  View,
-  TouchableOpacity,
+  Platform,
   ScrollView,
-  TextInput,
   StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import Communications from 'react-native-communications';
 import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
+import * as RNLocalize from 'react-native-localize';
+import MapView, {AnimatedRegion, Marker} from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
 import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
 import HeaderWithFilters from '../../Components/HeaderWithFilters';
@@ -26,36 +30,25 @@ import {
   loaderOne,
 } from '../../Components/Loaders/AnimatedLoaderFiles';
 import StepIndicators from '../../Components/StepIndicator';
+import UserDetail from '../../Components/UserDetail';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import Communications from 'react-native-communications';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {
-  getCurrentLocation,
-  getImageUrl,
-  getRandomColor,
-  showError,
-} from '../../utils/helperFunctions';
+import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {getImageUrl, showError} from '../../utils/helperFunctions';
 import useInterval from '../../utils/useInterval';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
-import {useIsFocused} from '@react-navigation/native';
-import * as RNLocalize from 'react-native-localize';
-import MapView, {Marker, AnimatedRegion} from 'react-native-maps';
-import MapViewDirections from 'react-native-maps-directions';
-import {locationPermission} from '../../utils/permissions';
 const {height, width} = Dimensions.get('window');
-import Geolocation from 'react-native-geolocation-service';
-import UserDetail from '../../Components/UserDetail';
 
 export default function OrderDetail({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -471,7 +464,9 @@ export default function OrderDetail({navigation, route}) {
                               <Text style={styles.cartItemPrice}>
                                 {`${currencies?.primary_currency?.symbol}${
                                   // Number(i?.pvariant?.multiplier) *
-                                  Number(i?.price).toFixed(2)
+                                  currencyNumberFormatter(
+                                    Number(i?.price).toFixed(2),
+                                  )
                                 }`}
                               </Text>
                             </View>
@@ -600,9 +595,13 @@ export default function OrderDetail({navigation, route}) {
                         },
                       ]
                     : styles.priceItemLabel
-                }>{`- ${currencies?.primary_currency?.symbol}${Number(
-                item?.discount_amount ? item?.discount_amount : 0,
-              ).toFixed(2)}`}</Text>
+                }>{`- ${
+                currencies?.primary_currency?.symbol
+              }${currencyNumberFormatter(
+                Number(
+                  item?.discount_amount ? item?.discount_amount : 0,
+                ).toFixed(2),
+              )}`}</Text>
             </View>
           )}
 
@@ -657,9 +656,11 @@ export default function OrderDetail({navigation, route}) {
                         },
                       ]
                     : styles.priceItemLabel
-                }>{`${currencies?.primary_currency?.symbol}${Number(
-                item?.delivery_fee ? item?.delivery_fee : 0,
-              ).toFixed(2)}`}</Text>
+                }>{`${
+                currencies?.primary_currency?.symbol
+              }${currencyNumberFormatter(
+                Number(item?.delivery_fee ? item?.delivery_fee : 0).toFixed(2),
+              )}`}</Text>
             </View>
           )}
           <View style={styles.itemPriceDiscountTaxView}>
@@ -680,9 +681,13 @@ export default function OrderDetail({navigation, route}) {
                 color: isDarkMode
                   ? MyDarkTheme.colors.text
                   : colors.blackOpacity86,
-              }}>{`${currencies?.primary_currency?.symbol}${Number(
-              item?.payable_amount ? item?.payable_amount : 0,
-            ).toFixed(2)}`}</Text>
+              }}>{`${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(item?.payable_amount ? item?.payable_amount : 0).toFixed(
+                2,
+              ),
+            )}`}</Text>
           </View>
         </View>
       </View>
@@ -722,9 +727,11 @@ export default function OrderDetail({navigation, route}) {
                     },
                   ]
                 : styles.priceItemLabel
-            }>{`${currencies?.primary_currency?.symbol}${Number(
-            cartData?.total_amount,
-          ).toFixed(2)}`}</Text>
+            }>{`${
+            currencies?.primary_currency?.symbol
+          }${currencyNumberFormatter(
+            Number(cartData?.total_amount).toFixed(2),
+          )}`}</Text>
         </View>
         {!!cartData?.wallet_amount_used && (
           <View style={styles.bottomTabLableValue}>
@@ -753,9 +760,13 @@ export default function OrderDetail({navigation, route}) {
                       },
                     ]
                   : styles.priceItemLabel
-              }>{`-${currencies?.primary_currency?.symbol}${Number(
-              cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
-            ).toFixed(2)}`}</Text>
+              }>{`-${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(
+                cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
+              ).toFixed(2),
+            )}`}</Text>
           </View>
         )}
         {!!cartData?.loyalty_amount_saved && (
@@ -785,11 +796,15 @@ export default function OrderDetail({navigation, route}) {
                       },
                     ]
                   : styles.priceItemLabel
-              }>{`-${currencies?.primary_currency?.symbol}${Number(
-              cartData?.loyalty_amount_saved
-                ? cartData?.loyalty_amount_saved
-                : 0,
-            ).toFixed(2)}`}</Text>
+              }>{`-${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(
+                cartData?.loyalty_amount_saved
+                  ? cartData?.loyalty_amount_saved
+                  : 0,
+              ).toFixed(2),
+            )}`}</Text>
           </View>
         )}
 
@@ -820,9 +835,11 @@ export default function OrderDetail({navigation, route}) {
                       },
                     ]
                   : styles.priceItemLabel
-              }>{`-${currencies?.primary_currency?.symbol}${Number(
-              cartData?.total_discount,
-            ).toFixed(2)}`}</Text>
+              }>{`-${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(cartData?.total_discount).toFixed(2),
+            )}`}</Text>
           </View>
         )}
         {!!cartData?.taxable_amount && (
@@ -852,9 +869,13 @@ export default function OrderDetail({navigation, route}) {
                       },
                     ]
                   : styles.priceItemLabel
-              }>{`${currencies?.primary_currency?.symbol}${Number(
-              cartData?.taxable_amount ? cartData?.taxable_amount : 0,
-            ).toFixed(2)}`}</Text>
+              }>{`${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(
+                cartData?.taxable_amount ? cartData?.taxable_amount : 0,
+              ).toFixed(2),
+            )}`}</Text>
           </View>
         )}
 
@@ -884,9 +905,11 @@ export default function OrderDetail({navigation, route}) {
                     },
                   ]
                 : styles.priceItemLabel2
-            }>{`${currencies?.primary_currency?.symbol}${Number(
-            cartData?.payable_amount,
-          ).toFixed(2)}`}</Text>
+            }>{`${
+            currencies?.primary_currency?.symbol
+          }${currencyNumberFormatter(
+            Number(cartData?.payable_amount).toFixed(2),
+          )}`}</Text>
         </View>
       </View>
     );
@@ -1131,9 +1154,11 @@ export default function OrderDetail({navigation, route}) {
           {!!cartData?.total_amount && cartData?.total_amount !== '0.00' && (
             <LeftRightText
               leftText={strings.SUBTOTAL}
-              rightText={`${currencies?.primary_currency?.symbol}${Number(
-                cartData?.total_amount,
-              ).toFixed(2)}`}
+              rightText={`${
+                currencies?.primary_currency?.symbol
+              }${currencyNumberFormatter(
+                Number(cartData?.total_amount).toFixed(2),
+              )}`}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
             />
@@ -1142,9 +1167,11 @@ export default function OrderDetail({navigation, route}) {
             cartData?.total_delivery_fee !== '0.00' && (
               <LeftRightText
                 leftText={strings.DELIVERY_FEE}
-                rightText={`${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.total_delivery_fee,
-                ).toFixed(2)}`}
+                rightText={`${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(cartData?.total_delivery_fee).toFixed(2),
+                )}`}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}
               />
@@ -1153,9 +1180,11 @@ export default function OrderDetail({navigation, route}) {
             cartData?.wallet_amount_used !== '0.00' && (
               <LeftRightText
                 leftText={strings.WALLET}
-                rightText={`${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.wallet_amount_used,
-                ).toFixed(2)}`}
+                rightText={`${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(cartData?.wallet_amount_used).toFixed(2),
+                )}`}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}
               />
@@ -1164,9 +1193,11 @@ export default function OrderDetail({navigation, route}) {
             cartData?.loyalty_amount_saved !== '0.00' && (
               <LeftRightText
                 leftText={strings.LOYALTY}
-                rightText={`${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.loyalty_amount_saved,
-                ).toFixed(2)}`}
+                rightText={`${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(cartData?.loyalty_amount_saved).toFixed(2),
+                )}`}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}
               />
@@ -1174,9 +1205,11 @@ export default function OrderDetail({navigation, route}) {
           {!!cartData?.tip_amount && cartData?.tip_amount !== '0.00' && (
             <LeftRightText
               leftText={strings.TIP_AMOUNT}
-              rightText={`${currencies?.primary_currency?.symbol}${Number(
-                cartData?.tip_amount,
-              ).toFixed(2)}`}
+              rightText={`${
+                currencies?.primary_currency?.symbol
+              }${currencyNumberFormatter(
+                Number(cartData?.tip_amount).toFixed(2),
+              )}`}
               isDarkMode={isDarkMode}
               MyDarkTheme={MyDarkTheme}
             />
@@ -1185,9 +1218,11 @@ export default function OrderDetail({navigation, route}) {
             cartData?.total_discount !== '0.00' && (
               <LeftRightText
                 leftText={strings.DISCOUNT}
-                rightText={`-${currencies?.primary_currency?.symbol}${Number(
-                  cartData?.total_discount,
-                ).toFixed(2)}`}
+                rightText={`-${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(cartData?.total_discount).toFixed(2),
+                )}`}
                 isDarkMode={isDarkMode}
                 MyDarkTheme={MyDarkTheme}
               />
@@ -1202,9 +1237,11 @@ export default function OrderDetail({navigation, route}) {
           />
           <LeftRightText
             leftText={strings.TOTAL}
-            rightText={`${currencies?.primary_currency?.symbol}${Number(
-              cartData?.payable_amount,
-            ).toFixed(2)}`}
+            rightText={`${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(cartData?.payable_amount).toFixed(2),
+            )}`}
             isDarkMode={isDarkMode}
             MyDarkTheme={MyDarkTheme}
             leftTextStyle={{
@@ -1285,7 +1322,9 @@ export default function OrderDetail({navigation, route}) {
                                         : colors.black,
                                   }
                             }>
-                            {`${currencies?.primary_currency?.symbol} ${j.value}`}
+                            {`${
+                              currencies?.primary_currency?.symbol
+                            } ${currencyNumberFormatter(j.value)}`}
                           </Text>
                           <Text
                             style={{

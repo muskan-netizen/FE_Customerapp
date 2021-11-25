@@ -1,4 +1,3 @@
-import moment from 'moment';
 import React from 'react';
 import {
   Image,
@@ -27,6 +26,7 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
+import {currencyNumberFormatter} from '../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -47,7 +47,6 @@ export default function OrderCardVendorComponent({
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  console.log(data, 'datata');
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
@@ -162,9 +161,9 @@ export default function OrderCardVendorComponent({
                   isDarkMode
                     ? [styles.orderLableStyle, {color: MyDarkTheme.colors.text}]
                     : styles.orderLableStyle
-                }>{`${moment(data?.date_time).format('DD MMM,YYYY')} ${moment(
-                data?.date_time,
-              ).format('LT')} `}</Text>
+                }>
+                {data?.date_time}
+              </Text>
             </View>
           </View>
         </View>
@@ -178,7 +177,7 @@ export default function OrderCardVendorComponent({
                 : [styles.userName]
             }>{`${currencies?.primary_currency?.symbol}${
             // Number(i?.pvariant?.multiplier) *
-            Number(data?.payable_amount).toFixed(2)
+            currencyNumberFormatter(Number(data?.payable_amount).toFixed(2))
           }`}</Text>
         </View>
       </View>

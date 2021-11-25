@@ -21,6 +21,7 @@ import {getImageUrl} from '../../../utils/helperFunctions';
 import stylesFun from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
+import {currencyNumberFormatter} from '../../../utils/commonFunction';
 
 export default function TaxiOrderDetailView({
   isLoading = false,
@@ -243,9 +244,11 @@ export default function TaxiOrderDetailView({
                         : styles.distanceDurationDeliveryValue
                     }>
                     {productDetail && productDetail?.payable_amount
-                      ? `${currencies?.primary_currency?.symbol}${Number(
-                          productDetail?.payable_amount,
-                        ).toFixed(2)}`
+                      ? `${
+                          currencies?.primary_currency?.symbol
+                        }${currencyNumberFormatter(
+                          Number(productDetail?.payable_amount).toFixed(2),
+                        )}`
                       : '--'}
                   </Text>
                   {/* <TouchableOpacity

@@ -1,6 +1,7 @@
 import {useFocusEffect} from '@react-navigation/native';
+import {cloneDeep} from 'lodash';
+import LottieView from 'lottie-react-native';
 import moment from 'moment';
-import {cloneDeep, forEach} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {
   Alert,
@@ -8,25 +9,30 @@ import {
   I18nManager,
   Image,
   RefreshControl,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
-  ScrollView,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import DatePicker from 'react-native-date-picker';
 import DeviceInfo from 'react-native-device-info';
+import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import {TextInput} from 'react-native-gesture-handler';
+import * as RNLocalize from 'react-native-localize';
+import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
 import AddressModal from '../../Components/AddressModal';
 import ButtonComponent from '../../Components/ButtonComponent';
 import ChooseAddressModal from '../../Components/ChooseAddressModal';
 import ConfirmationModal from '../../Components/ConfirmationModal';
+import GradientButton from '../../Components/GradientButton';
 import HeaderWithFilters from '../../Components/HeaderWithFilters';
 import {
   loaderOne,
   loaderSix,
 } from '../../Components/Loaders/AnimatedLoaderFiles';
-import TransparentButtonWithTxtAndIcon from '../../Components/TransparentButtonWithTxtAndIcon';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -37,28 +43,19 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
-  textScale,
   width,
 } from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
+import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {
-  getParameterByName,
   getColorCodeWithOpactiyNumber,
   getImageUrl,
+  getParameterByName,
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
-import ListEmptyCart from './ListEmptyCart';
+import {getItem, removeItem, setItem} from '../../utils/utils';
 import stylesFun from './styles';
-import Modal from 'react-native-modal';
-import GradientButton from '../../Components/GradientButton';
-import DatePicker from 'react-native-date-picker';
-import DropDownPicker from 'react-native-dropdown-picker';
-import {getItem, removeItem, setItem, setUserData} from '../../utils/utils';
-import commonStyles from '../../styles/commonStyles';
-import * as RNLocalize from 'react-native-localize';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme, MyDefaultTheme} from '../../styles/theme';
-import LottieView from 'lottie-react-native';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -917,9 +914,11 @@ export default function Cart({navigation, route}) {
                                       }
                                       numberOfLines={1}>{` ${
                                       currencies?.primary_currency?.symbol
-                                    }${(
-                                      Number(j.price) * Number(j.multiplier)
-                                    ).toFixed(2)} `}</Text>
+                                    }${currencyNumberFormatter(
+                                      (
+                                        Number(j.price) * Number(j.multiplier)
+                                      ).toFixed(2),
+                                    )} `}</Text>
                                   </View>
                                 );
                               })
@@ -935,7 +934,9 @@ export default function Cart({navigation, route}) {
                           <Text style={styles.cartItemPrice}>
                             {`${currencies?.primary_currency?.symbol}${
                               // Number(i?.pvariant?.multiplier) *
-                              Number(i?.variants?.quantity_price).toFixed(2)
+                              currencyNumberFormatter(
+                                Number(i?.variants?.quantity_price).toFixed(2),
+                              )
                             }`}
                           </Text>
                         </View>
@@ -1029,9 +1030,13 @@ export default function Cart({navigation, route}) {
                       },
                     ]
                   : styles.priceItemLabel
-              }>{`- ${currencies?.primary_currency?.symbol}${Number(
-              item?.discount_amount ? item?.discount_amount : 0,
-            ).toFixed(2)}`}</Text>
+              }>{`- ${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(item?.discount_amount ? item?.discount_amount : 0).toFixed(
+                2,
+              ),
+            )}`}</Text>
           </View>
         )}
         {!!item?.deliver_charge && (
@@ -1059,9 +1064,13 @@ export default function Cart({navigation, route}) {
                       },
                     ]
                   : styles.priceItemLabel
-              }>{`${currencies?.primary_currency?.symbol}${Number(
-              item?.deliver_charge ? item?.deliver_charge : 0,
-            ).toFixed(2)}`}</Text>
+              }>{`${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(item?.deliver_charge ? item?.deliver_charge : 0).toFixed(
+                2,
+              ),
+            )}`}</Text>
           </View>
         )}
         <View style={styles.itemPriceDiscountTaxView}>
@@ -1088,9 +1097,11 @@ export default function Cart({navigation, route}) {
                     },
                   ]
                 : styles.priceItemLabel2
-            }>{`${currencies?.primary_currency?.symbol}${Number(
-            item?.payable_amount ? item?.payable_amount : 0,
-          ).toFixed(2)}`}</Text>
+            }>{`${
+            currencies?.primary_currency?.symbol
+          }${currencyNumberFormatter(
+            Number(item?.payable_amount ? item?.payable_amount : 0).toFixed(2),
+          )}`}</Text>
         </View>
       </View>
     );
@@ -1164,9 +1175,11 @@ export default function Cart({navigation, route}) {
                 isDarkMode
                   ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                   : styles.priceItemLabel
-              }>{`${currencies?.primary_currency?.symbol}${Number(
-              cartData?.gross_paybale_amount,
-            ).toFixed(2)}`}</Text>
+              }>{`${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(cartData?.gross_paybale_amount).toFixed(2),
+            )}`}</Text>
           </View>
           {!!cartData?.wallet_amount && (
             <View style={styles.bottomTabLableValue}>
@@ -1183,9 +1196,13 @@ export default function Cart({navigation, route}) {
                   isDarkMode
                     ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                     : styles.priceItemLabel
-                }>{`${currencies?.primary_currency?.symbol}${Number(
-                cartData?.wallet_amount ? cartData?.wallet_amount : 0,
-              ).toFixed(2)}`}</Text>
+                }>{`${
+                currencies?.primary_currency?.symbol
+              }${currencyNumberFormatter(
+                Number(
+                  cartData?.wallet_amount ? cartData?.wallet_amount : 0,
+                ).toFixed(2),
+              )}`}</Text>
             </View>
           )}
           {!!cartData?.loyalty_amount && (
@@ -1203,9 +1220,13 @@ export default function Cart({navigation, route}) {
                   isDarkMode
                     ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                     : styles.priceItemLabel
-                }>{`-${currencies?.primary_currency?.symbol}${Number(
-                cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
-              ).toFixed(2)}`}</Text>
+                }>{`-${
+                currencies?.primary_currency?.symbol
+              }${currencyNumberFormatter(
+                Number(
+                  cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
+                ).toFixed(2),
+              )}`}</Text>
             </View>
           )}
 
@@ -1224,9 +1245,15 @@ export default function Cart({navigation, route}) {
                   isDarkMode
                     ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                     : styles.priceItemLabel
-                }>{`-${currencies?.primary_currency?.symbol}${Number(
-                cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
-              ).toFixed(2)}`}</Text>
+                }>{`-${
+                currencies?.primary_currency?.symbol
+              }${currencyNumberFormatter(
+                Number(
+                  cartData?.wallet_amount_used
+                    ? cartData?.wallet_amount_used
+                    : 0,
+                ).toFixed(2),
+              )}`}</Text>
             </View>
           )}
           {!!cartData?.total_subscription_discount && (
@@ -1244,9 +1271,11 @@ export default function Cart({navigation, route}) {
                   isDarkMode
                     ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                     : styles.priceItemLabel
-                }>{`-${currencies?.primary_currency?.symbol}${Number(
-                cartData?.total_subscription_discount,
-              ).toFixed(2)}`}</Text>
+                }>{`-${
+                currencies?.primary_currency?.symbol
+              }${currencyNumberFormatter(
+                Number(cartData?.total_subscription_discount).toFixed(2),
+              )}`}</Text>
             </View>
           )}
 
@@ -1308,7 +1337,9 @@ export default function Cart({navigation, route}) {
                                       : colors.black,
                                 }
                           }>
-                          {`${currencies?.primary_currency?.symbol} ${j.value}`}
+                          {`${
+                            currencies?.primary_currency?.symbol
+                          } ${currencyNumberFormatter(j.value)}`}
                         </Text>
                         <Text
                           style={{
@@ -1406,9 +1437,13 @@ export default function Cart({navigation, route}) {
                   isDarkMode
                     ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                     : styles.priceItemLabel
-                }>{`${currencies?.primary_currency?.symbol}${Number(
-                cartData?.total_tax ? cartData?.total_tax : 0,
-              ).toFixed(2)}`}</Text>
+                }>{`${
+                currencies?.primary_currency?.symbol
+              }${currencyNumberFormatter(
+                Number(cartData?.total_tax ? cartData?.total_tax : 0).toFixed(
+                  2,
+                ),
+              )}`}</Text>
             </View>
           )}
 
@@ -1426,12 +1461,16 @@ export default function Cart({navigation, route}) {
                 isDarkMode
                   ? [styles.priceItemLabel2, {color: MyDarkTheme.colors.text}]
                   : styles.priceItemLabel2
-              }>{`${currencies?.primary_currency?.symbol}${(
-              Number(cartData?.total_payable_amount) +
-              (selectedTipAmount != null && selectedTipAmount != ''
-                ? Number(selectedTipAmount)
-                : 0)
-            ).toFixed(2)}`}</Text>
+              }>{`${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              (
+                Number(cartData?.total_payable_amount) +
+                (selectedTipAmount != null && selectedTipAmount != ''
+                  ? Number(selectedTipAmount)
+                  : 0)
+              ).toFixed(2),
+            )}`}</Text>
           </View>
         </View>
 

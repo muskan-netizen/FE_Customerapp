@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import { Animated, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, {useState} from 'react';
+import {
+  Animated,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FastImage from 'react-native-fast-image';
 import {UIActivityIndicator} from 'react-native-indicators';
 import StarRating from 'react-native-star-rating';
-import { useSelector } from 'react-redux';
-import imagePath from '../constants/imagePath';
+import {useSelector} from 'react-redux';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStylesFunc, {hitSlopProp} from '../styles/commonStyles';
@@ -16,14 +22,12 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
+import {currencyNumberFormatter} from '../utils/commonFunction';
 import {
-  getColorCodeWithOpactiyNumber,
   getImageUrl,
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-import BlurImages from './BlurImages';
-import HtmlViewComp from './HtmlViewComp';
 
 export default function ProductCard3({
   data = {},
@@ -64,7 +68,8 @@ export default function ProductCard3({
   const url1 = data?.media[0]?.image?.path.image_fit;
   const url2 = data?.media[0]?.image?.path.image_path;
   const getImage = (quality) => getImageUrl(url1, url2, quality);
-  const getIconImage = (url1, url2, quality) => getImageUrl(url1, url2, quality);
+  const getIconImage = (url1, url2, quality) =>
+    getImageUrl(url1, url2, quality);
 
   const scaleInAnimated = new Animated.Value(0);
 
@@ -100,7 +105,6 @@ export default function ProductCard3({
           marginVertical: moderateScaleVertical(10),
           paddingHorizontal: 16,
         }}>
-
         <View
           style={{
             marginLeft: moderateScale(10),
@@ -120,11 +124,23 @@ export default function ProductCard3({
           >
             {/* Title View */}
             <View>
-              {
-              !!data?.tags &&  data?.tags.length > 0 && (
-                  <Image source={{ uri: getIconImage(data.tags[0].tag.icon.image_fit,data?.tags[0]?.tag.icon.image_path, '50/50') }} style={{ marginLeft: moderateScale(1), marginBottom: moderateScale(5), width: moderateScale(17), height: moderateScale(17) }} />
-                )
-              }
+              {data && data?.tags && data?.tags.length > 0 && (
+                <Image
+                  source={{
+                    uri: getIconImage(
+                      data.tags[0].tag.icon.image_fit,
+                      data?.tags[0]?.tag.icon.image_path,
+                      '50/50',
+                    ),
+                  }}
+                  style={{
+                    marginLeft: moderateScale(1),
+                    marginBottom: moderateScale(5),
+                    width: moderateScale(17),
+                    height: moderateScale(17),
+                  }}
+                />
+              )}
               <Text
                 // numberOfLines={1}
                 style={{
@@ -135,7 +151,7 @@ export default function ProductCard3({
                   fontFamily: fontFamily.regular,
                   fontSize: textScale(12),
                   width: width / 2.5,
-                  textTransform: 'capitalize'
+                  textTransform: 'capitalize',
                   // flex:1
                 }}>
                 {data?.translation[0]?.title}
@@ -192,21 +208,30 @@ export default function ProductCard3({
                   fontSize: textScale(12),
                   fontFamily: fontFamily.regular,
                 }}>
-                {`${currencies?.primary_currency?.symbol}${(
-                  Number(
-                    data?.variant[0]?.multiplier || data?.variant_multiplier,
-                  ) * Number(data?.variant[0]?.price)
-                ).toFixed(2)}`}
+                {`${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  (
+                    Number(
+                      data?.variant[0]?.multiplier || data?.variant_multiplier,
+                    ) * Number(data?.variant[0]?.price)
+                  ).toFixed(2),
+                )}`}
               </Text>
             </View>
-            <View style={{ width: width / 2 }}>
-              <Text style={{
-                fontSize: textScale(9),
-                fontFamily: fontFamily.regular,
-                lineHeight: moderateScale(14),
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyE,
-                textAlign: 'left',
-              }}>{data?.translation_description}</Text>
+            <View style={{width: width / 2}}>
+              <Text
+                style={{
+                  fontSize: textScale(9),
+                  fontFamily: fontFamily.regular,
+                  lineHeight: moderateScale(14),
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.textGreyE,
+                  textAlign: 'left',
+                }}>
+                {data?.translation_description}
+              </Text>
               {/* {!!htmlText && (
                 <HtmlViewComp
                   plainHtml={htmlText}
@@ -218,16 +243,22 @@ export default function ProductCard3({
             </View>
           </Animatable.View>
 
-          <View style={{
-            paddingBottom: (!!data?.add_on && data?.add_on.length !== 0) ||
-              (!!data?.variantSet && data?.variantSet.length !== 0) ? moderateScale(30) : moderateScale(15),
-            alignItems: 'center',
-            // marginRight: url1 ? 0 :  moderateScale(60)
-          }}>
-            {url1 &&
+          <View
+            style={{
+              paddingBottom:
+                (!!data?.add_on && data?.add_on.length !== 0) ||
+                (!!data?.variantSet && data?.variantSet.length !== 0)
+                  ? moderateScale(30)
+                  : moderateScale(15),
+              alignItems: 'center',
+              // marginRight: url1 ? 0 :  moderateScale(60)
+            }}>
+            {url1 && (
               <Animatable.View
                 key={selectedIndex}
-                animation={selectedIndex == index ? 'slideInLeft' : 'slideInRight'}
+                animation={
+                  selectedIndex == index ? 'slideInLeft' : 'slideInRight'
+                }
                 duration={100}>
                 <TouchableOpacity
                   disabled
@@ -248,15 +279,21 @@ export default function ProductCard3({
                       backgroundColor: isDarkMode
                         ? colors.whiteOpacity15
                         : colors.greyColor,
-                      borderRadius: moderateScale(7)
+                      borderRadius: moderateScale(7),
                     }}
-                    source={{ uri: getImage('800/400') }}
+                    source={{uri: getImage('800/400')}}
                   />
                 </TouchableOpacity>
               </Animatable.View>
-            }
+            )}
 
-            <View style={{ position: url1 ? 'absolute' : 'relative', bottom: 0, flex: 1, justifyContent: url1 ? 'flex-start' : 'center' }}>
+            <View
+              style={{
+                position: url1 ? 'absolute' : 'relative',
+                bottom: 0,
+                flex: 1,
+                justifyContent: url1 ? 'flex-start' : 'center',
+              }}>
               {!!data?.variant[0]?.quantity || (!!typeId && typeId == 8) ? (
                 <View
                   style={{
@@ -266,7 +303,7 @@ export default function ProductCard3({
                   }}>
                   {(!!data?.variant[0]?.check_if_in_cart_app &&
                     data?.variant[0]?.check_if_in_cart_app.length > 0) ||
-                    !!data?.qty ? (
+                  !!data?.qty ? (
                     <View
                       style={{
                         ...styles.addBtnStyle,
@@ -297,8 +334,8 @@ export default function ProductCard3({
                       </TouchableOpacity>
                       <View>
                         {selectedItemIndx === index &&
-                          selectedItemID == data?.id &&
-                          btnLoader ? (
+                        selectedItemID == data?.id &&
+                        btnLoader ? (
                           <UIActivityIndicator
                             size={moderateScale(18)}
                             color={themeColors.primary_color}
@@ -311,7 +348,8 @@ export default function ProductCard3({
                               color: themeColors.primary_color,
                             }}>
                             {data?.qty ||
-                              data?.variant[0]?.check_if_in_cart_app[0]?.quantity}
+                              data?.variant[0]?.check_if_in_cart_app[0]
+                                ?.quantity}
                           </Text>
                         )}
                       </View>
@@ -347,7 +385,9 @@ export default function ProductCard3({
                           />
                         ) : (
                           <View>
-                            <Text style={styles.addStyleText}>{strings.ADD}</Text>
+                            <Text style={styles.addStyleText}>
+                              {strings.ADD}
+                            </Text>
                           </View>
                         )}
 
@@ -356,7 +396,7 @@ export default function ProductCard3({
                     </>
                   )}
                   {(!!data?.add_on && data?.add_on.length !== 0) ||
-                    (!!data?.variantSet && data?.variantSet.length !== 0) ? (
+                  (!!data?.variantSet && data?.variantSet.length !== 0) ? (
                     <Text
                       style={{
                         ...styles.customTextStyle,

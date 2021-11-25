@@ -34,6 +34,9 @@ import {setItem} from '../../utils/utils';
 import stylesFunc from './styles';
 import DeviceInfo from 'react-native-device-info';
 import {API_BASE_URL} from '../../config/urls';
+import AsyncStorage from '@react-native-community/async-storage';
+import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
+import BackgroundService from 'react-native-background-actions';
 
 const ONE_SECOND_IN_MS = 80;
 const PATTERN = [
@@ -171,6 +174,21 @@ export default function Settings({route, navigation}) {
       showAlertMessageError(strings.SELECT);
       return;
     } else {
+      let btData = {};
+      AsyncStorage.getItem('BleDevice').then((res) => {
+        if (res !== null) {
+          btData = res;
+          BluetoothManager.disconnect(JSON.parse(res).boundAddress).then(
+            (s) => {},
+          );
+        }
+      });
+      // await BackgroundService.removeAllListeners();
+      // await BackgroundService.stop().then((res) => {});
+      // await AsyncStorage.removeItem('BleDevice');
+      await AsyncStorage.setItem('autoConnectEnabled', 'true');
+      await AsyncStorage.setItem('BleDevice2', btData);
+
       if (lang === 'ar') {
         I18nManager.forceRTL(true);
         setItem('language', lang);

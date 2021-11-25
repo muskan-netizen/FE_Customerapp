@@ -597,4 +597,7 @@ export default {
   GET_STARTED: 'Get started',
   OTHERS: 'Others',
   UNKNOWN: 'Unknown',
+  CONNECTION_ERROR: 'Connection Error',
+  INTERNET_CONNECTION_ERROR:
+    'Oops! Looks like your device is not connected to the Internet.',
 };

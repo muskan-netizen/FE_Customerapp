@@ -10,16 +10,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import HTMLView from 'react-native-htmlview';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Pagination} from 'react-native-snap-carousel';
+import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
-import Banner from '../../Components/Banner';
+import Banner2 from '../../Components/Banner2';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
+import HorizontalLine from '../../Components/HorizontalLine';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import ProductCard from '../../Components/ProductCard';
+import ProductsComp from '../../Components/ProductsComp';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -33,6 +36,8 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
+import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   showError,
@@ -41,13 +46,6 @@ import {
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
-import HorizontalLine from '../../Components/HorizontalLine';
-import StarRating from 'react-native-star-rating';
-import Banner2 from '../../Components/Banner2';
-import MarketCard3 from '../../Components/MarketCard3';
-import ProductsComp from '../../Components/ProductsComp';
 
 export default function ProductDetail({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -693,17 +691,20 @@ export default function ProductDetail({route, navigation}) {
                           <View style={{alignSelf: 'flex-end', padding: 8}}>
                             {!!productDetailData?.inwishlist ? (
                               <Image
-                                style={
-                                  {tintColor:isDarkMode ? MyDarkTheme.colors.text: themeColors.primary_color}
-                                   
-                                }
+                                style={{
+                                  tintColor: isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : themeColors.primary_color,
+                                }}
                                 source={imagePath.whiteFilledHeart}
                               />
                             ) : (
                               <Image
-                                style={
-                                  {tintColor:isDarkMode ? MyDarkTheme.colors.text: themeColors.primary_color}
-                                }
+                                style={{
+                                  tintColor: isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : themeColors.primary_color,
+                                }}
                                 source={imagePath.heart2}
                               />
                             )}
@@ -977,10 +978,12 @@ export default function ProductDetail({route, navigation}) {
                           onPress={addToCart}
                           btnText={`${strings.ADD}  ${
                             currencies?.primary_currency?.symbol
-                          }${(
-                            Number(productPriceData?.multiplier) *
-                            Number(productPriceData?.price)
-                          ).toFixed(2)}`}
+                          }${currencyNumberFormatter(
+                            (
+                              Number(productPriceData?.multiplier) *
+                              Number(productPriceData?.price)
+                            ).toFixed(2),
+                          )}`}
                           btnStyle={{
                             borderRadius: moderateScale(4),
                             height: moderateScale(38),

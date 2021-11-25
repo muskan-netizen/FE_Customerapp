@@ -1,8 +1,9 @@
 import * as React from 'react';
+
 import {showMessage} from 'react-native-flash-message';
 import Geocoder from 'react-native-geocoder';
 import Geolocation from 'react-native-geolocation-service';
-import {BackHandler, Alert, Animated} from 'react-native';
+import {BackHandler, Alert, Animated, Text} from 'react-native';
 import strings from './../constants/lang/index';
 import {callingCountries} from 'country-data';
 import navigationStrings from '../navigation/navigationStrings';
@@ -357,7 +358,6 @@ const getNearestLocation = (currentLocation, savedLocations) => {
     return newAddressArray;
   });
 
-
   const minDistance = Math.min.apply(
     null,
     points.map(function (item) {
@@ -372,6 +372,22 @@ const getNearestLocation = (currentLocation, savedLocations) => {
 const checkEvenOdd = (num) => {
   return num % 5 === 0 ? num : num - (num % 5);
 };
+
+// export function numberFormat(formatableObj = {}) {
+//   return (
+//     <NumberFormat
+//       value={formatableObj?.number}
+//       displayType={'text'}
+//       thousandSeparator={true}
+//       prefix={formatableObj?.currencySign}
+//       renderText={(formattedValue) => (
+//         <Text numberOfLines={1} style={formatableObj?.textStyle}>
+//           {formattedValue}
+//         </Text>
+//       )}
+//     />
+//   );
+// }
 
 export {
   showError,
