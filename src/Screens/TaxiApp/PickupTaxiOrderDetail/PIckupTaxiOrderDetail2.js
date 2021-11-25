@@ -8,7 +8,6 @@ import {
   Image,
   ScrollView,
   BackHandler,
-  Animated
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import HeaderWithFilters from '../../../Components/HeaderWithFilters';
@@ -45,12 +44,10 @@ import FastImage from 'react-native-fast-image';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale,
 } from '../../../styles/responsiveSize';
 import StarRating from 'react-native-star-rating';
 import { mapStyleGrey } from '../../../utils/constants/MapStyle';
 import StepIndicators from '../../../Components/StepIndicator';
-import AnimatedHeader from '../../../Components/AnimatedHeader';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -90,7 +87,6 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       strings.OUT_FOR_DELIVERY,
       strings.DELIVERED,
     ],
-    orderFullDetail: null
   });
   const {
     isLoading,
@@ -112,8 +108,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     isVisible,
     driverRating,
     labels,
-    orderStatus,
-    orderFullDetail
+    orderStatus
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -126,7 +121,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   const { profile } = appData;
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ fontFamily, isDarkMode });
+  const styles = stylesFunc({ fontFamily });
 
   const moveToNewScreen =
     (screenName, data = {}) =>
@@ -204,7 +199,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           isVisible: true,
         });
       }
-      // showSuccess(driverStatus);
+      showSuccess(driverStatus);
     }
   }, [driverStatus]);
 
@@ -241,7 +236,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           productInfo: res?.data?.order_details?.products,
           getDispatchId: res?.data?.order?.id,
           driverRating: res?.data?.avgrating,
-          orderStatus: res?.data?.order?.status,
+          orderStatus: res?.data?.order?.status
         });
       })
       .catch(errorMethod);
@@ -267,7 +262,6 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         updateState({
           isLoading: false,
           tasks: res?.data?.tasks,
-          orderFullDetail: res?.data,
           region: {
             latitude: res?.data?.tasks[0]?.latitude
               ? Number(res?.data?.tasks[0].latitude)
@@ -492,150 +486,142 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     );
   };
 
-  const offset = useRef(new Animated.Value(0)).current;
-
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
-      <View style={{ margin: moderateScale(16) }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: moderateScaleVertical(16) }}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            activeOpacity={0.8}
-          >
-            <Image source={imagePath.backArrowCourier} />
-          </TouchableOpacity>
-          <Text style={{
-            fontSize: moderateScale(16),
-            fontFamily: fontFamily.medium,
-            textAlign: 'left',
-            marginLeft: moderateScale(8)
-          }}>Invoice</Text>
-        </View>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-        >
-          {!isLoading && (<MapView
-            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-            style={{
-              height: 200,
-              width: '100%'
-            }}
-            region={region}
-            // initialRegion={region}
-            ref={mapRef}
-            // cacheEnabled={true}
-            customMapStyle={mapStyleGrey}
-            // showsMyLocationButton={true}
-            userLocationFastestInterval={10000}
-            onRegionChangeComplete={_onRegionChange}>
-            {/* pick and drop all locations */}
-            {tasks.map((coordinate, index) => (
-              <MapView.Marker
-                key={`coordinate_${index}`}
-                image={imagePath.radioLocation}
-                coordinate={{
-                  latitude: Number(coordinate?.latitude),
-                  longitude: Number(coordinate?.longitude),
-                }}>
-                <View
-                  style={{
-                    ...styles.plainView,
-                    backgroundColor: themeColors.primary_color
+      <View style={styles.container}>
+        {!isLoading && (
+          <>
+            <MapView
+              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+              style={styles.map}
+              region={region}
+              // initialRegion={region}
+              ref={mapRef}
+              // cacheEnabled={true}
+              customMapStyle={mapStyleGrey}
+              // showsMyLocationButton={true}
+              userLocationFastestInterval={10000}
+              onRegionChangeComplete={_onRegionChange}>
+              {/* pick and drop all locations */}
+              {tasks.map((coordinate, index) => (
+                <MapView.Marker
+                  key={`coordinate_${index}`}
+                  image={imagePath.radioLocation}
+                  coordinate={{
+                    latitude: Number(coordinate?.latitude),
+                    longitude: Number(coordinate?.longitude),
                   }}>
-                  <Text style={styles.pickupDropOff}>
-                    {index === 0 ? 'Pickup' : 'Drop'}
-                  </Text>
-                </View>
-              </MapView.Marker>
-            ))}
+                  <View
+                    style={{
+                      ...styles.plainView,
+                      backgroundColor: themeColors.primary_color
+                    }}>
+                    <Text style={styles.pickupDropOff}>
+                      {index === 0 ? 'Pickup' : 'Drop'}
+                    </Text>
+                  </View>
+                </MapView.Marker>
+              ))}
 
-            {/* driver location */}
-            {agent_location && orderStatus != 'completed' && (
-              <MapView.Marker
-                key={`coordinate_${agent_location?.lat}`}
-                //   image={imagePath.driver}
-                coordinate={{
-                  latitude: Number(agent_location?.lat),
-                  longitude: Number(
-                    agent_location?.long || agent_location?.lng,
-                  ),
-                }}>
-                <Image
-                  style={{ height: 35, width: 35 }}
-                  source={imagePath.icScooter}
-                />
-              </MapView.Marker>
-            )}
+              {/* driver location */}
+              {agent_location && orderStatus != 'completed' && (
+                <MapView.Marker
+                  key={`coordinate_${agent_location?.lat}`}
+                  //   image={imagePath.driver}
+                  coordinate={{
+                    latitude: Number(agent_location?.lat),
+                    longitude: Number(
+                      agent_location?.long || agent_location?.lng,
+                    ),
+                  }}>
+                  <Image
+                    style={{ height: 35, width: 35 }}
+                    source={imagePath.icScooter}
+                  />
+                </MapView.Marker>
+              )}
 
-            {/* Directions and paths */}
-            <MapViewDirections
-              origin={tasks[0]}
-              waypoints={tasks.length > 2 ? tasks.slice(1, -1) : []}
-              destination={tasks[tasks.length - 1]}
-              apikey={profile?.preferences?.map_key}
-              strokeWidth={5}
-              strokeColor={themeColors.primary_color}
-              optimizeWaypoints={true}
-              onStart={(params) => { }}
-              precision={'high'}
-              timePrecision={'now'}
-              mode={'DRIVING'}
-              // maxZoomLevel={20}
-              onReady={(result) => {
-                updateState({
-                  totalDistance: result.distance.toFixed(2),
-                  totalDuration: result.duration.toFixed(2),
-                });
-                mapRef.current.fitToCoordinates(result.coordinates, {
-                  edgePadding: {
-                    right: width / 20,
-                    bottom: height / 20,
-                    left: width / 20,
-                    top: height / 60,
-                  },
-                });
-              }}
-              onError={(errorMessage) => {
-                //
-              }}
-            />
-          </MapView>)}
+              {/* Directions and paths */}
+              <MapViewDirections
+                origin={tasks[0]}
+                waypoints={tasks.length > 2 ? tasks.slice(1, -1) : []}
+                destination={tasks[tasks.length - 1]}
+                apikey={profile?.preferences?.map_key}
+                strokeWidth={5}
+                strokeColor={themeColors.primary_color}
+                optimizeWaypoints={true}
+                onStart={(params) => { }}
+                precision={'high'}
+                timePrecision={'now'}
+                mode={'DRIVING'}
+                // maxZoomLevel={20}
+                onReady={(result) => {
+                  updateState({
+                    totalDistance: result.distance.toFixed(2),
+                    totalDuration: result.duration.toFixed(2),
+                  });
+                  mapRef.current.fitToCoordinates(result.coordinates, {
+                    edgePadding: {
+                      right: width / 20,
+                      bottom: height / 20,
+                      left: width / 20,
+                      top: height / 20,
+                    },
+                  });
+                }}
+                onError={(errorMessage) => {
+                  //
+                }}
+              />
+            </MapView>
 
-          {!!orderFullDetail && <View>
             <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginTop: moderateScaleVertical(16),
+              ...styles.topView,
+              // width: '100%',
+              // marginBottom: 36
             }}>
-              <View style={{ flex: 0.5 }}>
-                <Text style={styles.datePriceText}>July 28  ·  01:52 PM</Text>
-                <Text style={styles.statusText}>id:9888</Text>
-              </View>
-              <View style={{ flex: 0.5, alignItems: 'flex-end' }}>
-                <Text style={styles.datePriceText}> {currencies?.primary_currency?.symbol} {orderFullDetail.order_details?.payable_amount}</Text>
-                <Text style={{
-                  ...styles.statusText,
-                  color: themeColors.primary_color
-                }}>Completed</Text>
-              </View>
-            </View>
 
-            {orderFullDetail?.tasks.map((val, i) => {
-              return (
-                <View
+              {/* <StepIndicators
+                labels={labels}
+                currentPosition={'Accepted'}
+                themeColor={themeColors}
+              /> */}
+              <TouchableOpacity
+                style={[
+                  styles.backButtonView,
+                  {
+                    backgroundColor: isDarkMode
+                      ? MyDarkTheme.colors.lightDark
+                      : colors.white,
+                  },
+                ]}
+                onPress={
+                  paramData?.fromCab
+                    ? () =>
+                      navigation.navigate(navigationStrings.TAXIHOMESCREEN)
+                    : paramData?.pickup_taxi
+                      ? () => navigation.navigate(navigationStrings.HOME)
+                      : () => navigation.goBack()
+                  // () => navigation.navigate(navigationStrings.TAXIHOMESCREEN)
+                }>
+                <Image
                   style={{
-                    borderBottomWidth: 0.5,
-                    borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.lightGreyBg
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
                   }}
+                  source={imagePath.backArrowCourier}
                 />
-              )
-            })}
-          </View>}
-        </ScrollView>
+              </TouchableOpacity>
+            </View>
+            {/* {_selectOrderDetailView()} */}
+            {_selectTexiOrderDetailView()}
+          </>
+        )}
       </View>
       <BottomViewModal
         show={isVisible}

@@ -9,7 +9,7 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 
-export default ({ fontFamily }) => {
+export default ({ fontFamily,isDarkMode }) => {
   const commonStyles = commonStylesFunc({ fontFamily });
   const styles = StyleSheet.create({
     scrollviewHorizontal: {
@@ -377,6 +377,21 @@ export default ({ fontFamily }) => {
       color: colors.blackC,
       fontFamily: fontFamily.regular,
     },
+    datePriceText: {
+      fontSize:textScale(14),
+      fontFamily:fontFamily.medium,
+      color:  isDarkMode
+      ? MyDarkTheme.colors.text
+      : colors.black,
+    },
+    statusText: {
+      fontSize:textScale(12),
+      fontFamily:fontFamily.regular,
+      color:  isDarkMode
+      ? MyDarkTheme.colors.text
+      : colors.blackOpacity40,
+      marginTop:moderateScaleVertical(4)
+    }
   });
   return styles;
 };
