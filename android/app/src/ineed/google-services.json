@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "957766317349",
+    "project_id": "ineed-1b6d8",
+    "storage_bucket": "ineed-1b6d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957766317349:android:8d5357ac0851539c4616cc",
+        "android_client_info": {
+          "package_name": "com.customer.ineed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "957766317349-28pigm45gfc1bttnvcck8bucip8lkn6d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.ineed",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "957766317349-kmt6n369qp9lrpnnsifgjfno1d2v7rad.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.ineed",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "957766317349-vi2eq48tndeecle60hshnqusvkqhj7st.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.ineed",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "957766317349-1htnm3kruqjn2b1g7i4n4hl46lvurjfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_5qGSJhldHDUgof11cintg6bcbWGQ-jY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "957766317349-1htnm3kruqjn2b1g7i4n4hl46lvurjfv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "957766317349-43qf32sur8jlu9ps2lknqn8ev3kg85q7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.customer.ineed"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -68,6 +68,7 @@ export default function Home({route, navigation}) {
     pageActive: 1,
     currentLocation: '',
     saveAllUserAddress,
+    isLoadingB: false,
   });
 
   const {
@@ -78,6 +79,7 @@ export default function Home({route, navigation}) {
     pageActive,
     currentLocation,
     saveAllUserAddress,
+    isLoadingB,
   } = state;
 
   const {profile} = appData;
@@ -236,10 +238,6 @@ export default function Home({route, navigation}) {
           },
         )
         .then((res) => {
-          console.log(res, 'resresres');
-          updateState({
-            isLoadingB: false,
-          });
           if (res.data) {
             actions.saveAllUserAddress(res.data);
             updateState({saveAllUserAddress: res?.data});
@@ -318,7 +316,7 @@ export default function Home({route, navigation}) {
                 }
               }
               setTimeout(() => {
-                updateState({isLoading: false});
+                updateState({isLoading: false, isLoadingB: false});
               }, 1000);
             })
             .catch(errorMethod)
@@ -330,11 +328,11 @@ export default function Home({route, navigation}) {
   const errorMethod = (error) => {
     updateState({
       isLoading: false,
-      isLoadingB: false,
       isRefreshing: false,
       acceptLoader: false,
       rejectLoader: false,
       selectedOrder: null,
+      isLoadingB: false,
     });
     showError(error?.message || error?.error);
   };
@@ -602,6 +600,10 @@ export default function Home({route, navigation}) {
     }
   };
 
+  const updateLoader = () => {
+    updateState({isLoadingB: true});
+  };
+
   const renderHomeScreen = () => {
     const case_ = 5;
     switch (appStyle?.homePageLayout) {
@@ -651,6 +653,8 @@ export default function Home({route, navigation}) {
               toggleData={appData}
               isLoading={isLoading}
               currentLocation={currentLocation}
+              isLoadingB={isLoadingB}
+              updateLoader={updateLoader}
             />
 
             <DashBoardFive
