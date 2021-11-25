@@ -2111,45 +2111,47 @@ export default function Products({route, navigation}) {
             marginBottom: moderateScale(15),
           }}
           contentContainerStyle={{alignItems: 'center'}}>
-          {ProductTags.map((el, index) => {
-            return (
-              <View key={index} style={{flexDirection: 'row'}}>
-                <ToggleSwitch
-                  isOn={el.isSelected}
-                  onColor={colors.green}
-                  offColor={
-                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
-                  }
-                  size="small"
-                  onToggle={() => {
-                    const updatedArr = ProductTags.map((el, idx) => {
-                      console.log(el);
-                      if (idx === index) {
-                        let newObj = el;
-                        newObj.isSelected = !newObj.isSelected;
-                        return newObj;
-                      } else {
-                        return el;
-                      }
-                    });
-                    updateState({ProductTags: updatedArr});
-                  }}
-                />
-                <Text
-                  style={{
-                    fontSize: textScale(11),
-                    fontFamily: fontFamily.regular,
-                    marginLeft: moderateScale(7),
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGrey,
-                  }}>
-                  {el.translations[0].name}
-                </Text>
-                <View style={{width: moderateScale(20)}} />
-              </View>
-            );
-          })}
+          {ProductTags &&
+            ProductTags.map((el, index) => {
+              console.log(el, 'elelelelelelel');
+              return (
+                <View key={index} style={{flexDirection: 'row'}}>
+                  <ToggleSwitch
+                    isOn={el.isSelected}
+                    onColor={colors.green}
+                    offColor={
+                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                    }
+                    size="small"
+                    onToggle={() => {
+                      const updatedArr = ProductTags.map((el, idx) => {
+                        console.log(el);
+                        if (idx === index) {
+                          let newObj = el;
+                          newObj.isSelected = !newObj.isSelected;
+                          return newObj;
+                        } else {
+                          return el;
+                        }
+                      });
+                      updateState({ProductTags: updatedArr});
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: textScale(11),
+                      fontFamily: fontFamily.regular,
+                      marginLeft: moderateScale(7),
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGrey,
+                    }}>
+                    {!!el?.translations?.length>0 ? el.translations[0].name : ''}
+                  </Text>
+                  <View style={{width: moderateScale(20)}} />
+                </View>
+              );
+            })}
         </ScrollView>
         <SearchBar
           containerStyle={{

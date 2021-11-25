@@ -707,8 +707,8 @@ export default function VariantAddons({
           onClose();
         })
         .catch((error) => errorMethodSecond(error, addonSet));
+      return;
     }
-    console.log(data, 'data for cart');
     updateState({btnLoader: true});
     actions
       .addProductsToCart(data, {
