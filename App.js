@@ -27,8 +27,25 @@ import {
 } from './src/utils/notificationService';
 import {getItem, getUserData, setItem} from './src/utils/utils';
 import PushNotification from 'react-native-push-notification';
+import PrinterScreen from './src/Screens/PrinterConnection/PrinterScreen';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const App = () => {
+  const ConnectBTFunction = async () => {
+    await AsyncStorage.removeItem('autoConnectEnabled');
+
+    const temp = new PrinterScreen();
+    AsyncStorage.getItem('BleDevice2').then((res) => {
+      console.log('check bt data >>> ', res);
+      const tt = JSON.parse(res);
+      temp.connectBTFunc({
+        address: tt.boundAddress,
+        name: tt.name,
+      });
+    });
+    AsyncStorage.removeItem('BleDevice2');
+  };
+
   const [internetConnection, setInternet] = useState(true);
   // const appMainData = useSelector((state) => state?.home?.appMainData);
   const appMainData = store.getState().home;
@@ -83,6 +100,13 @@ const App = () => {
     setTimeout(() => {
       SplashScreen.hide();
     }, 3000);
+
+    AsyncStorage.getItem('autoConnectEnabled').then((res) => {
+      if (res !== null) {
+        console.log('hit connect funcions >>>>');
+        ConnectBTFunction();
+      }
+    });
   }, []);
 
   const notificationConfig = () => {

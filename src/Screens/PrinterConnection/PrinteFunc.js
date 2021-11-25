@@ -338,7 +338,7 @@ export const printReciept = async (data) => {
               BluetoothManager.disconnect(JSON.parse(res).boundAddress).then(
                 async (s) => {
                   AsyncStorage.removeItem('BleDevice');
-                  await BackgroundService.stop();
+                  BackgroundService.stop();
                 },
               );
             }
