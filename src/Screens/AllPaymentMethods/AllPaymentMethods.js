@@ -1,5 +1,4 @@
 import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
-import RazorpayCheckout from 'react-native-razorpay';
 
 import React, {useEffect, useState} from 'react';
 import {
@@ -192,36 +191,6 @@ export default function AllPaymentMethods({navigation, route}) {
     }
   };
 
-  const _renderRazor = () => {
-    var options = {
-      description: 'Credits towards consultation',
-      image: 'https://i.imgur.com/3g7nmJC.png',
-      currency: 'INR',
-      key: 'rzp_test_wJKoMvNF62XWpP', // Your api key
-      amount: '5000',
-      name: 'foo',
-      prefill: {
-        email: 'void@razorpay.com',
-        contact: '9191919191',
-        name: 'Razorpay Software',
-      },
-      theme: {color: '#F37254'},
-    };
-    try {
-      RazorpayCheckout.open(options)
-        .then((data) => {
-          // handle success
-          console.log(`Success for razor: `, data);
-        })
-        .catch((error) => {
-          // handle failure
-          console.log(`Error  for razor: `, error);
-        });
-    } catch (error) {
-      console.log('catch block ', error);
-    }
-  };
-
   const _renderItemPayments = ({item, index}) => {
     return (
       <>
@@ -282,11 +251,11 @@ export default function AllPaymentMethods({navigation, route}) {
             />
           </View>
         )}
-        {selectedPaymentMethod &&
+        {/* {selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.off_site == 0 &&
           selectedPaymentMethod?.id === 10 &&
-          _renderRazor()}
+          _renderRazor()} */}
       </>
     );
   };

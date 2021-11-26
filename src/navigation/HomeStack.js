@@ -214,7 +214,7 @@ export default function () {
             ? Cart3
             : Cart
         }
-        options={{headerShown: false}}
+        options={{headerShown: false, gestureEnabled: true}}
       />
     </Stack.Navigator>
   );

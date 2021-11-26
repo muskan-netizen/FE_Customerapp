@@ -27,6 +27,7 @@ const GradientCartView = ({
   disabled = false,
   onMenuTap,
   ifCartShow,
+  isMenuBtnShow,
 }) => {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -124,15 +125,17 @@ const GradientCartView = ({
 
   return (
     <View>
-      <Animatable.View
-        duration={400}
-        animation={ifCartShow ? menuBtnAnimation : menuBtnAnimationReverse}>
-        <BrowseMenuButton
-          fontFamily={fontFamily}
-          onMenuTap={onMenuTap}
-          // containerStyle={{ marginBottom: moderateScale(-58) }}
-        />
-      </Animatable.View>
+      {isMenuBtnShow ? (
+        <Animatable.View
+          duration={400}
+          animation={ifCartShow ? menuBtnAnimation : menuBtnAnimationReverse}>
+          <BrowseMenuButton
+            fontFamily={fontFamily}
+            onMenuTap={onMenuTap}
+            // containerStyle={{ marginBottom: moderateScale(-58) }}
+          />
+        </Animatable.View>
+      ) : null}
 
       {ifCartShow && (
         <Animatable.View

@@ -277,10 +277,12 @@ export default function Products({ route, navigation }) {
       updateState({ pageNo: 1 });
       getAllListItems();
       // getAllProductTags();
-      fetchOffers();
+      if (productListId?.vendor) {
+        fetchOffers();
+      }
       if (isLoadingC) {
         getAllProducts(true);
-        fetchOffers();
+        // fetchOffers();
       }
     });
     return unsubscribe;
@@ -536,7 +538,7 @@ export default function Products({ route, navigation }) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendor = () => {
-    console.log('api hit getAllProductsByVendor');
+    console.log('api hit getAllProductsByVendor', productListId);
     actions
       .getProductByVendorId(
         `/${productListId?.id}?limit=${limit}&page=${pageNo}`,
@@ -556,7 +558,7 @@ export default function Products({ route, navigation }) {
           let filterArray = res?.data?.categories?.map((val) => {
             let newKey = {
               ...val,
-              ['data']: val.products,
+              ['data']: val?.products && val.products,
               title: val?.category && val.category.translation[0].name,
               totalProduct: totalProduct + val.products.length,
             };
@@ -574,21 +576,26 @@ export default function Products({ route, navigation }) {
           });
           fetchTags(filterArray);
         } else {
-          updateState({
-            isLoading: false,
-            isRefreshing: false,
-            categoryInfo: res?.data?.vendor,
-            filterData: res?.data?.filterData,
-            productListData: res?.data?.vendor?.is_show_products_with_category
-              ? res?.data?.categories[0]?.products
-              : pageNo == 1
+          console.log('get product list by vendor id >>>> ', res);
+          if (res?.data) {
+            updateState({
+              isLoading: false,
+              isRefreshing: false,
+              categoryInfo: res?.data?.vendor,
+              filterData: res?.data?.filterData,
+              productListData: res?.data?.vendor?.is_show_products_with_category
+                ? res?.data?.categories[0]?.products
+                : pageNo == 1
                 ? res.data.products.data
                 : [...productListData, ...res.data.products.data],
-            vendorCategories: res?.data?.categories,
-            // vendorCategoryItms: res?.data?.categories[0]?.products,
-          });
+              vendorCategories: res?.data?.categories,
+              // vendorCategoryItms: res?.data?.categories[0]?.products,
+            });
+          }
         }
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        if (res?.data) {
+          updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
+        }
       })
       .catch(errorMethod);
   };
@@ -1307,7 +1314,10 @@ export default function Products({ route, navigation }) {
   useEffect(() => {
     if (isLoadingC) {
       getAllProducts(true);
-      fetchOffers();
+      if (productListId?.vendor) {
+        fetchOffers();
+      }
+
       // getAllProductTags();
     }
   }, [isLoadingC]);
@@ -1390,7 +1400,7 @@ export default function Products({ route, navigation }) {
   };
 
   const fetchOffers = () => {
-    // console.log(productListId?.id)
+    console.log('offerlist api', productListId);
     // return;
     let data = {};
     // data['vendor_id'] = 2;
@@ -1440,6 +1450,7 @@ export default function Products({ route, navigation }) {
           />
           {cloneSectionList.map((el, index) => {
             const idx = index + 1;
+            const temp = el.data.length + idx * 2;
             return (
               <TouchableOpacity
                 key={index}
@@ -1448,8 +1459,11 @@ export default function Products({ route, navigation }) {
                   updateState({MenuModalVisible: !MenuModalVisible});
                   sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
                     {
-                      x: (height / 7.5) * idx * idx,
-                      y: (height / 7.5) * idx * idx,
+                      // x: (height / 7.5) * idx * idx,
+                      // y: (height / 7.5) * idx * idx,
+
+                      x: (height / 7.5) * temp * idx,
+                      y: (height / 7.5) * temp * idx,
                       animated: true,
                     },
                   );
@@ -1581,7 +1595,7 @@ export default function Products({ route, navigation }) {
                     <TouchableOpacity
                       onPress={() => {
                         Clipboard.setString(`${el.name ? el.name : ''}`);
-                        Toast.show(`Copied`);
+                        Toast.show(`Copied!`);
                       }}>
                       <Text
                         style={{
@@ -2967,14 +2981,12 @@ export default function Products({ route, navigation }) {
         ]}
         visible={updateQtyLoader}
       />
-
-      {!!categoryInfo?.is_show_products_with_category && !searchInput && (
+      {console.log('cehk cart items in render >>>', CartItems)}
+      {!searchInput && (
         <GradientCartView
           onPress={() => {
             Vibration.vibrate(PATTERN);
-            NavigationService.navigate(navigationStrings.TAB_ROUTES, {
-              screen: navigationStrings.CART,
-            });
+            NavigationService.navigate(navigationStrings.CART_SCREEN);
           }}
           btnText={
             CartItems && CartItems.data && CartItems.data.item_count
@@ -2988,10 +3000,11 @@ export default function Products({ route, navigation }) {
               : ''
           }
           ifCartShow={
-            CartItems && CartItems.data && CartItems.data.item_count
+            CartItems && CartItems.data && CartItems.data.item_count > 0
               ? true
               : false
           }
+          isMenuBtnShow={categoryInfo?.is_show_products_with_category}
           onMenuTap={() => {
             Vibration.vibrate(PATTERN);
             updateState({MenuModalVisible: !MenuModalVisible});
