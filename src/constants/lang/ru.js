@@ -602,4 +602,5 @@ export default {
   CONNECTION_ERROR: 'Connection Error',
   INTERNET_CONNECTION_ERROR:
     'Oops! Looks like your device is not connected to the Internet.',
+  HERE_YOU_ARE_FOR_RETURN: 'Here You Are For Return Product !',
 };
