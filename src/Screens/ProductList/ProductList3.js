@@ -69,6 +69,8 @@ import _ from 'lodash';
 import ProductListLoader3 from '../../Components/Loaders/ProductListLoader3';
 import Clipboard from '@react-native-community/clipboard';
 import Toast from 'react-native-simple-toast';
+import RepeatModal from '../../Components/RepeatModal';
+
 
 const ONE_SECOND_IN_MS = 50;
 const PATTERN = [
@@ -179,6 +181,7 @@ export default function Products({ route, navigation }) {
     MenuModalVisible: false,
     isVegEnabled: true,
     ProductTags: [],
+    repeatItems: null,
     updateTagFilter: false,
     offerList: [],
   });
@@ -243,6 +246,7 @@ export default function Products({ route, navigation }) {
     isVegEnabled,
     MenuModalVisible,
     ProductTags,
+    repeatItems,
     updateTagFilter,
     offerList,
   } = state;
@@ -1359,7 +1363,7 @@ export default function Products({ route, navigation }) {
   };
 
   const onSearchWithinMenu = (text) => {
-    updateState({searchInput: text});
+    updateState({ searchInput: text });
     if (text) {
       const newArr = sectionListData.map((el) => {
         const records =

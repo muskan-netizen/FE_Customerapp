@@ -645,11 +645,12 @@ export default function VariantAddons({
   };
 
   const addToCart = (addonSet) => {
+    let updateQty =
+      productdetail?.qty + 1 || //localy update cart quanity
+      productdetail?.variant[0]?.check_if_in_cart_app[0]?.quantity + 1 ||
+      productQuantityForCart;
+    console.log('update qty', updateQty);
 
-    let updateQty = productdetail?.qty + 1 || //localy update cart quanity
-    productdetail?.variant[0]?.check_if_in_cart_app[0]?.quantity + 1 || productQuantityForCart
-    console.log('update qty',updateQty)
-    
     console.log('add on set', addonSet);
     const addon_ids = [];
     const addon_options = [];
@@ -1165,6 +1166,7 @@ export default function VariantAddons({
                   textStyle={{
                     fontFamily: fontFamily.medium,
                     textTransform: 'capitalize',
+                    color: colors.white,
                   }}
                   onPress={() => addToCart(addonSet)}
                   btnText={`${strings.ADD_ITEM} - ${

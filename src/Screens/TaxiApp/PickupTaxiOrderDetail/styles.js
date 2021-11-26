@@ -9,7 +9,7 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 
-export default ({ fontFamily,isDarkMode }) => {
+export default ({ fontFamily,isDarkMode,MyDarkTheme }) => {
   const commonStyles = commonStylesFunc({ fontFamily });
   const styles = StyleSheet.create({
     scrollviewHorizontal: {
@@ -383,6 +383,7 @@ export default ({ fontFamily,isDarkMode }) => {
       color:  isDarkMode
       ? MyDarkTheme.colors.text
       : colors.black,
+      textAlign:'left'
     },
     statusText: {
       fontSize:textScale(12),
@@ -390,7 +391,21 @@ export default ({ fontFamily,isDarkMode }) => {
       color:  isDarkMode
       ? MyDarkTheme.colors.text
       : colors.blackOpacity40,
-      marginTop:moderateScaleVertical(4)
+      textAlign:'left'
+    },
+    deliveryProof: {
+      textTransform: 'uppercase',
+      fontSize: moderateScale(10),
+      fontFamily: fontFamily.medium,
+      color: isDarkMode
+        ? MyDarkTheme.colors.text
+        : colors.blackOpacity86,
+      marginVertical: moderateScaleVertical(8),
+    },
+    horizontalLine:{
+      borderBottomWidth: 0.8,
+      borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.lightGreyBg,
+      marginVertical: moderateScaleVertical(10)
     }
   });
   return styles;

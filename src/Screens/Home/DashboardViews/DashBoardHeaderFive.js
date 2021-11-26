@@ -37,7 +37,6 @@ export default function DashBoardHeaderFive({
   toggleData,
   isLoading = false,
   isLoadingB = false,
-  updateLoader = () => {},
 }) {
   const navigation = useNavigation();
   const pickerRef = createRef();
@@ -371,7 +370,6 @@ export default function DashBoardHeaderFive({
 
   const _onTableItm = (item, indx) => {
     const newTabs = [...tabs];
-    updateLoader();
 
     newTabs.forEach((item, index) => {
       if (index === indx) {
