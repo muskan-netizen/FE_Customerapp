@@ -737,26 +737,33 @@ export default function TaxiHomeDashbord({
                     marginTop: moderateScaleVertical(20),
                     alignItems: 'center',
                   }}>
-                  <MapView
-                    ref={mapRef}
-                    provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                    customMapStyle={mapStyleGrey}
-                    style={{
-                      ...StyleSheet.absoluteFillObject,
-                      borderRadius: 12,
-                    }}
-                    // provider={MapView.PROVIDER_GOOGLE}
-                    region={{
-                      latitude: parseFloat(location?.latitude),
-                      longitude: parseFloat(location?.longitude),
-                      latitudeDelta: 0.015,
-                      longitudeDelta: 0.0121,
-                    }}
-                    // initialRegion={region}
-                    showsUserLocation={true}
-                    //showsMyLocationButton={true}
-                    // pointerEvents={'none'}
-                  />
+                  {console.log(location, 'locationlocationlocation')}
+                  {!!location && location?.latitude && (
+                    <MapView
+                      ref={mapRef}
+                      provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                      customMapStyle={mapStyleGrey}
+                      style={{
+                        ...StyleSheet.absoluteFillObject,
+                        borderRadius: 12,
+                      }}
+                      // provider={MapView.PROVIDER_GOOGLE}
+                      region={{
+                        latitude: location
+                          ? parseFloat(location?.latitude)
+                          : 30.7333,
+                        longitude: location
+                          ? parseFloat(location?.longitude)
+                          : 76.7794,
+                        latitudeDelta: 0.015,
+                        longitudeDelta: 0.0121,
+                      }}
+                      // initialRegion={region}
+                      showsUserLocation={true}
+                      //showsMyLocationButton={true}
+                      // pointerEvents={'none'}
+                    />
+                  )}
                 </View>
               </TouchableOpacity>
             </View>
