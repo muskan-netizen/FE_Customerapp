@@ -1,6 +1,6 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { cloneDeep } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import {cloneDeep} from 'lodash';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
   FlatList,
@@ -11,7 +11,7 @@ import {
   Text,
   TouchableNativeFeedback,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import CalanderStrip from 'react-native-calendar-strip';
@@ -19,9 +19,9 @@ import DeviceInfo from 'react-native-device-info';
 import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
 import Toast from 'react-native-simple-toast';
-import { Pagination } from 'react-native-snap-carousel';
+import {Pagination} from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import actions from '../redux/actions';
@@ -33,14 +33,11 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width
+  width,
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
-import { timeforMarkedQuestion } from '../utils/constants/ConstantValues';
-import {
-  showError,
-  showSuccess
-} from '../utils/helperFunctions';
+import {MyDarkTheme} from '../styles/theme';
+import {timeforMarkedQuestion} from '../utils/constants/ConstantValues';
+import {showError, showSuccess} from '../utils/helperFunctions';
 import GradientButton from './GradientButton';
 import HtmlViewComp from './HtmlViewComp';
 import CardLoader from './Loaders/CardLoader';
@@ -139,7 +136,6 @@ export default function HomeServiceVariantAddons({
   const dineInType = useSelector((state) => state?.home?.dineInType);
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  console.log(timeforMarkedQuestion, 'timeforMarkedQuestion');
   // useFocusEffect(
   //   React.useCallback(() => {
   //     getCartDetail();
