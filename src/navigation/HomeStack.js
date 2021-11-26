@@ -37,6 +37,7 @@ import {
   Cart2,
   Cart3,
   Cart,
+  AllPaymentMethods,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
@@ -215,6 +216,11 @@ export default function () {
             : Cart
         }
         options={{headerShown: false, gestureEnabled: true}}
+      />
+      <Stack.Screen
+        name={navigationStrings.ALL_PAYMENT_METHODS}
+        component={AllPaymentMethods}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

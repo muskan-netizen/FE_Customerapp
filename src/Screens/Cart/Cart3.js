@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
+import {cloneDeep, update} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
@@ -64,7 +64,6 @@ import {
 import {getItem, removeItem, setItem} from '../../utils/utils';
 import stylesFun from './styles';
 import RazorpayCheckout from 'react-native-razorpay';
-
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -547,6 +546,7 @@ export default function Cart({navigation, route}) {
 
   //Error handling in screen
   const errorMethod = (error) => {
+    console.log(error, '<==errorOccured');
     updateState({
       isLoading: false,
       isLoadingB: false,
@@ -554,7 +554,7 @@ export default function Cart({navigation, route}) {
       btnLoader: false,
       placeLoader: false,
     });
-    showError(error?.message || error?.error || error);
+    showError(error?.description || error?.message || error?.error || error);
   };
 
   //Get list of all offers
@@ -620,7 +620,6 @@ export default function Cart({navigation, route}) {
         0
       )
     ) {
-      alert();
       moveToNewScreen(navigationStrings.ORDERSUCESS, {
         orderDetail: res.data,
       })();
@@ -669,6 +668,10 @@ export default function Cart({navigation, route}) {
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
     }
+    placeOrderData(data);
+  };
+
+  const placeOrderData = (data) => {
     actions
       .placeOrder(data, {
         code: appData?.profile?.code,
@@ -803,9 +806,6 @@ export default function Cart({navigation, route}) {
       });
     //   .catch(errorMethod);
   };
-
-
-
 
   const _finalPayment = () => {
     if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
@@ -1092,39 +1092,55 @@ export default function Cart({navigation, route}) {
     }
   };
 
+  console.log(
+    (Number(cartData?.total_payable_amount) +
+      (selectedTipAmount != null && selectedTipAmount != ''
+        ? Number(selectedTipAmount)
+        : 0)) *
+      100,
+    'payableAmount',
+  );
 
   const _renderRazor = () => {
-    var options = {
+    updateState({isLoadingB: true});
+    let options = {
       description: 'Credits towards consultation',
-      image: 'https://i.imgur.com/3g7nmJC.png',
-      currency: 'INR',
-      key: 'rzp_test_wJKoMvNF62XWpP', // Your api key
-      amount: '5000',
-      name: 'foo',
-    
+      image: getImageUrl(
+        appData?.profile?.logo?.image_fit,
+        appData?.profile?.logo?.image_path,
+        '1000/1000',
+      ),
+      currency: currencies?.primary_currency?.iso_code,
+      key: appData?.profile?.preferences?.razorpay_api_key, // Your api key
+      amount:
+        (Number(cartData?.total_payable_amount) +
+          (selectedTipAmount != null && selectedTipAmount != ''
+            ? Number(selectedTipAmount)
+            : 0)) *
+        100,
+      name: appData?.profile?.company_name,
       prefill: {
-        email: 'void@razorpay.com',
-        contact: '9191919191',
-        name: 'Razorpay Software',
+        email: userData?.email,
+        contact: userData?.phone_number || '',
+        name: userData?.name,
       },
-      theme: {color: '#F37254'},
+      theme: {color: themeColors.primary_color},
     };
-    try {
-      RazorpayCheckout.open(options)
-        .then((data) => {
-          // handle success
-          console.log(`Success for razor: `, data);
-        })
-        .catch((error) => {
-          // handle failure
-          console.log(`Error  for razor: `, error);
-        });
-    } catch (error) {
-      console.log('catch block ', error);
-    }
+
+    RazorpayCheckout.open(options)
+      .then((res) => {
+        console.log(`Success for razor: `, res);
+        if (res?.razorpay_payment_id) {
+          let data = {};
+          data['address_id'] = selectedAddressData?.id;
+          data['payment_option_id'] = selectedPayment?.id;
+          data['type'] = dineInType || '';
+          data['transaction_id'] = res?.razorpay_payment_id;
+          placeOrderData(data); // placeOrder
+        }
+      })
+      .catch(errorMethod);
   };
-
-
 
   const clearSceduleDate = async () => {
     updateState({
