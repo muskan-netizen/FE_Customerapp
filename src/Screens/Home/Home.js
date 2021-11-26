@@ -536,6 +536,7 @@ export default function Home({route, navigation}) {
     actions.dineInData(type);
     updateState({
       selectedTabType: type,
+      isLoadingB: true
     });
   };
 
@@ -600,9 +601,7 @@ export default function Home({route, navigation}) {
     }
   };
 
-  const updateLoader = () => {
-    updateState({isLoadingB: true});
-  };
+ 
 
   const renderHomeScreen = () => {
     const case_ = 5;
@@ -654,7 +653,6 @@ export default function Home({route, navigation}) {
               isLoading={isLoading}
               currentLocation={currentLocation}
               isLoadingB={isLoadingB}
-              updateLoader={updateLoader}
             />
 
             <DashBoardFive
