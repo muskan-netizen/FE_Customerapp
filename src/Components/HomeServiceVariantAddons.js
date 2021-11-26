@@ -1,6 +1,6 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -11,7 +11,7 @@ import {
   Text,
   TouchableNativeFeedback,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import CalanderStrip from 'react-native-calendar-strip';
@@ -19,9 +19,9 @@ import DeviceInfo from 'react-native-device-info';
 import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
 import Toast from 'react-native-simple-toast';
-import {Pagination} from 'react-native-snap-carousel';
+import { Pagination } from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import actions from '../redux/actions';
@@ -33,13 +33,14 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {currencyNumberFormatter} from '../utils/commonFunction';
-import {timeforMarkedQuestion} from '../utils/constants/ConstantValues';
-import {showError, showSuccess} from '../utils/helperFunctions';
-import Banner from './Banner';
+import { MyDarkTheme } from '../styles/theme';
+import { timeforMarkedQuestion } from '../utils/constants/ConstantValues';
+import {
+  showError,
+  showSuccess
+} from '../utils/helperFunctions';
 import GradientButton from './GradientButton';
 import HtmlViewComp from './HtmlViewComp';
 import CardLoader from './Loaders/CardLoader';
@@ -50,7 +51,7 @@ export default function HomeServiceVariantAddons({
   onClose,
   showShimmer,
   shimmerClose = () => {},
-  updateCartItems,
+  updateCartItems = () => {},
 }) {
   console.log(productdetail, 'productdetailproductdetailproductdetail');
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
@@ -833,6 +834,12 @@ export default function HomeServiceVariantAddons({
   };
 
   const addToCart = (addonSet) => {
+    let updateQty =
+      productdetail?.qty + 1 || //localy update cart quanity
+      productdetail?.variant[0]?.check_if_in_cart_app[0]?.quantity + 1 ||
+      productQuantityForCart;
+    console.log('update qty', updateQty);
+
     const addon_ids = [];
     const addon_options = [];
     addonSet.map((i, inx) => {
@@ -845,7 +852,7 @@ export default function HomeServiceVariantAddons({
     });
     let data = {};
     data['sku'] = productSku;
-    data['quantity'] = productQuantityForCart;
+    data['quantity'] = updateQty;
     data['product_variant_id'] = productVariantId;
     data['type'] = dine_In_Type;
 
@@ -873,7 +880,7 @@ export default function HomeServiceVariantAddons({
         });
         updateCartItems(
           productdetail,
-          productQuantityForCart,
+          updateQty, ////localy update cart quanity
           res.data.cart_product_id,
           res.data.id,
         );

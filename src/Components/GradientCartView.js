@@ -1,19 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-  Animated,
-} from 'react-native';
+import {Image, TouchableOpacity, View} from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import commonStylesFun from '../styles/commonStyles';
 import {moderateScale} from '../styles/responsiveSize';
-import * as Animatable from 'react-native-animatable';
 import BrowseMenuButton from './BrowseMenuButton';
 
 const GradientCartView = ({

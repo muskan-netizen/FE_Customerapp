@@ -433,16 +433,22 @@ export default function HomeScreenTaxi({navigation, route}) {
 
   return (
     <>
-      <MapView
-        ref={mapRef}
-        //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-        style={styles.map}
-        region={region}
-        initialRegion={region}
-        customMapStyle={mapStyleGrey}
-        // pointerEvents={'none'}
-        onRegionChangeComplete={_onRegionChange}>
-        {/* <Marker
+      {userCurrentLatitude && (
+        <MapView
+          ref={mapRef}
+          //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+          style={styles.map}
+          region={{
+            latitude: userCurrentLatitude,
+            longitude: userCurrentLongitude,
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.0121,
+          }}
+          initialRegion={region}
+          customMapStyle={mapStyleGrey}
+          // pointerEvents={'none'}
+          onRegionChangeComplete={_onRegionChange}>
+          {/* <Marker
             ref={markerRef}
             // pointerEvents={'none'}
             coordinate={coordinate}
@@ -452,7 +458,8 @@ export default function HomeScreenTaxi({navigation, route}) {
             // onPress={(e) => console.log('onPress', e)}
             // draggable
           /> */}
-      </MapView>
+        </MapView>
+      )}
       <View style={[styles.backbutton, {marginHorizontal: moderateScale(15)}]}>
         {businessType === 4 ? null : (
           <TouchableOpacity onPress={() => navigation.goBack()}>
