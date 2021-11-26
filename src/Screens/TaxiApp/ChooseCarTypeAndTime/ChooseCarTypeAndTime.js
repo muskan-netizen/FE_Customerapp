@@ -157,6 +157,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       ? paramData?.datetime?.slectedDate
       : moment().format('YYYY-MM-DD'),
     selectedPayment: { id: 1, title: 'Cash On Delivery', image: imagePath.cash },
+    taskInstruction: ''
   });
   const {
     selectedPayment,
@@ -196,7 +197,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     pickedUpTime,
     selectedDate,
     pickedUpDate,
-    uploadImages
+    uploadImages,
+    taskInstruction
   } = state;
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -369,11 +371,10 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     let data = {};
 
     data['task_type'] = pickUpTimeType ? pickUpTimeType : '';
-    data['schedule_time'] =
-      pickUpTimeType == 'now' ? '' : `${slectedDate} ${selectedTime}`;
+    data['schedule_time'] = pickUpTimeType == 'now' ? '' : `${slectedDate} ${selectedTime}`;
     data['recipient_phone'] = '';
     data['recipient_email'] = '';
-    data['task_description'] = '';
+    data['task_description'] = taskInstruction;
     // data['amount'] =
     //   couponInfo && updatedAmount
     //     ? updatedAmount
@@ -617,6 +618,10 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
   console.log("image uploaded res", uploadImages)
 
+  const updateInstruction = (val) => {
+    updateState({ taskInstruction: val })
+  }
+
   const _selectPaymentView = () => {
     return (
       <SelectPaymentModalView
@@ -644,6 +649,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         selectedPayment={selectedPayment}
         pickup_taxi={paramData?.pickup_taxi}
         uploadImage={uploadImage}
+        updateInstruction={updateInstruction}
       />
     );
   };
@@ -860,16 +866,18 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           animateOnMount={true}
           handleComponent={carModalHeader}
         >
-          <View style={{
-            flex: 1,
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.background
-              : colors.white,
-          }}>
-            {!!showCarModal && _selectCarModalView()}
-            {/* {!!showTimeModal && _selectTimeView()} */}
-            {!!showPaymentModal && _selectPaymentView()}
-          </View>
+          <BottomSheetScrollView keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+            <View style={{
+              flex: 1,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.background
+                : colors.white,
+            }}>
+              {!!showCarModal && _selectCarModalView()}
+              {/* {!!showTimeModal && _selectTimeView()} */}
+              {!!showPaymentModal && _selectPaymentView()}
+            </View>
+          </BottomSheetScrollView>
         </BottomSheet>
         {!showPaymentModal && (<View style={{
           width: '90%',

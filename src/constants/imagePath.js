@@ -74,6 +74,7 @@ export default {
   percent: require('../assets/images/ic_percent2.png'),
   percent2: require('../assets/images/ic_percentage.png'),
   icUpload: require('../assets/images/ic_upload.png'),
+  icInstruction: require('../assets/images/ic_instructions.png'),
   paymentMethod: require('../assets/images/ic_pay.png'),
   clientLogo: require('../assets/images/ic_logo.png'),
   cartActive: require('../assets/images/ic_cartactive.png'),
@@ -224,7 +225,7 @@ export default {
   delivery: require('../assets/images/ic_delivery.png'),
   redLocation: require('../assets/images/ic_location.png'),
   location2: require('../assets/images/ic_location2.png'),
-
+icDotedLine: require('../assets/images/dottedLine.png'),
   homeRedActive: require('../assets/images/ic_home4.png'),
   homeRedInActive: require('../assets/images/ic_home_black4.png'),
   cartRedActive: require('../assets/images/ic_cart4.png'),

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { I18nManager, StyleSheet } from 'react-native';
 import store from '../../../redux/store';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
@@ -246,6 +246,13 @@ export default ({ fontFamily, themeColors }) => {
       fontSize: textScale(13),
       marginLeft: moderateScale(10),
     },
+    insctructionText: {
+      flex: 1,
+      fontFamily: fontFamily.medium,
+      textAlign: I18nManager.isRTL ? 'right' : 'left',
+      fontSize: textScale(11),
+    
+  }
   });
   return styles;
 };
