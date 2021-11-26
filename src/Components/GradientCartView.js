@@ -7,6 +7,7 @@ import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import commonStylesFun from '../styles/commonStyles';
 import {moderateScale} from '../styles/responsiveSize';
+import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
 import BrowseMenuButton from './BrowseMenuButton';
 
 const GradientCartView = ({
@@ -170,7 +171,13 @@ const GradientCartView = ({
             colors={
               colorsArray
                 ? colorsArray
-                : [themeColors?.primary_color, themeColors?.primary_color]
+                : [
+                    themeColors?.primary_color,
+                    getColorCodeWithOpactiyNumber(
+                      themeColors?.primary_color.substr(1),
+                      70,
+                    ),
+                  ]
             }>
             {showText && (
               <Animatable.Text
