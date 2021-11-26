@@ -63,6 +63,8 @@ import {
 } from '../../utils/helperFunctions';
 import {getItem, removeItem, setItem} from '../../utils/utils';
 import stylesFun from './styles';
+import RazorpayCheckout from 'react-native-razorpay';
+
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -802,9 +804,16 @@ export default function Cart({navigation, route}) {
     //   .catch(errorMethod);
   };
 
+
+
+
   const _finalPayment = () => {
     if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
       _offineLinePayment();
+      return;
+    }
+    if (selectedPayment?.id == 10 && selectedPayment?.off_site == 0) {
+      _renderRazor();
       return;
     }
     if (
@@ -1082,6 +1091,40 @@ export default function Cart({navigation, route}) {
       errorMethod(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
   };
+
+
+  const _renderRazor = () => {
+    var options = {
+      description: 'Credits towards consultation',
+      image: 'https://i.imgur.com/3g7nmJC.png',
+      currency: 'INR',
+      key: 'rzp_test_wJKoMvNF62XWpP', // Your api key
+      amount: '5000',
+      name: 'foo',
+    
+      prefill: {
+        email: 'void@razorpay.com',
+        contact: '9191919191',
+        name: 'Razorpay Software',
+      },
+      theme: {color: '#F37254'},
+    };
+    try {
+      RazorpayCheckout.open(options)
+        .then((data) => {
+          // handle success
+          console.log(`Success for razor: `, data);
+        })
+        .catch((error) => {
+          // handle failure
+          console.log(`Error  for razor: `, error);
+        });
+    } catch (error) {
+      console.log('catch block ', error);
+    }
+  };
+
+
 
   const clearSceduleDate = async () => {
     updateState({
