@@ -21,6 +21,7 @@ export default function SearchBar({
   rightIconPress = () => {},
   searchValue = '',
   rightIconStyle,
+  autoFocus,
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
@@ -57,7 +58,7 @@ export default function SearchBar({
             textAlign: I18nManager.isRTL ? 'right' : 'left',
           }}
           value={searchValue}
-          autoFocus={true}
+          autoFocus={autoFocus}
           placeholder={placeholder}
           onChangeText={onChangeText}
           //onChange={onChangeText}
