@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>473216754084-3hcn3p5ghf4a7aphjqu446uebhqmumq0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.473216754084-3hcn3p5ghf4a7aphjqu446uebhqmumq0</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>473216754084-10hrlsneu6f4uvukbflsjjl4lbmk5vbg.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDwXFIp7LGkc4KTGLV9QYGapgedYZfronc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>473216754084</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.silvestre</string>
+	<key>PROJECT_ID</key>
+	<string>silvestre-3b580</string>
+	<key>STORAGE_BUCKET</key>
+	<string>silvestre-3b580.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:473216754084:ios:f564d667bbcd6f90446131</string>
+</dict>
+</plist>

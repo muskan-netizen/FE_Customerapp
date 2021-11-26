@@ -400,4 +400,6 @@ export default {
   ic_cameraColored: require('../assets/images/ic_cameraColored.png'),
   pickUpSchedule: require('../assets/images/ic_pickup.png'),
   dropOffSchedule: require('../assets/images/ic_order.png'),
+  icMyRideActive: require('../assets/images/ic_ride2.png'),
+  icMyRideInActive: require('../assets/images/ic_ride1.png'),
 };

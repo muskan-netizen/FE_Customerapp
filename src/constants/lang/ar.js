@@ -621,5 +621,8 @@ export default {
   SEARCH_WITHIN_MENU: 'Search within the menu',
   GET_STARTED: 'Get started',
   OTHERS: 'Others',
-  UNKNOWN:"Unknown"
+  UNKNOWN: 'Unknown',
+  CONNECTION_ERROR: 'Connection Error',
+  INTERNET_CONNECTION_ERROR:
+    'Oops! Looks like your device is not connected to the Internet.',
 };

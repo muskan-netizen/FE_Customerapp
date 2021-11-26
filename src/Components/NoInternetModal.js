@@ -1,15 +1,15 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Modal from 'react-native-modal';
+import strings from '../constants/lang';
 
 export default function NoInternetModal({show, onRetry, isRetrying}) {
-  console.log(show, 'THE VALUE OF SHOW');
   return (
     <Modal isVisible={show} style={styles.modal} animationInTiming={600}>
       <View style={styles.modalContainer}>
-        <Text style={styles.modalTitle}>Connection Error</Text>
+        <Text style={styles.modalTitle}>{strings.CONNECTION_ERROR}</Text>
         <Text style={styles.modalText}>
-          Oops! Looks like your device is not connected to the Internet.
+          {strings.INTERNET_CONNECTION_ERROR}
         </Text>
       </View>
     </Modal>

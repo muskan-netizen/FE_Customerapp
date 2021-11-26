@@ -52,9 +52,11 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
+import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {
   getImageUrl,
   getParameterByName,
+  numberFormat,
   showError,
   showSuccess,
   timeInLocalLangauge,
@@ -915,6 +917,7 @@ export default function Cart({navigation, route}) {
       }
     } else {
       // showError(strings.UNAUTHORIZED_MESSAGE);
+      updateState({placeLoader: false});
       moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     }
   };
@@ -1342,7 +1345,9 @@ export default function Cart({navigation, route}) {
                                 <Text style={{}}>
                                   {`${currencies?.primary_currency?.symbol}${
                                     // Number(i?.pvariant?.multiplier) *
-                                    Number(i?.variants?.price).toFixed(2)
+                                    currencyNumberFormatter(
+                                      Number(i?.variants?.price).toFixed(2),
+                                    )
                                   }`}
                                 </Text>{' '}
                                 X {i?.quantity} ={' '}
@@ -1354,8 +1359,10 @@ export default function Cart({navigation, route}) {
                                   }}>
                                   {`${currencies?.primary_currency?.symbol}${
                                     // Number(i?.pvariant?.multiplier) *
-                                    Number(i?.variants?.quantity_price).toFixed(
-                                      2,
+                                    currencyNumberFormatter(
+                                      Number(
+                                        i?.variants?.quantity_price,
+                                      ).toFixed(2),
                                     )
                                   }`}
                                 </Text>
@@ -1509,9 +1516,12 @@ export default function Cart({navigation, route}) {
                                           }
                                           numberOfLines={1}>{` ${
                                           currencies?.primary_currency?.symbol
-                                        }${(
-                                          Number(j.price) * Number(j.multiplier)
-                                        ).toFixed(2)} `}</Text>
+                                        }${currencyNumberFormatter(
+                                          (
+                                            Number(j.price) *
+                                            Number(j.multiplier)
+                                          ).toFixed(2),
+                                        )} `}</Text>
                                       </View>
                                     );
                                   })
@@ -1633,9 +1643,13 @@ export default function Cart({navigation, route}) {
                           },
                         ]
                       : styles.priceItemLabel
-                  }>{`- ${currencies?.primary_currency?.symbol}${Number(
-                  item?.discount_amount ? item?.discount_amount : 0,
-                ).toFixed(2)}`}</Text>
+                  }>{`- ${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(
+                    item?.discount_amount ? item?.discount_amount : 0,
+                  ).toFixed(2),
+                )}`}</Text>
               </View>
             )}
             {!!item?.deliver_charge && (
@@ -1663,9 +1677,13 @@ export default function Cart({navigation, route}) {
                           },
                         ]
                       : styles.priceItemLabel
-                  }>{`${currencies?.primary_currency?.symbol}${Number(
-                  item?.deliver_charge ? item?.deliver_charge : 0,
-                ).toFixed(2)}`}</Text>
+                  }>{`${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  Number(
+                    item?.deliver_charge ? item?.deliver_charge : 0,
+                  ).toFixed(2),
+                )}`}</Text>
               </View>
             )}
             <View style={styles.itemPriceDiscountTaxView}>
@@ -1677,7 +1695,37 @@ export default function Cart({navigation, route}) {
                 }>
                 {strings.AMOUNT}
               </Text>
+
               <Text
+                style={
+                  isDarkMode
+                    ? [
+                        styles.priceItemLabel2,
+                        {
+                          color: MyDarkTheme.colors.text,
+                        },
+                      ]
+                    : styles.priceItemLabel2
+                }>
+                {currencies?.primary_currency?.symbol}
+                {currencyNumberFormatter(
+                  Number(
+                    item?.payable_amount ? item?.payable_amount : 0,
+                  ).toFixed(2),
+                )}
+              </Text>
+
+              {/* <NumberFormat
+                thousandsGroupStyle="thousand"
+                value={2456981}
+                prefix="$"
+                decimalSeparator="."
+                displayType="input"
+                type="text"
+                thousandSeparator={true}
+                allowNegative={true}
+              /> */}
+              {/* <Text
                 style={
                   isDarkMode
                     ? [
@@ -1689,7 +1737,7 @@ export default function Cart({navigation, route}) {
                     : styles.priceItemLabel2
                 }>{`${currencies?.primary_currency?.symbol}${Number(
                 item?.payable_amount ? item?.payable_amount : 0,
-              ).toFixed(2)}`}</Text>
+              ).toFixed(2)}`}</Text> */}
             </View>
             {/* <View style={styles.bottomTabLableValue}>
               <Text
@@ -2547,9 +2595,11 @@ export default function Cart({navigation, route}) {
               isDarkMode
                 ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                 : styles.priceItemLabel
-            }>{`${currencies?.primary_currency?.symbol}${Number(
-            cartData?.gross_paybale_amount,
-          ).toFixed(2)}`}</Text>
+            }>{`${
+            currencies?.primary_currency?.symbol
+          }${currencyNumberFormatter(
+            Number(cartData?.gross_paybale_amount).toFixed(2),
+          )}`}</Text>
         </View>
         {!!cartData?.wallet_amount && (
           <View style={styles.bottomTabLableValue}>
@@ -2566,9 +2616,13 @@ export default function Cart({navigation, route}) {
                 isDarkMode
                   ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                   : styles.priceItemLabel
-              }>{`${currencies?.primary_currency?.symbol}${Number(
-              cartData?.wallet_amount ? cartData?.wallet_amount : 0,
-            ).toFixed(2)}`}</Text>
+              }>{`${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(
+                cartData?.wallet_amount ? cartData?.wallet_amount : 0,
+              ).toFixed(2),
+            )}`}</Text>
           </View>
         )}
         {!!cartData?.loyalty_amount && (
@@ -2586,9 +2640,13 @@ export default function Cart({navigation, route}) {
                 isDarkMode
                   ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                   : styles.priceItemLabel
-              }>{`-${currencies?.primary_currency?.symbol}${Number(
-              cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
-            ).toFixed(2)}`}</Text>
+              }>{`-${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(
+                cartData?.loyalty_amount ? cartData?.loyalty_amount : 0,
+              ).toFixed(2),
+            )}`}</Text>
           </View>
         )}
 
@@ -2607,9 +2665,13 @@ export default function Cart({navigation, route}) {
                 isDarkMode
                   ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                   : styles.priceItemLabel
-              }>{`-${currencies?.primary_currency?.symbol}${Number(
-              cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
-            ).toFixed(2)}`}</Text>
+              }>{`-${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(
+                cartData?.wallet_amount_used ? cartData?.wallet_amount_used : 0,
+              ).toFixed(2),
+            )}`}</Text>
           </View>
         )}
         {!!cartData?.total_subscription_discount && (
@@ -2627,9 +2689,11 @@ export default function Cart({navigation, route}) {
                 isDarkMode
                   ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                   : styles.priceItemLabel
-              }>{`-${currencies?.primary_currency?.symbol}${Number(
-              cartData?.total_subscription_discount,
-            ).toFixed(2)}`}</Text>
+              }>{`-${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(cartData?.total_subscription_discount).toFixed(2),
+            )}`}</Text>
           </View>
         )}
         {!!cartData?.total_tax && (
@@ -2647,9 +2711,11 @@ export default function Cart({navigation, route}) {
                 isDarkMode
                   ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
                   : styles.priceItemLabel
-              }>{`${currencies?.primary_currency?.symbol}${Number(
-              cartData?.total_tax ? cartData?.total_tax : 0,
-            ).toFixed(2)}`}</Text>
+              }>{`${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              Number(cartData?.total_tax ? cartData?.total_tax : 0).toFixed(2),
+            )}`}</Text>
           </View>
         )}
 
@@ -2666,12 +2732,16 @@ export default function Cart({navigation, route}) {
               isDarkMode
                 ? [styles.priceItemLabel2, {color: MyDarkTheme.colors.text}]
                 : styles.priceItemLabel2
-            }>{`${currencies?.primary_currency?.symbol}${(
-            Number(cartData?.total_payable_amount) +
-            (selectedTipAmount != null && selectedTipAmount != ''
-              ? Number(selectedTipAmount)
-              : 0)
-          ).toFixed(2)}`}</Text>
+            }>{`${
+            currencies?.primary_currency?.symbol
+          }${currencyNumberFormatter(
+            (
+              Number(cartData?.total_payable_amount) +
+              (selectedTipAmount != null && selectedTipAmount != ''
+                ? Number(selectedTipAmount)
+                : 0)
+            ).toFixed(2),
+          )}`}</Text>
         </View>
 
         <TouchableOpacity
@@ -3051,15 +3121,19 @@ export default function Cart({navigation, route}) {
   };
 
   const _vendorTableCart = (data, item) => {
-    actions
-      .vendorTableCart(data, {
-        code: appData?.profile?.code,
-      })
-      .then((res) => {
-        removeItem('deepLinkUrl');
-        setItem('selectedTable', item?.label);
-      })
-      .catch(errorMethod);
+    if (!!userData?.auth_token) {
+      actions
+        .vendorTableCart(data, {
+          code: appData?.profile?.code,
+        })
+        .then((res) => {
+          removeItem('deepLinkUrl');
+          setItem('selectedTable', item?.label);
+        })
+        .catch(errorMethod);
+      return;
+    }
+    return;
   };
 
   const onPressRecommendedVendors = (item) => {

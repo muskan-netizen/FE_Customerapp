@@ -150,7 +150,7 @@ const shortCodes = {
   kel360: '9087f6',
   yeboy: 'e4ec39',
   moboserrandsservice: '3d2e75',
-  cabway: '7c4e0b',
+  cabway: 'e1331a',
   tajammul: '7c4e0b',
   carroai: '0d6852',
   ssuum: 'b3cc0b',
@@ -162,6 +162,11 @@ const shortCodes = {
   trucxi: '3096b7',
   paysic: '786133',
   chipetaxi: '29790b',
+  laundryorders: '995951',
+  ineed: '10d0dd',
+  nadelivery: '9aee12',
+  marasym: 'af735a',
+  silvestre: '5fa7f3',
 };
 
 const appIds = {
@@ -808,6 +813,26 @@ const appIds = {
   chipetaxi: Platform.select({
     ios: 'com.chipetaxi',
     android: 'com.chipetaxi',
+  }),
+  laundryorders: Platform.select({
+    ios: 'com.laundryorders',
+    android: 'com.laundryorders',
+  }),
+  ineed: Platform.select({
+    ios: 'com.customer.ineed',
+    android: 'com.customer.ineed',
+  }),
+  nadelivery: Platform.select({
+    ios: 'com.nadelivery',
+    android: 'com.nadelivery',
+  }),
+  marasym: Platform.select({
+    ios: 'com.marasym',
+    android: 'com.marasym',
+  }),
+  silvestre: Platform.select({
+    ios: 'com.silvestre',
+    android: 'com.silvestre',
   }),
 };
 

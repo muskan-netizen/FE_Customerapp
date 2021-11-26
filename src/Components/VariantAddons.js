@@ -1,27 +1,30 @@
+import {useFocusEffect} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  Alert,
   Image,
-  Keyboard,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableNativeFeedback,
   TouchableOpacity,
   View,
-  ImageBackground,
-  TouchableNativeFeedback,
-  Alert,
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import DeviceInfo from 'react-native-device-info';
 import Modal from 'react-native-modal';
+import {Pagination} from 'react-native-snap-carousel';
+import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
+import Banner from '../Components/Banner';
 import GradientButton from '../Components/GradientButton';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
+import actions from '../redux/actions';
 import colors from '../styles/colors';
 import commonStylesFun, {hitSlopProp} from '../styles/commonStyles';
 import fontFamily from '../styles/fontFamily';
-import Banner from '../Components/Banner';
-import DeviceInfo from 'react-native-device-info';
 import {
   height,
   moderateScale,
@@ -29,22 +32,14 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
+import {MyDarkTheme} from '../styles/theme';
+import {currencyNumberFormatter} from '../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
-  getImageUrl,
   showError,
   showSuccess,
 } from '../utils/helperFunctions';
-import {useNavigation, useFocusEffect} from '@react-navigation/native';
-import navigationStrings from '../navigation/navigationStrings';
-import HTMLView from 'react-native-htmlview';
 import HtmlViewComp from './HtmlViewComp';
-import {MyDarkTheme} from '../styles/theme';
-import * as Animatable from 'react-native-animatable';
-import actions from '../redux/actions';
-import {Pagination} from 'react-native-snap-carousel';
-import CardLoader from './Loaders/CardLoader';
-import StarRating from 'react-native-star-rating';
 import BannerLoader from './Loaders/BannerLoader';
 import HeaderLoader from './Loaders/HeaderLoader';
 
@@ -361,9 +356,11 @@ export default function VariantAddons({
                         : colors.black,
                     },
                   ]}>
-                  {`${currencies?.primary_currency?.symbol}${(
-                    Number(i?.multiplier) * Number(i?.price)
-                  ).toFixed(2)}`}
+                  {`${
+                    currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
+                    (Number(i?.multiplier) * Number(i?.price)).toFixed(2),
+                  )}`}
                 </Text>
                 <View style={{paddingLeft: moderateScale(5)}}>
                   <Image
@@ -648,11 +645,12 @@ export default function VariantAddons({
   };
 
   const addToCart = (addonSet) => {
+    let updateQty =
+      productdetail?.qty + 1 || //localy update cart quanity
+      productdetail?.variant[0]?.check_if_in_cart_app[0]?.quantity + 1 ||
+      productQuantityForCart;
+    console.log('update qty', updateQty);
 
-    let updateQty = productdetail?.qty + 1 || //localy update cart quanity
-    productdetail?.variant[0]?.check_if_in_cart_app[0]?.quantity + 1 || productQuantityForCart
-    console.log('update qty',updateQty)
-    
     console.log('add on set', addonSet);
     const addon_ids = [];
     const addon_options = [];
@@ -712,9 +710,8 @@ export default function VariantAddons({
           onClose();
         })
         .catch((error) => errorMethodSecond(error, addonSet));
-        return;
+      return;
     }
-    console.log(data, 'data for cart');
     updateState({btnLoader: true});
     actions
       .addProductsToCart(data, {
@@ -1169,14 +1166,17 @@ export default function VariantAddons({
                   textStyle={{
                     fontFamily: fontFamily.medium,
                     textTransform: 'capitalize',
+                    color: colors.white,
                   }}
                   onPress={() => addToCart(addonSet)}
                   btnText={`${strings.ADD_ITEM} - ${
                     currencies?.primary_currency?.symbol
-                  }${(
-                    Number(productPriceData?.multiplier) *
-                    Number(productPriceData?.price)
-                  ).toFixed(2)}`}
+                  }${currencyNumberFormatter(
+                    (
+                      Number(productPriceData?.multiplier) *
+                      Number(productPriceData?.price)
+                    ).toFixed(2),
+                  )}`}
                   btnStyle={{
                     borderRadius: moderateScale(4),
                     height: moderateScale(38),

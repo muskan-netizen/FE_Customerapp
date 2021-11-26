@@ -29,6 +29,8 @@ import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
+import {removeItem} from '../../utils/utils';
+
 import {
   moderateScale,
   moderateScaleVertical,
@@ -46,11 +48,19 @@ const PATTERN = [
   3 * ONE_SECOND_IN_MS,
 ];
 
+let timeOut = undefined;
+
+var tempQty = 0;
+
+let activeIdx = 0;
+
 export default function BrandProducts2({route, navigation}) {
   const {data} = route.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const dineInType = useSelector((state) => state?.home?.dineInType);
+
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
@@ -119,7 +129,6 @@ export default function BrandProducts2({route, navigation}) {
     selectedSection: null,
     cartId: null,
     sectionListData: [],
-    productListData: [],
     showShimmer: true,
   });
 
@@ -157,7 +166,6 @@ export default function BrandProducts2({route, navigation}) {
     selectedSection,
     cartId,
     sectionListData,
-    productListData,
     showShimmer,
   } = state;
 
@@ -278,6 +286,7 @@ export default function BrandProducts2({route, navigation}) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
         },
       )
       .then((res) => {
@@ -414,8 +423,6 @@ export default function BrandProducts2({route, navigation}) {
       return;
     }
 
-    console.log(item, 'itemitem', item?.variantSet, item?.add_on);
-
     if (item?.add_on?.length > 0 || item?.variantSet?.length > 0) {
       updateState({
         updateQtyLoader: false,
@@ -445,7 +452,7 @@ export default function BrandProducts2({route, navigation}) {
     data['sku'] = item.sku;
     data['quantity'] = 1;
     data['product_variant_id'] = item?.variant[0]?.id;
-    data['type'] = dine_In_Type;
+    data['type'] = dineInType;
     actions
       .addProductsToCart(data, {
         code: appData.profile.code,
@@ -454,7 +461,6 @@ export default function BrandProducts2({route, navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res.data, 'addProductsToCart');
         actions.cartItemQty(res);
         updateState({cartId: res.data.id});
         if (!!section) {
@@ -476,7 +482,7 @@ export default function BrandProducts2({route, navigation}) {
             }),
           });
         } else {
-          let updateArray = productListData.map((val, i) => {
+          let updateArray = brandData.map((val, i) => {
             if (val.id == item.id) {
               return {
                 ...val,
@@ -488,7 +494,7 @@ export default function BrandProducts2({route, navigation}) {
             return val;
           });
           updateState({
-            productListData: updateArray,
+            brandData: updateArray,
           });
         }
         updateState({
@@ -592,7 +598,7 @@ export default function BrandProducts2({route, navigation}) {
         removeItem('selectedTable');
         removeProductFromCart(itemToUpdate, section);
       }
-    }, 1500);
+    }, 700);
   };
 
   const checkSingleVendor = async (id) => {
@@ -672,46 +678,22 @@ export default function BrandProducts2({route, navigation}) {
   };
 
   const updateLocally = (section, quanitity, item, isExistproductId) => {
-    if (!!section) {
-      let updatedSection = section.data.map((x, xnx) => {
-        if (x?.id == item?.id) {
-          return {
-            ...x,
-            qty: quanitity,
-            cart_product_id: isExistproductId,
-            isRemove: false,
-          };
-        }
-        return x;
-      });
-      section['data'] = updatedSection;
-      updateState({
-        ...state,
-        sectionListData: sectionListData.map((f, fnx) => {
-          if (f?.id == section?.id) {
-            return section;
-          }
-          return f;
-        }),
-        selectedItemID: -1,
-      });
-    } else {
-      let updateArray = productListData.map((val, i) => {
-        if (val.id == item.id) {
-          return {
-            ...val,
-            qty: quanitity,
-            cart_product_id: isExistproductId,
-            isRemove: false,
-          };
-        }
-        return val;
-      });
-      updateState({
-        productListData: updateArray,
-        selectedItemID: -1,
-      });
-    }
+    let cloneArr = brandData;
+    let updateArray = cloneArr.map((val, i) => {
+      if (val.id == item.id) {
+        return {
+          ...val,
+          qty: quanitity,
+          cart_product_id: isExistproductId,
+          isRemove: false,
+        };
+      }
+      return val;
+    });
+    updateState({
+      brandData: updateArray,
+      selectedItemID: -1,
+    });
   };
 
   const removeProductFromCart = (itemToUpdate, section = null) => {
@@ -768,7 +750,7 @@ export default function BrandProducts2({route, navigation}) {
             btnLoader: false,
           });
         } else {
-          let updateArray = productListData.map((val, i) => {
+          let updateArray = brandData.map((val, i) => {
             if (val.id == itemToUpdate.id) {
               return {
                 ...val,
@@ -782,7 +764,7 @@ export default function BrandProducts2({route, navigation}) {
             return val;
           });
           updateState({
-            productListData: updateArray,
+            brandData: updateArray,
             updateQtyLoader: false,
             selectedItemID: -1,
             btnLoader: false,
@@ -949,45 +931,22 @@ export default function BrandProducts2({route, navigation}) {
   });
 
   const updateCartItems = (item, quanitity, productId, cartID) => {
-    if (!!selectedSection) {
-      let updatedSection = selectedSection.data.map((x, xnx) => {
-        if (x?.id == item?.id) {
-          return {
-            ...x,
-            qty: quanitity,
-            cart_product_id: productId,
-            isRemove: false,
-          };
-        }
-        return x;
-      });
-      selectedSection['data'] = updatedSection;
-      updateState({
-        sectionListData: sectionListData.map((f, fnx) => {
-          if (f?.id == selectedSection?.id) {
-            return selectedSection;
-          }
-          return f;
-        }),
-        cartId: cartID,
-      });
-    } else {
-      let updateArray = productListData.map((val, i) => {
-        if (val.id == item.id) {
-          return {
-            ...val,
-            qty: quanitity,
-            cart_product_id: productId,
-            isRemove: false,
-          };
-        }
-        return val;
-      });
-      updateState({
-        cartId: cartID,
-        productListData: updateArray,
-      });
-    }
+    let cloneArr = brandData;
+    let updateArray = cloneArr.map((val, i) => {
+      if (val.id == item.id) {
+        return {
+          ...val,
+          qty: quanitity,
+          cart_product_id: productId,
+          isRemove: false,
+        };
+      }
+      return val;
+    });
+    updateState({
+      cartId: cartID,
+      brandData: updateArray,
+    });
   };
 
   return (
@@ -1207,7 +1166,7 @@ export default function BrandProducts2({route, navigation}) {
                   containerStyle={{marginTop: moderateScaleVertical(width / 8)}}
                 />
               }
-              ListFooterComponent={() => <View style={{height: 20}} />}
+              ListFooterComponent={() => <View style={{height: 40}} />}
             />
             <View>
               {isSortEnabled && (

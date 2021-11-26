@@ -11,6 +11,7 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
+import {currencyNumberFormatter} from '../utils/commonFunction';
 import ButtonComponent from './ButtonComponent';
 
 export default function OrderCardComponent({
@@ -99,7 +100,7 @@ export default function OrderCardComponent({
               currencies?.primary_currency?.symbol
             }${
               // Number(i?.pvariant?.multiplier) *
-              Number(data?.payable_amount).toFixed(2)
+              currencyNumberFormatter(Number(data?.payable_amount).toFixed(2))
             }`}</Text>
           </Text>
         </View>

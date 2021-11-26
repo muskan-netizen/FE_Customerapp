@@ -34,6 +34,9 @@ import {
   ViewAllData,
   TaxiHomeScreen,
   CategoryBrands,
+  Cart2,
+  Cart3,
+  Cart,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
@@ -200,6 +203,17 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.CATEGORY_BRANDS}
         component={CategoryBrands}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.CART_SCREEN}
+        component={
+          appStyle?.homePageLayout === 2
+            ? Cart2
+            : appStyle?.homePageLayout === 3
+            ? Cart3
+            : Cart
+        }
         options={{headerShown: false}}
       />
     </Stack.Navigator>

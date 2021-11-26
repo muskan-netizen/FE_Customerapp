@@ -18,6 +18,7 @@ import {
   ScrollView,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
@@ -45,8 +46,8 @@ import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import commonStylesFunc, { hitSlopProp } from '../../styles/commonStyles';
-import Modal from 'react-native-modal';
+import commonStylesFunc, {hitSlopProp} from '../../styles/commonStyles';
+import * as NavigationService from '../../navigation/NavigationService';
 import {
   height,
   moderateScale,
@@ -54,7 +55,8 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
+import {MyDarkTheme} from '../../styles/theme';
+import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {
   checkEvenOdd,
   getImageUrl,
@@ -63,9 +65,12 @@ import {
 } from '../../utils/helperFunctions';
 import { removeItem } from '../../utils/utils';
 import stylesFunc from './styles';
-import ButtonWithLoader from '../../Components/ButtonWithLoader';
-import { BlurView } from '@react-native-community/blur';
+import _ from 'lodash';
+import ProductListLoader3 from '../../Components/Loaders/ProductListLoader3';
+import Clipboard from '@react-native-community/clipboard';
+import Toast from 'react-native-simple-toast';
 import RepeatModal from '../../Components/RepeatModal';
+
 
 const ONE_SECOND_IN_MS = 50;
 const PATTERN = [
@@ -88,8 +93,11 @@ export default function Products({ route, navigation }) {
   const dineInType = useSelector((state) => state?.home?.dineInType);
   const CartItems = useSelector((state) => state?.cart?.cartItemCount);
 
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+
   let sectionListRef = useRef(null);
-  const isDarkMode = theme;
   const [state, setState] = useState({
     isVisibleModal: false,
     isOffline: false,
@@ -173,7 +181,9 @@ export default function Products({ route, navigation }) {
     MenuModalVisible: false,
     isVegEnabled: true,
     ProductTags: [],
-    repeatItems: null
+    repeatItems: null,
+    updateTagFilter: false,
+    offerList: [],
   });
 
   const {
@@ -236,7 +246,9 @@ export default function Products({ route, navigation }) {
     isVegEnabled,
     MenuModalVisible,
     ProductTags,
-    repeatItems
+    repeatItems,
+    updateTagFilter,
+    offerList,
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -260,15 +272,15 @@ export default function Products({ route, navigation }) {
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
-    getAllProductTags();
+    // getAllProductTags();
     const unsubscribe = navigation.addListener('focus', () => {
       updateState({ pageNo: 1 });
       getAllListItems();
-      getAllProductTags();
+      // getAllProductTags();
+      fetchOffers();
       if (isLoadingC) {
         getAllProducts(true);
         fetchOffers();
-        getAllProductTags();
       }
     });
     return unsubscribe;
@@ -545,7 +557,7 @@ export default function Products({ route, navigation }) {
             let newKey = {
               ...val,
               ['data']: val.products,
-              title: val.category.translation[0].name,
+              title: val?.category && val.category.translation[0].name,
               totalProduct: totalProduct + val.products.length,
             };
             delete newKey['products'];
@@ -560,6 +572,7 @@ export default function Products({ route, navigation }) {
             filterData: res?.data?.filterData,
             vendorCategories: res?.data?.categories,
           });
+          fetchTags(filterArray);
         } else {
           updateState({
             isLoading: false,
@@ -578,6 +591,27 @@ export default function Products({ route, navigation }) {
         updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
       .catch(errorMethod);
+  };
+
+  const fetchTags = (filterArray) => {
+    if (filterArray && filterArray.length > 0) {
+      let tagsArr = [];
+      filterArray.forEach((el) => {
+        // console.log('checking data for tags >>>', el);
+        el.data.forEach((data) => {
+          tagsArr.push(...data.tags);
+        });
+      });
+      tagsArr = _.uniqBy(tagsArr, 'tag_id');
+      updateState({
+        ProductTags: tagsArr.map((el) => {
+          return {
+            ...el.tag,
+            isSelected: false,
+          };
+        }),
+      });
+    }
   };
 
   /**********Get all list items by category id */
@@ -836,20 +870,17 @@ export default function Products({ route, navigation }) {
             return x;
           });
           section['data'] = updatedSection;
-          updateState({
-            sectionListData: sectionListData.map((f, fnx) => {
-              if (f?.id == section?.id) {
-                return section;
-              }
-              return f;
-            }),
-            cloneSectionList: cloneSectionList.map((f, fnx) => {
-              if (f?.id == section?.id) {
-                return section;
-              }
-              return f;
-            }),
+          const filteredArr = sectionListData.map((f, fnx) => {
+            if (f?.id == section?.id) {
+              return section;
+            }
+            return f;
           });
+          updateState({
+            sectionListData: filteredArr,
+            cloneSectionList: filteredArr,
+          });
+          // fetchTags(filteredArr)
         } else {
           let updateArray = productListData.map((val, i) => {
             if (val.id == item.id) {
@@ -991,22 +1022,19 @@ export default function Products({ route, navigation }) {
         return x;
       });
       section['data'] = updatedSection;
+      const filteredArr = sectionListData.map((f, fnx) => {
+        if (f?.id == section?.id) {
+          return section;
+        }
+        return f;
+      });
       updateState({
         ...state,
-        sectionListData: sectionListData.map((f, fnx) => {
-          if (f?.id == section?.id) {
-            return section;
-          }
-          return f;
-        }),
-        cloneSectionList: cloneSectionList.map((f, fnx) => {
-          if (f?.id == section?.id) {
-            return section;
-          }
-          return f;
-        }),
+        sectionListData: filteredArr,
+        cloneSectionList: filteredArr,
         selectedItemID: -1,
       });
+      // fetchTags(filteredArr)
     } else {
       let updateArray = productListData.map((val, i) => {
         if (val.id == item.id) {
@@ -1280,9 +1308,44 @@ export default function Products({ route, navigation }) {
     if (isLoadingC) {
       getAllProducts(true);
       fetchOffers();
-      getAllProductTags();
+      // getAllProductTags();
     }
   }, [isLoadingC]);
+
+  const checkIfItemExist = (item, tags) => {
+    let result = false;
+    tags.forEach((el) => {
+      if (el.id === item.tag_id) {
+        result = true;
+      }
+    });
+    return result;
+  };
+
+  useEffect(() => {
+    let EnabledTags = ProductTags.filter((el) => el.isSelected);
+    if (EnabledTags.length > 0) {
+      const newArr = sectionListData.map((el) => {
+        const records =
+          el.data &&
+          el.data.filter((item) => {
+            if (
+              item.tags.length > 0 &&
+              checkIfItemExist(item.tags[0], EnabledTags)
+            )
+              return item;
+          });
+        const newObj = {
+          ...el,
+        };
+        newObj.data = records;
+        return newObj;
+      });
+      updateState({cloneSectionList: newArr});
+    } else {
+      getAllProductsByVendor();
+    }
+  }, [ProductTags && updateTagFilter]);
 
   const onPressChildCards = (item) => {
     console.log(item, 'item upload');
@@ -1301,7 +1364,6 @@ export default function Products({ route, navigation }) {
 
   const onSearchWithinMenu = (text) => {
     updateState({ searchInput: text });
-    let Arr = [];
     if (text) {
       const newArr = sectionListData.map((el) => {
         const records =
@@ -1329,27 +1391,28 @@ export default function Products({ route, navigation }) {
 
   const fetchOffers = () => {
     // console.log(productListId?.id)
-    // // return;
-    //   let data = {};
-    //   data['vendor_id'] = 2;
-    //   // data['vendor_id'] = productListId?.id;
-    //   // data['cart_id'] = vendorInfo.cartId;
-    //   console.log(data, 'vendor_id');
-    //   actions
-    //     .getAllPromoCodesForProductList(data, {
-    //       code: appData?.profile?.code,
-    //       currency: currencies?.primary_currency?.id,
-    //       language: languages?.primary_language?.id,
-    //       systemuser: DeviceInfo.getUniqueId(),
-    //     })
-    //     .then((res) => {
-    //       console.log('res >>>>>>>', res);
-    //       // updateState({isLoading: false});
-    //       // if (res && res.data) {
-    //       //   updateState({allAvailableCoupons: res.data});
-    //       // }
-    //     })
-    //     .catch(errorMethod);
+    // return;
+    let data = {};
+    // data['vendor_id'] = 2;
+    data['vendor_id'] = productListId?.id;
+    1;
+    // data['cart_id'] = vendorInfo.cartId;
+    console.log(data, 'vendor_id');
+    actions
+      .getAllPromoCodesForProductList(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log('res >>>>>>> offers >>>', res);
+        updateState({isLoading: false});
+        if (res && res.data) {
+          updateState({offerList: res.data});
+        }
+      })
+      .catch(errorMethod);
   };
 
   const RenderMenuView = () => {
@@ -1381,7 +1444,8 @@ export default function Products({ route, navigation }) {
               <TouchableOpacity
                 key={index}
                 onPress={() => {
-                  updateState({ MenuModalVisible: !MenuModalVisible });
+                  Vibration.vibrate(PATTERN);
+                  updateState({MenuModalVisible: !MenuModalVisible});
                   sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
                     {
                       x: (height / 7.5) * idx * idx,
@@ -1451,80 +1515,87 @@ export default function Products({ route, navigation }) {
             marginVertical: moderateScaleVertical(10),
           }}
         />
-        <ScrollView style={{ width: '100%' }}>
-          {[1, 2, 3].map((el, indx) => {
-            return (
-              <View
-                key={indx}
-                style={{
-                  borderBottomWidth: 1,
-                  paddingHorizontal: moderateScale(15),
-                  width: '100%',
-                  borderBottomColor: colors.greyMedium,
-                  marginBottom: moderateScale(10),
-                }}>
-                <Text
-                  style={{
-                    fontSize: textScale(13),
-                    marginBottom: moderateScale(5),
-                    fontFamily: fontFamily.regular,
-                  }}>
-                  Get 20% OFF up to $50
-                </Text>
-                <Text
-                  style={{
-                    fontSize: textScale(11),
-                    marginBottom: moderateScale(5),
-                    color: colors.textGreyOpcaity7,
-                    fontFamily: fontFamily.regular,
-                  }}>
-                  Valid on orders with items worth $159 or more.
-                </Text>
+        <ScrollView style={{width: '100%'}}>
+          {offerList?.length > 0 &&
+            offerList.map((el, indx) => {
+              console.log(el);
+              return (
                 <View
+                  key={indx}
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    borderBottomWidth: 1,
+                    paddingHorizontal: moderateScale(15),
                     width: '100%',
-                    borderTopWidth: 1,
-                    borderTopColor: colors.greyMedium,
-                    alignItems: 'center',
-                    paddingTop: moderateScaleVertical(15),
-                    marginTop: moderateScale(8),
-                    paddingBottom: moderateScale(15),
+                    borderBottomColor: colors.greyMedium,
+                    marginBottom: moderateScale(10),
                   }}>
+                  <Text
+                    style={{
+                      fontSize: textScale(13),
+                      marginBottom: moderateScale(5),
+                      fontFamily: fontFamily.regular,
+                    }}>
+                    {el.title ? el.title : ''}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: textScale(11),
+                      marginBottom: moderateScale(5),
+                      color: colors.textGreyOpcaity7,
+                      fontFamily: fontFamily.regular,
+                    }}>
+                    {el.title ? el.title : ''}
+                  </Text>
                   <View
                     style={{
-                      borderWidth: 1,
-                      borderColor: themeColors.primary_color,
-                      borderRadius: moderateScale(3),
-                      paddingHorizontal: moderateScale(7),
-                      paddingVertical: moderateScale(4),
-                      borderStyle: 'dashed',
-                      justifyContent: 'center',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      width: '100%',
+                      borderTopWidth: 1,
+                      borderTopColor: colors.greyMedium,
                       alignItems: 'center',
+                      paddingTop: moderateScaleVertical(15),
+                      marginTop: moderateScale(8),
+                      paddingBottom: moderateScale(15),
                     }}>
-                    <Text
+                    <View
                       style={{
-                        fontSize: textScale(11),
-                        fontFamily: fontFamily.regular,
+                        borderWidth: 1,
+                        borderColor: themeColors.primary_color,
+                        borderRadius: moderateScale(3),
+                        paddingHorizontal: moderateScale(7),
+                        paddingVertical: moderateScale(4),
+                        borderStyle: 'dashed',
+                        justifyContent: 'center',
+                        alignItems: 'center',
                       }}>
-                      TASTY
-                    </Text>
+                      <Text
+                        style={{
+                          fontSize: textScale(11),
+                          fontFamily: fontFamily.regular,
+                          textTransform: 'uppercase',
+                        }}>
+                        {el.name ? el.name : ''}
+                      </Text>
+                    </View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        Clipboard.setString(`${el.name ? el.name : ''}`);
+                        Toast.show(`Copied`);
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: textScale(11),
+                          color: themeColors.primary_color,
+                          fontFamily: fontFamily.regular,
+                        }}>
+                        TAP TO COPY
+                      </Text>
+                    </TouchableOpacity>
                   </View>
-                  <TouchableOpacity>
-                    <Text
-                      style={{
-                        fontSize: textScale(11),
-                        color: themeColors.primary_color,
-                        fontFamily: fontFamily.regular,
-                      }}>
-                      TAP TO COPY
-                    </Text>
-                  </TouchableOpacity>
                 </View>
-              </View>
-            );
-          })}
+              );
+            })}
         </ScrollView>
       </View>
     );
@@ -1700,6 +1771,7 @@ export default function Products({ route, navigation }) {
                           color: isDarkMode
                             ? MyDarkTheme.colors.text
                             : colors.white,
+                          width: width / 1.5,
                         }}>
                         {categoryInfo?.address || ''}
                       </Text>
@@ -1773,7 +1845,7 @@ export default function Products({ route, navigation }) {
                         </View>
                       )}
                   </View> */}
-                  {!!categoryInfo && !!categoryInfo?.categoriesList && (
+                  {!!categoryInfo && !!categoryInfo?.categoriesList ? (
                     <View>
                       <Text
                         numberOfLines={1}
@@ -1805,7 +1877,7 @@ export default function Products({ route, navigation }) {
                         {desc}
                       </Text>
                     </View>
-                  )}
+                  ) : null}
                   {/* {!!categoryInfo && !!categoryInfo?.lineOfSightDistance && (
                     <View
                       style={{
@@ -2011,32 +2083,41 @@ export default function Products({ route, navigation }) {
           </Animatable.View>
         )}
 
-        <View
-          style={{
-            justifyContent: 'space-between',
-            flexDirection: 'row',
-            width: width / 1.11,
-            alignSelf: 'center',
-            borderBottomWidth: 1,
-            borderBottomColor: colors.greyMedium,
-            marginBottom: moderateScale(15),
-            paddingBottom: moderateScaleVertical(10),
-            paddingHorizontal: moderateScale(10),
-          }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View
-              style={{
-                backgroundColor: colors.greyColor,
-                width: moderateScale(30),
-                height: moderateScale(30),
-                borderRadius: moderateScale(30),
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Image source={imagePath.ic_pinIcon} />
-            </View>
-            {categoryInfo.lineOfSightDistance != undefined &&
-              categoryInfo.lineOfSightDistance != null && (
+        {!(
+          categoryInfo &&
+          categoryInfo?.lineOfSightDistance == undefined &&
+          categoryInfo.lineOfSightDistance == null &&
+          categoryInfo?.timeofLineOfSightDistance == undefined &&
+          categoryInfo.timeofLineOfSightDistance == null &&
+          offerList?.length === 0
+        ) && (
+          <View
+            style={{
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+              width: width / 1.11,
+              alignSelf: 'center',
+              borderBottomWidth: 1,
+              borderBottomColor: colors.greyMedium,
+              // marginBottom: moderateScale(15),
+              paddingBottom: moderateScaleVertical(10),
+              paddingHorizontal: moderateScale(10),
+            }}>
+            {categoryInfo?.lineOfSightDistance != undefined &&
+            categoryInfo.lineOfSightDistance != null ? (
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View
+                  style={{
+                    backgroundColor: colors.greyColor,
+                    width: moderateScale(30),
+                    height: moderateScale(30),
+                    borderRadius: moderateScale(30),
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Image source={imagePath.ic_pinIcon} />
+                </View>
+
                 <Text
                   style={{
                     ...styles.milesTxt,
@@ -2046,23 +2127,60 @@ export default function Products({ route, navigation }) {
                   }}>
                   {categoryInfo.lineOfSightDistance}
                 </Text>
-              )}
-          </View>
+              </View>
+            ) : null}
 
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View
-              style={{
-                backgroundColor: colors.greyColor,
-                width: moderateScale(30),
-                height: moderateScale(30),
-                borderRadius: moderateScale(30),
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Image source={imagePath.ic_timeIcon} />
-            </View>
-            {categoryInfo.lineOfSightDistance != undefined &&
-              categoryInfo.lineOfSightDistance != null && (
+            {categoryInfo?.timeofLineOfSightDistance != undefined &&
+              categoryInfo.timeofLineOfSightDistance != null && (
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <View
+                    style={{
+                      backgroundColor: colors.greyColor,
+                      width: moderateScale(30),
+                      height: moderateScale(30),
+                      borderRadius: moderateScale(30),
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Image source={imagePath.ic_timeIcon} />
+                  </View>
+                  {categoryInfo?.timeofLineOfSightDistance != undefined &&
+                  categoryInfo.timeofLineOfSightDistance != null ? (
+                    <Text
+                      style={{
+                        ...styles.milesTxt,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        opacity: 1,
+                        fontSize: textScale(10),
+                      }}>
+                      {checkEvenOdd(categoryInfo.timeofLineOfSightDistance)}-
+                      {checkEvenOdd(categoryInfo.timeofLineOfSightDistance + 5)}
+                      {' mins'}
+                    </Text>
+                  ) : null}
+                </View>
+              )}
+
+            {offerList?.length > 0 && (
+              <TouchableOpacity
+                onPress={() =>
+                  updateState({offersModalVisible: !offersModalVisible})
+                }
+                activeOpacity={0.7}
+                style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View
+                  style={{
+                    backgroundColor: colors.greyColor,
+                    width: moderateScale(30),
+                    height: moderateScale(30),
+                    borderRadius: moderateScale(30),
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Image source={imagePath.ic_offersIcon} />
+                </View>
                 <Text
                   style={{
                     ...styles.milesTxt,
@@ -2070,51 +2188,22 @@ export default function Products({ route, navigation }) {
                     opacity: 1,
                     fontSize: textScale(10),
                   }}>
-                  {checkEvenOdd(categoryInfo.timeofLineOfSightDistance)}-
-                  {checkEvenOdd(categoryInfo.timeofLineOfSightDistance + 5)}
-                  {' mins'}
+                  {'Offers'}
                 </Text>
-              )}
+                <Image
+                  source={imagePath.icBackb}
+                  style={{
+                    transform: [{rotate: '-90deg'}],
+                    width: moderateScale(11),
+                    height: moderateScale(11),
+                    resizeMode: 'contain',
+                    marginLeft: moderateScale(6),
+                  }}
+                />
+              </TouchableOpacity>
+            )}
           </View>
-
-          <TouchableOpacity
-            onPress={() =>
-              updateState({ offersModalVisible: !offersModalVisible })
-            }
-            activeOpacity={0.7}
-            style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View
-              style={{
-                backgroundColor: colors.greyColor,
-                width: moderateScale(30),
-                height: moderateScale(30),
-                borderRadius: moderateScale(30),
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Image source={imagePath.ic_offersIcon} />
-            </View>
-            <Text
-              style={{
-                ...styles.milesTxt,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                opacity: 1,
-                fontSize: textScale(10),
-              }}>
-              {'Offers'}
-            </Text>
-            <Image
-              source={imagePath.icBackb}
-              style={{
-                transform: [{ rotate: '-90deg' }],
-                width: moderateScale(11),
-                height: moderateScale(11),
-                resizeMode: 'contain',
-                marginLeft: moderateScale(6),
-              }}
-            />
-          </TouchableOpacity>
-        </View>
+        )}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -2122,45 +2211,58 @@ export default function Products({ route, navigation }) {
             paddingHorizontal: moderateScale(20),
             marginBottom: moderateScale(15),
           }}
-          contentContainerStyle={{ alignItems: 'center' }}>
-          {ProductTags.map((el, index) => {
-            return (
-              <View key={index} style={{ flexDirection: 'row' }}>
-                <ToggleSwitch
-                  isOn={el.isSelected}
-                  onColor={colors.green}
-                  offColor={
-                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
-                  }
-                  size="small"
-                  onToggle={() => {
-                    const updatedArr = ProductTags.map((el, idx) => {
-                      console.log(el);
-                      if (idx === index) {
-                        let newObj = el;
-                        newObj.isSelected = !newObj.isSelected;
-                        return newObj;
-                      } else {
-                        return el;
-                      }
-                    });
-                    updateState({ ProductTags: updatedArr });
-                  }}
-                />
-                <Text
-                  style={{
-                    fontSize: textScale(11),
-                    fontFamily: fontFamily.regular,
-                    marginLeft: moderateScale(7),
-                  }}>
-                  {el.translations[0].name}
-                </Text>
-                <View style={{ width: moderateScale(20) }} />
-              </View>
-            );
-          })}
+          contentContainerStyle={{alignItems: 'center'}}>
+          {ProductTags &&
+            ProductTags.map((el, index) => {
+              return (
+                <View
+                  key={index}
+                  style={{flexDirection: 'row', marginTop: moderateScale(20)}}>
+                  <ToggleSwitch
+                    isOn={el.isSelected}
+                    onColor={colors.green}
+                    offColor={
+                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                    }
+                    size="small"
+                    onToggle={() => {
+                      Vibration.vibrate(PATTERN);
+                      const updatedArr = ProductTags.map((el, idx) => {
+                        console.log(el);
+                        if (idx === index) {
+                          let newObj = el;
+                          newObj.isSelected = !newObj.isSelected;
+                          return newObj;
+                        } else {
+                          return el;
+                        }
+                      });
+                      updateState({
+                        ProductTags: updatedArr,
+                        updateTagFilter: !updateTagFilter,
+                      });
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: textScale(11),
+                      fontFamily: fontFamily.regular,
+                      marginLeft: moderateScale(7),
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGrey,
+                    }}>
+                    {!!el?.translations?.length > 0
+                      ? el.translations[0].name
+                      : ''}
+                  </Text>
+                  <View style={{width: moderateScale(20)}} />
+                </View>
+              );
+            })}
         </ScrollView>
         <SearchBar
+          autoFocus={false}
           containerStyle={{
             alignSelf: 'center',
             // marginHorizontal: moderateScale(18),
@@ -2174,8 +2276,8 @@ export default function Products({ route, navigation }) {
           searchValue={searchInput}
           placeholder={strings.SEARCH_WITHIN_MENU}
           onChangeText={(value) => onSearchWithinMenu(value)}
-          showRightIcon
-          rightIconStyle={{ tintColor: themeColors.secondary_color }}
+          showRightIcon={searchInput ? true : false}
+          rightIconStyle={{tintColor: themeColors.secondary_color}}
           rightIconPress={() => onSearchWithinMenu('')}
         />
         {!!categoryInfo && categoryInfo?.childs?.length > 0 && (
@@ -2322,24 +2424,24 @@ export default function Products({ route, navigation }) {
           ) : (
             <View style={{ marginBottom: moderateScaleVertical(16) }} />
           )}
-          <View style={{ marginHorizontal: moderateScale(16) }}>
-            <ProductListLoader />
-            <View style={{ marginBottom: moderateScaleVertical(12) }} />
-            <ProductListLoader />
-            <View style={{ marginBottom: moderateScaleVertical(12) }} />
-            <ProductListLoader />
-            <View style={{ marginBottom: moderateScaleVertical(12) }} />
-            <ProductListLoader />
-            <View style={{ marginBottom: moderateScaleVertical(12) }} />
-            <ProductListLoader />
-            <View style={{ marginBottom: moderateScaleVertical(12) }} />
+          <View style={{marginHorizontal: moderateScale(16)}}>
+            <ProductListLoader3 />
+            <View style={{marginBottom: moderateScaleVertical(12)}} />
+            <ProductListLoader3 />
+            <View style={{marginBottom: moderateScaleVertical(12)}} />
+            <ProductListLoader3 />
+            <View style={{marginBottom: moderateScaleVertical(12)}} />
+            <ProductListLoader3 />
+            <View style={{marginBottom: moderateScaleVertical(12)}} />
+            <ProductListLoader3 />
+            <View style={{marginBottom: moderateScaleVertical(12)}} />
           </View>
           {!data?.isVerndorList && (
-            <View style={{ marginHorizontal: moderateScale(16) }}>
-              <ProductListLoader />
-              <View style={{ marginBottom: moderateScaleVertical(12) }} />
-              <ProductListLoader />
-              <View style={{ marginBottom: moderateScaleVertical(12) }} />
+            <View style={{marginHorizontal: moderateScale(16)}}>
+              <ProductListLoader3 />
+              <View style={{marginBottom: moderateScaleVertical(12)}} />
+              <ProductListLoader3 />
+              <View style={{marginBottom: moderateScaleVertical(12)}} />
             </View>
           )}
         </SafeAreaView>
@@ -2367,8 +2469,7 @@ export default function Products({ route, navigation }) {
   };
 
   const renderSectionTab = (props) => {
-    console.log('check all datya >>> ', props);
-    const { title, isActive } = props;
+    const {title, isActive} = props;
 
     if (isActive) {
       activeIdx = props.index;
@@ -2867,19 +2968,34 @@ export default function Products({ route, navigation }) {
         visible={updateQtyLoader}
       />
 
-      {!searchInput && (
+      {!!categoryInfo?.is_show_products_with_category && !searchInput && (
         <GradientCartView
-          // colorsArray={}
-          onPress={() => navigation.navigate(navigationStrings.CART)}
+          onPress={() => {
+            Vibration.vibrate(PATTERN);
+            NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+              screen: navigationStrings.CART,
+            });
+          }}
           btnText={
             CartItems && CartItems.data && CartItems.data.item_count
-              ? `${CartItems.data.item_count} ${CartItems.data.item_count > 1 ? strings.ITEMS : strings.ITEM
-              } | ${currencies.primary_currency.symbol}${CartItems.data.total_payable_amount
-              }`
+              ? `${CartItems.data.item_count} ${
+                  CartItems.data.item_count > 1 ? strings.ITEM : strings.ITEMS
+                } | ${
+                  currencies.primary_currency.symbol
+                }${currencyNumberFormatter(
+                  Number(CartItems.data.total_payable_amount).toFixed(2),
+                )}`
               : ''
           }
-          ifCartShow={CartItems && CartItems.data && CartItems.data.item_count ? true : false}
-          onMenuTap={() => updateState({ MenuModalVisible: !MenuModalVisible })}
+          ifCartShow={
+            CartItems && CartItems.data && CartItems.data.item_count
+              ? true
+              : false
+          }
+          onMenuTap={() => {
+            Vibration.vibrate(PATTERN);
+            updateState({MenuModalVisible: !MenuModalVisible});
+          }}
         />
       )}
 
@@ -2919,9 +3035,9 @@ export default function Products({ route, navigation }) {
           backgroundColor: 'white',
           borderRadius: moderateScale(10),
         }}
-        onBackdropPress={() =>
-          updateState({ MenuModalVisible: !MenuModalVisible })
-        }
+        onBackdropPress={() => {
+          updateState({MenuModalVisible: !MenuModalVisible});
+        }}
       />
     </View>
   );
