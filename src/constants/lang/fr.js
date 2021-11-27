@@ -654,4 +654,5 @@ montant`,
   HERE_YOU_ARE_FOR_RETURN: 'Vos produits à rembourser',
   SEARCH_WITHIN_MENU: 'Rechercher dans le menu',
   BROWSE_MENU: 'Voir le menu',
+  MINS: 'min',
 };
