@@ -126,7 +126,7 @@ export default function AvailableDriver({
                 fontSize: textScale(10),
                 textAlign: 'left',
               }}>
-              Affordable {item?.translation[0]?.title} ride{' '}
+              {item?.translation[0]?.title} ride{' '}
             </Text>
           </View>
         </View>

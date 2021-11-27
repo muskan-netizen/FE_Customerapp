@@ -64,6 +64,7 @@ import {
 import {getItem, removeItem, setItem} from '../../utils/utils';
 import stylesFun from './styles';
 import RazorpayCheckout from 'react-native-razorpay';
+import moment from 'moment';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -1587,6 +1588,7 @@ export default function Cart({navigation, route}) {
                                 : null}
                             </View>
                           </View>
+
                           <TouchableOpacity
                             style={{
                               alignSelf: 'flex-end',
@@ -1598,6 +1600,23 @@ export default function Cart({navigation, route}) {
                           </TouchableOpacity>
                         </View>
                       </View>
+                      {!!cartData?.delay_date && (
+                        <Text
+                          style={{
+                            fontSize: moderateScale(12),
+                            fontFamily: fontFamily.medium,
+                            color: colors.redFireBrick,
+                            marginBottom: moderateScale(3),
+                          }}>{`${strings.PREPARATION_TIME_IS} ${
+                          i?.product.delay_order_hrs
+                            ? `${i?.product.delay_order_hrs} hrs`
+                            : ''
+                        } ${
+                          i?.product.delay_order_min
+                            ? `${i?.product.delay_order_min} mins`
+                            : ''
+                        }  `}</Text>
+                      )}
 
                       {/* <View style={styles.dashedLine} /> */}
                     </Animated.View>
@@ -2876,7 +2895,11 @@ export default function Cart({navigation, route}) {
               <ButtonComponent
                 onPress={_selectTime}
                 btnText={
-                  localeSheduledOrderDate
+                  !!cartData?.delay_date
+                    ? `${strings.SCHEDULE_FOR} ${moment(
+                        cartData?.delay_date,
+                      ).format('DD MMM, YYYY HH:mm')}`
+                    : localeSheduledOrderDate
                     ? localeSheduledOrderDate
                     : strings.SCHEDULE_ORDER
                 }
@@ -3783,7 +3806,11 @@ export default function Cart({navigation, route}) {
                   }
                   textColor={isDarkMode ? colors.white : colors.blackB}
                   mode="datetime"
-                  minimumDate={new Date()}
+                  minimumDate={
+                    !!cartData?.delay_date
+                      ? new Date(cartData?.delay_date)
+                      : new Date()
+                  }
                   maximumDate={undefined}
                   style={styles.datetimePickerText}
                   // onDateChange={setDate}

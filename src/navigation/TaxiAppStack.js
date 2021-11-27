@@ -58,7 +58,10 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.RATEORDER}
         component={RateOrder}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          unmountOnBlur: true,
+        }}
       />
     </>
   );

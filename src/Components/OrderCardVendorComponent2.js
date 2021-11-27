@@ -198,7 +198,7 @@ export default function OrderCardVendorComponent2({
             }}>
             {`${strings.TOTAL_ITEMS}: ${data?.product_details?.length}`}
           </Text>
-          {data?.order_status?.current_status?.title == strings.DELIVERED && (
+          {/* {data?.order_status?.current_status?.title == strings.DELIVERED && (
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => setModal(true)}>
@@ -207,7 +207,7 @@ export default function OrderCardVendorComponent2({
                 source={imagePath.icAttachments}
               />
             </TouchableOpacity>
-          )}
+          )} */}
         </View>
         <ScrollView bounces={true}>
           {data?.product_details.map((i, inx) => {
