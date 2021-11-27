@@ -1526,7 +1526,7 @@ export default function Products({route, navigation}) {
             paddingHorizontal: moderateScale(15),
             fontFamily: fontFamily.regular,
           }}>
-          Available Offers
+          {strings.AVAILABLE_OFFERS}
         </Text>
         <View
           style={{
@@ -1602,7 +1602,7 @@ export default function Products({route, navigation}) {
                     <TouchableOpacity
                       onPress={() => {
                         Clipboard.setString(`${el.name ? el.name : ''}`);
-                        Toast.show(`Copied!`);
+                        Toast.show(strings.COPIED);
                       }}>
                       <Text
                         style={{
@@ -1610,7 +1610,7 @@ export default function Products({route, navigation}) {
                           color: themeColors.primary_color,
                           fontFamily: fontFamily.regular,
                         }}>
-                        TAP TO COPY
+                        {strings.TAP_TO_COPY}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -2209,7 +2209,7 @@ export default function Products({route, navigation}) {
                     opacity: 1,
                     fontSize: textScale(10),
                   }}>
-                  {'Offers'}
+                  {strings.OFFERS}
                 </Text>
                 <Image
                   source={imagePath.icBackb}

@@ -624,4 +624,9 @@ export default {
   HERE_YOU_ARE_FOR_RETURN: 'Here You Are For Return Product !',
   BROWSE_MENU: 'Browse Menu',
   MINS: 'mins',
+  AVAILABLE_OFFERS: 'Available Offers',
+  TAP_TO_COPY: 'TAP TO COPY',
+  COPIED: 'Copied!',
+  SCHEDULE_FOR: 'Schedule for',
+  PREPARATION_TIME_IS: 'Preparation Time is',
 };
