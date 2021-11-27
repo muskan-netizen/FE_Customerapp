@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { Animated, Image, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import { Animated, Image, Text, TouchableOpacity, View, ScrollView, Keyboard } from 'react-native';
 import { useDarkMode } from 'react-native-dark-mode';
 import { getBundleId } from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
@@ -301,7 +301,7 @@ export default function Addaddress({ navigation, route }) {
       tasks: checkEmptyTask,
       cabVendors: pickUpVendors,
       datetime: paramData?.datetime,
-      pickUpTimeType: paramData?.pickUpTimeType,
+      pickUpTimeType: paramData?.pickUpTimeType || route?.params?.data?.pickUpTimeType
     });
   };
 
@@ -376,6 +376,7 @@ export default function Addaddress({ navigation, route }) {
   }
 
   const onPressAddress = async (place) => {
+    Keyboard.dismiss()
     console.log("selected item", place?.name)
     // return;
     if (!!place.place_id && !!place?.name) {

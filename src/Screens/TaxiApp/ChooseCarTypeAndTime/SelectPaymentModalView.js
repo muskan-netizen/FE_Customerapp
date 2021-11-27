@@ -51,8 +51,8 @@ export default function SelectPaymentModalView({
   uploadImage,
   updateInstruction
 }) {
-  console.log(pickUpTimeType, 'pickUpTimeType');
-  console.log(selectedTime, 'selectedTime');
+  console.log(pickUpTimeType, 'pickUpTimeType+++++++');
+  console.log(selectedTime, 'selectedTime+++++++');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();

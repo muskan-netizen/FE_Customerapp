@@ -64,6 +64,8 @@ import RoundImg from '../../../Components/RoundImg';
 import LeftRightText from '../../../Components/LeftRightText';
 import SearchDriver from '../ChooseCarTypeAndTime/SearchDriver';
 import moment from 'moment';
+import ButtonWithLoader from '../../../Components/ButtonWithLoader';
+import { FlatList } from 'react-native';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -105,7 +107,9 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     ],
     orderFullDetail: null,
     showModal: false,
-    hideShowBack: 0
+    hideShowBack: 0,
+    selectedImg: '',
+    baseUrl: ''
   });
   const {
     isLoading,
@@ -130,7 +134,9 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     orderStatus,
     orderFullDetail,
     showModal,
-    hideShowBack
+    hideShowBack,
+    selectedImg,
+    baseUrl
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -194,6 +200,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       updateState({ isLoading: false });
     }
   }, [])
+
   useInterval(
     () => {
       if (urlValue) {
@@ -255,7 +262,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       )
       .then((res) => {
         // console.log(res?.data?.order_details?.dispatcher_status, 'res---agent');
-        console.log('agent location', res?.data)
+        console.log('agent location1', res?.data)
         updateState({
           agent_location: res?.data?.agent_location,
           orderDetail: res?.data?.order,
@@ -265,6 +272,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           getDispatchId: res?.data?.order?.id,
           driverRating: res?.data?.avgrating,
           orderStatus: res?.data?.order?.status,
+          orderFullDetail: res.data,
+          baseUrl: res?.data?.base_url
         });
       })
       .catch(errorMethod);
@@ -286,11 +295,12 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         },
       )
       .then((res) => {
-        console.log(res, 'res---agent>>>>>>>');
+        console.log(res, 'agent location2');
         updateState({
           isLoading: false,
           tasks: res?.data?.tasks,
           orderFullDetail: res?.data,
+          baseUrl: res?.data?.base_url,
           region: {
             latitude: res?.data?.tasks[0]?.latitude
               ? Number(res?.data?.tasks[0].latitude)
@@ -519,6 +529,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
 
 
   const bottomSheetHeader = () => {
+    if (!!orderFullDetail) {
       return (
         <View
           style={{
@@ -550,8 +561,11 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           <Text />
         </View>
       )
+    } else {
+      return <View />
+    }
   }
-  
+
   const onCenter = () => {
 
     let cords = orderFullDetail.tasks.map((val) => {
@@ -738,7 +752,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 }}
               />
             </MapView>)}
-          <TouchableOpacity
+          {!!orderFullDetail && (<TouchableOpacity
             style={{
               position: 'absolute',
               top: height / 5,
@@ -754,7 +768,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               }}
               source={imagePath.mapNavigation}
             />
-          </TouchableOpacity>
+          </TouchableOpacity>)}
 
         </View>
 
@@ -762,10 +776,9 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         <BottomSheet
           ref={bottomSheetRef}
           index={0}
-          snapPoints={[height / 1.8, height / 1.16]}
+          snapPoints={[height / 1.95, height / 1.1]}
           animateOnMount={true}
           onChange={(inx) => updateState({ hideShowBack: inx })}
-
           handleComponent={bottomSheetHeader}
         >
           <BottomSheetScrollView
@@ -799,7 +812,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 </View>
               </View>
 
-              <View style={{ marginHorizontal: moderateScale(16) }}>
+              {!!orderFullDetail?.order.task_description && (<View style={{ marginHorizontal: moderateScale(16) }}>
                 <Text style={styles.datePriceText}>Instructions:</Text>
                 <Text style={{
                   ...styles.statusText,
@@ -808,7 +821,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     : colors.blackOpacity66,
                   lineHeight: moderateScale(20)
                 }}>{orderFullDetail?.order.task_description} </Text>
-              </View>
+              </View>)}
               <View style={styles.horizontalLine} />
 
               {orderFullDetail?.tasks.map((val, i) => {
@@ -874,21 +887,43 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     starSize={15}
                   />)}
                 </View>
-                <View style={styles.horizontalLine} />
-                <Text style={styles.deliveryProof}>Delivery Proof</Text>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => updateState({ showModal: true })}
-                >
-                  <Image
-                    source={{ uri: 'https://static.independent.co.uk/s3fs-public/thumbnails/image/2018/05/10/13/man-flashy-car.jpg?width=1200' }}
-                    style={{
-                      height: moderateScale(40),
-                      width: moderateScale(40),
-                      borderRadius: moderateScale(4)
+
+                {!!orderFullDetail?.tasks[0]?.proof_image && (<View>
+                  <View style={styles.horizontalLine} />
+                  <Text style={styles.deliveryProof}>Delivery Proof</Text>
+                  <FlatList
+                    ItemSeparatorComponent={() => <View style={{ marginLeft: 8 }} />}
+                    horizontal
+                    data={orderFullDetail?.tasks.filter((val => {
+                      if (!!val?.proof_image) {
+                        return val
+                      }
+                    }))}
+                    renderItem={({ item }) => {
+                      return (
+                        <View>
+                          <TouchableOpacity
+                            activeOpacity={0.8}
+                            onPress={() => updateState({
+                              showModal: true,
+                              selectedImg: item?.proof_image
+                            })}
+                          >
+                            <Image
+                              source={{ uri: `${baseUrl}/${item?.proof_image}` }}
+                              style={{
+                                height: moderateScale(40),
+                                width: moderateScale(40),
+                                borderRadius: moderateScale(4)
+                              }}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      )
                     }}
                   />
-                </TouchableOpacity>
+
+                </View>)}
                 <View style={styles.horizontalLine} />
                 <Text style={styles.deliveryProof}>Order Details</Text>
                 {orderFullDetail.order_details.products.map((val) => {
@@ -928,6 +963,17 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                         fullStarColor={'#DD812E'}
                         starSize={15}
                       />)}
+
+                      {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Image source={imagePath.startwo} />
+                        <TouchableOpacity>
+                          <Text style={{
+                            fontSize: textScale(10),
+                            fontFamily: fontFamily.medium,
+                            marginLeft: moderateScale(4)
+                          }}>Add Rating</Text>
+                        </TouchableOpacity>
+                      </View> */}
                     </View>
                   )
                 })}
@@ -1038,7 +1084,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
             </TouchableOpacity>
           </View>
           <Image
-            source={{ uri: 'https://www.digitalcreed.in/wp-content/uploads/2016/04/driver.jpg' }}
+            source={{ uri: `${baseUrl}/${selectedImg}` }}
             style={{
               width: '100%',
               height: height / 3,
