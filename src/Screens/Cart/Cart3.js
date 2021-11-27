@@ -3059,6 +3059,7 @@ export default function Cart({navigation, route}) {
             isVisible: false,
             isLoadingB: false,
             selectedAddress: address,
+            placeLoader: false,
           });
         })
         .catch(errorMethod);
@@ -3079,6 +3080,7 @@ export default function Cart({navigation, route}) {
           isLoadingB: false,
           isVisible: false,
           isVisibleAddressModal: false,
+          placeLoader: false,
         });
         getAllAddress();
         setTimeout(() => {
