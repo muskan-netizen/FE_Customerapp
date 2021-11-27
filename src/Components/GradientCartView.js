@@ -139,77 +139,77 @@ const GradientCartView = ({
       ) : null}
 
       {ifCartShow && (
-        <Animatable.View
-          style={{
-            ...commonStyles.buttonRect,
-            borderWidth: 0,
-            marginTop,
-            marginBottom,
-            height: moderateScale(58),
-            width: moderateScale(58),
-            borderRadius: 100,
-            ...containerStyle,
-          }}
-          animation={zoomIn ? zoomOut : expand}
-          duration={500}>
-          <LinearGradient
-            start={{x: 0.0, y: -1.5}}
-            end={{x: 0.5, y: 1.0}}
-            // end={endcolor}
+        <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
+          <Animatable.View
             style={{
-              height: '100%',
-              alignItems: 'center',
-              // justifyContent: 'space-between',
-              flexDirection: 'row',
-              width: '85%',
-              marginBottom: moderateScale(40),
-              paddingRight: moderateScale(4),
-              // paddingLeft: moderateScale(20),
+              ...commonStyles.buttonRect,
+              borderWidth: 0,
+              marginTop,
+              marginBottom,
+              height: moderateScale(58),
+              width: moderateScale(58),
               borderRadius: 100,
-              ...btnStyle,
+              ...containerStyle,
             }}
-            colors={
-              colorsArray
-                ? colorsArray
-                : [
-                    themeColors?.primary_color,
-                    getColorCodeWithOpactiyNumber(
-                      themeColors?.primary_color.substr(1),
-                      70,
-                    ),
-                  ]
-            }>
-            {showText && (
-              <Animatable.Text
-                duration={500}
-                animation={showText ? textOpacity : null}
-                style={{
-                  ...commonStyles.buttonTextWhite,
-                  color: colors.white,
-                  ...textStyle,
-                }}>
-                {btnText}
-              </Animatable.Text>
-            )}
-            <Animatable.View
-              animation={zoomOut}
-              duration={500}
+            animation={zoomIn ? zoomOut : expand}
+            duration={500}>
+            <LinearGradient
+              start={{x: 0.0, y: -1.5}}
+              end={{x: 0.5, y: 1.0}}
+              // end={endcolor}
               style={{
-                width: moderateScale(50),
-                height: moderateScale(50),
-                borderRadius: moderateScale(50),
-                backgroundColor: 'rgba(255,255,255,.5)',
+                height: '100%',
                 alignItems: 'center',
-                justifyContent: 'center',
-                position: 'absolute',
-                right: showText ? moderateScale(5) : 0,
-              }}>
-              <TouchableOpacity activeOpacity={0.6} onPress={onPress}>
+                // justifyContent: 'space-between',
+                flexDirection: 'row',
+                width: '85%',
+                marginBottom: moderateScale(40),
+                paddingRight: moderateScale(4),
+                // paddingLeft: moderateScale(20),
+                borderRadius: 100,
+                ...btnStyle,
+              }}
+              colors={
+                colorsArray
+                  ? colorsArray
+                  : [
+                      themeColors?.primary_color,
+                      getColorCodeWithOpactiyNumber(
+                        themeColors?.primary_color.substr(1),
+                        70,
+                      ),
+                    ]
+              }>
+              {showText && (
+                <Animatable.Text
+                  duration={500}
+                  animation={showText ? textOpacity : null}
+                  style={{
+                    ...commonStyles.buttonTextWhite,
+                    color: colors.white,
+                    ...textStyle,
+                  }}>
+                  {btnText}
+                </Animatable.Text>
+              )}
+              <Animatable.View
+                animation={zoomOut}
+                duration={500}
+                style={{
+                  width: moderateScale(50),
+                  height: moderateScale(50),
+                  borderRadius: moderateScale(50),
+                  backgroundColor: 'rgba(255,255,255,.5)',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'absolute',
+                  right: showText ? moderateScale(5) : 0,
+                }}>
                 <Image source={imagePath.cartIcon} />
-              </TouchableOpacity>
-            </Animatable.View>
-          </LinearGradient>
-        </Animatable.View>
+              </Animatable.View>
+            </LinearGradient>
+          </Animatable.View>
+        </TouchableOpacity>
       )}
     </View>
   );

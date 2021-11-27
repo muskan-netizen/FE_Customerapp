@@ -2992,12 +2992,10 @@ export default function Products({route, navigation}) {
       />
 
       {!searchInput && (
-        <GradientCartViews
+        <GradientCartView
           onPress={() => {
             Vibration.vibrate(PATTERN);
-            NavigationService.navigate(navigationStrings.TAB_ROUTES, {
-              screen: navigationStrings.CART_STACK,
-            });
+            NavigationService.navigate(navigationStrings.CART_SCREEN);
           }}
           btnText={
             CartItems && CartItems.data && CartItems.data.item_count
