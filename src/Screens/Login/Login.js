@@ -58,7 +58,7 @@ export default function Login({navigation}) {
 
   const [state, setState] = useState({
     // email: '',
-    // password: '',
+    password: '',
     isLoading: false,
     phoneInput: false,
     phoneNoVisibility: false,
@@ -77,6 +77,7 @@ export default function Login({navigation}) {
         : 'IN',
       focus: false,
       countryName: '',
+      isShowPassword: false,
     },
   });
 
@@ -100,6 +101,7 @@ export default function Login({navigation}) {
     mobilNo,
     email,
     number,
+    isShowPassword,
   } = state;
 
   //Naviagtion to specific screen
@@ -370,6 +372,10 @@ export default function Login({navigation}) {
     });
   };
 
+  const showHidePassword = () => {
+    updateState({isShowPassword: !isShowPassword});
+  };
+
   return (
     <WrapperContainer
       isLoadingB={isLoading}
@@ -429,6 +435,7 @@ export default function Login({navigation}) {
             keyboardType={'email-ad
             autoCapitalize={'none'}
           /> */}
+        {console.log(password.length, 'jkfhdjfhdsj')}
         {!phoneInput && (
           <>
             <BorderTextInput
@@ -443,7 +450,17 @@ export default function Login({navigation}) {
               onChangeText={_onChangeText('password')}
               placeholder={strings.ENTER_PASSWORD}
               value={password}
-              secureTextEntry={true}
+              secureTextEntry={isShowPassword ? false : true}
+              rightIcon={
+                password.length > 0
+                  ? !isShowPassword
+                    ? imagePath.icShowPassword
+                    : imagePath.icHidePassword
+                  : false
+              }
+              onPressRight={showHidePassword}
+              isShowPassword={isShowPassword}
+              rightIconStyle={{}}
             />
           </>
         )}

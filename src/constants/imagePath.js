@@ -402,4 +402,6 @@ export default {
   dropOffSchedule: require('../assets/images/ic_order.png'),
   icMyRideActive: require('../assets/images/ic_ride2.png'),
   icMyRideInActive: require('../assets/images/ic_ride1.png'),
+  icShowPassword: require('../assets/images/ic_view1.png'),
+  icHidePassword: require('../assets/images/ic_view2.png'),
 };

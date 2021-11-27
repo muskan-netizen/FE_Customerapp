@@ -48,7 +48,6 @@ export default function Signup({navigation}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-
   // console.log(appData, 'appDataSignup');
 
   const [state, setState] = useState({
@@ -65,6 +64,7 @@ export default function Signup({navigation}) {
     phoneNumber: '',
     deviceToken: '',
     referralCode: '',
+    isShowPassword: false,
   });
   const _onCountryChange = (data) => {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
@@ -179,7 +179,12 @@ export default function Signup({navigation}) {
     isLoading,
     password,
     referralCode,
+    isShowPassword,
   } = state;
+
+  const showHidePassword = () => {
+    updateState({isShowPassword: !isShowPassword});
+  };
   return (
     <WrapperContainer
       isLoadingB={isLoading}
@@ -268,10 +273,20 @@ export default function Signup({navigation}) {
             />
             <View style={{height: moderateScaleVertical(20)}} />
             <BorderTextInput
-              secureTextEntry={true}
+              secureTextEntry={isShowPassword ? false : true}
               onChangeText={_onChangeText('password')}
               placeholder={strings.ENTER_PASSWORD}
               value={password}
+              rightIcon={
+                password.length > 0
+                  ? !isShowPassword
+                    ? imagePath.icShowPassword
+                    : imagePath.icHidePassword
+                  : false
+              }
+              onPressRight={showHidePassword}
+              isShowPassword={isShowPassword}
+              rightIconStyle={{}}
             />
             <BorderTextInput
               onChangeText={_onChangeText('referralCode')}

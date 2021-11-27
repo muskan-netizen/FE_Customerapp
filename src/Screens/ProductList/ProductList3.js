@@ -1417,7 +1417,6 @@ export default function Products({ route, navigation }) {
       })
       .then((res) => {
         console.log('res >>>>>>> offers >>>', res);
-        updateState({isLoading: false});
         if (res && res.data) {
           updateState({offerList: res.data});
         }
