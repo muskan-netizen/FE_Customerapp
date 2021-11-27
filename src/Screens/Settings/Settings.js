@@ -187,7 +187,7 @@ export default function Settings({route, navigation}) {
       // await BackgroundService.stop().then((res) => {});
       // await AsyncStorage.removeItem('BleDevice');
       await AsyncStorage.setItem('autoConnectEnabled', 'true');
-      await AsyncStorage.setItem('BleDevice2', btData);
+      await AsyncStorage.setItem('BleDevice2', JSON.stringify(btData));
 
       if (lang === 'ar') {
         I18nManager.forceRTL(true);

@@ -274,9 +274,13 @@ export const sessionHandler = (error) => {
 };
 
 export const getScaleTransformationStyle = (
-  animated: Animated.Value,
-  startSize: number = 1,
-  endSize: number = 0.95,
+  // animated: Animated.Value,
+  // startSize: number = 1,
+  // endSize: number = 0.95,
+  /** Removing annoataions commented above original code in case of any issue arise */
+  animated,
+  startSize = 1,
+  endSize = 0.95,
 ) => {
   const interpolation = animated.interpolate({
     inputRange: [0, 1],
@@ -288,8 +292,11 @@ export const getScaleTransformationStyle = (
 };
 
 export const pressInAnimation = (
-  animated: Animated.Value,
-  duration: number = 150,
+  // animated: Animated.Value,
+  // duration: number = 150,
+  /** Removing annoataions commented above original code in case of any issue arise */
+  animated,
+  duration = 150,
 ) => {
   animated.setValue(0);
   Animated.timing(animated, {
@@ -300,8 +307,11 @@ export const pressInAnimation = (
 };
 
 export const pressOutAnimation = (
-  animated: Animated.Value,
-  duration: number = 150,
+  // animated: Animated.Value,
+  // duration: number = 150,
+  /** Removing annoataions commented above original code in case of any issue arise */
+  animated,
+  duration = 150,
 ) => {
   animated.setValue(1);
   Animated.timing(animated, {

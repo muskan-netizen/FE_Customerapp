@@ -153,9 +153,9 @@ export default function OrderCardVendorComponent2({
                           color: colors.black,
                         },
                       ]
-                }>{`${moment(data?.date_time).format('DD MMM, YYYY')} ${moment(
-                data?.date_time,
-              ).format('LT')} `}</Text>
+                }>
+                {data?.date_time}
+              </Text>
             </View>
           </View>
         </View>

@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
+import {cloneDeep, update} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
@@ -63,6 +63,8 @@ import {
 } from '../../utils/helperFunctions';
 import {getItem, removeItem, setItem} from '../../utils/utils';
 import stylesFun from './styles';
+import RazorpayCheckout from 'react-native-razorpay';
+import moment from 'moment';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -545,6 +547,7 @@ export default function Cart({navigation, route}) {
 
   //Error handling in screen
   const errorMethod = (error) => {
+    console.log(error, '<==errorOccured');
     updateState({
       isLoading: false,
       isLoadingB: false,
@@ -552,7 +555,7 @@ export default function Cart({navigation, route}) {
       btnLoader: false,
       placeLoader: false,
     });
-    showError(error?.message || error?.error || error);
+    showError(error?.description || error?.message || error?.error || error);
   };
 
   //Get list of all offers
@@ -618,7 +621,6 @@ export default function Cart({navigation, route}) {
         0
       )
     ) {
-      alert();
       moveToNewScreen(navigationStrings.ORDERSUCESS, {
         orderDetail: res.data,
       })();
@@ -667,6 +669,10 @@ export default function Cart({navigation, route}) {
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
     }
+    placeOrderData(data);
+  };
+
+  const placeOrderData = (data) => {
     actions
       .placeOrder(data, {
         code: appData?.profile?.code,
@@ -805,6 +811,10 @@ export default function Cart({navigation, route}) {
   const _finalPayment = () => {
     if (selectedPayment?.id == 4 && selectedPayment?.off_site == 0) {
       _offineLinePayment();
+      return;
+    }
+    if (selectedPayment?.id == 10 && selectedPayment?.off_site == 0) {
+      _renderRazor();
       return;
     }
     if (
@@ -1081,6 +1091,56 @@ export default function Cart({navigation, route}) {
     } else {
       errorMethod(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
+  };
+
+  console.log(
+    (Number(cartData?.total_payable_amount) +
+      (selectedTipAmount != null && selectedTipAmount != ''
+        ? Number(selectedTipAmount)
+        : 0)) *
+      100,
+    'payableAmount',
+  );
+
+  const _renderRazor = () => {
+    updateState({isLoadingB: true});
+    let options = {
+      description: 'Credits towards consultation',
+      image: getImageUrl(
+        appData?.profile?.logo?.image_fit,
+        appData?.profile?.logo?.image_path,
+        '1000/1000',
+      ),
+      currency: currencies?.primary_currency?.iso_code,
+      key: appData?.profile?.preferences?.razorpay_api_key, // Your api key
+      amount:
+        (Number(cartData?.total_payable_amount) +
+          (selectedTipAmount != null && selectedTipAmount != ''
+            ? Number(selectedTipAmount)
+            : 0)) *
+        100,
+      name: appData?.profile?.company_name,
+      prefill: {
+        email: userData?.email,
+        contact: userData?.phone_number || '',
+        name: userData?.name,
+      },
+      theme: {color: themeColors.primary_color},
+    };
+
+    RazorpayCheckout.open(options)
+      .then((res) => {
+        console.log(`Success for razor: `, res);
+        if (res?.razorpay_payment_id) {
+          let data = {};
+          data['address_id'] = selectedAddressData?.id;
+          data['payment_option_id'] = selectedPayment?.id;
+          data['type'] = dineInType || '';
+          data['transaction_id'] = res?.razorpay_payment_id;
+          placeOrderData(data); // placeOrder
+        }
+      })
+      .catch(errorMethod);
   };
 
   const clearSceduleDate = async () => {
@@ -1528,6 +1588,7 @@ export default function Cart({navigation, route}) {
                                 : null}
                             </View>
                           </View>
+
                           <TouchableOpacity
                             style={{
                               alignSelf: 'flex-end',
@@ -1539,6 +1600,23 @@ export default function Cart({navigation, route}) {
                           </TouchableOpacity>
                         </View>
                       </View>
+                      {!!cartData?.delay_date && (
+                        <Text
+                          style={{
+                            fontSize: moderateScale(12),
+                            fontFamily: fontFamily.medium,
+                            color: colors.redFireBrick,
+                            marginBottom: moderateScale(3),
+                          }}>{`${strings.PREPARATION_TIME_IS} ${
+                          i?.product.delay_order_hrs
+                            ? `${i?.product.delay_order_hrs} hrs`
+                            : ''
+                        } ${
+                          i?.product.delay_order_min
+                            ? `${i?.product.delay_order_min} mins`
+                            : ''
+                        }  `}</Text>
+                      )}
 
                       {/* <View style={styles.dashedLine} /> */}
                     </Animated.View>
@@ -2817,7 +2895,11 @@ export default function Cart({navigation, route}) {
               <ButtonComponent
                 onPress={_selectTime}
                 btnText={
-                  localeSheduledOrderDate
+                  !!cartData?.delay_date
+                    ? `${strings.SCHEDULE_FOR} ${moment(
+                        cartData?.delay_date,
+                      ).format('DD MMM, YYYY HH:mm')}`
+                    : localeSheduledOrderDate
                     ? localeSheduledOrderDate
                     : strings.SCHEDULE_ORDER
                 }
@@ -3000,6 +3082,7 @@ export default function Cart({navigation, route}) {
             isVisible: false,
             isLoadingB: false,
             selectedAddress: address,
+            placeLoader: false,
           });
         })
         .catch(errorMethod);
@@ -3020,6 +3103,7 @@ export default function Cart({navigation, route}) {
           isLoadingB: false,
           isVisible: false,
           isVisibleAddressModal: false,
+          placeLoader: false,
         });
         getAllAddress();
         setTimeout(() => {
@@ -3722,7 +3806,11 @@ export default function Cart({navigation, route}) {
                   }
                   textColor={isDarkMode ? colors.white : colors.blackB}
                   mode="datetime"
-                  minimumDate={new Date()}
+                  minimumDate={
+                    !!cartData?.delay_date
+                      ? new Date(cartData?.delay_date)
+                      : new Date()
+                  }
                   maximumDate={undefined}
                   style={styles.datetimePickerText}
                   // onDateChange={setDate}
