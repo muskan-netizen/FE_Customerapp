@@ -58,6 +58,7 @@ import {
   getParameterByName,
   numberFormat,
   showError,
+  showInfo,
   showSuccess,
   timeInLocalLangauge,
 } from '../../utils/helperFunctions';
@@ -856,6 +857,12 @@ export default function Cart({navigation, route}) {
 
   //Clear cart
   const placeOrder = () => {
+    if (!!cartData?.delay_date && !localeSheduledOrderDate) {
+      // alert('You have to schedule this order due to vendor unavailablity');
+      showInfo('Schedule date time is required');
+      return;
+    }
+
     updateState({placeLoader: true});
     var d1 = new Date();
     var d2 = new Date(sheduledorderdate);
@@ -2526,7 +2533,6 @@ export default function Cart({navigation, route}) {
                 styles.bottomTabLableValue,
                 {
                   flexDirection: 'column',
-                  marginTop: moderateScaleVertical(8),
                 },
               ]}>
               <Text
@@ -2895,11 +2901,7 @@ export default function Cart({navigation, route}) {
               <ButtonComponent
                 onPress={_selectTime}
                 btnText={
-                  !!cartData?.delay_date
-                    ? `${strings.SCHEDULE_FOR} ${moment(
-                        cartData?.delay_date,
-                      ).format('DD MMM, YYYY HH:mm')}`
-                    : localeSheduledOrderDate
+                  localeSheduledOrderDate
                     ? localeSheduledOrderDate
                     : strings.SCHEDULE_ORDER
                 }

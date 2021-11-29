@@ -486,9 +486,7 @@ export default {
   PHONE_NUMBER_NOT_VALID: 'El número de teléfono no es válido',
   CUSTOMISABLE: 'Ver Opciones',
   AVAILABLE_STORE: 'Comercios disponibles',
-  SPENDABLE_POINTS: 'Puntos',
   POINTS_EARNED: 'Puntos acumulados',
-  UPCOMING: 'Próximo nivel',
   CARD_EARNED: 'Nivel actual',
   ADDITIONAL_POINTS_REQUIRED_FOR: 'Puntos para el próximo nivel',
   IN: 'En',
@@ -629,4 +627,6 @@ export default {
   COPIED: 'Copied!',
   SCHEDULE_FOR: 'Schedule for',
   PREPARATION_TIME_IS: 'Preparation Time is',
+  SCHEDULE_DATE_REQUIRED: 'Schedule date time is required',
+  POINTS_SPENT: 'Points Spent',
 };

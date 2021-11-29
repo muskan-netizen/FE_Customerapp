@@ -189,7 +189,7 @@ export default function OrderDetail({navigation, route}) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res, 'res===>');
+        console.log(res, 'order detail res===>');
         updateState({isLoading: false});
         if (res?.data) {
           if (res?.data?.luxury_option_name !== strings.DELIVERY) {

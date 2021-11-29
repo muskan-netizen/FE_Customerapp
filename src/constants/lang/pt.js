@@ -461,7 +461,6 @@ export default {
   PHONE_NUMBER_NOT_VALID: 'O número de telefone não é válido.',
   CUSTOMISABLE: 'Personalizável',
   AVAILABLE_STORE: 'Lojas Disponíveis',
-  SPENDABLE_POINTS: 'Pontos gastos',
   POINTS_EARNED: 'Pontos Ganhos',
   UPCOMING: 'Próximo',
   CARD_EARNED: 'Cartão Ganho',
@@ -600,4 +599,6 @@ export default {
   COPIED: 'Copied!',
   SCHEDULE_FOR: 'Schedule for',
   PREPARATION_TIME_IS: 'Preparation Time is',
+  SCHEDULE_DATE_REQUIRED: 'Schedule date time is required',
+  POINTS_SPENT: 'Points Spent',
 };

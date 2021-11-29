@@ -175,31 +175,43 @@ export default function Settings({route, navigation}) {
       return;
     } else {
       let btData = {};
-      AsyncStorage.getItem('BleDevice').then((res) => {
+      AsyncStorage.getItem('BleDevice').then(async (res) => {
         if (res !== null) {
           btData = res;
+          await AsyncStorage.setItem('autoConnectEnabled', 'true');
+          await AsyncStorage.setItem('BleDevice2', JSON.stringify(res));
+          console.log('++++++22', res);
+          if (lang === 'ar') {
+            I18nManager.forceRTL(true);
+            setItem('language', lang);
+            changeLaguage(lang);
+            RNRestart.Restart();
+          } else {
+            I18nManager.forceRTL(false);
+            setItem('language', lang);
+            changeLaguage(lang);
+            RNRestart.Restart();
+          }
           BluetoothManager.disconnect(JSON.parse(res).boundAddress).then(
             (s) => {},
           );
+        } else {
+          if (lang === 'ar') {
+            I18nManager.forceRTL(true);
+            setItem('language', lang);
+            changeLaguage(lang);
+            RNRestart.Restart();
+          } else {
+            I18nManager.forceRTL(false);
+            setItem('language', lang);
+            changeLaguage(lang);
+            RNRestart.Restart();
+          }
         }
       });
       // await BackgroundService.removeAllListeners();
       // await BackgroundService.stop().then((res) => {});
       // await AsyncStorage.removeItem('BleDevice');
-      await AsyncStorage.setItem('autoConnectEnabled', 'true');
-      await AsyncStorage.setItem('BleDevice2', JSON.stringify(btData));
-
-      if (lang === 'ar') {
-        I18nManager.forceRTL(true);
-        setItem('language', lang);
-        changeLaguage(lang);
-        RNRestart.Restart();
-      } else {
-        I18nManager.forceRTL(false);
-        setItem('language', lang);
-        changeLaguage(lang);
-        RNRestart.Restart();
-      }
     }
   };
 

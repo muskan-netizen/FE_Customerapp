@@ -240,7 +240,7 @@ export default function Loyalty({navigation}) {
                   fontSize: textScale(10),
                   marginTop: moderateScaleVertical(6),
                 }}>
-                {strings.SPENDABLE_POINTS}
+                {strings.POINTS_SPENT}
               </Text>
             </View>
           </View>

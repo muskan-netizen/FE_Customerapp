@@ -86,6 +86,8 @@ let activeIdx = 0;
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
+  console.log(data,"datadatadata")
+  const routeData = data?.fetchOffers;
   const {blurRef} = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
@@ -271,17 +273,14 @@ export default function Products({route, navigation}) {
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   useEffect(() => {
-    // getAllProductTags();
     const unsubscribe = navigation.addListener('focus', () => {
       updateState({pageNo: 1});
       getAllListItems();
-      // getAllProductTags();
       if (productListId?.vendor) {
         fetchOffers();
       }
       if (isLoadingC) {
         getAllProducts(true);
-        // fetchOffers();
       }
     });
     return unsubscribe;
@@ -800,10 +799,13 @@ export default function Products({route, navigation}) {
     let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
     updateState({selectedItemID: item?.id, btnLoader: true});
     let isSingleVendor = await checkSingleVendor(item.id);
+    console.log('is singel vendor', isSingleVendor);
+
     if (
-      isSingleVendor.isSingleVendorEnabled !== 0 &&
-      isSingleVendor.otherVendorExists !== 0
+      isSingleVendor.isSingleVendorEnabled == 1 &&
+      isSingleVendor.otherVendorExists == 1
     ) {
+      alert('oh yeh');
       updateState({
         updateQtyLoader: false,
         selectedItemID: -1,
@@ -1146,7 +1148,7 @@ export default function Products({route, navigation}) {
   };
 
   const errorMethodSecond = (error, addonSet = []) => {
-    console.log(error.message.alert, 'Error>>>>>');
+    console.log(error, 'Error>>>>>');
     updateState({updateQtyLoader: false});
     if (error?.message?.alert == 1) {
       updateState({
@@ -1159,11 +1161,11 @@ export default function Products({route, navigation}) {
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
-          text: 'Cancel',
+          text: strings.CANCEL,
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        {text: 'Clear Cart', onPress: () => clearCart(addonSet)},
+        {text: strings.CLEARCART, onPress: () => clearCart(addonSet)},
       ]);
     } else {
       updateState({
@@ -1415,7 +1417,13 @@ export default function Products({route, navigation}) {
     data['vendor_id'] = productListId?.id;
     1;
     // data['cart_id'] = vendorInfo.cartId;
-    console.log(data, 'vendor_id');
+    // console.log(data, 'vendor_id');
+    console.log(routeData, 'datadatadatadata');
+
+    if (routeData) {
+      return;
+    }
+
     actions
       .getAllPromoCodesForProductList(data, {
         code: appData?.profile?.code,
@@ -1797,35 +1805,34 @@ export default function Products({route, navigation}) {
                         {categoryInfo?.address || ''}
                       </Text>
 
-                      {!!categoryInfo &&
-                        !!categoryInfo?.product_avg_average_rating && (
-                          <View
-                            style={[
-                              styles.hdrRatingTxtView,
-                              {
-                                width: moderateScale(50),
-                                justifyContent: 'center',
-                                height: moderateScale(20),
-                              },
-                            ]}>
-                            <Text
-                              style={{
-                                ...styles.ratingTxt,
-                                color: categoryInfo?.show_slot
-                                  ? colors.white
-                                  : categoryInfo?.is_vendor_closed
-                                  ? colors.redB
-                                  : colors.white,
-                                fontSize: textScale(9.5),
-                              }}>
-                              {categoryInfo?.show_slot
-                                ? strings.OPEN
+                      {!!categoryInfo && (
+                        <View
+                          style={[
+                            styles.hdrRatingTxtView,
+                            {
+                              justifyContent: 'center',
+                              height: moderateScale(20),
+                              backgroundColor: categoryInfo?.show_slot
+                                ? colors.green
                                 : categoryInfo?.is_vendor_closed
-                                ? strings.CLOSE
-                                : strings.OPEN}
-                            </Text>
-                          </View>
-                        )}
+                                ? colors.redB
+                                : colors.green,
+                            },
+                          ]}>
+                          <Text
+                            style={{
+                              ...styles.ratingTxt,
+                              color: colors.white,
+                              fontSize: textScale(9.5),
+                            }}>
+                            {categoryInfo?.show_slot
+                              ? strings.OPEN
+                              : categoryInfo?.is_vendor_closed
+                              ? strings.CLOSE
+                              : strings.OPEN}
+                          </Text>
+                        </View>
+                      )}
                     </View>
                   </View>
                 </LinearGradient>
