@@ -297,44 +297,26 @@ export default function AddMoney({navigation}) {
 
     RazorpayCheckout.open(options)
       .then((res) => {
-        console.log(`Success for razor: `, res);
         if (res?.razorpay_payment_id) {
-          // const data={}
-          // data["amount"]=amount;
-
-          // actions.walletCredit()
-          // let selectedMethod = selectedPaymentMethod.title.toLowerCase();
-          // // updateState({isLoadingB: true});
-          // actions
-          //   .openPaymentWebUrl(
-          //     `/${selectedMethod}?amount=${amount}&payment_option_id=${selectedPaymentMethod?.id}&action=wallet&razorpay_payment_id=${res?.razorpay_payment_id}`,
-          //     {},
-          //     {
-          //       code: appData?.profile?.code,
-          //       currency: currencies?.primary_currency?.id,
-          //       language: languages?.primary_language?.id,
-          //     },
-          //   )
-          //   .then((res) => {
-          //     updateState({isLoadingB: false, isRefreshing: false});
-          //     if (res && res?.status == 'Success' && res?.data) {
-          //       // updateState({allAvailAblePaymentMethods: res?.data});
-          //       // alert('Payment successfull');
-          //       Alert.alert('', strings.PAYMENT_SUCCESS, [
-          //         {
-          //           text: strings.CANCEL,
-          //           onPress: () => console.log('Cancel Pressed'),
-          //           // style: 'destructive',
-          //         },
-          //       ]);
-          navigation.navigate(navigationStrings.WALLET);
-          //     }
-          //   })
-          //   .catch(errorMethod);
-
-          navigation.navigate(navigationStrings.WALLET);
-
-          // navigation.navigate(navigationStrings.WALLET);
+          const data = {};
+          data['amount'] = amount;
+          data['transaction_id'] = res?.razorpay_payment_id;
+          actions
+            .walletCredit(data, {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+            })
+            .then((res) => {
+              Alert.alert('', strings.PAYMENT_SUCCESS, [
+                {
+                  text: strings.OK,
+                  onPress: () => console.log('Okay pressed'),
+                },
+              ]);
+              navigation.navigate(navigationStrings.WALLET);
+            })
+            .catch(errorMethod);
         }
       })
       .catch(errorMethod);
