@@ -86,6 +86,7 @@ let activeIdx = 0;
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
+  console.log(data,"datadatadata")
   const routeData = data?.fetchOffers;
   const {blurRef} = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);

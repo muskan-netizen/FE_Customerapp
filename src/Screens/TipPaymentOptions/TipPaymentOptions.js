@@ -239,8 +239,8 @@ export default function TipPaymentOptions({ navigation, route }) {
 
   const _webPayment = () => {
     let selectedMethod = selectedPaymentMethod.title.toLowerCase();
-    let returnUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
-    let cancelUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
+    let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
+    let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
 
     updateState({ isLoading: true });
     actions

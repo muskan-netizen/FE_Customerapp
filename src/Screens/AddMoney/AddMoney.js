@@ -37,11 +37,12 @@ import {
 } from '../../styles/responsiveSize';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {showError} from '../../utils/helperFunctions';
+import {getImageUrl, showError} from '../../utils/helperFunctions';
 import stylesFun from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import queryString from 'query-string';
+import RazorpayCheckout from 'react-native-razorpay';
 
 export default function AddMoney({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -123,6 +124,7 @@ export default function AddMoney({navigation}) {
 
   //Error handling in screen
   const errorMethod = (error) => {
+    console.log(error, 'errorerrorerror');
     updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
@@ -225,17 +227,8 @@ export default function AddMoney({navigation}) {
 
         {selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
-          selectedPaymentMethod?.off_site != 1 && (
-            // <LiteCreditCardInput
-            //   autoFocus
-            //   inputStyle={styles.input}
-            //   validColor={'black'}
-            //   invalidColor={'red'}
-            //   placeholderColor={'darkgray'}
-            //   // onFocus={_onFocusStripeData}
-            //   onChange={_onChangeStripeData}
-            //   inputContainerStyle={{backgroundColor: 'white'}}
-            // />
+          selectedPaymentMethod?.off_site == 0 &&
+          selectedPaymentMethod?.id === 4 && (
             <View>
               <CardField
                 postalCodeEnabled={false}
@@ -282,6 +275,72 @@ export default function AddMoney({navigation}) {
   //
   // };
 
+  const renderRazorPay = () => {
+    let options = {
+      description: 'Credits towards consultation',
+      image: getImageUrl(
+        appData?.profile?.logo?.image_fit,
+        appData?.profile?.logo?.image_path,
+        '1000/1000',
+      ),
+      currency: currencies?.primary_currency?.iso_code,
+      key: appData?.profile?.preferences?.razorpay_api_key, // Your api key
+      amount: amount * 100,
+      name: appData?.profile?.company_name,
+      prefill: {
+        email: userData?.email,
+        contact: userData?.phone_number || '',
+        name: userData?.name,
+      },
+      theme: {color: themeColors.primary_color},
+    };
+
+    RazorpayCheckout.open(options)
+      .then((res) => {
+        console.log(`Success for razor: `, res);
+        if (res?.razorpay_payment_id) {
+          // const data={}
+          // data["amount"]=amount;
+
+          // actions.walletCredit()
+          // let selectedMethod = selectedPaymentMethod.title.toLowerCase();
+          // // updateState({isLoadingB: true});
+          // actions
+          //   .openPaymentWebUrl(
+          //     `/${selectedMethod}?amount=${amount}&payment_option_id=${selectedPaymentMethod?.id}&action=wallet&razorpay_payment_id=${res?.razorpay_payment_id}`,
+          //     {},
+          //     {
+          //       code: appData?.profile?.code,
+          //       currency: currencies?.primary_currency?.id,
+          //       language: languages?.primary_language?.id,
+          //     },
+          //   )
+          //   .then((res) => {
+          //     updateState({isLoadingB: false, isRefreshing: false});
+          //     if (res && res?.status == 'Success' && res?.data) {
+          //       // updateState({allAvailAblePaymentMethods: res?.data});
+          //       // alert('Payment successfull');
+          //       Alert.alert('', strings.PAYMENT_SUCCESS, [
+          //         {
+          //           text: strings.CANCEL,
+          //           onPress: () => console.log('Cancel Pressed'),
+          //           // style: 'destructive',
+          //         },
+          //       ]);
+          navigation.navigate(navigationStrings.WALLET);
+          //     }
+          //   })
+          //   .catch(errorMethod);
+
+          navigation.navigate(navigationStrings.WALLET);
+
+          // navigation.navigate(navigationStrings.WALLET);
+        }
+      })
+      .catch(errorMethod);
+  };
+
+  console.log(selectedPaymentMethod, 'selectedPaymentMethod');
   const _addMoneyToWallet = () => {
     if (amount == '') {
       showError(strings.PLEASE_ENTER_OR_SELECT_AMOUNT);
@@ -289,8 +348,16 @@ export default function AddMoney({navigation}) {
       showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
     } else {
       // console.log("selectedPaymentMethod",selectedPaymentMethod)
+      if (
+        selectedPaymentMethod?.off_site == 0 &&
+        selectedPaymentMethod?.id == 10
+      ) {
+        renderRazorPay();
+        return;
+      }
       if (selectedPaymentMethod?.off_site == 1) {
         _webPayment();
+        return;
       } else {
         _offineLinePayment();
       }
@@ -299,8 +366,8 @@ export default function AddMoney({navigation}) {
 
   const _webPayment = () => {
     let selectedMethod = selectedPaymentMethod.title.toLowerCase();
-    let returnUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
-    let cancelUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
+    let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
+    let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
 
     updateState({isLoadingB: true});
     actions
@@ -326,6 +393,7 @@ export default function AddMoney({navigation}) {
             paymentUrl: res.data,
             action: 'wallet',
           };
+
           navigation.navigate(navigationStrings.ALL_IN_ONE_PAYMENTS, {
             data: sendingData,
           });
@@ -340,7 +408,7 @@ export default function AddMoney({navigation}) {
       updateState({isLoadingB: true});
       await createToken(cardInfo)
         .then((res) => {
-          console.log(res, 'res>>');
+          console.log(res, 'res>>STRIpe');
           if (res && res?.token && res.token?.id) {
             let selectedMethod = selectedPaymentMethod.title.toLowerCase();
             // updateState({isLoadingB: true});
@@ -372,10 +440,7 @@ export default function AddMoney({navigation}) {
               .catch(errorMethod);
           }
         })
-        .catch((err) => {
-          updateState({isLoadingB: false});
-          console.log(err, 'err>>');
-        });
+        .catch(errorMethod);
     }
 
     // updateState({isLoadingB: true});
