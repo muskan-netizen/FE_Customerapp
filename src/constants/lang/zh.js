@@ -448,7 +448,6 @@ export default {
   PHONE_NUMBER_NOT_VALID: '电话号码无效',
   CUSTOMISABLE: '可自定义',
   AVAILABLE_STORE: '可用商店',
-  SPENDABLE_POINTS: '可消费积分',
   POINTS_EARNED: '赚取的积分',
   UPCOMING: '即将 到来',
   CARD_EARNED: '卡已赚取',
@@ -582,4 +581,6 @@ export default {
   COPIED: 'Copied!',
   SCHEDULE_FOR: 'Schedule for',
   PREPARATION_TIME_IS: 'Preparation Time is',
+  SCHEDULE_DATE_REQUIRED: 'Schedule date time is required',
+  POINTS_SPENT: 'Points Spent',
 };

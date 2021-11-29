@@ -486,9 +486,7 @@ export default {
   PHONE_NUMBER_NOT_VALID: 'Telefonnumret är ogiltigt',
   CUSTOMISABLE: 'Anpassningsbar',
   AVAILABLE_STORE: 'Tillgängliga butiker',
-  SPENDABLE_POINTS: 'Poäng som går att använda',
   POINTS_EARNED: 'Poäng tjänade',
-  UPCOMING: 'Kommande',
   CARD_EARNED: 'Kortet tjänat',
   ADDITIONAL_POINTS_REQUIRED_FOR: 'Ytterligare poäng krävs för',
   IN: 'I',
@@ -608,4 +606,6 @@ export default {
   COPIED: 'Copied!',
   SCHEDULE_FOR: 'Schedule for',
   PREPARATION_TIME_IS: 'Preparation Time is',
+  SCHEDULE_DATE_REQUIRED: 'Schedule date time is required',
+  POINTS_SPENT: 'Points Spent',
 };

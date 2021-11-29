@@ -468,7 +468,6 @@ export default {
   PHONE_NUMBER_NOT_VALID: 'Недопустимый номер телефона',
   CUSTOMISABLE: 'Настраиваемый',
   AVAILABLE_STORE: 'Доступные магазины',
-  SPENDABLE_POINTS: 'Расходуемые баллы',
   POINTS_EARNED: 'Заработанные баллы',
   UPCOMING: 'Развивающийся',
   CARD_EARNED: 'Заработанная карта',
@@ -610,4 +609,6 @@ export default {
   COPIED: 'Copied!',
   SCHEDULE_FOR: 'Schedule for',
   PREPARATION_TIME_IS: 'Preparation Time is',
+  SCHEDULE_DATE_REQUIRED: 'Schedule date time is required',
+  POINTS_SPENT: 'Points Spent',
 };
