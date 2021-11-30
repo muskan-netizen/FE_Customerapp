@@ -1905,6 +1905,16 @@ android {
             resValue "string", "app_name", "Sea Eats"
             resValue "string", "host_name", ""
          }
+         enext{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.enext'
+            resValue "string", "app_name", "EnExt"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

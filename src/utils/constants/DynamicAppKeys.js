@@ -169,7 +169,7 @@ const shortCodes = {
   silvestre: '5fa7f3',
   samakeemart: 'c473b2',
   seaeats: '27b6eb',
-
+  enext: 'e36583',
 };
 
 const appIds = {
@@ -844,6 +844,10 @@ const appIds = {
   seaeats: Platform.select({
     ios: 'com.seaeats',
     android: 'com.seaeats',
+  }),
+  enext: Platform.select({
+    ios: 'com.enext',
+    android: 'com.enext',
   }),
 };
 

@@ -89,13 +89,7 @@ export default function Cart({navigation, route}) {
     type: '',
     vendorAddress: '',
     selectedAddress: null,
-    selectedPayment: {
-      id: 1,
-      off_site: 0,
-      title: 'Cash On Delivery',
-      title_lng: strings.CASH_ON_DELIVERY,
-    },
-    // selectedPayment: null,
+    selectedPayment: {},
     isRefreshing: false,
     selectedTipvalue: null,
     selectedTipAmount: null,
@@ -859,7 +853,13 @@ export default function Cart({navigation, route}) {
   const placeOrder = () => {
     if (!!cartData?.delay_date && !localeSheduledOrderDate) {
       // alert('You have to schedule this order due to vendor unavailablity');
-      showInfo('Schedule date time is required');
+      showInfo(strings.SCHEDULE_DATE_REQUIRED);
+      return;
+    }
+
+
+    if (selectedPayment) {
+      showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
       return;
     }
 
@@ -968,6 +968,8 @@ export default function Cart({navigation, route}) {
       </Animated.View>
     );
   };
+
+  console.log(selectedPayment, 'selectedPaymentselectedPayment');
 
   const _webPayment = () => {
     let selectedMethod = selectedPayment.title.toLowerCase();

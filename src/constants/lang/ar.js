@@ -631,4 +631,10 @@ export default {
   SCHEDULE_FOR: 'Schedule for',
   PREPARATION_TIME_IS: 'Preparation Time is',
   SCHEDULE_DATE_REQUIRED: 'Schedule date time is required',
+  MIN: 'Min',
+  AND_MAX: 'and Max',
+  SELECTION_ALLOWED: 'Selections allowed',
+  PLEASE_SELECT_A_PAYMENT_METHOD: 'please select a payment method',
+  MINIMUM: 'Minimum',
+  REQUIRED: 'required',
 };
