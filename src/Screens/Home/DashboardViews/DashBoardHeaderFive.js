@@ -576,7 +576,6 @@ export default function DashBoardHeaderFive({
                     : colors.white,
                 },
               ]}>
-              {console.log(tabs, 'tabstabstabs')}
               <View style={{padding: moderateScale(10)}}>
                 {tabs.length > 1 &&
                   tabs.map((item, indx) => {

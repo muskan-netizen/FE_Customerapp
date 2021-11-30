@@ -168,6 +168,8 @@ const shortCodes = {
   marasym: 'af735a',
   silvestre: '5fa7f3',
   samakeemart: 'c473b2',
+  seaeats: '27b6eb',
+
 };
 
 const appIds = {
@@ -838,6 +840,10 @@ const appIds = {
   samakeemart: Platform.select({
     ios: 'com.samakeemart',
     android: 'com.samakeemart',
+  }),
+  seaeats: Platform.select({
+    ios: 'com.seaeats',
+    android: 'com.seaeats',
   }),
 };
 
