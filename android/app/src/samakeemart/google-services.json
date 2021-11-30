@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "120057501775",
+    "project_id": "samakee-mart-44d17",
+    "storage_bucket": "samakee-mart-44d17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120057501775:android:3ba7b5df053ac96af9723a",
+        "android_client_info": {
+          "package_name": "com.samakeemart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120057501775-5aqq4vf2ldvohmo2260cv8biibk7uetu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.samakeemart",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "120057501775-ar9eon7sue9569mk8i60i7h62ph4resi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.samakeemart",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "120057501775-sv6l9u06ks69132j1h13m48l6hme7j0d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.samakeemart",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "120057501775-a2a1nutgor0ph85f1s904v5649si1rpo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqjZqxKlq74OTj2bR7iWmbkkV1xt6KHuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120057501775-a2a1nutgor0ph85f1s904v5649si1rpo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

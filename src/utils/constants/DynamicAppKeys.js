@@ -167,6 +167,7 @@ const shortCodes = {
   nadelivery: '9aee12',
   marasym: 'af735a',
   silvestre: '5fa7f3',
+  samakeemart: 'c473b2',
 };
 
 const appIds = {
@@ -833,6 +834,10 @@ const appIds = {
   silvestre: Platform.select({
     ios: 'com.silvestre',
     android: 'com.silvestre',
+  }),
+  samakeemart: Platform.select({
+    ios: 'com.samakeemart',
+    android: 'com.samakeemart',
   }),
 };
 

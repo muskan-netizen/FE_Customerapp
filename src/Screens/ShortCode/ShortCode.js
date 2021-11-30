@@ -1096,6 +1096,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+          case appIds.samakeemart:
+            updateState({
+              shortCode: shortCodes.samakeemart,
+              isShortcodePrefilled: true,
+            });
+            break;
       }
     })();
   }, []);
