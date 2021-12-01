@@ -395,8 +395,8 @@ target 'Specialhalal' do
 
 end
 
-#Klickmat Target
-target 'Klickmat' do
+#Snabbhem Target
+target 'Snabbhem' do
   permissions_path = '../node_modules/react-native-permissions/ios'
  rn_maps_path = '../node_modules/react-native-maps'
   config = use_native_modules!

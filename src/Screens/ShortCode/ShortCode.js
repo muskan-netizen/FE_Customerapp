@@ -242,9 +242,9 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-        case appIds.klickmat:
+        case appIds.snabbhem:
           updateState({
-            shortCode: shortCodes.klickmat,
+            shortCode: shortCodes.snabbhem,
             isShortcodePrefilled: true,
           });
           break;
@@ -1108,12 +1108,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.enext:
-            updateState({
-              shortCode: shortCodes.enext,
-              isShortcodePrefilled: true,
-            });
-            break;
+        case appIds.enext:
+          updateState({
+            shortCode: shortCodes.enext,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
