@@ -1333,7 +1333,7 @@ export default function Products({ route, navigation }) {
       let checkIsAvailable = await getDiffAddsOn(apiData, section, item) //check products with different addOns is exist or not.
       // console.log("check available", checkIsAvailable)
 
-      !!checkIsAvailable?.data && checkIsAvailable?.data.map((val) => { 
+      !!checkIsAvailable?.data && checkIsAvailable?.data.map((val) => {
         console.log("check available", val)
         tempQty = tempQty + val?.quantity //store updated total quantity of products
       })
@@ -1380,6 +1380,9 @@ export default function Products({ route, navigation }) {
             productId: res?.data?.id,
             parentCartId: res.data.cart_id
           };
+          console.log("is++ exist qty", tempQty == 0 ? isExistqty : tempQty)
+          console.log("is++ update local qty", res.data?.quantity)
+
           updateState({ repeatItems: addData, selectedSection: section });
         }
       } catch (error) {
@@ -1425,25 +1428,16 @@ export default function Products({ route, navigation }) {
     }
   }
 
-  // console.log("diffAddOnCartIdProductIddiffAddOnCartIdProductId",diffAddOnCartIdProductId)
-
-
-  const difAddOnsAdded = async (item, qty, productId, cartId, section, index, type, differentAddsOnsQty) => {
-
-    console.log("ids++ cart id", cartId)
-    console.log("ids++ product id", productId)
-    console.log("ids++ differentAddsOnsQty", differentAddsOnsQty)
-    console.log("ids+++ quantity",qty)
-    // return;
+  const difAddOnsAdded = async (item, qty, productId, cartId, section, index, type) => {
+    let differentAddsOnsQty = 0
     let cloneArr = differentAddsOns
     let updateLocallyAddOns = cloneArr.map((val) => {
+      differentAddsOnsQty = differentAddsOnsQty + val.quantity
       if (cartId == val.id) {
         return { ...val, quantity: type == 1 ? qty + 1 : qty - 1 }
       }
       return val
     })
-
-    // return;
     await addDeleteCartItems(
       item,
       qty,
@@ -1453,7 +1447,7 @@ export default function Products({ route, navigation }) {
       index,
       type,
       null,
-      differentAddsOnsQty
+      type == 1 ? differentAddsOnsQty + 1 : differentAddsOnsQty - 1 //send updated total quantity
     )
     updateState({ differentAddsOns: updateLocallyAddOns })
   }
