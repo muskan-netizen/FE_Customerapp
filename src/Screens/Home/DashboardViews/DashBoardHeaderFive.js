@@ -73,8 +73,13 @@ export default function DashBoardHeaderFive({
     userSelectedtab();
   }, [appData]);
 
+  // useEffect(() => {
+  //   checkSelectedTab()
+  // }, [])
+
   const checkSelectedTab = () => {
     const newTabs = [...tabs];
+    console.log(dine_In_Type, ' dine_In_Type');
     newTabs.forEach((item, index) => {
       if (item.label === dine_In_Type) {
         newTabs[index].isActive = true;
@@ -150,6 +155,10 @@ export default function DashBoardHeaderFive({
 
   const setUserSelectedTab = (label, value) => {
     selcetedToggle(value);
+
+    const localTabs = [...tabs];
+    console.log(localTabs, 'localTabslocalTabs');
+
     updateState({
       checked: label,
     });

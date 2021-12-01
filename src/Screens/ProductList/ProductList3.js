@@ -86,7 +86,7 @@ let activeIdx = 0;
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
-  console.log(data,"datadatadata")
+  console.log(data, 'datadatadata');
   const routeData = data?.fetchOffers;
   const {blurRef} = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -805,7 +805,6 @@ export default function Products({route, navigation}) {
       isSingleVendor.isSingleVendorEnabled == 1 &&
       isSingleVendor.otherVendorExists == 1
     ) {
-      alert('oh yeh');
       updateState({
         updateQtyLoader: false,
         selectedItemID: -1,
@@ -1415,14 +1414,7 @@ export default function Products({route, navigation}) {
     let data = {};
     // data['vendor_id'] = 2;
     data['vendor_id'] = productListId?.id;
-    1;
-    // data['cart_id'] = vendorInfo.cartId;
-    // console.log(data, 'vendor_id');
-    console.log(routeData, 'datadatadatadata');
 
-    if (routeData) {
-      return;
-    }
 
     actions
       .getAllPromoCodesForProductList(data, {

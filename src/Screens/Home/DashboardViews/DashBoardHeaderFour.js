@@ -1,8 +1,8 @@
-import React, { createRef, useEffect, useRef, useState } from 'react';
-import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
+import React, {createRef, useEffect, useRef, useState} from 'react';
+import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
 import deviceInfoModule from 'react-native-device-info';
 import Modal from 'react-native-modal';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
@@ -14,19 +14,19 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import { getImageUrl, showSuccess } from '../../../utils/helperFunctions';
+import {getImageUrl, showSuccess} from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
-import { RadioButton } from 'react-native-paper';
+import {RadioButton} from 'react-native-paper';
 
 import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
-import { string } from 'prop-types';
-import { BlurView } from '@react-native-community/blur';
+import {string} from 'prop-types';
+import {BlurView} from '@react-native-community/blur';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import ScaledImage from 'react-native-scalable-image';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 export default function DashBoardHeaderFive({
   // navigation = {},
@@ -42,7 +42,7 @@ export default function DashBoardHeaderFive({
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
-  const { appData, themeColors, appStyle, currencies, languages } = useSelector(
+  const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     (state) => state?.initBoot,
   );
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
@@ -53,12 +53,12 @@ export default function DashBoardHeaderFive({
     setSelectedTab: 0,
   });
 
-  const { isModalVisible, checked, tabs } = state;
+  const {isModalVisible, checked, tabs} = state;
 
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ themeColors, fontFamily });
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const styles = stylesFunc({themeColors, fontFamily});
+  const updateState = (data) => setState((state) => ({...state, ...data}));
   const imageURI = getImageUrl(
     profileInfo?.logo?.image_fit,
     profileInfo?.logo?.image_path,
@@ -73,7 +73,6 @@ export default function DashBoardHeaderFive({
   const checkSelectedTab = () => {
     const newTabs = [...tabs];
     newTabs.forEach((item, index) => {
-      console.log(item.label, dine_In_Type, 'dine_In_Type2');
       if (item.label === dine_In_Type) {
         newTabs[index].isActive = true;
         updateState({
@@ -164,7 +163,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-          strings.TAKEAWAY,
+            strings.TAKEAWAY,
           'takeaway',
         );
       } else if (
@@ -190,7 +189,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-          strings.TAKEAWAY,
+            strings.TAKEAWAY,
           'takeaway',
         );
       } else if (
@@ -228,7 +227,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-          strings.TAKEAWAY,
+            strings.TAKEAWAY,
           'takeaway',
         );
       } else if (
@@ -238,7 +237,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-          strings.TAKEAWAY,
+            strings.TAKEAWAY,
           'takeaway',
         );
       } else if (
@@ -248,7 +247,7 @@ export default function DashBoardHeaderFive({
       ) {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-          strings.TAKEAWAY,
+            strings.TAKEAWAY,
           'takeaway',
         );
       } else if (
@@ -272,7 +271,7 @@ export default function DashBoardHeaderFive({
       } else {
         setUserSelectedTab(
           toggleData?.profile?.preferences?.takeaway_nomenclature ||
-          strings.TAKEAWAY,
+            strings.TAKEAWAY,
           'takeaway',
         );
       }
@@ -285,7 +284,7 @@ export default function DashBoardHeaderFive({
         text: strings.CANCEL,
         onPress: () => console.log('Cancel Pressed'),
       },
-      { text: strings.CLEAR_CART2, onPress: clearCart },
+      {text: strings.CLEAR_CART2, onPress: clearCart},
     ]);
   };
 
@@ -303,13 +302,13 @@ export default function DashBoardHeaderFive({
       .then((res) => {
         showSuccess(res?.message);
         actions.cartItemQty(res);
-        updateState({ isModalVisible: false });
+        updateState({isModalVisible: false});
       })
       .catch(errorMethod);
   };
 
   const errorMethod = (error) => {
-    updateState({ isLoading: false, isLoadingB: false, isRefreshing: false });
+    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
 
@@ -335,7 +334,7 @@ export default function DashBoardHeaderFive({
 
   const _onTableLabel = () => {
     checkSelectedTab();
-    updateState({ isModalVisible: true });
+    updateState({isModalVisible: true});
   };
 
   const viewRef2 = useRef();
@@ -348,7 +347,7 @@ export default function DashBoardHeaderFive({
         heightRight={moderateScaleVertical(20)}
         rectHeightRight={moderateScaleVertical(20)}
         isRight
-        viewStyles={{ marginVertical: moderateScaleVertical(10) }}
+        viewStyles={{marginVertical: moderateScaleVertical(10)}}
       />
     );
   }
@@ -362,22 +361,28 @@ export default function DashBoardHeaderFive({
             ? colors.whiteOpacity22
             : colors.borderColorD,
           justifyContent: 'space-between',
-          alignItems: 'center'
+          alignItems: 'center',
         }}>
-        <View style={{ flexDirection: 'row',alignItems: 'center' }}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <TouchableOpacity
             // style={styles.crossIcon}
-            onPress={() => updateState({ isModalVisible: false })}>
-            <Image source={imagePath.ic_cross} resizeMode="contain" style={{ tintColor: 'black', width: moderateScale(30), height: moderateScale(30) }} />
+            onPress={() => updateState({isModalVisible: false})}>
+            <Image
+              source={imagePath.ic_cross}
+              resizeMode="contain"
+              style={{
+                tintColor: 'black',
+                width: moderateScale(30),
+                height: moderateScale(30),
+              }}
+            />
           </TouchableOpacity>
-          <View style={ styles.locationView }>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={ styles.locationTitleTxt }>Your location</Text>
+          <View style={styles.locationView}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={styles.locationTitleTxt}>Your location</Text>
               <Image source={imagePath.chev_down} />
             </View>
-            <Text style={ styles.locationTxt }>
-              Unnamed Road
-            </Text>
+            <Text style={styles.locationTxt}>Unnamed Road</Text>
           </View>
         </View>
 
@@ -395,12 +400,12 @@ export default function DashBoardHeaderFive({
               source={
                 profileInfo && profileInfo?.logo
                   ? {
-                    uri: getImageUrl(
-                      profileInfo.logo.image_fit,
-                      profileInfo.logo.image_path,
-                      '1000/1000',
-                    ),
-                  }
+                      uri: getImageUrl(
+                        profileInfo.logo.image_fit,
+                        profileInfo.logo.image_path,
+                        '1000/1000',
+                      ),
+                    }
                   : imagePath.logo
               }
             />

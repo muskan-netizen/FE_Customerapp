@@ -167,6 +167,9 @@ const shortCodes = {
   nadelivery: '9aee12',
   marasym: 'af735a',
   silvestre: '5fa7f3',
+  samakeemart: 'c473b2',
+  seaeats: '27b6eb',
+  enext: 'e36583',
 };
 
 const appIds = {
@@ -833,6 +836,18 @@ const appIds = {
   silvestre: Platform.select({
     ios: 'com.silvestre',
     android: 'com.silvestre',
+  }),
+  samakeemart: Platform.select({
+    ios: 'com.samakeemart',
+    android: 'com.samakeemart',
+  }),
+  seaeats: Platform.select({
+    ios: 'com.seaeats',
+    android: 'com.seaeats',
+  }),
+  enext: Platform.select({
+    ios: 'com.enext',
+    android: 'com.enext',
   }),
 };
 

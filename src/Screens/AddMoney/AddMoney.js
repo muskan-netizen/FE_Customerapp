@@ -284,7 +284,7 @@ export default function AddMoney({navigation}) {
         '1000/1000',
       ),
       currency: currencies?.primary_currency?.iso_code,
-      key: appData?.profile?.preferences?.razorpay_api_key, // Your api key
+      key: preferences?.razorpay_api_key, // Your api key
       amount: amount * 100,
       name: appData?.profile?.company_name,
       prefill: {
@@ -411,7 +411,7 @@ export default function AddMoney({navigation}) {
                   // alert('Payment successfull');
                   Alert.alert('', strings.PAYMENT_SUCCESS, [
                     {
-                      text: strings.CANCEL,
+                      text: strings.OK,
                       onPress: () => console.log('Cancel Pressed'),
                       // style: 'destructive',
                     },

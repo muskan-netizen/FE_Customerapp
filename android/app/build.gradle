@@ -485,7 +485,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.codebrew.klickmat'
-            resValue "string", "app_name", "Klickmat"
+            resValue "string", "app_name", "Snabbhem"
             resValue "string", "host_name", ""
         }
         lastminutedress{
@@ -1885,7 +1885,36 @@ android {
             resValue "string", "app_name", "Silvestre"
             resValue "string", "host_name", ""
          }
-        
+         samakeemart{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.samakeemart'
+            resValue "string", "app_name", "Samakee Mart"
+            resValue "string", "host_name", ""
+         }
+       seaeats{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.seaeats'
+            resValue "string", "app_name", "Sea Eats"
+            resValue "string", "host_name", ""
+         }
+         enext{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.enext'
+            resValue "string", "app_name", "EnExt"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

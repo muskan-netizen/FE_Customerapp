@@ -410,7 +410,7 @@ export default function VariantAddons({
                       : colors.grayOpacity51,
                     fontSize: textScale(10),
                   }}>
-                  {`Min ${i?.min_select} and Max ${i?.max_select} Selections allowed`}
+                  {`${strings.MIN} ${i?.min_select} ${strings.AND_MAX} ${i?.max_select} ${strings.SELECTION_ALLOWED}`}
                 </Text>
 
                 {!!i.errorShow && (
@@ -421,7 +421,7 @@ export default function VariantAddons({
                       fontFamily: fontFamily.medium,
                       textAlign: 'left',
                     }}>
-                    {`Minimum ${i?.min_select} required`}
+                    {`${strings.MIN} ${i?.min_select} ${strings.REQUIRED}`}
                   </Text>
                 )}
 
@@ -461,7 +461,7 @@ export default function VariantAddons({
                     color: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.textGrey,
-                  }}>{`Choice of ${i?.title}`}</Text>
+                  }}>{`${strings.CHOICE_OF} ${i?.title}`}</Text>
                 <Text
                   style={{
                     ...styles.chooseOption,

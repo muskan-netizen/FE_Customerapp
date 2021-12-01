@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, update} from 'lodash';
+import {cloneDeep, isEmpty, update} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
@@ -89,13 +89,7 @@ export default function Cart({navigation, route}) {
     type: '',
     vendorAddress: '',
     selectedAddress: null,
-    selectedPayment: {
-      id: 1,
-      off_site: 0,
-      title: 'Cash On Delivery',
-      title_lng: strings.CASH_ON_DELIVERY,
-    },
-    // selectedPayment: null,
+    selectedPayment: {},
     isRefreshing: false,
     selectedTipvalue: null,
     selectedTipAmount: null,
@@ -858,8 +852,11 @@ export default function Cart({navigation, route}) {
   //Clear cart
   const placeOrder = () => {
     if (!!cartData?.delay_date && !localeSheduledOrderDate) {
-      // alert('You have to schedule this order due to vendor unavailablity');
-      showInfo('Schedule date time is required');
+      showInfo(strings.SCHEDULE_DATE_REQUIRED);
+      return;
+    }
+    if (isEmpty(selectedPayment)) {
+      showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
       return;
     }
 
