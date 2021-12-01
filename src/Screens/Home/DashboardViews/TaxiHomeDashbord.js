@@ -9,6 +9,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import BannerHome from '../../../Components/BannerHome';
@@ -60,6 +61,13 @@ import AddressModal3 from '../../../Components/AddressModal3';
 import AddressModal from '../../../Components/AddressModal';
 import Loader from '../../../Components/Loader';
 import staticStrings from '../../../constants/staticStrings';
+import Modal from 'react-native-modal';
+import Geocoder from 'react-native-geocoding';
+import {locationPermission} from '../../../utils/permissions';
+import {
+  getAddressFromLatLong,
+  getCurrentLocationFromApi,
+} from '../../../utils/googlePlaceApi';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => {},
@@ -71,11 +79,11 @@ export default function TaxiHomeDashbord({
   selectedToggle,
   toggleData,
   isDineInSelected = false,
+  location = {},
 }) {
   const mapRef = React.createRef();
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
-
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const userData = useSelector((state) => state?.auth?.userData);
   const darkthemeusingDevice = useDarkMode();
@@ -85,14 +93,14 @@ export default function TaxiHomeDashbord({
     newCategoryData: [],
     date: new Date(),
     region: {
-      latitude: 30.7191,
-      longitude: 76.8107,
+      latitude: parseFloat(location?.latitude),
+      longitude: parseFloat(location?.longitude),
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
     coordinate: {
-      latitude: 30.7191,
-      longitude: 76.8107,
+      latitude: parseFloat(location?.latitude),
+      longitude: parseFloat(location?.longitude),
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121,
     },
@@ -122,7 +130,11 @@ export default function TaxiHomeDashbord({
     slectedDate: null,
     newAddressAdded: null,
     isLoadingModal: false,
+    fullMapShow: false,
+    pickupAddress: {},
   });
+  console.log(location, 'loaction');
+  console.log(region, 'region');
   const appMainData = useSelector((state) => state?.home?.appMainData);
   console.log(appMainData, 'appMainData>new');
   let findCabCategory = appMainData?.categories?.find(
@@ -132,7 +144,6 @@ export default function TaxiHomeDashbord({
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-
   const fontFamily = appStyle?.fontSizeData;
   const {bannerRef} = useRef();
   const {
@@ -155,6 +166,8 @@ export default function TaxiHomeDashbord({
     type,
     del,
     isLoadingModal,
+    fullMapShow,
+    pickupAddress,
   } = state;
   const styles = stylesFunc({themeColors, fontFamily});
 
@@ -197,7 +210,7 @@ export default function TaxiHomeDashbord({
       )
       .then((res) => {
         // actions.saveAllUserAddress(res.data);
-        console.log(res, 'res?>>>>>>>>>>>>>>');
+        console.log('res?>>>>>>>>>>>>>>', res);
         updateState({
           allSavedAddress: res.data,
           isLoading: false,
@@ -260,8 +273,6 @@ export default function TaxiHomeDashbord({
       });
   };
 
-  console.log(appData, 'appDataappDataappData');
-
   const setModalVisible = (visible, type, id, data) => {
     if (!!userData?.auth_token) {
       updateState({
@@ -300,43 +311,94 @@ export default function TaxiHomeDashbord({
               minimumDate={new Date()}
               style={{
                 width: width - 20,
-                height: height / 4.1,
+                height: height / 4.4,
               }}
               // onDateChange={setDate}
               onDateChange={(value) => onDateChange(value)}
             />
-            <TouchableOpacity
-              style={{
-                width: width - 40,
-                height: 40,
-                backgroundColor: themeColors.primary_color,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              onPress={() => {
-                updateState({
-                  isVisible: false,
-                  isLoadingModal: true,
-                });
 
-                setTimeout(() => {
-                  updateState({isLoadingModal: false});
-                  navigation.navigate(navigationStrings.ADDADDRESS, {
-                    cat: appMainData?.categories[0],
-                    datetime: {slectedDate, selectedTime},
-                    pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
-                  });
-                }, 2000);
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginHorizontal: 16,
+                marginBottom: 24,
               }}>
-              <Text
-                style={{color: colors.white, fontFamily: fontFamily.regular}}>
-                {strings.SETPICKUPTIME}
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  height: 40,
+                  backgroundColor: themeColors.primary_color,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: moderateScale(10),
+                }}
+                onPress={_modalClose}>
+                <Text
+                  style={{color: colors.white, fontFamily: fontFamily.regular}}>
+                  {'Cancel'}
+                </Text>
+              </TouchableOpacity>
+
+              <View style={{marginHorizontal: 4}} />
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  height: 40,
+                  backgroundColor: themeColors.primary_color,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: moderateScale(10),
+                }}
+                onPress={() => {
+                  updateState({
+                    isVisible: false,
+                    isLoadingModal: true,
+                  });
+
+                  setTimeout(() => {
+                    updateState({isLoadingModal: false});
+                    navigation.navigate(navigationStrings.ADDADDRESS, {
+                      cat: appMainData?.categories[0],
+                      datetime: {slectedDate, selectedTime},
+                      pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
+                    });
+                  }, 2000);
+                }}>
+                <Text
+                  style={{color: colors.white, fontFamily: fontFamily.regular}}>
+                  {'Set'}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
     );
+  };
+
+  const moveToScreen = (details) => {
+    updateState({fullMapShow: false});
+    if (!!userData?.auth_token) {
+      let prefillAdress = null;
+      if (!!details) {
+        prefillAdress = {
+          longitude: Number(details?.longitude),
+          latitude: Number(details?.latitude),
+          address: details?.address,
+          task_type_id: 1,
+          pre_address: details?.address,
+        };
+      }
+      navigation.navigate(navigationStrings.ADDADDRESS, {
+        cat: appMainData?.categories[0],
+        datetime: {slectedDate, selectedTime},
+        pickUpTimeType: 'now',
+        prefillAdress: !!prefillAdress ? prefillAdress : null,
+      });
+    } else {
+      navigation.navigate(navigationStrings.LOGIN);
+    }
   };
 
   const addressView = (image) => {
@@ -357,13 +419,7 @@ export default function TaxiHomeDashbord({
                 marginLeft: moderateScale(20),
                 width: width - 60,
               }}
-              onPress={() => {
-                navigation.navigate(navigationStrings.ADDADDRESS, {
-                  cat: appMainData?.categories[0],
-                  datetime: {slectedDate, selectedTime},
-                  pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
-                });
-              }}>
+              onPress={() => moveToScreen(itm)}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -379,10 +435,24 @@ export default function TaxiHomeDashbord({
                   style={{
                     marginHorizontal: moderateScale(10),
                   }}>
-                  <Text numberOfLines={2} style={[styles.addressTitle]}>
+                  <Text
+                    numberOfLines={2}
+                    style={{
+                      ...styles.addressTitle,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
                     {itm?.street}
                   </Text>
-                  <Text numberOfLines={2} style={[styles.address]}>
+                  <Text
+                    numberOfLines={2}
+                    style={{
+                      ...styles.address,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
                     {itm?.address}
                   </Text>
                 </View>
@@ -426,6 +496,7 @@ export default function TaxiHomeDashbord({
             userData?.auth_token
               ? navigation.navigate(navigationStrings.ADDADDRESS, {
                   data: appMainData?.categories[0],
+                  pickUpTimeType: 'now',
                 })
               : navigation.navigate(navigationStrings.LOGIN);
           }}>
@@ -439,7 +510,12 @@ export default function TaxiHomeDashbord({
               <Image source={image} />
             </View>
             <View style={{marginHorizontal: moderateScale(10)}}>
-              <Text numberOfLines={2} style={[styles.address]}>
+              <Text
+                numberOfLines={2}
+                style={{
+                  ...styles.address,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
                 {strings.CHOOSESAVEDPLACE}
               </Text>
             </View>
@@ -469,7 +545,13 @@ export default function TaxiHomeDashbord({
   console.log(slectedDate, 'selectedTimeselectedTime');
 
   return (
-    <>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: isDarkMode
+          ? MyDarkTheme.colors.background
+          : colors.white,
+      }}>
       <ScrollView
         // bounces={false}
         refreshing={isRefreshing}
@@ -502,19 +584,10 @@ export default function TaxiHomeDashbord({
           data={appMainData?.categories}
           style={{
             marginTop: moderateScaleVertical(10),
-            marginHorizontal: moderateScale(10),
+            // marginHorizontal: moderateScale(10),
           }}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.id.toString()}
-          ItemSeparatorComponent={() => {
-            return (
-              <View
-                style={{
-                  height: moderateScaleVertical(20),
-                  marginLeft: moderateScale(10),
-                }}></View>
-            );
-          }}
           renderItem={_renderItem}
         />
 
@@ -540,8 +613,7 @@ export default function TaxiHomeDashbord({
                     ? navigation.navigate(navigationStrings.ADDADDRESS, {
                         cat: appMainData?.categories[0],
                         datetime: {slectedDate, selectedTime},
-                        pickUpTimeType:
-                          slectedDate != null || selectedTime ? '' : 'now',
+                        pickUpTimeType: 'now',
                       })
                     : navigation.navigate(navigationStrings.LOGIN);
                 }}>
@@ -614,7 +686,14 @@ export default function TaxiHomeDashbord({
                     <Image source={imagePath.plushRoundedBackground} />
                   </View>
                   <View style={{marginHorizontal: moderateScale(10)}}>
-                    <Text numberOfLines={2} style={[styles.address]}>
+                    <Text
+                      numberOfLines={2}
+                      style={{
+                        ...styles.addressTitle,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                      }}>
                       {'Add new address'}
                     </Text>
                   </View>
@@ -648,30 +727,47 @@ export default function TaxiHomeDashbord({
                 {strings.AROUNDYOU}
               </Text>
 
-              <View
-                style={{
-                  height: height / 4,
-                  width: width - 45,
-                  borderRadius: 12,
-                  marginTop: moderateScaleVertical(20),
-                  alignItems: 'center',
-                }}>
-                <MapView
-                  ref={mapRef}
-                  provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                  customMapStyle={mapStyleGrey}
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => updateState({fullMapShow: true})}>
+                <View
+                  pointerEvents="none"
                   style={{
-                    ...StyleSheet.absoluteFillObject,
+                    height: height / 4,
+                    width: width - 45,
                     borderRadius: 12,
-                  }}
-                  // provider={MapView.PROVIDER_GOOGLE}
-                  region={region}
-                  initialRegion={region}
-                  showsUserLocation={true}
-                  //showsMyLocationButton={true}
-                  // pointerEvents={'none'}
-                ></MapView>
-              </View>
+                    marginTop: moderateScaleVertical(20),
+                    alignItems: 'center',
+                  }}>
+                  {console.log(location, 'locationlocationlocation')}
+                  {!!location && location?.latitude && (
+                    <MapView
+                      ref={mapRef}
+                      provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                      customMapStyle={mapStyleGrey}
+                      style={{
+                        ...StyleSheet.absoluteFillObject,
+                        borderRadius: 12,
+                      }}
+                      // provider={MapView.PROVIDER_GOOGLE}
+                      region={{
+                        latitude: location
+                          ? parseFloat(location?.latitude)
+                          : 30.7333,
+                        longitude: location
+                          ? parseFloat(location?.longitude)
+                          : 76.7794,
+                        latitudeDelta: 0.015,
+                        longitudeDelta: 0.0121,
+                      }}
+                      // initialRegion={region}
+                      showsUserLocation={true}
+                      //showsMyLocationButton={true}
+                      // pointerEvents={'none'}
+                    />
+                  )}
+                </View>
+              </TouchableOpacity>
             </View>
           </>
         )}
@@ -697,6 +793,87 @@ export default function TaxiHomeDashbord({
         passLocation={(data) => addUpdateLocation(data)}
         // onPress={currentLocation}
       />
-    </>
+
+      <Modal
+        isVisible={fullMapShow}
+        style={{
+          margin: 0,
+        }}
+        animationInTiming={600}>
+        <View style={{flex: 1}}>
+          <View style={{flex: 1}}>
+            <MapView
+              ref={mapRef}
+              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+              customMapStyle={mapStyleGrey}
+              style={{...StyleSheet.absoluteFillObject}}
+              region={{
+                latitude: parseFloat(location?.latitude),
+                longitude: parseFloat(location?.longitude),
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.0121,
+              }}
+              // initialRegion={region}
+              showsUserLocation={true}
+              // onRegionChangeComplete={_onRegionChange}
+              // showsMyLocationButton={true}
+              // pointerEvents={'none'}
+            />
+            <SafeAreaView>
+              <TouchableOpacity
+                onPress={() => updateState({fullMapShow: false})}
+                style={{
+                  marginTop: moderateScaleVertical(24),
+                  height: moderateScale(40),
+                  width: moderateScale(40),
+                  borderRadius: moderateScale(16),
+                  backgroundColor: colors.white,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginLeft: moderateScale(24),
+                }}>
+                <Image
+                  style={{
+                    tintColor: colors.black,
+                  }}
+                  source={imagePath.backArrowCourier}
+                />
+              </TouchableOpacity>
+            </SafeAreaView>
+          </View>
+          <View
+            style={{
+              height: moderateScale(100),
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.background
+                : colors.white,
+            }}>
+            <SafeAreaView>
+              <TouchableOpacity
+                onPress={() => moveToScreen()}
+                style={{
+                  height: moderateScale(48),
+                  backgroundColor: isDarkMode
+                    ? colors.whiteOpacity15
+                    : colors.greyNew,
+                  justifyContent: 'center',
+                  paddingHorizontal: moderateScale(16),
+                  margin: moderateScale(16),
+                }}>
+                <Text
+                  style={{
+                    fontFamily: fontFamily.regular,
+                    fontSize: textScale(16),
+                    textAlign: 'left',
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  }}>
+                  {strings.WHERETO}
+                </Text>
+              </TouchableOpacity>
+            </SafeAreaView>
+          </View>
+        </View>
+      </Modal>
+    </View>
   );
 }

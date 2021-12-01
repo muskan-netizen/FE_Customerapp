@@ -1,21 +1,21 @@
 //import liraries
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import colors from '../styles/colors';
-import {useSelector} from 'react-redux';
+import React from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
-import {getImageUrl} from '../utils/helperFunctions';
+import {useSelector} from 'react-redux';
+import imagePath from '../constants/imagePath';
+import strings from '../constants/lang';
+import colors from '../styles/colors';
+import fontFamily from '../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import fontFamily from '../styles/fontFamily';
-import imagePath from '../constants/imagePath';
-import commonStyles from '../styles/commonStyles';
 import {MyDarkTheme} from '../styles/theme';
-import strings from '../constants/lang';
+import {currencyNumberFormatter} from '../utils/commonFunction';
+import {getImageUrl} from '../utils/helperFunctions';
 
 const WishlistCard = ({data, onPress}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -84,10 +84,14 @@ const WishlistCard = ({data, onPress}) => {
                   ? MyDarkTheme.colors.text
                   : colors.blackOpacity86,
                 fontSize: textScale(11),
-              }}>{`${currencies?.primary_currency?.symbol}${(
-              Number(data?.variant[0]?.multiplier) *
-              Number(data?.variant[0]?.price)
-            ).toFixed(2)}`}</Text>
+              }}>{`${
+              currencies?.primary_currency?.symbol
+            }${currencyNumberFormatter(
+              (
+                Number(data?.variant[0]?.multiplier) *
+                Number(data?.variant[0]?.price)
+              ).toFixed(2),
+            )}`}</Text>
             {data?.averageRating && (
               <View style={styles.ratingView}>
                 <Text style={styles.ratingTxt}>

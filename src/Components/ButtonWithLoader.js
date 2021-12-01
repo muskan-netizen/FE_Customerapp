@@ -24,7 +24,9 @@ const ButtonWithLoader = ({
         ...btnStyle,
       }}
       disabled={disabled}
-      onPress={onPress}>
+      onPress={onPress}
+      activeOpacity={0.8}
+      >
       {isLoading ? (
         <ActivityIndicator size="small" color={color} />
       ) : (

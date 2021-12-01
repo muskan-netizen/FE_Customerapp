@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import {StyleSheet} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import colors from '../../styles/colors';
 import {
   height,
@@ -8,9 +8,9 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
+import {MyDarkTheme} from '../../styles/theme';
 
-export default ({ themeColors, fontFamily }) => {
+export default ({themeColors, fontFamily}) => {
   const styles = StyleSheet.create({
     modalContainer: {
       backgroundColor: colors.white,
@@ -45,7 +45,7 @@ export default ({ themeColors, fontFamily }) => {
       paddingBottom: moderateScaleVertical(12),
       paddingLeft: moderateScaleVertical(12),
     },
-    imgSmall: { height: '100%', width: '100%', borderRadius: 4 },
+    imgSmall: {height: '100%', width: '100%', borderRadius: 4},
     imgContainer: {
       height: moderateScaleVertical(128),
       width: width * 0.5 - moderateScale(12),
@@ -207,7 +207,7 @@ export default ({ themeColors, fontFamily }) => {
       fontSize: textScale(9),
       textAlign: 'left',
     },
-    circularListImage: { height: moderateScale(40), width: moderateScale(40) },
+    circularListImage: {height: moderateScale(40), width: moderateScale(40)},
     applyPromoBtn: {
       marginHorizontal: moderateScale(7),
       borderRadius: moderateScale(15),
@@ -362,7 +362,7 @@ export default ({ themeColors, fontFamily }) => {
       marginVertical: moderateScale(10),
     },
     viewAllText: {
-      color: colors.redD,
+      color: themeColors.primary_color,
       fontFamily: fontFamily.regular,
     },
     viewAllVeiw: {
@@ -398,15 +398,22 @@ export default ({ themeColors, fontFamily }) => {
     },
     locationTitleTxt: {
       fontFamily: fontFamily.medium,
-      fontSize: moderateScale(13)
+      fontSize: moderateScale(13),
     },
     locationTxt: {
       fontFamily: fontFamily.medium,
-      fontSize: moderateScale(15)
+      fontSize: moderateScale(12),
+      marginLeft: 2,
     },
     locationView: {
-      marginLeft: 5
-    }
+      marginLeft: 5,
+    },
+    locationTypeTxt: {
+      fontFamily: fontFamily.bold,
+      fontSize: moderateScale(15),
+      marginLeft: 2,
+      color: themeColors.primary_color,
+    },
   });
 
   return styles;

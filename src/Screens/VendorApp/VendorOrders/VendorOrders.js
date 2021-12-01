@@ -33,7 +33,9 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import Modal from 'react-native-modal';
 import BorderTextInput from '../../../Components/BorderTextInput';
-import { StartPrinting } from '../../PrinterConnection/PrinteFunc';
+import {StartPrinting} from '../../PrinterConnection/PrinteFunc';
+import {getItem} from '../../../utils/utils';
+import * as RNLocalize from 'react-native-localize';
 
 export default function VendorOrders({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -67,6 +69,7 @@ export default function VendorOrders({navigation, route}) {
     rejectReason: '',
     acceptRejectData: '',
     status: null,
+    isBleDevice: false,
   });
   const {
     isLoadingB,
@@ -82,6 +85,7 @@ export default function VendorOrders({navigation, route}) {
     rejectReason,
     acceptRejectData,
     status,
+    isBleDevice,
   } = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -98,8 +102,23 @@ export default function VendorOrders({navigation, route}) {
     // updateState({isLoading: true});
     if (isLoading) {
       _getListOfVendorOrders();
+      _getBleDevice();
     }
   }, [isLoading]);
+
+  const _getBleDevice = async () => {
+    const res = await getItem('BleDevice');
+    if (!!res) {
+      updateState({
+        isBleDevice: true,
+      });
+      return;
+    } else {
+      updateState({
+        isBleDevice: false,
+      });
+    }
+  };
 
   useEffect(() => {
     updateState({
@@ -123,6 +142,8 @@ export default function VendorOrders({navigation, route}) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
+          timezone: RNLocalize.getTimeZone(),
+
           // systemuser: DeviceInfo.getUniqueId(),
         },
       )
@@ -171,6 +192,7 @@ export default function VendorOrders({navigation, route}) {
         // selectedTab={selectedTab}
         onPress={() => onPressViewEditAndReplace(item)}
         updateOrderStatus={(data, status) => updateOrderStatus(data, status)}
+        isBleDevice={isBleDevice}
       />
     );
   };
@@ -198,8 +220,8 @@ export default function VendorOrders({navigation, route}) {
         })
         .then((res) => {
           if (res && res.status == 'success') {
-            if(status == 7){
-              StartPrinting({ id: acceptRejectData?.id })
+            if (status == 7) {
+              StartPrinting({id: acceptRejectData?.id});
             }
             updateStatus(res, acceptRejectData);
           }

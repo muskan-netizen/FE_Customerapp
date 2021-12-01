@@ -504,7 +504,7 @@ export default function MyOrders({ navigation }) {
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3
               ? imagePath.icBackb
-              : imagePath.back
+              : imagePath.backArrowCourier
         }
         centerTitle={businessType === 4 ? strings.MYRIDES : strings.MY_ORDERS}
         headerStyle={
@@ -564,7 +564,11 @@ export default function MyOrders({ navigation }) {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <NoDataFound isLoading={state.isLoading} />
+              <NoDataFound
+                image={businessType === 4 ? imagePath.noRides : imagePath.noDataFound2}
+                isLoading={state.isLoading}
+                text={businessType === 4 ? strings.NO_RIDE_FOUND : strings.NODATAFOUND}
+              />
             </View>
           )
         }

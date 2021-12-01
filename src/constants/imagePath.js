@@ -74,6 +74,7 @@ export default {
   percent: require('../assets/images/ic_percent2.png'),
   percent2: require('../assets/images/ic_percentage.png'),
   icUpload: require('../assets/images/ic_upload.png'),
+  icInstruction: require('../assets/images/ic_instructions.png'),
   paymentMethod: require('../assets/images/ic_pay.png'),
   clientLogo: require('../assets/images/ic_logo.png'),
   cartActive: require('../assets/images/ic_cartactive.png'),
@@ -162,6 +163,7 @@ export default {
   iconItems: require('../assets/images/VendorAppImages/ic_items.png'),
   iconPayments: require('../assets/images/VendorAppImages/ic_payment.png'),
   myStoreIcon: require('../assets/images/VendorAppImages/ic_my_store.png'),
+  icAttachments: require('../assets/images/ic_attachment.png'),
 
   frameorder: require('../assets/images/Courier/Frameorder.png'),
 
@@ -223,7 +225,7 @@ export default {
   delivery: require('../assets/images/ic_delivery.png'),
   redLocation: require('../assets/images/ic_location.png'),
   location2: require('../assets/images/ic_location2.png'),
-
+icDotedLine: require('../assets/images/dottedLine.png'),
   homeRedActive: require('../assets/images/ic_home4.png'),
   homeRedInActive: require('../assets/images/ic_home_black4.png'),
   cartRedActive: require('../assets/images/ic_cart4.png'),
@@ -283,6 +285,7 @@ export default {
   icDestination: require('../assets/images/ic_destination.png'),
   gifImg: require('../assets/images/5ef9d70b03d22b1acd145b9422d3a33f.gif'),
   // 5ef9d70b03d22b1acd145b9422d3a33f.gif
+
   //royoorder new images
   wishlist: require('../assets/images/RoyoorderNewImages/ic_wishlist.png'),
   share1: require('../assets/images/RoyoorderNewImages/ic_share.png'),
@@ -298,6 +301,12 @@ export default {
   trending: require('../assets/images/RoyoorderNewImages/ic_trending.png'),
   icMark1: require('../assets/images/RoyoorderNewImages/ic_mark1.png'),
   icMark2: require('../assets/images/RoyoorderNewImages/ic_mark2.png'),
+  icStarIcon: require('../assets/images/RoyoorderNewImages/ic_starIcon.png'),
+  ic_timeIcon: require('../assets/images/RoyoorderNewImages/ic_timeIcon.png'),
+  ic_pinIcon: require('../assets/images/RoyoorderNewImages/ic_pinIcon.png'),
+  ic_offersIcon: require('../assets/images/RoyoorderNewImages/ic_offersIcon.png'),
+  ic_nonveg: require('../assets/images/RoyoorderNewImages/ic_nonveg.png'),
+  ic_veg: require('../assets/images/RoyoorderNewImages/ic_veg.png'),
 
   icTime2: require('../assets/images/RoyoorderNewImages/ic_time.png'),
   icBrandActive: require('../assets/images/RoyoorderNewImages/ic_tag2.png'),
@@ -317,6 +326,7 @@ export default {
   brandsInActive1: require('../assets/images/ic_tagGrey1.png'),
   taxiUserAccount: require('../assets/images/TAXIAPPIMAGES/ic_account.png'),
   savedLocationImage: require('../assets/images/TAXIAPPIMAGES/ic_fav.png'),
+  noRides: require('../assets/images/TAXIAPPIMAGES/ic_norides.png'),
   RecentLocationImage: require('../assets/images/TAXIAPPIMAGES/ic_saved.png'),
   mapNavigation: require('../assets/images/TAXIAPPIMAGES/ic_nav.png'),
   locationPin: require('../assets/images/TAXIAPPIMAGES/ic_pin.png'),
@@ -337,6 +347,8 @@ export default {
   newfilter: require('../assets/images/RoyoorderNewImages/ic_filter.png'),
   newsort: require('../assets/images/RoyoorderNewImages/sort.png'),
   icBagA: require('../assets/images/RoyoorderNewImages/ic_bag2.png'),
+  cartIcon: require('../assets/images/RoyoorderNewImages/ic_cart.png'),
+
   cash: require('../assets/images/TAXIAPPIMAGES/ic_cash.png'),
   card: require('../assets/images/TAXIAPPIMAGES/ic_card.png'),
   upi: require('../assets/images/TAXIAPPIMAGES/ic_upi.png'),
@@ -364,14 +376,19 @@ export default {
   bluetooth: require('../assets/images/RoyoorderNewImages/bluetooth.png'),
   rightArrowAngle: require('../assets/images/RoyoorderNewImages/right-arrow-angle.png'),
   car5: require('../assets/images/TAXIAPPIMAGES/ic_car1.png'),
-  ride: require('../assets/images/TAXIAPPIMAGES/ic_ride_icon.png'),
+  ride: require('../assets/images/TAXIAPPIMAGES/ic_ride.png'),
   taxiOrders: require('../assets/images/TAXIAPPIMAGES/ic_orders.png'),
+  icAdd: require('../assets/images/TAXIAPPIMAGES/ic_add.png'),
+  icNearby: require('../assets/images/TAXIAPPIMAGES/ic_nearby.png'),
+  icRemove: require('../assets/images/TAXIAPPIMAGES/ic_remove.png'),
   locationRoundedBackground: require('../assets/images/TAXIAPPIMAGES/ic_location.png'),
   starRoundedBackground: require('../assets/images/TAXIAPPIMAGES/ic_star.png'),
   clock: require('../assets/images/TAXIAPPIMAGES/ic_clock.png'),
   grayDot: require('../assets/images/TAXIAPPIMAGES/ic_dot.png'),
   blackSquare: require('../assets/images/TAXIAPPIMAGES/ic_square.png'),
   blackNav: require('../assets/images/TAXIAPPIMAGES/ic_nav.png'),
+  rideFilled: require('../assets/images/TAXIAPPIMAGES/ic_ridefilled.png'),
+
   plushRoundedBackground: require('../assets/images/TAXIAPPIMAGES/ic_plus.png'),
   icViewMore: require('../assets/images/RoyoorderNewImages/ic_viewmore.png'),
   msg: require('../assets/images/ic_msg.png'),
@@ -388,5 +405,10 @@ export default {
   settings_icon: require('../assets/images/TowFinder/settings.png'),
   settings_red_icon: require('../assets/images/TowFinder/ic_settings1.png'),
   ic_cameraColored: require('../assets/images/ic_cameraColored.png'),
-  // ic_placeholderbeeNew: require('../assets/images/ic_placeholderbeeNew.png'),
+  pickUpSchedule: require('../assets/images/ic_pickup.png'),
+  dropOffSchedule: require('../assets/images/ic_order.png'),
+  icMyRideActive: require('../assets/images/ic_ride2.png'),
+  icMyRideInActive: require('../assets/images/ic_ride1.png'),
+  icShowPassword: require('../assets/images/ic_view1.png'),
+  icHidePassword: require('../assets/images/ic_view2.png'),
 };

@@ -282,7 +282,7 @@ export default function ReturnOrder({navigation, route}) {
                 fontFamily: fontFamily.medium,
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyJ,
               }}>
-              {'Here You Are For Return Product !'}
+              {strings.HERE_YOU_ARE_FOR_RETURN}
             </Text>
           </View>
 

@@ -34,11 +34,16 @@ import {
   ViewAllData,
   TaxiHomeScreen,
   CategoryBrands,
+  Cart2,
+  Cart3,
+  Cart,
+  AllPaymentMethods,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 
 import {verticalAnimation} from '../utils/utils';
+import CartStack from './CartStack';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
@@ -201,6 +206,11 @@ export default function () {
         name={navigationStrings.CATEGORY_BRANDS}
         component={CategoryBrands}
         options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.CART_SCREEN}
+        component={CartStack}
+        options={{headerShown: false, gestureEnabled: true}}
       />
     </Stack.Navigator>
   );

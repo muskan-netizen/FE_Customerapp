@@ -9,7 +9,7 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 
-export default ({ fontFamily }) => {
+export default ({ fontFamily, isDarkMode, MyDarkTheme }) => {
   const commonStyles = commonStylesFunc({ fontFamily });
   const styles = StyleSheet.create({
     scrollviewHorizontal: {
@@ -158,7 +158,7 @@ export default ({ fontFamily }) => {
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: colors.textGreyLight,
-      left: 20,
+      // left: 20,
       borderRadius: moderateScale(4),
       paddingVertical: moderateScale(2),
       paddingHorizontal: moderateScale(4),
@@ -377,6 +377,35 @@ export default ({ fontFamily }) => {
       color: colors.blackC,
       fontFamily: fontFamily.regular,
     },
+    datePriceText: {
+      fontSize: textScale(14),
+      fontFamily: fontFamily.medium,
+      color: isDarkMode
+        ? MyDarkTheme.colors.text
+        : colors.black,
+      textAlign: 'left'
+    },
+    statusText: {
+      fontSize: textScale(12),
+      fontFamily: fontFamily.regular,
+      color: isDarkMode
+        ? MyDarkTheme.colors.text
+        : colors.blackOpacity40,
+      textAlign: 'left'
+    },
+    deliveryProof: {
+      fontSize: textScale(12),
+      fontFamily: fontFamily.medium,
+      marginBottom: moderateScaleVertical(4),
+      color: isDarkMode
+        ? MyDarkTheme.colors.text
+        : colors.blackOpacity86,
+    },
+    horizontalLine: {
+      borderBottomWidth: 0.8,
+      borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.lightGreyBg,
+      marginVertical: moderateScaleVertical(10)
+    }
   });
   return styles;
 };

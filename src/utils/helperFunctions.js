@@ -1,8 +1,9 @@
 import * as React from 'react';
+
 import {showMessage} from 'react-native-flash-message';
 import Geocoder from 'react-native-geocoder';
 import Geolocation from 'react-native-geolocation-service';
-import {BackHandler, Alert, Animated} from 'react-native';
+import {BackHandler, Alert, Animated, Text} from 'react-native';
 import strings from './../constants/lang/index';
 import {callingCountries} from 'country-data';
 import navigationStrings from '../navigation/navigationStrings';
@@ -10,6 +11,8 @@ import actions from '../redux/actions';
 import * as NavigationService from '../navigation/NavigationService';
 import Toast from 'react-native-simple-toast';
 import {StatusBarHeight} from '../styles/responsiveSize';
+import {getDistance} from 'geolib';
+import {min} from 'moment';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -271,9 +274,13 @@ export const sessionHandler = (error) => {
 };
 
 export const getScaleTransformationStyle = (
-  animated: Animated.Value,
-  startSize: number = 1,
-  endSize: number = 0.95,
+  // animated: Animated.Value,
+  // startSize: number = 1,
+  // endSize: number = 0.95,
+  /** Removing annoataions commented above original code in case of any issue arise */
+  animated,
+  startSize = 1,
+  endSize = 0.95,
 ) => {
   const interpolation = animated.interpolate({
     inputRange: [0, 1],
@@ -285,8 +292,11 @@ export const getScaleTransformationStyle = (
 };
 
 export const pressInAnimation = (
-  animated: Animated.Value,
-  duration: number = 150,
+  // animated: Animated.Value,
+  // duration: number = 150,
+  /** Removing annoataions commented above original code in case of any issue arise */
+  animated,
+  duration = 150,
 ) => {
   animated.setValue(0);
   Animated.timing(animated, {
@@ -297,8 +307,11 @@ export const pressInAnimation = (
 };
 
 export const pressOutAnimation = (
-  animated: Animated.Value,
-  duration: number = 150,
+  // animated: Animated.Value,
+  // duration: number = 150,
+  /** Removing annoataions commented above original code in case of any issue arise */
+  animated,
+  duration = 150,
 ) => {
   animated.setValue(1);
   Animated.timing(animated, {
@@ -336,9 +349,55 @@ const timeInLocalLangauge = (value, selectedLanguage) => {
   })}`;
 };
 
+const getNearestLocation = (currentLocation, savedLocations) => {
+  const points = savedLocations.map((item, indx) => {
+    const distance = getDistance(
+      {
+        latitude: currentLocation?.latitude,
+        longitude: currentLocation?.longitude,
+      },
+      {latitude: item?.latitude, longitude: item?.longitude},
+    );
+    var newAddressArray = Object.assign({}, indx);
+    newAddressArray.distance = distance;
+    newAddressArray.latitude = parseFloat(item?.latitude);
+    newAddressArray.longitude = parseFloat(item?.longitude);
+    newAddressArray.address = item?.address;
+    newAddressArray.type = item?.type;
+    newAddressArray.type_name = item?.type_name;
+    return newAddressArray;
+  });
+
+  const minDistance = Math.min.apply(
+    null,
+    points.map(function (item) {
+      return item?.distance;
+    }),
+  );
+
+  const nearestAddress = points.find((x) => x.distance === minDistance);
+  return nearestAddress;
+};
+
 const checkEvenOdd = (num) => {
   return num % 5 === 0 ? num : num - (num % 5);
 };
+
+// export function numberFormat(formatableObj = {}) {
+//   return (
+//     <NumberFormat
+//       value={formatableObj?.number}
+//       displayType={'text'}
+//       thousandSeparator={true}
+//       prefix={formatableObj?.currencySign}
+//       renderText={(formattedValue) => (
+//         <Text numberOfLines={1} style={formatableObj?.textStyle}>
+//           {formattedValue}
+//         </Text>
+//       )}
+//     />
+//   );
+// }
 
 export {
   showError,
@@ -351,4 +410,5 @@ export {
   getUrlRoutes,
   timeInLocalLangauge,
   checkEvenOdd,
+  getNearestLocation,
 };

@@ -266,15 +266,14 @@ export default function ({navigation}) {
       />
       <Stack.Screen
         name={navigationStrings.SUBSCRIPTION}
-        component={
-          appStyle?.homePageLayout === 3 ? Subscriptions2 : Subscriptions
-          // Subscriptions
-        }
+        // component={appStyle?.homePageLayout === 3 ? Subscriptions2 : Subscriptions}
+        component={Subscriptions2}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name={navigationStrings.LOYALTY}
-        component={appStyle?.homePageLayout === 3 ? Loyalty2 : Loyalty}
+        // component={appStyle?.homePageLayout === 3 ? Loyalty2 : Loyalty}
+        component={Loyalty2}
         options={{headerShown: false}}
       />
       <Stack.Screen

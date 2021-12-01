@@ -11,7 +11,6 @@ export default {
   ACCOUNTS: 'accounts',
   TAB_ROUTES: 'tabRoutes',
   DRAWER_ROUTES: 'drawerRoutes',
-  DRAWER_ROUTES_TOWFINDER: 'drawerRoutesTwoFinder',
   DELIVERY: 'delivery',
   VENDOR: 'vendor',
   SUPERMARKET: 'supermarket',
@@ -100,4 +99,5 @@ export default {
   ADD_VEHICLE_DETAILS: 'addVehicleDetails',
   CATEGORY_BRANDS: 'categoryBrands',
   ALL_IN_ONE_PAYMENTS: 'allInOnePayments',
+  CART_SCREEN: 'cartScreen',
 };

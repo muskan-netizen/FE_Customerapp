@@ -1,6 +1,9 @@
 import React from 'react';
 import {Animated, Text, TouchableOpacity, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import DashedLine from 'react-native-dashed-line';
 import FastImage from 'react-native-fast-image';
+import HTMLView from 'react-native-htmlview';
 import {useSelector} from 'react-redux';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -11,16 +14,13 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
+import {MyDarkTheme} from '../styles/theme';
+import {currencyNumberFormatter} from '../utils/commonFunction';
 import {
   getImageUrl,
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-import HTMLView from 'react-native-htmlview';
-import DashedLine from 'react-native-dashed-line';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
-import {StyleSheet} from 'react-native';
 
 export default function ProductCard2({
   data = {},
@@ -95,10 +95,12 @@ export default function ProductCard2({
               ...commonStyles.mediumFont14,
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
-            {`${currencies?.primary_currency?.symbol}${(
-              Number(data?.variant[0]?.multiplier) *
-              Number(data?.variant[0]?.price)
-            ).toFixed(2)}`}
+            {`${currencies?.primary_currency?.symbol}${currencyNumberFormatter(
+              (
+                Number(data?.variant[0]?.multiplier) *
+                Number(data?.variant[0]?.price)
+              ).toFixed(2),
+            )}`}
           </Text>
         </View>
         {data?.translation[0]?.body_html && (

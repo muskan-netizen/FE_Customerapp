@@ -1,10 +1,12 @@
 import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
+
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
   Keyboard,
   Text,
+  TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -220,11 +222,11 @@ export default function AllPaymentMethods({navigation, route}) {
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.off_site == 0 &&
-          selectedPaymentMethod?.id != 1
+          selectedPaymentMethod?.id === 4
         ) && (
           <View>
             <CardField
-              postalCodeEnabled={true}
+              postalCodeEnabled={false}
               placeholder={{
                 number: '4242 4242 4242 4242',
               }}
@@ -249,6 +251,11 @@ export default function AllPaymentMethods({navigation, route}) {
             />
           </View>
         )}
+        {/* {selectedPaymentMethod &&
+          selectedPaymentMethod?.id == item.id &&
+          selectedPaymentMethod?.off_site == 0 &&
+          selectedPaymentMethod?.id === 10 &&
+          _renderRazor()} */}
       </>
     );
   };

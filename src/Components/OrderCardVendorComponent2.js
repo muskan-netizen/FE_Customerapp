@@ -1,14 +1,15 @@
 import moment from 'moment';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Image,
-  ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
 import {dummyUser} from '../constants/constants';
 import imagePath from '../constants/imagePath';
@@ -18,18 +19,15 @@ import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {
-  getColorCodeWithOpactiyNumber,
-  getImageUrl,
-} from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
-import {color} from 'react-native-reanimated';
+import {currencyNumberFormatter} from '../utils/commonFunction';
+import {getImageUrl} from '../utils/helperFunctions';
 
 export default function OrderCardVendorComponent2({
   data = {},
@@ -44,7 +42,7 @@ export default function OrderCardVendorComponent2({
   cardStyle,
 }) {
   let cardWidth = width - 21.5;
-
+  const [showModal, setModal] = useState(false);
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -155,9 +153,9 @@ export default function OrderCardVendorComponent2({
                           color: colors.black,
                         },
                       ]
-                }>{`${moment(data?.date_time).format('DD MMM, YYYY')} ${moment(
-                data?.date_time,
-              ).format('LT')} `}</Text>
+                }>
+                {data?.date_time}
+              </Text>
             </View>
           </View>
         </View>
@@ -185,15 +183,32 @@ export default function OrderCardVendorComponent2({
           borderColor: colors.borderColorB,
           padding: moderateScale(10),
         }}>
-        <Text
+        <View
           style={{
-            fontFamily: fontFamily.semiBold,
-            fontSize: textScale(14),
+            flexDirection: 'row',
+            justifyContent: 'space-between',
             marginVertical: moderateScaleVertical(10),
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           }}>
-          {`${strings.TOTAL_ITEMS}: ${data?.product_details?.length}`}
-        </Text>
+          <Text
+            style={{
+              fontFamily: fontFamily.semiBold,
+              fontSize: textScale(14),
+
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}>
+            {`${strings.TOTAL_ITEMS}: ${data?.product_details?.length}`}
+          </Text>
+          {/* {data?.order_status?.current_status?.title == strings.DELIVERED && (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => setModal(true)}>
+              <Image
+                style={{tintColor: themeColors.primary_color}}
+                source={imagePath.icAttachments}
+              />
+            </TouchableOpacity>
+          )} */}
+        </View>
         <ScrollView bounces={true}>
           {data?.product_details.map((i, inx) => {
             return (
@@ -280,7 +295,7 @@ export default function OrderCardVendorComponent2({
                 marginHorizontal: moderateScale(10),
               }}>{`${currencies?.primary_currency?.symbol}${
               // Number(i?.pvariant?.multiplier) *
-              Number(data?.payable_amount).toFixed(2)
+              currencyNumberFormatter(Number(data?.payable_amount).toFixed(2))
             }`}</Text>
           </View>
         </View>
@@ -419,6 +434,54 @@ export default function OrderCardVendorComponent2({
           </View>
         )}
       </View>
+      <Modal
+        isVisible={showModal}
+        onBackdropPress={() => setModal(false)}
+        animationIn="zoomIn"
+        animationOut="zoomOut">
+        <View
+          style={{
+            backgroundColor: isDarkMode ? colors.whiteOpacity50 : colors.white,
+            borderRadius: moderateScale(8),
+            overflow: 'hidden',
+            // paddingVertical: moderateScale(12)
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: moderateScale(6),
+            }}>
+            <Text />
+            <Text
+              style={{
+                fontSize: textScale(16),
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                alignSelf: 'center',
+                fontFamily: fontFamily.medium,
+              }}>
+              Proof
+            </Text>
+            <TouchableOpacity onPress={() => setModal(false)}>
+              <Image source={imagePath.closeButton} />
+            </TouchableOpacity>
+          </View>
+          <Image
+            source={{
+              uri: 'https://www.digitalcreed.in/wp-content/uploads/2016/04/driver.jpg',
+            }}
+            style={{
+              width: '100%',
+              height: height / 3,
+              backgroundColor: isDarkMode
+                ? colors.whiteOpacity22
+                : colors.blackOpacity10,
+              // borderRadius: 8,
+            }}
+          />
+        </View>
+      </Modal>
     </TouchableOpacity>
   );
 }

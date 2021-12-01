@@ -157,8 +157,9 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     // cart item design start from here
     cartItemMainContainer: {
       flexDirection: 'row',
-      paddingVertical: moderateScaleVertical(10),
+      paddingTop: moderateScaleVertical(10),
       paddingHorizontal: moderateScale(10),
+      paddingBottom: moderateScale(2),
       // backgroundColor: colors.white,
     },
     cartItemImage: {
@@ -438,6 +439,31 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       fontFamily: fontFamily.regular,
       color: isDarkMode ? colors.white : colors.black,
       textAlign: I18nManager.isRTL ? 'right' : 'left',
+    },
+    laundrySection: {
+      backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.greyNew,
+      padding: moderateScale(10),
+      marginHorizontal: moderateScale(10),
+      borderRadius: moderateScale(5),
+    },
+    LaundryApppriceItemLabel: {
+      color: colors.textGreyB,
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(12),
+    },
+    LaundryApppriceItemLabel2: {
+      marginLeft: moderateScale(5),
+      color: themeColors?.primary_color,
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(12),
+      opacity: 0.6,
+    },
+    LaundryApppriceItemLabel3: {
+      marginLeft: moderateScale(5),
+      color: colors.black,
+      fontFamily: fontFamily.regular,
+      fontSize: textScale(12),
+      opacity: 0.6,
     },
   });
   return styles;

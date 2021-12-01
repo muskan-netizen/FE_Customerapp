@@ -31,6 +31,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../../styles/theme';
 import LinearGradient from 'react-native-linear-gradient';
 import {BlurView} from '@react-native-community/blur';
+import {currencyNumberFormatter} from '../../../utils/commonFunction';
 
 export default function SelectCarModalView({
   isLoading = false,
@@ -172,9 +173,11 @@ export default function SelectCarModalView({
                     //   ? [styles.priceStyle, {color: MyDarkTheme.colors.text}]
                     //   : styles.priceStyle
                   }>
-                  {`${currencies?.primary_currency?.symbol}${Number(
-                    item.tags_price,
-                  ).toFixed(2)}`}
+                  {`${
+                    currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
+                    Number(item.tags_price).toFixed(2),
+                  )}`}
                 </Text>
               </View>
 
@@ -315,6 +318,7 @@ export default function SelectCarModalView({
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     marginHorizontal: 20,
+                    marginBottom: moderateScaleVertical(24),
                   }}>
                   <GradientButton
                     // endcolor={{x: 0.0, y: 0.25}}
@@ -339,7 +343,7 @@ export default function SelectCarModalView({
                     }
                     btnText={
                       selectedCarOption?.variant[0]?.price > 0
-                        ? strings.BOOK_NOW
+                        ? strings.CONFIRM
                         : strings.NORIDEAVAILABLE
                     }
                     containerStyle={{flex: 1}}

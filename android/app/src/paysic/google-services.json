@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "819164019202",
+    "project_id": "paysic-2d6dc",
+    "storage_bucket": "paysic-2d6dc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819164019202:android:6e97c7632b51ff2c6b051b",
+        "android_client_info": {
+          "package_name": "com.paysic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819164019202-a8g428etvjua0gk4mc3jsrhcefcn17ol.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.paysic",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "819164019202-cfcdugvkn3hieukap8tqj41lso25dti0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.paysic",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "819164019202-shi4sjrgtvgnijr3r2clpgqb2ahb9sg3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.paysic",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "819164019202-l30gtl8ak4d5r8aqt7mu9ankvq4r14k0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAe-i6pz9l2EgL0IxNCGfXMJjbKQav142c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "819164019202-l30gtl8ak4d5r8aqt7mu9ankvq4r14k0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "819164019202-npsnla6bku3lp11f9ecvdc5ft9rgffo9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.paysic"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

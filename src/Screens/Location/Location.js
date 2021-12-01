@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import Geocoder from 'react-native-geocoding';
 import {useSelector} from 'react-redux';
 import GooglePlaceInput from '../../Components/GooglePlaceInput';
@@ -9,12 +10,11 @@ import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import colors from '../../styles/colors';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import {moderateScale} from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
+import {getCurrentLocation} from '../../utils/helperFunctions';
 import {chekLocationPermission} from '../../utils/permissions';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
-import {moderateScale} from '../../styles/responsiveSize';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -23,7 +23,6 @@ export default function Location({route, navigation}) {
   const {type} = route.params;
   const addressType = route?.params?.addressType;
 
-  console.log(addressType, 'addressType');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -57,7 +56,7 @@ export default function Location({route, navigation}) {
     };
 
   //Get Your current location
-  const getCurrentLocation = () => {
+  const getCurrentLocate = () => {
     chekLocationPermission()
       .then((result) => {
         if (result !== 'goback') {
@@ -68,44 +67,72 @@ export default function Location({route, navigation}) {
   };
 
   const getCurrentPosition = () => {
-    return navigator.geolocation.default.getCurrentPosition(
-      (position) => {
-        Geocoder.from({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        })
-          .then((json) => {
-            var addressComponent = json.results[0].formatted_address;
-            let details = {};
-            details = {
-              formatted_address: addressComponent,
-              geometry: {
-                location: {
-                  lat: position.coords.latitude,
-                  lng: position.coords.longitude,
-                },
-              },
-              address_components: json.results[0].address_components,
-            };
+    getCurrentLocation('home')
+      .then((res) => {
+        let details = {};
+        details = {
+          formatted_address: res?.address,
+          geometry: {
+            location: {
+              lat: res?.latitude,
+              lng: res?.longitude,
+            },
+          },
+        };
 
-            if (type == 'Home1') {
-              navigation.navigate(navigationStrings.HOME, {
-                details,
-              });
-            }
+        if (type == 'Home1') {
+          navigation.navigate(navigationStrings.HOME, {
+            details,
+          });
+        }
+        if (type == 'Pickup') {
+          navigation.navigate(navigationStrings.PICKUPLOCATION, {
+            details,
+            addressType,
+          });
+        }
+      })
+      .catch((err) => console.log(err, 'errorOccured'));
+    // return navigator.geolocation.default.getCurrentPosition(
+    //   (position) => {
+    //     Geocoder.from({
+    //       latitude: position.coords.latitude,
+    //       longitude: position.coords.longitude,
+    //     })
+    //       .then((json) => {
+    //         var addressComponent = json.results[0].formatted_address;
+    //         let details = {};
+    //         details = {
+    //           formatted_address: addressComponent,
+    //           geometry: {
+    //             location: {
+    //               lat: position.coords.latitude,
+    //               lng: position.coords.longitude,
+    //             },
+    //           },
+    //           address_components: json.results[0].address_components,
+    //         };
 
-            if (type == 'Pickup') {
-              navigation.navigate(navigationStrings.PICKUPLOCATION, {
-                details,
-                addressType,
-              });
-            }
-          })
-          .catch((error) => console.log(error, 'errro geocode'));
-      },
-      (error) => console.log(error.message),
-      {enableHighAccuracy: true, timeout: 20000},
-    );
+    //         console.log(details, 'detailsdetails');
+
+    //         if (type == 'Home1') {
+    //           navigation.navigate(navigationStrings.HOME, {
+    //             details,
+    //           });
+    //         }
+
+    //         if (type == 'Pickup') {
+    //           navigation.navigate(navigationStrings.PICKUPLOCATION, {
+    //             details,
+    //             addressType,
+    //           });
+    //         }
+    //       })
+    //       .catch((error) => console.log(error, 'errro geocode'));
+    //   },
+    //   (error) => console.log(error.message),
+    //   {enableHighAccuracy: true, timeout: 20000},
+    // );
   };
 
   const handleAddressOnKeyUp = (text) => {
@@ -147,7 +174,7 @@ export default function Location({route, navigation}) {
         <View style={{zIndex: -1000}}>
           <TouchableOpacity
             style={{backgroundColor: 'transparent'}}
-            onPress={() => getCurrentLocation()}>
+            onPress={() => getCurrentLocate()}>
             <View style={styles.useCurrentLocationView}>
               <Image
                 style={{
@@ -155,7 +182,7 @@ export default function Location({route, navigation}) {
                   height: moderateScale(16),
                   width: moderateScale(16),
                 }}
-                source={imagePath.icLocation1}
+                source={imagePath.redLocation}
                 resizeMode="contain"
               />
               <Text

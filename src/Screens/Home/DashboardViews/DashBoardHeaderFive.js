@@ -27,6 +27,8 @@ import {BlurView} from '@react-native-community/blur';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import ScaledImage from 'react-native-scalable-image';
 import {useNavigation} from '@react-navigation/native';
+import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 
 export default function DashBoardHeaderFive({
   // navigation = {},
@@ -34,6 +36,7 @@ export default function DashBoardHeaderFive({
   selcetedToggle,
   toggleData,
   isLoading = false,
+  isLoadingB = false,
 }) {
   const navigation = useNavigation();
   const pickerRef = createRef();
@@ -70,8 +73,13 @@ export default function DashBoardHeaderFive({
     userSelectedtab();
   }, [appData]);
 
+  // useEffect(() => {
+  //   checkSelectedTab()
+  // }, [])
+
   const checkSelectedTab = () => {
     const newTabs = [...tabs];
+    console.log(dine_In_Type, ' dine_In_Type');
     newTabs.forEach((item, index) => {
       if (item.label === dine_In_Type) {
         newTabs[index].isActive = true;
@@ -147,6 +155,10 @@ export default function DashBoardHeaderFive({
 
   const setUserSelectedTab = (label, value) => {
     selcetedToggle(value);
+
+    const localTabs = [...tabs];
+    console.log(localTabs, 'localTabslocalTabs');
+
     updateState({
       checked: label,
     });
@@ -330,17 +342,17 @@ export default function DashBoardHeaderFive({
     }
   };
 
-  const dineInFunction = () => {
+  const dineInFunction = (item, indx) => {
     Alert.alert('', strings.REMOVE_CART_MSG, [
       {
         text: strings.CANCEL,
         onPress: () => console.log('Cancel Pressed'),
       },
-      {text: strings.CLEAR_CART2, onPress: clearCart},
+      {text: strings.CLEAR_CART2, onPress: () => clearCart(item, indx)},
     ]);
   };
 
-  const clearCart = () => {
+  const clearCart = (item, indx) => {
     actions
       .clearCart(
         {},
@@ -354,18 +366,20 @@ export default function DashBoardHeaderFive({
       .then((res) => {
         showSuccess(res?.message);
         actions.cartItemQty(res);
+        _onTableItm(item, indx);
         updateState({isModalVisible: false});
       })
       .catch(errorMethod);
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
+    updateState({isLoading: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
 
   const _onTableItm = (item, indx) => {
     const newTabs = [...tabs];
+
     newTabs.forEach((item, index) => {
       if (index === indx) {
         selcetedToggle(item.label);
@@ -403,13 +417,21 @@ export default function DashBoardHeaderFive({
   }
 
   return (
-    <>
+    <View
+      style={{
+        borderBottomWidth: 0.8,
+        borderBottomColor: isDarkMode
+          ? colors.whiteOpacity22
+          : colors.borderColorD,
+        paddingBottom: moderateScale(5),
+      }}>
       <View
         style={{
           ...styles.headerContainer,
           borderBottomColor: isDarkMode
             ? colors.whiteOpacity22
             : colors.borderColorD,
+          borderBottomWidth: 0,
         }}>
         <View
           style={{
@@ -454,19 +476,31 @@ export default function DashBoardHeaderFive({
                 source={imagePath.redLocation}
                 resizeMode="contain"
               />
-
-              <Text
-                numberOfLines={1}
-                style={[
-                  styles.locationTxt,
-                  {
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGrey,
-                  },
-                ]}>
-                {location?.address}
-              </Text>
+              <View>
+                {!!location?.type && (
+                  <Text numberOfLines={1} style={styles.locationTypeTxt}>
+                    {location?.type === 3
+                      ? !!location?.type_name
+                        ? location?.type_name
+                        : strings.UNKNOWN
+                      : location?.type === 2
+                      ? strings.WORK
+                      : strings.HOME}
+                  </Text>
+                )}
+                <Text
+                  numberOfLines={1}
+                  style={[
+                    styles.locationTxt,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGrey,
+                    },
+                  ]}>
+                  {location?.address}
+                </Text>
+              </View>
             </TouchableOpacity>
           )}
         </View>
@@ -481,7 +515,7 @@ export default function DashBoardHeaderFive({
             source={imagePath.search1}
           />
         </TouchableOpacity>
-        {tabs.length > 1 && (
+        {/* {tabs.length > 1 && (
           <TouchableOpacity
             activeOpacity={0.7}
             style={{
@@ -494,17 +528,17 @@ export default function DashBoardHeaderFive({
               source={
                 !!(
                   checked ==
-                    toggleData?.profile?.preferences?.delivery_nomenclature ||
+                  toggleData?.profile?.preferences?.delivery_nomenclature ||
                   checked == strings.DELIVERY
                 )
                   ? imagePath.delivery
                   : !!(
-                      checked ==
-                        toggleData?.profile?.preferences?.dinein_nomenclature ||
-                      checked == strings.DINE_IN
-                    )
-                  ? imagePath.dineIn
-                  : imagePath.takeaway
+                    checked ==
+                    toggleData?.profile?.preferences?.dinein_nomenclature ||
+                    checked == strings.DINE_IN
+                  )
+                    ? imagePath.dineIn
+                    : imagePath.takeaway
               }
               style={styles.deliveryIcon}
               resizeMode="contain"
@@ -518,7 +552,7 @@ export default function DashBoardHeaderFive({
               resizeMode="contain"
             />
           </TouchableOpacity>
-        )}
+        )} */}
         <Modal
           isVisible={isModalVisible}
           style={{
@@ -543,87 +577,185 @@ export default function DashBoardHeaderFive({
                 },
               ]}>
               <View style={{padding: moderateScale(10)}}>
-                {tabs.map((item, indx) => {
-                  return (
-                    <TouchableOpacity
-                      key={indx}
-                      style={{
-                        borderColor: item.isActive
-                          ? themeColors.primary_color
-                          : colors.transparent,
-                        borderWidth: 0.7,
-                        flexDirection: 'row',
-                        paddingVertical: moderateScaleVertical(15),
-                        margin: moderateScale(5),
-                        borderRadius: moderateScale(10),
-                        alignItems: 'center',
-                        paddingHorizontal: moderateScale(20),
-                        justifyContent: 'space-between',
-                      }}
-                      onPress={() =>
-                        !(
-                          cartItemCount?.message == null &&
-                          cartItemCount?.data?.item_count > 0
-                        )
-                          ? _onTableItm(item, indx)
-                          : dineInFunction()
-                      }>
-                      <View
+                {tabs.length > 1 &&
+                  tabs.map((item, indx) => {
+                    return (
+                      <TouchableOpacity
+                        key={indx}
+                        disabled={!!item.isActive}
                         style={{
+                          borderColor: item.isActive
+                            ? themeColors.primary_color
+                            : colors.transparent,
+                          borderWidth: 0.7,
                           flexDirection: 'row',
-                          justifyContent: 'center',
+                          paddingVertical: moderateScaleVertical(15),
+                          margin: moderateScale(5),
+                          borderRadius: moderateScale(10),
                           alignItems: 'center',
-                        }}>
+                          paddingHorizontal: moderateScale(20),
+                          justifyContent: 'space-between',
+                        }}
+                        onPress={() =>
+                          !(
+                            cartItemCount?.message == null &&
+                            cartItemCount?.data?.item_count > 0
+                          )
+                            ? _onTableItm(item, indx)
+                            : dineInFunction(item, indx)
+                        }>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <Image
+                            source={
+                              item.isActive
+                                ? imagePath.radioNewActive
+                                : imagePath.radioNewInActive
+                            }
+                            style={{
+                              height: moderateScale(20),
+                              width: moderateScale(20),
+                              tintColor: item.isActive
+                                ? themeColors.primary_color
+                                : colors.blackOpacity43,
+                            }}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: fontFamily.medium,
+                              color: item.isActive
+                                ? themeColors.primary_color
+                                : isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.blackOpacity43,
+                              fontSize: textScale(12),
+                              marginHorizontal: moderateScale(10),
+                            }}>
+                            {item.value}
+                          </Text>
+                        </View>
                         <Image
-                          source={
-                            item.isActive
-                              ? imagePath.radioNewActive
-                              : imagePath.radioNewInActive
-                          }
+                          source={item.icon}
                           style={{
-                            height: moderateScale(20),
-                            width: moderateScale(20),
+                            height: moderateScale(22),
+                            width: moderateScale(22),
                             tintColor: item.isActive
-                              ? themeColors.primary_color
-                              : colors.blackOpacity43,
-                          }}
-                        />
-                        <Text
-                          style={{
-                            fontFamily: fontFamily.medium,
-                            color: item.isActive
                               ? themeColors.primary_color
                               : isDarkMode
                               ? MyDarkTheme.colors.text
-                              : colors.blackOpacity43,
-                            fontSize: textScale(12),
-                            marginHorizontal: moderateScale(10),
-                          }}>
-                          {item.value}
-                        </Text>
-                      </View>
-                      <Image
-                        source={item.icon}
-                        style={{
-                          height: moderateScale(22),
-                          width: moderateScale(22),
-                          tintColor: item.isActive
-                            ? themeColors.primary_color
-                            : isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.blackOpacity66,
-                          alignSelf: 'flex-end',
-                        }}
-                        resizeMode="contain"
-                      />
-                    </TouchableOpacity>
-                  );
-                })}
+                              : colors.blackOpacity66,
+                            alignSelf: 'flex-end',
+                          }}
+                          resizeMode="contain"
+                        />
+                      </TouchableOpacity>
+                    );
+                  })}
               </View>
             </View>
           </View>
         </Modal>
       </View>
-    </>
+      <View
+        style={{
+          width: width - 24,
+          alignSelf: 'center',
+          borderRadius: moderateScale(10),
+          flexDirection: 'row',
+          marginTop: moderateScale(10),
+        }}>
+        {tabs.length > 1 &&
+          tabs.map((item, indx) => {
+            return (
+              <TouchableOpacity
+                activeOpacity={1}
+                disabled={item.isActive}
+                onPress={() =>
+                  !(
+                    cartItemCount?.message == null &&
+                    cartItemCount?.data?.item_count > 0
+                  )
+                    ? _onTableItm(item, indx)
+                    : dineInFunction(item, indx)
+                }
+                key={indx}
+                style={{
+                  width: width / 3 - 8,
+                  borderBottomColor:
+                    item.isActive && isDarkMode
+                      ? MyDarkTheme.colors.white
+                      : item.isActive && !isDarkMode
+                      ? themeColors.primary_color
+                      : isDarkMode
+                      ? colors.blackOpacity0
+                      : colors.greyColor1,
+                  borderBottomWidth: 2,
+                  height: moderateScale(40),
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexDirection: 'row',
+                }}>
+                <Image
+                  source={item.icon}
+                  style={{
+                    height: moderateScale(16),
+                    width: moderateScale(16),
+                    tintColor:
+                      item.isActive && isDarkMode
+                        ? MyDarkTheme.colors.white
+                        : item.isActive && !isDarkMode
+                        ? themeColors.primary_color
+                        : colors.greyLight,
+                    // ? themeColors.primary_color
+                    // : isDarkMode
+                    // ? MyDarkTheme.colors.text
+                    // : colors.blackOpacity66,
+                    marginRight: moderateScale(3),
+                    // tintColor: item.isActive
+                    //   ? themeColors.primary_color
+                    //   : colors.textGreyOpcaity7,
+                    // alignSelf: 'flex-end',
+                  }}
+                  resizeMode="contain"
+                />
+                <Text
+                  style={{
+                    marginLeft: moderateScale(3),
+                    fontSize: textScale(14),
+                    fontFamily: fontFamily.regular,
+                    color:
+                      item.isActive && isDarkMode
+                        ? MyDarkTheme.colors.white
+                        : item.isActive && !isDarkMode
+                        ? themeColors.primary_color
+                        : colors.greyLight,
+                    textTransform: 'capitalize',
+                  }}>
+                  {item.value}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+      </View>
+      <CustomAnimatedLoader
+        source={loaderOne}
+        loaderTitle={strings.LOADING}
+        containerColor={
+          isDarkMode ? MyDarkTheme.colors.lightDark : colors.white
+        }
+        loadercolor={themeColors.primary_color}
+        animationStyle={[
+          {
+            height: moderateScaleVertical(40),
+            width: moderateScale(40),
+          },
+        ]}
+        visible={isLoadingB}
+      />
+    </View>
   );
 }
