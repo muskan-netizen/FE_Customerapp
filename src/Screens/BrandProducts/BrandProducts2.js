@@ -37,16 +37,14 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
+import {
+  getImageUrl,
+  playVibration,
+  showError,
+  showSuccess,
+} from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-
-const ONE_SECOND_IN_MS = 50;
-const PATTERN = [
-  1 * ONE_SECOND_IN_MS,
-  2 * ONE_SECOND_IN_MS,
-  3 * ONE_SECOND_IN_MS,
-];
 
 let timeOut = undefined;
 
@@ -397,7 +395,7 @@ export default function BrandProducts2({route, navigation}) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }
-    Vibration.vibrate(PATTERN);
+    playVibration();
     let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
     updateState({selectedItemID: item?.id, btnLoader: true});
     let isSingleVendor = await checkSingleVendor(item.id);
@@ -513,7 +511,7 @@ export default function BrandProducts2({route, navigation}) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }
-    Vibration.vibrate(PATTERN);
+    playVibration();
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
     //!!data?.variant[0]?.check_if_in_cart_app && data?.variant[0]?.check_if_in_cart_app.length > 0 || !!data?.qty ?
@@ -775,7 +773,7 @@ export default function BrandProducts2({route, navigation}) {
   };
 
   const _onAddtoWishlist = (item) => {
-    Vibration.vibrate(PATTERN);
+    playVibration();
     if (!!userData?.auth_token) {
       updateState({isLoadingB: true});
       actions

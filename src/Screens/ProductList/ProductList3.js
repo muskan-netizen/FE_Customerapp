@@ -60,6 +60,7 @@ import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {
   checkEvenOdd,
   getImageUrl,
+  playVibration,
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
@@ -70,13 +71,6 @@ import ProductListLoader3 from '../../Components/Loaders/ProductListLoader3';
 import Clipboard from '@react-native-community/clipboard';
 import Toast from 'react-native-simple-toast';
 import RepeatModal from '../../Components/RepeatModal';
-
-const ONE_SECOND_IN_MS = 50;
-const PATTERN = [
-  1 * ONE_SECOND_IN_MS,
-  2 * ONE_SECOND_IN_MS,
-  3 * ONE_SECOND_IN_MS,
-];
 
 let timeOut = undefined;
 
@@ -672,7 +666,7 @@ export default function Products({route, navigation}) {
 
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
-    Vibration.vibrate(PATTERN);
+    playVibration();
     if (!!userData?.auth_token) {
       updateState({isLoadingB: true});
       actions
@@ -795,7 +789,7 @@ export default function Products({route, navigation}) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }
-    Vibration.vibrate(PATTERN);
+    playVibration();
     let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
     updateState({selectedItemID: item?.id, btnLoader: true});
     let isSingleVendor = await checkSingleVendor(item.id);
@@ -922,7 +916,7 @@ export default function Products({route, navigation}) {
       return;
     }
 
-    Vibration.vibrate(PATTERN);
+    playVibration();
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
     //!!data?.variant[0]?.check_if_in_cart_app && data?.variant[0]?.check_if_in_cart_app.length > 0 || !!data?.qty ?
@@ -1271,6 +1265,7 @@ export default function Products({route, navigation}) {
   };
 
   const updateCartItems = (item, quanitity, productId, cartID) => {
+    playVibration();
     console.log('selcted section', selectedSection);
 
     if (!!selectedSection) {
@@ -1419,9 +1414,9 @@ export default function Products({route, navigation}) {
     // console.log(data, 'vendor_id');
     console.log(routeData, 'datadatadatadata');
 
-    if (routeData) {
-      return;
-    }
+    // if (routeData) {
+    //   return;
+    // }
 
     actions
       .getAllPromoCodesForProductList(data, {
@@ -1469,7 +1464,7 @@ export default function Products({route, navigation}) {
               <TouchableOpacity
                 key={index}
                 onPress={() => {
-                  Vibration.vibrate(PATTERN);
+                  playVibration();
                   updateState({MenuModalVisible: !MenuModalVisible});
                   sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
                     {
@@ -2253,7 +2248,7 @@ export default function Products({route, navigation}) {
                     }
                     size="small"
                     onToggle={() => {
-                      Vibration.vibrate(PATTERN);
+                      playVibration();
                       const updatedArr = ProductTags.map((el, idx) => {
                         console.log(el);
                         if (idx === index) {
@@ -3000,8 +2995,8 @@ export default function Products({route, navigation}) {
       {!searchInput && (
         <GradientCartView
           onPress={() => {
-            Vibration.vibrate(PATTERN);
-            NavigationService.navigate(navigationStrings.CART_SCREEN);
+            playVibration();
+            navigation.navigate(navigationStrings.CART);
           }}
           btnText={
             CartItems && CartItems.data && CartItems.data.item_count
@@ -3021,7 +3016,7 @@ export default function Products({route, navigation}) {
           }
           isMenuBtnShow={categoryInfo?.is_show_products_with_category}
           onMenuTap={() => {
-            Vibration.vibrate(PATTERN);
+            playVibration();
             updateState({MenuModalVisible: !MenuModalVisible});
           }}
         />
