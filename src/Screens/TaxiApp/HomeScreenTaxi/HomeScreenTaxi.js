@@ -153,8 +153,8 @@ export default function HomeScreenTaxi({navigation, route}) {
                     position.coords.latitude,
                   );
                   updateState({
-                    userCurrentLongitude: currentLongitude,
-                    userCurrentLatitude: currentLatitude,
+                    userCurrentLongitude: parseFloat(currentLongitude),
+                    userCurrentLatitude: parseFloat(currentLatitude),
                   });
                 },
                 (error) => alert(error.message),

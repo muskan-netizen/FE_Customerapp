@@ -1410,10 +1410,8 @@ export default function Products({route, navigation}) {
     let data = {};
     // data['vendor_id'] = 2;
     data['vendor_id'] = productListId?.id;
-    1;
     // data['cart_id'] = vendorInfo.cartId;
     // console.log(data, 'vendor_id');
-    console.log(routeData, 'datadatadatadata');
     actions
       .getAllPromoCodesForProductList(data, {
         code: appData?.profile?.code,
