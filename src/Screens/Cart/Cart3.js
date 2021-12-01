@@ -852,17 +852,11 @@ export default function Cart({navigation, route}) {
   //Clear cart
   const placeOrder = () => {
     if (!!cartData?.delay_date && !localeSheduledOrderDate) {
-      // alert('You have to schedule this order due to vendor unavailablity');
       showInfo(strings.SCHEDULE_DATE_REQUIRED);
       return;
     }
 
-
-    if (selectedPayment) {
-      showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
-      return;
-    }
-
+   
     updateState({placeLoader: true});
     var d1 = new Date();
     var d2 = new Date(sheduledorderdate);
