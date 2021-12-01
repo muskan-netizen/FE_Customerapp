@@ -9,6 +9,7 @@ import {appData, language} from './PrinterScreen';
 import actions from '../../redux/actions';
 import BackgroundService from 'react-native-background-actions';
 import {getItem} from '../../utils/utils';
+import strings from '../../constants/lang';
 const fs = RNFetchBlob.fs;
 
 export let arr = [];
@@ -174,20 +175,27 @@ export const printReciept = async (data) => {
             await BluetoothEscposPrinter.printerAlign(
               BluetoothEscposPrinter.ALIGN.CENTER,
             );
-            await BluetoothEscposPrinter.printText('Order details\r\n\r\n', {
-              encoding: 'GBK',
-              codepage: 0,
-              widthtimes: 0.5,
-              heigthtimes: 0.5,
-              fonttype: 1,
-            });
+            await BluetoothEscposPrinter.printText(
+              `${strings.ORDER_DETAILS}\r\n\r\n`,
+              {
+                encoding: 'GBK',
+                codepage: 0,
+                widthtimes: 0.5,
+                heigthtimes: 0.5,
+                fonttype: 1,
+              },
+            );
 
             await BluetoothEscposPrinter.printerAlign(
               BluetoothEscposPrinter.ALIGN.LEFT,
             );
 
             await BluetoothEscposPrinter.printText(
-              `Customer: ${`Lara Brayne`}\r\nOrder placed on: ${`02-12-2021 at 09:16`}\r\nTo be prepared for: ${`02-12-2021 at 09:16`}\r\n\r\nDELIVERY:\r\n${
+              `${strings.CUSTOMER}: ${`Lara Brayne`}\r\n${
+                strings.ORDER_PLACE_ON + 'é'
+              }: ${`02-12-2021 at 09:16`}\r\n${
+                strings.TOBE_PREPARED
+              }: ${`02-12-2021 at 09:16`}\r\n\r\n${strings.DELIVERY}:\r\n${
                 detail.address.address
               }\r\n----------------------------------------------\r\n`,
               {},
@@ -204,7 +212,7 @@ export const printReciept = async (data) => {
                 BluetoothEscposPrinter.ALIGN.LEFT,
                 BluetoothEscposPrinter.ALIGN.RIGHT,
               ],
-              ['Item', 'Amount'],
+              [`${strings.ITEM}`, strings.AMOUNT],
               {},
             );
 
@@ -259,7 +267,7 @@ export const printReciept = async (data) => {
                 BluetoothEscposPrinter.ALIGN.RIGHT,
               ],
               [
-                'Total',
+                `${strings.TOTAL}`,
                 JSON.stringify(detail.item_count),
                 ' ',
                 JSON.stringify(total_amt) + '\r\n',
@@ -273,7 +281,7 @@ export const printReciept = async (data) => {
                 BluetoothEscposPrinter.ALIGN.LEFT,
                 BluetoothEscposPrinter.ALIGN.RIGHT,
               ],
-              ['Delivery Fee', detail.total_delivery_fee + '\r\n'],
+              [`${strings.DELIVERY_FEE}`, detail.total_delivery_fee + '\r\n'],
               {},
             );
 
@@ -283,7 +291,7 @@ export const printReciept = async (data) => {
                 BluetoothEscposPrinter.ALIGN.LEFT,
                 BluetoothEscposPrinter.ALIGN.RIGHT,
               ],
-              ['Discount', -detail.total_discount + '\r\n'],
+              [`${strings.DISCOUNT}`, -detail.total_discount + '\r\n'],
               {},
             );
 
@@ -294,7 +302,7 @@ export const printReciept = async (data) => {
                   BluetoothEscposPrinter.ALIGN.LEFT,
                   BluetoothEscposPrinter.ALIGN.RIGHT,
                 ],
-                ['Loyalty', -detail.loyalty_amount_saved + '\r\n'],
+                [`${strings.LOYALTY}`, -detail.loyalty_amount_saved + '\r\n'],
                 {},
               );
 
@@ -304,7 +312,7 @@ export const printReciept = async (data) => {
                   BluetoothEscposPrinter.ALIGN.LEFT,
                   BluetoothEscposPrinter.ALIGN.RIGHT,
                 ],
-                ['Paid amount', detail.payable_amount + '\r\n'],
+                [`${strings.PAID_AMOUNT}`, detail.payable_amount + '\r\n'],
                 {},
               );
             }
