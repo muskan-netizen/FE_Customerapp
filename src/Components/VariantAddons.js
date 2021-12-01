@@ -686,7 +686,7 @@ export default function VariantAddons({
 
     if (checkIsError == -1) {
       data['sku'] = productSku;
-      data['quantity'] = 1;
+      data['quantity'] = productQuantityForCart;
       data['product_variant_id'] = productVariantId;
       data['type'] = dine_In_Type;
       if (addonSet && addonSet.length) {
@@ -706,10 +706,11 @@ export default function VariantAddons({
         .then((res) => {
           actions.cartItemQty(res);
           showSuccess(strings.PRODUCT_ADDED_SUCCESS);
+          console.log("Product successfully added",res)
           updateState({ isLoadingC: false, btnLoader: false });
           updateCartItems(
             productdetail,
-            updateQty,
+            res.data.item_count, ////localy update cart quanity
             res.data.cart_product_id,
             res.data.id,
           );
@@ -732,7 +733,7 @@ export default function VariantAddons({
         updateState({ isLoadingC: false, btnLoader: false });
         updateCartItems(
           productdetail,
-          updateQty,
+          res.data.item_count, ////localy update cart quanity
           res.data.cart_product_id,
           res.data.id,
         );

@@ -880,7 +880,7 @@ export default function HomeServiceVariantAddons({
         });
         updateCartItems(
           productdetail,
-          updateQty, ////localy update cart quanity
+          res.data.item_count, ////localy update cart quanity
           res.data.cart_product_id,
           res.data.id,
         );

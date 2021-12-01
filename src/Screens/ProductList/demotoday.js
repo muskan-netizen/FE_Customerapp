@@ -893,7 +893,7 @@ export default function Products({ route, navigation }) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res.data, 'add single item addProductsToCart');
+        console.log(res.data, 'addProductsToCart');
         actions.cartItemQty(res);
         updateState({ cartId: res.data.id });
         // showSuccess('Product successfully added');
@@ -1082,12 +1082,11 @@ export default function Products({ route, navigation }) {
         if (val.id == item.id) {
           return {
             ...val,
-            qty: !!differentAddsOnsQty ? differentAddsOnsQty : quanitity,
+            qty: quanitity,
             cart_product_id: isExistproductId,
             isRemove: false,
           };
         }
-        updateState({...state,storeLocalQty: differentAddsOnsQty});
         return val;
       });
       updateState({
@@ -1099,8 +1098,6 @@ export default function Products({ route, navigation }) {
 
   //decrementing/removeing products from cart
   const removeProductFromCart = (itemToUpdate, section = null, diffAdOnId = 0) => {
-
-    console.log("item to update remove item", itemToUpdate)
     let updateLocallyAddOns = []
     if (differentAddsOnsModal) {
       let cloneArr = differentAddsOns
@@ -1113,14 +1110,17 @@ export default function Products({ route, navigation }) {
     }
 
     let data = {};
-    let isExistproductId = diffAdOnId
+    let isExistproductId =
+      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
+        itemToUpdate.variant[0]?.check_if_in_cart_app.length > 0
+        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].id
+        : itemToUpdate?.cart_product_id;
     let isExistCartId =
       !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
         itemToUpdate.variant[0]?.check_if_in_cart_app.length > 0
         ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
         : cartId;
     console.log('item', itemToUpdate);
-
 
     data['cart_id'] = isExistCartId;
     data['cart_product_id'] = isExistproductId;
@@ -1249,12 +1249,12 @@ export default function Products({ route, navigation }) {
   const onRepeat = async () => {
     console.log("repeate items", repeatItems)
 
-    const { item, isExistqty, productId, parentCartId, updateLocalQty } = repeatItems
+    const { item, isExistqty, isExistproductId, isExistCartId, updateLocalQty } = repeatItems
     await addDeleteCartItems(
       item,
       isExistqty,
-      productId,
-      parentCartId,
+      isExistproductId,
+      isExistCartId,
       repeatItems?.section,
       repeatItems?.index,
       1,
@@ -1281,48 +1281,8 @@ export default function Products({ route, navigation }) {
     });
   };
 
-  const addProductsWithoutCustomize = (item, section, index, type) => {
-
-    let itemToUpdate = cloneDeep(item);
-    let isExistqty = !!itemToUpdate?.qty ? itemToUpdate?.qty : itemToUpdate.variant[0]?.check_if_in_cart_app[0].quantity
-    let isExistproductId = !!itemToUpdate?.cart_product_id ? itemToUpdate?.cart_product_id : itemToUpdate.variant[0]?.check_if_in_cart_app[0].id
-    let isExistCartId = !!cartId ? cartId : itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
-
-    if (type == 1) {
-      addDeleteCartItems(
-        item,
-        isExistqty,
-        isExistproductId,
-        isExistCartId,
-        section,
-        index,
-        1
-      )
-    } else {
-      addDeleteCartItems(
-        item,
-        isExistqty,
-        isExistproductId,
-        isExistCartId,
-        section,
-        index,
-        2
-      )
-    }
-
-  }
-
   const checkIsCustomize = async (item, section = null, index, type) => {
     let itemToUpdate = cloneDeep(item);
-    console.log("item to update", itemToUpdate)
-    if (item.add_on.length == 0) {
-      addProductsWithoutCustomize(item, section, index, type)
-      return;
-    }
-
-    let productId = !!itemToUpdate?.cart_product_id ? itemToUpdate?.cart_product_id : itemToUpdate.variant[0]?.check_if_in_cart_app[0]?.id
-    let parentCartId = !!cartId ? cartId : itemToUpdate.variant[0]?.check_if_in_cart_app[0]?.cart_id
-
     var totalProductQty = 0
     if (itemToUpdate?.variant && itemToUpdate?.variant[0]?.check_if_in_cart_app) {
       itemToUpdate?.variant[0]?.check_if_in_cart_app.map((val) => {
@@ -1330,52 +1290,29 @@ export default function Products({ route, navigation }) {
       })
     }
 
+    let isExistqty = itemToUpdate?.qty ? itemToUpdate?.qty : totalProductQty;
 
-    var isExistqty = itemToUpdate?.qty ? itemToUpdate?.qty : totalProductQty;
-    var tempQty = 0
-
-    if (type == 2 && item?.add_on?.length > 0) { //hit in case of subtruction
-      let apiData = { cart_id: parentCartId, product_id: item.id }
-      console.log("send api data for diff adds on", apiData)
-      let checkIsAvailable = await getDiffAddsOn(apiData, section, item) //check products with different add ons is exist
-      // console.log("check available", checkIsAvailable)
-
-      !!checkIsAvailable?.data && checkIsAvailable?.data.map((val) => {
-        console.log("check available", val)
-        tempQty = tempQty + val?.quantity
-      })
-
-      if (!!checkIsAvailable?.goNext) {
-        console.log(tempQty, "isExistqtyisExistqty", isExistqty)
-        return
-      }
-    }
-
-    console.log(tempQty, "isExistqtyisExistqty", isExistqty)
-
-    if (type == 2) {  // direct subtract customize items
-      addDeleteCartItems(
-        item,
-        tempQty == 0 ? isExistqty : tempQty,
-        productId,
-        parentCartId,
-        section,
-        index,
-        2
-      )
-      return;
-    }
+    let isExistproductId = item?.add_on?.length > 0 ?
+      item?.id :
+      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
+        !!itemToUpdate.variant[0]?.check_if_in_cart_app?.length
+        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].id
+        : itemToUpdate?.cart_product_id
+    let isExistCartId =
+      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
+        itemToUpdate.variant[0]?.check_if_in_cart_app.length
+        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
+        : cartId;
 
 
-    if (type == 1) { //hit in case of add
-      let apiData = { cart_id: parentCartId, product_id: item.id }
+    if (type == 1 && item?.add_on?.length > 0) { //hit in case of add
+      let apiData = { cart_id: isExistCartId, product_id: isExistproductId }
       let header = {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
         systemuser: DeviceInfo.getUniqueId(),
       }
-      console.log("api data checkLastAdded", apiData)
       try {
         const res = await actions.checkLastAdded(apiData, header)
         console.log("res++++++", res)
@@ -1385,18 +1322,67 @@ export default function Products({ route, navigation }) {
             index: index,
             type: type,
             section: section,
-            isExistqty: tempQty == 0 ? isExistqty : tempQty,
+            isExistqty,
             updateLocalQty: res.data?.quantity,
-            productId: res?.data?.id,
-            parentCartId: res.data.cart_id
+            isExistproductId: res?.data?.id,
+            isExistCartId
           };
-          updateState({ repeatItems: addData, selectedSection: section });
+          updateState({
+            repeatItems: addData,
+            selectedSection: section,
+
+          });
         }
       } catch (error) {
         console.log("error riased++++", error)
         showError(error?.message || error?.error)
       }
       return;
+    }
+
+    if (type == 2 && item?.add_on?.length > 0) { //hit in case of subtruction
+      let apiData = { cart_id: isExistCartId, product_id: isExistproductId }
+      let checkIsAvailable = await getDiffAddsOn(apiData, section, item)
+      if (checkIsAvailable) {
+        return
+      }
+    }
+
+
+    if (type == 1) {
+      addDeleteCartItems(
+        item,
+        isExistqty,
+        isExistproductId,
+        isExistCartId,
+        section,
+        index, 1
+      );
+    } else {
+      addDeleteCartItems(
+        item,
+        isExistqty,
+        isExistproductId,
+        isExistCartId,
+        section,
+        index, 2
+      )
+    }
+    return;
+    if (
+      (!!item?.add_on && item?.add_on.length !== 0) ||
+      (!!item?.variantSet && item?.variantSet.length !== 0)
+    ) {
+      updateState({
+        repeatItems: addData,
+        selectedSection: section,
+      });
+      return;
+    }
+    if (type == 1) {
+      addDeleteCartItems(item, section, index, 1);
+    } else {
+      addDeleteCartItems(item, section, index, 2);
     }
   };
 
@@ -1425,13 +1411,12 @@ export default function Products({ route, navigation }) {
           },
           differentAddsOnsModal: true
         })
-        return { data: res?.data, goNext: true }
+        return true
       }
-      return { data: res?.data, goNext: false }
+      return false
 
     } catch (error) {
       console.log("error raised,error")
-      return { data: null, goNext: false }
     }
   }
 
@@ -1440,9 +1425,7 @@ export default function Products({ route, navigation }) {
 
   const difAddOnsAdded = async (item, qty, productId, cartId, section, index, type, differentAddsOnsQty) => {
 
-    console.log("ids++ cart id", cartId)
-    console.log("ids++ product id", productId)
-    console.log(qty, "ids++ product quantity", differentAddsOnsQty)
+
     let cloneArr = differentAddsOns
     let updateLocallyAddOns = cloneArr.map((val) => {
       if (cartId == val.id) {
@@ -1479,12 +1462,13 @@ export default function Products({ route, navigation }) {
         selectedItemID={selectedItemID}
         btnLoader={btnLoader}
         selectedItemIndx={selectedItemIndx}
-        differentAddsOns={differentAddsOns}
+        categoryInfo={categoryInfo}
       />
     );
   };
 
   const updateCartItems = (item, quanitity, productId, cartID) => {
+    console.log('selcted section', selectedSection);
 
     if (!!selectedSection) {
       let updatedSection = selectedSection.data.map((x, xnx) => {
@@ -1496,7 +1480,6 @@ export default function Products({ route, navigation }) {
             isRemove: false,
           };
         }
-        updateState({ storeLocalQty: quanitity })
         return x;
       });
       selectedSection['data'] = updatedSection;
@@ -1525,7 +1508,6 @@ export default function Products({ route, navigation }) {
             isRemove: false,
           };
         }
-        updateState({ storeLocalQty: quanitity })
         return val;
       });
       updateState({

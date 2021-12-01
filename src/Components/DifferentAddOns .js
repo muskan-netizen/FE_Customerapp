@@ -21,7 +21,7 @@ const DifferentAddOns = ({
     storeLocalQty = null,
     differentAddsOnsModal = false,
     btnLoader,
-    selectedDiffAdsOnId=0
+    selectedDiffAdsOnId = 0
 
 }) => {
     const { themeColor, themeToggle, appStyle, themeColors, languages, currencies } = useSelector((state) => state?.initBoot);
@@ -34,6 +34,7 @@ const DifferentAddOns = ({
 
     const onIncrementDecrement = (item, index, type) => {
         setSelectedItem(item)
+        
         var totalProductQty = 0
         if (!!storeLocalQty) {
             totalProductQty = storeLocalQty
@@ -53,7 +54,7 @@ const DifferentAddOns = ({
             index,
             type,
             type == 1 ? totalProductQty + 1 : totalProductQty - 1 //update total quantity
-            
+
         )
     }
 
