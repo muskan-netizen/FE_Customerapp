@@ -629,4 +629,10 @@ export default {
   PREPARATION_TIME_IS: 'Preparation Time is',
   SCHEDULE_DATE_REQUIRED: 'Schedule date time is required',
   POINTS_SPENT: 'Points Spent',
+  MIN: 'Min',
+  AND_MAX: 'and Max',
+  SELECTION_ALLOWED: 'Selections allowed',
+  PLEASE_SELECT_A_PAYMENT_METHOD: 'Please select a payment method',
+  MINIMUM: 'Minimum',
+  REQUIRED: 'required',
 };

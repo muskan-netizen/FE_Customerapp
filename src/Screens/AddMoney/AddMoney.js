@@ -411,7 +411,7 @@ export default function AddMoney({navigation}) {
                   // alert('Payment successfull');
                   Alert.alert('', strings.PAYMENT_SUCCESS, [
                     {
-                      text: strings.CANCEL,
+                      text: strings.OK,
                       onPress: () => console.log('Cancel Pressed'),
                       // style: 'destructive',
                     },
