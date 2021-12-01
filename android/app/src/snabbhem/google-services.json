@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "201647064711",
+    "project_id": "snabbhem-order",
+    "storage_bucket": "snabbhem-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201647064711:android:d75272c09a25204c281a22",
+        "android_client_info": {
+          "package_name": "com.snabbhem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "201647064711-18b7s89vodkusl17m3v3l70p8h45siuf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.snabbhem",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "201647064711-fjkfcbmih2jkgj3lpat9mgp38ss0qr4h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.snabbhem",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "201647064711-ujbt5ah1clhgljib5m235gmj3mqvejke.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.snabbhem",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "201647064711-6pr2tb7ckodga8de2s7nh4uojbb39ebv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArPtNHs0VbuCwJ8KQRafDyX6ypU7kE6bQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "201647064711-6pr2tb7ckodga8de2s7nh4uojbb39ebv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "201647064711-r4rn10a4soankmrjb4jgnj9qcpsql021.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.snabbhem"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

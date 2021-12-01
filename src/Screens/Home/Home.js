@@ -155,7 +155,6 @@ export default function Home({route, navigation}) {
 
   const updateLatLang = (res) => {
     updateState({updateTime: Math.random()});
-    console.log();
     actions.locationData(res);
   };
   useEffect(() => {
@@ -180,12 +179,13 @@ export default function Home({route, navigation}) {
                 appMainData?.reqData?.latitude &&
                 (location?.latitude == '' || location?.longitude == '')
               ) {
+                alert('mdfjsh');
                 const data = {
                   address: appMainData?.reqData?.address,
                   latitude: appMainData?.reqData?.latitude,
                   longitude: appMainData?.reqData?.longitude,
                 };
-                actions.locationData(res);
+                actions.locationData(data);
               } else {
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
                   if (!!userData?.auth_token && !paramData?.details) {
@@ -201,9 +201,6 @@ export default function Home({route, navigation}) {
                       actions.locationData(res);
                       return;
                     }
-                  } else {
-                    actions.locationData(res);
-                    return;
                   }
                 }
               }
@@ -212,7 +209,7 @@ export default function Home({route, navigation}) {
         }
       })
       .catch((error) => console.log('error while accessing location', error));
-  }, [isRefreshing, userData?.auth_token, saveAllUserAddress]);
+  }, [isRefreshing, userData?.auth_token]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -603,7 +600,6 @@ export default function Home({route, navigation}) {
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
-
   const renderHomeScreen = () => {
     const case_ = 5;
     switch (appStyle?.homePageLayout) {
