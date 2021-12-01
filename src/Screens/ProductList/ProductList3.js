@@ -270,7 +270,8 @@ export default function Products({route, navigation}) {
     const unsubscribe = navigation.addListener('focus', () => {
       updateState({pageNo: 1});
       getAllListItems();
-      if (productListId?.vendor) {
+      console.log('checking route params >>>>', productListId);
+      if (productListId?.vendor && routeData) {
         fetchOffers();
       }
       if (isLoadingC) {
@@ -1318,7 +1319,7 @@ export default function Products({route, navigation}) {
   useEffect(() => {
     if (isLoadingC) {
       getAllProducts(true);
-      if (productListId?.vendor) {
+      if (productListId?.vendor && routeData) {
         fetchOffers();
       }
 
@@ -1413,11 +1414,6 @@ export default function Products({route, navigation}) {
     // data['cart_id'] = vendorInfo.cartId;
     // console.log(data, 'vendor_id');
     console.log(routeData, 'datadatadatadata');
-
-    // if (routeData) {
-    //   return;
-    // }
-
     actions
       .getAllPromoCodesForProductList(data, {
         code: appData?.profile?.code,
