@@ -51,7 +51,6 @@ export default function ProductCard3({
   });
   const { selectedIndex, selectedIndexForCartIcon } = state;
 
-  console.log(index,"data?.variant",data?.variant)
 
   var totalProductQty = 0
   if (data?.variant && data?.variant[0]?.check_if_in_cart_app) {
@@ -102,7 +101,7 @@ export default function ProductCard3({
       // animation={index > 8 ? '' : 'fadeInUp'}
       // delay={index > 8 ? 1 * 100 : index * 10}
       pointerEvents={btnLoader ? 'none' : 'auto'}
-      >
+    >
       <TouchableOpacity
         // disabled
         activeOpacity={0.6}
@@ -343,19 +342,19 @@ export default function ProductCard3({
                         </Text>
                       </TouchableOpacity>
                       <View>
-                      {selectedItemID == data?.id &&
+                        {selectedItemID == data?.id &&
                           btnLoader ? (
                           <UIActivityIndicator
                             size={moderateScale(18)}
                             color={themeColors.primary_color}
                           />
-                        // {/* {selectedItemIndx === index &&
-                        //   selectedItemID == data?.id &&
-                        //   btnLoader ? (
-                        //   <UIActivityIndicator
-                        //     size={moderateScale(18)}
-                        //     color={themeColors.primary_color}
-                        //   /> */}
+                          // {/* {selectedItemIndx === index &&
+                          //   selectedItemID == data?.id &&
+                          //   btnLoader ? (
+                          //   <UIActivityIndicator
+                          //     size={moderateScale(18)}
+                          //     color={themeColors.primary_color}
+                          //   /> */}
                         ) : (
                           <Text
                             style={{

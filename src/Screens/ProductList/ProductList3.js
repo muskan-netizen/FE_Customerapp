@@ -349,7 +349,7 @@ export default function Products({ route, navigation }) {
   };
 
 
-  console.log("selectedDiffAdsOnIdselectedDiffAdsOnId", selectedDiffAdsOnId)
+
 
   const getAllListItems = () => {
     let filterExist =
@@ -594,7 +594,7 @@ export default function Products({ route, navigation }) {
           });
           fetchTags(filterArray);
         } else {
-          console.log('get product list by vendor id >>>> ', res);
+          // console.log('get product list by vendor id >>>> ', res);
           if (res?.data) {
             updateState({
               isLoading: false,
@@ -788,7 +788,6 @@ export default function Products({ route, navigation }) {
   };
 
 
-  console.log("btn loader", btnLoader)
 
   const clearCartAndAddProduct = async (item, section = null) => {
     updateState({ updateQtyLoader: true });
@@ -1087,12 +1086,12 @@ export default function Products({ route, navigation }) {
             isRemove: false,
           };
         }
-        updateState({...state,storeLocalQty: differentAddsOnsQty});
         return val;
       });
       updateState({
         productListData: updateArray,
         selectedItemID: -1,
+        storeLocalQty: differentAddsOnsQty
       });
     }
   };
@@ -1175,7 +1174,7 @@ export default function Products({ route, navigation }) {
                 qty: null,
                 cart_product_id: res.data.cart_product_id,
                 variant: itemToUpdate?.variant.map((val, i) => {
-                  return { ...val, check_if_in_cart_app: [] };
+                  return { ...val, check_if_in_cart_app: differentAddsOnsModal ? updateLocallyAddOns : [] };
                 }),
               };
             }
@@ -1247,8 +1246,7 @@ export default function Products({ route, navigation }) {
   };
 
   const onRepeat = async () => {
-    console.log("repeate items", repeatItems)
-
+    // console.log("repeate items", repeatItems)
     const { item, isExistqty, productId, parentCartId, updateLocalQty } = repeatItems
     await addDeleteCartItems(
       item,
@@ -1264,12 +1262,9 @@ export default function Products({ route, navigation }) {
   };
 
   const onAddNew = () => {
-    console.log("repeatitmesrepeatitmes", repeatItems)
     let getTypeId =
       !!repeatItems?.item?.category &&
       repeatItems?.item?.category.category_detail?.type_id;
-    console.log('repeatitmes', repeatItems);
-    // return;
     updateState({
       repeatItems: null,
       updateQtyLoader: false,
@@ -1284,16 +1279,16 @@ export default function Products({ route, navigation }) {
   const addProductsWithoutCustomize = (item, section, index, type) => {
 
     let itemToUpdate = cloneDeep(item);
-    let isExistqty = !!itemToUpdate?.qty ? itemToUpdate?.qty : itemToUpdate.variant[0]?.check_if_in_cart_app[0].quantity
-    let isExistproductId = !!itemToUpdate?.cart_product_id ? itemToUpdate?.cart_product_id : itemToUpdate.variant[0]?.check_if_in_cart_app[0].id
-    let isExistCartId = !!cartId ? cartId : itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
+    let quanitity = !!itemToUpdate?.qty ? itemToUpdate?.qty : itemToUpdate.variant[0]?.check_if_in_cart_app[0].quantity
+    let productId = !!itemToUpdate?.cart_product_id ? itemToUpdate?.cart_product_id : itemToUpdate.variant[0]?.check_if_in_cart_app[0].id
+    let parentCartId = !!cartId ? cartId : itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
 
     if (type == 1) {
       addDeleteCartItems(
         item,
-        isExistqty,
-        isExistproductId,
-        isExistCartId,
+        quanitity,
+        productId,
+        parentCartId,
         section,
         index,
         1
@@ -1301,9 +1296,9 @@ export default function Products({ route, navigation }) {
     } else {
       addDeleteCartItems(
         item,
-        isExistqty,
-        isExistproductId,
-        isExistCartId,
+        quanitity,
+        productId,
+        parentCartId,
         section,
         index,
         2
@@ -1314,8 +1309,7 @@ export default function Products({ route, navigation }) {
 
   const checkIsCustomize = async (item, section = null, index, type) => {
     let itemToUpdate = cloneDeep(item);
-    console.log("item to update", itemToUpdate)
-    if (item.add_on.length == 0) {
+    if (item.add_on.length == 0) { // hit in case of simple products withou any customization
       addProductsWithoutCustomize(item, section, index, type)
       return;
     }
@@ -1331,29 +1325,25 @@ export default function Products({ route, navigation }) {
     }
 
 
-    var isExistqty = itemToUpdate?.qty ? itemToUpdate?.qty : totalProductQty;
-    var tempQty = 0
+    var isExistqty = itemToUpdate?.qty ? itemToUpdate?.qty : totalProductQty; //this variable contain only local product quantity
+    var tempQty = 0 //this variable contain latest updated quantity of products
 
     if (type == 2 && item?.add_on?.length > 0) { //hit in case of subtruction
       let apiData = { cart_id: parentCartId, product_id: item.id }
-      console.log("send api data for diff adds on", apiData)
-      let checkIsAvailable = await getDiffAddsOn(apiData, section, item) //check products with different add ons is exist
+      let checkIsAvailable = await getDiffAddsOn(apiData, section, item) //check products with different addOns is exist or not.
       // console.log("check available", checkIsAvailable)
 
-      !!checkIsAvailable?.data && checkIsAvailable?.data.map((val) => {
+      !!checkIsAvailable?.data && checkIsAvailable?.data.map((val) => { 
         console.log("check available", val)
-        tempQty = tempQty + val?.quantity
+        tempQty = tempQty + val?.quantity //store updated total quantity of products
       })
 
-      if (!!checkIsAvailable?.goNext) {
-        console.log(tempQty, "isExistqtyisExistqty", isExistqty)
+      if (!!checkIsAvailable?.goNext) { //if different adOns is exist then open DifferentAddOns Modal.
         return
       }
     }
 
-    console.log(tempQty, "isExistqtyisExistqty", isExistqty)
-
-    if (type == 2) {  // direct subtract customize items
+    if (type == 2) {  // direct subtract customize items if products added with same addons 
       addDeleteCartItems(
         item,
         tempQty == 0 ? isExistqty : tempQty,
@@ -1367,7 +1357,7 @@ export default function Products({ route, navigation }) {
     }
 
 
-    if (type == 1) { //hit in case of add
+    if (type == 1) { //hit in case of add new products
       let apiData = { cart_id: parentCartId, product_id: item.id }
       let header = {
         code: appData?.profile?.code,
@@ -1379,7 +1369,7 @@ export default function Products({ route, navigation }) {
       try {
         const res = await actions.checkLastAdded(apiData, header)
         console.log("res++++++", res)
-        if (!!res.data) {
+        if (!!res.data) { //open RepeatModal 
           const addData = {
             item: item,
             index: index,
@@ -1442,7 +1432,9 @@ export default function Products({ route, navigation }) {
 
     console.log("ids++ cart id", cartId)
     console.log("ids++ product id", productId)
-    console.log(qty, "ids++ product quantity", differentAddsOnsQty)
+    console.log("ids++ differentAddsOnsQty", differentAddsOnsQty)
+    console.log("ids+++ quantity",qty)
+    // return;
     let cloneArr = differentAddsOns
     let updateLocallyAddOns = cloneArr.map((val) => {
       if (cartId == val.id) {

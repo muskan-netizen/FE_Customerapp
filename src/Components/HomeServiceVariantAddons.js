@@ -41,6 +41,7 @@ import {
   showError,
   showSuccess
 } from '../utils/helperFunctions';
+import Banner from './Banner';
 import GradientButton from './GradientButton';
 import HtmlViewComp from './HtmlViewComp';
 import CardLoader from './Loaders/CardLoader';
@@ -852,7 +853,7 @@ export default function HomeServiceVariantAddons({
     });
     let data = {};
     data['sku'] = productSku;
-    data['quantity'] = updateQty;
+    data['quantity'] = productQuantityForCart;
     data['product_variant_id'] = productVariantId;
     data['type'] = dine_In_Type;
 
