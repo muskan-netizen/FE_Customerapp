@@ -212,7 +212,7 @@ export default function Home({route, navigation}) {
         }
       })
       .catch((error) => console.log('error while accessing location', error));
-  }, [isRefreshing, userData?.auth_token, saveAllUserAddress]);
+  }, [isRefreshing, userData?.auth_token]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -536,7 +536,7 @@ export default function Home({route, navigation}) {
     actions.dineInData(type);
     updateState({
       selectedTabType: type,
-      isLoadingB: true
+      isLoadingB: true,
     });
   };
 
@@ -600,9 +600,6 @@ export default function Home({route, navigation}) {
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
-
- 
-
   const renderHomeScreen = () => {
     const case_ = 5;
     switch (appStyle?.homePageLayout) {

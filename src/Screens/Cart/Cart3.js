@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, update} from 'lodash';
+import {cloneDeep, isEmpty, update} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
@@ -855,8 +855,11 @@ export default function Cart({navigation, route}) {
       showInfo(strings.SCHEDULE_DATE_REQUIRED);
       return;
     }
+    if (isEmpty(selectedPayment)) {
+      showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
+      return;
+    }
 
-   
     updateState({placeLoader: true});
     var d1 = new Date();
     var d2 = new Date(sheduledorderdate);
@@ -962,8 +965,6 @@ export default function Cart({navigation, route}) {
       </Animated.View>
     );
   };
-
-  console.log(selectedPayment, 'selectedPaymentselectedPayment');
 
   const _webPayment = () => {
     let selectedMethod = selectedPayment.title.toLowerCase();
