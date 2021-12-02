@@ -643,6 +643,12 @@ export default {
   DELIVERY: 'DELIVERY',
   ITEM: 'Item',
   PAID_AMOUNT: 'Paid amount',
+  SOMETHING_WENT_WRONG_PRINTER_MSG:
+    'Something went wrong, please make connection with printer again.',
+  PLACE_ID_NOT_FOUND: 'Place Id not found',
+  PLEASE_FILL_ADDRESS: 'Please fill the exist address',
+  TAXES_FEES: 'Taxes & Fees',
+  TOTAL_SERVICE_FEE: 'Total Service Fee',
   WELCOME_NEXT_TIME: 'Welcome next time',
   SCAN: 'Scan',
   FOUND_DEVICES: 'Found(Tap to connect)',

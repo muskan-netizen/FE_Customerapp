@@ -842,7 +842,7 @@ export default function OrderDetail({navigation, route}) {
             )}`}</Text>
           </View>
         )}
-        {!!cartData?.taxable_amount && (
+        {/* {!!cartData?.taxable_amount && (
           <View style={styles.bottomTabLableValue}>
             <Text
               style={
@@ -877,7 +877,7 @@ export default function OrderDetail({navigation, route}) {
               ).toFixed(2),
             )}`}</Text>
           </View>
-        )}
+        )} */}
 
         <View style={styles.amountPayable}>
           <Text
@@ -1189,6 +1189,22 @@ export default function OrderDetail({navigation, route}) {
                 MyDarkTheme={MyDarkTheme}
               />
             )}
+          {(cartData?.total_service_fee > 0 ||
+            cartData?.taxable_amount > 0) && (
+            <LeftRightText
+              leftText={strings.TAXES_FEES}
+              rightText={`${
+                currencies?.primary_currency?.symbol
+              }${currencyNumberFormatter(
+                (
+                  Number(cartData?.total_service_fee) +
+                  Number(cartData?.taxable_amount)
+                ).toFixed(2),
+              )}`}
+              isDarkMode={isDarkMode}
+              MyDarkTheme={MyDarkTheme}
+            />
+          )}
           {!!cartData?.loyalty_amount_saved &&
             cartData?.loyalty_amount_saved !== '0.00' && (
               <LeftRightText
