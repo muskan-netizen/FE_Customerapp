@@ -80,11 +80,13 @@ export default function SelectPaymentModalView({
   const [image, setImage] = useState([]);
   const [taskInstruction, setInstruction] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [showInstructionModal, setInstructionShowModal] = useState(false);
+
   const [isError, setError] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [AllAskedQuestionAnswers, setAllAskedQuestionAnswers] = useState([]);
   const [myAnswerdArray, setMyAllanswers] = useState([]);
+  const [myFaqValidationArray, setMyFaqValidationArray] = useState([]);
+  const [validationFucCalled, setvalidationFucCalled] = useState(true);
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -203,17 +205,44 @@ export default function SelectPaymentModalView({
     };
   }, []);
 
-  const onChangeText = (question, text, index, arrLength) => {
+  const onChangeText = (item, text, index, arrLength) => {
     // const myAnswerdArray = [];
     const answerdArray = [...myAnswerdArray];
     answerdArray[index] = {
-      question: question,
+      question: item?.translations[0]?.name,
       answer: text,
     };
 
+    if (item?.is_required) {
+      setvalidationFucCalled(false);
+      const arraywithAllRequiredQuestion = [...myFaqValidationArray];
+      arraywithAllRequiredQuestion[index] = false;
+      setMyFaqValidationArray(arraywithAllRequiredQuestion);
+      if (text === '') {
+        const arraywithAllRequiredQuestion = [...myFaqValidationArray];
+        arraywithAllRequiredQuestion[index] = true;
+        setMyFaqValidationArray(arraywithAllRequiredQuestion);
+      }
+    }
     setMyAllanswers(answerdArray);
   };
-  console.log(myAnswerdArray, 'myAnswerdArraymyAnswerdArray');
+
+  const setAllRequiredQuestions = (item, index) => {
+    if (validationFucCalled) {
+      if (item?.is_required) {
+        setvalidationFucCalled(false);
+        const arraywithAllRequiredQuestion = [...myFaqValidationArray];
+        arraywithAllRequiredQuestion[index] = true;
+
+        setMyFaqValidationArray(arraywithAllRequiredQuestion);
+      } else {
+        setvalidationFucCalled(false);
+      }
+    }
+  };
+
+  console.log(myFaqValidationArray, 'myFaqValidationArraymyFaqValidationArray');
+
   return (
     <View
       style={
@@ -647,11 +676,7 @@ export default function SelectPaymentModalView({
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity onPress={() => setInstructionShowModal(true)}>
-        <Text style={{textAlign: 'center'}}>
-          Question Answer Related To Product
-        </Text>
-      </TouchableOpacity>
+
       {image.length !== 0 && (
         <View
           style={{
@@ -727,15 +752,14 @@ export default function SelectPaymentModalView({
 
       <Modal
         isVisible={showModal}
-        style={{margin: 0, justifyContent: 'flex-end'}}
+        style={{margin: moderateScale(0), justifyContent: 'flex-end'}}
         // animationInTiming={600}
         onBackdropPress={() => setShowModal(false)}>
         <View
           style={{
             backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
             padding: moderateScale(12),
-            borderTopRightRadius: moderateScale(8),
-            borderTopLeftRadius: moderateScale(8),
+            borderRadius: moderateScale(8),
             paddingBottom: moderateScale(keyboardHeight),
           }}>
           <View
@@ -750,13 +774,29 @@ export default function SelectPaymentModalView({
               style={{
                 fontSize: textScale(16),
                 fontFamily: fontFamily.medium,
-                textAlign: 'left',
+                // textAlign: 'left',
               }}>
-              Add Insctructions
+              FAQ Form
             </Text>
             <TouchableOpacity onPress={() => setShowModal(false)}>
               <Image source={imagePath.closeButton} />
             </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: moderateScaleVertical(12),
+            }}>
+            <Text
+              style={{
+                fontSize: textScale(12),
+                fontFamily: fontFamily.medium,
+                textAlign: 'left',
+              }}>
+              Add Insctructions
+            </Text>
           </View>
 
           {isError && (
@@ -796,62 +836,43 @@ export default function SelectPaymentModalView({
               }
             />
           </View>
-          <GradientButton
-            colorsArray={[themeColors.primary_color, themeColors.primary_color]}
-            textStyle={{textTransform: 'none', fontSize: textScale(12)}}
-            onPress={onInstructionDone}
-            btnText={strings.DONE}
-            marginTop={moderateScaleVertical(16)}
-            marginBottom={moderateScaleVertical(16)}
-          />
-        </View>
-      </Modal>
+          {AllAskedQuestionAnswers?.length && (
+            <View style={{marginVertical: moderateScaleVertical(10)}}>
+              <Text
+                style={{
+                  fontSize: textScale(12),
+                  fontFamily: fontFamily.medium,
+                  // textAlign: 'left',
+                }}>
+                Related Question To Product
+              </Text>
+            </View>
+          )}
 
-      <Modal
-        isVisible={showInstructionModal}
-        style={{margin: moderateScale(20)}}
-        // animationInTiming={600}
-        onBackdropPress={() => setInstructionShowModal(false)}>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
-            padding: moderateScale(12),
-            borderRadius: moderateScale(8),
-            paddingBottom: moderateScale(keyboardHeight),
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: moderateScaleVertical(12),
-            }}>
-            <Text />
-            <Text
-              style={{
-                fontSize: textScale(16),
-                fontFamily: fontFamily.medium,
-                textAlign: 'left',
-              }}>
-              Related Question To Product
-            </Text>
-            <TouchableOpacity onPress={() => setInstructionShowModal(false)}>
-              <Image source={imagePath.closeButton} />
-            </TouchableOpacity>
-          </View>
           {AllAskedQuestionAnswers?.map((i, index) => {
             return i?.map((item, index) => {
+              setAllRequiredQuestions(item, index);
+
               return (
                 <View
                   style={{
                     marginTop: moderateScaleVertical(10),
                   }}>
-                  <Text
-                    style={{
-                      marginBottom: moderateScaleVertical(10),
-                    }}>
-                    {item?.translations[0]?.name}
-                  </Text>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text
+                      style={{
+                        marginBottom: moderateScaleVertical(10),
+                        color: colors.redColor,
+                      }}>
+                      {`${item?.is_required ? '* ' : ''}`}
+                    </Text>
+                    <Text
+                      style={{
+                        marginBottom: moderateScaleVertical(10),
+                      }}>
+                      {item?.translations[0]?.name}
+                    </Text>
+                  </View>
                   <View
                     style={{
                       // marginVertical: moderateScaleVertical(16),
@@ -866,12 +887,7 @@ export default function SelectPaymentModalView({
                       multiline
                       placeholder={'Answer'}
                       onChangeText={(text) =>
-                        onChangeText(
-                          item?.translations[0]?.name,
-                          text,
-                          index,
-                          i?.length,
-                        )
+                        onChangeText(item, text, index, i?.length)
                       }
                       style={{
                         ...styles.insctructionText,
@@ -892,8 +908,17 @@ export default function SelectPaymentModalView({
             colorsArray={[themeColors.primary_color, themeColors.primary_color]}
             textStyle={{textTransform: 'none', fontSize: textScale(12)}}
             onPress={() => {
-              onQuestionAnswerSubmit(myAnswerdArray),
-                setInstructionShowModal(false);
+              const isRequired = myFaqValidationArray.some(checkRequird);
+              function checkRequird(checkRequird) {
+                return checkRequird == true;
+              }
+
+              if (isRequired) {
+                alert('Please fill All Required Fields');
+              } else {
+                onQuestionAnswerSubmit(myAnswerdArray),
+                  setInstructionShowModal(false);
+              }
             }}
             btnText={strings.SUBMIT}
             marginTop={moderateScaleVertical(16)}

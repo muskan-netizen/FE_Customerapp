@@ -406,7 +406,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       data['coupon_id'] = couponInfo?.id;
     }
     data['order_time_zone'] = RNLocalize.getTimeZone();
-    console.log(data, '_confirmAndPay>>>>data>>>');
 
     if (!!userData) {
       !!userData?.client_preference?.verify_email ||
