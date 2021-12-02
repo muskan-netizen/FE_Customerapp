@@ -643,6 +643,32 @@ export default function VariantAddons({
     return false;
   };
 
+
+  const getDiffAddsOn = async (apiData) => {
+    console.log("get diffadds on data", apiData)
+    let header = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      systemuser: DeviceInfo.getUniqueId(),
+    }
+    try {
+      const res = await actions.differentAddOns(apiData, header)
+      if (!!res?.data) {
+        var getQty = 0
+        console.log("res diff add ons+++++++", res)
+        res.data.map((val) => {
+          getQty = getQty + val.quantity
+        })
+        return getQty
+      }
+    } catch (error) {
+      console.log("error raised,error")
+      return false
+    }
+  }
+
+
   var totalProductQty = 0
   if (productdetail?.variant && productdetail?.variant[0]?.check_if_in_cart_app) {
     productdetail?.variant[0]?.check_if_in_cart_app.map((val) => {
@@ -703,14 +729,19 @@ export default function VariantAddons({
           language: languages.primary_language.id,
           systemuser: DeviceInfo.getUniqueId(),
         })
-        .then((res) => {
+        .then(async(res) => {
           actions.cartItemQty(res);
           showSuccess(strings.PRODUCT_ADDED_SUCCESS);
-          console.log("Product successfully added",res)
+          console.log("Product successfully added", res)
           updateState({ isLoadingC: false, btnLoader: false });
+
+
+          let apiData = { cart_id: res.data.id, product_id: productdetail.id }
+          let localQty = await getDiffAddsOn(apiData)
+          console.log("local qty++",localQty)
           updateCartItems(
             productdetail,
-            res.data.item_count, ////localy update cart quanity
+            localQty, ////localy update cart quanity
             res.data.cart_product_id,
             res.data.id,
           );
