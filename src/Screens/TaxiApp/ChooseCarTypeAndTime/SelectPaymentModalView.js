@@ -714,30 +714,11 @@ export default function SelectPaymentModalView({
               marginBottom: moderateScaleVertical(12),
             }}>
             <Text />
-            <Text
-              style={{
-                fontSize: textScale(16),
-                fontFamily: fontFamily.medium,
-                // textAlign: 'left',
-              }}>
-              FAQ Form
-            </Text>
+
             <TouchableOpacity onPress={() => setShowModal(false)}>
               <Image source={imagePath.closeButton} />
             </TouchableOpacity>
           </View>
-
-          {productFaqQuestionAnswers?.product_faq?.length && (
-            <View>
-              <Text
-                style={{
-                  fontSize: textScale(12),
-                  fontFamily: fontFamily.medium,
-                }}>
-                {strings.RELATEDQUESTIONOFPRODUCT}
-              </Text>
-            </View>
-          )}
 
           {productFaqQuestionAnswers?.product_faq?.map((item, index) => {
             setAllRequiredQuestions(item, index);
@@ -758,6 +739,7 @@ export default function SelectPaymentModalView({
                   <Text
                     style={{
                       marginBottom: moderateScaleVertical(10),
+                      fontFamily: fontFamily.medium,
                     }}>
                     {item?.translations[0]?.name}
                   </Text>
@@ -801,7 +783,6 @@ export default function SelectPaymentModalView({
             }}>
             <Text
               style={{
-                fontSize: textScale(12),
                 fontFamily: fontFamily.medium,
                 textAlign: 'left',
               }}>
