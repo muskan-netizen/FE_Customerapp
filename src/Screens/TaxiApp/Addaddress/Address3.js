@@ -691,7 +691,7 @@ export default function Addaddress({ navigation, route }) {
       updateState({ dropLocationData: cloneArr })
       console.log('res===', res)
     } else {
-      alert('Place Id not found')
+      alert(strings.PLACE_ID_NOT_FOUND)
     }
   }
 

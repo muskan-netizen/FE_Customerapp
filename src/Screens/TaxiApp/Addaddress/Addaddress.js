@@ -1,11 +1,19 @@
-import { useFocusEffect } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
-import { Animated, Image, Text, TouchableOpacity, View, ScrollView, Keyboard } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
-import { getBundleId } from 'react-native-device-info';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {
+  Animated,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  Keyboard,
+} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import {getBundleId} from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useSelector } from 'react-redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useSelector} from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
 import SearchPlaces from '../../../Components/SearchPlaces';
 import WrapperContainer from '../../../Components/WrapperContainer';
@@ -18,20 +26,24 @@ import commonStylesFun from '../../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale
+  textScale,
 } from '../../../styles/responsiveSize';
-import { MyDarkTheme } from '../../../styles/theme';
-import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import { getAddressFromLatLong, getCurrentLocationFromApi, getPlaceDetails, nearbySearch } from '../../../utils/googlePlaceApi';
+import {MyDarkTheme} from '../../../styles/theme';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
 import {
-  getAddressComponent,
-  showError
-} from '../../../utils/helperFunctions';
-import { chekLocationPermission, locationPermission } from '../../../utils/permissions';
+  getAddressFromLatLong,
+  getCurrentLocationFromApi,
+  getPlaceDetails,
+  nearbySearch,
+} from '../../../utils/googlePlaceApi';
+import {getAddressComponent, showError} from '../../../utils/helperFunctions';
+import {
+  chekLocationPermission,
+  locationPermission,
+} from '../../../utils/permissions';
 import stylesFun from './styles';
 
-
-export default function Addaddress({ navigation, route }) {
+export default function Addaddress({navigation, route}) {
   const paramData = route?.params;
   console.log(paramData, 'paramDataparamDataparamDataparamData');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -39,7 +51,9 @@ export default function Addaddress({ navigation, route }) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const userData = useSelector((state) => state?.auth?.userData);
-  const { appData, allAddresss, themeColors, appStyle } = useSelector((state) => state?.initBoot);
+  const {appData, allAddresss, themeColors, appStyle} = useSelector(
+    (state) => state?.initBoot,
+  );
   const fontFamily = appStyle?.fontSizeData;
   const [state, setState] = useState({
     pageNo: 1,
@@ -57,27 +71,27 @@ export default function Addaddress({ navigation, route }) {
     del: false,
     searchResult: {
       currentIndex: 0,
-      data: []
+      data: [],
     },
     curLatLng: {
       latitude: 30.7333,
-      longitude: 76.7794
+      longitude: 76.7794,
     },
     dropLocationData: [
       {
         pre_address: '',
         address: '',
         latitude: 0,
-        longitude: 0
+        longitude: 0,
       },
       {
         pre_address: '',
         address: '',
         latitude: 0,
-        longitude: 0
+        longitude: 0,
       },
     ],
-    nearByAddressess: []
+    nearByAddressess: [],
   });
   const {
     pageNo,
@@ -95,29 +109,33 @@ export default function Addaddress({ navigation, route }) {
     searchResult,
     dropLocationData,
     nearByAddressess,
-    curLatLng
+    curLatLng,
   } = state;
 
   useEffect(() => {
     if (!!paramData?.prefillAdress) {
-      console.log("param data address", paramData)
-      const { prefillAdress } = paramData
-      const cloneArr = dropLocationData
-      cloneArr[searchResult.currentIndex].pre_address = prefillAdress?.pre_address
-      cloneArr[searchResult.currentIndex].latitude = prefillAdress?.latitude
-      cloneArr[searchResult.currentIndex].longitude = prefillAdress?.longitude
-      cloneArr[searchResult.currentIndex].task_type_id = prefillAdress?.task_type_id
+      console.log('param data address', paramData);
+      const {prefillAdress} = paramData;
+      const cloneArr = dropLocationData;
+      cloneArr[searchResult.currentIndex].pre_address =
+        prefillAdress?.pre_address;
+      cloneArr[searchResult.currentIndex].latitude = prefillAdress?.latitude;
+      cloneArr[searchResult.currentIndex].longitude = prefillAdress?.longitude;
+      cloneArr[searchResult.currentIndex].task_type_id =
+        prefillAdress?.task_type_id;
       // cloneArr[searchResult.currentIndex].post_code = addressData?.pincode
       // cloneArr[searchResult.currentIndex].short_name = addressData?.states || addressData?.state
-      cloneArr[searchResult?.currentIndex].address = prefillAdress?.address
-      updateState({ dropLocationData: cloneArr, searchResult: { currentIndex: searchResult?.currentIndex, data: [] } })
-      console.log("clone array result", cloneArr)
+      cloneArr[searchResult?.currentIndex].address = prefillAdress?.address;
+      updateState({
+        dropLocationData: cloneArr,
+        searchResult: {currentIndex: searchResult?.currentIndex, data: []},
+      });
+      console.log('clone array result', cloneArr);
     }
     if (!!(userData && userData?.auth_token)) {
       getAllAddress();
     }
   }, [paramData]);
-
 
   //get All address
   const getAllAddress = () => {
@@ -138,7 +156,7 @@ export default function Addaddress({ navigation, route }) {
         });
       })
       .catch((error) => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
         showError(error?.message || error?.error);
       });
   };
@@ -149,21 +167,20 @@ export default function Addaddress({ navigation, route }) {
         if (result === 'goback') {
           navigation.goBack();
         }
-        Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
+        Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
       })
       .catch((error) => console.log('error while accessing location', error));
   }, []);
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({
     fontFamily,
     themeColors,
     savedAddressViewHeight,
     avalibleValueInTextInput,
   });
-  const commonStyles = commonStylesFun({ fontFamily });
-  const { profile } = appData;
-
+  const commonStyles = commonStylesFun({fontFamily});
+  const {profile} = appData;
 
   useFocusEffect(
     React.useCallback(() => {
@@ -174,10 +191,11 @@ export default function Addaddress({ navigation, route }) {
   const getAllPickUpVendors = () => {
     actions
       .getDataByCategoryId(
-        `/${paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
+        `/${
+          paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
         }?limit=${limit}&page=${pageNo}`,
         {},
-        { code: appData?.profile?.code },
+        {code: appData?.profile?.code},
       )
       .then((res) => {
         console.log(res, 'res>>>>>');
@@ -194,20 +212,20 @@ export default function Addaddress({ navigation, route }) {
   };
 
   const errorMethod = (error) => {
-    updateState({ isLoading: false, isRefreshing: false });
+    updateState({isLoading: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
-
 
   const _moveToNextScreen = (updateIndex) => {
     let existLatLng = {
       latitude: dropLocationData[updateIndex]?.latitude || 0,
-      longitude: dropLocationData[updateIndex]?.longitude || 0
-    }
-    updateState({ searchResult: { ...searchResult, currentIndex: updateIndex } })
+      longitude: dropLocationData[updateIndex]?.longitude || 0,
+    };
+    updateState({searchResult: {...searchResult, currentIndex: updateIndex}});
     navigation.navigate(navigationStrings.PINADDRESSONMAP, {
       task_id: updateIndex == 0 ? 1 : 2,
-      pickUpLocationLatLng: existLatLng?.latitude !== 0 ? existLatLng : curLatLng
+      pickUpLocationLatLng:
+        existLatLng?.latitude !== 0 ? existLatLng : curLatLng,
     });
   };
 
@@ -226,7 +244,7 @@ export default function Addaddress({ navigation, route }) {
                 themeColors.primary_color,
                 themeColors.primary_color,
               ]}
-              textStyle={{ textTransform: 'none', fontSize: textScale(16) }}
+              textStyle={{textTransform: 'none', fontSize: textScale(16)}}
               onPress={saveAddressAndRedirect}
               marginTop={moderateScaleVertical(10)}
               marginBottom={moderateScaleVertical(10)}
@@ -247,7 +265,7 @@ export default function Addaddress({ navigation, route }) {
                 themeColors.primary_color,
                 themeColors.primary_color,
               ]}
-              textStyle={{ textTransform: 'none', fontSize: textScale(16) }}
+              textStyle={{textTransform: 'none', fontSize: textScale(16)}}
               onPress={saveAddressAndRedirect}
               marginTop={moderateScaleVertical(10)}
               marginBottom={moderateScaleVertical(10)}
@@ -265,7 +283,8 @@ export default function Addaddress({ navigation, route }) {
             tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             height: moderateScale(5),
             width: moderateScale(5),
-            borderRadius: dropLocationData.length - 1 == i ? 0 : moderateScale(5 / 2),
+            borderRadius:
+              dropLocationData.length - 1 == i ? 0 : moderateScale(5 / 2),
           }}
           source={imagePath.blackSquare}
         />
@@ -274,12 +293,18 @@ export default function Addaddress({ navigation, route }) {
   };
 
   const saveAddressAndRedirect = () => {
-    let location = []
-    if (dropLocationData[0].pre_address == '' || dropLocationData[0].address == '') {
+    let location = [];
+    if (
+      dropLocationData[0].pre_address == '' ||
+      dropLocationData[0].address == ''
+    ) {
       showError(strings.PLEASE_SELECT_PICKUP_LOCATION);
       return;
     }
-    if (dropLocationData[1].pre_address == '' || dropLocationData[1].address == '') {
+    if (
+      dropLocationData[1].pre_address == '' ||
+      dropLocationData[1].address == ''
+    ) {
       showError(strings.PLEASE_SELECT_DROP_OFF_LOCATION);
       return;
     }
@@ -288,11 +313,13 @@ export default function Addaddress({ navigation, route }) {
         location.push({
           latitude: val.latitude,
           longitude: val.longitude,
-        })
+        });
       }
-    })
+    });
 
-    let checkEmptyTask = dropLocationData.filter(item => item.pre_address !== '')
+    let checkEmptyTask = dropLocationData.filter(
+      (item) => item.pre_address !== '',
+    );
 
     navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
       location: location,
@@ -301,245 +328,309 @@ export default function Addaddress({ navigation, route }) {
       tasks: checkEmptyTask,
       cabVendors: pickUpVendors,
       datetime: paramData?.datetime,
-      pickUpTimeType: paramData?.pickUpTimeType || route?.params?.data?.pickUpTimeType
+      pickUpTimeType:
+        paramData?.pickUpTimeType || route?.params?.data?.pickUpTimeType,
     });
   };
 
   useEffect(() => {
-    getLiveLocation()
-  }, [])
+    getLiveLocation();
+  }, []);
 
   const getLiveLocation = async () => {
-    const locPermissionDenied = await locationPermission()
+    const locPermissionDenied = await locationPermission();
     if (locPermissionDenied) {
-      const { latitude, longitude } = await getCurrentLocationFromApi()
+      const {latitude, longitude} = await getCurrentLocationFromApi();
       // console.log("get live location after 4 second")
-      updateState({ curLatLng: { latitude, longitude } })
-      getNearByAddress(`${latitude}, ${longitude}`)
+      updateState({curLatLng: {latitude, longitude}});
+      getNearByAddress(`${latitude}, ${longitude}`);
       if (!paramData?.prefillAdress) {
-        const res = await getAddressFromLatLong(`${latitude}, ${longitude}`, appData.profile.preferences?.map_key)
-        console.log("get address+++++", res)
+        const res = await getAddressFromLatLong(
+          `${latitude}, ${longitude}`,
+          appData.profile.preferences?.map_key,
+        );
+        console.log('get address+++++', res);
         // alert("inner")
-        let cloneArr = dropLocationData
-        cloneArr[0].pre_address = res.address
-        cloneArr[0].address = res.address
-        cloneArr[0].latitude = latitude
-        cloneArr[0].longitude = longitude
-        cloneArr[0].task_type_id = 1
-        updateState({ dropLocationData: cloneArr })
+        let cloneArr = dropLocationData;
+        cloneArr[0].pre_address = res.address;
+        cloneArr[0].address = res.address;
+        cloneArr[0].latitude = latitude;
+        cloneArr[0].longitude = longitude;
+        cloneArr[0].task_type_id = 1;
+        updateState({dropLocationData: cloneArr});
       }
     }
-  }
+  };
 
   const getNearByAddress = async (latlng) => {
     try {
-      const res = await nearbySearch(latlng, profile?.preferences?.map_key)
-      console.log("nearby search res+++++", res.results)
+      const res = await nearbySearch(latlng, profile?.preferences?.map_key);
+      console.log('nearby search res+++++', res.results);
       updateState({
-        nearByAddressess: res.results
-      })
+        nearByAddressess: res.results,
+      });
     } catch (error) {
-      console.log("error raised", error)
+      console.log('error raised', error);
     }
-  }
+  };
 
   const renderAddressess = (item) => {
     return (
       <TouchableOpacity
         style={{
           ...styles.addressViewStyle,
-          borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.lightGreyBg
+          borderBottomColor: isDarkMode
+            ? colors.whiteOpacity22
+            : colors.lightGreyBg,
         }}
-        onPress={() => onPressAddress({ place_id: item.place_id, name: item.name })}
-      >
-        <View style={{ flex: 0.12 }}>
-          <Image style={{ height: moderateScale(24), width: moderateScale(24), borderRadius: moderateScale(12) }}
-            source={imagePath.RecentLocationImage} />
+        onPress={() =>
+          onPressAddress({place_id: item.place_id, name: item.name})
+        }>
+        <View style={{flex: 0.12}}>
+          <Image
+            style={{
+              height: moderateScale(24),
+              width: moderateScale(24),
+              borderRadius: moderateScale(12),
+            }}
+            source={imagePath.RecentLocationImage}
+          />
         </View>
-        <View style={{ flex: 0.9 }}>
-          <Text style={{
-            fontSize: textScale(12),
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            fontFamily: fontFamily.regular,
-          }}>{item?.name}</Text>
-          <Text numberOfLines={2} style={{
-            fontSize: textScale(10),
-            color: colors.textGreyJ,
-            fontFamily: fontFamily.regular,
-            lineHeight: moderateScaleVertical(20),
-          }}>
+        <View style={{flex: 0.9}}>
+          <Text
+            style={{
+              fontSize: textScale(12),
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              fontFamily: fontFamily.regular,
+            }}>
+            {item?.name}
+          </Text>
+          <Text
+            numberOfLines={2}
+            style={{
+              fontSize: textScale(10),
+              color: colors.textGreyJ,
+              fontFamily: fontFamily.regular,
+              lineHeight: moderateScaleVertical(20),
+            }}>
             {item?.vicinity}
           </Text>
         </View>
       </TouchableOpacity>
-    )
-  }
+    );
+  };
 
   const onPressAddress = async (place) => {
-    Keyboard.dismiss()
-    console.log("selected item", place?.name)
+    Keyboard.dismiss();
+    console.log('selected item', place?.name);
     // return;
     if (!!place.place_id && !!place?.name) {
       // updateAddress(place.description)
-      const cloneArr = dropLocationData
-      cloneArr[searchResult.currentIndex].pre_address = place?.name
-      updateState({ dropLocationData: cloneArr })
+      const cloneArr = dropLocationData;
+      cloneArr[searchResult.currentIndex].pre_address = place?.name;
+      updateState({dropLocationData: cloneArr});
       try {
-        let res = await getPlaceDetails(place.place_id, profile?.preferences?.map_key);
-        const { result } = res
-        console.log('res===', result)
+        let res = await getPlaceDetails(
+          place.place_id,
+          profile?.preferences?.map_key,
+        );
+        const {result} = res;
+        console.log('res===', result);
         let addressData = getAddressComponent(result);
-        cloneArr[searchResult.currentIndex].latitude = result.geometry.location.lat
-        cloneArr[searchResult.currentIndex].longitude = result.geometry.location.lng
-        cloneArr[searchResult.currentIndex].task_type_id = searchResult.currentIndex == 0 ? 1 : 2
-        cloneArr[searchResult.currentIndex].post_code = addressData?.pincode
-        cloneArr[searchResult.currentIndex].short_name = addressData?.states || addressData?.state
-        cloneArr[searchResult?.currentIndex].address = result?.formatted_address
-        updateState({ dropLocationData: cloneArr, searchResult: { currentIndex: searchResult.currentIndex, data: [] } })
+        cloneArr[searchResult.currentIndex].latitude =
+          result.geometry.location.lat;
+        cloneArr[searchResult.currentIndex].longitude =
+          result.geometry.location.lng;
+        cloneArr[searchResult.currentIndex].task_type_id =
+          searchResult.currentIndex == 0 ? 1 : 2;
+        cloneArr[searchResult.currentIndex].post_code = addressData?.pincode;
+        cloneArr[searchResult.currentIndex].short_name =
+          addressData?.states || addressData?.state;
+        cloneArr[searchResult?.currentIndex].address =
+          result?.formatted_address;
+        updateState({
+          dropLocationData: cloneArr,
+          searchResult: {currentIndex: searchResult.currentIndex, data: []},
+        });
       } catch (error) {
-        console.log("something wen't wrong")
+        console.log("something wen't wrong");
       }
     } else {
-      alert('Place Id not found')
+      alert(strings.PLACE_ID_NOT_FOUND);
     }
-  }
+  };
 
   const renderSearchItem = (item) => {
     return (
-      <TouchableOpacity style={{
-        ...styles.addressViewStyle,
-        borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.lightGreyBg
-      }}
-        onPress={() => onPressAddress(item)}
-      >
-        <View style={{ flex: 0.15 }}>
+      <TouchableOpacity
+        style={{
+          ...styles.addressViewStyle,
+          borderBottomColor: isDarkMode
+            ? colors.whiteOpacity22
+            : colors.lightGreyBg,
+        }}
+        onPress={() => onPressAddress(item)}>
+        <View style={{flex: 0.15}}>
           <Image source={imagePath.RecentLocationImage} />
         </View>
-        <View style={{ flex: 0.9 }}>
-          <Text style={{
-            fontSize: textScale(12),
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            fontFamily: fontFamily.regular,
-          }}>{item?.name}</Text>
-          <Text numberOfLines={2} style={{
-            fontSize: textScale(10),
-            color: colors.textGreyJ,
-            fontFamily: fontFamily.regular,
-            lineHeight: moderateScaleVertical(20),
-          }}>
+        <View style={{flex: 0.9}}>
+          <Text
+            style={{
+              fontSize: textScale(12),
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              fontFamily: fontFamily.regular,
+            }}>
+            {item?.name}
+          </Text>
+          <Text
+            numberOfLines={2}
+            style={{
+              fontSize: textScale(10),
+              color: colors.textGreyJ,
+              fontFamily: fontFamily.regular,
+              lineHeight: moderateScaleVertical(20),
+            }}>
             {item?.formatted_address}
           </Text>
         </View>
       </TouchableOpacity>
-    )
-  }
+    );
+  };
 
   const addRemove = (isAddd, inx) => {
     if (!isAddd) {
-      let cloneArr = dropLocationData
+      let cloneArr = dropLocationData;
       let removeItem = cloneArr.filter((item, i) => {
         if (i !== inx) {
-          return item
+          return item;
         }
       });
-      updateState({ dropLocationData: removeItem })
+      updateState({dropLocationData: removeItem});
       return;
     }
 
-    let isFill = true
+    let isFill = true;
     if (dropLocationData.length > 5) {
       return;
     }
-    dropLocationData.map((val) => { if (val.latitude == 0) { isFill = false } })
+    dropLocationData.map((val) => {
+      if (val.latitude == 0) {
+        isFill = false;
+      }
+    });
     if (isFill) {
       if (isAddd) {
-        let x = []
+        let x = [];
         x.push({
           pre_address: '',
           address: '',
           latitude: 0,
           longitude: 0,
-        })
-        isFill = true
-        updateState({ dropLocationData: [...dropLocationData, ...x] })
+        });
+        isFill = true;
+        updateState({dropLocationData: [...dropLocationData, ...x]});
       }
-    } else { alert("Please fill the exist address") }
-  }
+    } else {
+      alert(strings.PLEASE_FILL_ADDRESS);
+    }
+  };
 
   const updateCurValues = (text, i) => {
-    const cloneArr = dropLocationData
-    cloneArr[i].pre_address = text
-    updateState({ dropLocationData: cloneArr })
-  }
+    const cloneArr = dropLocationData;
+    cloneArr[i].pre_address = text;
+    updateState({dropLocationData: cloneArr});
+  };
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}>
-      <View style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        height: moderateScale(40),
-        marginHorizontal: moderateScale(16)
-      }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          height: moderateScale(40),
+          marginHorizontal: moderateScale(16),
+        }}>
         <TouchableOpacity
-          style={{ flex: 0.5 }}
+          style={{flex: 0.5}}
           onPress={() => navigation.goBack()}
           hitSlop={{
             top: 30,
             right: 30,
             left: 30,
             bottom: 30,
-          }}
-        >
-          <Image style={{
-            tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-          }} source={imagePath.backArrowCourier} />
+          }}>
+          <Image
+            style={{
+              tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}
+            source={imagePath.backArrowCourier}
+          />
         </TouchableOpacity>
-        <Text style={{
-          fontSize: textScale(12),
-          fontFamily: fontFamily.medium,
-          color: isDarkMode ? MyDarkTheme.colors.text : colors.black
-        }}>{strings.SELECT_LOCATION}</Text>
+        <Text
+          style={{
+            fontSize: textScale(12),
+            fontFamily: fontFamily.medium,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          }}>
+          {strings.SELECT_LOCATION}
+        </Text>
       </View>
 
-      <View
-
-        style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
-          <View style={{
-            ...commonStyles.shadowStyle,
-            backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
-            paddingBottom: moderateScaleVertical(8),
-            shadowOffset: { width: 0, height: moderateScale(6) },
-            borderRadius: 0
-          }}>
+      <View style={{flex: 1}}>
+        <View style={{flex: 1}}>
+          <View
+            style={{
+              ...commonStyles.shadowStyle,
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.background
+                : colors.white,
+              paddingBottom: moderateScaleVertical(8),
+              shadowOffset: {width: 0, height: moderateScale(6)},
+              borderRadius: 0,
+            }}>
             {dropLocationData.map((val, i) => {
               return (
-                <View style={{
-                  flexDirection: 'row',
-                  marginHorizontal: moderateScale(16),
-                  alignItems: 'center',
-                  marginVertical: moderateScale(2),
-                  justifyContent: 'space-between'
-                }}>
-                  <View style={{ flex: 0.05, alignItems: 'center' }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginHorizontal: moderateScale(16),
+                    alignItems: 'center',
+                    marginVertical: moderateScale(2),
+                    justifyContent: 'space-between',
+                  }}>
+                  <View style={{flex: 0.05, alignItems: 'center'}}>
                     {renderDotContainer(i)}
                   </View>
-                  <View style={{ flex: 0.9, marginLeft: moderateScale(20) }}>
+                  <View style={{flex: 0.9, marginLeft: moderateScale(20)}}>
                     <SearchPlaces
                       curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
                       autoFocus={i == 1 ? true : false}
-                      placeHolder={i == 0 ? strings.PICKUP_LOCATION : i == 1 ? 'Where to?' : 'Add a stop'}
+                      placeHolder={
+                        i == 0
+                          ? strings.PICKUP_LOCATION
+                          : i == 1
+                          ? 'Where to?'
+                          : 'Add a stop'
+                      }
                       value={val.pre_address} // instant update search value
                       mapKey={profile?.preferences?.map_key} //send here google Key
-                      fetchArrayResult={(data) => updateState({ searchResult: { data: data, currentIndex: i } })}
+                      fetchArrayResult={(data) =>
+                        updateState({
+                          searchResult: {data: data, currentIndex: i},
+                        })
+                      }
                       setValue={(text) => updateCurValues(text, i)} //return & update on change text value
-                      onFocus={() => updateState({ searchResult: { ...searchResult, currentIndex: i } })}
+                      onFocus={() =>
+                        updateState({
+                          searchResult: {...searchResult, currentIndex: i},
+                        })
+                      }
                       _moveToNextScreen={() => _moveToNextScreen(i)}
                     />
                   </View>
-                  <View style={{ marginHorizontal: moderateScale(8) }} />
-                  <View style={{ flex: 0.1 }}>
+                  <View style={{marginHorizontal: moderateScale(8)}} />
+                  <View style={{flex: 0.1}}>
                     {i >= 1 && (
                       <TouchableOpacity
                         hitSlop={{
@@ -548,54 +639,85 @@ export default function Addaddress({ navigation, route }) {
                           left: 30,
                           bottom: 30,
                         }}
-                        onPress={() => addRemove(dropLocationData.length - 1 == i ? true : false, i)}
-                        activeOpacity={1}
-                      >
+                        onPress={() =>
+                          addRemove(
+                            dropLocationData.length - 1 == i ? true : false,
+                            i,
+                          )
+                        }
+                        activeOpacity={1}>
                         <Animated.Image
                           style={{
-                            tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                            transform: [{ rotate: dropLocationData.length - 1 == i ? '0deg' : '45deg' }]
+                            tintColor: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
+                            transform: [
+                              {
+                                rotate:
+                                  dropLocationData.length - 1 == i
+                                    ? '0deg'
+                                    : '45deg',
+                              },
+                            ],
                           }}
                           source={imagePath.icAdd}
                         />
-                      </TouchableOpacity>)}
+                      </TouchableOpacity>
+                    )}
                   </View>
                 </View>
-              )
+              );
             })}
           </View>
 
           <ScrollView
             keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-          >
-            {!!searchResult?.data && searchResult?.data.length > 0 ?
-              <View style={{ marginTop: moderateScaleVertical(16) }}>
-                <View style={{ ...styles.savedAddressView }}>
+            showsVerticalScrollIndicator={false}>
+            {!!searchResult?.data && searchResult?.data.length > 0 ? (
+              <View style={{marginTop: moderateScaleVertical(16)}}>
+                <View style={{...styles.savedAddressView}}>
                   <Image
-                    style={{ marginHorizontal: moderateScale(12) }}
+                    style={{marginHorizontal: moderateScale(12)}}
                     source={imagePath.starRoundedBackground}
                   />
                   <Text
                     numberOfLines={1}
-                    style={{ ...styles.addresssLableName, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>
+                    style={{
+                      ...styles.addresssLableName,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
                     {strings.SEARCHED_RESULTS}
                   </Text>
                 </View>
-                {searchResult?.data.map((item, i) => { return renderSearchItem(item) })}
+                {searchResult?.data.map((item, i) => {
+                  return renderSearchItem(item);
+                })}
               </View>
-              :
-              <View style={{ marginTop: moderateScaleVertical(16) }}>
-                <View style={{ ...styles.savedAddressView }}>
-                  <Image style={{ marginHorizontal: moderateScale(12) }} source={imagePath.starRoundedBackground} />
-                  <Text numberOfLines={1}
-                    style={{ ...styles.addresssLableName, color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}>
+            ) : (
+              <View style={{marginTop: moderateScaleVertical(16)}}>
+                <View style={{...styles.savedAddressView}}>
+                  <Image
+                    style={{marginHorizontal: moderateScale(12)}}
+                    source={imagePath.starRoundedBackground}
+                  />
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      ...styles.addresssLableName,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
                     {strings.NEARBY_LOCATION}
                   </Text>
                 </View>
-                {nearByAddressess.slice(0, 5).map((val) => { return renderAddressess(val) })}
+                {nearByAddressess.slice(0, 5).map((val) => {
+                  return renderAddressess(val);
+                })}
               </View>
-            }
+            )}
           </ScrollView>
         </View>
       </View>

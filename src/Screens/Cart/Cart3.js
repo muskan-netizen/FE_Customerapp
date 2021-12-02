@@ -16,6 +16,7 @@ import {
   View,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
+import * as Animatable from 'react-native-animatable';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo from 'react-native-device-info';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -66,6 +67,7 @@ import {getItem, removeItem, setItem} from '../../utils/utils';
 import stylesFun from './styles';
 import RazorpayCheckout from 'react-native-razorpay';
 import moment from 'moment';
+import {hitSlopProp} from '../../styles/commonStyles';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -120,6 +122,7 @@ export default function Cart({navigation, route}) {
     localePickupDate: null,
     localeDropOffDate: null,
     modalType: null,
+    showTaxFeeArea: false,
   });
   const {
     viewHeight,
@@ -160,6 +163,7 @@ export default function Cart({navigation, route}) {
     modalType,
     sheduledpickupdate,
     sheduleddropoffdate,
+    showTaxFeeArea,
   } = state;
 
   //Redux store data
@@ -1611,15 +1615,20 @@ export default function Cart({navigation, route}) {
                             fontFamily: fontFamily.medium,
                             color: colors.redFireBrick,
                             marginBottom: moderateScale(3),
-                          }}>{`${strings.PREPARATION_TIME_IS} ${
-                          i?.product.delay_order_hrs
-                            ? `${i?.product.delay_order_hrs} hrs`
+                          }}>{`${
+                          i?.product.delay_order_hrs > 0 ||
+                          i?.product.delay_order_min > 0
+                            ? strings.PREPARATION_TIME_IS
                             : ''
-                        } ${
-                          i?.product.delay_order_min
-                            ? `${i?.product.delay_order_min} mins`
+                        }${
+                          i?.product.delay_order_hrs > 0
+                            ? ` ${i?.product.delay_order_hrs} hrs`
                             : ''
-                        }  `}</Text>
+                        }${
+                          i?.product.delay_order_min > 0
+                            ? ` ${i?.product.delay_order_min} mins`
+                            : ''
+                        }`}</Text>
                       )}
 
                       {/* <View style={styles.dashedLine} /> */}
@@ -2777,16 +2786,38 @@ export default function Cart({navigation, route}) {
             )}`}</Text>
           </View>
         )}
-        {!!cartData?.total_tax && (
-          <View style={styles.bottomTabLableValue}>
-            <Text
-              style={
-                isDarkMode
-                  ? [styles.priceItemLabel, {color: MyDarkTheme.colors.text}]
-                  : styles.priceItemLabel
-              }>
-              {strings.TAX_AMOUNT}
-            </Text>
+        {(cartData?.total_tax > 0 || cartData?.total_service_fee > 0) && (
+          <Animatable.View
+            style={{
+              ...styles.bottomTabLableValue,
+              marginTop: moderateScale(8),
+              marginBottom: moderateScale(2),
+            }}>
+            <TouchableOpacity
+              activeOpacity={0.9}
+              hitSlop={hitSlopProp}
+              onPress={() => updateState({showTaxFeeArea: !showTaxFeeArea})}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text
+                  style={{
+                    ...styles.priceItemLabel,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyB,
+                  }}>
+                  {strings.TAXES_FEES}
+                </Text>
+
+                <Image
+                  source={imagePath.dropDownNew}
+                  style={{
+                    transform: [{scaleY: showTaxFeeArea ? -1 : 1}],
+                    marginHorizontal: moderateScale(2),
+                  }}
+                />
+              </View>
+            </TouchableOpacity>
+
             <Text
               style={
                 isDarkMode
@@ -2795,8 +2826,83 @@ export default function Cart({navigation, route}) {
               }>{`${
               currencies?.primary_currency?.symbol
             }${currencyNumberFormatter(
-              Number(cartData?.total_tax ? cartData?.total_tax : 0).toFixed(2),
+              (
+                Number(cartData?.total_tax ? cartData?.total_tax : 0) +
+                Number(
+                  cartData?.total_service_fee ? cartData?.total_service_fee : 0,
+                )
+              ).toFixed(2),
             )}`}</Text>
+          </Animatable.View>
+        )}
+        {showTaxFeeArea && (
+          <View>
+            <Animatable.View
+              animation="fadeIn"
+              style={{marginLeft: moderateScale(15)}}>
+              {cartData?.total_service_fee > 0 && (
+                <View
+                  style={{...styles.bottomTabLableValue, marginVertical: 1}}>
+                  <Text
+                    style={{
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      fontSize: textScale(11),
+                    }}>
+                    {strings.TOTAL_SERVICE_FEE}
+                  </Text>
+
+                  <Text
+                    style={{
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      fontSize: textScale(11),
+                    }}>{`${
+                    currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
+                    Number(
+                      cartData?.total_service_fee
+                        ? cartData?.total_service_fee
+                        : 0,
+                    ).toFixed(2),
+                  )}`}</Text>
+                </View>
+              )}
+              {cartData?.total_tax > 0 && (
+                <View
+                  style={{...styles.bottomTabLableValue, marginVertical: 1}}>
+                  <Text
+                    style={{
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      fontSize: textScale(11),
+                    }}>
+                    {strings.TAX_AMOUNT}
+                  </Text>
+
+                  <Text
+                    style={{
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      fontSize: textScale(11),
+                    }}>{`${
+                    currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
+                    Number(
+                      cartData?.total_tax ? cartData?.total_tax : 0,
+                    ).toFixed(2),
+                  )}`}</Text>
+                </View>
+              )}
+            </Animatable.View>
           </View>
         )}
 
@@ -3417,7 +3523,7 @@ export default function Cart({navigation, route}) {
         // isLoadingB={isLoadingB}
       >
         <Header centerTitle={strings.CART} leftIcon={imagePath.icBackb} />
-        <View
+        {/* <View
           style={{
             // flex: 1,
             justifyContent: 'center',
@@ -3437,7 +3543,7 @@ export default function Cart({navigation, route}) {
           <Text style={{...styles.textStyle}}>
             {strings.YOUR_CART_EMPTY_ADD_ITEMS}
           </Text>
-        </View>
+        </View> */}
         <ScrollView showsVerticalScrollIndicator={false}>
           <HeaderLoader
             widthLeft={width - moderateScale(30)}
@@ -3625,7 +3731,7 @@ export default function Cart({navigation, route}) {
     >
       <Header
         centerTitle={strings.CART}
-        leftIcon={imagePath.icBackb}
+        noLeftIcon
         isRightText={cartItems && cartItems?.length}
         onPressRightTxt={() => openClearCartModal()}
       />
