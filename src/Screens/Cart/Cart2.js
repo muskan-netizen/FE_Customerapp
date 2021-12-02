@@ -451,8 +451,8 @@ export default function Cart2({navigation, route}) {
   }, [paramsData?.redirectFrom]);
   const _webPayment = () => {
     let selectedMethod = selectedPayment.title.toLowerCase();
-    let returnUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
-    let cancelUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
+    let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
+    let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
 
     updateState({isLoadingB: true});
     actions

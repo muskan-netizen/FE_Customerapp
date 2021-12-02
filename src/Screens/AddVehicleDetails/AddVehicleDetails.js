@@ -34,16 +34,14 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
+import {
+  getImageUrl,
+  playVibration,
+  showError,
+  showSuccess,
+} from '../../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
-
-const ONE_SECOND_IN_MS = 50;
-const PATTERN = [
-  1 * ONE_SECOND_IN_MS,
-  2 * ONE_SECOND_IN_MS,
-  3 * ONE_SECOND_IN_MS
-];
 
 export default function AddVehicleDetails({route, navigation}) {
   const {data} = route.params;
@@ -457,7 +455,7 @@ export default function AddVehicleDetails({route, navigation}) {
 
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
-    Vibration.vibrate(PATTERN)
+    playVibration();
     if (!!userData?.auth_token) {
       updateState({isLoadingB: true});
       actions
@@ -505,7 +503,6 @@ export default function AddVehicleDetails({route, navigation}) {
     showError(error?.message || error?.error);
   };
 
-
   return (
     <WrapperContainer
       bgColor={
@@ -519,7 +516,6 @@ export default function AddVehicleDetails({route, navigation}) {
       <Header
         centerTitle={data?.name || data?.translation[0]?.name}
         hideRight={true}
-
       />
       {/* <View style={{...commonStyles.headerTopLine}} /> */}
 
@@ -532,8 +528,6 @@ export default function AddVehicleDetails({route, navigation}) {
           marginBottom: 2,
         }}
       />
-
-      
     </WrapperContainer>
   );
 }

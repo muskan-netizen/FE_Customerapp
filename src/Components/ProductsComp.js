@@ -110,7 +110,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
             fontSize: textScale(11),
             fontFamily: fontFamily.regular,
             marginVertical: moderateScaleVertical(4),
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity40,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity66,
             textAlign: 'left',
           }}>
           {vendor?.name}
@@ -126,7 +126,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
                     fontFamily: fontFamily.regular,
                     color: isDarkMode
                       ? MyDarkTheme.colors.text
-                      : colors.blackOpacity40,
+                      : colors.blackOpacity66,
                     width: width / 4,
                   }}>
                   {strings.IN} {category?.category_detail?.translation[0]?.name}
@@ -160,7 +160,7 @@ const ProductsComp = ({isDiscount, item, imageStyle, onPress = () => {}}) => {
                 fontFamily: fontFamily.regular,
                 color: isDarkMode
                   ? MyDarkTheme.colors.text
-                  : colors.blackOpacity40,
+                  : colors.blackOpacity66,
               }}>
               {strings.IN} {category?.category_detail?.translation[0]?.name}
             </Text>

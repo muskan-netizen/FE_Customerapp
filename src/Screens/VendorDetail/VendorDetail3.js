@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {FlatList, View} from 'react-native';
+import {useSelector} from 'react-redux';
 import Header from '../../Components/Header';
 import VendorDetailLoader from '../../Components/Loaders/VendorDetailLoader';
 import ThreeColumnCard from '../../Components/ThreeColumnCard';
@@ -17,17 +17,17 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { showError } from '../../utils/helperFunctions';
+import {showError} from '../../utils/helperFunctions';
 import ListEmptyVendors from '../Vendors/ListEmptyVendors';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../styles/theme';
 import strings from '../../constants/lang';
 import BrandCard2 from '../../Components/BrandCard2';
 import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
-import { trim } from 'lodash';
+import {trim} from 'lodash';
 import NoDataFound from '../../Components/NoDataFound';
 
-export default function VendorDetail3({ navigation, route }) {
+export default function VendorDetail3({navigation, route}) {
   let vendorParams = route?.params?.data;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   // alert("312")
@@ -42,7 +42,7 @@ export default function VendorDetail3({ navigation, route }) {
     limit: 12,
     pageNo: 1,
   });
-  const { vendorId, vendorData, isLoading, limit, pageNo, vendordName } = state;
+  const {vendorId, vendorData, isLoading, limit, pageNo, vendordName} = state;
 
   useEffect(() => {
     if (
@@ -76,17 +76,17 @@ export default function VendorDetail3({ navigation, route }) {
     convertLocalDateToUTCDate('2021-09-28T00:00', true);
   }, []);
 
-  const { appData, appStyle, currencies, languages } = useSelector(
+  const {appData, appStyle, currencies, languages} = useSelector(
     (state) => state.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({ fontFamily });
+  const commonStyles = commonStylesFun({fontFamily});
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   //Naviagtion to specific screen
   const moveToNewScreen = (item) => {
-    console.log("item++++", item)
+    console.log('item++++', item);
     // return;
     navigation.navigate(navigationStrings.PRODUCT_LIST, {
       data: {
@@ -98,194 +98,192 @@ export default function VendorDetail3({ navigation, route }) {
         name: item.name,
         isVendorList: false,
         category_slug: item?.slug,
-    }
-    })
-}
-// (screenName, data = {}) =>
-//   () => {
-//     navigation.navigate(screenName, { data });
-//   };
+      },
+    });
+  };
+  // (screenName, data = {}) =>
+  //   () => {
+  //     navigation.navigate(screenName, { data });
+  //   };
 
-/***********GET SUBCATEGORY  DETAIL DATA******** */
+  /***********GET SUBCATEGORY  DETAIL DATA******** */
 
-const getSubCategoryDetailData = () => {
-  //
-  actions
-    .getProductByCategoryId(
-      `/${vendorId}?limit=${limit}&page=${pageNo}`,
-      {},
-      {
+  const getSubCategoryDetailData = () => {
+    //
+    actions
+      .getProductByCategoryId(
+        `/${vendorId}?limit=${limit}&page=${pageNo}`,
+        {},
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'res>>>category data');
+        updateState({isLoading: false});
+        if (res && res.data) {
+          updateState({vendorData: res.data.listData});
+        }
+      })
+      .catch(errorMethod);
+  };
+  /*********** */
+
+  /*********GET VENDOR DETAIL********* */
+  const getVendorDetailData = () => {
+    let data = {};
+    data['vendor_id'] = vendorId;
+
+    actions
+      .getVendorDetail(data, {
         code: appData.profile.code,
         currency: currencies.primary_currency.id,
         language: languages.primary_language.id,
-      },
-    )
-    .then((res) => {
-      console.log(res, 'res>>>category data');
-      updateState({ isLoading: false });
-      if (res && res.data) {
-        updateState({ vendorData: res.data.listData });
-      }
-    })
-    .catch(errorMethod);
-};
-/*********** */
+      })
+      .then((res) => {
+        updateState({isLoading: false});
+        if (res && res.data) {
+          console.log(res, 'res>>res');
+          let newArray = res.data;
+          // if (vendorParams?.rootProducts) {
+          //   // console.log(
+          //   //   newArray.filter((x) => x?.id != vendorParams?.categoryData?.id),
+          //   //   'newArray>>>>',
+          //   // );
+          //   newArray= newArray.filter((x) => x?.id != vendorParams?.categoryData?.id)
+          // }
+          updateState({vendorData: newArray});
+        }
+      })
+      .catch(errorMethod);
+  };
 
-/*********GET VENDOR DETAIL********* */
-const getVendorDetailData = () => {
-  let data = {};
-  data['vendor_id'] = vendorId;
+  /********* */
 
-  actions
-    .getVendorDetail(data, {
-      code: appData.profile.code,
-      currency: currencies.primary_currency.id,
-      language: languages.primary_language.id,
-    })
-    .then((res) => {
-      updateState({ isLoading: false });
-      if (res && res.data) {
-        console.log(res, 'res>>res');
-        let newArray = res.data;
-        // if (vendorParams?.rootProducts) {
-        //   // console.log(
-        //   //   newArray.filter((x) => x?.id != vendorParams?.categoryData?.id),
-        //   //   'newArray>>>>',
-        //   // );
-        //   newArray= newArray.filter((x) => x?.id != vendorParams?.categoryData?.id)
-        // }
-        updateState({ vendorData: newArray });
-      }
-    })
-    .catch(errorMethod);
-};
+  const errorMethod = (error) => {
+    updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+    showError(error?.message || error?.error);
+  };
 
-/********* */
+  const _renderItem = ({item, index}) => {
+    return (
+      <BrandCard2
+        onPress={() => moveToNewScreen(item)}
+        // onPress={() => navigation.navigate(navigationStrings.PRODUCT_LIST)}
+        data={item}
+        withTextBG
+        cardIndex={index}
+      />
+    );
+  };
 
-const errorMethod = (error) => {
-  updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
-  showError(error?.message || error?.error);
-};
+  if (isLoading) {
+    return (
+      <WrapperContainer
+        statusBarColor={colors.backgroundGrey}
+        bgColor={
+          isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+        }>
+        <CategoryLoader2
+          viewStyles={{marginTop: moderateScale(50)}}
+          isFourthItem={false}
+          widthTop={(width - moderateScale(50)) / 3}
+          rectWidthTop={(width - moderateScale(50)) / 3}
+          heightTop={moderateScaleVertical(90)}
+          rectHeightTop={moderateScaleVertical(90)}
+          isSubCategory
+        />
+        <CategoryLoader2
+          viewStyles={{marginTop: moderateScale(25)}}
+          isFourthItem={false}
+          widthTop={(width - moderateScale(50)) / 3}
+          rectWidthTop={(width - moderateScale(50)) / 3}
+          heightTop={moderateScaleVertical(90)}
+          rectHeightTop={moderateScaleVertical(90)}
+          isSubCategory
+        />
+        <CategoryLoader2
+          viewStyles={{marginTop: moderateScale(25)}}
+          isFourthItem={false}
+          widthTop={(width - moderateScale(50)) / 3}
+          rectWidthTop={(width - moderateScale(50)) / 3}
+          heightTop={moderateScaleVertical(90)}
+          rectHeightTop={moderateScaleVertical(90)}
+          isSubCategory
+        />
+        <CategoryLoader2
+          viewStyles={{marginTop: moderateScale(25)}}
+          isFourthItem={false}
+          widthTop={(width - moderateScale(50)) / 3}
+          rectWidthTop={(width - moderateScale(50)) / 3}
+          heightTop={moderateScaleVertical(90)}
+          rectHeightTop={moderateScaleVertical(90)}
+          isSubCategory
+        />
+        <CategoryLoader2
+          viewStyles={{marginTop: moderateScale(25)}}
+          isFourthItem={false}
+          widthTop={(width - moderateScale(50)) / 3}
+          rectWidthTop={(width - moderateScale(50)) / 3}
+          heightTop={moderateScaleVertical(90)}
+          rectHeightTop={moderateScaleVertical(90)}
+          isSubCategory
+        />
+      </WrapperContainer>
+    );
+  }
 
-
-
-const _renderItem = ({ item, index }) => {
-  return (
-
-    <BrandCard2
-      onPress={() => moveToNewScreen(item)}
-      // onPress={() => navigation.navigate(navigationStrings.PRODUCT_LIST)}
-      data={item}
-      withTextBG
-      cardIndex={index}
-    />
-
-  );
-};
-
-if (isLoading) {
   return (
     <WrapperContainer
       statusBarColor={colors.backgroundGrey}
       bgColor={
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
       }>
-      <CategoryLoader2
-        viewStyles={{ marginTop: moderateScale(50) }}
-        isFourthItem={false}
-        widthTop={(width - moderateScale(50)) / 3}
-        rectWidthTop={(width - moderateScale(50)) / 3}
-        heightTop={moderateScaleVertical(90)}
-        rectHeightTop={moderateScaleVertical(90)}
-        isSubCategory
+      {/* <Header centerTitle={vendorParams?.item?.name} hideRight={false} /> */}
+
+      <Header
+        leftIcon={
+          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+        }
+        centerTitle={vendorParams?.item?.name || vendordName}
+        textStyle={{fontSize: textScale(13)}}
+        rightIcon={
+          appStyle?.homePageLayout === 3
+            ? imagePath.icSearchb
+            : imagePath.search
+        }
+        onPressRight={() =>
+          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+        }
       />
-      <CategoryLoader2
-        viewStyles={{ marginTop: moderateScale(25) }}
-        isFourthItem={false}
-        widthTop={(width - moderateScale(50)) / 3}
-        rectWidthTop={(width - moderateScale(50)) / 3}
-        heightTop={moderateScaleVertical(90)}
-        rectHeightTop={moderateScaleVertical(90)}
-        isSubCategory
-      />
-      <CategoryLoader2
-        viewStyles={{ marginTop: moderateScale(25) }}
-        isFourthItem={false}
-        widthTop={(width - moderateScale(50)) / 3}
-        rectWidthTop={(width - moderateScale(50)) / 3}
-        heightTop={moderateScaleVertical(90)}
-        rectHeightTop={moderateScaleVertical(90)}
-        isSubCategory
-      />
-      <CategoryLoader2
-        viewStyles={{ marginTop: moderateScale(25) }}
-        isFourthItem={false}
-        widthTop={(width - moderateScale(50)) / 3}
-        rectWidthTop={(width - moderateScale(50)) / 3}
-        heightTop={moderateScaleVertical(90)}
-        rectHeightTop={moderateScaleVertical(90)}
-        isSubCategory
-      />
-      <CategoryLoader2
-        viewStyles={{ marginTop: moderateScale(25) }}
-        isFourthItem={false}
-        widthTop={(width - moderateScale(50)) / 3}
-        rectWidthTop={(width - moderateScale(50)) / 3}
-        heightTop={moderateScaleVertical(90)}
-        rectHeightTop={moderateScaleVertical(90)}
-        isSubCategory
-      />
+      <View style={{marginHorizontal: moderateScale(8)}}>
+        <FlatList
+          data={vendorData || []}
+          numColumns={3}
+          ListHeaderComponent={<View style={{height: 10}} />}
+          // columnWrapperStyle={{justifyContent: 'space-between'}}
+          ItemSeparatorComponent={() => (
+            <View style={{height: moderateScale(4)}} />
+          )}
+          renderItem={_renderItem}
+          ListEmptyComponent={
+            !isLoading && (
+              <View
+                style={{
+                  flex: 1,
+                  marginTop: moderateScaleVertical(width / 2),
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <NoDataFound isLoading={state.isLoading} />
+              </View>
+            )
+          }
+          keyExtractor={(item, index) => String(index)}
+        />
+      </View>
     </WrapperContainer>
   );
-}
-
-return (
-  <WrapperContainer
-    statusBarColor={colors.backgroundGrey}
-    bgColor={
-      isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-    }>
-    {/* <Header centerTitle={vendorParams?.item?.name} hideRight={false} /> */}
-
-    <Header
-      leftIcon={
-        appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
-      }
-      centerTitle={vendorParams?.item?.name || vendordName}
-      textStyle={{ fontSize: textScale(13) }}
-      rightIcon={
-        appStyle?.homePageLayout === 3
-          ? imagePath.icSearchb
-          : imagePath.search
-      }
-      onPressRight={() =>
-        navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-      }
-    />
-    <View style={{ marginHorizontal: moderateScale(8) }}>
-      <FlatList
-        data={vendorData || []}
-        numColumns={3}
-        ListHeaderComponent={<View style={{ height: 10 }} />}
-        // columnWrapperStyle={{justifyContent: 'space-between'}}
-        ItemSeparatorComponent={() => <View style={{ height: moderateScale(4) }} />}
-        renderItem={_renderItem}
-        ListEmptyComponent={
-          !isLoading && (
-            <View
-              style={{
-                flex: 1,
-                marginTop: moderateScaleVertical(width / 2),
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <NoDataFound isLoading={state.isLoading} />
-            </View>
-          )
-        }
-        keyExtractor={(item, index) => String(index)}
-      />
-    </View>
-  </WrapperContainer>
-);
 }

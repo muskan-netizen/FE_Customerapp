@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import {Vibration} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import Geocoder from 'react-native-geocoder';
 import Geolocation from 'react-native-geolocation-service';
@@ -383,6 +383,16 @@ const checkEvenOdd = (num) => {
   return num % 5 === 0 ? num : num - (num % 5);
 };
 
+const playVibration = () => {
+  const ONE_SECOND_IN_MS = 1;
+
+  Vibration.vibrate([
+    1 * ONE_SECOND_IN_MS,
+    2 * ONE_SECOND_IN_MS,
+    3 * ONE_SECOND_IN_MS,
+  ]);
+};
+
 // export function numberFormat(formatableObj = {}) {
 //   return (
 //     <NumberFormat
@@ -411,4 +421,5 @@ export {
   timeInLocalLangauge,
   checkEvenOdd,
   getNearestLocation,
+  playVibration,
 };

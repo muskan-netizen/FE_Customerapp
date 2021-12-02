@@ -43,6 +43,7 @@ import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 
 import {verticalAnimation} from '../utils/utils';
+import CartStack from './CartStack';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
@@ -206,22 +207,11 @@ export default function () {
         component={CategoryBrands}
         options={{headerShown: false}}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.CART_SCREEN}
-        component={
-          appStyle?.homePageLayout === 2
-            ? Cart2
-            : appStyle?.homePageLayout === 3
-            ? Cart3
-            : Cart
-        }
+        component={CartStack}
         options={{headerShown: false, gestureEnabled: true}}
-      />
-      <Stack.Screen
-        name={navigationStrings.ALL_PAYMENT_METHODS}
-        component={AllPaymentMethods}
-        options={{headerShown: false}}
-      />
+      /> */}
     </Stack.Navigator>
   );
 }

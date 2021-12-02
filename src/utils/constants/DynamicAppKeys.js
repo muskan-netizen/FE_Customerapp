@@ -28,7 +28,7 @@ const shortCodes = {
   specialhalal: 'b0fc04',
   thehouse: 'edcbc0',
   tasmeem: '408d5a',
-  klickmat: 'de2c54',
+  snabbhem: 'de2c54',
   lastminutedress: '6e940e',
   rerak: 'f16959',
   yummiidash: 'c23640',
@@ -167,6 +167,9 @@ const shortCodes = {
   nadelivery: '9aee12',
   marasym: 'af735a',
   silvestre: '5fa7f3',
+  samakeemart: 'c473b2',
+  seaeats: '27b6eb',
+  enext: 'e36583',
 };
 
 const appIds = {
@@ -278,9 +281,9 @@ const appIds = {
     ios: 'com.codebrew.tasmeem',
     android: 'com.codebrew.tasmeem',
   }),
-  klickmat: Platform.select({
-    ios: 'com.codebrew.klickmat',
-    android: 'com.codebrew.klickmat',
+  snabbhem: Platform.select({
+    ios: 'com.snabbhem',
+    android: 'com.snabbhem',
   }),
   lastminutedress: Platform.select({
     ios: 'com.codebrewLab.lastminutedress',
@@ -704,7 +707,7 @@ const appIds = {
   }),
   pinkjet: Platform.select({
     ios: 'com.pinkjet',
-    android: 'com.pinkjet',
+    android: 'com.customer.pinkjet',
   }),
   mokabfix: Platform.select({
     ios: 'com.mokabfix',
@@ -833,6 +836,18 @@ const appIds = {
   silvestre: Platform.select({
     ios: 'com.silvestre',
     android: 'com.silvestre',
+  }),
+  samakeemart: Platform.select({
+    ios: 'com.samakeemart',
+    android: 'com.samakeemart',
+  }),
+  seaeats: Platform.select({
+    ios: 'com.seaeats',
+    android: 'com.seaeats',
+  }),
+  enext: Platform.select({
+    ios: 'com.enext',
+    android: 'com.enext',
   }),
 };
 

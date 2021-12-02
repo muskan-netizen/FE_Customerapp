@@ -209,7 +209,7 @@ const PaymentOptions = ({navigation, route}) => {
           borderRadius: 14,
           flex: 0.15,
         }}
-        leftIcon={imagePath.close2}
+        leftIcon={imagePath.backArrowCourier}
         centerTitle={strings.PAYMENT_OPTIONS}
         // rightIcon={imagePath.cartShop}
         headerStyle={{

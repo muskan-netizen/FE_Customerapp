@@ -73,23 +73,6 @@ export default function DashBoardHeaderFive({
     userSelectedtab();
   }, [appData]);
 
-  const checkSelectedTab = () => {
-    const newTabs = [...tabs];
-    newTabs.forEach((item, index) => {
-      if (item.label === dine_In_Type) {
-        newTabs[index].isActive = true;
-        updateState({
-          tabs: [...newTabs],
-        });
-      } else {
-        newTabs[index].isActive = false;
-        updateState({
-          tabs: [...newTabs],
-        });
-      }
-    });
-  };
-
   const addAllTabs = () => {
     const localTabsArray = [];
 
@@ -101,7 +84,7 @@ export default function DashBoardHeaderFive({
         label: 'delivery',
         icon: imagePath.delivery,
         iconInActive: imagePath.deliveryInActive,
-        isActive: true,
+        isActive: dine_In_Type === 'delivery' ? true : false,
       });
       if (
         toggleData?.profile?.preferences?.dinein_check == 0 &&
@@ -117,7 +100,7 @@ export default function DashBoardHeaderFive({
           strings.DINE_IN,
         label: 'dine_in',
         icon: imagePath.dineIn,
-        isActive: false,
+        isActive: dine_In_Type === 'dine_in' ? true : false,
       });
       if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
@@ -133,7 +116,7 @@ export default function DashBoardHeaderFive({
           strings.TAKEAWAY,
         label: 'takeaway',
         icon: imagePath.takeaway,
-        isActive: false,
+        isActive: dine_In_Type === 'takeaway' ? true : false,
       });
       if (
         toggleData?.profile?.preferences?.delivery_check == 0 &&
@@ -150,10 +133,24 @@ export default function DashBoardHeaderFive({
 
   const setUserSelectedTab = (label, value) => {
     selcetedToggle(value);
-    updateState({
-      checked: label,
-    });
   };
+
+  // const checkSelectedTab = () => {
+  //   const newTabs = [...tabs];
+  //   newTabs.forEach((item, index) => {
+  //     if (item.label === dine_In_Type) {
+  //       newTabs[index].isActive = true;
+  //       updateState({
+  //         tabs: [...newTabs],
+  //       });
+  //     } else {
+  //       newTabs[index].isActive = false;
+  //       updateState({
+  //         tabs: [...newTabs],
+  //       });
+  //     }
+  //   });
+  // };
 
   const userSelectedtab = () => {
     if (dine_In_Type === 'delivery') {
@@ -387,11 +384,6 @@ export default function DashBoardHeaderFive({
         });
       }
     });
-  };
-
-  const _onTableLabel = () => {
-    checkSelectedTab();
-    updateState({isModalVisible: true});
   };
 
   if (isLoading) {

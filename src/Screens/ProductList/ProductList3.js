@@ -60,6 +60,7 @@ import { currencyNumberFormatter } from '../../utils/commonFunction';
 import {
   checkEvenOdd,
   getImageUrl,
+  playVibration,
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
@@ -72,22 +73,17 @@ import Toast from 'react-native-simple-toast';
 import RepeatModal from '../../Components/RepeatModal';
 import DifferentAddOns from '../../Components/DifferentAddOns ';
 
-const ONE_SECOND_IN_MS = 50;
-const PATTERN = [
-  1 * ONE_SECOND_IN_MS,
-  2 * ONE_SECOND_IN_MS,
-  3 * ONE_SECOND_IN_MS,
-];
-
 let timeOut = undefined;
 
 var tempQty = 0;
 
 let activeIdx = 0;
 
-export default function Products({ route, navigation }) {
-  const { data } = route.params;
-  const { blurRef } = useRef();
+export default function Products({route, navigation}) {
+  const {data} = route.params;
+  console.log(data, 'datadatadata');
+  const routeData = data?.fetchOffers;
+  const {blurRef} = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const dineInType = useSelector((state) => state?.home?.dineInType);
@@ -287,17 +283,15 @@ export default function Products({ route, navigation }) {
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
-    // getAllProductTags();
     const unsubscribe = navigation.addListener('focus', () => {
       updateState({ pageNo: 1 });
       getAllListItems();
-      // getAllProductTags();
-      if (productListId?.vendor) {
+      console.log('checking route params >>>>', productListId);
+      if (productListId?.vendor && routeData) {
         fetchOffers();
       }
       if (isLoadingC) {
         getAllProducts(true);
-        // fetchOffers();
       }
     });
     return unsubscribe;
@@ -691,7 +685,7 @@ export default function Products({ route, navigation }) {
 
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
-    Vibration.vibrate(PATTERN);
+    playVibration();
     if (!!userData?.auth_token) {
       updateState({ isLoadingB: true });
       actions
@@ -825,13 +819,15 @@ export default function Products({ route, navigation }) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }
-    Vibration.vibrate(PATTERN);
+    playVibration();
     let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
     updateState({ selectedItemID: item?.id, btnLoader: true });
     let isSingleVendor = await checkSingleVendor(item.id);
+    console.log('is singel vendor', isSingleVendor);
+
     if (
-      isSingleVendor.isSingleVendorEnabled !== 0 &&
-      isSingleVendor.otherVendorExists !== 0
+      isSingleVendor.isSingleVendorEnabled == 1 &&
+      isSingleVendor.otherVendorExists == 1
     ) {
       updateState({
         updateQtyLoader: false,
@@ -961,7 +957,7 @@ export default function Products({ route, navigation }) {
       return;
     }
 
-    Vibration.vibrate(PATTERN);
+    playVibration();
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
 
@@ -1192,8 +1188,8 @@ export default function Products({ route, navigation }) {
   };
 
   const errorMethodSecond = (error, addonSet = []) => {
-    console.log(error.message.alert, 'Error>>>>>');
-    updateState({ updateQtyLoader: false });
+    console.log(error, 'Error>>>>>');
+    updateState({updateQtyLoader: false});
     if (error?.message?.alert == 1) {
       updateState({
         isLoading: false,
@@ -1205,11 +1201,11 @@ export default function Products({ route, navigation }) {
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
-          text: 'Cancel',
+          text: strings.CANCEL,
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        { text: 'Clear Cart', onPress: () => clearCart(addonSet) },
+        {text: strings.CLEARCART, onPress: () => clearCart(addonSet)},
       ]);
     } else {
       updateState({
@@ -1471,6 +1467,7 @@ export default function Products({ route, navigation }) {
   };
 
   const updateCartItems = (item, quanitity, productId, cartID) => {
+    playVibration();
 
     if (!!selectedSection) {
       let updatedSection = selectedSection.data.map((x, xnx) => {
@@ -1524,7 +1521,7 @@ export default function Products({ route, navigation }) {
   useEffect(() => {
     if (isLoadingC) {
       getAllProducts(true);
-      if (productListId?.vendor) {
+      if (productListId?.vendor && routeData) {
         fetchOffers();
       }
 
@@ -1615,9 +1612,8 @@ export default function Products({ route, navigation }) {
     let data = {};
     // data['vendor_id'] = 2;
     data['vendor_id'] = productListId?.id;
-    1;
     // data['cart_id'] = vendorInfo.cartId;
-    console.log(data, 'vendor_id');
+    // console.log(data, 'vendor_id');
     actions
       .getAllPromoCodesForProductList(data, {
         code: appData?.profile?.code,
@@ -1664,8 +1660,8 @@ export default function Products({ route, navigation }) {
               <TouchableOpacity
                 key={index}
                 onPress={() => {
-                  Vibration.vibrate(PATTERN);
-                  updateState({ MenuModalVisible: !MenuModalVisible });
+                  playVibration();
+                  updateState({MenuModalVisible: !MenuModalVisible});
                   sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
                     {
                       // x: (height / 7.5) * idx * idx,
@@ -1999,35 +1995,34 @@ export default function Products({ route, navigation }) {
                         {categoryInfo?.address || ''}
                       </Text>
 
-                      {!!categoryInfo &&
-                        !!categoryInfo?.product_avg_average_rating && (
-                          <View
-                            style={[
-                              styles.hdrRatingTxtView,
-                              {
-                                width: moderateScale(50),
-                                justifyContent: 'center',
-                                height: moderateScale(20),
-                              },
-                            ]}>
-                            <Text
-                              style={{
-                                ...styles.ratingTxt,
-                                color: categoryInfo?.show_slot
-                                  ? colors.white
-                                  : categoryInfo?.is_vendor_closed
-                                    ? colors.redB
-                                    : colors.white,
-                                fontSize: textScale(9.5),
-                              }}>
-                              {categoryInfo?.show_slot
-                                ? strings.OPEN
+                      {!!categoryInfo && (
+                        <View
+                          style={[
+                            styles.hdrRatingTxtView,
+                            {
+                              justifyContent: 'center',
+                              height: moderateScale(20),
+                              backgroundColor: categoryInfo?.show_slot
+                                ? colors.green
                                 : categoryInfo?.is_vendor_closed
-                                  ? strings.CLOSE
-                                  : strings.OPEN}
-                            </Text>
-                          </View>
-                        )}
+                                ? colors.redB
+                                : colors.green,
+                            },
+                          ]}>
+                          <Text
+                            style={{
+                              ...styles.ratingTxt,
+                              color: colors.white,
+                              fontSize: textScale(9.5),
+                            }}>
+                            {categoryInfo?.show_slot
+                              ? strings.OPEN
+                              : categoryInfo?.is_vendor_closed
+                              ? strings.CLOSE
+                              : strings.OPEN}
+                          </Text>
+                        </View>
+                      )}
                     </View>
                   </View>
                 </LinearGradient>
@@ -2449,7 +2444,7 @@ export default function Products({ route, navigation }) {
                     }
                     size="small"
                     onToggle={() => {
-                      Vibration.vibrate(PATTERN);
+                      playVibration();
                       const updatedArr = ProductTags.map((el, idx) => {
                         console.log(el);
                         if (idx === index) {
@@ -3187,8 +3182,8 @@ export default function Products({ route, navigation }) {
       {!searchInput && (
         <GradientCartView
           onPress={() => {
-            Vibration.vibrate(PATTERN);
-            NavigationService.navigate(navigationStrings.CART_SCREEN);
+            playVibration();
+            navigation.navigate(navigationStrings.CART);
           }}
           btnText={
             CartItems && CartItems.data && CartItems.data.item_count
@@ -3206,8 +3201,8 @@ export default function Products({ route, navigation }) {
           }
           isMenuBtnShow={categoryInfo?.is_show_products_with_category}
           onMenuTap={() => {
-            Vibration.vibrate(PATTERN);
-            updateState({ MenuModalVisible: !MenuModalVisible });
+            playVibration();
+            updateState({MenuModalVisible: !MenuModalVisible});
           }}
         />
       )}

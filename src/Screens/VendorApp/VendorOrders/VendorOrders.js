@@ -35,6 +35,7 @@ import Modal from 'react-native-modal';
 import BorderTextInput from '../../../Components/BorderTextInput';
 import {StartPrinting} from '../../PrinterConnection/PrinteFunc';
 import {getItem} from '../../../utils/utils';
+import * as RNLocalize from 'react-native-localize';
 
 export default function VendorOrders({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -141,6 +142,8 @@ export default function VendorOrders({navigation, route}) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
+          timezone: RNLocalize.getTimeZone(),
+
           // systemuser: DeviceInfo.getUniqueId(),
         },
       )

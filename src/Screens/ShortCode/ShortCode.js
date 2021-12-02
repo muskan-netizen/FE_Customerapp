@@ -242,9 +242,9 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-        case appIds.klickmat:
+        case appIds.snabbhem:
           updateState({
-            shortCode: shortCodes.klickmat,
+            shortCode: shortCodes.snabbhem,
             isShortcodePrefilled: true,
           });
           break;
@@ -1096,6 +1096,24 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.samakeemart:
+          updateState({
+            shortCode: shortCodes.samakeemart,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.seaeats:
+          updateState({
+            shortCode: shortCodes.seaeats,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.enext:
+          updateState({
+            shortCode: shortCodes.enext,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -1143,6 +1161,7 @@ export default function ShortCode({route, navigation}) {
     actions
       .initApp({}, header, false, null, null, true)
       .then((res) => {
+        console.log(res, '<====headerResponse');
         updateState({changeInShortCode: false});
         if (getBundleId() == appIds.royoorder) {
           actions.saveShortCode(shortCode);

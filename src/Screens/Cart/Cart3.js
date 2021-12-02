@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, update} from 'lodash';
+import {cloneDeep, isEmpty, update} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
@@ -58,6 +58,7 @@ import {
   getParameterByName,
   numberFormat,
   showError,
+  showInfo,
   showSuccess,
   timeInLocalLangauge,
 } from '../../utils/helperFunctions';
@@ -88,13 +89,7 @@ export default function Cart({navigation, route}) {
     type: '',
     vendorAddress: '',
     selectedAddress: null,
-    selectedPayment: {
-      id: 1,
-      off_site: 0,
-      title: 'Cash On Delivery',
-      title_lng: strings.CASH_ON_DELIVERY,
-    },
-    // selectedPayment: null,
+    selectedPayment: {},
     isRefreshing: false,
     selectedTipvalue: null,
     selectedTipAmount: null,
@@ -856,6 +851,15 @@ export default function Cart({navigation, route}) {
 
   //Clear cart
   const placeOrder = () => {
+    if (!!cartData?.delay_date && !localeSheduledOrderDate) {
+      showInfo(strings.SCHEDULE_DATE_REQUIRED);
+      return;
+    }
+    if (isEmpty(selectedPayment)) {
+      showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
+      return;
+    }
+
     updateState({placeLoader: true});
     var d1 = new Date();
     var d2 = new Date(sheduledorderdate);
@@ -2526,7 +2530,6 @@ export default function Cart({navigation, route}) {
                 styles.bottomTabLableValue,
                 {
                   flexDirection: 'column',
-                  marginTop: moderateScaleVertical(8),
                 },
               ]}>
               <Text
@@ -2895,11 +2898,7 @@ export default function Cart({navigation, route}) {
               <ButtonComponent
                 onPress={_selectTime}
                 btnText={
-                  !!cartData?.delay_date
-                    ? `${strings.SCHEDULE_FOR} ${moment(
-                        cartData?.delay_date,
-                      ).format('DD MMM, YYYY HH:mm')}`
-                    : localeSheduledOrderDate
+                  localeSheduledOrderDate
                     ? localeSheduledOrderDate
                     : strings.SCHEDULE_ORDER
                 }
