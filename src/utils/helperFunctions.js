@@ -13,6 +13,7 @@ import Toast from 'react-native-simple-toast';
 import {StatusBarHeight} from '../styles/responsiveSize';
 import {getDistance} from 'geolib';
 import {min} from 'moment';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -393,6 +394,43 @@ const playVibration = () => {
   ]);
 };
 
+const playHapticEffect = (effect = 'clockTick') => {
+  const options = {
+    enableVibrateFallback: true,
+    ignoreAndroidSystemSettings: true,
+  };
+
+  ReactNativeHapticFeedback.trigger(effect, options);
+};
+
+const hapticEffects = {
+  effectClick: 'effectClick',
+
+  effectDoubleClick: 'effectDoubleClick',
+  effectHeavyClick: 'effectHeavyClick',
+  effectTick: 'effectTick',
+  impactHeavy: 'impactHeavy',
+  impactMedium: 'impactMedium',
+  impactLight: 'impactLight',
+  notificationError: 'notificationError',
+  notificationSuccess: 'notificationSuccess',
+  notificationWarning: 'notificationWarning',
+  rigid: 'rigid',
+  selection: 'selection',
+  soft: 'soft',
+
+  // (Android only)
+  clockTick: 'clockTick',
+  contextClick: 'contextClick',
+  keyboardPress: 'keyboardPress',
+  keyboardRelease: 'keyboardRelease',
+  keyboardTap: 'keyboardTap',
+  longPress: 'longPress',
+  textHandleMove: 'textHandleMove',
+  virtualKey: 'virtualKey',
+  virtualKeyRelease: 'virtualKeyRelease',
+};
+
 // export function numberFormat(formatableObj = {}) {
 //   return (
 //     <NumberFormat
@@ -422,4 +460,6 @@ export {
   checkEvenOdd,
   getNearestLocation,
   playVibration,
+  playHapticEffect,
+  hapticEffects,
 };

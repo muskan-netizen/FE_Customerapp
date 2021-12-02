@@ -36,6 +36,8 @@ import {
 } from '../../styles/responsiveSize';
 import {
   getImageUrl,
+  hapticEffects,
+  playHapticEffect,
   playVibration,
   showError,
   showSuccess,
@@ -455,7 +457,7 @@ export default function AddVehicleDetails({route, navigation}) {
 
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
-    playVibration();
+    playHapticEffect(hapticEffects.rigid);
     if (!!userData?.auth_token) {
       updateState({isLoadingB: true});
       actions

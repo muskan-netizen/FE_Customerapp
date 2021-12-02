@@ -647,4 +647,5 @@ export default {
   PLEASE_FILL_ADDRESS: 'Please fill the exist address',
   TAXES_FEES: 'Taxes & Fees',
   TOTAL_SERVICE_FEE: 'Total Service Fee',
+  WELCOME_NEXT_TIME: 'Welcome next time',
 };

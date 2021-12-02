@@ -341,7 +341,6 @@
     "samakeemartRelease": "cd android && ./gradlew assembleSamakeeMartRelease",
     "seaeatsRelease": "cd android && ./gradlew assembleSeaEatsRelease",
     "enextRelease": "cd android && ./gradlew assembleEnExtRelease",
-
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
@@ -432,6 +431,7 @@
     "react-native-google-maps": "^1.0.0",
     "react-native-google-places": "^3.1.2",
     "react-native-google-places-autocomplete": "^2.2.0",
+    "react-native-haptic-feedback": "^1.13.0",
     "react-native-htmlview": "^0.16.0",
     "react-native-image-crop-picker": "^0.36.2",
     "react-native-image-header-scroll-view": "^0.10.3",

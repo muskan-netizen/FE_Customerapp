@@ -646,4 +646,5 @@ Amount`,
   TAXES_FEES: 'Taxes & Fees',
   TOTAL_SERVICE_FEE: 'Service Fee',
   HOUSE_NO: 'House No.',
+  WELCOME_NEXT_TIME: 'Welcome next time',
 };
