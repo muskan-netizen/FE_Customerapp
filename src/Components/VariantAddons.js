@@ -36,6 +36,8 @@ import {MyDarkTheme} from '../styles/theme';
 import {currencyNumberFormatter} from '../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
+  hapticEffects,
+  playHapticEffect,
   playVibration,
   showError,
   showSuccess,
@@ -323,7 +325,7 @@ export default function VariantAddons({
               key={inx}
               activeOpacity={1}
               onPress={() => {
-                playVibration();
+                playHapticEffect(hapticEffects.rigid);
                 selectSpecificOptionsForAddions(setoptions, i, inx);
               }}
               style={{
@@ -647,7 +649,7 @@ export default function VariantAddons({
   };
 
   const addToCart = (addonSet) => {
-    playVibration();
+    playHapticEffect(hapticEffects.rigid);
     let updateQty =
       productdetail?.qty + 1 || //localy update cart quanity
       productdetail?.variant[0]?.check_if_in_cart_app[0]?.quantity + 1 ||
@@ -912,7 +914,7 @@ export default function VariantAddons({
   };
 
   const productIncrDecreamentForCart = (type) => {
-    playVibration();
+    playHapticEffect(hapticEffects.rigid);
     if (type == 2) {
       if (productQuantityForCart <= 1) {
         onClose();

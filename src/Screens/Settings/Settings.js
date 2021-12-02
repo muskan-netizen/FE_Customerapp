@@ -37,7 +37,11 @@ import {API_BASE_URL} from '../../config/urls';
 import AsyncStorage from '@react-native-community/async-storage';
 import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
 import BackgroundService from 'react-native-background-actions';
-import {playVibration} from '../../utils/helperFunctions';
+import {
+  hapticEffects,
+  playHapticEffect,
+  playVibration,
+} from '../../utils/helperFunctions';
 
 export default function Settings({route, navigation}) {
   // const appData = useSelector(state => state?.initBoot?.appData);
@@ -211,7 +215,7 @@ export default function Settings({route, navigation}) {
 
   const _toggleOnOff = (isOn) => {
     actions.setToggle(isOn);
-    playVibration();
+    playHapticEffect(hapticEffects.rigid);
     updateState({
       isOn: isOn ? true : false,
     });
@@ -334,7 +338,7 @@ export default function Settings({route, navigation}) {
                 key={String(inx)}
                 onPress={() => {
                   _setApperance(i);
-                  playVibration();
+                  playHapticEffect(hapticEffects.rigid);
                 }}>
                 <Image source={i.image} />
                 <Text
