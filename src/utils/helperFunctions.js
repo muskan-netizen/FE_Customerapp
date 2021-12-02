@@ -397,7 +397,7 @@ const playVibration = () => {
 const playHapticEffect = (effect = 'clockTick') => {
   const options = {
     enableVibrateFallback: true,
-    ignoreAndroidSystemSettings: false,
+    ignoreAndroidSystemSettings: true,
   };
 
   ReactNativeHapticFeedback.trigger(effect, options);

@@ -642,4 +642,5 @@ export default {
   DELIVERY: 'DELIVERY',
   ITEM: 'Item',
   PAID_AMOUNT: 'Paid amount',
+  WELCOME_NEXT_TIME: 'Welcome next time',
 };
