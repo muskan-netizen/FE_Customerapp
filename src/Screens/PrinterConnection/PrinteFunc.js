@@ -334,9 +334,7 @@ export const printReciept = async (data) => {
           }
         } else {
           canEnablePrinter = true;
-          alert(
-            'Something went wrong, please make connection with printer again.',
-          );
+          alert(strings.SOMETHING_WENT_WRONG_PRINTER_MSG);
           AsyncStorage.getItem('BleDevice').then((res) => {
             console.log(
               'checking ble device storage data >>>',

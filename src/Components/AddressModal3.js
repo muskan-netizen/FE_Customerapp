@@ -101,7 +101,10 @@ export default function AddressModal3({
       longitudeDelta: LONGITUDE_DELTA,
     },
     customAddress: '',
+    houseNo: '',
   });
+
+  console.log(updateData, 'updateData');
 
   const styles = stylesData({fontFamily, themeColors});
 
@@ -122,6 +125,7 @@ export default function AddressModal3({
       country_code: updateData?.country_code ? updateData?.country_code : '',
       is_primary: updateData?.is_primary ? updateData?.is_primary : '',
       address_type: updateData?.type,
+      houseNo: updateData?.house_number ? updateData?.house_number : '',
     });
   }, [updateData]);
 
@@ -144,6 +148,7 @@ export default function AddressModal3({
     viewHeight,
     region,
     customAddress,
+    houseNo,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -187,6 +192,7 @@ export default function AddressModal3({
           {id: 3, lable: strings.OTHERS, icon: imagePath.workInActive},
         ],
         address_type: updateData?.type ? updateData?.type : 1,
+        houseNo: '',
       });
     }, 1000);
   };
@@ -288,6 +294,7 @@ export default function AddressModal3({
       is_primary: type == 'addAddress' ? 1 : is_primary,
       address_type: address_type,
       type_name: address_type === 3 && customAddress,
+      house_number: houseNo,
     };
     if (type == 'Home1') {
       navigation.navigate(navigationStrings.HOME, {
@@ -500,17 +507,27 @@ export default function AddressModal3({
           </View> */}
 
             <BorderTextInputWithLable
-              onChangeText={_onChangeText('street')}
-              placeholder={strings.ENTER_STREET}
+              onChangeText={_onChangeText('houseNo')}
+              placeholder={strings.HOUSE_NO}
               label={strings.COMPLETE_ADDRESS}
-              textInputStyle={getTextInputStyle(street)}
-              value={street}
+              textInputStyle={getTextInputStyle(houseNo)}
+              value={houseNo}
               multiline={false}
               borderWidth={0}
               marginBottomTxt={0}
               containerStyle={{borderBottomWidth: 1}}
               mainStyle={{marginTop: 10}}
               labelStyle={styles.labelStyle}
+            />
+
+            <BorderTextInputWithLable
+              onChangeText={_onChangeText('street')}
+              placeholder={strings.ENTER_STREET}
+              textInputStyle={getTextInputStyle(city)}
+              value={street}
+              borderWidth={0}
+              marginBottomTxt={0}
+              containerStyle={{borderBottomWidth: 1}}
             />
 
             <BorderTextInputWithLable
