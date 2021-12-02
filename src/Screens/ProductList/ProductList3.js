@@ -1108,8 +1108,7 @@ export default function Products({ route, navigation }) {
   const removeProductFromCart = (itemToUpdate, section = null, diffAdOnId = 0) => {
 
     // console.log("item to update remove item", itemToUpdate)
-    console.log("diffAdOnId", diffAdOnId)
-
+s
 
     let updateLocallyAddOns = []
     if (differentAddsOnsModal) {
