@@ -1479,7 +1479,6 @@ export default function Products({route, navigation}) {
             isRemove: false,
           };
         }
-        updateState({ storeLocalQty: quanitity })
         return x;
       });
       selectedSection['data'] = updatedSection;
@@ -1497,6 +1496,8 @@ export default function Products({route, navigation}) {
           return f;
         }),
         cartId: cartID,
+        storeLocalQty: quanitity,
+        isVisibleModal: false
       });
     } else {
       let updateArray = productListData.map((val, i) => {
@@ -1514,6 +1515,7 @@ export default function Products({route, navigation}) {
       updateState({
         cartId: cartID,
         productListData: updateArray,
+        isVisibleModal: false
       });
     }
   };

@@ -731,23 +731,21 @@ export default function VariantAddons({
           language: languages.primary_language.id,
           systemuser: DeviceInfo.getUniqueId(),
         })
-        .then(async(res) => {
+        .then(async (res) => {
           actions.cartItemQty(res);
           showSuccess(strings.PRODUCT_ADDED_SUCCESS);
           console.log("Product successfully added", res)
-          updateState({ isLoadingC: false, btnLoader: false });
-
-
           let apiData = { cart_id: res.data.id, product_id: productdetail.id }
           let localQty = await getDiffAddsOn(apiData)
-          console.log("local qty++",localQty)
+          console.log("local qty++", localQty)
           updateCartItems(
             productdetail,
             localQty, ////localy update cart quanity
             res.data.cart_product_id,
             res.data.id,
           );
-          onClose();
+          updateState({ isLoadingC: false, btnLoader: false });
+          // onClose();
         })
         .catch((error) => errorMethodSecond(error, addonSet));
       return;
@@ -975,6 +973,7 @@ export default function VariantAddons({
       isVisible={isVisible}
       animationType={'none'}
       style={styles.modalContainer}
+      onBackdropPress={() => onClose()}
       onLayout={(event) => {
         updateState({ viewHeight: event.nativeEvent.layout.height });
       }}>
