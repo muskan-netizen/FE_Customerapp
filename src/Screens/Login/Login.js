@@ -432,7 +432,6 @@ export default function Login({navigation}) {
             keyboardType={'email-ad
             autoCapitalize={'none'}
           /> */}
-        {console.log(password.length, 'jkfhdjfhdsj')}
         {!phoneInput && (
           <>
             <BorderTextInput
