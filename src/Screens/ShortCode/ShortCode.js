@@ -1114,6 +1114,19 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.hokitch:
+          updateState({
+            shortCode: shortCodes.hokitch,
+            isShortcodePrefilled: true,
+          });
+          break;
+          break;
+        case appIds.foodnests:
+          updateState({
+            shortCode: shortCodes.foodnests,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

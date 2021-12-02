@@ -170,6 +170,8 @@ const shortCodes = {
   samakeemart: 'c473b2',
   seaeats: '27b6eb',
   enext: 'e36583',
+  hokitch: 'bc54f4',
+  foodnests: '82b5bc',
 };
 
 const appIds = {
@@ -848,6 +850,14 @@ const appIds = {
   enext: Platform.select({
     ios: 'com.enext',
     android: 'com.enext',
+  }),
+  hokitch: Platform.select({
+    ios: 'com.hokitch',
+    android: 'com.hokitch',
+  }),
+  foodnests: Platform.select({
+    ios: 'com.foodnests',
+    android: 'com.foodnests',
   }),
 };
 

@@ -1,5 +1,5 @@
 // export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.20:8020/api/v1';
 // export const API_BASE_URL = 'http://192.168.103.73:8006/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.20:8020/api/v1';
@@ -8,7 +8,7 @@
 //export const API_BASE_URL = 'https://zuzuclean.alerthire.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
-export const API_BASE_URL = 'https://click-eat.com/api/v1';
+// export const API_BASE_URL = 'https://click-eat.com/api/v1';
 // export const API_BASE_URL = 'https://tranzit.app/api/v1';
 // export const API_BASE_URL = 'https://pinkjettaxi.com/api/v1';
 // export const API_BASE_URL = 'https://snabbhem.se/api/v1';
