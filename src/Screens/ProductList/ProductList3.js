@@ -79,11 +79,11 @@ var tempQty = 0;
 
 let activeIdx = 0;
 
-export default function Products({route, navigation}) {
-  const {data} = route.params;
-  console.log(data, 'datadatadata');
+export default function Products({ route, navigation }) {
+  const { data } = route.params;
+  // console.log(data, 'datadatadata');
   const routeData = data?.fetchOffers;
-  const {blurRef} = useRef();
+  const { blurRef } = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const dineInType = useSelector((state) => state?.home?.dineInType);
@@ -550,7 +550,7 @@ export default function Products({route, navigation}) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendor = () => {
-    console.log('api hit getAllProductsByVendor', productListId);
+    console.log('api hit getAllProductsByVendor');
     actions
       .getProductByVendorId(
         `/${productListId?.id}?limit=${limit}&page=${pageNo}`,
@@ -565,6 +565,7 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
+
         if (res?.data?.vendor?.is_show_products_with_category) {
           var totalProduct = 1;
           let filterArray = res?.data?.categories?.map((val) => {
@@ -1095,7 +1096,10 @@ export default function Products({route, navigation}) {
   //decrementing/removeing products from cart
   const removeProductFromCart = (itemToUpdate, section = null, diffAdOnId = 0) => {
 
-    console.log("item to update remove item", itemToUpdate)
+    // console.log("item to update remove item", itemToUpdate)
+    console.log("diffAdOnId", diffAdOnId)
+
+
     let updateLocallyAddOns = []
     if (differentAddsOnsModal) {
       let cloneArr = differentAddsOns
@@ -1109,11 +1113,7 @@ export default function Products({route, navigation}) {
 
     let data = {};
     let isExistproductId = diffAdOnId
-    let isExistCartId =
-      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-        itemToUpdate.variant[0]?.check_if_in_cart_app.length > 0
-        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
-        : cartId;
+    let isExistCartId = itemToUpdate?.check_if_in_cart_app[0]?.cart_id || cartId;
     console.log('item', itemToUpdate);
 
 
@@ -1137,9 +1137,10 @@ export default function Products({route, navigation}) {
                 ...x,
                 qty: null,
                 cart_product_id: res.data.cart_product_id,
-                variant: itemToUpdate?.variant.map((val, i) => {
-                  return { ...val, check_if_in_cart_app: differentAddsOnsModal ? updateLocallyAddOns : [] };
-                }),
+                check_if_in_cart_app: differentAddsOnsModal ? updateLocallyAddOns : []
+                // variant: itemToUpdate?.variant.map((val, i) => {
+                //   return { ...val, check_if_in_cart_app: differentAddsOnsModal ? updateLocallyAddOns : [] };
+                // }),
               };
             }
             return x;
@@ -1169,9 +1170,10 @@ export default function Products({route, navigation}) {
                 ...val,
                 qty: null,
                 cart_product_id: res.data.cart_product_id,
-                variant: itemToUpdate?.variant.map((val, i) => {
-                  return { ...val, check_if_in_cart_app: differentAddsOnsModal ? updateLocallyAddOns : [] };
-                }),
+                check_if_in_cart_app: differentAddsOnsModal ? updateLocallyAddOns : []
+                // variant: itemToUpdate?.variant.map((val, i) => {
+                //   return { ...val, check_if_in_cart_app: differentAddsOnsModal ? updateLocallyAddOns : [] };
+                // }),
               };
             }
             return val;
@@ -1189,7 +1191,7 @@ export default function Products({route, navigation}) {
 
   const errorMethodSecond = (error, addonSet = []) => {
     console.log(error, 'Error>>>>>');
-    updateState({updateQtyLoader: false});
+    updateState({ updateQtyLoader: false });
     if (error?.message?.alert == 1) {
       updateState({
         isLoading: false,
@@ -1205,7 +1207,7 @@ export default function Products({route, navigation}) {
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        {text: strings.CLEARCART, onPress: () => clearCart(addonSet)},
+        { text: strings.CLEARCART, onPress: () => clearCart(addonSet) },
       ]);
     } else {
       updateState({
@@ -1274,10 +1276,12 @@ export default function Products({route, navigation}) {
 
   const addProductsWithoutCustomize = (item, section, index, type) => {
 
+    console.log("very nice", item)
+    // return;
     let itemToUpdate = cloneDeep(item);
-    let quanitity = !!itemToUpdate?.qty ? itemToUpdate?.qty : itemToUpdate.variant[0]?.check_if_in_cart_app[0].quantity
-    let productId = !!itemToUpdate?.cart_product_id ? itemToUpdate?.cart_product_id : itemToUpdate.variant[0]?.check_if_in_cart_app[0].id
-    let parentCartId = !!cartId ? cartId : itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
+    let quanitity = !!itemToUpdate?.qty ? itemToUpdate?.qty : itemToUpdate?.check_if_in_cart_app[0].quantity
+    let productId = !!itemToUpdate?.cart_product_id ? itemToUpdate?.cart_product_id : itemToUpdate?.check_if_in_cart_app[0].id
+    let parentCartId = !!cartId ? cartId : itemToUpdate?.check_if_in_cart_app[0].cart_id
 
     if (type == 1) {
       addDeleteCartItems(
@@ -1305,26 +1309,30 @@ export default function Products({route, navigation}) {
 
   const checkIsCustomize = async (item, section = null, index, type) => {
     let itemToUpdate = cloneDeep(item);
-    if (item.add_on.length == 0) { // hit in case of simple products withou any customization
+    console.log("check item to update", itemToUpdate)
+    // return;
+    if (item.add_on.length == 0 && item.variantSet.length == 0) { // hit in case of simple products withou any customization
       addProductsWithoutCustomize(item, section, index, type)
       return;
     }
 
-    let productId = !!itemToUpdate?.cart_product_id ? itemToUpdate?.cart_product_id : itemToUpdate.variant[0]?.check_if_in_cart_app[0]?.id
-    let parentCartId = !!cartId ? cartId : itemToUpdate.variant[0]?.check_if_in_cart_app[0]?.cart_id
+    let productId = !!itemToUpdate?.cart_product_id ? itemToUpdate?.cart_product_id : itemToUpdate?.check_if_in_cart_app[0]?.id
+    let parentCartId = !!cartId ? cartId : itemToUpdate.check_if_in_cart_app[0]?.cart_id
 
     var totalProductQty = 0
-    if (itemToUpdate?.variant && itemToUpdate?.variant[0]?.check_if_in_cart_app) {
-      itemToUpdate?.variant[0]?.check_if_in_cart_app.map((val) => {
+    if (itemToUpdate?.variant && itemToUpdate?.check_if_in_cart_app) {
+      itemToUpdate?.check_if_in_cart_app.map((val) => {
         totalProductQty = totalProductQty + val?.quantity
       })
     }
+
+    // return;
 
 
     var isExistqty = itemToUpdate?.qty ? itemToUpdate?.qty : totalProductQty; //this variable contain only local product quantity
     var tempQty = 0 //this variable contain latest updated quantity of products
 
-    if (type == 2 && item?.add_on?.length > 0) { //hit in case of subtruction
+    if (type == 2 && item?.add_on?.length > 0 || item?.variantSet?.length > 0) { //hit in case of subtruction
       let apiData = { cart_id: parentCartId, product_id: item.id }
       let checkIsAvailable = await getDiffAddsOn(apiData, section, item) //check products with different addOns is exist or not.
       // console.log("check available", checkIsAvailable)
@@ -1340,6 +1348,7 @@ export default function Products({route, navigation}) {
     }
 
     if (type == 2) {  // direct subtract customize items if products added with same addons 
+
       addDeleteCartItems(
         item,
         tempQty == 0 ? isExistqty : tempQty,
@@ -1663,7 +1672,7 @@ export default function Products({route, navigation}) {
                 key={index}
                 onPress={() => {
                   playVibration();
-                  updateState({MenuModalVisible: !MenuModalVisible});
+                  updateState({ MenuModalVisible: !MenuModalVisible });
                   sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
                     {
                       // x: (height / 7.5) * idx * idx,
@@ -2007,8 +2016,8 @@ export default function Products({route, navigation}) {
                               backgroundColor: categoryInfo?.show_slot
                                 ? colors.green
                                 : categoryInfo?.is_vendor_closed
-                                ? colors.redB
-                                : colors.green,
+                                  ? colors.redB
+                                  : colors.green,
                             },
                           ]}>
                           <Text
@@ -2020,8 +2029,8 @@ export default function Products({route, navigation}) {
                             {categoryInfo?.show_slot
                               ? strings.OPEN
                               : categoryInfo?.is_vendor_closed
-                              ? strings.CLOSE
-                              : strings.OPEN}
+                                ? strings.CLOSE
+                                : strings.OPEN}
                           </Text>
                         </View>
                       )}
@@ -3204,7 +3213,7 @@ export default function Products({route, navigation}) {
           isMenuBtnShow={categoryInfo?.is_show_products_with_category}
           onMenuTap={() => {
             playVibration();
-            updateState({MenuModalVisible: !MenuModalVisible});
+            updateState({ MenuModalVisible: !MenuModalVisible });
           }}
         />
       )}
