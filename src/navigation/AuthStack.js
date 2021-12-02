@@ -17,6 +17,7 @@ import {
 import ForgotPassword from '../Screens/ForgotPassword/ForgotPassword';
 import Login2 from '../Screens/Login/Login2';
 import LoginLayoutFour from '../Screens/Login/LoginLayoutFour';
+import OtpVerificationTemplateFour from '../Screens/OtpVerification/OtpVerificationTemplateFour';
 import OuterScreen3 from '../Screens/OuterScreen/OuterScreen3';
 import SignupTemplateThree from '../Screens/Signup/SignupTemplateThree';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
@@ -68,9 +69,14 @@ export default function (Stack) {
         // component={LoginLayoutFour}
         options={{headerShown: false}}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.OTP_VERIFICATION}
         component={OtpVerification}
+        options={{headerShown: false}}
+      /> */}
+      <Stack.Screen
+        name={navigationStrings.OTP_VERIFICATION}
+        component={OtpVerificationTemplateFour}
         options={{headerShown: false}}
       />
       <Stack.Screen

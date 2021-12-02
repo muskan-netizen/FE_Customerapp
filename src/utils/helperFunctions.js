@@ -405,7 +405,6 @@ const playHapticEffect = (effect = 'clockTick') => {
 
 const hapticEffects = {
   effectClick: 'effectClick',
-
   effectDoubleClick: 'effectDoubleClick',
   effectHeavyClick: 'effectHeavyClick',
   effectTick: 'effectTick',

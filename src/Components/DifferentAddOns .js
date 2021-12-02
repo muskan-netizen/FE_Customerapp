@@ -34,7 +34,7 @@ const DifferentAddOns = ({
 
     const onIncrementDecrement = (item, index, type) => {
         setSelectedItem(item)
-        
+
         var totalProductQty = 0
         if (!!storeLocalQty) {
             totalProductQty = storeLocalQty
@@ -171,10 +171,10 @@ const DifferentAddOns = ({
                 <Text style={{
                     ...styles.titleText,
                     fontSize: textScale(15),
-                    paddingHorizontal: moderateScale(8)
+                    paddingHorizontal: moderateScale(12)
                 }}>Customizations for {selectedDiffAdsOnItem?.translation_title}</Text>
                 <View style={styles.horizontaLine} />
-                <View style={{ paddingHorizontal: moderateScale(8) }}>
+                <View style={{ paddingHorizontal: moderateScale(12) }}>
                     <FlatList
                         showsVerticalScrollIndicator={false}
                         data={data}

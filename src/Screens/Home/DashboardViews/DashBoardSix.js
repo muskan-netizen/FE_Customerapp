@@ -76,11 +76,11 @@ export default function DashBoardFour({
 
   return (
     <ScrollView
-    style={{
-      flex: 1,
-      // paddingHorizontal: moderateScale(15),
-    }}
-    refreshing={isRefreshing}
+      style={{
+        flex: 1,
+        // paddingHorizontal: moderateScale(15),
+      }}
+      refreshing={isRefreshing}
       refreshControl={
         <RefreshControl
           refreshing={isRefreshing}
@@ -91,7 +91,7 @@ export default function DashBoardFour({
       alwaysBounceVertical={true}
       showsVerticalScrollIndicator={false}
     >
-     <SearchBar
+      <SearchBar
         containerStyle={{
           marginHorizontal: moderateScale(10),
           borderRadius: 50,
@@ -99,7 +99,9 @@ export default function DashBoardFour({
           backgroundColor: isDarkMode
             ? colors.whiteOpacity15
             : colors.greyColor,
-          height: moderateScaleVertical(50),
+          height: moderateScaleVertical(45),
+          alignSelf: 'center',
+          paddingVertical: 0
         }}
         searchValue={''}
         placeholder={strings.SEARCH_ITEM}
@@ -138,14 +140,14 @@ export default function DashBoardFour({
           <View style={{ height: moderateScaleVertical(5) }} />
         </>
       ) : null}
-    <View
-      style={{
-        // flex: 1,
-        // paddingHorizontal: moderateScale(15),
-      }}>
-     
-      {/* <ToggleTabBar toggleData={toggleData} selcetedToggle={selcetedToggle} /> */}
-      {userData?.auth_token && (
+      <View
+        style={{
+          // flex: 1,
+          // paddingHorizontal: moderateScale(15),
+        }}>
+
+        {/* <ToggleTabBar toggleData={toggleData} selcetedToggle={selcetedToggle} /> */}
+        {/* {userData?.auth_token && (
         <>
           <Text
             style={[
@@ -162,12 +164,12 @@ export default function DashBoardFour({
             {strings.GREETING_MSG}
           </Text>
         </>
-      )}
-      {isLoading && (
-        <EmptyListLoader isLoading={isLoading} listSize={1} isRow />
-      )}
-      {isLoading && <ProductLoader2 isLoading={isLoading} isProductList />}
-      {/* {!isLoading &&
+      )} */}
+        {isLoading && (
+          <EmptyListLoader isLoading={isLoading} listSize={1} isRow />
+        )}
+        {isLoading && <ProductLoader2 isLoading={isLoading} isProductList />}
+        {/* {!isLoading &&
         appMainData &&
         appMainData?.categories &&
         appMainData?.categories.length ? (
@@ -185,119 +187,60 @@ export default function DashBoardFour({
           />
         </View>
       ) : null} */}
-      {!isLoading &&
-        appMainData &&
-        appMainData?.categories &&
-        appMainData?.categories.length ? (
-        <View
-          style={{
-            marginTop: moderateScaleVertical(10),
-           
-          }}>
-          <FlatList
-          contentContainerStyle={{ 
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-            width: '100%',
-            // marginHorizontal: moderateScale(10)
-            // backgroundColor: 'red'
-            // justifyContent: 'center'
-           }}
-            data={[...appMainData?.categories]}
-            // keyExtractor={(item) => item.id.toString()}
-            keyExtractor={(item) => item.toString()}
-            showsHorizontalScrollIndicator={false}
-            renderItem={_renderItem}
-            ItemSeparatorComponent={() => <View style={{ width: 6 }} />}
-          />
-        </View>
-      ) : null}
-      <View style={{ height: moderateScale(25) }} />
-      {appMainData?.vendors && appMainData?.vendors?.length ? (
-        <>
-          <Text
-            style={
-              isDarkMode
-                ? [styles.nearVendorTxt, { color: MyDarkTheme.colors.text }]
-                : styles.nearVendorTxt
-            }>
-            {strings.NEAR_VENDOR}
-          </Text>
-        </>
-      ) : null}
-      {!isLoading && !isVendorColumnList && appMainData?.vendors?.length ? (
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            flexDirection: 'column',
-            marginLeft: moderateScale(2),
-          }}>
+        {!isLoading &&
+          appMainData &&
+          appMainData?.categories &&
+          appMainData?.categories.length ? (
           <View
-            style={{ flexDirection: 'row', marginBottom: moderateScale(15) }}
-            horizontal={true}>
-            {appMainData?.vendors
-              ? appMainData?.vendors.map((itm, inx) => {
-                if (inx < appMainData?.vendors.length / 2) {
-                  return (
-                    <MarketCard2
-                      key={inx}
-                      data={itm}
-                      onPress={() => onPressCategory(itm)}
-                      extraStyles={{
-                        width: width * 0.8,
-                        marginRight: moderateScale(20),
-                      }}
-                    />
-                  );
-                }
-              })
-              : null}
+            style={{
+              marginTop: moderateScaleVertical(10),
+
+            }}>
+            <FlatList
+              contentContainerStyle={{
+                flexWrap: 'wrap',
+                flexDirection: 'row',
+                width: '100%',
+                // marginHorizontal: moderateScale(10)
+                // backgroundColor: 'red'
+                // justifyContent: 'center'
+              }}
+              data={[...appMainData?.categories, ...appMainData?.categories]}
+              // keyExtractor={(item) => item.id.toString()}
+              keyExtractor={(item) => item.toString()}
+              showsHorizontalScrollIndicator={false}
+              renderItem={_renderItem}
+              ItemSeparatorComponent={() => <View style={{ width: 6 }} />}
+            />
           </View>
-          <View style={{ flexDirection: 'row', marginTop: moderateScale(15) }}>
-            {!isLoading && appMainData?.vendors
-              ? appMainData?.vendors.map((itm, inx) => {
-                if (inx >= appMainData?.vendors.length / 2) {
-                  return (
-                    <MarketCard2
-                      key={inx}
-                      data={itm}
-                      onPress={() => onPressCategory(itm)}
-                      extraStyles={{
-                        width: width * 0.8,
-                        marginRight: moderateScale(20),
-                      }}
-                    />
-                  );
-                }
-              })
-              : null}
-          </View>
+        ) : null}
+        <View style={{ height: moderateScale(25) }} />
+        {appMainData?.vendors && appMainData?.vendors?.length ? (
+          <>
+            <Text
+              style={
+                isDarkMode
+                  ? [styles.nearVendorTxt, { color: MyDarkTheme.colors.text }]
+                  : styles.nearVendorTxt
+              }>
+              {strings.CHOOSE_FROM_CUISINES}
+            </Text>
+          </>
+        ) : null}
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {
+            ['Beverages', 'Snacks', 'Rice', 'Sweets', 'Beverages', 'Snacks', 'Rice', 'Sweets'].map((el) => {
+              return (
+                <View style={{ alignItems: 'center', marginLeft: moderateScale(15) }}>
+                  <View style={{ backgroundColor: colors.greyMedium, borderRadius: 50, width: 70, height: 70, }} />
+                  <Text style={{ textAlign: 'center', alignSelf: 'center', marginTop: moderateScale(10), fontSize: textScale(11), fontFamily: fontFamily.bold, marginLeft: moderateScale(3) }}>{el}</Text>
+                </View>
+              )
+            })
+          }
         </ScrollView>
-      ) : null}
-      {!isLoading && isVendorColumnList && appMainData?.vendors ? (
-        <FlatList
-          data={appMainData?.vendors || []}
-          showsVerticalScrollIndicator={false}
-          renderItem={_renderVendors}
-          ItemSeparatorComponent={() => (
-            <View style={{ height: moderateScale(20) }} />
-          )}
-          keyExtractor={(item) => item.id.toString()}
-        />
-      ) : null}
-      {!isLoading && appMainData?.vendors?.length ? (
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={_changeVendorListStyle}
-          style={styles.applyPromoBtn}>
-          <Text style={styles.viewAllBtn}>
-            {!isVendorColumnList ? strings.VIEW_ALL_VENDORS : strings.CLOSE}
-          </Text>
-        </TouchableOpacity>
-      ) : null}
-      <View style={{ height: moderateScaleVertical(65) }} />
-    </View>
+        <View style={{ height: moderateScaleVertical(65) }} />
+      </View>
     </ScrollView>
   );
 }

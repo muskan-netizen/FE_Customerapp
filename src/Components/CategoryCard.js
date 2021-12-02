@@ -31,8 +31,8 @@ export default function CategoryCard({ data = {}, onPress = () => { } }) {
         onPress={onPress}
         activeOpacity={0.9}
         style={{
-          height: moderateScale(80),
-          width: moderateScale(80),
+          height: moderateScale(75),
+          width: moderateScale(75),
           // shadowOpacity: 0.5,
           marginVertical: moderateScale(5),
           marginHorizontal: moderateScale(2),

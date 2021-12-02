@@ -674,8 +674,8 @@ export default function VariantAddons({
 
 
   var totalProductQty = 0
-  if (productdetail?.variant && productdetail?.variant[0]?.check_if_in_cart_app) {
-    productdetail?.variant[0]?.check_if_in_cart_app.map((val) => {
+  if (!!productdetail?.check_if_in_cart_app) {
+    productdetail?.check_if_in_cart_app.map((val) => {
       totalProductQty = totalProductQty + val.quantity
     })
   }
@@ -736,13 +736,9 @@ export default function VariantAddons({
         .then(async (res) => {
           actions.cartItemQty(res);
           showSuccess(strings.PRODUCT_ADDED_SUCCESS);
-          console.log("Product successfully added", res)
-          let apiData = { cart_id: res.data.id, product_id: productdetail.id }
-          let localQty = await getDiffAddsOn(apiData)
-          console.log("local qty++", localQty)
           updateCartItems(
             productdetail,
-            localQty, ////localy update cart quanity
+            res.data.product_total_qty_in_cart, ////localy update cart quanity
             res.data.cart_product_id,
             res.data.id,
           );

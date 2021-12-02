@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Image,
   Text,
@@ -9,10 +9,10 @@ import {
   StyleSheet,
 } from 'react-native';
 import Geocoder from 'react-native-geocoding';
-import MapView, { Callout, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapView, {Callout, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from 'react-native-maps-directions';
-import { useSelector } from 'react-redux';
-import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
+import {useSelector} from 'react-redux';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
@@ -27,20 +27,23 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import { getColorCodeWithOpactiyNumber, showError } from '../../../utils/helperFunctions';
+import {
+  getColorCodeWithOpactiyNumber,
+  showError,
+} from '../../../utils/helperFunctions';
 import SelectCarModalView from './SelectCarModalView';
 import SelectPaymentModalView from './SelectPaymentModalView';
 import SelectTimeModalView from './SelectTimeModalView';
 import SelectVendorModalView from './SelectVendorModalView';
 import stylesFun from './styles';
 import * as RNLocalize from 'react-native-localize';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 import strings from '../../../constants/lang';
 import PaymentProcessingModal from '../../CourierService/PaymentProcessingModal';
-import { BlurView } from '@react-native-community/blur';
-import { useFocusEffect } from '@react-navigation/native';
-import { mapStyleGrey } from '../../../utils/constants/MapStyle';
+import {BlurView} from '@react-native-community/blur';
+import {useFocusEffect} from '@react-navigation/native';
+import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 import BottomSheet, {
   BottomSheetFlatList,
   BottomSheetScrollView,
@@ -67,16 +70,16 @@ const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-export default function ChooseCarTypeAndTime({ navigation, route }) {
+export default function ChooseCarTypeAndTime({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
   console.log('my route', paramData);
-  const bottomSheetRef = useRef(null)
+  const bottomSheetRef = useRef(null);
 
-  const { appData, currencies, languages, themeColors, appStyle } = useSelector(
+  const {appData, currencies, languages, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
   const userData = useSelector((state) => state?.auth?.userData);
@@ -168,8 +171,10 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     pickedUpDate: paramData?.datetime?.slectedDate
       ? paramData?.datetime?.slectedDate
       : moment().format('YYYY-MM-DD'),
-    selectedPayment: { id: 1, title: 'Cash On Delivery', image: imagePath.cash },
-    taskInstruction: ''
+    selectedPayment: {id: 1, title: 'Cash On Delivery', image: imagePath.cash},
+    taskInstruction: '',
+    productFaqQuestionAnswers: [],
+    allSubmittedAnswers: null,
   });
   const {
     selectedPayment,
@@ -210,13 +215,15 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     selectedDate,
     pickedUpDate,
     uploadImages,
-    taskInstruction
+    taskInstruction,
+    productFaqQuestionAnswers,
+    allSubmittedAnswers,
   } = state;
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
-  const styles = stylesFun({ fontFamily, themeColors });
-  const commonStyles = commonStylesFun({ fontFamily });
-  const { profile } = appData;
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const styles = stylesFun({fontFamily, themeColors});
+  const commonStyles = commonStylesFun({fontFamily});
+  const {profile} = appData;
 
   const walletAmount = useSelector(
     (state) => state?.product?.walletData?.wallet_amount,
@@ -229,19 +236,19 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   useFocusEffect(
     React.useCallback(() => {
       if (paramData && paramData?.selectedMethod) {
-        updateState({ selectedPayment: paramData?.selectedMethod });
+        updateState({selectedPayment: paramData?.selectedMethod});
       }
       // updateState({isLoadingB: true});
     }, [paramData]),
   );
   console.log(selectedPayment, 'selectedPayment');
   useEffect(() => {
-    Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
+    Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
   }, []);
 
-  const _confirmAddress = (addressType) => { };
+  const _confirmAddress = (addressType) => {};
   const _onRegionChange = (region) => {
-    updateState({ region: region });
+    updateState({region: region});
     _getAddressBasedOnCoordinates(region);
     markerRef.current.showCallout();
 
@@ -251,9 +258,9 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   useEffect(() => {
     {
@@ -273,11 +280,11 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
   //Get list of all orders api
   const _getAllCarAndPrices = () => {
-    updateState({ isLoading: true, showVendorModal: false, showCarModal: true });
+    updateState({isLoading: true, showVendorModal: false, showCarModal: true});
     actions
       .getAllCarAndPrices(
         `/${selectedVendorOption?.id}?page=${pageNo}&limit=${limit}`,
-        { locations: paramData?.location },
+        {locations: paramData?.location},
         {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
@@ -299,6 +306,11 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           isLoadingB: false,
           isLoading: false,
           isRefreshing: false,
+          productFaqQuestionAnswers: res?.data?.products?.data?.map(
+            (item, index) => {
+              return item;
+            },
+          ),
         });
       })
       .catch(errorMethod);
@@ -330,7 +342,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   };
 
   const _selectTime = () => {
-    updateState({ showTimeModal: false, showPaymentModal: true });
+    updateState({showTimeModal: false, showPaymentModal: true});
   };
 
   const _finalPayment = (data) => {
@@ -357,7 +369,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
             orderId: res?.data?.id,
             fromVendorApp: true,
-            selectedVendor: { id: selectedCarOption?.vendor_id },
+            selectedVendor: {id: selectedCarOption?.vendor_id},
             orderDetail: res?.data,
             fromCab: paramData?.pickup_taxi ? false : true,
             pickup_taxi: paramData?.pickup_taxi,
@@ -375,15 +387,16 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       })
       .catch(errorMethod);
   };
-  //Modal to select time
 
+  console.log(pickUpTimeType != null, 'pickUpTimeTypepickUpTimeType');
   const _confirmAndPay = () => {
     console.log(selectedCarOption, 'selectedCarOption');
     console.log(selectedPayment?.id, 'selectedPayment?.id ');
     let data = {};
 
     data['task_type'] = pickUpTimeType ? pickUpTimeType : '';
-    data['schedule_time'] = pickUpTimeType == 'now' ? '' : `${slectedDate} ${selectedTime}`;
+    data['schedule_time'] =
+      pickUpTimeType == 'now' ? '' : `${slectedDate} ${selectedTime}`;
     data['recipient_phone'] = '';
     data['recipient_email'] = '';
     data['task_description'] = taskInstruction;
@@ -397,42 +410,42 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     data['product_id'] = selectedCarOption?.id;
     data['currency_id'] = currencies?.primary_currency?.id;
     data['tasks'] = paramData?.tasks;
-    data['images_array'] = uploadImages
+    data['images_array'] = uploadImages;
+    data['user_product_order_form'] = allSubmittedAnswers
+      ? allSubmittedAnswers
+      : [];
     if (couponInfo) {
       data['coupon_id'] = couponInfo?.id;
     }
     data['order_time_zone'] = RNLocalize.getTimeZone();
-    console.log(data, '_confirmAndPay>>>>data>>>');
 
     if (!!userData) {
       !!userData?.client_preference?.verify_email ||
-        !!userData?.client_preference?.verify_phone
+      !!userData?.client_preference?.verify_phone
         ? !!userData?.verify_details?.is_email_verified &&
           !!userData?.verify_details?.is_phone_verified
           ? _finalPayment(data)
           : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
-            formCart: true,
-          })()
+              formCart: true,
+            })()
         : _finalPayment(data);
     } else {
       _finalPayment();
     }
   };
 
-  console.log(selectedCarOption, 'selectedCarOption');
-
   const _selectTimeView = () => {
     return (
       <SelectTimeModalView
         date={date}
         onPressBack={() =>
-          updateState({ showTimeModal: false, showCarModal: true })
+          updateState({showTimeModal: false, showCarModal: true})
         }
         _onDateChange={_onNewDateChange}
         availAbleTimes={availAbleTimes}
         selectedAvailableTimeOption={selectedAvailableTimeOption}
         selectAvailAbleTime={(i) =>
-          updateState({ selectedAvailableTimeOption: i })
+          updateState({selectedAvailableTimeOption: i})
         }
         _selectTime={_selectTime}
         navigation={navigation}
@@ -458,7 +471,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     return (
       <SelectVendorModalView
         onPressAvailableVendor={(item) =>
-          updateState({ selectedVendorOption: item })
+          updateState({selectedVendorOption: item})
         }
         selectedVendorOption={selectedVendorOption}
         _select={() => {
@@ -486,96 +499,107 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   const carModalHeader = () => {
     if (!!showPaymentModal) {
       return (
-        <View style={{
+        <View
+          style={{
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.white,
+            padding: moderateScale(16),
+            // alignItems: 'center',
+            borderRadius: 8,
+            borderBottomLeftRadius: 0,
+            borderBottomRightRadius: 0,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <TouchableOpacity
+              onPress={() =>
+                redirectFromNow
+                  ? updateState({showCarModal: true, showPaymentModal: false})
+                  : updateState({showTimeModal: true, showPaymentModal: false})
+              }>
+              <Image
+                style={isDarkMode && {tintColor: MyDarkTheme.colors.text}}
+                source={imagePath.backArrowCourier}
+              />
+            </TouchableOpacity>
+            <View
+              style={{
+                backgroundColor: isDarkMode
+                  ? colors.whiteOpacity77
+                  : colors.black,
+                width: moderateScale(40),
+                height: moderateScale(4),
+                borderRadius: 8,
+                marginRight: moderateScale(34),
+              }}
+            />
+            <Text />
+          </View>
+        </View>
+      );
+    }
+    return (
+      <View
+        style={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.background
             : colors.white,
           padding: moderateScale(16),
-          // alignItems: 'center',
+          alignItems: 'center',
           borderRadius: 8,
           borderBottomLeftRadius: 0,
           borderBottomRightRadius: 0,
         }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <TouchableOpacity
-              onPress={() => redirectFromNow
-                ? updateState({ showCarModal: true, showPaymentModal: false })
-                : updateState({ showTimeModal: true, showPaymentModal: false })}
-            >
-              <Image
-                style={isDarkMode && { tintColor: MyDarkTheme.colors.text }}
-                source={imagePath.backArrowCourier}
-              />
-            </TouchableOpacity>
-            <View style={{
-              backgroundColor: isDarkMode
-                ? colors.whiteOpacity77
-                : colors.black,
-              width: moderateScale(40),
-              height: moderateScale(4),
-              borderRadius: 8,
-              marginRight: moderateScale(34)
-            }} />
-            <Text />
-          </View>
-        </View>
-      )
-    }
-    return (
-      <View style={{
-        backgroundColor: isDarkMode
-          ? MyDarkTheme.colors.background
-          : colors.white,
-        padding: moderateScale(16),
-        alignItems: 'center',
-        borderRadius: 8,
-        borderBottomLeftRadius: 0,
-        borderBottomRightRadius: 0,
-      }}>
-        <View style={{
-          backgroundColor: isDarkMode
-            ? colors.whiteOpacity77
-            : colors.black,
-          width: moderateScale(40),
-          height: moderateScale(4),
-          borderRadius: 8,
-          marginRight: moderateScale(34)
-        }} />
-        <Text style={{
-          fontFamily: fontFamily.regular,
-          color: isDarkMode
-            ? colors.whiteOpacity77
-            : colors.black,
-          marginTop: moderateScaleVertical(8)
-        }}>Choose a trip or swipe up for more</Text>
+        <View
+          style={{
+            backgroundColor: isDarkMode ? colors.whiteOpacity77 : colors.black,
+            width: moderateScale(40),
+            height: moderateScale(4),
+            borderRadius: 8,
+            marginRight: moderateScale(34),
+          }}
+        />
+        <Text
+          style={{
+            fontFamily: fontFamily.regular,
+            color: isDarkMode ? colors.whiteOpacity77 : colors.black,
+            marginTop: moderateScaleVertical(8),
+          }}>
+          Choose a trip or swipe up for more
+        </Text>
       </View>
-    )
-  }
+    );
+  };
 
   const _selectCarModalView = () => {
     return (
       <AvailableDriver
-        onPressAvailableCar={(item) => updateState({ selectedCarOption: item })}
+        onPressAvailableCar={(item) => updateState({selectedCarOption: item})}
         selectedCarOption={selectedCarOption}
         onPressPickUpNow={() => {
           selectedCarOption
             ? updateState({
-              // pickUpTimeType: 'now',
-              showPaymentModal: true,
-              redirectFromNow: true,
-              showCarModal: false,
-            })
+                // pickUpTimeType: 'now',
+                showPaymentModal: true,
+                redirectFromNow: true,
+                showCarModal: false,
+              })
             : showError(strings.PLEASE_SELECT_CAR);
         }}
         isLoading={isLoading}
         onPressPickUplater={() => {
           selectedCarOption
             ? updateState({
-              // pickUpTimeType: 'schedule',
-              showTimeModal: true,
-              redirectFromNow: false,
-              showCarModal: false,
-            })
+                // pickUpTimeType: 'schedule',
+                showTimeModal: true,
+                redirectFromNow: false,
+                showCarModal: false,
+              })
             : showError(strings.PLEASE_SELECT_CAR);
         }}
         availableCarList={availableCarList}
@@ -599,40 +623,45 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     })();
   };
 
-  console.log("app data")
-
+  console.log('app data');
 
   const uploadImage = async (img) => {
-    console.log('selected image', img)
+    console.log('selected image', img);
 
     const imgData = new FormData();
-    imgData.append("upload_photo", {
+    imgData.append('upload_photo', {
       uri: img,
-      name: "image.png",
+      name: 'image.png',
       fileName: 'image',
-      type: 'image/png'
-    })
+      type: 'image/png',
+    });
     try {
       const res = await actions.imageUpload(imgData, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
-      })
-      console.log("image upload res", res)
+      });
+      console.log('image upload res', res);
       updateState({
-        uploadImages: [...uploadImages, ...[res.image]]
-      })
+        uploadImages: [...uploadImages, ...[res.image]],
+      });
     } catch (error) {
-      console.log("erro rraised", error)
-      showError(error?.error || error?.message)
+      console.log('erro rraised', error);
+      showError(error?.error || error?.message);
     }
-  }
+  };
 
-  console.log("image uploaded res", uploadImages)
+  console.log('image uploaded res', uploadImages);
 
   const updateInstruction = (val) => {
-    updateState({ taskInstruction: val })
-  }
+    updateState({taskInstruction: val});
+  };
+
+  const onQuestionAnswerSubmit = (item) => {
+    updateState({
+      allSubmittedAnswers: item,
+    });
+  };
 
   const _selectPaymentView = () => {
     return (
@@ -645,8 +674,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         date={date}
         onPressBack={() =>
           redirectFromNow
-            ? updateState({ showCarModal: true, showPaymentModal: false })
-            : updateState({ showTimeModal: true, showPaymentModal: false })
+            ? updateState({showCarModal: true, showPaymentModal: false})
+            : updateState({showTimeModal: true, showPaymentModal: false})
         }
         totalDistance={totalDistance}
         totalDuration={totalDuration}
@@ -662,6 +691,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         pickup_taxi={paramData?.pickup_taxi}
         uploadImage={uploadImage}
         updateInstruction={updateInstruction}
+        productFaqQuestionAnswers={selectedCarOption}
+        onQuestionAnswerSubmit={(item) => onQuestionAnswerSubmit(item)}
       />
     );
   };
@@ -692,7 +723,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
 
   const _updateState = () => {
     // navigationStrings.CABDRIVERLOCATIONANDDETAIL
-    updateState({ isModalVisible: false });
+    updateState({isModalVisible: false});
     navigation.navigate(navigationStrings.CABDRIVERLOCATIONANDDETAIL, {});
   };
 
@@ -703,15 +734,15 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   };
 
   const _pickerOpen = (value) => {
-    updateState({ [value]: true });
+    updateState({[value]: true});
   };
 
   const _pickerCancel = (value) => {
-    updateState({ [value]: false });
+    updateState({[value]: false});
   };
 
   const _onDayPress = (value) => {
-    updateState({ selectedDate: value.dateString });
+    updateState({selectedDate: value.dateString});
   };
 
   const _modalOkPress = (value1, value2) => {
@@ -722,17 +753,16 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   };
 
   const _onNewDateChange = (value) => {
-    updateState({ formatedTime: moment(value).format('hh:mm A') });
+    updateState({formatedTime: moment(value).format('hh:mm A')});
   };
-
 
   useEffect(() => {
     setTimeout(() => {
-      coordinatesFit()
+      coordinatesFit();
     }, 2000);
-  }, [])
+  }, []);
 
-  console.log("paramData?.location", paramData)
+  console.log('paramData?.location', paramData);
   // useEffect(() => {
   //   console.log('check state ref array >>>', refArr);
   //   refArr.forEach((element) => {
@@ -751,39 +781,36 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   //   }
   // };
 
-
   const coordinatesFit = () => {
     if (paramData?.location.length > 0 && !!mapRef?.current?.fitToCoordinates) {
-      mapRef.current.fitToCoordinates(paramData?.location,
-        {
-          edgePadding: {
-            right: width / 20,
-            bottom: height / 20,
-            left: width / 20,
-            top: height / 20,
-          },
-        }
-      )
+      mapRef.current.fitToCoordinates(paramData?.location, {
+        edgePadding: {
+          right: width / 20,
+          bottom: height / 20,
+          left: width / 20,
+          top: height / 20,
+        },
+      });
     }
-  }
+  };
 
   const onPressPickUpNow = () => {
     selectedCarOption
       ? updateState({
-        // pickUpTimeType: 'now',
-        showPaymentModal: true,
-        redirectFromNow: true,
-        showCarModal: false,
-      })
+          // pickUpTimeType: 'now',
+          showPaymentModal: true,
+          redirectFromNow: true,
+          showCarModal: false,
+        })
       : showError(strings.PLEASE_SELECT_CAR);
-  }
+  };
 
   return (
-    <View style={{ ...styles.container }}>
-      <View style={{ height: StatusBarHeight }} />
+    <View style={{...styles.container}}>
+      <View style={{height: StatusBarHeight}} />
       <View
         style={{
-          flex: 1
+          flex: 1,
         }}>
         <MapView
           ref={mapRef}
@@ -797,15 +824,12 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           // ref={mapRef}
           // liteMode={true}
           tracksViewChanges={false}
-        // onPress={onMapPress}
-        // onRegionChangeComplete={() =>
-        //   _onRegionChange(region, {isGesture: true})
-        // }
+          // onPress={onMapPress}
+          // onRegionChangeComplete={() =>
+          //   _onRegionChange(region, {isGesture: true})
+          // }
         >
-
-          <CustomCallouts
-            data={paramData?.tasks}
-          />
+          <CustomCallouts data={paramData?.tasks} />
           {/* {paramData?.tasks.map((coordinate, index) => {
             return (
               <View>
@@ -928,56 +952,59 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           activeOffsetY={[-1, 1]}
           failOffsetX={[-5, 5]}
           animateOnMount={true}
-          handleComponent={carModalHeader}
-        >
-          <BottomSheetScrollView keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
-            <View style={{
-              flex: 1,
-              backgroundColor: isDarkMode
-                ? MyDarkTheme.colors.background
-                : colors.white,
-            }}>
+          handleComponent={carModalHeader}>
+          <BottomSheetScrollView
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}>
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.background
+                  : colors.white,
+              }}>
               {!!showCarModal && _selectCarModalView()}
               {/* {!!showTimeModal && _selectTimeView()} */}
               {!!showPaymentModal && _selectPaymentView()}
             </View>
           </BottomSheetScrollView>
         </BottomSheet>
-        {!showPaymentModal && (<View style={{
-          width: '90%',
-          position: 'absolute',
-          bottom: 20,
-          marginHorizontal: moderateScale(16),
+        {!showPaymentModal && (
+          <View
+            style={{
+              width: '90%',
+              position: 'absolute',
+              bottom: 20,
+              marginHorizontal: moderateScale(16),
+            }}>
+            {availableCarList.length > 0 && (
+              <GradientButton
+                // endcolor={{x: 0.0, y: 0.25}}
+                // startcolor={{x: 0.0, y: 0.0}}
+                colorsArray={[
+                  themeColors.primary_color,
 
-        }}>
-
-          {availableCarList.length > 0 && (<GradientButton
-            // endcolor={{x: 0.0, y: 0.25}}
-            // startcolor={{x: 0.0, y: 0.0}}
-            colorsArray={[
-              themeColors.primary_color,
-
-              themeColors.primary_color,
-            ]}
-            textStyle={{ textTransform: 'none', fontSize: textScale(14) }}
-            onPress={
-              selectedCarOption?.variant[0]?.price > 0
-                ? onPressPickUpNow
-                : () => { }
-            }
-            btnText={
-              selectedCarOption?.variant[0]?.price > 0
-                ? `${strings.CONFIRM} ${selectedCarOption?.translation[0]?.title} `
-                : strings.NORIDEAVAILABLE
-            }
-            containerStyle={{ flex: 1 }}
-          />)}
-        </View>)}
-
+                  themeColors.primary_color,
+                ]}
+                textStyle={{textTransform: 'none', fontSize: textScale(14)}}
+                onPress={
+                  selectedCarOption?.variant[0]?.price > 0
+                    ? onPressPickUpNow
+                    : () => {}
+                }
+                btnText={
+                  selectedCarOption?.variant[0]?.price > 0
+                    ? `${strings.CONFIRM} ${selectedCarOption?.translation[0]?.title} `
+                    : strings.NORIDEAVAILABLE
+                }
+                containerStyle={{flex: 1}}
+              />
+            )}
+          </View>
+        )}
       </View>
 
       {/* BottomView */}
-
 
       <View style={styles.topView}>
         <TouchableOpacity
@@ -989,7 +1016,6 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             backgroundColor: colors.white,
             alignItems: 'center',
             justifyContent: 'center',
-
           }}
           onPress={() =>
             // navigation.navigate(navigationStrings.PICKUPLOCATION)

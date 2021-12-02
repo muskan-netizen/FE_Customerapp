@@ -837,7 +837,7 @@ export default function HomeServiceVariantAddons({
   const addToCart = (addonSet) => {
     let updateQty =
       productdetail?.qty + 1 || //localy update cart quanity
-      productdetail?.variant[0]?.check_if_in_cart_app[0]?.quantity + 1 ||
+      productdetail?.check_if_in_cart_app[0]?.quantity + 1 ||
       productQuantityForCart;
     console.log('update qty', updateQty);
 
