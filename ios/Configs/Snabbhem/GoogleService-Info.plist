@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>201647064711-r4rn10a4soankmrjb4jgnj9qcpsql021.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.201647064711-r4rn10a4soankmrjb4jgnj9qcpsql021</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>201647064711-18b7s89vodkusl17m3v3l70p8h45siuf.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDrM5msYLOCD2CDgv4iUD7zFw2CWgE0dO4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>201647064711</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.snabbhem</string>
+	<key>PROJECT_ID</key>
+	<string>snabbhem-order</string>
+	<key>STORAGE_BUCKET</key>
+	<string>snabbhem-order.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:201647064711:ios:2e23cc22e6a468f1281a22</string>
+</dict>
+</plist>

@@ -60,6 +60,9 @@ import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {
   checkEvenOdd,
   getImageUrl,
+  hapticEffects,
+  playHapticEffect,
+  playVibration,
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
@@ -70,13 +73,7 @@ import ProductListLoader3 from '../../Components/Loaders/ProductListLoader3';
 import Clipboard from '@react-native-community/clipboard';
 import Toast from 'react-native-simple-toast';
 import RepeatModal from '../../Components/RepeatModal';
-
-const ONE_SECOND_IN_MS = 50;
-const PATTERN = [
-  1 * ONE_SECOND_IN_MS,
-  2 * ONE_SECOND_IN_MS,
-  3 * ONE_SECOND_IN_MS,
-];
+import DifferentAddOns from '../../Components/DifferentAddOns ';
 
 let timeOut = undefined;
 
@@ -86,7 +83,7 @@ let activeIdx = 0;
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
-  console.log(data, 'datadatadata');
+  // console.log(data, 'datadatadata');
   const routeData = data?.fetchOffers;
   const {blurRef} = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -185,6 +182,13 @@ export default function Products({route, navigation}) {
     repeatItems: null,
     updateTagFilter: false,
     offerList: [],
+    differentAddsOns: [],
+    selectedDiffAdsOnItem: null,
+    selectedDiffAdsOnSection: null,
+    diffAddOnCartIdProductId: null,
+    storeLocalQty: null,
+    differentAddsOnsModal: false,
+    selectedDiffAdsOnId: 0,
   });
 
   const {
@@ -250,6 +254,13 @@ export default function Products({route, navigation}) {
     repeatItems,
     updateTagFilter,
     offerList,
+    differentAddsOns,
+    selectedDiffAdsOnItem,
+    selectedDiffAdsOnSection,
+    diffAddOnCartIdProductId,
+    storeLocalQty,
+    differentAddsOnsModal,
+    selectedDiffAdsOnId,
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -276,7 +287,8 @@ export default function Products({route, navigation}) {
     const unsubscribe = navigation.addListener('focus', () => {
       updateState({pageNo: 1});
       getAllListItems();
-      if (productListId?.vendor) {
+      console.log('checking route params >>>>', productListId);
+      if (productListId?.vendor && routeData) {
         fetchOffers();
       }
       if (isLoadingC) {
@@ -536,7 +548,7 @@ export default function Products({route, navigation}) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendor = () => {
-    console.log('api hit getAllProductsByVendor', productListId);
+    console.log('api hit getAllProductsByVendor');
     actions
       .getProductByVendorId(
         `/${productListId?.id}?limit=${limit}&page=${pageNo}`,
@@ -574,7 +586,7 @@ export default function Products({route, navigation}) {
           });
           fetchTags(filterArray);
         } else {
-          console.log('get product list by vendor id >>>> ', res);
+          // console.log('get product list by vendor id >>>> ', res);
           if (res?.data) {
             updateState({
               isLoading: false,
@@ -672,7 +684,7 @@ export default function Products({route, navigation}) {
 
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
-    Vibration.vibrate(PATTERN);
+    playHapticEffect(hapticEffects.impactLight);
     if (!!userData?.auth_token) {
       updateState({isLoadingB: true});
       actions
@@ -721,7 +733,7 @@ export default function Products({route, navigation}) {
   };
 
   const errorMethod = (error) => {
-    console.log('checking error >>>>><<<<<<', error);
+    console.log('checking error', error);
     updateState({
       updateQtyLoader: false,
       selectedItemID: -1,
@@ -788,6 +800,13 @@ export default function Products({route, navigation}) {
       .catch(errorMethod);
   };
 
+  const hideDifferentAddOns = () => {
+    updateState({differentAddsOnsModal: false, differentAddsOns: []});
+    // if (!btnLoader) {
+
+    // }
+  };
+
   const addSingleItem = async (item, section = null) => {
     console.log('checking section >>>', section);
     // return;
@@ -795,7 +814,7 @@ export default function Products({route, navigation}) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }
-    Vibration.vibrate(PATTERN);
+    playHapticEffect(hapticEffects.impactLight);
     let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
     updateState({selectedItemID: item?.id, btnLoader: true});
     let isSingleVendor = await checkSingleVendor(item.id);
@@ -864,7 +883,7 @@ export default function Products({route, navigation}) {
         systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res.data, 'addProductsToCart');
+        console.log(res.data, 'add single item addProductsToCart');
         actions.cartItemQty(res);
         updateState({cartId: res.data.id});
         // showSuccess('Product successfully added');
@@ -916,34 +935,28 @@ export default function Products({route, navigation}) {
       .catch((error) => errorMethodSecond(error));
   };
 
-  const addDeleteCartItems = async (item, section = null, index, type) => {
+  const addDeleteCartItems = async (
+    item,
+    isExistqty,
+    isExistproductId,
+    isExistCartId,
+    section = null,
+    index,
+    type,
+    updateLocalQty = null,
+    differentAddsOnsQty = null,
+  ) => {
     if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }
 
-    Vibration.vibrate(PATTERN);
+    playHapticEffect(hapticEffects.impactLight);
+
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
-    //!!data?.variant[0]?.check_if_in_cart_app && data?.variant[0]?.check_if_in_cart_app.length > 0 || !!data?.qty ?
-
-    let isExistqty = itemToUpdate?.qty
-      ? itemToUpdate?.qty
-      : !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-        itemToUpdate.variant[0]?.check_if_in_cart_app[0].quantity;
-    let isExistproductId =
-      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-      itemToUpdate.variant[0]?.check_if_in_cart_app.length
-        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].id
-        : itemToUpdate?.cart_product_id;
-    let isExistCartId =
-      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-      itemToUpdate.variant[0]?.check_if_in_cart_app.length
-        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
-        : cartId;
 
     console.log('exist qty', isExistqty);
-
     /** This will restring unneccessary api call , only hit api once user wait for 1.5 seconds ***/
 
     if (timeOut) {
@@ -958,13 +971,23 @@ export default function Products({route, navigation}) {
       quanitity = Number(isExistqty) - 1;
     }
 
-    updateLocally(section, quanitity, item, isExistproductId);
+    updateLocally(
+      section,
+      quanitity,
+      item,
+      isExistproductId,
+      differentAddsOnsQty,
+    );
 
     timeOut = setTimeout(
       () => {
         console.log('hit set time out functions');
         // return;
         if (quanitity) {
+          console.log(
+            'differentAddsOnsQtydifferentAddsOnsQty',
+            differentAddsOnsQty,
+          );
           updateState({
             selectedItemID: itemToUpdate.id,
             btnLoader: true,
@@ -972,7 +995,11 @@ export default function Products({route, navigation}) {
           });
           let data = {};
           data['cart_id'] = isExistCartId;
-          data['quantity'] = quanitity;
+          data['quantity'] = !!updateLocalQty
+            ? type == 1
+              ? updateLocalQty + 1
+              : updateLocalQty - 1
+            : quanitity;
           data['cart_product_id'] = isExistproductId;
           data['type'] = dineInType;
           console.log('sending api data', data);
@@ -985,6 +1012,7 @@ export default function Products({route, navigation}) {
               systemuser: DeviceInfo.getUniqueId(),
             })
             .then((res) => {
+              console.log('update qty res', res);
               tempQty = 0;
               actions.cartItemQty(res);
               updateState({
@@ -1006,22 +1034,35 @@ export default function Products({route, navigation}) {
               tempQty = 0;
             });
         } else {
-          updateState({selectedItemID: itemToUpdate?.id, btnLoader: false});
+          updateState({
+            selectedItemID: itemToUpdate?.id,
+            btnLoader: false,
+          });
           removeItem('selectedTable');
-          removeProductFromCart(itemToUpdate, section);
+          removeProductFromCart(itemToUpdate, section, isExistproductId);
         }
       },
-      quanitity === 1 ? 0 : 1500,
+      quanitity === 1 ? 0 : 700,
     );
   };
 
-  const updateLocally = (section, quanitity, item, isExistproductId) => {
+  const updateLocally = (
+    section,
+    quanitity,
+    item,
+    isExistproductId,
+    differentAddsOnsQty,
+  ) => {
+    console.log('quanitity', quanitity);
+    console.log('quanitity localy', differentAddsOnsQty);
+
+    // return;
     if (!!section) {
       let updatedSection = section.data.map((x, xnx) => {
         if (x?.id == item?.id) {
           return {
             ...x,
-            qty: quanitity,
+            qty: !!differentAddsOnsQty ? differentAddsOnsQty : quanitity,
             cart_product_id: isExistproductId,
             isRemove: false,
           };
@@ -1040,6 +1081,7 @@ export default function Products({route, navigation}) {
         sectionListData: filteredArr,
         cloneSectionList: filteredArr,
         selectedItemID: -1,
+        storeLocalQty: differentAddsOnsQty,
       });
       // fetchTags(filteredArr)
     } else {
@@ -1047,7 +1089,7 @@ export default function Products({route, navigation}) {
         if (val.id == item.id) {
           return {
             ...val,
-            qty: quanitity,
+            qty: !!differentAddsOnsQty ? differentAddsOnsQty : quanitity,
             cart_product_id: isExistproductId,
             isRemove: false,
           };
@@ -1057,23 +1099,35 @@ export default function Products({route, navigation}) {
       updateState({
         productListData: updateArray,
         selectedItemID: -1,
+        storeLocalQty: differentAddsOnsQty,
       });
     }
   };
 
   //decrementing/removeing products from cart
-  const removeProductFromCart = (itemToUpdate, section = null) => {
+  const removeProductFromCart = (
+    itemToUpdate,
+    section = null,
+    diffAdOnId = 0,
+  ) => {
+    // console.log("item to update remove item", itemToUpdate)
+    s;
+
+    let updateLocallyAddOns = [];
+    if (differentAddsOnsModal) {
+      let cloneArr = differentAddsOns;
+      updateLocallyAddOns = cloneArr.filter((val) => {
+        if (diffAdOnId !== val.id) {
+          return val;
+        }
+      });
+      updateState({differentAddsOns: updateLocallyAddOns});
+    }
+
     let data = {};
-    let isExistproductId =
-      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-      itemToUpdate.variant[0]?.check_if_in_cart_app.length > 0
-        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].id
-        : itemToUpdate?.cart_product_id;
+    let isExistproductId = diffAdOnId;
     let isExistCartId =
-      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-      itemToUpdate.variant[0]?.check_if_in_cart_app.length > 0
-        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
-        : cartId;
+      itemToUpdate?.check_if_in_cart_app[0]?.cart_id || cartId;
     console.log('item', itemToUpdate);
 
     data['cart_id'] = isExistCartId;
@@ -1096,9 +1150,12 @@ export default function Products({route, navigation}) {
                 ...x,
                 qty: null,
                 cart_product_id: res.data.cart_product_id,
-                variant: itemToUpdate?.variant.map((val, i) => {
-                  return {...val, check_if_in_cart_app: []};
-                }),
+                check_if_in_cart_app: differentAddsOnsModal
+                  ? updateLocallyAddOns
+                  : [],
+                // variant: itemToUpdate?.variant.map((val, i) => {
+                //   return { ...val, check_if_in_cart_app: differentAddsOnsModal ? updateLocallyAddOns : [] };
+                // }),
               };
             }
             return x;
@@ -1128,9 +1185,12 @@ export default function Products({route, navigation}) {
                 ...val,
                 qty: null,
                 cart_product_id: res.data.cart_product_id,
-                variant: itemToUpdate?.variant.map((val, i) => {
-                  return {...val, check_if_in_cart_app: []};
-                }),
+                check_if_in_cart_app: differentAddsOnsModal
+                  ? updateLocallyAddOns
+                  : [],
+                // variant: itemToUpdate?.variant.map((val, i) => {
+                //   return { ...val, check_if_in_cart_app: differentAddsOnsModal ? updateLocallyAddOns : [] };
+                // }),
               };
             }
             return val;
@@ -1201,11 +1261,18 @@ export default function Products({route, navigation}) {
   };
 
   const onRepeat = async () => {
+    // console.log("repeate items", repeatItems)
+    const {item, isExistqty, productId, parentCartId, updateLocalQty} =
+      repeatItems;
     await addDeleteCartItems(
-      repeatItems?.item,
+      item,
+      isExistqty,
+      productId,
+      parentCartId,
       repeatItems?.section,
       repeatItems?.index,
       1,
+      updateLocalQty,
     );
     updateState({repeatItems: null});
   };
@@ -1214,8 +1281,6 @@ export default function Products({route, navigation}) {
     let getTypeId =
       !!repeatItems?.item?.category &&
       repeatItems?.item?.category.category_detail?.type_id;
-    console.log('repeatitmes', repeatItems);
-    // return;
     updateState({
       repeatItems: null,
       updateQtyLoader: false,
@@ -1227,50 +1292,232 @@ export default function Products({route, navigation}) {
     });
   };
 
-  const checkIsCustomize = (item, section = null, index, type) => {
-    const addData = {
-      item: item,
-      index: index,
-      type: type,
-      section: section,
-    };
+  const addProductsWithoutCustomize = (item, section, index, type) => {
+    console.log('very nice', item);
     // return;
-    if (
-      (!!item?.add_on && item?.add_on.length !== 0) ||
-      (!!item?.variantSet && item?.variantSet.length !== 0)
-    ) {
-      updateState({
-        repeatItems: addData,
-        selectedSection: section,
-      });
+    let itemToUpdate = cloneDeep(item);
+    let quanitity = !!itemToUpdate?.qty
+      ? itemToUpdate?.qty
+      : itemToUpdate?.check_if_in_cart_app[0].quantity;
+    let productId = !!itemToUpdate?.cart_product_id
+      ? itemToUpdate?.cart_product_id
+      : itemToUpdate?.check_if_in_cart_app[0].id;
+    let parentCartId = !!cartId
+      ? cartId
+      : itemToUpdate?.check_if_in_cart_app[0].cart_id;
+
+    if (type == 1) {
+      addDeleteCartItems(
+        item,
+        quanitity,
+        productId,
+        parentCartId,
+        section,
+        index,
+        1,
+      );
+    } else {
+      addDeleteCartItems(
+        item,
+        quanitity,
+        productId,
+        parentCartId,
+        section,
+        index,
+        2,
+      );
+    }
+  };
+
+  const checkIsCustomize = async (item, section = null, index, type) => {
+    let itemToUpdate = cloneDeep(item);
+    console.log('check item to update', itemToUpdate);
+    // return;
+    if (item.add_on.length == 0 && item.variantSet.length == 0) {
+      // hit in case of simple products withou any customization
+      addProductsWithoutCustomize(item, section, index, type);
       return;
     }
-    if (type == 1) {
-      addDeleteCartItems(item, section, index, 1);
-    } else {
-      addDeleteCartItems(item, section, index, 2);
+
+    let productId = !!itemToUpdate?.cart_product_id
+      ? itemToUpdate?.cart_product_id
+      : itemToUpdate?.check_if_in_cart_app[0]?.id;
+    let parentCartId = !!cartId
+      ? cartId
+      : itemToUpdate.check_if_in_cart_app[0]?.cart_id;
+
+    var totalProductQty = 0;
+    if (itemToUpdate?.variant && itemToUpdate?.check_if_in_cart_app) {
+      itemToUpdate?.check_if_in_cart_app.map((val) => {
+        totalProductQty = totalProductQty + val?.quantity;
+      });
     }
+
+    // return;
+
+    var isExistqty = itemToUpdate?.qty ? itemToUpdate?.qty : totalProductQty; //this variable contain only local product quantity
+    var tempQty = 0; //this variable contain latest updated quantity of products
+
+    if (
+      (type == 2 && item?.add_on?.length > 0) ||
+      item?.variantSet?.length > 0
+    ) {
+      //hit in case of subtruction
+      let apiData = {cart_id: parentCartId, product_id: item.id};
+      let checkIsAvailable = await getDiffAddsOn(apiData, section, item); //check products with different addOns is exist or not.
+      // console.log("check available", checkIsAvailable)
+
+      !!checkIsAvailable?.data &&
+        checkIsAvailable?.data.map((val) => {
+          console.log('check available', val);
+          tempQty = tempQty + val?.quantity; //store updated total quantity of products
+        });
+
+      if (!!checkIsAvailable?.goNext) {
+        //if different adOns is exist then open DifferentAddOns Modal.
+        return;
+      }
+    }
+
+    if (type == 2) {
+      // direct subtract customize items if products added with same addons
+
+      addDeleteCartItems(
+        item,
+        tempQty == 0 ? isExistqty : tempQty,
+        productId,
+        parentCartId,
+        section,
+        index,
+        2,
+      );
+      return;
+    }
+
+    if (type == 1) {
+      //hit in case of add new products
+      let apiData = {cart_id: parentCartId, product_id: item.id};
+      let header = {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      };
+      console.log('api data checkLastAdded', apiData);
+      try {
+        const res = await actions.checkLastAdded(apiData, header);
+        console.log('res++++++', res);
+        if (!!res.data) {
+          //open RepeatModal
+          const addData = {
+            item: item,
+            index: index,
+            type: type,
+            section: section,
+            isExistqty: tempQty == 0 ? isExistqty : tempQty,
+            updateLocalQty: res.data?.quantity,
+            productId: res?.data?.id,
+            parentCartId: res.data.cart_id,
+          };
+          console.log('is++ exist qty', tempQty == 0 ? isExistqty : tempQty);
+          console.log('is++ update local qty', res.data?.quantity);
+
+          updateState({repeatItems: addData, selectedSection: section});
+        }
+      } catch (error) {
+        console.log('error riased++++', error);
+        showError(error?.message || error?.error);
+      }
+      return;
+    }
+  };
+
+  const getDiffAddsOn = async (apiData, section, item) => {
+    console.log('get diffadds on data', apiData);
+    let header = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      systemuser: DeviceInfo.getUniqueId(),
+    };
+    try {
+      const res = await actions.differentAddOns(apiData, header);
+      console.log('res+++++++', res);
+      if (res?.data.length > 1) {
+        updateState({
+          differentAddsOns: res?.data || [],
+          selectedDiffAdsOnItem: item,
+          selectedDiffAdsOnSection: section,
+          diffAddOnCartIdProductId: {
+            cart_id: apiData?.cart_id,
+            product_id: apiData?.product_id,
+          },
+          differentAddsOnsModal: true,
+        });
+        return {data: res?.data, goNext: true};
+      }
+      return {data: res?.data, goNext: false};
+    } catch (error) {
+      console.log('error raised,error');
+      return {data: null, goNext: false};
+    }
+  };
+
+  const difAddOnsAdded = async (
+    item,
+    qty,
+    productId,
+    cartId,
+    section,
+    index,
+    type,
+  ) => {
+    let differentAddsOnsQty = 0;
+    let cloneArr = differentAddsOns;
+    let updateLocallyAddOns = cloneArr.map((val) => {
+      differentAddsOnsQty = differentAddsOnsQty + val.quantity;
+      if (cartId == val.id) {
+        return {...val, quantity: type == 1 ? qty + 1 : qty - 1};
+      }
+      return val;
+    });
+    await addDeleteCartItems(
+      item,
+      qty,
+      cartId,
+      productId,
+      section,
+      index,
+      type,
+      null,
+      type == 1 ? differentAddsOnsQty + 1 : differentAddsOnsQty - 1, //send updated total quantity
+    );
+    updateState({differentAddsOns: updateLocallyAddOns});
   };
 
   const renderProduct = ({item, index}) => {
     return (
-      <ProductCard3
-        data={item}
-        index={index}
-        onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-        onAddtoWishlist={() => _onAddtoWishlist(item)}
-        addToCart={() => addSingleItem(item, null, index)}
-        onIncrement={() => checkIsCustomize(item, null, index, 1)}
-        onDecrement={() => checkIsCustomize(item, null, index, 2)}
-        selectedItemID={selectedItemID}
-        btnLoader={btnLoader}
-        selectedItemIndx={selectedItemIndx}
-        categoryInfo={categoryInfo}
-      />
+      <>
+        <ProductCard3
+          data={item}
+          index={index}
+          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+          onAddtoWishlist={() => _onAddtoWishlist(item)}
+          addToCart={() => addSingleItem(item, null, index)}
+          onIncrement={() => checkIsCustomize(item, null, index, 1)}
+          onDecrement={() => checkIsCustomize(item, null, index, 2)}
+          selectedItemID={selectedItemID}
+          btnLoader={btnLoader}
+          selectedItemIndx={selectedItemIndx}
+          differentAddsOns={differentAddsOns}
+        />
+        <View style={styles.horizontalLine} />
+      </>
     );
   };
 
   const updateCartItems = (item, quanitity, productId, cartID) => {
+    playHapticEffect(hapticEffects.impactLight);
     console.log('selcted section', selectedSection);
 
     if (!!selectedSection) {
@@ -1300,6 +1547,8 @@ export default function Products({route, navigation}) {
           return f;
         }),
         cartId: cartID,
+        storeLocalQty: quanitity,
+        isVisibleModal: false,
       });
     } else {
       let updateArray = productListData.map((val, i) => {
@@ -1311,11 +1560,13 @@ export default function Products({route, navigation}) {
             isRemove: false,
           };
         }
+        updateState({storeLocalQty: quanitity});
         return val;
       });
       updateState({
         cartId: cartID,
         productListData: updateArray,
+        isVisibleModal: false,
       });
     }
   };
@@ -1323,7 +1574,7 @@ export default function Products({route, navigation}) {
   useEffect(() => {
     if (isLoadingC) {
       getAllProducts(true);
-      if (productListId?.vendor) {
+      if (productListId?.vendor && routeData) {
         fetchOffers();
       }
 
@@ -1414,15 +1665,8 @@ export default function Products({route, navigation}) {
     let data = {};
     // data['vendor_id'] = 2;
     data['vendor_id'] = productListId?.id;
-    1;
     // data['cart_id'] = vendorInfo.cartId;
     // console.log(data, 'vendor_id');
-    console.log(routeData, 'datadatadatadata');
-
-    if (routeData) {
-      return;
-    }
-
     actions
       .getAllPromoCodesForProductList(data, {
         code: appData?.profile?.code,
@@ -1469,7 +1713,7 @@ export default function Products({route, navigation}) {
               <TouchableOpacity
                 key={index}
                 onPress={() => {
-                  Vibration.vibrate(PATTERN);
+                  playHapticEffect(hapticEffects.impactLight);
                   updateState({MenuModalVisible: !MenuModalVisible});
                   sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
                     {
@@ -1546,7 +1790,7 @@ export default function Products({route, navigation}) {
         <ScrollView style={{width: '100%'}}>
           {offerList?.length > 0 &&
             offerList.map((el, indx) => {
-              console.log(el);
+              // console.log(el);
               return (
                 <View
                   key={indx}
@@ -2253,7 +2497,7 @@ export default function Products({route, navigation}) {
                     }
                     size="small"
                     onToggle={() => {
-                      Vibration.vibrate(PATTERN);
+                      playHapticEffect(hapticEffects.impactLight);
                       const updatedArr = ProductTags.map((el, idx) => {
                         console.log(el);
                         if (idx === index) {
@@ -2557,15 +2801,11 @@ export default function Products({route, navigation}) {
           addToCart={() => addSingleItem(item, section, index)}
           onIncrement={() => checkIsCustomize(item, section, index, 1)}
           onDecrement={() => checkIsCustomize(item, section, index, 2)}
-          // onIncrement={() => addDeleteCartItems(item, section, index, 1)}
-          // onDecrement={() => addDeleteCartItems(item, section, index, 2)}
           selectedItemID={selectedItemID}
           btnLoader={btnLoader}
           selectedItemIndx={selectedItemIndx}
         />
-        <View
-          style={{width: '100%', height: 2, backgroundColor: colors.greyColor}}
-        />
+        <View style={styles.horizontalLine} />
       </View>
     );
   };
@@ -2920,15 +3160,6 @@ export default function Products({route, navigation}) {
           />
         )}
 
-        {!!repeatItems && (
-          <RepeatModal
-            data={repeatItems?.item}
-            modalHide={() => updateState({repeatItems: null})}
-            onRepeat={onRepeat}
-            onAddNew={onAddNew}
-          />
-        )}
-
         {/* {!!repeatItems && (<BlurView
           style={{
             position: 'absolute',
@@ -3000,8 +3231,8 @@ export default function Products({route, navigation}) {
       {!searchInput && (
         <GradientCartView
           onPress={() => {
-            Vibration.vibrate(PATTERN);
-            NavigationService.navigate(navigationStrings.CART_SCREEN);
+            playHapticEffect(hapticEffects.notificationSuccess);
+            navigation.navigate(navigationStrings.CART);
           }}
           btnText={
             CartItems && CartItems.data && CartItems.data.item_count
@@ -3021,7 +3252,7 @@ export default function Products({route, navigation}) {
           }
           isMenuBtnShow={categoryInfo?.is_show_products_with_category}
           onMenuTap={() => {
-            Vibration.vibrate(PATTERN);
+            playHapticEffect(hapticEffects.impactLight);
             updateState({MenuModalVisible: !MenuModalVisible});
           }}
         />
@@ -3067,6 +3298,30 @@ export default function Products({route, navigation}) {
           updateState({MenuModalVisible: !MenuModalVisible});
         }}
       />
+
+      {/* Add new addons and repeat item view */}
+      {!!repeatItems && (
+        <RepeatModal
+          data={repeatItems?.item}
+          modalHide={() => updateState({repeatItems: null})}
+          onRepeat={onRepeat}
+          onAddNew={onAddNew}
+        />
+      )}
+
+      {!!differentAddsOns && differentAddsOns.length > 1 && (
+        <DifferentAddOns
+          differentAddsOnsModal={differentAddsOnsModal}
+          data={differentAddsOns}
+          selectedDiffAdsOnItem={selectedDiffAdsOnItem}
+          hideDifferentAddOns={hideDifferentAddOns}
+          difAddOnsAdded={difAddOnsAdded}
+          selectedDiffAdsOnSection={selectedDiffAdsOnSection}
+          storeLocalQty={storeLocalQty}
+          btnLoader={btnLoader}
+          selectedDiffAdsOnId={selectedDiffAdsOnId}
+        />
+      )}
     </View>
   );
 }

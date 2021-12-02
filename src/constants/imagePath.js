@@ -264,6 +264,8 @@ export default {
   radioNewInActive: require('../assets/images/ic_radio1.png'),
   deliveryInActive: require('../assets/images/ic_delivery1.png'),
   crossC: require('../assets/images/ic_crossNew.png'),
+  icGo: require('../assets/images/ic_go.png'),
+  icUp: require('../assets/images/ic_up.png'),
 
   //gif images
   search_gif: require('../assets/images/gif/search.gif'),

@@ -28,7 +28,7 @@ const shortCodes = {
   specialhalal: 'b0fc04',
   thehouse: 'edcbc0',
   tasmeem: '408d5a',
-  klickmat: 'de2c54',
+  snabbhem: 'de2c54',
   lastminutedress: '6e940e',
   rerak: 'f16959',
   yummiidash: 'c23640',
@@ -281,9 +281,9 @@ const appIds = {
     ios: 'com.codebrew.tasmeem',
     android: 'com.codebrew.tasmeem',
   }),
-  klickmat: Platform.select({
-    ios: 'com.codebrew.klickmat',
-    android: 'com.codebrew.klickmat',
+  snabbhem: Platform.select({
+    ios: 'com.snabbhem',
+    android: 'com.snabbhem',
   }),
   lastminutedress: Platform.select({
     ios: 'com.codebrewLab.lastminutedress',
@@ -707,7 +707,7 @@ const appIds = {
   }),
   pinkjet: Platform.select({
     ios: 'com.pinkjet',
-    android: 'com.pinkjet',
+    android: 'com.customer.pinkjet',
   }),
   mokabfix: Platform.select({
     ios: 'com.mokabfix',

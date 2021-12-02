@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import {Vibration} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import Geocoder from 'react-native-geocoder';
 import Geolocation from 'react-native-geolocation-service';
@@ -13,6 +13,7 @@ import Toast from 'react-native-simple-toast';
 import {StatusBarHeight} from '../styles/responsiveSize';
 import {getDistance} from 'geolib';
 import {min} from 'moment';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 const getCurrentLocation = (type) =>
   new Promise((resolve, reject) => {
@@ -383,6 +384,52 @@ const checkEvenOdd = (num) => {
   return num % 5 === 0 ? num : num - (num % 5);
 };
 
+const playVibration = () => {
+  const ONE_SECOND_IN_MS = 1;
+
+  Vibration.vibrate([
+    1 * ONE_SECOND_IN_MS,
+    2 * ONE_SECOND_IN_MS,
+    3 * ONE_SECOND_IN_MS,
+  ]);
+};
+
+const playHapticEffect = (effect = 'clockTick') => {
+  const options = {
+    enableVibrateFallback: true,
+    ignoreAndroidSystemSettings: true,
+  };
+
+  ReactNativeHapticFeedback.trigger(effect, options);
+};
+
+const hapticEffects = {
+  effectClick: 'effectClick',
+  effectDoubleClick: 'effectDoubleClick',
+  effectHeavyClick: 'effectHeavyClick',
+  effectTick: 'effectTick',
+  impactHeavy: 'impactHeavy',
+  impactMedium: 'impactMedium',
+  impactLight: 'impactLight',
+  notificationError: 'notificationError',
+  notificationSuccess: 'notificationSuccess',
+  notificationWarning: 'notificationWarning',
+  rigid: 'rigid',
+  selection: 'selection',
+  soft: 'soft',
+
+  // (Android only)
+  clockTick: 'clockTick',
+  contextClick: 'contextClick',
+  keyboardPress: 'keyboardPress',
+  keyboardRelease: 'keyboardRelease',
+  keyboardTap: 'keyboardTap',
+  longPress: 'longPress',
+  textHandleMove: 'textHandleMove',
+  virtualKey: 'virtualKey',
+  virtualKeyRelease: 'virtualKeyRelease',
+};
+
 // export function numberFormat(formatableObj = {}) {
 //   return (
 //     <NumberFormat
@@ -411,4 +458,7 @@ export {
   timeInLocalLangauge,
   checkEvenOdd,
   getNearestLocation,
+  playVibration,
+  playHapticEffect,
+  hapticEffects,
 };

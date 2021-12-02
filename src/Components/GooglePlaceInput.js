@@ -128,7 +128,6 @@ export default function GooglePlaceInput({
               //   details,
               //   addressType,
               // });
-              alert('12');
               updateTheAddress(details, addressType);
             }
           })
