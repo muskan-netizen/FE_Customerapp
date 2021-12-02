@@ -16,6 +16,7 @@ import {
   View,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
+import * as Animatable from 'react-native-animatable';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo from 'react-native-device-info';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -2786,32 +2787,36 @@ export default function Cart({navigation, route}) {
           </View>
         )}
         {(cartData?.total_tax > 0 || cartData?.total_service_fee > 0) && (
-          <View
+          <Animatable.View
             style={{
               ...styles.bottomTabLableValue,
               marginTop: moderateScale(8),
               marginBottom: moderateScale(2),
             }}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text
-                style={{
-                  ...styles.priceItemLabel,
-                  color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.textGreyB,
-                }}>
-                {strings.TAXES_FEES}
-              </Text>
-              <TouchableOpacity
-                hitSlop={hitSlopProp}
-                onPress={() => updateState({showTaxFeeArea: !showTaxFeeArea})}
-                style={{marginHorizontal: moderateScale(2)}}>
+            <TouchableOpacity
+              activeOpacity={0.9}
+              hitSlop={hitSlopProp}
+              onPress={() => updateState({showTaxFeeArea: !showTaxFeeArea})}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text
+                  style={{
+                    ...styles.priceItemLabel,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyB,
+                  }}>
+                  {strings.TAXES_FEES}
+                </Text>
+
                 <Image
                   source={imagePath.dropDownNew}
-                  style={{transform: [{scaleY: showTaxFeeArea ? -1 : 1}]}}
+                  style={{
+                    transform: [{scaleY: showTaxFeeArea ? -1 : 1}],
+                    marginHorizontal: moderateScale(2),
+                  }}
                 />
-              </TouchableOpacity>
-            </View>
+              </View>
+            </TouchableOpacity>
 
             <Text
               style={
@@ -2828,70 +2833,76 @@ export default function Cart({navigation, route}) {
                 )
               ).toFixed(2),
             )}`}</Text>
-          </View>
+          </Animatable.View>
         )}
         {showTaxFeeArea && (
-          <View style={{marginLeft: moderateScale(15)}}>
-            {cartData?.total_service_fee > 0 && (
-              <View style={{...styles.bottomTabLableValue, marginVertical: 1}}>
-                <Text
-                  style={{
-                    ...styles.priceItemLabel,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyB,
-                    fontSize: textScale(11),
-                  }}>
-                  {strings.TOTAL_SERVICE_FEE}
-                </Text>
+          <View>
+            <Animatable.View
+              animation="fadeIn"
+              style={{marginLeft: moderateScale(15)}}>
+              {cartData?.total_service_fee > 0 && (
+                <View
+                  style={{...styles.bottomTabLableValue, marginVertical: 1}}>
+                  <Text
+                    style={{
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      fontSize: textScale(11),
+                    }}>
+                    {strings.TOTAL_SERVICE_FEE}
+                  </Text>
 
-                <Text
-                  style={{
-                    ...styles.priceItemLabel,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyB,
-                    fontSize: textScale(11),
-                  }}>{`${
-                  currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
-                  Number(
-                    cartData?.total_service_fee
-                      ? cartData?.total_service_fee
-                      : 0,
-                  ).toFixed(2),
-                )}`}</Text>
-              </View>
-            )}
-            {cartData?.total_tax > 0 && (
-              <View style={{...styles.bottomTabLableValue, marginVertical: 1}}>
-                <Text
-                  style={{
-                    ...styles.priceItemLabel,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyB,
-                    fontSize: textScale(11),
-                  }}>
-                  {strings.TAX_AMOUNT}
-                </Text>
+                  <Text
+                    style={{
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      fontSize: textScale(11),
+                    }}>{`${
+                    currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
+                    Number(
+                      cartData?.total_service_fee
+                        ? cartData?.total_service_fee
+                        : 0,
+                    ).toFixed(2),
+                  )}`}</Text>
+                </View>
+              )}
+              {cartData?.total_tax > 0 && (
+                <View
+                  style={{...styles.bottomTabLableValue, marginVertical: 1}}>
+                  <Text
+                    style={{
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      fontSize: textScale(11),
+                    }}>
+                    {strings.TAX_AMOUNT}
+                  </Text>
 
-                <Text
-                  style={{
-                    ...styles.priceItemLabel,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyB,
-                    fontSize: textScale(11),
-                  }}>{`${
-                  currencies?.primary_currency?.symbol
-                }${currencyNumberFormatter(
-                  Number(cartData?.total_tax ? cartData?.total_tax : 0).toFixed(
-                    2,
-                  ),
-                )}`}</Text>
-              </View>
-            )}
+                  <Text
+                    style={{
+                      ...styles.priceItemLabel,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.textGreyB,
+                      fontSize: textScale(11),
+                    }}>{`${
+                    currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
+                    Number(
+                      cartData?.total_tax ? cartData?.total_tax : 0,
+                    ).toFixed(2),
+                  )}`}</Text>
+                </View>
+              )}
+            </Animatable.View>
           </View>
         )}
 
@@ -3512,7 +3523,7 @@ export default function Cart({navigation, route}) {
         // isLoadingB={isLoadingB}
       >
         <Header centerTitle={strings.CART} leftIcon={imagePath.icBackb} />
-        <View
+        {/* <View
           style={{
             // flex: 1,
             justifyContent: 'center',
@@ -3532,7 +3543,7 @@ export default function Cart({navigation, route}) {
           <Text style={{...styles.textStyle}}>
             {strings.YOUR_CART_EMPTY_ADD_ITEMS}
           </Text>
-        </View>
+        </View> */}
         <ScrollView showsVerticalScrollIndicator={false}>
           <HeaderLoader
             widthLeft={width - moderateScale(30)}
