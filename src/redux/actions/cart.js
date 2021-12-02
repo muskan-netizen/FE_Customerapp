@@ -16,7 +16,9 @@ import {
   CART_PRODUCT_SCHEDULE,
   TIP_AFTER_ORDER,
   VALIDATE_PROMO_CODE,
-  GET_ALL_PROMO_CODES_FOR_PRODUCTLIST
+  GET_ALL_PROMO_CODES_FOR_PRODUCTLIST,
+  LAST_ADDED,
+  DIFFERENT_ADD_ONS
 } from '../../config/urls';
 import {
   apiGet,
@@ -276,6 +278,32 @@ export const tipAfterOrder = (data, headers = {}) => {
 export const validatePromocode = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(VALIDATE_PROMO_CODE, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+
+export const checkLastAdded= (data, headers = {}) => {
+  console.log("data",data)
+  return new Promise((resolve, reject) => {
+    apiPost(LAST_ADDED, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const differentAddOns= (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(DIFFERENT_ADD_ONS, data, headers)
       .then((res) => {
         resolve(res);
       })

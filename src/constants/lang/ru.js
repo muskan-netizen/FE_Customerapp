@@ -617,4 +617,10 @@ export default {
   PLEASE_SELECT_A_PAYMENT_METHOD: 'please select a payment method',
   MINIMUM: 'Minimum',
   REQUIRED: 'required',
+  CUSTOMER: 'Customer',
+  ORDER_PLACE_ON: 'Order placed on',
+  TOBE_PREPARED: 'To be prepared for',
+  DELIVERY: 'DELIVERY',
+  ITEM: 'Item',
+  PAID_AMOUNT: 'Paid amount',
 };

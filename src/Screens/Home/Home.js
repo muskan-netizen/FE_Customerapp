@@ -179,7 +179,6 @@ export default function Home({route, navigation}) {
                 appMainData?.reqData?.latitude &&
                 (location?.latitude == '' || location?.longitude == '')
               ) {
-                alert('mdfjsh');
                 const data = {
                   address: appMainData?.reqData?.address,
                   latitude: appMainData?.reqData?.latitude,

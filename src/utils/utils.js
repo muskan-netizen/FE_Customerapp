@@ -110,7 +110,6 @@ export async function apiReq(
       ...headers,
     };
 
-    console.log(headers, '<<<<<<<<< headers');
     if (method === 'get' || method === 'delete') {
       data = {
         ...requestOptions,
@@ -130,8 +129,9 @@ export async function apiReq(
         return res(data);
       })
       .catch((error) => {
+        console.log('core error raised', error);
         if (error && error.response && error.response.status === 401) {
-          console.log('erro raised', error);
+       
           sessionHandler(error.response.data.message);
           return rej(error);
         }
