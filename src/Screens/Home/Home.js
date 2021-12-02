@@ -179,7 +179,6 @@ export default function Home({route, navigation}) {
                 appMainData?.reqData?.latitude &&
                 (location?.latitude == '' || location?.longitude == '')
               ) {
-                alert('mdfjsh');
                 const data = {
                   address: appMainData?.reqData?.address,
                   latitude: appMainData?.reqData?.latitude,
@@ -187,6 +186,7 @@ export default function Home({route, navigation}) {
                 };
                 actions.locationData(data);
               } else {
+                console.log(paramData, 'paramDataparamData');
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
                   if (!!userData?.auth_token && !paramData?.details) {
                     const nearestAddress = getNearestLocation(
@@ -196,11 +196,14 @@ export default function Home({route, navigation}) {
 
                     if (!!nearestAddress) {
                       actions.locationData(nearestAddress);
+                      homeData(nearestAddress);
                       return;
                     } else {
                       actions.locationData(res);
                       return;
                     }
+                  } else {
+                    actions.locationData(res);
                   }
                 }
               }
@@ -209,7 +212,7 @@ export default function Home({route, navigation}) {
         }
       })
       .catch((error) => console.log('error while accessing location', error));
-  }, [isRefreshing, userData?.auth_token]);
+  }, [isRefreshing, userData?.auth_token, saveAllUserAddress]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -247,7 +250,7 @@ export default function Home({route, navigation}) {
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
     let latlongObj = {};
-
+    console.log(slectedLocatonFromPreviousScreen, location, 'hereGoes');
     if (appData?.profile?.preferences?.is_hyperlocal) {
       latlongObj = {
         address: slectedLocatonFromPreviousScreen
@@ -437,6 +440,7 @@ export default function Home({route, navigation}) {
     }
   };
   useEffect(() => {
+    console.log(saveAllUserAddress, 'saveAllUserAddress');
     if (!saveAllUserAddress) {
       homeData();
     }
@@ -534,10 +538,18 @@ export default function Home({route, navigation}) {
 
   const selcetedToggle = (type) => {
     actions.dineInData(type);
-    updateState({
-      selectedTabType: type,
-      isLoadingB: true,
-    });
+    if (dineInType != type) {
+      {
+        updateState({
+          selectedTabType: type,
+          isLoadingB: true,
+        });
+      }
+    } else {
+      updateState({
+        selectedTabType: type,
+      });
+    }
   };
 
   useEffect(() => {
