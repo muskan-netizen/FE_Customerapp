@@ -39,6 +39,8 @@ import {
 import {MyDarkTheme} from '../../styles/theme';
 import {
   getImageUrl,
+  hapticEffects,
+  playHapticEffect,
   playVibration,
   showError,
   showSuccess,
@@ -395,7 +397,7 @@ export default function BrandProducts2({route, navigation}) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }
-    playVibration();
+    playHapticEffect(hapticEffects.rigid);
     let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
     updateState({selectedItemID: item?.id, btnLoader: true});
     let isSingleVendor = await checkSingleVendor(item.id);
@@ -511,7 +513,7 @@ export default function BrandProducts2({route, navigation}) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }
-    playVibration();
+    playHapticEffect(hapticEffects.rigid);
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
     //!!data?.variant[0]?.check_if_in_cart_app && data?.variant[0]?.check_if_in_cart_app.length > 0 || !!data?.qty ?
@@ -773,7 +775,7 @@ export default function BrandProducts2({route, navigation}) {
   };
 
   const _onAddtoWishlist = (item) => {
-    playVibration();
+    playHapticEffect(hapticEffects.rigid);
     if (!!userData?.auth_token) {
       updateState({isLoadingB: true});
       actions
