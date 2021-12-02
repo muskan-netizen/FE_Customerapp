@@ -10,6 +10,7 @@ import actions from '../../redux/actions';
 import BackgroundService from 'react-native-background-actions';
 import {getItem} from '../../utils/utils';
 import strings from '../../constants/lang';
+import moment from 'moment';
 const fs = RNFetchBlob.fs;
 
 export let arr = [];
@@ -190,16 +191,34 @@ export const printReciept = async (data) => {
               BluetoothEscposPrinter.ALIGN.LEFT,
             );
 
-            await BluetoothEscposPrinter.printText(
-              `${strings.CUSTOMER}: ${`Lara Brayne`}\r\n${
-                strings.ORDER_PLACE_ON + 'é'
-              }: ${`02-12-2021 at 09:16`}\r\n${
-                strings.TOBE_PREPARED
-              }: ${`02-12-2021 at 09:16`}\r\n\r\n${strings.DELIVERY}:\r\n${
-                detail.address.address
-              }\r\n----------------------------------------------\r\n`,
-              {},
-            );
+            if (detail.scheduled_date_time !== null) {
+              await BluetoothEscposPrinter.printText(
+                `${strings.CUSTOMER}: ${`${detail.user.name}`}\r\n${
+                  strings.ORDER_PLACE_ON
+                }: ${`${moment(detail.created_at).format(
+                  'YYYY-MM-DD [at] hh:mm A z',
+                )}`}\r\n${strings.TOBE_PREPARED}: ${moment(
+                  detail.scheduled_date_time,
+                ).format('YYYY-MM-DD [at] hh:mm A z')}\r\n\r\n${
+                  strings.DELIVERY
+                }:\r\n${
+                  detail.address.address
+                }\r\n----------------------------------------------\r\n`,
+                {},
+              );
+            } else {
+              await BluetoothEscposPrinter.printText(
+                `${strings.CUSTOMER}: ${`${detail.user.name}`}\r\n${
+                  strings.ORDER_PLACE_ON
+                }: ${`${moment(detail.created_at).format(
+                  'YYYY-MM-DD [at] hh:mm A z',
+                )}`}\r\n\r\n${strings.DELIVERY}:\r\n${
+                  detail.address.address
+                }\r\n----------------------------------------------\r\n`,
+                {},
+              );
+            }
+
             await BluetoothEscposPrinter.setBlob(8);
             await BluetoothEscposPrinter.printerAlign(
               BluetoothEscposPrinter.ALIGN.CENTER,
@@ -276,12 +295,15 @@ export const printReciept = async (data) => {
             );
 
             await BluetoothEscposPrinter.printColumn(
-              [15, 30],
+              [25, 20],
               [
                 BluetoothEscposPrinter.ALIGN.LEFT,
                 BluetoothEscposPrinter.ALIGN.RIGHT,
               ],
-              [`${strings.DELIVERY_FEE}`, detail.total_delivery_fee + '\r\n'],
+              [
+                `${strings.DELIVERY_FEE}`,
+                `${detail.total_delivery_fee.toString()}` + '\r\n',
+              ],
               {},
             );
 
@@ -291,7 +313,10 @@ export const printReciept = async (data) => {
                 BluetoothEscposPrinter.ALIGN.LEFT,
                 BluetoothEscposPrinter.ALIGN.RIGHT,
               ],
-              [`${strings.DISCOUNT}`, -detail.total_discount + '\r\n'],
+              [
+                `${strings.DISCOUNT}`,
+                `-${detail.total_discount.toString()}` + '\r\n',
+              ],
               {},
             );
 
@@ -302,7 +327,10 @@ export const printReciept = async (data) => {
                   BluetoothEscposPrinter.ALIGN.LEFT,
                   BluetoothEscposPrinter.ALIGN.RIGHT,
                 ],
-                [`${strings.LOYALTY}`, -detail.loyalty_amount_saved + '\r\n'],
+                [
+                  `${strings.LOYALTY}`,
+                  `-${detail.loyalty_amount_saved.toString()}` + '\r\n',
+                ],
                 {},
               );
 
@@ -318,7 +346,7 @@ export const printReciept = async (data) => {
             }
 
             await BluetoothEscposPrinter.printText(
-              '----------------------------------------------\r\n\nWelcome next time\r\n\r\n\r\n\r\n\n',
+              `----------------------------------------------\r\n\n${strings.WELCOME_NEXT_TIME}\r\n\r\n\r\n\r\n\n`,
               {},
             );
 
@@ -334,9 +362,7 @@ export const printReciept = async (data) => {
           }
         } else {
           canEnablePrinter = true;
-          alert(
-            'Something went wrong, please make connection with printer again.',
-          );
+          alert(strings.SOMETHING_WENT_WRONG_PRINTER_MSG);
           AsyncStorage.getItem('BleDevice').then((res) => {
             console.log(
               'checking ble device storage data >>>',
