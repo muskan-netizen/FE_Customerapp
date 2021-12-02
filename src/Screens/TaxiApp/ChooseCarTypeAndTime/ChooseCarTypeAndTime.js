@@ -679,7 +679,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         pickup_taxi={paramData?.pickup_taxi}
         uploadImage={uploadImage}
         updateInstruction={updateInstruction}
-        productFaqQuestionAnswers={productFaqQuestionAnswers}
+        productFaqQuestionAnswers={selectedCarOption}
         onQuestionAnswerSubmit={(item) => onQuestionAnswerSubmit(item)}
       />
     );

@@ -80,10 +80,8 @@ export default function SelectPaymentModalView({
   const [image, setImage] = useState([]);
   const [taskInstruction, setInstruction] = useState('');
   const [showModal, setShowModal] = useState(false);
-
   const [isError, setError] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
-  const [AllAskedQuestionAnswers, setAllAskedQuestionAnswers] = useState([]);
   const [myAnswerdArray, setMyAllanswers] = useState([]);
   const [myFaqValidationArray, setMyFaqValidationArray] = useState([]);
   const [validationFucCalled, setvalidationFucCalled] = useState(true);
@@ -94,14 +92,6 @@ export default function SelectPaymentModalView({
     () => {
       navigation.navigate(screenName, {data});
     };
-
-  useEffect(() => {
-    const allQuestion = productFaqQuestionAnswers?.map((item, index) => {
-      return item?.product_faq;
-    });
-
-    setAllAskedQuestionAnswers(allQuestion);
-  }, []);
 
   //Get list of all offers
   const _getAllOffers = (vendor, cartData) => {
@@ -240,8 +230,6 @@ export default function SelectPaymentModalView({
       }
     }
   };
-
-  console.log(myFaqValidationArray, 'myFaqValidationArraymyFaqValidationArray');
 
   return (
     <View
@@ -657,12 +645,6 @@ export default function SelectPaymentModalView({
         </TouchableOpacity>
 
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <TouchableOpacity onPress={onImageUpload}>
-            <Image
-              style={{tintColor: themeColors.primary_color}}
-              source={imagePath.icUpload}
-            />
-          </TouchableOpacity>
           <TouchableOpacity
             style={{
               marginLeft: moderateScale(8),
@@ -677,55 +659,6 @@ export default function SelectPaymentModalView({
         </View>
       </View>
 
-      {image.length !== 0 && (
-        <View
-          style={{
-            ...styles.offersViewB,
-            marginVertical: 0,
-            paddingVertical: 0,
-            // alignSelf: 'flex-start',
-            overflow: 'visible',
-          }}>
-          <FlatList
-            horizontal
-            data={image}
-            ItemSeparatorComponent={() => <View style={{marginLeft: 8}} />}
-            renderItem={({item, index}) => {
-              return (
-                <View style={{alignItems: 'center'}}>
-                  <View>
-                    <Image
-                      source={{uri: item}}
-                      style={{
-                        width: moderateScale(40),
-                        height: moderateScale(40),
-                        borderRadius: moderateScale(8),
-                      }}
-                    />
-                    <TouchableOpacity
-                      onPress={() => removeImage(index)}
-                      style={{
-                        position: 'absolute',
-                        right: 0,
-                      }}>
-                      <Image
-                        style={{
-                          width: moderateScale(16),
-                          height: moderateScale(16),
-                          borderRadius: moderateScale(10),
-                        }}
-                        resizeMode="contain"
-                        source={imagePath.icClose3}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              );
-            }}
-          />
-        </View>
-      )}
-
       <View
         style={{
           marginTop: moderateScale(10),
@@ -735,7 +668,18 @@ export default function SelectPaymentModalView({
         <GradientButton
           colorsArray={[themeColors.primary_color, themeColors.primary_color]}
           textStyle={{textTransform: 'none', fontSize: textScale(12)}}
-          onPress={_confirmAndPay}
+          onPress={() => {
+            const isRequired = myFaqValidationArray.some(checkRequird);
+            function checkRequird(checkRequird) {
+              return checkRequird == true;
+            }
+
+            if (isRequired) {
+              alert('Please fill all required fields in detail form');
+            } else {
+              _confirmAndPay();
+            }
+          }}
           // marginTop={moderateScaleVertical(10)}
           // marginBottom={moderateScaleVertical(5)}
           // btnText={`${slectedDate}  -  ${selectedTime}`}
@@ -782,12 +726,78 @@ export default function SelectPaymentModalView({
               <Image source={imagePath.closeButton} />
             </TouchableOpacity>
           </View>
+
+          {productFaqQuestionAnswers?.product_faq?.length && (
+            <View>
+              <Text
+                style={{
+                  fontSize: textScale(12),
+                  fontFamily: fontFamily.medium,
+                }}>
+                {strings.RELATEDQUESTIONOFPRODUCT}
+              </Text>
+            </View>
+          )}
+
+          {productFaqQuestionAnswers?.product_faq?.map((item, index) => {
+            setAllRequiredQuestions(item, index);
+
+            return (
+              <View
+                style={{
+                  marginTop: moderateScaleVertical(10),
+                }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Text
+                    style={{
+                      marginBottom: moderateScaleVertical(10),
+                      color: colors.redColor,
+                    }}>
+                    {`${item?.is_required ? '* ' : ''}`}
+                  </Text>
+                  <Text
+                    style={{
+                      marginBottom: moderateScaleVertical(10),
+                    }}>
+                    {item?.translations[0]?.name}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    // marginVertical: moderateScaleVertical(16),
+                    backgroundColor: isDarkMode
+                      ? colors.whiteOpacity15
+                      : colors.greyNew,
+                    height: moderateScale(42),
+                    borderRadius: moderateScale(4),
+                    paddingHorizontal: moderateScale(8),
+                  }}>
+                  <TextInput
+                    multiline
+                    placeholder={'Answer'}
+                    onChangeText={(text) =>
+                      onChangeText(item, text, index, i?.length)
+                    }
+                    style={{
+                      ...styles.insctructionText,
+                      color: isDarkMode ? colors.textGreyB : colors.black,
+                    }}
+                    onSubmitEditing={Keyboard.dismiss}
+                    placeholderTextColor={
+                      isDarkMode ? colors.textGreyB : colors.blackOpacity40
+                    }
+                  />
+                </View>
+              </View>
+            );
+          })}
           <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
               marginBottom: moderateScaleVertical(12),
+              marginTop: moderateScaleVertical(5),
             }}>
             <Text
               style={{
@@ -795,7 +805,7 @@ export default function SelectPaymentModalView({
                 fontFamily: fontFamily.medium,
                 textAlign: 'left',
               }}>
-              Add Insctructions
+              {strings.ADDINSTRACTION}
             </Text>
           </View>
 
@@ -808,7 +818,7 @@ export default function SelectPaymentModalView({
                 color: colors.redB,
                 marginBottom: moderateScaleVertical(4),
               }}>
-              *Please enter your instruction
+              {strings.PLEASEADDINSTRACTION}
             </Text>
           )}
           <View
@@ -836,73 +846,81 @@ export default function SelectPaymentModalView({
               }
             />
           </View>
-          {AllAskedQuestionAnswers?.length && (
-            <View style={{marginVertical: moderateScaleVertical(10)}}>
-              <Text
-                style={{
-                  fontSize: textScale(12),
-                  fontFamily: fontFamily.medium,
-                  // textAlign: 'left',
-                }}>
-                Related Question To Product
-              </Text>
-            </View>
-          )}
-
-          {AllAskedQuestionAnswers?.map((i, index) => {
-            return i?.map((item, index) => {
-              setAllRequiredQuestions(item, index);
-
-              return (
-                <View
-                  style={{
-                    marginTop: moderateScaleVertical(10),
-                  }}>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text
-                      style={{
-                        marginBottom: moderateScaleVertical(10),
-                        color: colors.redColor,
-                      }}>
-                      {`${item?.is_required ? '* ' : ''}`}
-                    </Text>
-                    <Text
-                      style={{
-                        marginBottom: moderateScaleVertical(10),
-                      }}>
-                      {item?.translations[0]?.name}
-                    </Text>
-                  </View>
+          <Text
+            style={{
+              fontSize: textScale(12),
+              fontFamily: fontFamily.medium,
+              textAlign: 'left',
+              marginTop: moderateScaleVertical(10),
+            }}>
+            {strings.ADDIMAGE}
+          </Text>
+          <View
+            style={{
+              marginVertical: 0,
+              paddingVertical: 0,
+              // alignSelf: 'flex-start',
+              overflow: 'visible',
+            }}>
+            <FlatList
+              horizontal
+              data={image}
+              ItemSeparatorComponent={() => <View style={{marginLeft: 8}} />}
+              ListHeaderComponent={() => {
+                return (
+                  <TouchableOpacity
+                    style={{
+                      width: moderateScale(40),
+                      height: moderateScale(40),
+                      borderRadius: moderateScale(8),
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginVertical: moderateScaleVertical(5),
+                      marginRight: moderateScale(10),
+                    }}
+                    onPress={() => onImageUpload()}>
+                    <Image source={imagePath.icImageUpload} />
+                  </TouchableOpacity>
+                );
+              }}
+              renderItem={({item, index}) => {
+                return (
                   <View
                     style={{
-                      // marginVertical: moderateScaleVertical(16),
-                      backgroundColor: isDarkMode
-                        ? colors.whiteOpacity15
-                        : colors.greyNew,
-                      height: moderateScale(42),
-                      borderRadius: moderateScale(4),
-                      paddingHorizontal: moderateScale(8),
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}>
-                    <TextInput
-                      multiline
-                      placeholder={'Answer'}
-                      onChangeText={(text) =>
-                        onChangeText(item, text, index, i?.length)
-                      }
-                      style={{
-                        ...styles.insctructionText,
-                        color: isDarkMode ? colors.textGreyB : colors.black,
-                      }}
-                      onSubmitEditing={Keyboard.dismiss}
-                      placeholderTextColor={
-                        isDarkMode ? colors.textGreyB : colors.blackOpacity40
-                      }
-                    />
+                    <View>
+                      <Image
+                        source={{uri: item}}
+                        style={{
+                          width: moderateScale(40),
+                          height: moderateScale(40),
+                          borderRadius: moderateScale(8),
+                        }}
+                      />
+                      <TouchableOpacity
+                        onPress={() => removeImage(index)}
+                        style={{
+                          position: 'absolute',
+                          right: 0,
+                        }}>
+                        <Image
+                          style={{
+                            width: moderateScale(16),
+                            height: moderateScale(16),
+                            borderRadius: moderateScale(10),
+                          }}
+                          resizeMode="contain"
+                          source={imagePath.icClose3}
+                        />
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
-              );
-            });
-          })}
+                );
+              }}
+            />
+          </View>
 
           <GradientButton
             colorsArray={[themeColors.primary_color, themeColors.primary_color]}
@@ -916,8 +934,7 @@ export default function SelectPaymentModalView({
               if (isRequired) {
                 alert('Please fill All Required Fields');
               } else {
-                onQuestionAnswerSubmit(myAnswerdArray),
-                  setInstructionShowModal(false);
+                onQuestionAnswerSubmit(myAnswerdArray), setShowModal(false);
               }
             }}
             btnText={strings.SUBMIT}

@@ -635,4 +635,8 @@ export default {
   PLEASE_SELECT_A_PAYMENT_METHOD: 'Please select a payment method',
   MINIMUM: 'Minimum',
   REQUIRED: 'required',
+  RELATEDQUESTIONOFPRODUCT: ' Related Question To Product',
+  ADDINSTRACTION: 'Add Instructions',
+  PLEASEADDINSTRACTION: '*Please enter your instruction',
+  ADDIMAGE: ' Add Images',
 };

@@ -663,4 +663,8 @@ montant`,
   PLEASE_SELECT_A_PAYMENT_METHOD: 'Veuillez choisir un moyen de paiement',
   MINIMUM: 'Minimum',
   REQUIRED: 'obligatoire',
+  RELATEDQUESTIONOFPRODUCT: ' Related Question To Product',
+  ADDINSTRACTION: 'Add Instructions',
+  PLEASEADDINSTRACTION: '*Please enter your instruction',
+  ADDIMAGE: ' Add Images',
 };
