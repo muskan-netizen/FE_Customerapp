@@ -596,10 +596,10 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     mapRef.current.fitToCoordinates(cords,
       {
         edgePadding: {
-          right: 20,
-          bottom: 20,
-          left: 20,
-          top: 40,
+          right: width / 3.2,
+          bottom: height / 20,
+          left: width / 3.2,
+          top: height / 20,
         },
       },
     );
@@ -671,7 +671,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
 
 
         <View style={{ flex: 1 }}>
-          {!isLoading && (
+          {!isLoading && !!tasks?.length > 0 && (
             <MapView
               provider={PROVIDER_GOOGLE} // remove if not using Google Maps
               style={{ height: height / 2.6, width: '100%' }}
@@ -723,10 +723,10 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                   });
                   mapRef.current.fitToCoordinates(result.coordinates, {
                     edgePadding: {
-                      right: width / 20,
+                      right: width / 3.2,
                       bottom: height / 20,
-                      left: width / 20,
-                      top: height / 20
+                      left: width / 3.2,
+                      top: height / 20,
                     },
                   });
                 }}
@@ -762,7 +762,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           snapPoints={[height / 2.5, height / 1.1]}
           animateOnMount={true}
           // onChange={(inx) => updateState({ hideShowBack: inx })}
-          onChange={()=>playHapticEffect(hapticEffects.impactMedium)}
+          onChange={() => playHapticEffect(hapticEffects.impactMedium)}
           handleComponent={bottomSheetHeader}
         >
           <BottomSheetScrollView
@@ -1025,7 +1025,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     marginBottom={0}
                   />
                 </View>)}
-        
+
               </View>
             </View>
             }

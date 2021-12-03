@@ -177,6 +177,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     taskInstruction: '',
     productFaqQuestionAnswers: [],
     allSubmittedAnswers: null,
+    indicatorLoader: false
   });
   const {
     selectedPayment,
@@ -220,6 +221,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     taskInstruction,
     productFaqQuestionAnswers,
     allSubmittedAnswers,
+    indicatorLoader
   } = state;
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
@@ -324,6 +326,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       isLoading: false,
       isLoadingB: false,
       isRefreshing: false,
+      indicatorLoader: false
     });
     showError(error?.message || error?.error);
   };
@@ -350,6 +353,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   const _finalPayment = (data) => {
     updateState({
       isLoading: true,
+      indicatorLoader: true
     });
     actions
       .placeDelievryOrder(data, {
@@ -363,6 +367,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             isModalVisible: false,
             isLoading: false,
             isRefreshing: false,
+            indicatorLoader: false
           });
           // navigation.navigate(navigationStrings.CABDRIVERLOCATIONANDDETAIL, {
           //   orderDetail: res?.data,
@@ -383,6 +388,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             isModalVisible: false,
             isLoading: false,
             isRefreshing: false,
+            indicatorLoader: false
           });
           showError(res?.message || res?.error);
         }
@@ -435,6 +441,36 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
       _finalPayment();
     }
   };
+
+  function checkRequird(checkRequird) {
+    return checkRequird == true;
+  }
+
+  const myData = [
+    {
+      is_required: false,
+    },
+    {
+      is_required: false,
+    },
+    {
+      is_required: false,
+    },
+  ]
+
+  const onBookNow = () => {
+    var isRequired = false
+    !!selectedCarOption?.product_faq.length > 0 && selectedCarOption.product_faq.forEach((val) => {
+      if (val.is_required) {
+        isRequired = true
+      }
+    })
+    if (isRequired) {
+      alert('Please fill all required fields in detail form');
+    } else {
+      _confirmAndPay();
+    }
+  }
 
   const _selectTimeView = () => {
     return (
@@ -758,11 +794,11 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
     updateState({ formatedTime: moment(value).format('hh:mm A') });
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      coordinatesFit();
-    }, 2000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     coordinatesFit();
+  //   }, 2000);
+  // }, []);
 
   console.log('paramData?.location', paramData);
   // useEffect(() => {
@@ -783,13 +819,13 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   //   }
   // };
 
-  const coordinatesFit = () => {
+  const onCenter = () => {
     if (paramData?.location.length > 0 && !!mapRef?.current?.fitToCoordinates) {
       mapRef.current.fitToCoordinates(paramData?.location, {
         edgePadding: {
-          right: width / 20,
+          right: width / 3.2,
           bottom: height / 20,
-          left: width / 20,
+          left: width / 3.2,
           top: height / 20,
         },
       });
@@ -810,102 +846,21 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
   return (
     <View style={{ ...styles.container }}>
       <View style={{ height: StatusBarHeight }} />
-      <View
-        style={{
-          flex: 1,
-        }}>
-        <MapView
+      <View style={{ flex: 1 }}>
+        {!!paramData?.location.length > 0 && <MapView
           ref={mapRef}
           provider={PROVIDER_GOOGLE} // remove if not using Google Maps
           customMapStyle={mapStyleGrey}
           // style={styles.map}
-          style={StyleSheet.absoluteFillObject}
+          style={{ height: height / 2 }}
           region={region}
           initialRegion={region}
           //   customMapStyle={mapStyle}
           // ref={mapRef}
           // liteMode={true}
           tracksViewChanges={false}
-        // onPress={onMapPress}
-        // onRegionChangeComplete={() =>
-        //   _onRegionChange(region, {isGesture: true})
-        // }
         >
           <CustomCallouts data={paramData?.tasks} />
-          {/* {paramData?.tasks.map((coordinate, index) => {
-            return (
-              <View>
-                <MapView.Marker
-                  ref={markerRef}
-                  zIndex={index}
-                  key={`coordinate_${index}`}
-                  image={imagePath.radioLocation}
-                  coordinate={{
-                    latitude: Number(coordinate?.latitude),
-                    longitude: Number(coordinate?.longitude),
-                  }}
-                >
-                  <View 
-                    style={{
-                      ...styles.plainView,
-                      backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white
-                    }}>
-                    <View style={{
-                      flexDirection: 'row', alignItems: 'center'
-                    }}>
-                      <View style={{
-                        backgroundColor: colors.black,
-                        paddingHorizontal: moderateScale(12),
-                        paddingVertical: moderateScale(10)
-                      }}>
-                        {index == 0 ?<PulseIndicator
-                        size={12}
-                        color="white"
-                        style={{
-                          height: moderateScale(8),
-                          width: moderateScale(8),
-                          borderRadius:moderateScale(4)
-                        }}
-                        />: 
-                        <Text style={{ 
-                          ...styles.pickupDropOff,
-                          color: colors.white,
-                          fontFamily:fontFamily.medium
-                        }}>{'D'}</Text>
-                        }
-                      </View>
-                      <View style={{
-                        flexDirection: "row",
-                        alignItems: 'center',
-                        paddingHorizontal: moderateScale(8),
-                        paddingVertical: moderateScale(10)
-                      }}>
-                        <Text
-                          numberOfLines={1}
-                          style={{
-                            ...styles.pickupDropOff,
-                            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                            alignItems: 'center',
-                            maxWidth: 150,
-
-                          }}>
-                          {coordinate?.pre_address}
-                        </Text>
-                        <Image style={{
-                          marginLeft: moderateScale(4),
-                          height: moderateScale(12),
-                          width: moderateScale(12)
-                        }}
-                          resizeMode="contain"
-                          source={imagePath.icGo}
-                        />
-                      </View>
-                    </View>
-                  </View>
-                </MapView.Marker>
-              </View>
-            );
-          })} */}
 
           <MapViewDirections
             origin={paramData?.location[0]}
@@ -935,9 +890,9 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
               });
               mapRef.current.fitToCoordinates(result.coordinates, {
                 edgePadding: {
-                  right: width / 20,
+                  right: width / 3.2,
                   bottom: height / 20,
-                  left: width / 20,
+                  left: width / 3.2,
                   top: height / 20,
                 },
               });
@@ -946,18 +901,29 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
               // console.log('GOT AN ERROR');
             }}
           />
-        </MapView>
+        </MapView>}
 
-        {/* <View style={{
-          position: 'absolute',
-          bottom:10
-        }}>
-          <Text>Hdifdf</Text>
-        </View> */}
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            top: height / 2.25,
+            right: 10,
+          }}
+          onPress={onCenter}
+        >
+          <Image
+            style={{
+              width: moderateScale(34),
+              height: moderateScale(34),
+              borderRadius: moderateScale(34 / 2),
+            }}
+            source={imagePath.mapNavigation}
+          />
+        </TouchableOpacity>
         <BottomSheet
           ref={bottomSheetRef}
-          index={1}
-          snapPoints={['25%', '40%']}
+          index={0}
+          snapPoints={[height / 2.6, height / 1.25]}
           activeOffsetY={[-1, 1]}
           failOffsetX={[-5, 5]}
           animateOnMount={true}
@@ -982,7 +948,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             </View>
           </BottomSheetScrollView>
         </BottomSheet>
-        {!showPaymentModal && (
+        {!!showCarModal && (
           <View
             style={{
               width: '90%',
@@ -1014,6 +980,42 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
                 containerStyle={{ flex: 1 }}
               />
             )}
+          </View>
+        )}
+
+        {!!showPaymentModal && (
+          <View
+            style={{
+              width: '90%',
+              position: 'absolute',
+              bottom: 20,
+              marginHorizontal: moderateScale(16),
+
+            }}>
+
+            <GradientButton
+              // endcolor={{x: 0.0, y: 0.25}}
+              // startcolor={{x: 0.0, y: 0.0}}
+              indicator={indicatorLoader}
+              indicatorColor={colors.white}
+              colorsArray={[
+                themeColors.primary_color,
+
+                themeColors.primary_color,
+              ]}
+              textStyle={{ textTransform: 'none', fontSize: textScale(14) }}
+              onPress={onBookNow}
+              btnText={
+                paramData?.pickup_taxi
+                  ? strings.BOOK_NOW_RIDE
+                  : pickUpTimeType === 'now'
+                    ? strings.BOOK_NOW
+                    : strings.SCHEDULE_RIDE_FOR +
+                    `${moment(slectedDate).format('DD MMM')} ${selectedTime} `
+              }
+              containerStyle={{ flex: 1 }}
+            />
+
           </View>
         )}
       </View>

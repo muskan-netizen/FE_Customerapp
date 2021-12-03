@@ -414,4 +414,5 @@ export default {
   icShowPassword: require('../assets/images/ic_view1.png'),
   icHidePassword: require('../assets/images/ic_view2.png'),
   icImageUpload: require('../assets/images/ic_imgupload.png'),
+
 };

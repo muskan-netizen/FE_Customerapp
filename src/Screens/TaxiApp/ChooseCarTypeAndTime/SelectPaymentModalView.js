@@ -659,7 +659,7 @@ export default function SelectPaymentModalView({
         </View>
       </View>
 
-      <View
+      {/* <View
         style={{
           marginTop: moderateScale(10),
           marginHorizontal: moderateScale(20),
@@ -692,7 +692,7 @@ export default function SelectPaymentModalView({
                 `${moment(slectedDate).format('DD MMM')} ${selectedTime} `
           }
         />
-      </View>
+      </View> */}
 
       <Modal
         isVisible={showModal}
