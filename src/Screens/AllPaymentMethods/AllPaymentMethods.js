@@ -133,7 +133,7 @@ export default function AllPaymentMethods({navigation, route}) {
         if (cardInfo) {
           await createToken(cardInfo)
             .then((res) => {
-              console.log(res, 'res>>');
+              console.log(res, 'stripeTokenres>>');
               if (res && res?.token && res.token?.id) {
                 updateState({isLoading: false});
                 navigation.navigate(navigationStrings.CART, {

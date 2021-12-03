@@ -434,6 +434,11 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     }
   };
 
+  console.log(
+    allSubmittedAnswers,
+    'allSubmittedAnswers ===========>>>>>>>>>>>',
+  );
+
   const _selectTimeView = () => {
     return (
       <SelectTimeModalView

@@ -450,7 +450,7 @@ export default function Cart2({navigation, route}) {
     }
   }, [paramsData?.redirectFrom]);
   const _webPayment = () => {
-    let selectedMethod = selectedPayment.title.toLowerCase();
+    let selectedMethod = selectedPayment.code.toLowerCase();
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
 
@@ -485,7 +485,7 @@ export default function Cart2({navigation, route}) {
   const _offineLinePayment = async () => {
     if (paramsData?.tokenInfo) {
       updateState({isLoadingB: true});
-      let selectedMethod = selectedPayment.title.toLowerCase();
+      let selectedMethod = selectedPayment.code.toLowerCase();
       updateState({isLoadingB: true});
       actions
         .openPaymentWebUrl(

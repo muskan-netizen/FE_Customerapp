@@ -45,7 +45,6 @@ import stylesFun from './styles';
 
 export default function Addaddress({navigation, route}) {
   const paramData = route?.params;
-  console.log(paramData, 'paramDataparamDataparamDataparamData');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();

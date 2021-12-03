@@ -758,7 +758,7 @@ export default function SelectPaymentModalView({
                     multiline
                     placeholder={'Answer'}
                     onChangeText={(text) =>
-                      onChangeText(item, text, index, i?.length)
+                      onChangeText(item, text, index, item?.length)
                     }
                     style={{
                       ...styles.insctructionText,

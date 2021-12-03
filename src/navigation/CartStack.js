@@ -23,6 +23,8 @@ import {
   Paylink,
   Yoco,
   AllinonePyments,
+  Simplify,
+  Square,
 } from '../Screens';
 import OrderSuccess from '../Screens/OrderSuccess/OrderSuccess';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
@@ -125,6 +127,16 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.ALL_IN_ONE_PAYMENTS}
         component={AllinonePyments}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.SIMPLIFY}
+        component={Simplify}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.SQUARE}
+        component={Square}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
