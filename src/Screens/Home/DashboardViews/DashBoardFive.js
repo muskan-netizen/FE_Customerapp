@@ -514,13 +514,9 @@ export default function DashBoardFive({
               )}
           </View>
 
-          {console.log(
-            appIds.orderchekout,
-            DeviceInfo.getBundleId(),
-            'getordercheck',
-          )}
-
-          {!appIds.orderchekout === DeviceInfo.getBundleId() && (
+          {appIds.orderchekout == DeviceInfo.getBundleId() ? (
+            <></>
+          ) : (
             <View>
               {appMainData &&
                 appMainData?.on_sale_products &&
