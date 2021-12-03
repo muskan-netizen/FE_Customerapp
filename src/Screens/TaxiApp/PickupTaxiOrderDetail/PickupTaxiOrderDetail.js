@@ -66,6 +66,8 @@ import SearchDriver from '../ChooseCarTypeAndTime/SearchDriver';
 import moment from 'moment';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import { FlatList } from 'react-native';
+import { PulseIndicator } from 'react-native-indicators';
+import CustomCallouts from '../../../Components/CustomCallouts';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -643,7 +645,12 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           marginHorizontal: moderateScale(16)
         }}>
           <TouchableOpacity
-            onPress={() => navigation.goBack()}
+            onPress={paramData?.fromCab
+              ? () =>
+                navigation.navigate(navigationStrings.TAXIHOMESCREEN)
+              : paramData?.pickup_taxi
+                ? () => navigation.navigate(navigationStrings.HOME)
+                : () => navigation.goBack()}
             activeOpacity={0.8}
           >
             <Image style={{
@@ -665,41 +672,15 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           {!isLoading && (
             <MapView
               provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-              style={{
-                height: '30%',
-                width: '100%'
-              }}
+              style={{ height: '30%', width: '100%' }}
               initialRegion={region}
-              // region={region}
-              // initialRegion={region}
               ref={mapRef}
               // cacheEnabled={true}
               customMapStyle={mapStyleGrey}
-            // showsMyLocationButton={true}
-            // userLocationFastestInterval={10000}
-            // onRegionChangeComplete={_onRegionChange}
             >
-
-              {/* pick and drop all locations */}
-              {tasks.map((coordinate, index) => (
-                <MapView.Marker
-                  key={`coordinate_${index}`}
-                  image={imagePath.radioLocation}
-                  coordinate={{
-                    latitude: Number(coordinate?.latitude),
-                    longitude: Number(coordinate?.longitude),
-                  }}>
-                  <View
-                    style={{
-                      ...styles.plainView,
-                      backgroundColor: themeColors.primary_color
-                    }}>
-                    <Text style={styles.pickupDropOff}>
-                      {index === 0 ? 'Pickup' : 'Drop'}
-                    </Text>
-                  </View>
-                </MapView.Marker>
-              ))}
+              {!!tasks && tasks.length > 0 && (<CustomCallouts
+                data={tasks}
+              />)}
 
               {/* driver location */}
               {!!agent_location && !!agent_location?.lat && orderStatus != 'completed' && (
@@ -725,8 +706,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 waypoints={tasks.length > 2 ? tasks.slice(1, -1) : []}
                 destination={tasks[tasks.length - 1]}
                 apikey={profile?.preferences?.map_key}
-                strokeWidth={5}
-                strokeColor={themeColors.primary_color}
+                strokeWidth={4}
+                strokeColor={colors.black}
                 optimizeWaypoints={true}
                 onStart={(params) => { }}
                 precision={'high'}

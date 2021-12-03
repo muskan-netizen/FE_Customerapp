@@ -9,7 +9,11 @@
 // export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
 export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.100.198:8020/api/v1';
+// export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
+// export const API_BASE_URL = 'https://click-eat.com/api/v1';s
 // export const API_BASE_URL = 'https://tranzit.app/api/v1';
+// export const API_BASE_URL = 'https://pinkjettaxi.com/api/v1';
+// export const API_BASE_URL = 'https://codiner.com/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
@@ -133,4 +137,8 @@ export const CART_PRODUCT_SCHEDULE = getApiUrl('/cart/product-schedule/update');
 export const TIP_AFTER_ORDER = getApiUrl('/orders/tip-after-order');
 export const VALIDATE_PROMO_CODE = getApiUrl('/promo-code/validate_promo_code');
 export const UPLOAD_PHOTO = getApiUrl('/upload-image-pickup');
+export const LAST_ADDED = getApiUrl('/cart/product/lastAdded');
+export const DIFFERENT_ADD_ONS = getApiUrl(
+  '/cart/product/variant/different-addons',
+);
 export const WALLET_CREDIT = getApiUrl('/myWallet/credit');

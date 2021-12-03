@@ -155,7 +155,6 @@ export default function Home({route, navigation}) {
 
   const updateLatLang = (res) => {
     updateState({updateTime: Math.random()});
-    console.log();
     actions.locationData(res);
   };
   useEffect(() => {
@@ -185,8 +184,9 @@ export default function Home({route, navigation}) {
                   latitude: appMainData?.reqData?.latitude,
                   longitude: appMainData?.reqData?.longitude,
                 };
-                actions.locationData(res);
+                actions.locationData(data);
               } else {
+                console.log(paramData, 'paramDataparamData');
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
                   if (!!userData?.auth_token && !paramData?.details) {
                     const nearestAddress = getNearestLocation(
@@ -196,6 +196,7 @@ export default function Home({route, navigation}) {
 
                     if (!!nearestAddress) {
                       actions.locationData(nearestAddress);
+                      homeData(nearestAddress);
                       return;
                     } else {
                       actions.locationData(res);
@@ -203,7 +204,6 @@ export default function Home({route, navigation}) {
                     }
                   } else {
                     actions.locationData(res);
-                    return;
                   }
                 }
               }
@@ -250,7 +250,7 @@ export default function Home({route, navigation}) {
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
     let latlongObj = {};
-
+    console.log(slectedLocatonFromPreviousScreen, location, 'hereGoes');
     if (appData?.profile?.preferences?.is_hyperlocal) {
       latlongObj = {
         address: slectedLocatonFromPreviousScreen
@@ -379,7 +379,10 @@ export default function Home({route, navigation}) {
       item.redirect_to == staticStrings.ONDEMANDSERVICE ||
       item?.redirect_to == staticStrings.LAUNDRY
     ) {
-      moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+        ...item,
+        fetchOffers: true,
+      })();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
         if (shortCodes.arenagrub == appData?.profile?.code) {
@@ -437,6 +440,7 @@ export default function Home({route, navigation}) {
     }
   };
   useEffect(() => {
+    console.log(saveAllUserAddress, 'saveAllUserAddress');
     if (!saveAllUserAddress) {
       homeData();
     }
@@ -534,10 +538,18 @@ export default function Home({route, navigation}) {
 
   const selcetedToggle = (type) => {
     actions.dineInData(type);
-    updateState({
-      selectedTabType: type,
-      isLoadingB: true,
-    });
+    if (dineInType != type) {
+      {
+        updateState({
+          selectedTabType: type,
+          isLoadingB: true,
+        });
+      }
+    } else {
+      updateState({
+        selectedTabType: type,
+      });
+    }
   };
 
   useEffect(() => {
@@ -600,7 +612,6 @@ export default function Home({route, navigation}) {
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
-
   const renderHomeScreen = () => {
     const case_ = 5;
     switch (appStyle?.homePageLayout) {

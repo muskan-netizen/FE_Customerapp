@@ -37,13 +37,11 @@ import {API_BASE_URL} from '../../config/urls';
 import AsyncStorage from '@react-native-community/async-storage';
 import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
 import BackgroundService from 'react-native-background-actions';
-
-const ONE_SECOND_IN_MS = 80;
-const PATTERN = [
-  1 * ONE_SECOND_IN_MS,
-  2 * ONE_SECOND_IN_MS,
-  3 * ONE_SECOND_IN_MS,
-];
+import {
+  hapticEffects,
+  playHapticEffect,
+  playVibration,
+} from '../../utils/helperFunctions';
 
 export default function Settings({route, navigation}) {
   // const appData = useSelector(state => state?.initBoot?.appData);
@@ -179,8 +177,8 @@ export default function Settings({route, navigation}) {
         if (res !== null) {
           btData = res;
           await AsyncStorage.setItem('autoConnectEnabled', 'true');
-          await AsyncStorage.setItem('BleDevice2', JSON.stringify(res));
-          console.log('++++++22', res);
+          await AsyncStorage.setItem('BleDevice2', btData);
+          console.log('++++++22', btData);
           if (lang === 'ar') {
             I18nManager.forceRTL(true);
             setItem('language', lang);
@@ -217,7 +215,7 @@ export default function Settings({route, navigation}) {
 
   const _toggleOnOff = (isOn) => {
     actions.setToggle(isOn);
-    Vibration.vibrate(PATTERN);
+    playHapticEffect(hapticEffects.rigid);
     updateState({
       isOn: isOn ? true : false,
     });
@@ -340,7 +338,7 @@ export default function Settings({route, navigation}) {
                 key={String(inx)}
                 onPress={() => {
                   _setApperance(i);
-                  Vibration.vibrate(PATTERN);
+                  playHapticEffect(hapticEffects.rigid);
                 }}>
                 <Image source={i.image} />
                 <Text

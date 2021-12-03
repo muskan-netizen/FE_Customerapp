@@ -53,6 +53,18 @@ import BottomSheet, {
 } from '@gorhom/bottom-sheet';
 import AvailableDriver from './AvailableDriver';
 import GradientButton from '../../../Components/GradientButton';
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
+import CustomCallouts from '../../../Components/CustomCallouts';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -822,7 +834,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           //   _onRegionChange(region, {isGesture: true})
           // }
         >
-          {paramData?.tasks.map((coordinate, index) => {
+          <CustomCallouts data={paramData?.tasks} />
+          {/* {paramData?.tasks.map((coordinate, index) => {
             return (
               <View>
                 <MapView.Marker
@@ -833,20 +846,69 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
                   coordinate={{
                     latitude: Number(coordinate?.latitude),
                     longitude: Number(coordinate?.longitude),
-                  }}>
-                  <View
+                  }}
+                >
+                  <View 
                     style={{
                       ...styles.plainView,
-                      backgroundColor: themeColors.primary_color,
+                      backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white
                     }}>
-                    <Text style={styles.pickupDropOff}>
-                      {index === 0 ? 'Pickup' : 'Drop'}
-                    </Text>
+                    <View style={{
+                      flexDirection: 'row', alignItems: 'center'
+                    }}>
+                      <View style={{
+                        backgroundColor: colors.black,
+                        paddingHorizontal: moderateScale(12),
+                        paddingVertical: moderateScale(10)
+                      }}>
+                        {index == 0 ?<PulseIndicator
+                        size={12}
+                        color="white"
+                        style={{
+                          height: moderateScale(8),
+                          width: moderateScale(8),
+                          borderRadius:moderateScale(4)
+                        }}
+                        />: 
+                        <Text style={{ 
+                          ...styles.pickupDropOff,
+                          color: colors.white,
+                          fontFamily:fontFamily.medium
+                        }}>{'D'}</Text>
+                        }
+                      </View>
+                      <View style={{
+                        flexDirection: "row",
+                        alignItems: 'center',
+                        paddingHorizontal: moderateScale(8),
+                        paddingVertical: moderateScale(10)
+                      }}>
+                        <Text
+                          numberOfLines={1}
+                          style={{
+                            ...styles.pickupDropOff,
+                            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                            alignItems: 'center',
+                            maxWidth: 150,
+
+                          }}>
+                          {coordinate?.pre_address}
+                        </Text>
+                        <Image style={{
+                          marginLeft: moderateScale(4),
+                          height: moderateScale(12),
+                          width: moderateScale(12)
+                        }}
+                          resizeMode="contain"
+                          source={imagePath.icGo}
+                        />
+                      </View>
+                    </View>
                   </View>
                 </MapView.Marker>
               </View>
             );
-          })}
+          })} */}
 
           <MapViewDirections
             origin={paramData?.location[0]}
@@ -857,8 +919,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             }
             destination={paramData?.location[paramData?.location.length - 1]}
             apikey={profile?.preferences?.map_key}
-            strokeWidth={3}
-            strokeColor={themeColors.primary_color}
+            strokeWidth={4}
+            strokeColor={colors.black}
             optimizeWaypoints={true}
             onStart={(params) => {
               // console.log(Started routing between "${params.origin}" and "${params.destination}");

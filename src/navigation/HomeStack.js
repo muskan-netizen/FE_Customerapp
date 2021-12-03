@@ -207,11 +207,11 @@ export default function () {
         component={CategoryBrands}
         options={{headerShown: false}}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.CART_SCREEN}
         component={CartStack}
         options={{headerShown: false, gestureEnabled: true}}
-      />
+      /> */}
     </Stack.Navigator>
   );
 }
