@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import stylesFun from './styles';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import MapView, {
   AnimatedRegion,
   Marker,
@@ -28,19 +28,19 @@ import {
 } from '../../../styles/responsiveSize';
 import colors from '../../../styles/colors';
 import AutoUpLabelTxtInput from '../../../Components/AutoUpLabelTxtInput';
-import { BlurView } from '@react-native-community/blur';
-import { mapStyleGrey } from '../../../utils/constants/MapStyle';
+import {BlurView} from '@react-native-community/blur';
+import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 import navigationStrings from '../../../navigation/navigationStrings';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 import Geolocation from 'react-native-geolocation-service';
-import { chekLocationPermission } from '../../../utils/permissions';
-import { getCurrentLocation } from '../../../utils/helperFunctions';
+import {chekLocationPermission} from '../../../utils/permissions';
+import {getCurrentLocation} from '../../../utils/helperFunctions';
 import BottomViewModal from '../../../Components/BottomViewModal';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import GradientButton from '../../../Components/GradientButton';
 
-export default function HomeScreenTaxi({ navigation, route }) {
+export default function HomeScreenTaxi({navigation, route}) {
   const mapRef = React.createRef();
   const paramData = route?.params;
 
@@ -92,19 +92,19 @@ export default function HomeScreenTaxi({ navigation, route }) {
     details,
   } = state;
 
-  const { appData, themeColors, appStyle } = useSelector(
+  const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
   const businessType = appStyle?.homePageLayout;
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
   const userData = useSelector((state) => state.auth.userData);
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({ fontFamily, themeColors });
+  const styles = stylesFun({fontFamily, themeColors});
 
   const _onRegionChange = (region) => {
-    updateState({ region: region });
+    updateState({region: region});
     _getAddressBasedOnCoordinates(region);
     // animate(region);
   };
@@ -122,7 +122,7 @@ export default function HomeScreenTaxi({ navigation, route }) {
           formattedAddress: json.results[0].formatted_address,
         });
         let detail = {};
-        console.log("scroll detail", json.results[0])
+        console.log('scroll detail', json.results[0]);
         detail = {
           formatted_address: json.results[0].formatted_address,
           geometry: {
@@ -173,7 +173,7 @@ export default function HomeScreenTaxi({ navigation, route }) {
                 },
               );
             })
-            .catch((err) => { });
+            .catch((err) => {});
         }
       })
       .catch((error) => console.log('error while accessing location', error));
@@ -181,7 +181,7 @@ export default function HomeScreenTaxi({ navigation, route }) {
 
   //Animating the marker
   const animate = (region) => {
-    const { coordinate } = state;
+    const {coordinate} = state;
     const newCoordinate = {
       ...region,
     };
@@ -192,11 +192,11 @@ export default function HomeScreenTaxi({ navigation, route }) {
           500,
         );
       }
-      updateState({ region: new AnimatedRegion(region) });
+      updateState({region: new AnimatedRegion(region)});
       _getAddressBasedOnCoordinates(region);
     } else {
       coordinate.timing(newCoordinate).start();
-      updateState({ region: new AnimatedRegion(region) });
+      updateState({region: new AnimatedRegion(region)});
       _getAddressBasedOnCoordinates(region);
     }
   };
@@ -222,17 +222,14 @@ export default function HomeScreenTaxi({ navigation, route }) {
     });
   };
 
-  console.log(paramData, 'paramDataparamDataparamDataparamDataparamData');
-
   const _modeToNextScreen = () => {
-
     const pickuplocationAllData = {
       longitude: details?.geometry?.location?.lng,
       latitude: details?.geometry?.location?.lat,
       address: details?.formatted_address,
       task_type_id: paramData?.task_id,
-      pre_address: details?.formatted_address
-    }
+      pre_address: details?.formatted_address,
+    };
 
     console.log(pickuplocationAllData, 'pickuplocationAllData');
     navigation.navigate(navigationStrings.ADDADDRESS, {
@@ -262,8 +259,7 @@ export default function HomeScreenTaxi({ navigation, route }) {
         initialRegion={region}
         customMapStyle={mapStyleGrey}
         // pointerEvents={'none'}
-        onRegionChangeComplete={_onRegionChange}
-      >
+        onRegionChangeComplete={_onRegionChange}>
         {/* <Marker
             ref={markerRef}
             // pointerEvents={'none'}
@@ -275,13 +271,12 @@ export default function HomeScreenTaxi({ navigation, route }) {
             // draggable
           /> */}
       </MapView>
-      <View style={[styles.backbutton, { marginHorizontal: moderateScale(15) }]}>
+      <View style={[styles.backbutton, {marginHorizontal: moderateScale(15)}]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <View
             style={{
               paddingHorizontal: moderateScale(15),
               paddingVertical: moderateScaleVertical(15),
-
             }}>
             <Image
               style={{
