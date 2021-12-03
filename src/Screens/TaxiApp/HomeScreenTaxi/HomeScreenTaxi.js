@@ -224,7 +224,6 @@ export default function HomeScreenTaxi({navigation, route}) {
   //       addressType: paramData?.addressType,
   //     });
   //   };
-  console.log(paramData, 'paramDataparamDataparamDataparamDataparamData');
 
   const moveToNewScreen =
     (screenName, data = {paramData}) =>
