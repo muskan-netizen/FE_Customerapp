@@ -634,4 +634,5 @@ export default {
   PRINTER_ATTACHED: 'Printer Attached',
   UNPAIR: 'Unpair',
   UNPAIR_DEVICE_WARNING: 'Are you sure you want to unpair this device ?',
+  DOES_THIS_INCLUDE_GIFT: 'Does this include a gift?',
 };

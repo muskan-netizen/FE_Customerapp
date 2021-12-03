@@ -138,10 +138,14 @@ export default function ReturnOrder({navigation, route}) {
             console.log(res, 'response');
             let file = {
               image_id: Math.random(),
-              name: res?.filename,
+              name: res?.filename ? res?.filename : 'unknown',
               type: res?.mime,
-              uri: res?.sourceURL || res?.path,
+              uri:
+                res?.sourceURL !== null && res?.sourceURL
+                  ? res?.sourceURL
+                  : `file://${res?.path}`,
             };
+            console.log(file, 'filefilefilefilefile');
             let formdata = new FormData();
             formdata.append('images[]', file);
             actions

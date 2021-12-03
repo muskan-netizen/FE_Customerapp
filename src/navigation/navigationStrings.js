@@ -100,4 +100,6 @@ export default {
   CATEGORY_BRANDS: 'categoryBrands',
   ALL_IN_ONE_PAYMENTS: 'allInOnePayments',
   CART_SCREEN: 'cartScreen',
+  SIMPLIFY: 'simplify',
+  SQUARE: 'square',
 };
