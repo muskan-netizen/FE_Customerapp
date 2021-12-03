@@ -915,7 +915,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             }}
           />
         </MapView>}
-
+{/* 
         <TouchableOpacity
           style={{
             position: 'absolute',
@@ -932,7 +932,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             }}
             source={imagePath.mapNavigation}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <BottomSheet
           ref={bottomSheetRef}
           index={0}
