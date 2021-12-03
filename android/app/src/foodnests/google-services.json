@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "487451161102",
+    "project_id": "foodnests-2d968",
+    "storage_bucket": "foodnests-2d968.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487451161102:android:c2b7811eb8edd91a9c825f",
+        "android_client_info": {
+          "package_name": "com.foodnests"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "487451161102-mct9jjicookhudi8b2nkik3qs7i8j8c1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foodnests",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "487451161102-qdmprkhen6r6j4s7lhfjjr0bn9s3nj4p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foodnests",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "487451161102-toq2joee36j52cgkk6a10h0bru2ji428.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foodnests",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "487451161102-p3djinjbidocfd9huutinbct6fs4plb4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA24CTaYrql48dzeQjg8ci2vFrAwjhnck8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "487451161102-p3djinjbidocfd9huutinbct6fs4plb4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "487451161102-6u9ai348l7csm73lai1sevmqvq1bgme0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.foodnests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

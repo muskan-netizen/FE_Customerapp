@@ -636,7 +636,7 @@ export function stylesFunc({fontFamily, themeColors}) {
     trackStatusView: {
       paddingHorizontal: moderateScale(20),
       paddingVertical: moderateScale(8),
-      borderRadius: moderateScale(8.5),
+      borderRadius: moderateScale(8),
       alignItems: 'center',
     },
     bottomFirstHalf: {
