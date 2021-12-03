@@ -341,9 +341,10 @@ export default {
   CONTINUE_FACEBOOK: 'Continue with Facebook',
   CONTINUE_TWITTER: 'Continue with Twitter',
   CONTINUE_APPLE: 'Continue with Apple',
-  RETURNORDER: 'Return order',
+  RETURNORDER: 'Issues / Returns',
   SELECTDATEANDTIME: 'Select Date and Time',
-  DOYOUWANTTORETURNYOURORDER: 'Do You Want To Return Your Order?',
+  DOYOUWANTTORETURNYOURORDER:
+    'Please report issues here to log a complaint or to request a refund.',
   SELECTITEMSFORRETURN: 'Select item(s) for return',
   RETURNREASONS: 'Reason for return product',
   COMMENTSOPTIONAL: 'Comments (Optional):',
