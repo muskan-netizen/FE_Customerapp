@@ -971,7 +971,7 @@ export default function Cart({navigation, route}) {
   };
 
   const _webPayment = () => {
-    let selectedMethod = selectedPayment.title.toLowerCase();
+    let selectedMethod = selectedPayment.code.toLowerCase();
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
 
@@ -1030,7 +1030,7 @@ export default function Cart({navigation, route}) {
   //Offline payments
   const _offineLinePayment = async () => {
     if (paramsData?.tokenInfo) {
-      let selectedMethod = selectedPayment.title.toLowerCase();
+      let selectedMethod = selectedPayment.code.toLowerCase();
       actions
         .openPaymentWebUrl(
           `/${selectedMethod}?tip=${
@@ -1095,20 +1095,11 @@ export default function Cart({navigation, route}) {
             });
           }
         })
-        .catch(errorMethod);
+        .catch((err) => console.log(err, 'errorInPlaceOrder'));
     } else {
       errorMethod(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
   };
-
-  console.log(
-    (Number(cartData?.total_payable_amount) +
-      (selectedTipAmount != null && selectedTipAmount != ''
-        ? Number(selectedTipAmount)
-        : 0)) *
-      100,
-    'payableAmount',
-  );
 
   const _renderRazor = () => {
     updateState({isLoadingB: true});

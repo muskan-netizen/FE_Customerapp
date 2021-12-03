@@ -131,7 +131,6 @@ export async function apiReq(
       .catch((error) => {
         console.log('core error raised', error);
         if (error && error.response && error.response.status === 401) {
-       
           sessionHandler(error.response.data.message);
           return rej(error);
         }
@@ -160,6 +159,7 @@ export function apiDelete(endPoint, data, headers = {}) {
 }
 
 export function apiGet(endPoint, data, headers = {}, requestOptions) {
+  console.log(endPoint, 'endPointendPointendPoint');
   return apiReq(endPoint, data, 'get', headers, requestOptions);
 }
 
