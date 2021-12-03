@@ -46,6 +46,8 @@ import {
 import {useScrollToTop} from '@react-navigation/native';
 import staticStrings from '../../../constants/staticStrings';
 import imagePath from '../../../constants/imagePath';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import DeviceInfo from 'react-native-device-info';
 
 export default function DashBoardFive({
   handleRefresh = () => {},
@@ -512,31 +514,35 @@ export default function DashBoardFive({
               )}
           </View>
 
-          <View>
-            {appMainData &&
-              appMainData?.on_sale_products &&
-              !!appMainData?.on_sale_products.length && (
-                <>
-                  <View>{listHeader(strings.ON_SALE)}</View>
-                  <FlatList
-                    showsHorizontalScrollIndicator={false}
-                    horizontal
-                    keyExtractor={(item) => item?.id.toString() || ''}
-                    data={appMainData?.on_sale_products}
-                    renderItem={renderSale}
-                    ItemSeparatorComponent={() => (
-                      <View style={{marginRight: moderateScale(16)}} />
-                    )}
-                    ListHeaderComponent={() => (
-                      <View style={{marginLeft: moderateScale(16)}} />
-                    )}
-                    ListFooterComponent={() => (
-                      <View style={{marginRight: moderateScale(16)}} />
-                    )}
-                  />
-                </>
-              )}
-          </View>
+          {appIds.orderchekout == DeviceInfo.getBundleId() ? (
+            <></>
+          ) : (
+            <View>
+              {appMainData &&
+                appMainData?.on_sale_products &&
+                !!appMainData?.on_sale_products.length && (
+                  <>
+                    <View>{listHeader(strings.ON_SALE)}</View>
+                    <FlatList
+                      showsHorizontalScrollIndicator={false}
+                      horizontal
+                      keyExtractor={(item) => item?.id.toString() || ''}
+                      data={appMainData?.on_sale_products}
+                      renderItem={renderSale}
+                      ItemSeparatorComponent={() => (
+                        <View style={{marginRight: moderateScale(16)}} />
+                      )}
+                      ListHeaderComponent={() => (
+                        <View style={{marginLeft: moderateScale(16)}} />
+                      )}
+                      ListFooterComponent={() => (
+                        <View style={{marginRight: moderateScale(16)}} />
+                      )}
+                    />
+                  </>
+                )}
+            </View>
+          )}
         </Animatable.View>
         <View
           style={{

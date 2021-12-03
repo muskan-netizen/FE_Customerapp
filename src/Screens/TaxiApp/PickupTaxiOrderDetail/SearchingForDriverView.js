@@ -51,7 +51,7 @@ export default function ({
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-  console.log(productRatings, 'productRatings');
+
   // alert(isShowRating);
   const fontFamily = appStyle?.fontSizeData;
   const currencies = useSelector((state) => state?.initBoot?.currencies);
@@ -65,7 +65,7 @@ export default function ({
   const {profile} = appData;
 
   //give review and update the rate
-
+  console.log(searchingLoader, 'searchingLoader');
   return (
     <>
       <View
@@ -253,6 +253,35 @@ export default function ({
                   height: moderateScaleVertical(100),
                   width: moderateScale(100),
                 }}
+                colorFilters={
+                  // searchingLoader?.nm == 'Comp 1'
+                  //   ? [
+                  //       {
+                  //         keypath: searchingLoader?.layers[0].nm,
+                  //         color: themeColors?.primary_color,
+                  //       },
+                  //       {
+                  //         keypath: searchingLoader?.layers[1].nm,
+                  //         color: themeColors?.primary_color,
+                  //       },
+                  //     ]
+                  //   : [
+                  //       {
+                  //         keypath: searchingLoader?.layers[0].nm,
+                  //         color: themeColors?.primary_color,
+                  //       },
+                  //     ]
+                  [
+                    {
+                      keypath: 'button',
+                      color: 'red',
+                    },
+                    {
+                      keypath: 'Sending Loader',
+                      color: 'green',
+                    },
+                  ]
+                }
               />
             </View>
             <Text

@@ -83,7 +83,7 @@ let activeIdx = 0;
 
 export default function Products({route, navigation}) {
   const {data} = route.params;
-  console.log(data, 'datadatadata');
+  // console.log(data, 'datadatadata');
   const routeData = data?.fetchOffers;
   const {blurRef} = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -548,7 +548,7 @@ export default function Products({route, navigation}) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendor = () => {
-    console.log('api hit getAllProductsByVendor', productListId);
+    console.log('api hit getAllProductsByVendor');
     actions
       .getProductByVendorId(
         `/${productListId?.id}?limit=${limit}&page=${pageNo}`,
@@ -684,7 +684,7 @@ export default function Products({route, navigation}) {
 
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
-    playHapticEffect(hapticEffects.rigid);
+    playHapticEffect(hapticEffects.impactLight);
     if (!!userData?.auth_token) {
       updateState({isLoadingB: true});
       actions
@@ -733,7 +733,7 @@ export default function Products({route, navigation}) {
   };
 
   const errorMethod = (error) => {
-    console.log('checking error >>>>><<<<<<', error);
+    console.log('checking error', error);
     updateState({
       updateQtyLoader: false,
       selectedItemID: -1,
@@ -814,7 +814,7 @@ export default function Products({route, navigation}) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }
-    playHapticEffect(hapticEffects.rigid);
+    playHapticEffect(hapticEffects.impactLight);
     let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
     updateState({selectedItemID: item?.id, btnLoader: true});
     let isSingleVendor = await checkSingleVendor(item.id);
@@ -951,7 +951,8 @@ export default function Products({route, navigation}) {
       return;
     }
 
-    playHapticEffect(hapticEffects.rigid);
+    playHapticEffect(hapticEffects.impactLight);
+
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
 
@@ -1109,7 +1110,9 @@ export default function Products({route, navigation}) {
     section = null,
     diffAdOnId = 0,
   ) => {
-    console.log('item to update remove item', itemToUpdate);
+    // console.log("item to update remove item", itemToUpdate)
+    s;
+
     let updateLocallyAddOns = [];
     if (differentAddsOnsModal) {
       let cloneArr = differentAddsOns;
@@ -1124,10 +1127,7 @@ export default function Products({route, navigation}) {
     let data = {};
     let isExistproductId = diffAdOnId;
     let isExistCartId =
-      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-      itemToUpdate.variant[0]?.check_if_in_cart_app.length > 0
-        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
-        : cartId;
+      itemToUpdate?.check_if_in_cart_app[0]?.cart_id || cartId;
     console.log('item', itemToUpdate);
 
     data['cart_id'] = isExistCartId;
@@ -1150,14 +1150,12 @@ export default function Products({route, navigation}) {
                 ...x,
                 qty: null,
                 cart_product_id: res.data.cart_product_id,
-                variant: itemToUpdate?.variant.map((val, i) => {
-                  return {
-                    ...val,
-                    check_if_in_cart_app: differentAddsOnsModal
-                      ? updateLocallyAddOns
-                      : [],
-                  };
-                }),
+                check_if_in_cart_app: differentAddsOnsModal
+                  ? updateLocallyAddOns
+                  : [],
+                // variant: itemToUpdate?.variant.map((val, i) => {
+                //   return { ...val, check_if_in_cart_app: differentAddsOnsModal ? updateLocallyAddOns : [] };
+                // }),
               };
             }
             return x;
@@ -1187,14 +1185,12 @@ export default function Products({route, navigation}) {
                 ...val,
                 qty: null,
                 cart_product_id: res.data.cart_product_id,
-                variant: itemToUpdate?.variant.map((val, i) => {
-                  return {
-                    ...val,
-                    check_if_in_cart_app: differentAddsOnsModal
-                      ? updateLocallyAddOns
-                      : [],
-                  };
-                }),
+                check_if_in_cart_app: differentAddsOnsModal
+                  ? updateLocallyAddOns
+                  : [],
+                // variant: itemToUpdate?.variant.map((val, i) => {
+                //   return { ...val, check_if_in_cart_app: differentAddsOnsModal ? updateLocallyAddOns : [] };
+                // }),
               };
             }
             return val;
@@ -1297,16 +1293,18 @@ export default function Products({route, navigation}) {
   };
 
   const addProductsWithoutCustomize = (item, section, index, type) => {
+    console.log('very nice', item);
+    // return;
     let itemToUpdate = cloneDeep(item);
     let quanitity = !!itemToUpdate?.qty
       ? itemToUpdate?.qty
-      : itemToUpdate.variant[0]?.check_if_in_cart_app[0].quantity;
+      : itemToUpdate?.check_if_in_cart_app[0].quantity;
     let productId = !!itemToUpdate?.cart_product_id
       ? itemToUpdate?.cart_product_id
-      : itemToUpdate.variant[0]?.check_if_in_cart_app[0].id;
+      : itemToUpdate?.check_if_in_cart_app[0].id;
     let parentCartId = !!cartId
       ? cartId
-      : itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id;
+      : itemToUpdate?.check_if_in_cart_app[0].cart_id;
 
     if (type == 1) {
       addDeleteCartItems(
@@ -1333,7 +1331,9 @@ export default function Products({route, navigation}) {
 
   const checkIsCustomize = async (item, section = null, index, type) => {
     let itemToUpdate = cloneDeep(item);
-    if (item.add_on.length == 0) {
+    console.log('check item to update', itemToUpdate);
+    // return;
+    if (item.add_on.length == 0 && item.variantSet.length == 0) {
       // hit in case of simple products withou any customization
       addProductsWithoutCustomize(item, section, index, type);
       return;
@@ -1341,25 +1341,27 @@ export default function Products({route, navigation}) {
 
     let productId = !!itemToUpdate?.cart_product_id
       ? itemToUpdate?.cart_product_id
-      : itemToUpdate.variant[0]?.check_if_in_cart_app[0]?.id;
+      : itemToUpdate?.check_if_in_cart_app[0]?.id;
     let parentCartId = !!cartId
       ? cartId
-      : itemToUpdate.variant[0]?.check_if_in_cart_app[0]?.cart_id;
+      : itemToUpdate.check_if_in_cart_app[0]?.cart_id;
 
     var totalProductQty = 0;
-    if (
-      itemToUpdate?.variant &&
-      itemToUpdate?.variant[0]?.check_if_in_cart_app
-    ) {
-      itemToUpdate?.variant[0]?.check_if_in_cart_app.map((val) => {
+    if (itemToUpdate?.variant && itemToUpdate?.check_if_in_cart_app) {
+      itemToUpdate?.check_if_in_cart_app.map((val) => {
         totalProductQty = totalProductQty + val?.quantity;
       });
     }
 
+    // return;
+
     var isExistqty = itemToUpdate?.qty ? itemToUpdate?.qty : totalProductQty; //this variable contain only local product quantity
     var tempQty = 0; //this variable contain latest updated quantity of products
 
-    if (type == 2 && item?.add_on?.length > 0) {
+    if (
+      (type == 2 && item?.add_on?.length > 0) ||
+      item?.variantSet?.length > 0
+    ) {
       //hit in case of subtruction
       let apiData = {cart_id: parentCartId, product_id: item.id};
       let checkIsAvailable = await getDiffAddsOn(apiData, section, item); //check products with different addOns is exist or not.
@@ -1379,6 +1381,7 @@ export default function Products({route, navigation}) {
 
     if (type == 2) {
       // direct subtract customize items if products added with same addons
+
       addDeleteCartItems(
         item,
         tempQty == 0 ? isExistqty : tempQty,
@@ -1494,24 +1497,27 @@ export default function Products({route, navigation}) {
 
   const renderProduct = ({item, index}) => {
     return (
-      <ProductCard3
-        data={item}
-        index={index}
-        onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-        onAddtoWishlist={() => _onAddtoWishlist(item)}
-        addToCart={() => addSingleItem(item, null, index)}
-        onIncrement={() => checkIsCustomize(item, null, index, 1)}
-        onDecrement={() => checkIsCustomize(item, null, index, 2)}
-        selectedItemID={selectedItemID}
-        btnLoader={btnLoader}
-        selectedItemIndx={selectedItemIndx}
-        differentAddsOns={differentAddsOns}
-      />
+      <>
+        <ProductCard3
+          data={item}
+          index={index}
+          onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+          onAddtoWishlist={() => _onAddtoWishlist(item)}
+          addToCart={() => addSingleItem(item, null, index)}
+          onIncrement={() => checkIsCustomize(item, null, index, 1)}
+          onDecrement={() => checkIsCustomize(item, null, index, 2)}
+          selectedItemID={selectedItemID}
+          btnLoader={btnLoader}
+          selectedItemIndx={selectedItemIndx}
+          differentAddsOns={differentAddsOns}
+        />
+        <View style={styles.horizontalLine} />
+      </>
     );
   };
 
   const updateCartItems = (item, quanitity, productId, cartID) => {
-    playHapticEffect(hapticEffects.rigid);
+    playHapticEffect(hapticEffects.impactLight);
     console.log('selcted section', selectedSection);
 
     if (!!selectedSection) {
@@ -2502,7 +2508,7 @@ export default function Products({route, navigation}) {
                     }
                     size="small"
                     onToggle={() => {
-                      playHapticEffect(hapticEffects.rigid);
+                      playHapticEffect(hapticEffects.impactLight);
                       const updatedArr = ProductTags.map((el, idx) => {
                         console.log(el);
                         if (idx === index) {
@@ -2844,9 +2850,7 @@ export default function Products({route, navigation}) {
           btnLoader={btnLoader}
           selectedItemIndx={selectedItemIndx}
         />
-        <View
-          style={{width: '100%', height: 2, backgroundColor: colors.greyColor}}
-        />
+        <View style={styles.horizontalLine} />
       </View>
     );
   };
@@ -3281,7 +3285,7 @@ export default function Products({route, navigation}) {
       {!searchInput && (
         <GradientCartView
           onPress={() => {
-            playHapticEffect(hapticEffects.rigid);
+            playHapticEffect(hapticEffects.notificationSuccess);
             navigation.navigate(navigationStrings.CART);
           }}
           btnText={
@@ -3302,7 +3306,7 @@ export default function Products({route, navigation}) {
           }
           isMenuBtnShow={categoryInfo?.is_show_products_with_category}
           onMenuTap={() => {
-            playHapticEffect(hapticEffects.rigid);
+            playHapticEffect(hapticEffects.impactLight);
             updateState({MenuModalVisible: !MenuModalVisible});
           }}
         />

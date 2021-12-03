@@ -330,7 +330,6 @@ export default function Login({navigation}) {
     let c = re.test(data);
 
     if (c) {
-      console.log(mobilNo.focus, 'mobilNo');
       updateState({
         phoneInput: true,
         mobilNo: {
@@ -357,8 +356,6 @@ export default function Login({navigation}) {
       });
     }
   };
-
-  console.log(mobilNo.focus, 'mobilNo');
 
   /*************************** On Text Change
    */ const textChangeHandler = (type, data, value = 'value') => {
@@ -435,7 +432,6 @@ export default function Login({navigation}) {
             keyboardType={'email-ad
             autoCapitalize={'none'}
           /> */}
-        {console.log(password.length, 'jkfhdjfhdsj')}
         {!phoneInput && (
           <>
             <BorderTextInput

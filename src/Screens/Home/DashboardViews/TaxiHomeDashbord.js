@@ -364,8 +364,7 @@ export default function TaxiHomeDashbord({
                       pickUpTimeType: slectedDate || selectedTime ? '' : 'now',
                     });
                   }, 2000);
-                }}
-                >
+                }}>
                 <Text
                   style={{color: colors.white, fontFamily: fontFamily.regular}}>
                   {'Set'}
@@ -497,7 +496,7 @@ export default function TaxiHomeDashbord({
             userData?.auth_token
               ? navigation.navigate(navigationStrings.ADDADDRESS, {
                   data: appMainData?.categories[0],
-                  pickUpTimeType: 'now'
+                  pickUpTimeType: 'now',
                 })
               : navigation.navigate(navigationStrings.LOGIN);
           }}>
@@ -542,6 +541,8 @@ export default function TaxiHomeDashbord({
       </ScrollView>
     );
   };
+
+  console.log(slectedDate, 'selectedTimeselectedTime');
 
   return (
     <View

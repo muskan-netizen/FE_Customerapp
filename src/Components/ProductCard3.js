@@ -43,6 +43,7 @@ export default function ProductCard3({
   btnLoader,
   categoryInfo = '',
 }) {
+  // console.log("item data",data)
   // data['qty'] = 1
   const [state, setState] = useState({
     selectedIndex: -1,
@@ -53,8 +54,8 @@ export default function ProductCard3({
 
 
   var totalProductQty = 0
-  if (data?.variant && data?.variant[0]?.check_if_in_cart_app) {
-    data?.variant[0]?.check_if_in_cart_app.map((val) => {
+  if (data?.check_if_in_cart_app) {
+    data?.check_if_in_cart_app.map((val) => {
       totalProductQty = totalProductQty + val.quantity
     })
   }
@@ -310,8 +311,8 @@ export default function ProductCard3({
                       selectedIndex == index ? moderateScaleVertical(8) : 0,
                     alignItems: 'center',
                   }}>
-                  {(!!data?.variant[0]?.check_if_in_cart_app &&
-                    data?.variant[0]?.check_if_in_cart_app.length > 0) ||
+                  {(!!data?.check_if_in_cart_app &&
+                    data?.check_if_in_cart_app.length > 0) ||
                     !!data?.qty || totalProductQty ? (
                     <View
                       style={{

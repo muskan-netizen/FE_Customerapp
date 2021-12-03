@@ -52,7 +52,7 @@ const RepeatModal = ({
                         // marginLeft: moderateScale(8)
                     }}>{data?.translation_title}</Text>
                 </View>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row',marginBottom: 16 }}>
                     <ButtonWithLoader
                         btnText="Add new"
                         btnTextStyle={{
