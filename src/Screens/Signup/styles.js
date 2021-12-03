@@ -38,7 +38,6 @@ export default ({fontFamily}) => {
       bottom: moderateScale(80),
       alignItems: 'center',
       width: '100%',
-      alignSelf: 'center'
     },
     guestBtn: {
       marginTop: moderateScaleVertical(20),

@@ -6,7 +6,7 @@ import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import commonStylesFun from '../styles/commonStyles';
-import {moderateScale} from '../styles/responsiveSize';
+import {moderateScale, width} from '../styles/responsiveSize';
 import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
 import BrowseMenuButton from './BrowseMenuButton';
 
@@ -84,7 +84,7 @@ const GradientCartView = ({
     1: {
       opacity: 1,
       scale: 1,
-      width: 415,
+      width: width,
     },
   };
 

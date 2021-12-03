@@ -481,6 +481,10 @@ export default function TaxiHomeScreen({route, navigation}) {
     updateState({updatedData: data});
   };
 
+  useEffect(() => {
+    initApiHit();
+  }, []);
+
   const selectedToggle = (type) => {
     actions.dineInData(type);
     updateState({
@@ -547,7 +551,6 @@ export default function TaxiHomeScreen({route, navigation}) {
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
-
 
   const renderHomeScreen = () => {
     const case_ = 5;

@@ -36,6 +36,8 @@ import {
 } from '../../styles/responsiveSize';
 import {
   getImageUrl,
+  hapticEffects,
+  playHapticEffect,
   playVibration,
   showError,
   showSuccess,
@@ -491,7 +493,7 @@ export default function Products({route, navigation}) {
 
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
-    playVibration();
+    playHapticEffect(hapticEffects.rigid);
     if (!!userData?.auth_token) {
       updateState({isLoadingB: true});
       actions
@@ -558,7 +560,7 @@ export default function Products({route, navigation}) {
 
   //Add product to cart
   const _addToCart = (item) => {
-    playVibration();
+    playHapticEffect(hapticEffects.rigid);
     moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
   };
 

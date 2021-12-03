@@ -264,4 +264,11 @@ export default ({themeColors, fontFamily, isDarkMode, MyDarkTheme}) =>
     locTimeIcon: {
       tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51,
     },
+    horizontalLine: {
+      width: '100%',
+      borderBottomWidth: 0.5,
+      borderBottomColor: isDarkMode
+        ? colors.whiteOpacity22
+        : colors.lightGreyBg,
+    }
   });

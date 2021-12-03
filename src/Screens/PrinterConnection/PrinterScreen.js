@@ -59,7 +59,7 @@ class PrinterScreen extends Component {
           paddingHorizontal: moderateScale(20),
         }}>
         <Text style={styles.subscription2}>
-          {'Are you sure you want to unpair this device ?'}
+          {strings.UNPAIR_DEVICE_WARNING}
         </Text>
         <TouchableOpacity
           onPress={() =>
@@ -105,7 +105,7 @@ class PrinterScreen extends Component {
                 });
             }}
             style={styles.unpairBtn}>
-            <Text style={styles.unpairBtnTxt}>Unpair</Text>
+            <Text style={styles.unpairBtnTxt}>{strings.UNPAIR}</Text>
           </TouchableOpacity>
         </View>
       </>
@@ -301,10 +301,9 @@ class PrinterScreen extends Component {
     };
 
     const options = {
-      taskName: 'Printer',
-      taskTitle: 'Printer Attached',
-      taskDesc:
-        'Your Printer is attached and service keep going on in background.',
+      taskName: strings.PRINTER,
+      taskTitle: strings.PRINTER_ATTACHED,
+      taskDesc: strings.PRINTER_MSG,
       taskIcon: {
         name: 'ic_launcher',
         type: 'mipmap',
@@ -317,8 +316,7 @@ class PrinterScreen extends Component {
 
     await BackgroundService.start(veryIntensiveTask, options);
     await BackgroundService.updateNotification({
-      taskDesc:
-        'Your Printer is attached and service keep going on in background.',
+      taskDesc: strings.PRINTER_MSG,
     }); // Only Android, iOS will ignore this call
     // iOS will also run everything here in the background until .stop() is called
     // await BackgroundService.stop();
@@ -473,8 +471,12 @@ class PrinterScreen extends Component {
               <View style={styles.rowContainerInner}>
                 <Image source={imagePath.bluetooth} style={styles.iconImg} />
                 <View>
-                  <Text style={styles.PairedRowName}>
-                    {row.name || 'UNKNOWN'}
+                  <Text
+                    style={[
+                      styles.PairedRowName,
+                      {textTransform: 'uppercase'},
+                    ]}>
+                    {row.name || strings.UNKNOWN}
                   </Text>
                   <Text style={styles.PairedRowAdrress}>{row.address}</Text>
                 </View>
@@ -527,7 +529,9 @@ class PrinterScreen extends Component {
                 }
               });
             }}>
-            <Text style={styles.name}>{row.name || 'UNKNOWN'}</Text>
+            <Text style={[styles.name, {textTransform: 'uppercase'}]}>
+              {row.name || strings.UNKNOWN}
+            </Text>
             <Text style={styles.address}>{row.address}</Text>
           </TouchableOpacity>,
         );
@@ -606,11 +610,11 @@ class PrinterScreen extends Component {
                     this.state.loading ||
                     !(this.state.bleOpend && this.state.boundAddress.length > 0)
                   }>
-                  <Text style={styles.scanBtnTxt}>Disconnect</Text>
+                  <Text style={styles.scanBtnTxt}>{strings.DISCONNECT}</Text>
                 </TouchableOpacity>
               )}
 
-              <Text style={styles.title}>Paired:</Text>
+              <Text style={styles.title}>{strings.PAIRED}:</Text>
               {/* {this.state.loading ? (<ActivityIndicator animating={true} />) : null} */}
               <View style={{flex: 1, flexDirection: 'column'}}>
                 {this._renderPairedRow(this.state.pairedDs)}
@@ -618,7 +622,7 @@ class PrinterScreen extends Component {
 
               <View style={styles.scanView}>
                 <Text style={[styles.title, {paddingLeft: 0}]}>
-                  Found(Tap to connect):
+                  {strings.FOUND_DEVICES}:
                 </Text>
                 {this.state.loading ? (
                   <ActivityIndicator
@@ -633,7 +637,7 @@ class PrinterScreen extends Component {
                       this._scan();
                     }}
                     style={styles.scanBtn}>
-                    <Text style={styles.scanBtnTxt}>Scan</Text>
+                    <Text style={styles.scanBtnTxt}>{strings.SCAN}</Text>
                   </TouchableOpacity>
                 )}
               </View>
