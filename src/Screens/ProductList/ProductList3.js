@@ -1701,12 +1701,21 @@ export default function Products({route, navigation}) {
             }}
           />
           {cloneSectionList.map((el, index) => {
+            console.log('checking dtaa on tap >>>', activeIdx);
             const idx = index + 1;
             const temp = el.data.length + idx * 2;
             return (
               <TouchableOpacity
                 key={index}
                 onPress={() => {
+                  activeIdx = index;
+                  let cells = [];
+                  cloneSectionList.forEach((el, ind) => {
+                    if (index > ind) {
+                      cells.push(...el.data);
+                    }
+                  });
+                  let hight = Number(cells.length) * 160;
                   playHapticEffect(hapticEffects.rigid);
                   updateState({MenuModalVisible: !MenuModalVisible});
                   sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
@@ -1714,8 +1723,10 @@ export default function Products({route, navigation}) {
                       // x: (height / 7.5) * idx * idx,
                       // y: (height / 7.5) * idx * idx,
 
-                      x: (height / 7.5) * temp * idx,
-                      y: (height / 7.5) * temp * idx,
+                      // x: (height / 7.5) * temp * idx,
+                      // y: (height / 7.5) * temp * idx,
+                      x: hight + 200,
+                      y: hight + 200,
                       animated: true,
                     },
                   );
@@ -2737,7 +2748,7 @@ export default function Products({route, navigation}) {
     const {title, isActive} = props;
 
     if (isActive) {
-      activeIdx = props.index;
+      // activeIdx = props.index;
     }
     if (!AnimatedHeaderValue) {
       return <View style={{width: 40}} />;
@@ -2751,17 +2762,51 @@ export default function Products({route, navigation}) {
           marginBottom: moderateScaleVertical(16),
           padding: 4,
           borderBottomWidth: 3,
-          borderColor: isActive
-            ? themeColors.primary_color
-            : colors.transparent,
+          borderColor:
+            activeIdx == props.index
+              ? themeColors.primary_color
+              : colors.transparent,
         }}>
-        <Text
-          style={{
-            fontFamily: fontFamily.medium,
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+        <TouchableOpacity
+          onPress={() => {
+            const newArr = cloneSectionList.map((el, indx) => {
+              if (indx == props.index) {
+                let temp = el;
+                temp.isActive = true;
+                activeIdx = indx;
+                return temp;
+              } else {
+                return el;
+              }
+            });
+            updateState({sectionListData: newArr, cloneSectionList: newArr});
+            console.log(props);
+            // activeIdx = props.index;
+            let cells = [];
+            cloneSectionList.forEach((el, ind) => {
+              if (props.index > ind) {
+                cells.push(...el.data);
+              }
+            });
+            let hight = Number(cells.length) * 160;
+            playHapticEffect(hapticEffects.rigid);
+            // updateState({MenuModalVisible: !MenuModalVisible});
+            sectionListRef.current.sectionList.current._wrapperListRef._listRef._scrollRef.scrollTo(
+              {
+                x: hight + 200,
+                y: hight + 200,
+                animated: true,
+              },
+            );
           }}>
-          {title}
-        </Text>
+          <Text
+            style={{
+              fontFamily: fontFamily.medium,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}>
+            {title}
+          </Text>
+        </TouchableOpacity>
       </Animatable.View>
     );
   };
@@ -2806,7 +2851,8 @@ export default function Products({route, navigation}) {
     );
   };
 
-  const onScroll = ({nativeEvent}) => {
+  const onScroll = (props) => {
+    const {nativeEvent} = props;
     if (
       productListData &&
       productListData.length &&
@@ -2817,6 +2863,14 @@ export default function Products({route, navigation}) {
 
     let offset = nativeEvent.contentOffset.y;
     let index = parseInt(offset / 8); // your cell height
+    /** cell heihgt 167 */
+    let num = [];
+    const hej = cloneSectionList.map((el, index) => {
+      if (offset > Number(num.length) * 167) {
+        num.push(...el.data);
+        activeIdx = index;
+      }
+    });
     if (index > moderateScale(36)) {
       if (!AnimatedHeaderValue) {
         updateState({AnimatedHeaderValue: true});
