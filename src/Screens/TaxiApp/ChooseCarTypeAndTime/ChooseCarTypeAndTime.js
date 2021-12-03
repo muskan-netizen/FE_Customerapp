@@ -595,13 +595,26 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         }}>
         <View
           style={{
-            backgroundColor: isDarkMode ? colors.whiteOpacity77 : colors.black,
-            width: moderateScale(40),
-            height: moderateScale(4),
-            borderRadius: 8,
-            marginRight: moderateScale(34),
-          }}
-        />
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+
+          <Image
+            style={{ opacity: 0 }}
+            source={imagePath.backArrowCourier}
+          />
+
+          <View
+            style={{
+              backgroundColor: isDarkMode ? colors.whiteOpacity77 : colors.black,
+              width: moderateScale(40),
+              height: moderateScale(4),
+              borderRadius: 8,
+              marginRight: moderateScale(34),
+            }}
+          />
+        </View>
         <Text
           style={{
             fontFamily: fontFamily.regular,
@@ -852,7 +865,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           provider={PROVIDER_GOOGLE} // remove if not using Google Maps
           customMapStyle={mapStyleGrey}
           // style={styles.map}
-          style={{ height: height / 2 }}
+          style={{ height: height / 2.3 }}
           region={region}
           initialRegion={region}
           //   customMapStyle={mapStyle}
@@ -906,8 +919,8 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         <TouchableOpacity
           style={{
             position: 'absolute',
-            top: height / 2.25,
-            right: 10,
+            top: height / 2.7,
+            right: 20,
           }}
           onPress={onCenter}
         >
@@ -923,7 +936,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
         <BottomSheet
           ref={bottomSheetRef}
           index={0}
-          snapPoints={[height / 2.6, height / 1.25]}
+          snapPoints={[height / 2.2, height / 1.25]}
           activeOffsetY={[-1, 1]}
           failOffsetX={[-5, 5]}
           animateOnMount={true}
