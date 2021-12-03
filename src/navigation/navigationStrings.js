@@ -101,4 +101,5 @@ export default {
   ALL_IN_ONE_PAYMENTS: 'allInOnePayments',
   CART_SCREEN: 'cartScreen',
   SIMPLIFY: 'simplify',
+  SQUARE: 'square',
 };

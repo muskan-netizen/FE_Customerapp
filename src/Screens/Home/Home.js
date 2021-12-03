@@ -98,6 +98,10 @@ export default function Home({route, navigation}) {
   }, [appMainData]);
 
   useEffect(() => {
+    _getLocationFromParams();
+  }, [paramData?.details]);
+
+  const _getLocationFromParams = () => {
     if (
       paramData?.details &&
       paramData?.details?.formatted_address != location?.address
@@ -121,7 +125,7 @@ export default function Home({route, navigation}) {
         updateLatLang(res);
       }
     }
-  }, [paramData?.details]);
+  };
 
   const checkCartWithLatLang = (res) => {
     Alert.alert('', strings.THIS_WILL_REMOVE_CART, [
@@ -155,6 +159,7 @@ export default function Home({route, navigation}) {
 
   const updateLatLang = (res) => {
     updateState({updateTime: Math.random()});
+    console.log(res, 'resresresresresres');
     actions.locationData(res);
   };
   useEffect(() => {
@@ -184,7 +189,7 @@ export default function Home({route, navigation}) {
                   latitude: appMainData?.reqData?.latitude,
                   longitude: appMainData?.reqData?.longitude,
                 };
-                actions.locationData(data);
+                actions.locationData(res);
               } else {
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
                   if (!!userData?.auth_token && !paramData?.details) {
@@ -195,16 +200,20 @@ export default function Home({route, navigation}) {
 
                     if (!!nearestAddress) {
                       actions.locationData(nearestAddress);
-                      homeData(nearestAddress);
+                      // homeData(nearestAddress);
                       return;
                     } else {
                       actions.locationData(res);
                       return;
                     }
+                  }
+                  if (paramData?.details) {
+                    _getLocationFromParams();
                   } else {
                     actions.locationData(res);
                   }
                 }
+                return;
               }
             })
             .catch((err) => {});

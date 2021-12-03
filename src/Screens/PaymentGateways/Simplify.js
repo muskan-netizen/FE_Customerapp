@@ -114,7 +114,7 @@ export default function Simplify({navigation, route}) {
           showsVerticalScrollIndicator={false}
           source={{
             uri: webData,
-            method: 'POST',
+            method: 'GET',
             body: queryString.stringify(webData?.formData),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
           }}

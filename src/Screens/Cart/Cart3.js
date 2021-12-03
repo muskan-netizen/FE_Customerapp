@@ -629,8 +629,6 @@ export default function Cart({navigation, route}) {
       return;
     }
 
-    console.log(paymentId, 'paymentId');
-
     switch (paymentId) {
       case 6: //Payfast Payment Getway
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
@@ -644,8 +642,11 @@ export default function Cart({navigation, route}) {
       case 9: //Pyalink Payment Getway
         navigation.navigate(navigationStrings.PAYLINK, paymentData);
         break;
-      case 12: //Pyalink Payment Getway
+      case 12: //Simplify Payment Getway
         navigation.navigate(navigationStrings.SIMPLIFY, paymentData);
+        break;
+      case 13: //Square Payment Getway
+        navigation.navigate(navigationStrings.SQUARE, paymentData);
         break;
       default:
         if (
@@ -1335,7 +1336,7 @@ export default function Cart({navigation, route}) {
             </Text>
           </View>
           {/************ start  render cart items *************/}
-          {item?.vendor_products.length
+          {item?.vendor_products.length > 0
             ? item?.vendor_products.map((i, inx) => {
                 return (
                   <Swipeable
@@ -1441,7 +1442,7 @@ export default function Cart({navigation, route}) {
                                 </Text>
                               </Text>
 
-                              {i?.variant_options.length
+                              {i?.variant_options.length > 0
                                 ? i?.variant_options.map((j, jnx) => {
                                     return (
                                       <View style={{flexDirection: 'row'}}>
@@ -1521,7 +1522,7 @@ export default function Cart({navigation, route}) {
                               justifyContent: 'space-between',
                             }}>
                             <View style={{flex: 0.5, justifyContent: 'center'}}>
-                              {!!i?.product_addons.length && (
+                              {!!i?.product_addons.length > 0 && (
                                 <View>
                                   <Text
                                     style={
@@ -1538,7 +1539,7 @@ export default function Cart({navigation, route}) {
                                   </Text>
                                 </View>
                               )}
-                              {i?.product_addons.length
+                              {i?.product_addons.length > 0
                                 ? i?.product_addons.map((j, jnx) => {
                                     return (
                                       <View style={{flexDirection: 'row'}}>
@@ -2215,9 +2216,10 @@ export default function Cart({navigation, route}) {
     updateState({isGiftBoxSelected: !isGiftBoxSelected});
   };
 
+  //get footer start
   const getFooter = () => {
     return (
-      <>
+      <View style={{}}>
         <TextInput
           value={instruction}
           onChangeText={(instruction) => updateState({instruction})}
@@ -2540,9 +2542,11 @@ export default function Cart({navigation, route}) {
           </View>
         )}
 
+        {/* tip_before_order view start */}
+
         {!!appData?.profile?.preferences?.tip_before_order &&
           !!cartData?.tip &&
-          cartData?.tip.length && (
+          cartData?.tip.length > 0 && (
             <View
               style={[
                 styles.bottomTabLableValue,
@@ -2680,8 +2684,9 @@ export default function Cart({navigation, route}) {
               )}
             </View>
           )}
+        {/* tip_before_order view end */}
 
-        {appData?.profile?.preferences?.gifting && (
+        {appData?.profile?.preferences?.gifting == 1 && (
           <View
             style={{
               ...styles.bottomTabLableValue,
@@ -3094,7 +3099,7 @@ export default function Cart({navigation, route}) {
         )}
         {!!cartData &&
           !!cartData?.upSell_products &&
-          !!cartData?.upSell_products.length && (
+          !!cartData?.upSell_products.length > 0 && (
             <View
               style={{
                 ...styles.suggetionView,
@@ -3128,7 +3133,7 @@ export default function Cart({navigation, route}) {
           )}
         {!!cartData &&
           !!cartData?.crossSell_products &&
-          !!cartData?.crossSell_products.length && (
+          !!cartData?.crossSell_products.length > 0 && (
             <View style={{...styles.suggetionView}}>
               <Text
                 style={{
@@ -3162,9 +3167,11 @@ export default function Cart({navigation, route}) {
             height: moderateScaleVertical(65),
             backgroundColor: colors.transparent,
           }}></View>
-      </>
+      </View>
     );
   };
+
+  //end footer
 
   //Header section of cart screen
   const getHeader = () => {
