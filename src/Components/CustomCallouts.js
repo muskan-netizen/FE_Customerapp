@@ -34,7 +34,7 @@ const CustomCallouts = ({data}) => {
                             <View
                                 style={{
                                     ...styles.plainView,
-                                    backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white
+                                    backgroundColor: colors.white
                                 }}>
                                 <View style={{
                                     flexDirection: 'row', alignItems: 'center'
@@ -64,7 +64,7 @@ const CustomCallouts = ({data}) => {
                                             numberOfLines={1}
                                             style={{
                                                 ...styles.pickupDropOff,
-                                                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                                                color: colors.black,
                                                 alignItems: 'center',
                                                 maxWidth: moderateScale(150),
 
@@ -100,7 +100,7 @@ const CustomCallouts = ({data}) => {
                             <View
                                 style={{
                                     ...styles.plainView,
-                                    backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white
+                                    backgroundColor:  colors.white
                                 }}>
                                 <View style={{
                                     flexDirection: 'row', alignItems: 'center'
@@ -137,7 +137,7 @@ const CustomCallouts = ({data}) => {
                                             style={{
                                                 ...styles.pickupDropOff,
                                                 fontFamily: fontFamily.regular,
-                                                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                                                color: colors.black,
                                                 alignItems: 'center',
                                                 maxWidth: 150,
 

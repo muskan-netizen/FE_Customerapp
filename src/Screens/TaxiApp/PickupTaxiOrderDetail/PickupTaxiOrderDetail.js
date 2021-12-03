@@ -28,6 +28,8 @@ import BottomSheet, {
 } from '@gorhom/bottom-sheet';
 import {
   getImageUrl,
+  hapticEffects,
+  playHapticEffect,
   showError,
   showSuccess,
 } from '../../../utils/helperFunctions';
@@ -672,7 +674,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           {!isLoading && (
             <MapView
               provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-              style={{ height: '30%', width: '100%' }}
+              style={{ height: height / 2.6, width: '100%' }}
               initialRegion={region}
               ref={mapRef}
               // cacheEnabled={true}
@@ -736,7 +738,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           {!!orderFullDetail && (<TouchableOpacity
             style={{
               position: 'absolute',
-              top: height / 5,
+              top: height / 3,
               right: 10,
             }}
             onPress={onCenter}
@@ -757,9 +759,10 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         <BottomSheet
           ref={bottomSheetRef}
           index={0}
-          snapPoints={[height / 1.95, height / 1.1]}
+          snapPoints={[height / 2.5, height / 1.1]}
           animateOnMount={true}
-          onChange={(inx) => updateState({ hideShowBack: inx })}
+          // onChange={(inx) => updateState({ hideShowBack: inx })}
+          onChange={()=>playHapticEffect(hapticEffects.impactMedium)}
           handleComponent={bottomSheetHeader}
         >
           <BottomSheetScrollView
@@ -804,6 +807,8 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 }}>{orderFullDetail?.order.task_description} </Text>
               </View>)}
               <View style={styles.horizontalLine} />
+
+              {orderStatus == 'unassigned' && <SearchDriver />}
 
               {orderFullDetail?.tasks.map((val, i) => {
                 return (
@@ -1020,7 +1025,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     marginBottom={0}
                   />
                 </View>)}
-                {orderStatus == 'unassigned' && <SearchDriver />}
+        
               </View>
             </View>
             }
