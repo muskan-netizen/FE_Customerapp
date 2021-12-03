@@ -186,7 +186,6 @@ export default function Home({route, navigation}) {
                 };
                 actions.locationData(data);
               } else {
-                console.log(paramData, 'paramDataparamData');
                 if (!!appData?.profile?.preferences?.is_hyperlocal) {
                   if (!!userData?.auth_token && !paramData?.details) {
                     const nearestAddress = getNearestLocation(
@@ -250,7 +249,6 @@ export default function Home({route, navigation}) {
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
     let latlongObj = {};
-    console.log(slectedLocatonFromPreviousScreen, location, 'hereGoes');
     if (appData?.profile?.preferences?.is_hyperlocal) {
       latlongObj = {
         address: slectedLocatonFromPreviousScreen

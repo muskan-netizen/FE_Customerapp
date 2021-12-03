@@ -1,6 +1,6 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { wrap } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import {wrap} from 'lodash';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   Platform,
@@ -11,8 +11,8 @@ import {
   Keyboard,
 } from 'react-native';
 import Geocoder from 'react-native-geocoding';
-import { abs } from 'react-native-reanimated';
-import { useSelector } from 'react-redux';
+import {abs} from 'react-native-reanimated';
+import {useSelector} from 'react-redux';
 import GooglePlaceInput from '../../../Components/GooglePlaceInput';
 import GradientButton from '../../../Components/GradientButton';
 import Header from '../../../Components/Header';
@@ -23,8 +23,8 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
-import { getBundleId } from 'react-native-device-info';
-import { appIds, shortCodes } from '../../../utils/constants/DynamicAppKeys';
+import {getBundleId} from 'react-native-device-info';
+import {appIds, shortCodes} from '../../../utils/constants/DynamicAppKeys';
 import {
   height,
   moderateScale,
@@ -37,21 +37,20 @@ import {
   showError,
   showSuccess,
 } from '../../../utils/helperFunctions';
-import { chekLocationPermission } from '../../../utils/permissions';
+import {chekLocationPermission} from '../../../utils/permissions';
 import stylesFun from './styles';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 import AddressModal3 from '../../../Components/AddressModal3';
 
-export default function Addaddress({ navigation, route }) {
+export default function Addaddress({navigation, route}) {
   const paramData = route?.params;
-  console.log(paramData, 'paramDataparamDataparamDataparamData');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const userData = useSelector((state) => state?.auth?.userData);
-  const { appData, allAddresss, themeColors, appStyle } = useSelector(
+  const {appData, allAddresss, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
@@ -181,7 +180,7 @@ export default function Addaddress({ navigation, route }) {
         });
       })
       .catch((error) => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
         showError(error?.message || error?.error);
       });
   };
@@ -192,23 +191,23 @@ export default function Addaddress({ navigation, route }) {
         if (result === 'goback') {
           navigation.goBack();
         }
-        Geocoder.init(profile?.preferences?.map_key, { language: 'en' }); // set the language
+        Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
       })
       .catch((error) => console.log('error while accessing location', error));
   }, []);
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({
     fontFamily,
     themeColors,
     savedAddressViewHeight,
     avalibleValueInTextInput,
   });
-  const commonStyles = commonStylesFun({ fontFamily });
-  const { profile } = appData;
+  const commonStyles = commonStylesFun({fontFamily});
+  const {profile} = appData;
 
   const _onChangeText = (key) => (val) => {
-    updateState({ [key]: val });
+    updateState({[key]: val});
   };
 
   useFocusEffect(
@@ -220,10 +219,11 @@ export default function Addaddress({ navigation, route }) {
   const getAllPickUpVendors = () => {
     actions
       .getDataByCategoryId(
-        `/${paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
+        `/${
+          paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
         }?limit=${limit}&page=${pageNo}`,
         {},
-        { code: appData?.profile?.code },
+        {code: appData?.profile?.code},
       )
       .then((res) => {
         console.log(res, 'res>>>>>');
@@ -240,25 +240,25 @@ export default function Addaddress({ navigation, route }) {
   };
 
   const errorMethod = (error) => {
-    updateState({ isLoading: false, isRefreshing: false });
+    updateState({isLoading: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
 
   const _onFocus = (type) => {
-    updateState({ [type]: true });
+    updateState({[type]: true});
   };
   /*************************** On Text Change
    */ const addressHelper = (results) => {
-    let clonedArrayData = { ...state };
-    clonedArrayData = { ...clonedArrayData, ...results, showDialogBox: false };
+    let clonedArrayData = {...state};
+    clonedArrayData = {...clonedArrayData, ...results, showDialogBox: false};
     updateState(clonedArrayData);
   };
 
   const handleAddressOnKeyUp = (text, type) => {
     if (text == '') {
-      updateState({ [type]: '', avalibleValueInTextInput: false });
+      updateState({[type]: '', avalibleValueInTextInput: false});
     } else {
-      updateState({ [type]: text, avalibleValueInTextInput: true });
+      updateState({[type]: text, avalibleValueInTextInput: true});
     }
   };
 
@@ -278,18 +278,18 @@ export default function Addaddress({ navigation, route }) {
   const addUpdateLocation = (childData) => {
     //setModalVisible(false);
 
-    updateState({ isLoading: true });
+    updateState({isLoading: true});
 
     actions
       .addAddress(childData, {
         code: appData?.profile?.code,
       })
       .then((res) => {
-        updateState({ del: del ? false : true });
+        updateState({del: del ? false : true});
         showSuccess(res.message);
       })
       .catch((error) => {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
         showError(error?.message || error?.error);
       });
   };
@@ -400,10 +400,10 @@ export default function Addaddress({ navigation, route }) {
   }, [paramData?.type]);
 
   const _moveToNextScreen = (type) => {
-
     navigation.navigate(navigationStrings.PINADDRESSONMAP, {
       data: type,
-      pickUpLocationLatLng: type === "pickup" ? pickUpLocationLatLng : dropOffLocationLatLng,
+      pickUpLocationLatLng:
+        type === 'pickup' ? pickUpLocationLatLng : dropOffLocationLatLng,
     });
   };
   const renderbtn = () => {
@@ -421,7 +421,7 @@ export default function Addaddress({ navigation, route }) {
                 themeColors.primary_color,
                 themeColors.primary_color,
               ]}
-              textStyle={{ textTransform: 'none', fontSize: textScale(16) }}
+              textStyle={{textTransform: 'none', fontSize: textScale(16)}}
               onPress={saveAddressAndRedirect}
               marginTop={moderateScaleVertical(10)}
               marginBottom={moderateScaleVertical(10)}
@@ -442,7 +442,7 @@ export default function Addaddress({ navigation, route }) {
                 themeColors.primary_color,
                 themeColors.primary_color,
               ]}
-              textStyle={{ textTransform: 'none', fontSize: textScale(16) }}
+              textStyle={{textTransform: 'none', fontSize: textScale(16)}}
               onPress={saveAddressAndRedirect}
               marginTop={moderateScaleVertical(10)}
               marginBottom={moderateScaleVertical(10)}
@@ -455,7 +455,7 @@ export default function Addaddress({ navigation, route }) {
   const renderDotContainer = () => {
     return (
       <>
-        <View style={{ height: 40, overflow: 'hidden', alignItems: 'center' }}>
+        <View style={{height: 40, overflow: 'hidden', alignItems: 'center'}}>
           <View
             style={{
               height: 40,
@@ -605,7 +605,7 @@ export default function Addaddress({ navigation, route }) {
         return (
           <ScrollView
             keyboardShouldPersistTaps={'handled'}
-            style={{ width: width - 40 }}>
+            style={{width: width - 40}}>
             <TouchableOpacity
               key={inx}
               style={{
@@ -619,7 +619,7 @@ export default function Addaddress({ navigation, route }) {
               <View>
                 <Image source={image} />
               </View>
-              <View style={{ marginHorizontal: moderateScale(10) }}>
+              <View style={{marginHorizontal: moderateScale(10)}}>
                 <Text numberOfLines={2} style={[styles.address]}>
                   {itm?.address}
                 </Text>
@@ -634,7 +634,7 @@ export default function Addaddress({ navigation, route }) {
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       statusBarColor={colors.white}>
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <Header
           rightViewStyle={{
             backgroundColor: isDarkMode
@@ -653,14 +653,14 @@ export default function Addaddress({ navigation, route }) {
               ? MyDarkTheme.colors.background
               : colors.white,
             marginVertical: moderateScaleVertical(10),
-            rightViewStyle: { backgroundColor: colors.greyColor },
+            rightViewStyle: {backgroundColor: colors.greyColor},
           }}
         />
 
-        <View style={{ flex: 1 }}>
+        <View style={{flex: 1}}>
           <View
             onLayout={(event) => {
-              updateState({ viewHeight: event.nativeEvent.layout.height });
+              updateState({viewHeight: event.nativeEvent.layout.height});
             }}
             style={{
               flex: 1,
@@ -719,21 +719,21 @@ export default function Addaddress({ navigation, route }) {
                       type: 'pickup',
                     }).listView
                   }
-                  onFocus={() => updateState({ pickUpLocationFocus: true })}
+                  onFocus={() => updateState({pickUpLocationFocus: true})}
                   textInput={
                     isDarkMode
                       ? {
-                        height: moderateScaleVertical(30),
-                        borderRadius: 13,
-                        color: colors.white,
-                        backgroundColor: MyDarkTheme.colors.background,
-                      }
+                          height: moderateScaleVertical(30),
+                          borderRadius: 13,
+                          color: colors.white,
+                          backgroundColor: MyDarkTheme.colors.background,
+                        }
                       : {
-                        height: moderateScaleVertical(30),
-                        borderRadius: 13,
+                          height: moderateScaleVertical(30),
+                          borderRadius: 13,
 
-                        backgroundColor: colors.white,
-                      }
+                          backgroundColor: colors.white,
+                        }
                   }
                   addressHelper={(results) => addressHelper(results)}
                   handleAddressOnKeyUp={(text) =>
@@ -762,9 +762,9 @@ export default function Addaddress({ navigation, route }) {
                     console.log(details, 'detailsdetails');
                     updateTheAddress(details, addressType, 'pickUpLocation');
                   }}
-                // ListHeaderComponent={() =>
-                //   _renderBottomComponent('pickUpLocation', 'pickup')
-                // }
+                  // ListHeaderComponent={() =>
+                  //   _renderBottomComponent('pickUpLocation', 'pickup')
+                  // }
                 />
                 <View
                   style={{
@@ -776,7 +776,7 @@ export default function Addaddress({ navigation, route }) {
                 />
               </View>
 
-              <View style={{ height: 5 }}></View>
+              <View style={{height: 5}}></View>
               <View
                 style={{
                   height: 48,
@@ -806,7 +806,7 @@ export default function Addaddress({ navigation, route }) {
                       type: 'dropOffLocation',
                     }).listView
                   }
-                  onFocus={() => updateState({ dropOffLocationFocus: true })}
+                  onFocus={() => updateState({dropOffLocationFocus: true})}
                   onBlur={() => {
                     if (dropOffLocation == '') {
                       updateState({
@@ -819,16 +819,16 @@ export default function Addaddress({ navigation, route }) {
                   textInput={
                     isDarkMode
                       ? {
-                        height: moderateScaleVertical(30),
-                        borderRadius: 13,
-                        color: MyDarkTheme.colors.text,
-                        backgroundColor: MyDarkTheme.colors.background,
-                      }
+                          height: moderateScaleVertical(30),
+                          borderRadius: 13,
+                          color: MyDarkTheme.colors.text,
+                          backgroundColor: MyDarkTheme.colors.background,
+                        }
                       : {
-                        height: moderateScaleVertical(30),
-                        borderRadius: 13,
-                        backgroundColor: colors.white,
-                      }
+                          height: moderateScaleVertical(30),
+                          borderRadius: 13,
+                          backgroundColor: colors.white,
+                        }
                   }
                   addressHelper={(results) => addressHelper(results)}
                   handleAddressOnKeyUp={(text) =>
@@ -843,9 +843,9 @@ export default function Addaddress({ navigation, route }) {
                   updateTheAddress={(details, addressType) =>
                     updateTheAddress(details, addressType, 'dropOffLocation')
                   }
-                // ListHeaderComponent={() =>
-                //   _renderBottomComponent('dropOffLocation', 'dropoff')
-                // }
+                  // ListHeaderComponent={() =>
+                  //   _renderBottomComponent('dropOffLocation', 'dropoff')
+                  // }
                 />
                 <View
                   style={{
@@ -858,13 +858,13 @@ export default function Addaddress({ navigation, route }) {
                 />
               </View>
             </View>
-            <View style={{ flex: 0.1, zIndex: -1000, paddingVertical: 10 }}>
-              <View style={{ height: moderateScale(48) }} />
+            <View style={{flex: 0.1, zIndex: -1000, paddingVertical: 10}}>
+              <View style={{height: moderateScale(48)}} />
               {renderCross('dropOffLocation')}
               {showDropOfTwo ? renderCross('dropOffLocationTwo') : null}
               {/* {showDropOfThree ? renderCross('dropOffLocationThree') : null} */}
             </View>
-            <View style={{ position: 'absolute', end: 28, top: 27 }}>
+            <View style={{position: 'absolute', end: 28, top: 27}}>
               <TouchableOpacity onPress={() => _moveToNextScreen('pickup')}>
                 <Image
                   style={{
@@ -888,7 +888,7 @@ export default function Addaddress({ navigation, route }) {
               <>
                 <View style={styles.savedAddressView}>
                   <Image
-                    style={{ marginHorizontal: moderateScale(12) }}
+                    style={{marginHorizontal: moderateScale(12)}}
                     source={imagePath.starRoundedBackground}
                   />
                   <Text
@@ -896,9 +896,9 @@ export default function Addaddress({ navigation, route }) {
                     style={
                       isDarkMode
                         ? [
-                          styles.addresssLableName,
-                          { color: MyDarkTheme.colors.text },
-                        ]
+                            styles.addresssLableName,
+                            {color: MyDarkTheme.colors.text},
+                          ]
                         : styles.addresssLableName
                     }>
                     {strings.SAVED_LOCATIONS}
@@ -914,9 +914,9 @@ export default function Addaddress({ navigation, route }) {
                   style={
                     isDarkMode
                       ? [
-                        styles.addresssLableName,
-                        { color: MyDarkTheme.colors.text },
-                      ]
+                          styles.addresssLableName,
+                          {color: MyDarkTheme.colors.text},
+                        ]
                       : styles.addresssLableName
                   }>
                   {/* {strings.SAVED_ADDRESS} */}
@@ -953,7 +953,7 @@ export default function Addaddress({ navigation, route }) {
         onClose={() => setModalVisible(false)}
         type={type}
         passLocation={(data) => addUpdateLocation(data)}
-      // onPress={currentLocation}
+        // onPress={currentLocation}
       />
 
       {/* <SearchPlaces
@@ -962,7 +962,6 @@ export default function Addaddress({ navigation, route }) {
           fetchArrayResult={(data)=> console.log("my data print",data)}
         //  previousLocationOfCreatedAd={}
         /> */}
-
     </WrapperContainer>
   );
 }
