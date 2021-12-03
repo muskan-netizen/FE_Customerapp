@@ -68,6 +68,7 @@ import stylesFun from './styles';
 import RazorpayCheckout from 'react-native-razorpay';
 import moment from 'moment';
 import {hitSlopProp} from '../../styles/commonStyles';
+import {CheckBox} from 'react-native-elements';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -123,6 +124,7 @@ export default function Cart({navigation, route}) {
     localeDropOffDate: null,
     modalType: null,
     showTaxFeeArea: false,
+    isGiftBoxSelected: false,
   });
   const {
     viewHeight,
@@ -164,6 +166,7 @@ export default function Cart({navigation, route}) {
     sheduledpickupdate,
     sheduleddropoffdate,
     showTaxFeeArea,
+    isGiftBoxSelected,
   } = state;
 
   //Redux store data
@@ -625,6 +628,9 @@ export default function Cart({navigation, route}) {
       })();
       return;
     }
+
+    console.log(paymentId, 'paymentId');
+
     switch (paymentId) {
       case 6: //Payfast Payment Getway
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
@@ -637,6 +643,9 @@ export default function Cart({navigation, route}) {
         break;
       case 9: //Pyalink Payment Getway
         navigation.navigate(navigationStrings.PAYLINK, paymentData);
+        break;
+      case 12: //Pyalink Payment Getway
+        navigation.navigate(navigationStrings.SIMPLIFY, paymentData);
         break;
       default:
         if (
@@ -664,6 +673,7 @@ export default function Cart({navigation, route}) {
       paramsData?.selectedPayment?.id || selectedPayment?.id;
 
     data['type'] = dineInType || '';
+    data['is_gift'] = isGiftBoxSelected ? 1 : 0;
 
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
@@ -882,6 +892,8 @@ export default function Cart({navigation, route}) {
               !!userData?.client_preference?.verify_email &&
               !!userData?.client_preference?.verify_phone
             ) {
+              updateState({placeLoader: false});
+
               if (
                 !!userData?.verify_details?.is_email_verified &&
                 !!userData?.verify_details?.is_phone_verified
@@ -908,6 +920,8 @@ export default function Cart({navigation, route}) {
                   _finalPayment();
                 }, 500);
               } else {
+                updateState({placeLoader: false});
+
                 moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
                   formCart: true,
                 })();
@@ -2197,6 +2211,10 @@ export default function Cart({navigation, route}) {
     }
   };
 
+  const _onGiftBoxSelection = () => {
+    updateState({isGiftBoxSelected: !isGiftBoxSelected});
+  };
+
   const getFooter = () => {
     return (
       <>
@@ -2662,6 +2680,58 @@ export default function Cart({navigation, route}) {
               )}
             </View>
           )}
+
+        {appData?.profile?.preferences?.gifting && (
+          <View
+            style={{
+              ...styles.bottomTabLableValue,
+              borderBottomWidth: 0.3,
+              borderTopWidth: 0.3,
+              borderColor: colors.textGreyB,
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}>
+            <CheckBox
+              checked={isGiftBoxSelected}
+              onPress={_onGiftBoxSelection}
+              // value={isGiftBoxSelected}
+              // onValueChange={_onGiftBoxSelection}
+              size={20}
+              checkedColor={themeColors.primary_color}
+              // style={{
+              //   height: moderateScale(18),
+              //   width: moderateScale(18),
+              //   marginLeft: moderateScale(10),
+              //   color: themeColors.primary_color,
+              // }}
+            />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginLeft: moderateScale(-12),
+              }}>
+              <Image
+                source={imagePath.icGiftIcon}
+                style={{
+                  marginTop: moderateScale(-3),
+                  tintColor: colors.blackOpacity43,
+                }}
+              />
+              <Text
+                style={{
+                  ...styles.priceTipLabel,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity43,
+                  marginLeft: moderateScale(6),
+                }}>
+                {strings.DOES_THIS_INCLUDE_GIFT}
+              </Text>
+            </View>
+          </View>
+        )}
+
         <View style={styles.bottomTabLableValue}>
           <Text
             style={

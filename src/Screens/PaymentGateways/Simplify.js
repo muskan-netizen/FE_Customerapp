@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ScrollView} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import {WebView} from 'react-native-webview';
 import {useSelector} from 'react-redux';
@@ -9,13 +9,12 @@ import WrapperContainer from '../../Components/WrapperContainer';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {moderateScaleVertical} from '../../styles/responsiveSize';
+import {height, moderateScaleVertical} from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {showError} from '../../utils/helperFunctions';
 import Header from '../../Components/Header';
 import imagePath from '../../constants/imagePath';
 
-export default function Mobbex({navigation, route}) {
+export default function Simplify({navigation, route}) {
   let paramsData = route?.params;
   console.log(paramsData, '===>paramsData');
 
@@ -25,20 +24,20 @@ export default function Mobbex({navigation, route}) {
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const [state, setState] = useState({
-    webUrl: '',
+    webData: '',
     isLoading: true,
   });
 
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {webUrl, isLoading} = state;
+  const {webData, isLoading} = state;
 
   useEffect(() => {
     apiHit();
   }, []);
 
   const apiHit = async () => {
-    let queryData = `/${paramsData?.selectedPayment?.code?.toLowerCase()}?amount=${
+    let queryData = `/${paramsData?.selectedPayment?.title?.toLowerCase()}?amount=${
       paramsData?.total_payable_amount
     }&payment_option_id=${
       paramsData?.payment_option_id
@@ -54,14 +53,16 @@ export default function Mobbex({navigation, route}) {
           language: languages?.primary_language?.id,
         },
       );
-      console.log(res, 'responseMobbex');
-      updateState({webUrl: res.data});
-    } catch (error) {
-      updateState({isLoading: false});
+      console.log(res?.data, 'responseData===>');
 
+      updateState({webData: res?.data});
+    } catch (error) {
+      console.log(error, 'errorerror');
+      updateState({isLoading: false});
       showError(error.message || error);
     }
   };
+
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
@@ -73,7 +74,7 @@ export default function Mobbex({navigation, route}) {
     const URL = queryString.parseUrl(url);
     const queryParams = URL.query;
     const nonQueryURL = URL.url;
-    console.log(props, 'propsMobbex');
+    console.log(props, 'props===>');
 
     setTimeout(() => {
       if (queryParams.status == 200) {
@@ -83,14 +84,16 @@ export default function Mobbex({navigation, route}) {
             id: paramsData?.orderDetail?.id,
           },
         })();
-      }
-      if (queryParams.status == 0) {
+      } else if (queryParams.status == 0) {
         moveToNewScreen(navigationStrings.CART, {
           queryURL: url.replace(`${nonQueryURL}?`, ''),
         })();
       }
-    }, 3000);
+    }, 200);
   };
+
+  console.log(webData, 'webDatawebDatawebData');
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.transparent}
@@ -106,19 +109,19 @@ export default function Mobbex({navigation, route}) {
         }
         headerStyle={{backgroundColor: colors.white}}
       />
-      {webUrl !== '' && (
+      {webData !== '' && (
         <WebView
-          onLoad={() => updateState({isLoading: false})}
-          source={{uri: webUrl}}
+          showsVerticalScrollIndicator={false}
+          source={{
+            uri: webData,
+            method: 'POST',
+            body: queryString.stringify(webData?.formData),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          }}
           onNavigationStateChange={onNavigationStateChange}
+          onLoad={() => updateState({isLoading: false})}
         />
       )}
-      <View
-        style={{
-          height: moderateScaleVertical(75),
-          backgroundColor: colors.transparent,
-        }}
-      />
     </WrapperContainer>
   );
 }
