@@ -1111,7 +1111,6 @@ export default function Products({route, navigation}) {
     diffAdOnId = 0,
   ) => {
     // console.log("item to update remove item", itemToUpdate)
-    s;
 
     let updateLocallyAddOns = [];
     if (differentAddsOnsModal) {
