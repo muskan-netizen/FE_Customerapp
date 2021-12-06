@@ -3199,7 +3199,7 @@ export default function Cart({navigation, route}) {
           justifyContent: 'space-between',
         }}>
         <View style={{flexDirection: 'row', flex: 0.85}}>
-          <Image source={imagePath.icMap} />
+          <Image source={imagePath.mapIcon} />
           <View style={styles.addressView}>
             <Text
               style={{

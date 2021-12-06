@@ -702,4 +702,7 @@ montant`,
     'Oups! Il semble que votre appareil ne soit pas connecté à Internet.',
   HOUSE_NO: 'Numéro de maison',
   DOES_THIS_INCLUDE_GIFT: 'Cela inclut-il un cadeau ?',
+  VENDOR_ADDRESS: 'vendor address',
+  ENTER_VENDOR_NAME: 'vendor name',
+  YOUR: 'your',
 };

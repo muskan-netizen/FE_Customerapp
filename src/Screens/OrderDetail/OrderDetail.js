@@ -943,7 +943,7 @@ export default function OrderDetail({navigation, route}) {
               flexDirection: 'row',
               marginBottom: moderateScaleVertical(16),
             }}>
-            <Image source={imagePath.icMap} />
+            <Image source={imagePath.mapIcon} />
             <View style={{marginLeft: moderateScale(12), flex: 1}}>
               <Text
                 style={{

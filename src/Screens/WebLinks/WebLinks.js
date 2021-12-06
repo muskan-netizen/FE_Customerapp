@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  FlatList,
 } from 'react-native';
 import {email} from 'react-native-communications';
 import {useDarkMode} from 'react-native-dark-mode';
@@ -81,6 +82,7 @@ export default function WebLinks({navigation, route}) {
     isDelivery: false,
     sfcLicense: [],
     fssaiLicense: [],
+    vendorRegDocs: [],
   });
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -92,7 +94,26 @@ export default function WebLinks({navigation, route}) {
   const styles = stylesFun({fontFamily});
   const commonStyles = commonStylesFun({fontFamily});
 
-  const {isLoading, htmlContent} = state;
+  const {
+    cca2,
+    phoneNumber,
+    imageArray,
+    isDineIn,
+    isDelivery,
+    isTakeaway,
+    imageArrayBanner,
+    fssaiLicense,
+    sfcLicense,
+    fullname,
+    email,
+    password,
+    confirm_password,
+    vendor_name,
+    address,
+    vendorRegDocs,
+    isLoading,
+    htmlContent,
+  } = state;
 
   //Navigation to specific screen
   const moveToNewScreen = (screenName, data) => () => {
@@ -118,9 +139,10 @@ export default function WebLinks({navigation, route}) {
       .then((res) => {
         console.log('Cms page detail', res);
         updateState({isLoadingB: false, isLoading: false, isRefreshing: false});
-        if (res && res?.data?.description) {
-          updateState({htmlContent: res?.data?.description});
-        }
+        updateState({
+          htmlContent: res?.data?.page_detail?.primary?.description,
+          vendorRegDocs: res?.data?.vendor_registration_documents,
+        });
       })
       .catch(errorMethod);
   };
@@ -338,23 +360,6 @@ export default function WebLinks({navigation, route}) {
       }
     }
   };
-  const {
-    cca2,
-    phoneNumber,
-    imageArray,
-    isDineIn,
-    isDelivery,
-    isTakeaway,
-    imageArrayBanner,
-    fssaiLicense,
-    sfcLicense,
-    fullname,
-    email,
-    password,
-    confirm_password,
-    vendor_name,
-    address,
-  } = state;
 
   const isValidData = () => {
     const error = validator({
@@ -364,7 +369,7 @@ export default function WebLinks({navigation, route}) {
       newPassword: password,
       confirmPassword: confirm_password,
       vendorName: vendor_name,
-      // address: address,
+      vendorAddress: address,
     });
 
     if (error) {
@@ -375,24 +380,73 @@ export default function WebLinks({navigation, route}) {
   };
 
   const _onSubmit = () => {
-    const checkValid = isValidData();
-    if (!checkValid) {
-      return;
-    }
+    // const checkValid = isValidData();
+    // if (!checkValid) {
+    //   return;
+    // }
 
-    actions
-      .vendorRegisteration(data, {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      })
-      .then((res) => {
-        console.log(res, 'serverResponse');
-      })
-      .catch((err) => {
-        console.log(err, 'serverError');
-      });
+    const data = {};
+    (data['full_name'] = fullname),
+      (data['email'] = email),
+      (data['phone_number'] = phoneNumber),
+      (data['password'] = password),
+      (data['confirm_password'] = confirm_password),
+      (data['name'] = vendor_name),
+      (data['address'] = address),
+      (data['check_conditions'] = 1),
+      actions
+        .vendorRegisteration(data, {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        })
+        .then((res) => {
+          console.log(res, 'serverResponse');
+        })
+        .catch((err) => {
+          console.log(err, 'serverError');
+        });
+  };
+  console.log(vendorRegDocs, 'vendorRegDocs');
+
+  const _renderFields = ({item, indx}) => {
+    return (
+      <View>
+        <Text>{item.primary?.name}</Text>
+        {item.fssaiLicense && fssaiLicense.length ? (
+          fssaiLicense.map((i, inx) => {
+            return (
+              <ImageBackground
+                source={{
+                  uri: i.uri,
+                }}
+                style={styles.imageOrderStyle}
+                imageStyle={styles.imageOrderStyle}>
+                <View style={styles.viewOverImage}>
+                  <View style={styles.crossIconStyle}>
+                    <TouchableOpacity onPress={() => _removeFssaiLicence(i)}>
+                      <Image source={imagePath.icRemoveIcon} />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </ImageBackground>
+            );
+          })
+        ) : (
+          <View style={styles.imageView}>
+            <TouchableOpacity
+              onPress={fssaiuploadFile}
+              style={[styles.viewOverImage2, {borderStyle: 'dashed'}]}>
+              <Image
+                source={imagePath.icCamIcon}
+                style={{tintColor: themeColors.primary_color}}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    );
   };
 
   return (
@@ -685,7 +739,8 @@ export default function WebLinks({navigation, route}) {
                 </View>
               </View>
               <View style={{marginVertical: moderateScaleVertical(20)}}>
-                <View style={{flexDirection: 'row'}}>
+                <FlatList data={vendorRegDocs} renderItem={_renderFields} />
+                {/*    <View style={{flexDirection: 'row'}}>
                   <View
                     style={{
                       width: width / 2 - moderateScale(22),
@@ -776,7 +831,7 @@ export default function WebLinks({navigation, route}) {
                       </View>
                     )}
                   </View>
-                </View>
+                </View>*/}
               </View>
 
               <GradientButton
