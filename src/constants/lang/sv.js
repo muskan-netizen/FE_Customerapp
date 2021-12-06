@@ -642,4 +642,7 @@ export default {
   UNPAIR: 'Unpair',
   UNPAIR_DEVICE_WARNING: 'Are you sure you want to unpair this device ?',
   DOES_THIS_INCLUDE_GIFT: 'Does this include a gift?',
+  VENDOR_ADDRESS: 'vendor address',
+  ENTER_VENDOR_NAME: 'vendor name',
+  YOUR: 'your',
 };
