@@ -47,6 +47,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const previousSearches = useSelector((state) => state?.initBoot?.searchText);
+  const dineInType = useSelector((state) => state?.home?.dineInType);
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
@@ -89,6 +90,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
   const globalSearch = () => {
     let data = {};
     data['keyword'] = searchInput;
+    data['type'] = dineInType;
     let query = '';
     let searchAction = null;
     if (paramData?.type == staticStrings.CATEGORY) {

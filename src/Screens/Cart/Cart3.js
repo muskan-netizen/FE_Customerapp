@@ -182,6 +182,8 @@ export default function Cart({navigation, route}) {
   );
 
   const dineInType = useSelector((state) => state?.home?.dineInType);
+  console.log(dineInType, 'dineInType');
+
 
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -1325,6 +1327,7 @@ export default function Cart({navigation, route}) {
             style={{
               ...styles.vendorView,
               paddingHorizontal: moderateScale(8),
+              flexDirection: 'column',
             }}>
             <Text
               numberOfLines={1}
@@ -1334,6 +1337,17 @@ export default function Cart({navigation, route}) {
               }}>
               {item?.vendor?.name}
             </Text>
+            {item?.is_vendor_closed && (
+              <Text
+                numberOfLines={1}
+                style={{
+                  ...styles.priceItemLabel2,
+                  color: colors.redB,
+                  fontSize: textScale(9),
+                }}>
+                {strings.VENDOR_NOT_ACCEPTING_ORDERS}
+              </Text>
+            )}
           </View>
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0
@@ -3185,7 +3199,7 @@ export default function Cart({navigation, route}) {
           justifyContent: 'space-between',
         }}>
         <View style={{flexDirection: 'row', flex: 0.85}}>
-          <Image source={imagePath.icMap} />
+          <Image source={imagePath.mapIcon} />
           <View style={styles.addressView}>
             <Text
               style={{

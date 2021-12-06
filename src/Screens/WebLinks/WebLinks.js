@@ -1,48 +1,45 @@
-import React, {useEffect, useState, useRef} from 'react';
+import {cloneDeep} from 'lodash';
+import React, {useEffect, useState} from 'react';
 import {
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
   Image,
-  TextInput,
   ImageBackground,
   StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  FlatList,
 } from 'react-native';
+import {email} from 'react-native-communications';
+import {useDarkMode} from 'react-native-dark-mode';
+import {getBundleId} from 'react-native-device-info';
+import DocumentPicker from 'react-native-document-picker';
 import HTMLView from 'react-native-htmlview';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
-import {cloneDeep} from 'lodash';
-
+import ToggleSwitch from 'toggle-switch-react-native';
+import BorderTextInput from '../../Components/BorderTextInput';
+import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
-  textScale,
   width,
 } from '../../styles/responsiveSize';
-import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {showError} from '../../utils/helperFunctions';
-import stylesFun from './styles';
-import PhoneNumberInput from '../../Components/PhoneNumberInput';
-import strings from '../../constants/lang';
-import BorderTextInput from '../../Components/BorderTextInput';
-import GradientButton from '../../Components/GradientButton';
-
-import {cameraHandler} from '../../utils/commonFunction';
-import ToggleSwitch from 'toggle-switch-react-native';
-import DocumentPicker from 'react-native-document-picker';
-import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
-import {getBundleId} from 'react-native-device-info';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {showError} from '../../utils/helperFunctions';
+import validator from '../../utils/validations';
+import stylesFun from './styles';
+import DeviceInfo from 'react-native-device-info';
 
 export default function WebLinks({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -85,6 +82,7 @@ export default function WebLinks({navigation, route}) {
     isDelivery: false,
     sfcLicense: [],
     fssaiLicense: [],
+    vendorRegDocs: [],
   });
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -96,7 +94,26 @@ export default function WebLinks({navigation, route}) {
   const styles = stylesFun({fontFamily});
   const commonStyles = commonStylesFun({fontFamily});
 
-  const {isLoading, htmlContent} = state;
+  const {
+    cca2,
+    phoneNumber,
+    imageArray,
+    isDineIn,
+    isDelivery,
+    isTakeaway,
+    imageArrayBanner,
+    fssaiLicense,
+    sfcLicense,
+    fullname,
+    email,
+    password,
+    confirm_password,
+    vendor_name,
+    address,
+    vendorRegDocs,
+    isLoading,
+    htmlContent,
+  } = state;
 
   //Navigation to specific screen
   const moveToNewScreen = (screenName, data) => () => {
@@ -122,9 +139,10 @@ export default function WebLinks({navigation, route}) {
       .then((res) => {
         console.log('Cms page detail', res);
         updateState({isLoadingB: false, isLoading: false, isRefreshing: false});
-        if (res && res?.data?.description) {
-          updateState({htmlContent: res?.data?.description});
-        }
+        updateState({
+          htmlContent: res?.data?.page_detail?.primary?.description,
+          vendorRegDocs: res?.data?.vendor_registration_documents,
+        });
       })
       .catch(errorMethod);
   };
@@ -342,17 +360,95 @@ export default function WebLinks({navigation, route}) {
       }
     }
   };
-  const {
-    cca2,
-    phoneNumber,
-    imageArray,
-    isDineIn,
-    isDelivery,
-    isTakeaway,
-    imageArrayBanner,
-    fssaiLicense,
-    sfcLicense,
-  } = state;
+
+  const isValidData = () => {
+    const error = validator({
+      name: fullname,
+      email: email,
+      phoneNumber: phoneNumber,
+      newPassword: password,
+      confirmPassword: confirm_password,
+      vendorName: vendor_name,
+      vendorAddress: address,
+    });
+
+    if (error) {
+      showError(error);
+      return;
+    }
+    return true;
+  };
+
+  const _onSubmit = () => {
+    // const checkValid = isValidData();
+    // if (!checkValid) {
+    //   return;
+    // }
+
+    const data = {};
+    (data['full_name'] = fullname),
+      (data['email'] = email),
+      (data['phone_number'] = phoneNumber),
+      (data['password'] = password),
+      (data['confirm_password'] = confirm_password),
+      (data['name'] = vendor_name),
+      (data['address'] = address),
+      (data['check_conditions'] = 1),
+      actions
+        .vendorRegisteration(data, {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
+        })
+        .then((res) => {
+          console.log(res, 'serverResponse');
+        })
+        .catch((err) => {
+          console.log(err, 'serverError');
+        });
+  };
+  console.log(vendorRegDocs, 'vendorRegDocs');
+
+  const _renderFields = ({item, indx}) => {
+    return (
+      <View>
+        <Text>{item.primary?.name}</Text>
+        {item.fssaiLicense && fssaiLicense.length ? (
+          fssaiLicense.map((i, inx) => {
+            return (
+              <ImageBackground
+                source={{
+                  uri: i.uri,
+                }}
+                style={styles.imageOrderStyle}
+                imageStyle={styles.imageOrderStyle}>
+                <View style={styles.viewOverImage}>
+                  <View style={styles.crossIconStyle}>
+                    <TouchableOpacity onPress={() => _removeFssaiLicence(i)}>
+                      <Image source={imagePath.icRemoveIcon} />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </ImageBackground>
+            );
+          })
+        ) : (
+          <View style={styles.imageView}>
+            <TouchableOpacity
+              onPress={fssaiuploadFile}
+              style={[styles.viewOverImage2, {borderStyle: 'dashed'}]}>
+              <Image
+                source={imagePath.icCamIcon}
+                style={{tintColor: themeColors.primary_color}}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    );
+  };
+
   return (
     <WrapperContainer
       bgColor={
@@ -643,7 +739,8 @@ export default function WebLinks({navigation, route}) {
                 </View>
               </View>
               <View style={{marginVertical: moderateScaleVertical(20)}}>
-                <View style={{flexDirection: 'row'}}>
+                <FlatList data={vendorRegDocs} renderItem={_renderFields} />
+                {/*    <View style={{flexDirection: 'row'}}>
                   <View
                     style={{
                       width: width / 2 - moderateScale(22),
@@ -734,10 +831,11 @@ export default function WebLinks({navigation, route}) {
                       </View>
                     )}
                   </View>
-                </View>
+                </View>*/}
               </View>
 
               <GradientButton
+                onPress={_onSubmit}
                 marginTop={moderateScaleVertical(10)}
                 btnText={strings.SUBMIT}
               />

@@ -1,9 +1,9 @@
 import validator from 'is_js';
 import strings from '../constants/lang';
 import {parsePhoneNumber, isValidPhoneNumber} from 'libphonenumber-js';
-const checkEmpty = (val, key) => {
+const checkEmpty = (val, key, key2 = true) => {
   if (validator.empty(val.trim())) {
-    return `${strings.PLEASE_ENTER} ${key}`;
+    return `${strings.PLEASE_ENTER} ${key2 ? `${strings.YOUR} ` : ''}${key}`;
   } else {
     return '';
   }
@@ -37,6 +37,8 @@ export default function (data) {
     country,
     callingCode,
     promocode,
+    vendorName,
+    vendorAddress,
   } = data;
   console.log(message, 'message');
   if (username !== undefined) {
@@ -261,6 +263,37 @@ export default function (data) {
       if (minLengthValidation !== '') {
         return minLengthValidation;
       }
+    }
+  }
+
+  if (vendorName !== undefined) {
+    let emptyValidationText = checkEmpty(
+      vendorName,
+      strings.ENTER_VENDOR_NAME,
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    } else {
+      let minLengthValidation = checkMinLength(
+        vendorName,
+        3,
+        strings.ENTER_VENDOR_NAME,
+      );
+      if (minLengthValidation !== '') {
+        return minLengthValidation;
+      }
+    }
+  }
+
+  if (vendorAddress !== undefined) {
+    let emptyValidationText = checkEmpty(
+      vendorAddress,
+      strings.VENDOR_ADDRESS,
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
     }
   }
 }

@@ -79,9 +79,8 @@ export const initPrinter = () => {
 
   _getOrderDetails(arr[0])
     .then((res) => {
-      console.log('check _getOrderDetails response >>>', JSON.stringify(res));
+      console.log('check _getOrderDetails response >>>', res);
       printReciept(res).then(() => {
-        console.log('check start printing >>>> 3');
         arr.shift();
         setTimeout(() => {
           if (arr.length > 0) {
@@ -331,6 +330,16 @@ export const printReciept = async (data) => {
                   `${strings.LOYALTY}`,
                   `-${detail.loyalty_amount_saved.toString()}` + '\r\n',
                 ],
+                {},
+              );
+
+              await BluetoothEscposPrinter.printColumn(
+                [15, 30],
+                [
+                  BluetoothEscposPrinter.ALIGN.LEFT,
+                  BluetoothEscposPrinter.ALIGN.RIGHT,
+                ],
+                [`${strings.TAXES_FEES}`, detail.taxable_amount + '\r\n'],
                 {},
               );
 

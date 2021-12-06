@@ -415,4 +415,7 @@ export default {
   icHidePassword: require('../assets/images/ic_view2.png'),
   icImageUpload: require('../assets/images/ic_imgupload.png'),
   icGiftIcon: require('../assets/images/ic_gift.png'),
+  mapIcon: require('../assets/images/ic_map.png'),
+
+  
 };

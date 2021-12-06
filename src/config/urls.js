@@ -14,7 +14,7 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://click-eat.com/api/v1';
 // export const API_BASE_URL = 'https://tranzit.app/api/v1';
 // export const API_BASE_URL = 'https://pinkjettaxi.com/api/v1';
-// export const API_BASE_URL = 'https://snabbhem.se/api/v1';
+// export const API_BASE_URL = 'https://snabbhem.se/api/v1';r
 // export const API_BASE_URL = 'https://codiner.com/api/v1';
 // export const API_BASE_URL = 'https://somame-247.com/api/v1';
 // export const API_BASE_URL = 'https://order.africanize.co/api/v1';
@@ -148,3 +148,4 @@ export const DIFFERENT_ADD_ONS = getApiUrl(
   '/cart/product/variant/different-addons',
 );
 export const WALLET_CREDIT = getApiUrl('/myWallet/credit');
+export const VENDOR_REGISTER = getApiUrl('/vendor/register');
