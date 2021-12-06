@@ -364,7 +364,7 @@ export default function WebLinks({navigation, route}) {
       newPassword: password,
       confirmPassword: confirm_password,
       vendorName: vendor_name,
-      // address: address,
+      vendorAddress: address,
     });
 
     if (error) {

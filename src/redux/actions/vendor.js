@@ -57,14 +57,14 @@ export function getSubcategoryDetail(data = {}, headers = {}) {
   });
 }
 
-// export function vendorRegisteration(data = {}, headers = {}) {
-//   return new Promise((resolve, reject) => {
-//     apiPost(VENDOR_REGISTER, data, headers)
-//       .then((res) => {
-//         resolve(res);
-//       })
-//       .catch((error) => {
-//         reject(error);
-//       });
-//   });
-// }
+export function vendorRegisteration(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(VENDOR_REGISTER, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}

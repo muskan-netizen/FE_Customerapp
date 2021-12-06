@@ -37,6 +37,8 @@ export default function (data) {
     country,
     callingCode,
     promocode,
+    vendorName,
+    vendorAddress,
   } = data;
   console.log(message, 'message');
   if (username !== undefined) {
@@ -261,6 +263,13 @@ export default function (data) {
       if (minLengthValidation !== '') {
         return minLengthValidation;
       }
+    }
+  }
+
+  if (vendorAddress !== undefined) {
+    let emptyValidationText = checkEmpty(vendorAddress, strings.VENDOR_ADDRESS);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
     }
   }
 }
