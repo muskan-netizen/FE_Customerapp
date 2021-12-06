@@ -1325,6 +1325,7 @@ export default function Cart({navigation, route}) {
             style={{
               ...styles.vendorView,
               paddingHorizontal: moderateScale(8),
+              flexDirection: 'column',
             }}>
             <Text
               numberOfLines={1}
@@ -1334,6 +1335,17 @@ export default function Cart({navigation, route}) {
               }}>
               {item?.vendor?.name}
             </Text>
+            {item?.is_vendor_closed && (
+              <Text
+                numberOfLines={1}
+                style={{
+                  ...styles.priceItemLabel2,
+                  color: colors.redB,
+                  fontSize: textScale(9),
+                }}>
+                {strings.VENDOR_NOT_ACCEPTING_ORDERS}
+              </Text>
+            )}
           </View>
           {/************ start  render cart items *************/}
           {item?.vendor_products.length > 0

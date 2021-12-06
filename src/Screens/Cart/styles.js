@@ -55,7 +55,7 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       flexDirection: 'row',
       // height: moderateScaleVertical(35),
       // backgroundColor: colors.white,
-      alignItems: 'center',
+      // alignItems: 'center',
       paddingHorizontal: moderateScale(2),
       // borderBottomWidth: moderateScaleVertical(0.5),
       borderBottomColor: colors.borderLight,
