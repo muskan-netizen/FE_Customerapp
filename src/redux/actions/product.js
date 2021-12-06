@@ -243,8 +243,6 @@ export function getProductBySpecificId(query = '', data = {}, headers = {}) {
 }
 
 export function checkSingleVendor(data = {}, header = {}) {
-  console.log('Sending data', data);
-  console.log('header==>>>', header);
   return new Promise((resolve, reject) => {
     apiPost(CHECK_VENDORS, data, header)
       .then((res) => {

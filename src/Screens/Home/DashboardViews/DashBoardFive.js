@@ -99,6 +99,9 @@ export default function DashBoardFive({
     });
   }, [appMainData?.vendors]);
 
+
+  console.log("app main data",appMainData)
+
   const _renderItem = ({item, index}) => {
     return (
       <View style={{marginRight: moderateScale(8), width: width / 6.2}}>

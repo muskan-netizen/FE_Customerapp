@@ -1,10 +1,10 @@
-import {useNavigation} from '@react-navigation/native';
-import {Alert, PermissionsAndroid, Platform} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Alert, PermissionsAndroid, Platform } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+import { check, PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 import strings from '../constants/lang';
-import {showError} from './helperFunctions';
-import {openAppSetting} from './openNativeApp';
+import { showError } from './helperFunctions';
+import { openAppSetting } from './openNativeApp';
 
 export const androidCameraPermission = () =>
   new Promise(async (resolve, reject) => {
@@ -25,8 +25,8 @@ export const androidCameraPermission = () =>
           Alert.alert(
             strings.ALERT,
             strings.CAMERA_PERMISSION_DENIED_MSG,
-            [{text: strings.OK}],
-            {cancelable: true},
+            [{ text: strings.OK }],
+            { cancelable: true },
           );
           return resolve(false);
           // alert(strings.DO_NOT_HAVE_PERMISSIONS_TO_SELECT_IMAGE);
@@ -85,7 +85,7 @@ export const locationPermission = () =>
     }
   });
 
-export const chekLocationPermission = () =>
+export const chekLocationPermission = (showAlert = true) =>
   new Promise(async (resolve, reject) => {
     try {
       check(
@@ -119,20 +119,21 @@ export const chekLocationPermission = () =>
               return resolve(result);
               break;
             case RESULTS.BLOCKED:
-              Alert.alert('', strings.LOCATION_DISABLED_MSG, [
-                {
-                  text: strings.CANCEL,
-                  onPress: () => resolve('goback'),
-                },
-                {
-                  text: strings.CONFIRM,
-                  onPress: () => {
-                    const locationPath = 'LOCATION_SERVICES';
-                    openAppSetting(locationPath);
+              if (showAlert) {
+                Alert.alert('', strings.LOCATION_DISABLED_MSG, [
+                  {
+                    text: strings.CANCEL,
+                    onPress: () => resolve('goback'),
                   },
-                },
-              ]);
-
+                  {
+                    text: strings.CONFIRM,
+                    onPress: () => {
+                      const locationPath = 'LOCATION_SERVICES';
+                      openAppSetting(locationPath);
+                    },
+                  },
+                ]);
+              }
               break;
           }
         })

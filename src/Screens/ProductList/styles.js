@@ -141,8 +141,7 @@ export default ({themeColors, fontFamily, isDarkMode, MyDarkTheme}) =>
       marginHorizontal: moderateScale(15),
       position: 'absolute',
       width: width - moderateScale(30),
-      bottom: -42,
-      minHeight: moderateScale(90),
+      // minHeight: moderateScale(90),
       shadowOpacity: 0.3,
       shadowColor: '#000',
       shadowOffset: {height: 0, width: 0},
@@ -151,6 +150,7 @@ export default ({themeColors, fontFamily, isDarkMode, MyDarkTheme}) =>
       paddingLeft: moderateScale(15),
       justifyContent: 'center',
       elevation: 0.9,
+      // alignItems:'center'
     },
     hdrNameRatingView: {
       flexDirection: 'row',
