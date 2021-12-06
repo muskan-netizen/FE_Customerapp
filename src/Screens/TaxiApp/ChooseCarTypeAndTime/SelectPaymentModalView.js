@@ -79,7 +79,7 @@ export default function SelectPaymentModalView({
   const userData = useSelector((state) => state?.auth?.userData);
   const [image, setImage] = useState([]);
   const [taskInstruction, setInstruction] = useState('');
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   const [isError, setError] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [myAnswerdArray, setMyAllanswers] = useState([]);
@@ -645,7 +645,7 @@ export default function SelectPaymentModalView({
         </TouchableOpacity>
 
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={{
               marginLeft: moderateScale(8),
               marginBottom: moderateScale(3),
@@ -655,7 +655,7 @@ export default function SelectPaymentModalView({
               style={{tintColor: themeColors.primary_color}}
               source={imagePath.icInstruction}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
 
