@@ -658,6 +658,7 @@ export default function Products({route, navigation}) {
               : [...productListData, ...res.data.listData.data],
           isLoadingC: false,
           isRefreshing: false,
+          isLoading: false,
         });
         {
           pageNo == 1 &&
@@ -1111,7 +1112,6 @@ export default function Products({route, navigation}) {
     diffAdOnId = 0,
   ) => {
     // console.log("item to update remove item", itemToUpdate)
-    s;
 
     let updateLocallyAddOns = [];
     if (differentAddsOnsModal) {
@@ -1613,7 +1613,7 @@ export default function Products({route, navigation}) {
       });
       updateState({cloneSectionList: newArr});
     } else {
-      getAllProductsByVendor();
+      // getAllProductsByVendor();
     }
   }, [ProductTags && updateTagFilter]);
 
@@ -2139,7 +2139,7 @@ export default function Products({route, navigation}) {
                           marginRight: moderateScale(40),
                           marginVertical: moderateScale(1),
                           marginLeft: 0,
-                          fontSize: textScale(12),
+                          fontSize: textScale(13),
                           opacity: 0.8,
                           fontFamily: fontFamily.medium,
                         }}>
@@ -2154,7 +2154,8 @@ export default function Products({route, navigation}) {
                             ? MyDarkTheme.colors.text
                             : colors.black,
                           marginVertical: moderateScaleVertical(4),
-                          fontSize: textScale(9.5),
+                          fontSize: textScale(10.5),
+                          opacity: 0.6,
                         }}>
                         {desc}
                       </Text>

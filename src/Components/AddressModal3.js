@@ -104,8 +104,6 @@ export default function AddressModal3({
     houseNo: '',
   });
 
-  console.log(updateData, 'updateData');
-
   const styles = stylesData({fontFamily, themeColors});
 
   //To update the states

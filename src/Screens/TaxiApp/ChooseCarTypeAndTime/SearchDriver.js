@@ -57,6 +57,25 @@ export default function () {
               height: moderateScaleVertical(100),
               width: moderateScale(100),
             }}
+
+            colorFilters={[
+              { keypath: "Shape Layer 16", color:  themeColors.primary_color },
+              { keypath: "Shape Layer 15", color: themeColors.primary_color },
+              { keypath: "Shape Layer 14", color: themeColors.primary_color },
+              { keypath: "Shape Layer 13", color: themeColors.primary_color },
+              { keypath: "Shape Layer 12", color: themeColors.primary_color },
+              { keypath: "Shape Layer 11", color: themeColors.primary_color },
+              { keypath: "Shape Layer 10", color: themeColors.primary_color },
+              { keypath: "Shape Layer 9", color: themeColors.primary_color },
+              { keypath: "Shape Layer 8", color: themeColors.primary_color },
+              { keypath: "Shape Layer 7", color: themeColors.primary_color },
+              { keypath: "Shape Layer 6", color: themeColors.primary_color },
+              { keypath: "Shape Layer 5", color: themeColors.primary_color },
+              { keypath: "Shape Layer 20", color: themeColors.primary_color },
+              { keypath: "Shape Layer 19", color: themeColors.primary_color },
+              { keypath: "Shape Layer 18", color: themeColors.primary_color },
+              { keypath: "Shape Layer 17", color: themeColors.primary_color },
+            ]}
           />
         </View>
         <Text
