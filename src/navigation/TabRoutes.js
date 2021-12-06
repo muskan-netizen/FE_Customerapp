@@ -62,11 +62,6 @@ export default function TabRoutes(props) {
       //   navigation.isFocused(),
       // );
 
-      console.log(
-        'checking route name >>>>',
-        route_name,
-        screen.includes(route_name),
-      );
       if (screen.includes(route_name)) {
         // setShowBottomBar(false)
         showBottomBar_ = false;

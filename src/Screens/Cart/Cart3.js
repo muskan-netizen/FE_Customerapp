@@ -182,6 +182,8 @@ export default function Cart({navigation, route}) {
   );
 
   const dineInType = useSelector((state) => state?.home?.dineInType);
+  console.log(dineInType, 'dineInType');
+
 
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
