@@ -658,6 +658,7 @@ export default function Products({route, navigation}) {
               : [...productListData, ...res.data.listData.data],
           isLoadingC: false,
           isRefreshing: false,
+          isLoading: false,
         });
         {
           pageNo == 1 &&
@@ -1612,7 +1613,7 @@ export default function Products({route, navigation}) {
       });
       updateState({cloneSectionList: newArr});
     } else {
-      getAllProductsByVendor();
+      // getAllProductsByVendor();
     }
   }, [ProductTags && updateTagFilter]);
 

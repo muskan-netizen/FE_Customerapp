@@ -414,6 +414,37 @@ export default function WebLinks({navigation, route}) {
     return (
       <View>
         <Text>{item.primary?.name}</Text>
+        {item.fssaiLicense && fssaiLicense.length ? (
+          fssaiLicense.map((i, inx) => {
+            return (
+              <ImageBackground
+                source={{
+                  uri: i.uri,
+                }}
+                style={styles.imageOrderStyle}
+                imageStyle={styles.imageOrderStyle}>
+                <View style={styles.viewOverImage}>
+                  <View style={styles.crossIconStyle}>
+                    <TouchableOpacity onPress={() => _removeFssaiLicence(i)}>
+                      <Image source={imagePath.icRemoveIcon} />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </ImageBackground>
+            );
+          })
+        ) : (
+          <View style={styles.imageView}>
+            <TouchableOpacity
+              onPress={fssaiuploadFile}
+              style={[styles.viewOverImage2, {borderStyle: 'dashed'}]}>
+              <Image
+                source={imagePath.icCamIcon}
+                style={{tintColor: themeColors.primary_color}}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     );
   };
