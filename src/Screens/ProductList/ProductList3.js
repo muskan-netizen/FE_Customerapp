@@ -2154,6 +2154,7 @@ export default function Products({route, navigation}) {
                             : colors.black,
                           marginVertical: moderateScaleVertical(4),
                           fontSize: textScale(9.5),
+                          opacity: 0.6,
                         }}>
                         {desc}
                       </Text>
