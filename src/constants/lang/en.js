@@ -654,7 +654,7 @@ Amount`,
   SOMETHING_WENT_WRONG_PRINTER_MSG:
     'Something went wrong, please make connection with printer again.',
   PLACE_ID_NOT_FOUND: 'Place Id not found',
-  PLEASE_FILL_ADDRESS: 'Please fill the exist address',
+  PLEASE_FILL_ADDRESS: 'Please fill the existing address',
   TAXES_FEES: 'Taxes & Fees',
   TOTAL_SERVICE_FEE: 'Service Fee',
   HOUSE_NO: 'House No.',

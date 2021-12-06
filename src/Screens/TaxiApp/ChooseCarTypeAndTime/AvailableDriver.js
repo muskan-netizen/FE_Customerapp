@@ -200,7 +200,7 @@ export default function AvailableDriver({
         keyExtractor={(item, index) => String(index)}
         renderItem={_renderItem}
         ListEmptyComponent={_listEmptyComponent}
-        ListFooterComponent={() => <View style={{marginTop: width / 5}} />}
+        // ListFooterComponent={() => <View style={{marginTop: width / 5}} />}
         // ListFooterComponent={() => {
         //     if (availableCarList.length > 0)
         //         return (
