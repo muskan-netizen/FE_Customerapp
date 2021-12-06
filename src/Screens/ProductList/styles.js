@@ -125,7 +125,7 @@ export default ({themeColors, fontFamily, isDarkMode, MyDarkTheme}) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       width: width - moderateScale(20),
-      marginTop: Platform.OS === 'ios' ? StatusBarHeight : moderateScale(25),
+      marginTop: Platform.OS === 'ios' ? StatusBarHeight-20 : moderateScale(25),
       flex: 1,
     },
     hdrCompRoundImg: {
