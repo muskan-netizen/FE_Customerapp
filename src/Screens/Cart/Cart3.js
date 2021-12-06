@@ -68,6 +68,7 @@ import stylesFun from './styles';
 import RazorpayCheckout from 'react-native-razorpay';
 import moment from 'moment';
 import {hitSlopProp} from '../../styles/commonStyles';
+import {CheckBox} from 'react-native-elements';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -123,6 +124,7 @@ export default function Cart({navigation, route}) {
     localeDropOffDate: null,
     modalType: null,
     showTaxFeeArea: false,
+    isGiftBoxSelected: false,
   });
   const {
     viewHeight,
@@ -164,6 +166,7 @@ export default function Cart({navigation, route}) {
     sheduledpickupdate,
     sheduleddropoffdate,
     showTaxFeeArea,
+    isGiftBoxSelected,
   } = state;
 
   //Redux store data
@@ -625,6 +628,7 @@ export default function Cart({navigation, route}) {
       })();
       return;
     }
+
     switch (paymentId) {
       case 6: //Payfast Payment Getway
         navigation.navigate(navigationStrings.PAYFAST, paymentData);
@@ -637,6 +641,12 @@ export default function Cart({navigation, route}) {
         break;
       case 9: //Pyalink Payment Getway
         navigation.navigate(navigationStrings.PAYLINK, paymentData);
+        break;
+      case 12: //Simplify Payment Getway
+        navigation.navigate(navigationStrings.SIMPLIFY, paymentData);
+        break;
+      case 13: //Square Payment Getway
+        navigation.navigate(navigationStrings.SQUARE, paymentData);
         break;
       default:
         if (
@@ -664,6 +674,7 @@ export default function Cart({navigation, route}) {
       paramsData?.selectedPayment?.id || selectedPayment?.id;
 
     data['type'] = dineInType || '';
+    data['is_gift'] = isGiftBoxSelected ? 1 : 0;
 
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
@@ -882,6 +893,8 @@ export default function Cart({navigation, route}) {
               !!userData?.client_preference?.verify_email &&
               !!userData?.client_preference?.verify_phone
             ) {
+              updateState({placeLoader: false});
+
               if (
                 !!userData?.verify_details?.is_email_verified &&
                 !!userData?.verify_details?.is_phone_verified
@@ -908,6 +921,8 @@ export default function Cart({navigation, route}) {
                   _finalPayment();
                 }, 500);
               } else {
+                updateState({placeLoader: false});
+
                 moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
                   formCart: true,
                 })();
@@ -971,7 +986,7 @@ export default function Cart({navigation, route}) {
   };
 
   const _webPayment = () => {
-    let selectedMethod = selectedPayment.title.toLowerCase();
+    let selectedMethod = selectedPayment.code.toLowerCase();
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/cart`;
 
@@ -1030,7 +1045,7 @@ export default function Cart({navigation, route}) {
   //Offline payments
   const _offineLinePayment = async () => {
     if (paramsData?.tokenInfo) {
-      let selectedMethod = selectedPayment.title.toLowerCase();
+      let selectedMethod = selectedPayment.code.toLowerCase();
       actions
         .openPaymentWebUrl(
           `/${selectedMethod}?tip=${
@@ -1095,20 +1110,11 @@ export default function Cart({navigation, route}) {
             });
           }
         })
-        .catch(errorMethod);
+        .catch((err) => console.log(err, 'errorInPlaceOrder'));
     } else {
       errorMethod(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }
   };
-
-  console.log(
-    (Number(cartData?.total_payable_amount) +
-      (selectedTipAmount != null && selectedTipAmount != ''
-        ? Number(selectedTipAmount)
-        : 0)) *
-      100,
-    'payableAmount',
-  );
 
   const _renderRazor = () => {
     updateState({isLoadingB: true});
@@ -1330,7 +1336,7 @@ export default function Cart({navigation, route}) {
             </Text>
           </View>
           {/************ start  render cart items *************/}
-          {item?.vendor_products.length
+          {item?.vendor_products.length > 0
             ? item?.vendor_products.map((i, inx) => {
                 return (
                   <Swipeable
@@ -1436,7 +1442,7 @@ export default function Cart({navigation, route}) {
                                 </Text>
                               </Text>
 
-                              {i?.variant_options.length
+                              {i?.variant_options.length > 0
                                 ? i?.variant_options.map((j, jnx) => {
                                     return (
                                       <View style={{flexDirection: 'row'}}>
@@ -1516,7 +1522,7 @@ export default function Cart({navigation, route}) {
                               justifyContent: 'space-between',
                             }}>
                             <View style={{flex: 0.5, justifyContent: 'center'}}>
-                              {!!i?.product_addons.length && (
+                              {!!i?.product_addons.length > 0 && (
                                 <View>
                                   <Text
                                     style={
@@ -1533,7 +1539,7 @@ export default function Cart({navigation, route}) {
                                   </Text>
                                 </View>
                               )}
-                              {i?.product_addons.length
+                              {i?.product_addons.length > 0
                                 ? i?.product_addons.map((j, jnx) => {
                                     return (
                                       <View style={{flexDirection: 'row'}}>
@@ -2206,9 +2212,14 @@ export default function Cart({navigation, route}) {
     }
   };
 
+  const _onGiftBoxSelection = () => {
+    updateState({isGiftBoxSelected: !isGiftBoxSelected});
+  };
+
+  //get footer start
   const getFooter = () => {
     return (
-      <>
+      <View style={{}}>
         <TextInput
           value={instruction}
           onChangeText={(instruction) => updateState({instruction})}
@@ -2531,9 +2542,11 @@ export default function Cart({navigation, route}) {
           </View>
         )}
 
+        {/* tip_before_order view start */}
+
         {!!appData?.profile?.preferences?.tip_before_order &&
           !!cartData?.tip &&
-          cartData?.tip.length && (
+          cartData?.tip.length > 0 && (
             <View
               style={[
                 styles.bottomTabLableValue,
@@ -2671,6 +2684,59 @@ export default function Cart({navigation, route}) {
               )}
             </View>
           )}
+        {/* tip_before_order view end */}
+
+        {appData?.profile?.preferences?.gifting == 1 && (
+          <View
+            style={{
+              ...styles.bottomTabLableValue,
+              borderBottomWidth: 0.3,
+              borderTopWidth: 0.3,
+              borderColor: colors.textGreyB,
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}>
+            <CheckBox
+              checked={isGiftBoxSelected}
+              onPress={_onGiftBoxSelection}
+              // value={isGiftBoxSelected}
+              // onValueChange={_onGiftBoxSelection}
+              size={20}
+              checkedColor={themeColors.primary_color}
+              // style={{
+              //   height: moderateScale(18),
+              //   width: moderateScale(18),
+              //   marginLeft: moderateScale(10),
+              //   color: themeColors.primary_color,
+              // }}
+            />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginLeft: moderateScale(-12),
+              }}>
+              <Image
+                source={imagePath.icGiftIcon}
+                style={{
+                  marginTop: moderateScale(-3),
+                  tintColor: colors.blackOpacity43,
+                }}
+              />
+              <Text
+                style={{
+                  ...styles.priceTipLabel,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity43,
+                  marginLeft: moderateScale(6),
+                }}>
+                {strings.DOES_THIS_INCLUDE_GIFT}
+              </Text>
+            </View>
+          </View>
+        )}
+
         <View style={styles.bottomTabLableValue}>
           <Text
             style={
@@ -3033,7 +3099,7 @@ export default function Cart({navigation, route}) {
         )}
         {!!cartData &&
           !!cartData?.upSell_products &&
-          !!cartData?.upSell_products.length && (
+          !!cartData?.upSell_products.length > 0 && (
             <View
               style={{
                 ...styles.suggetionView,
@@ -3067,7 +3133,7 @@ export default function Cart({navigation, route}) {
           )}
         {!!cartData &&
           !!cartData?.crossSell_products &&
-          !!cartData?.crossSell_products.length && (
+          !!cartData?.crossSell_products.length > 0 && (
             <View style={{...styles.suggetionView}}>
               <Text
                 style={{
@@ -3101,9 +3167,11 @@ export default function Cart({navigation, route}) {
             height: moderateScaleVertical(65),
             backgroundColor: colors.transparent,
           }}></View>
-      </>
+      </View>
     );
   };
+
+  //end footer
 
   //Header section of cart screen
   const getHeader = () => {
