@@ -1,48 +1,44 @@
-import React, {useEffect, useState, useRef} from 'react';
+import {cloneDeep} from 'lodash';
+import React, {useEffect, useState} from 'react';
 import {
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
   Image,
-  TextInput,
   ImageBackground,
   StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import {email} from 'react-native-communications';
+import {useDarkMode} from 'react-native-dark-mode';
+import {getBundleId} from 'react-native-device-info';
+import DocumentPicker from 'react-native-document-picker';
 import HTMLView from 'react-native-htmlview';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
-import {cloneDeep} from 'lodash';
-
+import ToggleSwitch from 'toggle-switch-react-native';
+import BorderTextInput from '../../Components/BorderTextInput';
+import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
-  textScale,
   width,
 } from '../../styles/responsiveSize';
-import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {showError} from '../../utils/helperFunctions';
-import stylesFun from './styles';
-import PhoneNumberInput from '../../Components/PhoneNumberInput';
-import strings from '../../constants/lang';
-import BorderTextInput from '../../Components/BorderTextInput';
-import GradientButton from '../../Components/GradientButton';
-
-import {cameraHandler} from '../../utils/commonFunction';
-import ToggleSwitch from 'toggle-switch-react-native';
-import DocumentPicker from 'react-native-document-picker';
-import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
-import {getBundleId} from 'react-native-device-info';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {showError} from '../../utils/helperFunctions';
+import validator from '../../utils/validations';
+import stylesFun from './styles';
+import DeviceInfo from 'react-native-device-info';
 
 export default function WebLinks({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -352,7 +348,53 @@ export default function WebLinks({navigation, route}) {
     imageArrayBanner,
     fssaiLicense,
     sfcLicense,
+    fullname,
+    email,
+    password,
+    confirm_password,
+    vendor_name,
+    address,
   } = state;
+
+  const isValidData = () => {
+    const error = validator({
+      name: fullname,
+      email: email,
+      phoneNumber: phoneNumber,
+      newPassword: password,
+      confirmPassword: confirm_password,
+      vendorName: vendor_name,
+      // address: address,
+    });
+
+    if (error) {
+      showError(error);
+      return;
+    }
+    return true;
+  };
+
+  const _onSubmit = () => {
+    const checkValid = isValidData();
+    if (!checkValid) {
+      return;
+    }
+
+    actions
+      .vendorRegisteration(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res, 'serverResponse');
+      })
+      .catch((err) => {
+        console.log(err, 'serverError');
+      });
+  };
+
   return (
     <WrapperContainer
       bgColor={
@@ -738,6 +780,7 @@ export default function WebLinks({navigation, route}) {
               </View>
 
               <GradientButton
+                onPress={_onSubmit}
                 marginTop={moderateScaleVertical(10)}
                 btnText={strings.SUBMIT}
               />

@@ -1,4 +1,8 @@
-import {GET_DATA_BY_CATEGORY, GET_VENDOR_DETAIL} from '../../config/urls';
+import {
+  GET_DATA_BY_CATEGORY,
+  GET_VENDOR_DETAIL,
+  VENDOR_REGISTER,
+} from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
 import types from '../types';
@@ -52,3 +56,15 @@ export function getSubcategoryDetail(data = {}, headers = {}) {
       });
   });
 }
+
+// export function vendorRegisteration(data = {}, headers = {}) {
+//   return new Promise((resolve, reject) => {
+//     apiPost(VENDOR_REGISTER, data, headers)
+//       .then((res) => {
+//         resolve(res);
+//       })
+//       .catch((error) => {
+//         reject(error);
+//       });
+//   });
+// }
