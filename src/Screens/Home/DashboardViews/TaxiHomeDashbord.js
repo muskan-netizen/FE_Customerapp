@@ -367,7 +367,7 @@ export default function TaxiHomeDashbord({
                 }}>
                 <Text
                   style={{ color: colors.white, fontFamily: fontFamily.regular }}>
-                  {strings.STEP_BACK}
+                  {strings.SET}
                 </Text>
               </TouchableOpacity>
             </View>
