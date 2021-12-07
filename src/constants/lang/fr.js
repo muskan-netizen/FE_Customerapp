@@ -706,4 +706,6 @@ montant`,
   ENTER_VENDOR_NAME: 'vendor name',
   YOUR: 'your',
   CARD: 'Card',
+  CHOOSE_FILE: 'Choose File',
+  NO_FILE_CHOSEN: 'No file chosen',
 };

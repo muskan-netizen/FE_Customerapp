@@ -674,4 +674,6 @@ export default {
   OTP_SENT: 'OTP code sent',
   HOUSE_NO: 'House No.',
   CARD: 'Card',
+  CHOOSE_FILE: 'Choose File',
+  NO_FILE_CHOSEN: 'No file chosen',
 };

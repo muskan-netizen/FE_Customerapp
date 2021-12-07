@@ -30,6 +30,7 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   width,
@@ -515,8 +516,14 @@ export default function WebLinks({navigation, route}) {
 
   const _renderFields = ({item, index}) => {
     return (
-      <View style={{marginHorizontal: moderateScale(10)}}>
-        <Text>{item.primary?.name}</Text>
+      <View
+        style={{
+          marginHorizontal: moderateScale(10),
+          marginVertical: moderateScale(5),
+        }}>
+        <Text style={{fontFamily: fontFamily.regular}}>
+          {item.primary?.name}
+        </Text>
 
         <View>
           {/* {item?.file_type == 'Pdf' && (
@@ -532,42 +539,83 @@ export default function WebLinks({navigation, route}) {
                 </TouchableOpacity>
               </View>
             )} */}
-          {console.log(vendorRegTxtInput, 'jdsjf')}
-          {(item?.file_type == 'Image' || item?.file_type == 'Pdf') && (
-            <View
-              style={{...styles.imageView, marginVertical: moderateScale(5)}}>
-              <TouchableOpacity
-                onPress={() => uploadDocs(item?.file_type, item, index)}
-                style={[styles.viewOverImage2, {borderStyle: 'dashed'}]}>
-                <Image
-                  source={
-                    vendorRegTxtInput[index]?.fileData
-                      ? {
-                          uri: vendorRegTxtInput[index]?.fileData?.avatar
-                            ?.sourceURL,
-                        }
-                      : imagePath.icCamIcon
-                  }
-                  style={{tintColor: themeColors.primary_color}}
-                />
-              </TouchableOpacity>
-            </View>
-          )}
-          {item?.file_type == 'Text' && (
+
+          {item?.file_type == 'Pdf' && (
             <View
               style={{
-                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginVertical: moderateScaleVertical(8),
+              }}>
+              {console.log(vendorRegTxtInput, 'vendorRegTxtInput')}
+              <TouchableOpacity
+                onPress={() => uploadDocs(item?.file_type, item, index)}
+                activeOpacity={0.7}
+                style={{
+                  backgroundColor: colors.greyMedium,
+                  borderRadius: moderateScale(5),
+                }}>
+                <Text
+                  style={{
+                    marginHorizontal: moderateScale(10),
+                    marginVertical: moderateScaleVertical(10),
+                  }}>
+                  {strings.CHOOSE_FILE}
+                </Text>
+              </TouchableOpacity>
+              <Text style={{fontFamily: fontFamily.regular, marginLeft: 6}}>
+                {vendorRegTxtInput[index]?.fileData
+                  ? vendorRegTxtInput[index]?.fileData?.name
+                  : strings.NO_FILE_CHOSEN}
+              </Text>
+            </View>
+          )}
+
+          {item?.file_type == 'Image' && (
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => uploadDocs(item?.file_type, item, index)}
+              style={{
+                ...styles.imageView,
                 marginVertical: moderateScale(5),
               }}>
-              <BorderTextInput
-                // secureTextEntry={true}
-                placeholder={`Enter ${item?.primary?.name}`}
-                onChangeText={(itm) =>
-                  _dynamicTextInputChange(itm, index, item)
+              {console.log(
+                vendorRegTxtInput[1]?.fileData?.avatar?.path,
+                'vendorRegTxtInput[index]?.fileData?.avatar?.path',
+              )}
+              <Image
+                source={
+                  vendorRegTxtInput[index]?.fileData?.avatar?.path !==
+                  'undefined'
+                    ? {uri: vendorRegTxtInput[index]?.fileData?.avatar?.path}
+                    : imagePath.icCamIcon
                 }
-                containerStyle={styles.containerStyle}
+                style={{
+                  tintColor: !vendorRegTxtInput[index]?.fileData
+                    ? themeColors.primary_color
+                    : null,
+                  height: vendorRegTxtInput[index]?.fileData
+                    ? height / 6 - moderateScale(15)
+                    : 30,
+                  width: vendorRegTxtInput[index]?.fileData
+                    ? width - moderateScale(80)
+                    : 30,
+                }}
+                resizeMode={'cover'}
               />
-            </View>
+            </TouchableOpacity>
+          )}
+          {item?.file_type == 'Text' && (
+            <BorderTextInput
+              // secureTextEntry={true}
+              placeholder={`Enter ${item?.primary?.name}`}
+              onChangeText={(itm) => _dynamicTextInputChange(itm, index, item)}
+              containerStyle={{
+                ...styles.containerStyle,
+                marginBottom: 0,
+                marginTop: moderateScale(3),
+              }}
+            />
           )}
         </View>
       </View>
@@ -863,7 +911,12 @@ export default function WebLinks({navigation, route}) {
                   />
                 </View>
               </View>
-              <View style={{marginVertical: moderateScaleVertical(20)}}>
+              <View
+                style={
+                  {
+                    // marginVertical: moderateScaleVertical(20),
+                  }
+                }>
                 <FlatList data={vendorRegDocs} renderItem={_renderFields} />
                 {/*    <View style={{flexDirection: 'row'}}>
                   <View
