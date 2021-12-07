@@ -1381,7 +1381,7 @@ export default function BrandProducts2({ route, navigation }) {
                   containerStyle={{ marginTop: moderateScaleVertical(width / 8) }}
                 />
               }
-              ListFooterComponent={() => <View style={{ height: 40 }} />}
+              ListFooterComponent={() => <View style={{ height: moderateScale(80) }} />}
             />
             <View>
               {isSortEnabled && (

@@ -50,8 +50,9 @@ export default function CategoryBrands({navigation, route}) {
     pageNo: 1,
     limit: 5,
     isRefreshing: false,
+    listData: []
   });
-  const {isLoading, limit, pageNo, isRefreshing} = state;
+  const {isLoading, limit, pageNo, isRefreshing,listData} = state;
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -80,16 +81,20 @@ export default function CategoryBrands({navigation, route}) {
         updateState({
           isRefreshing: false,
           isLoading: false,
+          listData: pageNo == 1
+                ? res?.data.listData.data
+                : [...listData, ...res.data.listData.data],
         });
+        
 
-        const vendorData = {
-          category: res.data.category,
-          listData:
-            pageNo == 1
-              ? res?.data.listData.data
-              : [...categoryData?.listData, ...res.data.listData.data],
-        };
-        actions.saveVendorListingAndCategoryInfo(vendorData);
+        // const vendorData = {
+        //   category: res.data.category,
+        //   listData:
+        //     pageNo == 1
+        //       ? res?.data.listData.data
+        //       : [...categoryData?.listData, ...res.data.listData.data],
+        // };
+        // actions.saveVendorListingAndCategoryInfo(vendorData);
       })
       .catch(errorMethod);
   }, [isRefreshing, pageNo]);
@@ -245,7 +250,7 @@ export default function CategoryBrands({navigation, route}) {
       <View style={{height: 1, backgroundColor: colors.borderLight}} />
 
       <FlatList
-        data={categoryData?.listData}
+        data={listData || []}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={<View style={{height: 10}} />}
         keyExtractor={(item, index) => String(index)}
