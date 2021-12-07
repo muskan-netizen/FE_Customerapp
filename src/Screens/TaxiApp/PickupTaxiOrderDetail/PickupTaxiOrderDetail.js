@@ -674,7 +674,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           {!isLoading && !!tasks?.length > 0 && (
             <MapView
               provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-              style={{ height: height / 2.6, width: '100%' }}
+              style={{ height: height / 2.4, width: '100%' }}
               initialRegion={region}
               ref={mapRef}
               // cacheEnabled={true}
@@ -759,7 +759,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         <BottomSheet
           ref={bottomSheetRef}
           index={0}
-          snapPoints={[height / 2.5, height / 1.1]}
+          snapPoints={[height / 2.2, height]}
           animateOnMount={true}
           // onChange={(inx) => updateState({ hideShowBack: inx })}
           onChange={() => playHapticEffect(hapticEffects.impactMedium)}
