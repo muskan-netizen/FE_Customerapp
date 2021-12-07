@@ -678,4 +678,5 @@ Amount`,
   CHOOSE_A_TRIP:"Choose a trip or swipe up for more",
   DRIVER_DETAILS:"Driver Details",
   INSTRUCTIONS:"Instructions",
+  SET:"Set"
 };

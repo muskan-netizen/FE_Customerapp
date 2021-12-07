@@ -1,5 +1,5 @@
 import {cloneDeep} from 'lodash';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   Image,
   ImageBackground,
@@ -40,6 +40,9 @@ import {showError} from '../../utils/helperFunctions';
 import validator from '../../utils/validations';
 import stylesFun from './styles';
 import DeviceInfo from 'react-native-device-info';
+import {cameraHandler} from '../../utils/commonFunction';
+import ActionSheet from 'react-native-actionsheet';
+import {androidCameraPermission} from '../../utils/permissions';
 
 export default function WebLinks({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -83,6 +86,9 @@ export default function WebLinks({navigation, route}) {
     sfcLicense: [],
     fssaiLicense: [],
     vendorRegDocs: [],
+    vendorRegTxtInput: [],
+    vendorRegPdfImg: [],
+    clickedIndx: 0,
   });
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -113,6 +119,9 @@ export default function WebLinks({navigation, route}) {
     vendorRegDocs,
     isLoading,
     htmlContent,
+    vendorRegTxtInput,
+    vendorRegPdfImg,
+    clickedIndx,
   } = state;
 
   //Navigation to specific screen
@@ -264,7 +273,6 @@ export default function WebLinks({navigation, route}) {
 
   // upload Banner function
   const uploadFile = async () => {
-    console.log('dffdffdf');
     try {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.images || DocumentPicker.types.doc],
@@ -316,7 +324,7 @@ export default function WebLinks({navigation, route}) {
   const fssaiuploadFile = async () => {
     try {
       const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.images || DocumentPicker.types.doc],
+        type: [DocumentPicker.types.pdf],
       });
 
       let file = {
@@ -337,29 +345,29 @@ export default function WebLinks({navigation, route}) {
     }
   };
   // upload SFC License function
-  const sfcuploadFile = async () => {
-    try {
-      const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.images || DocumentPicker.types.doc],
-      });
-      console.log(res, 'response');
-      let file = {
-        image_id: Math.random(),
-        name: res[0]?.name,
-        type: res[0]?.type,
-        uri: res[0]?.uri,
-      };
-      console.log(file, 'file');
-      updateState({sfcLicense: [...sfcLicense, file]});
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        // User cancelled the picker, exit any dialogs or menus and move on
-        console.log('cancel');
-      } else {
-        throw err;
-      }
-    }
-  };
+  // const sfcuploadFile = async () => {
+  //   try {
+  //     const res = await DocumentPicker.pick({
+  //       type: [DocumentPicker.types.images || DocumentPicker.types.doc],
+  //     });
+  //     console.log(res, 'response');
+  //     let file = {
+  //       image_id: Math.random(),
+  //       name: res[0]?.name,
+  //       type: res[0]?.type,
+  //       uri: res[0]?.uri,
+  //     };
+  //     console.log(file, 'file');
+  //     updateState({sfcLicense: [...sfcLicense, file]});
+  //   } catch (err) {
+  //     if (DocumentPicker.isCancel(err)) {
+  //       // User cancelled the picker, exit any dialogs or menus and move on
+  //       console.log('cancel');
+  //     } else {
+  //       throw err;
+  //     }
+  //   }
+  // };
 
   const isValidData = () => {
     const error = validator({
@@ -408,11 +416,99 @@ export default function WebLinks({navigation, route}) {
           console.log(err, 'serverError');
         });
   };
-  console.log(vendorRegDocs, 'vendorRegDocs');
 
-  const _renderFields = ({item, indx}) => {
+  const _dynamicTextInputChange = (item, indx, mainItem) => {
+    const vendorRegTxtInputAry = [...vendorRegTxtInput];
+    vendorRegTxtInputAry[indx] = {
+      item: item,
+      key: mainItem?.primary?.name,
+    };
+    updateState({
+      vendorRegTxtInput: vendorRegTxtInputAry,
+    });
+  };
+
+  let actionSheet = useRef();
+
+  const uploadDocs = async (type, item, indx) => {
+    if (type == 'Pdf') {
+      try {
+        const res = await DocumentPicker.pick({
+          type: DocumentPicker.types.pdf,
+        });
+
+        let file = {
+          image_id: Math.random(),
+          name: res[0]?.name,
+          type: res[0]?.type,
+          uri: res[0]?.uri,
+        };
+
+        console.log(file, 'selectedFile');
+
+        const vendorRegPdfImgAry = [...vendorRegPdfImg];
+        vendorRegPdfImgAry[indx] = {
+          item: item,
+          fileUrl: file,
+        };
+
+        updateState({
+          vendorRegPdfImg: vendorRegPdfImgAry,
+        });
+
+        console.log(vendorRegPdfImgAry, 'vendorRegPdfImgAry');
+
+        // console.log(file, 'file');
+        // updateState({fssaiLicense: [...fssaiLicense, file]});
+      } catch (err) {
+        if (DocumentPicker.isCancel(err)) {
+          // User cancelled the picker, exit any dialogs or menus and move on
+          console.log('cancel');
+        } else {
+          throw err;
+        }
+      }
+    } else {
+      updateState({clickedIndx: indx});
+      actionSheet.current.show();
+    }
+  };
+
+  // this funtion use for camera handle
+  const cameraHandle = async (index) => {
+    const permissionStatus = await androidCameraPermission();
+    if (permissionStatus) {
+      if (index == 0 || index == 1) {
+        cameraHandler(index, {
+          width: 300,
+          height: 400,
+          cropping: true,
+          cropperCircleOverlay: true,
+          mediaType: 'photo',
+        })
+          .then((res) => {
+            let data = {
+              type: 'jpg',
+              avatar: res?.data,
+            };
+
+            const vendorRegPdfImgAry = [...vendorRegPdfImg];
+            vendorRegPdfImgAry[clickedIndx] = {
+              item: item,
+              fileUrl: data,
+            };
+
+            updateState({
+              vendorRegPdfImg: vendorRegPdfImgAry,
+            });
+          })
+          .catch((err) => {});
+      }
+    }
+  };
+  const _renderFields = ({item, index}) => {
     return (
-      <View>
+      <View style={{marginHorizontal: moderateScale(10)}}>
         <Text>{item.primary?.name}</Text>
         {item.fssaiLicense && fssaiLicense.length ? (
           fssaiLicense.map((i, inx) => {
@@ -434,15 +530,49 @@ export default function WebLinks({navigation, route}) {
             );
           })
         ) : (
-          <View style={styles.imageView}>
-            <TouchableOpacity
-              onPress={fssaiuploadFile}
-              style={[styles.viewOverImage2, {borderStyle: 'dashed'}]}>
-              <Image
-                source={imagePath.icCamIcon}
-                style={{tintColor: themeColors.primary_color}}
-              />
-            </TouchableOpacity>
+          <View>
+            {/* {item?.file_type == 'Pdf' && (
+              <View
+                style={{...styles.imageView, marginVertical: moderateScale(5)}}>
+                <TouchableOpacity
+                  onPress={fssaiuploadFile}
+                  style={[styles.viewOverImage2, {borderStyle: 'dashed'}]}>
+                  <Image
+                    source={imagePath.icCamIcon}
+                    style={{tintColor: themeColors.primary_color}}
+                  />
+                </TouchableOpacity>
+              </View>
+            )} */}
+            {(item?.file_type == 'Image' || item?.file_type == 'Pdf') && (
+              <View
+                style={{...styles.imageView, marginVertical: moderateScale(5)}}>
+                <TouchableOpacity
+                  onPress={() => uploadDocs(item?.file_type, item, index)}
+                  style={[styles.viewOverImage2, {borderStyle: 'dashed'}]}>
+                  <Image
+                    source={imagePath.icCamIcon}
+                    style={{tintColor: themeColors.primary_color}}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+            {item?.file_type == 'Text' && (
+              <View
+                style={{
+                  flex: 1,
+                  marginVertical: moderateScale(5),
+                }}>
+                <BorderTextInput
+                  // secureTextEntry={true}
+                  placeholder={`Enter ${item?.primary?.name}`}
+                  onChangeText={(itm) =>
+                    _dynamicTextInputChange(itm, index, item)
+                  }
+                  containerStyle={styles.containerStyle}
+                />
+              </View>
+            )}
           </View>
         )}
       </View>
@@ -849,6 +979,14 @@ export default function WebLinks({navigation, route}) {
           )}
         </View>
       </KeyboardAwareScrollView>
+      <ActionSheet
+        ref={actionSheet}
+        // title={'Choose one option'}
+        options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
+        cancelButtonIndex={2}
+        destructiveButtonIndex={2}
+        onPress={(index) => cameraHandle(index)}
+      />
     </WrapperContainer>
   );
 }
