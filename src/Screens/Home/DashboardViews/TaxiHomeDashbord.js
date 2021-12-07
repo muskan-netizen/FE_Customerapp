@@ -336,7 +336,7 @@ export default function TaxiHomeDashbord({
                 onPress={_modalClose}>
                 <Text
                   style={{color: colors.white, fontFamily: fontFamily.regular}}>
-                  {'Cancel'}
+                  {strings.CANCEL}
                 </Text>
               </TouchableOpacity>
 
@@ -367,7 +367,7 @@ export default function TaxiHomeDashbord({
                 }}>
                 <Text
                   style={{color: colors.white, fontFamily: fontFamily.regular}}>
-                  {'Set'}
+                  {strings.SET}
                 </Text>
               </TouchableOpacity>
             </View>

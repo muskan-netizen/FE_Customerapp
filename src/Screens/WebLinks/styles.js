@@ -108,7 +108,6 @@ export default ({fontFamily}) => {
       alignItems: 'center',
       borderWidth: 1,
       height: height / 6,
-      marginHorizontal: moderateScale(12),
 
       borderColor: isDarkMode ? MyDarkTheme.colors.text : colors.borderLight,
     },
