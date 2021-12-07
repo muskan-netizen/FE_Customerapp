@@ -134,7 +134,7 @@ const App = () => {
         });
       }
       const getAppData = await getItem('appData');
-      
+
       dispatch({
         type: types.APP_INIT,
         payload: getAppData,
@@ -145,7 +145,7 @@ const App = () => {
         type: types.LOCATION_DATA,
         payload: locationData,
       });
-      
+
       const profileAddress = await getItem('profileAddress');
 
       dispatch({
