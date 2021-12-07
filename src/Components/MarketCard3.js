@@ -40,7 +40,6 @@ export default function MarketCard3({
   imageResizeMode = 'cover',
 }) {
 
-  console.log("market card 3",data)
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();

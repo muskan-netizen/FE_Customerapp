@@ -3,6 +3,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { cloneDeep, debounce } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   ImageBackground,
@@ -188,6 +189,8 @@ export default function CelebrityProduct2({ route, navigation }) {
       () => {
         navigation.navigate(screenName, { data });
       };
+
+
 
   useEffect(() => {
     updateState({
@@ -695,28 +698,29 @@ export default function CelebrityProduct2({ route, navigation }) {
     }
 
     console.log("item+++", item)
-    // if (item?.add_on?.length !== 0 || item?.variantSet?.length !== 0) {
-    //   updateState({
-    //     updateQtyLoader: false,
-    //     typeId: getTypeId,
-    //     isVisibleModal: true,
-    //     selectedCartItem: item,
-    //     selectedItemID: -1,
-    //     btnLoader: false,
-    //   });
-    //   return;
-    // }
-    // if (item?.add_on?.length === 0 && item?.mode_of_service === 'schedule') {
-    //   updateState({
-    //     updateQtyLoader: false,
-    //     typeId: getTypeId,
-    //     isVisibleModal: true,
-    //     selectedCartItem: item,
-    //     selectedItemID: -1,
-    //     btnLoader: false,
-    //   });
-    //   return;
-    // }
+
+    if (item?.add_on?.length !== 0 || item?.variantSet?.length !== 0) {
+      updateState({
+        updateQtyLoader: false,
+        typeId: getTypeId,
+        isVisibleModal: true,
+        selectedCartItem: item,
+        selectedItemID: -1,
+        btnLoader: false,
+      });
+      return;
+    }
+    if (item?.add_on?.length === 0 && item?.mode_of_service === 'schedule') {
+      updateState({
+        updateQtyLoader: false,
+        typeId: getTypeId,
+        isVisibleModal: true,
+        selectedCartItem: item,
+        selectedItemID: -1,
+        btnLoader: false,
+      });
+      return;
+    }
 
 
 
