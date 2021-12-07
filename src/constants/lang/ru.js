@@ -648,4 +648,5 @@ export default {
   VENDOR_ADDRESS: 'vendor address',
   ENTER_VENDOR_NAME: 'vendor name',
   YOUR: 'your',
+  CARD: 'Card',
 };

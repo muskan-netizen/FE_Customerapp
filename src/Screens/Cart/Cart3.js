@@ -3255,7 +3255,7 @@ export default function Cart({navigation, route}) {
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
               {vendorAddress
-                ? strings.HOME
+                ? strings.ADDRESS
                 : selectedAddressData
                 ? strings.HOME
                 : strings.ADD_ADDRESS}

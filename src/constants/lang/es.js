@@ -673,4 +673,5 @@ export default {
   CHOOSE_FROM_CUISINES: 'Choose from cuisines',
   OTP_SENT: 'OTP code sent',
   HOUSE_NO: 'House No.',
+  CARD: 'Card',
 };
