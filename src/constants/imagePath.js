@@ -71,7 +71,7 @@ export default {
   ic_package3: require('../assets/images/ic_package3.png'),
   ic_package4: require('../assets/images/ic_package4.png'),
   ic_calendar: require('../assets/images/ic_calendar.png'),
-  percent: require('../assets/images/ic_percent2.png'),
+  percent: require('../assets/images/ic_percent.png'),
   percent2: require('../assets/images/ic_percentage.png'),
   icUpload: require('../assets/images/ic_upload.png'),
   icInstruction: require('../assets/images/ic_instructions.png'),

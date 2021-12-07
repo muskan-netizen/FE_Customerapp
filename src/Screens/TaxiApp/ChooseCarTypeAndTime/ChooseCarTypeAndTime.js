@@ -610,7 +610,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             color: isDarkMode ? colors.whiteOpacity77 : colors.black,
             marginTop: moderateScaleVertical(8),
           }}>
-          Choose a trip or swipe up for more
+          {strings.CHOOSE_A_TRIP}
         </Text>
       </View>
     );
