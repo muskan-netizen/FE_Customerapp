@@ -678,4 +678,5 @@ export default {
   CHOOSE_A_TRIP:"Elija un viaje o deslice hacia arriba para ver más",
   DRIVER_DETAILS:"Detalles del conductor",
   INSTRUCTIONS:"Instrucciones",
+  SET:"Colocar"
 };
