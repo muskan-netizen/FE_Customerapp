@@ -1,6 +1,6 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, debounce} from 'lodash';
-import React, {useEffect, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep, debounce } from 'lodash';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -10,15 +10,15 @@ import {
   Vibration,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
 import DisplayModal from '../../Components/DisplayModal';
 import Header from '../../Components/Header';
 import HomeServiceVariantAddons from '../../Components/HomeServiceVariantAddons';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import NoDataFound from '../../Components/NoDataFound';
 import ProductCard3 from '../../Components/ProductCard3';
 import VariantAddons from '../../Components/VariantAddons';
@@ -29,14 +29,14 @@ import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {removeItem} from '../../utils/utils';
+import { removeItem } from '../../utils/utils';
 
 import {
   moderateScale,
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
+import { MyDarkTheme } from '../../styles/theme';
 import {
   getImageUrl,
   hapticEffects,
@@ -47,6 +47,8 @@ import {
 } from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
+import RepeatModal from '../../Components/RepeatModal';
+import DifferentAddOns from '../../Components/DifferentAddOns ';
 
 let timeOut = undefined;
 
@@ -54,8 +56,8 @@ var tempQty = 0;
 
 let activeIdx = 0;
 
-export default function BrandProducts2({route, navigation}) {
-  const {data} = route.params;
+export default function BrandProducts2({ route, navigation }) {
+  const { data } = route.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -126,13 +128,22 @@ export default function BrandProducts2({route, navigation}) {
     isVisibleModal: false,
     typeId: null,
     selectedCartItem: null,
-    selectedSection: null,
     cartId: null,
-    sectionListData: [],
     showShimmer: true,
+    differentAddsOns: [],
+    selectedDiffAdsOnItem: null,
+    selectedDiffAdsOnSection: null,
+    diffAddOnCartIdProductId: null,
+    storeLocalQty: null,
+    repeatItems: null,
+    differentAddsOns: [],
+    selectedDiffAdsOnSection: null,
+    diffAddOnCartIdProductId: null,
+    differentAddsOnsModal: false,
+    selectedDiffAdsOnId: 0,
   });
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const {
     brand,
     brandData,
@@ -163,26 +174,32 @@ export default function BrandProducts2({route, navigation}) {
     isVisibleModal,
     typeId,
     selectedCartItem,
-    selectedSection,
     cartId,
-    sectionListData,
     showShimmer,
+    repeatItems,
+    differentAddsOns,
+    selectedDiffAdsOnItem,
+    selectedDiffAdsOnSection,
+    diffAddOnCartIdProductId,
+    storeLocalQty,
+    differentAddsOnsModal,
+    selectedDiffAdsOnId,
   } = state;
 
   //Redux Store data
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
+  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state?.auth?.userData);
   const fontFamily = appStyle?.fontSizeData;
   //Screen styling
-  const styles = stylesFunc({themeColors, fontFamily});
+  const styles = stylesFunc({ themeColors, fontFamily });
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
   useEffect(() => {
     updateState({
       sortFilterMap: sortFilters[0].value,
@@ -196,14 +213,14 @@ export default function BrandProducts2({route, navigation}) {
 
   //Get brand Products based on change with language and currencies
   useEffect(() => {
-    updateState({pageNo: 1});
+    updateState({ pageNo: 1 });
     getListOfBrandProducts();
   }, [languages, currencies]);
 
   //On focus changes
   useFocusEffect(
     React.useCallback(() => {
-      updateState({pageNo: 1});
+      updateState({ pageNo: 1 });
       getListOfBrandProducts();
     }, [
       sleectdBrands,
@@ -232,13 +249,13 @@ export default function BrandProducts2({route, navigation}) {
     let sortExist = slectedSortBy.length;
     {
       filterExist
-        ? updateState({showFilterSlectedIcon: true})
-        : updateState({showFilterSlectedIcon: false});
+        ? updateState({ showFilterSlectedIcon: true })
+        : updateState({ showFilterSlectedIcon: false });
     }
     {
       sortExist
-        ? updateState({showSortSelectedicon: true})
-        : updateState({showSortSelectedicon: false});
+        ? updateState({ showSortSelectedicon: true })
+        : updateState({ showSortSelectedicon: false });
     }
     {
       !!filterExist || !!sortExist
@@ -308,7 +325,7 @@ export default function BrandProducts2({route, navigation}) {
 
   //Handing error coming from API
   const errorMethod = (error) => {
-    updateState({isLoading: false, isRefreshing: false, isLoadingB: false});
+    updateState({ btnLoader, isLoading: false, isRefreshing: false, isLoadingB: false });
     showError(error?.message || error?.error);
   };
 
@@ -362,49 +379,163 @@ export default function BrandProducts2({route, navigation}) {
     });
   };
 
-  //Add product to cart
-  const _addToCart = (item) => {
-    moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
+
+
+  const addProductsWithoutCustomize = (item, index, type) => {
+    console.log('very nice', item);
+    let itemToUpdate = cloneDeep(item);
+    let quanitity = !!itemToUpdate?.qty ? itemToUpdate?.qty : itemToUpdate?.check_if_in_cart_app[0].quantity;
+    let productId = !!itemToUpdate?.cart_product_id ? itemToUpdate?.cart_product_id : itemToUpdate?.check_if_in_cart_app[0].id;
+    let parentCartId = !!cartId ? cartId : itemToUpdate?.check_if_in_cart_app[0].cart_id;
+
+    if (type == 1) {
+      addDeleteCartItems(
+        item,
+        quanitity,
+        productId,
+        parentCartId,
+        index,
+        1,
+      );
+    } else {
+      addDeleteCartItems(
+        item,
+        quanitity,
+        productId,
+        parentCartId,
+        index,
+        2,
+      );
+    }
   };
 
-  //render Products list based on brand ID
-  const renderProduct = ({item, index}) => {
-    return (
-      // <ProductCard4
-      //   data={item}
-      //   onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-      //   onAddtoWishlist={() => _onAddtoWishlist(item)}
-      //   addToCart={() => _addToCart(item)}
-      // />
-      <ProductCard3
-        data={item}
-        index={index}
-        onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-        onAddtoWishlist={() => _onAddtoWishlist(item)}
-        addToCart={() => addSingleItem(item, null, index)}
-        onIncrement={() => addDeleteCartItems(item, null, index, 1)}
-        onDecrement={() => addDeleteCartItems(item, null, index, 2)}
-        selectedItemID={selectedItemID}
-        btnLoader={btnLoader}
-        selectedItemIndx={selectedItemIndx}
-        categoryInfo={categoryInfo}
-      />
-    );
+  const getDiffAddsOn = async (apiData, item) => {
+    console.log('get diffadds on data', apiData);
+    let header = {
+      code: appData?.profile?.code,
+      currency: currencies?.primary_currency?.id,
+      language: languages?.primary_language?.id,
+      systemuser: DeviceInfo.getUniqueId(),
+    };
+    try {
+      const res = await actions.differentAddOns(apiData, header);
+      console.log('res+++++++', res);
+      if (res?.data.length > 1) {
+        updateState({
+          differentAddsOns: res?.data || [],
+          selectedDiffAdsOnItem: item,
+          diffAddOnCartIdProductId: {
+            cart_id: apiData?.cart_id,
+            product_id: apiData?.product_id,
+          },
+          differentAddsOnsModal: true,
+        });
+        return { data: res?.data, goNext: true };
+      }
+      return { data: res?.data, goNext: false };
+    } catch (error) {
+      console.log('error raised,error');
+      return { data: null, goNext: false };
+    }
   };
 
-  const addSingleItem = async (item, section = null) => {
+  const checkIsCustomize = async (item, index, type) => {
+    let itemToUpdate = cloneDeep(item);
+    console.log('check item to update', itemToUpdate);
+    // return;
+    if (item.add_on.length == 0 && item.variantSet.length == 0) { // hit in case of simple products withou any customization
+      addProductsWithoutCustomize(item, index, type);
+      return;
+    }
+
+    let productId = !!itemToUpdate?.cart_product_id ? itemToUpdate?.cart_product_id : itemToUpdate?.check_if_in_cart_app[0]?.id;
+    let parentCartId = !!cartId ? cartId : itemToUpdate.check_if_in_cart_app[0]?.cart_id;
+
+    var totalProductQty = 0;
+    if (itemToUpdate?.variant && itemToUpdate?.check_if_in_cart_app) {
+      itemToUpdate?.check_if_in_cart_app.map((val) => {
+        totalProductQty = totalProductQty + val?.quantity;
+      });
+    }
+
+    var isExistqty = itemToUpdate?.qty ? itemToUpdate?.qty : totalProductQty; //this variable contain only local product quantity
+    var tempQty = 0; //this variable contain latest updated quantity of products
+
+    if ((type == 2 && item?.add_on?.length > 0) || item?.variantSet?.length > 0) {
+      //hit in case of subtruction
+      let apiData = { cart_id: parentCartId, product_id: item.id };
+      let checkIsAvailable = await getDiffAddsOn(apiData, item); //check products with different addOns is exist or not.
+      // console.log("check available", checkIsAvailable)
+
+      !!checkIsAvailable?.data &&
+        checkIsAvailable?.data.map((val) => {
+          console.log('check available', val);
+          tempQty = tempQty + val?.quantity; //store updated total quantity of products
+        });
+
+      if (!!checkIsAvailable?.goNext) { //if different adOns is exist then open DifferentAddOns Modal.
+        return;
+      }
+    }
+    if (type == 2) { // direct subtract customize items if products added with same addons
+      addDeleteCartItems(
+        item,
+        tempQty == 0 ? isExistqty : tempQty,
+        productId,
+        parentCartId,
+        index,
+        2,
+      );
+      return;
+    }
+
+    if (type == 1) { //hit in case of add new products
+      let apiData = { cart_id: parentCartId, product_id: item.id };
+      let header = {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      };
+      console.log('api data checkLastAdded', apiData);
+      try {
+        const res = await actions.checkLastAdded(apiData, header);
+        console.log('res++++++', res);
+        if (!!res.data) {
+          //open RepeatModal
+          const addData = {
+            item: item,
+            index: index,
+            type: type,
+            isExistqty: tempQty == 0 ? isExistqty : tempQty,
+            updateLocalQty: res.data?.quantity,
+            productId: res?.data?.id,
+            parentCartId: res.data.cart_id,
+          };
+          console.log('is++ exist qty', tempQty == 0 ? isExistqty : tempQty);
+          console.log('is++ update local qty', res.data?.quantity);
+
+          updateState({ repeatItems: addData });
+        }
+      } catch (error) {
+        console.log('error riased++++', error);
+        showError(error?.message || error?.error);
+      }
+      return;
+    }
+  };
+  const addSingleItem = async (item) => {
     if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }
-    playHapticEffect(hapticEffects.rigid);
+    playHapticEffect(hapticEffects.impactLight);
     let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
-    updateState({selectedItemID: item?.id, btnLoader: true});
+    updateState({ selectedItemID: item?.id, btnLoader: true });
     let isSingleVendor = await checkSingleVendor(item.id);
-    if (
-      isSingleVendor.isSingleVendorEnabled !== 0 &&
-      isSingleVendor.otherVendorExists !== 0
-    ) {
+    console.log('is singel vendor', isSingleVendor);
+
+    if (isSingleVendor.isSingleVendorEnabled == 1 && isSingleVendor.otherVendorExists == 1) {
       updateState({
         updateQtyLoader: false,
         selectedItemID: -1,
@@ -413,23 +544,23 @@ export default function BrandProducts2({route, navigation}) {
       Alert.alert('', strings.ALREADY_EXIST, [
         {
           text: strings.CANCEL,
-          onPress: () => {},
+          onPress: () => { },
+          // style: 'destructive',
         },
         {
           text: strings.CONFIRM,
-          onPress: () => clearCartAndAddProduct(item, section),
+          onPress: () => clearCartAndAddProduct(item),
         },
       ]);
       return;
     }
 
-    if (item?.add_on?.length > 0 || item?.variantSet?.length > 0) {
+    if (item?.add_on?.length !== 0 || item?.variantSet?.length !== 0) {
       updateState({
         updateQtyLoader: false,
         typeId: getTypeId,
         isVisibleModal: true,
         selectedCartItem: item,
-        selectedSection: section,
         selectedItemID: -1,
         btnLoader: false,
       });
@@ -441,7 +572,6 @@ export default function BrandProducts2({route, navigation}) {
         typeId: getTypeId,
         isVisibleModal: true,
         selectedCartItem: item,
-        selectedSection: section,
         selectedItemID: -1,
         btnLoader: false,
       });
@@ -462,78 +592,51 @@ export default function BrandProducts2({route, navigation}) {
       })
       .then((res) => {
         actions.cartItemQty(res);
-        updateState({cartId: res.data.id});
-        if (!!section) {
-          let updatedSection = section.data.map((x, xnx) => {
-            if (x?.id == item?.id) {
-              x['qty'] = 1;
-              x['cart_product_id'] = res.data.cart_product_id;
-              return x;
-            }
-            return x;
-          });
-          section['data'] = updatedSection;
-          updateState({
-            sectionListData: sectionListData.map((f, fnx) => {
-              if (f?.id == section?.id) {
-                return section;
-              }
-              return f;
-            }),
-          });
-        } else {
-          let updateArray = brandData.map((val, i) => {
-            if (val.id == item.id) {
-              return {
-                ...val,
-                qty: 1,
-                cart_product_id: res.data.cart_product_id,
-                isRemove: false,
-              };
-            }
-            return val;
-          });
-          updateState({
-            brandData: updateArray,
-          });
-        }
+        updateState({ cartId: res.data.id });
+        let updateArray = brandData.map((val, i) => {
+          if (val.id == item.id) {
+            return {
+              ...val,
+              qty: 1,
+              cart_product_id: res.data.cart_product_id,
+              isRemove: false,
+            };
+          }
+          return val;
+        });
         updateState({
           selectedCartItem: item,
           updateQtyLoader: false,
-          selectedSection: section,
           selectedItemID: -1,
           btnLoader: false,
+          brandData: updateArray,
         });
       })
       .catch((error) => errorMethodSecond(error));
   };
 
-  const addDeleteCartItems = (item, section = null, index, type) => {
+  const addDeleteCartItems = async (
+    item,
+    isExistqty,
+    isExistproductId,
+    isExistCartId,
+    index,
+    type,
+    updateLocalQty = null,
+    differentAddsOnsQty = null,
+  ) => {
     if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }
-    playHapticEffect(hapticEffects.rigid);
+
+    playHapticEffect(hapticEffects.impactLight);
+
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
-    //!!data?.variant[0]?.check_if_in_cart_app && data?.variant[0]?.check_if_in_cart_app.length > 0 || !!data?.qty ?
-
-    let isExistqty = itemToUpdate?.qty
-      ? itemToUpdate?.qty
-      : !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-        itemToUpdate.variant[0]?.check_if_in_cart_app[0].quantity;
-    let isExistproductId =
-      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-      itemToUpdate.variant[0]?.check_if_in_cart_app.length
-        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].id
-        : itemToUpdate?.cart_product_id;
-    let isExistCartId =
-      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-      itemToUpdate.variant[0]?.check_if_in_cart_app.length
-        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
-        : cartId;
 
     console.log('exist qty', isExistqty);
+    /** This will restring unneccessary api call , only hit api once user wait for 1.5 seconds ***/
 
     if (timeOut) {
       clearTimeout(timeOut);
@@ -547,63 +650,83 @@ export default function BrandProducts2({route, navigation}) {
       quanitity = Number(isExistqty) - 1;
     }
 
-    updateLocally(section, quanitity, item, isExistproductId);
+    updateLocally(
+      quanitity,
+      item,
+      isExistproductId,
+      differentAddsOnsQty,
+    );
 
-    timeOut = setTimeout(() => {
-      console.log('hit set time out functions');
-      // return;
-      if (quanitity) {
-        updateState({
-          selectedItemID: itemToUpdate.id,
-          btnLoader: true,
-          selectedItemIndx: index,
-        });
-        let data = {};
-        data['cart_id'] = isExistCartId;
-        data['quantity'] = quanitity;
-        data['cart_product_id'] = isExistproductId;
-        data['type'] = dineInType;
-        console.log('sending api data', data);
-
-        actions
-          .increaseDecreaseItemQty(data, {
-            code: appData?.profile?.code,
-            currency: currencies?.primary_currency?.id,
-            language: languages?.primary_language?.id,
-            systemuser: DeviceInfo.getUniqueId(),
-          })
-          .then((res) => {
-            tempQty = 0;
-            actions.cartItemQty(res);
-            updateState({
-              cartItems: res.data.products,
-              cartData: res.data,
-              updateQtyLoader: false,
-              selectedItemID: -1,
-              btnLoader: false,
-            });
-          })
-          .catch(async () => {
-            errorMethod();
-            if (type == 1) {
-              quanitity = quanitity - tempQty;
-            } else {
-              quanitity = quanitity + tempQty;
-            }
-            await updateLocally(section, quanitity, item, isExistproductId);
-            tempQty = 0;
+    timeOut = setTimeout(
+      () => {
+        console.log('hit set time out functions');
+        // return;
+        if (quanitity) {
+          console.log(
+            'differentAddsOnsQtydifferentAddsOnsQty',
+            differentAddsOnsQty,
+          );
+          updateState({
+            selectedItemID: itemToUpdate.id,
+            btnLoader: true,
+            selectedItemIndx: index,
           });
-      } else {
-        updateState({selectedItemID: itemToUpdate?.id, btnLoader: false});
-        removeItem('selectedTable');
-        removeProductFromCart(itemToUpdate, section);
-      }
-    }, 700);
+          let data = {};
+          data['cart_id'] = isExistCartId;
+          data['quantity'] = !!updateLocalQty
+            ? type == 1
+              ? updateLocalQty + 1
+              : updateLocalQty - 1
+            : quanitity;
+          data['cart_product_id'] = isExistproductId;
+          data['type'] = dineInType;
+          console.log('sending api data', data);
+
+          actions
+            .increaseDecreaseItemQty(data, {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+              systemuser: DeviceInfo.getUniqueId(),
+            })
+            .then((res) => {
+              console.log('update qty res', res);
+              tempQty = 0;
+              actions.cartItemQty(res);
+              updateState({
+                cartItems: res.data.products,
+                cartData: res.data,
+                updateQtyLoader: false,
+                selectedItemID: -1,
+                btnLoader: false,
+              });
+            })
+            .catch(async () => {
+              errorMethod();
+              if (type == 1) {
+                quanitity = quanitity - tempQty;
+              } else {
+                quanitity = quanitity + tempQty;
+              }
+              await updateLocally(quanitity, item, isExistproductId);
+              tempQty = 0;
+            });
+        } else {
+          updateState({
+            selectedItemID: itemToUpdate?.id,
+            btnLoader: false,
+          });
+          removeItem('selectedTable');
+          removeProductFromCart(itemToUpdate, isExistproductId);
+        }
+      },
+      quanitity === 1 ? 0 : 700,
+    );
   };
 
   const checkSingleVendor = async (id) => {
-    let vendorData = {vendor_id: categoryInfo?.id};
-    updateState({selectedItemID: id});
+    let vendorData = { vendor_id: categoryInfo?.id };
+    updateState({ selectedItemID: id });
     return new Promise((resolve, reject) => {
       actions
         .checkSingleVendor(vendorData, {
@@ -618,14 +741,14 @@ export default function BrandProducts2({route, navigation}) {
         })
         .catch((error) => {
           reject(error);
-          updateState({selectedItemID: -1});
+          updateState({ selectedItemID: -1 });
         });
     });
   };
 
   const errorMethodSecond = (error, addonSet = []) => {
     console.log(error.message.alert, 'Error>>>>>');
-    updateState({updateQtyLoader: false});
+    updateState({ updateQtyLoader: false });
     if (error?.message?.alert == 1) {
       updateState({
         isLoading: false,
@@ -641,7 +764,7 @@ export default function BrandProducts2({route, navigation}) {
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        {text: 'Clear Cart', onPress: () => clearCart(addonSet)},
+        { text: 'Clear Cart', onPress: () => clearCart(addonSet) },
       ]);
     } else {
       updateState({
@@ -677,13 +800,20 @@ export default function BrandProducts2({route, navigation}) {
       .catch(errorMethod);
   };
 
-  const updateLocally = (section, quanitity, item, isExistproductId) => {
-    let cloneArr = brandData;
-    let updateArray = cloneArr.map((val, i) => {
+  const updateLocally = (
+    quanitity,
+    item,
+    isExistproductId,
+    differentAddsOnsQty,
+  ) => {
+    console.log('quanitity', quanitity);
+    console.log('quanitity localy', differentAddsOnsQty);
+
+    let updateArray = brandData.map((val, i) => {
       if (val.id == item.id) {
         return {
           ...val,
-          qty: quanitity,
+          qty: !!differentAddsOnsQty ? differentAddsOnsQty : quanitity,
           cart_product_id: isExistproductId,
           isRemove: false,
         };
@@ -693,27 +823,41 @@ export default function BrandProducts2({route, navigation}) {
     updateState({
       brandData: updateArray,
       selectedItemID: -1,
+      storeLocalQty: differentAddsOnsQty,
     });
   };
 
-  const removeProductFromCart = (itemToUpdate, section = null) => {
+  //decrementing/removeing products from cart
+  const removeProductFromCart = (
+    itemToUpdate,
+    diffAdOnId = 0,
+  ) => {
+    // console.log("item to update remove item", itemToUpdate)
+
+    let updateLocallyAddOns = [];
+    if (differentAddsOnsModal) {
+      let cloneArr = differentAddsOns;
+      updateLocallyAddOns = cloneArr.filter((val) => {
+        if (diffAdOnId !== val.id) {
+          return val;
+        }
+      });
+      updateState({ differentAddsOns: updateLocallyAddOns });
+    }
+
     let data = {};
-    let isExistproductId =
-      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-      itemToUpdate.variant[0]?.check_if_in_cart_app.length > 0
-        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].id
-        : itemToUpdate?.cart_product_id;
-    let isExistCartId =
-      !!itemToUpdate?.variant[0]?.check_if_in_cart_app &&
-      itemToUpdate.variant[0]?.check_if_in_cart_app.length > 0
-        ? itemToUpdate.variant[0]?.check_if_in_cart_app[0].cart_id
-        : cartId;
-    console.log('item', itemToUpdate);
+    let isExistproductId = diffAdOnId;
+    let isExistCartId = !!itemToUpdate?.check_if_in_cart_app && !!itemToUpdate?.check_if_in_cart_app.length > 0 ? itemToUpdate?.check_if_in_cart_app[0]?.cart_id : cartId;
+
 
     data['cart_id'] = isExistCartId;
     data['cart_product_id'] = isExistproductId;
     data['type'] = dineInType;
-    updateState({btnLoader: true});
+
+    console.log('itemToUpdate', itemToUpdate);
+    console.log("sending data", data)
+
+    updateState({ btnLoader: true });
     actions
       .removeProductFromCart(data, {
         code: appData?.profile?.code,
@@ -723,61 +867,61 @@ export default function BrandProducts2({route, navigation}) {
       })
       .then((res) => {
         actions.cartItemQty(res);
-        if (!!section) {
-          let updatedSection = section.data.map((x, xnx) => {
-            if (x?.id == itemToUpdate?.id) {
-              return {
-                ...x,
-                qty: null,
-                cart_product_id: res.data.cart_product_id,
-                variant: itemToUpdate?.variant.map((val, i) => {
-                  return {...val, check_if_in_cart_app: []};
-                }),
-              };
-            }
-            return x;
-          });
-          section['data'] = updatedSection;
-          updateState({
-            sectionListData: sectionListData.map((f, fnx) => {
-              if (f?.id == section?.id) {
-                return section;
-              }
-              return f;
-            }),
-            updateQtyLoader: false,
-            selectedItemID: -1,
-            btnLoader: false,
-          });
-        } else {
-          let updateArray = brandData.map((val, i) => {
-            if (val.id == itemToUpdate.id) {
-              return {
-                ...val,
-                qty: null,
-                cart_product_id: res.data.cart_product_id,
-                variant: itemToUpdate?.variant.map((val, i) => {
-                  return {...val, check_if_in_cart_app: []};
-                }),
-              };
-            }
-            return val;
-          });
-          updateState({
-            brandData: updateArray,
-            updateQtyLoader: false,
-            selectedItemID: -1,
-            btnLoader: false,
-          });
-        }
+        let updateArray = brandData.map((val, i) => {
+          if (val.id == itemToUpdate.id) {
+            return {
+              ...val,
+              qty: null,
+              cart_product_id: res.data.cart_product_id,
+              check_if_in_cart_app: differentAddsOnsModal
+                ? updateLocallyAddOns
+                : [],
+              // variant: itemToUpdate?.variant.map((val, i) => {
+              //   return { ...val, check_if_in_cart_app: differentAddsOnsModal ? updateLocallyAddOns : [] };
+              // }),
+            };
+          }
+          return val;
+        });
+        updateState({
+          brandData: updateArray,
+          updateQtyLoader: false,
+          selectedItemID: -1,
+          btnLoader: false,
+        });
+
       })
       .catch(errorMethod);
   };
 
+
+
+  //render Products list based on brand ID
+  const renderProduct = ({ item, index }) => {
+    return (
+      <ProductCard3
+        data={item}
+        index={index}
+        onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
+        onAddtoWishlist={() => _onAddtoWishlist(item)}
+        addToCart={() => addSingleItem(item, index)}
+        onIncrement={() => checkIsCustomize(item, index, 1)}
+        onDecrement={() => checkIsCustomize(item, index, 2)}
+        // onIncrement={() => addDeleteCartItems(item, null, index, 1)}
+        // onDecrement={() => addDeleteCartItems(item, null, index, 2)}
+        selectedItemID={selectedItemID}
+        btnLoader={btnLoader}
+        selectedItemIndx={selectedItemIndx}
+        categoryInfo={categoryInfo}
+      />
+    );
+  };
+
+
   const _onAddtoWishlist = (item) => {
     playHapticEffect(hapticEffects.rigid);
     if (!!userData?.auth_token) {
-      updateState({isLoadingB: true});
+      updateState({ isLoadingB: true });
       actions
         .updateProductWishListData(
           `/${item.id}`,
@@ -796,12 +940,12 @@ export default function BrandProducts2({route, navigation}) {
         .catch(errorMethod);
     } else {
       showError(strings.UNAUTHORIZED_MESSAGE);
-      updateState({isLoadingB: false});
+      updateState({ isLoadingB: false });
     }
   };
 
-  const clearCartAndAddProduct = async (item, section = null) => {
-    updateState({updateQtyLoader: true});
+  const clearCartAndAddProduct = async (item) => {
+    updateState({ updateQtyLoader: true });
     actions
       .clearCart(
         {},
@@ -814,7 +958,7 @@ export default function BrandProducts2({route, navigation}) {
       )
       .then((res) => {
         actions.cartItemQty(res);
-        addSingleItem(item, section);
+        addSingleItem(item);
         // showSuccess(res?.message);
       })
       .catch(errorMethod);
@@ -827,25 +971,25 @@ export default function BrandProducts2({route, navigation}) {
       if (i.id == item.id) {
         if (item.inwishlist) {
           i.inwishlist = null;
-          return {...i, inwishlist: null};
+          return { ...i, inwishlist: null };
         } else {
-          return {...i, inwishlist: {product_id: i.id}};
+          return { ...i, inwishlist: { product_id: i.id } };
         }
       } else {
         return i;
       }
     });
-    updateState({brandData: newArray});
+    updateState({ brandData: newArray });
   };
 
   //pagination of data
-  const onEndReached = ({distanceFromEnd}) => {
-    updateState({pageNo: pageNo + 1});
+  const onEndReached = ({ distanceFromEnd }) => {
+    updateState({ pageNo: pageNo + 1 });
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({pageNo: 1, isRefreshing: true});
+    updateState({ pageNo: 1, isRefreshing: true });
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -854,10 +998,10 @@ export default function BrandProducts2({route, navigation}) {
   });
 
   const shortModalFun = () => {
-    updateState({isSortEnabled: true});
+    updateState({ isSortEnabled: true });
   };
   const closeOptionModal = () => {
-    updateState({isSortEnabled: false});
+    updateState({ isSortEnabled: false });
   };
 
   //Update short filter status
@@ -873,19 +1017,19 @@ export default function BrandProducts2({route, navigation}) {
                 if (i.id == -2) {
                   return {
                     ...j,
-                    value: {selected: j?.value?.selected ? false : true},
+                    value: { selected: j?.value?.selected ? false : true },
                   };
                 } else {
                   return {
                     ...j,
-                    value: {selected: j?.value?.selected ? false : true},
+                    value: { selected: j?.value?.selected ? false : true },
                   };
                 }
               } else {
                 if (i.id == -2) {
                   return {
                     ...j,
-                    value: {selected: false},
+                    value: { selected: false },
                   };
                 } else {
                   return j;
@@ -893,7 +1037,7 @@ export default function BrandProducts2({route, navigation}) {
               }
             });
 
-            updateState({sortFilterMap: checkArray});
+            updateState({ sortFilterMap: checkArray });
             return {
               ...i,
               value: checkArray,
@@ -930,9 +1074,11 @@ export default function BrandProducts2({route, navigation}) {
     index,
   });
 
+
   const updateCartItems = (item, quanitity, productId, cartID) => {
-    let cloneArr = brandData;
-    let updateArray = cloneArr.map((val, i) => {
+    playHapticEffect(hapticEffects.impactLight);
+
+    let updateArray = brandData.map((val, i) => {
       if (val.id == item.id) {
         return {
           ...val,
@@ -941,11 +1087,80 @@ export default function BrandProducts2({route, navigation}) {
           isRemove: false,
         };
       }
+      updateState({ storeLocalQty: quanitity });
       return val;
     });
     updateState({
       cartId: cartID,
       brandData: updateArray,
+      isVisibleModal: false,
+    });
+
+  };
+
+  const hideDifferentAddOns = () => {
+    updateState({ differentAddsOnsModal: false, differentAddsOns: [] });
+  };
+
+  const difAddOnsAdded = async (
+    item,
+    qty,
+    productId,
+    cartId,
+    section,
+    index,
+    type,
+  ) => {
+    let differentAddsOnsQty = 0;
+    let cloneArr = differentAddsOns;
+    let updateLocallyAddOns = cloneArr.map((val) => {
+      differentAddsOnsQty = differentAddsOnsQty + val.quantity;
+      if (cartId == val.id) {
+        return { ...val, quantity: type == 1 ? qty + 1 : qty - 1 };
+      }
+      return val;
+    });
+    await addDeleteCartItems(
+      item,
+      qty,
+      cartId,
+      productId,
+      index,
+      type,
+      null,
+      type == 1 ? differentAddsOnsQty + 1 : differentAddsOnsQty - 1, //send updated total quantity
+    );
+    updateState({ differentAddsOns: updateLocallyAddOns });
+  };
+
+  const onRepeat = async () => {
+    // console.log("repeate items", repeatItems)
+    const { item, isExistqty, productId, parentCartId, updateLocalQty } =
+      repeatItems;
+    await addDeleteCartItems(
+      item,
+      isExistqty,
+      productId,
+      parentCartId,
+      repeatItems?.index,
+      1,
+      updateLocalQty,
+    );
+    updateState({ repeatItems: null });
+  };
+
+  const onAddNew = () => {
+    let getTypeId =
+      !!repeatItems?.item?.category &&
+      repeatItems?.item?.category.category_detail?.type_id;
+    updateState({
+      repeatItems: null,
+      updateQtyLoader: false,
+      typeId: getTypeId,
+      isVisibleModal: true,
+      selectedCartItem: repeatItems?.item,
+      selectedItemID: -1,
+      btnLoader: false,
     });
   };
 
@@ -960,14 +1175,14 @@ export default function BrandProducts2({route, navigation}) {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3
-            ? imagePath.icBackb
-            : imagePath.back
+              ? imagePath.icBackb
+              : imagePath.back
         }
         centerTitle={brand.name || brand.translation[0].title}
         headerStyle={
           isDarkMode
-            ? {backgroundColor: MyDarkTheme.colors.background}
-            : {backgroundColor: colors.white}
+            ? { backgroundColor: MyDarkTheme.colors.background }
+            : { backgroundColor: colors.white }
         }
         rightIcon={
           appStyle?.homePageLayout === 3
@@ -981,13 +1196,13 @@ export default function BrandProducts2({route, navigation}) {
           })()
         }
       />
-      <View style={{height: 1, backgroundColor: colors.borderLight}} />
+      <View style={{ height: 1, backgroundColor: colors.borderLight }} />
       <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
         {state.isLoading && <ListEmptyProduct isLoading={state.isLoading} />}
         {!state.isLoading && (
           <>
             {/* //Top section slider */}
-            <View style={{marginTop: 20}} />
+            <View style={{ marginTop: 20 }} />
             {/* Brand Banner View */}
 
             <View
@@ -1007,9 +1222,9 @@ export default function BrandProducts2({route, navigation}) {
                   source={{
                     uri: getImageUrl(
                       brandDetail?.image_banner?.image_fit ||
-                        brandDetail.image.image_fit,
+                      brandDetail.image.image_fit,
                       brandDetail?.image_banner?.image_path ||
-                        brandDetail.image.image_path,
+                      brandDetail.image.image_path,
                       '1000/1000',
                     ),
                   }}
@@ -1141,11 +1356,11 @@ export default function BrandProducts2({route, navigation}) {
               keyExtractor={(item, index) => String(index)}
               keyboardShouldPersistTaps="always"
               showsVerticalScrollIndicator={false}
-              style={{flex: 1, marginTop: moderateScale(10)}}
+              style={{ flex: 1, marginTop: moderateScale(10) }}
               contentContainerStyle={{
                 flexGrow: 1,
               }}
-              ItemSeparatorComponent={() => <View style={{height: 18}} />}
+              ItemSeparatorComponent={() => <View style={{ height: 18 }} />}
               getItemLayout={getItemLayout}
               initialNumToRender={12}
               maxToRenderPerBatch={10}
@@ -1163,10 +1378,10 @@ export default function BrandProducts2({route, navigation}) {
               ListEmptyComponent={
                 <NoDataFound
                   isLoading={state.isLoading}
-                  containerStyle={{marginTop: moderateScaleVertical(width / 8)}}
+                  containerStyle={{ marginTop: moderateScaleVertical(width / 8) }}
                 />
               }
-              ListFooterComponent={() => <View style={{height: 40}} />}
+              ListFooterComponent={() => <View style={{ height: 40 }} />}
             />
             <View>
               {isSortEnabled && (
@@ -1195,12 +1410,12 @@ export default function BrandProducts2({route, navigation}) {
               isVisible={isVisibleModal}
               productdetail={selectedCartItem}
               onClose={() =>
-                updateState({isVisibleModal: false, showShimmer: true})
+                updateState({ isVisibleModal: false, showShimmer: true })
               }
               showShimmer={showShimmer}
-              shimmerClose={(val) => updateState({showShimmer: val})}
+              shimmerClose={(val) => updateState({ showShimmer: val })}
               updateCartItems={updateCartItems}
-              // modeOfService={selectedCartItem?.mode_of_service}
+            // modeOfService={selectedCartItem?.mode_of_service}
             />
           )}
         </View>
@@ -1213,11 +1428,11 @@ export default function BrandProducts2({route, navigation}) {
               isVisible={isVisibleModal}
               productdetail={selectedCartItem}
               onClose={() =>
-                updateState({isVisibleModal: false, showShimmer: true})
+                updateState({ isVisibleModal: false, showShimmer: true })
               }
               typeId={typeId}
               showShimmer={showShimmer}
-              shimmerClose={(val) => updateState({showShimmer: val})}
+              shimmerClose={(val) => updateState({ showShimmer: val })}
               updateCartItems={updateCartItems}
             />
           )}
@@ -1237,6 +1452,32 @@ export default function BrandProducts2({route, navigation}) {
         ]}
         visible={updateQtyLoader}
       />
+
+
+      {/* Add new addons and repeat item view */}
+      {!!repeatItems && (
+        <RepeatModal
+          data={repeatItems?.item}
+          modalHide={() => updateState({ repeatItems: null })}
+          onRepeat={onRepeat}
+          onAddNew={onAddNew}
+        />
+      )}
+
+      {!!differentAddsOns && differentAddsOns.length > 1 && (
+        <DifferentAddOns
+          differentAddsOnsModal={differentAddsOnsModal}
+          data={differentAddsOns}
+          selectedDiffAdsOnItem={selectedDiffAdsOnItem}
+          hideDifferentAddOns={hideDifferentAddOns}
+          difAddOnsAdded={difAddOnsAdded}
+          selectedDiffAdsOnSection={selectedDiffAdsOnSection}
+          storeLocalQty={storeLocalQty}
+          btnLoader={btnLoader}
+          selectedDiffAdsOnId={selectedDiffAdsOnId}
+        />
+      )}
+
     </WrapperContainer>
   );
 }

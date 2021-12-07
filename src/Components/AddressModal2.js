@@ -296,7 +296,6 @@ export default function AddressModal2({
           longitude: position.coords.longitude,
         })
           .then((json) => {
-            console.log(json, 'json?>>>>>>>');
             let addressData = getAddressComponent(json?.results[0]);
             console.log(addressData, 'addressData?>>>>>>>');
             addressHelper(addressData);

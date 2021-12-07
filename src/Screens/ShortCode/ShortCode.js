@@ -1139,7 +1139,6 @@ export default function ShortCode({route, navigation}) {
 
   const checkScreen = () => {
     initApiHit();
-
     updateState({isShortcodePrefilled: true});
   };
 
@@ -1255,6 +1254,7 @@ export default function ShortCode({route, navigation}) {
   };
 
   const homeData = (res) => {
+
     actions
       .homeData(
         {},
