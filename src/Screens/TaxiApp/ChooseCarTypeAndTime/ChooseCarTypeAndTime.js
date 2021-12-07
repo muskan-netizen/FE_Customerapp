@@ -985,7 +985,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
           </View>
         )}
 
-        {!!showPaymentModal && (
+        {/* {!!showPaymentModal && (
           <View
             style={{
               width: '90%',
@@ -1019,7 +1019,7 @@ export default function ChooseCarTypeAndTime({ navigation, route }) {
             />
 
           </View>
-        )}
+        )} */}
       </View>
 
       {/* BottomView */}
