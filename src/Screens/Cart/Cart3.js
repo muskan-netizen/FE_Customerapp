@@ -1742,7 +1742,7 @@ export default function Cart({navigation, route}) {
                         ]
                       : styles.priceItemLabel
                   }>
-                  {strings.DISCOUNT}
+                  {strings.COUPON_DISCOUNT}
                 </Text>
                 <Text
                   style={

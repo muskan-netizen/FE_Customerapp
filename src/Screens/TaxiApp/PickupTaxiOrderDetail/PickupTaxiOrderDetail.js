@@ -797,7 +797,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               </View>
 
               {!!orderFullDetail?.order.task_description && (<View style={{ marginHorizontal: moderateScale(16) }}>
-                <Text style={styles.datePriceText}>Instructions:</Text>
+                <Text style={styles.datePriceText}>{strings.DRIVER_DETAILS}:</Text>
                 <Text style={{
                   ...styles.statusText,
                   color: isDarkMode
@@ -849,7 +849,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 borderRadius: moderateScale(8),
                 marginHorizontal: moderateScale(16)
               }}>
-                <Text style={styles.deliveryProof}>Driver Details</Text>
+                <Text style={styles.deliveryProof}>{strings.DRIVER_DETAILS}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <RoundImg
