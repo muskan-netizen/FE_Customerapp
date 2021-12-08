@@ -89,7 +89,7 @@ export default function WebLinks({navigation, route}) {
     sfcLicense: [],
     fssaiLicense: [],
     vendorRegDocs: [],
-    vendorRegTxtInput: [],
+    vendorRegisterationDocs: [],
     vendorRegPdfImg: [],
   });
   //update your state
@@ -121,7 +121,7 @@ export default function WebLinks({navigation, route}) {
     vendorRegDocs,
     isLoading,
     htmlContent,
-    vendorRegTxtInput,
+    vendorRegisterationDocs,
     vendorRegPdfImg,
   } = state;
 
@@ -139,7 +139,6 @@ export default function WebLinks({navigation, route}) {
   const getCmsPageDetail = () => {
     let data = {};
     data['page_id'] = paramData && paramData?.id;
-    console.log(paramData?.id);
     actions
       .getCmsPageDetail(data, {
         code: appData?.profile?.code,
@@ -388,6 +387,8 @@ export default function WebLinks({navigation, route}) {
     return true;
   };
 
+  console.log(vendorRegisterationDocs, 'vendorRegisterationDocs');
+
   const _onSubmit = () => {
     // const checkValid = isValidData();
     // if (!checkValid) {
@@ -395,41 +396,45 @@ export default function WebLinks({navigation, route}) {
     // }
 
     const data = {};
-    (data['full_name'] = fullname),
-      (data['email'] = email),
-      (data['phone_number'] = phoneNumber),
-      (data['password'] = password),
-      (data['confirm_password'] = confirm_password),
-      (data['name'] = vendor_name),
-      (data['address'] = address),
-      (data['check_conditions'] = 1),
-      actions
-        .vendorRegisteration(data, {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        })
-        .then((res) => {
-          console.log(res, 'serverResponse');
-        })
-        .catch((err) => {
-          console.log(err, 'serverError');
-        });
+    data['full_name'] = fullname;
+    data['email'] = email;
+    data['phone_number'] = phoneNumber;
+    data['dialCode'] = '91';
+    data['password'] = password;
+    data['confirm_password'] = confirm_password;
+    data['name'] = vendor_name;
+    data['address'] = address;
+    data['check_conditions'] = 1;
+
+    vendorRegisterationDocs.map((item, indx) => {
+      data[item?.item?.primary?.slug] =
+        item?.item?.file_type == 'Text' ? item?.fileData : item?.fileData;
+    });
+
+    console.log(data, 'datadatadata');
+    actions
+      .vendorRegisteration(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res, 'serverResponse');
+      })
+      .catch(errorMethod);
   };
 
   const _dynamicTextInputChange = (item, indx, mainItem) => {
-    const vendorRegTxtInputAry = [...vendorRegTxtInput];
-    vendorRegTxtInputAry[indx] = {
-      item: item,
-      fileData: mainItem?.primary?.name,
+    const vendorRegisterationDocsAry = [...vendorRegisterationDocs];
+    vendorRegisterationDocsAry[indx] = {
+      item: mainItem,
+      fileData: item,
     };
     updateState({
-      vendorRegTxtInput: vendorRegTxtInputAry,
+      vendorRegisterationDocs: vendorRegisterationDocsAry,
     });
   };
-
-  console.log(vendorRegTxtInput, 'vendorRegTxtInput');
 
   const uploadDocs = async (type, item, indx) => {
     if (type == 'Pdf') {
@@ -445,16 +450,14 @@ export default function WebLinks({navigation, route}) {
           uri: res[0]?.uri,
         };
 
-        console.log(file, 'selectedFile');
-
-        const vendorRegPdfImgAry = [...vendorRegTxtInput];
+        const vendorRegPdfImgAry = [...vendorRegisterationDocs];
         vendorRegPdfImgAry[indx] = {
           item: item,
           fileData: file,
         };
 
         updateState({
-          vendorRegTxtInput: vendorRegPdfImgAry,
+          vendorRegisterationDocs: vendorRegPdfImgAry,
         });
 
         // console.log(file, 'file');
@@ -492,27 +495,20 @@ export default function WebLinks({navigation, route}) {
               avatar: res,
             };
 
-            console.log(res, 'resresresres');
-
-            const vendorRegPdfImgAry = [...vendorRegTxtInput];
+            const vendorRegPdfImgAry = [...vendorRegisterationDocs];
             vendorRegPdfImgAry[clickedIndx] = {
               item: clickedItem,
               fileData: data,
             };
 
             updateState({
-              vendorRegTxtInput: vendorRegPdfImgAry,
+              vendorRegisterationDocs: vendorRegPdfImgAry,
             });
           })
           .catch((err) => {});
       }
     }
   };
-
-  console.log(
-    vendorRegTxtInput[1]?.fileData?.avatar?.sourceURL,
-    'vendorRegTxtInput',
-  );
 
   const _renderFields = ({item, index}) => {
     return (
@@ -547,7 +543,6 @@ export default function WebLinks({navigation, route}) {
                 alignItems: 'center',
                 marginVertical: moderateScaleVertical(8),
               }}>
-              {console.log(vendorRegTxtInput, 'vendorRegTxtInput')}
               <TouchableOpacity
                 onPress={() => uploadDocs(item?.file_type, item, index)}
                 activeOpacity={0.7}
@@ -557,15 +552,15 @@ export default function WebLinks({navigation, route}) {
                 }}>
                 <Text
                   style={{
-                    marginHorizontal: moderateScale(10),
-                    marginVertical: moderateScaleVertical(10),
+                    marginHorizontal: moderateScale(8),
+                    marginVertical: moderateScaleVertical(8),
                   }}>
                   {strings.CHOOSE_FILE}
                 </Text>
               </TouchableOpacity>
               <Text style={{fontFamily: fontFamily.regular, marginLeft: 6}}>
-                {vendorRegTxtInput[index]?.fileData
-                  ? vendorRegTxtInput[index]?.fileData?.name
+                {vendorRegisterationDocs[index]?.fileData
+                  ? vendorRegisterationDocs[index]?.fileData?.name
                   : strings.NO_FILE_CHOSEN}
               </Text>
             </View>
@@ -578,26 +573,25 @@ export default function WebLinks({navigation, route}) {
               style={{
                 ...styles.imageView,
                 marginVertical: moderateScale(5),
+                marginHorizontal: 0,
               }}>
-              {console.log(
-                vendorRegTxtInput[1]?.fileData?.avatar?.path,
-                'vendorRegTxtInput[index]?.fileData?.avatar?.path',
-              )}
               <Image
                 source={
-                  vendorRegTxtInput[index]?.fileData?.avatar?.path !==
-                  'undefined'
-                    ? {uri: vendorRegTxtInput[index]?.fileData?.avatar?.path}
+                  !!vendorRegisterationDocs[index]?.fileData?.avatar?.path
+                    ? {
+                        uri: vendorRegisterationDocs[index]?.fileData?.avatar
+                          ?.path,
+                      }
                     : imagePath.icCamIcon
                 }
                 style={{
-                  tintColor: !vendorRegTxtInput[index]?.fileData
+                  tintColor: !vendorRegisterationDocs[index]?.fileData
                     ? themeColors.primary_color
                     : null,
-                  height: vendorRegTxtInput[index]?.fileData
+                  height: vendorRegisterationDocs[index]?.fileData
                     ? height / 6 - moderateScale(15)
                     : 30,
-                  width: vendorRegTxtInput[index]?.fileData
+                  width: vendorRegisterationDocs[index]?.fileData
                     ? width - moderateScale(80)
                     : 30,
                 }}
@@ -621,6 +615,8 @@ export default function WebLinks({navigation, route}) {
       </View>
     );
   };
+
+  console.log(vendorRegisterationDocs, 'vendorRegisterationDocs');
 
   return (
     <WrapperContainer
