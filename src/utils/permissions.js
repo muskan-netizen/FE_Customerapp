@@ -117,7 +117,6 @@ export const chekLocationPermission = (showAlert = true) =>
               break;
             case RESULTS.GRANTED:
               return resolve(result);
-              break;
             case RESULTS.BLOCKED:
               if (showAlert) {
                 Alert.alert('', strings.LOCATION_DISABLED_MSG, [
@@ -134,7 +133,7 @@ export const chekLocationPermission = (showAlert = true) =>
                   },
                 ]);
               }
-              break;
+              return resolve(result);
           }
         })
         .catch((error) => {

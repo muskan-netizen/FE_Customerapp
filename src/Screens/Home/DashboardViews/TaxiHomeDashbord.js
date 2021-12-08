@@ -336,7 +336,7 @@ export default function TaxiHomeDashbord({
                 onPress={_modalClose}>
                 <Text
                   style={{color: colors.white, fontFamily: fontFamily.regular}}>
-                  {'Cancel'}
+                  {strings.CANCEL}
                 </Text>
               </TouchableOpacity>
 
@@ -367,7 +367,7 @@ export default function TaxiHomeDashbord({
                 }}>
                 <Text
                   style={{color: colors.white, fontFamily: fontFamily.regular}}>
-                  {'Set'}
+                  {strings.SET}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -377,6 +377,7 @@ export default function TaxiHomeDashbord({
     );
   };
 
+  console.log('location location', location);
   const moveToScreen = (details) => {
     updateState({fullMapShow: false});
     if (!!userData?.auth_token) {
@@ -658,7 +659,7 @@ export default function TaxiHomeDashbord({
                 </View>
               </TouchableOpacity>
             </View>
-            {allSavedAddress.length && userData?.auth_token ? (
+            {allSavedAddress.length > 0 && userData?.auth_token ? (
               <></>
             ) : (
               <TouchableOpacity
@@ -694,7 +695,7 @@ export default function TaxiHomeDashbord({
                           ? MyDarkTheme.colors.text
                           : colors.black,
                       }}>
-                      {'Add new address'}
+                      {strings.ADD_NEW_ADDRESS}
                     </Text>
                   </View>
                 </View>
@@ -739,8 +740,7 @@ export default function TaxiHomeDashbord({
                     marginTop: moderateScaleVertical(20),
                     alignItems: 'center',
                   }}>
-                  {console.log(location, 'locationlocationlocation')}
-                  {!!location && location?.latitude && (
+                  {!!location && (
                     <MapView
                       ref={mapRef}
                       provider={PROVIDER_GOOGLE} // remove if not using Google Maps
@@ -751,10 +751,10 @@ export default function TaxiHomeDashbord({
                       }}
                       // provider={MapView.PROVIDER_GOOGLE}
                       region={{
-                        latitude: location
+                        latitude: !!location?.latitude
                           ? parseFloat(location?.latitude)
                           : 30.7333,
-                        longitude: location
+                        longitude: !!location?.longitude
                           ? parseFloat(location?.longitude)
                           : 76.7794,
                         latitudeDelta: 0.015,
@@ -764,7 +764,20 @@ export default function TaxiHomeDashbord({
                       showsUserLocation={true}
                       //showsMyLocationButton={true}
                       // pointerEvents={'none'}
-                    />
+                    >
+                      <Marker
+                        coordinate={{
+                          latitude: !!location?.latitude
+                            ? parseFloat(location?.latitude)
+                            : 30.7333,
+                          longitude: !!location?.latitude
+                            ? parseFloat(location?.longitude)
+                            : 76.7794,
+                          latitudeDelta: 0.015,
+                          longitudeDelta: 0.0121,
+                        }}
+                      />
+                    </MapView>
                   )}
                 </View>
               </TouchableOpacity>
@@ -808,8 +821,12 @@ export default function TaxiHomeDashbord({
               customMapStyle={mapStyleGrey}
               style={{...StyleSheet.absoluteFillObject}}
               region={{
-                latitude: parseFloat(location?.latitude),
-                longitude: parseFloat(location?.longitude),
+                latitude: !!location?.latitude
+                  ? parseFloat(location?.latitude)
+                  : 30.7333,
+                longitude: !!location?.longitude
+                  ? parseFloat(location?.longitude)
+                  : 76.7794,
                 latitudeDelta: 0.015,
                 longitudeDelta: 0.0121,
               }}
