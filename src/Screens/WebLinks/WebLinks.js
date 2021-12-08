@@ -43,7 +43,7 @@ import {androidCameraPermission} from '../../utils/permissions';
 import validator from '../../utils/validations';
 import stylesFun from './styles';
 
-let clickedIndx = 0;
+let clickedIndx = null;
 let clickedItem = {};
 
 export default function WebLinks({navigation, route}) {
@@ -436,15 +436,13 @@ export default function WebLinks({navigation, route}) {
       data['vehicle_type_id'] = 1;
 
       driverRegistrationDocs.map((item, indx) => {
-        data[item?.item?.name] =
-          item?.item?.file_type == 'Text' ? item?.fileData : item?.fileData;
+        data[item?.item?.name] = item?.fileData;
 
         // if(item?.item?.is_required && ){
 
         // }
       });
       console.log(data, 'sendData');
-      console.log(vendorRegisterationDocs, 'vendorRegisterationDocs');
 
       actions
         .driverRegisteration(data, {
@@ -452,7 +450,7 @@ export default function WebLinks({navigation, route}) {
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
           systemuser: DeviceInfo.getUniqueId(),
-          'Content-Type': 'multipart/form-data',
+          // 'Content-Type': 'multipart/form-data',
         })
         .then((res) => {
           console.log(res, 'serverResponse');
@@ -497,7 +495,6 @@ export default function WebLinks({navigation, route}) {
     }
   };
 
-  console.log(driverRegistrationDocs, 'vendorRegisterationDocsAry');
   const _dynamicTextInputChange = (item, indx, mainItem) => {
     if (paramData?.slug === 'driver-registration') {
       const driverRegistrationDocsAry = [...driverRegistrationDocs];
@@ -573,9 +570,24 @@ export default function WebLinks({navigation, route}) {
         })
           .then((res) => {
             if (paramData?.slug === 'driver-registration') {
-              updateState({
-                driverPic: res,
-              });
+              if (!!clickedIndx) {
+                {
+                  const driverRegistrationDocsAry = [...driverRegistrationDocs];
+                  driverRegistrationDocsAry[clickedIndx] = {
+                    item: clickedItem,
+                    fileData: res,
+                  };
+
+                  updateState({
+                    driverRegistrationDocs: driverRegistrationDocsAry,
+                  });
+                }
+                clickedIndx = null;
+              } else {
+                updateState({
+                  driverPic: res,
+                });
+              }
             } else {
               const vendorRegPdfImgAry = [...vendorRegisterationDocs];
               vendorRegPdfImgAry[clickedIndx] = {
@@ -651,17 +663,22 @@ export default function WebLinks({navigation, route}) {
               }}>
               <Image
                 source={
-                  !!vendorRegisterationDocs[index]?.fileData?.avatar?.path
+                  paramData?.slug === 'driver-registration'
+                    ? driverRegistrationDocs[index]?.fileData?.path
+                      ? {
+                          uri: driverRegistrationDocs[index]?.fileData?.path,
+                        }
+                      : imagePath.icCamIcon
+                    : vendorRegisterationDocs[index]?.fileData?.path
                     ? {
-                        uri: vendorRegisterationDocs[index]?.fileData?.avatar
-                          ?.path,
+                        uri: vendorRegisterationDocs[index]?.fileData?.path,
                       }
                     : imagePath.icCamIcon
                 }
                 style={{
-                  tintColor: !vendorRegisterationDocs[index]?.fileData
-                    ? themeColors.primary_color
-                    : null,
+                  // tintColor: !vendorRegisterationDocs[index]?.fileData
+                  //   ? themeColors.primary_color
+                  //   : null,
                   height: vendorRegisterationDocs[index]?.fileData
                     ? height / 6 - moderateScale(15)
                     : 30,
@@ -705,6 +722,8 @@ export default function WebLinks({navigation, route}) {
       </TouchableOpacity>
     );
   };
+
+  console.log(driverRegistrationDocs, 'driverRegistrationDocs');
 
   return (
     <WrapperContainer
@@ -1085,7 +1104,7 @@ export default function WebLinks({navigation, route}) {
                   })
                 }
                 cca2={cca2}
-                phoneNumber={phoneNumber}
+                phoneNumber={driverPhoneNumber}
                 callingCode={state.callingCode}
                 placeholder={strings.YOUR_PHONE_NUMBER}
                 keyboardType={'phone-pad'}
