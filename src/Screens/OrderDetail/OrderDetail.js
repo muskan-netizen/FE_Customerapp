@@ -955,9 +955,10 @@ export default function OrderDetail({navigation, route}) {
                   flex: 1,
                 }}>
                 {`${
-                  cartData?.address?.house_number != null &&
-                  cartData?.address?.house_number
-                }, `}
+                  cartData?.address?.house_number === null
+                    ? ''
+                    : `${cartData?.address?.house_number}, `
+                }`}
                 {cartData?.address?.address} {''}
                 {cartData?.address?.pincode}
               </Text>
