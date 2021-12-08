@@ -674,7 +674,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           {!isLoading && !!tasks?.length > 0 && (
             <MapView
               provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-              style={{ height: height / 2.6, width: '100%' }}
+              style={{ height: height / 2.4, width: '100%' }}
               initialRegion={region}
               ref={mapRef}
               // cacheEnabled={true}
@@ -759,7 +759,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         <BottomSheet
           ref={bottomSheetRef}
           index={0}
-          snapPoints={[height / 2.5, height / 1.1]}
+          snapPoints={[height / 2.2, height]}
           animateOnMount={true}
           // onChange={(inx) => updateState({ hideShowBack: inx })}
           onChange={() => playHapticEffect(hapticEffects.impactMedium)}
@@ -797,7 +797,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               </View>
 
               {!!orderFullDetail?.order.task_description && (<View style={{ marginHorizontal: moderateScale(16) }}>
-                <Text style={styles.datePriceText}>Instructions:</Text>
+                <Text style={styles.datePriceText}>{strings.DRIVER_DETAILS}:</Text>
                 <Text style={{
                   ...styles.statusText,
                   color: isDarkMode
@@ -849,7 +849,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 borderRadius: moderateScale(8),
                 marginHorizontal: moderateScale(16)
               }}>
-                <Text style={styles.deliveryProof}>Driver Details</Text>
+                <Text style={styles.deliveryProof}>{strings.DRIVER_DETAILS}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <RoundImg

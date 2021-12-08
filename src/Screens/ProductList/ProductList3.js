@@ -1920,7 +1920,8 @@ export default function Products({ route, navigation }) {
                   style={styles.linearGradientHdr}
                   colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0.7)']}>
                   <View
-                    style={[styles.hdrCompHeader, { flex: 0, width: '100%' }]}>
+                    style={[styles.hdrCompHeader, { flex: 0, width: '100%' }]}
+                    >
                     <TouchableOpacity
                       hitSlop={styles.hitSlopProp}
                       onPress={() => navigation.goBack()}

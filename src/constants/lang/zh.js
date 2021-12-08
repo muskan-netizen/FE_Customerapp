@@ -620,4 +620,12 @@ export default {
   VENDOR_ADDRESS: 'vendor address',
   ENTER_VENDOR_NAME: 'vendor name',
   YOUR: 'your',
+  CARD: 'Card',
+  CHOOSE_FILE: 'Choose File',
+  NO_FILE_CHOSEN: 'No file chosen',
+  COUPON_DISCOUNT: 'Coupon Discount',
+  CHOOSE_A_TRIP: 'Choose a trip or swipe up for more',
+  DRIVER_DETAILS: 'Driver Details',
+  INSTRUCTIONS: 'Instructions',
+  SET: 'Set',
 };

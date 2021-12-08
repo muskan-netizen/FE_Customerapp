@@ -39,6 +39,7 @@ export default function MarketCard3({
   fastImageStyle = {},
   imageResizeMode = 'cover',
 }) {
+
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -214,7 +215,12 @@ export default function MarketCard3({
                 </View>
 
                 {!!data?.timeofLineOfSightDistance && (
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      flex: 0.96,
+                    }}>
                     <Image
                       style={{
                         tintColor: themeColors.primary_color,
@@ -224,7 +230,7 @@ export default function MarketCard3({
                       resizeMode="contain"
                       source={imagePath.icTime2}
                     />
-                    <Text style={styles.distanceTimeStyle}>
+                    <Text numberOfLines={1} style={styles.distanceTimeStyle}>
                       {checkEvenOdd(data?.timeofLineOfSightDistance)}-
                       {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
                       {''}

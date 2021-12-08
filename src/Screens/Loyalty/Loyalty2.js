@@ -122,14 +122,14 @@ export default function Loyalty({navigation}) {
             ...styles.commTextStyle,
             marginTop: moderateScaleVertical(8),
           }}>
-          {item?.name} Card
+          {item?.name} {strings.CARD}
         </Text>
         <Text
           style={{
             ...styles.commTextStyle,
             marginTop: moderateScaleVertical(8),
           }}>
-          {item?.minimum_points}
+          {item?.points_to_reach}
         </Text>
       </View>
     );
