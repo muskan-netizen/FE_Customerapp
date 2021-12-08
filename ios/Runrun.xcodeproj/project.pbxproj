@@ -15745,7 +15745,7 @@
 						ProvisioningStyle = Automatic;
 					};
 					8472A113272549FF00CD25DC = {
-						DevelopmentTeam = 6FXUMT5X23;
+						DevelopmentTeam = 2UQK37J983;
 						ProvisioningStyle = Automatic;
 					};
 					84780040270744F00083F24E = {
@@ -54540,7 +54540,7 @@
 				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
 				PROJECT_ENTITLEMENT = "";
 				PROJECT_PLIST = "$(PROJECT_PLIST)";
-				PROVISIONING_PROFILE_SPECIFIER = RoyoOrder;
+				PROVISIONING_PROFILE_SPECIFIER = "com.codebrew.royoordersreactnative AppStore";
 				SWIFT_OBJC_BRIDGING_HEADER = "RoyoOrder-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -56407,7 +56407,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = 2UQK37J983;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
