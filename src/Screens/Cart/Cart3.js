@@ -1591,24 +1591,8 @@ export default function Cart({navigation, route}) {
                                             <View
                                               style={{
                                                 flexDirection: 'row',
-                                                flex: 0.8,
+                                                flex: 1,
                                               }}>
-                                              <Text
-                                                style={
-                                                  isDarkMode
-                                                    ? [
-                                                        styles.cartItemWeight2,
-                                                        {
-                                                          color:
-                                                            MyDarkTheme.colors
-                                                              .text,
-                                                        },
-                                                      ]
-                                                    : styles.cartItemWeight2
-                                                }
-                                                numberOfLines={1}>
-                                                {j.addon_title}
-                                              </Text>
                                               <Text
                                                 style={
                                                   {
@@ -1621,7 +1605,7 @@ export default function Cart({navigation, route}) {
                                                   // colors.textGreyB
                                                 }
                                                 numberOfLines={1}>
-                                                {` (${j.option_title})`}
+                                                {`${j.addon_title} (${j.option_title})`}
                                               </Text>
                                             </View>
                                             <Text>:</Text>

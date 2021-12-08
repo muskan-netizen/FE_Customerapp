@@ -954,6 +954,10 @@ export default function OrderDetail({navigation, route}) {
                     : colors.blackOpacity43,
                   flex: 1,
                 }}>
+                {`${
+                  cartData?.address?.house_number != null &&
+                  cartData?.address?.house_number
+                }, `}
                 {cartData?.address?.address} {''}
                 {cartData?.address?.pincode}
               </Text>
