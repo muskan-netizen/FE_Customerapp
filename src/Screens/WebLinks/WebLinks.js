@@ -1,17 +1,17 @@
 import {cloneDeep} from 'lodash';
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
+  FlatList,
   Image,
   ImageBackground,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  FlatList,
 } from 'react-native';
-import {email} from 'react-native-communications';
+import ActionSheet from 'react-native-actionsheet';
 import {useDarkMode} from 'react-native-dark-mode';
-import {getBundleId} from 'react-native-device-info';
+import DeviceInfo from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import HTMLView from 'react-native-htmlview';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -30,21 +30,24 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {cameraHandler} from '../../utils/commonFunction';
 import {showError} from '../../utils/helperFunctions';
+import {androidCameraPermission} from '../../utils/permissions';
 import validator from '../../utils/validations';
 import stylesFun from './styles';
-import DeviceInfo from 'react-native-device-info';
-import {cameraHandler} from '../../utils/commonFunction';
-import ActionSheet from 'react-native-actionsheet';
-import {androidCameraPermission} from '../../utils/permissions';
+
+let clickedIndx = 0;
+let clickedItem = {};
 
 export default function WebLinks({navigation, route}) {
+  let actionSheet = useRef();
+
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -86,9 +89,8 @@ export default function WebLinks({navigation, route}) {
     sfcLicense: [],
     fssaiLicense: [],
     vendorRegDocs: [],
-    vendorRegTxtInput: [],
+    vendorRegisterationDocs: [],
     vendorRegPdfImg: [],
-    clickedIndx: 0,
   });
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -119,9 +121,8 @@ export default function WebLinks({navigation, route}) {
     vendorRegDocs,
     isLoading,
     htmlContent,
-    vendorRegTxtInput,
+    vendorRegisterationDocs,
     vendorRegPdfImg,
-    clickedIndx,
   } = state;
 
   //Navigation to specific screen
@@ -138,7 +139,6 @@ export default function WebLinks({navigation, route}) {
   const getCmsPageDetail = () => {
     let data = {};
     data['page_id'] = paramData && paramData?.id;
-    console.log(paramData?.id);
     actions
       .getCmsPageDetail(data, {
         code: appData?.profile?.code,
@@ -247,29 +247,29 @@ export default function WebLinks({navigation, route}) {
 
   /// remove sfcLicence
 
-  const _removeSfcLicence = (selectdImage) => {
-    console.log(selectdImage, 'selectdImage>>>');
-    if (selectdImage?.id) {
-      console.log(selectdImage?.id, 'selectdImage?.id');
-      let copyArrayImages = cloneDeep(sfcLicense);
-      console.log(copyArrayImages, 'copyArrayImages');
-      copyArrayImages = copyArrayImages.filter(
-        (x) => x?.id !== selectdImage?.id,
-      );
-      updateState({
-        sfcLicense: copyArrayImages,
-        remove_image_ids: [...remove_image_ids, selectdImage?.id],
-      });
-    } else {
-      let copyArrayImages = cloneDeep(sfcLicense);
-      copyArrayImages = copyArrayImages.filter(
-        (x) => x?.image_id !== selectdImage?.image_id,
-      );
-      updateState({
-        sfcLicense: copyArrayImages,
-      });
-    }
-  };
+  // const _removeSfcLicence = (selectdImage) => {
+  //   console.log(selectdImage, 'selectdImage>>>');
+  //   if (selectdImage?.id) {
+  //     console.log(selectdImage?.id, 'selectdImage?.id');
+  //     let copyArrayImages = cloneDeep(sfcLicense);
+  //     console.log(copyArrayImages, 'copyArrayImages');
+  //     copyArrayImages = copyArrayImages.filter(
+  //       (x) => x?.id !== selectdImage?.id,
+  //     );
+  //     updateState({
+  //       sfcLicense: copyArrayImages,
+  //       remove_image_ids: [...remove_image_ids, selectdImage?.id],
+  //     });
+  //   } else {
+  //     let copyArrayImages = cloneDeep(sfcLicense);
+  //     copyArrayImages = copyArrayImages.filter(
+  //       (x) => x?.image_id !== selectdImage?.image_id,
+  //     );
+  //     updateState({
+  //       sfcLicense: copyArrayImages,
+  //     });
+  //   }
+  // };
 
   // upload Banner function
   const uploadFile = async () => {
@@ -321,29 +321,29 @@ export default function WebLinks({navigation, route}) {
     }
   };
   // upload FSSAI License function
-  const fssaiuploadFile = async () => {
-    try {
-      const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.pdf],
-      });
+  // const fssaiuploadFile = async () => {
+  //   try {
+  //     const res = await DocumentPicker.pick({
+  //       type: [DocumentPicker.types.pdf],
+  //     });
 
-      let file = {
-        image_id: Math.random(),
-        name: res[0]?.name,
-        type: res[0]?.type,
-        uri: res[0]?.uri,
-      };
-      console.log(file, 'file');
-      updateState({fssaiLicense: [...fssaiLicense, file]});
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        // User cancelled the picker, exit any dialogs or menus and move on
-        console.log('cancel');
-      } else {
-        throw err;
-      }
-    }
-  };
+  //     let file = {
+  //       image_id: Math.random(),
+  //       name: res[0]?.name,
+  //       type: res[0]?.type,
+  //       uri: res[0]?.uri,
+  //     };
+  //     console.log(file, 'file');
+  //     updateState({fssaiLicense: [...fssaiLicense, file]});
+  //   } catch (err) {
+  //     if (DocumentPicker.isCancel(err)) {
+  //       // User cancelled the picker, exit any dialogs or menus and move on
+  //       console.log('cancel');
+  //     } else {
+  //       throw err;
+  //     }
+  //   }
+  // };
   // upload SFC License function
   // const sfcuploadFile = async () => {
   //   try {
@@ -387,6 +387,8 @@ export default function WebLinks({navigation, route}) {
     return true;
   };
 
+  console.log(vendorRegisterationDocs, 'vendorRegisterationDocs');
+
   const _onSubmit = () => {
     // const checkValid = isValidData();
     // if (!checkValid) {
@@ -394,41 +396,45 @@ export default function WebLinks({navigation, route}) {
     // }
 
     const data = {};
-    (data['full_name'] = fullname),
-      (data['email'] = email),
-      (data['phone_number'] = phoneNumber),
-      (data['password'] = password),
-      (data['confirm_password'] = confirm_password),
-      (data['name'] = vendor_name),
-      (data['address'] = address),
-      (data['check_conditions'] = 1),
-      actions
-        .vendorRegisteration(data, {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        })
-        .then((res) => {
-          console.log(res, 'serverResponse');
-        })
-        .catch((err) => {
-          console.log(err, 'serverError');
-        });
+    data['full_name'] = fullname;
+    data['email'] = email;
+    data['phone_number'] = phoneNumber;
+    data['dialCode'] = '91';
+    data['password'] = password;
+    data['confirm_password'] = confirm_password;
+    data['name'] = vendor_name;
+    data['address'] = address;
+    data['check_conditions'] = 1;
+
+    vendorRegisterationDocs.map((item, indx) => {
+      data[item?.item?.primary?.slug] =
+        item?.item?.file_type == 'Text' ? item?.fileData : item?.fileData;
+    });
+
+    console.log(data, 'datadatadata');
+    actions
+      .vendorRegisteration(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then((res) => {
+        console.log(res, 'serverResponse');
+      })
+      .catch(errorMethod);
   };
 
   const _dynamicTextInputChange = (item, indx, mainItem) => {
-    const vendorRegTxtInputAry = [...vendorRegTxtInput];
-    vendorRegTxtInputAry[indx] = {
-      item: item,
-      key: mainItem?.primary?.name,
+    const vendorRegisterationDocsAry = [...vendorRegisterationDocs];
+    vendorRegisterationDocsAry[indx] = {
+      item: mainItem,
+      fileData: item,
     };
     updateState({
-      vendorRegTxtInput: vendorRegTxtInputAry,
+      vendorRegisterationDocs: vendorRegisterationDocsAry,
     });
   };
-
-  let actionSheet = useRef();
 
   const uploadDocs = async (type, item, indx) => {
     if (type == 'Pdf') {
@@ -444,19 +450,15 @@ export default function WebLinks({navigation, route}) {
           uri: res[0]?.uri,
         };
 
-        console.log(file, 'selectedFile');
-
-        const vendorRegPdfImgAry = [...vendorRegPdfImg];
+        const vendorRegPdfImgAry = [...vendorRegisterationDocs];
         vendorRegPdfImgAry[indx] = {
           item: item,
-          fileUrl: file,
+          fileData: file,
         };
 
         updateState({
-          vendorRegPdfImg: vendorRegPdfImgAry,
+          vendorRegisterationDocs: vendorRegPdfImgAry,
         });
-
-        console.log(vendorRegPdfImgAry, 'vendorRegPdfImgAry');
 
         // console.log(file, 'file');
         // updateState({fssaiLicense: [...fssaiLicense, file]});
@@ -469,7 +471,8 @@ export default function WebLinks({navigation, route}) {
         }
       }
     } else {
-      updateState({clickedIndx: indx});
+      clickedIndx = indx;
+      clickedItem = item;
       actionSheet.current.show();
     }
   };
@@ -489,49 +492,37 @@ export default function WebLinks({navigation, route}) {
           .then((res) => {
             let data = {
               type: 'jpg',
-              avatar: res?.data,
+              avatar: res,
             };
 
-            const vendorRegPdfImgAry = [...vendorRegPdfImg];
+            const vendorRegPdfImgAry = [...vendorRegisterationDocs];
             vendorRegPdfImgAry[clickedIndx] = {
-              item: item,
-              fileUrl: data,
+              item: clickedItem,
+              fileData: data,
             };
 
             updateState({
-              vendorRegPdfImg: vendorRegPdfImgAry,
+              vendorRegisterationDocs: vendorRegPdfImgAry,
             });
           })
           .catch((err) => {});
       }
     }
   };
+
   const _renderFields = ({item, index}) => {
     return (
-      <View style={{marginHorizontal: moderateScale(10)}}>
-        <Text>{item.primary?.name}</Text>
-        {item.fssaiLicense && fssaiLicense.length ? (
-          fssaiLicense.map((i, inx) => {
-            return (
-              <ImageBackground
-                source={{
-                  uri: i.uri,
-                }}
-                style={styles.imageOrderStyle}
-                imageStyle={styles.imageOrderStyle}>
-                <View style={styles.viewOverImage}>
-                  <View style={styles.crossIconStyle}>
-                    <TouchableOpacity onPress={() => _removeFssaiLicence(i)}>
-                      <Image source={imagePath.icRemoveIcon} />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </ImageBackground>
-            );
-          })
-        ) : (
-          <View>
-            {/* {item?.file_type == 'Pdf' && (
+      <View
+        style={{
+          marginHorizontal: moderateScale(10),
+          marginVertical: moderateScale(5),
+        }}>
+        <Text style={{fontFamily: fontFamily.regular}}>
+          {item.primary?.name}
+        </Text>
+
+        <View>
+          {/* {item?.file_type == 'Pdf' && (
               <View
                 style={{...styles.imageView, marginVertical: moderateScale(5)}}>
                 <TouchableOpacity
@@ -544,40 +535,88 @@ export default function WebLinks({navigation, route}) {
                 </TouchableOpacity>
               </View>
             )} */}
-            {(item?.file_type == 'Image' || item?.file_type == 'Pdf') && (
-              <View
-                style={{...styles.imageView, marginVertical: moderateScale(5)}}>
-                <TouchableOpacity
-                  onPress={() => uploadDocs(item?.file_type, item, index)}
-                  style={[styles.viewOverImage2, {borderStyle: 'dashed'}]}>
-                  <Image
-                    source={imagePath.icCamIcon}
-                    style={{tintColor: themeColors.primary_color}}
-                  />
-                </TouchableOpacity>
-              </View>
-            )}
-            {item?.file_type == 'Text' && (
-              <View
+
+          {item?.file_type == 'Pdf' && (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginVertical: moderateScaleVertical(8),
+              }}>
+              <TouchableOpacity
+                onPress={() => uploadDocs(item?.file_type, item, index)}
+                activeOpacity={0.7}
                 style={{
-                  flex: 1,
-                  marginVertical: moderateScale(5),
+                  backgroundColor: colors.greyMedium,
+                  borderRadius: moderateScale(5),
                 }}>
-                <BorderTextInput
-                  // secureTextEntry={true}
-                  placeholder={`Enter ${item?.primary?.name}`}
-                  onChangeText={(itm) =>
-                    _dynamicTextInputChange(itm, index, item)
-                  }
-                  containerStyle={styles.containerStyle}
-                />
-              </View>
-            )}
-          </View>
-        )}
+                <Text
+                  style={{
+                    marginHorizontal: moderateScale(8),
+                    marginVertical: moderateScaleVertical(8),
+                  }}>
+                  {strings.CHOOSE_FILE}
+                </Text>
+              </TouchableOpacity>
+              <Text style={{fontFamily: fontFamily.regular, marginLeft: 6}}>
+                {vendorRegisterationDocs[index]?.fileData
+                  ? vendorRegisterationDocs[index]?.fileData?.name
+                  : strings.NO_FILE_CHOSEN}
+              </Text>
+            </View>
+          )}
+
+          {item?.file_type == 'Image' && (
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => uploadDocs(item?.file_type, item, index)}
+              style={{
+                ...styles.imageView,
+                marginVertical: moderateScale(5),
+                marginHorizontal: 0,
+              }}>
+              <Image
+                source={
+                  !!vendorRegisterationDocs[index]?.fileData?.avatar?.path
+                    ? {
+                        uri: vendorRegisterationDocs[index]?.fileData?.avatar
+                          ?.path,
+                      }
+                    : imagePath.icCamIcon
+                }
+                style={{
+                  tintColor: !vendorRegisterationDocs[index]?.fileData
+                    ? themeColors.primary_color
+                    : null,
+                  height: vendorRegisterationDocs[index]?.fileData
+                    ? height / 6 - moderateScale(15)
+                    : 30,
+                  width: vendorRegisterationDocs[index]?.fileData
+                    ? width - moderateScale(80)
+                    : 30,
+                }}
+                resizeMode={'cover'}
+              />
+            </TouchableOpacity>
+          )}
+          {item?.file_type == 'Text' && (
+            <BorderTextInput
+              // secureTextEntry={true}
+              placeholder={`Enter ${item?.primary?.name}`}
+              onChangeText={(itm) => _dynamicTextInputChange(itm, index, item)}
+              containerStyle={{
+                ...styles.containerStyle,
+                marginBottom: 0,
+                marginTop: moderateScale(3),
+              }}
+            />
+          )}
+        </View>
       </View>
     );
   };
+
+  console.log(vendorRegisterationDocs, 'vendorRegisterationDocs');
 
   return (
     <WrapperContainer
@@ -868,7 +907,12 @@ export default function WebLinks({navigation, route}) {
                   />
                 </View>
               </View>
-              <View style={{marginVertical: moderateScaleVertical(20)}}>
+              <View
+                style={
+                  {
+                    // marginVertical: moderateScaleVertical(20),
+                  }
+                }>
                 <FlatList data={vendorRegDocs} renderItem={_renderFields} />
                 {/*    <View style={{flexDirection: 'row'}}>
                   <View

@@ -645,11 +645,16 @@ export default {
   VENDOR_ADDRESS: 'vendor address',
   ENTER_VENDOR_NAME: 'vendor name',
   YOUR: 'your',
-  COUPON_DISCOUNT:"Coupon Discount",
-  WHERETO:"Where to?",
-  ADD_A_STOP:"Add a stop",
-  CHOOSE_A_TRIP:"Choose a trip or swipe up for more",
-  DRIVER_DETAILS:"Driver Details",
-  INSTRUCTIONS:"Instructions",
-  SET:"Set"
+  CARD: 'Card',
+  CHOOSE_FILE: 'Choose File',
+  NO_FILE_CHOSEN: 'No file chosen',
+  COUPON_DISCOUNT: 'Coupon Discount',
+  WHERETO: 'Where to?',
+  ADD_A_STOP: 'Add a stop',
+  CHOOSE_A_TRIP: 'Choose a trip or swipe up for more',
+  DRIVER_DETAILS: 'Driver Details',
+  INSTRUCTIONS: 'Instructions',
+  SET: 'Set',
+  CANCELLATION_REASON:" Cancellation Reason",
+  WRITE_YOUR_REASON_HERE:"Write your reason here......"
 };

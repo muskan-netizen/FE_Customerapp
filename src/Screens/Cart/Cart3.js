@@ -786,7 +786,7 @@ export default function Cart({navigation, route}) {
         : null;
       data['schedule_dropoff'] = sheduleddropoffdate
         ? new Date(sheduleddropoffdate).toISOString()
-        : null;
+        :  null;
     } else {
       data['task_type'] = scheduleType;
       data['schedule_dt'] =
@@ -875,6 +875,10 @@ export default function Cart({navigation, route}) {
   //Clear cart
   const placeOrder = () => {
     if (!!cartData?.delay_date && !localeSheduledOrderDate) {
+      showInfo(strings.SCHEDULE_DATE_REQUIRED);
+      return;
+    }
+    if (!!cartData?.pickup_delay_date && !!cartData?.dropoff_delay_date) {
       showInfo(strings.SCHEDULE_DATE_REQUIRED);
       return;
     }
@@ -1214,7 +1218,6 @@ export default function Cart({navigation, route}) {
         scheduleType: 'schedule',
       });
     }
-
     setDateAndTimeSchedule();
   };
 
@@ -3107,7 +3110,7 @@ export default function Cart({navigation, route}) {
         </TouchableOpacity>
         {!!(
           userData?.auth_token &&
-          !appData?.profile?.preferences?.off_scheduling_at_cart
+          !appData?.profile?.preferences?.off_scheduling_at_cart && businessType !== 'laundry'
         ) &&
           !!(scheduleType == 'schedule' && localeSheduledOrderDate) && (
             <TouchableOpacity
@@ -3134,7 +3137,7 @@ export default function Cart({navigation, route}) {
             style={styles.paymentView}>
             {!!(
               userData?.auth_token &&
-              !appData?.profile?.preferences?.off_scheduling_at_cart
+              !appData?.profile?.preferences?.off_scheduling_at_cart &&  businessType !== 'laundry'
             ) && (
               <ButtonComponent
                 onPress={_selectTime}
@@ -3233,7 +3236,7 @@ export default function Cart({navigation, route}) {
           )}
         <View
           style={{
-            height: moderateScaleVertical(65),
+            height: moderateScaleVertical(80),
             backgroundColor: colors.transparent,
           }}></View>
       </View>
@@ -4011,7 +4014,12 @@ export default function Cart({navigation, route}) {
                     }
                     textColor={isDarkMode ? colors.white : colors.blackB}
                     mode="datetime"
-                    minimumDate={new Date()}
+                    minimumDate={
+                      !!cartData?.pickup_delay_date
+                        ? new Date(cartData?.pickup_delay_date)
+                        : new Date()
+                    }
+
                     maximumDate={undefined}
                     style={styles.datetimePickerText}
                     // onDateChange={setDate}
@@ -4027,7 +4035,12 @@ export default function Cart({navigation, route}) {
                     }
                     textColor={isDarkMode ? colors.white : colors.blackB}
                     mode="datetime"
-                    minimumDate={new Date()}
+                    minimumDate={
+                      !!cartData?.dropoff_delay_date
+                        ? new Date(cartData?.dropoff_delay_date)
+                        : new Date()
+                    }
+                
                     maximumDate={undefined}
                     style={styles.datetimePickerText}
                     // onDateChange={setDate}
