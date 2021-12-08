@@ -682,4 +682,5 @@ Amount`,
   DRIVER_DETAILS: 'Driver Details',
   INSTRUCTIONS: 'Instructions',
   SET: 'Set',
+  TYPE: 'Type',
 };

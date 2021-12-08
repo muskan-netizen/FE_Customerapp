@@ -99,8 +99,7 @@ export default function DashBoardFive({
     });
   }, [appMainData?.vendors]);
 
-
-  console.log("app main data",appMainData)
+  console.log('app main data', appMainData);
 
   const _renderItem = ({item, index}) => {
     return (
@@ -517,7 +516,7 @@ export default function DashBoardFive({
               )}
           </View>
 
-          {appIds.orderchekout == DeviceInfo.getBundleId() ? (
+          {/* {appIds.orderchekout == DeviceInfo.getBundleId() ? (
             <></>
           ) : (
             <View>
@@ -545,7 +544,7 @@ export default function DashBoardFive({
                   </>
                 )}
             </View>
-          )}
+          )} */}
         </Animatable.View>
         <View
           style={{

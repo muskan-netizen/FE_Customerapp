@@ -68,3 +68,15 @@ export function vendorRegisteration(data = {}, headers = {}) {
       });
   });
 }
+
+export function driverRegisteration(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(DRIVER_REGISTER, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
