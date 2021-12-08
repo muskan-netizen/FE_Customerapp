@@ -184,6 +184,7 @@ export default function Cart({navigation, route}) {
   const dineInType = useSelector((state) => state?.home?.dineInType);
   console.log(dineInType, 'dineInType');
 
+  console.log("cartData?.delay_date",cartData)
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -669,10 +670,8 @@ export default function Cart({navigation, route}) {
 
   const _directOrderPlace = () => {
     let data = {};
-    data['address_id'] =
-      paramsData?.selectedAddressData?.id || selectedAddressData?.id;
-    data['payment_option_id'] =
-      paramsData?.selectedPayment?.id || selectedPayment?.id;
+    data['address_id'] =  paramsData?.selectedAddressData?.id || selectedAddressData?.id;
+    data['payment_option_id'] = paramsData?.selectedPayment?.id || selectedPayment?.id;
 
     data['type'] = dineInType || '';
     data['is_gift'] = isGiftBoxSelected ? 1 : 0;
@@ -680,12 +679,16 @@ export default function Cart({navigation, route}) {
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
     }
+    if(!!selectedTipAmount){
+      data['tip'] = selectedTipAmount || '';
+    }
     placeOrderData(data);
   };
 
   const placeOrderData = (data) => {
-    actions
-      .placeOrder(data, {
+    console.log("Sending data",data)
+
+    actions.placeOrder(data, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
@@ -707,6 +710,8 @@ export default function Cart({navigation, route}) {
           modalType: null,
           sheduledpickupdate: null,
           sheduleddropoffdate: null,
+          selectedTipvalue: null,
+          selectedTipAmount: null,
         });
         actions.cartItemQty({});
         checkPaymentOptions(res);
