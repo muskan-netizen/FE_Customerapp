@@ -865,6 +865,8 @@ export default function Cart({navigation, route}) {
     // _offineLinePayment();
   };
 
+  console.log("cartDatacartData",cartData)
+
   //Clear cart
   const placeOrder = () => {
     if (!!cartData?.delay_date && !localeSheduledOrderDate) {

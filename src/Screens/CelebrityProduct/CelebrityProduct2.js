@@ -44,6 +44,16 @@ import { useDarkMode } from 'react-native-dark-mode';
 import { MyDarkTheme } from '../../styles/theme';
 import ProductCard3 from '../../Components/ProductCard3';
 import DeviceInfo from 'react-native-device-info';
+import RepeatModal from '../../Components/RepeatModal';
+import DifferentAddOns from '../../Components/DifferentAddOns ';
+import VariantAddons from '../../Components/VariantAddons';
+import { removeItem } from '../../utils/utils';
+
+let timeOut = undefined;
+
+var tempQty = 0;
+
+let activeIdx = 0;
 
 export default function CelebrityProduct2({ route, navigation }) {
   //Route data / params coming from some screen
@@ -200,20 +210,20 @@ export default function CelebrityProduct2({ route, navigation }) {
 
   //List of celebrity products based on
   useEffect(() => {
-    getListOfCelebrityProducts();
+    getListOfCelebrityProducts(pageNo);
   }, [state.celebrity, state.isLoadingB]);
 
   //List of celebrity products based on language and currency
   useEffect(() => {
     updateState({ pageNo: 1 });
-    getListOfCelebrityProducts();
+    getListOfCelebrityProducts(pageNo);
   }, [languages, currencies]);
 
   //on focus screen fucntions
   useFocusEffect(
     React.useCallback(() => {
       updateState({ pageNo: 1 });
-      getListOfCelebrityProducts();
+      getListOfCelebrityProducts(pageNo);
     }, [
       sleectdBrands,
       selectedOptions,
@@ -224,11 +234,11 @@ export default function CelebrityProduct2({ route, navigation }) {
   );
 
   //List of celebrity products based on page number change  and pull to refress
-  useEffect(() => {
-    getListOfCelebrityProducts();
-  }, [state.pageNo, state.isRefreshing]);
+  // useEffect(() => {
+  //   getListOfCelebrityProducts();
+  // }, [state.pageNo]);
 
-  const getListOfCelebrityProducts = () => {
+  const getListOfCelebrityProducts = (pageNo) => {
     let filterExist =
       sleectdBrands.length ||
       selectedVariants.length ||
@@ -251,8 +261,8 @@ export default function CelebrityProduct2({ route, navigation }) {
     }
     {
       !!filterExist || !!sortExist
-        ? getCelebrityProductsFilterBased()
-        : getCelebrityProducts();
+        ? getCelebrityProductsFilterBased(pageNo)
+        : getCelebrityProducts(pageNo);
     }
   };
 
@@ -272,6 +282,7 @@ export default function CelebrityProduct2({ route, navigation }) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
         },
       )
       .then((res) => {
@@ -286,7 +297,7 @@ export default function CelebrityProduct2({ route, navigation }) {
   };
 
   //Get list of celebrity products based on celebrity id
-  const getCelebrityProducts = () => {
+  const getCelebrityProducts = (pageNo) => {
     actions
       .getCelebrityProductsByCelebrityId(
         `/${celebrity.id}?limit=${limit}&page=${pageNo}`,
@@ -295,6 +306,7 @@ export default function CelebrityProduct2({ route, navigation }) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
+          systemuser: DeviceInfo.getUniqueId(),
         },
       )
       .then((res) => {
@@ -580,7 +592,7 @@ export default function CelebrityProduct2({ route, navigation }) {
   };
 
   const checkIsCustomize = async (item, index, type) => {
-    return;
+    // return;
     let itemToUpdate = cloneDeep(item);
     console.log('check item to update', itemToUpdate);
     // return;
@@ -665,8 +677,9 @@ export default function CelebrityProduct2({ route, navigation }) {
       return;
     }
   };
+
   const addSingleItem = async (item) => {
-    return;
+    // return;
     if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
@@ -722,8 +735,6 @@ export default function CelebrityProduct2({ route, navigation }) {
       return;
     }
 
-
-
     let data = {};
     data['sku'] = item.sku;
     data['quantity'] = 1;
@@ -758,7 +769,7 @@ export default function CelebrityProduct2({ route, navigation }) {
           celebrityData: updateArray,
         });
       })
-      .catch((error) => errorMethodSecond(error));
+      .catch((error) => errorMethodSecond(error, [], item));
   };
 
   const addDeleteCartItems = async (
@@ -892,7 +903,7 @@ export default function CelebrityProduct2({ route, navigation }) {
     });
   };
 
-  const errorMethodSecond = (error, addonSet = []) => {
+  const errorMethodSecond = (error, addonSet = [], item) => {
     console.log(error.message.alert, 'Error>>>>>');
     updateState({ updateQtyLoader: false });
     if (error?.message?.alert == 1) {
@@ -906,11 +917,11 @@ export default function CelebrityProduct2({ route, navigation }) {
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
-          text: 'Cancel',
+          text: strings.CANCEL,
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        { text: 'Clear Cart', onPress: () => clearCart(addonSet) },
+        { text: strings.CLEARCART, onPress: () => clearCart(addonSet, item) },
       ]);
     } else {
       updateState({
@@ -924,7 +935,7 @@ export default function CelebrityProduct2({ route, navigation }) {
     }
   };
 
-  const clearCart = async (addonSet = []) => {
+  const clearCart = async (addonSet = [], item) => {
     actions
       .clearCart(
         {},
@@ -937,6 +948,9 @@ export default function CelebrityProduct2({ route, navigation }) {
       )
       .then((res) => {
         actions.cartItemQty(res);
+        addSingleItem(item)
+        updateState({ pageNo: 1 })
+        getListOfCelebrityProducts(pageNo);
         if (addonSet) {
         } else {
           // addToCart();
@@ -1059,6 +1073,96 @@ export default function CelebrityProduct2({ route, navigation }) {
 
       })
       .catch(errorMethod);
+  };
+
+
+  const updateCartItems = (item, quanitity, productId, cartID) => {
+    playHapticEffect(hapticEffects.impactLight);
+
+    let updateArray = celebrityData.map((val, i) => {
+      if (val.id == item.id) {
+        return {
+          ...val,
+          qty: quanitity,
+          cart_product_id: productId,
+          isRemove: false,
+        };
+      }
+      updateState({ storeLocalQty: quanitity });
+      return val;
+    });
+    updateState({
+      cartId: cartID,
+      celebrityData: updateArray,
+      isVisibleModal: false,
+    });
+
+  };
+
+  const hideDifferentAddOns = () => {
+    updateState({ differentAddsOnsModal: false, differentAddsOns: [] });
+  };
+
+  const difAddOnsAdded = async (
+    item,
+    qty,
+    productId,
+    cartId,
+    section,
+    index,
+    type,
+  ) => {
+    let differentAddsOnsQty = 0;
+    let cloneArr = differentAddsOns;
+    let updateLocallyAddOns = cloneArr.map((val) => {
+      differentAddsOnsQty = differentAddsOnsQty + val.quantity;
+      if (cartId == val.id) {
+        return { ...val, quantity: type == 1 ? qty + 1 : qty - 1 };
+      }
+      return val;
+    });
+    await addDeleteCartItems(
+      item,
+      qty,
+      cartId,
+      productId,
+      index,
+      type,
+      null,
+      type == 1 ? differentAddsOnsQty + 1 : differentAddsOnsQty - 1, //send updated total quantity
+    );
+    updateState({ differentAddsOns: updateLocallyAddOns });
+  };
+
+  const onRepeat = async () => {
+    // console.log("repeate items", repeatItems)
+    const { item, isExistqty, productId, parentCartId, updateLocalQty } =
+      repeatItems;
+    await addDeleteCartItems(
+      item,
+      isExistqty,
+      productId,
+      parentCartId,
+      repeatItems?.index,
+      1,
+      updateLocalQty,
+    );
+    updateState({ repeatItems: null });
+  };
+
+  const onAddNew = () => {
+    let getTypeId =
+      !!repeatItems?.item?.category &&
+      repeatItems?.item?.category.category_detail?.type_id;
+    updateState({
+      repeatItems: null,
+      updateQtyLoader: false,
+      typeId: getTypeId,
+      isVisibleModal: true,
+      selectedCartItem: repeatItems?.item,
+      selectedItemID: -1,
+      btnLoader: false,
+    });
   };
 
 
@@ -1264,7 +1368,7 @@ export default function CelebrityProduct2({ route, navigation }) {
               }
               onEndReached={onEndReachedDelayed}
               onEndReachedThreshold={0.5}
-              ListFooterComponent={() => <View style={{ height: 20 }} />}
+              ListFooterComponent={() => <View style={{ height: moderateScale(80) }} />}
             />
             <View>
               {isSortEnabled && (
@@ -1282,6 +1386,50 @@ export default function CelebrityProduct2({ route, navigation }) {
             </View>
           </>
         )}
+
+
+        <View>
+          {isVisibleModal && (
+            <VariantAddons
+              addonSet={selectedCartItem?.add_on}
+              variantData={selectedCartItem?.variantSet}
+              isVisible={isVisibleModal}
+              productdetail={selectedCartItem}
+              onClose={() =>
+                updateState({ isVisibleModal: false, showShimmer: true })
+              }
+              typeId={typeId}
+              showShimmer={showShimmer}
+              shimmerClose={(val) => updateState({ showShimmer: val })}
+              updateCartItems={updateCartItems}
+            />
+          )}
+        </View>
+
+        {/* Add new addons and repeat item view */}
+        {!!repeatItems && (
+          <RepeatModal
+            data={repeatItems?.item}
+            modalHide={() => updateState({ repeatItems: null })}
+            onRepeat={onRepeat}
+            onAddNew={onAddNew}
+          />
+        )}
+
+        {!!differentAddsOns && differentAddsOns.length > 1 && (
+          <DifferentAddOns
+            differentAddsOnsModal={differentAddsOnsModal}
+            data={differentAddsOns}
+            selectedDiffAdsOnItem={selectedDiffAdsOnItem}
+            hideDifferentAddOns={hideDifferentAddOns}
+            difAddOnsAdded={difAddOnsAdded}
+            selectedDiffAdsOnSection={selectedDiffAdsOnSection}
+            storeLocalQty={storeLocalQty}
+            btnLoader={btnLoader}
+            selectedDiffAdsOnId={selectedDiffAdsOnId}
+          />
+        )}
+
       </KeyboardAwareScrollView>
     </WrapperContainer>
   );
