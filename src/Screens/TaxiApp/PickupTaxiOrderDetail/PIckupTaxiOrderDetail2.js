@@ -518,7 +518,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       backgroundColor: themeColors.primary_color,
                     }}>
                     <Text style={styles.pickupDropOff}>
-                      {index === 0 ? 'Pickup' : 'Drop'}
+                      {index === 0 ? strings.PICKUP : strings.DROP}
                     </Text>
                   </View>
                 </MapView.Marker>

@@ -120,7 +120,7 @@ export default function TaxiOrderDetailView({
                   }>
                   {!!agent_location
                     ? orderDetail?.name || ''
-                    : 'Searching for nearby drivers'}
+                    : strings.SEARCHINGFORNEARBYDRIVERS}
                 </Text>
                 <Text
                   style={
@@ -131,7 +131,7 @@ export default function TaxiOrderDetailView({
                   {/* {'Jason is on the way to pick up the package'} */}
                   {!!agent_location
                     ? orderDetail?.phone_number || ''
-                    : 'Processing...'}
+                    : strings.PROCESSING1}
                 </Text>
               </View>
               {!!agent_location && (

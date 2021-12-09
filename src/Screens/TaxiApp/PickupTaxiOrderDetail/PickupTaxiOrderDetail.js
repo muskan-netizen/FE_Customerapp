@@ -232,7 +232,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       driverStatus != null &&
       driverStatus != undefined
     ) {
-      console.log(driverStatus, 'driverStatus');
+     
       if (orderStatus === 'completed') {
         showSuccess(driverStatus);
         updateState({
@@ -434,6 +434,31 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     });
     navigation.navigate(navigationStrings.RATEORDER, {item});
   };
+
+console.log(orderFullDetail?.order.status,"orderFullDetail?.order.statusorderFullDetail?.order.status");
+
+const viewDriverStatus = ()=>{
+  switch (orderFullDetail?.order.status) {
+      case 'completed':
+      return strings.COMPLETE
+      break;
+      case 'assigned':
+      return strings.ASSIGNED
+      break;
+        case 'unassigned':
+      return strings.UNASSIGNED
+      break;
+       case 'arrived':
+      return strings.ARRIVED
+      break;
+    default:
+      break;
+  }
+}
+
+
+
+
   const _ModalMainView = () => (
     <View
       style={{
@@ -635,6 +660,9 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     );
   };
 
+
+
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -818,14 +846,15 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                         marginTop: moderateScaleVertical(4),
                         textTransform: 'capitalize',
                       }}>
-                      {orderFullDetail?.order.status}
+                      {/* {orderFullDetail?.order.status} */}
+                      {viewDriverStatus()}
                     </Text>
                   </View>
                 </View>
 
                 {!!orderFullDetail?.order.task_description && (
                   <View style={{marginHorizontal: moderateScale(16)}}>
-                    <Text style={styles.datePriceText}>Instructions:</Text>
+                    <Text style={styles.datePriceText}>{`${strings.INSTRUCTION} :` }</Text>
                     <Text
                       style={{
                         ...styles.statusText,
@@ -892,7 +921,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       borderRadius: moderateScale(8),
                       marginHorizontal: moderateScale(16),
                     }}>
-                    <Text style={styles.deliveryProof}>Driver Details</Text>
+                    <Text style={styles.deliveryProof}>{strings.DRIVERDETAIL}</Text>
                     <View
                       style={{
                         flexDirection: 'row',
@@ -934,7 +963,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     {!!orderFullDetail?.tasks[0]?.proof_image && (
                       <View>
                         <View style={styles.horizontalLine} />
-                        <Text style={styles.deliveryProof}>Delivery Proof</Text>
+                        <Text style={styles.deliveryProof}>{strings.DELIVERYPROOF}</Text>
                         <FlatList
                           ItemSeparatorComponent={() => (
                             <View style={{marginLeft: 8}} />
@@ -1129,7 +1158,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                           style={{marginVertical: moderateScaleVertical(5)}}>
                           <View style={{flexDirection: 'row'}}>
                             <Text style={{fontFamily: fontFamily.bold}}>
-                              {'Question : '}
+                              {strings.QUESTION}
                             </Text>
                             <Text style={{fontFamily: fontFamily.regular}}>
                               {item?.question}
@@ -1141,7 +1170,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                               marginVertical: moderateScaleVertical(5),
                             }}>
                             <Text style={{fontFamily: fontFamily.bold}}>
-                              {'Answer : '}
+                              {strings.ANSWER}
                             </Text>
                             <Text style={{fontFamily: fontFamily.regular}}>
                               {item?.answer}
