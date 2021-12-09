@@ -77,15 +77,17 @@ export default function AllPaymentMethods({ navigation, route }) {
   const { preferences } = appData?.profile;
 
   useEffect(() => {
-    if (
-      preferences &&
-      preferences?.stripe_publishable_key != '' &&
-      preferences?.stripe_publishable_key != null
-    ) {
-      initStripe({
-        publishableKey: preferences?.stripe_publishable_key,
-        merchantIdentifier: 'merchant.identifier',
-      });
+    if (preferences && preferences?.stripe_publishable_key != '' && preferences?.stripe_publishable_key != null) {
+      (async () => {
+        try {
+            let res = await initStripe({
+              publishableKey: preferences?.stripe_publishable_key,
+              merchantIdentifier: 'merchant.identifier',
+            });
+        } catch (error) {
+          console.log("error raised")
+        }
+      })();
     }
   }, []);
 
