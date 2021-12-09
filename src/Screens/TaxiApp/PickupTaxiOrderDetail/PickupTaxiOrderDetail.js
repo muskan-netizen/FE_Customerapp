@@ -951,7 +951,9 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     {!!orderFullDetail?.tasks[0]?.proof_image && (
                       <View>
                         <View style={styles.horizontalLine} />
-                        <Text style={styles.deliveryProof}>Delivery Proof</Text>
+                        <Text style={styles.deliveryProof}>
+                          {strings.DELIVERYPROOF}
+                        </Text>
                         <FlatList
                           ItemSeparatorComponent={() => (
                             <View style={{marginLeft: 8}} />
@@ -991,7 +993,9 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       </View>
                     )}
                     <View style={styles.horizontalLine} />
-                    <Text style={styles.deliveryProof}>Order Details</Text>
+                    <Text style={styles.deliveryProof}>
+                      {strings.ORDER_DETAIL}
+                    </Text>
                     {orderFullDetail.order_details.products.map((val) => {
                       return (
                         <View

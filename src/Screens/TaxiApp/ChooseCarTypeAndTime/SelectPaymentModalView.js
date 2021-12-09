@@ -696,12 +696,16 @@ export default function SelectPaymentModalView({
 
       <Modal
         isVisible={showModal}
-        style={{margin: moderateScale(0), justifyContent: 'flex-end'}}
+        style={{
+          margin: moderateScale(0),
+          justifyContent: 'flex-end',
+          // backgroundColor: isDarkMode ? colors.black : colors.white,
+        }}
         // animationInTiming={600}
         onBackdropPress={() => setShowModal(false)}>
         <View
           style={{
-            backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
+            backgroundColor: isDarkMode ? colors.black : colors.white,
             padding: moderateScale(12),
             borderRadius: moderateScale(8),
             paddingBottom: moderateScale(keyboardHeight),
@@ -740,6 +744,7 @@ export default function SelectPaymentModalView({
                     style={{
                       marginBottom: moderateScaleVertical(10),
                       fontFamily: fontFamily.medium,
+                      color: isDarkMode ? colors.white : colors.blackC,
                     }}>
                     {item?.translations[0]?.name}
                   </Text>
@@ -785,6 +790,7 @@ export default function SelectPaymentModalView({
               style={{
                 fontFamily: fontFamily.medium,
                 textAlign: 'left',
+                color: isDarkMode ? colors.white : colors.blackC,
               }}>
               {strings.ADDINSTRACTION}
             </Text>
@@ -834,6 +840,7 @@ export default function SelectPaymentModalView({
               fontFamily: fontFamily.medium,
               textAlign: 'left',
               marginTop: moderateScaleVertical(10),
+              color: isDarkMode ? colors.white : colors.blackC,
             }}>
             {strings.ADDIMAGE1}
           </Text>
@@ -861,7 +868,12 @@ export default function SelectPaymentModalView({
                       marginRight: moderateScale(10),
                     }}
                     onPress={() => onImageUpload()}>
-                    <Image source={imagePath.icImageUpload} />
+                    <Image
+                      style={{
+                        tintColor: isDarkMode ? colors.white : colors.blackC,
+                      }}
+                      source={imagePath.icImageUpload}
+                    />
                   </TouchableOpacity>
                 );
               }}

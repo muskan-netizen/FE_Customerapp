@@ -690,7 +690,6 @@ Amount`,
   ARRIVED: 'Arrived',
   DRIVERDETAIL: 'Driver Details',
   DELIVERYPROOF: 'Delivery Proof',
-
   CARD: 'Card',
   CHOOSE_FILE: 'Choose File',
   NO_FILE_CHOSEN: 'No file chosen',
