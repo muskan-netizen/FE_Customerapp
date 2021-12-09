@@ -114,7 +114,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     hideShowBack: 0,
     selectedImg: '',
     baseUrl: '',
-    allInstractionsData: [],
   });
   const {
     isLoading,
@@ -142,7 +141,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     hideShowBack,
     selectedImg,
     baseUrl,
-    allInstractionsData,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -232,7 +230,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
       driverStatus != null &&
       driverStatus != undefined
     ) {
-     
+      console.log(driverStatus, 'driverStatus');
       if (orderStatus === 'completed') {
         showSuccess(driverStatus);
         updateState({
@@ -301,12 +299,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
         },
       )
       .then((res) => {
-        const allInstractionsData = res?.data?.order_details?.products?.map(
-          (item, index) => {
-            return item.user_product_order_form;
-          },
-        );
-
+        console.log(res, 'agent location2');
         updateState({
           isLoading: false,
           tasks: res?.data?.tasks,
@@ -339,7 +332,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
           driverStatus: res?.data?.order_details?.dispatcher_status,
           isShowRating: res?.data?.order?.status == 'completed' ? true : false,
           productInfo: res?.data?.order_details?.products,
-          allInstractionsData: JSON.parse(allInstractionsData),
         });
       })
       .catch(errorMethod);
@@ -435,29 +427,24 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     navigation.navigate(navigationStrings.RATEORDER, {item});
   };
 
-console.log(orderFullDetail?.order.status,"orderFullDetail?.order.statusorderFullDetail?.order.status");
-
-const viewDriverStatus = ()=>{
-  switch (orderFullDetail?.order.status) {
+  const viewDriverStatus = () => {
+    switch (orderFullDetail?.order.status) {
       case 'completed':
-      return strings.COMPLETE
-      break;
+        return strings.COMPLETE;
+        break;
       case 'assigned':
-      return strings.ASSIGNED
-      break;
-        case 'unassigned':
-      return strings.UNASSIGNED
-      break;
-       case 'arrived':
-      return strings.ARRIVED
-      break;
-    default:
-      break;
-  }
-}
-
-
-
+        return strings.ASSIGNED;
+        break;
+      case 'unassigned':
+        return strings.UNASSIGNED;
+        break;
+      case 'arrived':
+        return strings.ARRIVED;
+        break;
+      default:
+        break;
+    }
+  };
 
   const _ModalMainView = () => (
     <View
@@ -660,9 +647,6 @@ const viewDriverStatus = ()=>{
     );
   };
 
-
-
-
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -846,7 +830,7 @@ const viewDriverStatus = ()=>{
                         marginTop: moderateScaleVertical(4),
                         textTransform: 'capitalize',
                       }}>
-                      {/* {orderFullDetail?.order.status} */}
+                      {' '}
                       {viewDriverStatus()}
                     </Text>
                   </View>
@@ -854,7 +838,9 @@ const viewDriverStatus = ()=>{
 
                 {!!orderFullDetail?.order.task_description && (
                   <View style={{marginHorizontal: moderateScale(16)}}>
-                    <Text style={styles.datePriceText}>{`${strings.INSTRUCTION} :` }</Text>
+                    <Text style={styles.datePriceText}>
+                      {strings.DRIVER_DETAILS}:
+                    </Text>
                     <Text
                       style={{
                         ...styles.statusText,
@@ -921,7 +907,9 @@ const viewDriverStatus = ()=>{
                       borderRadius: moderateScale(8),
                       marginHorizontal: moderateScale(16),
                     }}>
-                    <Text style={styles.deliveryProof}>{strings.DRIVERDETAIL}</Text>
+                    <Text style={styles.deliveryProof}>
+                      {strings.DRIVER_DETAILS}
+                    </Text>
                     <View
                       style={{
                         flexDirection: 'row',
@@ -963,7 +951,7 @@ const viewDriverStatus = ()=>{
                     {!!orderFullDetail?.tasks[0]?.proof_image && (
                       <View>
                         <View style={styles.horizontalLine} />
-                        <Text style={styles.deliveryProof}>{strings.DELIVERYPROOF}</Text>
+                        <Text style={styles.deliveryProof}>Delivery Proof</Text>
                         <FlatList
                           ItemSeparatorComponent={() => (
                             <View style={{marginLeft: 8}} />
@@ -1151,35 +1139,6 @@ const viewDriverStatus = ()=>{
                         />
                       </View>
                     )}
-                  <View style={{marginTop: moderateScaleVertical(10)}}>
-                    {allInstractionsData?.map((item, index) => {
-                      return (
-                        <View
-                          style={{marginVertical: moderateScaleVertical(5)}}>
-                          <View style={{flexDirection: 'row'}}>
-                            <Text style={{fontFamily: fontFamily.bold}}>
-                              {strings.QUESTION}
-                            </Text>
-                            <Text style={{fontFamily: fontFamily.regular}}>
-                              {item?.question}
-                            </Text>
-                          </View>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              marginVertical: moderateScaleVertical(5),
-                            }}>
-                            <Text style={{fontFamily: fontFamily.bold}}>
-                              {strings.ANSWER}
-                            </Text>
-                            <Text style={{fontFamily: fontFamily.regular}}>
-                              {item?.answer}
-                            </Text>
-                          </View>
-                        </View>
-                      );
-                    })}
-                  </View>
                 </View>
               </View>
             )}

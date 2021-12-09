@@ -34,6 +34,7 @@ export default function Vendors3({route, navigation}) {
     pageNo: 1,
     limit: 5,
     isRefreshing: false,
+    listData: []
   });
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state.initBoot);
@@ -44,7 +45,7 @@ export default function Vendors3({route, navigation}) {
   // alert(dine_In_Type);
   const location = useSelector((state) => state?.home?.location);
 
-  const {isLoading, pageNo, isRefreshing, limit} = state;
+  const {isLoading, pageNo, isRefreshing, limit,listData} = state;
   const {data} = route.params;
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -73,14 +74,19 @@ export default function Vendors3({route, navigation}) {
       .then((res) => {
         console.log('vendor data', res);
         updateState({isLoading: false, isRefreshing: false});
-        const vendorData = {
-          category: res.data.category,
-          listData:
-            pageNo == 1
-              ? res.data.listData.data
-              : [...categoryData?.listData, ...res.data.listData.data],
-        };
-        actions.saveVendorListingAndCategoryInfo(vendorData);
+        updateState({
+          listData: pageNo == 1
+          ? res.data.listData.data
+          : [...listData, ...res.data.listData.data],
+        })
+        // const vendorData = {
+        //   category: res.data.category,
+        //   listData:
+        //     pageNo == 1
+        //       ? res.data.listData.data
+        //       : [...categoryData?.listData, ...res.data.listData.data],
+        // };
+        // actions.saveVendorListingAndCategoryInfo(vendorData);
       })
       .catch(errorMethod);
   }, [pageNo, isRefreshing]);
@@ -227,7 +233,7 @@ export default function Vendors3({route, navigation}) {
       ) : (
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={(!isLoading && categoryData?.listData) || []}
+          data={(!isLoading && listData) || []}
           ItemSeparatorComponent={() => <View style={{height: 8}} />}
           keyExtractor={(item, index) => String(index)}
           renderItem={_renderItem}

@@ -184,7 +184,7 @@ export default function Cart({navigation, route}) {
   const dineInType = useSelector((state) => state?.home?.dineInType);
   console.log(dineInType, 'dineInType');
 
-
+  console.log("cartData?.delay_date",cartData)
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -670,10 +670,8 @@ export default function Cart({navigation, route}) {
 
   const _directOrderPlace = () => {
     let data = {};
-    data['address_id'] =
-      paramsData?.selectedAddressData?.id || selectedAddressData?.id;
-    data['payment_option_id'] =
-      paramsData?.selectedPayment?.id || selectedPayment?.id;
+    data['address_id'] =  paramsData?.selectedAddressData?.id || selectedAddressData?.id;
+    data['payment_option_id'] = paramsData?.selectedPayment?.id || selectedPayment?.id;
 
     data['type'] = dineInType || '';
     data['is_gift'] = isGiftBoxSelected ? 1 : 0;
@@ -681,12 +679,16 @@ export default function Cart({navigation, route}) {
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
     }
+    if(!!selectedTipAmount){
+      data['tip'] = selectedTipAmount || '';
+    }
     placeOrderData(data);
   };
 
   const placeOrderData = (data) => {
-    actions
-      .placeOrder(data, {
+    console.log("Sending data",data)
+
+    actions.placeOrder(data, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
@@ -708,6 +710,8 @@ export default function Cart({navigation, route}) {
           modalType: null,
           sheduledpickupdate: null,
           sheduleddropoffdate: null,
+          selectedTipvalue: null,
+          selectedTipAmount: null,
         });
         actions.cartItemQty({});
         checkPaymentOptions(res);
@@ -782,7 +786,7 @@ export default function Cart({navigation, route}) {
         : null;
       data['schedule_dropoff'] = sheduleddropoffdate
         ? new Date(sheduleddropoffdate).toISOString()
-        : null;
+        :  null;
     } else {
       data['task_type'] = scheduleType;
       data['schedule_dt'] =
@@ -866,9 +870,15 @@ export default function Cart({navigation, route}) {
     // _offineLinePayment();
   };
 
+  console.log("cartDatacartData",cartData)
+
   //Clear cart
   const placeOrder = () => {
     if (!!cartData?.delay_date && !localeSheduledOrderDate) {
+      showInfo(strings.SCHEDULE_DATE_REQUIRED);
+      return;
+    }
+    if (!!cartData?.pickup_delay_date && !!cartData?.dropoff_delay_date) {
       showInfo(strings.SCHEDULE_DATE_REQUIRED);
       return;
     }
@@ -1208,7 +1218,6 @@ export default function Cart({navigation, route}) {
         scheduleType: 'schedule',
       });
     }
-
     setDateAndTimeSchedule();
   };
 
@@ -1406,20 +1415,74 @@ export default function Cart({navigation, route}) {
                               flexDirection: 'row',
                               justifyContent: 'space-between',
                             }}>
-                            <View style={{flex: 0.6}}>
-                              <Text
-                                numberOfLines={1}
+                            <View style={{flex: 1}}>
+                              <View
                                 style={{
-                                  ...styles.priceItemLabel2,
-                                  color: isDarkMode
-                                    ? MyDarkTheme.colors.text
-                                    : colors.blackOpacity86,
-                                  fontSize: textScale(12),
-                                  fontFamily: fontFamily.medium,
+                                  flexDirection: 'row',
+                                  justifyContent: 'space-between',
+                                  flex: 1,
                                 }}>
-                                {i?.product?.translation[0]?.title},
-                              </Text>
+                                <Text
+                                  numberOfLines={1}
+                                  style={{
+                                    ...styles.priceItemLabel2,
+                                    color: isDarkMode
+                                      ? MyDarkTheme.colors.text
+                                      : colors.blackOpacity86,
+                                    fontSize: textScale(12),
+                                    fontFamily: fontFamily.medium,
+                                    flex: 0.7,
+                                  }}>
+                                  {i?.product?.translation[0]?.title},
+                                </Text>
 
+                                <View
+                                  pointerEvents={btnLoader ? 'none' : 'auto'}
+                                  style={{flex: 0.3}}>
+                                  <View
+                                    style={{
+                                      ...styles.incDecBtnContainer,
+                                      justifyContent: 'space-between',
+                                    }}>
+                                    <TouchableOpacity
+                                      style={{alignItems: 'center'}}
+                                      onPress={() =>
+                                        addDeleteCartItems(i, inx, 1)
+                                      }>
+                                      <Text style={styles.cartItemValueBtn}>
+                                        +
+                                      </Text>
+                                    </TouchableOpacity>
+                                    <View
+                                      style={{
+                                        alignItems: 'center',
+                                        width: moderateScale(20),
+                                        height: moderateScale(20),
+                                        justifyContent: 'center',
+                                      }}>
+                                      {btnLoadrId === i.id && btnLoader ? (
+                                        <UIActivityIndicator
+                                          size={moderateScale(16)}
+                                          color={colors.white}
+                                        />
+                                      ) : (
+                                        <Text style={styles.cartItemValue}>
+                                          {i?.quantity}
+                                        </Text>
+                                      )}
+                                    </View>
+                                    <TouchableOpacity
+                                      style={{alignItems: 'center'}}
+                                      onPress={() =>
+                                        addDeleteCartItems(i, inx, 2)
+                                      }>
+                                      <Text style={styles.cartItemValueBtn}>
+                                        -
+                                      </Text>
+                                    </TouchableOpacity>
+                                  </View>
+                                </View>
+                              </View>
                               <Text
                                 style={{
                                   ...styles.priceItemLabel2,
@@ -1495,39 +1558,6 @@ export default function Cart({navigation, route}) {
                                   })
                                 : null}
                             </View>
-
-                            <View pointerEvents={btnLoader ? 'none' : 'auto'}>
-                              <View style={styles.incDecBtnContainer}>
-                                <TouchableOpacity
-                                  style={{alignItems: 'center'}}
-                                  onPress={() => addDeleteCartItems(i, inx, 1)}>
-                                  <Text style={styles.cartItemValueBtn}>+</Text>
-                                </TouchableOpacity>
-                                <View
-                                  style={{
-                                    alignItems: 'center',
-                                    width: moderateScale(20),
-                                    height: moderateScale(20),
-                                    justifyContent: 'center',
-                                  }}>
-                                  {btnLoadrId === i.id && btnLoader ? (
-                                    <UIActivityIndicator
-                                      size={moderateScale(16)}
-                                      color={colors.white}
-                                    />
-                                  ) : (
-                                    <Text style={styles.cartItemValue}>
-                                      {i?.quantity}
-                                    </Text>
-                                  )}
-                                </View>
-                                <TouchableOpacity
-                                  style={{alignItems: 'center'}}
-                                  onPress={() => addDeleteCartItems(i, inx, 2)}>
-                                  <Text style={styles.cartItemValueBtn}>-</Text>
-                                </TouchableOpacity>
-                              </View>
-                            </View>
                           </View>
 
                           <View
@@ -1535,85 +1565,113 @@ export default function Cart({navigation, route}) {
                               flexDirection: 'row',
                               justifyContent: 'space-between',
                             }}>
-                            <View style={{flex: 0.5, justifyContent: 'center'}}>
+                            <View
+                              style={{
+                                flex: 1,
+                                justifyContent: 'center',
+                              }}>
                               {!!i?.product_addons.length > 0 && (
                                 <View>
                                   <Text
-                                    style={
-                                      isDarkMode
-                                        ? [
-                                            styles.cartItemWeight2,
-                                            {
-                                              color: MyDarkTheme.colors.text,
-                                            },
-                                          ]
-                                        : styles.cartItemWeight2
-                                    }>
+                                    style={{
+                                      ...styles.cartItemWeight2,
+                                      color: isDarkMode
+                                        ? MyDarkTheme.colors.text
+                                        : colors.textGreyB,
+                                      marginTop: moderateScale(2),
+                                    }}>
                                     {strings.EXTRA}
                                   </Text>
                                 </View>
                               )}
-                              {i?.product_addons.length > 0
-                                ? i?.product_addons.map((j, jnx) => {
-                                    return (
-                                      <View style={{flexDirection: 'row'}}>
-                                        <Text
-                                          style={
-                                            isDarkMode
-                                              ? [
-                                                  styles.cartItemWeight2,
+                              <View>
+                                {i?.product_addons.length > 0
+                                  ? i?.product_addons.map((j, jnx) => {
+                                      return (
+                                        <View
+                                          style={{
+                                            flexDirection: 'row',
+                                          }}>
+                                          <View
+                                            style={{
+                                              flexDirection: 'row',
+                                              width: '52%',
+                                              justifyContent: 'space-between',
+                                            }}>
+                                            <View
+                                              style={{
+                                                flexDirection: 'row',
+                                                flex: 0.8,
+                                              }}>
+                                              <Text
+                                                style={
+                                                  isDarkMode
+                                                    ? [
+                                                        styles.cartItemWeight2,
+                                                        {
+                                                          color:
+                                                            MyDarkTheme.colors
+                                                              .text,
+                                                        },
+                                                      ]
+                                                    : styles.cartItemWeight2
+                                                }
+                                                numberOfLines={1}>
+                                                {j.addon_title}
+                                              </Text>
+                                              <Text
+                                                style={
                                                   {
-                                                    color:
-                                                      MyDarkTheme.colors.text,
-                                                  },
-                                                ]
-                                              : styles.cartItemWeight2
-                                          }
-                                          numberOfLines={1}>
-                                          {j.addon_title}
-                                        </Text>
-                                        <Text
-                                          style={
-                                            isDarkMode
-                                              ? [
-                                                  styles.cartItemWeight2,
-                                                  {
-                                                    color:
-                                                      MyDarkTheme.colors.text,
-                                                  },
-                                                ]
-                                              : styles.cartItemWeight2
-                                          }
-                                          numberOfLines={
-                                            1
-                                          }>{`(${j.option_title})`}</Text>
-                                        <Text
-                                          style={
-                                            isDarkMode
-                                              ? [
-                                                  styles.cartItemWeight2,
-                                                  {
-                                                    color:
-                                                      MyDarkTheme.colors.text,
-                                                  },
-                                                ]
-                                              : [
-                                                  styles.cartItemWeight2,
-                                                  {color: colors.textGrey},
-                                                ]
-                                          }
-                                          numberOfLines={1}>{` ${
-                                          currencies?.primary_currency?.symbol
-                                        }${currencyNumberFormatter(
-                                          (
-                                            Number(j.price) *
-                                            Number(j.multiplier)
-                                          ).toFixed(2),
-                                        )} `}</Text>
-                                      </View>
-                                    );
-                                  })
-                                : null}
+                                                    ...styles.cartItemWeight2,
+                                                    color: isDarkMode
+                                                      ? MyDarkTheme.colors.text
+                                                      : colors.textGreyB,
+                                                  }
+
+                                                  // colors.textGreyB
+                                                }
+                                                numberOfLines={1}>
+                                                {` (${j.option_title})`}
+                                              </Text>
+                                            </View>
+                                            <Text>:</Text>
+                                          </View>
+
+                                          <Text
+                                            style={
+                                              isDarkMode
+                                                ? [
+                                                    styles.cartItemWeight2,
+                                                    {
+                                                      color:
+                                                        MyDarkTheme.colors.text,
+                                                    },
+                                                  ]
+                                                : [
+                                                    styles.cartItemWeight2,
+                                                    {color: colors.textGrey},
+                                                  ]
+                                            }
+                                            numberOfLines={1}>{` ${
+                                            currencies?.primary_currency?.symbol
+                                          }${currencyNumberFormatter(
+                                            (
+                                              Number(j.price) *
+                                              Number(j.multiplier)
+                                            ).toFixed(2),
+                                          )} x ${Number(j.quantity)} =  ${
+                                            currencies?.primary_currency?.symbol
+                                          }${currencyNumberFormatter(
+                                            (
+                                              Number(j.price) *
+                                              Number(j.quantity)
+                                            ).toFixed(2),
+                                          )}`}</Text>
+                                        </View>
+                                      );
+                                    })
+                                  : null}
+                              </View>
                             </View>
                           </View>
 
@@ -1742,7 +1800,7 @@ export default function Cart({navigation, route}) {
                         ]
                       : styles.priceItemLabel
                   }>
-                  {strings.DISCOUNT}
+                  {strings.COUPON_DISCOUNT}
                 </Text>
                 <Text
                   style={
@@ -3052,7 +3110,7 @@ export default function Cart({navigation, route}) {
         </TouchableOpacity>
         {!!(
           userData?.auth_token &&
-          !appData?.profile?.preferences?.off_scheduling_at_cart
+          !appData?.profile?.preferences?.off_scheduling_at_cart && businessType !== 'laundry'
         ) &&
           !!(scheduleType == 'schedule' && localeSheduledOrderDate) && (
             <TouchableOpacity
@@ -3079,7 +3137,7 @@ export default function Cart({navigation, route}) {
             style={styles.paymentView}>
             {!!(
               userData?.auth_token &&
-              !appData?.profile?.preferences?.off_scheduling_at_cart
+              !appData?.profile?.preferences?.off_scheduling_at_cart &&  businessType !== 'laundry'
             ) && (
               <ButtonComponent
                 onPress={_selectTime}
@@ -3178,7 +3236,7 @@ export default function Cart({navigation, route}) {
           )}
         <View
           style={{
-            height: moderateScaleVertical(65),
+            height: moderateScaleVertical(80),
             backgroundColor: colors.transparent,
           }}></View>
       </View>
@@ -3956,7 +4014,12 @@ export default function Cart({navigation, route}) {
                     }
                     textColor={isDarkMode ? colors.white : colors.blackB}
                     mode="datetime"
-                    minimumDate={new Date()}
+                    minimumDate={
+                      !!cartData?.pickup_delay_date
+                        ? new Date(cartData?.pickup_delay_date)
+                        : new Date()
+                    }
+
                     maximumDate={undefined}
                     style={styles.datetimePickerText}
                     // onDateChange={setDate}
@@ -3972,7 +4035,12 @@ export default function Cart({navigation, route}) {
                     }
                     textColor={isDarkMode ? colors.white : colors.blackB}
                     mode="datetime"
-                    minimumDate={new Date()}
+                    minimumDate={
+                      !!cartData?.dropoff_delay_date
+                        ? new Date(cartData?.dropoff_delay_date)
+                        : new Date()
+                    }
+                
                     maximumDate={undefined}
                     style={styles.datetimePickerText}
                     // onDateChange={setDate}
