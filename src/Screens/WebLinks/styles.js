@@ -129,6 +129,17 @@ export default ({fontFamily}) => {
       fontFamily: fontFamily.medium,
       color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7,
     },
+
+    mainView: {
+      marginVertical: moderateScaleVertical(15),
+      marginHorizontal: moderateScale(20),
+    },
+    labelTxt: {
+      color: colors.blackOpacity43,
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(13),
+      marginBottom: moderateScale(5),
+    },
   });
   return styles;
 };

@@ -682,6 +682,16 @@ export default {
   DRIVER_DETAILS: 'Detalles del conductor',
   INSTRUCTIONS: 'Instrucciones',
   SET: 'Colocar',
-  CANCELLATION_REASON:" Cancellation Reason",
-  WRITE_YOUR_REASON_HERE:"Write your reason here......"
+  CANCELLATION_REASON: ' Cancellation Reason',
+  WRITE_YOUR_REASON_HERE: 'Write your reason here......',
+  TYPE: 'Type',
+  TEAMS: 'Teams',
+  UPLOAD_PHOTO: 'Upload Profile Photo',
+  TAGS: 'Tags',
+  EXAMPLE_TEXT: '2000, Make, Model',
+  TRANSPORT_DETAILS: 'Transport Details',
+  UID: 'UID',
+  LICENCE_PLATE: 'Licence Plate',
+  COLOR: 'Color',
+  TRANSPORT_TYPE: 'Transport Type',
 };

@@ -1,14 +1,13 @@
-import {cloneDeep} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
-import {I18nManager, TextInput} from 'react-native';
 import {
   FlatList,
+  I18nManager,
   Image,
-  ImageBackground,
+  ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
-  ScrollView,
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
@@ -16,7 +15,6 @@ import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import HTMLView from 'react-native-htmlview';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
@@ -106,7 +104,7 @@ export default function WebLinks({navigation, route}) {
     driverUUID: '',
     driverLicencePlate: '',
     driverColor: '',
-    driverTransportType: {},
+    driverTransportType: '',
     driverRegistrationDocs: [],
     driverTransportTypeIndx: null,
     isDriverType: false,
@@ -116,6 +114,7 @@ export default function WebLinks({navigation, route}) {
     isTagsShow: false,
     selectedTags: [],
     selectedTagIndxs: [],
+    tagsViewHeight: moderateScale(44),
   });
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -168,12 +167,8 @@ export default function WebLinks({navigation, route}) {
     isTagsShow,
     selectedTags,
     selectedTagIndxs,
+    tagsViewHeight,
   } = state;
-
-  //Navigation to specific screen
-  const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
-  };
 
   useEffect(() => {
     updateState({isLoading: true});
@@ -202,7 +197,6 @@ export default function WebLinks({navigation, route}) {
       .catch(errorMethod);
   };
 
-  //Error handling in screen
   const errorMethod = (error) => {
     updateState({isLoading: false});
     showError(error?.message || error?.error);
@@ -214,108 +208,6 @@ export default function WebLinks({navigation, route}) {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
     return;
   };
-
-  /***********Remove Image from logo */
-  const _removeImageFromList = (selectdImage) => {
-    console.log(selectdImage, 'selectdImage>>>');
-    if (selectdImage?.id) {
-      console.log(selectdImage?.id, 'selectdImage?.id');
-      let copyArrayImages = cloneDeep(imageArray);
-      console.log(copyArrayImages, 'copyArrayImages');
-      copyArrayImages = copyArrayImages.filter(
-        (x) => x?.id !== selectdImage?.id,
-      );
-      updateState({
-        imageArray: copyArrayImages,
-        remove_image_ids: [...remove_image_ids, selectdImage?.id],
-      });
-    } else {
-      let copyArrayImages = cloneDeep(imageArray);
-      copyArrayImages = copyArrayImages.filter(
-        (x) => x?.image_id !== selectdImage?.image_id,
-      );
-      updateState({
-        imageArray: copyArrayImages,
-      });
-    }
-  };
-
-  /// remove banner
-
-  const _removeBannerFromList = (selectdImage) => {
-    console.log(selectdImage, 'selectdImage>>>');
-    if (selectdImage?.id) {
-      console.log(selectdImage?.id, 'selectdImage?.id');
-      let copyArrayImages = cloneDeep(imageArrayBanner);
-      console.log(copyArrayImages, 'copyArrayImages');
-      copyArrayImages = copyArrayImages.filter(
-        (x) => x?.id !== selectdImage?.id,
-      );
-      updateState({
-        imageArrayBanner: copyArrayImages,
-        remove_image_ids: [...remove_image_ids, selectdImage?.id],
-      });
-    } else {
-      let copyArrayImages = cloneDeep(imageArrayBanner);
-      copyArrayImages = copyArrayImages.filter(
-        (x) => x?.image_id !== selectdImage?.image_id,
-      );
-      updateState({
-        imageArrayBanner: copyArrayImages,
-      });
-    }
-  };
-  /// remove fssaiLicence
-
-  const _removeFssaiLicence = (selectdImage) => {
-    console.log(selectdImage, 'selectdImage>>>');
-    if (selectdImage?.id) {
-      console.log(selectdImage?.id, 'selectdImage?.id');
-      let copyArrayImages = cloneDeep(fssaiLicense);
-      console.log(copyArrayImages, 'copyArrayImages');
-      copyArrayImages = copyArrayImages.filter(
-        (x) => x?.id !== selectdImage?.id,
-      );
-      updateState({
-        fssaiLicense: copyArrayImages,
-        remove_image_ids: [...remove_image_ids, selectdImage?.id],
-      });
-    } else {
-      let copyArrayImages = cloneDeep(fssaiLicense);
-      copyArrayImages = copyArrayImages.filter(
-        (x) => x?.image_id !== selectdImage?.image_id,
-      );
-      updateState({
-        fssaiLicense: copyArrayImages,
-      });
-    }
-  };
-
-  /// remove sfcLicence
-
-  // const _removeSfcLicence = (selectdImage) => {
-  //   console.log(selectdImage, 'selectdImage>>>');
-  //   if (selectdImage?.id) {
-  //     console.log(selectdImage?.id, 'selectdImage?.id');
-  //     let copyArrayImages = cloneDeep(sfcLicense);
-  //     console.log(copyArrayImages, 'copyArrayImages');
-  //     copyArrayImages = copyArrayImages.filter(
-  //       (x) => x?.id !== selectdImage?.id,
-  //     );
-  //     updateState({
-  //       sfcLicense: copyArrayImages,
-  //       remove_image_ids: [...remove_image_ids, selectdImage?.id],
-  //     });
-  //   } else {
-  //     let copyArrayImages = cloneDeep(sfcLicense);
-  //     copyArrayImages = copyArrayImages.filter(
-  //       (x) => x?.image_id !== selectdImage?.image_id,
-  //     );
-  //     updateState({
-  //       sfcLicense: copyArrayImages,
-  //     });
-  //   }
-  // };
 
   // upload Banner function
   const uploadFile = async () => {
@@ -445,14 +337,20 @@ export default function WebLinks({navigation, route}) {
 
       formData.append('name', driverName);
       formData.append('phone_number', driverPhoneNumber);
-      formData.append('type', selectedDriverType.name);
+      formData.append(
+        'type',
+        !!selectedDriverType ? selectedDriverType.name : '',
+      );
       formData.append('dialCode', '91');
-      formData.append('team', selectedTeam?.id);
+      formData.append('team', !!selectedTeam ? selectedTeam?.id : '');
       formData.append('make_model', driverTransportDetails);
       formData.append('uid', driverUUID);
       formData.append('plate_number', driverLicencePlate);
       formData.append('color', driverColor);
-      formData.append('vehicle_type_id', driverTransportType?.value);
+      formData.append(
+        'vehicle_type_id',
+        !!driverTransportType ? driverTransportType?.value : '',
+      );
       formData.append('upload_photo', {
         uri: driverPic.path,
         name: driverPic.filename,
@@ -466,7 +364,7 @@ export default function WebLinks({navigation, route}) {
 
       driverRegistrationDocs.map((item, indx) => {
         formData.append(
-          item?.item?.name,
+          item?.item?.slug,
           item?.item.file_type === 'Image'
             ? {
                 uri: item.fileData.path,
@@ -475,17 +373,7 @@ export default function WebLinks({navigation, route}) {
                 mime: item.fileData.mime,
               }
             : item?.fileData,
-          //   {
-          //   name: item?.fileData?.name,
-          //   uri: item?.fileData?.uri,
-          //   type: item?.fileData?.type,
-          // }
         );
-        // data[item?.item?.name] = item?.fileData;
-
-        // if(item?.item?.is_required && ){
-
-        // }
       });
 
       console.log(formData, 'formData');
@@ -659,11 +547,15 @@ export default function WebLinks({navigation, route}) {
     return (
       <View
         style={{
-          marginVertical: moderateScale(5),
-          // marginHorizontal: moderateScale(10),
+          marginVertical: moderateScale(7),
         }}>
-        <Text style={{fontFamily: fontFamily.regular}}>
-          {item.primary?.name}
+        <Text
+          style={{
+            color: colors.blackOpacity43,
+            fontFamily: fontFamily.bold,
+            fontSize: textScale(13),
+          }}>
+          {item.primary?.name || item?.name}
         </Text>
 
         <View>
@@ -869,500 +761,389 @@ export default function WebLinks({navigation, route}) {
         contentContainerStyle={{
           flexGrow: 1,
         }}>
-        <View style={{flex: 1}}>
-          <View
-            style={{
-              marginTop: moderateScaleVertical(20),
-              marginHorizontal: moderateScale(20),
-            }}>
-            {/* {!!(paramData && paramData?.url) && (
-              <WebView source={{uri: paramData?.url}} />
-            )} */}
-            {htmlContent && (
-              <HTMLView
-                stylesheet={isDarkMode ? htmlStyle : null}
-                value={`<p>${htmlContent}</p>`}
-              />
-            )}
-          </View>
+        <View
+          style={{
+            marginTop: moderateScaleVertical(20),
+            marginHorizontal: moderateScale(20),
+          }}>
+          {htmlContent && (
+            <HTMLView
+              stylesheet={isDarkMode ? htmlStyle : null}
+              value={`<p>${htmlContent}</p>`}
+            />
+          )}
+        </View>
 
-          {paramData?.slug === 'vendor-registration' && (
+        {paramData?.slug === 'vendor-registration' && (
+          <View style={styles.mainView}>
+            <View style={{marginBottom: moderateScaleVertical(12)}}>
+              <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
+            </View>
+            <BorderTextInput
+              placeholder={strings.YOUR_NAME}
+              onChangeText={_onChangeText('fullname')}
+              containerStyle={styles.containerStyle}
+            />
+
+            <BorderTextInput
+              placeholder={strings.YOUR_EMAIL}
+              onChangeText={_onChangeText('email')}
+              containerStyle={styles.containerStyle}
+            />
+            <PhoneNumberInput
+              onCountryChange={_onCountryChange}
+              onChangePhone={(phoneNumber) =>
+                updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
+              }
+              cca2={cca2}
+              phoneNumber={phoneNumber}
+              callingCode={state.callingCode}
+              placeholder={strings.YOUR_PHONE_NUMBER}
+              keyboardType={'phone-pad'}
+              containerStyle={styles.containerStyle}
+            />
+
+            <BorderTextInput
+              placeholder={strings.ENTER_TITLE}
+              label={'Title'}
+              onChangeText={_onChangeText('title')}
+              containerStyle={styles.containerStyle}
+            />
+
+            <BorderTextInput
+              secureTextEntry={true}
+              placeholder={strings.ENTER_PASSWORD}
+              onChangeText={_onChangeText('password')}
+              containerStyle={styles.containerStyle}
+            />
+            <BorderTextInput
+              secureTextEntry={true}
+              placeholder={strings.CONFIRM_PASSWORD}
+              onChangeText={_onChangeText('confirm_password')}
+              containerStyle={styles.containerStyle}
+            />
+            <View style={{marginVertical: moderateScaleVertical(10)}}>
+              <Text style={styles.detailStyle}>{strings.STORE_DETAILS}</Text>
+            </View>
+
+            <BorderTextInput
+              placeholder={strings.VENDOR_NAME}
+              onChangeText={_onChangeText('vendor_name')}
+              containerStyle={styles.containerStyle}
+            />
+            <BorderTextInput
+              placeholder={strings.DESCRIPTION}
+              onChangeText={_onChangeText('description')}
+              containerStyle={styles.containerStyle}
+            />
+            <BorderTextInput
+              placeholder={strings.ADDRESS}
+              onChangeText={_onChangeText('address')}
+              containerStyle={styles.containerStyle}
+            />
+            <BorderTextInput
+              placeholder={strings.WEBSITE}
+              onChangeText={_onChangeText('website')}
+              containerStyle={styles.containerStyle}
+            />
             <View
               style={{
-                marginTop: moderateScaleVertical(30),
-                marginHorizontal: moderateScale(24),
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+
+                marginHorizontal: moderateScale(10),
+                marginVertical: moderateScaleVertical(16),
               }}>
-              <View style={{marginBottom: moderateScaleVertical(12)}}>
-                <Text style={styles.detailStyle}>
-                  {strings.PERSONAL_DETAILS}
-                </Text>
-              </View>
-              <BorderTextInput
-                placeholder={strings.YOUR_NAME}
-                onChangeText={_onChangeText('fullname')}
-                containerStyle={styles.containerStyle}
-              />
-
-              <BorderTextInput
-                placeholder={strings.YOUR_EMAIL}
-                onChangeText={_onChangeText('email')}
-                containerStyle={styles.containerStyle}
-              />
-              <PhoneNumberInput
-                onCountryChange={_onCountryChange}
-                onChangePhone={(phoneNumber) =>
-                  updateState({phoneNumber: phoneNumber.replace(/[^0-9]/g, '')})
-                }
-                cca2={cca2}
-                phoneNumber={phoneNumber}
-                callingCode={state.callingCode}
-                placeholder={strings.YOUR_PHONE_NUMBER}
-                keyboardType={'phone-pad'}
-                containerStyle={styles.containerStyle}
-              />
-
-              <BorderTextInput
-                placeholder={strings.ENTER_TITLE}
-                label={'Title'}
-                onChangeText={_onChangeText('title')}
-                containerStyle={styles.containerStyle}
-              />
-
-              <BorderTextInput
-                secureTextEntry={true}
-                placeholder={strings.ENTER_PASSWORD}
-                onChangeText={_onChangeText('password')}
-                containerStyle={styles.containerStyle}
-              />
-              <BorderTextInput
-                secureTextEntry={true}
-                placeholder={strings.CONFIRM_PASSWORD}
-                onChangeText={_onChangeText('confirm_password')}
-                containerStyle={styles.containerStyle}
-              />
-              <View style={{marginTop: moderateScaleVertical(10)}}>
-                <Text style={styles.detailStyle}>{strings.STORE_DETAILS}</Text>
-              </View>
-
-              <View style={{marginVertical: moderateScaleVertical(20)}}>
-                <View style={{flexDirection: 'row'}}>
-                  <View
-                    style={{
-                      width: width / 2 - moderateScale(22),
-                    }}>
-                    <Text style={styles.uploadText}>{strings.UPLOAD_LOGO}</Text>
-                    {imageArray && imageArray.length ? (
-                      imageArray.map((i, inx) => {
-                        return (
-                          <ImageBackground
-                            source={{
-                              uri: i.uri,
-                            }}
-                            style={styles.imageOrderStyle}
-                            imageStyle={styles.imageOrderStyle}>
-                            <View style={styles.viewOverImage}>
-                              <View style={styles.crossIconStyle}>
-                                <TouchableOpacity
-                                  onPress={() => _removeImageFromList(i)}>
-                                  <Image source={imagePath.icRemoveIcon} />
-                                </TouchableOpacity>
-                              </View>
-                            </View>
-                          </ImageBackground>
-                        );
-                      })
-                    ) : (
-                      <View style={styles.imageView}>
-                        <TouchableOpacity
-                          onPress={uploadLogo}
-                          style={[
-                            styles.viewOverImage2,
-                            {borderStyle: 'dashed'},
-                          ]}>
-                          <Image
-                            source={imagePath.icCamIcon}
-                            style={{tintColor: themeColors.primary_color}}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    )}
-                  </View>
-                  <View
-                    style={{
-                      width: width / 2 - moderateScale(22),
-                    }}>
-                    <Text style={styles.uploadText}>
-                      {strings.UPLOAD_BANNER}
-                    </Text>
-                    {imageArrayBanner && imageArrayBanner.length ? (
-                      imageArrayBanner.map((i, inx) => {
-                        return (
-                          <ImageBackground
-                            source={{
-                              uri: i.uri,
-                            }}
-                            style={styles.imageOrderStyle}
-                            imageStyle={styles.imageStyle}>
-                            <View style={styles.viewOverImage}>
-                              <View style={styles.crossIconStyle}>
-                                <TouchableOpacity
-                                  onPress={() => _removeBannerFromList(i)}>
-                                  <Image source={imagePath.icRemoveIcon} />
-                                </TouchableOpacity>
-                              </View>
-                            </View>
-                          </ImageBackground>
-                        );
-                      })
-                    ) : (
-                      <View style={styles.imageView}>
-                        <TouchableOpacity
-                          onPress={uploadFile}
-                          style={[
-                            styles.viewOverImage2,
-                            {borderStyle: 'dashed'},
-                          ]}>
-                          <Image
-                            source={imagePath.icCamIcon}
-                            style={{tintColor: themeColors.primary_color}}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    )}
-                  </View>
-                </View>
-              </View>
-              <BorderTextInput
-                placeholder={strings.VENDOR_NAME}
-                onChangeText={_onChangeText('vendor_name')}
-                containerStyle={styles.containerStyle}
-              />
-              <BorderTextInput
-                placeholder={strings.DESCRIPTION}
-                onChangeText={_onChangeText('description')}
-                containerStyle={styles.containerStyle}
-              />
-              <BorderTextInput
-                placeholder={strings.ADDRESS}
-                onChangeText={_onChangeText('address')}
-                containerStyle={styles.containerStyle}
-              />
-              <BorderTextInput
-                placeholder={strings.WEBSITE}
-                onChangeText={_onChangeText('website')}
-                containerStyle={styles.containerStyle}
-              />
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-
-                  marginHorizontal: moderateScale(10),
-                  marginVertical: moderateScaleVertical(16),
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}>
-                <View
+                <Text
                   style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    marginBottom: moderateScaleVertical(8),
+                    fontFamily: fontFamily.medium,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
                   }}>
-                  <Text
-                    style={{
-                      marginBottom: moderateScaleVertical(8),
-                      fontFamily: fontFamily.medium,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.textGreyOpcaity7,
-                    }}>
-                    {strings.DINE_IN}
-                  </Text>
-                  <ToggleSwitch
-                    isOn={isDineIn}
-                    onColor={themeColors.primary_color}
-                    offColor={
-                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
-                    }
-                    size="small"
-                    onToggle={() => updateState({isDineIn: !isDineIn})}
-                  />
-                </View>
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                  <Text
-                    style={{
-                      marginBottom: moderateScaleVertical(8),
-                      fontFamily: fontFamily.medium,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.textGreyOpcaity7,
-                    }}>
-                    {strings.TAKEAWAY}
-                  </Text>
-                  <ToggleSwitch
-                    isOn={isTakeaway}
-                    onColor={themeColors.primary_color}
-                    offColor={
-                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
-                    }
-                    size="small"
-                    onToggle={() => updateState({isTakeaway: !isTakeaway})}
-                  />
-                </View>
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                  <Text
-                    style={{
-                      marginBottom: moderateScaleVertical(8),
-                      fontFamily: fontFamily.medium,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.textGreyOpcaity7,
-                    }}>
-                    {strings.DELIVERY}
-                  </Text>
-                  <ToggleSwitch
-                    isOn={isDelivery}
-                    onColor={themeColors.primary_color}
-                    offColor={
-                      isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
-                    }
-                    size="small"
-                    onToggle={() => updateState({isDelivery: !isDelivery})}
-                  />
-                </View>
-              </View>
-              <View style={{}}>
-                <FlatList
-                  keyExtractor={(itm, indx) => indx.toString()}
-                  data={vendorRegDocs}
-                  renderItem={_renderFields}
+                  {strings.DINE_IN}
+                </Text>
+                <ToggleSwitch
+                  isOn={isDineIn}
+                  onColor={themeColors.primary_color}
+                  offColor={
+                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                  }
+                  size="small"
+                  onToggle={() => updateState({isDineIn: !isDineIn})}
                 />
               </View>
-
-              <GradientButton
-                onPress={_onSubmit}
-                marginTop={moderateScaleVertical(10)}
-                btnText={strings.SUBMIT}
-              />
-              <View
-                style={{
-                  height: moderateScaleVertical(24),
-                  marginBottom: moderateScaleVertical(44),
-                }}
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Text
+                  style={{
+                    marginBottom: moderateScaleVertical(8),
+                    fontFamily: fontFamily.medium,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
+                  }}>
+                  {strings.TAKEAWAY}
+                </Text>
+                <ToggleSwitch
+                  isOn={isTakeaway}
+                  onColor={themeColors.primary_color}
+                  offColor={
+                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                  }
+                  size="small"
+                  onToggle={() => updateState({isTakeaway: !isTakeaway})}
+                />
+              </View>
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Text
+                  style={{
+                    marginBottom: moderateScaleVertical(8),
+                    fontFamily: fontFamily.medium,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.textGreyOpcaity7,
+                  }}>
+                  {strings.DELIVERY}
+                </Text>
+                <ToggleSwitch
+                  isOn={isDelivery}
+                  onColor={themeColors.primary_color}
+                  offColor={
+                    isDarkMode ? MyDarkTheme.colors.text : colors.borderLight
+                  }
+                  size="small"
+                  onToggle={() => updateState({isDelivery: !isDelivery})}
+                />
+              </View>
+            </View>
+            <View
+              style={{
+                marginHorizontal: moderateScale(5),
+              }}>
+              <FlatList
+                keyExtractor={(itm, indx) => indx.toString()}
+                data={vendorRegDocs}
+                renderItem={_renderFields}
               />
             </View>
-          )}
-          {paramData?.slug === 'driver-registration' && (
+
+            <GradientButton
+              onPress={_onSubmit}
+              marginTop={moderateScaleVertical(10)}
+              btnText={strings.SUBMIT}
+            />
             <View
               style={{
-                marginTop: moderateScaleVertical(30),
-                marginHorizontal: moderateScale(24),
+                height: moderateScaleVertical(24),
+                marginBottom: moderateScaleVertical(44),
+              }}
+            />
+          </View>
+        )}
+        {paramData?.slug === 'driver-registration' && (
+          <View style={styles.mainView}>
+            <View style={{marginBottom: moderateScaleVertical(12)}}>
+              <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
+            </View>
+
+            <Text style={{...styles.labelTxt}}>{strings.UPLOAD_PHOTO}</Text>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => {
+                actionSheet.current.show();
+              }}
+              style={{
+                ...styles.imageView,
+                // marginVertical: moderateScale(5),
+                marginHorizontal: 0,
+                marginBottom: moderateScaleVertical(14),
               }}>
-              <View style={{marginBottom: moderateScaleVertical(12)}}>
-                <Text style={styles.detailStyle}>
-                  {strings.PERSONAL_DETAILS}
-                </Text>
-              </View>
-
-              <Text
+              <Image
+                source={driverPic ? {uri: driverPic.path} : imagePath.icCamIcon}
                 style={{
-                  fontFamily: fontFamily.regular,
-                  fontSize: textScale(13),
-                  marginVertical: moderateScaleVertical(5),
-                  color: colors.textGreyB,
-                }}>
-                Upload Profile Photo
-              </Text>
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => {
-                  actionSheet.current.show();
+                  tintColor: !driverPic ? themeColors.primary_color : null,
+                  height: driverPic ? height / 6 - moderateScale(15) : 30,
+                  width: driverPic ? width - moderateScale(80) : 30,
                 }}
-                style={{
-                  ...styles.imageView,
-                  // marginVertical: moderateScale(5),
-                  marginHorizontal: 0,
-                  marginBottom: moderateScaleVertical(14),
-                }}>
-                <Image
-                  source={
-                    driverPic ? {uri: driverPic.path} : imagePath.icCamIcon
-                  }
-                  style={{
-                    tintColor: !driverPic ? themeColors.primary_color : null,
-                    height: driverPic ? height / 6 - moderateScale(15) : 30,
-                    width: driverPic ? width - moderateScale(80) : 30,
-                  }}
-                  resizeMode={'cover'}
-                />
-              </TouchableOpacity>
-
-              <BorderTextInput
-                placeholder={strings.YOUR_NAME}
-                onChangeText={_onChangeText('driverName')}
-                containerStyle={styles.containerStyle}
+                resizeMode={'cover'}
               />
+            </TouchableOpacity>
 
-              <PhoneNumberInput
-                onCountryChange={_onCountryChange}
-                onChangePhone={(phoneNumber) =>
-                  updateState({
-                    driverPhoneNumber: phoneNumber.replace(/[^0-9]/g, ''),
-                  })
-                }
-                cca2={cca2}
-                phoneNumber={driverPhoneNumber}
-                callingCode={state.callingCode}
-                placeholder={strings.YOUR_PHONE_NUMBER}
-                keyboardType={'phone-pad'}
-                containerStyle={styles.containerStyle}
-              />
+            <Text style={styles.labelTxt}>{strings.YOUR_NAME}</Text>
 
-              <View style={{zIndex: 10}}>
-                <TouchableOpacity
-                  style={{
-                    borderRadius: 8,
-                    height: moderateScaleVertical(44),
-                    marginBottom: moderateScaleVertical(14),
-                    paddingHorizontal: moderateScale(5),
-                    borderWidth: 1,
-                    borderColor: colors.borderLight,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}
-                  activeOpacity={0.7}
-                  onPress={() =>
-                    updateState({isDriverType: !isDriverType, isTeams: false})
-                  }>
-                  <Text style={{fontFamily: fontFamily.regular}}>
-                    {!!selectedDriverType
-                      ? selectedDriverType.name
-                      : strings.TYPE}
-                  </Text>
-                  <Image source={imagePath.dropDownNew} />
-                </TouchableOpacity>
-                {isDriverType && (
-                  <View
-                    style={{
-                      top: moderateScaleVertical(40),
-                      borderWidth: 1,
-                      borderColor: colors.borderColorB,
-                      backgroundColor: colors.white,
-                      width: '100%',
-                      position: 'absolute',
-                      paddingHorizontal: moderateScale(10),
-                      paddingVertical: moderateScale(5),
-                      shadowOffset: {width: 0, height: 1},
-                      shadowOpacity: 0.1,
-                    }}>
-                    {driverTypes.map((itm, indx) => {
-                      return (
-                        <TouchableOpacity
-                          key={indx}
-                          onPress={() =>
-                            updateState({
-                              selectedDriverType: itm,
-                              isDriverType: false,
-                            })
-                          }
-                          style={{
-                            marginVertical: moderateScale(5),
-                          }}>
-                          <Text>{itm.name}</Text>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                )}
-              </View>
+            <BorderTextInput
+              placeholder={''}
+              onChangeText={_onChangeText('driverName')}
+              containerStyle={styles.containerStyle}
+            />
 
-              {/* <TouchableOpacity
+            <Text style={styles.labelTxt}>{strings.YOUR_PHONE_NUMBER}</Text>
+
+            <PhoneNumberInput
+              onCountryChange={_onCountryChange}
+              onChangePhone={(phoneNumber) =>
+                updateState({
+                  driverPhoneNumber: phoneNumber.replace(/[^0-9]/g, ''),
+                })
+              }
+              cca2={cca2}
+              phoneNumber={driverPhoneNumber}
+              callingCode={state.callingCode}
+              placeholder={''}
+              keyboardType={'phone-pad'}
+              containerStyle={styles.containerStyle}
+            />
+
+            <View style={{zIndex: 10}}>
+              <TouchableOpacity
                 style={{
                   borderRadius: 8,
                   height: moderateScaleVertical(44),
                   marginBottom: moderateScaleVertical(14),
                   paddingHorizontal: moderateScale(5),
                   borderWidth: 1,
-                  borderColor: colors.borderColorGrey,
+                  borderColor: colors.borderLight,
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'space-between',
                 }}
-                activeOpacity={0.7}>
-                <Text style={{fontFamily: fontFamily.regular}}>{'Teams'}</Text>
+                activeOpacity={0.7}
+                onPress={() =>
+                  updateState({
+                    isDriverType: !isDriverType,
+                    isTeams: false,
+                    isTagsShow: false,
+                  })
+                }>
+                <Text style={{...styles.labelTxt, marginBottom: 0}}>
+                  {!!selectedDriverType
+                    ? selectedDriverType.name
+                    : strings.TYPE}
+                </Text>
                 <Image source={imagePath.dropDownNew} />
-              </TouchableOpacity> */}
-              <View style={{zIndex: 5}}>
-                <TouchableOpacity
-                  style={{
-                    borderRadius: 8,
-                    height: moderateScaleVertical(44),
-                    marginBottom: moderateScaleVertical(14),
-                    paddingHorizontal: moderateScale(5),
-                    borderWidth: 1,
-                    borderColor: colors.borderLight,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}
-                  activeOpacity={0.7}
-                  onPress={() =>
-                    updateState({isTeams: !isTeams, isDriverType: false})
-                  }>
-                  <Text style={{fontFamily: fontFamily.regular}}>
-                    {!!selectedTeam ? selectedTeam?.name : 'Teams'}
-                  </Text>
-                  <Image source={imagePath.dropDownNew} />
-                </TouchableOpacity>
-                {isTeams && (
-                  <View
-                    style={{
-                      top: moderateScaleVertical(40),
-                      borderWidth: 1,
-                      borderColor: colors.borderColorB,
-                      backgroundColor: colors.white,
-                      width: '100%',
-                      position: 'absolute',
-                      paddingHorizontal: moderateScale(10),
-                      paddingVertical: moderateScale(5),
-                      shadowOffset: {width: 0, height: 1},
-                      shadowOpacity: 0.1,
-                    }}>
-                    {driverRegDocs?.teams.map((itm, indx) => {
-                      return (
-                        <TouchableOpacity
-                          key={indx}
-                          onPress={() =>
-                            updateState({
-                              selectedTeam: itm,
-                              isTeams: false,
-                            })
-                          }
-                          style={{
-                            marginVertical: moderateScale(5),
-                          }}>
-                          <Text>{itm.name}</Text>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                )}
-              </View>
-
-              <View
-                style={{marginBottom: moderateScaleVertical(14), zIndex: 2}}>
+              </TouchableOpacity>
+              {isDriverType && (
                 <View
                   style={{
-                    minHeight: moderateScaleVertical(44),
-                    color: colors.white,
+                    top: moderateScaleVertical(40),
                     borderWidth: 1,
-                    borderColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.borderLight,
-                    borderRadius: 8,
-                    justifyContent: 'center',
-                    paddingVertical: 3,
-                    paddingHorizontal: 3,
-                    position: 'relative',
+                    borderColor: colors.borderColorB,
+                    backgroundColor: colors.white,
+                    width: '100%',
+                    position: 'absolute',
+                    paddingHorizontal: moderateScale(10),
+                    paddingVertical: moderateScale(5),
+                    shadowOffset: {width: 0, height: 1},
+                    shadowOpacity: 0.1,
                   }}>
+                  {driverTypes.map((itm, indx) => {
+                    return (
+                      <TouchableOpacity
+                        key={indx}
+                        onPress={() =>
+                          updateState({
+                            selectedDriverType: itm,
+                            isDriverType: false,
+                          })
+                        }
+                        style={{
+                          marginVertical: moderateScale(5),
+                        }}>
+                        <Text>{itm.name}</Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              )}
+            </View>
+
+            <View style={{zIndex: 5}}>
+              <TouchableOpacity
+                style={{
+                  borderRadius: 8,
+                  height: moderateScaleVertical(44),
+                  marginBottom: moderateScaleVertical(14),
+                  paddingHorizontal: moderateScale(5),
+                  borderWidth: 1,
+                  borderColor: colors.borderLight,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+                activeOpacity={0.7}
+                onPress={() =>
+                  updateState({
+                    isTeams: !isTeams,
+                    isDriverType: false,
+                    isTagsShow: false,
+                  })
+                }>
+                <Text style={{...styles.labelTxt, marginBottom: 0}}>
+                  {!!selectedTeam ? selectedTeam?.name : strings.TEAMS}
+                </Text>
+                <Image source={imagePath.dropDownNew} />
+              </TouchableOpacity>
+              {isTeams && (
+                <View
+                  style={{
+                    top: moderateScaleVertical(40),
+                    borderWidth: 1,
+                    borderColor: colors.borderColorB,
+                    backgroundColor: colors.white,
+                    width: '100%',
+                    position: 'absolute',
+                    paddingHorizontal: moderateScale(10),
+                    paddingVertical: moderateScale(5),
+                    shadowOffset: {width: 0, height: 1},
+                    shadowOpacity: 0.1,
+                  }}>
+                  {driverRegDocs?.teams.map((itm, indx) => {
+                    return (
+                      <TouchableOpacity
+                        key={indx}
+                        onPress={() =>
+                          updateState({
+                            selectedTeam: itm,
+                            isTeams: false,
+                          })
+                        }
+                        style={{
+                          marginVertical: moderateScale(5),
+                        }}>
+                        <Text>{itm.name}</Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              )}
+            </View>
+
+            <View style={{marginBottom: moderateScaleVertical(14), zIndex: 2}}>
+              <View
+                onLayout={(event) => {
+                  updateState({
+                    tagsViewHeight: event.nativeEvent.layout.height,
+                  });
+                }}
+                style={{
+                  minHeight: moderateScaleVertical(44),
+                  color: colors.white,
+                  borderWidth: 1,
+                  borderColor: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.borderLight,
+                  borderRadius: 8,
+                  paddingVertical: 3,
+                  paddingHorizontal: 3,
+                  justifyContent: 'center',
+                }}>
+                <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
                   {selectedTags.length > 0 && (
                     <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
                       <FlatList
@@ -1370,7 +1151,7 @@ export default function WebLinks({navigation, route}) {
                         data={selectedTags}
                         renderItem={({item}) => (
                           <TouchableOpacity
-                            onPress={() => removeTag(itm, index)}
+                            // onPress={() => removeTag(itm, index)}
                             style={{
                               borderWidth: 1,
                               borderColor: colors.borderColorB,
@@ -1379,7 +1160,10 @@ export default function WebLinks({navigation, route}) {
                               marginHorizontal: moderateScale(2),
                               flexDirection: 'row',
                               marginVertical: 3,
-                              minWidth: '33%',
+                              width: (width - moderateScale(52)) / 3,
+                              justifyContent: 'space-around',
+                              borderRadius: moderateScale(5),
+                              paddingVertical: moderateScale(3),
                             }}>
                             <Image
                               source={imagePath.ic_cross}
@@ -1392,49 +1176,17 @@ export default function WebLinks({navigation, route}) {
                             <Text
                               style={{
                                 fontFamily: fontFamily.regular,
-                                marginLeft: 3,
+                                marginRight: 3,
                               }}>
                               {item?.name}
                             </Text>
                           </TouchableOpacity>
                         )}
                       />
-                      {/* {selectedTags.map((itm, index) => {
-                          return (
-                            <TouchableOpacity
-                              onPress={() => removeTag(itm, index)}
-                              style={{
-                                borderWidth: 1,
-                                borderColor: colors.borderColorB,
-                                alignItems: 'center',
-                                backgroundColor: colors.borderColorB,
-                                marginHorizontal: moderateScale(2),
-                                flexDirection: 'row',
-                                minWidth: '32.10%',
-                                marginVertical: 3,
-                              }}>
-                              <Image
-                                source={imagePath.ic_cross}
-                                style={{
-                                  height: 15,
-                                  width: 15,
-                                  tintColor: colors.blackOpacity70,
-                                }}
-                              />
-                              <Text
-                                style={{
-                                  fontFamily: fontFamily.regular,
-                                  marginLeft: 3,
-                                }}>
-                                {itm?.name}
-                              </Text>
-                            </TouchableOpacity>
-                          );
-                        })} */}
                     </View>
                   )}
                   <TextInput
-                    placeholder={'Tags'}
+                    placeholder={strings.TAGS}
                     onFocus={() => updateState({isTagsShow: true})}
                     onBlur={() => updateState({isTagsShow: false})}
                     onPressIn={() => alert()}
@@ -1447,116 +1199,159 @@ export default function WebLinks({navigation, route}) {
                       fontSize: textScale(14),
                       paddingHorizontal: 8,
                       textAlign: I18nManager.isRTL ? 'right' : 'left',
-                      flex: 1,
+                      marginVertical: 3,
+                      marginHorizontal: 3,
                     }}
                   />
                 </View>
-                {isTagsShow && (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      backgroundColor: colors.white,
-                      position: 'absolute',
-                      top: moderateScaleVertical(44),
-                      flexWrap: 'wrap',
-                      shadowOffset: {width: 0, height: 1},
-                      shadowOpacity: 0.1,
-                      width: '100%',
-                    }}>
-                    {driverRegDocs?.tags.map((item, indx) => {
-                      return (
-                        <TouchableOpacity
-                          key={indx}
-                          onPress={() => _onTagSelect(item, indx)}
-                          style={{
-                            borderWidth: 1,
-                            borderColor: selectedTagIndxs.includes(indx)
-                              ? themeColors.primary_color
-                              : colors.borderColorB,
-                            width: '32.10%',
-                            alignItems: 'center',
-                            marginVertical: moderateScale(5),
-                            paddingVertical: moderateScale(5),
-                            marginHorizontal: moderateScale(2),
-                            zIndex: 1,
-                            backgroundColor: selectedTagIndxs.includes(indx)
-                              ? themeColors.primary_color
-                              : colors.borderColorB,
-                          }}>
-                          <Text
-                            style={{
-                              textAlign: 'center',
-                              color: selectedTagIndxs.includes(indx)
-                                ? colors.white
-                                : colors.black,
-                            }}>
-                            {item?.name}
-                          </Text>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                )}
               </View>
+              {isTagsShow && (
+                <View
+                  style={{
+                    backgroundColor: colors.white,
+                    position: 'absolute',
+                    top: tagsViewHeight,
+                    shadowOffset: {width: 0, height: 1},
+                    shadowOpacity: 0.1,
+                    width: '100%',
+                    flexWrap: 'wrap',
+                    flexDirection: 'row',
+                  }}>
+                  {/* <FlatList
+                    data={driverRegDocs?.tags}
+                    numColumns={3}
+                    keyExtractor={(itm, indx) => indx}
+                    renderItem={({item, index}) => (
+                      <TouchableOpacity
+                        onPress={() => _onTagSelect(item, index)}
+                        style={{
+                          borderWidth: 1,
+                          borderColor: selectedTagIndxs.includes(index)
+                            ? themeColors.primary_color
+                            : colors.borderColorB,
+                          width: (width - moderateScale(70)) / 3,
+                          alignItems: 'center',
+                          marginVertical: moderateScale(5),
+                          paddingVertical: moderateScale(5),
+                          marginHorizontal: moderateScale(5),
+                          zIndex: 1,
+                          backgroundColor: selectedTagIndxs.includes(index)
+                            ? themeColors.primary_color
+                            : colors.borderColorB,
+                        }}>
+                        <Text
+                          style={{
+                            textAlign: 'center',
+                            color: selectedTagIndxs.includes(index)
+                              ? colors.white
+                              : colors.black,
+                          }}>
+                          {item?.name}
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+                  /> */}
+                  {driverRegDocs?.tags.map((item, index) => {
+                    return (
+                      <TouchableOpacity
+                        onPress={() => _onTagSelect(item, index)}
+                        style={{
+                          borderWidth: 1,
+                          borderColor: selectedTagIndxs.includes(index)
+                            ? themeColors.primary_color
+                            : colors.borderColorB,
+                          width: (width - moderateScale(70)) / 3,
+                          alignItems: 'center',
+                          marginVertical: moderateScale(5),
+                          paddingVertical: moderateScale(5),
+                          marginHorizontal: moderateScale(5),
+                          zIndex: 1,
+                          backgroundColor: selectedTagIndxs.includes(index)
+                            ? themeColors.primary_color
+                            : colors.borderColorB,
+                          borderRadius: moderateScale(5),
+                        }}>
+                        <Text
+                          style={{
+                            textAlign: 'center',
+                            color: selectedTagIndxs.includes(index)
+                              ? colors.white
+                              : colors.black,
+                          }}>
+                          {item?.name}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              )}
+            </View>
+            <Text style={styles.labelTxt}>{strings.TRANSPORT_DETAILS}</Text>
 
-              <BorderTextInput
-                placeholder={'2000, Malke, Model'}
-                onChangeText={_onChangeText('driverTransportDetails')}
-                containerStyle={styles.containerStyle}
-              />
-              <BorderTextInput
-                placeholder={'UID'}
-                onChangeText={_onChangeText('driverUUID')}
-                containerStyle={styles.containerStyle}
-              />
-              <BorderTextInput
-                placeholder={'Licence Plate'}
-                onChangeText={_onChangeText('driverLicencePlate')}
-                containerStyle={styles.containerStyle}
-              />
+            <BorderTextInput
+              placeholder={strings.EXAMPLE_TEXT}
+              onChangeText={_onChangeText('driverTransportDetails')}
+              containerStyle={styles.containerStyle}
+            />
+            <Text style={styles.labelTxt}>{strings.UID}</Text>
 
-              <BorderTextInput
-                placeholder={'Color'}
-                onChangeText={_onChangeText('driverColor')}
-                containerStyle={styles.containerStyle}
-              />
+            <BorderTextInput
+              placeholder={''}
+              onChangeText={_onChangeText('driverUUID')}
+              containerStyle={styles.containerStyle}
+            />
+            <Text style={styles.labelTxt}>{strings.LICENCE_PLATE}</Text>
+
+            <BorderTextInput
+              placeholder={''}
+              onChangeText={_onChangeText('driverLicencePlate')}
+              containerStyle={styles.containerStyle}
+            />
+            <Text style={styles.labelTxt}>{strings.COLOR}</Text>
+
+            <BorderTextInput
+              placeholder={''}
+              onChangeText={_onChangeText('driverColor')}
+              containerStyle={styles.containerStyle}
+            />
+            {!!driverRegDocs && (
               <Text
                 style={{
-                  fontFamily: fontFamily.regular,
+                  color: colors.blackOpacity43,
+                  fontFamily: fontFamily.bold,
                   fontSize: textScale(13),
                   marginVertical: moderateScaleVertical(5),
-                  color: colors.textGreyB,
                 }}>
-                Transport Type
+                {strings.TRANSPORT_TYPE}
               </Text>
-              <FlatList
-                keyExtractor={(itm, indx) => indx.toString()}
-                data={driverRegDocs?.transport_types}
-                horizontal={true}
-                ItemSeparatorComponent={() => <View style={{width: 10}} />}
-                renderItem={_renderTransportTypes}
-              />
+            )}
+            <FlatList
+              keyExtractor={(itm, indx) => indx.toString()}
+              data={driverRegDocs?.transport_types}
+              horizontal={true}
+              ItemSeparatorComponent={() => <View style={{width: 10}} />}
+              renderItem={_renderTransportTypes}
+            />
 
-              <FlatList
-                keyExtractor={(itm, indx) => indx.toString()}
-                data={driverRegDocs?.driver_registration_documents}
-                renderItem={_renderFields}
-              />
+            <FlatList
+              keyExtractor={(itm, indx) => indx.toString()}
+              data={driverRegDocs?.driver_registration_documents}
+              renderItem={_renderFields}
+            />
 
-              <GradientButton
-                onPress={_onSubmit}
-                marginTop={moderateScaleVertical(10)}
-                btnText={strings.SUBMIT}
-              />
-              <View
-                style={{
-                  height: moderateScaleVertical(24),
-                  marginBottom: moderateScaleVertical(44),
-                }}
-              />
-            </View>
-          )}
-        </View>
+            <GradientButton
+              onPress={_onSubmit}
+              marginTop={moderateScaleVertical(10)}
+              btnText={strings.SUBMIT}
+            />
+            <View
+              style={{
+                height: moderateScaleVertical(24),
+                marginBottom: moderateScaleVertical(44),
+              }}
+            />
+          </View>
+        )}
       </ScrollView>
       <ActionSheet
         ref={actionSheet}
