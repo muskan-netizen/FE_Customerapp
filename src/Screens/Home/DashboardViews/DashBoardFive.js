@@ -469,7 +469,12 @@ export default function DashBoardFive({
               appMainData?.featured_products &&
               !!appMainData?.featured_products.length && (
                 <>
-                  <View>{listHeader(strings.FEATURED_PRODUCTS)}</View>
+                  {appIds.orderchekout == DeviceInfo.getBundleId() ? (
+                    <View>{listHeader(strings.ALCOHAL)}</View>
+                  ) : (
+                    <View>{listHeader(strings.FEATURED_PRODUCTS)}</View>
+                  )}
+
                   <FlatList
                     showsHorizontalScrollIndicator={false}
                     horizontal

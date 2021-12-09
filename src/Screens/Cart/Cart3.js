@@ -184,6 +184,7 @@ export default function Cart({navigation, route}) {
   const dineInType = useSelector((state) => state?.home?.dineInType);
   console.log(dineInType, 'dineInType');
 
+  console.log("cartData?.delay_date",cartData)
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -669,10 +670,8 @@ export default function Cart({navigation, route}) {
 
   const _directOrderPlace = () => {
     let data = {};
-    data['address_id'] =
-      paramsData?.selectedAddressData?.id || selectedAddressData?.id;
-    data['payment_option_id'] =
-      paramsData?.selectedPayment?.id || selectedPayment?.id;
+    data['address_id'] =  paramsData?.selectedAddressData?.id || selectedAddressData?.id;
+    data['payment_option_id'] = paramsData?.selectedPayment?.id || selectedPayment?.id;
 
     data['type'] = dineInType || '';
     data['is_gift'] = isGiftBoxSelected ? 1 : 0;
@@ -680,12 +679,16 @@ export default function Cart({navigation, route}) {
     if (paramsData?.transactionId) {
       data['transaction_id'] = paramsData?.transactionId;
     }
+    if(!!selectedTipAmount){
+      data['tip'] = selectedTipAmount || '';
+    }
     placeOrderData(data);
   };
 
   const placeOrderData = (data) => {
-    actions
-      .placeOrder(data, {
+    console.log("Sending data",data)
+
+    actions.placeOrder(data, {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
@@ -707,6 +710,8 @@ export default function Cart({navigation, route}) {
           modalType: null,
           sheduledpickupdate: null,
           sheduleddropoffdate: null,
+          selectedTipvalue: null,
+          selectedTipAmount: null,
         });
         actions.cartItemQty({});
         checkPaymentOptions(res);
@@ -781,7 +786,7 @@ export default function Cart({navigation, route}) {
         : null;
       data['schedule_dropoff'] = sheduleddropoffdate
         ? new Date(sheduleddropoffdate).toISOString()
-        : null;
+        :  null;
     } else {
       data['task_type'] = scheduleType;
       data['schedule_dt'] =
@@ -865,9 +870,15 @@ export default function Cart({navigation, route}) {
     // _offineLinePayment();
   };
 
+  console.log("cartDatacartData",cartData)
+
   //Clear cart
   const placeOrder = () => {
     if (!!cartData?.delay_date && !localeSheduledOrderDate) {
+      showInfo(strings.SCHEDULE_DATE_REQUIRED);
+      return;
+    }
+    if (!!cartData?.pickup_delay_date && !!cartData?.dropoff_delay_date) {
       showInfo(strings.SCHEDULE_DATE_REQUIRED);
       return;
     }
@@ -1207,7 +1218,6 @@ export default function Cart({navigation, route}) {
         scheduleType: 'schedule',
       });
     }
-
     setDateAndTimeSchedule();
   };
 
@@ -1591,8 +1601,24 @@ export default function Cart({navigation, route}) {
                                             <View
                                               style={{
                                                 flexDirection: 'row',
-                                                flex: 1,
+                                                flex: 0.8,
                                               }}>
+                                              <Text
+                                                style={
+                                                  isDarkMode
+                                                    ? [
+                                                        styles.cartItemWeight2,
+                                                        {
+                                                          color:
+                                                            MyDarkTheme.colors
+                                                              .text,
+                                                        },
+                                                      ]
+                                                    : styles.cartItemWeight2
+                                                }
+                                                numberOfLines={1}>
+                                                {j.addon_title}
+                                              </Text>
                                               <Text
                                                 style={
                                                   {
@@ -1605,7 +1631,7 @@ export default function Cart({navigation, route}) {
                                                   // colors.textGreyB
                                                 }
                                                 numberOfLines={1}>
-                                                {`${j.addon_title} (${j.option_title})`}
+                                                {` (${j.option_title})`}
                                               </Text>
                                             </View>
                                             <Text>:</Text>
@@ -3091,7 +3117,7 @@ export default function Cart({navigation, route}) {
         </TouchableOpacity>
         {!!(
           userData?.auth_token &&
-          !appData?.profile?.preferences?.off_scheduling_at_cart
+          !appData?.profile?.preferences?.off_scheduling_at_cart && businessType !== 'laundry'
         ) &&
           !!(scheduleType == 'schedule' && localeSheduledOrderDate) && (
             <TouchableOpacity
@@ -3118,7 +3144,7 @@ export default function Cart({navigation, route}) {
             style={styles.paymentView}>
             {!!(
               userData?.auth_token &&
-              !appData?.profile?.preferences?.off_scheduling_at_cart
+              !appData?.profile?.preferences?.off_scheduling_at_cart &&  businessType !== 'laundry'
             ) && (
               <ButtonComponent
                 onPress={_selectTime}
@@ -3217,7 +3243,7 @@ export default function Cart({navigation, route}) {
           )}
         <View
           style={{
-            height: moderateScaleVertical(65),
+            height: moderateScaleVertical(80),
             backgroundColor: colors.transparent,
           }}></View>
       </View>
@@ -3246,7 +3272,7 @@ export default function Cart({navigation, route}) {
                 color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               }}>
               {vendorAddress
-                ? strings.ADDRESS
+                ? strings.HOME
                 : selectedAddressData
                 ? strings.HOME
                 : strings.ADD_ADDRESS}
@@ -3995,7 +4021,12 @@ export default function Cart({navigation, route}) {
                     }
                     textColor={isDarkMode ? colors.white : colors.blackB}
                     mode="datetime"
-                    minimumDate={new Date()}
+                    minimumDate={
+                      !!cartData?.pickup_delay_date
+                        ? new Date(cartData?.pickup_delay_date)
+                        : new Date()
+                    }
+
                     maximumDate={undefined}
                     style={styles.datetimePickerText}
                     // onDateChange={setDate}
@@ -4011,7 +4042,12 @@ export default function Cart({navigation, route}) {
                     }
                     textColor={isDarkMode ? colors.white : colors.blackB}
                     mode="datetime"
-                    minimumDate={new Date()}
+                    minimumDate={
+                      !!cartData?.dropoff_delay_date
+                        ? new Date(cartData?.dropoff_delay_date)
+                        : new Date()
+                    }
+                
                     maximumDate={undefined}
                     style={styles.datetimePickerText}
                     // onDateChange={setDate}

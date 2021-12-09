@@ -46,15 +46,11 @@ export default function Home({ route, navigation }) {
     themeToggle,
     allAddresss,
   } = useSelector((state) => state?.initBoot);
-  const { location, appMainData, dineInType } = useSelector(
-    (state) => state?.home,
-  );
+  const { location, appMainData, dineInType } = useSelector((state) => state?.home);
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
-
+  const addressSearch = useSelector((state) => state?.addressSearch.addressSearch);
   const userData = useSelector((state) => state?.auth?.userData);
-  const pendingNotifications = useSelector(
-    (state) => state?.pendingNotifications?.pendingNotifications,
-  );
+  const pendingNotifications = useSelector((state) => state?.pendingNotifications?.pendingNotifications);
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -69,6 +65,7 @@ export default function Home({ route, navigation }) {
     currentLocation: '',
     saveAllUserAddress,
     isLoadingB: false,
+    searchDataLoader: false
   });
 
   const {
@@ -80,6 +77,7 @@ export default function Home({ route, navigation }) {
     currentLocation,
     saveAllUserAddress,
     isLoadingB,
+    searchDataLoader
   } = state;
 
   const { profile } = appData;
@@ -97,11 +95,17 @@ export default function Home({ route, navigation }) {
     updateState({ updatedData: appMainData?.categories });
   }, [appMainData]);
 
+  console.log("addressSearchaddressSearch", addressSearch)
+
   useEffect(() => {
     _getLocationFromParams();
+    // if (addressSearch) {
+    //   _getLocationFromParams();
+    // }
   }, [paramData?.details]);
 
   const _getLocationFromParams = () => {
+    console.log("one time")
     if (
       paramData?.details &&
       paramData?.details?.formatted_address != location?.address
@@ -208,7 +212,7 @@ export default function Home({ route, navigation }) {
                     }
                   }
                   if (paramData?.details) {
-                    _getLocationFromParams();
+                    // _getLocationFromParams();
                   } else {
                     actions.locationData(res);
                   }
@@ -257,6 +261,10 @@ export default function Home({ route, navigation }) {
 
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
+    console.log("param data++++", paramData)
+    if (!!paramData) {
+      updateState({ searchDataLoader: true })
+    }
     let latlongObj = {};
     if (appData?.profile?.preferences?.is_hyperlocal) {
       latlongObj = {
@@ -289,6 +297,7 @@ export default function Home({ route, navigation }) {
           )
           .then((res) => {
             console.log('Home data++++++', res);
+            updateState({ searchDataLoader: false })
             if (
               appData?.profile?.preferences?.is_hyperlocal &&
               location?.latitude == '' &&
@@ -323,7 +332,11 @@ export default function Home({ route, navigation }) {
               }
             }
             setTimeout(() => {
-              updateState({ isLoading: false, isLoadingB: false });
+              updateState({
+                isLoading: false,
+                isLoadingB: false,
+                searchDataLoader: false
+              });
             }, 1000);
           })
           .catch(errorMethod)
@@ -340,6 +353,7 @@ export default function Home({ route, navigation }) {
       rejectLoader: false,
       selectedOrder: null,
       isLoadingB: false,
+      searchDataLoader: false
     });
     showError(error?.message || error?.error);
   };
@@ -378,7 +392,7 @@ export default function Home({ route, navigation }) {
   //onPress Category
   const onPressCategory = (item) => {
     console.log('category press', item);
- 
+
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -426,8 +440,8 @@ export default function Home({ route, navigation }) {
     } else if (item.redirect_to == staticStrings.CELEBRITY) {
       moveToNewScreen(navigationStrings.CELEBRITY)();
     } else if (item.redirect_to == staticStrings.BRAND) {
-        
-        console.log("brand item",item)
+
+      console.log("brand item", item)
 
       moveToNewScreen(navigationStrings.CATEGORY_BRANDS, item)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
@@ -776,7 +790,9 @@ export default function Home({ route, navigation }) {
       statusBarColor={colors.backgroundGrey}
       bgColor={
         isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
-      }>
+      }
+      isLoading={searchDataLoader}
+    >
       {/* <View style={{flex: 1}}>{}</View> */}
       <>{renderHomeScreen()}</>
     </WrapperContainer>

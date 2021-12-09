@@ -11,6 +11,7 @@ export default function CircularProfileLoader({
   backgroundColor = colors.greyNew,
   foregroundColor = '#DFDFDF',
   isDesc = true,
+  size=30
 }) {
   return (
     <ContentLoader
@@ -19,10 +20,11 @@ export default function CircularProfileLoader({
       width={moderateScale(60)}
       height={moderateScaleVertical(70)}>
       <Circle
-        cx={moderateScale(30)}
-        cy={moderateScale(30)}
-        r={moderateScale(30)}
+        cx={moderateScale(size)}
+        cy={moderateScale(size)}
+        r={moderateScale(size)}
       />
+      
       {isDesc && (
         <>
           <Rect x="80" y="12" rx="8" ry="8" width="60" height="16" />

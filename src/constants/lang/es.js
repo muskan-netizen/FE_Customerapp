@@ -682,4 +682,6 @@ export default {
   DRIVER_DETAILS: 'Detalles del conductor',
   INSTRUCTIONS: 'Instrucciones',
   SET: 'Colocar',
+  CANCELLATION_REASON:" Cancellation Reason",
+  WRITE_YOUR_REASON_HERE:"Write your reason here......"
 };

@@ -655,4 +655,6 @@ export default {
   DRIVER_DETAILS: 'Driver Details',
   INSTRUCTIONS: 'Instructions',
   SET: 'Set',
+  CANCELLATION_REASON:" Cancellation Reason",
+  WRITE_YOUR_REASON_HERE:"Write your reason here......"
 };
