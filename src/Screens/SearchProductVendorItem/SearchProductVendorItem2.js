@@ -345,7 +345,6 @@ export default function SearchProductVendorItem2({ navigation, route }) {
   };
 
   const renderProduct = ({ item }) => {
-    console.log(item, 'searchedItem');
     return (
       <TouchableOpacity
         onPress={() => _onclickSearchItem(item)}

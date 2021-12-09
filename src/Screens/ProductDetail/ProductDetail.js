@@ -19,6 +19,7 @@ import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
 import Banner2 from '../../Components/Banner2';
 import GradientButton from '../../Components/GradientButton';
+import GradientCartView from '../../Components/GradientCartView';
 import Header from '../../Components/Header';
 import HorizontalLine from '../../Components/HorizontalLine';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
@@ -40,6 +41,8 @@ import {MyDarkTheme} from '../../styles/theme';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
+  hapticEffects,
+  playHapticEffect,
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
@@ -50,10 +53,10 @@ import stylesFunc from './styles';
 export default function ProductDetail({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const CartItems = useSelector((state) => state?.cart?.cartItemCount);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
-    useSelector((state) => state?.initBoot);
+  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} = useSelector((state) => state?.initBoot);
   const {productListData} = useSelector((state) => state?.product);
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
@@ -980,8 +983,8 @@ export default function ProductDetail({route, navigation}) {
                             currencies?.primary_currency?.symbol
                           }${currencyNumberFormatter(
                             (
-                              Number(productPriceData?.multiplier) *
-                              Number(productPriceData?.price)
+                              (Number(productPriceData?.multiplier) *
+                              Number(productPriceData?.price))* Number(productQuantityForCart)
                             ).toFixed(2),
                           )}`}
                           btnStyle={{
@@ -1054,6 +1057,32 @@ export default function ProductDetail({route, navigation}) {
         </View>
         <View style={{marginBottom: moderateScale(40)}} />
       </KeyboardAwareScrollView>
+{/* 
+      <GradientCartView
+          onPress={() => {
+            playHapticEffect(hapticEffects.notificationSuccess);
+            navigation.navigate(navigationStrings.CART);
+          }}
+          btnText={
+            CartItems && CartItems.data && CartItems.data.item_count
+              ? `${CartItems.data.item_count} ${CartItems.data.item_count > 1 ? strings.ITEM : strings.ITEMS
+              } | ${currencies.primary_currency.symbol
+              }${currencyNumberFormatter(
+                Number(CartItems.data.total_payable_amount).toFixed(2),
+              )}`
+              : ''
+          }
+          ifCartShow={
+            CartItems && CartItems.data && CartItems.data.item_count > 0
+              ? true
+              : false
+          }
+          isMenuBtnShow={false}
+          // onMenuTap={() => {
+          //   playHapticEffect(hapticEffects.impactLight);
+          //   updateState({ MenuModalVisible: !MenuModalVisible });
+          // }}
+        /> */}
     </WrapperContainer>
   );
 }
