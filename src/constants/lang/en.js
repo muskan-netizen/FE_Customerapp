@@ -683,6 +683,7 @@ Amount`,
   INSTRUCTIONS: 'Instructions',
   ALCOHAL: 'Alcohol',
   SET: 'Set',
+  TYPE: 'Type',
   CANCELLATION_REASON: ' Cancellation Reason',
   WRITE_YOUR_REASON_HERE: 'Write your reason here......',
 };
