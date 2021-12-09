@@ -7,7 +7,7 @@ export default {
   JOIN_US: 'قم بإنشاء حساب مجاني وانضم إلينا!',
   CREATE_AN_ACCOUNT: 'إنشاء حساب جديد',
   CREATE_NEW_ACCOUNT: 'انشاء حساب جديد',
-  GUEST_LOGIN: 'تسجيل دخول زائر',
+  GUEST_LOGIN: 'SKIP',
   OR_SIGNUP_WITH: 'أو تسجيل اشتراك من خلال',
   OR_LOGIN_WITH: 'أو تسجيل دخول من خلال',
   ALREADY_HAVE_AN_ACCOUNT: 'هل لديك حساب بالفعل؟',

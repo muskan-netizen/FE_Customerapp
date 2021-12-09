@@ -7,7 +7,7 @@ export default {
   JOIN_US: 'Créez un compte gratuit et rejoignez- nous !',
   CREATE_AN_ACCOUNT: 'CRÉER UN NOUVEAU COMPTE',
   CREATE_NEW_ACCOUNT: 'Créer un nouveau compte',
-  GUEST_LOGIN: 'CONNEXION INVITÉ',
+  GUEST_LOGIN: 'SKIP',
   OR_SIGNUP_WITH: 'Ou inscrivez-vous avec',
   OR_LOGIN_WITH: 'Ou connectez-vous avec',
   ALREADY_HAVE_AN_ACCOUNT: 'Vous avez déjà un compte? ',

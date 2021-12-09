@@ -7,7 +7,7 @@ export default {
   JOIN_US: 'Ücretsiz bir hesap oluşturun ve bize katılın!',
   CREATE_AN_ACCOUNT: 'YENİ HESAP OLUŞTUR',
   CREATE_NEW_ACCOUNT: 'Yeni hesap oluştur',
-  GUEST_LOGIN: 'MİSAFİR GİRİŞİ',
+  GUEST_LOGIN: 'SKIP',
   OR_SIGNUP_WITH: 'Veya kaydolun',
   OR_LOGIN_WITH: 'Veya giriş yapın',
   ALREADY_HAVE_AN_ACCOUNT: 'Zaten bir hesabınız var mı?',

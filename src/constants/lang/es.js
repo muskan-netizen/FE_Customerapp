@@ -7,7 +7,7 @@ export default {
   JOIN_US: '¿Cómo querés continuar?',
   CREATE_AN_ACCOUNT: 'Crear rápido mi cuenta',
   CREATE_NEW_ACCOUNT: 'Crear una nueva cuenta',
-  GUEST_LOGIN: 'Continuar sin registrarme',
+  GUEST_LOGIN: 'SKIP',
   OR_SIGNUP_WITH: 'Continuar con:',
   OR_LOGIN_WITH: 'Continuar con:',
   ALREADY_HAVE_AN_ACCOUNT: '¿Ya tenés una cuenta?',

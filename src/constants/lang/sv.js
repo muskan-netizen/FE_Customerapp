@@ -7,7 +7,7 @@ export default {
   JOIN_US: 'Skapa ett gratis konto och gå med oss!',
   CREATE_AN_ACCOUNT: 'SKAPA NYTT KONTO',
   CREATE_NEW_ACCOUNT: 'Crear una nueva cuenta',
-  GUEST_LOGIN: 'GÄSTINLOGGNING',
+  GUEST_LOGIN: 'SKIP',
   OR_SIGNUP_WITH: 'Eller registrera dig med',
   OR_LOGIN_WITH: 'Eller logga in med',
   ALREADY_HAVE_AN_ACCOUNT: 'Har du redan ett konto? ',

@@ -7,7 +7,7 @@ export default {
   JOIN_US: 'Create a  free account and join us!',
   CREATE_AN_ACCOUNT: 'CREATE NEW ACCOUNT',
   CREATE_NEW_ACCOUNT: 'Create new Account',
-  GUEST_LOGIN: 'GUEST LOGIN',
+  GUEST_LOGIN: 'SKIP',
   OR_SIGNUP_WITH: 'Or signup with',
   OR_CONTINUE_WITH: 'Or Continue with',
   OR_LOGIN_WITH: 'Or login with',

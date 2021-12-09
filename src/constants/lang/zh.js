@@ -6,7 +6,7 @@ export default {
   VERIFY_NUMBER: '电话号码验证',
   JOIN_US: '创建一个免费的帐户并加入我们！',
   CREATE_AN_ACCOUNT: '创建新帐户',
-  GUEST_LOGIN: '客人登录',
+  GUEST_LOGIN: 'SKIP',
   OR_SIGNUP_WITH: '或注册',
   OR_LOGIN_WITH: '或登录',
   ALREADY_HAVE_AN_ACCOUNT: '已经有帐户了？',

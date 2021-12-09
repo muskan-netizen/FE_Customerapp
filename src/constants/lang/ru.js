@@ -6,7 +6,7 @@ export default {
   VERIFY_NUMBER: 'Проверка номера телефона',
   JOIN_US: 'Создайте бесплатный аккаунт и присоединяйтесь к нам!',
   CREATE_AN_ACCOUNT: 'СОЗДАТЬ НОВЫЙ АККАУНТ',
-  GUEST_LOGIN: 'ГОСТЕВОЙ ЛОГИН',
+  GUEST_LOGIN: 'SKIP',
   OR_SIGNUP_WITH: 'Или зарегистрируйтесь с помощью',
   OR_LOGIN_WITH: 'Или войдите с помощью',
   ALREADY_HAVE_AN_ACCOUNT: 'У вас уже есть учетная запись? ',

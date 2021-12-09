@@ -6,7 +6,7 @@ export default {
   VERIFY_NUMBER: 'Verificação de número de telefone',
   JOIN_US: 'Crie uma conta gratuita e junte-se a nós!',
   CREATE_AN_ACCOUNT: 'CRIAR NOVA CONTA',
-  GUEST_LOGIN: 'LOGIN DE HÓSPEDES',
+  GUEST_LOGIN: 'SKIP',
   OR_SIGNUP_WITH: 'Ou se inscrever com',
   OR_LOGIN_WITH: 'Ou faça login com',
   ALREADY_HAVE_AN_ACCOUNT: 'Já tem uma conta? ',
