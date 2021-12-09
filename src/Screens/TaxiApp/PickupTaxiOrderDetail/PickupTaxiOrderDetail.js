@@ -151,6 +151,15 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
 
+  console.log(
+    appData,
+    themeColors,
+    currencies,
+    languages,
+    appStyle,
+    'appDataappDataappDataappDataappDataappData',
+  );
+
   const {profile} = appData;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -806,7 +815,9 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     <Text style={styles.datePriceText}>
                       {moment(
                         new Date(orderFullDetail?.order_details?.created_at),
-                      ).format('MMMM Do YYYY, h:mm a')}
+                      )
+                        .locale('ES')
+                        .format('MMMM Do YYYY, h:mm a')}
                     </Text>
                     <Text
                       style={{
