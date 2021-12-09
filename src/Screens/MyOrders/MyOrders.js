@@ -134,6 +134,18 @@ export default function MyOrders({ navigation }) {
     },
     isFocused ? 3000 : null,
   );
+
+  const updateLocalItem = (data) => {
+    console.log("update location item data", data)
+    let cloneArr = orders
+    let filterArray = cloneArr.filter((val) => {
+      if (val.order_id !== data.order_id) {
+        return val
+      }
+    })
+    // console.log("update location item data filter array",filterArray)
+    updateState({ orders: filterArray })
+  }
   // useEffect(() => {
   //   const focus = navigation.addListener('focus', () => {
   //     if (userData && userData?.auth_token) {
@@ -177,7 +189,7 @@ export default function MyOrders({ navigation }) {
         },
       )
       .then((res) => {
-        console.log(res, 'res my orders >>>');
+        console.log(res.data, 'res my orders >>>');
         updateState({
           orders:
             pageActive == 1 ? res.data.data : [...orders, ...res.data.data],
@@ -342,6 +354,7 @@ export default function MyOrders({ navigation }) {
         }
         cardStyle={{ padding: 0 }}
         etaTime={!!item?.ETA ? item.ETA : null}
+        updateLocalItem={updateLocalItem}
       />
       // <OrderCardComponent
       //   data={item}

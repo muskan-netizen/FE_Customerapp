@@ -198,9 +198,9 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
     incDecBtnContainer: {
       backgroundColor: themeColors.primary_color,
       borderRadius: moderateScale(16),
-      paddingHorizontal: moderateScale(4),
+      paddingHorizontal: moderateScale(6),
       paddingVertical: moderateScaleVertical(4),
-      marginRight: moderateScale(8),
+      flexDirection: 'row-reverse',
     },
     cartItemRatting: {
       tintColor: colors.orange,

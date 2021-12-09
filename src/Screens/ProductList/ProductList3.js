@@ -91,6 +91,7 @@ export default function Products({ route, navigation }) {
   const dineInType = useSelector((state) => state?.home?.dineInType);
   const CartItems = useSelector((state) => state?.cart?.cartItemCount);
 
+
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
@@ -200,6 +201,8 @@ export default function Products({ route, navigation }) {
     internetConnection,
     appStyle,
   } = useSelector((state) => state?.initBoot);
+
+  let businessType = appData?.profile?.preferences?.business_type || null;
 
   const {
     selectedCategory,
@@ -1511,6 +1514,7 @@ export default function Products({ route, navigation }) {
           btnLoader={btnLoader}
           selectedItemIndx={selectedItemIndx}
           differentAddsOns={differentAddsOns}
+          businessType={businessType}
         />
         <View style={styles.horizontalLine} />
       </>
@@ -1921,7 +1925,7 @@ export default function Products({ route, navigation }) {
                   colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0.7)']}>
                   <View
                     style={[styles.hdrCompHeader, { flex: 0, width: '100%' }]}
-                    >
+                  >
                     <TouchableOpacity
                       hitSlop={styles.hitSlopProp}
                       onPress={() => navigation.goBack()}
@@ -2581,16 +2585,9 @@ export default function Products({ route, navigation }) {
             ry={5}
             viewStyles={{ marginTop: moderateScale(10) }}
           />
-          {!!categoryInfo?.categoriesList ? (
+          {true ? (
             <View>
-              <View
-                style={{
-                  marginVertical: moderateScaleVertical(12),
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <CircularProfileLoader isDesc={false} />
-              </View>
+              <View style={{height:moderateScale(16)}} />
               <HeaderLoader
                 viewStyles={{
                   marginHorizontal: moderateScale(20),
@@ -2598,8 +2595,8 @@ export default function Products({ route, navigation }) {
                 }}
                 widthLeft={width - moderateScale(40)}
                 rectWidthLeft={width - moderateScale(40)}
-                heightLeft={moderateScaleVertical(80)}
-                rectHeightLeft={moderateScaleVertical(80)}
+                heightLeft={moderateScaleVertical(100)}
+                rectHeightLeft={moderateScaleVertical(100)}
                 isRight={false}
                 rx={8}
                 ry={8}
@@ -2751,6 +2748,7 @@ export default function Products({ route, navigation }) {
           selectedItemID={selectedItemID}
           btnLoader={btnLoader}
           selectedItemIndx={selectedItemIndx}
+          businessType={businessType}
         />
         <View style={styles.horizontalLine} />
       </View>

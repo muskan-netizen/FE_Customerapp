@@ -13,6 +13,7 @@ import {
   MY_PENDING_ORDERS,
   GET_ORDER_DETAIL_FOR_BILLING,
   DISPATCHER_URL,
+  CANCEL_ORDER,
 } from '../../config/urls';
 import {apiGet, apiPost} from '../../utils/utils';
 import store from '../store';
@@ -194,9 +195,21 @@ export function uploadReturnOrderImage(data = {}, headers = {}) {
 
 //Submit return order
 export function submitReturnOrder(data = {}, headers = {}) {
-  console.log('headers ++', headers);
   return new Promise((resolve, reject) => {
     apiPost(SUBMIT_RETURN_ORDER, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+//Submit return order
+export function cancelOrder(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(CANCEL_ORDER, data, headers)
       .then((res) => {
         resolve(res);
       })
