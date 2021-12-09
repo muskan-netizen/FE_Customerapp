@@ -99,8 +99,7 @@ export default function DashBoardFive({
     });
   }, [appMainData?.vendors]);
 
-
-  console.log("app main data",appMainData)
+  console.log('app main data', appMainData);
 
   const _renderItem = ({item, index}) => {
     return (
@@ -470,7 +469,12 @@ export default function DashBoardFive({
               appMainData?.featured_products &&
               !!appMainData?.featured_products.length && (
                 <>
-                  <View>{listHeader(strings.FEATURED_PRODUCTS)}</View>
+                  {appIds.orderchekout == DeviceInfo.getBundleId() ? (
+                    <View>{listHeader(strings.ALCOHAL)}</View>
+                  ) : (
+                    <View>{listHeader(strings.FEATURED_PRODUCTS)}</View>
+                  )}
+
                   <FlatList
                     showsHorizontalScrollIndicator={false}
                     horizontal

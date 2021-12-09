@@ -681,5 +681,8 @@ Amount`,
   CHOOSE_A_TRIP: 'Choose a trip or swipe up for more',
   DRIVER_DETAILS: 'Driver Details',
   INSTRUCTIONS: 'Instructions',
+  ALCOHAL: 'Alcohol',
   SET: 'Set',
+  CANCELLATION_REASON: ' Cancellation Reason',
+  WRITE_YOUR_REASON_HERE: 'Write your reason here......',
 };

@@ -10,6 +10,9 @@ import vendor from './vendor';
 import pickupdelivery from './pickupdelivery';
 import order from './order';
 import pendingNotifications from './pendingNotifications';
+import addressSearch from './addressSearch';
+
+
 const appReducer = combineReducers({
   auth,
   appTheme,
@@ -20,7 +23,8 @@ const appReducer = combineReducers({
   cart,
   pickupdelivery,
   order,
-  pendingNotifications
+  pendingNotifications,
+  addressSearch
 });
 
 const rootReducer = (state, action) => {

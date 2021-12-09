@@ -14,7 +14,7 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://click-eat.com/api/v1';
 // export const API_BASE_URL = 'https://tranzit.app/api/v1';
 // export const API_BASE_URL = 'https://pinkjettaxi.com/api/v1';
-// export const API_BASE_URL = 'https://snabbhem.se/api/v1';r
+// export const API_BASE_URL = 'https://snabbhem.se/api/v1';
 // export const API_BASE_URL = 'https://codiner.com/api/v1';
 // export const API_BASE_URL = 'https://somame-247.com/api/v1';
 // export const API_BASE_URL = 'https://order.africanize.co/api/v1';
@@ -22,11 +22,13 @@ export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'https://bustanfakieh.com/api/v1';
 // export const API_BASE_URL = 'https://cabdeliv.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
+// export const API_BASE_URL = 'https://orderchekout.com/api/v1';
 // export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
+// export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
-//export const SEND_OTP = getApiUrl('/auth/sendOtp');
+export const SEND_OTP = getApiUrl('/auth/sendOtp');
 export const LOGIN_BY_USERNAME = getApiUrl('/auth/loginViaUsername');
 export const PHONE_LOGIN_OTP = getApiUrl('/auth/verify/phoneLoginOtp');
 export const LOGIN_API = getApiUrl('/auth/login');
@@ -152,3 +154,4 @@ export const DIFFERENT_ADD_ONS = getApiUrl(
 );
 export const WALLET_CREDIT = getApiUrl('/myWallet/credit');
 export const VENDOR_REGISTER = getApiUrl('/vendor/register');
+export const CANCEL_ORDER = getApiUrl('/return-order/vendor-order-for-cancel');

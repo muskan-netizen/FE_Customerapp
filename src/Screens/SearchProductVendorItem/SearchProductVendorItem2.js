@@ -487,6 +487,7 @@ export default function SearchProductVendorItem2({navigation, route}) {
             rightIconPress={() =>
               updateState({searchInput: '', isLoading: false})
             }
+            autoFocus={true}
           />
         </View>
 
