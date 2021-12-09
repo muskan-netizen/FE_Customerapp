@@ -123,7 +123,6 @@ export async function apiReq(
         return res(data);
       })
       .catch((error) => {
-        console.log('core error raised', error);
         if (error && error.response && error.response.status === 401) {
           sessionHandler(error.response.data.message);
           return rej(error);

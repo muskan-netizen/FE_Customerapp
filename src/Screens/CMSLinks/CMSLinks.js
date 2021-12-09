@@ -89,7 +89,6 @@ export default function CMSLinks({navigation}) {
   };
 
   const _renderCmsLinks = ({item, index}) => {
-    console.log(item, 'itemitemitem');
     return (
       <TouchableOpacity
         onPress={() => navigation.navigate(navigationStrings.WEBLINKS, item)}

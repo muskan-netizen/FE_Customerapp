@@ -212,8 +212,7 @@ export default function Home({ route, navigation }) {
                     }
                   }
                   if (paramData?.details) {
-
-                    _getLocationFromParams();
+                    // _getLocationFromParams();
                   } else {
                     actions.locationData(res);
                   }
