@@ -32,8 +32,8 @@ import actions from '../../../redux/actions';
 const PaymentOptions = ({navigation, route}) => {
   const [state, setState] = useState({
     paymentMethods: [
-      {id: 1, title: 'Cash On Delivery', image: imagePath.cash},
-      {id: 2, title: 'Wallet', image: imagePath.card},
+      {id: 1, title: strings.CASH_ON_DELIVERY, image: imagePath.cash},
+      {id: 2, title: strings.WALLET, image: imagePath.card},
       // {id: 2, title: 'UPI', image: imagePath.upi},
     ],
     allAvailableCoupons: [

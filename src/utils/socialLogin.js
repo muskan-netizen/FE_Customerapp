@@ -88,11 +88,11 @@ export const handleAppleLogin = async () => {
 
       // use credentialState response to ensure the user is authenticated
       if (credentialState === appleAuth.State.AUTHORIZED) {
-        console.log('checking apple login >>> ', appleAuthRequestResponse)
+        console.log('checking apple login >>> ', appleAuthRequestResponse);
         // user is authenticated
-         resolve(appleAuthRequestResponse);
+        resolve(appleAuthRequestResponse);
       } else {
-         reject(credentialState);
+        reject(credentialState);
       }
     } else {
       reject('Apple login is not supproted to this device');

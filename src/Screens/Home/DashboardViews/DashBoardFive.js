@@ -70,10 +70,11 @@ export default function DashBoardFive({
     vendorsData: [],
   });
 
+
+
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  const {appData, themeColors, appStyle} = useSelector(
-    (state) => state?.initBoot,
-  );
+  const {appData, themeColors, appStyle} = useSelector((state) => state?.initBoot);
+  let businessType = appData?.profile?.preferences?.business_type || null;
 
   const allCategory = appMainData?.categories;
   const checkForBrand =
@@ -389,6 +390,8 @@ export default function DashBoardFive({
     );
   }
 
+  console.log("themeColors.primary_colorthemeColors.primary_color",themeColors.primary_color)
+
   return (
     <View style={{flex: 1}}>
       {/* <SearchBar2
@@ -464,7 +467,7 @@ export default function DashBoardFive({
             </>
           )}
 
-          <View style={{}}>
+          {businessType !== 'laundry'  && (<View style={{}}>
             {appMainData &&
               appMainData?.featured_products &&
               !!appMainData?.featured_products.length && (
@@ -493,9 +496,9 @@ export default function DashBoardFive({
                   />
                 </>
               )}
-          </View>
+          </View>)}
 
-          <View style={{}}>
+          {businessType !== 'laundry' && (<View style={{}}>
             {appMainData &&
               appMainData?.new_products &&
               !!appMainData?.new_products.length && (
@@ -519,7 +522,7 @@ export default function DashBoardFive({
                   />
                 </>
               )}
-          </View>
+          </View>)}
 
           {/* {appIds.orderchekout == DeviceInfo.getBundleId() ? (
             <></>

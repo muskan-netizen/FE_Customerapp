@@ -173,7 +173,11 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     pickedUpDate: paramData?.datetime?.slectedDate
       ? paramData?.datetime?.slectedDate
       : moment().format('YYYY-MM-DD'),
-    selectedPayment: {id: 1, title: 'Cash On Delivery', image: imagePath.cash},
+    selectedPayment: {
+      id: 1,
+      title: strings.CASH_ON_DELIVERY,
+      image: imagePath.cash,
+    },
     taskInstruction: '',
     productFaqQuestionAnswers: [],
     allSubmittedAnswers: null,

@@ -1100,37 +1100,59 @@ export default function WebLinks({navigation, route}) {
                 </Text>
                 <Image source={imagePath.dropDownNew} />
               </TouchableOpacity>
-              {isTeams && driverRegDocs?.teams.length > 0 && (
+
+              {isTeams && (
                 <View
                   style={{
-                    top: moderateScaleVertical(40),
+                    top: moderateScaleVertical(44),
+                    position: 'absolute',
                     borderWidth: 1,
                     borderColor: colors.borderColorB,
                     backgroundColor: colors.white,
                     width: '100%',
-                    position: 'absolute',
                     paddingHorizontal: moderateScale(10),
                     paddingVertical: moderateScale(5),
                     shadowOffset: {width: 0, height: 1},
                     shadowOpacity: 0.1,
                   }}>
-                  {driverRegDocs?.teams.map((itm, indx) => {
-                    return (
-                      <TouchableOpacity
-                        key={indx}
-                        onPress={() =>
-                          updateState({
-                            selectedTeam: itm,
-                            isTeams: false,
-                          })
-                        }
+                  {driverRegDocs?.teams.length > 0 ? (
+                    <View>
+                      {driverRegDocs?.teams.map((itm, indx) => {
+                        return (
+                          <TouchableOpacity
+                            key={indx}
+                            onPress={() =>
+                              updateState({
+                                selectedTeam: itm,
+                                isTeams: false,
+                              })
+                            }
+                            style={{
+                              marginVertical: moderateScale(5),
+                            }}>
+                            <Text>{itm.name}</Text>
+                          </TouchableOpacity>
+                        );
+                      })}
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        width: '100%',
+                        height: moderateScale(30),
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: colors.white,
+                      }}>
+                      <Text
                         style={{
-                          marginVertical: moderateScale(5),
+                          fontFamily: fontFamily.medium,
+                          fontSize: moderateScale(13),
                         }}>
-                        <Text>{itm.name}</Text>
-                      </TouchableOpacity>
-                    );
-                  })}
+                        {strings.NODATAFOUND}
+                      </Text>
+                    </View>
+                  )}
                 </View>
               )}
             </View>
@@ -1222,47 +1244,65 @@ export default function WebLinks({navigation, route}) {
                   style={{
                     backgroundColor: colors.white,
                     position: 'absolute',
-                    top: tagsViewHeight,
                     shadowOffset: {width: 0, height: 1},
                     shadowOpacity: 0.1,
                     width: '100%',
-                    flexWrap: 'wrap',
-                    flexDirection: 'row',
+
+                    top: tagsViewHeight,
                   }}>
-                  {driverRegDocs?.tags.length > 0 &&
-                    driverRegDocs?.tags.map((item, index) => {
-                      return (
-                        <TouchableOpacity
-                          onPress={() => _onTagSelect(item, index)}
-                          activeOpacity={0.7}
-                          style={{
-                            borderWidth: 1,
-                            borderColor: selectedTags.includes(item)
-                              ? themeColors.primary_color
-                              : colors.borderColorB,
-                            width: (width - moderateScale(70)) / 3,
-                            alignItems: 'center',
-                            marginVertical: moderateScale(5),
-                            paddingVertical: moderateScale(5),
-                            marginHorizontal: moderateScale(5),
-                            zIndex: 1,
-                            backgroundColor: selectedTags.includes(item)
-                              ? themeColors.primary_color
-                              : colors.borderColorB,
-                            borderRadius: moderateScale(5),
-                          }}>
-                          <Text
+                  {driverRegDocs?.tags.length > 0 ? (
+                    <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                      {driverRegDocs?.tags.map((item, index) => {
+                        return (
+                          <TouchableOpacity
+                            onPress={() => _onTagSelect(item, index)}
+                            activeOpacity={0.7}
                             style={{
-                              textAlign: 'center',
-                              color: selectedTags.includes(item)
-                                ? colors.white
-                                : colors.black,
+                              borderWidth: 1,
+                              borderColor: selectedTags.includes(item)
+                                ? themeColors.primary_color
+                                : colors.borderColorB,
+                              width: (width - moderateScale(70)) / 3,
+                              alignItems: 'center',
+                              marginVertical: moderateScale(5),
+                              paddingVertical: moderateScale(5),
+                              marginHorizontal: moderateScale(5),
+                              zIndex: 1,
+                              backgroundColor: selectedTags.includes(item)
+                                ? themeColors.primary_color
+                                : colors.borderColorB,
+                              borderRadius: moderateScale(5),
                             }}>
-                            {item?.name}
-                          </Text>
-                        </TouchableOpacity>
-                      );
-                    })}
+                            <Text
+                              style={{
+                                textAlign: 'center',
+                                color: selectedTags.includes(item)
+                                  ? colors.white
+                                  : colors.black,
+                              }}>
+                              {item?.name}
+                            </Text>
+                          </TouchableOpacity>
+                        );
+                      })}
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        width: '100%',
+                        height: moderateScale(30),
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontFamily: fontFamily.medium,
+                          fontSize: moderateScale(13),
+                        }}>
+                        {strings.NODATAFOUND}
+                      </Text>
+                    </View>
+                  )}
                 </View>
               )}
             </View>
@@ -1335,7 +1375,6 @@ export default function WebLinks({navigation, route}) {
       </ScrollView>
       <ActionSheet
         ref={actionSheet}
-        // title={'Choose one option'}
         options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
         cancelButtonIndex={2}
         destructiveButtonIndex={2}
