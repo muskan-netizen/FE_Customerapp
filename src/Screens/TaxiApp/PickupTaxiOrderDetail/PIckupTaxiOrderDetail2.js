@@ -1,5 +1,5 @@
-import { useFocusEffect } from '@react-navigation/native';
-import React, { useEffect, useRef, useState } from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Dimensions,
   View,
@@ -9,9 +9,9 @@ import {
   ScrollView,
   BackHandler,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import HeaderWithFilters from '../../../Components/HeaderWithFilters';
-import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
@@ -23,21 +23,21 @@ import {
   showSuccess,
 } from '../../../utils/helperFunctions';
 import stylesFunc from './styles';
-const { height, width } = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 import MapViewDirections from 'react-native-maps-directions';
 import Geocoder from 'react-native-geocoding';
-import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
-import { useIsFocused } from '@react-navigation/native';
+import MapView, {Marker, Callout, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import {useIsFocused} from '@react-navigation/native';
 
 import Communications from 'react-native-communications';
 import navigationStrings from '../../../navigation/navigationStrings';
-import { useDarkMode } from 'react-native-dark-mode';
-import { MyDarkTheme } from '../../../styles/theme';
+import {useDarkMode} from 'react-native-dark-mode';
+import {MyDarkTheme} from '../../../styles/theme';
 import TaxiOrderDetailView from './TaxiOrderDetailView';
 import SearchingForDriverView from './SearchingForDriverView';
-import { color } from 'react-native-reanimated';
+import {color} from 'react-native-reanimated';
 import useInterval from '../../../utils/useInterval';
-import { cloneDeep } from 'lodash';
+import {cloneDeep} from 'lodash';
 import BottomViewModal from '../../../Components/BottomViewModal';
 import FastImage from 'react-native-fast-image';
 
@@ -46,14 +46,14 @@ import {
   moderateScaleVertical,
 } from '../../../styles/responsiveSize';
 import StarRating from 'react-native-star-rating';
-import { mapStyleGrey } from '../../../utils/constants/MapStyle';
+import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 import StepIndicators from '../../../Components/StepIndicator';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-export default function PickupTaxiOrderDetail({ navigation, route }) {
+export default function PickupTaxiOrderDetail({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -108,26 +108,26 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     isVisible,
     driverRating,
     labels,
-    orderStatus
+    orderStatus,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
-  const { appData, themeColors, currencies, languages, appStyle } = useSelector(
+  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
   const isFocused = useIsFocused();
 
-  const { profile } = appData;
+  const {profile} = appData;
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ fontFamily });
+  const styles = stylesFunc({fontFamily});
 
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   // const urlValue = paramData?.orderDetail?.dispatch_traking_url
   //   ? (paramData?.orderDetail?.dispatch_traking_url).replace(
@@ -155,7 +155,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
         if (url) {
           _getOrderDetailScreen(url);
         } else {
-          updateState({ isLoading: false });
+          updateState({isLoading: false});
         }
       } else {
         showError(strings.UNAUTHORIZED_MESSAGE);
@@ -164,14 +164,14 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   );
   const mapRef = useRef();
 
-  console.log("driverStatusdriverStatus", orderStatus)
+  console.log('driverStatusdriverStatus', orderStatus);
 
   useInterval(
     () => {
       if (urlValue) {
         _updateDriverLocationLocation(urlValue);
       } else {
-        updateState({ isLoading: false });
+        updateState({isLoading: false});
       }
     },
     isFocused && orderStatus != 'completed' ? 3000 : null,
@@ -205,9 +205,9 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
 
   const new_dispatch_traking_url = paramData?.orderDetail?.dispatch_traking_url
     ? (paramData?.orderDetail?.dispatch_traking_url).replace(
-      '/order/',
-      '/order-details/',
-    )
+        '/order/',
+        '/order-details/',
+      )
     : null;
   console.log(new_dispatch_traking_url, 'new_dispatch_traking_url');
   /*********Update driver detail screen********* */
@@ -227,7 +227,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
       )
       .then((res) => {
         // console.log(res?.data?.order_details?.dispatcher_status, 'res---agent');
-        console.log('agent location', res?.data)
+
         updateState({
           agent_location: res?.data?.agent_location,
           orderDetail: res?.data?.order,
@@ -236,7 +236,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           productInfo: res?.data?.order_details?.products,
           getDispatchId: res?.data?.order?.id,
           driverRating: res?.data?.avgrating,
-          orderStatus: res?.data?.order?.status
+          orderStatus: res?.data?.order?.status,
         });
       })
       .catch(errorMethod);
@@ -287,10 +287,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
           orderDetail: res?.data?.order,
           agent_image: res?.data?.agent_image,
           driverStatus: res?.data?.order_details?.dispatcher_status,
-          isShowRating:
-            res?.data?.order?.status == 'completed'
-              ? true
-              : false,
+          isShowRating: res?.data?.order?.status == 'completed' ? true : false,
           productInfo: res?.data?.order_details?.products,
         });
       })
@@ -298,11 +295,11 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
   };
 
   const errorMethod = (error) => {
-    updateState({ isLoading: false, isLoading: false, isLoadingC: false });
+    updateState({isLoading: false, isLoading: false, isLoadingC: false});
     showError(error?.message || error?.error);
   };
   const _onRegionChange = (region) => {
-    updateState({ region: region });
+    updateState({region: region});
     // _getAddressBasedOnCoordinates(region);
     // animate(region);
   };
@@ -384,7 +381,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
     updateState({
       isVisible: false,
     });
-    navigation.navigate(navigationStrings.RATEORDER, { item });
+    navigation.navigate(navigationStrings.RATEORDER, {item});
   };
   const _ModalMainView = () => (
     <View
@@ -416,7 +413,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     priority: FastImage.priority.high,
                   }}
                 />
-                <View style={{ marginTop: moderateScaleVertical(10) }}>
+                <View style={{marginTop: moderateScaleVertical(10)}}>
                   <StarRating
                     disabled={false}
                     maxStars={5}
@@ -428,7 +425,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 </View>
                 {!!item?.product_rating && (
                   <TouchableOpacity
-                    hitSlop={{ top: 100, bottom: 100, left: 125, right: 125 }}
+                    hitSlop={{top: 100, bottom: 100, left: 125, right: 125}}
                     onPress={() => rateYourOrder(item)}>
                     <Text
                       style={{
@@ -518,10 +515,10 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                   <View
                     style={{
                       ...styles.plainView,
-                      backgroundColor: themeColors.primary_color
+                      backgroundColor: themeColors.primary_color,
                     }}>
                     <Text style={styles.pickupDropOff}>
-                      {index === 0 ? 'Pickup' : 'Drop'}
+                      {index === 0 ? strings.PICKUP : strings.DROP}
                     </Text>
                   </View>
                 </MapView.Marker>
@@ -539,7 +536,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                     ),
                   }}>
                   <Image
-                    style={{ height: 35, width: 35 }}
+                    style={{height: 35, width: 35}}
                     source={imagePath.icScooter}
                   />
                 </MapView.Marker>
@@ -554,7 +551,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 strokeWidth={5}
                 strokeColor={themeColors.primary_color}
                 optimizeWaypoints={true}
-                onStart={(params) => { }}
+                onStart={(params) => {}}
                 precision={'high'}
                 timePrecision={'now'}
                 mode={'DRIVING'}
@@ -579,12 +576,12 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
               />
             </MapView>
 
-            <View style={{
-              ...styles.topView,
-              // width: '100%',
-              // marginBottom: 36
-            }}>
-
+            <View
+              style={{
+                ...styles.topView,
+                // width: '100%',
+                // marginBottom: 36
+              }}>
               {/* <StepIndicators
                 labels={labels}
                 currentPosition={'Accepted'}
@@ -602,10 +599,10 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                 onPress={
                   paramData?.fromCab
                     ? () =>
-                      navigation.navigate(navigationStrings.TAXIHOMESCREEN)
+                        navigation.navigate(navigationStrings.TAXIHOMESCREEN)
                     : paramData?.pickup_taxi
-                      ? () => navigation.navigate(navigationStrings.HOME)
-                      : () => navigation.goBack()
+                    ? () => navigation.navigate(navigationStrings.HOME)
+                    : () => navigation.goBack()
                   // () => navigation.navigate(navigationStrings.TAXIHOMESCREEN)
                 }>
                 <Image
