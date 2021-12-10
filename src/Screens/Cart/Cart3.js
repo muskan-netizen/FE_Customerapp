@@ -1109,7 +1109,14 @@ export default function Cart({ navigation, route }) {
             });
           }
         })
-        .catch((err) => console.log(err, 'errorInPlaceOrder'));
+        .catch((err) => {
+          showError(err.message)
+          updateState({
+            isLoadingB: false,
+            placeLoader: false,
+          });
+          console.log(err, 'errorInPlaceOrder')
+        });
     } else {
       errorMethod(strings.NOT_ADDED_CART_DETAIL_FOR_PAYMENT_METHOD);
     }

@@ -16,10 +16,11 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
+  textScale,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
-import {getImageUrl} from '../../utils/helperFunctions';
+import {getImageUrl, hapticEffects, playHapticEffect} from '../../utils/helperFunctions';
 import stylesFunc from './styles';
 
 export default function AddonModal({
@@ -197,7 +198,7 @@ export default function AddonModal({
                         ? MyDarkTheme.colors.text
                         : colors.textGrey,
                     },
-                  ]}>{`Choice of ${i?.title}`}</Text>
+                  ]}>{`${strings.CHOICE_OF} ${i?.title}`}</Text>
                 <Text
                   style={[
                     styles.chooseOption,
@@ -207,8 +208,19 @@ export default function AddonModal({
                         : colors.textGreyF,
                     },
                   ]}>
-                  {strings.PLS_SELECT_ONE}
+                   {`${strings.MIN} ${i?.min_select} ${strings.AND_MAX} ${i?.max_select} ${strings.SELECTION_ALLOWED}`}
                 </Text>
+                {!!i.errorShow && (
+                  <Text
+                    style={{
+                      color: colors.redColor,
+                      fontSize: textScale(8),
+                      fontFamily: fontFamily.medium,
+                      textAlign: 'left',
+                    }}>
+                    {`${strings.MIN} ${i?.min_select} ${strings.REQUIRED}`}
+                  </Text>
+                )}
                 {i?.setoptions ? checkBoxButtonViewAddons(i) : null}
                 <View
                   style={{
@@ -224,14 +236,43 @@ export default function AddonModal({
     );
   };
 
+
+  const checkIfMaxReached = (minVal, Arr) => {
+    const SelectedItems = Arr.filter((el) => el.value);
+    if (SelectedItems.length >= minVal) {
+      return true;
+    }
+    return false;
+  };
+
+
   const addToCart = () => {
-    onClose();
-    navigation.navigate(navigationStrings.PRODUCTDETAIL, {
-      data: {
-        addonSetData: addonSetData,
-        randomValue: Math.random(),
-      },
+    playHapticEffect(hapticEffects.impactLight);
+    addonSetData.map((i, inx) => {
+      const temp = checkIfMaxReached(i.min_select, i.setoptions);
+      console.log('temp value', temp);
+      if (temp) {
+        let CloneArr = addonSetData;
+        CloneArr[inx] = { ...CloneArr[inx], errorShow: false };
+        updateState({ addonSetData: CloneArr });
+      } else {
+        let CloneArr = addonSetData;
+        CloneArr[inx] = { ...CloneArr[inx], errorShow: true };
+        updateState({ addonSetData: CloneArr });
+      }
     });
+
+    const checkIsError = addonSetData.findIndex((el) => el.errorShow);
+    if (checkIsError == -1) {
+      onClose();
+      navigation.navigate(navigationStrings.PRODUCTDETAIL, {
+        data: {
+          addonSetData: addonSetData,
+          randomValue: Math.random(),
+        },
+      });
+    }
+    return;
   };
 
   return (

@@ -713,6 +713,7 @@ export default function VariantAddons({
     });
 
     const checkIsError = addonSet.findIndex((el) => el.errorShow);
+    
     let data = {};
 
     if (checkIsError == -1) {
