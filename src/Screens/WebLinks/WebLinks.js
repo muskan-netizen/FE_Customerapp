@@ -45,6 +45,7 @@ import stylesFun from './styles';
 
 let clickedIndx = null;
 let clickedItem = {};
+let isVendorLogo = false;
 
 export default function WebLinks({navigation, route}) {
   let actionSheet = useRef();
@@ -101,7 +102,7 @@ export default function WebLinks({navigation, route}) {
     driverTags: '',
     driverSelectedTeam: '',
     driverTransportDetails: '',
-    driverUUID: '',
+    driverUID: '',
     driverLicencePlate: '',
     driverColor: '',
     driverTransportType: '',
@@ -115,6 +116,9 @@ export default function WebLinks({navigation, route}) {
     selectedTags: [],
     selectedTagIndxs: [],
     tagsViewHeight: moderateScale(44),
+    vendorLogo: '',
+    vendorBanner: '',
+    isTermsConditions: false,
   });
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -154,7 +158,7 @@ export default function WebLinks({navigation, route}) {
     driverTags,
     driverSelectedTeam,
     driverTransportDetails,
-    driverUUID,
+    driverUID,
     driverLicencePlate,
     driverColor,
     driverTransportType,
@@ -171,6 +175,9 @@ export default function WebLinks({navigation, route}) {
     title,
     description,
     website,
+    vendorLogo,
+    vendorBanner,
+    isTermsConditions,
   } = state;
 
   useEffect(() => {
@@ -236,60 +243,65 @@ export default function WebLinks({navigation, route}) {
       }
     }
   };
-  // upload logo function
-  const uploadLogo = async () => {
-    console.log('dffdffdf');
-    try {
-      const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.images || DocumentPicker.types.doc],
-      });
-      console.log(res, 'response');
-      let file = {
-        image_id: Math.random(),
-        name: res[0]?.name,
-        type: res[0]?.type,
-        uri: res[0]?.uri,
-      };
-
-      updateState({imageArray: [...imageArray, file]});
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        // User cancelled the picker, exit any dialogs or menus and move on
-        console.log('cancel');
-      } else {
-        throw err;
-      }
-    }
-  };
 
   const isValidData = () => {
-    const error = validator({
-      name: fullname,
-      email: email,
-      phoneNumber: phoneNumber,
-      newPassword: password,
-      confirmPassword: confirm_password,
-      vendorName: vendor_name,
-      vendorAddress: address,
-    });
+    if (paramData?.slug === 'driver-registration') {
+      const error = validator({
+        name: driverName,
+        phoneNumber: driverPhoneNumber,
+        driverType: selectedDriverType,
+        driverTeam: selectedTeam,
+        driverTransportDetails: driverTransportDetails,
+        driverUID: driverUID,
+        driverLicencePlate: driverLicencePlate,
+        driverColor: driverColor,
+        driverTransportType: driverTransportType,
+      });
 
-    if (error) {
-      showError(error);
-      return;
+      if (error) {
+        showError(error);
+        return;
+      }
+      return true;
+    } else {
+      // const error = validator({
+      //   name: fullname,
+      //   email: email,
+      //   phoneNumber: phoneNumber,
+      //   newPassword: password,
+      //   confirmPassword: confirm_password,
+      //   vendorName: vendor_name,
+      //   vendorAddress: address,
+      // });
+
+      // if (error) {
+      //   showError(error);
+      //   return;
+      // }
+      return true;
     }
-    return true;
   };
 
   const _onSubmit = () => {
-    // const checkValid = isValidData();
-    // if (!checkValid) {
-    //   return;
-    // }
+    const checkValid = isValidData();
+    if (!checkValid) {
+      return;
+    }
+
+    // driverRegDocs?.driver_registration_documents.map((item, index) => {
+    //   if (item.is_required) {
+    //     if (driverRegistrationDocs.includes(item)) {
+    //       console.log(item, 'itemitemitem', driverRegistrationDocs);
+    //       showError(`Please choose ${item.name} field`);
+    //       return;
+    //     }
+    //   }
+    // });
+
     updateState({isLoading: true});
 
     if (paramData?.slug === 'driver-registration') {
       var formData = new FormData();
-
       formData.append('name', driverName);
       formData.append('phone_number', driverPhoneNumber);
       formData.append(
@@ -299,7 +311,7 @@ export default function WebLinks({navigation, route}) {
       formData.append('dialCode', '91');
       formData.append('team', !!selectedTeam ? selectedTeam?.id : '');
       formData.append('make_model', driverTransportDetails);
-      formData.append('uid', driverUUID);
+      formData.append('uid', driverUID);
       formData.append('plate_number', driverLicencePlate);
       formData.append('color', driverColor);
       formData.append(
@@ -312,11 +324,9 @@ export default function WebLinks({navigation, route}) {
         filename: driverPic.filename,
         mime: driverPic.mime,
       });
-
       selectedTags.map((item) => {
         formData.append('tags[]', item.name);
       });
-
       driverRegistrationDocs.map((item, indx) => {
         formData.append(
           item?.item?.slug,
@@ -330,7 +340,6 @@ export default function WebLinks({navigation, route}) {
             : item?.fileData,
         );
       });
-
       actions
         .driverRegisteration(formData, {
           code: appData?.profile?.code,
@@ -345,32 +354,39 @@ export default function WebLinks({navigation, route}) {
             isLoading: false,
           });
           showSuccess(res.message);
+          navigation.goBack();
         })
         .catch(errorMethod);
     } else {
-      console.log(vendorRegisterationDocs, 'vendorRegisterationDocs');
-
       var formData = new FormData();
-
-      formData.append('full_name', fullname);
-      formData.append('email', email);
-      formData.append('phone_number', phoneNumber);
-      // formData.append('title', title);
-
+      formData.append('full_name', 'fullname');
+      formData.append('email', 'email');
+      formData.append('phone_number', 'phoneNumber');
+      formData.append('title', 'title');
       formData.append('dialCode', '91');
-      formData.append('password', password);
-      formData.append('confirm_password', confirm_password);
-      formData.append('name', vendor_name);
-      // formData.append('description', description);
-
-      formData.append('address', address);
-      // formData.append('website', website);
-      // formData.append('isDelivery-in', isDelivery);
-      // formData.append('isDineIn', isDineIn);
-      // formData.append('isTakeaway', isTakeaway);
-
+      formData.append('password', 'password');
+      formData.append('confirm_password', 'confirm_password');
+      formData.append('name', 'vendor_name');
+      formData.append('vendor_description', 'description');
+      formData.append('address', 'address');
+      formData.append('website', 'website');
+      formData.append('delivery', 1); //isDelivery
+      formData.append('dine_in', 1); //isDineIn
+      formData.append('takeaway', 1); // isTakeaway
       formData.append('countryData', 'IN');
-      formData.append('check_conditions', 1);
+      formData.append('check_conditions', 1); //isTermsConditions
+      formData.append('upload_logo', {
+        uri: vendorLogo.path,
+        name: vendorLogo.filename,
+        filename: vendorLogo.filename,
+        mime: vendorLogo.mime,
+      });
+      formData.append('vendor_description', {
+        uri: vendorBanner.path,
+        name: vendorBanner.filename,
+        filename: vendorBanner.filename,
+        mime: vendorBanner.mime,
+      });
 
       vendorRegisterationDocs.map((item, indx) => {
         formData.append(
@@ -384,9 +400,6 @@ export default function WebLinks({navigation, route}) {
               }
             : item?.fileData,
         );
-        // if(item?.item?.is_required && ){
-
-        // }
       });
       console.log(formData, 'formData');
 
@@ -400,6 +413,11 @@ export default function WebLinks({navigation, route}) {
         })
         .then((res) => {
           console.log(res, 'serverResponse');
+          updateState({
+            isLoading: false,
+          });
+          showSuccess(res.message);
+          navigation.goBack();
         })
         .catch(errorMethod);
     }
@@ -497,21 +515,35 @@ export default function WebLinks({navigation, route}) {
                 updateState({
                   driverPic: res,
                 });
-                console.log(driverPic, 'driverPic');
               }
             } else {
-              const vendorRegPdfImgAry = [...vendorRegisterationDocs];
-              vendorRegPdfImgAry[clickedIndx] = {
-                item: clickedItem,
-                fileData: res,
-              };
+              if (!!clickedIndx) {
+                const vendorRegPdfImgAry = [...vendorRegisterationDocs];
+                vendorRegPdfImgAry[clickedIndx] = {
+                  item: clickedItem,
+                  fileData: res,
+                };
 
-              updateState({
-                vendorRegisterationDocs: vendorRegPdfImgAry,
-              });
+                updateState({
+                  vendorRegisterationDocs: vendorRegPdfImgAry,
+                });
+                clickedIndx = null;
+              } else {
+                if (isVendorLogo) {
+                  updateState({
+                    vendorLogo: res,
+                  });
+                } else {
+                  updateState({
+                    vendorBanner: res,
+                  });
+                }
+              }
             }
           })
           .catch((err) => {});
+      } else {
+        console.log('Cancle pressed');
       }
     }
   };
@@ -798,15 +830,32 @@ export default function WebLinks({navigation, route}) {
                     <Text style={styles.uploadText}>{strings.UPLOAD_LOGO}</Text>
 
                     <View style={styles.imageView}>
+                      {console.log(vendorLogo, 'vendorLogo')}
                       <TouchableOpacity
-                        onPress={uploadLogo}
+                        onPress={() => {
+                          isVendorLogo = true;
+                          actionSheet.current.show();
+                        }}
                         style={[
                           styles.viewOverImage2,
                           {borderStyle: 'dashed'},
                         ]}>
                         <Image
-                          source={imagePath.icCamIcon}
-                          style={{tintColor: themeColors.primary_color}}
+                          source={
+                            vendorLogo.path
+                              ? {uri: vendorLogo.path}
+                              : imagePath.icCamIcon
+                          }
+                          style={{
+                            tintColor: vendorLogo.path
+                              ? null
+                              : themeColors.primary_color,
+                            height: vendorLogo.path ? height / 6 - 10 : 30,
+                            width: vendorLogo.path
+                              ? width / 2 - moderateScale(62)
+                              : moderateScale(30),
+                          }}
+                          resizeMode="cover"
                         />
                       </TouchableOpacity>
                     </View>
@@ -821,14 +870,33 @@ export default function WebLinks({navigation, route}) {
 
                     <View style={styles.imageView}>
                       <TouchableOpacity
-                        onPress={uploadFile}
+                        onPress={() => {
+                          isVendorLogo = false;
+
+                          actionSheet.current.show();
+                        }}
                         style={[
                           styles.viewOverImage2,
                           {borderStyle: 'dashed'},
                         ]}>
                         <Image
-                          source={imagePath.icCamIcon}
-                          style={{tintColor: themeColors.primary_color}}
+                          source={
+                            vendorBanner.path
+                              ? {uri: vendorBanner.path}
+                              : imagePath.icCamIcon
+                          }
+                          style={{
+                            tintColor: vendorBanner.path
+                              ? null
+                              : themeColors.primary_color,
+                            height: vendorBanner.path
+                              ? height / 6 - 10
+                              : moderateScale(30),
+                            width: vendorBanner.path
+                              ? width / 2 - moderateScale(62)
+                              : moderateScale(30),
+                          }}
+                          resizeMode="cover"
                         />
                       </TouchableOpacity>
                     </View>
@@ -942,6 +1010,25 @@ export default function WebLinks({navigation, route}) {
                 data={vendorRegDocs}
                 renderItem={_renderFields}
               />
+            </View>
+
+            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+              {/* <TouchableOpacity
+                onPress={() =>
+                  updateState({isTermsConditions: !isTermsConditions})
+                }
+                
+              >
+
+              </TouchableOpacity> */}
+              <Text>I accept the </Text>
+              <TouchableOpacity>
+                <Text>Terms And Conditions</Text>
+              </TouchableOpacity>
+              <Text> and have read the </Text>
+              <TouchableOpacity>
+                <Text>Privacy Policy.</Text>
+              </TouchableOpacity>
             </View>
 
             <GradientButton
@@ -1100,37 +1187,59 @@ export default function WebLinks({navigation, route}) {
                 </Text>
                 <Image source={imagePath.dropDownNew} />
               </TouchableOpacity>
-              {isTeams && driverRegDocs?.teams.length > 0 && (
+
+              {isTeams && (
                 <View
                   style={{
-                    top: moderateScaleVertical(40),
+                    top: moderateScaleVertical(44),
+                    position: 'absolute',
                     borderWidth: 1,
                     borderColor: colors.borderColorB,
                     backgroundColor: colors.white,
                     width: '100%',
-                    position: 'absolute',
                     paddingHorizontal: moderateScale(10),
                     paddingVertical: moderateScale(5),
                     shadowOffset: {width: 0, height: 1},
                     shadowOpacity: 0.1,
                   }}>
-                  {driverRegDocs?.teams.map((itm, indx) => {
-                    return (
-                      <TouchableOpacity
-                        key={indx}
-                        onPress={() =>
-                          updateState({
-                            selectedTeam: itm,
-                            isTeams: false,
-                          })
-                        }
+                  {driverRegDocs?.teams.length > 0 ? (
+                    <View>
+                      {driverRegDocs?.teams.map((itm, indx) => {
+                        return (
+                          <TouchableOpacity
+                            key={indx}
+                            onPress={() =>
+                              updateState({
+                                selectedTeam: itm,
+                                isTeams: false,
+                              })
+                            }
+                            style={{
+                              marginVertical: moderateScale(5),
+                            }}>
+                            <Text>{itm.name}</Text>
+                          </TouchableOpacity>
+                        );
+                      })}
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        width: '100%',
+                        height: moderateScale(30),
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: colors.white,
+                      }}>
+                      <Text
                         style={{
-                          marginVertical: moderateScale(5),
+                          fontFamily: fontFamily.medium,
+                          fontSize: moderateScale(13),
                         }}>
-                        <Text>{itm.name}</Text>
-                      </TouchableOpacity>
-                    );
-                  })}
+                        {strings.NODATAFOUND}
+                      </Text>
+                    </View>
+                  )}
                 </View>
               )}
             </View>
@@ -1222,47 +1331,65 @@ export default function WebLinks({navigation, route}) {
                   style={{
                     backgroundColor: colors.white,
                     position: 'absolute',
-                    top: tagsViewHeight,
                     shadowOffset: {width: 0, height: 1},
                     shadowOpacity: 0.1,
                     width: '100%',
-                    flexWrap: 'wrap',
-                    flexDirection: 'row',
+
+                    top: tagsViewHeight,
                   }}>
-                  {driverRegDocs?.tags.length > 0 &&
-                    driverRegDocs?.tags.map((item, index) => {
-                      return (
-                        <TouchableOpacity
-                          onPress={() => _onTagSelect(item, index)}
-                          activeOpacity={0.7}
-                          style={{
-                            borderWidth: 1,
-                            borderColor: selectedTags.includes(item)
-                              ? themeColors.primary_color
-                              : colors.borderColorB,
-                            width: (width - moderateScale(70)) / 3,
-                            alignItems: 'center',
-                            marginVertical: moderateScale(5),
-                            paddingVertical: moderateScale(5),
-                            marginHorizontal: moderateScale(5),
-                            zIndex: 1,
-                            backgroundColor: selectedTags.includes(item)
-                              ? themeColors.primary_color
-                              : colors.borderColorB,
-                            borderRadius: moderateScale(5),
-                          }}>
-                          <Text
+                  {driverRegDocs?.tags.length > 0 ? (
+                    <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                      {driverRegDocs?.tags.map((item, index) => {
+                        return (
+                          <TouchableOpacity
+                            onPress={() => _onTagSelect(item, index)}
+                            activeOpacity={0.7}
                             style={{
-                              textAlign: 'center',
-                              color: selectedTags.includes(item)
-                                ? colors.white
-                                : colors.black,
+                              borderWidth: 1,
+                              borderColor: selectedTags.includes(item)
+                                ? themeColors.primary_color
+                                : colors.borderColorB,
+                              width: (width - moderateScale(70)) / 3,
+                              alignItems: 'center',
+                              marginVertical: moderateScale(5),
+                              paddingVertical: moderateScale(5),
+                              marginHorizontal: moderateScale(5),
+                              zIndex: 1,
+                              backgroundColor: selectedTags.includes(item)
+                                ? themeColors.primary_color
+                                : colors.borderColorB,
+                              borderRadius: moderateScale(5),
                             }}>
-                            {item?.name}
-                          </Text>
-                        </TouchableOpacity>
-                      );
-                    })}
+                            <Text
+                              style={{
+                                textAlign: 'center',
+                                color: selectedTags.includes(item)
+                                  ? colors.white
+                                  : colors.black,
+                              }}>
+                              {item?.name}
+                            </Text>
+                          </TouchableOpacity>
+                        );
+                      })}
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        width: '100%',
+                        height: moderateScale(30),
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          fontFamily: fontFamily.medium,
+                          fontSize: moderateScale(13),
+                        }}>
+                        {strings.NODATAFOUND}
+                      </Text>
+                    </View>
+                  )}
                 </View>
               )}
             </View>
@@ -1277,7 +1404,7 @@ export default function WebLinks({navigation, route}) {
 
             <BorderTextInput
               placeholder={''}
-              onChangeText={_onChangeText('driverUUID')}
+              onChangeText={_onChangeText('driverUID')}
               containerStyle={styles.containerStyle}
             />
             <Text style={styles.labelTxt}>{strings.LICENCE_PLATE}</Text>
@@ -1335,7 +1462,6 @@ export default function WebLinks({navigation, route}) {
       </ScrollView>
       <ActionSheet
         ref={actionSheet}
-        // title={'Choose one option'}
         options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
         cancelButtonIndex={2}
         destructiveButtonIndex={2}
