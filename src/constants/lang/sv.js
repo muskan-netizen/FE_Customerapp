@@ -684,4 +684,5 @@ export default {
   LICENCE_PLATE: 'Licence Plate',
   COLOR: 'Color',
   TRANSPORT_TYPE: 'Transport Type',
+  WRITE_A_REVIEW:"Write a review"
 };
