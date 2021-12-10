@@ -168,6 +168,9 @@ export default function WebLinks({navigation, route}) {
     selectedTags,
     selectedTagIndxs,
     tagsViewHeight,
+    title,
+    description,
+    website,
   } = state;
 
   useEffect(() => {
@@ -258,54 +261,6 @@ export default function WebLinks({navigation, route}) {
       }
     }
   };
-  // upload FSSAI License function
-  // const fssaiuploadFile = async () => {
-  //   try {
-  //     const res = await DocumentPicker.pick({
-  //       type: [DocumentPicker.types.pdf],
-  //     });
-
-  //     let file = {
-  //       image_id: Math.random(),
-  //       name: res[0]?.name,
-  //       type: res[0]?.type,
-  //       uri: res[0]?.uri,
-  //     };
-  //     console.log(file, 'file');
-  //     updateState({fssaiLicense: [...fssaiLicense, file]});
-  //   } catch (err) {
-  //     if (DocumentPicker.isCancel(err)) {
-  //       // User cancelled the picker, exit any dialogs or menus and move on
-  //       console.log('cancel');
-  //     } else {
-  //       throw err;
-  //     }
-  //   }
-  // };
-  // upload SFC License function
-  // const sfcuploadFile = async () => {
-  //   try {
-  //     const res = await DocumentPicker.pick({
-  //       type: [DocumentPicker.types.images || DocumentPicker.types.doc],
-  //     });
-  //     console.log(res, 'response');
-  //     let file = {
-  //       image_id: Math.random(),
-  //       name: res[0]?.name,
-  //       type: res[0]?.type,
-  //       uri: res[0]?.uri,
-  //     };
-  //     console.log(file, 'file');
-  //     updateState({sfcLicense: [...sfcLicense, file]});
-  //   } catch (err) {
-  //     if (DocumentPicker.isCancel(err)) {
-  //       // User cancelled the picker, exit any dialogs or menus and move on
-  //       console.log('cancel');
-  //     } else {
-  //       throw err;
-  //     }
-  //   }
-  // };
 
   const isValidData = () => {
     const error = validator({
@@ -376,7 +331,6 @@ export default function WebLinks({navigation, route}) {
         );
       });
 
-      console.log(formData, 'formData');
       actions
         .driverRegisteration(formData, {
           code: appData?.profile?.code,
@@ -394,31 +348,50 @@ export default function WebLinks({navigation, route}) {
         })
         .catch(errorMethod);
     } else {
-      const data = {};
-      data['full_name'] = fullname;
-      data['email'] = email;
-      data['phone_number'] = phoneNumber;
-      data['dialCode'] = '91';
-      data['password'] = password;
-      data['confirm_password'] = confirm_password;
-      data['name'] = vendor_name;
-      data['address'] = address;
-      data['check_conditions'] = 1;
-      data['countryData'] = 'IN';
+      console.log(vendorRegisterationDocs, 'vendorRegisterationDocs');
+
+      var formData = new FormData();
+
+      formData.append('full_name', fullname);
+      formData.append('email', email);
+      formData.append('phone_number', phoneNumber);
+      // formData.append('title', title);
+
+      formData.append('dialCode', '91');
+      formData.append('password', password);
+      formData.append('confirm_password', confirm_password);
+      formData.append('name', vendor_name);
+      // formData.append('description', description);
+
+      formData.append('address', address);
+      // formData.append('website', website);
+      // formData.append('isDelivery-in', isDelivery);
+      // formData.append('isDineIn', isDineIn);
+      // formData.append('isTakeaway', isTakeaway);
+
+      formData.append('countryData', 'IN');
+      formData.append('check_conditions', 1);
 
       vendorRegisterationDocs.map((item, indx) => {
-        data[item?.item?.primary?.slug] =
-          item?.item?.file_type == 'Text' ? item?.fileData : item?.fileData;
-
+        formData.append(
+          item?.item?.primary?.slug,
+          item?.item?.file_type == 'Image'
+            ? {
+                uri: item.fileData.path,
+                name: item.fileData.filename,
+                filename: item.fileData.filename,
+                mime: item.fileData.mime,
+              }
+            : item?.fileData,
+        );
         // if(item?.item?.is_required && ){
 
         // }
       });
-      console.log(data, 'sendData');
-      console.log(vendorRegisterationDocs, 'vendorRegisterationDocs');
+      console.log(formData, 'formData');
 
       actions
-        .vendorRegisteration(data, {
+        .vendorRegisteration(formData, {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
@@ -694,40 +667,32 @@ export default function WebLinks({navigation, route}) {
   };
 
   const _onTagSelect = (itm, indx) => {
-    if (!selectedTagIndxs.includes(indx)) {
+    if (!selectedTags.includes(itm)) {
       updateState({
-        selectedTagIndxs: [...selectedTagIndxs, indx],
         selectedTags: [...selectedTags, itm],
       });
     } else {
       const selectedTagsAry = [...selectedTags];
-      const selectedTagIndxsAry = [...selectedTagIndxs];
       const ind = selectedTagsAry.findIndex((item) => item.id === itm.id);
-      const tagIdind = selectedTagIndxsAry.findIndex((item) => item === indx);
       var result = selectedTagsAry.filter((item, idx) => idx !== ind);
-      var tagIdresult = selectedTagIndxsAry.filter(
-        (item, idx) => idx !== tagIdind,
-      );
       updateState({
-        selectedTagIndxs: tagIdresult,
         selectedTags: result,
       });
     }
   };
 
   const removeTag = (itm, indx) => {
-    // const selectedTagsAry = [...selectedTags];
-    // const selectedTagIndxsAry = [...selectedTagIndxs];
-    // const ind = selectedTagsAry.findIndex((item) => item.id === itm.id);
+    const selectedTagsAry = [...selectedTags];
+
+    const ind = selectedTagsAry.findIndex((item) => item.id == itm.id);
     // const tagIdind = selectedTagIndxsAry.findIndex((item) => item === indx);
-    // var result = selectedTagsAry.filter((item, idx) => idx !== ind);
+    var result = selectedTagsAry.filter((item, idx) => idx !== ind);
     // var tagIdresult = selectedTagIndxsAry.filter(
     //   (item, idx) => idx !== tagIdind,
     // );
-    // updateState({
-    //   selectedTagIndxs: tagIdresult,
-    //   selectedTags: result,
-    // });
+    updateState({
+      selectedTags: result,
+    });
   };
 
   return (
@@ -824,6 +789,52 @@ export default function WebLinks({navigation, route}) {
             />
             <View style={{marginVertical: moderateScaleVertical(10)}}>
               <Text style={styles.detailStyle}>{strings.STORE_DETAILS}</Text>
+              <View style={{marginVertical: moderateScaleVertical(20)}}>
+                <View style={{flexDirection: 'row'}}>
+                  <View
+                    style={{
+                      width: width / 2 - moderateScale(22),
+                    }}>
+                    <Text style={styles.uploadText}>{strings.UPLOAD_LOGO}</Text>
+
+                    <View style={styles.imageView}>
+                      <TouchableOpacity
+                        onPress={uploadLogo}
+                        style={[
+                          styles.viewOverImage2,
+                          {borderStyle: 'dashed'},
+                        ]}>
+                        <Image
+                          source={imagePath.icCamIcon}
+                          style={{tintColor: themeColors.primary_color}}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      width: width / 2 - moderateScale(22),
+                    }}>
+                    <Text style={styles.uploadText}>
+                      {strings.UPLOAD_BANNER}
+                    </Text>
+
+                    <View style={styles.imageView}>
+                      <TouchableOpacity
+                        onPress={uploadFile}
+                        style={[
+                          styles.viewOverImage2,
+                          {borderStyle: 'dashed'},
+                        ]}>
+                        <Image
+                          source={imagePath.icCamIcon}
+                          style={{tintColor: themeColors.primary_color}}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </View>
             </View>
 
             <BorderTextInput
@@ -1089,7 +1100,7 @@ export default function WebLinks({navigation, route}) {
                 </Text>
                 <Image source={imagePath.dropDownNew} />
               </TouchableOpacity>
-              {isTeams && (
+              {isTeams && driverRegDocs?.teams.length > 0 && (
                 <View
                   style={{
                     top: moderateScaleVertical(40),
@@ -1149,9 +1160,10 @@ export default function WebLinks({navigation, route}) {
                       <FlatList
                         numColumns={3}
                         data={selectedTags}
-                        renderItem={({item}) => (
+                        renderItem={({item, index}) => (
                           <TouchableOpacity
-                            // onPress={() => removeTag(itm, index)}
+                            onPress={() => removeTag(item, index)}
+                            activeOpacity={0.7}
                             style={{
                               borderWidth: 1,
                               borderColor: colors.borderColorB,
@@ -1217,72 +1229,40 @@ export default function WebLinks({navigation, route}) {
                     flexWrap: 'wrap',
                     flexDirection: 'row',
                   }}>
-                  {/* <FlatList
-                    data={driverRegDocs?.tags}
-                    numColumns={3}
-                    keyExtractor={(itm, indx) => indx}
-                    renderItem={({item, index}) => (
-                      <TouchableOpacity
-                        onPress={() => _onTagSelect(item, index)}
-                        style={{
-                          borderWidth: 1,
-                          borderColor: selectedTagIndxs.includes(index)
-                            ? themeColors.primary_color
-                            : colors.borderColorB,
-                          width: (width - moderateScale(70)) / 3,
-                          alignItems: 'center',
-                          marginVertical: moderateScale(5),
-                          paddingVertical: moderateScale(5),
-                          marginHorizontal: moderateScale(5),
-                          zIndex: 1,
-                          backgroundColor: selectedTagIndxs.includes(index)
-                            ? themeColors.primary_color
-                            : colors.borderColorB,
-                        }}>
-                        <Text
+                  {driverRegDocs?.tags.length > 0 &&
+                    driverRegDocs?.tags.map((item, index) => {
+                      return (
+                        <TouchableOpacity
+                          onPress={() => _onTagSelect(item, index)}
+                          activeOpacity={0.7}
                           style={{
-                            textAlign: 'center',
-                            color: selectedTagIndxs.includes(index)
-                              ? colors.white
-                              : colors.black,
+                            borderWidth: 1,
+                            borderColor: selectedTags.includes(item)
+                              ? themeColors.primary_color
+                              : colors.borderColorB,
+                            width: (width - moderateScale(70)) / 3,
+                            alignItems: 'center',
+                            marginVertical: moderateScale(5),
+                            paddingVertical: moderateScale(5),
+                            marginHorizontal: moderateScale(5),
+                            zIndex: 1,
+                            backgroundColor: selectedTags.includes(item)
+                              ? themeColors.primary_color
+                              : colors.borderColorB,
+                            borderRadius: moderateScale(5),
                           }}>
-                          {item?.name}
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                  /> */}
-                  {driverRegDocs?.tags.map((item, index) => {
-                    return (
-                      <TouchableOpacity
-                        onPress={() => _onTagSelect(item, index)}
-                        style={{
-                          borderWidth: 1,
-                          borderColor: selectedTagIndxs.includes(index)
-                            ? themeColors.primary_color
-                            : colors.borderColorB,
-                          width: (width - moderateScale(70)) / 3,
-                          alignItems: 'center',
-                          marginVertical: moderateScale(5),
-                          paddingVertical: moderateScale(5),
-                          marginHorizontal: moderateScale(5),
-                          zIndex: 1,
-                          backgroundColor: selectedTagIndxs.includes(index)
-                            ? themeColors.primary_color
-                            : colors.borderColorB,
-                          borderRadius: moderateScale(5),
-                        }}>
-                        <Text
-                          style={{
-                            textAlign: 'center',
-                            color: selectedTagIndxs.includes(index)
-                              ? colors.white
-                              : colors.black,
-                          }}>
-                          {item?.name}
-                        </Text>
-                      </TouchableOpacity>
-                    );
-                  })}
+                          <Text
+                            style={{
+                              textAlign: 'center',
+                              color: selectedTags.includes(item)
+                                ? colors.white
+                                : colors.black,
+                            }}>
+                            {item?.name}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    })}
                 </View>
               )}
             </View>
