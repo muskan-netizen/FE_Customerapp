@@ -172,6 +172,7 @@ const shortCodes = {
   enext: 'e36583',
   hokitch: 'bc54f4',
   foodnests: '82b5bc',
+  sponge: 'c2c6c5',
 };
 
 const appIds = {
@@ -858,6 +859,10 @@ const appIds = {
   foodnests: Platform.select({
     ios: 'com.foodnests',
     android: 'com.foodnests',
+  }),
+  sponge: Platform.select({
+    ios: 'com.app.sponge',
+    android: 'com.sponge',
   }),
 };
 

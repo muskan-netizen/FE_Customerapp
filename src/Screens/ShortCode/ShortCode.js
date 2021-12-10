@@ -1127,6 +1127,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.sponge:
+          updateState({
+            shortCode: shortCodes.sponge,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -1254,7 +1260,6 @@ export default function ShortCode({route, navigation}) {
   };
 
   const homeData = (res) => {
-
     actions
       .homeData(
         {},

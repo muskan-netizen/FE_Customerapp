@@ -821,7 +821,7 @@ android {
          }
          vici{
             dimension "appType"
-            versionCode 3
+            versionCode 4
             versionName "1.1"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -1933,6 +1933,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.foodnests'
             resValue "string", "app_name", "FoodNests"
+            resValue "string", "host_name", ""
+         }
+         sponge{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.sponge'
+            resValue "string", "app_name", "Sponge"
             resValue "string", "host_name", ""
          }
     }
