@@ -713,4 +713,6 @@ Amount`,
   COLOR: 'Color',
   TRANSPORT_TYPE: 'Transport Type',
   PLEASE_SELECT: 'Please select',
+  EMPLOYEE: 'Employee',
+  FREELANCER: 'Freelancer',
 };

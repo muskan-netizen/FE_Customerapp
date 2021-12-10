@@ -96,8 +96,8 @@ export default function WebLinks({navigation, route}) {
     driverName: '',
     driverPhoneNumber: '',
     driverTypes: [
-      {id: 1, name: 'Employee'},
-      {id: 2, name: 'Freelancer'},
+      {id: 1, name: strings.EMPLOYEE},
+      {id: 2, name: strings.FREELANCER},
     ],
     driverTags: '',
     driverSelectedTeam: '',
@@ -119,6 +119,9 @@ export default function WebLinks({navigation, route}) {
     vendorLogo: '',
     vendorBanner: '',
     isTermsConditions: false,
+    dialCode: appData?.profile.country?.phonecode
+      ? appData?.profile.country?.phonecode
+      : '91',
   });
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -178,6 +181,7 @@ export default function WebLinks({navigation, route}) {
     vendorLogo,
     vendorBanner,
     isTermsConditions,
+    callingCode,
   } = state;
 
   useEffect(() => {
@@ -217,31 +221,6 @@ export default function WebLinks({navigation, route}) {
   const _onCountryChange = (data) => {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
     return;
-  };
-
-  // upload Banner function
-  const uploadFile = async () => {
-    try {
-      const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.images || DocumentPicker.types.doc],
-      });
-      console.log(res, 'response');
-      let file = {
-        image_id: Math.random(),
-        name: res[0]?.name,
-        type: res[0]?.type,
-        uri: res[0]?.uri,
-      };
-      console.log(file, 'file');
-      updateState({imageArrayBanner: [...imageArrayBanner, file]});
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        // User cancelled the picker, exit any dialogs or menus and move on
-        console.log('cancel');
-      } else {
-        throw err;
-      }
-    }
   };
 
   const isValidData = () => {
@@ -308,7 +287,7 @@ export default function WebLinks({navigation, route}) {
         'type',
         !!selectedDriverType ? selectedDriverType.name : '',
       );
-      formData.append('dialCode', '91');
+      formData.append('dialCode', callingCode);
       formData.append('team', !!selectedTeam ? selectedTeam?.id : '');
       formData.append('make_model', driverTransportDetails);
       formData.append('uid', driverUID);
@@ -363,7 +342,7 @@ export default function WebLinks({navigation, route}) {
       formData.append('email', 'email');
       formData.append('phone_number', 'phoneNumber');
       formData.append('title', 'title');
-      formData.append('dialCode', '91');
+      formData.append('dialCode', '91'); //callingCode
       formData.append('password', 'password');
       formData.append('confirm_password', 'confirm_password');
       formData.append('name', 'vendor_name');
@@ -497,51 +476,55 @@ export default function WebLinks({navigation, route}) {
           mediaType: 'photo',
         })
           .then((res) => {
-            if (paramData?.slug === 'driver-registration') {
-              if (!!clickedIndx) {
-                {
-                  const driverRegistrationDocsAry = [...driverRegistrationDocs];
-                  driverRegistrationDocsAry[clickedIndx] = {
+            if (res && res.data) {
+              if (paramData?.slug === 'driver-registration') {
+                if (!!clickedIndx) {
+                  {
+                    const driverRegistrationDocsAry = [
+                      ...driverRegistrationDocs,
+                    ];
+                    driverRegistrationDocsAry[clickedIndx] = {
+                      item: clickedItem,
+                      fileData: res,
+                    };
+
+                    updateState({
+                      driverRegistrationDocs: driverRegistrationDocsAry,
+                    });
+                  }
+                  clickedIndx = null;
+                } else {
+                  updateState({
+                    driverPic: res,
+                  });
+                }
+              } else {
+                if (!!clickedIndx) {
+                  const vendorRegPdfImgAry = [...vendorRegisterationDocs];
+                  vendorRegPdfImgAry[clickedIndx] = {
                     item: clickedItem,
                     fileData: res,
                   };
 
                   updateState({
-                    driverRegistrationDocs: driverRegistrationDocsAry,
+                    vendorRegisterationDocs: vendorRegPdfImgAry,
                   });
-                }
-                clickedIndx = null;
-              } else {
-                updateState({
-                  driverPic: res,
-                });
-              }
-            } else {
-              if (!!clickedIndx) {
-                const vendorRegPdfImgAry = [...vendorRegisterationDocs];
-                vendorRegPdfImgAry[clickedIndx] = {
-                  item: clickedItem,
-                  fileData: res,
-                };
-
-                updateState({
-                  vendorRegisterationDocs: vendorRegPdfImgAry,
-                });
-                clickedIndx = null;
-              } else {
-                if (isVendorLogo) {
-                  updateState({
-                    vendorLogo: res,
-                  });
+                  clickedIndx = null;
                 } else {
-                  updateState({
-                    vendorBanner: res,
-                  });
+                  if (isVendorLogo) {
+                    updateState({
+                      vendorLogo: res,
+                    });
+                  } else {
+                    updateState({
+                      vendorBanner: res,
+                    });
+                  }
                 }
               }
             }
           })
-          .catch((err) => {});
+          .catch((err) => console.log(err, 'errerrerr'));
       } else {
         console.log('Cancle pressed');
       }
