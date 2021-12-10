@@ -306,6 +306,7 @@ export default function TaxiHomeDashbord({
             }}>
             <DatePicker
               date={date}
+              locale={'es'}
               mode="datetime"
               textColor={isDarkMode ? '#fff' : colors.blackB}
               minimumDate={new Date()}
