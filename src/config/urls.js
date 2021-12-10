@@ -155,4 +155,5 @@ export const DIFFERENT_ADD_ONS = getApiUrl(
 );
 export const WALLET_CREDIT = getApiUrl('/myWallet/credit');
 export const VENDOR_REGISTER = getApiUrl('/vendor/register');
+export const DRIVER_REGISTER = getApiUrl('/driver/register');
 export const CANCEL_ORDER = getApiUrl('/return-order/vendor-order-for-cancel');

@@ -187,6 +187,7 @@ export default function VariantAddons({
   };
 
   console.log('type id++', typeId);
+  
   const clearCart = (addonSet) => {
     // actions
     //   .clearCart(
@@ -1210,8 +1211,8 @@ export default function VariantAddons({
                     btnText={`${strings.ADD_ITEM} - ${currencies?.primary_currency?.symbol
                       }${currencyNumberFormatter(
                         (
-                          Number(productPriceData?.multiplier) *
-                          Number(productPriceData?.price)
+                         ( Number(productPriceData?.multiplier) *
+                          Number(productPriceData?.price))*productQuantityForCart
                         ).toFixed(2),
                       )}`}
                     btnStyle={{

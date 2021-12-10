@@ -521,7 +521,7 @@ export default function DashBoardFive({
               )}
           </View>
 
-          {appIds.orderchekout == DeviceInfo.getBundleId() ? (
+          {/* {appIds.orderchekout == DeviceInfo.getBundleId() ? (
             <></>
           ) : (
             <View>
@@ -549,7 +549,7 @@ export default function DashBoardFive({
                   </>
                 )}
             </View>
-          )}
+          )} */}
         </Animatable.View>
         <View
           style={{

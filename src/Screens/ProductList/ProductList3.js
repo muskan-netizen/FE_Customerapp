@@ -824,7 +824,6 @@ export default function Products({ route, navigation }) {
     let isSingleVendor = await checkSingleVendor(item.id);
     console.log('is singel vendor', isSingleVendor);
 
-
     if (
       isSingleVendor.isSingleVendorEnabled == 1 &&
       isSingleVendor.otherVendorExists == 1
@@ -2587,7 +2586,7 @@ export default function Products({ route, navigation }) {
           />
           {true ? (
             <View>
-              <View style={{height:moderateScale(16)}} />
+              <View style={{ height: moderateScale(16) }} />
               <HeaderLoader
                 viewStyles={{
                   marginHorizontal: moderateScale(20),
