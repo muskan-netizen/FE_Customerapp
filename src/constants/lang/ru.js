@@ -663,7 +663,7 @@ export default {
   TEAMS: 'Teams',
   UPLOAD_PHOTO: 'Upload Profile Photo',
   TAGS: 'Tags',
-  EXAMPLE_TEXT: '2000, Make, Model',
+  EXAMPLE_TEXT: 'Year, Make, Model',
   TRANSPORT_DETAILS: 'Transport Details',
   UID: 'UID',
   LICENCE_PLATE: 'Licence Plate',
