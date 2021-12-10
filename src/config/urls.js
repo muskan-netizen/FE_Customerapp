@@ -23,9 +23,9 @@
 // export const API_BASE_URL = 'https://cabdeliv.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
 // export const API_BASE_URL = 'https://orderchekout.com/api/v1';
-// export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
+export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
-export const API_BASE_URL = 'https://ufood.ca/api/v1';
+// export const API_BASE_URL = 'https://ufood.ca/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
