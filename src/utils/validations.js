@@ -9,6 +9,14 @@ const checkEmpty = (val, key, key2 = true) => {
   }
 };
 
+const checkEmptyForSelection = (val, key, key2 = true) => {
+  if (validator.empty(val)) {
+    return `${strings.PLEASE_SELECT} ${key2 ? `${strings.YOUR} ` : ''}${key}`;
+  } else {
+    return '';
+  }
+};
+
 const checkMinLength = (val, minLength, key) => {
   if (val.trim().length < minLength) {
     return `${strings.PLEASE_ENTER_VALID} ${key}`;
@@ -39,6 +47,13 @@ export default function (data) {
     promocode,
     vendorName,
     vendorAddress,
+    driverType,
+    driverTeam,
+    driverTransportDetails,
+    driverUID,
+    driverLicencePlate,
+    driverColor,
+    driverTransportType,
   } = data;
   console.log(message, 'message');
   if (username !== undefined) {
@@ -290,6 +305,76 @@ export default function (data) {
     let emptyValidationText = checkEmpty(
       vendorAddress,
       strings.VENDOR_ADDRESS,
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+  if (driverType !== undefined) {
+    let emptyValidationText = checkEmptyForSelection(
+      driverType,
+      'valid driver type',
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
+  if (driverTeam !== undefined) {
+    let emptyValidationText = checkEmptyForSelection(
+      driverTeam,
+      'valid driver team',
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
+  if (driverTransportDetails !== undefined) {
+    let emptyValidationText = checkEmpty(
+      driverTransportDetails,
+      'year, make , model',
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
+  if (driverUID !== undefined) {
+    let emptyValidationText = checkEmpty(driverUID, strings.UID, false);
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+  if (driverLicencePlate !== undefined) {
+    let emptyValidationText = checkEmpty(
+      driverLicencePlate,
+      'valid Licence Plate',
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+  if (driverColor !== undefined) {
+    let emptyValidationText = checkEmpty(
+      driverColor,
+      'valid color name',
+      false,
+    );
+    if (emptyValidationText !== '') {
+      return emptyValidationText;
+    }
+  }
+
+  if (driverTransportType !== undefined) {
+    let emptyValidationText = checkEmptyForSelection(
+      driverTransportType,
+      'valid transport type',
       false,
     );
     if (emptyValidationText !== '') {
