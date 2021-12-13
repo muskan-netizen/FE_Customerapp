@@ -1133,6 +1133,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.gomeat:
+          updateState({
+            shortCode: shortCodes.gomeat,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.shopcentral:
+          updateState({
+            shortCode: shortCodes.shopcentral,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
