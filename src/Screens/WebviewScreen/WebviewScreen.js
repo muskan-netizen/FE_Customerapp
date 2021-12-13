@@ -31,6 +31,7 @@ export default function WebviewScreen({navigation, route}) {
     navigation.navigate(screenName, {data});
   };
 
+  console.log(paramData, 'paramDataparamData');
   return (
     <WrapperContainer
       bgColor={colors.backgroundGrey}

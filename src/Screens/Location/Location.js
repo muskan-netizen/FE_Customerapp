@@ -1,8 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { I18nManager, Image, Text, TouchableOpacity, View, ScrollView, Keyboard } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import React, {useEffect, useState} from 'react';
+import {
+  I18nManager,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  Keyboard,
+} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import Geocoder from 'react-native-geocoding';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import GooglePlaceInput from '../../Components/GooglePlaceInput';
 import Header from '../../Components/Header';
 import SearchPlaces from '../../Components/SearchPlaces';
@@ -11,19 +19,30 @@ import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import colors from '../../styles/colors';
-import { hitSlopProp } from '../../styles/commonStyles';
-import { moderateScale, moderateScaleVertical, textScale } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
-import { getCurrentLocationFromApi, getPlaceDetails, nearbySearch } from '../../utils/googlePlaceApi';
-import { getCurrentLocation } from '../../utils/helperFunctions';
-import { chekLocationPermission, locationPermission } from '../../utils/permissions';
+import {hitSlopProp} from '../../styles/commonStyles';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  textScale,
+} from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
+import {
+  getCurrentLocationFromApi,
+  getPlaceDetails,
+  nearbySearch,
+} from '../../utils/googlePlaceApi';
+import {getCurrentLocation} from '../../utils/helperFunctions';
+import {
+  chekLocationPermission,
+  locationPermission,
+} from '../../utils/permissions';
 import stylesFun from './styles';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
-export default function Location({ route, navigation }) {
+export default function Location({route, navigation}) {
   //get param data from specific screen
-  const { type } = route.params;
+  const {type} = route.params;
   const addressType = route?.params?.addressType;
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -41,29 +60,28 @@ export default function Location({ route, navigation }) {
     searchResult: [],
   });
 
-  const { isLoading, address, curLatLng, nearByAddressess, searchResult } = state;
+  const {isLoading, address, curLatLng, nearByAddressess, searchResult} = state;
 
   //Reduc store data
-  const { appData, appStyle, themeColors } = useSelector(
+  const {appData, appStyle, themeColors} = useSelector(
     (state) => state?.initBoot,
   );
-  const { profile } = appData;
+  const {profile} = appData;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({ fontFamily });
+  const styles = stylesFun({fontFamily});
   useEffect(() => {
-    Geocoder.init(profile.preferences.map_key, { language: 'en' }); // set the language
+    Geocoder.init(profile.preferences.map_key, {language: 'en'}); // set the language
   }, []);
 
   //update state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
-
+    () => {
+      navigation.navigate(screenName, {data});
+    };
 
   useEffect(() => {
     getLiveLocation();
@@ -72,9 +90,9 @@ export default function Location({ route, navigation }) {
   const getLiveLocation = async () => {
     const locPermissionDenied = await locationPermission();
     if (locPermissionDenied) {
-      const { latitude, longitude } = await getCurrentLocationFromApi();
+      const {latitude, longitude} = await getCurrentLocationFromApi();
       // console.log("get live location after 4 second")
-      updateState({ curLatLng: { latitude, longitude } });
+      updateState({curLatLng: {latitude, longitude}});
       getNearByAddress(`${latitude}, ${longitude}`);
     }
   };
@@ -106,7 +124,7 @@ export default function Location({ route, navigation }) {
     getCurrentLocation('home')
       .then((res) => {
         let details = {};
-        updateState({ address: res.address })
+        updateState({address: res.address});
         details = {
           formatted_address: res?.address,
           geometry: {
@@ -175,19 +193,14 @@ export default function Location({ route, navigation }) {
   };
 
   const handleAddressOnKeyUp = (text) => {
-    updateState({ address: text });
+    updateState({address: text});
   };
 
-  const _moveToNextScreen = (data) => {
-
-  }
-
+  const _moveToNextScreen = (data) => {};
 
   const updateCurValues = (text) => {
-    updateState({ address: text });
+    updateState({address: text});
   };
-
-
 
   const onPressAddress = async (place) => {
     Keyboard.dismiss();
@@ -195,8 +208,11 @@ export default function Location({ route, navigation }) {
     // return;
     if (!!place.place_id && !!place?.name) {
       try {
-        let res = await getPlaceDetails(place.place_id, profile?.preferences?.map_key);
-        const { result } = res;
+        let res = await getPlaceDetails(
+          place.place_id,
+          profile?.preferences?.map_key,
+        );
+        const {result} = res;
         console.log('res===', result);
 
         let details = {};
@@ -205,7 +221,7 @@ export default function Location({ route, navigation }) {
           geometry: {
             location: {
               lat: result?.geometry.location.lat,
-              lng: result?.geometry.location.longitude,
+              lng: result?.geometry.location.lng,
             },
           },
         };
@@ -221,7 +237,6 @@ export default function Location({ route, navigation }) {
             addressType,
           });
         }
-
       } catch (error) {
         console.log("something wen't wrong");
       }
@@ -239,8 +254,10 @@ export default function Location({ route, navigation }) {
             ? colors.whiteOpacity22
             : colors.lightGreyBg,
         }}
-        onPress={() => onPressAddress({ place_id: item.place_id, name: item.name })}>
-        <View style={{ flex: 0.12 }}>
+        onPress={() =>
+          onPressAddress({place_id: item.place_id, name: item.name})
+        }>
+        <View style={{flex: 0.12}}>
           <Image
             style={{
               height: moderateScale(24),
@@ -250,7 +267,7 @@ export default function Location({ route, navigation }) {
             source={imagePath.RecentLocationImage}
           />
         </View>
-        <View style={{ flex: 0.9 }}>
+        <View style={{flex: 0.9}}>
           <Text
             style={{
               fontSize: textScale(12),
@@ -284,10 +301,10 @@ export default function Location({ route, navigation }) {
             : colors.lightGreyBg,
         }}
         onPress={() => onPressAddress(item)}>
-        <View style={{ flex: 0.15 }}>
+        <View style={{flex: 0.15}}>
           <Image source={imagePath.RecentLocationImage} />
         </View>
-        <View style={{ flex: 0.9 }}>
+        <View style={{flex: 0.9}}>
           <Text
             style={{
               fontSize: textScale(12),
@@ -311,12 +328,10 @@ export default function Location({ route, navigation }) {
     );
   };
 
-
   return (
     <WrapperContainer
       statusBarColor={colors.white}
-      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
-    >
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
       <View
         style={{
           flex: 1,
@@ -324,7 +339,6 @@ export default function Location({ route, navigation }) {
             ? MyDarkTheme.colors.background
             : colors.white,
         }}>
-
         <View
           style={{
             flexDirection: 'row',
@@ -347,19 +361,19 @@ export default function Location({ route, navigation }) {
               }
               style={{
                 tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
               }}
             />
           </TouchableOpacity>
 
-          <View style={{ flex: 0.9 }}>
+          <View style={{flex: 0.9}}>
             <SearchPlaces
               curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
               autoFocus={true}
               placeHolder={strings.SEARCH_LOCATION}
               value={address} // instant update search value
               mapKey={profile?.preferences?.map_key} //send here google Key
-              fetchArrayResult={(data) => updateState({ searchResult: data })}
+              fetchArrayResult={(data) => updateState({searchResult: data})}
               setValue={(text) => updateCurValues(text)} //return & update on change text value
               _moveToNextScreen={getCurrentLocate}
             />
@@ -383,24 +397,21 @@ export default function Location({ route, navigation }) {
           </View> */}
         </View>
 
-
         <ScrollView
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}>
           {!!searchResult && searchResult.length > 0 ? (
-            <View style={{ marginTop: moderateScaleVertical(16) }}>
-              <View style={{ ...styles.savedAddressView }}>
+            <View style={{marginTop: moderateScaleVertical(16)}}>
+              <View style={{...styles.savedAddressView}}>
                 <Image
-                  style={{ marginHorizontal: moderateScale(12) }}
+                  style={{marginHorizontal: moderateScale(12)}}
                   source={imagePath.starRoundedBackground}
                 />
                 <Text
                   numberOfLines={1}
                   style={{
                     ...styles.addresssLableName,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}>
                   {strings.SEARCHED_RESULTS}
                 </Text>
@@ -410,19 +421,17 @@ export default function Location({ route, navigation }) {
               })}
             </View>
           ) : (
-            <View style={{ marginTop: moderateScaleVertical(16) }}>
-              <View style={{ ...styles.savedAddressView }}>
+            <View style={{marginTop: moderateScaleVertical(16)}}>
+              <View style={{...styles.savedAddressView}}>
                 <Image
-                  style={{ marginHorizontal: moderateScale(12) }}
+                  style={{marginHorizontal: moderateScale(12)}}
                   source={imagePath.starRoundedBackground}
                 />
                 <Text
                   numberOfLines={1}
                   style={{
                     ...styles.addresssLableName,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}>
                   {strings.NEARBY_LOCATION}
                 </Text>
@@ -433,7 +442,6 @@ export default function Location({ route, navigation }) {
             </View>
           )}
         </ScrollView>
-
 
         {/* <View style={{ marginTop: moderateScaleVertical(16) }}>
           <View style={{ ...styles.savedAddressView }}>
@@ -456,7 +464,6 @@ export default function Location({ route, navigation }) {
             return renderAddressess(val);
           })}
         </View> */}
-
       </View>
       {/* 
       <View style={{ zIndex: -1000 }}>
@@ -483,6 +490,6 @@ export default function Location({ route, navigation }) {
           </View>
         </TouchableOpacity>
       </View> */}
-    </WrapperContainer >
+    </WrapperContainer>
   );
 }
