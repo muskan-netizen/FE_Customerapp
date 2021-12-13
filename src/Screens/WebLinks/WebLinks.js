@@ -15,6 +15,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import HTMLView from 'react-native-htmlview';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
@@ -27,6 +28,7 @@ import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import actions from '../../redux/actions';
+import {getReturnOrderDetailData} from '../../redux/actions/order';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
@@ -266,14 +268,27 @@ export default function WebLinks({navigation, route}) {
     if (!checkValid) {
       return;
     }
-
+    // let isRequired = true;
     // driverRegDocs?.driver_registration_documents.map((item, index) => {
     //   if (item.is_required) {
-    //     if (driverRegistrationDocs.includes(item)) {
-    //       console.log(item, 'itemitemitem', driverRegistrationDocs);
-    //       showError(`Please choose ${item.name} field`);
-    //       return;
+    //     if (driverRegistrationDocs.length === 0) {
+    //       // console.log(
+    //       //   driverRegDocs?.driver_registration_documents[0].is_required,
+    //       //   'driverRegDocsdriverRegDocs',
+    //       // );
     //     }
+    //     driverRegistrationDocs.map((itm, indx) => {
+    //       if (isRequired) {
+    //         if (itm.item.id === item.id) {
+    //           console.log(itm.item, 'matched');
+    //           isRequired = false;
+    //           return;
+    //         } else {
+    //           console.log(itm.item, 'not matched');
+    //           return;
+    //         }
+    //       }
+    //     });
     //   }
     // });
 
@@ -338,22 +353,22 @@ export default function WebLinks({navigation, route}) {
         .catch(errorMethod);
     } else {
       var formData = new FormData();
-      formData.append('full_name', 'fullname');
-      formData.append('email', 'email');
-      formData.append('phone_number', 'phoneNumber');
-      formData.append('title', 'title');
-      formData.append('dialCode', '91'); //callingCode
-      formData.append('password', 'password');
-      formData.append('confirm_password', 'confirm_password');
-      formData.append('name', 'vendor_name');
-      formData.append('vendor_description', 'description');
-      formData.append('address', 'address');
+      formData.append('full_name', fullname);
+      formData.append('email', email);
+      formData.append('phone_number', phoneNumber);
+      formData.append('title', title);
+      formData.append('dialCode', callingCode);
+      formData.append('password', password);
+      formData.append('confirm_password', confirm_password);
+      formData.append('name', vendor_name);
+      formData.append('vendor_description', description);
+      formData.append('address', address);
       formData.append('website', 'website');
-      formData.append('delivery', 1); //isDelivery
-      formData.append('dine_in', 1); //isDineIn
-      formData.append('takeaway', 1); // isTakeaway
-      formData.append('countryData', 'IN');
-      formData.append('check_conditions', 1); //isTermsConditions
+      formData.append('delivery', isDelivery ? 1 : 0);
+      formData.append('dine_in', isDineIn ? 1 : 0);
+      formData.append('takeaway', isTakeaway ? 1 : 0);
+      formData.append('countryData', cca2);
+      formData.append('check_conditions', isTermsConditions ? 1 : 0);
       formData.append('upload_logo', {
         uri: vendorLogo.path,
         name: vendorLogo.filename,
@@ -535,7 +550,7 @@ export default function WebLinks({navigation, route}) {
     return (
       <View
         style={{
-          marginVertical: moderateScale(7),
+          marginTop: moderateScale(15),
         }}>
         <Text
           style={{
@@ -552,7 +567,7 @@ export default function WebLinks({navigation, route}) {
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginVertical: moderateScaleVertical(8),
+                marginTop: moderateScaleVertical(8),
               }}>
               <TouchableOpacity
                 onPress={() => uploadDocs(item?.file_type, item, index)}
@@ -735,7 +750,7 @@ export default function WebLinks({navigation, route}) {
       />
       <View style={{...commonStyles.headerTopLine}} />
 
-      <ScrollView
+      <KeyboardAwareScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -995,28 +1010,53 @@ export default function WebLinks({navigation, route}) {
               />
             </View>
 
-            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-              {/* <TouchableOpacity
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                marginVertical: moderateScale(10),
+                alignItems: 'center',
+              }}>
+              <TouchableOpacity
                 onPress={() =>
                   updateState({isTermsConditions: !isTermsConditions})
-                }
-                
-              >
-
-              </TouchableOpacity> */}
-              <Text>I accept the </Text>
-              <TouchableOpacity>
-                <Text>Terms And Conditions</Text>
+                }>
+                <Image
+                  source={
+                    isTermsConditions ? imagePath.check : imagePath.unCheck
+                  }
+                />
               </TouchableOpacity>
-              <Text> and have read the </Text>
-              <TouchableOpacity>
-                <Text>Privacy Policy.</Text>
+              <Text style={{fontFamily: fontFamily.regular}}>
+                {strings.I_ACCEPT}{' '}
+              </Text>
+              <TouchableOpacity activeOpacity={0.7} onP>
+                <Text
+                  style={{
+                    fontFamily: fontFamily.regular,
+                    color: colors.blueColor,
+                  }}>
+                  {strings.TERMS_CONDITIONS}
+                </Text>
+              </TouchableOpacity>
+              <Text style={{fontFamily: fontFamily.regular}}>
+                {' '}
+                {strings.HAVE_READ}{' '}
+              </Text>
+              <TouchableOpacity activeOpacity={0.7}>
+                <Text
+                  style={{
+                    fontFamily: fontFamily.regular,
+                    color: colors.blueColor,
+                  }}>
+                  {strings.PRIVACY_POLICY}
+                </Text>
               </TouchableOpacity>
             </View>
 
             <GradientButton
               onPress={_onSubmit}
-              marginTop={moderateScaleVertical(10)}
+              marginTop={moderateScaleVertical(5)}
               btnText={strings.SUBMIT}
             />
             <View
@@ -1442,7 +1482,7 @@ export default function WebLinks({navigation, route}) {
             />
           </View>
         )}
-      </ScrollView>
+      </KeyboardAwareScrollView>
       <ActionSheet
         ref={actionSheet}
         options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}

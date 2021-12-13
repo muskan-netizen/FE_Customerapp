@@ -657,4 +657,11 @@ export default {
   LICENCE_PLATE: 'Licence Plate',
   COLOR: 'Color',
   TRANSPORT_TYPE: 'Transport Type',
+  PLEASE_SELECT: 'Please select',
+  EMPLOYEE: 'Employee',
+  FREELANCER: 'Freelancer',
+  I_ACCEPT: 'I accept the',
+  TERMS_CONDITIONS: 'Terms & Conditions',
+  HAVE_READ: 'and have read the',
+  PRIVACY_POLICY: 'Privacy Policy.',
 };
