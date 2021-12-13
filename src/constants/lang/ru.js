@@ -686,4 +686,7 @@ export default {
   LICENCE_PLATE: 'Licence Plate',
   COLOR: 'Color',
   TRANSPORT_TYPE: 'Transport Type',
+  REPEAT_LAST_CUSTOMIZATION: 'Repeat last used customization?',
+  ADD_NEW: 'Add new',
+  REPEAT_LAST: 'Repeat last',
 };

@@ -713,4 +713,7 @@ Amount`,
   COLOR: 'Color',
   TRANSPORT_TYPE: 'Transport Type',
   PLEASE_SELECT: 'Please select',
+  REPEAT_LAST_CUSTOMIZATION: 'Repeat last used customization?',
+  ADD_NEW: 'Add new',
+  REPEAT_LAST: 'Repeat last',
 };
