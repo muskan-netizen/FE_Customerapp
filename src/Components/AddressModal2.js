@@ -69,7 +69,7 @@ export default function AddressModal2({
     addressTypeArray: [
       {
         id: 1,
-        lable: strings.HOME,
+        lable: strings.HOME_1,
         icon: imagePath.home,
       },
       {id: 2, lable: 'Work', icon: imagePath.workInActive},

@@ -172,6 +172,7 @@ export default {
   POPULARITY: 'Popularity',
   MOST_PURCHASED: 'Most purchased',
   HOME: 'Home',
+  HOME_1: 'Home',
   HOLD_ON: 'Hold On',
   EXIT_WARNING: 'Are you sure you want to quit?',
   YES: 'Yes',
