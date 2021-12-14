@@ -716,4 +716,5 @@ export default {
   TERMS_CONDITIONS: 'Terms & Conditions',
   HAVE_READ: 'and have read the',
   PRIVACY_POLICY: 'Privacy Policy.',
+  NO_CARS_AVAILABLE: 'No cars available',
 };

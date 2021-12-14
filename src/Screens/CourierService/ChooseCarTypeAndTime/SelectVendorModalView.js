@@ -112,7 +112,9 @@ export default function SelectVendorModalView({
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={styles.noCarsAvailable}>{'No cars available'}</Text>
+          <Text style={styles.noCarsAvailable}>
+            {strings.NO_CARS_AVAILABLE}
+          </Text>
         </View>
       </>
     );

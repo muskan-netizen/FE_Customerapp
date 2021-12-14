@@ -592,7 +592,7 @@ export default function TaxiHomeDashbord({
           renderItem={_renderItem}
         />
 
-{/* findCabCategory */}
+        {/* findCabCategory */}
         {true && (
           <>
             <View
