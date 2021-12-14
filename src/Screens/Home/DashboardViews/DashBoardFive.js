@@ -70,10 +70,10 @@ export default function DashBoardFive({
     vendorsData: [],
   });
 
-
-
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  const {appData, themeColors, appStyle} = useSelector((state) => state?.initBoot);
+  const {appData, themeColors, appStyle} = useSelector(
+    (state) => state?.initBoot,
+  );
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   const allCategory = appMainData?.categories;
@@ -390,7 +390,10 @@ export default function DashBoardFive({
     );
   }
 
-  console.log("themeColors.primary_colorthemeColors.primary_color",themeColors.primary_color)
+  console.log(
+    'themeColors.primary_colorthemeColors.primary_color',
+    themeColors.primary_color,
+  );
 
   return (
     <View style={{flex: 1}}>
@@ -467,62 +470,67 @@ export default function DashBoardFive({
             </>
           )}
 
-          {businessType !== 'laundry'  && (<View style={{}}>
-            {appMainData &&
-              appMainData?.featured_products &&
-              !!appMainData?.featured_products.length && (
-                <>
-                  {appIds.orderchekout == DeviceInfo.getBundleId() ? (
-                    <View>{listHeader(strings.ALCOHAL)}</View>
-                  ) : (
-                    <View>{listHeader(strings.FEATURED_PRODUCTS)}</View>
+          {businessType !== 'laundry' && (
+            <View style={{}}>
+              {appMainData &&
+                appMainData?.featured_products &&
+                !!appMainData?.featured_products.length && (
+                  <>
+                    {appIds.orderchekout == DeviceInfo.getBundleId() ? (
+                      <View>{listHeader(strings.ALCOHAL)}</View>
+                    ) : (
+                      <View>{listHeader(strings.FEATURED_PRODUCTS)}</View>
+                    )}
+
+                    <FlatList
+                      showsHorizontalScrollIndicator={false}
+                      horizontal
+                      data={appMainData?.featured_products}
+                      renderItem={renderFeaturedProducts}
+                      keyExtractor={(item) => item.id.toString()}
+                      ItemSeparatorComponent={() => (
+                        <View style={{marginRight: moderateScale(16)}} />
+                      )}
+                      ListHeaderComponent={() => (
+                        <View style={{marginLeft: moderateScale(16)}} />
+                      )}
+                      ListFooterComponent={() => (
+                        <View style={{marginRight: moderateScale(16)}} />
+                      )}
+                    />
+                  </>
+                )}
+            </View>
+          )}
+
+          {businessType !== 'laundry' &&
+            appIds.orderchekout != DeviceInfo.getBundleId() && (
+              <View style={{}}>
+                {appMainData &&
+                  appMainData?.new_products &&
+                  !!appMainData?.new_products.length && (
+                    <>
+                      <View>{listHeader(strings.NEW_PRODUCTS)}</View>
+                      <FlatList
+                        showsHorizontalScrollIndicator={false}
+                        horizontal
+                        data={appMainData?.new_products}
+                        renderItem={renderFeaturedProducts}
+                        keyExtractor={(item) => item.id.toString()}
+                        ItemSeparatorComponent={() => (
+                          <View style={{marginRight: moderateScale(16)}} />
+                        )}
+                        ListHeaderComponent={() => (
+                          <View style={{marginLeft: moderateScale(16)}} />
+                        )}
+                        ListFooterComponent={() => (
+                          <View style={{marginRight: moderateScale(16)}} />
+                        )}
+                      />
+                    </>
                   )}
-
-                  <FlatList
-                    showsHorizontalScrollIndicator={false}
-                    horizontal
-                    data={appMainData?.featured_products}
-                    renderItem={renderFeaturedProducts}
-                    keyExtractor={(item) => item.id.toString()}
-                    ItemSeparatorComponent={() => (
-                      <View style={{marginRight: moderateScale(16)}} />
-                    )}
-                    ListHeaderComponent={() => (
-                      <View style={{marginLeft: moderateScale(16)}} />
-                    )}
-                    ListFooterComponent={() => (
-                      <View style={{marginRight: moderateScale(16)}} />
-                    )}
-                  />
-                </>
-              )}
-          </View>)}
-
-          {businessType !== 'laundry' && (<View style={{}}>
-            {appMainData &&
-              appMainData?.new_products &&
-              !!appMainData?.new_products.length && (
-                <>
-                  <View>{listHeader(strings.NEW_PRODUCTS)}</View>
-                  <FlatList
-                    showsHorizontalScrollIndicator={false}
-                    horizontal
-                    data={appMainData?.new_products}
-                    renderItem={renderFeaturedProducts}
-                    keyExtractor={(item) => item.id.toString()}
-                    ItemSeparatorComponent={() => (
-                      <View style={{marginRight: moderateScale(16)}} />
-                    )}
-                    ListHeaderComponent={() => (
-                      <View style={{marginLeft: moderateScale(16)}} />
-                    )}
-                    ListFooterComponent={() => (
-                      <View style={{marginRight: moderateScale(16)}} />
-                    )}
-                  />
-                </>
-              )}
-          </View>)}
+              </View>
+            )}
 
           {/* {appIds.orderchekout == DeviceInfo.getBundleId() ? (
             <></>
