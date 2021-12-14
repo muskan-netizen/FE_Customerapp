@@ -353,7 +353,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.blip'
+            applicationId 'com.app.blip'
             resValue "string", "app_name", "BLIP"
             resValue "string", "host_name", ""
         }

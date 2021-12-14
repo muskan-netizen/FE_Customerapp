@@ -236,7 +236,7 @@ const appIds = {
   }),
   blip: Platform.select({
     ios: 'com.blip',
-    android: 'com.blip',
+    android: 'com.app.blip',
   }),
   helpnowrightnow: Platform.select({
     ios: 'com.helpnowrightnow',
