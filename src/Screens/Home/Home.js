@@ -392,7 +392,6 @@ export default function Home({ route, navigation }) {
   //onPress Category
   const onPressCategory = (item) => {
     console.log('category press', item);
-
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (

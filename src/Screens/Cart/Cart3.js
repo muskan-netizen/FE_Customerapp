@@ -571,7 +571,7 @@ export default function Cart({ navigation, route }) {
 
   //Verify your promo code
   const _removeCoupon = (item, cartData) => {
-    updateState({ isLoadingB: true });
+    // updateState({ isLoadingB: true });
     let data = {};
     data['vendor_id'] = item?.vendor_id;
     data['cart_id'] = cartData?.id;
@@ -805,7 +805,7 @@ export default function Cart({ navigation, route }) {
             _finalPayment();
           }
           updateState({
-            isLoadingB: toHitApiForPlaceOrder ? true : false,
+            // isLoadingB: toHitApiForPlaceOrder ? true : false,
           });
         } else {
           updateState({
@@ -1766,32 +1766,32 @@ export default function Cart({ navigation, route }) {
                       alignItems: 'center',
                     }}>
                     <Image
-                      style={{tintColor: themeColors.primary_color}}
+                      style={{ tintColor: themeColors.primary_color }}
                       source={imagePath.percent}
                     />
                     <Text
                       numberOfLines={1}
                       style={[
                         styles.viewOffers,
-                        {marginLeft: moderateScale(10)},
+                        { marginLeft: moderateScale(10) },
                       ]}>
                       {`${strings.CODE} ${item?.couponData?.name} ${strings.APPLYED}`}
                     </Text>
                   </View>
-                  <View style={{flex: 0.3, alignItems: 'flex-end'}}>
+                  <View style={{ flex: 0.3, alignItems: 'flex-end' }}>
                     {/* <Image source={imagePath.crossBlueB}  /> */}
                     <Text
                       onPress={() => _removeCoupon(item, cartData)}
                       style={[
                         styles.removeCoupon,
-                        {color: colors.cartItemPrice},
+                        { color: colors.cartItemPrice },
                       ]}>
                       {strings.REMOVE}
                     </Text>
                   </View>
                 </View>
               ) : (
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Image
                     style={{ tintColor: themeColors.primary_color }}
                     source={imagePath.percent}
@@ -3329,7 +3329,7 @@ export default function Cart({ navigation, route }) {
   //SelectAddress
   const selectAddress = (address) => {
     if (!!userData?.auth_token) {
-      updateState({ isLoadingB: true });
+      // updateState({ isLoadingB: true });
       let data = {};
       let query = `/${address?.id}`;
       actions
