@@ -46,6 +46,7 @@ export default function GooglePlaceInput({
     : colors.textGreyOpcaity7,
   getResults = () => {},
   selectionColor = colors.textGreyB,
+  style = {}
 }) {
   const [state, setState] = useState({
     isLoading: true,
@@ -153,6 +154,7 @@ export default function GooglePlaceInput({
           },
           onBlur: onBlur,
           onFocus: onFocus,
+          ...style
         }}
         enableHighAccuracyLocation={true}
         keyboardShouldPersistTaps={'handled'}

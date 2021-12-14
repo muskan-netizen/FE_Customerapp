@@ -3,6 +3,7 @@ import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
 } from '../../styles/responsiveSize';
 
 export default ({fontFamily}) => {
@@ -43,6 +44,26 @@ export default ({fontFamily}) => {
       marginHorizontal: moderateScale(15),
       marginTop: moderateScaleVertical(70),
     },
+    savedAddressView: {
+      flexDirection: 'row',
+      marginBottom: moderateScaleVertical(8),
+      alignItems: 'center'
+    },
+    addresssLableName: {
+      fontSize: textScale(12),
+      color: colors.black,
+      fontFamily: fontFamily.medium,
+
+      marginLeft: moderateScale(6),
+    },
+    addressViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: 6,
+      paddingHorizontal: moderateScale(10),
+      borderBottomWidth: 0.5,
+      marginBottom: moderateScaleVertical(4),
+    }
   });
   return styles;
 };

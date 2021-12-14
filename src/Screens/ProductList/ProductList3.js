@@ -52,6 +52,7 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
+  StatusBarHeight,
   textScale,
   width,
 } from '../../styles/responsiveSize';
@@ -1899,12 +1900,6 @@ export default function Products({route, navigation}) {
       <View>
         {!!categoryInfo?.categoriesList ? (
           <View style={{...styles.header2, height: height * 0.29}}>
-            {/* <StatusBar
-              translucent
-              barStyle={
-                Platform.OS === 'ios' ? 'light-content' : 'dark-content'
-              }
-            /> */}
             <View style={{height: '80%'}}>
               <ImageBackground
                 source={{
@@ -1928,182 +1923,127 @@ export default function Products({route, navigation}) {
                 <LinearGradient
                   style={styles.linearGradientHdr}
                   colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0.7)']}>
-                  <SafeAreaView>
-                    <View
-                      style={[styles.hdrCompHeader, {flex: 0, width: '100%'}]}>
-                      <TouchableOpacity
-                        hitSlop={styles.hitSlopProp}
-                        onPress={() => navigation.goBack()}
-                        style={{flex: 0.2}}>
-                        <Image
-                          source={imagePath.icBackb}
-                          style={{
-                            marginLeft: moderateScale(10),
-                            tintColor: colors.white,
-                            transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                          }}
-                        />
-                      </TouchableOpacity>
-                      {/* <FastImage
-                      source={{
-                        uri: getImageUrl(
-                          categoryInfo?.banner?.image_fit ||
-                            categoryInfo?.image?.image_fit,
-                          categoryInfo?.banner?.image_path ||
-                            categoryInfo?.image?.image_path,
-                          '400/400',
-                        ),
-                        priority: FastImage.priority.low,
+                  <TouchableOpacity
+                    hitSlop={styles.hitSlopProp}
+                    activeOpacity={0.7}
+                    style={{
+                      width: moderateScale(30),
+                      height: moderateScale(30),
+                      justifyContent: 'center',
+                      marginLeft: moderateScale(10),
+                    }}
+                    onPress={() => navigation.goBack()}>
+                    <Image
+                      source={imagePath.icBackb}
+                      style={{
+                        tintColor: colors.white,
+                        transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
                       }}
-                      style={styles.hdrCompRoundImg}
-                    /> */}
+                    />
+                  </TouchableOpacity>
 
-                      {/* <View style={styles.rightViewOfShareSearch}>
-                      <TouchableOpacity
-                        activeOpacity={0.8}
-                        onPress={moveToNewScreen(
-                          navigationStrings.SEARCHPRODUCTOVENDOR,
-                          {
-                            type: data?.vendor
-                              ? staticStrings.VENDOR
-                              : staticStrings.CATEGORY,
-                            id: data?.vendor ? data?.id : productListId?.id,
-                          },
-                        )}>
-                        <Image
-                          style={{
-                            tintColor: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.white,
-                            transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                          }}
-                          source={
-                            !!data?.showAddToCart ? false : imagePath.icSearchb
-                          }
-                        />
-                      </TouchableOpacity>
-                      <View style={{marginHorizontal: moderateScale(8)}} />
-                      <TouchableOpacity
-                        onPress={onShare}
-                        hitSlop={hitSlopProp}
-                        activeOpacity={0.8}>
-                        <Image
-                          style={{
-                            tintColor: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.white,
-                            transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                          }}
-                          source={imagePath.icShareb}
-                        />
-                      </TouchableOpacity>
-                    </View> */}
-                    </View>
+                  <View style={{width: width, paddingLeft: moderateScale(13)}}>
                     <View
-                      style={{width: width, paddingLeft: moderateScale(13)}}>
-                      <View
+                      style={{
+                        marginTop: moderateScale(10),
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
+                      <Text
+                        numberOfLines={2}
                         style={{
-                          marginTop: moderateScale(20),
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
+                          ...styles.hdrTitleTxt,
+                          flex: 0,
+                          textAlign: 'left',
+                          fontSize: textScale(15),
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.white,
                         }}>
-                        <Text
-                          numberOfLines={2}
-                          style={{
-                            ...styles.hdrTitleTxt,
-                            flex: 0,
-                            textAlign: 'left',
-                            fontSize: textScale(15),
-                            color: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.white,
-                          }}>
-                          {data?.name || categoryInfo?.name || ''}
-                        </Text>
-                        {!!categoryInfo &&
-                          !!categoryInfo?.product_avg_average_rating && (
-                            <View
-                              style={[
-                                styles.hdrRatingTxtView,
-                                {
-                                  backgroundColor: colors.yellowC,
-                                  width: moderateScale(50),
-                                  justifyContent: 'center',
-                                  height: moderateScale(20),
-                                },
-                              ]}>
-                              <Text
-                                style={[
-                                  styles.ratingTxt,
-                                  {fontSize: textScale(9.5)},
-                                ]}>
-                                {Number(
-                                  categoryInfo?.product_avg_average_rating,
-                                ).toFixed(1)}
-                              </Text>
-                              <Image
-                                style={styles.starImg}
-                                source={imagePath.star}
-                                resizeMode="contain"
-                              />
-                            </View>
-                          )}
-                      </View>
-                      <View
-                        style={{
-                          marginTop: moderateScale(5),
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}>
-                        <Text
-                          numberOfLines={2}
-                          style={{
-                            ...styles.hdrTitleTxt,
-                            flex: 0,
-                            fontSize: textScale(12.5),
-                            fontFamily: fontFamily.regular,
-                            textAlign: 'left',
-                            color: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.white,
-                            width: width / 1.5,
-                          }}>
-                          {categoryInfo?.address || ''}
-                        </Text>
-
-                        {!!categoryInfo && (
+                        {data?.name || categoryInfo?.name || ''}
+                      </Text>
+                      {!!categoryInfo &&
+                        !!categoryInfo?.product_avg_average_rating && (
                           <View
                             style={[
                               styles.hdrRatingTxtView,
                               {
+                                backgroundColor: colors.yellowC,
+                                width: moderateScale(50),
                                 justifyContent: 'center',
                                 height: moderateScale(20),
-                                backgroundColor: categoryInfo?.show_slot
-                                  ? colors.green
-                                  : categoryInfo?.is_vendor_closed
-                                  ? colors.redB
-                                  : colors.green,
                               },
                             ]}>
                             <Text
-                              style={{
-                                ...styles.ratingTxt,
-                                color: colors.white,
-                                fontSize: textScale(9.5),
-                              }}>
-                              {categoryInfo?.show_slot
-                                ? strings.OPEN
-                                : categoryInfo?.is_vendor_closed
-                                ? strings.CLOSE
-                                : strings.OPEN}
+                              style={[
+                                styles.ratingTxt,
+                                {fontSize: textScale(9.5)},
+                              ]}>
+                              {Number(
+                                categoryInfo?.product_avg_average_rating,
+                              ).toFixed(1)}
                             </Text>
+                            <Image
+                              style={styles.starImg}
+                              source={imagePath.star}
+                              resizeMode="contain"
+                            />
                           </View>
                         )}
-                      </View>
                     </View>
-                  </SafeAreaView>
-                </LinearGradient>
+                    <View
+                      style={{
+                        marginTop: moderateScale(5),
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
+                      <Text
+                        numberOfLines={2}
+                        style={{
+                          ...styles.hdrTitleTxt,
+                          flex: 0,
+                          fontSize: textScale(12.5),
+                          fontFamily: fontFamily.regular,
+                          textAlign: 'left',
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.white,
+                          width: width / 1.5,
+                        }}>
+                        {categoryInfo?.address || ''}
+                      </Text>
 
+                      {!!categoryInfo && (
+                        <View
+                          style={[
+                            styles.hdrRatingTxtView,
+                            {
+                              justifyContent: 'center',
+                              height: moderateScale(20),
+                              backgroundColor: categoryInfo?.show_slot
+                                ? colors.green
+                                : categoryInfo?.is_vendor_closed
+                                ? colors.redB
+                                : colors.green,
+                            },
+                          ]}>
+                          <Text
+                            style={{
+                              ...styles.ratingTxt,
+                              color: colors.white,
+                              fontSize: textScale(9.5),
+                            }}>
+                            {categoryInfo?.show_slot
+                              ? strings.OPEN
+                              : categoryInfo?.is_vendor_closed
+                              ? strings.CLOSE
+                              : strings.OPEN}
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+                  </View>
+                </LinearGradient>
                 {/* ****************************************/}
                 <View
                   style={{
@@ -3202,7 +3142,7 @@ export default function Products({route, navigation}) {
           btnText={
             CartItems && CartItems.data && CartItems.data.item_count
               ? `${CartItems.data.item_count} ${
-                  CartItems.data.item_count <= 1 ? strings.ITEM : strings.ITEMS
+                  CartItems.data.item_count > 1 ? strings.ITEM : strings.ITEMS
                 } | ${
                   currencies.primary_currency.symbol
                 }${currencyNumberFormatter(

@@ -688,4 +688,11 @@ export default {
   REPEAT_LAST_CUSTOMIZATION: 'Repeat last used customization?',
   ADD_NEW: 'Add new',
   REPEAT_LAST: 'Repeat last',
+  PLEASE_SELECT: 'Please select',
+  EMPLOYEE: 'Employee',
+  FREELANCER: 'Freelancer',
+  I_ACCEPT: 'I accept the',
+  TERMS_CONDITIONS: 'Terms & Conditions',
+  HAVE_READ: 'and have read the',
+  PRIVACY_POLICY: 'Privacy Policy.',
 };

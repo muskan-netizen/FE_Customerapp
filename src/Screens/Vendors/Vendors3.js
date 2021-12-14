@@ -67,8 +67,8 @@ export default function Vendors3({route, navigation}) {
         {},
         {
           code: appData.profile.code,
-          latitude: location?.latitude.toString() || '',
-          longitude: location?.longitude.toString() || '',
+          latitude: location?.latitude || '',
+          longitude: location?.longitude || '',
         },
       )
       .then((res) => {

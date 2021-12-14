@@ -15,6 +15,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import HTMLView from 'react-native-htmlview';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {useSelector} from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
@@ -26,7 +27,9 @@ import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
+import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
+import {getReturnOrderDetailData} from '../../redux/actions/order';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
@@ -96,8 +99,8 @@ export default function WebLinks({navigation, route}) {
     driverName: '',
     driverPhoneNumber: '',
     driverTypes: [
-      {id: 1, name: 'Employee'},
-      {id: 2, name: 'Freelancer'},
+      {id: 1, name: strings.EMPLOYEE},
+      {id: 2, name: strings.FREELANCER},
     ],
     driverTags: '',
     driverSelectedTeam: '',
@@ -119,6 +122,9 @@ export default function WebLinks({navigation, route}) {
     vendorLogo: '',
     vendorBanner: '',
     isTermsConditions: false,
+    dialCode: appData?.profile.country?.phonecode
+      ? appData?.profile.country?.phonecode
+      : '91',
   });
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -178,6 +184,7 @@ export default function WebLinks({navigation, route}) {
     vendorLogo,
     vendorBanner,
     isTermsConditions,
+    callingCode,
   } = state;
 
   useEffect(() => {
@@ -217,31 +224,6 @@ export default function WebLinks({navigation, route}) {
   const _onCountryChange = (data) => {
     updateState({cca2: data.cca2, callingCode: data.callingCode[0]});
     return;
-  };
-
-  // upload Banner function
-  const uploadFile = async () => {
-    try {
-      const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.images || DocumentPicker.types.doc],
-      });
-      console.log(res, 'response');
-      let file = {
-        image_id: Math.random(),
-        name: res[0]?.name,
-        type: res[0]?.type,
-        uri: res[0]?.uri,
-      };
-      console.log(file, 'file');
-      updateState({imageArrayBanner: [...imageArrayBanner, file]});
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        // User cancelled the picker, exit any dialogs or menus and move on
-        console.log('cancel');
-      } else {
-        throw err;
-      }
-    }
   };
 
   const isValidData = () => {
@@ -287,14 +269,27 @@ export default function WebLinks({navigation, route}) {
     if (!checkValid) {
       return;
     }
-
+    // let isRequired = true;
     // driverRegDocs?.driver_registration_documents.map((item, index) => {
     //   if (item.is_required) {
-    //     if (driverRegistrationDocs.includes(item)) {
-    //       console.log(item, 'itemitemitem', driverRegistrationDocs);
-    //       showError(`Please choose ${item.name} field`);
-    //       return;
+    //     if (driverRegistrationDocs.length === 0) {
+    //       // console.log(
+    //       //   driverRegDocs?.driver_registration_documents[0].is_required,
+    //       //   'driverRegDocsdriverRegDocs',
+    //       // );
     //     }
+    //     driverRegistrationDocs.map((itm, indx) => {
+    //       if (isRequired) {
+    //         if (itm.item.id === item.id) {
+    //           console.log(itm.item, 'matched');
+    //           isRequired = false;
+    //           return;
+    //         } else {
+    //           console.log(itm.item, 'not matched');
+    //           return;
+    //         }
+    //       }
+    //     });
     //   }
     // });
 
@@ -308,7 +303,7 @@ export default function WebLinks({navigation, route}) {
         'type',
         !!selectedDriverType ? selectedDriverType.name : '',
       );
-      formData.append('dialCode', '91');
+      formData.append('dialCode', callingCode);
       formData.append('team', !!selectedTeam ? selectedTeam?.id : '');
       formData.append('make_model', driverTransportDetails);
       formData.append('uid', driverUID);
@@ -359,22 +354,22 @@ export default function WebLinks({navigation, route}) {
         .catch(errorMethod);
     } else {
       var formData = new FormData();
-      formData.append('full_name', 'fullname');
-      formData.append('email', 'email');
-      formData.append('phone_number', 'phoneNumber');
-      formData.append('title', 'title');
-      formData.append('dialCode', '91');
-      formData.append('password', 'password');
-      formData.append('confirm_password', 'confirm_password');
-      formData.append('name', 'vendor_name');
-      formData.append('vendor_description', 'description');
-      formData.append('address', 'address');
+      formData.append('full_name', fullname);
+      formData.append('email', email);
+      formData.append('phone_number', phoneNumber);
+      formData.append('title', title);
+      formData.append('dialCode', callingCode);
+      formData.append('password', password);
+      formData.append('confirm_password', confirm_password);
+      formData.append('name', vendor_name);
+      formData.append('vendor_description', description);
+      formData.append('address', address);
       formData.append('website', 'website');
-      formData.append('delivery', 1); //isDelivery
-      formData.append('dine_in', 1); //isDineIn
-      formData.append('takeaway', 1); // isTakeaway
-      formData.append('countryData', 'IN');
-      formData.append('check_conditions', 1); //isTermsConditions
+      formData.append('delivery', isDelivery ? 1 : 0);
+      formData.append('dine_in', isDineIn ? 1 : 0);
+      formData.append('takeaway', isTakeaway ? 1 : 0);
+      formData.append('countryData', cca2);
+      formData.append('check_conditions', isTermsConditions ? 1 : 0);
       formData.append('upload_logo', {
         uri: vendorLogo.path,
         name: vendorLogo.filename,
@@ -497,51 +492,55 @@ export default function WebLinks({navigation, route}) {
           mediaType: 'photo',
         })
           .then((res) => {
-            if (paramData?.slug === 'driver-registration') {
-              if (!!clickedIndx) {
-                {
-                  const driverRegistrationDocsAry = [...driverRegistrationDocs];
-                  driverRegistrationDocsAry[clickedIndx] = {
+            if (res && res.data) {
+              if (paramData?.slug === 'driver-registration') {
+                if (!!clickedIndx) {
+                  {
+                    const driverRegistrationDocsAry = [
+                      ...driverRegistrationDocs,
+                    ];
+                    driverRegistrationDocsAry[clickedIndx] = {
+                      item: clickedItem,
+                      fileData: res,
+                    };
+
+                    updateState({
+                      driverRegistrationDocs: driverRegistrationDocsAry,
+                    });
+                  }
+                  clickedIndx = null;
+                } else {
+                  updateState({
+                    driverPic: res,
+                  });
+                }
+              } else {
+                if (!!clickedIndx) {
+                  const vendorRegPdfImgAry = [...vendorRegisterationDocs];
+                  vendorRegPdfImgAry[clickedIndx] = {
                     item: clickedItem,
                     fileData: res,
                   };
 
                   updateState({
-                    driverRegistrationDocs: driverRegistrationDocsAry,
+                    vendorRegisterationDocs: vendorRegPdfImgAry,
                   });
-                }
-                clickedIndx = null;
-              } else {
-                updateState({
-                  driverPic: res,
-                });
-              }
-            } else {
-              if (!!clickedIndx) {
-                const vendorRegPdfImgAry = [...vendorRegisterationDocs];
-                vendorRegPdfImgAry[clickedIndx] = {
-                  item: clickedItem,
-                  fileData: res,
-                };
-
-                updateState({
-                  vendorRegisterationDocs: vendorRegPdfImgAry,
-                });
-                clickedIndx = null;
-              } else {
-                if (isVendorLogo) {
-                  updateState({
-                    vendorLogo: res,
-                  });
+                  clickedIndx = null;
                 } else {
-                  updateState({
-                    vendorBanner: res,
-                  });
+                  if (isVendorLogo) {
+                    updateState({
+                      vendorLogo: res,
+                    });
+                  } else {
+                    updateState({
+                      vendorBanner: res,
+                    });
+                  }
                 }
               }
             }
           })
-          .catch((err) => {});
+          .catch((err) => console.log(err, 'errerrerr'));
       } else {
         console.log('Cancle pressed');
       }
@@ -552,7 +551,7 @@ export default function WebLinks({navigation, route}) {
     return (
       <View
         style={{
-          marginVertical: moderateScale(7),
+          marginTop: moderateScale(15),
         }}>
         <Text
           style={{
@@ -569,7 +568,7 @@ export default function WebLinks({navigation, route}) {
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginVertical: moderateScaleVertical(8),
+                marginTop: moderateScaleVertical(8),
               }}>
               <TouchableOpacity
                 onPress={() => uploadDocs(item?.file_type, item, index)}
@@ -727,6 +726,18 @@ export default function WebLinks({navigation, route}) {
     });
   };
 
+ 
+
+  const _onLinkPress = (route) => {
+    if (route == 'terms') {
+      navigation.navigate(navigationStrings.WEBVIEWSCREEN, { url: driverRegDocs?.terms_and_conditions,})
+   
+    } else {
+      navigation.navigate(navigationStrings.WEBVIEWSCREEN, { url: driverRegDocs?.terms_and_conditions,})
+
+    }
+  };
+
   return (
     <WrapperContainer
       bgColor={
@@ -752,7 +763,7 @@ export default function WebLinks({navigation, route}) {
       />
       <View style={{...commonStyles.headerTopLine}} />
 
-      <ScrollView
+      <KeyboardAwareScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -1012,28 +1023,61 @@ export default function WebLinks({navigation, route}) {
               />
             </View>
 
-            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-              {/* <TouchableOpacity
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                marginVertical: moderateScale(10),
+                alignItems: 'center',
+              }}>
+              <TouchableOpacity
                 onPress={() =>
                   updateState({isTermsConditions: !isTermsConditions})
-                }
-                
-              >
-
-              </TouchableOpacity> */}
-              <Text>I accept the </Text>
-              <TouchableOpacity>
-                <Text>Terms And Conditions</Text>
+                }>
+                <Image
+                  source={
+                    isTermsConditions ? imagePath.check : imagePath.unCheck
+                  }
+                />
               </TouchableOpacity>
-              <Text> and have read the </Text>
-              <TouchableOpacity>
-                <Text>Privacy Policy.</Text>
+              <Text
+                style={{
+                  fontFamily: fontFamily.regular,
+                  marginLeft: moderateScale(3),
+                }}>
+                {strings.I_ACCEPT}{' '}
+              </Text>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => _onLinkPress('terms')}>
+                <Text
+                  style={{
+                    fontFamily: fontFamily.regular,
+                    color: colors.blueColor,
+                  }}>
+                  {strings.TERMS_CONDITIONS}
+                </Text>
+              </TouchableOpacity>
+              <Text style={{fontFamily: fontFamily.regular}}>
+                {' '}
+                {strings.HAVE_READ}{' '}
+              </Text>
+              <TouchableOpacity
+                onPress={() => _onLinkPress('privacy')}
+                activeOpacity={0.7}>
+                <Text
+                  style={{
+                    fontFamily: fontFamily.regular,
+                    color: colors.blueColor,
+                  }}>
+                  {strings.PRIVACY_POLICY}
+                </Text>
               </TouchableOpacity>
             </View>
 
             <GradientButton
               onPress={_onSubmit}
-              marginTop={moderateScaleVertical(10)}
+              marginTop={moderateScaleVertical(5)}
               btnText={strings.SUBMIT}
             />
             <View
@@ -1459,7 +1503,7 @@ export default function WebLinks({navigation, route}) {
             />
           </View>
         )}
-      </ScrollView>
+      </KeyboardAwareScrollView>
       <ActionSheet
         ref={actionSheet}
         options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
