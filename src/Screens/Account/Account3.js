@@ -68,7 +68,7 @@ export default function Account3({navigation}) {
 
   const userData = useSelector((state) => state.auth.userData);
   const appMainData = useSelector((state) => state?.home?.appMainData);
-
+  console.log(userData, 'userDAta');
   // useFocusEffect(
   //   React.useCallback(() => {
   //     _scrollRef.current.scrollTo(0);
