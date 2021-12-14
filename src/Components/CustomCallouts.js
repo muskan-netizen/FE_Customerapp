@@ -19,7 +19,7 @@ const CustomCallouts = ({data}) => {
     return (
         <>
             {data.map((val, index) => {
-                if (index == 0) {
+                if (index == 0) { //pickup location
                     return (
                         <Marker
                             key={`coordinate_${index}`}
@@ -66,7 +66,8 @@ const CustomCallouts = ({data}) => {
                                                 ...styles.pickupDropOff,
                                                 color: colors.black,
                                                 alignItems: 'center',
-                                                maxWidth: moderateScale(150),
+                                                maxWidth: moderateScale(180),
+                                                fontFamily: fontFamily.medium,
 
                                             }}>
                                            {val?.pre_address || val?.address}
@@ -85,7 +86,7 @@ const CustomCallouts = ({data}) => {
                         </Marker>
                     )
                 }
-                if (data.length - 1 == index) {
+                if (data.length - 1 == index) { //last drop location
                     return (
                         <Marker
                             key={`coordinate_${index}`}
@@ -136,10 +137,10 @@ const CustomCallouts = ({data}) => {
                                             numberOfLines={1}
                                             style={{
                                                 ...styles.pickupDropOff,
-                                                fontFamily: fontFamily.regular,
+                                                fontFamily: fontFamily.medium,
                                                 color: colors.black,
                                                 alignItems: 'center',
-                                                maxWidth: 150,
+                                                maxWidth: moderateScale(180),
 
                                             }}>
                                               {val?.pre_address || val?.address}
@@ -189,7 +190,7 @@ const styles = StyleSheet.create({
     pickupDropOff: {
         textAlign: 'center',
         alignItems: 'center',
-        fontSize: textScale(10),
+        fontSize: textScale(9),
     },
 });
 

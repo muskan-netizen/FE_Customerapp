@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>107840296915-kjrulli5l1uh7b8f8lo2k1olauhjrm4m.apps.googleusercontent.com</string>
+	<string>107840296915-c859tl3ainbiunq6j341bcf32j61kt4o.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.107840296915-kjrulli5l1uh7b8f8lo2k1olauhjrm4m</string>
+	<string>com.googleusercontent.apps.107840296915-c859tl3ainbiunq6j341bcf32j61kt4o</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>107840296915-bgj352p8jl2gjpcsvms7i73jnppuncu8.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.customer.orderchekout</string>
+	<string>com.orderchekout.application</string>
 	<key>PROJECT_ID</key>
 	<string>order-chekout-92be3</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:107840296915:ios:b2b18cb08eae0bbc634126</string>
+	<string>1:107840296915:ios:e23711468d3a25b5634126</string>
 </dict>
 </plist>

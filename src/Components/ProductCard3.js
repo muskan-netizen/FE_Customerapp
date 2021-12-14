@@ -302,7 +302,7 @@ export default function ProductCard3({
                 flex: 1,
                 justifyContent: url1 ? 'flex-start' : 'center',
               }}>
-              {!!data?.variant[0]?.quantity || (!!typeId && typeId == 8) || (!!businessType && businessType == 'laundry') ? (
+              {!!data?.variant[0]?.quantity || (!!typeId && typeId == 8) || (!!businessType && businessType == 'laundry') || data?.has_inventory == 0 ? (
                 <View
                   style={{
                     marginTop:

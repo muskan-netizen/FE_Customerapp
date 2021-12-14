@@ -27,6 +27,7 @@ import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
+import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import {getReturnOrderDetailData} from '../../redux/actions/order';
 import colors from '../../styles/colors';
@@ -725,6 +726,18 @@ export default function WebLinks({navigation, route}) {
     });
   };
 
+ 
+
+  const _onLinkPress = (route) => {
+    if (route == 'terms') {
+      navigation.navigate(navigationStrings.WEBVIEWSCREEN, { url: driverRegDocs?.terms_and_conditions,})
+   
+    } else {
+      navigation.navigate(navigationStrings.WEBVIEWSCREEN, { url: driverRegDocs?.terms_and_conditions,})
+
+    }
+  };
+
   return (
     <WrapperContainer
       bgColor={
@@ -1027,10 +1040,16 @@ export default function WebLinks({navigation, route}) {
                   }
                 />
               </TouchableOpacity>
-              <Text style={{fontFamily: fontFamily.regular}}>
+              <Text
+                style={{
+                  fontFamily: fontFamily.regular,
+                  marginLeft: moderateScale(3),
+                }}>
                 {strings.I_ACCEPT}{' '}
               </Text>
-              <TouchableOpacity activeOpacity={0.7} onP>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => _onLinkPress('terms')}>
                 <Text
                   style={{
                     fontFamily: fontFamily.regular,
@@ -1043,7 +1062,9 @@ export default function WebLinks({navigation, route}) {
                 {' '}
                 {strings.HAVE_READ}{' '}
               </Text>
-              <TouchableOpacity activeOpacity={0.7}>
+              <TouchableOpacity
+                onPress={() => _onLinkPress('privacy')}
+                activeOpacity={0.7}>
                 <Text
                   style={{
                     fontFamily: fontFamily.regular,
