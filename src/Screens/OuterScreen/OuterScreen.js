@@ -191,6 +191,7 @@ export default function OuterScreen({navigation}) {
         console.log(res, 'appleappleappleappleappleapple');
       })
       .catch((err) => {
+        console.log(err, 'error');
         updateState({isLoading: false});
       });
   };

@@ -72,7 +72,7 @@ export default function HomeCategoryCard2({
       </View>
       <View style={{flex: 0.2}}>
         <Text
-          numberOfLines={1}
+          // numberOfLines={1}
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
             fontFamily: fontFamily.regular,

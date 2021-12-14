@@ -8,54 +8,73 @@ import {
   moderateScaleVertical,
   width,
 } from '../../../styles/responsiveSize';
+import { useDarkMode } from 'react-native-dark-mode';
+import { useSelector } from 'react-redux';
 
 export default function ListEmptyCar({ isLoading = false }) {
+
+  const {themeToggle, themeColor} = useSelector((state) => state?.initBoot)
+  const darkthemeusingDevice = useDarkMode();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+
   if (isLoading) {
     return (
-      <View>
-        <View style={{ flexDirection: 'row' }}>
-          <CardLoader
-            cardWidth={width / 6}
-            height={moderateScaleVertical(40)}
-            listSize={1}
-            containerStyle={{
-              marginLeft: moderateScale(16),
-              //   backgroundColor: colors.white,
-              justifyContent: 'center',
-            }}
-          />
-          <View>
+      <View style={{ marginTop: moderateScaleVertical(16) }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <CardLoader
-              cardWidth={width / 4}
-              height={moderateScaleVertical(10)}
+              cardWidth={width / 6}
+              height={moderateScaleVertical(40)}
               listSize={1}
               containerStyle={{
                 marginLeft: moderateScale(16),
-                color: colors.white,
+                //   backgroundColor: colors.white,
+                justifyContent: 'center',
               }}
             />
-            <CardLoader
-              cardWidth={width / 2}
-              height={moderateScaleVertical(10)}
-              listSize={1}
-              containerStyle={{
-                marginLeft: moderateScale(16),
-                color: colors.white,
-              }}
-            />
+            <View>
+              <CardLoader
+                cardWidth={width / 5}
+                height={moderateScaleVertical(10)}
+                listSize={1}
+                containerStyle={{
+                  marginLeft: moderateScale(16),
+                  color: colors.white,
+                }}
+              />
+              <CardLoader
+                cardWidth={width / 6}
+                height={moderateScaleVertical(8)}
+                listSize={1}
+                containerStyle={{
+                  marginLeft: moderateScale(16),
+                  color: colors.white,
+                }}
+              />
+            </View>
           </View>
 
           <CardLoader
             cardWidth={width / 6}
-            height={moderateScaleVertical(20)}
+            height={moderateScaleVertical(14)}
             listSize={1}
             containerStyle={{
-              marginLeft: moderateScale(16),
+              marginRight: moderateScale(16),
               // backgroundColor: colors.white,
               justifyContent: 'center',
             }}
           />
         </View>
+        <View
+
+          style={{
+            borderBottomColor: isDarkMode
+              ? colors.whiteOpacity22
+              : colors.lightGreyBg,
+            borderBottomWidth: 0.6,
+            marginTop:moderateScaleVertical(8)
+          }}
+        />
       </View>
     );
   }

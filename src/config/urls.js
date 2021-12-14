@@ -25,6 +25,8 @@ export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://orderchekout.com/api/v1';
 // export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
 // export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
+// export const API_BASE_URL = 'https://ufood.ca/api/v1';
+// export const API_BASE_URL = 'https://app.vici.la/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
@@ -154,4 +156,5 @@ export const DIFFERENT_ADD_ONS = getApiUrl(
 );
 export const WALLET_CREDIT = getApiUrl('/myWallet/credit');
 export const VENDOR_REGISTER = getApiUrl('/vendor/register');
+export const DRIVER_REGISTER = getApiUrl('/driver/register');
 export const CANCEL_ORDER = getApiUrl('/return-order/vendor-order-for-cancel');

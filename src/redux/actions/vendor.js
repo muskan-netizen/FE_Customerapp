@@ -1,4 +1,5 @@
 import {
+  DRIVER_REGISTER,
   GET_DATA_BY_CATEGORY,
   GET_VENDOR_DETAIL,
   VENDOR_REGISTER,
@@ -60,6 +61,18 @@ export function getSubcategoryDetail(data = {}, headers = {}) {
 export function vendorRegisteration(data = {}, headers = {}) {
   return new Promise((resolve, reject) => {
     apiPost(VENDOR_REGISTER, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function driverRegisteration(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(DRIVER_REGISTER, data, headers)
       .then((res) => {
         resolve(res);
       })

@@ -538,6 +538,7 @@ export default function Addaddress({ navigation, route }) {
     cloneArr[i].pre_address = text;
     updateState({ dropLocationData: cloneArr });
   };
+  
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}

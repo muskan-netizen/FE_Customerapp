@@ -34,7 +34,7 @@ export default function Vendors3({route, navigation}) {
     pageNo: 1,
     limit: 5,
     isRefreshing: false,
-    listData: []
+    listData: [],
   });
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state.initBoot);
@@ -45,7 +45,7 @@ export default function Vendors3({route, navigation}) {
   // alert(dine_In_Type);
   const location = useSelector((state) => state?.home?.location);
 
-  const {isLoading, pageNo, isRefreshing, limit,listData} = state;
+  const {isLoading, pageNo, isRefreshing, limit, listData} = state;
   const {data} = route.params;
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -67,18 +67,19 @@ export default function Vendors3({route, navigation}) {
         {},
         {
           code: appData.profile.code,
-          latitude: location?.latitude.toString() || '',
-          longitude: location?.longitude.toString() || '',
+          latitude: location?.latitude || '',
+          longitude: location?.longitude || '',
         },
       )
       .then((res) => {
         console.log('vendor data', res);
         updateState({isLoading: false, isRefreshing: false});
         updateState({
-          listData: pageNo == 1
-          ? res.data.listData.data
-          : [...listData, ...res.data.listData.data],
-        })
+          listData:
+            pageNo == 1
+              ? res.data.listData.data
+              : [...listData, ...res.data.listData.data],
+        });
         // const vendorData = {
         //   category: res.data.category,
         //   listData:
@@ -113,8 +114,6 @@ export default function Vendors3({route, navigation}) {
 
   //************Check the redirecton screen********/
   const _checkRedirectScreen = (item) => {
-    console.log(item, 'itemitemitem');
-
     {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {

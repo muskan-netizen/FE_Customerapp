@@ -78,7 +78,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    enableHermes: false,  // clean and rebuild if changing
+    enableHermes: true,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -759,7 +759,7 @@ android {
          }
           codiner{
             dimension "appType"
-            versionCode 2
+            versionCode 3
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -779,7 +779,7 @@ android {
          }
           hairstonexpress{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -821,7 +821,7 @@ android {
          }
          vici{
             dimension "appType"
-            versionCode 3
+            versionCode 4
             versionName "1.1"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -1933,6 +1933,37 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.foodnests'
             resValue "string", "app_name", "FoodNests"
+            resValue "string", "host_name", ""
+         }
+         sponge{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.sponge'
+            resValue "string", "app_name", "Sponge"
+            resValue "string", "host_name", ""
+         }
+          gomeat{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.app.gomeat'
+            resValue "string", "app_name", "GoMeat"
+            resValue "string", "host_name", ""
+         }
+         
+      shopcentral{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.shopcentral'
+            resValue "string", "app_name", "Shop Central"
             resValue "string", "host_name", ""
          }
     }

@@ -120,13 +120,15 @@ export default ({themeColors, fontFamily, isDarkMode, MyDarkTheme}) =>
     },
     header2: {height: height * 0.3},
     imageBackgroundHdr: {width: width, height: '100%'},
-    linearGradientHdr: {alignItems: 'center', height: '100%', width: width},
+    linearGradientHdr: {
+      height: '100%',
+      width: width,
+      paddingVertical: moderateScale(30),
+    },
     hdrCompHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       width: width - moderateScale(20),
-      marginTop: Platform.OS === 'ios' ? StatusBarHeight-20 : moderateScale(25),
-      flex: 1,
     },
     hdrCompRoundImg: {
       height: moderateScale(70),
@@ -270,5 +272,5 @@ export default ({themeColors, fontFamily, isDarkMode, MyDarkTheme}) =>
       borderBottomColor: isDarkMode
         ? colors.whiteOpacity22
         : colors.lightGreyBg,
-    }
+    },
   });

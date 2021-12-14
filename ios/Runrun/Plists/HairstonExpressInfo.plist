@@ -82,7 +82,7 @@
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play using while you are hiking</string>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like access to your photo gallery to upload photos and set profile picture</string>
+	<string>$(PRODUCT_NAME) would like access to your camera to upload photos and set profile picture</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to access your current location for registration</string>
 	<key>NSLocationAlwaysUsageDescription</key>
