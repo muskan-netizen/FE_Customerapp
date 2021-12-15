@@ -95,4 +95,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default SearchPlaces;
+export default React.memo(SearchPlaces);
