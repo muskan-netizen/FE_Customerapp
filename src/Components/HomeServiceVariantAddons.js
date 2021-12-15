@@ -35,12 +35,9 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
-import { timeforMarkedQuestion } from '../utils/constants/ConstantValues';
-import {
-  showError,
-  showSuccess
-} from '../utils/helperFunctions';
+import {MyDarkTheme} from '../styles/theme';
+import {timeforMarkedQuestion} from '../utils/constants/ConstantValues';
+import {showError, showSuccess} from '../utils/helperFunctions';
 import Banner from './Banner';
 import GradientButton from './GradientButton';
 import HtmlViewComp from './HtmlViewComp';
