@@ -369,11 +369,11 @@ export default function VariantAddons({
                 </Text>
                 <View style={{paddingLeft: moderateScale(5)}}>
                   <Image
-                    // style={{tintColor: 'red'}}
+                    style={{tintColor: themeColors.primary_color}}
                     source={
                       i?.value
-                        ? imagePath.icCheckBoxActive
-                        : imagePath.icCheckBoxInactive
+                        ? imagePath.checkBox2Active
+                        : imagePath.checkBox2InActive
                     }
                   />
                 </View>
