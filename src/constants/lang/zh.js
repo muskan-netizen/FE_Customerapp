@@ -667,4 +667,7 @@ export default {
   TERMS_CONDITIONS: 'Terms & Conditions',
   HAVE_READ: 'and have read the',
   PRIVACY_POLICY: 'Privacy Policy.',
+  VENDER: 'Vendor',
+  DRIVER: 'Driver',
+  ENTER_ADDRESS_TYPE: 'Enter a address type',
 };

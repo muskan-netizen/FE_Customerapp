@@ -3142,7 +3142,7 @@ export default function Products({route, navigation}) {
           btnText={
             CartItems && CartItems.data && CartItems.data.item_count
               ? `${CartItems.data.item_count} ${
-                  CartItems.data.item_count > 1 ? strings.ITEM : strings.ITEMS
+                  CartItems.data.item_count == 1 ? strings.ITEM : strings.ITEMS
                 } | ${
                   currencies.primary_currency.symbol
                 }${currencyNumberFormatter(

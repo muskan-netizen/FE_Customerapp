@@ -29,6 +29,7 @@ export const API_BASE_URL = 'https://codiner.com/api/v1';
 // export const API_BASE_URL = 'https://app.vici.la/api/v1';
 // export const API_BASE_URL = 'https://blipdelivery.com/api/v1';
 // export const API_BASE_URL = 'https://africanvillage.market/api/v1';
+// export const API_BASE_URL = 'https://govachow.com/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 

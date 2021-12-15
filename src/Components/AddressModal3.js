@@ -659,7 +659,7 @@ export default function AddressModal3({
             {address_type === 3 && (
               <BorderTextInputWithLable
                 onChangeText={_onChangeText('customAddress')}
-                placeholder={'Enter a address type'}
+                placeholder={strings.ENTER_ADDRESS_TYPE}
                 textInputStyle={getTextInputStyle(city)}
                 borderWidth={0}
                 marginBottomTxt={0}

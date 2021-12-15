@@ -356,7 +356,7 @@ export default function OrderDetail({navigation, route}) {
             </View>
           )}
         <View style={{paddingHorizontal: moderateScale(10)}}>
-          <UserDetail data={item} type="Vendor" />
+          <UserDetail data={item} type={strings.VENDER} />
 
           {item?.products.length
             ? item?.products.map((i, inx) => {
@@ -1530,7 +1530,7 @@ export default function OrderDetail({navigation, route}) {
           orderStatus?.current_status?.id == 5 && (
             <UserDetail
               data={driverStatus}
-              type="Driver"
+              type={strings.DRIVER}
               containerStyle={{paddingHorizontal: moderateScale(8)}}
             />
           )}
@@ -1810,7 +1810,7 @@ export default function OrderDetail({navigation, route}) {
             ? imagePath.icBackb
             : imagePath.back
         }
-        centerTitle={`Order ${'#'}${cartData?.order_number || ''}`}
+        centerTitle={strings.ORDER + `${'#'}${cartData?.order_number || ''}`}
       />
       <View
         style={{
