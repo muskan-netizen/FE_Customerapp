@@ -534,7 +534,7 @@ export default function Account3({navigation}) {
             centerContainerStyle={{flexDirection: 'row'}}
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             onPress={() => onStartSupportChat()}
-            iconLeft={imagePath.contactUs}
+            iconLeft={imagePath.support}
             centerHeading={strings.SUPPORT}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{

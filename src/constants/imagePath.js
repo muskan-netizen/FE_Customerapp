@@ -426,4 +426,5 @@ export default {
   activeprocceing: require('../assets/images/vendorStatusImages/ic_activeprocceing.png'),
   activeoutdelivery: require('../assets/images/vendorStatusImages/ic_activeoutdelivery.png'),
   activedelivered: require('../assets/images/vendorStatusImages/ic_activedelivered.png'),
+  support: require('../assets/images/ic_support.png'),
 };
