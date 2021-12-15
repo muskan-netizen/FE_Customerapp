@@ -425,9 +425,8 @@ export default function Home({ route, navigation }) {
           //   }
           // }
           item['pickup_taxi'] = true;
-
           // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
-          moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
+          moveToNewScreen(navigationStrings.ADDADDRESS, item)();
         }
       } else {
         // showError(strings.UNAUTHORIZED_MESSAGE);
