@@ -754,4 +754,5 @@ montant`,
   REPEAT_LAST_CUSTOMIZATION: 'Réutiliser vos choix récents?',
   ADD_NEW: 'Ajouter un nouveau',
   REPEAT_LAST: 'Re-commander',
+  SUPPORT: 'Support',
 };

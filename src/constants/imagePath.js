@@ -417,5 +417,13 @@ export default {
   icGiftIcon: require('../assets/images/ic_gift.png'),
   mapIcon: require('../assets/images/ic_map.png'),
 
-  
+  inactiveaccept: require('../assets/images/vendorStatusImages/ic_inactiveaccept.png'),
+  inactiveprocceing: require('../assets/images/vendorStatusImages/ic_inactiveprocceing.png'),
+  inactiveoutdelivery: require('../assets/images/vendorStatusImages/ic_inactiveoutdelivery.png'),
+  inactivedelivered: require('../assets/images/vendorStatusImages/ic_inactivedelivered.png'),
+
+  activeaccept: require('../assets/images/vendorStatusImages/ic_activeaccept.png'),
+  activeprocceing: require('../assets/images/vendorStatusImages/ic_activeprocceing.png'),
+  activeoutdelivery: require('../assets/images/vendorStatusImages/ic_activeoutdelivery.png'),
+  activedelivered: require('../assets/images/vendorStatusImages/ic_activedelivered.png'),
 };

@@ -213,7 +213,6 @@ export default function OrderDetail({navigation, route}) {
             let lat = Number(driverStatus?.agent_location?.lat);
             let lng = Number(driverStatus?.agent_location?.long);
             if (!!lat && !!lng) {
-              console.log(lat, 'updated lat lng', lng);
               animate(lat, lng);
             }
           }
@@ -322,6 +321,25 @@ export default function OrderDetail({navigation, route}) {
     navigation.navigate(navigationStrings.RATEORDER, {item});
   };
 
+  const onOrderStatusChange = (status) => {
+    switch (status) {
+      case 'Accepted':
+        return 'Order Accepted (which is automatic if restaurant has auto accept on)';
+        break;
+      case 'Processing':
+        return 'Your driver is heading to the restaurant';
+        break;
+      case 'Out For Delivery':
+        return 'Your driver is heading to you';
+        break;
+      case 'Delivered':
+        return 'Your order has been delivered';
+        break;
+      default:
+        break;
+    }
+  };
+
   const _renderItem = ({item, index}) => {
     // return <OffersCard />;
     let {itemCount} = state;
@@ -334,27 +352,6 @@ export default function OrderDetail({navigation, route}) {
           // marginVertical: moderateScale(10),
         }}>
         {/* show ETA Time */}
-
-        {cartData?.order_status?.current_status?.title !== strings.DELIVERED &&
-          cartData?.order_status?.current_status?.title !== strings.REJECTED &&
-          (!!cartData?.scheduled_date_time || !!cartData?.ETA) && (
-            <View
-              style={{
-                ...styles.ariveView,
-                backgroundColor: themeColors.primary_color,
-              }}>
-              <Text
-                style={{
-                  ...styles.ariveTextStyle,
-                  color: colors.white,
-                }}>
-                {strings.YOUR_ORDER_WILL_ARRIVE_BY}{' '}
-                {cartData?.scheduled_date_time
-                  ? cartData?.scheduled_date_time
-                  : cartData?.ETA}
-              </Text>
-            </View>
-          )}
         <View style={{paddingHorizontal: moderateScale(10)}}>
           <UserDetail data={item} type="Vendor" />
 
@@ -1534,101 +1531,103 @@ export default function OrderDetail({navigation, route}) {
               containerStyle={{paddingHorizontal: moderateScale(8)}}
             />
           )}
-        {!!driverStatus && orderStatus?.current_status?.id == 5 && (
-          <View style={{width: '100%', height: height / 2.2}}>
-            <MapView
-              ref={mapRef}
-              style={StyleSheet.absoluteFillObject}
-              initialRegion={{
-                latitude: Number(driverStatus.tasks[0]?.latitude),
-                longitude: Number(driverStatus.tasks[0]?.longitude),
-                latitudeDelta: 0.0222,
-                longitudeDelta: 0.032,
-              }}
-              rotateEnabled={true}>
-              <MapViewDirections
-                origin={{
-                  // latitude: Number(driverStatus.tasks[0]?.latitude),
-                  // longitude: Number(driverStatus.tasks[0]?.longitude),
-                  latitude: Number(driverStatus?.agent_location?.lat),
-                  longitude: Number(driverStatus?.agent_location?.long),
+        {!!driverStatus &&
+          orderStatus?.current_status?.id == 5 &&
+          !!driverStatus?.agent_location?.lat && (
+            <View style={{width: '100%', height: height / 2.2}}>
+              <MapView
+                ref={mapRef}
+                style={StyleSheet.absoluteFillObject}
+                initialRegion={{
+                  latitude: Number(driverStatus.tasks[0]?.latitude),
+                  longitude: Number(driverStatus.tasks[0]?.longitude),
                   latitudeDelta: 0.0222,
                   longitudeDelta: 0.032,
                 }}
-                destination={{
-                  latitude: Number(driverStatus.tasks[1]?.latitude),
-                  longitude: Number(driverStatus.tasks[1]?.longitude),
-                  latitudeDelta: 0.0222,
-                  longitudeDelta: 0.032,
-                }}
-                apikey={appData.profile?.preferences?.map_key}
-                strokeWidth={3}
-                strokeColor={themeColors.primary_color}
-                optimizeWaypoints={true}
-                onStart={(params) => {}}
-                precision={'high'}
-                timePrecision={'now'}
-                mode={'DRIVING'}
-                // maxZoomLevel={20}
-                onReady={(result) => {
-                  // updateState({
-                  //   totalDistance: result.distance.toFixed(2),v
-                  //   totalDuration: result.duration.toFixed(2),
-                  // });
-                  mapRef.current.fitToCoordinates(result.coordinates, {
-                    edgePadding: {
-                      right: width / 20,
-                      bottom: height / 20,
-                      left: width / 20,
-                      top: height / 20,
-                    },
-                  });
-                }}
-                onError={(errorMessage) => {
-                  //
-                }}
-              />
-              <Marker
-                coordinate={{
-                  latitude: Number(driverStatus.tasks[1]?.latitude),
-                  longitude: Number(driverStatus.tasks[1]?.longitude),
-                  latitudeDelta: 0.0222,
-                  longitudeDelta: 0.032,
-                }}
-                image={imagePath.icDestination}
-              />
-              {!!driverStatus.agent_location.lat && (
-                <Marker.Animated
-                  ref={markerRef}
-                  coordinate={state.animateDriver}
-                  flat>
-                  <Image
-                    source={imagePath.icScooter}
-                    style={{
-                      transform: [{rotate: `${state.headingAngle + 110}deg`}],
-                    }}
-                  />
-                </Marker.Animated>
-              )}
-            </MapView>
-            <TouchableOpacity
-              style={{
-                position: 'absolute',
-                bottom: 10,
-                right: 10,
-              }}
-              onPress={onCenter}>
-              <Image
+                rotateEnabled={true}>
+                <MapViewDirections
+                  origin={{
+                    // latitude: Number(driverStatus.tasks[0]?.latitude),
+                    // longitude: Number(driverStatus.tasks[0]?.longitude),
+                    latitude: Number(driverStatus?.agent_location?.lat),
+                    longitude: Number(driverStatus?.agent_location?.long),
+                    latitudeDelta: 0.0222,
+                    longitudeDelta: 0.032,
+                  }}
+                  destination={{
+                    latitude: Number(driverStatus.tasks[1]?.latitude),
+                    longitude: Number(driverStatus.tasks[1]?.longitude),
+                    latitudeDelta: 0.0222,
+                    longitudeDelta: 0.032,
+                  }}
+                  apikey={appData.profile?.preferences?.map_key}
+                  strokeWidth={3}
+                  strokeColor={themeColors.primary_color}
+                  optimizeWaypoints={true}
+                  onStart={(params) => {}}
+                  precision={'high'}
+                  timePrecision={'now'}
+                  mode={'DRIVING'}
+                  // maxZoomLevel={20}
+                  onReady={(result) => {
+                    // updateState({
+                    //   totalDistance: result.distance.toFixed(2),v
+                    //   totalDuration: result.duration.toFixed(2),
+                    // });
+                    mapRef.current.fitToCoordinates(result.coordinates, {
+                      edgePadding: {
+                        right: width / 20,
+                        bottom: height / 20,
+                        left: width / 20,
+                        top: height / 20,
+                      },
+                    });
+                  }}
+                  onError={(errorMessage) => {
+                    //
+                  }}
+                />
+                <Marker
+                  coordinate={{
+                    latitude: Number(driverStatus.tasks[1]?.latitude),
+                    longitude: Number(driverStatus.tasks[1]?.longitude),
+                    latitudeDelta: 0.0222,
+                    longitudeDelta: 0.032,
+                  }}
+                  image={imagePath.icDestination}
+                />
+                {!!driverStatus?.agent_location?.lat && (
+                  <Marker.Animated
+                    ref={markerRef}
+                    coordinate={state.animateDriver}
+                    flat>
+                    <Image
+                      source={imagePath.icScooter}
+                      style={{
+                        transform: [{rotate: `${state.headingAngle + 110}deg`}],
+                      }}
+                    />
+                  </Marker.Animated>
+                )}
+              </MapView>
+              <TouchableOpacity
                 style={{
-                  width: moderateScale(34),
-                  height: moderateScale(34),
-                  borderRadius: moderateScale(34 / 2),
+                  position: 'absolute',
+                  bottom: 10,
+                  right: 10,
                 }}
-                source={imagePath.mapNavigation}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
+                onPress={onCenter}>
+                <Image
+                  style={{
+                    width: moderateScale(34),
+                    height: moderateScale(34),
+                    borderRadius: moderateScale(34 / 2),
+                  }}
+                  source={imagePath.mapNavigation}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
 
         {!!orderStatus && orderStatus?.current_status?.title == 'Placed' && (
           <View
@@ -1729,6 +1728,42 @@ export default function OrderDetail({navigation, route}) {
                 currentPosition={currentPosition}
                 themeColor={themeColors}
               />
+              <Text
+                style={{
+                  marginTop: moderateScaleVertical(15),
+                  marginVertical: moderateScaleVertical(10),
+                  marginHorizontal: moderateScale(31),
+                  color: themeColors?.primary_color,
+                  fontFamily: fontFamily?.bold,
+                }}>
+                {!!orderStatus?.vendor_order_status
+                  ? orderStatus?.vendor_order_status
+                  : onOrderStatusChange(orderStatus?.current_status?.title)}
+              </Text>
+
+              {cartData?.order_status?.current_status?.title !==
+                strings.DELIVERED &&
+                cartData?.order_status?.current_status?.title !==
+                  strings.REJECTED &&
+                (!!cartData.vendors[0]?.scheduled_date_time ||
+                  !!cartData?.vendors[0].ETA) && (
+                  <View
+                    style={{
+                      ...styles.ariveView,
+                      marginHorizontal: moderateScale(28),
+                    }}>
+                    <Text
+                      style={{
+                        ...styles.ariveTextStyle,
+                        color: colors.blackC,
+                      }}>
+                      {strings.YOUR_ORDER_WILL_ARRIVE_BY}{' '}
+                      {cartData?.vendors[0]?.scheduled_date_time
+                        ? cartData?.vendors[0]?.scheduled_date_time
+                        : cartData?.vendors[0]?.ETA}
+                    </Text>
+                  </View>
+                )}
             </View>
           )}
 

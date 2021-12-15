@@ -1,5 +1,5 @@
 import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   I18nManager,
@@ -36,6 +36,7 @@ import {
   getRandomColor,
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
+import ZendeskChat from '../../library/react-native-zendesk-chat';
 
 export default function Account3({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -113,6 +114,40 @@ export default function Account3({navigation}) {
     } else {
       moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     }
+  };
+
+  // initalize Zendesk
+
+  useEffect(() => {
+    ZendeskChat.init(
+      'hkj6wV0p0qW45bXDMtdTSCEenFuTZhFR',
+      '882ad89551868abec6d361472fee131462c1ea5ebebbb63f',
+    );
+  }, []);
+
+  console.log(userData, 'userData?.nameuserData?.name');
+
+  const onStartSupportChat = () => {
+    ZendeskChat.startChat({
+      name: userData?.name,
+      email: userData?.email,
+      phone: '885541515351',
+      // The behaviorFlags are optional, and each default to 'true' if omitted
+      behaviorFlags: {
+        showAgentAvailability: true,
+        showChatTranscriptPrompt: true,
+        showPreChatForm: true,
+        showOfflineForm: true,
+      },
+      // The preChatFormOptions are optional & each defaults to "optional" if omitted
+      preChatFormOptions: {
+        name: 'optional name',
+        email: 'optional email',
+        phone: 'optional phone',
+        department: 'required',
+      },
+      localizedDismissButtonTitle: 'Dismiss',
+    });
   };
 
   const usernameFirstlater = !!userData?.name && userData?.name?.charAt(0);
@@ -487,6 +522,20 @@ export default function Account3({navigation}) {
             onPress={moveToNewScreen(navigationStrings.CONTACT_US)}
             iconLeft={imagePath.contactUs}
             centerHeading={strings.CONTACT_US}
+            containerStyle={styles.containerStyle2}
+            centerHeadingStyle={{
+              fontSize: textScale(14),
+              fontFamily: fontFamily.regular,
+            }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+          />
+          <ListItemHorizontal
+            centerContainerStyle={{flexDirection: 'row'}}
+            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+            onPress={() => onStartSupportChat()}
+            iconLeft={imagePath.contactUs}
+            centerHeading={strings.SUPPORT}
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
               fontSize: textScale(14),
