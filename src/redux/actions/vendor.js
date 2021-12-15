@@ -20,7 +20,7 @@ export function saveVendorListingAndCategoryInfo(data) {
 
 //Get vendor info and Category data
 export function getDataByCategoryId(query = '', data = {}, headers = {}) {
-  console.log(data, 'data');
+  console.log(data, 'data>>>>>>>>>');
   return new Promise((resolve, reject) => {
     apiGet(GET_DATA_BY_CATEGORY + query, data, headers)
       .then((res) => {

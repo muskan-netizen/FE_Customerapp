@@ -138,6 +138,7 @@ export default function Addaddress({navigation, route}) {
     }
   }, [paramData]);
 
+  console.log(appData, 'appData?.profile?');
   //get All address
   const getAllAddress = () => {
     actions
@@ -190,17 +191,22 @@ export default function Addaddress({navigation, route}) {
   // );
 
   const getAllPickUpVendors = (lat, lng) => {
+    const latlongData = appData?.profile?.preferences
+      ?.pickup_delivery_service_area
+      ? {
+          code: appData?.profile?.code,
+          latitude: lat,
+          longitude: lng,
+        }
+      : {code: appData?.profile?.code};
+
     actions
       .getDataByCategoryId(
         `/${
           paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
         }?limit=${limit}&page=${pageNo}`,
         {},
-        {
-          code: appData?.profile?.code,
-          latitude: lat,
-          longitude: lng,
-        },
+        latlongData,
       )
       .then((res) => {
         console.log(res, 'res>>>>> vendors');
