@@ -824,7 +824,7 @@ export default function ProductDetail({ route, navigation }) {
                       {(!!productTotalQuantity &&
                         !!productTotalQuantity != 0) ||
                         (!!typeId && typeId == 8) ||
-                        !!productDetailData?.sell_when_out_of_stock
+                        !!productDetailData?.sell_when_out_of_stock || productDetailData?.has_inventory == 0 
                         ? ''
                         : strings.OUT_OF_STOCK}
                     </Text>
@@ -886,7 +886,7 @@ export default function ProductDetail({ route, navigation }) {
               ) : null}
               {/* Add to Cart button */}
               {((!!productTotalQuantity && !!productTotalQuantity != 0) ||
-                (!!typeId && typeId == 8) ||
+                (!!typeId && typeId == 8) || productDetailData?.has_inventory == 0 ||
                 !!productDetailData?.sell_when_out_of_stock) &&
                 (!!data?.showAddToCart ? null : showErrorMessageTitle ? null : (
                   <View

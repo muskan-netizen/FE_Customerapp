@@ -173,7 +173,7 @@ const App = () => {
       if (walletData) {
         dispatch({
           type: types.WALLET_DATA,
-          payload: data,
+          payload: walletData,
         });
       }
 

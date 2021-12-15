@@ -279,7 +279,6 @@ export default function Home({ route, navigation }) {
           : location?.longitude,
       };
     }
-
     {
       selectedTabType
         ? actions

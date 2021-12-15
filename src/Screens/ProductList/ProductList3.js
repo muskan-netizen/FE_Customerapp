@@ -3038,17 +3038,17 @@ export default function Products({ route, navigation }) {
               flexGrow: 1,
             }}
             ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-            refreshing={isRefreshing}
+            // refreshing={isRefreshing}
             // initialNumToRender={12}
             // maxToRenderPerBatch={10}
             // windowSize={10}
-            refreshControl={
-              <RefreshControl
-                refreshing={isRefreshing}
-                onRefresh={handleRefresh}
-                tintColor={themeColors.primary_color}
-              />
-            }
+            // refreshControl={
+            //   <RefreshControl
+            //     refreshing={isRefreshing}
+            //     onRefresh={handleRefresh}
+            //     tintColor={themeColors.primary_color}
+            //   />
+            // }
             onEndReached={
               !categoryInfo?.is_show_products_with_category &&
               onEndReachedDelayed

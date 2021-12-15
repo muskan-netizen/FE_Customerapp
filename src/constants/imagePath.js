@@ -416,6 +416,6 @@ export default {
   icImageUpload: require('../assets/images/ic_imgupload.png'),
   icGiftIcon: require('../assets/images/ic_gift.png'),
   mapIcon: require('../assets/images/ic_map.png'),
-
-  
+  checkBox2Active: require('../assets/images/ic_check2.png'),
+  checkBox2InActive: require('../assets/images/ic_check1.png'),
 };
