@@ -95,7 +95,7 @@ export default function Home({ route, navigation }) {
     updateState({ updatedData: appMainData?.categories });
   }, [appMainData]);
 
-  console.log("addressSearchaddressSearch", addressSearch)
+  console.log("addressSearchaddressSearch", appData)
 
   useEffect(() => {
     _getLocationFromParams();
