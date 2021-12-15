@@ -414,6 +414,7 @@
     "react-native-charts-wrapper": "^0.5.7",
     "react-native-circle-list": "^0.1.33",
     "react-native-code-input": "^1.0.6",
+    "react-native-code-push": "^7.0.4",
     "react-native-collapsible-tab-view": "^4.2.1",
     "react-native-communications": "^2.2.1",
     "react-native-confetti-cannon": "^1.5.2",
