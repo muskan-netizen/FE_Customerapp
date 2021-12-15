@@ -178,7 +178,6 @@ export default {
   LOYALTY: 'Puntos',
   SORT_MODAL_TITLE: 'Ordenar por:',
   TAX_AMOUNT: 'Impuestos',
-  TOTAL: 'Total',
   EXTRA: 'Adicionales:',
   APPLY_PROMO_CODE: 'Aplicar cupón',
   AMOUNT: 'Monto',
@@ -187,7 +186,7 @@ export default {
   LOYALTY: 'Puntos',
   AMOUNT_PAYABLE: 'Monto a pagar',
   TAX: 'Impuestos',
-  TOTAL: 'Total',
+
   AMOUNT: 'Monto',
   SPICY_DIP: 'Salsa',
   DELIVERY_FEE: 'Envío',
@@ -473,7 +472,7 @@ export default {
   PAYMENT_METHOD: 'Método de pago',
   PLACED_ON: 'Pedido solicitado',
   PAYMENT_SUMMARY: 'Resumen de pago',
-  SUBTOTAL: 'Subtotal',
+  SUBTOTAL: 'Total parcial',
   DISCOUNT: 'Descuento',
   TOTAL: 'Total',
   NO_ORDERS_FOUND: 'No hay nuevos pedidos',
@@ -724,5 +723,7 @@ export default {
   PRIVACY_POLICY: 'Privacy Policy.',
   VENDER: 'Vendor',
   DRIVER: 'Driver',
-  ENTER_ADDRESS_TYPE: 'Enter a address type',
+
+  ENETER_YOUR_ADDRESS: 'Enter your address',
+  NO_CARS_AVAILABLE: 'No cars available',
 };

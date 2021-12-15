@@ -136,14 +136,15 @@ export default function TaxiHomeDashbord({
   console.log(location, 'loaction');
   console.log(region, 'region');
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  console.log(appMainData, 'appMainData>new');
+
   let findCabCategory = appMainData?.categories?.find(
     (x) => x?.redirect_to == staticStrings.PICKUPANDDELIEVRY,
   );
   console.log(findCabCategory, 'findCabCategory');
-  const {appData, themeColors, appStyle} = useSelector(
+  const {appData, themeColors, appStyle, languages} = useSelector(
     (state) => state?.initBoot,
   );
+  console.log(languages, 'languages>new');
   const fontFamily = appStyle?.fontSizeData;
   const {bannerRef} = useRef();
   const {
@@ -306,6 +307,11 @@ export default function TaxiHomeDashbord({
             }}>
             <DatePicker
               date={date}
+              locale={
+                languages?.primary_language?.sort_code
+                  ? languages?.primary_language?.sort_code
+                  : 'en'
+              }
               mode="datetime"
               textColor={isDarkMode ? '#fff' : colors.blackB}
               minimumDate={new Date()}
@@ -592,7 +598,7 @@ export default function TaxiHomeDashbord({
           renderItem={_renderItem}
         />
 
-{/* findCabCategory */}
+        {/* findCabCategory */}
         {true && (
           <>
             <View

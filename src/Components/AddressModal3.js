@@ -395,7 +395,9 @@ export default function AddressModal3({
                 {paddingHorizontal: moderateScale(24)},
               ]
         }>
-        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
+        <KeyboardAwareScrollView
+          keyboardShouldPersistTaps="always"
+          showsVerticalScrollIndicator={false}>
           <View style={styles.addAddessView}>
             <Text
               numberOfLines={1}
@@ -423,11 +425,8 @@ export default function AddressModal3({
               flexDirection: 'row',
               alignItems: 'center',
               marginTop: moderateScale(7),
-              marginHorizontal: moderateScale(7),
+              // marginHorizontal: moderateScale(7),
             }}>
-            <TouchableOpacity onPress={currentLocation}>
-              <Image source={imagePath.currentLocation} />
-            </TouchableOpacity>
             <GooglePlaceInput
               getDefaultValue={address}
               type={type}
@@ -452,6 +451,9 @@ export default function AddressModal3({
                 isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7
               }
             />
+            <TouchableOpacity onPress={currentLocation}>
+              <Image source={imagePath.currentLocation} />
+            </TouchableOpacity>
           </View>
           <View
             style={{
@@ -659,7 +661,7 @@ export default function AddressModal3({
             {address_type === 3 && (
               <BorderTextInputWithLable
                 onChangeText={_onChangeText('customAddress')}
-                placeholder={strings.ENTER_ADDRESS_TYPE}
+                placeholder={strings.ENETER_YOUR_ADDRESS}
                 textInputStyle={getTextInputStyle(city)}
                 borderWidth={0}
                 marginBottomTxt={0}

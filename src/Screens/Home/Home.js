@@ -95,7 +95,7 @@ export default function Home({ route, navigation }) {
     updateState({ updatedData: appMainData?.categories });
   }, [appMainData]);
 
-  console.log("addressSearchaddressSearch", addressSearch)
+  console.log("addressSearchaddressSearch", appData)
 
   useEffect(() => {
     _getLocationFromParams();
@@ -279,7 +279,6 @@ export default function Home({ route, navigation }) {
           : location?.longitude,
       };
     }
-
     {
       selectedTabType
         ? actions
@@ -392,7 +391,6 @@ export default function Home({ route, navigation }) {
   //onPress Category
   const onPressCategory = (item) => {
     console.log('category press', item);
-
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -427,9 +425,8 @@ export default function Home({ route, navigation }) {
           //   }
           // }
           item['pickup_taxi'] = true;
-
           // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
-          moveToNewScreen(navigationStrings.HOMESCREENTAXI, item)();
+          moveToNewScreen(navigationStrings.ADDADDRESS, item)();
         }
       } else {
         // showError(strings.UNAUTHORIZED_MESSAGE);

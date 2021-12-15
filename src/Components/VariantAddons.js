@@ -1084,7 +1084,8 @@ export default function VariantAddons({
                       fontFamily: fontFamily.medium,
                     }}>
                     {(productTotalQuantity && productTotalQuantity != 0) ||
-                    !!productDetailData?.sell_when_out_of_stock
+                    !!productDetailData?.sell_when_out_of_stock ||
+                    productDetailData?.has_inventory == 0
                       ? ''
                       : strings.OUT_OF_STOCK}
                   </Text>
@@ -1129,7 +1130,8 @@ export default function VariantAddons({
           {!!(
             (!showErrorMessageTitle && productTotalQuantity > 0) ||
             (!!typeId && typeId == 8) ||
-            !!productDetailData?.sell_when_out_of_stock
+            !!productDetailData?.sell_when_out_of_stock ||
+            productDetailData?.has_inventory == 0
           ) && (
             <View
               style={{

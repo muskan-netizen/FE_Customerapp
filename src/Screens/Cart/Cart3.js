@@ -578,7 +578,7 @@ export default function Cart({navigation, route}) {
 
   //Verify your promo code
   const _removeCoupon = (item, cartData) => {
-    updateState({isLoadingB: true});
+    // updateState({ isLoadingB: true });
     let data = {};
     data['vendor_id'] = item?.vendor_id;
     data['cart_id'] = cartData?.id;
@@ -815,7 +815,7 @@ export default function Cart({navigation, route}) {
             _finalPayment();
           }
           updateState({
-            isLoadingB: toHitApiForPlaceOrder ? true : false,
+            // isLoadingB: toHitApiForPlaceOrder ? true : false,
           });
         } else {
           updateState({
@@ -877,23 +877,24 @@ export default function Cart({navigation, route}) {
 
   //Clear cart
   const placeOrder = () => {
-    if (!!cartData?.delay_date && !localeSheduledOrderDate) {
-      showInfo(strings.SCHEDULE_DATE_REQUIRED);
-      return;
-    }
-    if (!!cartData?.pickup_delay_date && !!cartData?.dropoff_delay_date) {
-      showInfo(strings.SCHEDULE_DATE_REQUIRED);
-      return;
-    }
-    if (isEmpty(selectedPayment)) {
-      showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
-      return;
-    }
-
-    updateState({placeLoader: true});
-    var d1 = new Date();
-    var d2 = new Date(sheduledorderdate);
     if (!!userData?.auth_token) {
+      if (!!cartData?.delay_date && !localeSheduledOrderDate) {
+        showInfo(strings.SCHEDULE_DATE_REQUIRED);
+        return;
+      }
+      if (!!cartData?.pickup_delay_date && !!cartData?.dropoff_delay_date) {
+        showInfo(strings.SCHEDULE_DATE_REQUIRED);
+        return;
+      }
+      if (isEmpty(selectedPayment)) {
+        // showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
+        moveToNewScreen(navigationStrings.ALL_PAYMENT_METHODS)();
+        return;
+      }
+
+      updateState({placeLoader: true});
+      var d1 = new Date();
+      var d2 = new Date(sheduledorderdate);
       if (!selectedAddressData) {
         // showError(strings.PLEASE_SELECT_ADDRESS);
         setModalVisible(true);
@@ -949,22 +950,11 @@ export default function Cart({navigation, route}) {
               }, 500);
             }
           }
-          // !!userData?.client_preference?.verify_email ||
-          // !!userData?.client_preference?.verify_phone
-          //   ? !!userData?.verify_details?.is_email_verified &&
-          //     !!userData?.verify_details?.is_phone_verified
-          //     ? _finalPayment()
-          //     : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {
-          //         formCart: true,
-          //       })()
-          //   : _finalPayment();
         } else {
           _finalPayment();
         }
-        // _finalPayment()
       }
     } else {
-      // showError(strings.UNAUTHORIZED_MESSAGE);
       updateState({placeLoader: false});
       moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
     }
@@ -2817,51 +2807,54 @@ export default function Cart({navigation, route}) {
         {appData?.profile?.preferences?.gifting == 1 && (
           <View
             style={{
-              ...styles.bottomTabLableValue,
-              borderBottomWidth: 0.3,
-              borderTopWidth: 0.3,
-              borderColor: colors.textGreyB,
-              justifyContent: 'flex-start',
-              alignItems: 'center',
+              borderTopWidth: 0.8,
+              borderBottomWidth: 0.8,
+              paddingVertical: moderateScaleVertical(8),
+              borderColor: isDarkMode
+                ? colors.whiteOpacity22
+                : colors.lightGreyBg,
             }}>
-            <CheckBox
-              checked={isGiftBoxSelected}
+            <TouchableOpacity
               onPress={_onGiftBoxSelection}
-              // value={isGiftBoxSelected}
-              // onValueChange={_onGiftBoxSelection}
-              size={20}
-              checkedColor={themeColors.primary_color}
-              // style={{
-              //   height: moderateScale(18),
-              //   width: moderateScale(18),
-              //   marginLeft: moderateScale(10),
-              //   color: themeColors.primary_color,
-              // }}
-            />
-            <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginLeft: moderateScale(-12),
-              }}>
+                marginHorizontal: 16,
+              }}
+              activeOpacity={1}>
               <Image
-                source={imagePath.icGiftIcon}
-                style={{
-                  marginTop: moderateScale(-3),
-                  tintColor: colors.blackOpacity43,
-                }}
+                style={{tintColor: themeColors.primary_color}}
+                source={
+                  isGiftBoxSelected
+                    ? imagePath.checkBox2Active
+                    : imagePath.checkBox2InActive
+                }
               />
-              <Text
+              <View
                 style={{
-                  ...styles.priceTipLabel,
-                  color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.blackOpacity43,
-                  marginLeft: moderateScale(6),
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginLeft: moderateScale(12),
                 }}>
-                {strings.DOES_THIS_INCLUDE_GIFT}
-              </Text>
-            </View>
+                <Image
+                  source={imagePath.icGiftIcon}
+                  style={{
+                    marginTop: moderateScale(-3),
+                    tintColor: colors.blackOpacity43,
+                  }}
+                />
+                <Text
+                  style={{
+                    ...styles.priceTipLabel,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.blackOpacity43,
+                    marginLeft: moderateScale(6),
+                  }}>
+                  {strings.DOES_THIS_INCLUDE_GIFT}
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
         )}
 
@@ -3216,9 +3209,7 @@ export default function Cart({navigation, route}) {
             )}
 
             <ButtonComponent
-              onPress={() => {
-                placeOrder();
-              }}
+              onPress={placeOrder}
               btnText={strings.PLACE_ORDER}
               borderRadius={moderateScale(13)}
               textStyle={{color: colors.white}}
@@ -3372,7 +3363,7 @@ export default function Cart({navigation, route}) {
   //SelectAddress
   const selectAddress = (address) => {
     if (!!userData?.auth_token) {
-      updateState({isLoadingB: true});
+      // updateState({ isLoadingB: true });
       let data = {};
       let query = `/${address?.id}`;
       actions

@@ -70,6 +70,7 @@ import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import {FlatList} from 'react-native';
 import {PulseIndicator} from 'react-native-indicators';
 import CustomCallouts from '../../../Components/CustomCallouts';
+import localization from 'moment/locale/es';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -148,6 +149,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   const {appData, themeColors, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
+
   const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
 
@@ -816,7 +818,11 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       {moment(
                         new Date(orderFullDetail?.order_details?.created_at),
                       )
-                        .locale('ES')
+                        .locale(
+                          languages?.primary_language?.sort_code
+                            ? languages?.primary_language?.sort_code
+                            : 'en',
+                        )
                         .format('MMMM Do YYYY, h:mm a')}
                     </Text>
                     <Text
