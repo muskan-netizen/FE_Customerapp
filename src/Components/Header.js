@@ -178,7 +178,6 @@ const Header = ({
     </>
   );
 };
-export default Header;
 
 export function stylesFunc({fontFamily}) {
   const styles = StyleSheet.create({
@@ -198,3 +197,4 @@ export function stylesFunc({fontFamily}) {
   });
   return styles;
 }
+export default React.memo(Header);

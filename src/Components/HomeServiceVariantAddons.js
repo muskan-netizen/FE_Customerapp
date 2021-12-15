@@ -35,25 +35,22 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
-import { timeforMarkedQuestion } from '../utils/constants/ConstantValues';
-import {
-  showError,
-  showSuccess
-} from '../utils/helperFunctions';
+import {MyDarkTheme} from '../styles/theme';
+import {timeforMarkedQuestion} from '../utils/constants/ConstantValues';
+import {showError, showSuccess} from '../utils/helperFunctions';
 import Banner from './Banner';
 import GradientButton from './GradientButton';
 import HtmlViewComp from './HtmlViewComp';
 import CardLoader from './Loaders/CardLoader';
 
-export default function HomeServiceVariantAddons({
+const HomeServiceVariantAddons = ({
   productdetail = {},
   isVisible = false,
   onClose,
   showShimmer,
   shimmerClose = () => {},
   updateCartItems = () => {},
-}) {
+}) => {
   console.log(productdetail, 'productdetailproductdetailproductdetail');
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
 
@@ -1508,7 +1505,7 @@ export default function HomeServiceVariantAddons({
       )}
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   productName: {
@@ -1654,3 +1651,4 @@ const styles = StyleSheet.create({
     marginVertical: moderateScale(10),
   },
 });
+export default React.memo(HomeServiceVariantAddons);

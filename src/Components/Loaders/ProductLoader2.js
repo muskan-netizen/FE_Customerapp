@@ -7,13 +7,12 @@ import {
 } from '../../styles/responsiveSize';
 import CardLoader from './CardLoader';
 import ProductLoader from './ProductLoader';
-
-export default function ProductLoader2({
+const ProductLoader2 = ({
   listSize = 1,
   pRows = 0,
   isLoading,
   isProductList = false,
-}) {
+}) => {
   const productCardLoader = () => {
     if (isLoading) {
       return (
@@ -69,4 +68,5 @@ export default function ProductLoader2({
   };
 
   return productLoaderList();
-}
+};
+export default React.memo(ProductLoader2);

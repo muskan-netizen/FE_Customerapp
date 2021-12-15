@@ -15,7 +15,7 @@ import {
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 
-export default function BrandCard({data = {}, onPress = () => {}}) {
+const BrandCard = ({data = {}, onPress = () => {}}) => {
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -77,7 +77,7 @@ export default function BrandCard({data = {}, onPress = () => {}}) {
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 const styles = StyleSheet.create({
   imgContainer: {
@@ -87,3 +87,4 @@ const styles = StyleSheet.create({
     paddingVertical: moderateScaleVertical(10),
   },
 });
+export default React.memo(BrandCard);

@@ -22,7 +22,7 @@ import {
   pressOutAnimation,
 } from '../utils/helperFunctions';
 
-export default function ProductCard2({
+const ProductCard2 = ({
   data = {},
   onPress = () => {},
   cardWidth,
@@ -31,7 +31,7 @@ export default function ProductCard2({
   addToCart = () => {},
   activeOpacity = 1,
   bottomText = strings.BUY_NOW,
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -255,4 +255,5 @@ export default function ProductCard2({
       </Animated.View>
     </TouchableOpacity>
   );
-}
+};
+export default React.memo(ProductCard2);

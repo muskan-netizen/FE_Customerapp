@@ -18,14 +18,14 @@ import imagePath from '../constants/imagePath';
 import ButtonComponent from './ButtonComponent';
 import {ScrollView} from 'react-native';
 
-export default function LanguageModal({
+const LanguageModal = ({
   isSelectLanguageModal = false,
   onBackdropPress = () => {},
   _onLangSelect = () => {},
   isLangSelected = false,
   allLangs = [],
   _updateLang = () => {},
-}) {
+}) => {
   const {themeColor, themeToggle, appStyle, themeColors, languages} =
     useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
@@ -154,7 +154,7 @@ export default function LanguageModal({
       </View>
     </Modal>
   );
-}
+};
 
 export function stylesFunc({fontFamily, themeColors}) {
   const commonStyles = commonStylesFun({fontFamily, themeColors});
@@ -184,3 +184,4 @@ export function stylesFunc({fontFamily, themeColors}) {
   });
   return styles;
 }
+export default React.memo(LanguageModal);

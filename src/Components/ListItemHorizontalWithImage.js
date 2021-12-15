@@ -104,4 +104,4 @@ const ListItemHorizontal = ({
   );
 };
 
-export default ListItemHorizontal;
+export default React.memo(ListItemHorizontal);

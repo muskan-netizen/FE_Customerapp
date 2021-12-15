@@ -14,12 +14,9 @@ import {
 import {getImageUrl} from '../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import MarketCard3 from './MarketCard3';
 
-export default function MarketCard2({
-  data = {},
-  onPress = () => {},
-  extraStyles = {},
-}) {
+const MarketCard2 = ({data = {}, onPress = () => {}, extraStyles = {}}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -109,7 +106,7 @@ export default function MarketCard2({
       />
     </TouchableOpacity>
   );
-}
+};
 
 export function stylesFunc({fontFamily, extraStyles}) {
   const styles = StyleSheet.create({
@@ -128,3 +125,4 @@ export function stylesFunc({fontFamily, extraStyles}) {
   });
   return styles;
 }
+export default React.memo(MarketCard2);

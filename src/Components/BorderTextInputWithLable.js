@@ -21,7 +21,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 // import styles from '../Screens/Tracking/styles';
 
-export default function BorderTextInputWithLable({
+const BorderTextInputWithLable = ({
   label,
   labelStyle,
   lableViewStyle,
@@ -47,7 +47,7 @@ export default function BorderTextInputWithLable({
   borderWidth = 1,
   marginBottomTxt = 10,
   ...props
-}) {
+}) => {
   const inputRef = useRef();
   const {appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -173,7 +173,7 @@ export default function BorderTextInputWithLable({
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 export function stylesData({fontFamily}) {
   const styles = StyleSheet.create({
@@ -241,3 +241,4 @@ export function stylesData({fontFamily}) {
   });
   return styles;
 }
+export default React.memo(BorderTextInputWithLable);

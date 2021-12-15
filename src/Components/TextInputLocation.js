@@ -12,8 +12,7 @@ import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 import commonStylesFun, {hitSlopProp} from '../styles/commonStyles';
 import {moderateScaleVertical, textScale} from '../styles/responsiveSize';
-
-export default function TextInputLocation({
+const TextInputLocation = ({
   containerStyle,
   textInputStyle,
   leftIcon,
@@ -30,7 +29,7 @@ export default function TextInputLocation({
   isFocus = false,
   label = '',
   ...props
-}) {
+}) => {
   const inputRef = useRef();
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -105,7 +104,7 @@ export default function TextInputLocation({
       )}
     </View>
   );
-}
+};
 
 export function stylesData({fontFamily, themeColors}) {
   const commonStyles = commonStylesFun({fontFamily});
@@ -122,3 +121,4 @@ export function stylesData({fontFamily, themeColors}) {
   });
   return styles;
 }
+export default React.memo(TextInputLocation);

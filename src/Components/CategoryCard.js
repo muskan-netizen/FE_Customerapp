@@ -1,21 +1,20 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Elevations from 'react-native-elevation';
-import { SvgUri } from 'react-native-svg';
-import { useSelector } from 'react-redux';
+import {SvgUri} from 'react-native-svg';
+import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
-import { moderateScale, textScale, width } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
-import { getImageUrl } from '../utils/helperFunctions';
-import { useDarkMode } from 'react-native-dark-mode';
+import {moderateScale, textScale, width} from '../styles/responsiveSize';
+import {MyDarkTheme} from '../styles/theme';
+import {getImageUrl} from '../utils/helperFunctions';
+import {useDarkMode} from 'react-native-dark-mode';
 
-
-export default function CategoryCard({ data = {}, onPress = () => { } }) {
+const CategoryCard = ({data = {}, onPress = () => {}}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const { appStyle } = useSelector((state) => state?.initBoot);
+  const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const imageURI = getImageUrl(
     data?.icon?.proxy_url,
@@ -26,7 +25,12 @@ export default function CategoryCard({ data = {}, onPress = () => { } }) {
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
 
   return (
-    <View style={{ width: width / 4, marginBottom: moderateScale(10), alignItems: 'center' }}> 
+    <View
+      style={{
+        width: width / 4,
+        marginBottom: moderateScale(10),
+        alignItems: 'center',
+      }}>
       <TouchableOpacity
         onPress={onPress}
         activeOpacity={0.9}
@@ -37,13 +41,14 @@ export default function CategoryCard({ data = {}, onPress = () => { } }) {
           marginVertical: moderateScale(5),
           marginHorizontal: moderateScale(2),
           borderRadius: moderateScale(5),
-          backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : '#FFFCFC',
+          backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.lightDark
+            : '#FFFCFC',
 
           // ...Elevations[2],
           borderWidth: 0.5,
           borderColor: isDarkMode ? MyDarkTheme.colors.lightDark : '#979797',
         }}>
-
         <View
           style={{
             flex: 1,
@@ -65,14 +70,13 @@ export default function CategoryCard({ data = {}, onPress = () => { } }) {
           ) : (
             <View
               style={{
-                
                 height: moderateScale(50),
                 width: moderateScale(50),
                 // borderRadius: 15,
-                overflow: 'hidden'
+                overflow: 'hidden',
               }}>
               <Image
-                style={{ flex: 1 }}
+                style={{flex: 1}}
                 source={{
                   uri: imageURI,
                 }}
@@ -81,9 +85,7 @@ export default function CategoryCard({ data = {}, onPress = () => { } }) {
           )}
         </View>
       </TouchableOpacity>
-      <View
-        style={{
-        }}>
+      <View style={{}}>
         <Text
           style={{
             fontFamily: fontFamily.regular,
@@ -96,8 +98,8 @@ export default function CategoryCard({ data = {}, onPress = () => { } }) {
         </Text>
       </View>
     </View>
-
   );
-}
+};
 
 const styles = StyleSheet.create({});
+export default React.memo(CategoryCard);

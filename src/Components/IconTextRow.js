@@ -5,12 +5,7 @@ import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {textScale} from '../styles/responsiveSize';
 
-export default function IconTextRow({
-  text,
-  icon,
-  containerStyle = {},
-  textStyle = {},
-}) {
+const IconTextRow = ({text, icon, containerStyle = {}, textStyle = {}}) => {
   const {appStyle} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
@@ -32,4 +27,5 @@ export default function IconTextRow({
       </Text>
     </View>
   );
-}
+};
+export default React.memo(IconTextRow);

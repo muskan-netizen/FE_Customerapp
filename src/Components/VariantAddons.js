@@ -46,7 +46,7 @@ import HtmlViewComp from './HtmlViewComp';
 import BannerLoader from './Loaders/BannerLoader';
 import HeaderLoader from './Loaders/HeaderLoader';
 
-export default function VariantAddons({
+const VariantAddons = ({
   productdetail = {},
   isVisible = false,
   onClose,
@@ -55,7 +55,7 @@ export default function VariantAddons({
   showShimmer,
   shimmerClose = () => {},
   updateCartItems,
-}) {
+}) => {
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
 
   const [state, setState] = useState({
@@ -1232,7 +1232,7 @@ export default function VariantAddons({
       )}
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   productName: {
@@ -1363,3 +1363,4 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.medium,
   },
 });
+export default React.memo(VariantAddons);

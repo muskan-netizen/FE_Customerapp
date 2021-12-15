@@ -7,8 +7,7 @@ import {
   textScale,
 } from '../../styles/responsiveSize';
 import colors from '../../styles/colors';
-
-export default function HomeLoader({
+const HomeLoader = ({
   width = 20,
   height = 20,
   backgroundColor = colors.greyNew,
@@ -21,7 +20,7 @@ export default function HomeLoader({
   y = 0,
   rx = 5,
   ry = 5,
-}) {
+}) => {
   return (
     <View style={{...viewStyles}}>
       <ContentLoader
@@ -40,6 +39,6 @@ export default function HomeLoader({
       </ContentLoader>
     </View>
   );
-}
-
+};
+export default React.memo(HomeLoader);
 // const styles = StyleSheet.create({});

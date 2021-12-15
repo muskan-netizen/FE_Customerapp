@@ -16,7 +16,7 @@ import {moderateScale, textScale, width} from '../styles/responsiveSize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 
-export default function PhoneNumberInput({
+const PhoneNumberInput = ({
   cca2 = '',
   callingCode = '',
   onChangePhone,
@@ -29,8 +29,8 @@ export default function PhoneNumberInput({
   showCountryCode = true,
   TxtInputStyle,
   flagSize,
-  downArrowStyle
-}) {
+  downArrowStyle,
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -72,25 +72,29 @@ export default function PhoneNumberInput({
           width: moderateScale(88),
         }}
         onPress={_openCountryPicker}>
-        {showCountryCode &&
+        {showCountryCode && (
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text> +</Text>
-          <Text
-            style={{
-              fontFamily: fontFamily.medium,
-              color: isDarkMode
-                ? MyDarkTheme.colors.text
-                : colors.textGreyOpcaity7,
-            }}>
-            {callingCode}
-          </Text>
-        </View>}
+            <Text> +</Text>
+            <Text
+              style={{
+                fontFamily: fontFamily.medium,
+                color: isDarkMode
+                  ? MyDarkTheme.colors.text
+                  : colors.textGreyOpcaity7,
+              }}>
+              {callingCode}
+            </Text>
+          </View>
+        )}
 
         <View style={{marginRight: moderateScale(-10)}}>
           <Flag countryCode={cca2} flagSize={flagSize} />
         </View>
 
-        <Image source={imagePath.dropdownTriangle} style={{ ...downArrowStyle }} />
+        <Image
+          source={imagePath.dropdownTriangle}
+          style={{...downArrowStyle}}
+        />
       </TouchableOpacity>
       <TextInput
         selectionColor={colors.black}
@@ -115,7 +119,7 @@ export default function PhoneNumberInput({
           marginVertical: 8,
           paddingHorizontal: 10,
           textAlign: I18nManager.isRTL ? 'right' : 'left',
-          ...TxtInputStyle
+          ...TxtInputStyle,
         }}
         autoFocus={autoFocus}
       />
@@ -133,4 +137,5 @@ export default function PhoneNumberInput({
       )}
     </View>
   );
-}
+};
+export default React.memo(PhoneNumberInput);

@@ -7,14 +7,14 @@ import {
   width,
 } from '../../styles/responsiveSize';
 
-export default function ProductLoader({
+const ProductLoader = ({
   listSize = 1,
   cardWidth = width * 0.5 - moderateScale(12),
   height = moderateScaleVertical(128),
   containerStyle = {},
   isRow = false,
   rowContainerstyle = {},
-}) {
+}) => {
   const contentCard = () => {
     return (
       <View style={{...containerStyle, width: cardWidth, padding: 0}}>
@@ -55,4 +55,5 @@ export default function ProductLoader({
     );
   }
   return contentCard();
-}
+};
+export default React.memo(ProductLoader);

@@ -7,14 +7,14 @@ import colors from '../styles/colors';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 
-export default function CustomBottomTabBar({
+const CustomBottomTabBar = ({
   state,
   descriptors,
   navigation,
   bottomTabNotify,
 
   ...props
-}) {
+}) => {
   const insets = useSafeAreaInsets();
   const currentTheme = useSelector((state) => state.initBoot);
   const {themeColors, themeLayouts} = currentTheme;
@@ -94,4 +94,5 @@ export default function CustomBottomTabBar({
       })}
     </LinearGradient>
   );
-}
+};
+export default React.memo(CustomBottomTabBar);

@@ -8,7 +8,7 @@ import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
 import {getImageUrl} from '../utils/helperFunctions';
 import ProgressiveImage from './ProgressiveImage';
 
-export default function OffersCard({data = {}, onPress = () => {}}) {
+const OffersCard = ({data = {}, onPress = () => {}}) => {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
@@ -75,4 +75,5 @@ export default function OffersCard({data = {}, onPress = () => {}}) {
       </View>
     </TouchableOpacity>
   );
-}
+};
+export default React.memo(OffersCard);

@@ -32,14 +32,13 @@ import {
   pressOutAnimation,
 } from '../utils/helperFunctions';
 
-export default function MarketCard3({
+const MarketCard3 = ({
   data = {},
   onPress = () => {},
   extraStyles = {},
   fastImageStyle = {},
   imageResizeMode = 'cover',
-}) {
-
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -277,7 +276,7 @@ export default function MarketCard3({
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
   const styles = StyleSheet.create({
@@ -339,3 +338,4 @@ export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
   });
   return styles;
 }
+export default React.memo(MarketCard3);

@@ -8,14 +8,13 @@ import {
 import CircularProfileLoader from './CircularProfileLoader';
 import HeaderLoader from './HeaderLoader';
 import HomeLoader from './HomeLoader';
-
-export default function ProductListLoader({
+const ProductListLoader = ({
   viewStyles = {},
   widthTop = moderateScale(95),
   rectWidthBottom = moderateScaleVertical(90),
   mainView = {},
   widthLeft = 20,
-}) {
+}) => {
   return (
     <View
       style={{
@@ -78,6 +77,7 @@ export default function ProductListLoader({
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({});
+export default React.memo(ProductListLoader);

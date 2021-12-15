@@ -215,4 +215,4 @@ const GradientCartView = ({
   );
 };
 
-export default GradientCartView;
+export default React.memo(GradientCartView);

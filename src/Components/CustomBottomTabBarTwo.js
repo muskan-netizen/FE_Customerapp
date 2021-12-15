@@ -12,14 +12,14 @@ import {
   textScale,
 } from '../styles/responsiveSize';
 
-export default function CustomBottomTabBarTwo({
+const CustomBottomTabBarTwo = ({
   state,
   descriptors,
   navigation,
   bottomTabNotify,
 
   ...props
-}) {
+}) => {
   const insets = useSafeAreaInsets();
 
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
@@ -84,7 +84,7 @@ export default function CustomBottomTabBarTwo({
       })}
     </View>
   );
-}
+};
 
 export function stylesData({fontFamily, themeColors}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -120,3 +120,4 @@ export function stylesData({fontFamily, themeColors}) {
   });
   return styles;
 }
+export default React.memo(CustomBottomTabBarTwo);

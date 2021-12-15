@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import Modal from 'react-native-modal';
 import strings from '../constants/lang';
 
-export default function NoInternetModal({show, onRetry, isRetrying}) {
+const NoInternetModal = ({show, onRetry, isRetrying}) => {
   return (
     <Modal isVisible={show} style={styles.modal} animationInTiming={600}>
       <View style={styles.modalContainer}>
@@ -14,7 +14,7 @@ export default function NoInternetModal({show, onRetry, isRetrying}) {
       </View>
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   modal: {
@@ -52,3 +52,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
+export default React.memo(NoInternetModal);

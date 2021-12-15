@@ -22,7 +22,7 @@ import {
 } from '../utils/helperFunctions';
 import HtmlViewComp from './HtmlViewComp';
 
-export default function ProductCard3({
+const ProductCard3demo = ({
   data = {},
   onPress = () => {},
   cardWidth,
@@ -35,7 +35,7 @@ export default function ProductCard3({
   onIncrement,
   onDecrement,
   selectedCartItem,
-}) {
+}) => {
   // data['qty'] = 1
   const [state, setState] = useState({
     selectedIndex: -1,
@@ -338,4 +338,5 @@ export default function ProductCard3({
       </TouchableOpacity>
     </Animatable.View>
   );
-}
+};
+export default React.memo(ProductCard3demo);

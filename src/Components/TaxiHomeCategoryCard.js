@@ -18,11 +18,11 @@ import Elevations from 'react-native-elevation';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 
-export default function TaxiHomeCategoryCard({
+const TaxiHomeCategoryCard = ({
   data = {},
   onPress = () => {},
   isLoading = false,
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -102,6 +102,7 @@ export default function TaxiHomeCategoryCard({
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 const styles = StyleSheet.create({});
+export default React.memo(TaxiHomeCategoryCard);

@@ -32,7 +32,7 @@ import {
   getImageUrl,
 } from '../utils/helperFunctions';
 
-export default function OrderCardVendorComponent({
+const OrderCardVendorComponent = ({
   data = {},
   titlestyle,
   selectedTab,
@@ -42,7 +42,7 @@ export default function OrderCardVendorComponent({
   updateOrderStatus,
   onPressReturnOrder,
   isBleDevice = false,
-}) {
+}) => {
   let cardWidth = width - 21.5;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
@@ -418,7 +418,7 @@ export default function OrderCardVendorComponent({
       </View>
     </TouchableOpacity>
   );
-}
+};
 export function stylesFunc({fontFamily, themeColors}) {
   const commonStyles = commonStylesFunc({fontFamily});
 
@@ -611,3 +611,4 @@ export function stylesFunc({fontFamily, themeColors}) {
   });
   return styles;
 }
+export default React.memo(OrderCardVendorComponent);

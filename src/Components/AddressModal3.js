@@ -45,7 +45,7 @@ const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-export default function AddressModal3({
+const AddressModal3 = ({
   updateData,
   isVisible = false,
   onClose,
@@ -55,7 +55,7 @@ export default function AddressModal3({
   onPress,
   indicator,
   navigation,
-}) {
+}) => {
   const mapRef = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -692,7 +692,7 @@ export default function AddressModal3({
     //   </View>
     // </View>
   );
-}
+};
 
 export function stylesData({fontFamily, themeColors}) {
   const commonStyles = commonStylesFun({fontFamily});
@@ -884,3 +884,4 @@ export function stylesData({fontFamily, themeColors}) {
   });
   return styles;
 }
+export default React.memo(AddressModal3);

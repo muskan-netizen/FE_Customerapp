@@ -35,7 +35,7 @@ import AutoUpLabelTxtInput from './AutoUpLabelTxtInput';
 // navigator.geolocation = require('@react-native-community/geolocation');
 navigator.geolocation = require('react-native-geolocation-service');
 
-export default function AddressModal2({
+const AddressModal2 = ({
   updateData,
   isVisible = false,
   onClose,
@@ -45,7 +45,7 @@ export default function AddressModal2({
   onPress,
   indicator,
   navigation,
-}) {
+}) => {
   const appData = useSelector((state) => state?.initBoot?.appData);
   const currentTheme = useSelector((state) => state.initBoot);
   const {themeColors, themeLayouts, appStyle} = currentTheme;
@@ -523,7 +523,7 @@ export default function AddressModal2({
       {/* </ScrollView> */}
     </Modal>
   );
-}
+};
 
 export function stylesData({fontFamily, themeColors}) {
   const commonStyles = commonStylesFun({fontFamily});
@@ -682,3 +682,4 @@ export function stylesData({fontFamily, themeColors}) {
   });
   return styles;
 }
+export default React.memo(AddressModal2);

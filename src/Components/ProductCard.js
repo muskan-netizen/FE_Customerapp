@@ -20,7 +20,7 @@ import {
   pressOutAnimation,
 } from '../utils/helperFunctions';
 
-export default function ProductCard({
+const ProductCard = ({
   data = {},
   onPress = () => {},
   cardWidth,
@@ -30,7 +30,7 @@ export default function ProductCard({
   activeOpacity = 1,
   bottomText = strings.BUY_NOW,
   nameTextStyle = {},
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -196,4 +196,5 @@ export default function ProductCard({
       </Animated.View>
     </TouchableOpacity>
   );
-}
+};
+export default React.memo(ProductCard);

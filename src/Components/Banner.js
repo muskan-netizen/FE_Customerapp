@@ -134,5 +134,4 @@ const styles = StyleSheet.create({
     // marginRight: 20
   },
 });
-
-export default Banner;
+export default React.memo(Banner);
