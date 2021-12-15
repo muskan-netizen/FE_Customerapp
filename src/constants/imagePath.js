@@ -427,4 +427,6 @@ export default {
   activeoutdelivery: require('../assets/images/vendorStatusImages/ic_activeoutdelivery.png'),
   activedelivered: require('../assets/images/vendorStatusImages/ic_activedelivered.png'),
   support: require('../assets/images/ic_support.png'),
+  checkBox2Active: require('../assets/images/ic_check2.png'),
+  checkBox2InActive: require('../assets/images/ic_check1.png'),
 };

@@ -19,7 +19,8 @@ const SearchPlaces = ({
     onFocus = () => { },
     autoFocus = false,
     _moveToNextScreen = () => { },
-    curLatLng = {}
+    curLatLng = {},
+    placeHolderColor = colors.black
 }) => {
     // console.log(mapKey, 'in MapPlaceComp map key')
 
@@ -58,9 +59,7 @@ const SearchPlaces = ({
                 }}
                 onSubmitEditing={Keyboard.dismiss}
                 onFocus={onFocus}
-                placeholderTextColor={
-                    isDarkMode ? colors.textGreyB : colors.black
-                }
+                placeholderTextColor={isDarkMode ? colors.textGreyB : placeHolderColor}
             />
             <TouchableOpacity
                 onPress={_moveToNextScreen}

@@ -668,4 +668,6 @@ export default {
   HAVE_READ: 'and have read the',
   PRIVACY_POLICY: 'Privacy Policy.',
   SUPPORT: 'Support',
+  ENETER_YOUR_ADDRESS: 'Enter your address',
+  NO_CARS_AVAILABLE: 'No cars available',
 };

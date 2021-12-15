@@ -202,6 +202,7 @@ export default function OuterScreen({navigation}) {
     googleLogin()
       .then((res) => {
         if (res?.user) {
+          console.log(res, 'googlegooogle');
           _saveSocailLogin(res.user, 'google');
         } else {
           updateState({isLoading: false});

@@ -755,4 +755,6 @@ montant`,
   ADD_NEW: 'Ajouter un nouveau',
   REPEAT_LAST: 'Re-commander',
   SUPPORT: 'Support',
+  ENETER_YOUR_ADDRESS: 'Enter your address',
+  NO_CARS_AVAILABLE: 'No cars available',
 };
