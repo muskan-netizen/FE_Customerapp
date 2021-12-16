@@ -12,7 +12,7 @@ const LeftRightText = ({
   MyDarkTheme,
   leftTextStyle,
   rightTextStyle,
-  marginBottom = 12
+  marginBottom = 12,
 }) => {
   const {appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -57,4 +57,4 @@ export function stylesFunc({fontFamily}) {
   return styles;
 }
 
-export default LeftRightText;
+export default React.memo(LeftRightText);

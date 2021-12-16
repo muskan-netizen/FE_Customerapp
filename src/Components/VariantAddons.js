@@ -46,7 +46,7 @@ import HtmlViewComp from './HtmlViewComp';
 import BannerLoader from './Loaders/BannerLoader';
 import HeaderLoader from './Loaders/HeaderLoader';
 
-export default function VariantAddons({
+const VariantAddons = ({
   productdetail = {},
   isVisible = false,
   onClose,
@@ -55,7 +55,7 @@ export default function VariantAddons({
   showShimmer,
   shimmerClose = () => {},
   updateCartItems,
-}) {
+}) => {
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
 
   const [state, setState] = useState({
@@ -187,7 +187,7 @@ export default function VariantAddons({
   };
 
   console.log('type id++', typeId);
-  
+
   const clearCart = (addonSet) => {
     // actions
     //   .clearCart(
@@ -369,10 +369,11 @@ export default function VariantAddons({
                 </Text>
                 <View style={{paddingLeft: moderateScale(5)}}>
                   <Image
+                    style={{tintColor: themeColors.primary_color}}
                     source={
                       i?.value
-                        ? imagePath.icCheckBoxActive
-                        : imagePath.icCheckBoxInactive
+                        ? imagePath.checkBox2Active
+                        : imagePath.checkBox2InActive
                     }
                   />
                 </View>
@@ -712,7 +713,7 @@ export default function VariantAddons({
     });
 
     const checkIsError = addonSet.findIndex((el) => el.errorShow);
-    
+
     let data = {};
 
     if (checkIsError == -1) {
@@ -1101,7 +1102,8 @@ export default function VariantAddons({
                       fontFamily: fontFamily.medium,
                     }}>
                     {(productTotalQuantity && productTotalQuantity != 0) ||
-                      !!productDetailData?.sell_when_out_of_stock ||  productDetailData?.has_inventory == 0 
+                    !!productDetailData?.sell_when_out_of_stock ||
+                    productDetailData?.has_inventory == 0
                       ? ''
                       : strings.OUT_OF_STOCK}
                   </Text>
@@ -1146,7 +1148,8 @@ export default function VariantAddons({
           {!!(
             (!showErrorMessageTitle && productTotalQuantity > 0) ||
             (!!typeId && typeId == 8) ||
-            !!productDetailData?.sell_when_out_of_stock || productDetailData?.has_inventory == 0 
+            !!productDetailData?.sell_when_out_of_stock ||
+            productDetailData?.has_inventory == 0
           ) && (
             <View
               style={{
@@ -1244,7 +1247,7 @@ export default function VariantAddons({
       )}
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   productName: {
@@ -1375,3 +1378,4 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.medium,
   },
 });
+export default React.memo(VariantAddons);

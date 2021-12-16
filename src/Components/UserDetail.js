@@ -155,4 +155,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserDetail;
+export default React.memo(UserDetail);

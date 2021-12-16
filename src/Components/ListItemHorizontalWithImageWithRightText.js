@@ -23,7 +23,7 @@ const ListItemHorizontalWithRightText = ({
   centerContainerStyle = {},
   centerHeadingStyle = {},
   rightIconStyle = {},
-  rightText
+  rightText,
 }) => {
   const {appStyle} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -33,9 +33,10 @@ const ListItemHorizontalWithRightText = ({
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});
   return (
-    <TouchableOpacity style={{
-      flex: 1,
-      // width: '100%',
+    <TouchableOpacity
+      style={{
+        flex: 1,
+        // width: '100%',
         paddingRight: moderateScale(23),
         flexDirection: 'row',
         // paddingVertical: moderateScaleVertical(28),
@@ -63,71 +64,77 @@ const ListItemHorizontalWithRightText = ({
       ) : (
         <View />
       )}
-    <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={0.8}
-      style={{
-        // 
-        flexDirection: 'row',
-        paddingVertical: moderateScaleVertical(28),
-        borderBottomColor: colors.borderLight,
-        borderBottomWidth: 1,
-        alignItems: 'center',
-        ...containerStyle,
-        flex: 1,
-        justifyContent:'space-between'
-      }}>
-      
-      <View
+      <TouchableOpacity
+        onPress={onPress}
+        activeOpacity={0.8}
         style={{
-          // marginHorizontal: moderateScale(20),
-          // flex: 1,
-          ...centerContainerStyle,
+          //
+          flexDirection: 'row',
+          paddingVertical: moderateScaleVertical(28),
+          borderBottomColor: colors.borderLight,
+          borderBottomWidth: 1,
+          alignItems: 'center',
+          ...containerStyle,
+          flex: 1,
+          justifyContent: 'space-between',
         }}>
-        <Text
+        <View
           style={{
-            fontSize: textScale(18),
-            fontFamily: fontFamily?.regular,
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            textAlign: I18nManager.isRTL ? 'right' : 'left',
-            ...centerHeadingStyle,
+            // marginHorizontal: moderateScale(20),
+            // flex: 1,
+            ...centerContainerStyle,
           }}>
-          {centerHeading}
-        </Text>
-        {!!centerText && (
           <Text
             style={{
-              ...commonStyles.mediumFont14,
-              color: colors.grey,
-              lineHeight: textScale(20),
-              opacity: 0.7,
-              fontSize: textScale(13),
-              marginTop: moderateScaleVertical(5),
+              fontSize: textScale(18),
+              fontFamily: fontFamily?.regular,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
               textAlign: I18nManager.isRTL ? 'right' : 'left',
+              ...centerHeadingStyle,
             }}>
-            {centerText}
+            {centerHeading}
           </Text>
-        )}
-      </View>
-      {iconRight && (
-        <TouchableOpacity onPress={onRightIconPress} style={{ flexDirection: 'row', alignItems: 'center' }}>
-          {rightText && (
-            <Text style={{ fontSize: textScale(9), marginRight: moderateScale(10), color: colors.textGreyOpcaity7 }}>
-              {rightText}
+          {!!centerText && (
+            <Text
+              style={{
+                ...commonStyles.mediumFont14,
+                color: colors.grey,
+                lineHeight: textScale(20),
+                opacity: 0.7,
+                fontSize: textScale(13),
+                marginTop: moderateScaleVertical(5),
+                textAlign: I18nManager.isRTL ? 'right' : 'left',
+              }}>
+              {centerText}
             </Text>
           )}
-          <Image
-            style={[
-              rightIconStyle,
-              {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]},
-            ]}
-            source={iconRight}
-          />
-        </TouchableOpacity>
-      )}
-    </TouchableOpacity>
+        </View>
+        {iconRight && (
+          <TouchableOpacity
+            onPress={onRightIconPress}
+            style={{flexDirection: 'row', alignItems: 'center'}}>
+            {rightText && (
+              <Text
+                style={{
+                  fontSize: textScale(9),
+                  marginRight: moderateScale(10),
+                  color: colors.textGreyOpcaity7,
+                }}>
+                {rightText}
+              </Text>
+            )}
+            <Image
+              style={[
+                rightIconStyle,
+                {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]},
+              ]}
+              source={iconRight}
+            />
+          </TouchableOpacity>
+        )}
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 };
 
-export default ListItemHorizontalWithRightText;
+export default React.memo(ListItemHorizontalWithRightText);

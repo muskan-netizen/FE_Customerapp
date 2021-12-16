@@ -65,4 +65,4 @@ const GradientButton = ({
   );
 };
 
-export default GradientButton;
+export default React.memo(GradientButton);

@@ -159,4 +159,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default WishlistCard;
+export default React.memo(WishlistCard);

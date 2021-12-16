@@ -140,4 +140,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TaxiBannerHome;
+export default React.memo(TaxiBannerHome);

@@ -716,6 +716,8 @@ export default {
   TERMS_CONDITIONS: 'Terms & Conditions',
   HAVE_READ: 'and have read the',
   PRIVACY_POLICY: 'Privacy Policy.',
-  ENETER_YOUR_ADDRESS:"Enter your address",
+  VENDER: 'Vendor',
+  DRIVER: 'Driver',
+  ENETER_YOUR_ADDRESS: 'Enter your address',
   NO_CARS_AVAILABLE: 'No cars available',
 };

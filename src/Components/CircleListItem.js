@@ -6,7 +6,7 @@ import colors from '../styles/colors';
 import {moderateScale, textScale, width} from '../styles/responsiveSize';
 import {getImageUrl} from '../utils/helperFunctions';
 
-export const CircleListItem = ({circlualistData, onPress = () => {}}) => {
+const CircleListItem = ({circlualistData, onPress = () => {}}) => {
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
       <View style={styles.container}>
@@ -49,3 +49,4 @@ const styles = StyleSheet.create({
   },
   circularListImage: {height: moderateScale(40), width: moderateScale(40)},
 });
+export default React.memo(CircleListItem);

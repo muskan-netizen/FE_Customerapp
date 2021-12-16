@@ -7,7 +7,7 @@ import colors from '../styles/colors';
 import commonStylesFun from '../styles/commonStyles';
 import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
 
-export default function CartModal({isVisible = false, onClose}) {
+const CartModal = ({isVisible = false, onClose}) => {
   const {appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFun({fontFamily});
@@ -67,4 +67,5 @@ export default function CartModal({isVisible = false, onClose}) {
       </View>
     </Modal>
   );
-}
+};
+export default React.memo(CartModal);

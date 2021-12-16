@@ -174,4 +174,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BannerWithText;
+export default React.memo(BannerWithText);

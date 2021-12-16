@@ -45,4 +45,4 @@ const BrowseMenuButton = ({fontFamily, containerStyle, onMenuTap}) => {
   );
 };
 
-export default BrowseMenuButton;
+export default React.memo(BrowseMenuButton);

@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 import TextTabBar from './TextTabBar';
 
-export default function CustomTopTabBar({
+const CustomTopTabBar = ({
   tabBarItems,
   onPress,
   customContainerStyle,
@@ -17,7 +17,7 @@ export default function CustomTopTabBar({
   topBarMainView = {},
   textTabBarView = {},
   ...props
-}) {
+}) => {
   const insets = useSafeAreaInsets();
   const currentTheme = useSelector((state) => state.initBoot);
   const {themeColors, themeLayouts, appStyle} = currentTheme;
@@ -59,4 +59,5 @@ export default function CustomTopTabBar({
       </ScrollView>
     </View>
   );
-}
+};
+export default React.memo(CustomTopTabBar);

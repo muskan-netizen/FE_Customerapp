@@ -7,14 +7,14 @@ import {
   width,
 } from '../../styles/responsiveSize';
 
-export default function CategoryLoader({
+const CategoryLoader = ({
   listSize = 1,
   cardWidth = width * 0.297,
   height = moderateScaleVertical(128),
   containerStyle = {},
   isRow = false,
   pRows = 0,
-}) {
+}) => {
   const contentCard = () => {
     return (
       <View style={{...containerStyle, width: cardWidth, padding: 0}}>
@@ -54,4 +54,5 @@ export default function CategoryLoader({
     );
   }
   return contentCard();
-}
+};
+export default React.memo(CategoryLoader);

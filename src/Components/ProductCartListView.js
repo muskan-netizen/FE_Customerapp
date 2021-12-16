@@ -11,7 +11,7 @@ import {MyDarkTheme} from '../styles/theme';
 import {currencyNumberFormatter} from '../utils/commonFunction';
 import {getImageUrl} from '../utils/helperFunctions';
 
-export default function ProductCartListView({
+const ProductCartListView = ({
   data = {},
   onPress = () => {},
   cardWidth,
@@ -19,7 +19,7 @@ export default function ProductCartListView({
   onAddtoWishlist,
   addToCart = () => {},
   activeOpacity = 1,
-}) {
+}) => {
   const currentTheme = useSelector((state) => state?.appTheme);
   const {currencies, appStyle} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -144,4 +144,5 @@ export default function ProductCartListView({
       </View>
     </TouchableOpacity>
   );
-}
+};
+export default React.memo(ProductCartListView);

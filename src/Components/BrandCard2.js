@@ -19,8 +19,7 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-
-export default function BrandCard2({data = {}, onPress = () => {}}) {
+const BrandCard2 = ({data = {}, onPress = () => {}}) => {
   const navigation = useNavigation();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -95,7 +94,7 @@ export default function BrandCard2({data = {}, onPress = () => {}}) {
       </Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   imgContainer: {
@@ -109,3 +108,4 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(10),
   },
 });
+export default React.memo(BrandCard2);

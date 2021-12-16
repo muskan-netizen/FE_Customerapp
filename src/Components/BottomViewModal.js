@@ -11,12 +11,12 @@ import {
   width,
 } from '../styles/responsiveSize';
 
-export default function BottomViewModal({
+const BottomViewModal = ({
   show,
   mainContainView,
   closeModal = () => {},
   isDatetimePicker = false,
-}) {
+}) => {
   return (
     <Modal
       isVisible={show}
@@ -56,7 +56,7 @@ export default function BottomViewModal({
       </View>
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   modal: {
@@ -96,3 +96,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
+export default React.memo(BottomViewModal);

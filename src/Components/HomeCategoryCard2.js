@@ -10,11 +10,11 @@ import Elevations from 'react-native-elevation';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 
-export default function HomeCategoryCard2({
+const HomeCategoryCard2 = ({
   data = {},
   onPress = () => {},
   isLoading = false,
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -84,6 +84,6 @@ export default function HomeCategoryCard2({
       </View>
     </TouchableOpacity>
   );
-}
-
+};
+export default React.memo(HomeCategoryCard2);
 const styles = StyleSheet.create({});

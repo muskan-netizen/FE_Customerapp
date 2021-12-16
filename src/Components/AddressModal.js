@@ -36,7 +36,7 @@ import {MyDarkTheme} from '../styles/theme';
 // navigator.geolocation = require('@react-native-community/geolocation');
 navigator.geolocation = require('react-native-geolocation-service');
 
-export default function AddressModal({
+const AddressModal = ({
   updateData,
   isVisible = false,
   onClose,
@@ -46,7 +46,7 @@ export default function AddressModal({
   onPress,
   indicator,
   navigation,
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   // const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -76,7 +76,7 @@ export default function AddressModal({
     addressTypeArray: [
       {
         id: 1,
-        lable: strings.HOME,
+        lable: strings.HOME_1,
         icon: imagePath.home,
       },
       {id: 2, lable: strings.WORK, icon: imagePath.workInActive},
@@ -582,7 +582,7 @@ export default function AddressModal({
       {/* </ScrollView> */}
     </Modal>
   );
-}
+};
 
 export function stylesData({fontFamily, themeColors}) {
   const commonStyles = commonStylesFun({fontFamily});
@@ -741,3 +741,4 @@ export function stylesData({fontFamily, themeColors}) {
   });
   return styles;
 }
+export default React.memo(AddressModal);
