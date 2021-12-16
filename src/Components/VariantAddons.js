@@ -967,6 +967,24 @@ const VariantAddons = ({
     }
   };
 
+  const getAdditionalPriceOfAddons = () => {
+    let addOnsAdditionalPrice = 0;
+    if (addonSet && addonSet[0]) {
+      addonSet[0].setoptions.forEach((el) => {
+        if (el.value) {
+          addOnsAdditionalPrice = addOnsAdditionalPrice + Number(el.price);
+        }
+      });
+    }
+    addOnsAdditionalPrice = currencyNumberFormatter(
+      (
+        Number(productPriceData?.multiplier) * Number(productPriceData?.price) +
+        addOnsAdditionalPrice
+      ).toFixed(2),
+    );
+    return addOnsAdditionalPrice;
+  };
+
   return (
     <Modal
       transparent={false}
@@ -1193,7 +1211,10 @@ const VariantAddons = ({
                   </TouchableOpacity>
                 </View>
               </View>
-
+              {console.log(
+                addonSet,
+                'productPriceDataproductPriceDataproductPriceData',
+              )}
               <View style={{marginHorizontal: 8}} />
               <View
                 pointerEvents={btnLoader ? 'none' : 'auto'}
@@ -1213,13 +1234,7 @@ const VariantAddons = ({
                   onPress={() => addToCart(addonSet)}
                   btnText={`${strings.ADD_ITEM} - ${
                     currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
-                    (
-                      Number(productPriceData?.multiplier) *
-                      Number(productPriceData?.price) *
-                      productQuantityForCart
-                    ).toFixed(2),
-                  )}`}
+                  }${getAdditionalPriceOfAddons()}`}
                   btnStyle={{
                     borderRadius: moderateScale(4),
                     height: moderateScale(38),

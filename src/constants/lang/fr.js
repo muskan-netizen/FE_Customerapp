@@ -761,7 +761,8 @@ montant`,
   REPEAT_LAST: 'Re-commander',
   VENDER: 'Vendeur',
   DRIVER: 'Chauffeuse',
-
   ENETER_YOUR_ADDRESS: "Entrer le nom de l'adresse",
+  SUPPORT: 'Support',
+  ENETER_YOUR_ADDRESS: 'Enter your address',
   NO_CARS_AVAILABLE: 'No cars available',
 };

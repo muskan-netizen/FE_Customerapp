@@ -82,6 +82,7 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -1966,6 +1967,16 @@ android {
             resValue "string", "app_name", "Shop Central"
             resValue "string", "host_name", ""
          }
+          skidoo{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.skidoo'
+            resValue "string", "app_name", "Skidoo"
+            resValue "string", "host_name", ""
+         }
     }
 }
 
@@ -1977,6 +1988,13 @@ dependencies {
     implementation 'com.facebook.fresco:animated-webp:1.+'
     implementation 'com.facebook.fresco:webpsupport:1.+'
     implementation project(':react-native-charts-wrapper')
+    
+    // zendesk initalize 
+     api group: 'com.zendesk', name: 'chat', version: '2.2.0'
+     api group: 'com.zendesk', name: 'messaging', version: '4.3.1'
+
+
+
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
     // implementation 'com.google.firebase:firebase-analytics:17.3.0'
     implementation fileTree(dir: "libs", include: ["*.jar"])
