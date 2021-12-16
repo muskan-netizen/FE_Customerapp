@@ -223,7 +223,7 @@ const appIds = {
     android: 'com.bottomsup',
   }),
   africanvillagemarket: Platform.select({
-    ios: 'com.codebrew.africanvillagemarket',
+    ios: 'com.africanvillagemarket',
     android: 'com.africanvillagemarket',
   }),
   ufood: Platform.select({

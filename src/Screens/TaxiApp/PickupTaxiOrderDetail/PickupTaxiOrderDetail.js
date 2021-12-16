@@ -19,6 +19,8 @@ import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import * as Animatable from 'react-native-animatable';
+
+import DeviceInfo from 'react-native-device-info';
 import BottomSheet, {
   BottomSheetFlatList,
   BottomSheetScrollView,
@@ -71,6 +73,7 @@ import {FlatList} from 'react-native';
 import {PulseIndicator} from 'react-native-indicators';
 import CustomCallouts from '../../../Components/CustomCallouts';
 import localization from 'moment/locale/es';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -711,7 +714,9 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
               initialRegion={region}
               ref={mapRef}
               // cacheEnabled={true}
-              customMapStyle={mapStyleGrey}>
+              customMapStyle={
+                appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
+              }>
               {!!tasks && tasks.length > 0 && <CustomCallouts data={tasks} />}
 
               {/* driver location */}
