@@ -53,6 +53,8 @@
 			</array>
 		</dict>
 	</array>
+    <key>CodePushDeploymentKey</key>
+    <string>$(CODE_PUSH_KEY)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
