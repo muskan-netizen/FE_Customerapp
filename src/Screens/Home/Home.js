@@ -95,7 +95,6 @@ export default function Home({ route, navigation }) {
     updateState({ updatedData: appMainData?.categories });
   }, [appMainData]);
 
-  console.log("addressSearchaddressSearch", appData)
 
   useEffect(() => {
     _getLocationFromParams();
@@ -105,7 +104,7 @@ export default function Home({ route, navigation }) {
   }, [paramData?.details]);
 
   const _getLocationFromParams = () => {
-    console.log("one time")
+ 
     if (
       paramData?.details &&
       paramData?.details?.formatted_address != location?.address
@@ -163,7 +162,6 @@ export default function Home({ route, navigation }) {
 
   const updateLatLang = (res) => {
     updateState({ updateTime: Math.random() });
-    console.log(res, 'resresresresresres');
     actions.locationData(res);
   };
   useEffect(() => {
