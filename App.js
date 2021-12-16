@@ -30,6 +30,7 @@ import PushNotification from 'react-native-push-notification';
 import PrinterScreen from './src/Screens/PrinterConnection/PrinterScreen';
 import AsyncStorage from '@react-native-community/async-storage';
 import codePush from "react-native-code-push";
+import withCodePush from './codepush';
 
 let codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_RESUME };
 
@@ -290,4 +291,4 @@ const App = () => {
 };
 
 
-export default codePush(codePushOptions)(App);
+export default withCodePush(App);
