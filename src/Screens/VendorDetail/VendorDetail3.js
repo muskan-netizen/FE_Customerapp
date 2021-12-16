@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, View} from 'react-native';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { FlatList, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import VendorDetailLoader from '../../Components/Loaders/VendorDetailLoader';
 import ThreeColumnCard from '../../Components/ThreeColumnCard';
@@ -17,17 +17,17 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {showError} from '../../utils/helperFunctions';
+import { showError } from '../../utils/helperFunctions';
 import ListEmptyVendors from '../Vendors/ListEmptyVendors';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../styles/theme';
 import strings from '../../constants/lang';
 import BrandCard2 from '../../Components/BrandCard2';
 import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
-import {trim} from 'lodash';
+import { trim } from 'lodash';
 import NoDataFound from '../../Components/NoDataFound';
 
-export default function VendorDetail3({navigation, route}) {
+export default function VendorDetail3({ navigation, route }) {
   let vendorParams = route?.params?.data;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   // alert("312")
@@ -42,7 +42,7 @@ export default function VendorDetail3({navigation, route}) {
     limit: 12,
     pageNo: 1,
   });
-  const {vendorId, vendorData, isLoading, limit, pageNo, vendordName} = state;
+  const { vendorId, vendorData, isLoading, limit, pageNo, vendordName } = state;
 
   useEffect(() => {
     if (
@@ -76,18 +76,25 @@ export default function VendorDetail3({navigation, route}) {
     convertLocalDateToUTCDate('2021-09-28T00:00', true);
   }, []);
 
-  const {appData, appStyle, currencies, languages} = useSelector(
+  const { appData, appStyle, currencies, languages } = useSelector(
     (state) => state.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
-  const commonStyles = commonStylesFun({fontFamily});
+  const commonStyles = commonStylesFun({ fontFamily });
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   //Naviagtion to specific screen
   const moveToNewScreen = (item) => {
-    console.log('item++++', item);
-    // return;
+    // console.log('item++++ upper', item);
+    // if (item.type.id == 7) {
+      
+    //   // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
+    //   console.log('item++++', {...item, pickup_taxi: 'fdf'});
+    //   // return;
+    //   moveToNewScreen(navigationStrings.ADDADDRESS, item)();
+    //   return;
+    // }
     navigation.navigate(navigationStrings.PRODUCT_LIST, {
       data: {
         id: item.id,
@@ -122,9 +129,9 @@ export default function VendorDetail3({navigation, route}) {
       )
       .then((res) => {
         console.log(res, 'res>>>category data');
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         if (res && res.data) {
-          updateState({vendorData: res.data.listData});
+          updateState({ vendorData: res.data.listData });
         }
       })
       .catch(errorMethod);
@@ -143,7 +150,7 @@ export default function VendorDetail3({navigation, route}) {
         language: languages.primary_language.id,
       })
       .then((res) => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         if (res && res.data) {
           console.log(res, 'res>>res');
           let newArray = res.data;
@@ -154,7 +161,7 @@ export default function VendorDetail3({navigation, route}) {
           //   // );
           //   newArray= newArray.filter((x) => x?.id != vendorParams?.categoryData?.id)
           // }
-          updateState({vendorData: newArray});
+          updateState({ vendorData: newArray });
         }
       })
       .catch(errorMethod);
@@ -163,11 +170,11 @@ export default function VendorDetail3({navigation, route}) {
   /********* */
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+    updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
     showError(error?.message || error?.error);
   };
 
-  const _renderItem = ({item, index}) => {
+  const _renderItem = ({ item, index }) => {
     return (
       <BrandCard2
         onPress={() => moveToNewScreen(item)}
@@ -187,7 +194,7 @@ export default function VendorDetail3({navigation, route}) {
           isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
         }>
         <CategoryLoader2
-          viewStyles={{marginTop: moderateScale(50)}}
+          viewStyles={{ marginTop: moderateScale(50) }}
           isFourthItem={false}
           widthTop={(width - moderateScale(50)) / 3}
           rectWidthTop={(width - moderateScale(50)) / 3}
@@ -196,7 +203,7 @@ export default function VendorDetail3({navigation, route}) {
           isSubCategory
         />
         <CategoryLoader2
-          viewStyles={{marginTop: moderateScale(25)}}
+          viewStyles={{ marginTop: moderateScale(25) }}
           isFourthItem={false}
           widthTop={(width - moderateScale(50)) / 3}
           rectWidthTop={(width - moderateScale(50)) / 3}
@@ -205,7 +212,7 @@ export default function VendorDetail3({navigation, route}) {
           isSubCategory
         />
         <CategoryLoader2
-          viewStyles={{marginTop: moderateScale(25)}}
+          viewStyles={{ marginTop: moderateScale(25) }}
           isFourthItem={false}
           widthTop={(width - moderateScale(50)) / 3}
           rectWidthTop={(width - moderateScale(50)) / 3}
@@ -214,7 +221,7 @@ export default function VendorDetail3({navigation, route}) {
           isSubCategory
         />
         <CategoryLoader2
-          viewStyles={{marginTop: moderateScale(25)}}
+          viewStyles={{ marginTop: moderateScale(25) }}
           isFourthItem={false}
           widthTop={(width - moderateScale(50)) / 3}
           rectWidthTop={(width - moderateScale(50)) / 3}
@@ -223,7 +230,7 @@ export default function VendorDetail3({navigation, route}) {
           isSubCategory
         />
         <CategoryLoader2
-          viewStyles={{marginTop: moderateScale(25)}}
+          viewStyles={{ marginTop: moderateScale(25) }}
           isFourthItem={false}
           widthTop={(width - moderateScale(50)) / 3}
           rectWidthTop={(width - moderateScale(50)) / 3}
@@ -248,7 +255,7 @@ export default function VendorDetail3({navigation, route}) {
           appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
         }
         centerTitle={vendorParams?.item?.name || vendordName}
-        textStyle={{fontSize: textScale(13)}}
+        textStyle={{ fontSize: textScale(13) }}
         rightIcon={
           appStyle?.homePageLayout === 3
             ? imagePath.icSearchb
@@ -258,14 +265,14 @@ export default function VendorDetail3({navigation, route}) {
           navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
         }
       />
-      <View style={{marginHorizontal: moderateScale(8)}}>
+      <View style={{ marginHorizontal: moderateScale(8) }}>
         <FlatList
           data={vendorData || []}
           numColumns={3}
-          ListHeaderComponent={<View style={{height: 10}} />}
+          ListHeaderComponent={<View style={{ height: 10 }} />}
           // columnWrapperStyle={{justifyContent: 'space-between'}}
           ItemSeparatorComponent={() => (
-            <View style={{height: moderateScale(4)}} />
+            <View style={{ height: moderateScale(4) }} />
           )}
           renderItem={_renderItem}
           ListEmptyComponent={

@@ -67,4 +67,4 @@ const WrapperContainer = ({
   );
 };
 
-export default WrapperContainer;
+export default React.memo(WrapperContainer);

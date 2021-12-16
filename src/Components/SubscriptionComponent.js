@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -12,29 +12,29 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
+import {MyDarkTheme} from '../styles/theme';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../utils/helperFunctions';
 import GradientButton from './GradientButton';
-import { useDarkMode } from 'react-native-dark-mode';
-export default function SubscriptionComponent({
+import {useDarkMode} from 'react-native-dark-mode';
+const SubscriptionComponent = ({
   data = {},
-  onPress = () => { },
+  onPress = () => {},
   cardWidth,
   cardStyle = {},
   onAddtoWishlist,
-  addToCart = () => { },
+  addToCart = () => {},
   activeOpacity = 1,
   bottomText = strings.BUY_NOW,
   clientCurrency = {},
   currentSubscription = false,
-  payNowUpcoming = () => { },
-  cancelSubscription = () => { },
+  payNowUpcoming = () => {},
+  cancelSubscription = () => {},
   subscriptionData,
   allSubscriptions = [],
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -42,11 +42,11 @@ export default function SubscriptionComponent({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
+  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
-  const { themeLayouts } = currentTheme;
-  const commonStyles = commonStylesFunc({ fontFamily });
-  const styles = stylesFunc({ fontFamily, themeColors });
+  const {themeLayouts} = currentTheme;
+  const commonStyles = commonStylesFunc({fontFamily});
+  const styles = stylesFunc({fontFamily, themeColors});
 
   const cardWidthNew = cardWidth ? cardWidth : width - 20;
   const url1 = data?.image?.image_fit;
@@ -79,25 +79,25 @@ export default function SubscriptionComponent({
       style={
         isDarkMode
           ? [
-            { width: cardWidthNew },
-            {
-              ...commonStyles.shadowStyle,
-              backgroundColor: MyDarkTheme.colors.lightDark,
-            },
-            { ...cardStyle },
-            { borderRadius: 10, justifyContent: 'center' },
-          ]
+              {width: cardWidthNew},
+              {
+                ...commonStyles.shadowStyle,
+                backgroundColor: MyDarkTheme.colors.lightDark,
+              },
+              {...cardStyle},
+              {borderRadius: 10, justifyContent: 'center'},
+            ]
           : [
-            { width: cardWidthNew },
-            { ...commonStyles.shadowStyle },
-            { ...cardStyle },
-            { borderRadius: 10, justifyContent: 'center' },
-          ]
+              {width: cardWidthNew},
+              {...commonStyles.shadowStyle},
+              {...cardStyle},
+              {borderRadius: 10, justifyContent: 'center'},
+            ]
       }>
       <View>
-        <View style={{ padding: 10 }}>
+        <View style={{padding: 10}}>
           <Image
-            source={getImage ? { uri: getImage } : ''}
+            source={getImage ? {uri: getImage} : ''}
             // resizeMode={'contain'}
             style={{
               justifyContent: 'center',
@@ -119,7 +119,7 @@ export default function SubscriptionComponent({
         <Text
           style={
             isDarkMode
-              ? [styles.title, { color: MyDarkTheme.colors.text }]
+              ? [styles.title, {color: MyDarkTheme.colors.text}]
               : styles.title
           }>
           {data?.title}
@@ -127,7 +127,7 @@ export default function SubscriptionComponent({
         <Text
           style={
             isDarkMode
-              ? [styles.title, { color: MyDarkTheme.colors.text }]
+              ? [styles.title, {color: MyDarkTheme.colors.text}]
               : styles.title
           }>
           {currentSubscription
@@ -144,7 +144,7 @@ export default function SubscriptionComponent({
         <Text
           style={
             isDarkMode
-              ? [styles.subtitle, { color: MyDarkTheme.colors.text }]
+              ? [styles.subtitle, {color: MyDarkTheme.colors.text}]
               : [styles.subtitle]
           }>
           {(subscriptionData && subscriptionData?.plan?.description) ||
@@ -163,7 +163,7 @@ export default function SubscriptionComponent({
           <Text
             style={
               isDarkMode
-                ? [styles.freeDelivery, { color: MyDarkTheme.colors.text }]
+                ? [styles.freeDelivery, {color: MyDarkTheme.colors.text}]
                 : [styles.freeDelivery]
             }>
             {strings.FREE_DELIVERY}
@@ -196,16 +196,16 @@ export default function SubscriptionComponent({
                 <Text
                   style={[
                     styles.updateBilling,
-                    { color: colors.white, fontSize: textScale(12) },
+                    {color: colors.white, fontSize: textScale(12)},
                   ]}>
                   {currentDateValue == subscriptionDateValue ||
-                    currentTimeValue > subscriptionTimeValue
+                  currentTimeValue > subscriptionTimeValue
                     ? `${strings.CANCELLED_AT} ${moment(
-                      subscriptionData?.end_date,
-                    ).format('LL')}`
+                        subscriptionData?.end_date,
+                      ).format('LL')}`
                     : `${strings.CANCELS_AT} ${moment(
-                      subscriptionData?.end_date,
-                    ).format('LL')}`}
+                        subscriptionData?.end_date,
+                      ).format('LL')}`}
                 </Text>
               </View>
               {allSubscriptions && allSubscriptions.length ? (
@@ -227,7 +227,7 @@ export default function SubscriptionComponent({
                   onPress={payNowUpcoming}
                   btnText={
                     currentDateValue == subscriptionDateValue ||
-                      currentTimeValue > subscriptionTimeValue
+                    currentTimeValue > subscriptionTimeValue
                       ? `${strings.RENEW}(${data?.price})`
                       : `${strings.PAY}(${data?.price})`
                   }
@@ -258,7 +258,7 @@ export default function SubscriptionComponent({
                 <Text
                   style={[
                     styles.updateBilling,
-                    { color: colors.white, fontSize: textScale(12) },
+                    {color: colors.white, fontSize: textScale(12)},
                   ]}>
                   {`${strings.EXPIRED_ON} ${moment(
                     subscriptionData?.end_date,
@@ -284,7 +284,7 @@ export default function SubscriptionComponent({
                   onPress={payNowUpcoming}
                   btnText={
                     currentDateValue == subscriptionDateValue ||
-                      currentTimeValue > subscriptionTimeValue
+                    currentTimeValue > subscriptionTimeValue
                       ? `${strings.RENEW}(${data?.price})`
                       : `${strings.PAY}(${data?.price})`
                   }
@@ -313,7 +313,7 @@ export default function SubscriptionComponent({
               currentDateValue == subscriptionEndDateValue ||
               currentTimeValue > subscriptionEndTimeValue ? null : ( */}
               <View
-                style={{ marginTop: moderateScale(10), flexDirection: 'row' }}>
+                style={{marginTop: moderateScale(10), flexDirection: 'row'}}>
                 <GradientButton
                   colorsArray={[
                     themeColors.primary_color,
@@ -368,15 +368,15 @@ export default function SubscriptionComponent({
           marginTop={moderateScaleVertical(10)}
           marginBottom={moderateScaleVertical(10)}
           borderRadius={moderateScale(5)}
-          containerStyle={{ marginHorizontal: moderateScale(10) }}
+          containerStyle={{marginHorizontal: moderateScale(10)}}
           btnText={strings.SUBSCRIBE}
         />
       )}
     </TouchableOpacity>
   );
-}
+};
 
-export function stylesFunc({ fontFamily, themeColors }) {
+export function stylesFunc({fontFamily, themeColors}) {
   const styles = StyleSheet.create({
     title: {
       color: colors.black,
@@ -427,3 +427,4 @@ export function stylesFunc({ fontFamily, themeColors }) {
   });
   return styles;
 }
+export default React.memo(SubscriptionComponent);

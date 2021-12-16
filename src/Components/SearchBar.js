@@ -13,7 +13,7 @@ import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 
-export default function SearchBar({
+const SearchBar = ({
   containerStyle = {},
   placeholder = '',
   onChangeText,
@@ -22,7 +22,7 @@ export default function SearchBar({
   searchValue = '',
   rightIconStyle,
   autoFocus,
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -74,4 +74,5 @@ export default function SearchBar({
       )}
     </View>
   );
-}
+};
+export default React.memo(SearchBar);

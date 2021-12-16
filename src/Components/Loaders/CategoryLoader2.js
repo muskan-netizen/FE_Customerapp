@@ -8,7 +8,7 @@ import {
 } from '../../styles/responsiveSize';
 import HomeLoader from './HomeLoader';
 
-export default function CategoryLoader2({
+const CategoryLoader2 = ({
   viewStyles = {},
   widthTop = (width - moderateScale(50)) / 4,
   heightTop = moderateScaleVertical(70),
@@ -17,7 +17,7 @@ export default function CategoryLoader2({
   rectWidthBottom = moderateScaleVertical(15),
   isFourthItem = true,
   isSubCategory = false,
-}) {
+}) => {
   const _categoryView = () => {
     return (
       <View>
@@ -53,6 +53,7 @@ export default function CategoryLoader2({
       {isFourthItem && <>{_categoryView()}</>}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({});
+export default React.memo(CategoryLoader2);

@@ -20,7 +20,7 @@ import ProgressiveImage from './ProgressiveImage';
 import moment from 'moment';
 import {MyDarkTheme} from '../styles/theme';
 
-export default function OffersCard2({data = {}, onPress = () => {}}) {
+const OffersCard2 = ({data = {}, onPress = () => {}}) => {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
@@ -161,4 +161,5 @@ export default function OffersCard2({data = {}, onPress = () => {}}) {
       </View>
     </TouchableOpacity>
   );
-}
+};
+export default React.memo(OffersCard2);

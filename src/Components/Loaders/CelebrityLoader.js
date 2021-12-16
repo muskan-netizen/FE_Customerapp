@@ -7,7 +7,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 
-export default function CelebrityLoader({
+const CelebrityLoader = ({
   listSize = 1,
   cardWidth = width * 0.297,
   height = moderateScaleVertical(128),
@@ -15,7 +15,7 @@ export default function CelebrityLoader({
   isRow = false,
   pRows = 1,
   marginHorizontal = moderateScale(8),
-}) {
+}) => {
   const contentCard = () => {
     return (
       <View style={{...containerStyle, width: cardWidth, padding: 0}}>
@@ -54,4 +54,5 @@ export default function CelebrityLoader({
     );
   }
   return contentCard();
-}
+};
+export default React.memo(CelebrityLoader);

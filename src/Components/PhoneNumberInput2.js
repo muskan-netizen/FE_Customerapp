@@ -12,7 +12,7 @@ import {
 } from '../styles/responsiveSize';
 import {TextInput} from 'react-native-paper';
 
-export default function PhoneNumberInput2({
+const PhoneNumberInput2 = ({
   cca2 = '',
   callingCode = '',
   onChangePhone,
@@ -20,7 +20,7 @@ export default function PhoneNumberInput2({
   phoneNumber,
   placeholder,
   textInputStyle = {},
-}) {
+}) => {
   const {themeColors, appStyle} = useSelector((state) => state?.initBoot);
   const [state, setState] = useState({
     countryPickerModalVisible: false,
@@ -133,4 +133,5 @@ export default function PhoneNumberInput2({
       )}
     </View>
   );
-}
+};
+export default React.memo(PhoneNumberInput2);

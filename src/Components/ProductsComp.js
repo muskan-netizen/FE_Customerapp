@@ -222,4 +222,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductsComp;
+export default React.memo(ProductsComp);

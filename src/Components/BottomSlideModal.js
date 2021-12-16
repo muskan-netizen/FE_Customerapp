@@ -18,7 +18,7 @@ import imagePath from '../constants/imagePath';
 import ButtonComponent from './ButtonComponent';
 import {ScrollView} from 'react-native';
 
-export default function BottomSlideModal({
+const BottomSlideModal = ({
   isModalVisible = false,
   onBackdropPress = () => {},
   mainContainView,
@@ -27,8 +27,8 @@ export default function BottomSlideModal({
   allLangs = [],
   _updateLang = () => {},
   mainContainerStyle,
-  innerViewContainerStyle
-}) {
+  innerViewContainerStyle,
+}) => {
   const {themeColor, themeToggle, appStyle, themeColors, languages} =
     useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
@@ -58,13 +58,13 @@ export default function BottomSlideModal({
             backgroundColor: isDarkMode
               ? MyDarkTheme.colors.background
               : colors.white,
-              ...mainContainerStyle
+            ...mainContainerStyle,
           }}>
           <View
             style={{
               paddingHorizontal: moderateScale(10),
               paddingVertical: moderateScaleVertical(15),
-              ...innerViewContainerStyle
+              ...innerViewContainerStyle,
               // flex: 1,
             }}>
             {mainContainView()}
@@ -121,13 +121,11 @@ export default function BottomSlideModal({
               <View style={{height: moderateScale(15)}} />
             </ScrollView> */}
           </View>
-
-          
         </View>
       </View>
     </Modal>
   );
-}
+};
 
 export function stylesFunc({fontFamily, themeColors}) {
   const commonStyles = commonStylesFun({fontFamily, themeColors});
@@ -157,3 +155,4 @@ export function stylesFunc({fontFamily, themeColors}) {
   });
   return styles;
 }
+export default React.memo(BottomSlideModal);

@@ -23,7 +23,7 @@ import imagePath from '../constants/imagePath';
 
 // import styles from '../Screens/Tracking/styles';
 
-export default function TextInputWithUnderlineAndLabel({
+const TextInputWithUnderlineAndLabel = ({
   label,
   labelStyle,
   lableViewStyle,
@@ -51,7 +51,7 @@ export default function TextInputWithUnderlineAndLabel({
   labelIconStyle = {},
   onPressLabel = () => {},
   ...props
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -152,7 +152,7 @@ export default function TextInputWithUnderlineAndLabel({
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 export function stylesData({fontFamily}) {
   const styles = StyleSheet.create({
@@ -218,3 +218,4 @@ export function stylesData({fontFamily}) {
   });
   return styles;
 }
+export default React.memo(TextInputWithUnderlineAndLabel);

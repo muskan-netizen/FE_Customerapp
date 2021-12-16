@@ -5,7 +5,7 @@ import LottieAnimation from 'lottie-react-native';
 import {defaultLoader} from './Loaders/AnimatedLoaderFiles';
 import colors from '../styles/colors';
 import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
-export default class CustomAnimatedLoader extends React.PureComponent {
+class CustomAnimatedLoader extends React.PureComponent {
   static defaultProps = {
     visible: false,
     overlayColor: 'rgba(0, 0, 0, 0.25)',
@@ -146,3 +146,4 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
+export default React.memo(CustomAnimatedLoader);

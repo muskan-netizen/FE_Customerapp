@@ -9,13 +9,13 @@ import CircularProfileLoader from './CircularProfileLoader';
 import HeaderLoader from './HeaderLoader';
 import HomeLoader from './HomeLoader';
 
-export default function ProductListLoader3({
+const ProductListLoader3 = ({
   viewStyles = {},
   widthTop = moderateScale(95),
   rectWidthBottom = moderateScaleVertical(90),
   mainView = {},
   widthLeft = 20,
-}) {
+}) => {
   return (
     <View
       style={{
@@ -85,6 +85,6 @@ export default function ProductListLoader3({
       />
     </View>
   );
-}
-
+};
+export default React.memo(ProductListLoader3);
 const styles = StyleSheet.create({});

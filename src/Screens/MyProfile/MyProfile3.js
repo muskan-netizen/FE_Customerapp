@@ -62,6 +62,7 @@ export default function MyProfile3({route, navigation}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state?.initBoot);
+  const {languages} = useSelector((state) => state?.initBoot);
 
   const {themeColors, themeLayouts, appStyle} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
@@ -250,6 +251,7 @@ export default function MyProfile3({route, navigation}) {
       actions
         .addAddress(childData, {
           code: appData?.profile?.code,
+          language: languages?.primary_language?.id,
         })
         .then((res) => {
           updateState({del: del ? false : true});
@@ -271,6 +273,7 @@ export default function MyProfile3({route, navigation}) {
       actions
         .updateAddress(query, childData, {
           code: appData?.profile?.code,
+          language: languages?.primary_language?.id,
         })
         .then((res) => {
           updateState({del: del ? false : true});
@@ -453,6 +456,7 @@ export default function MyProfile3({route, navigation}) {
     actions
       .deleteAddress(query, data, {
         code: appData?.profile?.code,
+        language: languages?.primary_language?.id,
       })
       .then((res) => {
         updateState({del: del ? false : true});

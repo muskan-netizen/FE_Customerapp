@@ -31,8 +31,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {currencyNumberFormatter} from '../utils/commonFunction';
-
-export default function PendingOrderCard({
+const PendingOrderCard = ({
   data = {},
   titlestyle,
   selectedTab,
@@ -44,7 +43,7 @@ export default function PendingOrderCard({
   acceptLoader = false,
   rejectLoader = false,
   selectedOrder = null,
-}) {
+}) => {
   let cardWidth = width - 21.5;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
@@ -325,7 +324,7 @@ export default function PendingOrderCard({
       </View>
     </TouchableOpacity>
   );
-}
+};
 export function stylesFunc({fontFamily, themeColors}) {
   const commonStyles = commonStylesFunc({fontFamily});
 
@@ -491,3 +490,4 @@ export function stylesFunc({fontFamily, themeColors}) {
   });
   return styles;
 }
+export default React.memo(PendingOrderCard);

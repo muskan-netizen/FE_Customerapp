@@ -25,8 +25,7 @@ const ButtonWithLoader = ({
       }}
       disabled={disabled}
       onPress={onPress}
-      activeOpacity={0.8}
-      >
+      activeOpacity={0.8}>
       {isLoading ? (
         <ActivityIndicator size="small" color={color} />
       ) : (
@@ -38,4 +37,4 @@ const ButtonWithLoader = ({
   );
 };
 
-export default ButtonWithLoader;
+export default React.memo(ButtonWithLoader);

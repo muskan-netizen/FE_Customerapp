@@ -18,7 +18,7 @@ import {MyDarkTheme} from '../styles/theme';
 import strings from '../constants/lang';
 import imagePath from '../constants/imagePath';
 
-export default function GooglePlaceInput({
+const GooglePlaceInput = ({
   type,
   navigation,
   googleApiKey = '',
@@ -46,8 +46,8 @@ export default function GooglePlaceInput({
     : colors.textGreyOpcaity7,
   getResults = () => {},
   selectionColor = colors.textGreyB,
-  style = {}
-}) {
+  style = {},
+}) => {
   const [state, setState] = useState({
     isLoading: true,
     currentLat: '',
@@ -154,7 +154,7 @@ export default function GooglePlaceInput({
           },
           onBlur: onBlur,
           onFocus: onFocus,
-          ...style
+          ...style,
         }}
         enableHighAccuracyLocation={true}
         keyboardShouldPersistTaps={'handled'}
@@ -275,7 +275,7 @@ export default function GooglePlaceInput({
       {renderBottomComponent}
     </View>
   );
-}
+};
 
 export function stylesFunc({fontFamily}) {
   const styles = StyleSheet.create({
@@ -316,3 +316,4 @@ export function stylesFunc({fontFamily}) {
   });
   return styles;
 }
+export default React.memo(GooglePlaceInput);

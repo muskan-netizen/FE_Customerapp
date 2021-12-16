@@ -12,14 +12,14 @@ import Elevations from 'react-native-elevation';
 import {BlurView} from '@react-native-community/blur';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
-export default function CustomBottomTabBarFive({
+const CustomBottomTabBarFive = ({
   state,
   descriptors,
   navigation,
   bottomTabNotify,
 
   ...props
-}) {
+}) => {
   const insets = useSafeAreaInsets();
 
   const {appStyle} = useSelector((state) => state?.initBoot);
@@ -101,7 +101,7 @@ export default function CustomBottomTabBarFive({
       </View>
     </View>
   );
-}
+};
 
 export function stylesData({fontFamily}) {
   const currentTheme = useSelector((state) => state.initBoot);
@@ -128,7 +128,7 @@ export function stylesData({fontFamily}) {
   });
   return styles;
 }
-
+export default React.memo(CustomBottomTabBarFive);
 // Blur Tab bar
 
 // import React, {Fragment, useRef} from 'react';

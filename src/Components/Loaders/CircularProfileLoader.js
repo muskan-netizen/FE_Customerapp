@@ -7,12 +7,12 @@ import {
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
 
-export default function CircularProfileLoader({
+const CircularProfileLoader = ({
   backgroundColor = colors.greyNew,
   foregroundColor = '#DFDFDF',
   isDesc = true,
-  size=30
-}) {
+  size = 30,
+}) => {
   return (
     <ContentLoader
       foregroundColor={foregroundColor}
@@ -24,7 +24,7 @@ export default function CircularProfileLoader({
         cy={moderateScale(size)}
         r={moderateScale(size)}
       />
-      
+
       {isDesc && (
         <>
           <Rect x="80" y="12" rx="8" ry="8" width="60" height="16" />
@@ -34,6 +34,7 @@ export default function CircularProfileLoader({
       )}
     </ContentLoader>
   );
-}
+};
 
 const styles = StyleSheet.create({});
+export default React.memo(CircularProfileLoader);

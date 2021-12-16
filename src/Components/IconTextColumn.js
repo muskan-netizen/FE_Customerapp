@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 
-export default function IconTextColumn({
+const IconTextColumn = ({
   text,
   icon,
   containerStyle = {},
@@ -13,7 +13,7 @@ export default function IconTextColumn({
   activeStyle = {},
   onPress = () => {},
   imageStyle = {},
-}) {
+}) => {
   const currentTheme = useSelector((state) => state?.initBoot);
   const {themeColors, themeLayouts, appStyle} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
@@ -51,4 +51,5 @@ export default function IconTextColumn({
       </Text>
     </TouchableOpacity>
   );
-}
+};
+export default React.memo(IconTextColumn);

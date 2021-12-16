@@ -14,13 +14,13 @@ import {
 import {currencyNumberFormatter} from '../utils/commonFunction';
 import ButtonComponent from './ButtonComponent';
 
-export default function OrderCardComponent({
+const OrderCardComponent = ({
   data = {},
   titlestyle,
   selectedTab,
   onPress,
   onPressRateOrder,
-}) {
+}) => {
   const cardWidth = width - 21.5;
   const {appData, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
@@ -176,7 +176,7 @@ export default function OrderCardComponent({
       </View>
     </View>
   );
-}
+};
 export function stylesFunc({fontFamily}) {
   const commonStyles = commonStylesFunc({fontFamily});
 
@@ -206,3 +206,4 @@ export function stylesFunc({fontFamily}) {
   });
   return styles;
 }
+export default React.memo(OrderCardComponent);

@@ -8,12 +8,13 @@ import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
 import colors from '../styles/colors';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import SearchBar from 'react-native-elements/dist/searchbar/SearchBar-ios';
 
-export default function SearchBar2({
+const SearchBar2 = ({
   navigation,
   placeHolderTxt = strings.SEARCH_HERE,
   containerStyle,
-}) {
+}) => {
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});
@@ -39,7 +40,7 @@ export default function SearchBar2({
       <Image source={imagePath.search1} />
     </TouchableOpacity>
   );
-}
+};
 
 export function stylesFunc({fontFamily}) {
   const styles = StyleSheet.create({
@@ -60,3 +61,4 @@ export function stylesFunc({fontFamily}) {
   });
   return styles;
 }
+export default React.memo(SearchBar2);

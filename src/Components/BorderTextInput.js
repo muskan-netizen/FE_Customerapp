@@ -15,7 +15,7 @@ import {hitSlopProp} from '../styles/commonStyles';
 import {moderateScaleVertical, textScale} from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
 
-export default function BorderTextInput({
+const BorderTextInput = ({
   containerStyle,
   textInputStyle,
   leftIcon,
@@ -33,7 +33,7 @@ export default function BorderTextInput({
   isShowPassword,
   rightIconStyle = {},
   ...props
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -110,4 +110,6 @@ export default function BorderTextInput({
       )}
     </View>
   );
-}
+};
+
+export default React.memo(BorderTextInput);

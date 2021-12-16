@@ -27,7 +27,7 @@ import {
   getImageUrl,
 } from '../utils/helperFunctions';
 import GradientButton from './GradientButton';
-export default function SubscriptionComponent2({
+const SubscriptionComponent2 = ({
   data = {},
   onPress = () => {},
   cardWidth,
@@ -42,7 +42,7 @@ export default function SubscriptionComponent2({
   cancelSubscription = () => {},
   subscriptionData,
   allSubscriptions = [],
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -301,7 +301,7 @@ export default function SubscriptionComponent2({
       )}
     </TouchableOpacity>
   );
-}
+};
 
 export function stylesFunc({fontFamily, themeColors}) {
   const styles = StyleSheet.create({
@@ -378,3 +378,4 @@ export function stylesFunc({fontFamily, themeColors}) {
   });
   return styles;
 }
+export default React.memo(SubscriptionComponent2);

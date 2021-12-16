@@ -130,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BannerHome;
+export default React.memo(BannerHome);

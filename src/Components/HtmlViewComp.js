@@ -1,17 +1,17 @@
 import React from 'react';
-import { View } from 'react-native';
+import {View} from 'react-native';
 import HTMLView from 'react-native-htmlview';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 import fontFamily from '../styles/fontFamily';
-import { moderateScale, textScale } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
+import {moderateScale, textScale} from '../styles/responsiveSize';
+import {MyDarkTheme} from '../styles/theme';
 
-const HtmlViewComp = ({ plainHtml = null, numOfLine = 2, ...props }) => {
+const HtmlViewComp = ({plainHtml = null, numOfLine = 2, ...props}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = theme;
   return (
-    <View style={{ maxHeight: 40 }}>
+    <View style={{maxHeight: 40}}>
       <HTMLView
         value={'<div>' + plainHtml + '</div>'}
         stylesheet={{
@@ -21,7 +21,7 @@ const HtmlViewComp = ({ plainHtml = null, numOfLine = 2, ...props }) => {
             lineHeight: moderateScale(14),
             color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyE,
             textAlign: 'left',
-          }
+          },
         }}
         {...props}
       />
@@ -29,4 +29,4 @@ const HtmlViewComp = ({ plainHtml = null, numOfLine = 2, ...props }) => {
   );
 };
 
-export default HtmlViewComp;
+export default React.memo(HtmlViewComp);

@@ -25,14 +25,14 @@ import {getImageUrl} from '../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 
-export default function CustomBottomTabBarThree({
+const CustomBottomTabBarThree = ({
   state,
   descriptors,
   navigation,
   bottomTabNotify,
 
   ...props
-}) {
+}) => {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -292,7 +292,7 @@ export default function CustomBottomTabBarThree({
       )}
     </Animated.View>
   );
-}
+};
 
 export function stylesFunc({fontFamily, themeColors}) {
   const styles = StyleSheet.create({
@@ -335,3 +335,4 @@ export function stylesFunc({fontFamily, themeColors}) {
   });
   return styles;
 }
+export default React.memo(CustomBottomTabBarThree);

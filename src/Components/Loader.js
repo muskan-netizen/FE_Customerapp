@@ -36,4 +36,4 @@ const Loader = ({isLoading = false, withModal}) => {
   return null;
 };
 
-export default Loader;
+export default React.memo(Loader);

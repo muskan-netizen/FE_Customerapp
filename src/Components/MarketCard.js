@@ -32,12 +32,8 @@ import IconTextRow from './IconTextRow';
 import {useDarkMode} from 'react-native-dark-mode';
 import strings from '../constants/lang';
 import {string} from 'prop-types';
-
-export default function MarketCard({
-  data = {},
-  onPress = () => {},
-  activeOpacity = 1,
-}) {
+import MarketCard3 from './MarketCard3';
+const MarketCard = ({data = {}, onPress = () => {}, activeOpacity = 1}) => {
   const {appStyle} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -222,7 +218,7 @@ export default function MarketCard({
       </Animated.View>
     </TouchableOpacity>
   );
-}
+};
 
 export function stylesFunc({fontFamily}) {
   const styles = StyleSheet.create({
@@ -253,3 +249,4 @@ export function stylesFunc({fontFamily}) {
   });
   return styles;
 }
+export default React.memo(MarketCard);

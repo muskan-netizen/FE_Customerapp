@@ -7,8 +7,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import HomeLoader from './HomeLoader';
-
-export default function HeaderLoader({
+const HeaderLoader = ({
   widthLeft = moderateScale(240),
   heightLeft = moderateScaleVertical(35),
   rectWidthLeft = moderateScale(240),
@@ -21,7 +20,7 @@ export default function HeaderLoader({
   isRight = true,
   rx = 15,
   ry = 15,
-}) {
+}) => {
   return (
     <View
       style={{
@@ -50,6 +49,7 @@ export default function HeaderLoader({
       )}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({});
+export default React.memo(HeaderLoader);
