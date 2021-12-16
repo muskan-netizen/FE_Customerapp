@@ -30,9 +30,10 @@ import PushNotification from 'react-native-push-notification';
 import PrinterScreen from './src/Screens/PrinterConnection/PrinterScreen';
 import AsyncStorage from '@react-native-community/async-storage';
 import codePush from "react-native-code-push";
-import withCodePush from './codepush';
 
-let codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_RESUME };
+let codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.ON_APP_START,
+ };
 
 const App = () => {
   const ConnectBTFunction = async () => {
@@ -291,4 +292,4 @@ const App = () => {
 };
 
 
-export default withCodePush(App);
+export default codePush(codePushOptions)(App);
