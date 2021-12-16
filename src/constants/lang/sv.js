@@ -695,13 +695,9 @@ export default {
   TERMS_CONDITIONS: 'Terms & Conditions',
   HAVE_READ: 'and have read the',
   PRIVACY_POLICY: 'Privacy Policy.',
-<<<<<<< HEAD
   VENDER: 'Vendor',
   DRIVER: 'Driver',
-
-=======
   SUPPORT: 'Support',
->>>>>>> d1072d207c7afc82d7ae5b547cd4cca7341e5ae6
   ENETER_YOUR_ADDRESS: 'Enter your address',
   NO_CARS_AVAILABLE: 'No cars available',
 };
