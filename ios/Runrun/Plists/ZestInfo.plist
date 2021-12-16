@@ -20,6 +20,8 @@
 	<string>$(PROJECT_APP_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+    <key>CodePushDeploymentKey</key>
+    <string>$(CODE_PUSH_KEY)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
