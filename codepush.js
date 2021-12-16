@@ -6,7 +6,7 @@ let codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_START }
 const withCodePush = WrappedComponent => {
     class WrappedApp extends React.PureComponent {
         componentDidMount() {
-            codePush.sync({ installMode: codePush.InstallMode.IMMEDIATE }, this.syncWithCodePush)
+            codePush.sync({updateDialog: true, installMode: codePush.InstallMode.IMMEDIATE }, this.syncWithCodePush)
         }
         syncWithCodePush = (status) => {
             console.log("status code push", status)
