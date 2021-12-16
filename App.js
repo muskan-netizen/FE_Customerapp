@@ -32,7 +32,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import codePush from "react-native-code-push";
 
 let codePushOptions = {
-  checkFrequency: codePush.CheckFrequency.ON_APP_START,
+  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
  };
 
 const App = () => {
