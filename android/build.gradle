@@ -37,5 +37,8 @@ allprojects {
         }
         google()
         maven { url 'https://www.jitpack.io' }
+        
+        //zendesk Repo
+        maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
     }
 }

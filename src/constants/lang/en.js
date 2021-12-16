@@ -727,6 +727,7 @@ Amount`,
   VENDER: 'Vendor',
   DRIVER: 'Driver',
   ORDER: 'Order',
+  SUPPORT: 'Support',
   ENETER_YOUR_ADDRESS: 'Enter your address',
   NO_CARS_AVAILABLE: 'No cars available',
 };

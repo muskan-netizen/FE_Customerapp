@@ -1930,6 +1930,7 @@ export default function Products({route, navigation}) {
                       height: moderateScale(30),
                       justifyContent: 'center',
                       marginLeft: moderateScale(10),
+                      paddding: 10,
                     }}
                     onPress={() => navigation.goBack()}>
                     <Image

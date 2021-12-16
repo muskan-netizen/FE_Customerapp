@@ -709,7 +709,7 @@ export default {
   PRIVACY_POLICY: 'Privacy Policy.',
   VENDER: 'Vendor',
   DRIVER: 'Driver',
-
+  SUPPORT: 'Support',
   ENETER_YOUR_ADDRESS: 'Enter your address',
   NO_CARS_AVAILABLE: 'No cars available',
 };
