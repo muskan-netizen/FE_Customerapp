@@ -42,7 +42,6 @@ const App = () => {
     const temp = new PrinterScreen();
     AsyncStorage.getItem('BleDevice2').then((res) => {
       const tt = JSON.parse(res);
-      console.log('check bt data >>> ', tt);
       temp.connectBTFunc({
         address: tt.boundAddress,
         name: tt.name,
