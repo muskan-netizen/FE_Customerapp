@@ -646,7 +646,7 @@ export default function DashBoardHeaderFive({
       </View>
       <View
         style={{
-          width: width - 24,
+          // width: 0,
           alignSelf: 'center',
           borderRadius: moderateScale(10),
           flexDirection: 'row',

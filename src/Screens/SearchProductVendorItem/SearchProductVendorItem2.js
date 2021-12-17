@@ -366,7 +366,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
           <Text
           numberOfLines={1}
             style={{
-              fontSize: textScale(10),
+              fontSize: textScale(12),
               fontFamily: fontFamily.medium,
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
