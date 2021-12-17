@@ -21,7 +21,10 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {getImageUrl} from '../utils/helperFunctions';
+import {
+  getColorCodeWithOpactiyNumber,
+  getImageUrl,
+} from '../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 
@@ -253,7 +256,12 @@ const CustomBottomTabBarThree = ({
                         : {
                             ...props.labelStyle,
                             // ...styles.labelStyle,
-                            color: colors.white,
+                            color: isFocused
+                              ? themeColors.secondary_color
+                              : getColorCodeWithOpactiyNumber(
+                                  themeColors?.secondary_color.substr(1),
+                                  70,
+                                ),
                             opacity: isFocused ? 1 : 0.6,
                             fontSize: textScale(11),
                           }

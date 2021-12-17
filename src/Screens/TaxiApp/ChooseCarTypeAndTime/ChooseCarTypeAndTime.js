@@ -1,21 +1,18 @@
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
 import React, {useEffect, useRef, useState} from 'react';
-import {
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-  ScrollView,
-  StyleSheet,
-  FlatList,
-} from 'react-native';
+import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import Geocoder from 'react-native-geocoding';
-import MapView, {Callout, PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import * as RNLocalize from 'react-native-localize';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from 'react-native-maps-directions';
 import {useSelector} from 'react-redux';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
-import WrapperContainer from '../../../Components/WrapperContainer';
+import CustomCallouts from '../../../Components/CustomCallouts';
+import GradientButton from '../../../Components/GradientButton';
 import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
@@ -24,50 +21,22 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
-  StatusBarHeight,
   textScale,
   width,
 } from '../../../styles/responsiveSize';
+import {MyDarkTheme} from '../../../styles/theme';
+import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 import {
-  getColorCodeWithOpactiyNumber,
   hapticEffects,
   playHapticEffect,
   showError,
 } from '../../../utils/helperFunctions';
-import SelectCarModalView from './SelectCarModalView';
+import PaymentProcessingModal from '../../CourierService/PaymentProcessingModal';
+import AvailableDriver from './AvailableDriver';
 import SelectPaymentModalView from './SelectPaymentModalView';
 import SelectTimeModalView from './SelectTimeModalView';
 import SelectVendorModalView from './SelectVendorModalView';
 import stylesFun from './styles';
-import * as RNLocalize from 'react-native-localize';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../../styles/theme';
-import strings from '../../../constants/lang';
-import PaymentProcessingModal from '../../CourierService/PaymentProcessingModal';
-import {BlurView} from '@react-native-community/blur';
-import {useFocusEffect} from '@react-navigation/native';
-import {mapStyleGrey} from '../../../utils/constants/MapStyle';
-import BottomSheet, {
-  BottomSheetFlatList,
-  BottomSheetScrollView,
-  BottomSheetSectionList,
-  BottomSheetVirtualizedList,
-  BottomSheetView,
-} from '@gorhom/bottom-sheet';
-import AvailableDriver from './AvailableDriver';
-import GradientButton from '../../../Components/GradientButton';
-import {
-  BallIndicator,
-  BarIndicator,
-  DotIndicator,
-  MaterialIndicator,
-  PacmanIndicator,
-  PulseIndicator,
-  SkypeIndicator,
-  UIActivityIndicator,
-  WaveIndicator,
-} from 'react-native-indicators';
-import CustomCallouts from '../../../Components/CustomCallouts';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -548,7 +517,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
             fontSize: textScale(12),
             fontFamily: fontFamily.regular,
             color:
-              selectedVendorOption.id == item.id ? colors.white : colors.black,
+              selectedVendorOption.id == item.id
+                ? themeColors.secondary_color
+                : colors.black,
           }}>
           {item?.name || ''}
         </Text>

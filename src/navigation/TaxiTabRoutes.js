@@ -2,6 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import {Image, StyleSheet} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
+import DeviceInfo from 'react-native-device-info';
 import {useSelector} from 'react-redux';
 import CustomBottomTabBar from '../Components/CustomBottomTabBar';
 import CustomBottomTabBarFive from '../Components/CustomBottomTabBarFive';
@@ -13,6 +14,7 @@ import strings from '../constants/lang';
 import {MyOrders} from '../Screens';
 import colors from '../styles/colors';
 import {moderateScale, textScale} from '../styles/responsiveSize';
+import {appIds} from '../utils/constants/DynamicAppKeys';
 import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
 import AccountStack from './AccountStack';
 import HomeStack from './HomeStack';
@@ -21,18 +23,17 @@ import navigationStrings from './navigationStrings';
 const Tab = createBottomTabNavigator();
 
 export default function TaxiTabRoutes(props) {
-  const appMainData = useSelector((state) => state?.home?.appMainData);
-  const {appStyle, themeColors, appData, themeColor, themeToggle} = useSelector(
+  const {appStyle, themeColors, themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
   );
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
+
   return (
     <Tab.Navigator
       backBehavior={'initialRoute'}
       tabBar={(props) => {
-        console.log(appStyle?.tabBarLayout, 'appStyle?.tabBarLayout');
         switch (appStyle?.tabBarLayout) {
           case 1:
             return <CustomBottomTabBar {...props} />;
@@ -64,7 +65,25 @@ export default function TaxiTabRoutes(props) {
           tabBarIcon: ({focused, tintColor}) => (
             <Image
               style={[
-                {tintColor: tintColor},
+                appStyle?.tabBarLayout == 4
+                  ? {
+                      tintColor: focused
+                        ? themeColors.primary_color
+                        : getColorCodeWithOpactiyNumber(
+                            themeColors?.secondary_color.substr(1),
+                            70,
+                          ),
+                    }
+                  : appStyle?.tabBarLayout == 5
+                  ? null
+                  : {
+                      tintColor: focused
+                        ? themeColors.secondary_color
+                        : getColorCodeWithOpactiyNumber(
+                            themeColors?.secondary_color.substr(1),
+                            70,
+                          ),
+                    },
                 appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
               ]}
               source={
@@ -85,7 +104,6 @@ export default function TaxiTabRoutes(props) {
           // unmountOnBlur: true,
         }}
       />
-      {console.log(appStyle?.tabBarLayout, 'appStyle?.tabBarLayout')}
       <Tab.Screen
         component={MyOrders}
         name={navigationStrings.MY_ORDERS}
@@ -94,24 +112,23 @@ export default function TaxiTabRoutes(props) {
             appStyle?.tabBarLayout === 6 ? strings.SERVICES : strings.MYRIDES,
           tabBarIcon: ({focused, tintColor}) => {
             let tabIconColor =
-              tintColor && appStyle?.tabBarLayout == 4
+              appStyle?.tabBarLayout == 4
                 ? {
                     tintColor: focused
-                      ? isDarkMode
-                        ? colors.white
-                        : themeColors.primary_color
-                      : isDarkMode
-                      ? colors.whiteOpacity77
-                      : colors.black,
+                      ? themeColors.primary_color
+                      : getColorCodeWithOpactiyNumber(
+                          themeColors?.secondary_color.substr(1),
+                          70,
+                        ),
                   }
                 : appStyle?.tabBarLayout == 5
                 ? null
                 : {
                     tintColor: focused
-                      ? colors.white
+                      ? themeColors.secondary_color
                       : getColorCodeWithOpactiyNumber(
-                          colors.white.substr(1),
-                          60,
+                          themeColors?.secondary_color.substr(1),
+                          70,
                         ),
                   };
             return (
@@ -152,7 +169,25 @@ export default function TaxiTabRoutes(props) {
           tabBarIcon: ({focused, tintColor}) => (
             <Image
               style={[
-                {tintColor: tintColor},
+                appStyle?.tabBarLayout == 4
+                  ? {
+                      tintColor: focused
+                        ? themeColors.primary_color
+                        : getColorCodeWithOpactiyNumber(
+                            themeColors?.secondary_color.substr(1),
+                            70,
+                          ),
+                    }
+                  : appStyle?.tabBarLayout == 5
+                  ? null
+                  : {
+                      tintColor: focused
+                        ? themeColors.secondary_color
+                        : getColorCodeWithOpactiyNumber(
+                            themeColors?.secondary_color.substr(1),
+                            70,
+                          ),
+                    },
                 appStyle?.tabBarLayout === 2 && {height: 25, width: 25},
               ]}
               source={
