@@ -261,7 +261,8 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     updateState({isLoading: true, showVendorModal: false, showCarModal: true});
     actions
       .getAllCarAndPrices(
-        `/${selectedVendorOption?.id}/${paramData?.id}?page=${pageNo}&limit=${limit}`,
+        // `/${selectedVendorOption?.id}/${paramData?.id}?page=${pageNo}&limit=${limit}`,
+        `/${selectedVendorOption?.id}?page=${pageNo}&limit=${limit}`,
         {locations: paramData?.location},
         {
           code: appData?.profile?.code,
