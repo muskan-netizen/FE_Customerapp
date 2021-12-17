@@ -136,16 +136,16 @@ export default function MyOrders({navigation}) {
   );
 
   const updateLocalItem = (data) => {
-    console.log("update location item data", data)
-    let cloneArr = orders
+    console.log('update location item data', data);
+    let cloneArr = orders;
     let filterArray = cloneArr.filter((val) => {
       if (val.order_id !== data.order_id) {
-        return val
+        return val;
       }
-    })
+    });
     // console.log("update location item data filter array",filterArray)
-    updateState({ orders: filterArray })
-  }
+    updateState({orders: filterArray});
+  };
   // useEffect(() => {
   //   const focus = navigation.addListener('focus', () => {
   //     if (userData && userData?.auth_token) {

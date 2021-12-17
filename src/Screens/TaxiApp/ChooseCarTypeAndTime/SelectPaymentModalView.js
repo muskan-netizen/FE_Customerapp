@@ -174,6 +174,11 @@ export default function SelectPaymentModalView({
     setShowModal(false);
   };
 
+  const setAllFormData = () => {
+    onInstructionDone();
+    onQuestionAnswerSubmit(myAnswerdArray), setShowModal(false);
+  };
+
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -928,7 +933,7 @@ export default function SelectPaymentModalView({
               if (isRequired) {
                 alert(strings.PLEASEFILDALL);
               } else {
-                onQuestionAnswerSubmit(myAnswerdArray), setShowModal(false);
+                setAllFormData();
               }
             }}
             btnText={strings.SUBMIT}
