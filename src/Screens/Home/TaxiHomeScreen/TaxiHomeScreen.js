@@ -246,8 +246,8 @@ export default function TaxiHomeScreen({ route, navigation }) {
   };
 
   //Home data
-  const homeData = (slectedLocatonFromPreviousScreen) => {
-    console.log("location +++location +++location +++", slectedLocatonFromPreviousScreen)
+  const homeData = () => {
+    console.log("appData?.profile?.preferences", appData?.profile?.preferences)
     let latlongObj = {};
     if (appData?.profile?.preferences?.is_hyperlocal) {
       latlongObj = {
