@@ -388,9 +388,7 @@ export default function Home({ route, navigation }) {
 
   //onPress Category
   const onPressCategory = (item) => {
-    console.log('category press', item);
-    alert('dynamic changes')
-    return;
+    console.log('category press', item)
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -472,8 +470,6 @@ export default function Home({ route, navigation }) {
   const bannerPress = (data) => {
     console.log('data', data);
     console.log('category press', item);
-    alert('dynamic changes')
-    return;
     let item = {};
     if (data?.redirect_id) {
       if (data?.redirect_to == staticStrings.VENDOR && data?.is_show_category) {
