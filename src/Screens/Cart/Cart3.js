@@ -69,6 +69,7 @@ import RazorpayCheckout from 'react-native-razorpay';
 import moment from 'moment';
 import {hitSlopProp} from '../../styles/commonStyles';
 import {CheckBox} from 'react-native-elements';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
 
 export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -3563,7 +3564,13 @@ export default function Cart({navigation, route}) {
             // backgroundColor: '#fff',
           }}>
           <FastImage
-            source={{uri: Image.resolveAssetSource(imagePath.icEmptyCartD).uri}}
+            source={{
+              uri: Image.resolveAssetSource(
+                appIds.codiner == DeviceInfo.getBundleId()
+                  ? imagePath.emptyCart3
+                  : imagePath.icEmptyCartD,
+              ).uri,
+            }}
             style={{
               marginVertical: moderateScaleVertical(20),
               height: moderateScale(120),

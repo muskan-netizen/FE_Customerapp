@@ -255,6 +255,7 @@ export default function HomeScreenTaxi({navigation, route}) {
     <>
       <MapView
         ref={mapRef}
+        provider={PROVIDER_GOOGLE}
         //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={styles.map}
         region={region}
@@ -296,7 +297,6 @@ export default function HomeScreenTaxi({navigation, route}) {
           <Image source={imagePath.taxiUserAccount} />
         </View>
       )} */}
-
       <View
         style={{
           position: 'absolute',
