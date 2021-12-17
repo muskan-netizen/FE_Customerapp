@@ -3573,8 +3573,8 @@ export default function Cart({navigation, route}) {
             }}
             style={{
               marginVertical: moderateScaleVertical(20),
-              height: moderateScale(120),
-              width: moderateScale(120),
+              height: moderateScale(100),
+              width: moderateScale(140),
             }}
 
             // resizeMode="contain"s
