@@ -231,12 +231,12 @@ const ProductCard3 = ({
             <View style={{width: width / 2}}>
               <Text
                 style={{
-                  fontSize: textScale(9),
+                  fontSize: textScale(10),
                   fontFamily: fontFamily.regular,
                   lineHeight: moderateScale(14),
                   color: isDarkMode
                     ? MyDarkTheme.colors.text
-                    : colors.textGreyE,
+                    : colors.blackOpacity66,
                   textAlign: 'left',
                 }}>
                 {data?.translation_description}
