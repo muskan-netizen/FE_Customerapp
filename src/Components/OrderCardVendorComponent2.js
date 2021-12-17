@@ -178,9 +178,11 @@ const OrderCardVendorComponent2 = ({
             <Image
               source={{uri: imageUrl}}
               style={{
-                height: moderateScale(35),
-                width: moderateScale(35),
-                borderRadius: moderateScale(40 / 2),
+                height: moderateScale(50),
+                width: moderateScale(50),
+                borderRadius: moderateScale(50 / 2),
+                resizeMode: 'contain',
+                // backgroundColor: 'red',
               }}
             />
 

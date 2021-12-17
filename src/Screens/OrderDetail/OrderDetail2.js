@@ -1,23 +1,23 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { cloneDeep } from 'lodash';
+import {useFocusEffect} from '@react-navigation/native';
+import {cloneDeep} from 'lodash';
 import LottieView from 'lottie-react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   Dimensions,
   FlatList,
   Image,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
 import StarRating from 'react-native-star-rating';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import HeaderWithFilters from '../../Components/HeaderWithFilters';
 import {
   loaderFive,
-  loaderOne
+  loaderOne,
 } from '../../Components/Loaders/AnimatedLoaderFiles';
 import StepIndicators from '../../Components/StepIndicator';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -29,11 +29,11 @@ import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale
+  textScale,
 } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
-import { currencyNumberFormatter } from '../../utils/commonFunction';
-import { getImageUrl, showError } from '../../utils/helperFunctions';
+import {MyDarkTheme} from '../../styles/theme';
+import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {getImageUrl, showError} from '../../utils/helperFunctions';
 import ListEmptyCart from './ListEmptyCart';
 import stylesFunc from './styles';
 
