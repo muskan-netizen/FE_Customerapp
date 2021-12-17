@@ -36,6 +36,9 @@ const TaxiHomeCategoryCard = ({
   );
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
+
+  console.log("data category",data)
+  
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -47,7 +50,7 @@ const TaxiHomeCategoryCard = ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        height: moderateScale(90),
+        // height: moderateScale(90),
       }}>
       {imageURI ? (
         <View
@@ -57,7 +60,7 @@ const TaxiHomeCategoryCard = ({
               colors.taxiCategoryGrayColor.substr(1),
               30,
             ),
-            paddingHorizontal: moderateScale(8),
+            // paddingHorizontal: moderateScale(8),
             borderRadius: 10,
           }}>
           {isSVG ? (

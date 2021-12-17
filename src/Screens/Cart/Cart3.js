@@ -1574,37 +1574,41 @@ export default function Cart({ navigation, route }) {
                                         marginBottom:
                                           moderateScaleVertical(4),
                                       }}>
-                                      <Text
-                                        style={{
-                                          ...styles.cartItemWeight2,
-                                          color: isDarkMode
-                                            ? MyDarkTheme.colors.text
-                                            : colors.textGreyB,
-                                        }}>
-                                        {j?.addon_title} {j?.option_title}
-                                        <Text
+                                      <View
                                           style={{
-                                            ...styles.cartItemWeight2,
-                                            color: isDarkMode
-                                              ? MyDarkTheme.colors.text
-                                              : colors.textGrey,
-                                          }}
-                                          numberOfLines={1}>{` ${currencies?.primary_currency
-                                              ?.symbol
-                                            }${currencyNumberFormatter(
-                                              (
-                                                Number(j.price) *
-                                                Number(j.multiplier)
-                                              ).toFixed(2),
-                                            )} x ${Number(j.quantity)} =  ${currencies?.primary_currency
-                                              ?.symbol
-                                            }${currencyNumberFormatter(
-                                              (
-                                                Number(j.price) *
-                                                Number(j.quantity)
-                                              ).toFixed(2),
-                                            )}`}</Text>
-                                      </Text>
+                                            marginRight: moderateScale(10),
+                                          }}>
+                                          <Text
+                                            style={
+                                              isDarkMode
+                                                ? [
+                                                    styles.cartItemWeight2,
+                                                    {
+                                                      color:
+                                                        MyDarkTheme.colors.text,
+                                                    },
+                                                  ]
+                                                : styles.cartItemWeight2
+                                            }
+                                            numberOfLines={1}>
+                                            {j.addon_title}:
+                                          </Text>
+                                          <Text
+                                            style={
+                                              isDarkMode
+                                                ? [
+                                                    styles.cartItemWeight2,
+                                                    {
+                                                      color:
+                                                        MyDarkTheme.colors.text,
+                                                    },
+                                                  ]
+                                                : styles.cartItemWeight2
+                                            }
+                                            numberOfLines={
+                                              1
+                                            }>{`(${j.option_title})`}</Text>
+                                        </View>
                                     </View>
                                     // <View
                                     //   style={{
