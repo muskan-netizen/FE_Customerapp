@@ -184,7 +184,6 @@ export default function Cart({navigation, route}) {
   const dineInType = useSelector((state) => state?.home?.dineInType);
   console.log(dineInType, 'dineInType');
 
-
   //Update states on screens
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
@@ -1557,36 +1556,41 @@ export default function Cart({navigation, route}) {
                                 ? i?.product_addons.map((j, jnx) => {
                                     return (
                                       <View style={{flexDirection: 'row'}}>
-                                        <Text
-                                          style={
-                                            isDarkMode
-                                              ? [
-                                                  styles.cartItemWeight2,
-                                                  {
-                                                    color:
-                                                      MyDarkTheme.colors.text,
-                                                  },
-                                                ]
-                                              : styles.cartItemWeight2
-                                          }
-                                          numberOfLines={1}>
-                                          {j.addon_title}
-                                        </Text>
-                                        <Text
-                                          style={
-                                            isDarkMode
-                                              ? [
-                                                  styles.cartItemWeight2,
-                                                  {
-                                                    color:
-                                                      MyDarkTheme.colors.text,
-                                                  },
-                                                ]
-                                              : styles.cartItemWeight2
-                                          }
-                                          numberOfLines={
-                                            1
-                                          }>{`(${j.option_title})`}</Text>
+                                        <View
+                                          style={{
+                                            marginRight: moderateScale(10),
+                                          }}>
+                                          <Text
+                                            style={
+                                              isDarkMode
+                                                ? [
+                                                    styles.cartItemWeight2,
+                                                    {
+                                                      color:
+                                                        MyDarkTheme.colors.text,
+                                                    },
+                                                  ]
+                                                : styles.cartItemWeight2
+                                            }
+                                            numberOfLines={1}>
+                                            {j.addon_title}:
+                                          </Text>
+                                          <Text
+                                            style={
+                                              isDarkMode
+                                                ? [
+                                                    styles.cartItemWeight2,
+                                                    {
+                                                      color:
+                                                        MyDarkTheme.colors.text,
+                                                    },
+                                                  ]
+                                                : styles.cartItemWeight2
+                                            }
+                                            numberOfLines={
+                                              1
+                                            }>{`(${j.option_title})`}</Text>
+                                        </View>
                                         <Text
                                           style={
                                             isDarkMode
