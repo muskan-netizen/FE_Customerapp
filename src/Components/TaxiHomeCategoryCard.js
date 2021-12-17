@@ -45,7 +45,7 @@ const TaxiHomeCategoryCard = ({
       activeOpacity={0.9}
       style={{
         // shadowOpacity: 0.5,
-        width: (width - moderateScale(-5)) / 4.5,
+        width: width/ moderateScale(5.4),
         marginVertical: moderateScale(10),
         flexDirection: 'column',
         justifyContent: 'center',
@@ -56,10 +56,10 @@ const TaxiHomeCategoryCard = ({
         <View
           style={{
             flex: 0.8,
-            backgroundColor: getColorCodeWithOpactiyNumber(
-              colors.taxiCategoryGrayColor.substr(1),
-              30,
-            ),
+            // backgroundColor: getColorCodeWithOpactiyNumber(
+            //   colors.taxiCategoryGrayColor.substr(1),
+            //   30,
+            // ),
             // paddingHorizontal: moderateScale(8),
             borderRadius: 10,
           }}>

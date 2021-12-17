@@ -5,7 +5,7 @@ import imagePath from '../constants/imagePath';
 import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 
-const StepIndicators = ({
+const StepIndicators_ = ({
   containerStyle = {},
   placeholder = '',
   labels = [],
@@ -50,29 +50,29 @@ const StepIndicators = ({
       case 0: {
         iconConfig =
           stepStatus == 'finished'
-            ? imagePath.acceptInactive
-            : imagePath.acceptInactive;
+            ? imagePath.inactiveaccept
+            : imagePath.inactiveaccept;
         break;
       }
       case 1: {
         iconConfig =
           stepStatus == 'finished'
-            ? imagePath.deliverInactive
-            : imagePath.deliverInactive;
+            ? imagePath.inactiveprocceing
+            : imagePath.inactiveprocceing;
         break;
       }
       case 2: {
         iconConfig =
           stepStatus == 'finished'
-            ? imagePath.onmywayInactive
-            : imagePath.onmywayInactive;
+            ? imagePath.inactiveoutdelivery
+            : imagePath.inactiveoutdelivery;
         break;
       }
       case 3: {
         iconConfig =
           stepStatus == 'finished'
-            ? imagePath.processingInactive
-            : imagePath.processingInactive;
+            ? imagePath.inactivedelivered
+            : imagePath.inactivedelivered;
         break;
       }
       default: {
@@ -106,8 +106,8 @@ const StepIndicators = ({
       currentPosition={currentPosition}
       renderStepIndicator={renderStepIndicator}
       // renderLabel={renderLabel}
-      labels={labels}
+      //labels={labels}
     />
   );
 };
-export default React.memo(StepIndicator);
+export default React.memo(StepIndicators_);
