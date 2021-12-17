@@ -176,6 +176,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
         if (result !== 'goback') {
           getCurrentLocation('home')
             .then((res) => {
+              console.log("current lcoation", res)
               if (
                 appMainData &&
                 typeof appMainData?.reqData == 'object' &&
@@ -208,7 +209,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
       .catch((error) => console.log('error while accessing location', error));
   }, []);
 
-  console.log("location address", location)
+  console.log("location address", locationObj)
   useFocusEffect(
     React.useCallback(() => {
       // homeData();
@@ -246,19 +247,13 @@ export default function TaxiHomeScreen({ route, navigation }) {
 
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
+    console.log("location +++location +++location +++", slectedLocatonFromPreviousScreen)
     let latlongObj = {};
-
     if (appData?.profile?.preferences?.is_hyperlocal) {
       latlongObj = {
-        address: slectedLocatonFromPreviousScreen
-          ? slectedLocatonFromPreviousScreen?.address
-          : location?.address,
-        latitude: slectedLocatonFromPreviousScreen
-          ? slectedLocatonFromPreviousScreen?.latitude
-          : location?.latitude,
-        longitude: slectedLocatonFromPreviousScreen
-          ? slectedLocatonFromPreviousScreen?.longitude
-          : location?.longitude,
+        address: locationObj?.address,
+        latitude: locationObj?.latitude,
+        longitude: locationObj?.longitude,
       };
     }
 
@@ -269,7 +264,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
       },
       'latlongObj>>Data',
     );
-    console.log(selectedTabType, 'selectedTabType');
+    console.log(latlongObj, 'selectedTabType');
     actions
       .homeData(
         {
@@ -445,6 +440,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
   };
 
   console.log("appMainDataappMainData", appMainData)
+
   //Reloads the screen
   const initApiHit = () => {
     let header = {};
