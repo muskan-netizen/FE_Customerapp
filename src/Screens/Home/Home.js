@@ -257,9 +257,10 @@ export default function Home({ route, navigation }) {
     }
   };
 
+  console.log("current data",appData)
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
-    console.log("param data++++", paramData)
+ 
     if (!!paramData) {
       updateState({ searchDataLoader: true })
     }

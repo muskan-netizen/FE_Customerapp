@@ -444,6 +444,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
     }
   };
 
+  console.log("appMainDataappMainData", appMainData)
   //Reloads the screen
   const initApiHit = () => {
     let header = {};
