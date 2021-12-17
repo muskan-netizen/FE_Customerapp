@@ -59317,6 +59317,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = "$(PROJECT_APP_VERSION)";
+				NEW_SETTING = "";
+				NEW_SETTING1 = "";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -59350,6 +59352,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = "$(PROJECT_APP_VERSION)";
+				NEW_SETTING = "";
+				NEW_SETTING1 = "";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
