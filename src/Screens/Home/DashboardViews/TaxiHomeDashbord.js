@@ -596,6 +596,15 @@ export default function TaxiHomeDashbord({
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.id.toString()}
           renderItem={_renderItem}
+          ItemSeparatorComponent={() => (
+            <View style={{marginRight: moderateScale(12)}} />
+          )}
+          ListHeaderComponent={() => (
+            <View style={{marginLeft: moderateScale(12)}} />
+          )}
+          ListFooterComponent={() => (
+            <View style={{marginRight: moderateScale(12)}} />
+          )}
         />
 
         {/* findCabCategory */}
