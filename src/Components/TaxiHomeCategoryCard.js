@@ -95,7 +95,7 @@ const TaxiHomeCategoryCard = ({
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             fontFamily: fontFamily.regular,
             marginTop: moderateScaleVertical(8),
-            fontSize: textScale(9),
+            fontSize: textScale(12),
           }}>
           {data.name}
         </Text>
