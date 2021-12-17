@@ -1,6 +1,6 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Image,
@@ -14,16 +14,16 @@ import {
 import * as Animatable from 'react-native-animatable';
 import DeviceInfo from 'react-native-device-info';
 import Modal from 'react-native-modal';
-import {Pagination} from 'react-native-snap-carousel';
+import { Pagination } from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import Banner from '../Components/Banner';
 import GradientButton from '../Components/GradientButton';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import actions from '../redux/actions';
 import colors from '../styles/colors';
-import commonStylesFun, {hitSlopProp} from '../styles/commonStyles';
+import commonStylesFun, { hitSlopProp } from '../styles/commonStyles';
 import fontFamily from '../styles/fontFamily';
 import {
   height,
@@ -32,8 +32,8 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {currencyNumberFormatter} from '../utils/commonFunction';
+import { MyDarkTheme } from '../styles/theme';
+import { currencyNumberFormatter } from '../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   hapticEffects,
@@ -53,7 +53,7 @@ const VariantAddons = ({
   resizeMode = 'contain',
   imagestyle = {},
   showShimmer,
-  shimmerClose = () => {},
+  shimmerClose = () => { },
   updateCartItems,
 }) => {
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
@@ -95,15 +95,15 @@ const VariantAddons = ({
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const isDarkMode = theme;
-  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
+  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const buttonTextColor = themeColors;
-  const commonStyles = commonStylesFun({fontFamily, buttonTextColor});
+  const commonStyles = commonStylesFun({ fontFamily, buttonTextColor });
   // let typeId = productdetail?.category?.category_detail?.type_id;
   console.log(typeId, 'typeId>typeId');
   // !!data?.variant[0]?.quantity || (!!typeId && typeId == 8) ||  !!data?.sell_when_out_of_stock?
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useFocusEffect(
     React.useCallback(() => {
@@ -130,7 +130,7 @@ const VariantAddons = ({
   );
 
   const getProductDetailBasedOnFilter = (variantSetData) => {
-    updateState({isLoadingC: true});
+    updateState({ isLoadingC: true });
     let data = {};
     data['variants'] = variantSetData.map((i) => i.variant_id);
     data['options'] = variantSetData.map((i) => i.optionId);
@@ -161,7 +161,7 @@ const VariantAddons = ({
     console.log(error, 'Error>>>>>');
 
     if (error?.message?.alert == 1) {
-      updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+      updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
       // showError(error?.message?.error || error?.error);
       Alert.alert('', error?.message?.error, [
         {
@@ -169,7 +169,7 @@ const VariantAddons = ({
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        {text: 'Clear Cart', onPress: () => clearCart()},
+        { text: 'Clear Cart', onPress: () => clearCart() },
       ]);
     } else {
       if (error?.data?.variant_empty) {
@@ -180,7 +180,7 @@ const VariantAddons = ({
           isLoadingC: false,
         });
       } else {
-        updateState({isLoading: false, isLoadingB: false, isLoadingC: false});
+        updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
         showError(error?.message || error?.error);
       }
     }
@@ -317,7 +317,7 @@ const VariantAddons = ({
     });
   };
 
-  const checkBoxButtonViewAddons = ({setoptions}) => {
+  const checkBoxButtonViewAddons = ({ setoptions }) => {
     return (
       <View>
         {setoptions.map((i, inx) => {
@@ -335,7 +335,7 @@ const VariantAddons = ({
                 justifyContent: 'space-between',
                 marginBottom: moderateScaleVertical(10),
               }}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text
                   style={[
                     styles.variantValue,
@@ -351,7 +351,7 @@ const VariantAddons = ({
                 </Text>
               </View>
 
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text
                   style={[
                     styles.variantValue,
@@ -361,15 +361,14 @@ const VariantAddons = ({
                         : colors.black,
                     },
                   ]}>
-                  {`${
-                    currencies?.primary_currency?.symbol
-                  }${currencyNumberFormatter(
-                    (Number(i?.multiplier) * Number(i?.price)).toFixed(2),
-                  )}`}
+                  {`${currencies?.primary_currency?.symbol
+                    }${currencyNumberFormatter(
+                      (Number(i?.multiplier) * Number(i?.price)).toFixed(2),
+                    )}`}
                 </Text>
-                <View style={{paddingLeft: moderateScale(5)}}>
+                <View style={{ paddingLeft: moderateScale(5) }}>
                   <Image
-                    style={{tintColor: themeColors.primary_color}}
+                    style={{ tintColor: themeColors.primary_color }}
                     source={
                       i?.value
                         ? imagePath.checkBox2Active
@@ -521,12 +520,12 @@ const VariantAddons = ({
       }
     });
 
-    updateState({variantSet: modifyVariants});
+    updateState({ variantSet: modifyVariants });
 
     // console.log(modifyVariants, 'im newArray>>>>>');
   };
 
-  const variantSetValue = ({options, type}) => {
+  const variantSetValue = ({ options, type }) => {
     if (type == 1) {
       return <>{radioButtonView(options)}</>;
     }
@@ -535,7 +534,7 @@ const VariantAddons = ({
 
   const radioButtonView = (options) => {
     return (
-      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         {options.map((i, inx) => {
           return (
             <TouchableOpacity
@@ -569,7 +568,7 @@ const VariantAddons = ({
 
   const circularView = (options) => {
     return (
-      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         {options.map((i, inx) => {
           return (
             <TouchableNativeFeedback
@@ -591,7 +590,7 @@ const VariantAddons = ({
 
                     borderColor:
                       i?.value &&
-                      (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
+                        (i.hexacode == '#FFFFFF' || i.hexacode == '#FFF')
                         ? colors.textGrey
                         : i.hexacode,
                   },
@@ -615,12 +614,12 @@ const VariantAddons = ({
     );
   };
 
-  const {bannerRef} = useRef();
+  const { bannerRef } = useRef();
 
   const showAllVariants = () => {
     let variantSetData = cloneDeep(variantSet);
     return (
-      <View style={{marginBottom: 10, paddingHorizontal: moderateScale(0)}}>
+      <View style={{ marginBottom: 10, paddingHorizontal: moderateScale(0) }}>
         {variantSetData.map((i, inx) => {
           return (
             <View
@@ -703,12 +702,12 @@ const VariantAddons = ({
           }
         });
         let CloneArr = addonSet;
-        CloneArr[inx] = {...CloneArr[inx], errorShow: false};
-        updateState({addonSet: CloneArr});
+        CloneArr[inx] = { ...CloneArr[inx], errorShow: false };
+        updateState({ addonSet: CloneArr });
       } else {
         let CloneArr = addonSet;
-        CloneArr[inx] = {...CloneArr[inx], errorShow: true};
-        updateState({addonSet: CloneArr});
+        CloneArr[inx] = { ...CloneArr[inx], errorShow: true };
+        updateState({ addonSet: CloneArr });
       }
     });
 
@@ -727,7 +726,7 @@ const VariantAddons = ({
         data['addon_options'] = addon_options;
       }
       console.log(data, 'data for cart');
-      updateState({btnLoader: true});
+      updateState({ btnLoader: true });
       actions
         .addProductsToCart(data, {
           code: appData.profile.code,
@@ -744,13 +743,13 @@ const VariantAddons = ({
             res.data.cart_product_id,
             res.data.id,
           );
-          updateState({isLoadingC: false, btnLoader: false});
+          updateState({ isLoadingC: false, btnLoader: false });
           // onClose();
         })
         .catch((error) => errorMethodSecond(error, addonSet));
       return;
     }
-    updateState({btnLoader: true});
+    updateState({ btnLoader: true });
     actions
       .addProductsToCart(data, {
         code: appData.profile.code,
@@ -761,7 +760,7 @@ const VariantAddons = ({
       .then((res) => {
         actions.cartItemQty(res);
         showSuccess(strings.PRODUCT_ADDED_SUCCESS);
-        updateState({isLoadingC: false, btnLoader: false});
+        updateState({ isLoadingC: false, btnLoader: false });
         updateCartItems(
           productdetail,
           res.data.item_count, ////localy update cart quanity
@@ -837,7 +836,7 @@ const VariantAddons = ({
           rectHeightLeft={moderateScaleVertical(10)}
           rx={5}
           ry={5}
-          viewStyles={{marginTop: moderateScaleVertical(8)}}
+          viewStyles={{ marginTop: moderateScaleVertical(8) }}
         />
         <HeaderLoader
           isRight={false}
@@ -847,7 +846,7 @@ const VariantAddons = ({
           rectHeightLeft={moderateScaleVertical(10)}
           rx={5}
           ry={5}
-          viewStyles={{marginTop: moderateScaleVertical(12)}}
+          viewStyles={{ marginTop: moderateScaleVertical(12) }}
         />
         <HeaderLoader
           isRight={false}
@@ -857,7 +856,7 @@ const VariantAddons = ({
           rectHeightLeft={moderateScaleVertical(2)}
           rx={5}
           ry={5}
-          viewStyles={{marginTop: moderateScaleVertical(12)}}
+          viewStyles={{ marginTop: moderateScaleVertical(12) }}
         />
         <HeaderLoader
           isRight={false}
@@ -867,7 +866,7 @@ const VariantAddons = ({
           rectHeightLeft={moderateScaleVertical(7)}
           rx={5}
           ry={5}
-          viewStyles={{marginTop: moderateScaleVertical(8)}}
+          viewStyles={{ marginTop: moderateScaleVertical(8) }}
         />
         <HeaderLoader
           widthLeft={moderateScale(60)}
@@ -880,7 +879,7 @@ const VariantAddons = ({
           rectHeightRight={moderateScaleVertical(10)}
           rx={5}
           ry={5}
-          viewStyles={{marginTop: moderateScaleVertical(8)}}
+          viewStyles={{ marginTop: moderateScaleVertical(8) }}
         />
         <HeaderLoader
           widthLeft={moderateScale(60)}
@@ -893,7 +892,7 @@ const VariantAddons = ({
           rectHeightRight={moderateScaleVertical(10)}
           rx={5}
           ry={5}
-          viewStyles={{marginTop: moderateScaleVertical(8)}}
+          viewStyles={{ marginTop: moderateScaleVertical(8) }}
         />
         <HeaderLoader
           isRight={false}
@@ -903,7 +902,7 @@ const VariantAddons = ({
           rectHeightLeft={moderateScaleVertical(7)}
           rx={5}
           ry={5}
-          viewStyles={{marginTop: moderateScaleVertical(8)}}
+          viewStyles={{ marginTop: moderateScaleVertical(8) }}
         />
         <HeaderLoader
           isRight={false}
@@ -913,7 +912,7 @@ const VariantAddons = ({
           rectHeightLeft={moderateScaleVertical(7)}
           rx={5}
           ry={5}
-          viewStyles={{marginTop: moderateScaleVertical(8)}}
+          viewStyles={{ marginTop: moderateScaleVertical(8) }}
         />
 
         <HeaderLoader
@@ -924,7 +923,7 @@ const VariantAddons = ({
           rectHeightLeft={moderateScaleVertical(2)}
           rx={5}
           ry={5}
-          viewStyles={{marginTop: moderateScaleVertical(15)}}
+          viewStyles={{ marginTop: moderateScaleVertical(15) }}
         />
         <HeaderLoader
           widthLeft={moderateScale(80)}
@@ -993,7 +992,7 @@ const VariantAddons = ({
       style={styles.modalContainer}
       onBackdropPress={() => onClose()}
       onLayout={(event) => {
-        updateState({viewHeight: event.nativeEvent.layout.height});
+        updateState({ viewHeight: event.nativeEvent.layout.height });
       }}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Image source={imagePath.crossC} />
@@ -1001,7 +1000,7 @@ const VariantAddons = ({
       {showShimmer ? (
         shimmerShow()
       ) : (
-        <Animatable.View style={{flex: 1}}>
+        <Animatable.View style={{ flex: 1 }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             bounces={false}
@@ -1012,7 +1011,7 @@ const VariantAddons = ({
                 ? MyDarkTheme.colors.background
                 : '#fff',
             }}>
-            <View style={{flex: 1, alignItems: 'center'}}>
+            <View style={{ flex: 1, alignItems: 'center' }}>
               <Banner
                 bannerRef={bannerRef}
                 bannerData={productDetailData?.product_media}
@@ -1020,13 +1019,13 @@ const VariantAddons = ({
                 itemWidth={width}
                 pagination={false}
                 setActiveState={(index) =>
-                  updateState({slider1ActiveSlide: index})
+                  updateState({ slider1ActiveSlide: index })
                 }
                 showLightbox={true}
                 cardViewStyle={styles.cardViewStyle}
-                // resizeMode="contain"
+              // resizeMode="contain"
               />
-              <View style={{paddingTop: 5}}>
+              <View style={{ paddingTop: 5 }}>
                 <Pagination
                   dotsLength={productDetailData?.product_media?.length}
                   activeDotIndex={state.slider1ActiveSlide}
@@ -1084,26 +1083,26 @@ const VariantAddons = ({
                       )}
                       fullStarColor={colors.yellowB}
                       starSize={8}
-                      containerStyle={{width: width / 9}}
+                      containerStyle={{ width: width / 9 }}
                     />
                   </View>
                 )}
               </View>
-              <View style={{justifyContent: 'center'}}>
+              <View style={{ justifyContent: 'center' }}>
                 {!!typeId && typeId !== 8 && (
                   <Text
                     style={{
                       color:
                         (productTotalQuantity && productTotalQuantity != 0) ||
-                        !!productDetailData?.sell_when_out_of_stock
+                          !!productDetailData?.sell_when_out_of_stock
                           ? colors.green
                           : colors.orangeB,
                       fontSize: textScale(10),
                       fontFamily: fontFamily.medium,
                     }}>
                     {(productTotalQuantity && productTotalQuantity != 0) ||
-                    !!productDetailData?.sell_when_out_of_stock ||
-                    productDetailData?.has_inventory == 0
+                      !!productDetailData?.sell_when_out_of_stock ||
+                      productDetailData?.has_inventory == 0
                       ? ''
                       : strings.OUT_OF_STOCK}
                   </Text>
@@ -1115,7 +1114,7 @@ const VariantAddons = ({
                   <HtmlViewComp
                     plainHtml={productdetail?.translation[0]?.body_html}
                   />
-                  <View style={{marginBottom: 10}} />
+                  <View style={{ marginBottom: 10 }} />
                 </View>
               )}
 
@@ -1151,98 +1150,94 @@ const VariantAddons = ({
             !!productDetailData?.sell_when_out_of_stock ||
             productDetailData?.has_inventory == 0
           ) && (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                paddingHorizontal: moderateScale(16),
-                paddingBottom: moderateScaleVertical(16),
-                backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.background
-                  : '#fff',
-              }}>
-              <View style={{flex: 0.25}}>
-                <View
-                  style={{
-                    ...commonStyles.buttonRect,
-                    ...styles.incDecBtnStyle,
-                    backgroundColor: getColorCodeWithOpactiyNumber(
-                      themeColors.primary_color.substr(1),
-                      15,
-                    ),
-                    borderColor: themeColors?.primary_color,
-                    height: moderateScale(38),
-                  }}
-                  // onPress={onPress}
-                >
-                  <TouchableOpacity
-                    onPress={() => productIncrDecreamentForCart(2)}
-                    hitSlop={hitSlopProp}>
-                    <Text
-                      style={{
-                        ...commonStyles.mediumFont14,
-                        color: themeColors?.primary_color,
-                        fontFamily: fontFamily.bold,
-                      }}>
-                      -
-                    </Text>
-                  </TouchableOpacity>
-                  <Text
-                    style={{
-                      ...commonStyles.mediumFont14,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    {productQuantityForCart}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => productIncrDecreamentForCart(1)}
-                    hitSlop={hitSlopProp}>
-                    <Text
-                      style={{
-                        ...commonStyles.mediumFont14,
-                        color: themeColors?.primary_color,
-                        fontFamily: fontFamily.bold,
-                      }}>
-                      +
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-              {console.log(
-                addonSet,
-                'productPriceDataproductPriceDataproductPriceData',
-              )}
-              <View style={{marginHorizontal: 8}} />
               <View
-                pointerEvents={btnLoader ? 'none' : 'auto'}
-                style={{flex: 0.75}}>
-                <GradientButton
-                  indicator={btnLoader}
-                  indicatorColor={colors.white}
-                  colorsArray={[
-                    themeColors.primary_color,
-                    themeColors.primary_color,
-                  ]}
-                  textStyle={{
-                    fontFamily: fontFamily.medium,
-                    textTransform: 'capitalize',
-                    color: colors.white,
-                  }}
-                  onPress={() => addToCart(addonSet)}
-                  btnText={`${strings.ADD_ITEM} - ${
-                    currencies?.primary_currency?.symbol
-                  }${getAdditionalPriceOfAddons()}`}
-                  btnStyle={{
-                    borderRadius: moderateScale(4),
-                    height: moderateScale(38),
-                  }}
-                />
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  paddingHorizontal: moderateScale(16),
+                  paddingBottom: moderateScaleVertical(16),
+                  backgroundColor: isDarkMode
+                    ? MyDarkTheme.colors.background
+                    : '#fff',
+                }}>
+                {!showErrorMessageTitle && (<View style={{ flex: 0.25 }}>
+                  <View
+                    style={{
+                      ...commonStyles.buttonRect,
+                      ...styles.incDecBtnStyle,
+                      backgroundColor: getColorCodeWithOpactiyNumber(
+                        themeColors.primary_color.substr(1),
+                        15,
+                      ),
+                      borderColor: themeColors?.primary_color,
+                      height: moderateScale(38),
+                    }}
+                  // onPress={onPress}
+                  >
+                    <TouchableOpacity
+                      onPress={() => productIncrDecreamentForCart(2)}
+                      hitSlop={hitSlopProp}>
+                      <Text
+                        style={{
+                          ...commonStyles.mediumFont14,
+                          color: themeColors?.primary_color,
+                          fontFamily: fontFamily.bold,
+                        }}>
+                        -
+                      </Text>
+                    </TouchableOpacity>
+                    <Text
+                      style={{
+                        ...commonStyles.mediumFont14,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                      }}>
+                      {productQuantityForCart}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => productIncrDecreamentForCart(1)}
+                      hitSlop={hitSlopProp}>
+                      <Text
+                        style={{
+                          ...commonStyles.mediumFont14,
+                          color: themeColors?.primary_color,
+                          fontFamily: fontFamily.bold,
+                        }}>
+                        +
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>)}
+
+                <View style={{ marginHorizontal: 8 }} />
+                {!showErrorMessageTitle && (<View
+                  pointerEvents={btnLoader ? 'none' : 'auto'}
+                  style={{ flex: 0.75 }}>
+                  <GradientButton
+                    indicator={btnLoader}
+                    indicatorColor={colors.white}
+                    colorsArray={[
+                      themeColors.primary_color,
+                      themeColors.primary_color,
+                    ]}
+                    textStyle={{
+                      fontFamily: fontFamily.medium,
+                      textTransform: 'capitalize',
+                      color: colors.white,
+                    }}
+                    onPress={() => addToCart(addonSet)}
+                    btnText={`${strings.ADD_ITEM} - ${currencies?.primary_currency?.symbol
+                      }${getAdditionalPriceOfAddons()}`}
+                    btnStyle={{
+                      borderRadius: moderateScale(4),
+                      height: moderateScale(38),
+                    }}
+                  />
+                </View>)}
               </View>
-            </View>
-          )}
+            )}
         </Animatable.View>
       )}
     </Modal>
@@ -1370,7 +1365,7 @@ const styles = StyleSheet.create({
     width: width,
     // marginRight: 20
   },
-  dotStyle: {height: 12, width: 12, borderRadius: 12 / 2},
+  dotStyle: { height: 12, width: 12, borderRadius: 12 / 2 },
   ratingColor: {
     color: colors.backgroundGrey,
     paddingLeft: 5,

@@ -111,8 +111,6 @@ export default function Addaddress({navigation, route}) {
     curLatLng,
   } = state;
 
-  console.log('param data address', paramData);
-
   useEffect(() => {
     if (!!paramData?.prefillAdress) {
       console.log('param data address', paramData);

@@ -669,7 +669,7 @@ export default function DashBoardHeaderFive({
                 key={indx}
                 style={{
                   // width: width / 3 - 8,
-                  width: tabs.length == 2? '50%': '33%',
+                  width: tabs.length == 2? '50%': '33.6%',
                   borderBottomColor:
                     item.isActive && isDarkMode
                       ? MyDarkTheme.colors.white
