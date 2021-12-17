@@ -183,8 +183,6 @@ export default function SearchProductVendorItem2({ navigation, route }) {
   }, [searchInput]);
 
 
-
-
   const _onclickSearchItem = (item) => {
     console.log(item, 'clickedItem');
     const searchResultExists = previousSearches?.some(
