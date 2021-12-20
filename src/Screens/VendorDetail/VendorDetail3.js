@@ -86,15 +86,13 @@ export default function VendorDetail3({ navigation, route }) {
 
   //Naviagtion to specific screen
   const moveToNewScreen = (item) => {
-    // console.log('item++++ upper', item);
-    // if (item.type.id == 7) {
-      
-    //   // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
-    //   console.log('item++++', {...item, pickup_taxi: 'fdf'});
-    //   // return;
-    //   moveToNewScreen(navigationStrings.ADDADDRESS, item)();
-    //   return;
-    // }
+    console.log('item++++ upper', item);
+    if (item.type.id == 7) {
+      item['pickup_taxi'] = true
+      item['redirect_to'] = item.type.redirect_to
+      navigation.navigate(navigationStrings.ADDADDRESS, {data: item})
+      return;
+    }
     navigation.navigate(navigationStrings.PRODUCT_LIST, {
       data: {
         id: item.id,
@@ -108,10 +106,6 @@ export default function VendorDetail3({ navigation, route }) {
       },
     });
   };
-  // (screenName, data = {}) =>
-  //   () => {
-  //     navigation.navigate(screenName, { data });
-  //   };
 
   /***********GET SUBCATEGORY  DETAIL DATA******** */
 

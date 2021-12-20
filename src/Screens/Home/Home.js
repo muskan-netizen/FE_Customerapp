@@ -95,7 +95,6 @@ export default function Home({ route, navigation }) {
     updateState({ updatedData: appMainData?.categories });
   }, [appMainData]);
 
-  console.log("addressSearchaddressSearch", appData)
 
   useEffect(() => {
     _getLocationFromParams();
@@ -105,7 +104,7 @@ export default function Home({ route, navigation }) {
   }, [paramData?.details]);
 
   const _getLocationFromParams = () => {
-    console.log("one time")
+ 
     if (
       paramData?.details &&
       paramData?.details?.formatted_address != location?.address
@@ -163,7 +162,6 @@ export default function Home({ route, navigation }) {
 
   const updateLatLang = (res) => {
     updateState({ updateTime: Math.random() });
-    console.log(res, 'resresresresresres');
     actions.locationData(res);
   };
   useEffect(() => {
@@ -259,9 +257,10 @@ export default function Home({ route, navigation }) {
     }
   };
 
+  console.log("current data",appData)
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
-    console.log("param data++++", paramData)
+ 
     if (!!paramData) {
       updateState({ searchDataLoader: true })
     }
@@ -390,7 +389,7 @@ export default function Home({ route, navigation }) {
 
   //onPress Category
   const onPressCategory = (item) => {
-    console.log('category press', item);
+    console.log('category press', item)
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -471,7 +470,7 @@ export default function Home({ route, navigation }) {
   //On Press banner
   const bannerPress = (data) => {
     console.log('data', data);
-
+    console.log('category press', item);
     let item = {};
     if (data?.redirect_id) {
       if (data?.redirect_to == staticStrings.VENDOR && data?.is_show_category) {

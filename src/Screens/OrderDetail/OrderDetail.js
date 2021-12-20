@@ -267,8 +267,6 @@ export default function OrderDetail({navigation, route}) {
       .catch(errorMethod);
   };
 
-  console.log('current order status', orderStatus);
-
   const errorMethod = (error) => {
     updateState({isLoading: false, isLoading: false, isLoadingC: false});
     showError(error?.message || error?.error);

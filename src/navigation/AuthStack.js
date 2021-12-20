@@ -69,16 +69,16 @@ export default function (Stack) {
         // component={LoginLayoutFour}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.OTP_VERIFICATION}
         component={OtpVerification}
         options={{headerShown: false}}
-      /> */}
-      <Stack.Screen
+      />
+      {/* <Stack.Screen
         name={navigationStrings.OTP_VERIFICATION}
         component={OtpVerificationTemplateFour}
         options={{headerShown: false}}
-      />
+      /> */}
       <Stack.Screen
         name={navigationStrings.VERIFY_ACCOUNT}
         component={VerifyAccount}

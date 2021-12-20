@@ -424,10 +424,6 @@ export default {
   inactiveoutdelivery: require('../assets/images/vendorStatusImages/ic_inactiveoutdelivery.png'),
   inactivedelivered: require('../assets/images/vendorStatusImages/ic_inactivedelivered.png'),
 
-  activeaccept: require('../assets/images/vendorStatusImages/ic_activeaccept.png'),
-  activeprocceing: require('../assets/images/vendorStatusImages/ic_activeprocceing.png'),
-  activeoutdelivery: require('../assets/images/vendorStatusImages/ic_activeoutdelivery.png'),
-  activedelivered: require('../assets/images/vendorStatusImages/ic_activedelivered.png'),
   support: require('../assets/images/ic_support.png'),
   checkBox2Active: require('../assets/images/ic_check2.png'),
   checkBox2InActive: require('../assets/images/ic_check1.png'),

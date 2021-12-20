@@ -200,7 +200,9 @@ export default ({fontFamily, themeColors, isDarkMode, MyDarkTheme}) => {
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(6),
       paddingVertical: moderateScaleVertical(4),
-      flexDirection: 'row-reverse',
+      flexDirection:'row',
+      alignItems:'center',
+      justifyContent:'space-between'
     },
     cartItemRatting: {
       tintColor: colors.orange,
