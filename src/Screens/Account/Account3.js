@@ -84,10 +84,13 @@ export default function Account3({ navigation }) {
 
   //Share your app
   const onShare = () => {
-    // https://play.google.com/store/apps/details?id=com.codebrew.customer'
+    console.log("preferencespreferences", preferences)
     if (!!preferences?.android_app_link && !!preferences?.ios_link) {
+      let androidLink = preferences?.android_app_link
+      let iosLink = preferences?.ios_link
       let options = {
-        urls: [preferences?.android_app_link, preferences?.ios_link]
+        // urls: [preferences?.android_app_link, preferences?.ios_link],
+        message: `android App: ${androidLink} \n \n iOS App: ${iosLink} `
       }
       Share.open(options)
         .then((res) => {
@@ -530,8 +533,8 @@ export default function Account3({ navigation }) {
           />
           {!!userData?.auth_token && (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={() => onStartSupportChat()}
               iconLeft={imagePath.support}
               centerHeading={strings.SUPPORT}
@@ -540,8 +543,8 @@ export default function Account3({ navigation }) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
 
