@@ -17,6 +17,8 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import DeviceInfo from 'react-native-device-info';
 import {
   height,
   moderateScale,
@@ -879,7 +881,9 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
           <MapView
             ref={mapRef}
             provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-            customMapStyle={mapStyleGrey}
+            customMapStyle={
+              appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
+            }
             // style={styles.map}
             style={{height: height / 2.3}}
             region={region}

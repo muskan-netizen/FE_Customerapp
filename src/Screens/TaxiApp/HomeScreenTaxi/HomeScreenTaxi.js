@@ -38,6 +38,10 @@ import {chekLocationPermission} from '../../../utils/permissions';
 import {getCurrentLocation} from '../../../utils/helperFunctions';
 import BottomViewModal from '../../../Components/BottomViewModal';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
+// import {appIds} from '../../../utils/constants/DynamicAppKeys';
+
+import DeviceInfo from 'react-native-device-info';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
 
 export default function HomeScreenTaxi({navigation, route}) {
   const mapRef = React.createRef();
@@ -444,7 +448,9 @@ export default function HomeScreenTaxi({navigation, route}) {
             longitudeDelta: 0.0121,
           }}
           initialRegion={region}
-          customMapStyle={mapStyleGrey}
+          customMapStyle={
+            appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
+          }
           // pointerEvents={'none'}
           onRegionChangeComplete={_onRegionChange}>
           {/* <Marker
