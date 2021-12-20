@@ -1013,62 +1013,68 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     <Text style={styles.deliveryProof}>
                       {strings.ORDER_DETAIL}
                     </Text>
-                    {orderFullDetail.order_details.products.map((val) => {
-                      return (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            marginBottom: moderateScaleVertical(8),
-                          }}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}>
+                      {orderFullDetail.order_details.products.map((val) => {
+                        return (
                           <View
                             style={{
                               flexDirection: 'row',
+                              justifyContent: 'space-between',
                               alignItems: 'center',
+                              marginBottom: moderateScaleVertical(8),
                             }}>
-                            <FastImage
-                              source={{
-                                uri: getImageUrl(
-                                  val?.image.image_fit,
-                                  val?.image.image_path,
-                                  '100/100',
-                                ),
-                                priority: FastImage.priority.high,
-                              }}
+                            <View
                               style={{
-                                height: moderateScale(40),
-                                width: moderateScale(40),
-                                borderRadius: moderateScale(4),
-                              }}
-                            />
-
-                            <Text
-                              style={{
-                                ...styles.statusText,
-                                color: isDarkMode
-                                  ? MyDarkTheme.colors.text
-                                  : colors.black,
-                                marginLeft: moderateScale(10),
+                                flexDirection: 'row',
+                                alignItems: 'center',
                               }}>
-                              {val?.product_name || ''}
-                            </Text>
-                          </View>
-                          {!!orderFullDetail?.avgrating &&
-                            Number(orderFullDetail?.avgrating) !== 0 && (
-                              <StarRating
-                                disabled={true}
-                                maxStars={5}
-                                rating={orderFullDetail?.avgrating}
-                                selectedStar={(rating) =>
-                                  onStarRatingPress(item, rating)
-                                }
-                                fullStarColor={'#DD812E'}
-                                starSize={15}
+                              <FastImage
+                                source={{
+                                  uri: getImageUrl(
+                                    val?.image.image_fit,
+                                    val?.image.image_path,
+                                    '100/100',
+                                  ),
+                                  priority: FastImage.priority.high,
+                                }}
+                                style={{
+                                  height: moderateScale(40),
+                                  width: moderateScale(40),
+                                  borderRadius: moderateScale(4),
+                                }}
                               />
-                            )}
 
-                          {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                              <Text
+                                style={{
+                                  ...styles.statusText,
+                                  color: isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : colors.black,
+                                  marginLeft: moderateScale(10),
+                                }}>
+                                {val?.product_name || ''}
+                              </Text>
+                            </View>
+                            {!!orderFullDetail?.avgrating &&
+                              Number(orderFullDetail?.avgrating) !== 0 && (
+                                <StarRating
+                                  disabled={true}
+                                  maxStars={5}
+                                  rating={orderFullDetail?.avgrating}
+                                  selectedStar={(rating) =>
+                                    onStarRatingPress(item, rating)
+                                  }
+                                  fullStarColor={'#DD812E'}
+                                  starSize={15}
+                                />
+                              )}
+
+                            {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Image source={imagePath.startwo} />
                         <TouchableOpacity>
                           <Text style={{
@@ -1078,9 +1084,32 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                           }}>Add Rating</Text>
                         </TouchableOpacity>
                       </View> */}
-                        </View>
-                      );
-                    })}
+                          </View>
+                        );
+                      })}
+                      <View style={{flexDirection: 'row'}}>
+                        <Text
+                          style={{
+                            ...styles.statusText,
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
+                            marginLeft: moderateScale(10),
+                          }}>
+                          {`${orderDetail?.color} ,`}
+                        </Text>
+                        <Text
+                          style={{
+                            ...styles.statusText,
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
+                            marginLeft: moderateScale(10),
+                          }}>
+                          {orderDetail?.plate_number}
+                        </Text>
+                      </View>
+                    </View>
                   </View>
                 ) : (
                   <View style={{marginBottom: moderateScaleVertical(24)}} />
