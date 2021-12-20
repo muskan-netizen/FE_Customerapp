@@ -192,14 +192,13 @@ export default function Addaddress({ navigation, route }) {
     const latlongData = appData?.profile?.preferences
       ?.pickup_delivery_service_area
       ? {
-        code: appData?.profile?.code,
-        latitude: lat,
-        longitude: lng,
-      }
-      : { code: appData?.profile?.code };
-
-    actions
-      .getDataByCategoryId(
+          code: appData?.profile?.code,
+          latitude: lat,
+          longitude: lng,
+        }
+      : {code: appData?.profile?.code};
+    
+      actions.getDataByCategoryId(
         `/${paramData?.data?.id ? paramData?.data?.id : paramData?.cat?.id
         }?limit=${limit}&page=${pageNo}`,
         {},
@@ -446,8 +445,8 @@ export default function Addaddress({ navigation, route }) {
           place.place_id,
           profile?.preferences?.map_key,
         );
-        const { result } = res;
-        console.log('res===', result);
+        const {result} = res;
+        console.log('res=== result', result);
         let addressData = getAddressComponent(result);
         cloneArr[searchResult.currentIndex].latitude =
           result.geometry.location.lat;
