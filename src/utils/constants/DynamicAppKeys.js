@@ -176,6 +176,8 @@ const shortCodes = {
   gomeat: '98f085',
   shopcentral: '9bdfac',
   skidoo: '4f130d',
+  admCourier: '56383d',
+  kurbsidekings: '67346e',
 };
 
 const appIds = {
@@ -878,6 +880,14 @@ const appIds = {
   skidoo: Platform.select({
     ios: 'com.skidoo',
     android: 'com.skidoo',
+  }),
+  admCourier: Platform.select({
+    ios: 'com.admcourier',
+    android: 'com.admcourier',
+  }),
+  kurbsidekings: Platform.select({
+    ios: 'com.kurbsidekings',
+    android: 'com.kurbsidekings',
   }),
 };
 

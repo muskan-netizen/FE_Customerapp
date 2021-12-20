@@ -1151,6 +1151,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.admCourier:
+          updateState({
+            shortCode: shortCodes.admCourier,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kurbsidekings:
+          updateState({
+            shortCode: shortCodes.kurbsidekings,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

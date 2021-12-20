@@ -1977,6 +1977,26 @@ android {
             resValue "string", "app_name", "Skidoo"
             resValue "string", "host_name", ""
          }
+         admCourier{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.admcourier'
+            resValue "string", "app_name", "ADM Courier"
+            resValue "string", "host_name", ""
+         }
+         kurbsidekings{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.kurbsidekings'
+            resValue "string", "app_name", "Kurbside Kings"
+            resValue "string", "host_name", ""
+         }
     }
 }
 
