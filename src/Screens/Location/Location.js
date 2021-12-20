@@ -318,7 +318,7 @@ export default function Location({ route, navigation }) {
             />
           </TouchableOpacity>
 
-          <View style={{ flex: 0.9 }}>
+          <View style={{ flex: 0.88 }}>
             <SearchPlaces
               curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
               autoFocus={true}
@@ -329,6 +329,7 @@ export default function Location({ route, navigation }) {
               setValue={(text) => updateCurValues(text)} //return & update on change text value
               _moveToNextScreen={getCurrentLocate}
               placeHolderColor={colors.textGreyB}
+              onClear={() => updateState({ address: '', searchResult: [] })}
             />
           </View>
         </View>

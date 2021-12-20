@@ -8,13 +8,17 @@ import {moderateScaleVertical, textScale} from '../styles/responsiveSize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 import colors from '../styles/colors';
+import {appIds} from '../utils/constants/DynamicAppKeys';
+import DeviceInfo from 'react-native-device-info';
 
 const NoDataFound = ({
   isLoading = false,
   containerStyle = {},
   text = strings.NODATAFOUND,
   textStyle = {},
-  image = imagePath.noDataFound2,
+  image = appIds.codiner == DeviceInfo.getBundleId()
+    ? imagePath.noDataFound3
+    : imagePath.noDataFound2,
 }) => {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
