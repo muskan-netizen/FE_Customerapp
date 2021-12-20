@@ -39,6 +39,8 @@ import {getCurrentLocation} from '../../../utils/helperFunctions';
 import BottomViewModal from '../../../Components/BottomViewModal';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import GradientButton from '../../../Components/GradientButton';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import DeviceInfo from 'react-native-device-info';
 
 export default function HomeScreenTaxi({navigation, route}) {
   const mapRef = React.createRef();
@@ -253,11 +255,14 @@ export default function HomeScreenTaxi({navigation, route}) {
     <>
       <MapView
         ref={mapRef}
+        provider={PROVIDER_GOOGLE}
         //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={styles.map}
         region={region}
         initialRegion={region}
-        customMapStyle={mapStyleGrey}
+        customMapStyle={
+          appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
+        }
         // pointerEvents={'none'}
         onRegionChangeComplete={_onRegionChange}>
         {/* <Marker
@@ -292,7 +297,6 @@ export default function HomeScreenTaxi({navigation, route}) {
           <Image source={imagePath.taxiUserAccount} />
         </View>
       )} */}
-
       <View
         style={{
           position: 'absolute',

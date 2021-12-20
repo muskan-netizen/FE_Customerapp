@@ -20,7 +20,8 @@ const SearchPlaces = ({
     autoFocus = false,
     _moveToNextScreen = () => { },
     curLatLng = {},
-    placeHolderColor = colors.black
+    placeHolderColor = colors.black,
+    onClear = () => { }
 }) => {
     // console.log(mapKey, 'in MapPlaceComp map key')
 
@@ -61,6 +62,22 @@ const SearchPlaces = ({
                 onFocus={onFocus}
                 placeholderTextColor={isDarkMode ? colors.textGreyB : placeHolderColor}
             />
+            {value !== '' && (
+                <TouchableOpacity
+                    onPress={onClear}
+                    activeOpacity={0.8}
+                >
+                    <Image
+                        style={{
+                            height: moderateScale(15),
+                            width: moderateScale(15),
+                            borderRadius: moderateScale(15/2),
+                            marginHorizontal: moderateScale(4)
+                        }}
+                        resizeMode='contain'
+                        source={imagePath.closeButton}
+                    />
+                </TouchableOpacity>)}
             <TouchableOpacity
                 onPress={_moveToNextScreen}
             >

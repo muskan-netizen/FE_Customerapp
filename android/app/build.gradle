@@ -760,7 +760,7 @@ android {
          }
           codiner{
             dimension "appType"
-            versionCode 3
+            versionCode 4
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -1965,6 +1965,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.shopcentral'
             resValue "string", "app_name", "Shop Central"
+            resValue "string", "host_name", ""
+         }
+          skidoo{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.skidoo'
+            resValue "string", "app_name", "Skidoo"
             resValue "string", "host_name", ""
          }
     }

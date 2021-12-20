@@ -107,6 +107,8 @@ export default {
   workInActive: require('../assets/images/ic_work_unactice.png'),
   emptyCart2: require('../assets/images/ic_empty-card.png'),
   noDataFound2: require('../assets/images/ic_placeholderbeeNew.png'),
+  noDataFound3: require('../assets/images/noDataFound.png'),
+
   icCamIcon: require('../assets/images/ic_capture.png'),
   icRemoveIcon: require('../assets/images/ic_remove_product.png'),
   noOffers: require('../assets/images/ic_nooffers.png'),
@@ -425,4 +427,5 @@ export default {
   support: require('../assets/images/ic_support.png'),
   checkBox2Active: require('../assets/images/ic_check2.png'),
   checkBox2InActive: require('../assets/images/ic_check1.png'),
+  emptyCart3: require('../assets/images/emptyCart3.png'),
 };

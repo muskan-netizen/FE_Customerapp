@@ -19,6 +19,8 @@ import CardLoader from '../../../Components/Loaders/CardLoader';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import DeviceInfo from 'react-native-device-info';
 import {
   height,
   itemWidth,
@@ -760,7 +762,7 @@ export default function TaxiHomeDashbord({
                     <MapView
                       ref={mapRef}
                       provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                      customMapStyle={mapStyleGrey}
+                      // customMapStyle={mapStyleGrey}
                       style={{
                         ...StyleSheet.absoluteFillObject,
                         borderRadius: 12,
@@ -834,7 +836,10 @@ export default function TaxiHomeDashbord({
             <MapView
               ref={mapRef}
               provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-              customMapStyle={mapStyleGrey}
+              // customMapStyle={mapStyleGrey}
+              customMapStyle={
+                appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
+              }
               style={{...StyleSheet.absoluteFillObject}}
               region={{
                 latitude: !!location?.latitude
