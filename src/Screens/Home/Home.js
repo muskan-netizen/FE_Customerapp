@@ -257,7 +257,7 @@ export default function Home({ route, navigation }) {
     }
   };
 
-  console.log("current data",appData)
+
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
  
