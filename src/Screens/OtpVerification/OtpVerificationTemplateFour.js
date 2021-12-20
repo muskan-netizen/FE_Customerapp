@@ -262,8 +262,8 @@ export default function OtpVerificationTemplateFour({navigation, route}) {
             !userData?.verify_details?.is_phone_verified && ( */}
         
             <TextInputWithUnderlineAndLabel
-                onChangeText={(data) => checkInputHandler(data)}
-                value={''}
+                onChangeText={(text) => updateState({phoneOTP: text})}
+                value={phoneOTP}
                 label={`${strings.OTP} *`}
                 autoCapitalize={'none'}
                 containerStyle={{marginVertical: moderateScaleVertical(10), width: '100%'}}
