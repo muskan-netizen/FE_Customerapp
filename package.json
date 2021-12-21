@@ -418,6 +418,7 @@
     "react-native-code-input": "^1.0.6",
     "react-native-code-push": "^7.0.4",
     "react-native-collapsible-tab-view": "^4.2.1",
+    "react-native-color-matrix-image-filters": "^5.2.10",
     "react-native-communications": "^2.2.1",
     "react-native-confetti-cannon": "^1.5.2",
     "react-native-confirmation-code-field": "^7.1.0",
