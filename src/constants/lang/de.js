@@ -720,4 +720,5 @@ export default {
   SUPPORT: 'Support',
   ENETER_YOUR_ADDRESS: 'Enter your address',
   NO_CARS_AVAILABLE: 'No cars available',
+  MYRIDES:"My Rides",
 };
