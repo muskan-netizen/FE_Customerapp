@@ -878,7 +878,7 @@ const HomeServiceVariantAddons = ({
         });
         updateCartItems(
           productdetail,
-          res.data.item_count, ////localy update cart quanity
+          res.data.product_total_qty_in_cart, ////localy update cart quanity
           res.data.cart_product_id,
           res.data.id,
         );
