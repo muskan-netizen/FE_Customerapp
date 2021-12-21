@@ -71,7 +71,11 @@ export default function Account3({ navigation }) {
 
   const userData = useSelector((state) => state.auth.userData);
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  console.log(userData, 'userDAta');
+
+  console.log(
+    appData?.profile?.preferences?.customer_support_application_id,
+    'userDAta',
+  );
   // useFocusEffect(
   //   React.useCallback(() => {
   //     _scrollRef.current.scrollTo(0);
@@ -80,10 +84,13 @@ export default function Account3({ navigation }) {
 
   //Share your app
   const onShare = () => {
-    // https://play.google.com/store/apps/details?id=com.codebrew.customer'
+    console.log("preferencespreferences", preferences)
     if (!!preferences?.android_app_link && !!preferences?.ios_link) {
+      let androidLink = preferences?.android_app_link
+      let iosLink = preferences?.ios_link
       let options = {
-        urls: [preferences?.android_app_link, preferences?.ios_link]
+        // urls: [preferences?.android_app_link, preferences?.ios_link],
+        message: `android App: ${androidLink} \n \n iOS App: ${iosLink} `
       }
       Share.open(options)
         .then((res) => {
@@ -124,33 +131,23 @@ export default function Account3({ navigation }) {
 
   useEffect(() => {
     ZendeskChat.init(
-      'hkj6wV0p0qW45bXDMtdTSCEenFuTZhFR',
-      '882ad89551868abec6d361472fee131462c1ea5ebebbb63f',
+      `${appData?.profile?.preferences?.customer_support_key}`,
+      `${appData?.profile?.preferences?.customer_support_application_id}`,
     );
   }, []);
 
   console.log(userData, 'userData?.nameuserData?.name');
 
   const onStartSupportChat = () => {
+    ZendeskChat.setVisitorInfo({
+      name: userData?.name,
+      phone: userData?.phone_number,
+    });
     ZendeskChat.startChat({
       name: userData?.name,
-      email: userData?.email,
-      phone: '885541515351',
-      // The behaviorFlags are optional, and each default to 'true' if omitted
-      behaviorFlags: {
-        showAgentAvailability: true,
-        showChatTranscriptPrompt: true,
-        showPreChatForm: true,
-        showOfflineForm: true,
-      },
-      // The preChatFormOptions are optional & each defaults to "optional" if omitted
-      preChatFormOptions: {
-        name: 'optional name',
-        email: 'optional email',
-        phone: 'optional phone',
-        department: 'required',
-      },
-      localizedDismissButtonTitle: 'Dismiss',
+      phone: userData?.phone_number,
+      withChat: true,
+      color: '#000',
     });
   };
 
@@ -534,20 +531,22 @@ export default function Account3({ navigation }) {
           // iconRight={imagePath.goRight}
           // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
-          <ListItemHorizontal
-            centerContainerStyle={{ flexDirection: 'row' }}
-            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-            onPress={() => onStartSupportChat()}
-            iconLeft={imagePath.support}
-            centerHeading={strings.SUPPORT}
-            containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{
-              fontSize: textScale(14),
-              fontFamily: fontFamily.regular,
-            }}
-          // iconRight={imagePath.goRight}
-          // rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
+          {!!userData?.auth_token && (
+            <ListItemHorizontal
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+              onPress={() => onStartSupportChat()}
+              iconLeft={imagePath.support}
+              centerHeading={strings.SUPPORT}
+              containerStyle={styles.containerStyle2}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
 
           {!!userData?.auth_token &&
             !!appMainData?.is_admin &&

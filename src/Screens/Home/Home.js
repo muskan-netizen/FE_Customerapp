@@ -257,7 +257,7 @@ export default function Home({ route, navigation }) {
     }
   };
 
-  console.log("current data",appData)
+
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
  
@@ -389,7 +389,7 @@ export default function Home({ route, navigation }) {
 
   //onPress Category
   const onPressCategory = (item) => {
-    console.log('category press', item)
+
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -437,7 +437,6 @@ export default function Home({ route, navigation }) {
       moveToNewScreen(navigationStrings.CELEBRITY)();
     } else if (item.redirect_to == staticStrings.BRAND) {
 
-      console.log("brand item", item)
 
       moveToNewScreen(navigationStrings.CATEGORY_BRANDS, item)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {

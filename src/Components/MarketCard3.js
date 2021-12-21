@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import DashedLine from 'react-native-dashed-line';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -21,8 +21,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../styles/theme';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../styles/theme';
 import BlurImages from './BlurImages';
 import {
   checkEvenOdd,
@@ -31,10 +31,14 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
+import LinearGradient from 'react-native-linear-gradient';
+
+const transparentColor = ['transparent', 'transparent']
+const greyColor = ['rgba(211,211,211,0.52)', 'rgba(221,221,221,0.52)']
 
 const MarketCard3 = ({
   data = {},
-  onPress = () => {},
+  onPress = () => { },
   extraStyles = {},
   fastImageStyle = {},
   imageResizeMode = 'cover',
@@ -43,12 +47,12 @@ const MarketCard3 = ({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appStyle, themeColors, appData} = useSelector(
+  const { appStyle, themeColors, appData } = useSelector(
     (state) => state?.initBoot,
   );
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, extraStyles, MyDarkTheme, isDarkMode});
+  const styles = stylesFunc({ fontFamily, extraStyles, MyDarkTheme, isDarkMode });
   const scaleInAnimated = new Animated.Value(0);
 
   let imageUrl = getImageUrl(
@@ -67,14 +71,26 @@ const MarketCard3 = ({
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <View>
+
         <FastImage
-          source={{uri: imageUrl, priority: FastImage.priority.high}}
+          source={{ uri: imageUrl, priority: FastImage.priority.high }}
           style={{
             ...styles.mainImage,
             ...fastImageStyle,
           }}
           resizeMode={FastImage.resizeMode.cover}
-        />
+        >
+          {!!data?.is_vendor_closed && (<LinearGradient
+            start={{ x: 0, y: 1 }}
+            end={{ x: 1, y: 1 }}
+            style={{
+              flex: 1
+              // style={{marginBottom:Platform.OS === 'ios'?30:10}}
+            }}
+            colors={greyColor}>
+          </LinearGradient>)}
+        </FastImage>
+
         {!appData?.profile?.preferences?.is_hyperlocal && (
           <View
             style={{
@@ -92,154 +108,147 @@ const MarketCard3 = ({
                 color: data?.show_slot
                   ? colors.green
                   : data?.is_vendor_closed
-                  ? colors.redB
-                  : colors.green,
+                    ? colors.redB
+                    : colors.green,
               }}>
               {data?.show_slot
                 ? strings.OPEN
                 : data?.is_vendor_closed
-                ? strings.CLOSE
-                : strings.OPEN}
+                  ? strings.CLOSE
+                  : strings.OPEN}
             </Text>
           </View>
         )}
       </View>
-      {/* <BlurImages
-        isDarkMode={isDarkMode}
-        themeColor={themeColors.primary_color}
-        thumnailUrl={{
-          uri: getImageUrl(
-            data.banner.proxy_url || data.image.proxy_url,
-            data.banner.image_path || data.image.image_path,
-            '20/20',
-          ),
-        }}
-        originalUrl={{
-          uri: getImageUrl(
-            data.banner.proxy_url || data.image.proxy_url,
-            data.banner.image_path || data.image.image_path,
-            '800/400',
-          ),
-        }}
-        style={[styles.mainImage, {...fastImageStyle}]}
-      /> */}
-
-      <View
-        style={{
-          padding: 8,
-        }}>
-        <View style={styles.descView}>
-          <Text
-            numberOfLines={1}
-            style={
-              isDarkMode
-                ? [styles.categoryText, {color: MyDarkTheme.colors.text}]
-                : styles.categoryText
-            }>
-            {data.name}
-          </Text>
-
-          {data?.product_avg_average_rating && (
-            <View style={styles.ratingView}>
-              <Text
-                style={{
-                  ...styles.ratingTxt,
-                  color: colors.white,
-                  fontSize: textScale(9),
-                }}>
-                {Number(data?.product_avg_average_rating).toFixed(1)}
-              </Text>
-              <Image
-                style={{
-                  tintColor: colors.white,
-                  marginLeft: 2,
-                  width: 9,
-                  height: 9,
-                }}
-                source={imagePath.star}
-                resizeMode="contain"
-              />
-            </View>
-          )}
-        </View>
-        {data?.categoriesList ? (
-          <Text
-            numberOfLines={1}
-            style={{
-              color: colors.greyLight,
-              fontSize: textScale(10),
-              fontFamily: fontFamily.regular,
-              textAlign: 'left',
-              marginVertical: moderateScaleVertical(4),
-              marginTop: moderateScaleVertical(6),
-            }}>
-            {data?.categoriesList}
-          </Text>
-        ) : null}
-
-        <View
+      <View style={{}}>
+        <LinearGradient
+          start={{ x: 0, y: 1 }}
+          end={{ x: 1, y: 1 }}
           style={{
-            height: 1,
-            borderWidth: 0.5,
-            borderColor: 'rgba(1,1,1,0.05)',
-            marginTop: moderateScaleVertical(2),
+            flex: 1,
+            borderBottomLeftRadius: moderateScale(10),
+            borderBottomRightRadius: moderateScale(10),
+            padding: moderateScale(8)
+            // style={{marginBottom:Platform.OS === 'ios'?30:10}}
           }}
-        />
-        <View style={styles.distanceView}>
+          colors={!!data?.is_vendor_closed ? greyColor : transparentColor}>
+
+          <View style={styles.descView}>
+            <Text
+              numberOfLines={1}
+              style={
+                isDarkMode
+                  ? [styles.categoryText, { color: MyDarkTheme.colors.text }]
+                  : styles.categoryText
+              }>
+              {data.name}
+            </Text>
+
+            {data?.product_avg_average_rating && (
+              <View style={styles.ratingView}>
+                <Text
+                  style={{
+                    ...styles.ratingTxt,
+                    color: colors.white,
+                    fontSize: textScale(9),
+                  }}>
+                  {Number(data?.product_avg_average_rating).toFixed(1)}
+                </Text>
+                <Image
+                  style={{
+                    tintColor: colors.white,
+                    marginLeft: 2,
+                    width: 9,
+                    height: 9,
+                  }}
+                  source={imagePath.star}
+                  resizeMode="contain"
+                />
+              </View>
+            )}
+          </View>
+          {data?.categoriesList ? (
+            <Text
+              numberOfLines={1}
+              style={{
+                color: colors.greyLight,
+                fontSize: textScale(10),
+                fontFamily: fontFamily.regular,
+                textAlign: 'left',
+                marginVertical: moderateScaleVertical(4),
+                marginTop: moderateScaleVertical(6),
+
+              }}>
+              {data?.categoriesList}
+            </Text>
+          ) : null}
+
           <View
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              flex: 1,
-            }}>
-            {!!data?.lineOfSightDistance && (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Image
-                    style={{
-                      tintColor: themeColors.primary_color,
-                      width: moderateScale(12),
-                      height: moderateScale(12),
-                    }}
-                    resizeMode="contain"
-                    source={imagePath.location2}
-                  />
-                  <Text numberOfLines={1} style={styles.distanceTimeStyle}>
-                    {data?.lineOfSightDistance}
-                  </Text>
-                </View>
-
-                {!!data?.timeofLineOfSightDistance && (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      flex: 0.96,
-                    }}>
+              height: 1,
+              borderWidth: 0.5,
+              borderColor: 'rgba(1,1,1,0.05)',
+              marginTop: moderateScaleVertical(2),
+            }}
+          />
+          <View style={styles.distanceView}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                flex: 1,
+              }}>
+              {!!data?.lineOfSightDistance && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Image
                       style={{
-                        tintColor: themeColors.primary_color,
+                        tintColor:  themeColors.primary_color,
                         width: moderateScale(12),
                         height: moderateScale(12),
                       }}
                       resizeMode="contain"
-                      source={imagePath.icTime2}
+                      source={imagePath.location2}
                     />
-                    <Text numberOfLines={1} style={styles.distanceTimeStyle}>
-                      {checkEvenOdd(data?.timeofLineOfSightDistance)}-
-                      {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
-                      {''}
-                      {strings.MINS}
+                    <Text numberOfLines={1} style={{
+                      ...styles.distanceTimeStyle,
+                      color: colors.greyLight,
+                    }}>
+                      {data?.lineOfSightDistance}
                     </Text>
                   </View>
-                )}
-              </View>
-            )}
-            {/* {!!data?.timeofLineOfSightDistance ? (
+
+                  {!!data?.timeofLineOfSightDistance && (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        flex: 0.96,
+                      }}>
+                      <Image
+                        style={{
+                          tintColor:  themeColors.primary_color,
+                          width: moderateScale(12),
+                          height: moderateScale(12),
+                        }}
+                        resizeMode="contain"
+                        source={imagePath.icTime2}
+                      />
+                      <Text numberOfLines={1} style={styles.distanceTimeStyle}>
+                        {checkEvenOdd(data?.timeofLineOfSightDistance)}-
+                        {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
+                        {''}
+                        {strings.MINS}
+                      </Text>
+                    </View>
+                  )}
+                </View>
+              )}
+              {/* {!!data?.timeofLineOfSightDistance ? (
               <Text
                 numberOfLines={1}
                 style={{
@@ -251,39 +260,40 @@ const MarketCard3 = ({
                 {`| ${data?.timeofLineOfSightDistance} mins`}
               </Text>
             ) : null} */}
-          </View>
+            </View>
 
-          {!!appData?.profile?.preferences?.is_hyperlocal && (
-            <Text
-              style={{
-                ...commonStyles.mediumFont14Normal,
-                fontSize: textScale(10),
-                textAlign: 'left',
-                color: data?.show_slot
-                  ? colors.green
+            {!!appData?.profile?.preferences?.is_hyperlocal && (
+              <Text
+                style={{
+                  ...commonStyles.mediumFont14Normal,
+                  fontSize: textScale(10),
+                  textAlign: 'left',
+                  color: data?.show_slot
+                    ? colors.green
+                    : data?.is_vendor_closed
+                      ? colors.redB
+                      : colors.green,
+                }}>
+                {data?.show_slot
+                  ? strings.OPEN
                   : data?.is_vendor_closed
-                  ? colors.redB
-                  : colors.green,
-              }}>
-              {data?.show_slot
-                ? strings.OPEN
-                : data?.is_vendor_closed
-                ? strings.CLOSE
-                : strings.OPEN}
-            </Text>
-          )}
-        </View>
+                    ? strings.CLOSE
+                    : strings.OPEN}
+              </Text>
+            )}
+          </View>
+        </LinearGradient>
       </View>
     </TouchableOpacity>
   );
 };
 
-export function stylesFunc({fontFamily, extraStyles, isDarkMode, MyDarkTheme}) {
+export function stylesFunc({ fontFamily, extraStyles, isDarkMode, MyDarkTheme }) {
   const styles = StyleSheet.create({
     mainTouchContainer: {
       borderRadius: moderateScale(10),
       shadowColor: '#000',
-      shadowOffset: {width: 0, height: 0},
+      shadowOffset: { width: 0, height: 0 },
       shadowOpacity: 0.15,
       shadowRadius: 1.84,
       elevation: 2,

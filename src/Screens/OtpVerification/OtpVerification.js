@@ -119,6 +119,7 @@ export default function OtpVerification({navigation, route}) {
       fcm_token: !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
     };
     updateState({isLoading: true});
+    console.log("sending data",data)
     actions
       .phoneloginOtp(data, {
         code: appData?.profile?.code,
