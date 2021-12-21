@@ -2614,6 +2614,7 @@
 		8479EBCE273FE8B40090FB2A /* ShooraFresh(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8479EBCD273FE8B40090FB2A /* ShooraFresh(Production).xcconfig */; };
 		8479EC64273FE8CB0090FB2A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8479EC63273FE8CB0090FB2A /* Images.xcassets */; };
 		8479ECFA273FE9590090FB2A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8479ECF9273FE9590090FB2A /* GoogleService-Info.plist */; };
+		847AFDAD2771DB9900866398 /* Runrun(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 844804A92653C92A0050AA67 /* Runrun(Production).xcconfig */; };
 		847C01FC2763561300A96CE8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847C01FB2763561200A96CE8 /* GoogleService-Info.plist */; };
 		847CF671276337A000A96CE8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		847CF672276337A000A96CE8 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -16863,6 +16864,7 @@
 				8496BC0826F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				844FDD1F2673989300C16835 /* CircularStd-Bold.ttf in Resources */,
 				767C68602655481D00AA80AD /* GoogleService-Info.plist in Resources */,
+				847AFDAD2771DB9900866398 /* Runrun(Production).xcconfig in Resources */,
 				846DA7AD2681E47100CC5BA2 /* SFProText-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
