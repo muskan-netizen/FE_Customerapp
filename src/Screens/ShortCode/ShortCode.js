@@ -1145,6 +1145,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.skidoo:
+          updateState({
+            shortCode: shortCodes.skidoo,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

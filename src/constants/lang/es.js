@@ -256,7 +256,7 @@ export default {
   OUT_OF_STOCK: 'Sin stock',
   ORDER_DET: 'Detalles de pedido',
   CELEBRITY: 'Influencer',
-  ACCOUNTS: 'Cuentas',
+  ACCOUNTS: 'Cuenta',
   ADD_ON: 'Adicionales',
   YOUMAYALSO: 'También te puede gustar:',
   USECURRENTLOACTION: 'Usar ubicación actual',

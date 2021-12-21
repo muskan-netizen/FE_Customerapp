@@ -79,6 +79,8 @@
 			</dict>
 		</dict>
 	</dict>
+    <key>CodePushDeploymentKey</key>
+    <string>$(CODE_PUSH_KEY)</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play using while you are hiking</string>
 	<key>NSCameraUsageDescription</key>

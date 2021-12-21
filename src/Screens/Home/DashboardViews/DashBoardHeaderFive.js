@@ -407,7 +407,7 @@ export default function DashBoardHeaderFive({
         borderBottomColor: isDarkMode
           ? colors.whiteOpacity22
           : colors.borderColorD,
-        paddingBottom: moderateScale(5),
+        // paddingBottom: moderateScale(5),
       }}>
       <View
         style={{
@@ -415,7 +415,7 @@ export default function DashBoardHeaderFive({
           borderBottomColor: isDarkMode
             ? colors.whiteOpacity22
             : colors.borderColorD,
-          borderBottomWidth: 0,
+          // borderBottomWidth: 0,
         }}>
         <View
           style={{
@@ -646,8 +646,7 @@ export default function DashBoardHeaderFive({
       </View>
       <View
         style={{
-          width: width - 24,
-          alignSelf: 'center',
+          // alignSelf: 'center',
           borderRadius: moderateScale(10),
           flexDirection: 'row',
           marginTop: moderateScale(10),
@@ -656,6 +655,7 @@ export default function DashBoardHeaderFive({
           tabs.map((item, indx) => {
             return (
               <TouchableOpacity
+              
                 activeOpacity={1}
                 disabled={item.isActive}
                 onPress={() =>
@@ -668,7 +668,8 @@ export default function DashBoardHeaderFive({
                 }
                 key={indx}
                 style={{
-                  width: width / 3 - 8,
+                  // width: width / 3 - 8,
+                  width: tabs.length == 2? '50%': '33.6%',
                   borderBottomColor:
                     item.isActive && isDarkMode
                       ? MyDarkTheme.colors.white

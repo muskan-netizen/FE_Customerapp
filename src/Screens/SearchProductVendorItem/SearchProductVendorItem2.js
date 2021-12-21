@@ -183,8 +183,6 @@ export default function SearchProductVendorItem2({ navigation, route }) {
   }, [searchInput]);
 
 
-
-
   const _onclickSearchItem = (item) => {
     console.log(item, 'clickedItem');
     const searchResultExists = previousSearches?.some(
@@ -272,6 +270,15 @@ export default function SearchProductVendorItem2({ navigation, route }) {
     }
   }
 
+  const onClickRecent = (item) => {
+    console.log("item+++++", item)
+    // return;
+    updateState({
+      searchInput: item?.dataname || item?.name,
+      isLoading: false,
+    })
+  }
+
 
   const recentlyData = (data) => {
     // console.log(data, 'data');
@@ -305,7 +312,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
                       paddingVertical: moderateScaleVertical(7),
                       marginVertical: moderateScaleVertical(5),
                     }}
-                    onPress={() => _onclickSearchItem(item)}
+                    onPress={() => onClickRecent(item)}
                     key={index}>
                     <View>
                       <Image
@@ -362,11 +369,11 @@ export default function SearchProductVendorItem2({ navigation, route }) {
             MyDarkTheme={MyDarkTheme}
           />
         )}
-        <View style={{flex:1, marginLeft: moderateScale(12) }}>
+        <View style={{ flex: 1, marginLeft: moderateScale(12) }}>
           <Text
-          numberOfLines={1}
+            numberOfLines={1}
             style={{
-              fontSize: textScale(10),
+              fontSize: textScale(12),
               fontFamily: fontFamily.medium,
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             }}>
@@ -557,12 +564,12 @@ export default function SearchProductVendorItem2({ navigation, route }) {
               marginHorizontal: moderateScale(20),
               marginTop: moderateScaleVertical(24)
             }}>
-              {[{},{},{},{},{},{},{},{},{},{}].map(()=>{
-                return(
+              {[{}, {}, {}, {}, {}, {}, {}, {}, {}, {}].map(() => {
+                return (
                   <ContentLoader style={{ height: moderateScale(54) }} >
-                  <Circle cx="20" cy="20" r="20" />
-                  <Rect x="50" y="14" rx="2" ry="2" width="100" height="8" />
-                </ContentLoader>
+                    <Circle cx="20" cy="20" r="20" />
+                    <Rect x="50" y="14" rx="2" ry="2" width="100" height="8" />
+                  </ContentLoader>
                 )
               })}
             </View>

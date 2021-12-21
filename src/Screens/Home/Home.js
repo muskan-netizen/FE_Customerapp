@@ -101,8 +101,6 @@ export default function Home({route, navigation}) {
     updateState({updatedData: appMainData?.categories});
   }, [appMainData]);
 
-  console.log('addressSearchaddressSearch', appData);
-
   useEffect(() => {
     _getLocationFromParams();
     // if (addressSearch) {
@@ -111,7 +109,6 @@ export default function Home({route, navigation}) {
   }, [paramData?.details]);
 
   const _getLocationFromParams = () => {
-    console.log('one time');
     if (
       paramData?.details &&
       paramData?.details?.formatted_address != location?.address
@@ -169,7 +166,6 @@ export default function Home({route, navigation}) {
 
   const updateLatLang = (res) => {
     updateState({updateTime: Math.random()});
-    console.log(res, 'resresresresresres');
     actions.locationData(res);
   };
   useEffect(() => {
@@ -267,7 +263,6 @@ export default function Home({route, navigation}) {
 
   //Home data
   const homeData = (slectedLocatonFromPreviousScreen) => {
-    console.log('param data++++', paramData);
     if (!!paramData) {
       updateState({searchDataLoader: true});
     }
@@ -396,7 +391,6 @@ export default function Home({route, navigation}) {
 
   //onPress Category
   const onPressCategory = (item) => {
-    console.log('category press', item);
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -443,8 +437,6 @@ export default function Home({route, navigation}) {
     } else if (item.redirect_to == staticStrings.CELEBRITY) {
       moveToNewScreen(navigationStrings.CELEBRITY)();
     } else if (item.redirect_to == staticStrings.BRAND) {
-      console.log('brand item', item);
-
       moveToNewScreen(navigationStrings.CATEGORY_BRANDS, item)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
@@ -476,7 +468,7 @@ export default function Home({route, navigation}) {
   //On Press banner
   const bannerPress = (data) => {
     console.log('data', data);
-
+    console.log('category press', item);
     let item = {};
     if (data?.redirect_id) {
       if (data?.redirect_to == staticStrings.VENDOR && data?.is_show_category) {

@@ -41,6 +41,7 @@ import {cloneDeep} from 'lodash';
 import BottomViewModal from '../../../Components/BottomViewModal';
 import FastImage from 'react-native-fast-image';
 
+import DeviceInfo from 'react-native-device-info';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -48,6 +49,7 @@ import {
 import StarRating from 'react-native-star-rating';
 import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 import StepIndicators from '../../../Components/StepIndicator';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -499,7 +501,9 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
               // initialRegion={region}
               ref={mapRef}
               // cacheEnabled={true}
-              customMapStyle={mapStyleGrey}
+              customMapStyle={
+                appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
+              }
               // showsMyLocationButton={true}
               userLocationFastestInterval={10000}
               onRegionChangeComplete={_onRegionChange}>

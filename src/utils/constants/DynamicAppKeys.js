@@ -175,6 +175,7 @@ const shortCodes = {
   sponge: 'c2c6c5',
   gomeat: '98f085',
   shopcentral: '9bdfac',
+  skidoo: '4f130d',
 };
 
 const appIds = {
@@ -223,7 +224,7 @@ const appIds = {
     android: 'com.bottomsup',
   }),
   africanvillagemarket: Platform.select({
-    ios: 'com.codebrew.africanvillagemarket',
+    ios: 'com.africanvillagemarket',
     android: 'com.africanvillagemarket',
   }),
   ufood: Platform.select({
@@ -873,6 +874,10 @@ const appIds = {
   shopcentral: Platform.select({
     ios: 'com.shopcentral',
     android: 'com.shopcentral',
+  }),
+  skidoo: Platform.select({
+    ios: 'com.skidoo',
+    android: 'com.skidoo',
   }),
 };
 

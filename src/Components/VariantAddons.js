@@ -968,6 +968,10 @@ const VariantAddons = ({
   };
 
   const getAdditionalPriceOfAddons = () => {
+    // console.log(
+    //   'productPriceDataproductPriceDataproductPriceData>>>',
+    //   productQuantityForCart,
+    // );
     let addOnsAdditionalPrice = 0;
     if (addonSet && addonSet[0]) {
       addonSet[0].setoptions.forEach((el) => {
@@ -978,7 +982,9 @@ const VariantAddons = ({
     }
     addOnsAdditionalPrice = currencyNumberFormatter(
       (
-        Number(productPriceData?.multiplier) * Number(productPriceData?.price) +
+        Number(productPriceData?.multiplier) *
+          Number(productPriceData?.price) *
+          productQuantityForCart +
         addOnsAdditionalPrice
       ).toFixed(2),
     );
@@ -1162,85 +1168,86 @@ const VariantAddons = ({
                   ? MyDarkTheme.colors.background
                   : '#fff',
               }}>
-              <View style={{flex: 0.25}}>
-                <View
-                  style={{
-                    ...commonStyles.buttonRect,
-                    ...styles.incDecBtnStyle,
-                    backgroundColor: getColorCodeWithOpactiyNumber(
-                      themeColors.primary_color.substr(1),
-                      15,
-                    ),
-                    borderColor: themeColors?.primary_color,
-                    height: moderateScale(38),
-                  }}
-                  // onPress={onPress}
-                >
-                  <TouchableOpacity
-                    onPress={() => productIncrDecreamentForCart(2)}
-                    hitSlop={hitSlopProp}>
-                    <Text
-                      style={{
-                        ...commonStyles.mediumFont14,
-                        color: themeColors?.primary_color,
-                        fontFamily: fontFamily.bold,
-                      }}>
-                      -
-                    </Text>
-                  </TouchableOpacity>
-                  <Text
+              {!showErrorMessageTitle && (
+                <View style={{flex: 0.25}}>
+                  <View
                     style={{
-                      ...commonStyles.mediumFont14,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    {productQuantityForCart}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => productIncrDecreamentForCart(1)}
-                    hitSlop={hitSlopProp}>
+                      ...commonStyles.buttonRect,
+                      ...styles.incDecBtnStyle,
+                      backgroundColor: getColorCodeWithOpactiyNumber(
+                        themeColors.primary_color.substr(1),
+                        15,
+                      ),
+                      borderColor: themeColors?.primary_color,
+                      height: moderateScale(38),
+                    }}
+                    // onPress={onPress}
+                  >
+                    <TouchableOpacity
+                      onPress={() => productIncrDecreamentForCart(2)}
+                      hitSlop={hitSlopProp}>
+                      <Text
+                        style={{
+                          ...commonStyles.mediumFont14,
+                          color: themeColors?.primary_color,
+                          fontFamily: fontFamily.bold,
+                        }}>
+                        -
+                      </Text>
+                    </TouchableOpacity>
                     <Text
                       style={{
                         ...commonStyles.mediumFont14,
-                        color: themeColors?.primary_color,
-                        fontFamily: fontFamily.bold,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
                       }}>
-                      +
+                      {productQuantityForCart}
                     </Text>
-                  </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => productIncrDecreamentForCart(1)}
+                      hitSlop={hitSlopProp}>
+                      <Text
+                        style={{
+                          ...commonStyles.mediumFont14,
+                          color: themeColors?.primary_color,
+                          fontFamily: fontFamily.bold,
+                        }}>
+                        +
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
-              {console.log(
-                addonSet,
-                'productPriceDataproductPriceDataproductPriceData',
               )}
+
               <View style={{marginHorizontal: 8}} />
-              <View
-                pointerEvents={btnLoader ? 'none' : 'auto'}
-                style={{flex: 0.75}}>
-                <GradientButton
-                  indicator={btnLoader}
-                  indicatorColor={colors.white}
-                  colorsArray={[
-                    themeColors.primary_color,
-                    themeColors.primary_color,
-                  ]}
-                  textStyle={{
-                    fontFamily: fontFamily.medium,
-                    textTransform: 'capitalize',
-                    color: colors.white,
-                  }}
-                  onPress={() => addToCart(addonSet)}
-                  btnText={`${strings.ADD_ITEM} - ${
-                    currencies?.primary_currency?.symbol
-                  }${getAdditionalPriceOfAddons()}`}
-                  btnStyle={{
-                    borderRadius: moderateScale(4),
-                    height: moderateScale(38),
-                  }}
-                />
-              </View>
+              {!showErrorMessageTitle && (
+                <View
+                  pointerEvents={btnLoader ? 'none' : 'auto'}
+                  style={{flex: 0.75}}>
+                  <GradientButton
+                    indicator={btnLoader}
+                    indicatorColor={colors.white}
+                    colorsArray={[
+                      themeColors.primary_color,
+                      themeColors.primary_color,
+                    ]}
+                    textStyle={{
+                      fontFamily: fontFamily.medium,
+                      textTransform: 'capitalize',
+                      color: colors.white,
+                    }}
+                    onPress={() => addToCart(addonSet)}
+                    btnText={`${strings.ADD_ITEM} - ${
+                      currencies?.primary_currency?.symbol
+                    }${getAdditionalPriceOfAddons()}`}
+                    btnStyle={{
+                      borderRadius: moderateScale(4),
+                      height: moderateScale(38),
+                    }}
+                  />
+                </View>
+              )}
             </View>
           )}
         </Animatable.View>
