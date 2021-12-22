@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>480971606443-lnlqjf6hpd25drvkpcm6rqlk7oh60tob.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.480971606443-lnlqjf6hpd25drvkpcm6rqlk7oh60tob</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>480971606443-e88u8l04oqv0ds3avoeioq4uma87gul8.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCEnNZuiu-xPFCyMnCqs_ZKZcqhCBfgq4c</string>
+	<key>GCM_SENDER_ID</key>
+	<string>480971606443</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.movingwheelsdelivery</string>
+	<key>PROJECT_ID</key>
+	<string>moving-wheels-delivery</string>
+	<key>STORAGE_BUCKET</key>
+	<string>moving-wheels-delivery.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:480971606443:ios:d276e9321772c7adf9aaee</string>
+</dict>
+</plist>

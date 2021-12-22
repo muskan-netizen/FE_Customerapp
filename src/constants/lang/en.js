@@ -246,7 +246,7 @@ export default {
   ENTER_NEW_ADDRESS: 'new address',
   ENTER_STREET: 'Street (Building, Street area)',
   STATE: 'State',
-  PINCODE: 'Pincode',
+  PINCODE: 'Pincode/Zipcode',
   SEARCH_LOCATION: 'Search Location',
   SAVE_ADDRESS: 'Save Address',
   SELECT_AN_ADDRESS: 'Select an address',

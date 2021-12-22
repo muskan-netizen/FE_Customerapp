@@ -380,7 +380,7 @@ android {
         }
         govachow{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -1622,7 +1622,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.doleypharmacy'
-            resValue "string", "app_name", "Doley Pharmacy"
+            resValue "string", "app_name", "Doley"
             resValue "string", "host_name", ""
          }
           bezalio{
@@ -1995,6 +1995,26 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.kurbsidekings'
             resValue "string", "app_name", "Kurbside Kings"
+            resValue "string", "host_name", ""
+         }
+          movingwheelsdelivery{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.movingwheelsdelivery'
+            resValue "string", "app_name", "Moving Wheels Delivery"
+            resValue "string", "host_name", ""
+         }
+           safewalks{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.safewalks'
+            resValue "string", "app_name", "SafeWalks"
             resValue "string", "host_name", ""
          }
     }
