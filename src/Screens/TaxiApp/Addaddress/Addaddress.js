@@ -628,13 +628,13 @@ export default function Addaddress({ navigation, route }) {
                   <View style={{ flex: 0.9, marginLeft: moderateScale(20) }}>
                     <SearchPlaces
                       curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
-                      autoFocus={i == 1 ? true : false}
+                      autoFocus={i == dropLocationData.length - 1 ? true : false}
                       placeHolder={
                         i == 0
                           ? strings.PICKUP_LOCATION
                           : i == 1
                             ? strings.WHERETO
-                            : strings.add
+                            : strings.ADD_A_STOP
                       }
                       value={val.pre_address} // instant update search value
                       mapKey={profile?.preferences?.map_key} //send here google Key
