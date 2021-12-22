@@ -321,7 +321,7 @@ const App = () => {
         setProgress(false)
         break;
       case codePush.SyncStatus.UNKNOWN_ERROR:
-        console.log("codepush status An unknown error occurred.")
+        console.log("codepush status An unknown error occurred")
         setProgress(false)
         break;
     }
