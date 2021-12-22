@@ -1175,6 +1175,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.dimavega:
+          updateState({
+            shortCode: shortCodes.dimavega,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

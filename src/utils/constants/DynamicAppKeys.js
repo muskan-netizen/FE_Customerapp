@@ -180,6 +180,7 @@ const shortCodes = {
   kurbsidekings: '67346e',
   movingwheelsdelivery: '46ee7c',
   safewalks: 'bb699c',
+  dimavega: 'd25db3',
 };
 
 const appIds = {
@@ -898,6 +899,10 @@ const appIds = {
   safewalks: Platform.select({
     ios: 'com.safewalks',
     android: 'com.safewalks',
+  }),
+  dimavega: Platform.select({
+    ios: 'com.dimavega',
+    android: 'com.dimavega',
   }),
 };
 
