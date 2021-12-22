@@ -296,28 +296,28 @@ const App = () => {
   function codePushStatusDidChange(syncStatus) {
     switch (syncStatus) {
       case codePush.SyncStatus.CHECKING_FOR_UPDATE:
-        console.log("codepush status Checking for update.")
+        console.log("codepush status Checking for update")
         break;
       case codePush.SyncStatus.DOWNLOADING_PACKAGE:
-        console.log("codepush status Downloading package.")
+        console.log("codepush status Downloading package")
         break;
       case codePush.SyncStatus.AWAITING_USER_ACTION:
-        console.log("codepush status Awaiting user action.")
+        console.log("codepush status Awaiting user action")
         break;
       case codePush.SyncStatus.INSTALLING_UPDATE:
-        console.log("codepush status Installing update.")
+        console.log("codepush status Installing update")
         setProgress(false)
         break;
       case codePush.SyncStatus.UP_TO_DATE:
-        console.log("codepush status App up to date.")
+        console.log("codepush status App up to date")
         setProgress(false)
         break;
       case codePush.SyncStatus.UPDATE_IGNORED:
-        console.log("codepush status Update cancelled by user.")
+        console.log("codepush status Update cancelled by user")
         setProgress(false)
         break;
       case codePush.SyncStatus.UPDATE_INSTALLED:
-        console.log("codepush status Update installed and will be applied on restart.")
+        console.log("codepush status Update installed and will be applied on restart")
         setProgress(false)
         break;
       case codePush.SyncStatus.UNKNOWN_ERROR:
