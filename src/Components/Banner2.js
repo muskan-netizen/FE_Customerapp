@@ -6,6 +6,7 @@ import {
   View,
 } from 'react-native';
 import CardView from 'react-native-cardview';
+import {BackgroundImage} from 'react-native-elements/dist/config';
 import FastImage from 'react-native-fast-image';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
@@ -29,6 +30,7 @@ const Banner2 = ({
   onPress = () => {},
   childView = null,
   showLightbox = false,
+  BackgroundImageStyle = {},
 }) => {
   const {themeColors} = useSelector((state) => state?.initBoot);
 
@@ -67,7 +69,11 @@ const Banner2 = ({
             source={{uri: imageUrl, priority: FastImage.priority.high}}
             //  onLoadStart={()=>}
             onLoadEnd={() => updateState({imageLoader: false})}
-            style={{height: moderateScale(180), width: '100%'}}
+            style={{
+              height: moderateScale(180),
+              width: '100%',
+              ...BackgroundImageStyle,
+            }}
             imageStyle={imagestyle}
             resizeMode={resizeMode}>
             {!!state.imageLoader && (

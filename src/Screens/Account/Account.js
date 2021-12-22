@@ -5,7 +5,6 @@ import {
   I18nManager,
   Image,
   ScrollView,
-  Share,
   Text,
   TouchableOpacity,
   View,
@@ -26,8 +25,12 @@ import DeviceInfo from 'react-native-device-info';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
+import Share from 'react-native-share';
+
 
 export default function Account({navigation}) {
+
+  
   const [state, setState] = useState({
     isLoading: false,
   });
@@ -62,21 +65,21 @@ export default function Account({navigation}) {
   );
 
   //Share your app
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        url: 'https://play.google.com/store/apps/details?id=com.codebrew.customer',
-      });
-
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-        } else {
-        }
-      } else if (result.action === Share.dismissedAction) {
-      }
-    } catch (error) {
-      alert(error.message);
+  const onShare = () => {
+    console.log("onShare",appData)
+    if (!!appData?.domain_link) {
+      let hyperLink = appData?.domain_link + '/share'
+      let options = { url: hyperLink }
+      Share.open(options)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          err && console.log(err);
+        });
+      return;
     }
+    alert('link not found')
   };
   //Logout function
   const userlogout = () => {

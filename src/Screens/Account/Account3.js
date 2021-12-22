@@ -84,14 +84,10 @@ export default function Account3({ navigation }) {
 
   //Share your app
   const onShare = () => {
-    console.log("preferencespreferences", preferences)
-    if (!!preferences?.android_app_link && !!preferences?.ios_link) {
-      let androidLink = preferences?.android_app_link
-      let iosLink = preferences?.ios_link
-      let options = {
-        // urls: [preferences?.android_app_link, preferences?.ios_link],
-        message: `android App: ${androidLink} \n \n iOS App: ${iosLink} `
-      }
+    console.log("onShare",appData)
+    if (!!appData?.domain_link) {
+      let hyperLink = appData?.domain_link + '/share'
+      let options = { url: hyperLink }
       Share.open(options)
         .then((res) => {
           console.log(res);
@@ -101,7 +97,7 @@ export default function Account3({ navigation }) {
         });
       return;
     }
-    alert('links not found')
+    alert('link not found')
   };
 
   //Logout function
