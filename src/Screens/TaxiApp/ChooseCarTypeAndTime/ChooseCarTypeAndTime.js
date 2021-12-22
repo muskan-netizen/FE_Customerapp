@@ -1,13 +1,16 @@
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {useFocusEffect} from '@react-navigation/native';
+import {isEmpty} from 'lodash';
 import moment from 'moment';
 import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
+import DeviceInfo from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
 import * as RNLocalize from 'react-native-localize';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from 'react-native-maps-directions';
+import RazorpayCheckout from 'react-native-razorpay';
 import {useSelector} from 'react-redux';
 import CustomCallouts from '../../../Components/CustomCallouts';
 import GradientButton from '../../../Components/GradientButton';
@@ -17,8 +20,6 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
-import DeviceInfo from 'react-native-device-info';
 import {
   height,
   moderateScale,
@@ -27,8 +28,10 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 import {MyDarkTheme} from '../../../styles/theme';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
 import {mapStyleGrey} from '../../../utils/constants/MapStyle';
 import {
+  getImageUrl,
   hapticEffects,
   playHapticEffect,
   showError,
@@ -145,11 +148,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
     pickedUpDate: paramData?.datetime?.slectedDate
       ? paramData?.datetime?.slectedDate
       : moment().format('YYYY-MM-DD'),
-    selectedPayment: {
-      id: 1,
-      title: strings.CASH_ON_DELIVERY,
-      image: imagePath.cash,
-    },
+    selectedPayment: {},
     taskInstruction: '',
     productFaqQuestionAnswers: [],
     allSubmittedAnswers: null,
@@ -298,13 +297,14 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
 
   //error handling of api
   const errorMethod = (error) => {
+    console.log(error, 'errorOccured');
     updateState({
       isLoading: false,
       isLoadingB: false,
       isRefreshing: false,
       indicatorLoader: false,
     });
-    showError(error?.message || error?.error);
+    showError(error?.message || error?.error || error?.description);
   };
 
   const _getAddressBasedOnCoordinates = (region) => {
@@ -327,10 +327,16 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
   };
 
   const _finalPayment = (data) => {
+    if (isEmpty(selectedPayment)) {
+      showError(strings.PLEASE_SELECT_A_PAYMENT_METHOD);
+      return;
+    }
+
     updateState({
       isLoading: true,
       indicatorLoader: true,
     });
+
     actions
       .placeDelievryOrder(data, {
         code: appData?.profile?.code,
@@ -338,6 +344,7 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
         language: languages?.primary_language?.id,
       })
       .then((res) => {
+        console.log(res, 'resresresres');
         if (res && res?.status == 200) {
           updateState({
             isModalVisible: false,
@@ -372,7 +379,6 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       .catch(errorMethod);
   };
 
-  console.log(pickUpTimeType != null, 'pickUpTimeTypepickUpTimeType');
   const _confirmAndPay = () => {
     console.log(selectedCarOption, 'selectedCarOption');
     console.log(selectedPayment?.id, 'selectedPayment?.id ');
@@ -408,19 +414,48 @@ export default function ChooseCarTypeAndTime({navigation, route}) {
       !!userData?.client_preference?.verify_phone
         ? !!userData?.verify_details?.is_email_verified &&
           !!userData?.verify_details?.is_phone_verified
-          ? _finalPayment(data)
+          ? selectedPayment.id == 10
+            ? renderRazorPay(data)
+            : _finalPayment(data)
           : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT_SECOND, {
               formCart: true,
             })()
+        : selectedPayment.id == 10
+        ? renderRazorPay(data)
         : _finalPayment(data);
-    } else {
-      _finalPayment();
     }
   };
 
-  function checkRequird(checkRequird) {
-    return checkRequird == true;
-  }
+  const renderRazorPay = (data) => {
+    let options = {
+      description: 'Credits towards consultation',
+      image: getImageUrl(
+        appData?.profile?.logo?.image_fit,
+        appData?.profile?.logo?.image_path,
+        '1000/1000',
+      ),
+      currency: currencies?.primary_currency?.iso_code,
+      key: appData?.profile?.preferences?.razorpay_api_key, // Your api key
+      amount: Number(selectedCarOption?.tags_price) * 100,
+      name: appData?.profile?.company_name,
+      prefill: {
+        email: userData?.email,
+        contact: userData?.phone_number || '',
+        name: userData?.name,
+      },
+      theme: {color: themeColors.primary_color},
+    };
+
+    RazorpayCheckout.open(options)
+      .then((res) => {
+        console.log(`Success for razor: `, res);
+        if (res?.razorpay_payment_id) {
+          data['transaction_id'] = res?.razorpay_payment_id;
+          _finalPayment(data); // placeOrder
+        }
+      })
+      .catch(errorMethod);
+  };
 
   const onBookNow = () => {
     var isRequired = false;

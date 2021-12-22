@@ -725,4 +725,6 @@ export default {
   OUTFORDELIVERY: 'Your driver is heading to you',
   ORDERDELIVERED: 'Your order has been delivered',
   MYRIDES: 'My Rides',
+  MYRIDES: 'My Rides',
+  PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
 };
