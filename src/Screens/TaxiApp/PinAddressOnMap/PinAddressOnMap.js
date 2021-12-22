@@ -258,13 +258,11 @@ export default function HomeScreenTaxi({navigation, route}) {
         provider={PROVIDER_GOOGLE}
         //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={styles.map}
-        region={region}
+        // region={region}
         initialRegion={region}
-        customMapStyle={
-          appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
-        }
         // pointerEvents={'none'}
-        onRegionChangeComplete={_onRegionChange}>
+        onRegionChangeComplete={_onRegionChange}
+        >
         {/* <Marker
             ref={markerRef}
             // pointerEvents={'none'}
