@@ -183,6 +183,7 @@ export default function Home({route, navigation}) {
         if (result !== 'goback') {
           getCurrentLocation('home')
             .then((res) => {
+              console.log(res, 'userCurrentLocation');
               if (
                 appMainData &&
                 typeof appMainData?.reqData == 'object' &&
@@ -763,6 +764,7 @@ export default function Home({route, navigation}) {
               // systemuser: DeviceInfo.getUniqueId(),
             },
           );
+          console.log('pending res==>>>', res.data.order_list);
           let orders =
             pageActive == 1
               ? res.data.order_list.data
