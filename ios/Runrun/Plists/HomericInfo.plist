@@ -19,9 +19,9 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
+	<string>????</string>
     <key>CodePushDeploymentKey</key>
     <string>$(CODE_PUSH_KEY)</string>
-	<string>????</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

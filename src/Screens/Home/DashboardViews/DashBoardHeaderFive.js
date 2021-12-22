@@ -403,7 +403,7 @@ export default function DashBoardHeaderFive({
   return (
     <View
       style={{
-        borderBottomWidth: 0.8,
+        borderBottomWidth: tabs.length > 1 ? 0.8: 0,
         borderBottomColor: isDarkMode
           ? colors.whiteOpacity22
           : colors.borderColorD,

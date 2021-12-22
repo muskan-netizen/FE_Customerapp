@@ -2,7 +2,7 @@ import Clipboard from '@react-native-community/clipboard';
 import NetInfo from '@react-native-community/netinfo';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import React, { useEffect, useRef, useState } from 'react';
-import { Linking, Platform, Text, View } from 'react-native';
+import { Linking, Platform, SafeAreaView, Text, View } from 'react-native';
 import { useDarkMode } from 'react-native-dark-mode';
 import FlashMessage from 'react-native-flash-message';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -18,9 +18,11 @@ import Routes from './src/navigation/Routes';
 import { updateInternetConnection } from './src/redux/actions/auth';
 import store from './src/redux/store';
 import types from './src/redux/types';
-import { moderateScaleVertical, width } from './src/styles/responsiveSize';
+import { moderateScale, moderateScaleVertical, textScale, width } from './src/styles/responsiveSize';
 import ForegroundHandler from './src/utils/ForegroundHandler';
 import { getParameterByName, getUrlRoutes } from './src/utils/helperFunctions';
+import * as Progress from 'react-native-progress';
+
 import {
   requestUserPermission,
   notificationListener,
@@ -30,18 +32,18 @@ import PushNotification from 'react-native-push-notification';
 import PrinterScreen from './src/Screens/PrinterConnection/PrinterScreen';
 import AsyncStorage from '@react-native-community/async-storage';
 import codePush from "react-native-code-push";
+import fontFamily from './src/styles/fontFamily';
+import Modal from 'react-native-modal'
+import { UIActivityIndicator } from 'react-native-indicators';
+import { ActivityIndicator } from 'react-native';
+import colors from './src/styles/colors'
 // import withCodePush from './withcodepush';
 
-let CodePushOptions = {
-  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
-  mandatoryInstallMode: codePush.InstallMode.IMMEDIATE,
-  updateDialog: {
-    appendReleaseDescription: true,
-    title: "a new update is available!"
-  }
-}
+let CodePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL }
 
 const App = () => {
+  const [progress, setProgress] = useState(false)
+  const [primaryColor, setPrimaryColor] = useState('black')
   const ConnectBTFunction = async () => {
     await AsyncStorage.removeItem('autoConnectEnabled');
 
@@ -59,8 +61,7 @@ const App = () => {
   const [internetConnection, setInternet] = useState(true);
   // const appMainData = useSelector((state) => state?.home?.appMainData);
   const appMainData = store.getState().home;
-  // deep linking
-  console.log(appMainData, 'appMainData+++++++++');
+
   async function handleDynamicLink(deepLinkUrl) {
     if (deepLinkUrl != null) {
       setItem('deepLinkUrl', deepLinkUrl);
@@ -144,7 +145,10 @@ const App = () => {
         });
       }
       const getAppData = await getItem('appData');
-
+      console.log("app data_", getAppData)
+      if (!!getAppData) {
+        setPrimaryColor(getAppData.themeColors.primary_color)
+      }
       dispatch({
         type: types.APP_INIT,
         payload: getAppData,
@@ -277,10 +281,113 @@ const App = () => {
   const { blurRef } = useRef();
   // let isVal = store.getState().pendingNotifications.isVendorNotification
   // console.log("is val++",isVal)
+
+
+  useEffect(() => {
+    codePush.sync(
+      {
+        installMode: codePush.InstallMode.IMMEDIATE, updateDialog: true
+      },
+      codePushStatusDidChange,
+      codePushDownloadDidProgress
+    );
+  }, [])
+
+  function codePushStatusDidChange(syncStatus) {
+    switch (syncStatus) {
+      case codePush.SyncStatus.CHECKING_FOR_UPDATE:
+        console.log("codepush status Checking for update.")
+        break;
+      case codePush.SyncStatus.DOWNLOADING_PACKAGE:
+        console.log("codepush status Downloading package.")
+        break;
+      case codePush.SyncStatus.AWAITING_USER_ACTION:
+        console.log("codepush status Awaiting user action.")
+        break;
+      case codePush.SyncStatus.INSTALLING_UPDATE:
+        console.log("codepush status Installing update.")
+        setProgress(false)
+        break;
+      case codePush.SyncStatus.UP_TO_DATE:
+        console.log("codepush status App up to date.")
+        setProgress(false)
+        break;
+      case codePush.SyncStatus.UPDATE_IGNORED:
+        console.log("codepush status Update cancelled by user.")
+        setProgress(false)
+        break;
+      case codePush.SyncStatus.UPDATE_INSTALLED:
+        console.log("codepush status Update installed and will be applied on restart.")
+        setProgress(false)
+        break;
+      case codePush.SyncStatus.UNKNOWN_ERROR:
+        console.log("codepush status An unknown error occurred.")
+        setProgress(false)
+        break;
+    }
+  }
+
+  function codePushDownloadDidProgress(progress) {
+    console.log("codepush status progress status", progress)
+    setProgress(progress)
+  }
+
+  const progressView = () => {
+    return (
+      <SafeAreaView>
+        <Modal isVisible={true}>
+
+          <View style={{
+            backgroundColor: colors.white,
+            borderRadius: moderateScale(8),
+            padding: moderateScale(16)
+          }}>
+
+            <Text style={{
+              alignSelf: 'center',
+              fontFamily: fontFamily.medium,
+              color: colors.blackOpacity70,
+              fontSize: textScale(14)
+            }}>In Progress...
+
+            </Text>
+
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginTop: moderateScaleVertical(12),
+              marginBottom: moderateScaleVertical(4)
+            }}>
+              <Text style={{
+                fontFamily: fontFamily.medium,
+                color: colors.blackOpacity70,
+                fontSize: textScale(12)
+              }}>{`${(Number(progress?.receivedBytes) / 1048576).toFixed(2)}MB/${(Number(progress.totalBytes) / 1048576).toFixed(2)}MB`}</Text>
+
+              <Text style={{
+                color: primaryColor,
+                fontFamily: fontFamily.medium,
+                fontSize: textScale(12)
+              }}>{((Number(progress?.receivedBytes) / Number(progress.totalBytes)) * 100).toFixed(0)}%</Text>
+            </View>
+
+            <Progress.Bar
+              progress={((Number(progress?.receivedBytes) / Number(progress.totalBytes)) * 100).toFixed(0) / 100}
+              width={width / 1.2}
+              color={primaryColor}
+            />
+
+          </View>
+        </Modal>
+      </SafeAreaView>
+    )
+  }
   return (
     <SafeAreaProvider>
       <Provider ref={blurRef} store={store}>
         <ForegroundHandler />
+        {!!progress ? progressView() : null}
         <Routes />
         <NotificationModal />
       </Provider>

@@ -103,7 +103,8 @@ const ProductCard2 = ({
             )}`}
           </Text>
         </View>
-        {data?.translation[0]?.body_html && (
+        {console.log('>>>>><<<<<<', data)}
+        {/* {data?.translation[0]?.body_html ? (
           <HTMLView
             value={`<p>${data?.translation[0]?.body_html} </p>`}
             nodeComponentProps={{
@@ -124,7 +125,21 @@ const ProductCard2 = ({
               ],
             }}
           />
-        )}
+        ) : null} */}
+
+        <Text
+          style={[
+            {
+              color: colors.textGreyE,
+              fontSize: textScale(14),
+              fontFamily: fontFamily.regular,
+            },
+            {
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyE,
+            },
+          ]}>
+          {data?.translation_description}
+        </Text>
 
         <DashedLine
           dashLength={5}
