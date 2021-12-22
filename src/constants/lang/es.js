@@ -256,7 +256,7 @@ export default {
   OUT_OF_STOCK: 'Sin stock',
   ORDER_DET: 'Detalles de pedido',
   CELEBRITY: 'Influencer',
-  ACCOUNTS: 'Cuentas',
+  ACCOUNTS: 'Cuenta',
   ADD_ON: 'Adicionales',
   YOUMAYALSO: 'También te puede gustar:',
   USECURRENTLOACTION: 'Usar ubicación actual',
@@ -726,4 +726,8 @@ export default {
   SUPPORT: 'Support',
   ENETER_YOUR_ADDRESS: 'Enter your address',
   NO_CARS_AVAILABLE: 'No cars available',
+  ORDERACCEPTED: 'Order Accepted',
+  PROCCESSING: 'Your driver is heading to the restaurant',
+  OUTFORDELIVERY: 'Your driver is heading to you',
+  ORDERDELIVERED: 'Your order has been delivered',
 };

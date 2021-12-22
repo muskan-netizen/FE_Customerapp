@@ -31,6 +31,20 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
+import LinearGradient from 'react-native-linear-gradient';
+import {
+  Grayscale,
+  Sepia,
+  Tint,
+  ColorMatrix,
+  concatColorMatrices,
+  invert,
+  contrast,
+  saturate,
+} from 'react-native-color-matrix-image-filters';
+
+const transparentColor = ['transparent', 'transparent'];
+const greyColor = ['rgba(0,0,0,0.52)', 'rgba(0,0,0,0.52)'];
 
 const MarketCard3 = ({
   data = {},
@@ -67,14 +81,26 @@ const MarketCard3 = ({
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <View>
-        <FastImage
-          source={{uri: imageUrl, priority: FastImage.priority.high}}
-          style={{
-            ...styles.mainImage,
-            ...fastImageStyle,
-          }}
-          resizeMode={FastImage.resizeMode.cover}
-        />
+        {!!data?.is_vendor_closed ? (
+          <Grayscale>
+            <FastImage
+              source={{uri: imageUrl, priority: FastImage.priority.high}}
+              style={{
+                ...styles.mainImage,
+                ...fastImageStyle,
+              }}
+              resizeMode={FastImage.resizeMode.cover}></FastImage>
+          </Grayscale>
+        ) : (
+          <FastImage
+            source={{uri: imageUrl, priority: FastImage.priority.high}}
+            style={{
+              ...styles.mainImage,
+              ...fastImageStyle,
+            }}
+            resizeMode={FastImage.resizeMode.cover}></FastImage>
+        )}
+
         {!appData?.profile?.preferences?.is_hyperlocal && (
           <View
             style={{
@@ -104,30 +130,7 @@ const MarketCard3 = ({
           </View>
         )}
       </View>
-      {/* <BlurImages
-        isDarkMode={isDarkMode}
-        themeColor={themeColors.primary_color}
-        thumnailUrl={{
-          uri: getImageUrl(
-            data.banner.proxy_url || data.image.proxy_url,
-            data.banner.image_path || data.image.image_path,
-            '20/20',
-          ),
-        }}
-        originalUrl={{
-          uri: getImageUrl(
-            data.banner.proxy_url || data.image.proxy_url,
-            data.banner.image_path || data.image.image_path,
-            '800/400',
-          ),
-        }}
-        style={[styles.mainImage, {...fastImageStyle}]}
-      /> */}
-
-      <View
-        style={{
-          padding: 8,
-        }}>
+      <View style={{padding: moderateScale(8)}}>
         <View style={styles.descView}>
           <Text
             numberOfLines={1}
@@ -208,7 +211,12 @@ const MarketCard3 = ({
                     resizeMode="contain"
                     source={imagePath.location2}
                   />
-                  <Text numberOfLines={1} style={styles.distanceTimeStyle}>
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      ...styles.distanceTimeStyle,
+                      color: colors.greyLight,
+                    }}>
                     {data?.lineOfSightDistance}
                   </Text>
                 </View>

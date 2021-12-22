@@ -2,13 +2,15 @@
 export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.20:8020/api/v1';
 // export const API_BASE_URL = 'http://192.168.103.73:8005/api/v1'; // preet
+// export const API_BASE_URL = 'http://192.168.97.123:8020/api/v1'; // sujata
+
 // export const API_BASE_URL = 'http://192.168.96.20:8020/api/v1';
 //export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
 //export const API_BASE_URL = 'https://zuzuclean.alerthire.com/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
-// export const API_BASE_URL = 'http://192.168.100.198:8020/api/v1';
+// export const API_BASE_URL = 'http://192.168.100.198:8020/api/v1';                     
 // export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
 // export const API_BASE_URL = 'https://click-eat.com/api/v1';
 // export const API_BASE_URL = 'https://tranzit.app/api/v1';
