@@ -716,7 +716,7 @@ export default {
   TERMS_CONDITIONS: 'Terms & Conditions',
   HAVE_READ: 'and have read the',
   PRIVACY_POLICY: 'Privacy Policy.',
-  VENDER: 'Vendor',
+  VENDER: 'بائع',
   DRIVER: 'Driver',
   SUPPORT: 'Support',
   ENETER_YOUR_ADDRESS: 'Enter your address',
@@ -726,4 +726,5 @@ export default {
   OUTFORDELIVERY: 'Your driver is heading to you',
   ORDERDELIVERED: 'Your order has been delivered',
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
+  ORDER: 'طلب',
 };

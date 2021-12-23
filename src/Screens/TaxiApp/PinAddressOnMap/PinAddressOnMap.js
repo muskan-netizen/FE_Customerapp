@@ -134,6 +134,7 @@ export default function HomeScreenTaxi({navigation, route}) {
             },
           },
           address_components: json.results[0].address_components,
+          place_id: json.results[0].place_id,
         };
         updateState({
           details: detail,
@@ -225,18 +226,26 @@ export default function HomeScreenTaxi({navigation, route}) {
   };
 
   const _modeToNextScreen = () => {
+    const {params} = route;
     const pickuplocationAllData = {
       longitude: details?.geometry?.location?.lng,
       latitude: details?.geometry?.location?.lat,
       address: details?.formatted_address,
       task_type_id: paramData?.task_id,
       pre_address: details?.formatted_address,
+      place_id: details?.place_id,
     };
 
     console.log(pickuplocationAllData, 'pickuplocationAllData');
-    navigation.navigate(navigationStrings.ADDADDRESS, {
-      prefillAdress: pickuplocationAllData,
-    });
+    if (params?.prevRoute === 'cart') {
+      params?.onGoBack(pickuplocationAllData);
+      navigation.goBack();
+    } else {
+      navigation.navigate(navigationStrings.ADDADDRESS, {
+        prefillAdress: pickuplocationAllData,
+      });
+    }
+
     //   }
   };
 
@@ -305,7 +314,10 @@ export default function HomeScreenTaxi({navigation, route}) {
           justifyContent: 'center',
           // marginTop: height / 2,
         }}>
-        <Image source={imagePath.mapPin2} />
+        <Image
+          source={imagePath.icLocationPin_}
+          style={{tintColor: themeColors.primary_color}}
+        />
       </View>
       <View
         style={{

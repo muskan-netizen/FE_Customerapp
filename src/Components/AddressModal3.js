@@ -19,6 +19,7 @@ import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
+import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
 import commonStyles from '../styles/commonStyles';
 import commonStylesFun from '../styles/commonStyles';
@@ -30,6 +31,7 @@ import {
   width,
 } from '../styles/responsiveSize';
 import {MyDarkTheme} from '../styles/theme';
+import {getPlaceDetails} from '../utils/googlePlaceApi';
 import {getAddressComponent} from '../utils/helperFunctions';
 import {chekLocationPermission} from '../utils/permissions';
 import validations from '../utils/validations';
@@ -363,6 +365,53 @@ const AddressModal3 = ({
       : {fontSize: textScale(12)};
   };
 
+  const updateAddress_ = async (data_) => {
+    console.log('onGoBackonGoBack>>>>', data_);
+    let res = await getPlaceDetails(
+      data_.place_id,
+      profile?.preferences?.map_key,
+    );
+    const {result} = res;
+
+    let addressData = getAddressComponent(result);
+    console.log('res===onGoBackonGoBack>>>>', addressData);
+    let data = {};
+    if (addressData.address) {
+      data['address'] = addressData.address;
+    }
+    if (addressData.street) {
+      data['street'] = addressData.street;
+    }
+    if (addressData.city) {
+      data['city'] = addressData.city;
+    }
+    if (addressData.pincode) {
+      data['pincode'] = addressData.pincode;
+    }
+    if (addressData.state) {
+      data['state'] = addressData.state;
+    }
+    if (addressData.country) {
+      data['country'] = addressData.country;
+    }
+    if (addressData.latitude) {
+      data['latitude'] = addressData.latitude;
+    }
+    if (addressData.longitude) {
+      data['longitude'] = addressData.longitude;
+    }
+    if (addressData.phonecode) {
+      data['phonecode'] = addressData.phonecode;
+    }
+    if (addressData.country_code) {
+      data['country_code'] = addressData.country_code;
+    }
+
+    data['is_primary'] = type == 'addAddress' ? 1 : is_primary;
+    console.log('passLocationpassLocation>>>', data);
+    passLocation(data);
+  };
+
   return (
     <Modal
       isVisible={isVisible}
@@ -457,13 +506,62 @@ const AddressModal3 = ({
           </View>
           <View
             style={{
-              marginBottom: 20,
+              marginBottom: 5,
               borderBottomWidth: 1,
               borderColor: isDarkMode
                 ? MyDarkTheme.colors.text
                 : colors.borderLight,
             }}></View>
-
+          <TouchableOpacity
+            onPress={() => {
+              onClose();
+              setTimeout(() => {
+                navigation.navigate(navigationStrings.PINADDRESSONMAP, {
+                  onGoBack: async (data) => {
+                    updateAddress_(data);
+                    onClose();
+                  },
+                  prevRoute: 'cart',
+                  task_id: 1,
+                  pickUpLocationLatLng: {
+                    latitude: 30.7333,
+                    longitude: 76.7794,
+                  },
+                });
+              }, 300);
+            }}
+            style={{
+              borderWidth: 1,
+              // padding: 10,
+              borderRadius: 10,
+              alignItems: 'center',
+              flexDirection: 'row',
+              borderColor: colors.borderColorB,
+              width: moderateScale(120),
+              justifyContent: 'center',
+              height: moderateScaleVertical(30),
+              marginLeft: moderateScale(10),
+              marginTop: moderateScale(10),
+              marginBottom: 15,
+            }}>
+            <Image
+              source={imagePath.ic_pinIcon}
+              style={{
+                width: moderateScale(15),
+                height: moderateScaleVertical(15),
+                resizeMode: 'contain',
+                tintColor: themeColors.primary_color,
+              }}
+            />
+            <Text
+              style={{
+                fontSize: moderateScale(12),
+                fontFamily: fontFamily.regular,
+                marginLeft: moderateScale(5),
+              }}>
+              Select via map
+            </Text>
+          </TouchableOpacity>
           {/* <View style={styles.textInputContainerAddress}>
             <TextInput
               onChangeText={_onChangeText('address')}
