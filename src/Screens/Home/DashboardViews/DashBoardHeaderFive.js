@@ -7,6 +7,7 @@ import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
+import FastImage from 'react-native-fast-image';
 import {
   height,
   moderateScale,
@@ -62,11 +63,12 @@ export default function DashBoardHeaderFive({
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  // console.log(profileInfo?.logo?.image_path, 'imageimageimage');
+  console.log(profileInfo?.logo?.image_path, 'imageimageimage');
+
   const imageURI = getImageUrl(
     profileInfo?.logo?.image_fit,
     profileInfo?.logo?.image_path,
-    '800/400',
+    '1000/1000',
   );
 
   useEffect(() => {
@@ -440,7 +442,18 @@ export default function DashBoardHeaderFive({
                   : imagePath.logo
               }
             />
-          ) : null}
+          ) : // <FastImage
+          //   source={{
+          //     uri: imageURI,
+          //     priority: FastImage.priority.high,
+          //   }}
+          //   style={{
+          //     height: moderateScaleVertical(50),
+          //     width: width / 6,
+          //   }}
+          //   resizeMode={FastImage.resizeMode.contain}
+          // />
+          null}
           {!!appData?.profile?.preferences?.is_hyperlocal && (
             <TouchableOpacity
               activeOpacity={1}
