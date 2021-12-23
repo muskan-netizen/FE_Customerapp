@@ -10,8 +10,9 @@ export default {
   GUEST_LOGIN: 'Plus tard',
   OR_SIGNUP_WITH: 'Ou inscrivez-vous avec',
   OR_LOGIN_WITH: 'Ou connectez-vous avec',
-  ALREADY_HAVE_AN_ACCOUNT: "Vous n'avez pas de compte ? ",
-  ALREADY_HAVE_AN_ACCOUNT1: 'Vous avez déjà un compte ? ',
+  ALREADY_HAVE_AN_ACCOUNT: ' Vous avez déjà un compte ?',
+  ALREADY_HAVE_AN_ACCOUNT1: "Vous n'avez pas de compte ? ",
+
   LOGIN: 'Connexion',
   SKIP: 'Ignorer',
   VERIFIED: 'Vérifié',
@@ -763,6 +764,6 @@ montant`,
   DRIVER: 'Chauffeuse',
   ENETER_YOUR_ADDRESS: "Entrer le nom de l'adresse",
   SUPPORT: 'Support',
-  ENETER_YOUR_ADDRESS: 'Enter your address',
+
   NO_CARS_AVAILABLE: 'No cars available',
 };
