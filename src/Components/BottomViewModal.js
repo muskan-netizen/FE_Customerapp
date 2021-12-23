@@ -5,6 +5,9 @@ import Modal from 'react-native-modal';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import fontFamily from '../styles/fontFamily';
+import {useSelector} from 'react-redux';
+import {useDarkMode} from 'react-native-dark-mode';
+
 import {
   moderateScaleVertical,
   textScale,
@@ -17,6 +20,10 @@ const BottomViewModal = ({
   closeModal = () => {},
   isDatetimePicker = false,
 }) => {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const darkthemeusingDevice = useDarkMode();
   return (
     <Modal
       isVisible={show}

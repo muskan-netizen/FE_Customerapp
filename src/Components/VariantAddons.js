@@ -683,11 +683,6 @@ const VariantAddons = ({
 
   const addToCart = (addonSet) => {
     playHapticEffect(hapticEffects.rigid);
-    let updateQty =
-      productdetail?.qty + 1 || //localy update cart quanity
-      totalProductQty + 1 ||
-      productQuantityForCart;
-
     console.log('add on set', addonSet);
     const addon_ids = [];
     const addon_options = [];
@@ -713,9 +708,7 @@ const VariantAddons = ({
     });
 
     const checkIsError = addonSet.findIndex((el) => el.errorShow);
-
     let data = {};
-
     if (checkIsError == -1) {
       data['sku'] = productSku;
       data['quantity'] = productQuantityForCart;
@@ -750,27 +743,6 @@ const VariantAddons = ({
         .catch((error) => errorMethodSecond(error, addonSet));
       return;
     }
-    updateState({btnLoader: true});
-    actions
-      .addProductsToCart(data, {
-        code: appData.profile.code,
-        currency: currencies.primary_currency.id,
-        language: languages.primary_language.id,
-        systemuser: DeviceInfo.getUniqueId(),
-      })
-      .then((res) => {
-        actions.cartItemQty(res);
-        showSuccess(strings.PRODUCT_ADDED_SUCCESS);
-        updateState({isLoadingC: false, btnLoader: false});
-        updateCartItems(
-          productdetail,
-          res.data.item_count, ////localy update cart quanity
-          res.data.cart_product_id,
-          res.data.id,
-        );
-        onClose();
-      })
-      .catch((error) => errorMethodSecond(error, addonSet));
   };
 
   const errorMethodSecond = (error, addonSet) => {

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>803208903783-ogljupbq99ekigca0pmmtbdqpehamf5d.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.803208903783-ogljupbq99ekigca0pmmtbdqpehamf5d</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>803208903783-6skm89258uhml688kt8enmo09j3c6lbk.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBpssbvfxvdTc6mSvllWoxSSOsWYG3R2Ys</string>
+	<key>GCM_SENDER_ID</key>
+	<string>803208903783</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.safewalks</string>
+	<key>PROJECT_ID</key>
+	<string>safewalks-37f25</string>
+	<key>STORAGE_BUCKET</key>
+	<string>safewalks-37f25.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:803208903783:ios:f78908949676892d0de8c2</string>
+</dict>
+</plist>

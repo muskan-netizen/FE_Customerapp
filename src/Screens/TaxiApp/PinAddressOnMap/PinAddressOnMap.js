@@ -255,27 +255,24 @@ export default function HomeScreenTaxi({navigation, route}) {
     <>
       <MapView
         ref={mapRef}
-        provider={PROVIDER_GOOGLE}
-        //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={styles.map}
-        region={region}
+        // region={region}
         initialRegion={region}
-        customMapStyle={
-          appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
-        }
         // pointerEvents={'none'}
-        onRegionChangeComplete={_onRegionChange}>
-        {/* <Marker
-            ref={markerRef}
-            // pointerEvents={'none'}
-            coordinate={coordinate}
-            image={imagePath.mapPin2}
-            // onDrag={(e) => _onDrag(e)}
-            // onDragEnd={(e) => _onDragEnd(e)}
-            // onPress={(e) => console.log('onPress', e)}
-            // draggable
-          /> */}
-      </MapView>
+        onRegionChangeComplete={_onRegionChange}
+      />
+      {/* <Marker
+          ref={markerRef}
+          // pointerEvents={'none'}
+          coordinate={coordinate}
+          image={imagePath.mapPin2}
+          // onDrag={(e) => _onDrag(e)}
+          // onDragEnd={(e) => _onDragEnd(e)}
+          // onPress={(e) => console.log('onPress', e)}
+          // draggable
+        /> */}
+
       <View style={[styles.backbutton, {marginHorizontal: moderateScale(15)}]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <View

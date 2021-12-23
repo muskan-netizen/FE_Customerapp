@@ -380,7 +380,7 @@ android {
         }
         govachow{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -1507,7 +1507,7 @@ android {
          }
          orderchekout{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -1622,7 +1622,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.doleypharmacy'
-            resValue "string", "app_name", "Doley Pharmacy"
+            resValue "string", "app_name", "Doley"
             resValue "string", "host_name", ""
          }
           bezalio{
@@ -1975,6 +1975,56 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.skidoo'
             resValue "string", "app_name", "Skidoo"
+            resValue "string", "host_name", ""
+         }
+         admCourier{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.admcourier'
+            resValue "string", "app_name", "ADM Courier"
+            resValue "string", "host_name", ""
+         }
+         kurbsidekings{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.kurbsidekings'
+            resValue "string", "app_name", "Kurbside Kings"
+            resValue "string", "host_name", ""
+         }
+          movingwheelsdelivery{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.movingwheelsdelivery'
+            resValue "string", "app_name", "Moving Wheels Delivery"
+            resValue "string", "host_name", ""
+         }
+           safewalks{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.safewalks'
+            resValue "string", "app_name", "SafeWalks"
+            resValue "string", "host_name", ""
+         }
+         dimavega{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.dimavega'
+            resValue "string", "app_name", "Dima Vega"
             resValue "string", "host_name", ""
          }
     }

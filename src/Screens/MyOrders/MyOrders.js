@@ -111,25 +111,13 @@ export default function MyOrders({navigation}) {
   const commonStyles = commonStylesFunc({fontFamily});
   const styles = stylesFun({fontFamily, themeColors});
 
-  //Get list of all orders
-  useEffect(() => {
-    updateState({isLoading: true});
-    if (userData && userData?.auth_token) {
-      _getListOfOrders();
-    } else {
-      updateState({
-        isLoading: false,
-      });
-    }
-  }, [selectedTab]);
-
   const isFocused = useIsFocused();
   useInterval(
     () => {
       if (!!userData?.auth_token) {
         _getListOfOrders();
       } else {
-        showError(strings.UNAUTHORIZED_MESSAGE);
+        navigation.navigate(navigationStrings.OUTER_SCREEN);
       }
     },
     isFocused ? 3000 : null,
@@ -368,6 +356,20 @@ export default function MyOrders({navigation}) {
   };
 
   //Get list of all orders based on selected tab
+
+  //Get list of all orders
+  useEffect(() => {
+    updateState({isLoading: true});
+    if (userData && userData?.auth_token) {
+      _getListOfOrders();
+    } else {
+      updateState({
+        isLoading: false,
+      });
+      navigation.navigate(navigationStrings.OUTER_SCREEN);
+    }
+  }, [selectedTab]);
+
   useEffect(() => {
     if (userData && userData?.auth_token) {
       _getListOfOrders();
@@ -375,6 +377,7 @@ export default function MyOrders({navigation}) {
       updateState({
         isLoading: false,
       });
+      navigation.navigate(navigationStrings.OUTER_SCREEN);
     }
   }, [pageActive, pagePastOrder, pageScheduleOrder, isRefreshing]);
 
@@ -586,7 +589,7 @@ export default function MyOrders({navigation}) {
                 isLoading={state.isLoading}
                 text={
                   businessType === 4
-                    ? strings.NO_RIDE_FOUND
+                    ? strings.NO_ORDERS_FOUND
                     : strings.NODATAFOUND
                 }
               />

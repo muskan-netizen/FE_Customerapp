@@ -53,13 +53,17 @@ let isVendorLogo = false;
 export default function WebLinks({navigation, route}) {
   let actionSheet = useRef();
 
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const {
+    appData,
+    themeColors,
+    appStyle,
+    currencies,
+    languages,
+    themeColor,
+    themeToggle,
+  } = useSelector((state) => state?.initBoot);
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const {appData, themeColors, appStyle, currencies, languages} = useSelector(
-    (state) => state?.initBoot,
-  );
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const paramData = route?.params;
   const [state, setState] = useState({
@@ -85,13 +89,9 @@ export default function WebLinks({navigation, route}) {
     vendor_name: '',
     address: '',
     website: '',
-    imageArray: [],
-    imageArrayBanner: [],
     isDineIn: false,
     isTakeaway: false,
     isDelivery: false,
-    sfcLicense: [],
-    fssaiLicense: [],
     vendorRegDocs: [],
     vendorRegisterationDocs: [],
     driverRegDocs: [],
@@ -102,8 +102,6 @@ export default function WebLinks({navigation, route}) {
       {id: 1, name: strings.EMPLOYEE},
       {id: 2, name: strings.FREELANCER},
     ],
-    driverTags: '',
-    driverSelectedTeam: '',
     driverTransportDetails: '',
     driverUID: '',
     driverLicencePlate: '',
@@ -117,7 +115,6 @@ export default function WebLinks({navigation, route}) {
     selectedTeam: '',
     isTagsShow: false,
     selectedTags: [],
-    selectedTagIndxs: [],
     tagsViewHeight: moderateScale(44),
     vendorLogo: '',
     vendorBanner: '',
@@ -125,6 +122,7 @@ export default function WebLinks({navigation, route}) {
     dialCode: appData?.profile.country?.phonecode
       ? appData?.profile.country?.phonecode
       : '91',
+    driverTagsAry: [],
   });
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -139,13 +137,9 @@ export default function WebLinks({navigation, route}) {
   const {
     cca2,
     phoneNumber,
-    imageArray,
     isDineIn,
     isDelivery,
     isTakeaway,
-    imageArrayBanner,
-    fssaiLicense,
-    sfcLicense,
     fullname,
     email,
     password,
@@ -161,8 +155,6 @@ export default function WebLinks({navigation, route}) {
     driverName,
     driverPhoneNumber,
     driverTypes,
-    driverTags,
-    driverSelectedTeam,
     driverTransportDetails,
     driverUID,
     driverLicencePlate,
@@ -176,7 +168,6 @@ export default function WebLinks({navigation, route}) {
     selectedTeam,
     isTagsShow,
     selectedTags,
-    selectedTagIndxs,
     tagsViewHeight,
     title,
     description,
@@ -185,6 +176,7 @@ export default function WebLinks({navigation, route}) {
     vendorBanner,
     isTermsConditions,
     callingCode,
+    driverTagsAry,
   } = state;
 
   useEffect(() => {
@@ -209,6 +201,7 @@ export default function WebLinks({navigation, route}) {
           htmlContent: res?.data?.page_detail?.primary?.description,
           vendorRegDocs: res?.data?.vendor_registration_documents,
           driverRegDocs: res?.data,
+          driverTagsAry: res?.data?.tags,
         });
       })
       .catch(errorMethod);
@@ -227,7 +220,7 @@ export default function WebLinks({navigation, route}) {
   };
 
   const isValidData = () => {
-    if (paramData?.slug === 'driver-registration') {
+    if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
       const error = validator({
         name: driverName,
         phoneNumber: driverPhoneNumber,
@@ -269,33 +262,10 @@ export default function WebLinks({navigation, route}) {
     if (!checkValid) {
       return;
     }
-    // let isRequired = true;
-    // driverRegDocs?.driver_registration_documents.map((item, index) => {
-    //   if (item.is_required) {
-    //     if (driverRegistrationDocs.length === 0) {
-    //       // console.log(
-    //       //   driverRegDocs?.driver_registration_documents[0].is_required,
-    //       //   'driverRegDocsdriverRegDocs',
-    //       // );
-    //     }
-    //     driverRegistrationDocs.map((itm, indx) => {
-    //       if (isRequired) {
-    //         if (itm.item.id === item.id) {
-    //           console.log(itm.item, 'matched');
-    //           isRequired = false;
-    //           return;
-    //         } else {
-    //           console.log(itm.item, 'not matched');
-    //           return;
-    //         }
-    //       }
-    //     });
-    //   }
-    // });
 
     updateState({isLoading: true});
 
-    if (paramData?.slug === 'driver-registration') {
+    if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
       var formData = new FormData();
       formData.append('name', driverName);
       formData.append('phone_number', driverPhoneNumber);
@@ -364,7 +334,7 @@ export default function WebLinks({navigation, route}) {
       formData.append('name', vendor_name);
       formData.append('vendor_description', description);
       formData.append('address', address);
-      formData.append('website', 'website');
+      formData.append('website', website);
       formData.append('delivery', isDelivery ? 1 : 0);
       formData.append('dine_in', isDineIn ? 1 : 0);
       formData.append('takeaway', isTakeaway ? 1 : 0);
@@ -419,7 +389,7 @@ export default function WebLinks({navigation, route}) {
   };
 
   const _dynamicTextInputChange = (item, indx, mainItem) => {
-    if (paramData?.slug === 'driver-registration') {
+    if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
       const driverRegistrationDocsAry = [...driverRegistrationDocs];
       driverRegistrationDocsAry[indx] = {
         item: mainItem,
@@ -447,7 +417,7 @@ export default function WebLinks({navigation, route}) {
           type: DocumentPicker.types.pdf,
         });
 
-        if (paramData?.slug === 'driver-registration') {
+        if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
           const driverRegistrationDocsAry = [...driverRegistrationDocs];
           driverRegistrationDocsAry[indx] = {
             item: item,
@@ -493,7 +463,7 @@ export default function WebLinks({navigation, route}) {
         })
           .then((res) => {
             if (res && res.data) {
-              if (paramData?.slug === 'driver-registration') {
+              if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
                 if (!!clickedIndx) {
                   {
                     const driverRegistrationDocsAry = [
@@ -560,6 +530,7 @@ export default function WebLinks({navigation, route}) {
             fontSize: textScale(13),
           }}>
           {item.primary?.name || item?.name}
+          {item?.is_required ? '*' : ''}
         </Text>
 
         <View>
@@ -586,7 +557,7 @@ export default function WebLinks({navigation, route}) {
                 </Text>
               </TouchableOpacity>
               <Text style={{fontFamily: fontFamily.regular, marginLeft: 6}}>
-                {paramData?.slug === 'driver-registration'
+                {driverRegDocs?.page_detail?.primary?.type_of_form == 2
                   ? driverRegistrationDocs[index]?.fileData
                     ? driverRegistrationDocs[index]?.fileData?.name
                     : strings.NO_FILE_CHOSEN
@@ -608,7 +579,7 @@ export default function WebLinks({navigation, route}) {
               }}>
               <Image
                 source={
-                  paramData?.slug === 'driver-registration'
+                  driverRegDocs?.page_detail?.primary?.type_of_form == 2
                     ? driverRegistrationDocs[index]?.fileData?.path
                       ? {
                           uri: driverRegistrationDocs[index]?.fileData?.path,
@@ -622,7 +593,7 @@ export default function WebLinks({navigation, route}) {
                 }
                 style={{
                   tintColor:
-                    paramData?.slug === 'driver-registration'
+                    driverRegDocs?.page_detail?.primary?.type_of_form == 2
                       ? !driverRegistrationDocs[index]?.fileData?.path
                         ? themeColors.primary_color
                         : null
@@ -630,7 +601,7 @@ export default function WebLinks({navigation, route}) {
                       ? themeColors.primary_color
                       : null,
                   height:
-                    paramData?.slug === 'driver-registration'
+                    driverRegDocs?.page_detail?.primary?.type_of_form == 2
                       ? driverRegistrationDocs[index]?.fileData?.path
                         ? height / 6 - moderateScale(15)
                         : 30
@@ -638,7 +609,7 @@ export default function WebLinks({navigation, route}) {
                       ? height / 6 - moderateScale(15)
                       : 30,
                   width:
-                    paramData?.slug === 'driver-registration'
+                    driverRegDocs?.page_detail?.primary?.type_of_form == 2
                       ? driverRegistrationDocs[index]?.fileData?.path
                         ? width - moderateScale(80)
                         : 30
@@ -716,25 +687,35 @@ export default function WebLinks({navigation, route}) {
     const selectedTagsAry = [...selectedTags];
 
     const ind = selectedTagsAry.findIndex((item) => item.id == itm.id);
-    // const tagIdind = selectedTagIndxsAry.findIndex((item) => item === indx);
     var result = selectedTagsAry.filter((item, idx) => idx !== ind);
-    // var tagIdresult = selectedTagIndxsAry.filter(
-    //   (item, idx) => idx !== tagIdind,
-    // );
+
     updateState({
       selectedTags: result,
     });
   };
 
- 
-
   const _onLinkPress = (route) => {
     if (route == 'terms') {
-      navigation.navigate(navigationStrings.WEBVIEWSCREEN, { url: driverRegDocs?.terms_and_conditions,})
-   
+      navigation.navigate(navigationStrings.WEBVIEWSCREEN, {
+        url: driverRegDocs?.terms_and_conditions,
+      });
     } else {
-      navigation.navigate(navigationStrings.WEBVIEWSCREEN, { url: driverRegDocs?.terms_and_conditions,})
+      navigation.navigate(navigationStrings.WEBVIEWSCREEN, {
+        url: driverRegDocs?.terms_and_conditions,
+      });
+    }
+  };
 
+  const onSearchTags = (text) => {
+    const driverTagsNewAry = [...driverRegDocs?.tags];
+    let searchedAry;
+    if (text) {
+      searchedAry = driverTagsNewAry.filter((item) => {
+        return item?.name.toLowerCase().includes(text.toLowerCase());
+      });
+      updateState({driverTagsAry: searchedAry});
+    } else {
+      updateState({driverTagsAry: driverRegDocs?.tags});
     }
   };
 
@@ -782,7 +763,7 @@ export default function WebLinks({navigation, route}) {
           )}
         </View>
 
-        {paramData?.slug === 'vendor-registration' && (
+        {driverRegDocs?.page_detail?.primary?.type_of_form == 1 && (
           <View style={styles.mainView}>
             <View style={{marginBottom: moderateScaleVertical(12)}}>
               <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
@@ -1088,7 +1069,8 @@ export default function WebLinks({navigation, route}) {
             />
           </View>
         )}
-        {paramData?.slug === 'driver-registration' && (
+
+        {driverRegDocs?.page_detail?.primary?.type_of_form == 2 && (
           <View style={styles.mainView}>
             <View style={{marginBottom: moderateScaleVertical(12)}}>
               <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
@@ -1354,7 +1336,7 @@ export default function WebLinks({navigation, route}) {
                     placeholder={strings.TAGS}
                     onFocus={() => updateState({isTagsShow: true})}
                     onBlur={() => updateState({isTagsShow: false})}
-                    onPressIn={() => alert()}
+                    onChangeText={onSearchTags}
                     style={{
                       opacity: 0.7,
                       color: isDarkMode
@@ -1381,9 +1363,9 @@ export default function WebLinks({navigation, route}) {
 
                     top: tagsViewHeight,
                   }}>
-                  {driverRegDocs?.tags.length > 0 ? (
+                  {driverTagsAry.length > 0 ? (
                     <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                      {driverRegDocs?.tags.map((item, index) => {
+                      {driverTagsAry.map((item, index) => {
                         return (
                           <TouchableOpacity
                             onPress={() => _onTagSelect(item, index)}

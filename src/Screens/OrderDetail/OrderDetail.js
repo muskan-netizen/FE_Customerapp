@@ -322,16 +322,16 @@ export default function OrderDetail({navigation, route}) {
   const onOrderStatusChange = (status) => {
     switch (status) {
       case 'Accepted':
-        return 'Order Accepted (which is automatic if restaurant has auto accept on)';
+        return strings.ORDERACCEPTED;
         break;
       case 'Processing':
-        return 'Your driver is heading to the restaurant';
+        return strings.PROCCESSING;
         break;
       case 'Out For Delivery':
-        return 'Your driver is heading to you';
+        return strings.OUTFORDELIVERY;
         break;
       case 'Delivered':
-        return 'Your order has been delivered';
+        return strings.ORDERDELIVERED;
         break;
       default:
         break;
