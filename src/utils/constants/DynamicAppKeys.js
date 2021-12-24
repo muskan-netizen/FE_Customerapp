@@ -183,6 +183,7 @@ const shortCodes = {
   dimavega: 'd25db3',
   skoop: 'ff2327',
   kudhyo: '300420',
+  bharatMove: 'e2ec5e',
 };
 
 const appIds = {
@@ -913,6 +914,10 @@ const appIds = {
   kudhyo: Platform.select({
     ios: 'com.kudhyo',
     android: 'com.kudhyo',
+  }),
+  bharatMove: Platform.select({
+    ios: 'com.bharatMove',
+    android: 'com.bharatMove',
   }),
 };
 

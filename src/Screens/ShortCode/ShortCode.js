@@ -1193,6 +1193,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.bharatMove:
+          updateState({
+            shortCode: shortCodes.bharatMove,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
