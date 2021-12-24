@@ -429,4 +429,5 @@ export default {
   checkBox2Active: require('../assets/images/ic_check2.png'),
   checkBox2InActive: require('../assets/images/ic_check1.png'),
   emptyCart3: require('../assets/images/emptyCart3.png'),
+  markerPin: require('../assets/images/markerPin.png')
 };

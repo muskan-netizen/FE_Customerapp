@@ -424,9 +424,11 @@ export default function DashBoardHeaderFive({
             alignItems: 'center',
           }}>
           {!!(profileInfo && profileInfo?.logo) ? (
-            <ScaledImage
-              width={width / 6}
-              height={moderateScaleVertical(50)}
+            <Image
+              style={{
+                width: width / 6,
+                height: moderateScaleVertical(50)
+              }}
               resizeMode="contain"
               source={
                 profileInfo && profileInfo?.logo
