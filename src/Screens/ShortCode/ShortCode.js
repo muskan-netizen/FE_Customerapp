@@ -1286,6 +1286,7 @@ export default function ShortCode({route, navigation}) {
           currency: res?.currencies?.find((x) => x.is_primary).currency_id,
           language: res?.languages?.find((x) => x.is_primary).language_id,
         },
+        true,
       )
       .then(() => {
         updateState({isLoading: false, LoadingScreen: false});

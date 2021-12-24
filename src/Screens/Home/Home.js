@@ -89,10 +89,6 @@ export default function Home({route, navigation}) {
     }, []),
   );
 
-  useEffect(() => {
-    _getLocationFromParams();
-  }, [paramData?.details]);
-
   const _getLocationFromParams = () => {
     if (
       paramData?.details &&
@@ -152,6 +148,7 @@ export default function Home({route, navigation}) {
     console.log(res, 'resPonseOfLatLng');
     actions.locationData(res);
   };
+  console.log(location, 'locationFetch===>');
 
   useEffect(() => {
     Geocoder.init(appData?.profile?.preferences?.map_key, {language: 'en'}); // set the language
@@ -191,48 +188,61 @@ export default function Home({route, navigation}) {
         if (result !== 'goback') {
           getCurrentLocation('home')
             .then((res) => {
-              console.log(res, 'userCurrentLocation');
-              if (
-                appMainData &&
-                typeof appMainData?.reqData == 'object' &&
-                appMainData?.reqData?.latitude &&
-                (location?.latitude == '' || location?.longitude == '')
-              ) {
-                const data = {
-                  address: appMainData?.reqData?.address,
-                  latitude: appMainData?.reqData?.latitude,
-                  longitude: appMainData?.reqData?.longitude,
-                };
-                actions.locationData(res);
-              } else {
-                if (!!appData?.profile?.preferences?.is_hyperlocal) {
-                  if (!!userData?.auth_token && !paramData?.details) {
-                    const nearestAddress = getNearestLocation(
-                      res,
-                      saveAllUserAddress,
-                    );
-
-                    if (!!nearestAddress) {
-                      actions.locationData(nearestAddress);
-                      return;
-                    } else {
-                      actions.locationData(res);
-                      return;
-                    }
-                  }
-                  if (paramData?.details) {
+              // if (
+              //   appMainData &&
+              //   typeof appMainData?.reqData == 'object' &&
+              //   appMainData?.reqData?.latitude &&
+              //   (location?.latitude == '' || location?.longitude == '')
+              // ) {
+              //   const data = {
+              //     address: appMainData?.reqData?.address,
+              //     latitude: appMainData?.reqData?.latitude,
+              //     longitude: appMainData?.reqData?.longitude,
+              //   };
+              //   actions.locationData(res);
+              // }
+              //  else {
+              if (!!appData?.profile?.preferences?.is_hyperlocal) {
+                if (!!userData?.auth_token && !paramData?.details) {
+                  const nearestAddress = getNearestLocation(
+                    res,
+                    saveAllUserAddress,
+                  );
+                  if (!!nearestAddress) {
+                    updateLatLang(nearestAddress);
                   } else {
-                    actions.locationData(res);
+                    updateLatLang(res);
                   }
                 }
-                return;
+                if (paramData?.details) {
+                  _getLocationFromParams();
+                } else {
+                  updateLatLang(res);
+                }
+              } else {
+                updateLatLang({});
               }
+              //   return;
+              // }
             })
             .catch((err) => {});
+        } else if (result === 'blocked') {
+          updateLatLang({});
+          // if (!!appData?.profile?.preferences?.is_hyperlocal ) {
+          //   updateLatLang({});
+          // }
+          // else {
+
+          // }
         }
       })
       .catch((error) => console.log('error while accessing location', error));
-  }, [isRefreshing, userData?.auth_token, saveAllUserAddress]);
+  }, [
+    isRefreshing,
+    userData?.auth_token,
+    saveAllUserAddress,
+    paramData?.details,
+  ]);
 
   useFocusEffect(
     React.useCallback(() => {
