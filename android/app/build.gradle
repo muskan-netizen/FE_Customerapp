@@ -2027,6 +2027,26 @@ android {
             resValue "string", "app_name", "Dima Vega"
             resValue "string", "host_name", ""
          }
+          skoop{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.app.skoop'
+            resValue "string", "app_name", "Skoop"
+            resValue "string", "host_name", ""
+         }
+          kudhyo{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.kudhyo'
+            resValue "string", "app_name", "Kudhyo"
+            resValue "string", "host_name", ""
+         }
     }
 }
 

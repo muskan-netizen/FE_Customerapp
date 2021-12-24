@@ -1181,6 +1181,18 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.skoop:
+          updateState({
+            shortCode: shortCodes.skoop,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kudhyo:
+          updateState({
+            shortCode: shortCodes.kudhyo,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

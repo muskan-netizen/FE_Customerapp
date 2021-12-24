@@ -181,6 +181,8 @@ const shortCodes = {
   movingwheelsdelivery: '46ee7c',
   safewalks: 'bb699c',
   dimavega: 'd25db3',
+  skoop: 'ff2327',
+  kudhyo: '300420',
 };
 
 const appIds = {
@@ -903,6 +905,14 @@ const appIds = {
   dimavega: Platform.select({
     ios: 'com.dimavega',
     android: 'com.dimavega',
+  }),
+  skoop: Platform.select({
+    ios: 'com.app.skoop',
+    android: 'com.app.skoop',
+  }),
+  kudhyo: Platform.select({
+    ios: 'com.kudhyo',
+    android: 'com.kudhyo',
   }),
 };
 
