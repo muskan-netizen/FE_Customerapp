@@ -171,6 +171,7 @@ export default {
   POPULARITY: 'Popularidad',
   MOST_PURCHASED: 'Más vendido',
   HOME: 'Inicio',
+  HOME_1: 'Home',
   HOLD_ON: 'Espera',
   EXIT_WARNING: '¿Estás seguro que querés salir?',
   YES: 'Si',
@@ -732,4 +733,5 @@ export default {
   ORDERDELIVERED: 'Your order has been delivered',
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
   ORDER: 'Order',
+  SELECT_VIA_MAP:"Select via map",
 };
