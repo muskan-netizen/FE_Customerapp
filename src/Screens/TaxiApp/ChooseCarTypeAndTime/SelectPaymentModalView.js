@@ -33,6 +33,7 @@ import {getImageUrl} from '../../../utils/helperFunctions';
 import {androidCameraPermission} from '../../../utils/permissions';
 import stylesFun from './styles';
 import Modal from 'react-native-modal';
+import {isEmpty} from 'lodash';
 
 export default function SelectPaymentModalView({
   isLoading = false,
@@ -572,7 +573,7 @@ export default function SelectPaymentModalView({
                 ? [styles.selectedMethod, {color: MyDarkTheme.colors.text}]
                 : styles.selectedMethod
             }>
-            {selectedPayment
+            {!isEmpty(selectedPayment)
               ? selectedPayment?.title
               : strings.SELECT_PAYMENT_METHOD}
           </Text>

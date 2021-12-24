@@ -315,7 +315,7 @@ export default function TaxiHomeDashbord({
                   : 'en'
               }
               mode="datetime"
-              textColor={isDarkMode ? '#fff' : colors.blackB}
+              textColor={isDarkMode ? colors.black : colors.blackB}
               minimumDate={new Date()}
               style={{
                 width: width - 20,
