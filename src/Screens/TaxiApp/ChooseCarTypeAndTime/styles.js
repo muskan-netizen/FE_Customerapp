@@ -1,4 +1,4 @@
-import { I18nManager, StyleSheet } from 'react-native';
+import {I18nManager, StyleSheet} from 'react-native';
 import store from '../../../redux/store';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
@@ -11,10 +11,10 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import { getColorCodeWithOpactiyNumber } from '../../../utils/helperFunctions';
+import {getColorCodeWithOpactiyNumber} from '../../../utils/helperFunctions';
 
-export default ({ fontFamily, themeColors }) => {
-  const commonStyles = commonStylesFun({ fontFamily });
+export default ({fontFamily, themeColors}) => {
+  const commonStyles = commonStylesFun({fontFamily});
   const styles = StyleSheet.create({
     titleAbout: {
       ...commonStyles.futuraBtHeavyFont14,
@@ -253,8 +253,7 @@ export default ({ fontFamily, themeColors }) => {
       fontFamily: fontFamily.medium,
       textAlign: I18nManager.isRTL ? 'right' : 'left',
       fontSize: textScale(11),
-    
-  }
+    },
   });
   return styles;
 };

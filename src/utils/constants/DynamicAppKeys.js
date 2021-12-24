@@ -176,6 +176,11 @@ const shortCodes = {
   gomeat: '98f085',
   shopcentral: '9bdfac',
   skidoo: '4f130d',
+  admCourier: '56383d',
+  kurbsidekings: '67346e',
+  movingwheelsdelivery: '46ee7c',
+  safewalks: 'bb699c',
+  dimavega: 'd25db3',
 };
 
 const appIds = {
@@ -878,6 +883,26 @@ const appIds = {
   skidoo: Platform.select({
     ios: 'com.skidoo',
     android: 'com.skidoo',
+  }),
+  admCourier: Platform.select({
+    ios: 'com.admcourier',
+    android: 'com.admcourier',
+  }),
+  kurbsidekings: Platform.select({
+    ios: 'com.kurbsidekings',
+    android: 'com.kurbsidekings',
+  }),
+  movingwheelsdelivery: Platform.select({
+    ios: 'com.movingwheelsdelivery',
+    android: 'com.movingwheelsdelivery',
+  }),
+  safewalks: Platform.select({
+    ios: 'com.safewalks',
+    android: 'com.safewalks',
+  }),
+  dimavega: Platform.select({
+    ios: 'com.dimavega',
+    android: 'com.dimavega',
   }),
 };
 

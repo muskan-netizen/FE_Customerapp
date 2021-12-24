@@ -52,14 +52,6 @@
 				<string>fb$(PROJECT_FACEBOOK_ID)</string>
 			</array>
 		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string></string>
-			<key>CFBundleURLSchemes</key>
-			<array/>
-		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
@@ -138,15 +130,6 @@
 		<string>Eina02-Regular.ttf</string>
 		<string>Eina02-Bold.ttf</string>
 		<string>Eina02-SemiBold.ttf</string>
-		<string>Metropolis-Bold.otf</string>
-		<string>Metropolis-Regular.otf</string>
-		<string>Metropolis-SemiBold.otf</string>
-	</array>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>external-accessory</string>
-		<string>fetch</string>
-		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

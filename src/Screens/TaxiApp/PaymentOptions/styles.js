@@ -17,6 +17,7 @@ export default ({fontFamily}) => {
       borderBottomWidth: 0.2,
       borderColor: colors.lightGreyBgColor,
       opacity: 1,
+      marginHorizontal: moderateScale(3),
     },
     textStyle: {
       alignSelf: 'center',
