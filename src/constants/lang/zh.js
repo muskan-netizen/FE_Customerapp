@@ -676,4 +676,6 @@ export default {
   PROCCESSING: 'Your driver is heading to the restaurant',
   OUTFORDELIVERY: 'Your driver is heading to you',
   ORDERDELIVERED: 'Your order has been delivered',
+  PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
+  ORDER: 'Order',
 };

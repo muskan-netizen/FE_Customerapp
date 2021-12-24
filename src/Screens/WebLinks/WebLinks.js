@@ -220,7 +220,7 @@ export default function WebLinks({navigation, route}) {
   };
 
   const isValidData = () => {
-    if (paramData?.slug === 'driver-registration') {
+    if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
       const error = validator({
         name: driverName,
         phoneNumber: driverPhoneNumber,
@@ -265,7 +265,7 @@ export default function WebLinks({navigation, route}) {
 
     updateState({isLoading: true});
 
-    if (paramData?.slug === 'driver-registration') {
+    if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
       var formData = new FormData();
       formData.append('name', driverName);
       formData.append('phone_number', driverPhoneNumber);
@@ -389,7 +389,7 @@ export default function WebLinks({navigation, route}) {
   };
 
   const _dynamicTextInputChange = (item, indx, mainItem) => {
-    if (paramData?.slug === 'driver-registration') {
+    if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
       const driverRegistrationDocsAry = [...driverRegistrationDocs];
       driverRegistrationDocsAry[indx] = {
         item: mainItem,
@@ -417,7 +417,7 @@ export default function WebLinks({navigation, route}) {
           type: DocumentPicker.types.pdf,
         });
 
-        if (paramData?.slug === 'driver-registration') {
+        if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
           const driverRegistrationDocsAry = [...driverRegistrationDocs];
           driverRegistrationDocsAry[indx] = {
             item: item,
@@ -463,7 +463,7 @@ export default function WebLinks({navigation, route}) {
         })
           .then((res) => {
             if (res && res.data) {
-              if (paramData?.slug === 'driver-registration') {
+              if (driverRegDocs?.page_detail?.primary?.type_of_form == 2) {
                 if (!!clickedIndx) {
                   {
                     const driverRegistrationDocsAry = [
@@ -518,7 +518,6 @@ export default function WebLinks({navigation, route}) {
   };
 
   const _renderFields = ({item, index}) => {
-   
     return (
       <View
         style={{
@@ -558,7 +557,7 @@ export default function WebLinks({navigation, route}) {
                 </Text>
               </TouchableOpacity>
               <Text style={{fontFamily: fontFamily.regular, marginLeft: 6}}>
-                {paramData?.slug === 'driver-registration'
+                {driverRegDocs?.page_detail?.primary?.type_of_form == 2
                   ? driverRegistrationDocs[index]?.fileData
                     ? driverRegistrationDocs[index]?.fileData?.name
                     : strings.NO_FILE_CHOSEN
@@ -580,7 +579,7 @@ export default function WebLinks({navigation, route}) {
               }}>
               <Image
                 source={
-                  paramData?.slug === 'driver-registration'
+                  driverRegDocs?.page_detail?.primary?.type_of_form == 2
                     ? driverRegistrationDocs[index]?.fileData?.path
                       ? {
                           uri: driverRegistrationDocs[index]?.fileData?.path,
@@ -594,7 +593,7 @@ export default function WebLinks({navigation, route}) {
                 }
                 style={{
                   tintColor:
-                    paramData?.slug === 'driver-registration'
+                    driverRegDocs?.page_detail?.primary?.type_of_form == 2
                       ? !driverRegistrationDocs[index]?.fileData?.path
                         ? themeColors.primary_color
                         : null
@@ -602,7 +601,7 @@ export default function WebLinks({navigation, route}) {
                       ? themeColors.primary_color
                       : null,
                   height:
-                    paramData?.slug === 'driver-registration'
+                    driverRegDocs?.page_detail?.primary?.type_of_form == 2
                       ? driverRegistrationDocs[index]?.fileData?.path
                         ? height / 6 - moderateScale(15)
                         : 30
@@ -610,7 +609,7 @@ export default function WebLinks({navigation, route}) {
                       ? height / 6 - moderateScale(15)
                       : 30,
                   width:
-                    paramData?.slug === 'driver-registration'
+                    driverRegDocs?.page_detail?.primary?.type_of_form == 2
                       ? driverRegistrationDocs[index]?.fileData?.path
                         ? width - moderateScale(80)
                         : 30
@@ -764,7 +763,7 @@ export default function WebLinks({navigation, route}) {
           )}
         </View>
 
-        {paramData?.slug === 'vendor-registration' && (
+        {driverRegDocs?.page_detail?.primary?.type_of_form == 1 && (
           <View style={styles.mainView}>
             <View style={{marginBottom: moderateScaleVertical(12)}}>
               <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>
@@ -1070,7 +1069,8 @@ export default function WebLinks({navigation, route}) {
             />
           </View>
         )}
-        {paramData?.slug === 'driver-registration' && (
+
+        {driverRegDocs?.page_detail?.primary?.type_of_form == 2 && (
           <View style={styles.mainView}>
             <View style={{marginBottom: moderateScaleVertical(12)}}>
               <Text style={styles.detailStyle}>{strings.PERSONAL_DETAILS}</Text>

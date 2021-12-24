@@ -352,6 +352,7 @@ export default {
   newsort: require('../assets/images/RoyoorderNewImages/sort.png'),
   icBagA: require('../assets/images/RoyoorderNewImages/ic_bag2.png'),
   cartIcon: require('../assets/images/RoyoorderNewImages/ic_cart.png'),
+  icLocationPin_: require('../assets/images/RoyoorderNewImages/ic_location_.png'),
 
   cash: require('../assets/images/TAXIAPPIMAGES/ic_cash.png'),
   card: require('../assets/images/TAXIAPPIMAGES/ic_card.png'),
@@ -428,4 +429,5 @@ export default {
   checkBox2Active: require('../assets/images/ic_check2.png'),
   checkBox2InActive: require('../assets/images/ic_check1.png'),
   emptyCart3: require('../assets/images/emptyCart3.png'),
+  markerPin: require('../assets/images/markerPin.png')
 };

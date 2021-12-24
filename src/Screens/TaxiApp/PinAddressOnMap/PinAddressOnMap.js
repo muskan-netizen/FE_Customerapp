@@ -134,6 +134,7 @@ export default function HomeScreenTaxi({navigation, route}) {
             },
           },
           address_components: json.results[0].address_components,
+          place_id: json.results[0].place_id,
         };
         updateState({
           details: detail,
@@ -225,18 +226,26 @@ export default function HomeScreenTaxi({navigation, route}) {
   };
 
   const _modeToNextScreen = () => {
+    const {params} = route;
     const pickuplocationAllData = {
       longitude: details?.geometry?.location?.lng,
       latitude: details?.geometry?.location?.lat,
       address: details?.formatted_address,
       task_type_id: paramData?.task_id,
       pre_address: details?.formatted_address,
+      place_id: details?.place_id,
     };
 
     console.log(pickuplocationAllData, 'pickuplocationAllData');
-    navigation.navigate(navigationStrings.ADDADDRESS, {
-      prefillAdress: pickuplocationAllData,
-    });
+    if (params?.prevRoute === 'cart') {
+      params?.onGoBack(pickuplocationAllData);
+      navigation.goBack();
+    } else {
+      navigation.navigate(navigationStrings.ADDADDRESS, {
+        prefillAdress: pickuplocationAllData,
+      });
+    }
+
     //   }
   };
 
@@ -255,25 +264,24 @@ export default function HomeScreenTaxi({navigation, route}) {
     <>
       <MapView
         ref={mapRef}
-        provider={PROVIDER_GOOGLE}
-        //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={styles.map}
         // region={region}
         initialRegion={region}
         // pointerEvents={'none'}
         onRegionChangeComplete={_onRegionChange}
-        >
-        {/* <Marker
-            ref={markerRef}
-            // pointerEvents={'none'}
-            coordinate={coordinate}
-            image={imagePath.mapPin2}
-            // onDrag={(e) => _onDrag(e)}
-            // onDragEnd={(e) => _onDragEnd(e)}
-            // onPress={(e) => console.log('onPress', e)}
-            // draggable
-          /> */}
-      </MapView>
+      />
+      {/* <Marker
+          ref={markerRef}
+          // pointerEvents={'none'}
+          coordinate={coordinate}
+          image={imagePath.mapPin2}
+          // onDrag={(e) => _onDrag(e)}
+          // onDragEnd={(e) => _onDragEnd(e)}
+          // onPress={(e) => console.log('onPress', e)}
+          // draggable
+        /> */}
+
       <View style={[styles.backbutton, {marginHorizontal: moderateScale(15)}]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <View
@@ -306,7 +314,10 @@ export default function HomeScreenTaxi({navigation, route}) {
           justifyContent: 'center',
           // marginTop: height / 2,
         }}>
-        <Image source={imagePath.mapPin2} />
+        <Image
+          source={imagePath.icLocationPin_}
+          style={{tintColor: themeColors.primary_color}}
+        />
       </View>
       <View
         style={{
