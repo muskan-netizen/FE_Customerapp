@@ -635,6 +635,7 @@ export default function Products({route, navigation}) {
     }
   };
 
+  console.log("cloneSectionListcloneSectionList",cloneSectionList)
   /**********Get all list items by category id */
   const getAllProducts = () => {
     console.log('api hit getProductByCategoryId', data);
