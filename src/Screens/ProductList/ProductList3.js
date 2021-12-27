@@ -638,7 +638,7 @@ export default function Products({route, navigation}) {
     }
   };
 
-  console.log("cloneSectionListcloneSectionList",cloneSectionList)
+  console.log('cloneSectionListcloneSectionList', cloneSectionList);
   /**********Get all list items by category id */
   const getAllProducts = () => {
     console.log('api hit getProductByCategoryId', data);
@@ -1966,6 +1966,7 @@ export default function Products({route, navigation}) {
                         }}>
                         {data?.name || categoryInfo?.name || ''}
                       </Text>
+
                       {!!categoryInfo &&
                         !!categoryInfo?.product_avg_average_rating && (
                           <View
