@@ -12,6 +12,7 @@ import {
   View,
   TextInput,
   Keyboard,
+  Dimensions,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -23,8 +24,10 @@ import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
+  StatusBarHeight,
   textScale,
 } from '../../../styles/responsiveSize';
 import {MyDarkTheme} from '../../../styles/theme';
@@ -86,6 +89,7 @@ export default function SelectPaymentModalView({
   const [myAnswerdArray, setMyAllanswers] = useState([]);
   const [myFaqValidationArray, setMyFaqValidationArray] = useState([]);
   const [validationFucCalled, setvalidationFucCalled] = useState(true);
+  const [faqModalLayoutHeight, setfaqModalLayoutHeight] = useState(null);
 
   //Naviagtion to specific screen
   const moveToNewScreen =
@@ -235,6 +239,11 @@ export default function SelectPaymentModalView({
         setvalidationFucCalled(false);
       }
     }
+  };
+
+  const setVisiblityWithModalSize = () => {
+    setShowModal(false);
+    setfaqModalLayoutHeight(null);
   };
 
   return (
@@ -705,242 +714,264 @@ export default function SelectPaymentModalView({
         style={{
           margin: moderateScale(0),
           justifyContent: 'flex-end',
+
           // backgroundColor: isDarkMode ? colors.black : colors.white,
         }}
         // animationInTiming={600}
         onBackdropPress={() => setShowModal(false)}>
         <View
+          onLayout={(event) => {
+            var {x, y, width, height} = event.nativeEvent.layout;
+            setfaqModalLayoutHeight(height);
+          }}
           style={{
+            paddingTop:
+              faqModalLayoutHeight === Dimensions.get('window').height
+                ? StatusBarHeight
+                : moderateScaleVertical(0),
             backgroundColor: isDarkMode ? colors.black : colors.white,
             padding: moderateScale(12),
             borderRadius: moderateScale(8),
             paddingBottom: moderateScale(keyboardHeight),
           }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: moderateScaleVertical(12),
-            }}>
-            <Text />
-
-            <TouchableOpacity onPress={() => setShowModal(false)}>
-              <Image source={imagePath.closeButton} />
-            </TouchableOpacity>
-          </View>
-
-          {productFaqQuestionAnswers?.product_faq?.map((item, index) => {
-            setAllRequiredQuestions(item, index);
-
-            return (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <>
               <View
                 style={{
-                  marginTop: moderateScaleVertical(10),
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginBottom: moderateScaleVertical(12),
+                  marginTop: moderateScaleVertical(25),
                 }}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text
-                    style={{
-                      marginBottom: moderateScaleVertical(10),
-                      color: colors.redColor,
-                    }}>
-                    {`${item?.is_required ? '* ' : ''}`}
-                  </Text>
-                  <Text
-                    style={{
-                      marginBottom: moderateScaleVertical(10),
-                      fontFamily: fontFamily.medium,
-                      color: isDarkMode ? colors.white : colors.blackC,
-                    }}>
-                    {item?.translations[0]?.name}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    // marginVertical: moderateScaleVertical(16),
-                    backgroundColor: isDarkMode
-                      ? colors.whiteOpacity15
-                      : colors.greyNew,
-                    height: moderateScale(42),
-                    borderRadius: moderateScale(4),
-                    paddingHorizontal: moderateScale(8),
-                  }}>
-                  <TextInput
-                    multiline
-                    placeholder={strings.ANSWER}
-                    onChangeText={(text) =>
-                      onChangeText(item, text, index, item?.length)
-                    }
-                    style={{
-                      ...styles.insctructionText,
-                      color: isDarkMode ? colors.textGreyB : colors.black,
-                    }}
-                    onSubmitEditing={Keyboard.dismiss}
-                    placeholderTextColor={
-                      isDarkMode ? colors.textGreyB : colors.blackOpacity40
-                    }
-                  />
-                </View>
-              </View>
-            );
-          })}
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: moderateScaleVertical(12),
-              marginTop: moderateScaleVertical(5),
-            }}>
-            <Text
-              style={{
-                fontFamily: fontFamily.medium,
-                textAlign: 'left',
-                color: isDarkMode ? colors.white : colors.blackC,
-              }}>
-              {strings.ADDINSTRACTION}
-            </Text>
-          </View>
+                <Text />
 
-          {isError && (
-            <Text
-              style={{
-                fontSize: textScale(10),
-                fontFamily: fontFamily.medium,
-                textAlign: 'left',
-                color: colors.redB,
-                marginBottom: moderateScaleVertical(4),
-              }}>
-              {strings.PLEASEADDINSTRACTION}
-            </Text>
-          )}
-          <View
-            style={{
-              // marginVertical: moderateScaleVertical(16),
-              backgroundColor: isDarkMode
-                ? colors.whiteOpacity15
-                : colors.greyNew,
-              height: moderateScale(82),
-              borderRadius: moderateScale(4),
-              paddingHorizontal: moderateScale(8),
-            }}>
-            <TextInput
-              multiline
-              value={taskInstruction}
-              placeholder={strings.INSTRUCTION}
-              onChangeText={(val) => setInstruction(val)}
-              style={{
-                ...styles.insctructionText,
-                color: isDarkMode ? colors.textGreyB : colors.black,
-                textAlignVertical: 'top',
-              }}
-              onSubmitEditing={Keyboard.dismiss}
-              placeholderTextColor={
-                isDarkMode ? colors.textGreyB : colors.blackOpacity40
-              }
-            />
-          </View>
-          <Text
-            style={{
-              fontSize: textScale(12),
-              fontFamily: fontFamily.medium,
-              textAlign: 'left',
-              marginTop: moderateScaleVertical(10),
-              color: isDarkMode ? colors.white : colors.blackC,
-            }}>
-            {strings.ADDIMAGE1}
-          </Text>
-          <View
-            style={{
-              marginVertical: 0,
-              paddingVertical: 0,
-              // alignSelf: 'flex-start',
-              overflow: 'visible',
-            }}>
-            <FlatList
-              horizontal
-              data={image}
-              ItemSeparatorComponent={() => <View style={{marginLeft: 8}} />}
-              ListHeaderComponent={() => {
-                return (
-                  <TouchableOpacity
-                    style={{
-                      width: moderateScale(40),
-                      height: moderateScale(40),
-                      borderRadius: moderateScale(8),
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginVertical: moderateScaleVertical(5),
-                      marginRight: moderateScale(10),
-                    }}
-                    onPress={() => onImageUpload()}>
-                    <Image
-                      style={{
-                        tintColor: isDarkMode ? colors.white : colors.blackC,
-                      }}
-                      source={imagePath.icImageUpload}
-                    />
-                  </TouchableOpacity>
-                );
-              }}
-              renderItem={({item, index}) => {
+                <TouchableOpacity onPress={() => setShowModal(false)}>
+                  <Image source={imagePath.closeButton} />
+                </TouchableOpacity>
+              </View>
+
+              {productFaqQuestionAnswers?.product_faq?.map((item, index) => {
+                setAllRequiredQuestions(item, index);
+
                 return (
                   <View
                     style={{
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      marginTop: moderateScaleVertical(10),
                     }}>
-                    <View>
-                      <Image
-                        source={{uri: item}}
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Text
+                        style={{
+                          marginBottom: moderateScaleVertical(10),
+                          color: colors.redColor,
+                        }}>
+                        {`${item?.is_required ? '* ' : ''}`}
+                      </Text>
+                      <Text
+                        style={{
+                          marginBottom: moderateScaleVertical(10),
+                          fontFamily: fontFamily.medium,
+                          color: isDarkMode ? colors.white : colors.blackC,
+                        }}>
+                        {item?.translations[0]?.name}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        // marginVertical: moderateScaleVertical(16),
+                        backgroundColor: isDarkMode
+                          ? colors.whiteOpacity15
+                          : colors.greyNew,
+                        height: moderateScale(42),
+                        borderRadius: moderateScale(4),
+                        paddingHorizontal: moderateScale(8),
+                      }}>
+                      <TextInput
+                        multiline
+                        placeholder={strings.ANSWER}
+                        onChangeText={(text) =>
+                          onChangeText(item, text, index, item?.length)
+                        }
+                        style={{
+                          ...styles.insctructionText,
+                          color: isDarkMode ? colors.textGreyB : colors.black,
+                        }}
+                        onSubmitEditing={Keyboard.dismiss}
+                        placeholderTextColor={
+                          isDarkMode ? colors.textGreyB : colors.blackOpacity40
+                        }
+                      />
+                    </View>
+                  </View>
+                );
+              })}
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginBottom: moderateScaleVertical(12),
+                  marginTop: moderateScaleVertical(5),
+                }}>
+                <Text
+                  style={{
+                    fontFamily: fontFamily.medium,
+                    textAlign: 'left',
+                    color: isDarkMode ? colors.white : colors.blackC,
+                  }}>
+                  {strings.ADDINSTRACTION}
+                </Text>
+              </View>
+
+              {isError && (
+                <Text
+                  style={{
+                    fontSize: textScale(10),
+                    fontFamily: fontFamily.medium,
+                    textAlign: 'left',
+                    color: colors.redB,
+                    marginBottom: moderateScaleVertical(4),
+                  }}>
+                  {strings.PLEASEADDINSTRACTION}
+                </Text>
+              )}
+              <View
+                style={{
+                  // marginVertical: moderateScaleVertical(16),
+                  backgroundColor: isDarkMode
+                    ? colors.whiteOpacity15
+                    : colors.greyNew,
+                  height: moderateScale(82),
+                  borderRadius: moderateScale(4),
+                  paddingHorizontal: moderateScale(8),
+                }}>
+                <TextInput
+                  multiline
+                  value={taskInstruction}
+                  placeholder={strings.INSTRUCTION}
+                  onChangeText={(val) => setInstruction(val)}
+                  style={{
+                    ...styles.insctructionText,
+                    color: isDarkMode ? colors.textGreyB : colors.black,
+                    textAlignVertical: 'top',
+                  }}
+                  onSubmitEditing={Keyboard.dismiss}
+                  placeholderTextColor={
+                    isDarkMode ? colors.textGreyB : colors.blackOpacity40
+                  }
+                />
+              </View>
+              <Text
+                style={{
+                  fontSize: textScale(12),
+                  fontFamily: fontFamily.medium,
+                  textAlign: 'left',
+                  marginTop: moderateScaleVertical(10),
+                  color: isDarkMode ? colors.white : colors.blackC,
+                }}>
+                {strings.ADDIMAGE1}
+              </Text>
+              <View
+                style={{
+                  marginVertical: 0,
+                  paddingVertical: 0,
+                  // alignSelf: 'flex-start',
+                  overflow: 'visible',
+                }}>
+                <FlatList
+                  horizontal
+                  data={image}
+                  ItemSeparatorComponent={() => (
+                    <View style={{marginLeft: 8}} />
+                  )}
+                  ListHeaderComponent={() => {
+                    return (
+                      <TouchableOpacity
                         style={{
                           width: moderateScale(40),
                           height: moderateScale(40),
                           borderRadius: moderateScale(8),
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginVertical: moderateScaleVertical(5),
+                          marginRight: moderateScale(10),
                         }}
-                      />
-                      <TouchableOpacity
-                        onPress={() => removeImage(index)}
-                        style={{
-                          position: 'absolute',
-                          right: 0,
-                        }}>
+                        onPress={() => onImageUpload()}>
                         <Image
                           style={{
-                            width: moderateScale(16),
-                            height: moderateScale(16),
-                            borderRadius: moderateScale(10),
+                            tintColor: isDarkMode
+                              ? colors.white
+                              : colors.blackC,
                           }}
-                          resizeMode="contain"
-                          source={imagePath.icClose3}
+                          source={imagePath.icImageUpload}
                         />
                       </TouchableOpacity>
-                    </View>
-                  </View>
-                );
-              }}
-            />
-          </View>
+                    );
+                  }}
+                  renderItem={({item, index}) => {
+                    return (
+                      <View
+                        style={{
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <View>
+                          <Image
+                            source={{uri: item}}
+                            style={{
+                              width: moderateScale(40),
+                              height: moderateScale(40),
+                              borderRadius: moderateScale(8),
+                            }}
+                          />
+                          <TouchableOpacity
+                            onPress={() => removeImage(index)}
+                            style={{
+                              position: 'absolute',
+                              right: 0,
+                            }}>
+                            <Image
+                              style={{
+                                width: moderateScale(16),
+                                height: moderateScale(16),
+                                borderRadius: moderateScale(10),
+                              }}
+                              resizeMode="contain"
+                              source={imagePath.icClose3}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    );
+                  }}
+                />
+              </View>
 
-          <GradientButton
-            colorsArray={[themeColors.primary_color, themeColors.primary_color]}
-            textStyle={{textTransform: 'none', fontSize: textScale(12)}}
-            onPress={() => {
-              const isRequired = myFaqValidationArray.some(checkRequird);
-              function checkRequird(checkRequird) {
-                return checkRequird == true;
-              }
+              <GradientButton
+                colorsArray={[
+                  themeColors.primary_color,
+                  themeColors.primary_color,
+                ]}
+                textStyle={{textTransform: 'none', fontSize: textScale(12)}}
+                onPress={() => {
+                  const isRequired = myFaqValidationArray.some(checkRequird);
+                  function checkRequird(checkRequird) {
+                    return checkRequird == true;
+                  }
 
-              if (isRequired) {
-                alert(strings.PLEASEFILDALL);
-              } else {
-                setAllFormData();
-              }
-            }}
-            btnText={strings.SUBMIT}
-            marginTop={moderateScaleVertical(16)}
-            marginBottom={moderateScaleVertical(16)}
-          />
+                  if (isRequired) {
+                    alert(strings.PLEASEFILDALL);
+                  } else {
+                    setAllFormData();
+                  }
+                }}
+                btnText={strings.SUBMIT}
+                marginTop={moderateScaleVertical(16)}
+                marginBottom={moderateScaleVertical(16)}
+              />
+            </>
+          </ScrollView>
         </View>
       </Modal>
     </View>
