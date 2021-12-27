@@ -119,6 +119,9 @@ const RoyoHome = (props) => {
       )
       .then((res) => {
         console.log('vendor orders res', res);
+
+        let newVendor = res.data.vendor_list.find((x) => x.is_selected);
+        if (!storeSelectedVendor?.id) actions.savedSelectedVendor(newVendor);
         updateState({
           activeOrders: res.data.order_list.data,
           selectedVendor: !!storeSelectedVendor?.id
@@ -156,13 +159,13 @@ const RoyoHome = (props) => {
     });
   }, [activeOrders]);
 
-  useEffect(()=>{
+  useEffect(() => {
     _getListOfVendorOrders();
-  },[])
+  }, []);
 
   useEffect(() => {
     if (selectedVendor != null) {
-      console.log()
+      console.log();
       _getRevnueData();
     }
   }, [selectedVendor, pageActive]);

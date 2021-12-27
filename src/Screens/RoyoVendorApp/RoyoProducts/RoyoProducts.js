@@ -31,7 +31,6 @@ const RoyoProducts = (props) => {
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
-
   const renderItem = (data, rowMap) => {
     const {item, index} = data;
     console.log(item);
@@ -75,11 +74,8 @@ const RoyoProducts = (props) => {
             </View>
             {/* <Image style={{alignSelf: 'flex-end'}} source={imagePath.share} /> */}
           </View>
-          <Text
-            style={styles.font13Regular}>
-            in {categoryName}
-          </Text>
-          
+          <Text style={styles.font13Regular}>in {categoryName}</Text>
+
           <View style={{marginTop: 10}}>
             <HTMLView value={item?.translation[0]?.body_html} />
             <View />
@@ -104,7 +100,6 @@ const RoyoProducts = (props) => {
   };
 
   const {storeSelectedVendor} = useSelector((state) => state?.order);
-
   const [state, setState] = useState({
     activeIndex: 0,
     headerText: 'Products',
@@ -154,7 +149,6 @@ const RoyoProducts = (props) => {
 
   useEffect(() => {
     updateState({
-      // selectedTab: null,
       selectedVendor: storeSelectedVendor,
       isLoading: true,
       pageNo: 1,
@@ -167,7 +161,7 @@ const RoyoProducts = (props) => {
     actions
       .getProductBySpecificId(
         `?selected_category_id=${
-          id || ''
+          id || storeSelectedVendor?.id
         }&limit=${limit}&page=${pageNo}&selected_vendor_id=${
           selectedVendor?.id || ''
         }`,
@@ -180,14 +174,11 @@ const RoyoProducts = (props) => {
       )
       .then((res) => {
         let categorylist = res.data.category_list.filter((x) => x.is_selected);
-        console.log(categorylist, 'data at categorylist');
-
-        console.log(res, 'data at product');
         updateState({
           isLoading: false,
           isRefreshing: false,
           vendor_list: res.data.vendor_list,
-          categoryName: categorylist[0].name,
+          categoryName: categorylist[0]?.name,
           selectedVendor: !!storeSelectedVendor?.id
             ? storeSelectedVendor
             : !!selectedVendor
@@ -225,11 +216,12 @@ const RoyoProducts = (props) => {
     trailing: false,
   });
 
-  const selectedCategory = async(index) => {
-    updateState({pageNo: 0})
-    setTimeout(()=>getAllProducts(index), 1000)
+  const selectedCategory = async (index) => {
+    updateState({pageNo: 0});
+    setTimeout(() => getAllProducts(index), 1000);
   };
 
+  console.log(category_list, 'thi si scategoru');
   const renderCatogry = ({item, index}) => (
     <View
       key={index}
@@ -284,7 +276,7 @@ const RoyoProducts = (props) => {
 
   return (
     <WrapperContainer
-    // isLoading={isLoading}
+      // isLoading={isLoading}
       bgColor="white"
       statusBarColor="white"
       barStyle="dark-content">
@@ -347,7 +339,9 @@ const RoyoProducts = (props) => {
             />
             <ButtonWithLoader
               onPress={() =>
-                navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT, {vendor_list})
+                navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT, {
+                  vendor_list,
+                })
               }
               btnStyle={styles.productBtn}
               btnText="+  products"
@@ -370,7 +364,9 @@ const RoyoProducts = (props) => {
 
             <ButtonWithLoader
               onPress={() =>
-                navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT, {vendor_list})
+                navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT, {
+                  vendor_list,
+                })
               }
               btnStyle={styles.categoryBtn}
               btnText="+  category"

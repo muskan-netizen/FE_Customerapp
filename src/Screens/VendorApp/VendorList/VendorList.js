@@ -68,7 +68,6 @@ export default function VendorList({navigation, route}) {
     );
   };
   const styles = stylesData({fontFamily});
-
   return (
     <WrapperContainer
       bgColor={
