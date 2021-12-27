@@ -22,6 +22,8 @@ import ActionSheet from 'react-native-actionsheet';
 import {cameraHandler} from '../../../utils/commonFunction';
 import Header from '../../../Components/Header';
 import { useSelector } from 'react-redux';
+import validations from '../../../utils/validations';
+import { showError } from '../../../utils/helperFunctions';
 
 const RoyoAddProduct = (props) => {
   const {navigation} = props;
@@ -42,6 +44,7 @@ const RoyoAddProduct = (props) => {
     salePrice,
     productDetail,
     selectedImage,
+    productCategory
   } = state;
 
   const updateState = (data) => {
@@ -97,52 +100,74 @@ const RoyoAddProduct = (props) => {
       : actionSheet.current.show();
   };
 
+  const isValidData = () => {
+    const error = validations({
+  //   selectedBuisnessType:selectedBuisnessType,
+  //  productCategory:productCategory,
+  //  productDetail:productDetail,
+  //  productName:productName,
+   mrp:mrp,
+   salePrice:salePrice,
+   });
+    if (error) {
+      showError(error);
+      return;
+    }
+    return true;
+  };
+  
   const onPressAdd = () => {
-    if (
-      selectedImage &&
-      selectedBuisnessType &&
-      productDetail &&
-      productName &&
-      mrp &&
-      salePrice
-    ) {
-      updateState({
-        selectedBuisnessType: '',
-        productName: '',
-        productCategory: '',
-        mrp: '',
-        salePrice: '',
-        productDetail: '',
-        selectedImage: '',
-      });
-      {
-        navigation.navigate(navigationStrings.ROYO_ADD_PRODUCT);
-      }
-    } else
-      showMessage({
-        type: 'danger',
-        icon: 'danger',
-        message: 'Please fill all the detail',
-      });
+    // if(!selectedImage.length){
+    //   return showError('Please select atleast one image')
+    // }
+    const checkValid = isValidData();
+    if (!checkValid) {
+      return;
+    }
+    let formData=new FormData()
+    formData.append('selectedBuisnessType',selectedBuisnessType)
+    formData.append('productCategory',productCategory)
+    formData.append('productDetail',productDetail)
+    formData.append('productName',productName)
+    formData.append('mrp',mrp)
+    formData.append('salePrice',salePrice)
+    if(selectedImage.length){
+      selectedImage.map((i,inx)=>{
+        formData.append('image[]',i)
+      })
+    }
+    console.log(formData,"formData");
+  
+    // navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT);
+
+    
   };
 
   const onPressSave = () => {
-    if (
-      selectedImage &&
-      selectedBuisnessType &&
-      productDetail &&
-      productName &&
-      mrp &&
-      salePrice
-    ) {
-      
-      navigation.navigate(navigationStrings.ROYO_HOME);
-    } else
-      showMessage({
-        type: 'danger',
-        icon: 'danger',
-        message: 'Please fill all the detail',
-      });
+    if(!selectedImage.length){
+      return showError('Please select atleast one image')
+    }
+    const checkValid = isValidData();
+    if (!checkValid) {
+      return;
+    }
+
+    let formData=new FormData()
+    formData.append('selectedBuisnessType',selectedBuisnessType)
+    formData.append('productCategory',productCategory)
+    formData.append('productDetail',productDetail)
+    formData.append('productName',productName)
+    formData.append('mrp',mrp)
+    formData.append('salePrice',salePrice)
+    if(selectedImage.length){
+      selectedImage.map((i,inx)=>{
+        formData.append('image[]',i)
+      })
+    }
+    console.log(formData,"formData");
+  
+    // navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT);
+
   };
 
 
@@ -150,7 +175,7 @@ const RoyoAddProduct = (props) => {
     navigation.navigate(navigationStrings.VENDORLIST, {
       selectedVendor: storeSelectedVendor,
       allVendors: vendor_list,
-      screenType: navigationStrings.ROYO_ADD_PRODUCT,
+      screenType: navigationStrings.ROYO_VENDOR_ADD_PRODUCT,
     });
   };
   const deleteImage = (index) => {

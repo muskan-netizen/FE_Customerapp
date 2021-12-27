@@ -730,5 +730,6 @@ export default {
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
   ORDER: 'Order',
   SELECT_VIA_MAP:"Select via map",
-  HOUSE_NO:'House No'
+  HOUSE_NO:'House No',
+  PLEASE_ENTER_VALID_NUMERIC: 'Please enter numeric value for',
 };

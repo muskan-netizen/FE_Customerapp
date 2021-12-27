@@ -734,4 +734,5 @@ export default {
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
   ORDER: 'Order',
   SELECT_VIA_MAP:"Select via map",
+  PLEASE_ENTER_VALID_NUMERIC: 'Please enter numeric value for',
 };

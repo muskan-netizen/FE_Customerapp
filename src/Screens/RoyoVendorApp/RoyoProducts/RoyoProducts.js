@@ -22,7 +22,7 @@ import {FlatList} from 'react-native';
 import staticStrings from '../../../constants/staticStrings';
 import {cloneDeep, debounce} from 'lodash';
 import actions from '../../../redux/actions';
-import {getImageUrl} from '../../../utils/helperFunctions';
+import {getImageUrl, showError} from '../../../utils/helperFunctions';
 import HTMLView from 'react-native-htmlview';
 import {RefreshControl} from 'react-native';
 
@@ -180,6 +180,8 @@ const RoyoProducts = (props) => {
       )
       .then((res) => {
         let categorylist = res.data.category_list.filter((x) => x.is_selected);
+        console.log(categorylist, 'data at categorylist');
+
         console.log(res, 'data at product');
         updateState({
           isLoading: false,
@@ -226,7 +228,6 @@ const RoyoProducts = (props) => {
   const selectedCategory = async(index) => {
     updateState({pageNo: 0})
     setTimeout(()=>getAllProducts(index), 1000)
-    
   };
 
   const renderCatogry = ({item, index}) => (
@@ -346,7 +347,7 @@ const RoyoProducts = (props) => {
             />
             <ButtonWithLoader
               onPress={() =>
-                navigation.navigate(navigationStrings.ROYO_ADD_PRODUCT, {vendor_list})
+                navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT, {vendor_list})
               }
               btnStyle={styles.productBtn}
               btnText="+  products"
@@ -369,7 +370,7 @@ const RoyoProducts = (props) => {
 
             <ButtonWithLoader
               onPress={() =>
-                navigation.navigate(navigationStrings.ROYO_ADD_PRODUCT, {vendor_list})
+                navigation.navigate(navigationStrings.ROYO_VENDOR_ADD_PRODUCT, {vendor_list})
               }
               btnStyle={styles.categoryBtn}
               btnText="+  category"

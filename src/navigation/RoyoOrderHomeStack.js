@@ -8,7 +8,7 @@ export default function () {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={navigationStrings.ROYO_HOME}
+        name={navigationStrings.ROYO_VENDOR_HOME}
         component={RoyoHome}
         options={{headerShown: false}}
       />

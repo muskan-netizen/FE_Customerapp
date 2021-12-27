@@ -56,7 +56,7 @@ const RoyoAccounts = (props) => {
     navigation.navigate(navigationStrings.VENDORLIST, {
       selectedVendor: selectedVendor,
       allVendors: vendor_list,
-      screenType: navigationStrings.ROYO_ACCOUNT,
+      screenType: navigationStrings.ROYO_VENDOR_ACCOUNT,
     });
   };
 
@@ -118,13 +118,13 @@ const RoyoAccounts = (props) => {
     {
       text: 'Transactions',
       image: imagePath.transactionsRoyo,
-      onPress: () => navigation.navigate(navigationStrings.ROYO_TRANSACTIONS),
+      onPress: () => navigation.navigate(navigationStrings.ROYO_VENDOR_TRANSACTIONS),
     },
     {
       text: 'Payment Settings',
       image: imagePath.paymentSettinRoyo,
       onPress: () =>
-        navigation.navigate(navigationStrings.ROYO_PAYMENT_SETTINGS),
+        navigation.navigate(navigationStrings.ROYO_VENDOR_PAYMENT_SETTINGS),
     },
     {
       text: 'Signout',

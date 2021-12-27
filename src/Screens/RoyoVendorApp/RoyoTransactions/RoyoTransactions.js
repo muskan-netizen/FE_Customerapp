@@ -53,7 +53,7 @@ const RoyoTransactions = (props) => {
     navigation.navigate(navigationStrings.VENDORLIST, {
       selectedVendor: selectedVendor,
       allVendors: vendor_list,
-      screenType: navigationStrings.ROYO_TRANSACTIONS,
+      screenType: navigationStrings.ROYO_VENDOR_TRANSACTIONS,
     });
   };
   const _getListOfVendor = () => {
