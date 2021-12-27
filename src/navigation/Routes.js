@@ -20,7 +20,7 @@ import UserInterfaceStyle from 'react-native-user-interface-style';
 import colors from '../styles/colors';
 import TaxiAppStack from './TaxiAppStack';
 import RoyoOrderStack from './RoyoOrderStack';
-import RoyoTabRoute from './RoyoTabRoute';
+import RoyoVendroAppTabRoute from './RoyoVendroAppTabRoute';
 
 const Stack = createStackNavigator();
 
@@ -83,7 +83,7 @@ export default function Routes() {
           <Stack.Screen
             name={navigationStrings.TABROUTESVENDOR}
             // component={TabRoutesVendor}
-            component={RoyoTabRoute}
+            component={RoyoVendroAppTabRoute}
             options={{ headerShown: false, gestureEnabled: false }}
           />
         </Stack.Navigator>

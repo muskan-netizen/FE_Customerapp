@@ -17,7 +17,7 @@ import RoyoOrderAccountStack from './RoyoOrderAccountStack';
 
 const Tab = createBottomTabNavigator();
 
-const RoyoTabRoute = ({barColor = colors.themeColor2}) => {
+const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
   const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
@@ -210,7 +210,7 @@ const RoyoTabRoute = ({barColor = colors.themeColor2}) => {
   );
 };
 
-export default RoyoTabRoute;
+export default RoyoVendroAppTabRoute;
 
 const styles = StyleSheet.create({
   navigatorContainer: {

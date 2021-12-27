@@ -1,14 +1,14 @@
 import React from 'react';
 import {RoyoAddProduct, RoyoOrderDetail, RoyoPaymentSetting, RoyoTransactions} from '../Screens';
 import navigationStrings from './navigationStrings';
-import RoyoTabRoute from './RoyoTabRoute';
+import RoyoVendroAppTabRoute from './RoyoVendroAppTabRoute';
 
 const RoyoOrderStack = (Stack) => {
   return (
     <>
       <Stack.Screen
         name={navigationStrings.ROYO_BOTTOMTAB}
-        component={RoyoTabRoute}
+        component={RoyoVendroAppTabRoute}
         options={{headerShown: false}}
       />
       <Stack.Screen
