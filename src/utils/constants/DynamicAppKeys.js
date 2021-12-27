@@ -184,6 +184,7 @@ const shortCodes = {
   skoop: 'ff2327',
   kudhyo: '300420',
   bharatMove: 'e2ec5e',
+  sofia: 'e2ef1a',
 };
 
 const appIds = {
@@ -918,6 +919,10 @@ const appIds = {
   bharatMove: Platform.select({
     ios: 'com.bharatMove',
     android: 'com.bharatMove',
+  }),
+  sofia: Platform.select({
+    ios: 'com.app.sofia',
+    android: 'com.app.sofia',
   }),
 };
 

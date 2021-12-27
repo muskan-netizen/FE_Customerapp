@@ -1199,6 +1199,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.sofia:
+          updateState({
+            shortCode: shortCodes.sofia,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

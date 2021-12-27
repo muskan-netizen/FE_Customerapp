@@ -391,6 +391,7 @@ export default function Home({route, navigation}) {
 
   //onPress Category
   const onPressCategory = (item) => {
+    console.log(item, 'itemitem');
     if (item.redirect_to == staticStrings.VENDOR) {
       moveToNewScreen(navigationStrings.VENDOR, item)();
     } else if (
@@ -400,8 +401,11 @@ export default function Home({route, navigation}) {
       item?.redirect_to == staticStrings.LAUNDRY
     ) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-        ...item,
         fetchOffers: true,
+        id: item.id,
+        vendor: true,
+        name: item.name,
+        isVendorList: true,
       })();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
@@ -453,6 +457,7 @@ export default function Home({route, navigation}) {
             vendor: true,
             name: item?.name,
             isVendorList: true,
+            fetchOffers: true,
           })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
@@ -476,6 +481,7 @@ export default function Home({route, navigation}) {
           id: data.redirect_id,
           vendor: true,
           name: data.redirect_name,
+          fetchOffers: true,
         })();
         return;
       }
@@ -503,6 +509,7 @@ export default function Home({route, navigation}) {
               id: data.redirect_id,
               vendor: true,
               name: data.redirect_name,
+              fetchOffers: true,
             })();
       } else if (data.redirect_to == staticStrings.CATEGORY) {
         if (data?.category?.type?.title == staticStrings.VENDOR) {
@@ -514,6 +521,7 @@ export default function Home({route, navigation}) {
             id: data.redirect_id,
             // vendor: true,
             name: data.redirect_name,
+            fetchOffers: true,
           })();
         }
       }
@@ -626,6 +634,7 @@ export default function Home({route, navigation}) {
             id: data?.id,
             vendor: true,
             name: data?.name,
+            fetchOffers: true,
           })();
 
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();

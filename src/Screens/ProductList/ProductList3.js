@@ -86,6 +86,7 @@ let activeIdx = 0;
 
 export default function Products({route, navigation}) {
   const bottomSheetRef = useRef(null);
+  console.log(route.params, 'route.params');
   const {data} = route.params;
   // console.log(data, 'datadatadata');
   const routeData = data?.fetchOffers;
@@ -293,7 +294,8 @@ export default function Products({route, navigation}) {
     const unsubscribe = navigation.addListener('focus', () => {
       updateState({pageNo: 1});
       getAllListItems();
-      console.log('checking route params >>>>', productListId);
+      console.log('checking route params >>>>1', productListId);
+      console.log(routeData, 'routeData');
       if (productListId?.vendor && routeData) {
         fetchOffers();
       }
@@ -1675,6 +1677,7 @@ export default function Products({route, navigation}) {
 
   const fetchOffers = () => {
     console.log('offerlist api', productListId);
+
     // return;
     let data = {};
     // data['vendor_id'] = 2;

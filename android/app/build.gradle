@@ -1557,7 +1557,7 @@ android {
          }
            pinkjet{
             dimension "appType"
-            versionCode 2
+            versionCode 3
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -2055,6 +2055,16 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.bharatMove'
             resValue "string", "app_name", "BharatMove"
+            resValue "string", "host_name", ""
+         }
+         sofia{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.app.sofia'
+            resValue "string", "app_name", "Sofia"
             resValue "string", "host_name", ""
          }
     }
