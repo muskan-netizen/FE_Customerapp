@@ -1,19 +1,40 @@
-export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
-// export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
+export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
+// export const API_BASE_URL = 'http://192.168.96.20:8020/api/v1';
+// export const API_BASE_URL = 'http://192.168.103.73:8005/api/v1'; // preet
+// export const API_BASE_URL = 'http://192.168.97.123:8020/api/v1'; // sujata
 
-// export const API_BASE_URL = 'http://192.168.100.89:8005/api/v1';
-// export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
-// export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
-
-// export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
-
-//export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
+// export const API_BASE_URL = 'http://192.168.96.20:8020/api/v1';
+//export const API_BASE_URL = 'https://sales.alerthire.com/api/v1';
+// export const API_BASE_URL = 'http://192.168.103.81:8005/api/v1';
 //export const API_BASE_URL = 'https://zuzuclean.alerthire.com/api/v1';
-//export const API_BASE_URL =  'http://192.168.98.193:8005/api/v1';
+// export const API_BASE_URL = 'http://192.168.96.23:8005/api/v1';
+// export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';//dinesh sir
+// export const API_BASE_URL = 'http://192.168.100.198:8020/api/v1';
+// export const API_BASE_URL = 'http://192.168.96.20:8005/api/v1';
+// export const API_BASE_URL = 'https://click-eat.com/api/v1';
+// export const API_BASE_URL = 'https://tranzit.app/api/v1';
+//export const API_BASE_URL = 'https://pinkjettaxi.com/api/v1';
+// export const API_BASE_URL = 'https://snabbhem.se/api/v1';
+// export const API_BASE_URL = 'https://codiner.com/api/v1';
+// export const API_BASE_URL = 'https://somame-247.com/api/v1';
+// export const API_BASE_URL = 'https://order.africanize.co/api/v1';
+// export const API_BASE_URL = 'https://destinationops.com/api/v1';
+// export const API_BASE_URL = 'https://bustanfakieh.com/api/v1';
+// export const API_BASE_URL = 'https://cabdeliv.com/api/v1';
+// export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
+// export const API_BASE_URL = 'https://orderchekout.com/api/v1';
+// export const API_BASE_URL = 'https://hairstonexpressgo.com/api/v1';
+// export const API_BASE_URL = 'https://helpnowrightnow.com/api/v1';
+// export const API_BASE_URL = 'https://ufood.ca/api/v1';
+// export const API_BASE_URL = 'https://app.vici.la/api/v1';
+// export const API_BASE_URL = 'https://blipdelivery.com/api/v1';
+// export const API_BASE_URL = 'https://africanvillage.market/api/v1';
+// export const API_BASE_URL = 'https://govachow.com/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;
 
-//export const SEND_OTP = getApiUrl('/auth/sendOtp');
+export const SEND_OTP = getApiUrl('/auth/sendOtp');
 export const LOGIN_BY_USERNAME = getApiUrl('/auth/loginViaUsername');
 export const PHONE_LOGIN_OTP = getApiUrl('/auth/verify/phoneLoginOtp');
 export const LOGIN_API = getApiUrl('/auth/login');
@@ -39,6 +60,7 @@ export const DECREASE_ITEM_QNT = getApiUrl('/cart/decreaseItem');
 export const GET_DATA_BY_CATEGORY_FILTERS = getApiUrl('/category/filters');
 export const GET_DATA_BY_VENDOR_FILTERS = getApiUrl('/vendor/filters');
 export const GET_PRODUCT_DATA_BASED_VARIANTS = getApiUrl('/productByVariant');
+export const GET_PRODUCT_TAGS = getApiUrl('/getAllProductTags');
 export const GET_BRANDPRODUCTS_DATA_BASED_VARIANTS =
   getApiUrl('/brand/filters');
 export const MY_WALLET = getApiUrl('/myWallet');
@@ -55,6 +77,9 @@ export const SEARCH_BY_VENDOR = getApiUrl('/search/vendor');
 export const SEARCH_BY_BRAND = getApiUrl('/search/brand');
 export const UPDATE_ADDRESS = getApiUrl('/user/address');
 export const GET_ALL_PROMO_CODES = getApiUrl('/promo-code/list');
+export const GET_ALL_PROMO_CODES_FOR_PRODUCTLIST = getApiUrl(
+  '/promo-code/vendor_promo_code',
+);
 export const VERIFY_PROMO_CODE = getApiUrl('/promo-code/verify');
 export const RESET_PASSWORD = getApiUrl('/auth/resetPassword');
 export const REMOVE_PROMO_CODE = getApiUrl('/promo-code/remove');
@@ -67,7 +92,9 @@ export const GET_PRODUCTS_BASED_ON_CELEBRITYFILTER =
 export const GET_PRODUCTS_BASED_ON_CELEBRITY = getApiUrl('/celebrityProducts');
 export const PLACE_ORDER = getApiUrl('/place/order');
 export const GET_ORDER_DETAIL = getApiUrl('/order-detail');
-export const GET_ORDER_DETAIL_FOR_BILLING = getApiUrl('/order/orderDetails_for_notification/');
+export const GET_ORDER_DETAIL_FOR_BILLING = getApiUrl(
+  '/order/orderDetails_for_notification/',
+);
 export const GET_ALL_ORDERS = getApiUrl('/orders');
 export const GET_VENDOR_DETAIL = getApiUrl('/vendor/category/list');
 export const SEND_REFFERAL_CODE = getApiUrl('/send/referralcode');
@@ -124,3 +151,14 @@ export const DISPATCHER_URL = getApiUrl(
   '/pickup-delivery/order-tracking-details',
 );
 export const CART_PRODUCT_SCHEDULE = getApiUrl('/cart/product-schedule/update');
+export const TIP_AFTER_ORDER = getApiUrl('/orders/tip-after-order');
+export const VALIDATE_PROMO_CODE = getApiUrl('/promo-code/validate_promo_code');
+export const UPLOAD_PHOTO = getApiUrl('/upload-image-pickup');
+export const LAST_ADDED = getApiUrl('/cart/product/lastAdded');
+export const DIFFERENT_ADD_ONS = getApiUrl(
+  '/cart/product/variant/different-addons',
+);
+export const WALLET_CREDIT = getApiUrl('/myWallet/credit');
+export const VENDOR_REGISTER = getApiUrl('/vendor/register');
+export const DRIVER_REGISTER = getApiUrl('/driver/register');
+export const CANCEL_ORDER = getApiUrl('/return-order/vendor-order-for-cancel');

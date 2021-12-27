@@ -362,7 +362,7 @@ export default ({themeColors, fontFamily}) => {
       marginVertical: moderateScale(10),
     },
     viewAllText: {
-      color: colors.redD,
+      color: themeColors.primary_color,
       fontFamily: fontFamily.regular,
     },
     viewAllVeiw: {
@@ -395,6 +395,24 @@ export default ({themeColors, fontFamily}) => {
       marginLeft: 2,
       width: 9,
       height: 9,
+    },
+    locationTitleTxt: {
+      fontFamily: fontFamily.medium,
+      fontSize: moderateScale(13),
+    },
+    locationTxt: {
+      fontFamily: fontFamily.medium,
+      fontSize: moderateScale(12),
+      marginLeft: 2,
+    },
+    locationView: {
+      marginLeft: 5,
+    },
+    locationTypeTxt: {
+      fontFamily: fontFamily.bold,
+      fontSize: moderateScale(15),
+      marginLeft: 2,
+      color: themeColors.primary_color,
     },
   });
 

@@ -44,6 +44,12 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {mobile} from 'is_js';
 
 export default function Login({navigation}) {
+  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
+    (state) => state?.initBoot,
+  );
+  const {apple_login, fb_login, twitter_login, google_login} = useSelector(
+    (state) => state?.initBoot?.appData?.profile?.preferences,
+  );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -52,7 +58,7 @@ export default function Login({navigation}) {
 
   const [state, setState] = useState({
     // email: '',
-    // password: '',
+    password: '',
     isLoading: false,
     phoneInput: false,
     phoneNoVisibility: false,
@@ -71,15 +77,9 @@ export default function Login({navigation}) {
         : 'IN',
       focus: false,
       countryName: '',
+      isShowPassword: false,
     },
   });
-
-  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
-    (state) => state?.initBoot,
-  );
-  const {apple_login, fb_login, twitter_login, google_login} = useSelector(
-    (state) => state?.initBoot?.appData?.profile?.preferences,
-  );
 
   const fontFamily = appStyle?.fontSizeData;
   //CLone deep all the states
@@ -101,6 +101,7 @@ export default function Login({navigation}) {
     mobilNo,
     email,
     number,
+    isShowPassword,
   } = state;
 
   //Naviagtion to specific screen
@@ -145,7 +146,6 @@ export default function Login({navigation}) {
       dialCode: mobilNo.focus ? mobilNo.callingCode : '',
       countryData: mobilNo.focus ? mobilNo.cca2 : '',
     };
-    console.log(data, 'dataaa');
     updateState({isLoading: true});
     actions
       .loginUsername(data, {
@@ -196,7 +196,6 @@ export default function Login({navigation}) {
   //Error handling in api
   const errorMethod = (error) => {
     updateState({isLoading: false});
-
     setTimeout(() => {
       showError(error?.message || error?.error);
     }, 500);
@@ -316,7 +315,8 @@ export default function Login({navigation}) {
       mobilNo: {
         phoneNo: mobilNo.phoneNo,
         cca2: data.cca2,
-        callingCode: data.callingCode,
+        callingCode: data.callingCode.toString(),
+        focus: true,
       },
       // cca2: data.cca2,
       // callingCode: data.mobilNo.callingCode[0],
@@ -356,6 +356,7 @@ export default function Login({navigation}) {
       });
     }
   };
+
   /*************************** On Text Change
    */ const textChangeHandler = (type, data, value = 'value') => {
     updateState((preState) => {
@@ -366,6 +367,10 @@ export default function Login({navigation}) {
         },
       };
     });
+  };
+
+  const showHidePassword = () => {
+    updateState({isShowPassword: !isShowPassword});
   };
 
   return (
@@ -441,7 +446,17 @@ export default function Login({navigation}) {
               onChangeText={_onChangeText('password')}
               placeholder={strings.ENTER_PASSWORD}
               value={password}
-              secureTextEntry={true}
+              secureTextEntry={isShowPassword ? false : true}
+              rightIcon={
+                password.length > 0
+                  ? !isShowPassword
+                    ? imagePath.icShowPassword
+                    : imagePath.icHidePassword
+                  : false
+              }
+              onPressRight={showHidePassword}
+              isShowPassword={isShowPassword}
+              rightIconStyle={{}}
             />
           </>
         )}
@@ -616,7 +631,7 @@ export default function Login({navigation}) {
                 ? {...styles.txtSmall, color: MyDarkTheme.colors.text}
                 : {...styles.txtSmall, color: colors.textGreyLight}
             }>
-            {strings.ALREADY_HAVE_AN_ACCOUNT}
+            {strings.ALREADY_HAVE_AN_ACCOUNT1}
             <Text
               onPress={moveToNewScreen(navigationStrings.SIGN_UP)}
               style={{

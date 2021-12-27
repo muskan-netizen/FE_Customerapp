@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image, Text, View} from 'react-native';
+import {Image, Linking, Text, View} from 'react-native';
 import {getBundleId} from 'react-native-device-info';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 import {useSelector} from 'react-redux';
@@ -18,9 +18,14 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {showError} from '../../utils/helperFunctions';
-import {getItem} from '../../utils/utils';
+import {getUrlRoutes, showError} from '../../utils/helperFunctions';
+import {getItem, setItem} from '../../utils/utils';
 import styles from './styles';
+import RNFetchBlob from 'rn-fetch-blob-v2';
+import {MaterialIndicator} from 'react-native-indicators';
+import * as NavigationService from '../../navigation/NavigationService';
+
+const fs = RNFetchBlob.fs;
 
 export default function ShortCode({route, navigation}) {
   const shortCodeParam = route?.params?.shortCodeParam;
@@ -33,6 +38,7 @@ export default function ShortCode({route, navigation}) {
     isBtnDisabled: true,
     isLoading: false,
     changeInShortCode: false,
+    LoadingScreen: true,
   });
   const {dispatch} = store;
 
@@ -42,6 +48,7 @@ export default function ShortCode({route, navigation}) {
     isBtnDisabled,
     isLoading,
     isShortcodePrefilled,
+    LoadingScreen,
   } = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const {appData, appStyle, currencies, languages} = useSelector(
@@ -66,7 +73,7 @@ export default function ShortCode({route, navigation}) {
             });
           } else {
             state;
-            //updateState({shortCode: '649a9a', isShortcodePrefilled: true});
+            //updateState({shortCode: 'd0a898', isShortcodePrefilled: true});
             if (shortCodeParam) {
               updateState({shortCode: '', isShortcodePrefilled: false});
             } else {
@@ -235,9 +242,9 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-        case appIds.klickmat:
+        case appIds.snabbhem:
           updateState({
-            shortCode: shortCodes.klickmat,
+            shortCode: shortCodes.snabbhem,
             isShortcodePrefilled: true,
           });
           break;
@@ -675,6 +682,7 @@ export default function ShortCode({route, navigation}) {
         case appIds.zest:
           updateState({
             shortCode: shortCodes.zest,
+            isShortcodePrefilled: true,
           });
           break;
         case appIds.gokab:
@@ -768,6 +776,429 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.sambiga:
+          updateState({
+            shortCode: shortCodes.sambiga,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.agrionline:
+          updateState({
+            shortCode: shortCodes.agrionline,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.quickquick:
+          updateState({
+            shortCode: shortCodes.quickquick,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.caribeclean:
+          updateState({
+            shortCode: shortCodes.caribeclean,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.stonses:
+          updateState({
+            shortCode: shortCodes.stonses,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.agbdeliveries:
+          updateState({
+            shortCode: shortCodes.agbdeliveries,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bookem:
+          updateState({
+            shortCode: shortCodes.bookem,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.twofinder:
+          updateState({
+            shortCode: shortCodes.twofinder,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.zip:
+          updateState({
+            shortCode: shortCodes.zip,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ridetci:
+          updateState({
+            shortCode: shortCodes.ridetci,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.noki:
+          updateState({
+            shortCode: shortCodes.noki,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.driveree:
+          updateState({
+            shortCode: shortCodes.driveree,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.rxnow:
+          updateState({
+            shortCode: shortCodes.rxnow,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.seachangevending:
+          updateState({
+            shortCode: shortCodes.seachangevending,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ored:
+          updateState({
+            shortCode: shortCodes.ored,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.orderchekout:
+          updateState({
+            shortCode: shortCodes.orderchekout,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.maxisdelivery:
+          updateState({
+            shortCode: shortCodes.maxisdelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.donepacked:
+          updateState({
+            shortCode: shortCodes.donepacked,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.careworks:
+          updateState({
+            shortCode: shortCodes.careworks,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.thubaerides:
+          updateState({
+            shortCode: shortCodes.thubaerides,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.pinkjet:
+          updateState({
+            shortCode: shortCodes.pinkjet,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mokabfix:
+          updateState({
+            shortCode: shortCodes.mokabfix,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.botseats:
+          updateState({
+            shortCode: shortCodes.botseats,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.gumastas:
+          updateState({
+            shortCode: shortCodes.gumastas,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.dishefs:
+          updateState({
+            shortCode: shortCodes.dishefs,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bilionza:
+          updateState({
+            shortCode: shortCodes.bilionza,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.doleypharmacy:
+          updateState({
+            shortCode: shortCodes.doleypharmacy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bezalio:
+          updateState({
+            shortCode: shortCodes.bezalio,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.youchillax:
+          updateState({
+            shortCode: shortCodes.youchillax,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.instashop:
+          updateState({
+            shortCode: shortCodes.instashop,
+            isShortcodePrefilled: true,
+          });
+          s;
+          break;
+        case appIds.shoorafresh:
+          updateState({
+            shortCode: shortCodes.shoorafresh,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.click2deliver:
+          updateState({
+            shortCode: shortCodes.click2deliver,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.trucktirenow:
+          updateState({
+            shortCode: shortCodes.trucktirenow,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.yeboy:
+          updateState({
+            shortCode: shortCodes.yeboy,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kel360:
+          updateState({
+            shortCode: shortCodes.kel360,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.moboserrandsservice:
+          updateState({
+            shortCode: shortCodes.moboserrandsservice,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.cabway:
+          updateState({
+            shortCode: shortCodes.cabway,
+            isShortcodePrefilled: true,
+          });
+          break;
+          break;
+        case appIds.tajammul:
+          updateState({
+            shortCode: shortCodes.tajammul,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.carroai:
+          updateState({
+            shortCode: shortCodes.carroai,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ssuum:
+          updateState({
+            shortCode: shortCodes.ssuum,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.blacnetwork:
+          updateState({
+            shortCode: shortCodes.blacnetwork,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.threadagain:
+          updateState({
+            shortCode: shortCodes.threadagain,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ezmobilefuel:
+          updateState({
+            shortCode: shortCodes.ezmobilefuel,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.runaround:
+          updateState({
+            shortCode: shortCodes.runaround,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.swiftandvalu:
+          updateState({
+            shortCode: shortCodes.swiftandvalu,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.trucxi:
+          updateState({
+            shortCode: shortCodes.trucxi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.paysic:
+          updateState({
+            shortCode: shortCodes.paysic,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.chipetaxi:
+          updateState({
+            shortCode: shortCodes.chipetaxi,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.laundryorders:
+          updateState({
+            shortCode: shortCodes.laundryorders,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.ineed:
+          updateState({
+            shortCode: shortCodes.ineed,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.nadelivery:
+          updateState({
+            shortCode: shortCodes.nadelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.marasym:
+          updateState({
+            shortCode: shortCodes.marasym,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.silvestre:
+          updateState({
+            shortCode: shortCodes.silvestre,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.samakeemart:
+          updateState({
+            shortCode: shortCodes.samakeemart,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.seaeats:
+          updateState({
+            shortCode: shortCodes.seaeats,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.enext:
+          updateState({
+            shortCode: shortCodes.enext,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.hokitch:
+          updateState({
+            shortCode: shortCodes.hokitch,
+            isShortcodePrefilled: true,
+          });
+          break;
+          break;
+        case appIds.foodnests:
+          updateState({
+            shortCode: shortCodes.foodnests,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.sponge:
+          updateState({
+            shortCode: shortCodes.sponge,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.gomeat:
+          updateState({
+            shortCode: shortCodes.gomeat,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.shopcentral:
+          updateState({
+            shortCode: shortCodes.shopcentral,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.skidoo:
+          updateState({
+            shortCode: shortCodes.skidoo,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.admCourier:
+          updateState({
+            shortCode: shortCodes.admCourier,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kurbsidekings:
+          updateState({
+            shortCode: shortCodes.kurbsidekings,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.movingwheelsdelivery:
+          updateState({
+            shortCode: shortCodes.movingwheelsdelivery,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.safewalks:
+          updateState({
+            shortCode: shortCodes.safewalks,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.dimavega:
+          updateState({
+            shortCode: shortCodes.dimavega,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.skoop:
+          updateState({
+            shortCode: shortCodes.skoop,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.kudhyo:
+          updateState({
+            shortCode: shortCodes.kudhyo,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bharatMove:
+          updateState({
+            shortCode: shortCodes.bharatMove,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
@@ -780,7 +1211,6 @@ export default function ShortCode({route, navigation}) {
 
   const checkScreen = () => {
     initApiHit();
-
     updateState({isShortcodePrefilled: true});
   };
 
@@ -796,12 +1226,15 @@ export default function ShortCode({route, navigation}) {
     }, 1000);
   };
 
-  const initApiHit = () => {
+  const initApiHit = async () => {
+    const res = await getItem('setPrimaryLanguage');
+
     let header = {};
-    if (languages?.primary_language?.id) {
+
+    if (!!res?.primary_language?.id) {
       header = {
         code: shortCode,
-        language: languages?.primary_language?.id,
+        language: res?.primary_language?.id,
       };
     } else {
       header = {
@@ -810,12 +1243,14 @@ export default function ShortCode({route, navigation}) {
     }
 
     actions
-      .initApp({}, header)
+      .initApp({}, header, false, null, null, true)
       .then((res) => {
+        console.log(res, '<====headerResponse');
         updateState({changeInShortCode: false});
         if (getBundleId() == appIds.royoorder) {
           actions.saveShortCode(shortCode);
         }
+
         homeData(res.data);
       })
       .catch((error) => {
@@ -834,6 +1269,62 @@ export default function ShortCode({route, navigation}) {
 
   //Home data
 
+  async function handleDynamicLink(deepLinkUrl) {
+    console.log('checking deep link >>> ', decodeURI(deepLinkUrl));
+    if (deepLinkUrl != null) {
+      setItem('deepLinkUrl', deepLinkUrl);
+      let routeName = getUrlRoutes(deepLinkUrl, 1);
+      var data = deepLinkUrl?.split('=').pop();
+      console.log('checking deep link data >>> ', data);
+      let removePer = decodeURI(data);
+      let sendingData = JSON.parse(removePer);
+
+      let decodedUri = decodeURI(deepLinkUrl);
+      let vendorName = decodedUri.split('?')[1].split('&')[1].split('=')[1];
+      let vendorId = decodedUri.split('?')[1].split('&')[0].split('=')[1];
+
+      // return;
+      setTimeout(() => {
+        NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+          screen: navigationStrings.HOMESTACK,
+          params: {
+            screen: navigationStrings.PRODUCT_LIST,
+            params: {
+              data: {
+                category_slug: 'Restaurants',
+                id: vendorId,
+                name: vendorName,
+                vendor: true,
+                table_id: sendingData,
+              },
+            },
+          },
+        });
+      }, 1800);
+    } else {
+      navigation.push(navigationStrings.DRAWER_ROUTES);
+    }
+  }
+
+  const navigateToNextScreen = (res) => {
+    getItem('firstTime').then((el) => {
+      if (!el && res.dynamic_tutorial && res.dynamic_tutorial.length > 0) {
+        navigation.push(navigationStrings.APP_INTRO, {
+          images: res.dynamic_tutorial,
+        });
+      } else {
+        // navigation.push(navigationStrings.DRAWER_ROUTES);
+        Linking.getInitialURL()
+          .then((link) => {
+            handleDynamicLink(link);
+          })
+          .catch((err) => {
+            console.log('checking deep link >>> 3232sdsd', err);
+          });
+      }
+    });
+  };
+
   const homeData = (res) => {
     actions
       .homeData(
@@ -844,13 +1335,13 @@ export default function ShortCode({route, navigation}) {
           language: res?.languages?.find((x) => x.is_primary).language_id,
         },
       )
-      .then((res) => {
-        updateState({isLoading: false});
-        navigation.push(navigationStrings.DRAWER_ROUTES);
+      .then(() => {
+        updateState({isLoading: false, LoadingScreen: false});
+        navigateToNextScreen(res);
       })
       .catch((error) => {
         updateState({isLoading: false});
-        navigation.push(navigationStrings.DRAWER_ROUTES);
+        navigateToNextScreen(res);
       });
   };
 
@@ -888,6 +1379,17 @@ export default function ShortCode({route, navigation}) {
     }
   }, [shortCode, isLoading]);
 
+  // let image = ''
+  // if (Platform.OS === 'android') {
+  //   image = require('../../../android/app/src/CareWorks/res/drawable-xxxhdpi/splash.png')
+  // } else {
+  //   image = require('../../../ios/Configs/CareWorks/Images.xcassets/Splash.imageset/ic_splash.png')
+  //   // image = {uri: "file://" + fs.dirs.DocumentDir + '/Splash.png'}
+  //   // image = {uri: "file:///Users/admin/Library/Developer/CoreSimulator/Devices/84EAA354-7A24-49DC-8CDC-8C02976A69B9/data/Containers/Data/Application/FE01C2A0-4CEA-44D5-B2D3-A052319D316E/Documents/Splash.png", scale: 1}
+  //   image = { uri: 'Splash' }
+  //   console.log('checking image >>>>>', image, themeColors)
+  // }
+
   return (
     <WrapperContainer
       statusBarColor={colors.white}
@@ -895,7 +1397,26 @@ export default function ShortCode({route, navigation}) {
       isLoadingB={isLoading}
       source={loaderOne}>
       {isShortcodePrefilled ? (
-        <View style={{flex: 1}}></View>
+        <View style={{flex: 1}}>
+          <View
+            style={{
+              flex: 1,
+              position: 'absolute',
+              zIndex: 99,
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'rgba(0,0,0,0.5',
+            }}>
+            <View style={{position: 'absolute', bottom: moderateScale(100)}}>
+              {LoadingScreen && (
+                <MaterialIndicator size={50} color={colors.greyMedium} />
+              )}
+            </View>
+          </View>
+          <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
+        </View>
       ) : (
         <View
           style={{

@@ -44,6 +44,9 @@ const Header = ({
   leftIconStyle,
   isRightText = false,
   onPressRightTxt = () => {},
+  rightTxt = strings.CLEAR_CART2,
+  rightTxtContainerStyle = {},
+  rightTxtStyle = {},
 }) => {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
@@ -92,18 +95,13 @@ const Header = ({
                 <Image
                   resizeMode="contain"
                   source={leftIcon}
-                  style={
-                    isDarkMode
-                      ? {
-                          transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                          ...leftIconStyle,
-                          tintColor: MyDarkTheme.colors.text,
-                        }
-                      : {
-                          transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                          ...leftIconStyle,
-                        }
-                  }
+                  style={{
+                    ...leftIconStyle,
+                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+                    tintColor: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}
                 />
               </TouchableOpacity>
             ))}
@@ -119,20 +117,11 @@ const Header = ({
             <Text
               onPress={onPressCenterTitle}
               numberOfLines={1}
-              style={
-                isDarkMode
-                  ? {
-                      ...styles.textStyle,
-                      ...textStyle,
-                      color: MyDarkTheme.colors.text,
-                      // width: moderateScale(150),
-                    }
-                  : {
-                      ...styles.textStyle,
-                      ...textStyle,
-                      // width: moderateScale(150),
-                    }
-              }>
+              style={{
+                ...styles.textStyle,
+                ...textStyle,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              }}>
               {centerTitle}
             </Text>
             {!!showImageAlongwithTitle && (
@@ -148,14 +137,18 @@ const Header = ({
 
         <View style={{flex: 0.3, alignItems: 'flex-end'}}>
           {isRightText ? (
-            <TouchableOpacity activeOpacity={0.7} onPress={onPressRightTxt}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={onPressRightTxt}
+              style={{...rightTxtContainerStyle}}>
               <Text
                 style={{
                   fontFamily: fontFamily.medium,
                   color: themeColors.primary_color,
                   fontSize: textScale(12),
+                  ...rightTxtStyle,
                 }}>
-                {strings.CLEAR_CART2}
+                {rightTxt}
               </Text>
             </TouchableOpacity>
           ) : !!rightIcon ? (
@@ -185,7 +178,6 @@ const Header = ({
     </>
   );
 };
-export default Header;
 
 export function stylesFunc({fontFamily}) {
   const styles = StyleSheet.create({
@@ -205,3 +197,4 @@ export function stylesFunc({fontFamily}) {
   });
   return styles;
 }
+export default React.memo(Header);

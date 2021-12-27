@@ -36,6 +36,7 @@ import stylesFun from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 import SubscriptionComponent from '../../Components/SubscriptionComponent';
+import navigationStrings from '../../navigation/navigationStrings';
 
 export default function Subscriptions2({navigation, route}) {
   //   console.log(route, 'route>>>');
@@ -57,6 +58,7 @@ export default function Subscriptions2({navigation, route}) {
     paymentOptions: [],
     selectedPaymentMethod: null,
     cardInfo: null,
+    planPrice: 0,
   });
 
   const {
@@ -71,6 +73,7 @@ export default function Subscriptions2({navigation, route}) {
     paymentOptions,
     selectedPaymentMethod,
     cardInfo,
+    planPrice,
   } = state;
   //update your state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -91,6 +94,8 @@ export default function Subscriptions2({navigation, route}) {
   };
 
   const explosion = createRef();
+
+  console.log('currentSubscription', currentSubscription);
 
   useEffect(() => {
     updateState({isLoadingB: true});
@@ -138,7 +143,7 @@ export default function Subscriptions2({navigation, route}) {
   //Subscribe for specific plan
   const selectSpecificSubscriptionPlan = (item) => {
     console.log(item, '>>>>>>>>>>>>>selectSpecificSubscriptionPlan');
-    updateState({isLoading: true});
+    updateState({isLoading: true, planPrice: item?.price});
     actions
       .selectSpecificSubscriptionPlan(
         `/${item?.slug}`,
@@ -206,18 +211,32 @@ export default function Subscriptions2({navigation, route}) {
   const renderProduct = ({item, index}) => {
     const {isSelectItem} = state;
     return (
-      <SubscriptionComponent2
-        data={item}
-        clientCurrency={clientCurrency}
-        onPress={(item) => selectSpecificSubscriptionPlan(item)}
-        payNowUpcoming={() =>
-          selectSpecificSubscriptionPlan(currentSubscription?.plan)
-        }
-        // cancelSubscription={()=>cancelSubscription(item)}
-        // onPress={moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)}
-        // onAddtoWishlist={() => _onAddtoWishlist(item)}
-        // addToCart={() => _addToCart(item)}
-      />
+      <>
+        {!!allSubscriptions.length && index == 0 && (
+          <View
+            style={{
+              marginTop: currentSubscription ? moderateScale(40) : null,
+              marginBottom: moderateScale(20),
+            }}>
+            <Text style={styles.subscriptionTitle}>
+              {currentSubscription
+                ? strings.OTHERSUBSCRIPTION
+                : strings.ALLSUBSCRIPTION}
+            </Text>
+          </View>
+        )}
+        <SubscriptionComponent2
+          data={item}
+          clientCurrency={clientCurrency}
+          onPress={(item) => selectSpecificSubscriptionPlan(item)}
+          payNowUpcoming={() =>
+            selectSpecificSubscriptionPlan(currentSubscription?.plan)
+          }
+          subscriptionData={currentSubscription}
+          // currentSubscription={item?.id == currentSubscription?.subscription_id}
+          // cancelSubscription={()=>cancelSubscription(item)}
+        />
+      </>
     );
   };
 
@@ -307,30 +326,32 @@ export default function Subscriptions2({navigation, route}) {
         </TouchableOpacity>
 
         {selectedPaymentMethod &&
-          selectedPaymentMethod?.id == item.id &&
-          selectedPaymentMethod?.off_site != 1 && (
-            <CardField
-              postalCodeEnabled={true}
-              placeholder={{
-                number: '4242 4242 4242 4242',
-              }}
-              cardStyle={{
-                backgroundColor: '#FFFFFF',
-                textColor: '#000000',
-              }}
-              style={{
-                width: '100%',
-                height: 50,
-                marginVertical: 10,
-              }}
-              onCardChange={(cardDetails) => {
-                // console.log('cardDetails', cardDetails);
-                _onChangeStripeData(cardDetails);
-              }}
-              onBlur={() => {
-                Keyboard.dismiss();
-              }}
-            />
+          selectedPaymentMethod?.id == item?.id &&
+          selectedPaymentMethod?.id == 4 && (
+            <View>
+              <CardField
+                postalCodeEnabled={false}
+                placeholder={{
+                  number: '4242 4242 4242 4242',
+                }}
+                cardStyle={{
+                  backgroundColor: '#FFFFFF',
+                  textColor: '#000000',
+                }}
+                style={{
+                  width: '100%',
+                  height: 50,
+                  marginVertical: 10,
+                }}
+                onCardChange={(cardDetails) => {
+                  // console.log('cardDetails', cardDetails);
+                  _onChangeStripeData(cardDetails);
+                }}
+                onBlur={() => {
+                  Keyboard.dismiss();
+                }}
+              />
+            </View>
           )}
       </>
     );
@@ -419,20 +440,65 @@ export default function Subscriptions2({navigation, route}) {
 
   const payAmount = () => {
     updateState({isModalVisibleForPayment: false});
-    if (selectedPaymentMethod?.code == 'stripe') {
-      _offineLinePayment();
+    if (!!selectedPaymentMethod) {
+      if (selectedPaymentMethod?.id == 4) {
+        _offineLinePayment();
+      } else {
+        _webPayment();
+      }
     } else {
-      _webPayment();
+      alert(strings.PLEASE_SELECT_PAYMENT_METHOD);
     }
   };
 
-  const _webPayment = () => {};
+  const _webPayment = () => {
+    let selectedMethod = selectedPaymentMethod.title.toLowerCase();
+    let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/`;
+    let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/subscription`;
+    let queryData = `/${selectedMethod}?amount=${planPrice}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&subscription_id=${selectedPlan?.slug}&payment_option_id=${selectedPaymentMethod?.id}&action=subscription`;
+    updateState({isLoading: true});
+    console.log('query data', queryData);
+    actions
+      .openPaymentWebUrl(
+        queryData,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then((res) => {
+        updateState({isLoading: false});
+        if (res && res?.status == 'Success' && res?.data) {
+          console.log('generate payment url', res.data);
+          let sendingData = {
+            id: selectedPaymentMethod.id,
+            title: selectedPaymentMethod.title,
+            screenName: navigationStrings.SUBSCRIPTION,
+            paymentUrl: res?.data,
+            action: 'subscription',
+            selectedPlanSlug: selectedPlan?.slug,
+          };
+          navigation.navigate(navigationStrings.ALL_IN_ONE_PAYMENTS, {
+            data: sendingData,
+          });
+          // navigation.navigate(navigationStrings.WEBPAYMENTS, {
+          //   paymentUrl: res?.data,
+          //   paymentTitle: selectedPaymentMethod?.title,
+          //   redirectFrom: 'subscription',
+          //   selectedPaymentMethod: selectedPaymentMethod,
+          // selectedPlanSlug: selectedPlan?.slug
+          // });
+        }
+      })
+      .catch(errorMethod);
+  };
 
   //Offline payments
   const _offineLinePayment = async () => {
     if (cardInfo) {
       updateState({isModalVisibleForPayment: false});
-
       await createToken(cardInfo)
         .then((res) => {
           if (res && res?.token && res.token?.id) {
@@ -563,6 +629,17 @@ export default function Subscriptions2({navigation, route}) {
                 {strings.MYSUBSCRIPTION}
               </Text>
             </View>
+            <SubscriptionComponent2
+              data={currentSubscription?.plan}
+              subscriptionData={currentSubscription}
+              clientCurrency={clientCurrency}
+              allSubscriptions={allSubscriptions}
+              currentSubscription={true}
+              payNowUpcoming={() =>
+                selectSpecificSubscriptionPlan(currentSubscription?.plan)
+              }
+              cancelSubscription={() => cancelSubscription(currentSubscription)}
+            />
           </>
         )}
       </>
@@ -597,7 +674,7 @@ export default function Subscriptions2({navigation, route}) {
         <FlatList
           data={(!isLoadingB && allSubscriptions) || []}
           renderItem={renderProduct}
-          // ListHeaderComponent={listHeaderComponent()}
+          ListHeaderComponent={listHeaderComponent()}
           keyExtractor={(item, index) => String(index)}
           keyboardShouldPersistTaps="always"
           showsVerticalScrollIndicator={false}

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   I18nManager,
   Image,
@@ -10,15 +10,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dark-mode';
 import Geocoder from 'react-native-geocoding';
 import RNGooglePlaces from 'react-native-google-places';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import MapView from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
+import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
 import commonStyles from '../styles/commonStyles';
 import commonStylesFun from '../styles/commonStyles';
@@ -29,9 +30,10 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {getAddressComponent} from '../utils/helperFunctions';
-import {chekLocationPermission} from '../utils/permissions';
+import { MyDarkTheme } from '../styles/theme';
+import { getPlaceDetails } from '../utils/googlePlaceApi';
+import { getAddressComponent } from '../utils/helperFunctions';
+import { chekLocationPermission } from '../utils/permissions';
 import validations from '../utils/validations';
 import BorderTextInput from './BorderTextInput';
 import BorderTextInputWithLable from './BorderTextInputWithLable';
@@ -45,7 +47,7 @@ const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-export default function AddressModal3({
+const AddressModal3 = ({
   updateData,
   isVisible = false,
   onClose,
@@ -55,7 +57,7 @@ export default function AddressModal3({
   onPress,
   indicator,
   navigation,
-}) {
+}) => {
   const mapRef = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -64,9 +66,9 @@ export default function AddressModal3({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const appData = useSelector((state) => state?.initBoot?.appData);
   const currentTheme = useSelector((state) => state.initBoot);
-  const {themeColors, themeLayouts, appStyle} = currentTheme;
+  const { themeColors, themeLayouts, appStyle } = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
-  const {profile} = appData;
+  const { profile } = appData;
   const [state, setState] = useState({
     dropDownData: [],
     address: updateData?.address ? updateData?.address : '',
@@ -85,12 +87,13 @@ export default function AddressModal3({
     addressTypeArray: [
       {
         id: 1,
-        lable: strings.HOME,
+        lable: strings.HOME_1,
         icon: imagePath.home,
       },
-      {id: 2, lable: 'Work', icon: imagePath.workInActive},
+      { id: 2, lable: strings.WORK, icon: imagePath.workInActive },
+      { id: 3, lable: strings.OTHERS, icon: imagePath.workInActive },
     ],
-    address_type: 1,
+    address_type: updateData?.type ? updateData?.type : 1,
     country_code: '',
     viewHeight: 0,
     region: {
@@ -99,9 +102,11 @@ export default function AddressModal3({
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
     },
+    customAddress: '',
+    houseNo: '',
   });
 
-  const styles = stylesData({fontFamily, themeColors});
+  const styles = stylesData({ fontFamily, themeColors });
 
   //To update the states
   useEffect(() => {
@@ -119,6 +124,8 @@ export default function AddressModal3({
       phonecode: updateData?.phonecode ? updateData?.phonecode : '',
       country_code: updateData?.country_code ? updateData?.country_code : '',
       is_primary: updateData?.is_primary ? updateData?.is_primary : '',
+      address_type: updateData?.type,
+      houseNo: updateData?.house_number ? updateData?.house_number : '',
     });
   }, [updateData]);
 
@@ -140,11 +147,13 @@ export default function AddressModal3({
     is_primary,
     viewHeight,
     region,
+    customAddress,
+    houseNo,
   } = state;
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
-    Geocoder.init(profile.preferences.map_key, {language: 'en'}); // set the language
+    Geocoder.init(profile.preferences.map_key, { language: 'en' }); // set the language
   }, []);
 
   const _onChangeText = (key) => (val) => {
@@ -152,7 +161,7 @@ export default function AddressModal3({
       getPlacesPrediction(val);
     }
 
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   //Cleaer all state
@@ -176,12 +185,14 @@ export default function AddressModal3({
         addressTypeArray: [
           {
             id: 1,
-            lable: 'Home',
+            lable: strings.HOME_1,
             icon: imagePath.home,
           },
-          {id: 2, lable: 'Work', icon: imagePath.workInActive},
+          { id: 2, lable: strings.WORK, icon: imagePath.workInActive },
+          { id: 3, lable: strings.OTHERS, icon: imagePath.workInActive },
         ],
-        address_type: 1,
+        address_type: updateData?.type ? updateData?.type : 1,
+        houseNo: '',
       });
     }, 1000);
   };
@@ -192,21 +203,20 @@ export default function AddressModal3({
     // console.log(data, 'data>>>>');
     RNGooglePlaces.getAutocompletePredictions(data)
       .then((results) => {
-        updateState({dropDownData: results});
+        updateState({ dropDownData: results });
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   /*************************** On Text Change
    */ const addressHelper = (results) => {
-    console.log(results, 'resultsresultsresults');
-    let clonedArrayData = {...state};
-    clonedArrayData = {...clonedArrayData, ...results, showDialogBox: false};
+    let clonedArrayData = { ...state };
+    clonedArrayData = { ...clonedArrayData, ...results, showDialogBox: false };
     updateState(clonedArrayData);
   };
 
   const handleAddressOnKeyUp = (text) => {
-    updateState({address: text});
+    updateState({ address: text });
   };
 
   /*************************** Place Id look Up
@@ -214,16 +224,16 @@ export default function AddressModal3({
     if (data?.placeID) {
       RNGooglePlaces.lookUpPlaceByID(data.placeID)
         .then((results) =>
-          addressHelper({...results, address: data.fullText || data.address}),
+          addressHelper({ ...results, address: data.fullText || data.address }),
         )
-        .catch((error) => {});
+        .catch((error) => { });
     } else {
     }
   };
 
   /*************************** On Text Change
    */ const placeSelectionHandler = (data) => {
-    updateState({showDialogBox: false});
+    updateState({ showDialogBox: false });
     placeIdLookUp(data);
     Keyboard.dismiss();
   };
@@ -236,7 +246,7 @@ export default function AddressModal3({
           {dropDownData.map((x, i) => (
             <TouchableOpacity onPress={() => placeSelectionHandler(x)} key={i}>
               <Text style={styles.textInput}>{x.fullText}</Text>
-              <View style={{paddingVertical: (height * 1.2) / 100}}></View>
+              <View style={{ paddingVertical: (height * 1.2) / 100 }}></View>
             </TouchableOpacity>
           ))}
         </View>
@@ -252,9 +262,9 @@ export default function AddressModal3({
       address: address ? address : '',
       street: street ? street : '',
       city: city ? city : '',
-      // states: states ? states : '',
+      states: states ? states : '',
       country: country ? country : '',
-      //pincode: pincode ? pincode : '',
+      // pincode: pincode ? pincode : '',
     });
     if (error) {
       // showError(error);
@@ -283,6 +293,8 @@ export default function AddressModal3({
       country_code: country_code,
       is_primary: type == 'addAddress' ? 1 : is_primary,
       address_type: address_type,
+      type_name: address_type === 3 && customAddress,
+      house_number: houseNo,
     };
     if (type == 'Home1') {
       navigation.navigate(navigationStrings.HOME, {
@@ -333,7 +345,7 @@ export default function AddressModal3({
           .catch((error) => console.log(error, 'errro geocode'));
       },
       (error) => console.log(error.message),
-      {enableHighAccuracy: true, timeout: 20000},
+      { enableHighAccuracy: true, timeout: 20000 },
     );
   };
 
@@ -347,10 +359,57 @@ export default function AddressModal3({
   const getTextInputStyle = (input, type) => {
     return input != '' && input != undefined
       ? [
-          styles.textInput,
-          {color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey},
-        ]
-      : {fontSize: textScale(12)};
+        styles.textInput,
+        { color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey },
+      ]
+      : { fontSize: textScale(12) };
+  };
+
+  const updateAddress_ = async (data_) => {
+    console.log('onGoBackonGoBack>>>>', data_);
+    let res = await getPlaceDetails(
+      data_.place_id,
+      profile?.preferences?.map_key,
+    );
+    const { result } = res;
+
+    let addressData = getAddressComponent(result);
+    console.log('res===onGoBackonGoBack>>>>', addressData);
+    let data = {};
+    if (addressData.address) {
+      data['address'] = addressData.address;
+    }
+    if (addressData.street) {
+      data['street'] = addressData.street;
+    }
+    if (addressData.city) {
+      data['city'] = addressData.city;
+    }
+    if (addressData.pincode) {
+      data['pincode'] = addressData.pincode;
+    }
+    if (addressData.state) {
+      data['state'] = addressData.state;
+    }
+    if (addressData.country) {
+      data['country'] = addressData.country;
+    }
+    if (addressData.latitude) {
+      data['latitude'] = addressData.latitude;
+    }
+    if (addressData.longitude) {
+      data['longitude'] = addressData.longitude;
+    }
+    if (addressData.phonecode) {
+      data['phonecode'] = addressData.phonecode;
+    }
+    if (addressData.country_code) {
+      data['country_code'] = addressData.country_code;
+    }
+
+    data['is_primary'] = type == 'addAddress' ? 1 : is_primary;
+    console.log('passLocationpassLocation>>>', data);
+    passLocation(data);
   };
 
   return (
@@ -360,12 +419,12 @@ export default function AddressModal3({
       style={styles.modalContainer}
       onBackdropPress={onClose}
       onLayout={(event) => {
-        updateState({viewHeight: event.nativeEvent.layout.height});
+        updateState({ viewHeight: event.nativeEvent.layout.height });
       }}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Image
           style={
-            isDarkMode ? {tintColor: colors.white} : {tintColor: colors.black}
+            isDarkMode ? { tintColor: colors.white } : { tintColor: colors.black }
           }
           source={imagePath.crossB}
         />
@@ -375,23 +434,25 @@ export default function AddressModal3({
         style={
           isDarkMode
             ? [
-                styles.modalMainViewContainer,
-                {
-                  backgroundColor: MyDarkTheme.colors.lightDark,
-                },
-              ]
+              styles.modalMainViewContainer,
+              {
+                backgroundColor: MyDarkTheme.colors.lightDark,
+              },
+            ]
             : [
-                styles.modalMainViewContainer,
-                {paddingHorizontal: moderateScale(24)},
-              ]
+              styles.modalMainViewContainer,
+              { paddingHorizontal: moderateScale(24) },
+            ]
         }>
-        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
+        <KeyboardAwareScrollView
+          keyboardShouldPersistTaps="always"
+          showsVerticalScrollIndicator={false}>
           <View style={styles.addAddessView}>
             <Text
               numberOfLines={1}
               style={
                 isDarkMode
-                  ? [styles.addNewAddeessText, {color: MyDarkTheme.colors.text}]
+                  ? [styles.addNewAddeessText, { color: MyDarkTheme.colors.text }]
                   : styles.addNewAddeessText
               }>
               {strings.ADD_ADDRESS1}
@@ -413,11 +474,8 @@ export default function AddressModal3({
               flexDirection: 'row',
               alignItems: 'center',
               marginTop: moderateScale(7),
-              marginHorizontal: moderateScale(7),
+              // marginHorizontal: moderateScale(7),
             }}>
-            <TouchableOpacity onPress={currentLocation}>
-              <Image source={imagePath.currentLocation} />
-            </TouchableOpacity>
             <GooglePlaceInput
               getDefaultValue={address}
               type={type}
@@ -442,16 +500,66 @@ export default function AddressModal3({
                 isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7
               }
             />
+            <TouchableOpacity onPress={currentLocation}>
+              <Image source={imagePath.currentLocation} />
+            </TouchableOpacity>
           </View>
           <View
             style={{
-              marginBottom: 20,
+              marginBottom: 5,
               borderBottomWidth: 1,
               borderColor: isDarkMode
                 ? MyDarkTheme.colors.text
                 : colors.borderLight,
             }}></View>
-
+          <TouchableOpacity
+            onPress={() => {
+              onClose();
+              setTimeout(() => {
+                navigation.navigate(navigationStrings.PINADDRESSONMAP, {
+                  onGoBack: async (data) => {
+                    updateAddress_(data);
+                    onClose();
+                  },
+                  prevRoute: 'cart',
+                  task_id: 1,
+                  pickUpLocationLatLng: {
+                    latitude: 30.7333,
+                    longitude: 76.7794,
+                  },
+                });
+              }, 300);
+            }}
+            style={{
+              borderWidth: 1,
+              // padding: 10,
+              borderRadius: 10,
+              alignItems: 'center',
+              flexDirection: 'row',
+              borderColor: colors.borderColorB,
+              width: moderateScale(120),
+              justifyContent: 'center',
+              height: moderateScaleVertical(30),
+              marginLeft: moderateScale(10),
+              marginTop: moderateScale(10),
+              marginBottom: 15,
+            }}>
+            <Image
+              source={imagePath.ic_pinIcon}
+              style={{
+                width: moderateScale(15),
+                height: moderateScaleVertical(15),
+                resizeMode: 'contain',
+                tintColor: themeColors.primary_color,
+              }}
+            />
+            <Text
+              style={{
+                fontSize: moderateScale(12),
+                fontFamily: fontFamily.regular,
+                marginLeft: moderateScale(5),
+              }}>{strings.HOME}</Text>
+          </TouchableOpacity>
           {/* <View style={styles.textInputContainerAddress}>
             <TextInput
               onChangeText={_onChangeText('address')}
@@ -495,17 +603,27 @@ export default function AddressModal3({
           </View> */}
 
             <BorderTextInputWithLable
-              onChangeText={_onChangeText('street')}
-              placeholder={strings.ENTER_STREET}
+              onChangeText={_onChangeText('houseNo')}
+              placeholder={strings.HOUSE_NO}
               label={strings.COMPLETE_ADDRESS}
-              textInputStyle={getTextInputStyle(street)}
-              value={street}
+              textInputStyle={getTextInputStyle(houseNo)}
+              value={houseNo}
               multiline={false}
               borderWidth={0}
               marginBottomTxt={0}
-              containerStyle={{borderBottomWidth: 1}}
-              mainStyle={{marginTop: 10}}
+              containerStyle={{ borderBottomWidth: 1 }}
+              mainStyle={{ marginTop: 10 }}
               labelStyle={styles.labelStyle}
+            />
+
+            <BorderTextInputWithLable
+              onChangeText={_onChangeText('street')}
+              placeholder={strings.ENTER_STREET}
+              textInputStyle={getTextInputStyle(city)}
+              value={street}
+              borderWidth={0}
+              marginBottomTxt={0}
+              containerStyle={{ borderBottomWidth: 1 }}
             />
 
             <BorderTextInputWithLable
@@ -515,7 +633,7 @@ export default function AddressModal3({
               value={city}
               borderWidth={0}
               marginBottomTxt={0}
-              containerStyle={{borderBottomWidth: 1}}
+              containerStyle={{ borderBottomWidth: 1 }}
             />
 
             <BorderTextInputWithLable
@@ -525,11 +643,11 @@ export default function AddressModal3({
               value={states}
               borderWidth={0}
               marginBottomTxt={0}
-              containerStyle={{borderBottomWidth: 1}}
+              containerStyle={{ borderBottomWidth: 1 }}
             />
 
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               {/* <BorderTextInput
               containerStyle={{flex: 0.45}}
               onChangeText={_onChangeText('country')}
@@ -565,11 +683,11 @@ export default function AddressModal3({
                   value={country}
                   style={
                     isDarkMode
-                      ? [styles.textInput3, {opacity: 0.7, color: '#fff'}]
+                      ? [styles.textInput3, { opacity: 0.7, color: '#fff' }]
                       : [
-                          styles.textInput3,
-                          {opacity: 0.7, color: colors.textGrey},
-                        ]
+                        styles.textInput3,
+                        { opacity: 0.7, color: colors.textGrey },
+                      ]
                   }
                 />
               </View>
@@ -603,10 +721,9 @@ export default function AddressModal3({
             <View style={styles.addressTypeView}>
               {addressTypeArray.map((item, index) => {
                 return (
-                  <>
+                  <View key={index}>
                     <TouchableOpacity
-                      key={index}
-                      onPress={() => updateState({address_type: item.id})}
+                      onPress={() => updateState({ address_type: item.id })}
                       style={[
                         styles.addressHomeOrOfficeView,
                         {
@@ -615,16 +732,6 @@ export default function AddressModal3({
                             : colors.white,
                         },
                       ]}>
-                      {/* <Image
-                    source={item.icon}
-                    style={{
-                      tintColor:
-                        address_type == item.id
-                          ? themeColors.primary_color
-                          : colors.textGreyG,
-                    }}
-                  /> */}
-
                       <Text
                         style={[
                           {
@@ -639,14 +746,27 @@ export default function AddressModal3({
                       {address_type == item.id && (
                         <Image
                           source={imagePath.icRedChecked}
-                          style={{position: 'absolute', right: -8, top: -8}}
+                          style={{ position: 'absolute', right: -8, top: -8 }}
                         />
                       )}
                     </TouchableOpacity>
-                  </>
+                  </View>
                 );
               })}
             </View>
+            {address_type === 3 && (
+              <BorderTextInputWithLable
+                onChangeText={_onChangeText('customAddress')}
+                placeholder={strings.ENETER_YOUR_ADDRESS}
+                textInputStyle={getTextInputStyle(city)}
+                borderWidth={0}
+                marginBottomTxt={0}
+                containerStyle={{
+                  borderBottomWidth: 1,
+                  marginTop: moderateScale(5),
+                }}
+              />
+            )}
           </View>
 
           <GradientButton
@@ -657,7 +777,7 @@ export default function AddressModal3({
             // marginBottom={moderateScaleVertical(10)}
             btnText={strings.SAVE_ADDRESS}
             indicator={indicator}
-            containerStyle={{marginTop: moderateScale(20)}}
+            containerStyle={{ marginTop: moderateScale(20) }}
           />
         </KeyboardAwareScrollView>
       </View>
@@ -668,10 +788,10 @@ export default function AddressModal3({
     //   </View>
     // </View>
   );
-}
+};
 
-export function stylesData({fontFamily, themeColors}) {
-  const commonStyles = commonStylesFun({fontFamily});
+export function stylesData({ fontFamily, themeColors }) {
+  const commonStyles = commonStylesFun({ fontFamily });
 
   const styles = StyleSheet.create({
     addressTypeView: {
@@ -828,7 +948,7 @@ export function stylesData({fontFamily, themeColors}) {
       backgroundColor: colors.white,
       shadowOpacity: 0.2,
       justifyContent: 'center',
-      shadowOffset: {width: 0, height: 0.1},
+      shadowOffset: { width: 0, height: 0.1 },
     },
     addressTextStyle: {
       // flex: 1,
@@ -860,3 +980,4 @@ export function stylesData({fontFamily, themeColors}) {
   });
   return styles;
 }
+export default React.memo(AddressModal3);

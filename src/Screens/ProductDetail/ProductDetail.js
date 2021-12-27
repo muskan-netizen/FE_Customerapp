@@ -10,16 +10,21 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
 import HTMLView from 'react-native-htmlview';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Pagination} from 'react-native-snap-carousel';
+import StarRating from 'react-native-star-rating';
 import {useSelector} from 'react-redux';
-import Banner from '../../Components/Banner';
+import Banner2 from '../../Components/Banner2';
+import BottomSlideModal from '../../Components/BottomSlideModal';
 import GradientButton from '../../Components/GradientButton';
+import GradientCartView from '../../Components/GradientCartView';
 import Header from '../../Components/Header';
+import HorizontalLine from '../../Components/HorizontalLine';
 import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import ProductCard from '../../Components/ProductCard';
+import ProductsComp from '../../Components/ProductsComp';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -28,30 +33,32 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc, {hitSlopProp} from '../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../../styles/responsiveSize';
+import {MyDarkTheme} from '../../styles/theme';
+import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
+  getImageUrl,
+  hapticEffects,
+  playHapticEffect,
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../styles/theme';
-import HorizontalLine from '../../Components/HorizontalLine';
-import StarRating from 'react-native-star-rating';
-import Banner2 from '../../Components/Banner2';
-import MarketCard3 from '../../Components/MarketCard3';
-import ProductsComp from '../../Components/ProductsComp';
+import Modal from 'react-native-modal';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 export default function ProductDetail({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const CartItems = useSelector((state) => state?.cart?.cartItemCount);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
@@ -82,6 +89,7 @@ export default function ProductDetail({route, navigation}) {
     productQuantityForCart: 1,
     showErrorMessageTitle: false,
     typeId: null,
+    isProductImageLargeViewVisible: false,
   });
   //Saving the initial state
   const initialState = cloneDeep(state);
@@ -106,6 +114,7 @@ export default function ProductDetail({route, navigation}) {
     productQuantityForCart,
     showErrorMessageTitle,
     typeId,
+    isProductImageLargeViewVisible,
   } = state;
 
   const customRight = () => {
@@ -625,7 +634,75 @@ export default function ProductDetail({route, navigation}) {
     updateState({lightBox: true});
   };
 
-  console.log('product detail+++', productDetailData?.vendor?.show_slot);
+  const onImageLargeView = (item) => {
+    updateState({
+      isProductImageLargeViewVisible: true,
+    });
+  };
+
+  // load images for zooming effect
+
+  const allImagesArrayForZoom = [];
+  productDetailData?.product_media
+    ? productDetailData?.product_media?.map((item, index) => {
+        return (allImagesArrayForZoom[index] = {
+          url: getImageUrl(
+            item?.image.path.image_fit,
+            item?.image.path.image_path,
+            '1000/1000',
+          ),
+        });
+      })
+    : getImageUrl(
+        productDetailData?.product_media[0]?.image?.path?.image_fit,
+        productDetailData?.product_media[0]?.image?.path?.image_path,
+        '1000/1000',
+      );
+
+  const renderImageZoomingView = () => {
+    return (
+      <View
+        style={{
+          height: moderateScaleVertical(height),
+          width: moderateScale(width),
+        }}>
+        <ImageViewer
+          renderHeader={() => <View style={{backgroundColor: 'red'}}></View>}
+          renderIndicator={(currentIndex, allSize) => (
+            <View
+              style={{
+                position: 'absolute',
+                top: 100,
+                width: width / 2,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <TouchableOpacity
+                onPress={() =>
+                  updateState({
+                    isProductImageLargeViewVisible: false,
+                  })
+                }>
+                <Image
+                  style={{
+                    tintColor: colors.white,
+                    marginHorizontal: moderateScale(20),
+                  }}
+                  source={imagePath.backArrow}
+                />
+              </TouchableOpacity>
+              <Text style={{color: colors.white}}>
+                {currentIndex + '/' + allSize}
+              </Text>
+            </View>
+          )}
+          imageUrls={allImagesArrayForZoom}
+        />
+      </View>
+    );
+  };
+
+  console.log('product detail+++', productDetailData?.product_media);
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -672,7 +749,7 @@ export default function ProductDetail({route, navigation}) {
                 {/* <View style={{ flex: 0.2 }}><Image source={imagePath.fav} /></View> */}
                 <View style={{flex: 1, alignItems: 'center'}}>
                   <Banner2
-                    // resizeMode="contain"
+                    resizeMode="contain"
                     bannerRef={bannerRef}
                     bannerData={productDetailData?.product_media}
                     sliderWidth={width}
@@ -693,20 +770,20 @@ export default function ProductDetail({route, navigation}) {
                           <View style={{alignSelf: 'flex-end', padding: 8}}>
                             {!!productDetailData?.inwishlist ? (
                               <Image
-                                style={
-                                  isDarkMode
-                                    ? {tintColor: MyDarkTheme.colors.text}
-                                    : {tintColor: colors.white}
-                                }
+                                style={{
+                                  tintColor: isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : themeColors.primary_color,
+                                }}
                                 source={imagePath.whiteFilledHeart}
                               />
                             ) : (
                               <Image
-                                style={
-                                  isDarkMode
-                                    ? {tintColor: MyDarkTheme.colors.text}
-                                    : {tintColor: colors.white}
-                                }
+                                style={{
+                                  tintColor: isDarkMode
+                                    ? MyDarkTheme.colors.text
+                                    : themeColors.primary_color,
+                                }}
                                 source={imagePath.heart2}
                               />
                             )}
@@ -714,6 +791,7 @@ export default function ProductDetail({route, navigation}) {
                         ) : null}
                       </TouchableOpacity>
                     }
+                    onPress={onImageLargeView}
                   />
 
                   <View style={{paddingTop: 5}}>
@@ -820,7 +898,11 @@ export default function ProductDetail({route, navigation}) {
                           productTotalQuantity,
                         }).productTypeAndBrandValue
                       }>
-                      {productTotalQuantity && productTotalQuantity != 0
+                      {(!!productTotalQuantity &&
+                        !!productTotalQuantity != 0) ||
+                      (!!typeId && typeId == 8) ||
+                      !!productDetailData?.sell_when_out_of_stock ||
+                      productDetailData?.has_inventory == 0
                         ? ''
                         : strings.OUT_OF_STOCK}
                     </Text>
@@ -854,12 +936,8 @@ export default function ProductDetail({route, navigation}) {
                       </Text>
 
                       <HTMLView
-                        value={
-                          plainHtml.startsWith('<p>')
-                            ? plainHtml
-                            : '<p>' + plainHtml + '</p>'
-                        }
-                        stylesheet={{p: styles.descriptionStyle}}
+                        value={'<div>' + plainHtml + '</div>'}
+                        stylesheet={{div: styles.descriptionStyle}}
                       />
                     </View>
                   </View>
@@ -886,7 +964,9 @@ export default function ProductDetail({route, navigation}) {
               ) : null}
               {/* Add to Cart button */}
               {((!!productTotalQuantity && !!productTotalQuantity != 0) ||
-                (!!typeId && typeId == 8)) &&
+                (!!typeId && typeId == 8) ||
+                productDetailData?.has_inventory == 0 ||
+                !!productDetailData?.sell_when_out_of_stock) &&
                 (!!data?.showAddToCart ? null : showErrorMessageTitle ? null : (
                   <View
                     style={{
@@ -980,10 +1060,13 @@ export default function ProductDetail({route, navigation}) {
                           onPress={addToCart}
                           btnText={`${strings.ADD}  ${
                             currencies?.primary_currency?.symbol
-                          }${(
-                            Number(productPriceData?.multiplier) *
-                            Number(productPriceData?.price)
-                          ).toFixed(2)}`}
+                          }${currencyNumberFormatter(
+                            (
+                              Number(productPriceData?.multiplier) *
+                              Number(productPriceData?.price) *
+                              Number(productQuantityForCart)
+                            ).toFixed(2),
+                          )}`}
                           btnStyle={{
                             borderRadius: moderateScale(4),
                             height: moderateScale(38),
@@ -1054,6 +1137,42 @@ export default function ProductDetail({route, navigation}) {
         </View>
         <View style={{marginBottom: moderateScale(40)}} />
       </KeyboardAwareScrollView>
+      {/* 
+      <GradientCartView
+          onPress={() => {
+            playHapticEffect(hapticEffects.notificationSuccess);
+            navigation.navigate(navigationStrings.CART);
+          }}
+          btnText={
+            CartItems && CartItems.data && CartItems.data.item_count
+              ? `${CartItems.data.item_count} ${CartItems.data.item_count > 1 ? strings.ITEM : strings.ITEMS
+              } | ${currencies.primary_currency.symbol
+              }${currencyNumberFormatter(
+                Number(CartItems.data.total_payable_amount).toFixed(2),
+              )}`
+              : ''
+          }
+          ifCartShow={
+            CartItems && CartItems.data && CartItems.data.item_count > 0
+              ? true
+              : false
+          }
+          isMenuBtnShow={false}
+          // onMenuTap={() => {
+          //   playHapticEffect(hapticEffects.impactLight);
+          //   updateState({ MenuModalVisible: !MenuModalVisible });
+          // }}
+        /> */}
+      <Modal
+        isVisible={isProductImageLargeViewVisible}
+        style={{
+          height: height,
+          width: width,
+          margin: 0,
+        }}
+        animationInTiming={600}>
+        {renderImageZoomingView()}
+      </Modal>
     </WrapperContainer>
   );
 }

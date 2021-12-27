@@ -1,0 +1,14 @@
+#include "Pods/Target Support Files/Pods-Donepacked/Pods-Donepacked.debug.xcconfig"
+
+PROJECT_APPLE_ID =1592441052
+PROJECT_BUNDLE_ID =com.donepacked
+PROJECT_APP_VERSION = 1.0
+PROJECT_BUILD_NUMBER = 3
+PROJECT_APP_NAME =Donepacked
+PROJECT_GOOGLE_CLIENT_ID =682117910811-7finjmp6adl1p8f6o05allincktu1kvj.apps.googleusercontent.com
+PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.682117910811-7finjmp6adl1p8f6o05allincktu1kvj
+PROJECT_FACEBOOK_ID =686074132772594
+PROJECT_TWITTER_ID = twitterkit-R66DHARfuoYAPowApUxNxwbPi
+PROJECT_PLIST =DonepackedInfo
+PROJECT_GOOGLE_PLACE_KEY = AIzaSyB85kLYYOmuAhBUPd7odVmL6gnQsSGWU-4
+CODE_PUSH_KEY = vqnL5s_ctpjknpsDdMAkZ_chh5w0jcxBK108l

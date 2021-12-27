@@ -35,7 +35,7 @@ import AutoUpLabelTxtInput from './AutoUpLabelTxtInput';
 // navigator.geolocation = require('@react-native-community/geolocation');
 navigator.geolocation = require('react-native-geolocation-service');
 
-export default function AddressModal2({
+const AddressModal2 = ({
   updateData,
   isVisible = false,
   onClose,
@@ -45,7 +45,7 @@ export default function AddressModal2({
   onPress,
   indicator,
   navigation,
-}) {
+}) => {
   const appData = useSelector((state) => state?.initBoot?.appData);
   const currentTheme = useSelector((state) => state.initBoot);
   const {themeColors, themeLayouts, appStyle} = currentTheme;
@@ -69,7 +69,7 @@ export default function AddressModal2({
     addressTypeArray: [
       {
         id: 1,
-        lable: strings.HOME,
+        lable: strings.HOME_1,
         icon: imagePath.home,
       },
       {id: 2, lable: 'Work', icon: imagePath.workInActive},
@@ -230,7 +230,7 @@ export default function AddressModal2({
       city: city ? city : '',
       states: states ? states : '',
       country: country ? country : '',
-      pincode: pincode ? pincode : '',
+      // pincode: pincode ? pincode : '',
     });
     if (error) {
       // showError(error);
@@ -296,7 +296,6 @@ export default function AddressModal2({
           longitude: position.coords.longitude,
         })
           .then((json) => {
-            console.log(json, 'json?>>>>>>>');
             let addressData = getAddressComponent(json?.results[0]);
             console.log(addressData, 'addressData?>>>>>>>');
             addressHelper(addressData);
@@ -524,7 +523,7 @@ export default function AddressModal2({
       {/* </ScrollView> */}
     </Modal>
   );
-}
+};
 
 export function stylesData({fontFamily, themeColors}) {
   const commonStyles = commonStylesFun({fontFamily});
@@ -683,3 +682,4 @@ export function stylesData({fontFamily, themeColors}) {
   });
   return styles;
 }
+export default React.memo(AddressModal2);

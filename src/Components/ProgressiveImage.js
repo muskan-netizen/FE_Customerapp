@@ -85,7 +85,7 @@ const ProgressiveImage = ({
   );
 };
 
-export default ProgressiveImage;
+export default React.memo(ProgressiveImage);
 
 const styles = StyleSheet.create({
   imageOverlay: {

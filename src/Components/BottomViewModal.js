@@ -5,18 +5,25 @@ import Modal from 'react-native-modal';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import fontFamily from '../styles/fontFamily';
+import {useSelector} from 'react-redux';
+import {useDarkMode} from 'react-native-dark-mode';
+
 import {
   moderateScaleVertical,
   textScale,
   width,
 } from '../styles/responsiveSize';
 
-export default function BottomViewModal({
+const BottomViewModal = ({
   show,
   mainContainView,
   closeModal = () => {},
   isDatetimePicker = false,
-}) {
+}) => {
+  const theme = useSelector((state) => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const darkthemeusingDevice = useDarkMode();
   return (
     <Modal
       isVisible={show}
@@ -31,12 +38,16 @@ export default function BottomViewModal({
           styles.modalContainer,
           {width: isDatetimePicker ? width : width - 50},
         ]}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           // hitSlop={{top: 200, left: 200, right: 200, bottom: 200}}
-          style={{alignSelf: 'flex-end'}}
+          style={{ alignSelf: 'flex-end' }}
           onPress={() => closeModal()}>
-          <Image source={imagePath.crossC} />
-        </TouchableOpacity>
+          <Image
+            source={imagePath.crossC}
+            resizeMode="contain"
+          />
+        </TouchableOpacity> */}
+
         {isDatetimePicker ? null : (
           <View
             style={{
@@ -52,7 +63,7 @@ export default function BottomViewModal({
       </View>
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   modal: {
@@ -92,3 +103,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
+export default React.memo(BottomViewModal);

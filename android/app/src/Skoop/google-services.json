@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "536851873085",
+    "project_id": "skoop-da2ce",
+    "storage_bucket": "skoop-da2ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536851873085:android:33970c70cea3206a1e5954",
+        "android_client_info": {
+          "package_name": "com.app.skoop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "536851873085-4ltg0tn4l8kk6v272ma9qpu3h80udj6k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.skoop",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "536851873085-i2pit24llhm4tfc1r72139i2bmkq7m1t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.skoop",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "536851873085-uk3qo6i9n37s0g933jqbehkpu9mng31e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.skoop",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "536851873085-ep6sd31909qg9kvtc2hb0rdqvftoh86q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0EG025bwPPlhrdeXnPFn0oqN_vFikT5Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "536851873085-ep6sd31909qg9kvtc2hb0rdqvftoh86q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "536851873085-h6998rua5mbppki62vu17cg04s1mohdc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.skoop"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

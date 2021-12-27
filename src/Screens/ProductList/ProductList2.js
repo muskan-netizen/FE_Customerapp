@@ -7,6 +7,7 @@ import {
   RefreshControl,
   ScrollView,
   TouchableOpacity,
+  Vibration,
   View,
 } from 'react-native';
 import {useSelector} from 'react-redux';
@@ -29,7 +30,14 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
+import {
+  getImageUrl,
+  hapticEffects,
+  playHapticEffect,
+  playVibration,
+  showError,
+  showSuccess,
+} from '../../utils/helperFunctions';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
 
@@ -97,6 +105,7 @@ export default function Products({route, navigation}) {
     checkForMinimumPriceChange: false,
     checkForMaximumPriceChange: false,
     showFilterSlectedIcon: false,
+    categories: [],
   });
 
   const {
@@ -132,6 +141,7 @@ export default function Products({route, navigation}) {
     checkForMinimumPriceChange,
     checkForMaximumPriceChange,
     showFilterSlectedIcon,
+    categories,
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -148,6 +158,8 @@ export default function Products({route, navigation}) {
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
+      // console.log("data",data)
+      // return;
       navigation.navigate(screenName, {data});
     };
 
@@ -161,21 +173,21 @@ export default function Products({route, navigation}) {
   //   }, []),
   // );
 
-  useEffect(() => {
-    updateState({pageNo: 1});
-    getAllListItems();
-  }, [languages, currencies]);
-
-  useEffect(() => {
-    // do something
-    getAllListItems();
-  }, [pageNo, isRefreshing]);
+  // useEffect(() => {
+  //   updateState({ pageNo: 1 });
+  //   getAllListItems();
+  // }, [languages, currencies]);
 
   useFocusEffect(
     React.useCallback(() => {
       updateState({pageNo: 1});
       getAllListItems();
+      console.log('run again');
     }, [
+      pageNo,
+      isRefreshing,
+      languages,
+      currencies,
       sleectdBrands,
       selectedOptions,
       slectedSortBy,
@@ -183,6 +195,19 @@ export default function Products({route, navigation}) {
       maximumPrice,
     ]),
   );
+
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     updateState({ pageNo: 1 });
+  //     getAllListItems();
+  //   }, [
+  //     sleectdBrands,
+  //     selectedOptions,
+  //     slectedSortBy,
+  //     minimumPrice,
+  //     maximumPrice,
+  //   ]),
+  // );
 
   const getAllListItems = () => {
     let filterExist =
@@ -388,9 +413,10 @@ export default function Products({route, navigation}) {
 
   /****Get all list items by vendor id */
   const getAllProductsByVendor = () => {
+    console.log('api hit getAllProductsByVendor');
     actions
       .getProductByVendorId(
-        `/${productListId.id}?limit=${limit}&page=${pageNo}`,
+        `/${productListId?.id}?limit=${limit}&page=${pageNo}`,
         {},
         {
           code: appData.profile.code,
@@ -399,18 +425,29 @@ export default function Products({route, navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'res vendor products');
+        console.log('getAllProductsByVendor res', res);
+        if (res.data.vendor.vendor_templete_id == 5) {
+          //showing products with category
+          updateState({
+            selectedSbCategoryID: res.data.categories[0].id,
+            categories: res.data.categories,
+            productListData: res.data.categories[0].products,
+          });
+        } else {
+          updateState({
+            productListData:
+              pageNo == 1
+                ? res.data.products.data
+                : [...productListData, ...res.data.products.data],
+          });
+        }
+        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
         updateState({
-          isLoading: false,
           isRefreshing: false,
           categoryInfo: res.data.vendor,
           filterData: res.data.filterData,
-          productListData:
-            pageNo == 1
-              ? res.data.products.data
-              : [...productListData, ...res.data.products.data],
+          isLoading: false,
         });
-        updateBrandAndCategoryFilter(res.data.filterData, appMainData.brands);
       })
       .catch(errorMethod);
   };
@@ -450,6 +487,7 @@ export default function Products({route, navigation}) {
 
   /*********Add product to wish list******* */
   const _onAddtoWishlist = (item) => {
+    playHapticEffect(hapticEffects.rigid);
     if (!!userData?.auth_token) {
       updateState({isLoadingB: true});
       actions
@@ -503,7 +541,9 @@ export default function Products({route, navigation}) {
 
   //pagination of data
   const onEndReached = ({distanceFromEnd}) => {
-    updateState({pageNo: pageNo + 1});
+    if (categoryInfo.vendor_templete_id !== 5) {
+      updateState({pageNo: pageNo + 1});
+    }
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -513,6 +553,7 @@ export default function Products({route, navigation}) {
 
   //Add product to cart
   const _addToCart = (item) => {
+    playHapticEffect(hapticEffects.rigid);
     moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
   };
 
@@ -536,7 +577,12 @@ export default function Products({route, navigation}) {
   };
 
   const onPressChildCards = (item) => {
-    // updateState({selectedSbCategoryID: item.id});
+    updateState({
+      productListData: item.products,
+      selectedSbCategoryID: item.id,
+    });
+    return;
+    updateState({selectedSbCategoryID: item.id});
     navigation.push(navigationStrings.PRODUCT_LIST, {data: item});
   };
 
@@ -551,7 +597,7 @@ export default function Products({route, navigation}) {
   const listHeaderComponent = () => {
     return (
       <Fragment>
-        {categoryInfo && categoryInfo.childs && categoryInfo.childs.length ? (
+        {categories.length > 0 ? (
           <View>
             <ScrollView
               showsHorizontalScrollIndicator={false}
@@ -560,28 +606,28 @@ export default function Products({route, navigation}) {
                 marginHorizontal: moderateScale(16),
                 marginTop: moderateScaleVertical(10),
               }}>
-              <IconTextColumn
+              {/* <IconTextColumn
                 isActive={selectedSbCategoryID == -1 ? true : false}
                 icon={imagePath.allProducts}
                 text={strings.ALLPRODUCT}
-                onPress={() => updateState({selectedSbCategoryID: -1})}
-              />
-              {categoryInfo.childs.map((item, inx) => {
+                onPress={() => updateState({ selectedSbCategoryID: -1 })}
+              /> */}
+              {categories.map((item, inx) => {
                 return (
                   <View key={inx}>
                     <IconTextColumn
                       isActive={selectedSbCategoryID == item.id ? true : false}
                       icon={{
                         uri: getImageUrl(
-                          item.icon.proxy_url,
-                          item.icon.image_path,
+                          item.category.icon.proxy_url,
+                          item.category.icon.image_path,
                           '200/200',
                         ),
                       }}
                       imageStyle={{height: 40, width: 40, borderRadius: 40 / 2}}
                       // url={getImageUrl(item.icon.proxy_url, item.icon.image_path, '200/200') }
                       onPress={() => onPressChildCards(item)}
-                      text={item?.translation[0]?.name}
+                      text={item?.category.translation[0]?.name}
                     />
                   </View>
                 );
@@ -607,28 +653,18 @@ export default function Products({route, navigation}) {
               flexDirection: 'row',
               justifyContent: 'flex-end',
             }}>
-            <TouchableOpacity
-              // onPress={() => navigation.navigate(navigationStrings.FILTER)}
-              onPress={moveToNewScreen(navigationStrings.FILTER, {
-                // brandData: brandData,
-                // filterData: filterData,
-                allFilters: allFilters,
-                minPrice: minimumPrice,
-                maxPrice: maximumPrice,
-                checkForMinimumPriceChange: checkForMinimumPriceChange,
-                checkForMaximumPriceChange: checkForMaximumPriceChange,
-                getProductBasedOnFilter: (
-                  minPrice,
-                  maxPrice,
-                  checkForMinimumPriceChange,
-                  checkForMaximumPriceChange,
-                  sortByIds,
-                  brandIds,
-                  variants,
-                  options,
-                  allSelectdFilters,
-                ) =>
-                  getProductBasedOnFilter(
+            {categories.length == 0 && (
+              <TouchableOpacity
+                // onPress={() => navigation.navigate(navigationStrings.FILTER)}
+                onPress={moveToNewScreen(navigationStrings.FILTER, {
+                  // brandData: brandData,
+                  // filterData: filterData,
+                  allFilters: allFilters,
+                  minPrice: minimumPrice,
+                  maxPrice: maximumPrice,
+                  checkForMinimumPriceChange: checkForMinimumPriceChange,
+                  checkForMaximumPriceChange: checkForMaximumPriceChange,
+                  getProductBasedOnFilter: (
                     minPrice,
                     maxPrice,
                     checkForMinimumPriceChange,
@@ -638,13 +674,27 @@ export default function Products({route, navigation}) {
                     variants,
                     options,
                     allSelectdFilters,
-                  ),
-              })}>
-              <Image
-                style={{tintColor: isDarkMode ? MyDarkTheme.colors.text : null}}
-                source={imagePath.slider}
-              />
-            </TouchableOpacity>
+                  ) =>
+                    getProductBasedOnFilter(
+                      minPrice,
+                      maxPrice,
+                      checkForMinimumPriceChange,
+                      checkForMaximumPriceChange,
+                      sortByIds,
+                      brandIds,
+                      variants,
+                      options,
+                      allSelectdFilters,
+                    ),
+                })}>
+                <Image
+                  style={{
+                    tintColor: isDarkMode ? MyDarkTheme.colors.text : null,
+                  }}
+                  source={imagePath.slider}
+                />
+              </TouchableOpacity>
+            )}
 
             <TouchableOpacity
               onPress={moveToNewScreen(navigationStrings.SEARCHPRODUCTOVENDOR, {

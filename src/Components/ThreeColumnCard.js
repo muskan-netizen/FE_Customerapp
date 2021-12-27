@@ -21,12 +21,12 @@ import {MyDarkTheme} from '../styles/theme';
 import FastImage from 'react-native-fast-image';
 import BlurImages from './BlurImages';
 
-export default function ThreeColumnCard({
+const ThreeColumnCard = ({
   data = {},
   cardIndex,
   withTextBG = false,
   onPress = () => {},
-}) {
+}) => {
   //MarginHorizontal is 16 which is total 32
   //marginHorizontal for center item is 8 which is toal 16
   //total spcaing required is width-32+16 or 48
@@ -113,4 +113,5 @@ export default function ThreeColumnCard({
       </View>
     </TouchableOpacity>
   );
-}
+};
+export default React.memo(ThreeColumnCard);

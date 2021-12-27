@@ -107,3 +107,13 @@ export {default as RoyoTransactions} from './RoyoVendorApp/RoyoTransactions/Royo
 export {default as RoyoOrderDetail} from './RoyoVendorApp/RoyoOrderDetail/RoyoOrderDetail';
 export {default as RoyoAddProduct} from './RoyoVendorApp/RoyoAddProduct/RoyoAddProduct';
 
+export {default as Mobbex} from './PaymentGateways/Mobbex';
+export {default as Payfast} from './PaymentGateways/Payfast';
+export {default as Yoco} from './PaymentGateways/Yoco';
+export {default as TipPaymentOptions} from './TipPaymentOptions/TipPaymentOptions';
+export {default as Paylink} from './PaymentGateways/Paylink';
+export {default as OuterScreen4} from './OuterScreen/OuterScreen4';
+export {default as CategoryBrands} from './CategoryBrands/CategoryBrands';
+export {default as AllinonePyments} from './AllinonePyments/AllinonePyments';
+export {default as Simplify} from './PaymentGateways/Simplify';
+export {default as Square} from './PaymentGateways/Square';

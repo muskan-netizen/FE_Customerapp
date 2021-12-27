@@ -5,7 +5,6 @@ import {
   I18nManager,
   Image,
   ScrollView,
-  Share,
   Text,
   TouchableOpacity,
   View,
@@ -25,8 +24,13 @@ import stylesFun from './styles';
 import DeviceInfo from 'react-native-device-info';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
+import Share from 'react-native-share';
+
 
 export default function Account({navigation}) {
+
+  
   const [state, setState] = useState({
     isLoading: false,
   });
@@ -39,8 +43,8 @@ export default function Account({navigation}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const homePageLayout = appStyle?.homePageLayout;
-  const businessType = appStyle?.homePageLayout; 
-   const fontFamily = appStyle?.fontSizeData;
+  const businessType = appStyle?.homePageLayout;
+  const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
   const commonStyles = commonStylesFun({fontFamily});
 
@@ -61,21 +65,21 @@ export default function Account({navigation}) {
   );
 
   //Share your app
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        url: 'https://play.google.com/store/apps/details?id=com.codebrew.customer',
-      });
-
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-        } else {
-        }
-      } else if (result.action === Share.dismissedAction) {
-      }
-    } catch (error) {
-      alert(error.message);
+  const onShare = () => {
+    console.log("onShare",appData)
+    if (!!appData?.domain_link) {
+      let hyperLink = appData?.domain_link + '/share'
+      let options = { url: hyperLink }
+      Share.open(options)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          err && console.log(err);
+        });
+      return;
     }
+    alert('link not found')
   };
   //Logout function
   const userlogout = () => {
@@ -124,14 +128,6 @@ export default function Account({navigation}) {
               {strings.EDITCODE}
             </Text>
           )}
-          customRight={() => (
-            <Text
-              numberOfLines={2}
-              style={{color: colors.textGreyJ, opacity: 0.6}}>
-              {`${DeviceInfo.getVersion()}`}
-              <Text>{`(${DeviceInfo.getBuildNumber()})`}</Text>
-            </Text>
-          )}
           // rightIcon={imagePath.cartShop}
           centerTitle={strings.MY_ACCOUNT}
         />
@@ -178,23 +174,26 @@ export default function Account({navigation}) {
             />
           ))}
 
-        {!!userData?.auth_token && (
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
-            iconLeft={imagePath.myOrder}
-            centerHeading={strings.SUBSCRIPTION}
-            containerStyle={styles.containerStyle}
-            centerHeadingStyle={
-              isDarkMode
-                ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
-                : {fontSize: textScale(15)}
-            }
-            iconRight={imagePath.goRight}
-            rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )}
+        {!!userData?.auth_token &&
+          !!appData &&
+          !!appData?.profile &&
+          appData?.profile?.preferences?.subscription_mode == 1 && (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
+              iconLeft={imagePath.myOrder}
+              centerHeading={strings.SUBSCRIPTION}
+              containerStyle={styles.containerStyle}
+              centerHeadingStyle={
+                isDarkMode
+                  ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}
+                  : {fontSize: textScale(15)}
+              }
+              iconRight={imagePath.goRight}
+              rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          )}
 
         {!!userData?.auth_token && (
           <ListItemHorizontal
@@ -340,6 +339,42 @@ export default function Account({navigation}) {
         />
 
         {!!userData?.auth_token &&
+          Platform.OS === 'android' &&
+          (businessType == 'taxi' ? null : (
+            <ListItemHorizontal
+              centerContainerStyle={{flexDirection: 'row'}}
+              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              onPress={() => {
+                BluetoothManager.checkBluetoothEnabled().then(
+                  (enabled) => {
+                    if (Boolean(enabled)) {
+                      navigation.navigate(navigationStrings.ATTACH_PRINTER);
+                    } else {
+                      BluetoothManager.enableBluetooth()
+                        .then(() => {
+                          navigation.navigate(navigationStrings.ATTACH_PRINTER);
+                        })
+                        .catch((err) => {});
+                    }
+                  },
+                  (err) => {
+                    err;
+                  },
+                );
+              }}
+              iconLeft={imagePath.printer}
+              centerHeading={strings.ATTACH_PRINTER}
+              containerStyle={styles.containerStyle}
+              centerHeadingStyle={{
+                fontSize: textScale(14),
+                fontFamily: fontFamily.regular,
+              }}
+              iconRight={imagePath.goRight}
+              rightIconStyle={{tintColor: colors.textGreyLight}}
+            />
+          ))}
+
+        {!!userData?.auth_token &&
           !!appMainData?.is_admin &&
           businessType != 4 && (
             <ListItemHorizontal
@@ -348,7 +383,7 @@ export default function Account({navigation}) {
               onPress={moveToNewScreen(navigationStrings.TABROUTESVENDOR)}
               iconLeft={imagePath.myStoreIcon}
               centerHeading={strings.MYSTORES}
-              containerStyle={styles.containerStyle}
+              containerStyle={styles.containerStyle2}
               centerHeadingStyle={
                 isDarkMode
                   ? {fontSize: textScale(15), color: MyDarkTheme.colors.text}

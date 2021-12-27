@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import store from '../../../redux/store';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
@@ -9,9 +9,9 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../../styles/theme';
-import {useSelector} from 'react-redux';
+import { useDarkMode } from 'react-native-dark-mode';
+import { MyDarkTheme } from '../../../styles/theme';
+import { useSelector } from 'react-redux';
 
 export default ({
   fontFamily,
@@ -26,7 +26,7 @@ export default ({
   //   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   //   const darkthemeusingDevice = useDarkMode();
   //   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const commonStyles = commonStylesFun({fontFamily});
+  const commonStyles = commonStylesFun({ fontFamily });
   const styles = StyleSheet.create({
     titleAbout: {
       ...commonStyles.futuraBtHeavyFont14,
@@ -67,8 +67,8 @@ export default ({
       fontSize: textScale(12),
       color: colors.black,
       fontFamily: fontFamily.medium,
-      lineHeight: moderateScaleVertical(20),
-      marginLeft: moderateScale(10),
+
+      marginLeft: moderateScale(6),
     },
     saveAddressLabel: {
       fontSize: textScale(14),
@@ -115,8 +115,8 @@ export default ({
         type == 'pickup'
           ? moderateScaleVertical(40) * 2
           : type == 'dropOffLocation'
-          ? moderateScaleVertical(28)
-          : -100,
+            ? moderateScaleVertical(28)
+            : -100,
       // height: height / 3,
     },
 
@@ -154,9 +154,9 @@ export default ({
     },
     savedAddressView: {
       flexDirection: 'row',
-
-      width: width - 30,
-
+      // width: width - 30,
+      marginBottom: moderateScaleVertical(8),
+      alignItems: 'center'
       // shadowColor: '#000',
       // shadowOffset: {
       //   width: 0,
@@ -164,6 +164,14 @@ export default ({
       // },
       // elevation: 3,
     },
+    addressViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: 6,
+      paddingHorizontal: moderateScale(10),
+      borderBottomWidth: 0.5,
+      marginBottom: moderateScaleVertical(4),
+    }
   });
   return styles;
 };

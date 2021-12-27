@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "576101925240",
+    "project_id": "agb-deliveries",
+    "storage_bucket": "agb-deliveries.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:576101925240:android:cd1f0a7b8103d7bc70088d",
+        "android_client_info": {
+          "package_name": "com.agbdeliveries"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "576101925240-d6agd48ikogqupbr50m9c55q60vldrn1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.agbdeliveries",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "576101925240-kn7s1tj0s46e1c2km4759tdsl3saq71n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.agbdeliveries",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "576101925240-qnt58ul0o7jnjie5nnrcti8vuhe5mabs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.agbdeliveries",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "576101925240-87ls4vo35pllkhtm0o3h85qapgc6bodc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl2EZNtTTQpXxHVhv21p74IgfohpBybIk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "576101925240-87ls4vo35pllkhtm0o3h85qapgc6bodc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "576101925240-j0c2rigg6dleo08877nkdifb8jnp521b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.agbdeliveries"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

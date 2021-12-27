@@ -102,7 +102,7 @@ const Header3 = ({
     </View>
   );
 };
-export default Header3;
+export default React.memo(Header3);
 
 export function stylesFunc({fontFamily}) {
   const styles = StyleSheet.create({});

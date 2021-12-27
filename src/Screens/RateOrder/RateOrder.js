@@ -28,14 +28,14 @@ import {
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
 import {cameraHandler} from '../../utils/commonFunction';
-import {getImageUrl, showError} from '../../utils/helperFunctions';
+import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
 // import OrderCardComponent from './OrderCardComponent';
 import stylesFunc from './styles';
 
 export default function RateOrder({navigation, route}) {
   const ratingData = route?.params?.item?.product_rating;
 
-  console.log(ratingData, 'ratingData');
+  console.log(route?.params, 'route?.params');
   const [state, setState] = useState({
     isLoading: false,
     rating: 0,
@@ -60,8 +60,8 @@ export default function RateOrder({navigation, route}) {
   const {appData, currencies, languages, appStyle} = useSelector(
     (state) => state.initBoot,
   );
-  const businessType = appStyle?.homePageLayout; 
-   const {themeColors, themeLayouts} = currentTheme;
+  const businessType = appStyle?.homePageLayout;
+  const {themeColors, themeLayouts} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
 
   const styles = stylesFunc({themeColors, fontFamily});
@@ -184,7 +184,9 @@ export default function RateOrder({navigation, route}) {
       })
       .then((res) => {
         updateState({isLoading: false});
-        navigation.navigate(navigationStrings.TAXIHOMESCREEN);
+        // navigation.navigate(navigationStrings.TAXIHOMESCREEN);
+        navigation.goBack();
+        showSuccess(res?.message);
       })
       .catch(errorMethod);
   };
@@ -265,7 +267,9 @@ export default function RateOrder({navigation, route}) {
       source={loaderOne}
       isLoadingB={isLoading}>
       <Header
-        leftIcon={imagePath.back}
+        leftIcon={
+          appStyle?.homePageLayout === 3 ? imagePath.icBackb : imagePath.back
+        }
         centerTitle={strings.RATEORDER}
         headerStyle={{backgroundColor: colors.white}}
       />

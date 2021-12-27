@@ -12,12 +12,15 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {getImageUrl} from '../utils/helperFunctions';
+import {
+  getColorCodeWithOpactiyNumber,
+  getImageUrl,
+} from '../utils/helperFunctions';
 import ProgressiveImage from './ProgressiveImage';
 import moment from 'moment';
 import {MyDarkTheme} from '../styles/theme';
 
-export default function OffersCard2({data = {}, onPress = () => {}}) {
+const OffersCard2 = ({data = {}, onPress = () => {}}) => {
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
@@ -27,13 +30,11 @@ export default function OffersCard2({data = {}, onPress = () => {}}) {
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  console.log(data, 'dataaa');
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={1}
       style={{
-        marginHorizontal: moderateScale(16),
         borderRadius: 3,
         borderWidth: 1.4,
         borderColor: isDarkMode
@@ -70,15 +71,18 @@ export default function OffersCard2({data = {}, onPress = () => {}}) {
             borderWidth: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            borderColor: colors.redC,
+            borderColor: themeColors.primary_color,
             padding: moderateScale(3),
-            backgroundColor: colors.redOpacity12,
+            backgroundColor: getColorCodeWithOpactiyNumber(
+              themeColors?.primary_color.substr(1),
+              15,
+            ),
           }}>
           <Text
             numberOfLines={1}
             style={{
               fontSize: textScale(12),
-              color: colors.redC,
+              color: themeColors.primary_color,
               alignSelf: 'center',
               fontFamily: fontFamily.medium,
             }}>
@@ -90,7 +94,7 @@ export default function OffersCard2({data = {}, onPress = () => {}}) {
           <Text
             style={{
               ...commonStyles.futuraHeavyBt,
-              color: colors.redC,
+              color: themeColors?.primary_color,
               opacity: 1,
               fontSize: textScale(12),
               textTransform: 'uppercase',
@@ -157,4 +161,5 @@ export default function OffersCard2({data = {}, onPress = () => {}}) {
       </View>
     </TouchableOpacity>
   );
-}
+};
+export default React.memo(OffersCard2);

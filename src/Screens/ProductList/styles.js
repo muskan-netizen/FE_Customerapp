@@ -10,7 +10,7 @@ import {
   width,
 } from '../../styles/responsiveSize';
 
-export default ({themeColors, fontFamily}) =>
+export default ({themeColors, fontFamily, isDarkMode, MyDarkTheme}) =>
   StyleSheet.create({
     topHeaderView: {
       flexDirection: 'row',
@@ -87,7 +87,7 @@ export default ({themeColors, fontFamily}) =>
       alignItems: 'center',
       paddingHorizontal: moderateScale(8),
       // height: 42,
-      marginTop: StatusBarHeight - 10,
+      marginTop: Platform.OS === 'ios' ? StatusBarHeight : 5,
     },
 
     HeaderInsideTextStyle: {
@@ -113,20 +113,22 @@ export default ({themeColors, fontFamily}) =>
       height: moderateScale(42),
     },
     hitSlopProp: {
-      top: 50,
-      right: 50,
-      left: 50,
-      bottom: 50,
+      top: 100,
+      right: 100,
+      left: 100,
+      bottom: 100,
     },
     header2: {height: height * 0.3},
     imageBackgroundHdr: {width: width, height: '100%'},
-    linearGradientHdr: {alignItems: 'center', height: '100%', width: width},
+    linearGradientHdr: {
+      height: '100%',
+      width: width,
+      paddingVertical: moderateScale(30),
+    },
     hdrCompHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       width: width - moderateScale(20),
-      marginTop: StatusBarHeight + 5,
-      flex: 1,
     },
     hdrCompRoundImg: {
       height: moderateScale(70),
@@ -141,17 +143,16 @@ export default ({themeColors, fontFamily}) =>
       marginHorizontal: moderateScale(15),
       position: 'absolute',
       width: width - moderateScale(30),
-      bottom: -42,
-      height: moderateScale(90),
+      // minHeight: moderateScale(90),
       shadowOpacity: 0.3,
       shadowColor: '#000',
       shadowOffset: {height: 0, width: 0},
-
       borderRadius: moderateScale(12),
-      paddingVertical: moderateScale(5),
+      paddingVertical: moderateScale(12),
       paddingLeft: moderateScale(15),
       justifyContent: 'center',
       elevation: 0.9,
+      // alignItems:'center'
     },
     hdrNameRatingView: {
       flexDirection: 'row',
@@ -261,5 +262,15 @@ export default ({themeColors, fontFamily}) =>
     },
     itemRow: {
       flexDirection: 'row',
+    },
+    locTimeIcon: {
+      tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.grayOpacity51,
+    },
+    horizontalLine: {
+      width: '100%',
+      borderBottomWidth: 0.5,
+      borderBottomColor: isDarkMode
+        ? colors.whiteOpacity22
+        : colors.lightGreyBg,
     },
   });

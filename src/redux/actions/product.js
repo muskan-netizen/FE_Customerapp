@@ -12,6 +12,8 @@ import {
   GET_ALL_PRODUCTSBY_STORE_ID,
   MY_WALLET,
   CHECK_VENDORS,
+  GET_PRODUCT_TAGS,
+  WALLET_CREDIT,
 } from '../../config/urls';
 import {apiGet, apiPost, setWalletData} from '../../utils/utils';
 import store from '../store';
@@ -94,6 +96,19 @@ export const getProductByCategoryFilters = (
 ) => {
   return new Promise((resolve, reject) => {
     apiPost(GET_DATA_BY_CATEGORY_FILTERS + query, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+/** Get All Products Tags for Filter */
+export const getAllProductTags = (query = '', data = {}, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiGet(GET_PRODUCT_TAGS, data, headers)
       .then((res) => {
         resolve(res);
       })
@@ -228,10 +243,20 @@ export function getProductBySpecificId(query = '', data = {}, headers = {}) {
 }
 
 export function checkSingleVendor(data = {}, header = {}) {
-  console.log('Sending data', data);
-  console.log('header==>>>', header);
   return new Promise((resolve, reject) => {
     apiPost(CHECK_VENDORS, data, header)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function walletCredit(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiPost(WALLET_CREDIT, data, headers)
       .then((res) => {
         resolve(res);
       })

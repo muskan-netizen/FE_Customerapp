@@ -1,12 +1,6 @@
-import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
-import {PermissionsAndroid, Platform} from 'react-native';
-import store from '../redux/store';
-import types from '../redux/types';
+import axios from 'axios';
 import {sessionHandler} from './helperFunctions';
-import actions from '../redux/actions';
-import navigationStrings from '../navigation/navigationStrings';
-import * as NavigationService from '../navigation/NavigationService';
 
 export async function getHeaders() {
   let userData = await AsyncStorage.getItem('userData');
@@ -130,7 +124,6 @@ export async function apiReq(
       })
       .catch((error) => {
         if (error && error.response && error.response.status === 401) {
-          console.log('erro raised', error);
           sessionHandler(error.response.data.message);
           return rej(error);
         }

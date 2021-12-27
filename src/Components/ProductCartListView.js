@@ -1,17 +1,17 @@
 import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
 import HTMLView from 'react-native-htmlview';
 import {useSelector} from 'react-redux';
-import {transparentProductImage} from '../constants/constants';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {moderateScale, textScale, width} from '../styles/responsiveSize';
-import {getImageUrl} from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import {currencyNumberFormatter} from '../utils/commonFunction';
+import {getImageUrl} from '../utils/helperFunctions';
 
-export default function ProductCartListView({
+const ProductCartListView = ({
   data = {},
   onPress = () => {},
   cardWidth,
@@ -19,7 +19,7 @@ export default function ProductCartListView({
   onAddtoWishlist,
   addToCart = () => {},
   activeOpacity = 1,
-}) {
+}) => {
   const currentTheme = useSelector((state) => state?.appTheme);
   const {currencies, appStyle} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -108,10 +108,14 @@ export default function ProductCartListView({
                   fontSize: textScale(16),
                   fontFamily: fontFamily.bold,
                 }}>
-                {`${currencies?.primary_currency?.symbol}${(
-                  Number(data.variant[0].multiplier) *
-                  Number(data.variant[0].price)
-                ).toFixed(2)}`}
+                {`${
+                  currencies?.primary_currency?.symbol
+                }${currencyNumberFormatter(
+                  (
+                    Number(data.variant[0].multiplier) *
+                    Number(data.variant[0].price)
+                  ).toFixed(2),
+                )}`}
               </Text>
             </View>
           </View>
@@ -140,4 +144,5 @@ export default function ProductCartListView({
       </View>
     </TouchableOpacity>
   );
-}
+};
+export default React.memo(ProductCartListView);

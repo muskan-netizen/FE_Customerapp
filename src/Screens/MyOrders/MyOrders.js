@@ -13,6 +13,7 @@ import {
 import {useDarkMode} from 'react-native-dark-mode';
 import FastImage from 'react-native-fast-image';
 import * as RNLocalize from 'react-native-localize';
+import {useIsFocused} from '@react-navigation/native';
 import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
 import CustomTopTabBar from '../../Components/CustomTopTabBar';
@@ -38,6 +39,7 @@ import {
 import {MyDarkTheme} from '../../styles/theme';
 import {getImageUrl, showError} from '../../utils/helperFunctions';
 import stylesFun from './styles';
+import useInterval from '../../utils/useInterval';
 
 export default function MyOrders({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -109,35 +111,58 @@ export default function MyOrders({navigation}) {
   const commonStyles = commonStylesFunc({fontFamily});
   const styles = stylesFun({fontFamily, themeColors});
 
-  //Get list of all orders
-  useEffect(() => {
-    updateState({isLoading: true});
-    if (userData && userData?.auth_token) {
-      _getListOfOrders();
-    } else {
-      updateState({
-        isLoading: false,
-      });
-    }
-  }, [selectedTab]);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      if (userData && userData?.auth_token) {
+  const isFocused = useIsFocused();
+  useInterval(
+    () => {
+      if (!!userData?.auth_token) {
         _getListOfOrders();
       } else {
-        updateState({
-          isLoading: false,
-        });
+        navigation.navigate(navigationStrings.OUTER_SCREEN);
       }
-    }, []),
+    },
+    isFocused ? 3000 : null,
   );
+
+  const updateLocalItem = (data) => {
+    console.log('update location item data', data);
+    let cloneArr = orders;
+    let filterArray = cloneArr.filter((val) => {
+      if (val.order_id !== data.order_id) {
+        return val;
+      }
+    });
+    // console.log("update location item data filter array",filterArray)
+    updateState({orders: filterArray});
+  };
+  // useEffect(() => {
+  //   const focus = navigation.addListener('focus', () => {
+  //     if (userData && userData?.auth_token) {
+  //       _getListOfOrders();
+  //     } else {
+  //       updateState({
+  //         isLoading: false,
+  //       });
+  //     }
+  //   });
+  //   const blur = navigation.addListener('blur', () => {
+  //     updateState({ orders: [] });
+  //   });
+  //   return focus, blur;
+  // }, []);
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     if (userData && userData?.auth_token) {
+  //       _getListOfOrders();
+  //     } else {
+  //       updateState({
+  //         isLoading: false,
+  //       });
+  //     }
+  //   }, [])
+  // );
 
   //Get list of all orders api
   const _getListOfOrders = () => {
-    console.log(RNLocalize.getTimeZone(), 'RNLocalize.getTimeZone()');
-    console.log(tabType, 'tabType');
-    console.log(pageActive, 'pageActive');
     actions
       .getOrderListing(
         `?limit=${limit}&page=${pageActive}&type=${tabType}`,
@@ -152,7 +177,7 @@ export default function MyOrders({navigation}) {
         },
       )
       .then((res) => {
-        console.log(res, 'res>>>');
+        console.log(res.data, 'res my orders >>>');
         updateState({
           orders:
             pageActive == 1 ? res.data.data : [...orders, ...res.data.data],
@@ -213,36 +238,60 @@ export default function MyOrders({navigation}) {
   };
 
   const onPressViewEditAndReplace = (item) => {
-    console.log(item, 'item>');
-    item?.product_details[0]?.category_type ==
-      staticStrings.PICKUPANDDELIEVRY ||
-    item?.product_details[0]?.category_type == staticStrings.ONDEMANDSERVICE
-      ? navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
-          orderId: item?.order_id,
-          fromVendorApp: true,
-          selectedVendor: {id: item?.vendor_id},
-          orderDetail: item,
-          showRating:
-            item?.order_status?.current_status?.id != 6 ? false : true,
-        })
-      : // navigation.navigate(navigationStrings.ACCOUNTS, {
-        //   screen: navigationStrings.PICKUPORDERDETAIL,
-        //   params: {
-        //     orderId: item?.order_id,
-        //     fromVendorApp: true,
-        //     selectedVendor: {id: item?.vendor_id},
-        //     orderDetail: item,
-        //   },
-        // })
-        // if (selectedTab == strings.ACTIVE_ORDERS) {
-        navigation.navigate(navigationStrings.ORDER_DETAIL, {
-          orderId: item?.order_id,
-          fromVendorApp: true,
-          orderStatus: item?.order_status,
-          selectedVendor: {id: item?.vendor_id},
-          showRating:
-            item?.order_status?.current_status?.id != 6 ? false : true,
-        });
+    if (
+      item?.dispatch_traking_url &&
+      (item?.product_details[0]?.category_type ==
+        staticStrings.PICKUPANDDELIEVRY ||
+        item?.product_details[0]?.category_type ==
+          staticStrings.ONDEMANDSERVICE)
+    ) {
+      navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
+        orderId: item?.order_id,
+        fromVendorApp: true,
+        selectedVendor: {id: item?.vendor_id},
+        orderDetail: item,
+        showRating: item?.order_status?.current_status?.id != 6 ? false : true,
+      });
+    } else {
+      navigation.navigate(navigationStrings.ORDER_DETAIL, {
+        orderId: item?.order_id,
+        fromVendorApp: true,
+        orderDetail: item,
+        orderStatus: item?.order_status,
+        selectedVendor: {id: item?.vendor_id},
+        showRating: item?.order_status?.current_status?.id != 6 ? false : true,
+      });
+    }
+    // (item?.dispatch_traking_url &&
+    //   item?.product_details[0]?.category_type ==
+    //     staticStrings.PICKUPANDDELIEVRY) ||
+    // item?.product_details[0]?.category_type == staticStrings.ONDEMANDSERVICE
+    //   ? navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
+    //       orderId: item?.order_id,
+    //       fromVendorApp: true,
+    //       selectedVendor: {id: item?.vendor_id},
+    //       orderDetail: item,
+    //       showRating:
+    //         item?.order_status?.current_status?.id != 6 ? false : true,
+    //     })
+    //   : // navigation.navigate(navigationStrings.ACCOUNTS, {
+    //   screen: navigationStrings.PICKUPORDERDETAIL,
+    //   params: {
+    //     orderId: item?.order_id,
+    //     fromVendorApp: true,
+    //     selectedVendor: {id: item?.vendor_id},
+    //     orderDetail: item,
+    //   },
+    // })
+    // if (selectedTab == strings.ACTIVE_ORDERS) {
+    // navigation.navigate(navigationStrings.ORDER_DETAIL, {
+    //   orderId: item?.order_id,
+    //   fromVendorApp: true,
+    //   orderStatus: item?.order_status,
+    //   selectedVendor: {id: item?.vendor_id},
+    //   showRating:
+    //     item?.order_status?.current_status?.id != 6 ? false : true,
+    // });
 
     // }
   };
@@ -251,7 +300,6 @@ export default function MyOrders({navigation}) {
   };
 
   const returnYourOrder = (item) => {
-    console.log('hhdhsdshdshdh');
     console.log(item, 'item>item>');
     updateState({isLoading: true});
     actions
@@ -294,6 +342,7 @@ export default function MyOrders({navigation}) {
         }
         cardStyle={{padding: 0}}
         etaTime={!!item?.ETA ? item.ETA : null}
+        updateLocalItem={updateLocalItem}
       />
       // <OrderCardComponent
       //   data={item}
@@ -307,6 +356,20 @@ export default function MyOrders({navigation}) {
   };
 
   //Get list of all orders based on selected tab
+
+  //Get list of all orders
+  useEffect(() => {
+    updateState({isLoading: true});
+    if (userData && userData?.auth_token) {
+      _getListOfOrders();
+    } else {
+      updateState({
+        isLoading: false,
+      });
+      navigation.navigate(navigationStrings.OUTER_SCREEN);
+    }
+  }, [selectedTab]);
+
   useEffect(() => {
     if (userData && userData?.auth_token) {
       _getListOfOrders();
@@ -314,6 +377,7 @@ export default function MyOrders({navigation}) {
       updateState({
         isLoading: false,
       });
+      navigation.navigate(navigationStrings.OUTER_SCREEN);
     }
   }, [pageActive, pagePastOrder, pageScheduleOrder, isRefreshing]);
 
@@ -438,7 +502,7 @@ export default function MyOrders({navigation}) {
         })
         .catch(errorMethod);
     } else {
-      showError('Please select the product to return');
+      showError(strings.PLEASE_SELECT_RETURN_ORDER);
     }
   };
 
@@ -456,7 +520,7 @@ export default function MyOrders({navigation}) {
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3
             ? imagePath.icBackb
-            : imagePath.back
+            : imagePath.backArrowCourier
         }
         centerTitle={businessType === 4 ? strings.MYRIDES : strings.MY_ORDERS}
         headerStyle={
@@ -483,6 +547,7 @@ export default function MyOrders({navigation}) {
       <FlatList
         ref={_scrollRef}
         data={orders}
+        extraData={orders}
         // data={activeOrders || pastOrders || scheduledOrders}
         // data={[1, 2, 3, 4]}
         renderItem={renderOrders}
@@ -515,7 +580,19 @@ export default function MyOrders({navigation}) {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <NoDataFound isLoading={state.isLoading} />
+              <NoDataFound
+                image={
+                  businessType === 4
+                    ? imagePath.noRides
+                    : imagePath.noDataFound2
+                }
+                isLoading={state.isLoading}
+                text={
+                  businessType === 4
+                    ? strings.NO_ORDERS_FOUND
+                    : strings.NODATAFOUND
+                }
+              />
             </View>
           )
         }

@@ -9,7 +9,7 @@ import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 import fontFamily from '../styles/fontFamily';
 
-export default function AutoUpLabelTxtInput({
+const AutoUpLabelTxtInput = ({
   onChangeText = () => {},
   containerStyle = {},
   value = '',
@@ -19,7 +19,7 @@ export default function AutoUpLabelTxtInput({
   secureTextEntry = false,
   txtInputStyle = {},
   undnerlinecolor = colors.transparent,
-}) {
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
@@ -53,6 +53,7 @@ export default function AutoUpLabelTxtInput({
         onChangeText={onChangeText}></TextInput>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({});
+export default React.memo(AutoUpLabelTxtInput);

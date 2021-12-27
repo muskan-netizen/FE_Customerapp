@@ -336,9 +336,14 @@ export default ({fontFamily, themeColors}) => {
     closeButton: {
       alignItems: 'flex-end',
       justifyContent: 'center',
-      marginVertical: moderateScaleVertical(-10),
-      marginHorizontal:moderateScale(20),
-      zIndex:1000
+      marginVertical: moderateScaleVertical(-25),
+      marginHorizontal: moderateScale(5),
+      zIndex: 1000,
+      backgroundColor: 'white',
+      // width: 20,
+      // height: 20,
+      alignSelf: 'flex-end',
+      borderRadius: 50,
     },
     modalMainViewContainer: {
       //   flex: 1,
@@ -357,6 +362,7 @@ export default ({fontFamily, themeColors}) => {
       fontSize: textScale(14),
       color: colors.blackC,
       fontFamily: fontFamily.bold,
+      paddingRight: moderateScale(30),
     },
     selectItemToReturn: {
       fontSize: textScale(12),
@@ -367,7 +373,7 @@ export default ({fontFamily, themeColors}) => {
       height: width / 7,
       width: width / 7,
       backgroundColor: colors.white,
-      marginLeft:5
+      marginLeft: 5,
     },
     imageStyle: {height: width / 7, width: width / 7},
   });

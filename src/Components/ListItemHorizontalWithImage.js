@@ -49,14 +49,10 @@ const ListItemHorizontal = ({
         <TouchableOpacity style={{...leftIconStyle}}>
           <Image
             source={iconLeft}
-            style={
-              isDarkMode
-                ? {
-                    transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
-                    tintColor: MyDarkTheme.colors.text,
-                  }
-                : {transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}
-            }
+            style={{
+              transform: [{scaleX: I18nManager.isRTL ? -1 : 1}],
+              tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            }}
           />
         </TouchableOpacity>
       ) : (
@@ -108,4 +104,4 @@ const ListItemHorizontal = ({
   );
 };
 
-export default ListItemHorizontal;
+export default React.memo(ListItemHorizontal);

@@ -37,10 +37,12 @@ import {
 } from '../../styles/responsiveSize';
 import {currencyNumberFormatter} from '../../utils/commonFunction';
 import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {showError} from '../../utils/helperFunctions';
+import {getImageUrl, showError} from '../../utils/helperFunctions';
 import stylesFun from './styles';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import queryString from 'query-string';
+import RazorpayCheckout from 'react-native-razorpay';
 
 export default function AddMoney({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -111,6 +113,7 @@ export default function AddMoney({navigation}) {
         },
       )
       .then((res) => {
+        console.log('payment list options', res.data);
         updateState({isLoadingB: false, isRefreshing: false});
         if (res && res?.data) {
           updateState({allAvailAblePaymentMethods: res?.data});
@@ -121,6 +124,7 @@ export default function AddMoney({navigation}) {
 
   //Error handling in screen
   const errorMethod = (error) => {
+    console.log(error, 'errorerrorerror');
     updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
@@ -171,7 +175,8 @@ export default function AddMoney({navigation}) {
                   ? [styles.chooseAddMoney, {color: MyDarkTheme.colors.text}]
                   : styles.chooseAddMoney
               }>
-              {'+ $'} {currencyNumberFormatter(item.amount)}
+              {`+ ${currencies?.primary_currency?.symbol}`}{' '}
+              {currencyNumberFormatter(item.amount)}
             </Text>
           </View>
         </View>
@@ -222,43 +227,35 @@ export default function AddMoney({navigation}) {
 
         {selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
-          selectedPaymentMethod?.off_site != 1 && (
-            // <LiteCreditCardInput
-            //   autoFocus
-            //   inputStyle={styles.input}
-            //   validColor={'black'}
-            //   invalidColor={'red'}
-            //   placeholderColor={'darkgray'}
-            //   // onFocus={_onFocusStripeData}
-            //   onChange={_onChangeStripeData}
-            //   inputContainerStyle={{backgroundColor: 'white'}}
-            // />
-
-            <CardField
-              postalCodeEnabled={true}
-              placeholder={{
-                number: '4242 4242 4242 4242',
-              }}
-              cardStyle={{
-                backgroundColor: '#FFFFFF',
-                textColor: '#000000',
-              }}
-              style={{
-                width: '100%',
-                height: 50,
-                marginVertical: 10,
-              }}
-              onCardChange={(cardDetails) => {
-                // console.log('cardDetails', cardDetails);
-                _onChangeStripeData(cardDetails);
-              }}
-              onFocus={(focusedField) => {
-                console.log('focusField', focusedField);
-              }}
-              onBlur={() => {
-                Keyboard.dismiss();
-              }}
-            />
+          selectedPaymentMethod?.off_site == 0 &&
+          selectedPaymentMethod?.id === 4 && (
+            <View>
+              <CardField
+                postalCodeEnabled={false}
+                placeholder={{
+                  number: '4242 4242 4242 4242',
+                }}
+                cardStyle={{
+                  backgroundColor: '#FFFFFF',
+                  textColor: '#000000',
+                }}
+                style={{
+                  width: '100%',
+                  height: 50,
+                  marginVertical: 10,
+                }}
+                onCardChange={(cardDetails) => {
+                  // console.log('cardDetails', cardDetails);
+                  _onChangeStripeData(cardDetails);
+                }}
+                onFocus={(focusedField) => {
+                  console.log('focusField', focusedField);
+                }}
+                onBlur={() => {
+                  Keyboard.dismiss();
+                }}
+              />
+            </View>
           )}
       </>
     );
@@ -278,14 +275,71 @@ export default function AddMoney({navigation}) {
   //
   // };
 
+  const renderRazorPay = () => {
+    let options = {
+      description: 'Credits towards consultation',
+      image: getImageUrl(
+        appData?.profile?.logo?.image_fit,
+        appData?.profile?.logo?.image_path,
+        '1000/1000',
+      ),
+      currency: currencies?.primary_currency?.iso_code,
+      key: preferences?.razorpay_api_key, // Your api key
+      amount: amount * 100,
+      name: appData?.profile?.company_name,
+      prefill: {
+        email: userData?.email,
+        contact: userData?.phone_number || '',
+        name: userData?.name,
+      },
+      theme: {color: themeColors.primary_color},
+    };
+
+    RazorpayCheckout.open(options)
+      .then((res) => {
+        if (res?.razorpay_payment_id) {
+          const data = {};
+          data['amount'] = amount;
+          data['transaction_id'] = res?.razorpay_payment_id;
+          actions
+            .walletCredit(data, {
+              code: appData?.profile?.code,
+              currency: currencies?.primary_currency?.id,
+              language: languages?.primary_language?.id,
+            })
+            .then((res) => {
+              Alert.alert('', strings.PAYMENT_SUCCESS, [
+                {
+                  text: strings.OK,
+                  onPress: () => console.log('Okay pressed'),
+                },
+              ]);
+              navigation.navigate(navigationStrings.WALLET);
+            })
+            .catch(errorMethod);
+        }
+      })
+      .catch(errorMethod);
+  };
+
+  console.log(selectedPaymentMethod, 'selectedPaymentMethod');
   const _addMoneyToWallet = () => {
     if (amount == '') {
       showError(strings.PLEASE_ENTER_OR_SELECT_AMOUNT);
     } else if (!selectedPaymentMethod) {
       showError(strings.PLEASE_SELECT_PAYMENT_METHOD);
     } else {
+      // console.log("selectedPaymentMethod",selectedPaymentMethod)
+      if (
+        selectedPaymentMethod?.off_site == 0 &&
+        selectedPaymentMethod?.id == 10
+      ) {
+        renderRazorPay();
+        return;
+      }
       if (selectedPaymentMethod?.off_site == 1) {
         _webPayment();
+        return;
       } else {
         _offineLinePayment();
       }
@@ -294,8 +348,8 @@ export default function AddMoney({navigation}) {
 
   const _webPayment = () => {
     let selectedMethod = selectedPaymentMethod.title.toLowerCase();
-    let returnUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
-    let cancelUrl = `/payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
+    let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
+    let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/wallet`;
 
     updateState({isLoadingB: true});
     actions
@@ -310,11 +364,20 @@ export default function AddMoney({navigation}) {
       )
       .then((res) => {
         updateState({isLoadingB: false, isRefreshing: false});
+        // console.log("res==>>>>",res)
+        const URL = queryString.parseUrl(res.data);
+        console.log('res==>>>>', res);
         if (res && res?.status == 'Success' && res?.data) {
-          // updateState({allAvailAblePaymentMethods: res?.data});
-          navigation.navigate(navigationStrings.WEBPAYMENTS, {
-            paymentUrl: res?.data,
-            paymentTitle: selectedPaymentMethod?.title,
+          let sendingData = {
+            id: selectedPaymentMethod.id,
+            title: selectedPaymentMethod.title,
+            screenName: navigationStrings.WALLET,
+            paymentUrl: res.data,
+            action: 'wallet',
+          };
+
+          navigation.navigate(navigationStrings.ALL_IN_ONE_PAYMENTS, {
+            data: sendingData,
           });
         }
       })
@@ -327,7 +390,7 @@ export default function AddMoney({navigation}) {
       updateState({isLoadingB: true});
       await createToken(cardInfo)
         .then((res) => {
-          console.log(res, 'res>>');
+          console.log(res, 'res>>STRIpe');
           if (res && res?.token && res.token?.id) {
             let selectedMethod = selectedPaymentMethod.title.toLowerCase();
             // updateState({isLoadingB: true});
@@ -348,7 +411,7 @@ export default function AddMoney({navigation}) {
                   // alert('Payment successfull');
                   Alert.alert('', strings.PAYMENT_SUCCESS, [
                     {
-                      text: strings.CANCEL,
+                      text: strings.OK,
                       onPress: () => console.log('Cancel Pressed'),
                       // style: 'destructive',
                     },
@@ -359,10 +422,7 @@ export default function AddMoney({navigation}) {
               .catch(errorMethod);
           }
         })
-        .catch((err) => {
-          updateState({isLoadingB: false});
-          console.log(err, 'err>>');
-        });
+        .catch(errorMethod);
     }
 
     // updateState({isLoadingB: true});
@@ -448,7 +508,7 @@ export default function AddMoney({navigation}) {
                     ? [styles.currencySymble, {color: MyDarkTheme.colors.text}]
                     : styles.currencySymble
                 }>
-                {'$'}
+                {currencies?.primary_currency?.symbol}
               </Text>
               <TextInput
                 style={

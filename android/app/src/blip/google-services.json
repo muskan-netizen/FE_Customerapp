@@ -7,34 +7,62 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:711046951889:android:e5bc167cd65f985fb9e6f0",
+        "mobilesdk_app_id": "1:711046951889:android:c878dc882146b0c0b9e6f0",
         "android_client_info": {
-          "package_name": "com.blip"
+          "package_name": "com.BlipDelivery.royodispatcher"
         }
       },
       "oauth_client": [
         {
-          "client_id": "711046951889-cdi65hvvo3g1nimhrftmb7p7o0c25481.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.blip",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
+          "client_id": "711046951889-72mlkihcgkih6ctsaem5io2o2mnsc0ct.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
         {
-          "client_id": "711046951889-rri2dcujrh848792h0hor0n1c599ssql.apps.googleusercontent.com",
+          "current_key": "AIzaSyC-O3LpzCcCOO3irAOyBzCkoNAPB_pmTlQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "711046951889-72mlkihcgkih6ctsaem5io2o2mnsc0ct.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "711046951889-3totg4uihkpfgdavjo4tfmhpmodcd0hf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.BlipDeliveryApp.Dispatch"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711046951889:android:092fd27c814dc122b9e6f0",
+        "android_client_info": {
+          "package_name": "com.app.blip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "711046951889-mf7ashuaaqmldpqqv14opvbhu3d3lmhd.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.blip",
+            "package_name": "com.app.blip",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "711046951889-udrgmr83tdoo0l13rltnkqn897c76jkq.apps.googleusercontent.com",
+          "client_id": "711046951889-r1ls1tdtpa9tm0pu8otm9m43o39aqkb8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.blip",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+            "package_name": "com.app.blip",
+            "certificate_hash": "58ee985c12af9c62ea2d0564a28ebccd02ec037f"
           }
         },
         {
@@ -53,6 +81,13 @@
             {
               "client_id": "711046951889-72mlkihcgkih6ctsaem5io2o2mnsc0ct.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "711046951889-3totg4uihkpfgdavjo4tfmhpmodcd0hf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.BlipDeliveryApp.Dispatch"
+              }
             }
           ]
         }

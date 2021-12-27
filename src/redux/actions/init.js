@@ -12,7 +12,10 @@ import {
 import {LIST_OF_CMS, CMS_PAGE_DETAIL} from '../../config/urls';
 import store from '../store';
 import types from '../types';
+import {changeLaguage} from '../../constants/lang';
+import {I18nManager} from 'react-native';
 const {dispatch} = store;
+import RNRestart from 'react-native-restart';
 
 export function initApp(
   data = {},
@@ -20,18 +23,13 @@ export function initApp(
   reload = false,
   primary_curreny,
   primary_language,
+  refreshlang = false,
 ) {
   return new Promise((resolve, reject) => {
     apiPost(APP_INITIAL_SETTINGS, data, headers)
       .then(async (res) => {
         let data = res?.data;
-        console.log(primary_curreny, 'primary_curreny>>>>>>><<<<<<');
-        console.log(primary_language, 'primary_language>>>>>>><<<<<<');
-        console.log(
-          data?.languages.find((x) => x?.language?.id == primary_language?.id),
-        
-        );
-        console.log(data, 'data>>>>>>><<<<<<');
+
         const currencies = data?.currencies
           ? data.currencies.map((x) => {
               return {
@@ -108,6 +106,10 @@ export function initApp(
         // setPrimaryCurrency
 
         if (reload) {
+          console.log(
+            currenciesData,
+            'currenciesDatacurrenciesDatacurrenciesData',
+          );
           setItem('setPrimaryCurrent', currenciesData);
           setCurrentcy(currenciesData);
         } else {
@@ -128,11 +130,34 @@ export function initApp(
           // refreshScreen(languagesData?.primary_language?.sort_code);
         } else {
           const getPrimaryLanguage = await getItem('setPrimaryLanguage');
+
           if (getPrimaryLanguage) {
+            if (refreshlang) {
+              changeLaguage(getPrimaryLanguage?.primary_language?.sort_code);
+            }
+            if (
+              refreshlang &&
+              getPrimaryLanguage?.primary_language?.sort_code == 'ar'
+            ) {
+              I18nManager.forceRTL(true);
+              // alert(JSON.stringify(I18nManager), 'I18nManager');
+            }
             setLanguage(getPrimaryLanguage);
           } else {
+            let primaryLang = data.languages.filter((x) => x.is_primary)[0]
+              .language;
+
+            // alert(JSON.stringify(I18nManager), 'I18nManager');
             setItem('setPrimaryLanguage', languagesData);
             setLanguage(languagesData);
+            changeLaguage(languagesData?.primary_language?.sort_code);
+
+            if (primaryLang.sort_code == 'ar') {
+              if (!I18nManager.isRTL) {
+                I18nManager.forceRTL(true);
+                RNRestart.Restart();
+              }
+            }
           }
         }
 
@@ -217,6 +242,7 @@ export function getListOfAllCmsLinks(data = {}, headers = {}) {
 
 //Get CMS page detail
 export function getCmsPageDetail(data = {}, headers = {}) {
+  console.log(data, 'datadatadatadata');
   return new Promise((resolve, reject) => {
     apiPost(CMS_PAGE_DETAIL, data, headers)
       .then((res) => {
@@ -244,8 +270,6 @@ export function setAppTheme(res) {
 }
 
 export function setToggle(res) {
-  // console.log(JSON.stringify(res), 'response from toggle');
-
   setItem('istoggle', JSON.stringify(res));
   dispatch({
     type: types.THEME_TOGGLE,

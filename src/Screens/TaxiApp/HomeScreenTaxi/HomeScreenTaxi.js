@@ -38,6 +38,10 @@ import {chekLocationPermission} from '../../../utils/permissions';
 import {getCurrentLocation} from '../../../utils/helperFunctions';
 import BottomViewModal from '../../../Components/BottomViewModal';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
+// import {appIds} from '../../../utils/constants/DynamicAppKeys';
+
+import DeviceInfo from 'react-native-device-info';
+import {appIds} from '../../../utils/constants/DynamicAppKeys';
 
 export default function HomeScreenTaxi({navigation, route}) {
   const mapRef = React.createRef();
@@ -153,8 +157,8 @@ export default function HomeScreenTaxi({navigation, route}) {
                     position.coords.latitude,
                   );
                   updateState({
-                    userCurrentLongitude: currentLongitude,
-                    userCurrentLatitude: currentLatitude,
+                    userCurrentLongitude: parseFloat(currentLongitude),
+                    userCurrentLatitude: parseFloat(currentLatitude),
                   });
                 },
                 (error) => alert(error.message),
@@ -224,7 +228,6 @@ export default function HomeScreenTaxi({navigation, route}) {
   //       addressType: paramData?.addressType,
   //     });
   //   };
-  console.log(paramData, 'paramDataparamDataparamDataparamDataparamData');
 
   const moveToNewScreen =
     (screenName, data = {paramData}) =>
@@ -433,16 +436,24 @@ export default function HomeScreenTaxi({navigation, route}) {
 
   return (
     <>
-      <MapView
-        ref={mapRef}
-        //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-        style={styles.map}
-        region={region}
-        initialRegion={region}
-        customMapStyle={mapStyleGrey}
-        // pointerEvents={'none'}
-        onRegionChangeComplete={_onRegionChange}>
-        {/* <Marker
+      {userCurrentLatitude && (
+        <MapView
+          ref={mapRef}
+          //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+          style={styles.map}
+          region={{
+            latitude: userCurrentLatitude,
+            longitude: userCurrentLongitude,
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.0121,
+          }}
+          initialRegion={region}
+          customMapStyle={
+            appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
+          }
+          // pointerEvents={'none'}
+          onRegionChangeComplete={_onRegionChange}>
+          {/* <Marker
             ref={markerRef}
             // pointerEvents={'none'}
             coordinate={coordinate}
@@ -452,7 +463,8 @@ export default function HomeScreenTaxi({navigation, route}) {
             // onPress={(e) => console.log('onPress', e)}
             // draggable
           /> */}
-      </MapView>
+        </MapView>
+      )}
       <View style={[styles.backbutton, {marginHorizontal: moderateScale(15)}]}>
         {businessType === 4 ? null : (
           <TouchableOpacity onPress={() => navigation.goBack()}>

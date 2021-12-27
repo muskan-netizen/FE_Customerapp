@@ -37,7 +37,9 @@ export default function Wallet({navigation}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const {appData, themeColors} = useSelector((state) => state?.initBoot);
+  const {appData, themeColors, currencies} = useSelector(
+    (state) => state?.initBoot,
+  );
   const userData = useSelector((state) => state.auth.userData);
   const {appStyle} = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
@@ -47,7 +49,7 @@ export default function Wallet({navigation}) {
     navigation.navigate(screenName, {data});
   };
   const {pageNo, walletHistory, limit, wallet_amount, isRefreshing} = state;
-
+  console.log('my currencies', currencies);
   useFocusEffect(
     React.useCallback(() => {
       getWalletData();
@@ -136,7 +138,9 @@ export default function Wallet({navigation}) {
                   ? [styles.addedMoneyValue, {color: MyDarkTheme.colors.text}]
                   : styles.addedMoneyValue
               }>
-              {item.type == 'deposit' ? '+$' : '-$'}{' '}
+              {item.type == 'deposit'
+                ? `+${currencies?.primary_currency?.symbol}`
+                : `-${currencies?.primary_currency?.symbol}`}
               {currencyNumberFormatter(item.amount)}
             </Text>
           </View>
@@ -225,7 +229,8 @@ export default function Wallet({navigation}) {
                     ]
                   : styles.availableBalanceValue
               }>
-              {'$'} {currencyNumberFormatter(wallet_amount)}
+              {currencies?.primary_currency?.symbol}{' '}
+              {currencyNumberFormatter(wallet_amount)}
             </Text>
           </View>
         </View>

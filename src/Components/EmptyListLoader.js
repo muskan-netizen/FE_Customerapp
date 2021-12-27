@@ -9,8 +9,7 @@ import {
 } from '../styles/responsiveSize';
 import CardLoader from './Loaders/CardLoader';
 import NoDataFound from './NoDataFound';
-
-export default function EmptyListLoader({
+const EmptyListLoader = ({
   isLoading = false,
   text = strings.NODATAFOUND,
   containerStyle = {},
@@ -20,7 +19,7 @@ export default function EmptyListLoader({
   isVendorList,
   emptyText = '',
   isVendorEmpty,
-}) {
+}) => {
   const contentCard = () => {
     if (isLoading) {
       return (
@@ -74,7 +73,7 @@ export default function EmptyListLoader({
   };
 
   return (
-    <View style={{width: '100%'}}>
+    <View style={{width: width - 5}}>
       {isRow ? (
         <View
           style={{
@@ -98,4 +97,5 @@ export default function EmptyListLoader({
       )}
     </View>
   );
-}
+};
+export default React.memo(EmptyListLoader);

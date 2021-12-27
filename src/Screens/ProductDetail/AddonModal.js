@@ -1,36 +1,27 @@
+import {useNavigation} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
-import {
-  Image,
-  Keyboard,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {useState} from 'react';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {useDarkMode} from 'react-native-dark-mode';
+import HTMLView from 'react-native-htmlview';
 import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
 import GradientButton from '../../Components/GradientButton';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
+import navigationStrings from '../../navigation/navigationStrings';
 import colors from '../../styles/colors';
 import commonStyles from '../../styles/commonStyles';
-import fontFamily from '../../styles/fontFamily';
 import {
   height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
 } from '../../styles/responsiveSize';
-import {getImageUrl} from '../../utils/helperFunctions';
-import {useNavigation} from '@react-navigation/native';
-import navigationStrings from '../../navigation/navigationStrings';
-import stylesFunc from './styles';
-import HTMLView from 'react-native-htmlview';
-import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../../styles/theme';
+import {currencyNumberFormatter} from '../../utils/commonFunction';
+import {getImageUrl, hapticEffects, playHapticEffect} from '../../utils/helperFunctions';
+import stylesFunc from './styles';
 
 export default function AddonModal({
   productdetail = {},
@@ -165,9 +156,11 @@ export default function AddonModal({
                         : colors.black,
                     },
                   ]}>
-                  {`${currencies?.primary_currency?.symbol}${(
-                    Number(i?.multiplier) * Number(i?.price)
-                  ).toFixed(2)}`}
+                  {`${
+                    currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
+                    (Number(i?.multiplier) * Number(i?.price)).toFixed(2),
+                  )}`}
                 </Text>
                 <View style={{paddingLeft: moderateScale(5)}}>
                   <Image
@@ -205,7 +198,7 @@ export default function AddonModal({
                         ? MyDarkTheme.colors.text
                         : colors.textGrey,
                     },
-                  ]}>{`Choice of ${i?.title}`}</Text>
+                  ]}>{`${strings.CHOICE_OF} ${i?.title}`}</Text>
                 <Text
                   style={[
                     styles.chooseOption,
@@ -215,8 +208,19 @@ export default function AddonModal({
                         : colors.textGreyF,
                     },
                   ]}>
-                  {strings.PLS_SELECT_ONE}
+                   {`${strings.MIN} ${i?.min_select} ${strings.AND_MAX} ${i?.max_select} ${strings.SELECTION_ALLOWED}`}
                 </Text>
+                {!!i.errorShow && (
+                  <Text
+                    style={{
+                      color: colors.redColor,
+                      fontSize: textScale(8),
+                      fontFamily: fontFamily.medium,
+                      textAlign: 'left',
+                    }}>
+                    {`${strings.MIN} ${i?.min_select} ${strings.REQUIRED}`}
+                  </Text>
+                )}
                 {i?.setoptions ? checkBoxButtonViewAddons(i) : null}
                 <View
                   style={{
@@ -232,14 +236,43 @@ export default function AddonModal({
     );
   };
 
+
+  const checkIfMaxReached = (minVal, Arr) => {
+    const SelectedItems = Arr.filter((el) => el.value);
+    if (SelectedItems.length >= minVal) {
+      return true;
+    }
+    return false;
+  };
+
+
   const addToCart = () => {
-    onClose();
-    navigation.navigate(navigationStrings.PRODUCTDETAIL, {
-      data: {
-        addonSetData: addonSetData,
-        randomValue: Math.random(),
-      },
+    playHapticEffect(hapticEffects.impactLight);
+    addonSetData.map((i, inx) => {
+      const temp = checkIfMaxReached(i.min_select, i.setoptions);
+      console.log('temp value', temp);
+      if (temp) {
+        let CloneArr = addonSetData;
+        CloneArr[inx] = { ...CloneArr[inx], errorShow: false };
+        updateState({ addonSetData: CloneArr });
+      } else {
+        let CloneArr = addonSetData;
+        CloneArr[inx] = { ...CloneArr[inx], errorShow: true };
+        updateState({ addonSetData: CloneArr });
+      }
     });
+
+    const checkIsError = addonSetData.findIndex((el) => el.errorShow);
+    if (checkIsError == -1) {
+      onClose();
+      navigation.navigate(navigationStrings.PRODUCTDETAIL, {
+        data: {
+          addonSetData: addonSetData,
+          randomValue: Math.random(),
+        },
+      });
+    }
+    return;
   };
 
   return (

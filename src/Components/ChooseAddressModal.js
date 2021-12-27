@@ -29,7 +29,7 @@ import {MyDarkTheme} from '../styles/theme';
 // navigator.geolocation = require('@react-native-community/geolocation');
 navigator.geolocation = require('react-native-geolocation-service');
 
-export default function ChooseAddressModal({
+const ChooseAddressModal = ({
   updateData,
   isVisible = false,
   onClose,
@@ -40,7 +40,7 @@ export default function ChooseAddressModal({
   selectAddress,
   openAddressModal,
   selectedAddress,
-}) {
+}) => {
   //close yout modal
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -255,7 +255,7 @@ export default function ChooseAddressModal({
       </ScrollView>
     </Modal>
   );
-}
+};
 
 export function stylesData({fontFamily}) {
   const commonStyles = commonStylesFun({fontFamily});
@@ -328,3 +328,4 @@ export function stylesData({fontFamily}) {
   });
   return styles;
 }
+export default React.memo(ChooseAddressModal);

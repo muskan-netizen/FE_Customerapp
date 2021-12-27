@@ -241,9 +241,10 @@ export default ({themeColors, fontFamily, productTotalQuantity}) =>
     },
     descriptionStyle: {
       color: colors.textGreyE,
-      fontSize: textScale(11),
+      fontSize: textScale(10),
       fontFamily: fontFamily.regular,
-      lineHeight: moderateScale(22),
+      textAlign: 'left',
+      // lineHeight: moderateScale(22),
     },
     flexView: {
       flexDirection: 'row',

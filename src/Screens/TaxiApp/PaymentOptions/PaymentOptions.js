@@ -1,60 +1,34 @@
-import React, {useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import WrapperContainer from '../../../Components/WrapperContainer';
-import Header from '../../../Components/Header';
+import React, {useEffect, useState} from 'react';
+import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
-import {MyDarkTheme} from '../../../styles/theme';
 import {useSelector} from 'react-redux';
+import Header from '../../../Components/Header';
+import OffersCard2 from '../../../Components/OffersCard2';
+import WrapperContainer from '../../../Components/WrapperContainer';
+import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
+import navigationStrings from '../../../navigation/navigationStrings';
+import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import stylesFun from './styles';
-
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
 } from '../../../styles/responsiveSize';
-import imagePath from '../../../constants/imagePath';
-import strings from '../../../constants/lang';
-import OffersCard2 from '../../../Components/OffersCard2';
-import navigationStrings from '../../../navigation/navigationStrings';
+import {MyDarkTheme} from '../../../styles/theme';
 import {showError} from '../../../utils/helperFunctions';
-import actions from '../../../redux/actions';
+import stylesFun from './styles';
 
 const PaymentOptions = ({navigation, route}) => {
   const [state, setState] = useState({
-    paymentMethods: [
-      {id: 1, title: 'Cash On Delivery', image: imagePath.cash},
-      {id: 2, title: 'Wallet', image: imagePath.card},
-      // {id: 2, title: 'UPI', image: imagePath.upi},
-    ],
-    allAvailableCoupons: [
-      {
-        id: 0,
-        title: 'FLAT20',
-        expiry_date: '20 jan 2022',
-        name: '78878',
-      },
-      {
-        id: 1,
-        title: 'FLAT50',
-        expiry_date: '11 jan 2022',
-        name: '78878',
-      },
-    ],
     pageNo: 1,
     limit: 12,
+    apiPaymentOptions: [],
+    walletPayment: {id: 2, title: strings.WALLET, off_site: 0},
   });
-  const {appData, appStyle, themeColors, themeLayouts, currencies, languages} =
-    useSelector((state) => state.initBoot);
+  const {appData, appStyle, themeColors} = useSelector(
+    (state) => state.initBoot,
+  );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
@@ -64,35 +38,37 @@ const PaymentOptions = ({navigation, route}) => {
   const walletAmount = useSelector(
     (state) => state?.product?.walletData?.wallet_amount,
   );
-  console.log(walletAmount, 'walletAmount');
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const vendorInfo = route?.params?.data;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily, themeColors});
 
-  const {paymentMethods, allAvailableCoupons, pageNo, limit} = state;
+  const {pageNo, limit, apiPaymentOptions, walletPayment} = state;
 
-  const _onPressPaymentOption = (item) => {
-    console.log(item, '_onPressPaymentOption');
-    if (item?.id == 1) {
-      navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
-        selectedMethod: item,
-      });
-      // selectedMethod: selectedPaymentMethod,
-    } else {
-      if (walletAmount >= 0) {
-        navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
-          selectedMethod: item,
-        });
-      } else {
-        showError('Please Recharge Your Wallet');
-      }
-    }
-  };
+  useEffect(() => {
+    getAllPaymentOptions();
+  }, []);
 
   useEffect(() => {
     getWalletData();
   }, [pageNo]);
+
+  const getAllPaymentOptions = () => {
+    actions
+      .getListOfPaymentMethod(
+        `/pickup_delivery`,
+        {},
+        {
+          code: appData?.profile?.code,
+        },
+      )
+      .then((res) => {
+        console.log(res, 'responseFromServer');
+        updateState({
+          apiPaymentOptions: res?.data,
+        });
+      })
+      .catch(errorMethod);
+  };
 
   const getWalletData = () => {
     actions
@@ -119,9 +95,27 @@ const PaymentOptions = ({navigation, route}) => {
       .catch(errorMethod);
   };
   const errorMethod = (error) => {
+    console.log(error, 'errorOccured');
     updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
+
+  const _onPressWallet = () => {
+    if (walletAmount >= 0) {
+      navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
+        selectedMethod: walletPayment,
+      });
+    } else {
+      showError(strings.PLEASE_RECHARGE_WALLET);
+    }
+  };
+
+  const _onPressPaymentOption = (item) => {
+    navigation.navigate(navigationStrings.CHOOSECARTYPEANDTIMETAXI, {
+      selectedMethod: item,
+    });
+  };
+
   const _renderItem = ({item}) => {
     return (
       <TouchableOpacity
@@ -132,7 +126,7 @@ const PaymentOptions = ({navigation, route}) => {
             flexDirection: 'row',
             marginBottom: moderateScale(20),
           }}>
-          <Image source={item.image} style={styles.imageStyle} />
+          <Image source={imagePath.radioInActive} style={styles.imageStyle} />
           <Text
             style={[
               styles.textStyle,
@@ -144,57 +138,7 @@ const PaymentOptions = ({navigation, route}) => {
       </TouchableOpacity>
     );
   };
-  const _headerComponent = () => {
-    return (
-      <View style={{marginTop: moderateScale(18)}}>
-        <Text
-          style={{
-            textTransform: 'uppercase',
-            opacity: 0.7,
-            fontFamily: fontFamily.reguler,
-            fontSize: textScale(12),
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            marginBottom: moderateScaleVertical(20),
-          }}>
-          {strings.PAYMENT_METHOD}
-        </Text>
-      </View>
-    );
-  };
-  const _headerVouchers = () => {
-    return (
-      <View
-        style={{
-          marginHorizontal: moderateScale(18),
-          marginTop: moderateScale(16),
-          marginBottom: moderateScale(24),
-        }}>
-        <Text
-          style={{
-            textTransform: 'uppercase',
-            opacity: 0.7,
-            fontFamily: fontFamily.reguler,
-            fontSize: textScale(12),
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-          }}>
-          {strings.AVAILABLE_VOUCHERS}
-        </Text>
-      </View>
-    );
-  };
 
-  const _renderPromoCodes = ({item}) => {
-    return (
-      <OffersCard2
-        data={item}
-        // onPress={() =>
-        //   vendorInfo?.cabOrder
-        //     ? _verifyPromoCodeForCab(item)
-        //     : _verifyPromoCode(item)
-        // }
-      />
-    );
-  };
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -209,9 +153,8 @@ const PaymentOptions = ({navigation, route}) => {
           borderRadius: 14,
           flex: 0.15,
         }}
-        leftIcon={imagePath.close2}
+        leftIcon={imagePath.backArrowCourier}
         centerTitle={strings.PAYMENT_OPTIONS}
-        // rightIcon={imagePath.cartShop}
         headerStyle={{
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.background
@@ -222,20 +165,38 @@ const PaymentOptions = ({navigation, route}) => {
       />
       <View style={styles.containerStyle}>
         <View style={{marginHorizontal: moderateScale(18)}}>
+          <Text
+            style={{
+              opacity: 0.7,
+              fontFamily: fontFamily.bold,
+              fontSize: textScale(14),
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              marginVertical: moderateScaleVertical(20),
+            }}>
+            {strings.PAYMENT_METHOD}
+          </Text>
+          {/* <TouchableOpacity
+            onPress={_onPressWallet}
+            style={{
+              ...styles.renderItemStyle,
+              flexDirection: 'row',
+              marginBottom: moderateScale(20),
+            }}>
+            <Image source={imagePath.radioInActive} style={styles.imageStyle} />
+            <Text
+              style={[
+                styles.textStyle,
+                {color: isDarkMode ? MyDarkTheme.colors.text : '#1C1C1C'},
+              ]}>
+              {strings.WALLET}
+            </Text>
+          </TouchableOpacity> */}
           <FlatList
-            data={paymentMethods}
+            data={apiPaymentOptions}
             renderItem={_renderItem}
-            ListHeaderComponent={_headerComponent}
+            keyExtractor={(item, index) => String(index)}
           />
         </View>
-        {/* <View style={{marginTop: moderateScale(28)}}>
-          <FlatList
-            data={allAvailableCoupons}
-            ListHeaderComponent={_headerVouchers}
-            renderItem={_renderPromoCodes}
-            ItemSeparatorComponent={() => <View style={{height: 20}} />}
-          />
-        </View> */}
       </View>
     </WrapperContainer>
   );

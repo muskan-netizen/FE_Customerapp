@@ -78,10 +78,11 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    enableHermes: false,  // clean and rebuild if changing
+    enableHermes: true,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -121,6 +122,9 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
 android {
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
@@ -141,7 +145,7 @@ android {
         abi {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
-            universalApk false  // If true, also generate a universal APK
+            universalApk true  // If true, also generate a universal APK
             include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
     }
@@ -170,6 +174,7 @@ android {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.release
+//            shrinkResources true
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -284,7 +289,7 @@ android {
         }
         clicktoeat{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -349,7 +354,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.blip'
+            applicationId 'com.app.blip'
             resValue "string", "app_name", "BLIP"
             resValue "string", "host_name", ""
         }
@@ -360,7 +365,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.helpnowrightnow'
-            resValue "string", "app_name", "Help Now Right Now"
+            resValue "string", "app_name", "HelpNow!"
             resValue "string", "host_name", ""
         }
         cannabus{
@@ -375,7 +380,7 @@ android {
         }
         govachow{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -474,14 +479,14 @@ android {
             resValue "string", "app_name", "Tasmeem"
              resValue "string", "host_name", ""
         }
-         klickmat{
+         snabbhem{
             dimension "appType"
-            versionCode 1
+            versionCode 3
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.codebrew.klickmat'
-            resValue "string", "app_name", "Klickmat"
+            applicationId 'com.snabbhem'
+            resValue "string", "app_name", "Snabbhem"
             resValue "string", "host_name", ""
         }
         lastminutedress{
@@ -506,11 +511,11 @@ android {
         }
         yummiidash{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.yummiidash'
+            applicationId 'com.app.yummiidash'
             resValue "string", "app_name", "Yummiidash"
             resValue "string", "host_name", ""
         }
@@ -611,11 +616,11 @@ android {
          }
          cabdelivr{
             dimension "appType"
-            versionCode 1
+            versionCode 3
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.cabdelivr'
+            applicationId 'com.app.cabdelivr'
             resValue "string", "app_name", "Cabdelivr"
             resValue "string", "host_name", ""
          }
@@ -755,11 +760,11 @@ android {
          }
           codiner{
             dimension "appType"
-            versionCode 1
+            versionCode 4
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.codiner'
+            applicationId 'com.app.codiner'
             resValue "string", "app_name", "Codiner"
             resValue "string", "host_name", "codiner.royoorders.com"
          }
@@ -775,7 +780,7 @@ android {
          }
           hairstonexpress{
             dimension "appType"
-            versionCode 1
+            versionCode 2
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
@@ -817,11 +822,11 @@ android {
          }
          vici{
             dimension "appType"
-            versionCode 1
-            versionName "1.0"
+            versionCode 4
+            versionName "1.1"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.vici'
+            applicationId 'com.app.vici'
             resValue "string", "app_name", "VICI"
             resValue "string", "host_name", ""
          }
@@ -963,7 +968,7 @@ android {
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.toda'
+            applicationId 'com.toda.orders'
             resValue "string", "app_name", "Toda"
             resValue "string", "host_name", ""
          }
@@ -1014,7 +1019,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             applicationId 'com.smcompany'
-            resValue "string", "app_name", "SMCompany"
+            resValue "string", "app_name", "SMCompany" 
             resValue "string", "host_name", ""
          }
          totum4U{
@@ -1322,7 +1327,7 @@ android {
          }
          somame{
             dimension "appType"
-            versionCode 1
+            versionCode 3
             versionName "1.0"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
@@ -1350,10 +1355,710 @@ android {
             resValue "string", "app_name", "Tranz.net"
             resValue "string", "host_name", ""
          }
+          sambiga{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.sambiga'
+            resValue "string", "app_name", "Sambiga"
+            resValue "string", "host_name", ""
+         }
+         agrionline{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.agrionline'
+            resValue "string", "app_name", "AgriOnline"
+            resValue "string", "host_name", ""
+         }
+         quickquick{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.quickquick'
+            resValue "string", "app_name", "Quick Quick"
+            resValue "string", "host_name", ""
+         }
+          caribeclean{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.caribeclean'
+            resValue "string", "app_name", "Caribe Clean"
+            resValue "string", "host_name", ""
+         }
+         stonses{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.stonses'
+            resValue "string", "app_name", "Stonses"
+            resValue "string", "host_name", ""
+         }
+          agbdeliveries{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.agbdeliveries'
+            resValue "string", "app_name", "AGB Deliveries"
+            resValue "string", "host_name", ""
+         }
+         twofinder{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.twofinder'
+            resValue "string", "app_name", "Two Finder"
+            resValue "string", "host_name", ""
+         }
+         bookem{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.bookem'
+            resValue "string", "app_name", "Bookem"
+            resValue "string", "host_name", ""
+         }
+         zip{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.zip'
+            resValue "string", "app_name", "Zip"
+            resValue "string", "host_name", ""
+         }
+         ridetci{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ridetci'
+            resValue "string", "app_name", "RIDE TCI"
+            resValue "string", "host_name", ""
+         }
+           noki{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.noki'
+            resValue "string", "app_name", "Noki"
+            resValue "string", "host_name", ""
+         }
+         driveree{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.driveree'
+            resValue "string", "app_name", "Driveree"
+            resValue "string", "host_name", ""
+         }
+          rxnow{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.rxnow'
+            resValue "string", "app_name", "RX Now"
+            resValue "string", "host_name", ""
+         }
+         seachangevending{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.seachangevending'
+            resValue "string", "app_name", "Sea Change Vending"
+            resValue "string", "host_name", ""
+         }
+           ored{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ored'
+            resValue "string", "app_name", "Ored"
+            resValue "string", "host_name", ""
+         }
+         orderchekout{
+            dimension "appType"
+            versionCode 2
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.orderchekout'
+            resValue "string", "app_name", "Order Chekout"
+            resValue "string", "host_name", ""
+         }
+         maxisdelivery{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.maxisdelivery'
+            resValue "string", "app_name", "Maxis Delivery"
+            resValue "string", "host_name", ""
+         }
+          donepacked{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.donepacked'
+            resValue "string", "app_name", "Donepacked"
+            resValue "string", "host_name", ""
+         }
+         careworks{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.careworks'
+            resValue "string", "app_name", "CareWorks"
+            resValue "string", "host_name", ""
+         }
+         thubaerides{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.thubaerides'
+            resValue "string", "app_name", "ThubaeRides"
+            resValue "string", "host_name", ""
+         }
+           pinkjet{
+            dimension "appType"
+            versionCode 2
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.customer.pinkjet'
+            resValue "string", "app_name", "Pink Jet - Request a ride"
+            resValue "string", "host_name", ""
+         }
+        mokabfix{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.mokabfix'
+            resValue "string", "app_name", "MokabFix"
+            resValue "string", "host_name", ""
+         }
+          botseats{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.botseats'
+            resValue "string", "app_name", "BotsEats"
+            resValue "string", "host_name", ""
+         }
+           gumastas{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.gumastas'
+            resValue "string", "app_name", "Gumastas"
+            resValue "string", "host_name", ""
+         }
+          dishefs{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.dishefs'
+            resValue "string", "app_name", "Dishefs"
+            resValue "string", "host_name", ""
+         }
+          bilionza{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.bilionza'
+            resValue "string", "app_name", "Bilionza"
+            resValue "string", "host_name", ""
+         }
+         doleypharmacy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.doleypharmacy'
+            resValue "string", "app_name", "Doley"
+            resValue "string", "host_name", ""
+         }
+          bezalio{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.bezalio'
+            resValue "string", "app_name", "Bezalio"
+            resValue "string", "host_name", ""
+         }
+         youchillax{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.youchillax'
+            resValue "string", "app_name", "YouChillax"
+            resValue "string", "host_name", ""
+         }
+          instashop{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.instashop'
+            resValue "string", "app_name", "InstaShop"
+            resValue "string", "host_name", ""
+         }
+         shoorafresh{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.shoorafresh'
+            resValue "string", "app_name", "Shoora Fresh"
+            resValue "string", "host_name", ""
+         }
+          click2deliver{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.click2deliver'
+            resValue "string", "app_name", "Click2Deliver"
+            resValue "string", "host_name", ""
+         }
+      trucktirenow{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.trucktirenow'
+            resValue "string", "app_name", "TruckTireNow"
+            resValue "string", "host_name", ""
+         }
+         yeboy{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.yeboy'
+            resValue "string", "app_name", "Yeboy"
+            resValue "string", "host_name", ""
+         }
+         kel360{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.kel'
+            resValue "string", "app_name", "360kel"
+            resValue "string", "host_name", ""
+         }
+          moboserrandsservice{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.moboserrandsservice'
+            resValue "string", "app_name", "MobosErrandsService"
+            resValue "string", "host_name", ""
+         }
+        
+        cabway{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.cabway'
+            resValue "string", "app_name", "CabWay"
+            resValue "string", "host_name", ""
+         }
+         tajammul{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.tajammul'
+            resValue "string", "app_name", "Tajammul"
+            resValue "string", "host_name", ""
+         }
+         carroai{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.carroai'
+            resValue "string", "app_name", "Carroai"
+            resValue "string", "host_name", ""
+         }
+          ssuum{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ssuum'
+            resValue "string", "app_name", "Ssuum"
+            resValue "string", "host_name", ""
+         }
+         blacnetwork{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.blacnetwork'
+            resValue "string", "app_name", "Blac Network"
+            resValue "string", "host_name", ""
+         }
+          threadagain{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.threadagain'
+            resValue "string", "app_name", "ThreadAgain"
+            resValue "string", "host_name", ""
+         }
+         ezmobilefuel{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.ezmobilefuel'
+            resValue "string", "app_name", "EzMobileFuel"
+            resValue "string", "host_name", ""
+         }
+          runaround{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.runaround'
+            resValue "string", "app_name", "Run-a-Round"
+            resValue "string", "host_name", ""
+         }
+        swiftandvalu{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.swiftandvalu'
+            resValue "string", "app_name", "Swift and Valu"
+            resValue "string", "host_name", ""
+         }
+        trucxi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.trucxi'
+            resValue "string", "app_name", "Trucxi"
+            resValue "string", "host_name", ""
+         }
+          paysic{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.paysic'
+            resValue "string", "app_name", "PaySic"
+            resValue "string", "host_name", ""
+         }
+         chipetaxi{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.chipetaxi'
+            resValue "string", "app_name", "Chipe Taxi"
+            resValue "string", "host_name", ""
+         }
+          laundryorders{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.laundryorders'
+            resValue "string", "app_name", "Laundry Orders"
+            resValue "string", "host_name", ""
+         }
+         ineed{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.customer.ineed'
+            resValue "string", "app_name", "INeed"
+            resValue "string", "host_name", ""
+         }
+          nadelivery{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.nadelivery'
+            resValue "string", "app_name", "NaDelivery"
+            resValue "string", "host_name", ""
+         }
+      marasym{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.marasym'
+            resValue "string", "app_name", "Marasym"
+            resValue "string", "host_name", ""
+         }
+         silvestre{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.silvestre'
+            resValue "string", "app_name", "Silvestre"
+            resValue "string", "host_name", ""
+         }
+         samakeemart{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.samakeemart'
+            resValue "string", "app_name", "Samakee Mart"
+            resValue "string", "host_name", ""
+         }
+       seaeats{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.seaeats'
+            resValue "string", "app_name", "Sea Eats"
+            resValue "string", "host_name", ""
+         }
+         enext{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.enext'
+            resValue "string", "app_name", "EnExt"
+            resValue "string", "host_name", ""
+         }
+         hokitch{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.hokitch'
+            resValue "string", "app_name", "Hokitch"
+            resValue "string", "host_name", ""
+         }
+          foodnests{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.foodnests'
+            resValue "string", "app_name", "FoodNests"
+            resValue "string", "host_name", ""
+         }
+         sponge{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.sponge'
+            resValue "string", "app_name", "Sponge"
+            resValue "string", "host_name", ""
+         }
+          gomeat{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.app.gomeat'
+            resValue "string", "app_name", "GoMeat"
+            resValue "string", "host_name", ""
+         }
+         
+      shopcentral{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.shopcentral'
+            resValue "string", "app_name", "Shop Central"
+            resValue "string", "host_name", ""
+         }
+          skidoo{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.skidoo'
+            resValue "string", "app_name", "Skidoo"
+            resValue "string", "host_name", ""
+         }
+         admCourier{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.admcourier'
+            resValue "string", "app_name", "ADM Courier"
+            resValue "string", "host_name", ""
+         }
+         kurbsidekings{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.kurbsidekings'
+            resValue "string", "app_name", "Kurbside Kings"
+            resValue "string", "host_name", ""
+         }
+          movingwheelsdelivery{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.movingwheelsdelivery'
+            resValue "string", "app_name", "Moving Wheels Delivery"
+            resValue "string", "host_name", ""
+         }
+           safewalks{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.safewalks'
+            resValue "string", "app_name", "SafeWalks"
+            resValue "string", "host_name", ""
+         }
+         dimavega{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.dimavega'
+            resValue "string", "app_name", "Dima Vega"
+            resValue "string", "host_name", ""
+         }
+          skoop{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.app.skoop'
+            resValue "string", "app_name", "Skoop"
+            resValue "string", "host_name", ""
+         }
+          kudhyo{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.kudhyo'
+            resValue "string", "app_name", "Kudhyo"
+            resValue "string", "host_name", ""
+         }
+          bharatMove{
+            dimension "appType"
+            versionCode 1
+            versionName "1.0"
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion         
+            applicationId 'com.bharatMove'
+            resValue "string", "app_name", "BharatMove"
+            resValue "string", "host_name", ""
+         }
     }
 }
-
-
 
 dependencies {
    
@@ -1363,6 +2068,13 @@ dependencies {
     implementation 'com.facebook.fresco:animated-webp:1.+'
     implementation 'com.facebook.fresco:webpsupport:1.+'
     implementation project(':react-native-charts-wrapper')
+    
+    // zendesk initalize 
+     api group: 'com.zendesk', name: 'chat', version: '2.2.0'
+     api group: 'com.zendesk', name: 'messaging', version: '4.3.1'
+
+
+
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
     // implementation 'com.google.firebase:firebase-analytics:17.3.0'
     implementation fileTree(dir: "libs", include: ["*.jar"])

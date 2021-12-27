@@ -13,14 +13,16 @@ import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
 
-export default function SearchBar({
+const SearchBar = ({
   containerStyle = {},
   placeholder = '',
   onChangeText,
   showRightIcon = false,
   rightIconPress = () => {},
   searchValue = '',
-}) {
+  rightIconStyle,
+  autoFocus,
+}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -52,24 +54,25 @@ export default function SearchBar({
             paddingTop: 0,
             paddingBottom: 0,
             fontFamily: fontFamily.medium,
-            color: colors.textGrey,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
             textAlign: I18nManager.isRTL ? 'right' : 'left',
           }}
           value={searchValue}
-          autoFocus={true}
+          autoFocus={autoFocus}
           placeholder={placeholder}
           onChangeText={onChangeText}
           //onChange={onChangeText}
           placeholderTextColor={
-            isDarkMode ? colors.textGreyB : colors.textGreyB
+            isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB
           }
         />
       </View>
       {showRightIcon && (
         <TouchableOpacity onPress={rightIconPress}>
-          <Image source={imagePath.crossBlueB} />
+          <Image source={imagePath.crossBlueB} style={{...rightIconStyle}} />
         </TouchableOpacity>
       )}
     </View>
   );
-}
+};
+export default React.memo(SearchBar);

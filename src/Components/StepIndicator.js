@@ -1,23 +1,23 @@
 import React from 'react';
-import {Image} from 'react-native';
+import { Image } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 import imagePath from '../constants/imagePath';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
+import { moderateScale } from '../styles/responsiveSize';
 
-export default function StepIndicators({
+const StepIndicators_ = ({
   containerStyle = {},
   placeholder = '',
   labels = [],
   currentPosition,
   themeColor,
-  stepCount = 4,
   labelSize = 13,
-}) {
-  const {appData, themeColors, currencies, languages, appStyle} = useSelector(
-    (state) => state.initBoot,
-  );
+  dispatcherStatus
+}) => {
+  const { appData, themeColors, currencies, languages, appStyle } = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
+  console.log("dispatcher status", dispatcherStatus)
 
   const thirdIndicatorStyles = {
     stepIndicatorSize: 30,
@@ -44,35 +44,35 @@ export default function StepIndicators({
     labelFontFamily: fontFamily.regular,
   };
 
-  const getSourceImage = ({position, stepStatus}) => {
+  const getSourceImage = ({ position, stepStatus }) => {
     let iconConfig = null;
     switch (position) {
       case 0: {
         iconConfig =
           stepStatus == 'finished'
-            ? imagePath.acceptInactive
-            : imagePath.acceptInactive;
+            ? imagePath.inactiveaccept
+            : imagePath.inactiveaccept;
         break;
       }
       case 1: {
         iconConfig =
           stepStatus == 'finished'
-            ? imagePath.deliverInactive
-            : imagePath.deliverInactive;
+            ? imagePath.inactiveprocceing
+            : imagePath.inactiveprocceing;
         break;
       }
       case 2: {
         iconConfig =
           stepStatus == 'finished'
-            ? imagePath.onmywayInactive
-            : imagePath.onmywayInactive;
+            ? imagePath.inactiveoutdelivery
+            : imagePath.inactiveoutdelivery;
         break;
       }
       case 3: {
         iconConfig =
           stepStatus == 'finished'
-            ? imagePath.processingInactive
-            : imagePath.processingInactive;
+            ? imagePath.inactivedelivered
+            : imagePath.inactivedelivered;
         break;
       }
       default: {
@@ -85,14 +85,20 @@ export default function StepIndicators({
     // }
   };
 
-  const renderStepIndicator = ({position, stepStatus}) => {
+  const renderStepIndicator = ({ position, stepStatus }) => {
     //console.log(position, 'position', stepStatus, 'stepStatus');
-    return <Image source={getSourceImage({position, stepStatus})} />;
+    return <Image
+      style={{
+        width: moderateScale(30),
+        height: moderateScale(30),
+      }}
+      source={{ uri: dispatcherStatus.dispatcher_status_icons[position] }}
+    />;
   };
 
-  const renderLabel = ({position, stepStatus, label, currentPosition}) => {
+  const renderLabel = ({ position, stepStatus, label, currentPosition }) => {
     //console.log(position, 'position', stepStatus, 'stepStatus');
-    return <Image source={getSourceImage({position, stepStatus})} />;
+    return <Image source={getSourceImage({ position, stepStatus })} />;
   };
 
   const allLables = labels.map((i, inx) => {
@@ -101,12 +107,13 @@ export default function StepIndicators({
 
   return (
     <StepIndicator
-      stepCount={stepCount}
+      stepCount={dispatcherStatus.vendor_dispatcher_status_count}//showing step indicators dynamically
       customStyles={thirdIndicatorStyles}
-      currentPosition={currentPosition}
+      currentPosition={dispatcherStatus.vendor_dispatcher_status.length - 1}
       renderStepIndicator={renderStepIndicator}
-      // renderLabel={renderLabel}
-      labels={labels}
+    // renderLabel={renderLabel}
+    //labels={labels}
     />
   );
-}
+};
+export default React.memo(StepIndicators_);

@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {moderateScale, width} from '../styles/responsiveSize';
-export default function TextTabBar({
+const TextTabBar = ({
   text,
   icon,
   onPress,
@@ -14,7 +14,7 @@ export default function TextTabBar({
   activeStyle = {},
   textTabWidth = null,
   textTabBarView = {},
-}) {
+}) => {
   const currentTheme = useSelector((state) => state.initBoot);
   const {themeColors, themeLayouts, appStyle} = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
@@ -59,4 +59,5 @@ export default function TextTabBar({
       )}
     </TouchableOpacity>
   );
-}
+};
+export default React.memo(TextTabBar);

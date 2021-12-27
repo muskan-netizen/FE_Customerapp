@@ -14,6 +14,11 @@ import {
   VENDOR_TABLE_CART,
   SCHEDULE_ORDER,
   CART_PRODUCT_SCHEDULE,
+  TIP_AFTER_ORDER,
+  VALIDATE_PROMO_CODE,
+  GET_ALL_PROMO_CODES_FOR_PRODUCTLIST,
+  LAST_ADDED,
+  DIFFERENT_ADD_ONS
 } from '../../config/urls';
 import {
   apiGet,
@@ -109,6 +114,20 @@ export const getAllPromoCodes = (data, headers = {}) => {
   });
 };
 
+//Get all promo codes for product list
+export const getAllPromoCodesForProductList = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(GET_ALL_PROMO_CODES_FOR_PRODUCTLIST, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+
 //Get all promo codes for cab
 export const getAllPromoCodesForCaB = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
@@ -193,6 +212,8 @@ export function getListOfPaymentMethod(query = '', data = {}, headers = {}) {
 
 //Get List of payment method
 export function openPaymentWebUrl(query = '', data = {}, headers = {}) {
+  console.log("payment++ query",query)
+  console.log("payment++ data",data)
   return new Promise((resolve, reject) => {
     apiGet(GETWEBURL + query, data, headers)
       .then((res) => {
@@ -231,6 +252,60 @@ export const scheduledOrder = (data, headers = {}) => {
 export const cartProductSchedule = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(CART_PRODUCT_SCHEDULE, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+// tip after order
+
+export const tipAfterOrder = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(TIP_AFTER_ORDER, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+//Validate Promo code
+
+export const validatePromocode = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(VALIDATE_PROMO_CODE, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+
+export const checkLastAdded= (data, headers = {}) => {
+  console.log("data",data)
+  return new Promise((resolve, reject) => {
+    apiPost(LAST_ADDED, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const differentAddOns= (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(DIFFERENT_ADD_ONS, data, headers)
       .then((res) => {
         resolve(res);
       })

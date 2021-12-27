@@ -796,7 +796,20 @@ export default function MyProfile({route, navigation}) {
               style={styles.profileImage}
             />
             <View style={styles.cameraView}>
-              <Image source={imagePath?.camera} />
+              <View
+                style={styles.roundViewCamera}
+                resizeMode="contain"
+                source={imagePath?.camera}>
+                <Image
+                  source={imagePath.ic_cameraColored}
+                  resizeMode="contain"
+                  style={{
+                    height: moderateScale(20),
+                    width: moderateScale(20),
+                    tintColor: colors.white,
+                  }}
+                />
+              </View>
             </View>
           </View>
         </TouchableWithoutFeedback>

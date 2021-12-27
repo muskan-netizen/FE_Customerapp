@@ -19,7 +19,7 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-export default function ConfirmationModal({
+const ConfirmationModal = ({
   bottomButtonClick,
   closeModal,
   ShowModal,
@@ -29,7 +29,7 @@ export default function ConfirmationModal({
   isSortEnabled,
   headerTitle,
   mainText = null,
-}) {
+}) => {
   const {appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;
   const styles = styleData({fontFamily});
@@ -95,7 +95,7 @@ export default function ConfirmationModal({
       </View>
     </Modal>
   );
-}
+};
 
 export function stylesData({fontFamily}) {
   const styles = StyleSheet.create({
@@ -162,3 +162,4 @@ export function stylesData({fontFamily}) {
   });
   return styles;
 }
+export default React.memo(ConfirmationModal);

@@ -6,23 +6,23 @@ import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 import {useDarkMode} from 'react-native-dark-mode';
 import {MyDarkTheme} from '../styles/theme';
+import {getColorCodeWithOpactiyNumber} from '../utils/helperFunctions';
 
-export default function CustomBottomTabBar({
+const CustomBottomTabBar = ({
   state,
   descriptors,
   navigation,
   bottomTabNotify,
 
   ...props
-}) {
+}) => {
   const insets = useSafeAreaInsets();
-  const currentTheme = useSelector((state) => state.initBoot);
-  const {themeColors, themeLayouts} = currentTheme;
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const {themeColors, themeToggle, themeColor, appStyle} = useSelector(
+    (state) => state.initBoot,
+  );
 
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   return (
     <LinearGradient
       start={{x: 0, y: 1}}
@@ -84,7 +84,13 @@ export default function CustomBottomTabBar({
               <Text
                 style={{
                   ...props.labelStyle,
-                  color: isFocused ? colors.white : colors.whiteOpacity5,
+                  color: isFocused
+                    ? themeColors.secondary_color
+                    : getColorCodeWithOpactiyNumber(
+                        themeColors?.secondary_color.substr(1),
+                        70,
+                      ),
+                  opacity: isFocused ? 1 : 0.6,
                 }}>
                 {label}
               </Text>
@@ -94,4 +100,5 @@ export default function CustomBottomTabBar({
       })}
     </LinearGradient>
   );
-}
+};
+export default React.memo(CustomBottomTabBar);

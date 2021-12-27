@@ -1,33 +1,38 @@
-import React, {useState} from 'react';
-import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  Animated,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FastImage from 'react-native-fast-image';
-import {UIActivityIndicator} from 'react-native-indicators';
+import { UIActivityIndicator } from 'react-native-indicators';
 import StarRating from 'react-native-star-rating';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import commonStylesFunc, {hitSlopProp} from '../styles/commonStyles';
+import commonStylesFunc, { hitSlopProp } from '../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
+import { MyDarkTheme } from '../styles/theme';
+import { currencyNumberFormatter } from '../utils/commonFunction';
 import {
-  getColorCodeWithOpactiyNumber,
   getImageUrl,
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-import BlurImages from './BlurImages';
-import HtmlViewComp from './HtmlViewComp';
 
-export default function ProductCard3({
+const ProductCard3 = ({
   data = {},
-  onPress = () => {},
-  addToCart = () => {},
+  onPress = () => { },
+  addToCart = () => { },
   index,
   onIncrement,
   onDecrement,
@@ -37,43 +42,54 @@ export default function ProductCard3({
   selectedItemIndx,
   btnLoader,
   categoryInfo = '',
-}) {
+  businessType,
+}) => {
+  console.log("item data++", data)
   // data['qty'] = 1
   const [state, setState] = useState({
     selectedIndex: -1,
     selectedIndexForCartIcon: -1,
   });
-  const {selectedIndex, selectedIndexForCartIcon} = state;
+  const { selectedIndex, selectedIndexForCartIcon } = state;
 
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  var totalProductQty = 0;
+  if (data?.check_if_in_cart_app) {
+    data?.check_if_in_cart_app.map((val) => {
+      totalProductQty = totalProductQty + val.quantity;
+    });
+  }
+
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const isDarkMode = theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-  const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
+  const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = styleData({themeColors, fontFamily});
+  const styles = styleData({ themeColors, fontFamily });
 
-  const {themeLayouts} = currentTheme;
-  const commonStyles = commonStylesFunc({fontFamily});
+  const { themeLayouts } = currentTheme;
+  const commonStyles = commonStylesFunc({ fontFamily });
 
   const url1 = data?.media[0]?.image?.path.image_fit;
   const url2 = data?.media[0]?.image?.path.image_path;
   const getImage = (quality) => getImageUrl(url1, url2, quality);
+  const getIconImage = (url1, url2, quality) =>
+    getImageUrl(url1, url2, quality);
 
   const scaleInAnimated = new Animated.Value(0);
 
   const changePosition = () => {
     let i = selectedIndex == -1 ? index : -1;
-    updateState({selectedIndex: i});
+    updateState({ selectedIndex: i });
   };
 
   const changePositionForCartIcon = () => {
     let i = selectedIndexForCartIcon == -1 ? index : -1;
-    updateState({selectedIndexForCartIcon: i});
+    updateState({ selectedIndexForCartIcon: i });
   };
 
   let htmlText = data?.translation[0]?.body_html || null;
@@ -82,11 +98,11 @@ export default function ProductCard3({
 
   return (
     <Animatable.View
-      animation={index > 8 ? '' : 'fadeInUp'}
-      delay={index > 8 ? 1 * 100 : index * 10}
+      // animation={index > 8 ? '' : 'fadeInUp'}
+      // delay={index > 8 ? 1 * 100 : index * 10}
       pointerEvents={btnLoader ? 'none' : 'auto'}>
       <TouchableOpacity
-        disabled
+        // disabled
         activeOpacity={0.6}
         onPress={onPress}
         onPressIn={() => pressInAnimation(scaleInAnimated)}
@@ -98,31 +114,6 @@ export default function ProductCard3({
           marginVertical: moderateScaleVertical(10),
           paddingHorizontal: 16,
         }}>
-        <Animatable.View
-          key={selectedIndex}
-          animation={selectedIndex == index ? 'slideInLeft' : 'slideInRight'}
-          duration={100}>
-          <TouchableOpacity
-            disabled
-            onPress={changePosition}
-            activeOpacity={1}
-            style={{
-              ...commonStyles.shadowStyle,
-              margin: 2,
-              borderRadius: moderateScale(15),
-            }}>
-            <FastImage
-              style={{
-                ...styles.imgStyle,
-                backgroundColor: isDarkMode
-                  ? colors.whiteOpacity15
-                  : colors.greyColor,
-              }}
-              source={{uri: getImage('800/400')}}
-            />
-          </TouchableOpacity>
-        </Animatable.View>
-
         <View
           style={{
             marginLeft: moderateScale(10),
@@ -138,10 +129,30 @@ export default function ProductCard3({
               flex: 1,
               marginTop: selectedIndex == index ? moderateScaleVertical(8) : 0,
             }}
-            // animation={selectedIndex == index ? 'fadeInDown' : 'fadeInLeft'}
+          // animation={selectedIndex == index ? 'fadeInDown' : 'fadeInLeft'}
           >
             {/* Title View */}
             <View>
+              {data && !!data?.tags && data?.tags.length > 0 ?
+                <View>
+                  {!!data.tags[0]?.tag?.icon ? <Image
+                    source={{
+                      uri: getIconImage(
+                        data.tags[0]?.tag?.icon?.image_fit,
+                        data?.tags[0]?.tag?.icon?.image_path,
+                        '50/50',
+                      ),
+                    }}
+                    style={{
+                      marginLeft: moderateScale(1),
+                      marginBottom: moderateScale(5),
+                      width: moderateScale(17),
+                      height: moderateScale(17),
+                    }}
+                  /> : null}
+                </View>
+                : null
+              }
               <Text
                 // numberOfLines={1}
                 style={{
@@ -152,6 +163,7 @@ export default function ProductCard3({
                   fontFamily: fontFamily.regular,
                   fontSize: textScale(12),
                   width: width / 2.5,
+                  textTransform: 'capitalize',
                   // flex:1
                 }}>
                 {data?.translation[0]?.title}
@@ -186,10 +198,10 @@ export default function ProductCard3({
                 <StarRating
                   disabled={false}
                   maxStars={5}
-                  rating={Number(data?.averageRating).toFixed(1)}
+                  rating={Number(parseInt(data?.averageRating).toFixed(1))}
                   fullStarColor={colors.yellowB}
                   starSize={8}
-                  containerStyle={{width: width / 9}}
+                  containerStyle={{ width: width / 9 }}
                 />
               </View>
             )}
@@ -208,150 +220,223 @@ export default function ProductCard3({
                   fontSize: textScale(12),
                   fontFamily: fontFamily.regular,
                 }}>
-                {`${currencies?.primary_currency?.symbol}${(
-                  Number(
-                    data?.variant[0]?.multiplier || data?.variant_multiplier,
-                  ) * Number(data?.variant[0]?.price)
-                ).toFixed(2)}`}
+                {`${currencies?.primary_currency?.symbol
+                  }${currencyNumberFormatter(
+                    (
+                      Number(
+                        data?.variant[0]?.multiplier || data?.variant_multiplier,
+                      ) * Number(data?.variant[0]?.price)
+                    ).toFixed(2),
+                  )}`}
               </Text>
             </View>
-            <View style={{width: width / 2}}>
-              {!!htmlText && (
+            <View style={{ width: width / 2 }}>
+              <Text
+                style={{
+                  fontSize: textScale(10),
+                  fontFamily: fontFamily.regular,
+                  lineHeight: moderateScale(14),
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.blackOpacity66,
+                  textAlign: 'left',
+                }}>
+                {data?.translation_description}
+              </Text>
+              {/* {!!htmlText && (
                 <HtmlViewComp
                   plainHtml={htmlText}
                   nodeComponentProps={{
                     numberOfLines: 2,
                   }}
                 />
-              )}
+              )} */}
             </View>
           </Animatable.View>
 
-          {!!data?.variant[0]?.quantity || (!!typeId && typeId == 8) ? (
+          <View
+            style={{
+              paddingBottom:
+                (!!data?.add_on && data?.add_on.length !== 0) ||
+                  (!!data?.variantSet && data?.variantSet.length !== 0)
+                  ? moderateScale(30)
+                  : moderateScale(15),
+              alignItems: 'center',
+              // marginRight: url1 ? 0 :  moderateScale(60)
+            }}>
+            {url1 && (
+              <Animatable.View
+                key={selectedIndex}
+                animation={
+                  selectedIndex == index ? 'slideInLeft' : 'slideInRight'
+                }
+                duration={100}>
+                <TouchableOpacity
+                  disabled
+                  onPress={changePosition}
+                  activeOpacity={1}
+                  style={{
+                    ...commonStyles.shadowStyle,
+                    margin: 2,
+                    borderRadius: moderateScale(15),
+                    height: moderateScale(100),
+                    width: moderateScale(100),
+                    // backgroundColor: 'red',
+                    // padding:5
+                  }}>
+                  <FastImage
+                    style={{
+                      ...styles.imgStyle,
+                      backgroundColor: isDarkMode
+                        ? colors.whiteOpacity15
+                        : colors.greyColor,
+                      borderRadius: moderateScale(7),
+                    }}
+                    source={{ uri: getImage('800/400') }}
+                  />
+                </TouchableOpacity>
+              </Animatable.View>
+            )}
+
             <View
               style={{
-                marginTop:
-                  selectedIndex == index ? moderateScaleVertical(8) : 0,
-                alignItems: 'center',
+                position: url1 ? 'absolute' : 'relative',
+                bottom: 0,
+                flex: 1,
+                justifyContent: url1 ? 'flex-start' : 'center',
               }}>
-              {(!!data?.variant[0]?.check_if_in_cart_app &&
-                data?.variant[0]?.check_if_in_cart_app.length > 0) ||
-              !!data?.qty ? (
+              {!!data?.variant[0]?.quantity ||
+                (!!typeId && typeId == 8) ||
+                (!!businessType && businessType == 'laundry') ||
+                data?.has_inventory == 0 ? (
                 <View
                   style={{
-                    ...styles.addBtnStyle,
-                    paddingVertical: 0,
-                    backgroundColor: themeColors.primary_color,
+                    marginTop:
+                      selectedIndex == index ? moderateScaleVertical(8) : 0,
                     alignItems: 'center',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    borderRadius: moderateScale(8),
-                    paddingHorizontal: moderateScale(8),
                   }}>
-                  <TouchableOpacity
-                    disabled={
-                      selectedItemID == data?.id || categoryInfo?.show_slot
-                        ? !categoryInfo?.show_slot
-                        : !!categoryInfo?.is_vendor_closed
-                    }
-                    onPress={onDecrement}
-                    activeOpacity={0.8}
-                    hitSlop={hitSlopProp}>
-                    <Text
+                  {(!!data?.check_if_in_cart_app &&
+                    data?.check_if_in_cart_app.length > 0) ||
+                    !!data?.qty ||
+                    totalProductQty ? (
+                    <View
                       style={{
-                        fontFamily: fontFamily.bold,
-                        fontSize: moderateScale(16),
-                        color: colors.white,
+                        ...styles.addBtnStyle,
+                        paddingVertical: 0,
+
+                        height: 35,
+                        // backgroundColor: themeColors.primary_color,
+                        backgroundColor: colors.greyColor2,
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        borderRadius: moderateScale(8),
+                        paddingHorizontal: moderateScale(8),
                       }}>
-                      -
-                    </Text>
-                  </TouchableOpacity>
-                  <View>
-                    {selectedItemIndx === index &&
-                    selectedItemID == data?.id &&
-                    btnLoader ? (
-                      <UIActivityIndicator
-                        size={moderateScale(18)}
-                        color={colors.white}
-                      />
-                    ) : (
-                      <Text
+                      <TouchableOpacity
+                        disabled={selectedItemID == data?.id}
+                        onPress={onDecrement}
+                        activeOpacity={0.8}
+                        hitSlop={hitSlopProp}>
+                        <Text
+                          style={{
+                            fontFamily: fontFamily.bold,
+                            fontSize: moderateScale(16),
+                            color: themeColors.primary_color,
+                          }}>
+                          -
+                        </Text>
+                      </TouchableOpacity>
+                      <View>
+                        {selectedItemID == data?.id && btnLoader ? (
+                          <UIActivityIndicator
+                            size={moderateScale(18)}
+                            color={themeColors.primary_color}
+                          />
+                        ) : (
+                          // {/* {selectedItemIndx === index &&
+                          //   selectedItemID == data?.id &&
+                          //   btnLoader ? (
+                          //   <UIActivityIndicator
+                          //     size={moderateScale(18)}
+                          //     color={themeColors.primary_color}
+                          //   /> */}
+                          <Text
+                            style={{
+                              fontFamily: fontFamily.bold,
+                              fontSize: moderateScale(16),
+                              color: themeColors.primary_color,
+                            }}>
+                            {data?.qty || totalProductQty}
+                          </Text>
+                        )}
+                      </View>
+                      <TouchableOpacity
+                        disabled={selectedItemID == data?.id}
+                        activeOpacity={0.8}
+                        hitSlop={hitSlopProp}
+                        onPress={onIncrement}>
+                        <Text
+                          style={{
+                            fontFamily: fontFamily.bold,
+                            fontSize: moderateScale(20),
+                            color: themeColors.primary_color,
+                          }}>
+                          +
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  ) : (
+                    <>
+                      <TouchableOpacity
+                        disabled={selectedItemID == data?.id}
+                        onPress={addToCart}
                         style={{
-                          fontFamily: fontFamily.bold,
-                          fontSize: moderateScale(16),
-                          color: colors.white,
+                          ...styles.addBtnStyle,
+                          backgroundColor: colors.greyColor2,
+                          // marginBottom: 1,
                         }}>
-                        {data?.qty ||
-                          data?.variant[0]?.check_if_in_cart_app[0]?.quantity}
-                      </Text>
-                    )}
-                  </View>
-                  <TouchableOpacity
-                    disabled={
-                      selectedItemID == data?.id || categoryInfo?.show_slot
-                        ? !categoryInfo?.show_slot
-                        : !!categoryInfo?.is_vendor_closed
-                    }
-                    activeOpacity={0.8}
-                    hitSlop={hitSlopProp}
-                    onPress={onIncrement}>
+                        {selectedItemID == data?.id ? (
+                          <UIActivityIndicator
+                            size={moderateScale(18)}
+                            color={themeColors.primary_color}
+                          />
+                        ) : (
+                          <View>
+                            <Text style={styles.addStyleText}>
+                              {strings.ADD}
+                            </Text>
+                          </View>
+                        )}
+
+                        {/* <Image source={imagePath.greyRoundPlus} /> */}
+                      </TouchableOpacity>
+                    </>
+                  )}
+                  {(!!data?.add_on && data?.add_on.length !== 0) ||
+                    (!!data?.variantSet && data?.variantSet.length !== 0) ? (
                     <Text
                       style={{
-                        fontFamily: fontFamily.bold,
-                        fontSize: moderateScale(20),
-                        color: colors.white,
+                        ...styles.customTextStyle,
+                        textTransform: 'lowercase',
+                        color: colors.blackOpacity40,
                       }}>
-                      +
+                      {strings.CUSTOMISABLE}
                     </Text>
-                  </TouchableOpacity>
+                  ) : null}
                 </View>
               ) : (
-                <TouchableOpacity
-                  disabled={
-                    selectedItemID == data?.id || categoryInfo?.show_slot
-                      ? !categoryInfo?.show_slot
-                      : !!categoryInfo?.is_vendor_closed
-                  }
-                  onPress={addToCart}
-                  style={{
-                    ...styles.addBtnStyle,
-                  }}>
-                  {selectedItemID == data?.id ? (
-                    <UIActivityIndicator
-                      size={moderateScale(18)}
-                      color={themeColors.primary_color}
-                    />
-                  ) : (
-                    <View>
-                      <Text style={styles.addStyleText}>{strings.ADD}</Text>
-                    </View>
-                  )}
-
-                  {/* <Image source={imagePath.greyRoundPlus} /> */}
-                </TouchableOpacity>
+                <Text style={styles.outOfStock}>{strings.OUT_OF_STOCK}</Text>
               )}
-              {(!!data?.add_on && data?.add_on.length !== 0) ||
-              (!!data?.variantSet && data?.variantSet.length !== 0) ? (
-                <Text
-                  style={{
-                    ...styles.customTextStyle,
-                    textTransform: 'lowercase',
-                    color: colors.blackOpacity40,
-                  }}>
-                  {strings.CUSTOMISABLE}
-                </Text>
-              ) : null}
             </View>
-          ) : (
-            <Text style={styles.outOfStock}>{strings.OUT_OF_STOCK}</Text>
-          )}
+          </View>
         </View>
       </TouchableOpacity>
     </Animatable.View>
   );
-}
+};
 
-function styleData({themeColors, fontFamily}) {
+function styleData({ themeColors, fontFamily }) {
   const styles = StyleSheet.create({
     outOfStock: {
       color: colors.orangeB,
@@ -378,8 +463,9 @@ function styleData({themeColors, fontFamily}) {
       borderColor: themeColors.primary_color,
       justifyContent: 'center',
       alignItems: 'center',
-      width: 79,
-      height: 35,
+      width: moderateScale(73),
+      height: moderateScaleVertical(35),
+
       // flexDirection:"row"
       // width: moderateScale(80),
     },
@@ -400,3 +486,4 @@ function styleData({themeColors, fontFamily}) {
   });
   return styles;
 }
+export default React.memo(ProductCard3);

@@ -33,10 +33,17 @@ import {
   BrandProducts2,
   ViewAllData,
   TaxiHomeScreen,
+  CategoryBrands,
+  Cart2,
+  Cart3,
+  Cart,
+  AllPaymentMethods,
 } from '../Screens';
+import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import {shortCodes} from '../utils/constants/DynamicAppKeys';
 
 import {verticalAnimation} from '../utils/utils';
+import CartStack from './CartStack';
 import navigationStrings from './navigationStrings';
 
 const Stack = createStackNavigator();
@@ -96,6 +103,12 @@ export default function () {
             ? ProductList3
             : ProductList
         }
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name={navigationStrings.ADD_VEHICLE_DETAILS}
+        component={AddVehicleDetails}
         options={{headerShown: false}}
       />
 
@@ -189,6 +202,16 @@ export default function () {
         component={ViewAllData}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name={navigationStrings.CATEGORY_BRANDS}
+        component={CategoryBrands}
+        options={{headerShown: false}}
+      />
+      {/* <Stack.Screen
+        name={navigationStrings.CART_SCREEN}
+        component={CartStack}
+        options={{headerShown: false, gestureEnabled: true}}
+      /> */}
     </Stack.Navigator>
   );
 }

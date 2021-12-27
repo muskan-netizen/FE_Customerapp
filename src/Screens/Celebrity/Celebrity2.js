@@ -38,7 +38,7 @@ export default function Celebrity2({navigation}) {
       'MNOP',
       'QRST',
       'UVWX',
-      'YX',
+      'YZ',
     ],
     selectedTab: 'All',
     pageIndex: 0,
@@ -235,8 +235,8 @@ export default function Celebrity2({navigation}) {
             flexDirection: 'row',
             justifyContent: 'space-between',
           }}>
-          {[1, 1, 1, 1, 1, 1].map((i) => {
-            return <View>{celebrityTagLoader()}</View>;
+          {[1, 1, 1, 1, 1, 1].map((i, indx) => {
+            return <View key={String(indx)}>{celebrityTagLoader()}</View>;
           })}
         </View>
         <View
@@ -252,8 +252,8 @@ export default function Celebrity2({navigation}) {
             justifyContent: 'space-between',
             flexWrap: 'wrap',
           }}>
-          {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((i) => {
-            return <View>{celebrityLoader()}</View>;
+          {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((i, inx) => {
+            return <View key={String(inx)}>{celebrityLoader()}</View>;
           })}
         </View>
       </WrapperContainer>
@@ -292,7 +292,7 @@ export default function Celebrity2({navigation}) {
           {scrollableDataArray.map((item, index) => {
             return (
               <Text
-                key={index}
+                key={String(index)}
                 onPress={() => _onPress(item, index)}
                 style={
                   selectedTab == item

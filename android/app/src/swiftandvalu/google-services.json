@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "1028733675614",
+    "project_id": "swift-and-valu",
+    "storage_bucket": "swift-and-valu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1028733675614:android:2a1974489b9c6c83feeccf",
+        "android_client_info": {
+          "package_name": "com.swiftandvalu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1028733675614-2pfb5ia8eg6li9parlabi40eod94g1u1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swiftandvalu",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "1028733675614-4tkjhr3qhfp9p9kd7mqhlbk91o63gfpu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swiftandvalu",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1028733675614-mqtvsuper61rcpt19395cpb7t70ghgra.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swiftandvalu",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "1028733675614-67fnsoprt0gaitp4p0vgd47ddr5rtll6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALFy7MV-K5yHaT-AAGaFuqgJj_Dw9QeGU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1028733675614-67fnsoprt0gaitp4p0vgd47ddr5rtll6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1028733675614-6m5955bdm18g45e6blka8vi5lq1mfdr0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.customer.swiftandvalu"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

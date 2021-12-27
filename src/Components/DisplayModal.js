@@ -132,8 +132,6 @@ const DisplayModal = ({
   );
 };
 
-export default DisplayModal;
-
 export function stylesFunc({fontFamily}) {
   const styles = StyleSheet.create({
     modalMainView: {
@@ -191,3 +189,4 @@ export function stylesFunc({fontFamily}) {
   });
   return styles;
 }
+export default React.memo(DisplayModal);

@@ -51,4 +51,4 @@ const TransparentButtonWithTxtAndIcon = ({
   );
 };
 
-export default TransparentButtonWithTxtAndIcon;
+export default React.memo(TransparentButtonWithTxtAndIcon);

@@ -34,6 +34,7 @@ export default function Vendors3({route, navigation}) {
     pageNo: 1,
     limit: 5,
     isRefreshing: false,
+    listData: [],
   });
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state.initBoot);
@@ -44,7 +45,7 @@ export default function Vendors3({route, navigation}) {
   // alert(dine_In_Type);
   const location = useSelector((state) => state?.home?.location);
 
-  const {isLoading, pageNo, isRefreshing, limit} = state;
+  const {isLoading, pageNo, isRefreshing, limit, listData} = state;
   const {data} = route.params;
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -66,21 +67,27 @@ export default function Vendors3({route, navigation}) {
         {},
         {
           code: appData.profile.code,
-          latitude: location?.latitude.toString() || '',
-          longitude: location?.longitude.toString() || '',
+          latitude: location?.latitude || '',
+          longitude: location?.longitude || '',
         },
       )
       .then((res) => {
         console.log('vendor data', res);
         updateState({isLoading: false, isRefreshing: false});
-        const vendorData = {
-          category: res.data.category,
+        updateState({
           listData:
             pageNo == 1
               ? res.data.listData.data
-              : [...categoryData?.listData, ...res.data.listData.data],
-        };
-        actions.saveVendorListingAndCategoryInfo(vendorData);
+              : [...listData, ...res.data.listData.data],
+        });
+        // const vendorData = {
+        //   category: res.data.category,
+        //   listData:
+        //     pageNo == 1
+        //       ? res.data.listData.data
+        //       : [...categoryData?.listData, ...res.data.listData.data],
+        // };
+        // actions.saveVendorListingAndCategoryInfo(vendorData);
       })
       .catch(errorMethod);
   }, [pageNo, isRefreshing]);
@@ -118,6 +125,8 @@ export default function Vendors3({route, navigation}) {
             id: item.id,
             vendor: true,
             name: item.name,
+            category_slug: data?.slug,
+            fetchOffers: true,
           })();
     }
   };
@@ -167,43 +176,98 @@ export default function Vendors3({route, navigation}) {
           source={imagePath.filter1}
         /> */}
       {/* </View> */}
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={(!isLoading && categoryData?.listData) || []}
-        ItemSeparatorComponent={() => <View style={{height: 8}} />}
-        keyExtractor={(item, index) => String(index)}
-        renderItem={_renderItem}
-        refreshing={isRefreshing}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={handleRefresh}
-            tintColor={themeColors.primary_color}
-            // titleColor="#fff"
+      {!!isLoading ? (
+        <View style={{alignItems: 'center'}}>
+          <HeaderLoader
+            viewStyles={{marginTop: 5}}
+            widthLeft={width - moderateScaleVertical(40)}
+            rectWidthLeft={width - moderateScaleVertical(40)}
+            heightLeft={moderateScaleVertical(170)}
+            rectHeightLeft={moderateScaleVertical(170)}
+            isRight={false}
+            rx={15}
+            ry={15}
           />
-        }
-        getItemLayout={getItemLayout}
-        initialNumToRender={5}
-        maxToRenderPerBatch={10}
-        windowSize={10}
-        onEndReached={onEndReachedDelayed}
-        onEndReachedThreshold={0.5}
-        // onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
-        ListEmptyComponent={
-          !isLoading && (
-            <View
-              style={{
-                flex: 1,
-                marginTop: moderateScaleVertical(width / 2),
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <NoDataFound isLoading={state.isLoading} />
-            </View>
-          )
-        }
-        ListFooterComponent={() => <View style={{height: 100}} />}
-      />
+          <HeaderLoader
+            viewStyles={{marginTop: 15}}
+            widthLeft={width - moderateScaleVertical(40)}
+            rectWidthLeft={width - moderateScaleVertical(40)}
+            heightLeft={moderateScaleVertical(170)}
+            rectHeightLeft={moderateScaleVertical(170)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{marginTop: 15}}
+            widthLeft={width - moderateScaleVertical(40)}
+            rectWidthLeft={width - moderateScaleVertical(40)}
+            heightLeft={moderateScaleVertical(170)}
+            rectHeightLeft={moderateScaleVertical(170)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{marginTop: 15}}
+            widthLeft={width - moderateScaleVertical(40)}
+            rectWidthLeft={width - moderateScaleVertical(40)}
+            heightLeft={moderateScaleVertical(170)}
+            rectHeightLeft={moderateScaleVertical(170)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+          <HeaderLoader
+            viewStyles={{marginTop: 15}}
+            widthLeft={width - moderateScaleVertical(40)}
+            rectWidthLeft={width - moderateScaleVertical(40)}
+            heightLeft={moderateScaleVertical(170)}
+            rectHeightLeft={moderateScaleVertical(170)}
+            isRight={false}
+            rx={15}
+            ry={15}
+          />
+        </View>
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={(!isLoading && listData) || []}
+          ItemSeparatorComponent={() => <View style={{height: 8}} />}
+          keyExtractor={(item, index) => String(index)}
+          renderItem={_renderItem}
+          refreshing={isRefreshing}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              tintColor={themeColors.primary_color}
+              // titleColor="#fff"
+            />
+          }
+          getItemLayout={getItemLayout}
+          initialNumToRender={5}
+          maxToRenderPerBatch={10}
+          windowSize={10}
+          onEndReached={onEndReachedDelayed}
+          onEndReachedThreshold={0.5}
+          // onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
+          ListEmptyComponent={
+            !isLoading && (
+              <View
+                style={{
+                  flex: 1,
+                  marginTop: moderateScaleVertical(width / 2),
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <NoDataFound isLoading={state.isLoading} />
+              </View>
+            )
+          }
+          ListFooterComponent={() => <View style={{height: 100}} />}
+        />
+      )}
     </WrapperContainer>
 
     //<VendorsDesign1 />
