@@ -8,7 +8,7 @@ export default function () {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={navigationStrings.ROYO_ACCOUNT}
+        name={navigationStrings.ROYO_VENDOR_ACCOUNT}
         component={RoyoAccounts}
         options={{headerShown: false}}
       />
@@ -19,12 +19,12 @@ export default function () {
       />
       
       <Stack.Screen
-        name={navigationStrings.ROYO_TRANSACTIONS}
+        name={navigationStrings.ROYO_VENDOR_TRANSACTIONS}
         component={RoyoTransactions}
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name={navigationStrings.ROYO_PAYMENT_SETTINGS}
+        name={navigationStrings.ROYO_VENDOR_PAYMENT_SETTINGS}
         component={RoyoPaymentSetting}
         options={{headerShown: false}}
       />

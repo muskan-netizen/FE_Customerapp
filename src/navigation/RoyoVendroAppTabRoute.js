@@ -76,7 +76,7 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
         // keyboardHidesTabBar: true,
       }}>
       <Tab.Screen
-        name={navigationStrings.ROYO_HOME}
+        name={navigationStrings.ROYO_VENDOR_HOME}
         options={{
           headerShown: false,
           tabBarIcon: ({focused}) => {
@@ -108,7 +108,7 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
       />
 
       <Tab.Screen
-        name={navigationStrings.ROYO_ORDER}
+        name={navigationStrings.ROYO_VENDOR_ORDER}
         // component={RoyoOrder}
         component = {RoyoOrderScreenStack}
         options={{
@@ -141,7 +141,7 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
       />
 
       <Tab.Screen
-        name={navigationStrings.ROYO_PRODUCTS}
+        name={navigationStrings.ROYO_VENDOR_PRODUCTS}
         // component={RoyoProducts}
         component={RoyoOrderProductStack}
         options={{
@@ -176,7 +176,7 @@ const RoyoVendroAppTabRoute = ({barColor = colors.themeColor2}) => {
       />
 
       <Tab.Screen
-        name={navigationStrings.ROYO_ACCOUNT}
+        name={navigationStrings.ROYO_VENDOR_ACCOUNT}
         component={RoyoOrderAccountStack}
         options={{
           headerShown: false,

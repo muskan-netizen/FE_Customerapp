@@ -710,4 +710,5 @@ export default {
   ORDER: 'Order',
   SELECT_VIA_MAP:"Select via map",
   HOUSE_NO: 'House No.',
+  PLEASE_ENTER_VALID_NUMERIC: 'Please enter numeric value for',
 };

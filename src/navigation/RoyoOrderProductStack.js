@@ -41,7 +41,7 @@ export default function () {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name={navigationStrings.ROYO_ADD_PRODUCT}
+        name={navigationStrings.ROYO_VENDOR_ADD_PRODUCT}
         component={RoyoAddProduct}
         options={{headerShown: false}}
       />

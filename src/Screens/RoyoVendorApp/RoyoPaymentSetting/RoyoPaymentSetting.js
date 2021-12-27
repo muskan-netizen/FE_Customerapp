@@ -71,7 +71,7 @@ const PaymentSettings = (props) => {
     navigation.navigate(navigationStrings.VENDORLIST, {
       selectedVendor: selectedVendor,
       allVendors: vendor_list,
-      screenType: navigationStrings.ROYO_PAYMENT_SETTINGS,
+      screenType: navigationStrings.ROYO_VENDOR_PAYMENT_SETTINGS,
     });
   };
   const _getListOfVendor = () => {

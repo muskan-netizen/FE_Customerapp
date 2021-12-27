@@ -156,9 +156,13 @@ const RoyoHome = (props) => {
     });
   }, [activeOrders]);
 
-  useEffect(() => {
+  useEffect(()=>{
     _getListOfVendorOrders();
+  },[])
+
+  useEffect(() => {
     if (selectedVendor != null) {
+      console.log()
       _getRevnueData();
     }
   }, [selectedVendor, pageActive]);

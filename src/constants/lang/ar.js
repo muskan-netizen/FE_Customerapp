@@ -729,5 +729,6 @@ export default {
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
   ORDER: 'طلب',
   SELECT_VIA_MAP:"حدد عبر الخريطة",
-  HOUSE_NO:'رقم الدار'
+  HOUSE_NO:'رقم الدار',
+  PLEASE_ENTER_VALID_NUMERIC: 'Please enter numeric value for',
 };
