@@ -45,6 +45,7 @@ import {
 import HtmlViewComp from './HtmlViewComp';
 import BannerLoader from './Loaders/BannerLoader';
 import HeaderLoader from './Loaders/HeaderLoader';
+import BottomSheet from '@gorhom/bottom-sheet';
 
 const VariantAddons = ({
   productdetail = {},
@@ -964,18 +965,10 @@ const VariantAddons = ({
   };
 
   return (
-    <Modal
-      transparent={false}
-      isVisible={isVisible}
-      animationType={'none'}
-      style={styles.modalContainer}
-      onBackdropPress={() => onClose()}
-      onLayout={(event) => {
-        updateState({viewHeight: event.nativeEvent.layout.height});
-      }}>
-      <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+    <View style={{flex: 1}}>
+      {/* <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Image source={imagePath.crossC} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       {showShimmer ? (
         shimmerShow()
       ) : (
@@ -1224,7 +1217,7 @@ const VariantAddons = ({
           )}
         </Animatable.View>
       )}
-    </Modal>
+    </View>
   );
 };
 

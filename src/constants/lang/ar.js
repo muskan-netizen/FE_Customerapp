@@ -176,6 +176,7 @@ export default {
   POPULARITY: 'الأكثر شعبية',
   MOST_PURCHASED: 'الأكثر شراء',
   HOME: 'الصفحة الرئيسية',
+  HOME_1: 'مسكن',
   HOLD_ON: 'انتظر',
   EXIT_WARNING: 'هل أنت متأكد من أنك تريد الخروج؟',
   YES: 'نعم',
@@ -617,7 +618,7 @@ export default {
   ITEMS: 'Items',
   SEARCH_WITHIN_MENU: 'Search within the menu',
   GET_STARTED: 'Get started',
-  OTHERS: 'Others',
+  OTHERS: 'الآخرين',
   UNKNOWN: 'Unknown',
   CONNECTION_ERROR: 'Connection Error',
   INTERNET_CONNECTION_ERROR:
@@ -716,7 +717,7 @@ export default {
   TERMS_CONDITIONS: 'Terms & Conditions',
   HAVE_READ: 'and have read the',
   PRIVACY_POLICY: 'Privacy Policy.',
-  VENDER: 'Vendor',
+  VENDER: 'بائع',
   DRIVER: 'Driver',
   SUPPORT: 'Support',
   ENETER_YOUR_ADDRESS: 'Enter your address',
@@ -728,4 +729,7 @@ export default {
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
   INVOICE: 'Invoice',
   PROOF: 'Proof',
+  ORDER: 'طلب',
+  SELECT_VIA_MAP:"حدد عبر الخريطة",
+  HOUSE_NO:'رقم الدار'
 };

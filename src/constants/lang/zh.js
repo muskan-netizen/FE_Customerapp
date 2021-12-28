@@ -165,6 +165,7 @@ export default {
   POPULARITY: '人气',
   MOST_PURCHASED: '购买最多的',
   HOME: '家',
+  HOME_1: 'Home',
   HOLD_ON: '坚持',
   EXIT_WARNING: '你确定要退出吗？',
   YES: '是的',
@@ -679,4 +680,7 @@ export default {
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
   INVOICE: 'Invoice',
   PROOF: 'Proof',
+  ORDER: 'Order',
+  SELECT_VIA_MAP: 'Select via map',
+  HOUSE_NO: 'House No.',
 };

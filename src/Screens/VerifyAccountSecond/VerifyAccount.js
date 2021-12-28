@@ -217,7 +217,7 @@ export default function VerifyAccountSecond({navigation, route}) {
               ) {
                 navigation.goBack();
               } else {
-                navigation.push(navigationStrings.DRAWER_ROUTES);
+                navigation.push(navigationStrings.TAB_ROUTES);
               }
             }
           } else if (res?.data?.client_preference?.verify_email) {
@@ -229,7 +229,7 @@ export default function VerifyAccountSecond({navigation, route}) {
               ) {
                 navigation.goBack();
               } else {
-                navigation.push(navigationStrings.DRAWER_ROUTES);
+                navigation.push(navigationStrings.TAB_ROUTES);
               }
             }
           } else if (res?.data?.client_preference?.verify_phone) {
@@ -241,7 +241,7 @@ export default function VerifyAccountSecond({navigation, route}) {
               ) {
                 navigation.goBack();
               } else {
-                navigation.push(navigationStrings.DRAWER_ROUTES);
+                navigation.push(navigationStrings.TAB_ROUTES);
               }
             }
           }
@@ -364,7 +364,7 @@ export default function VerifyAccountSecond({navigation, route}) {
         ) ? null : (
           <TouchableOpacity
             // onPress={() => navigation.push(navigationStrings.TAB_ROUTES)}>
-            onPress={() => navigation.push(navigationStrings.DRAWER_ROUTES)}>
+            onPress={() => navigation.push(navigationStrings.TAB_ROUTES)}>
             <Text style={styles.skipText}>{strings.SKIP}</Text>
           </TouchableOpacity>
         )}

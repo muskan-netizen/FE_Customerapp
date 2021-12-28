@@ -122,7 +122,7 @@ export default function Login2({ navigation }) {
             !!res.data?.client_preference?.verify_phone) {
             if (!!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified) {
-              navigation.push(navigationStrings.DRAWER_ROUTES)
+              navigation.push(navigationStrings.TAB_ROUTES)
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
             }
@@ -131,13 +131,13 @@ export default function Login2({ navigation }) {
             !!res.data?.client_preference?.verify_phone) {
             if (!!res.data?.verify_details?.is_email_verified ||
               !!res.data?.verify_details?.is_phone_verified) {
-              navigation.push(navigationStrings.DRAWER_ROUTES)
+              navigation.push(navigationStrings.TAB_ROUTES)
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
             }
           }
           else {
-            navigation.push(navigationStrings.DRAWER_ROUTES)
+            navigation.push(navigationStrings.TAB_ROUTES)
           }
         }
         updateState({ isLoading: false });
@@ -198,9 +198,9 @@ export default function Login2({ navigation }) {
             !!res.data?.client_preference?.verify_phone
             ? !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
-              ? navigation.push(navigationStrings.DRAWER_ROUTES)
+              ? navigation.push(navigationStrings.TAB_ROUTES)
               : moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})()
-            : navigation.push(navigationStrings.DRAWER_ROUTES);
+            : navigation.push(navigationStrings.TAB_ROUTES);
         }
         updateState({ isLoading: false });
         getCartDetail();

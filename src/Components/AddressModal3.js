@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   I18nManager,
   Image,
@@ -10,15 +10,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dark-mode';
+import { useDarkMode } from 'react-native-dark-mode';
 import Geocoder from 'react-native-geocoding';
 import RNGooglePlaces from 'react-native-google-places';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import MapView from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
+import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
 import commonStyles from '../styles/commonStyles';
 import commonStylesFun from '../styles/commonStyles';
@@ -29,9 +30,10 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {getAddressComponent} from '../utils/helperFunctions';
-import {chekLocationPermission} from '../utils/permissions';
+import { MyDarkTheme } from '../styles/theme';
+import { getPlaceDetails } from '../utils/googlePlaceApi';
+import { getAddressComponent } from '../utils/helperFunctions';
+import { chekLocationPermission } from '../utils/permissions';
 import validations from '../utils/validations';
 import BorderTextInput from './BorderTextInput';
 import BorderTextInputWithLable from './BorderTextInputWithLable';
@@ -64,9 +66,9 @@ const AddressModal3 = ({
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const appData = useSelector((state) => state?.initBoot?.appData);
   const currentTheme = useSelector((state) => state.initBoot);
-  const {themeColors, themeLayouts, appStyle} = currentTheme;
+  const { themeColors, themeLayouts, appStyle } = currentTheme;
   const fontFamily = appStyle?.fontSizeData;
-  const {profile} = appData;
+  const { profile } = appData;
   const [state, setState] = useState({
     dropDownData: [],
     address: updateData?.address ? updateData?.address : '',
@@ -88,8 +90,8 @@ const AddressModal3 = ({
         lable: strings.HOME_1,
         icon: imagePath.home,
       },
-      {id: 2, lable: strings.WORK, icon: imagePath.workInActive},
-      {id: 3, lable: strings.OTHERS, icon: imagePath.workInActive},
+      { id: 2, lable: strings.WORK, icon: imagePath.workInActive },
+      { id: 3, lable: strings.OTHERS, icon: imagePath.workInActive },
     ],
     address_type: updateData?.type ? updateData?.type : 1,
     country_code: '',
@@ -104,7 +106,7 @@ const AddressModal3 = ({
     houseNo: '',
   });
 
-  const styles = stylesData({fontFamily, themeColors});
+  const styles = stylesData({ fontFamily, themeColors });
 
   //To update the states
   useEffect(() => {
@@ -148,10 +150,10 @@ const AddressModal3 = ({
     customAddress,
     houseNo,
   } = state;
-  const updateState = (data) => setState((state) => ({...state, ...data}));
+  const updateState = (data) => setState((state) => ({ ...state, ...data }));
 
   useEffect(() => {
-    Geocoder.init(profile.preferences.map_key, {language: 'en'}); // set the language
+    Geocoder.init(profile.preferences.map_key, { language: 'en' }); // set the language
   }, []);
 
   const _onChangeText = (key) => (val) => {
@@ -159,7 +161,7 @@ const AddressModal3 = ({
       getPlacesPrediction(val);
     }
 
-    updateState({[key]: val});
+    updateState({ [key]: val });
   };
 
   //Cleaer all state
@@ -186,8 +188,8 @@ const AddressModal3 = ({
             lable: strings.HOME_1,
             icon: imagePath.home,
           },
-          {id: 2, lable: strings.WORK, icon: imagePath.workInActive},
-          {id: 3, lable: strings.OTHERS, icon: imagePath.workInActive},
+          { id: 2, lable: strings.WORK, icon: imagePath.workInActive },
+          { id: 3, lable: strings.OTHERS, icon: imagePath.workInActive },
         ],
         address_type: updateData?.type ? updateData?.type : 1,
         houseNo: '',
@@ -201,20 +203,20 @@ const AddressModal3 = ({
     // console.log(data, 'data>>>>');
     RNGooglePlaces.getAutocompletePredictions(data)
       .then((results) => {
-        updateState({dropDownData: results});
+        updateState({ dropDownData: results });
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   /*************************** On Text Change
    */ const addressHelper = (results) => {
-    let clonedArrayData = {...state};
-    clonedArrayData = {...clonedArrayData, ...results, showDialogBox: false};
+    let clonedArrayData = { ...state };
+    clonedArrayData = { ...clonedArrayData, ...results, showDialogBox: false };
     updateState(clonedArrayData);
   };
 
   const handleAddressOnKeyUp = (text) => {
-    updateState({address: text});
+    updateState({ address: text });
   };
 
   /*************************** Place Id look Up
@@ -222,16 +224,16 @@ const AddressModal3 = ({
     if (data?.placeID) {
       RNGooglePlaces.lookUpPlaceByID(data.placeID)
         .then((results) =>
-          addressHelper({...results, address: data.fullText || data.address}),
+          addressHelper({ ...results, address: data.fullText || data.address }),
         )
-        .catch((error) => {});
+        .catch((error) => { });
     } else {
     }
   };
 
   /*************************** On Text Change
    */ const placeSelectionHandler = (data) => {
-    updateState({showDialogBox: false});
+    updateState({ showDialogBox: false });
     placeIdLookUp(data);
     Keyboard.dismiss();
   };
@@ -244,7 +246,7 @@ const AddressModal3 = ({
           {dropDownData.map((x, i) => (
             <TouchableOpacity onPress={() => placeSelectionHandler(x)} key={i}>
               <Text style={styles.textInput}>{x.fullText}</Text>
-              <View style={{paddingVertical: (height * 1.2) / 100}}></View>
+              <View style={{ paddingVertical: (height * 1.2) / 100 }}></View>
             </TouchableOpacity>
           ))}
         </View>
@@ -343,7 +345,7 @@ const AddressModal3 = ({
           .catch((error) => console.log(error, 'errro geocode'));
       },
       (error) => console.log(error.message),
-      {enableHighAccuracy: true, timeout: 20000},
+      { enableHighAccuracy: true, timeout: 20000 },
     );
   };
 
@@ -357,10 +359,57 @@ const AddressModal3 = ({
   const getTextInputStyle = (input, type) => {
     return input != '' && input != undefined
       ? [
-          styles.textInput,
-          {color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey},
-        ]
-      : {fontSize: textScale(12)};
+        styles.textInput,
+        { color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey },
+      ]
+      : { fontSize: textScale(12) };
+  };
+
+  const updateAddress_ = async (data_) => {
+    console.log('onGoBackonGoBack>>>>', data_);
+    let res = await getPlaceDetails(
+      data_.place_id,
+      profile?.preferences?.map_key,
+    );
+    const { result } = res;
+
+    let addressData = getAddressComponent(result);
+    console.log('res===onGoBackonGoBack>>>>', addressData);
+    let data = {};
+    if (addressData.address) {
+      data['address'] = addressData.address;
+    }
+    if (addressData.street) {
+      data['street'] = addressData.street;
+    }
+    if (addressData.city) {
+      data['city'] = addressData.city;
+    }
+    if (addressData.pincode) {
+      data['pincode'] = addressData.pincode;
+    }
+    if (addressData.state) {
+      data['state'] = addressData.state;
+    }
+    if (addressData.country) {
+      data['country'] = addressData.country;
+    }
+    if (addressData.latitude) {
+      data['latitude'] = addressData.latitude;
+    }
+    if (addressData.longitude) {
+      data['longitude'] = addressData.longitude;
+    }
+    if (addressData.phonecode) {
+      data['phonecode'] = addressData.phonecode;
+    }
+    if (addressData.country_code) {
+      data['country_code'] = addressData.country_code;
+    }
+
+    data['is_primary'] = type == 'addAddress' ? 1 : is_primary;
+    console.log('passLocationpassLocation>>>', data);
+    passLocation(data);
   };
 
   return (
@@ -370,12 +419,12 @@ const AddressModal3 = ({
       style={styles.modalContainer}
       onBackdropPress={onClose}
       onLayout={(event) => {
-        updateState({viewHeight: event.nativeEvent.layout.height});
+        updateState({ viewHeight: event.nativeEvent.layout.height });
       }}>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <Image
           style={
-            isDarkMode ? {tintColor: colors.white} : {tintColor: colors.black}
+            isDarkMode ? { tintColor: colors.white } : { tintColor: colors.black }
           }
           source={imagePath.crossB}
         />
@@ -385,15 +434,15 @@ const AddressModal3 = ({
         style={
           isDarkMode
             ? [
-                styles.modalMainViewContainer,
-                {
-                  backgroundColor: MyDarkTheme.colors.lightDark,
-                },
-              ]
+              styles.modalMainViewContainer,
+              {
+                backgroundColor: MyDarkTheme.colors.lightDark,
+              },
+            ]
             : [
-                styles.modalMainViewContainer,
-                {paddingHorizontal: moderateScale(24)},
-              ]
+              styles.modalMainViewContainer,
+              { paddingHorizontal: moderateScale(24) },
+            ]
         }>
         <KeyboardAwareScrollView
           keyboardShouldPersistTaps="always"
@@ -403,7 +452,7 @@ const AddressModal3 = ({
               numberOfLines={1}
               style={
                 isDarkMode
-                  ? [styles.addNewAddeessText, {color: MyDarkTheme.colors.text}]
+                  ? [styles.addNewAddeessText, { color: MyDarkTheme.colors.text }]
                   : styles.addNewAddeessText
               }>
               {strings.ADD_ADDRESS1}
@@ -457,13 +506,60 @@ const AddressModal3 = ({
           </View>
           <View
             style={{
-              marginBottom: 20,
+              marginBottom: 5,
               borderBottomWidth: 1,
               borderColor: isDarkMode
                 ? MyDarkTheme.colors.text
                 : colors.borderLight,
             }}></View>
-
+          <TouchableOpacity
+            onPress={() => {
+              onClose();
+              setTimeout(() => {
+                navigation.navigate(navigationStrings.PINADDRESSONMAP, {
+                  onGoBack: async (data) => {
+                    updateAddress_(data);
+                    onClose();
+                  },
+                  prevRoute: 'cart',
+                  task_id: 1,
+                  pickUpLocationLatLng: {
+                    latitude: 30.7333,
+                    longitude: 76.7794,
+                  },
+                });
+              }, 300);
+            }}
+            style={{
+              borderWidth: 1,
+              // padding: 10,
+              borderRadius: 10,
+              alignItems: 'center',
+              flexDirection: 'row',
+              borderColor: colors.borderColorB,
+              width: moderateScale(120),
+              justifyContent: 'center',
+              height: moderateScaleVertical(30),
+              marginLeft: moderateScale(10),
+              marginTop: moderateScale(10),
+              marginBottom: 15,
+            }}>
+            <Image
+              source={imagePath.ic_pinIcon}
+              style={{
+                width: moderateScale(15),
+                height: moderateScaleVertical(15),
+                resizeMode: 'contain',
+                tintColor: themeColors.primary_color,
+              }}
+            />
+            <Text
+              style={{
+                fontSize: moderateScale(12),
+                fontFamily: fontFamily.regular,
+                marginLeft: moderateScale(5),
+              }}>{strings.HOME}</Text>
+          </TouchableOpacity>
           {/* <View style={styles.textInputContainerAddress}>
             <TextInput
               onChangeText={_onChangeText('address')}
@@ -515,8 +611,8 @@ const AddressModal3 = ({
               multiline={false}
               borderWidth={0}
               marginBottomTxt={0}
-              containerStyle={{borderBottomWidth: 1}}
-              mainStyle={{marginTop: 10}}
+              containerStyle={{ borderBottomWidth: 1 }}
+              mainStyle={{ marginTop: 10 }}
               labelStyle={styles.labelStyle}
             />
 
@@ -527,7 +623,7 @@ const AddressModal3 = ({
               value={street}
               borderWidth={0}
               marginBottomTxt={0}
-              containerStyle={{borderBottomWidth: 1}}
+              containerStyle={{ borderBottomWidth: 1 }}
             />
 
             <BorderTextInputWithLable
@@ -537,7 +633,7 @@ const AddressModal3 = ({
               value={city}
               borderWidth={0}
               marginBottomTxt={0}
-              containerStyle={{borderBottomWidth: 1}}
+              containerStyle={{ borderBottomWidth: 1 }}
             />
 
             <BorderTextInputWithLable
@@ -547,11 +643,11 @@ const AddressModal3 = ({
               value={states}
               borderWidth={0}
               marginBottomTxt={0}
-              containerStyle={{borderBottomWidth: 1}}
+              containerStyle={{ borderBottomWidth: 1 }}
             />
 
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               {/* <BorderTextInput
               containerStyle={{flex: 0.45}}
               onChangeText={_onChangeText('country')}
@@ -587,11 +683,11 @@ const AddressModal3 = ({
                   value={country}
                   style={
                     isDarkMode
-                      ? [styles.textInput3, {opacity: 0.7, color: '#fff'}]
+                      ? [styles.textInput3, { opacity: 0.7, color: '#fff' }]
                       : [
-                          styles.textInput3,
-                          {opacity: 0.7, color: colors.textGrey},
-                        ]
+                        styles.textInput3,
+                        { opacity: 0.7, color: colors.textGrey },
+                      ]
                   }
                 />
               </View>
@@ -627,7 +723,7 @@ const AddressModal3 = ({
                 return (
                   <View key={index}>
                     <TouchableOpacity
-                      onPress={() => updateState({address_type: item.id})}
+                      onPress={() => updateState({ address_type: item.id })}
                       style={[
                         styles.addressHomeOrOfficeView,
                         {
@@ -650,7 +746,7 @@ const AddressModal3 = ({
                       {address_type == item.id && (
                         <Image
                           source={imagePath.icRedChecked}
-                          style={{position: 'absolute', right: -8, top: -8}}
+                          style={{ position: 'absolute', right: -8, top: -8 }}
                         />
                       )}
                     </TouchableOpacity>
@@ -681,7 +777,7 @@ const AddressModal3 = ({
             // marginBottom={moderateScaleVertical(10)}
             btnText={strings.SAVE_ADDRESS}
             indicator={indicator}
-            containerStyle={{marginTop: moderateScale(20)}}
+            containerStyle={{ marginTop: moderateScale(20) }}
           />
         </KeyboardAwareScrollView>
       </View>
@@ -694,8 +790,8 @@ const AddressModal3 = ({
   );
 };
 
-export function stylesData({fontFamily, themeColors}) {
-  const commonStyles = commonStylesFun({fontFamily});
+export function stylesData({ fontFamily, themeColors }) {
+  const commonStyles = commonStylesFun({ fontFamily });
 
   const styles = StyleSheet.create({
     addressTypeView: {
@@ -852,7 +948,7 @@ export function stylesData({fontFamily, themeColors}) {
       backgroundColor: colors.white,
       shadowOpacity: 0.2,
       justifyContent: 'center',
-      shadowOffset: {width: 0, height: 0.1},
+      shadowOffset: { width: 0, height: 0.1 },
     },
     addressTextStyle: {
       // flex: 1,

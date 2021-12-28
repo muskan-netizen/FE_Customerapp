@@ -737,4 +737,6 @@ Amount`,
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
   INVOICE: 'Invoice',
   PROOF: 'Proof',
+  ORDER: 'Order',
+  SELECT_VIA_MAP: 'Select via map',
 };

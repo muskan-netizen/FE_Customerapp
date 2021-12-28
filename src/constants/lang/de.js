@@ -177,6 +177,7 @@ export default {
   POPULARITY: 'Beliebtheit',
   MOST_PURCHASED: 'Meist gekauft',
   HOME: 'Zuhause',
+  HOME_1: 'Home',
   HOLD_ON: 'Halten',
   EXIT_WARNING: ' Möchten Sie wirklich beenden?',
   YES: 'Ja',
@@ -729,4 +730,7 @@ export default {
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
   INVOICE: 'Invoice',
   PROOF: 'Proof',
+  ORDER: 'Order',
+  SELECT_VIA_MAP: 'Select via map',
+  HOUSE_NO: 'House No',
 };

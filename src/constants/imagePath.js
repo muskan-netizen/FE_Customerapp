@@ -352,6 +352,7 @@ export default {
   newsort: require('../assets/images/RoyoorderNewImages/sort.png'),
   icBagA: require('../assets/images/RoyoorderNewImages/ic_bag2.png'),
   cartIcon: require('../assets/images/RoyoorderNewImages/ic_cart.png'),
+  icLocationPin_: require('../assets/images/RoyoorderNewImages/ic_location_.png'),
 
   cash: require('../assets/images/TAXIAPPIMAGES/ic_cash.png'),
   card: require('../assets/images/TAXIAPPIMAGES/ic_card.png'),

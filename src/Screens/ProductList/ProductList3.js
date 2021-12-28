@@ -17,6 +17,7 @@ import {
   View,
   ScrollView,
 } from 'react-native';
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import * as Animatable from 'react-native-animatable';
 import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
@@ -75,6 +76,7 @@ import Clipboard from '@react-native-community/clipboard';
 import Toast from 'react-native-simple-toast';
 import RepeatModal from '../../Components/RepeatModal';
 import DifferentAddOns from '../../Components/DifferentAddOns ';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 let timeOut = undefined;
 
@@ -83,6 +85,7 @@ var tempQty = 0;
 let activeIdx = 0;
 
 export default function Products({route, navigation}) {
+  const bottomSheetRef = useRef(null);
   const {data} = route.params;
   // console.log(data, 'datadatadata');
   const routeData = data?.fetchOffers;
@@ -3103,23 +3106,55 @@ export default function Products({route, navigation}) {
           )}
         </View>
       ) : (
-        <View>
-          {isVisibleModal && (
-            <VariantAddons
-              addonSet={selectedCartItem?.add_on}
-              variantData={selectedCartItem?.variantSet}
-              isVisible={isVisibleModal}
-              productdetail={selectedCartItem}
-              onClose={() =>
-                updateState({isVisibleModal: false, showShimmer: true})
+        isVisibleModal && (
+          <BottomSheet
+            ref={bottomSheetRef}
+            index={1}
+            snapPoints={[0, height / 1.5, height / 1.25]}
+            activeOffsetY={[-1, 1]}
+            failOffsetX={[-5, 5]}
+            animateOnMount={true}
+            handleComponent={() => (
+              <View
+                style={{
+                  height: 0,
+                  borderTopLeftRadius: 20,
+                  backgroundColor: 'rgba(0,0,0,0)',
+                }}
+              />
+            )}
+            onChange={(index) => {
+              if (index === 0) {
+                updateState({isVisibleModal: false, showShimmer: true});
               }
-              typeId={typeId}
-              showShimmer={showShimmer}
-              shimmerClose={(val) => updateState({showShimmer: val})}
-              updateCartItems={updateCartItems}
-            />
-          )}
-        </View>
+              playHapticEffect(hapticEffects.impactMedium);
+            }}>
+            <BottomSheetScrollView
+              keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={false}
+              style={{
+                borderTopLeftRadius: moderateScale(15),
+                borderTopRightRadius: moderateScale(15),
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.background
+                  : colors.white,
+              }}>
+              <VariantAddons
+                addonSet={selectedCartItem?.add_on}
+                variantData={selectedCartItem?.variantSet}
+                isVisible={isVisibleModal}
+                productdetail={selectedCartItem}
+                onClose={() =>
+                  updateState({isVisibleModal: false, showShimmer: true})
+                }
+                typeId={typeId}
+                showShimmer={showShimmer}
+                shimmerClose={(val) => updateState({showShimmer: val})}
+                updateCartItems={updateCartItems}
+              />
+            </BottomSheetScrollView>
+          </BottomSheet>
+        )
       )}
 
       <CustomAnimatedLoader
