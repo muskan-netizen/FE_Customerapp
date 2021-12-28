@@ -157,13 +157,14 @@ const RoyoProducts = (props) => {
 
   /**********Get all list items by store  id and category id */
   const getAllProducts = (id) => {
+    console.log(pageNo, 'data at product');
     if(selectedVendor?.id||storeSelectedVendor?.id)
     actions
       .getProductBySpecificId(
         `?selected_category_id=${
-          id || ''
+          id || storeSelectedVendor?.id
         }&limit=${limit}&page=${pageNo}&selected_vendor_id=${
-          selectedVendor?.id || storeSelectedVendor?.id||''
+          selectedVendor?.id || ''
         }`,
         {},
         {
