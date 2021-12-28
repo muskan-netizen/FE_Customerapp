@@ -162,7 +162,7 @@ const RoyoProducts = (props) => {
     actions
       .getProductBySpecificId(
         `?selected_category_id=${
-          id || storeSelectedVendor?.id
+          id || ''
         }&limit=${limit}&page=${pageNo}&selected_vendor_id=${
           selectedVendor?.id || storeSelectedVendor?.id||''
         }`,
