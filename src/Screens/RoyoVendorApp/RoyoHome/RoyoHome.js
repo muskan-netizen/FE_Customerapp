@@ -409,8 +409,8 @@ const RoyoHome = (props) => {
         contentContainerStyle={{flexGrow: 1}}
         refreshControl={
           <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={handleRefresh}
+            // refreshing={isRefreshing}
+            // onRefresh={handleRefresh}
             tintColor={colors.themeColor2}
           />
         }
