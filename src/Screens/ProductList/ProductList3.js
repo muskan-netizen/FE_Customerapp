@@ -593,6 +593,7 @@ export default function Products({route, navigation}) {
             filterData: res?.data?.filterData,
             vendorCategories: res?.data?.categories,
           });
+          console.log(filterArray, 'filterArrayfilterArray');
           fetchTags(filterArray);
         } else {
           // console.log('get product list by vendor id >>>> ', res);
@@ -624,8 +625,10 @@ export default function Products({route, navigation}) {
       let tagsArr = [];
       filterArray.forEach((el) => {
         // console.log('checking data for tags >>>', el);
-        el.data.forEach((data) => {
-          tagsArr.push(...data.tags);
+        el.data.forEach((data_) => {
+          if (data_ && data_.tags) {
+            tagsArr.push(...data_.tags);
+          }
         });
       });
       tagsArr = _.uniqBy(tagsArr, 'tag_id');
@@ -1696,8 +1699,8 @@ export default function Products({route, navigation}) {
         if (res && res.data) {
           updateState({offerList: res.data});
         }
-      })
-      .catch(errorMethod);
+      });
+    // .catch(errorMethod);
   };
 
   const RenderMenuView = () => {

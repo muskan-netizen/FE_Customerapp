@@ -347,7 +347,7 @@ export default {
   SELECTDATEANDTIME: 'Select Date and Time',
   DOYOUWANTTORETURNYOURORDER:
     'Please report issues here to log a complaint or to request a refund.',
-  SELECTITEMSFORRETURN: 'Select item(s) for return',
+  SELECTITEMSFORRETURN: 'Select item(s)',
   RETURNREASONS: 'Reason for return product',
   COMMENTSOPTIONAL: 'Comments (Optional):',
   HEY_MSG: 'Hey',
@@ -627,7 +627,7 @@ Amount`,
   CONNECTION_ERROR: 'Connection Error',
   INTERNET_CONNECTION_ERROR:
     'Oops! Looks like your device is not connected to the Internet.',
-  HERE_YOU_ARE_FOR_RETURN: 'Here You Are For Return Product !',
+  HERE_YOU_ARE_FOR_RETURN: 'Report an issue or request a return / refund :',
   BROWSE_MENU: 'Browse Menu',
   MINS: 'mins',
   AVAILABLE_OFFERS: 'Available Offers',
