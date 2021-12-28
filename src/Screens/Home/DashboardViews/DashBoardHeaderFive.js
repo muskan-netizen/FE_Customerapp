@@ -38,7 +38,6 @@ export default function DashBoardHeaderFive({
   isLoading = false,
   isLoadingB = false,
 }) {
-
   const navigation = useNavigation();
   const pickerRef = createRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -63,6 +62,7 @@ export default function DashBoardHeaderFive({
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
   const updateState = (data) => setState((state) => ({...state, ...data}));
+  // console.log(profileInfo?.logo?.image_path, 'imageimageimage');
   const imageURI = getImageUrl(
     profileInfo?.logo?.image_fit,
     profileInfo?.logo?.image_path,
@@ -403,7 +403,7 @@ export default function DashBoardHeaderFive({
   return (
     <View
       style={{
-        borderBottomWidth: 0.8,
+        borderBottomWidth: tabs.length > 1 ? 0.8: 0,
         borderBottomColor: isDarkMode
           ? colors.whiteOpacity22
           : colors.borderColorD,
@@ -424,9 +424,11 @@ export default function DashBoardHeaderFive({
             alignItems: 'center',
           }}>
           {!!(profileInfo && profileInfo?.logo) ? (
-            <ScaledImage
-              width={width / 6}
-              height={moderateScaleVertical(50)}
+            <Image
+              style={{
+                width: width / 6,
+                height: moderateScaleVertical(50)
+              }}
               resizeMode="contain"
               source={
                 profileInfo && profileInfo?.logo
@@ -655,7 +657,6 @@ export default function DashBoardHeaderFive({
           tabs.map((item, indx) => {
             return (
               <TouchableOpacity
-              
                 activeOpacity={1}
                 disabled={item.isActive}
                 onPress={() =>
@@ -669,7 +670,7 @@ export default function DashBoardHeaderFive({
                 key={indx}
                 style={{
                   // width: width / 3 - 8,
-                  width: tabs.length == 2? '50%': '33.6%',
+                  width: tabs.length == 2 ? '50%' : '33.6%',
                   borderBottomColor:
                     item.isActive && isDarkMode
                       ? MyDarkTheme.colors.white

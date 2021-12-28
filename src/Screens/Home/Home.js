@@ -47,7 +47,6 @@ export default function Home({route, navigation}) {
     (state) => state?.home,
   );
   const cartItemCount = useSelector((state) => state?.cart?.cartItemCount);
-
   const userData = useSelector((state) => state?.auth?.userData);
   const pendingNotifications = useSelector(
     (state) => state?.pendingNotifications?.pendingNotifications,

@@ -21,13 +21,13 @@ export function homeData(data = {}, headers = {}, isShortCode = false) {
   return new Promise((resolve, reject) => {
     apiPost(HOMEPAGE_DATA_URL, data, headers)
       .then((res) => {
-        // if (!isShortCode) {
-        console.log('goesHere', res);
-        dispatch({
-          type: types.HOME_DATA,
-          payload: res.data,
-        });
-        // }
+        if (!isShortCode) {
+          console.log('goesHere', res);
+          dispatch({
+            type: types.HOME_DATA,
+            payload: res.data,
+          });
+        }
         resolve(res);
       })
       .catch((error) => {

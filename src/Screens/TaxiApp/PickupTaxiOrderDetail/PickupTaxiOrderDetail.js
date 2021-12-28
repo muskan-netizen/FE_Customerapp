@@ -9,6 +9,8 @@ import {
   ScrollView,
   BackHandler,
   Animated,
+  TextInput,
+  Keyboard,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import HeaderWithFilters from '../../../Components/HeaderWithFilters';
@@ -80,10 +82,11 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default function PickupTaxiOrderDetail({navigation, route}) {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
+  const {themeColor, themeToggle} = useSelector(
+    (state) => state?.initBoot?.themeColor,
+  );
   const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const paramData = route?.params;
   console.log(paramData, 'paramData');
   const [state, setState] = useState({
@@ -118,6 +121,9 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     hideShowBack: 0,
     selectedImg: '',
     baseUrl: '',
+    isCancleModal: false,
+    reason: '',
+    isBtnLoader: false,
   });
   const {
     isLoading,
@@ -145,6 +151,9 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     hideShowBack,
     selectedImg,
     baseUrl,
+    isCancleModal,
+    reason,
+    isBtnLoader,
   } = state;
   const userData = useSelector((state) => state?.auth?.userData);
 
@@ -155,15 +164,6 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
 
   const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
-
-  console.log(
-    appData,
-    themeColors,
-    currencies,
-    languages,
-    appStyle,
-    'appDataappDataappDataappDataappDataappData',
-  );
 
   const {profile} = appData;
 
@@ -352,7 +352,13 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   };
 
   const errorMethod = (error) => {
-    updateState({isLoading: false, isLoading: false, isLoadingC: false});
+    updateState({
+      isLoading: false,
+      isLoading: false,
+      isLoadingC: false,
+      isCancleModal: false,
+      isBtnLoader: false,
+    });
     showError(error?.message || error?.error);
   };
   const _onRegionChange = (region) => {
@@ -661,6 +667,46 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     );
   };
 
+  const hideModal = () => {
+    updateState({isCancleModal: false});
+  };
+
+  const onCancelOrder = () => {
+    if (reason == '') {
+      alert(
+        `${
+          strings.PLEASE_ENTER
+        }${strings.CANCELLATION_REASON.toLocaleLowerCase()}`,
+      );
+      return;
+    }
+
+    updateState({isBtnLoader: true});
+
+    const apiData = {
+      order_id: paramData?.orderId,
+      vendor_id: paramData?.selectedVendor?.id,
+      reject_reason: reason,
+    };
+    console.log('sendingapi data', apiData);
+    actions
+      .cancelOrder(apiData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then((response) => {
+        console.log(response, 'responseFromServer');
+        updateState({
+          isBtnLoader: false,
+          isCancleModal: false,
+        });
+        showSuccess(response?.message);
+        navigation.goBack();
+      })
+      .catch(errorMethod);
+  };
+
   return (
     <WrapperContainer
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
@@ -702,7 +748,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
             }}>
             {orderStatus == 'unassigned'
               ? strings.YOUR_RIDE_WILL_START_SOON
-              : 'Invoice'}
+              : strings.INVOICE}
           </Text>
         </View>
 
@@ -814,6 +860,35 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
+                    marginHorizontal: moderateScale(16),
+                  }}>
+                  <Text
+                    style={
+                      isDarkMode
+                        ? [
+                            styles.orderLableStyle,
+                            {color: MyDarkTheme.colors.text},
+                          ]
+                        : styles.orderLableStyle
+                    }>
+                    {`${strings.ORDER_ID}: #${paramData?.orderDetail?.order_number}`}
+                  </Text>
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => updateState({isCancleModal: true})}>
+                    <Text
+                      style={{
+                        textAlign: 'right',
+                        color: colors.redB,
+                      }}>
+                      {strings.CANCEL_ORDER}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
                     marginTop: moderateScaleVertical(16),
                     marginBottom: moderateScaleVertical(8),
                     marginHorizontal: moderateScale(16),
@@ -839,7 +914,11 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                       #{orderFullDetail.order.unique_id}
                     </Text>
                   </View>
-                  <View style={{flex: 0.3, alignItems: 'flex-end'}}>
+                  <View
+                    style={{
+                      flex: 0.3,
+                      alignItems: 'flex-end',
+                    }}>
                     <Text style={styles.statusText}>
                       {' '}
                       {currencies?.primary_currency?.symbol}{' '}
@@ -857,7 +936,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     </Text>
                   </View>
                 </View>
-
+                {console.log(orderFullDetail, 'orderFullDetail')}
                 {!!orderFullDetail?.order.task_description && (
                   <View style={{marginHorizontal: moderateScale(16)}}>
                     <Text style={styles.datePriceText}>
@@ -944,17 +1023,39 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                           img={orderFullDetail?.agent_image}
                           size={34}
                         />
-                        <Text
-                          style={{
-                            ...styles.statusText,
-                            color: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : colors.black,
-                            marginLeft: moderateScale(10),
-                          }}>
-                          {orderFullDetail?.order?.name || ''}
-                        </Text>
+                        <View style={{flexDirection: 'column'}}>
+                          <Text
+                            style={{
+                              ...styles.statusText,
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.black,
+                              marginLeft: moderateScale(10),
+                            }}>
+                            {orderFullDetail?.order?.name || ''}
+                          </Text>
+                          <Text
+                            style={{
+                              ...styles.statusText,
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.black,
+                              marginLeft: moderateScale(10),
+                            }}>
+                            {`Driver Id: `}
+                            {Array(
+                              Math.max(
+                                4 -
+                                  String(orderFullDetail?.order?.driver_id)
+                                    .length +
+                                  1,
+                                0,
+                              ),
+                            ).join(0) + orderFullDetail?.order?.driver_id}
+                          </Text>
+                        </View>
                       </View>
+
                       {!!orderFullDetail?.avgrating &&
                         Number(orderFullDetail?.avgrating) !== 0 && (
                           <StarRating
@@ -1101,7 +1202,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                               : colors.black,
                             marginLeft: moderateScale(10),
                           }}>
-                          {`${orderDetail?.color} ,`}
+                          {`${orderDetail?.color || ''}`}
                         </Text>
                         <Text
                           style={{
@@ -1232,7 +1333,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                 alignSelf: 'center',
                 fontFamily: fontFamily.medium,
               }}>
-              Proof
+              {strings.PROOF}
             </Text>
             <TouchableOpacity onPress={() => updateState({showModal: false})}>
               <Image source={imagePath.closeButton} />
@@ -1248,6 +1349,99 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                 : colors.blackOpacity10,
               // borderRadius: 8,
             }}
+          />
+        </View>
+      </Modal>
+      <Modal
+        isVisible={isCancleModal}
+        onBackdropPress={hideModal}
+        // animationIn="zoomIn"
+        // animationOut="zoomOut"
+        style={{
+          margin: 0,
+          justifyContent: 'flex-end',
+        }}>
+        <View
+          style={{
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : colors.white,
+            borderRadius: moderateScale(8),
+            overflow: 'hidden',
+            paddingHorizontal: moderateScale(16),
+            paddingVertical: moderateScale(12),
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <Text />
+            <Text
+              style={{
+                fontSize: textScale(16),
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                alignSelf: 'center',
+                fontFamily: fontFamily.medium,
+              }}>
+              {strings.CANCELLATION_REASON}
+            </Text>
+            <TouchableOpacity onPress={hideModal}>
+              <Image
+                style={isDarkMode && {tintColor: colors.white}}
+                source={imagePath.closeButton}
+              />
+            </TouchableOpacity>
+          </View>
+
+          {/* {!!reasonError && (
+            <Text
+              style={{
+                fontSize: textScale(12),
+                color: colors.redB,
+                fontFamily: fontFamily.medium,
+                marginTop: moderateScaleVertical(8),
+              }}>
+              {strings.REQUIRED}*{' '}
+            </Text>
+          )} */}
+
+          <View
+            style={{
+              // marginVertical: moderateScaleVertical(16),
+              backgroundColor: isDarkMode
+                ? colors.whiteOpacity15
+                : colors.greyNew,
+              height: moderateScale(82),
+              borderRadius: moderateScale(4),
+              paddingHorizontal: moderateScale(8),
+              marginTop: moderateScaleVertical(16),
+            }}>
+            <TextInput
+              multiline
+              value={reason}
+              placeholder={strings.WRITE_YOUR_REASON_HERE}
+              onChangeText={(val) => updateState({reason: val})}
+              style={{
+                ...styles.reasonText,
+                color: isDarkMode ? colors.textGreyB : colors.black,
+                textAlignVertical: 'top',
+              }}
+              onSubmitEditing={Keyboard.dismiss}
+              placeholderTextColor={
+                isDarkMode ? colors.textGreyB : colors.blackOpacity40
+              }
+            />
+          </View>
+          <ButtonWithLoader
+            isLoading={isBtnLoader}
+            btnText={strings.CANCEL}
+            btnStyle={{
+              backgroundColor: themeColors.primary_color,
+              borderWidth: 0,
+            }}
+            onPress={onCancelOrder}
           />
         </View>
       </Modal>

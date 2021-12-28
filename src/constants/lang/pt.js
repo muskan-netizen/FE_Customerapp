@@ -691,5 +691,11 @@ export default {
   SUPPORT: 'Support',
   ENETER_YOUR_ADDRESS: 'Enter your address',
   NO_CARS_AVAILABLE: 'No cars available',
+  ORDERACCEPTED: 'Order Accepted',
+  PROCCESSING: 'Your driver is heading to the restaurant',
+  OUTFORDELIVERY: 'Your driver is heading to you',
+  ORDERDELIVERED: 'Your order has been delivered',
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
+  INVOICE: 'Invoice',
+  PROOF: 'Proof',
 };
