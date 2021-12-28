@@ -1452,7 +1452,7 @@ android {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion         
             applicationId 'com.ridetci'
-            resValue "string", "app_name", "RIDE TCI"
+            resValue "string", "app_name", "TRIP TCI"
             resValue "string", "host_name", ""
          }
            noki{
