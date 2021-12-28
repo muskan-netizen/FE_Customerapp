@@ -363,7 +363,7 @@ const RoyoHome = (props) => {
   const toggleStatus = () => updateState({status: !status});
 
   const handleRefresh = () => {
-    updateState({pageActive: 1, isRefreshing: true});
+    updateState({pageActive: 1, isRefreshing: false});
   };
   const dashboard = (item, index) => {
     const {image, header, text} = item;
@@ -409,8 +409,8 @@ const RoyoHome = (props) => {
         contentContainerStyle={{flexGrow: 1}}
         refreshControl={
           <RefreshControl
-            // refreshing={isRefreshing}
-            // onRefresh={handleRefresh}
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
             tintColor={colors.themeColor2}
           />
         }
