@@ -164,7 +164,7 @@ const RoyoProducts = (props) => {
         `?selected_category_id=${
           id || storeSelectedVendor?.id
         }&limit=${limit}&page=${pageNo}&selected_vendor_id=${
-          selectedVendor?.id || ''
+          selectedVendor?.id || storeSelectedVendor?.id||''
         }`,
         {},
         {
