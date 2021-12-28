@@ -32,21 +32,23 @@ const BottomViewModal = ({
           ? [styles.modal, {justifyContent: 'flex-end'}]
           : styles.modal
       }
+      onBackdropPress={closeModal}
       animationInTiming={600}>
       <View
         style={[
           styles.modalContainer,
           {width: isDatetimePicker ? width : width - 50},
         ]}>
-        {/* <TouchableOpacity
+        <TouchableOpacity
           // hitSlop={{top: 200, left: 200, right: 200, bottom: 200}}
-          style={{ alignSelf: 'flex-end' }}
-          onPress={() => closeModal()}>
+          style={{ alignSelf: 'flex-end', }}
+          onPress={closeModal}>
           <Image
-            source={imagePath.crossC}
+          style={{tintColor:"black"}}
+            source={imagePath.ic_cross}
             resizeMode="contain"
           />
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
         {isDatetimePicker ? null : (
           <View
