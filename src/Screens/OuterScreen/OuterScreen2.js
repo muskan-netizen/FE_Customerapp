@@ -106,7 +106,7 @@ export default function OuterScreen2({navigation}) {
               !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
             ) {
-              navigation.push(navigationStrings.DRAWER_ROUTES);
+              navigation.push(navigationStrings.TAB_ROUTES);
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
@@ -118,12 +118,12 @@ export default function OuterScreen2({navigation}) {
               !!res.data?.verify_details?.is_email_verified ||
               !!res.data?.verify_details?.is_phone_verified
             ) {
-              navigation.push(navigationStrings.DRAWER_ROUTES);
+              navigation.push(navigationStrings.TAB_ROUTES);
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
           } else {
-            navigation.push(navigationStrings.DRAWER_ROUTES);
+            navigation.push(navigationStrings.TAB_ROUTES);
           }
         }
         updateState({isLoading: false});
@@ -220,7 +220,7 @@ export default function OuterScreen2({navigation}) {
   const onGuestLogin = () => {
     actions.userLogout();
     getCartDetail();
-    navigation.push(navigationStrings.DRAWER_ROUTES);
+    navigation.push(navigationStrings.TAB_ROUTES);
   };
   return (
     <WrapperContainer

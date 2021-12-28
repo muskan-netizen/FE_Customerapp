@@ -176,6 +176,7 @@ export default {
   POPULARITY: 'الأكثر شعبية',
   MOST_PURCHASED: 'الأكثر شراء',
   HOME: 'الصفحة الرئيسية',
+  HOME_1: 'مسكن',
   HOLD_ON: 'انتظر',
   EXIT_WARNING: 'هل أنت متأكد من أنك تريد الخروج؟',
   YES: 'نعم',
@@ -617,7 +618,7 @@ export default {
   ITEMS: 'Items',
   SEARCH_WITHIN_MENU: 'Search within the menu',
   GET_STARTED: 'Get started',
-  OTHERS: 'Others',
+  OTHERS: 'الآخرين',
   UNKNOWN: 'Unknown',
   CONNECTION_ERROR: 'Connection Error',
   INTERNET_CONNECTION_ERROR:
@@ -727,4 +728,6 @@ export default {
   ORDERDELIVERED: 'Your order has been delivered',
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
   ORDER: 'طلب',
+  SELECT_VIA_MAP:"حدد عبر الخريطة",
+  HOUSE_NO:'رقم الدار'
 };
