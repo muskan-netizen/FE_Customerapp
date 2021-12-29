@@ -960,6 +960,9 @@ export default function Products({route, navigation}) {
     updateLocalQty = null,
     differentAddsOnsQty = null,
   ) => {
+    let quantityToIncreaseDecrease = !!item?.batch_count
+    ? Number(item?.batch_count)
+    : 1;
     if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
@@ -978,9 +981,7 @@ export default function Products({route, navigation}) {
     }
 
     tempQty = tempQty + 1;
-    let quantityToIncreaseDecrease = !!item?.batch_count
-      ? Number(item?.batch_count)
-      : 1;
+  
     if (type == 1) {
       quanitity = Number(isExistqty) + quantityToIncreaseDecrease;
     } else {
@@ -1015,8 +1016,8 @@ export default function Products({route, navigation}) {
           data['cart_id'] = isExistCartId;
           data['quantity'] = !!updateLocalQty
             ? type == 1
-              ? updateLocalQty + 1
-              : updateLocalQty - 1
+              ? updateLocalQty + quantityToIncreaseDecrease
+              : updateLocalQty - quantityToIncreaseDecrease
             : quanitity;
           data['cart_product_id'] = isExistproductId;
           data['type'] = dineInType;
