@@ -124,6 +124,7 @@ export default function ProductDetail({route, navigation}) {
       </View>
     );
   };
+  console.log(productDetailData, 'productDetailData');
 
   let plainHtml = productDetailData?.translation[0]?.body_html || null;
   //Naviagtion to specific screen
@@ -132,6 +133,14 @@ export default function ProductDetail({route, navigation}) {
     () => {
       navigation.navigate(screenName, {data});
     };
+
+  // useEffect(() => {
+  //   updateState({
+  //     productQuantityForCart: !!productDetailData?.minimum_order_count
+  //       ? productDetailData?.minimum_order_count
+  //       : 1,
+  //   });
+  // }, [productQuantityForCart]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -210,6 +219,9 @@ export default function ProductDetail({route, navigation}) {
           productTotalQuantity: res.data.products.variant[0].quantity,
           productVariantId: res.data.products.variant[0].id,
           productSku: res.data.products.sku,
+          productQuantityForCart: !!res.data.products?.minimum_order_count
+            ? Number(res.data.products?.minimum_order_count)
+            : 1,
         });
         if (
           res.data.products.variant_set.length &&
@@ -577,11 +589,19 @@ export default function ProductDetail({route, navigation}) {
   const myRef = useRef(null);
 
   const productIncrDecreamentForCart = (type) => {
+    let quantityToIncreaseDecrease = !!productDetailData?.batch_count
+      ? Number(productDetailData?.batch_count)
+      : 1;
     if (type == 2) {
-      if (productQuantityForCart <= 1) {
+      let limitOfMinimumQuantity = !!productDetailData?.minimum_order_count
+        ? Number(productDetailData?.minimum_order_count)
+        : 1;
+
+      if (productQuantityForCart <= limitOfMinimumQuantity) {
       } else {
         updateState({
-          productQuantityForCart: productQuantityForCart - 1,
+          productQuantityForCart:
+            productQuantityForCart - quantityToIncreaseDecrease,
         });
       }
     } else if (type == 1) {
@@ -589,7 +609,8 @@ export default function ProductDetail({route, navigation}) {
         showError(strings.MAXIMUM_LIMIT_REACHED);
       } else {
         updateState({
-          productQuantityForCart: productQuantityForCart + 1,
+          productQuantityForCart:
+            productQuantityForCart + quantityToIncreaseDecrease,
         });
       }
     }
@@ -1019,6 +1040,7 @@ export default function ProductDetail({route, navigation}) {
                                 ? MyDarkTheme.colors.text
                                 : colors.black,
                             }}>
+                            {/* {productQuantityForCart} */}
                             {productQuantityForCart}
                           </Text>
                           <TouchableOpacity

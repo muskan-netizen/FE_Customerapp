@@ -21,6 +21,7 @@ import {
 import colors from '../styles/colors';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {hitSlopProp} from '../styles/commonStyles';
+import strings from '../constants/lang';
 
 // create a component
 const DifferentAddOns = ({
@@ -201,7 +202,8 @@ const DifferentAddOns = ({
             fontSize: textScale(15),
             paddingHorizontal: moderateScale(12),
           }}>
-          Customizations for {selectedDiffAdsOnItem?.translation_title}
+          {strings.CUSTOMIZZATION_FOR}{' '}
+          {selectedDiffAdsOnItem?.translation_title}
         </Text>
         <View style={styles.horizontaLine} />
         <View style={{paddingHorizontal: moderateScale(12)}}>

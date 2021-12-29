@@ -730,6 +730,7 @@ export default {
   INVOICE: 'Invoice',
   PROOF: 'Proof',
   ORDER: 'طلب',
-  SELECT_VIA_MAP:"حدد عبر الخريطة",
-  HOUSE_NO:'رقم الدار'
+  SELECT_VIA_MAP: 'حدد عبر الخريطة',
+  HOUSE_NO: 'رقم الدار',
+  CUSTOMIZZATION_FOR: 'Customizations for',
 };

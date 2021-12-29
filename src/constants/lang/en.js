@@ -739,4 +739,5 @@ Amount`,
   PROOF: 'Proof',
   ORDER: 'Order',
   SELECT_VIA_MAP: 'Select via map',
+  CUSTOMIZZATION_FOR: 'Customizations for',
 };

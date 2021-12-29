@@ -638,7 +638,6 @@ export default function Products({route, navigation}) {
     }
   };
 
-  console.log("cloneSectionListcloneSectionList",cloneSectionList)
   /**********Get all list items by category id */
   const getAllProducts = () => {
     console.log('api hit getProductByCategoryId', data);
@@ -817,6 +816,7 @@ export default function Products({route, navigation}) {
 
   const addSingleItem = async (item, section = null) => {
     console.log('checking section >>>', section);
+    console.log(item, 'itemitemitemitem=>>>');
     // return;
     if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
@@ -880,7 +880,9 @@ export default function Products({route, navigation}) {
 
     let data = {};
     data['sku'] = item.sku;
-    data['quantity'] = 1;
+    data['quantity'] = !!item?.minimum_order_count
+      ? Number(item?.minimum_order_count)
+      : 1;
     data['product_variant_id'] = item?.variant[0]?.id;
     data['type'] = dine_In_Type;
     actions
@@ -898,7 +900,9 @@ export default function Products({route, navigation}) {
         if (!!section) {
           let updatedSection = section.data.map((x, xnx) => {
             if (x?.id == item?.id) {
-              x['qty'] = 1;
+              x['qty'] = !!item?.minimum_order_count
+                ? Number(item?.minimum_order_count)
+                : 1;
               x['cart_product_id'] = res.data.cart_product_id;
               return x;
             }
@@ -921,7 +925,9 @@ export default function Products({route, navigation}) {
             if (val.id == item.id) {
               return {
                 ...val,
-                qty: 1,
+                qty: !!item?.minimum_order_count
+                  ? Number(item?.minimum_order_count)
+                  : 1,
                 cart_product_id: res.data.cart_product_id,
                 isRemove: false,
               };
@@ -972,11 +978,21 @@ export default function Products({route, navigation}) {
     }
 
     tempQty = tempQty + 1;
-
+    let quantityToIncreaseDecrease = !!item?.batch_count
+      ? Number(item?.batch_count)
+      : 1;
     if (type == 1) {
-      quanitity = Number(isExistqty) + 1;
+      quanitity = Number(isExistqty) + quantityToIncreaseDecrease;
     } else {
-      quanitity = Number(isExistqty) - 1;
+      console.log(isExistqty, item?.minimum_order_count, 'kdhgkjdfkjgh');
+      if (
+        Number(isExistqty - item?.batch_count) <
+        Number(item?.minimum_order_count)
+      ) {
+        quanitity = 0;
+      } else {
+        quanitity = Number(isExistqty) - quantityToIncreaseDecrease;
+      }
     }
 
     updateLocally(
@@ -989,13 +1005,7 @@ export default function Products({route, navigation}) {
 
     timeOut = setTimeout(
       () => {
-        console.log('hit set time out functions');
-        // return;
         if (quanitity) {
-          console.log(
-            'differentAddsOnsQtydifferentAddsOnsQty',
-            differentAddsOnsQty,
-          );
           updateState({
             selectedItemID: itemToUpdate.id,
             btnLoader: true,
@@ -1273,6 +1283,8 @@ export default function Products({route, navigation}) {
       })
       .catch(errorMethod);
   };
+
+  console.log(repeatItems, 'repeatItemsrepeatItems');
 
   const onRepeat = async () => {
     // console.log("repeate items", repeatItems)
@@ -2767,6 +2779,9 @@ export default function Products({route, navigation}) {
     console.log('l++++offset', offset);
     return {length, offset, index};
   };
+
+  console.log(productListData, 'productListDataproductListData');
+
   return (
     <View
       style={{
