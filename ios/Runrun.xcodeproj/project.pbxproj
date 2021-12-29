@@ -74,7 +74,7 @@
 		6B793BD00583F295C9A45AAD /* libPods-SafeWalks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA28EE7CD4CB6F83FFCA2348 /* libPods-SafeWalks.a */; };
 		6C51557D3909B0DB064A1598 /* libPods-MovingWheelsDelivery.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51DCE454821B6181C93DAA6E /* libPods-MovingWheelsDelivery.a */; };
 		6C94D75D8D89293093ED1FA1 /* libPods-Zip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB2B7F60BFC7DBFEE8CEE83 /* libPods-Zip.a */; };
-		70C835865C154E8F33420FA7 /* libPods-RoyoOrder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E512F5B849F48ACA07BBC82C /* libPods-RoyoOrder.a */; };
+		70C835865C154E8F33420FA7 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		715D4B6D0FD9BC6E1EEE8286 /* libPods-ShooraFresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DCB0EE616B010C860C95CC /* libPods-ShooraFresh.a */; };
 		72CBB2E1C0F752A6F80C11AD /* libPods-eBOYO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0637E7108A7AA2B42D1811B5 /* libPods-eBOYO.a */; };
 		72F0AA6FFD429C97D1BFD06D /* libPods-Stonses.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FFF6BEFEF914FC4C761FD5 /* libPods-Stonses.a */; };
@@ -2866,7 +2866,7 @@
 		847F6E2427203FDA00C7A32F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847F6E2327203FDA00C7A32F /* Images.xcassets */; };
 		847F6F1A2720428800C7A32F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847F6F192720428700C7A32F /* GoogleService-Info.plist */; };
 		8480076A26CE20340014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		8480076B26CE20340014F500 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		8480076B26CE20340014F500 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8480076C26CE20340014F500 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8480076D26CE20340014F500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848007AD26CE260D0014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -3292,7 +3292,7 @@
 		848C3CBC27146B5000D492B5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848C3CBB27146B5000D492B5 /* Images.xcassets */; };
 		848C3D2C27146C4100D492B5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848C3D2B27146C4000D492B5 /* GoogleService-Info.plist */; };
 		848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		848CEF8126CE229D0077C918 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		848CEF8126CE229D0077C918 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		848CEF8226CE229D0077C918 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848CEF8326CE229D0077C918 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848D76B92748F70100FE87AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -7840,7 +7840,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70C835865C154E8F33420FA7 /* libPods-RoyoOrder.a in Frameworks */,
+				70C835865C154E8F33420FA7 /* (null) in Frameworks */,
 				BD768A359932CB8DAF52FC46 /* libPods-RoyoOrder.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -16001,6 +16001,7 @@
 				C0BA2E1E7F190AB0A9E19F2A /* [CP] Embed Pods Frameworks */,
 				DB9C85C186FDCFEF470F0E69 /* [CP] Copy Pods Resources */,
 				407AEA94D8550DC67632DCF0 /* [CP-User] [RNFB] Core Configuration */,
+				844FB5B9277C275300C3550F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -39314,6 +39315,23 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
+		844FB5B9277C275300C3550F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+		};
 		8452302E26F4BE1800DE21B8 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -57350,7 +57368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */,
-				848CEF8126CE229D0077C918 /* BuildFile in Sources */,
+				848CEF8126CE229D0077C918 /* (null) in Sources */,
 				848CEF8226CE229D0077C918 /* Royo.swift in Sources */,
 				848CEF8326CE229D0077C918 /* main.m in Sources */,
 			);
@@ -57424,7 +57442,7 @@
 				84FFFF2026D672E600F2B059 /* Royo.swift in Sources */,
 				84FFFF2126D672E600F2B059 /* main.m in Sources */,
 				8480076A26CE20340014F500 /* AppDelegate.m in Sources */,
-				8480076B26CE20340014F500 /* BuildFile in Sources */,
+				8480076B26CE20340014F500 /* (null) in Sources */,
 				8480076C26CE20340014F500 /* Royo.swift in Sources */,
 				8480076D26CE20340014F500 /* main.m in Sources */,
 			);
