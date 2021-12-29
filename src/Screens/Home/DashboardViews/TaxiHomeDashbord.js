@@ -176,8 +176,7 @@ export default function TaxiHomeDashbord({
 
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const newCategoryAry = [...appMainData?.categories];
-
+ 
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
