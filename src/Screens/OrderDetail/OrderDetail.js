@@ -191,7 +191,7 @@ export default function OrderDetail({ navigation, route }) {
         // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
-        console.log(res.data.vendors[0], 'order detail res===>');
+        console.log(res.data, 'order detail res===>');
         updateState({ isLoading: false });
         if (res?.data) {
           if (res?.data?.luxury_option_name !== strings.DELIVERY) {
@@ -1513,6 +1513,8 @@ export default function OrderDetail({ navigation, route }) {
     }
   };
 
+  console.log('order status+++',orderStatus)
+
   const onCenter = () => {
     mapRef.current.fitToCoordinates(
       [
@@ -1545,111 +1547,109 @@ export default function OrderDetail({ navigation, route }) {
     return (
       <View>
         {!!driverStatus?.order &&
-          driverStatus?.order.status == 'assigned' &&
-          orderStatus?.current_status?.id == 5 && (
-            <UserDetail
-              data={driverStatus}
-              type={strings.DRIVER}
-              containerStyle={{ paddingHorizontal: moderateScale(8) }}
-            />
-          )}
+          driverStatus?.order.status == 'assigned' && orderStatus.current_status.id == 5 ?
+          <UserDetail
+            data={driverStatus}
+            type={strings.DRIVER}
+            containerStyle={{ paddingHorizontal: moderateScale(8) }}
+          />
+          : null}
         {!!driverStatus &&
-          orderStatus?.current_status?.id == 5 &&
-          !!driverStatus?.agent_location?.lat && (
-            <View style={{ width: '100%', height: height / 2.2 }}>
-              <MapView
-                ref={mapRef}
-                style={StyleSheet.absoluteFillObject}
-                initialRegion={{
+          !!driverStatus?.agent_location?.lat && orderStatus.current_status.id == 5 ?
+          <View style={{ width: '100%', height: height / 2.2 }}>
+            <MapView
+              ref={mapRef}
+              style={StyleSheet.absoluteFillObject}
+              initialRegion={{
+                latitude: Number(driverStatus.tasks[0]?.latitude),
+                longitude: Number(driverStatus.tasks[0]?.longitude),
+                latitudeDelta: 0.0222,
+                longitudeDelta: 0.032,
+              }}
+              rotateEnabled={true}>
+              <MapViewDirections
+                origin={{
                   latitude: Number(driverStatus.tasks[0]?.latitude),
                   longitude: Number(driverStatus.tasks[0]?.longitude),
+                  // latitude: Number(driverStatus?.agent_location?.lat),
+                  // longitude: Number(driverStatus?.agent_location?.long),
                   latitudeDelta: 0.0222,
                   longitudeDelta: 0.032,
                 }}
-                rotateEnabled={true}>
-                <MapViewDirections
-                  origin={{
-                    // latitude: Number(driverStatus.tasks[0]?.latitude),
-                    // longitude: Number(driverStatus.tasks[0]?.longitude),
-                    latitude: Number(driverStatus?.agent_location?.lat),
-                    longitude: Number(driverStatus?.agent_location?.long),
-                    latitudeDelta: 0.0222,
-                    longitudeDelta: 0.032,
-                  }}
-                  destination={{
-                    latitude: Number(driverStatus.tasks[1]?.latitude),
-                    longitude: Number(driverStatus.tasks[1]?.longitude),
-                    latitudeDelta: 0.0222,
-                    longitudeDelta: 0.032,
-                  }}
-                  apikey={appData.profile?.preferences?.map_key}
-                  strokeWidth={3}
-                  strokeColor={themeColors.primary_color}
-                  optimizeWaypoints={true}
-                  onStart={(params) => { }}
-                  precision={'high'}
-                  timePrecision={'now'}
-                  mode={'DRIVING'}
-                  // maxZoomLevel={20}
-                  onReady={(result) => {
-                    // updateState({
-                    //   totalDistance: result.distance.toFixed(2),v
-                    //   totalDuration: result.duration.toFixed(2),
-                    // });
-                    mapRef.current.fitToCoordinates(result.coordinates, {
-                      edgePadding: {
-                        right: width / 20,
-                        bottom: height / 20,
-                        left: width / 20,
-                        top: height / 20,
-                      },
-                    });
-                  }}
-                  onError={(errorMessage) => {
-                    //
-                  }}
-                />
-                <Marker
-                  coordinate={{
-                    latitude: Number(driverStatus.tasks[1]?.latitude),
-                    longitude: Number(driverStatus.tasks[1]?.longitude),
-                    latitudeDelta: 0.0222,
-                    longitudeDelta: 0.032,
-                  }}
-                  image={imagePath.icDestination}
-                />
-                {!!driverStatus?.agent_location?.lat && (
-                  <Marker.Animated
-                    ref={markerRef}
-                    coordinate={state.animateDriver}
-                    flat>
-                    <Image
-                      source={imagePath.icScooter}
-                      style={{
-                        transform: [{ rotate: `${state.headingAngle + 110}deg` }],
-                      }}
-                    />
-                  </Marker.Animated>
-                )}
-              </MapView>
-              <TouchableOpacity
-                style={{
-                  position: 'absolute',
-                  bottom: 10,
-                  right: 10,
+                destination={{
+                  latitude: Number(driverStatus.tasks[1]?.latitude),
+                  longitude: Number(driverStatus.tasks[1]?.longitude),
+                  latitudeDelta: 0.0222,
+                  longitudeDelta: 0.032,
                 }}
-                onPress={onCenter}>
-                <Image
-                  style={{
-                    width: moderateScale(34),
-                    height: moderateScale(34),
-                    borderRadius: moderateScale(34 / 2),
-                  }}
-                  source={imagePath.mapNavigation}
-                />
-              </TouchableOpacity>
-            </View>
-          )}
+                apikey={appData.profile?.preferences?.map_key}
+                strokeWidth={3}
+                strokeColor={themeColors.primary_color}
+                optimizeWaypoints={true}
+                onStart={(params) => { }}
+                precision={'high'}
+                timePrecision={'now'}
+                mode={'DRIVING'}
+                // maxZoomLevel={20}
+                onReady={(result) => {
+                  // updateState({
+                  //   totalDistance: result.distance.toFixed(2),v
+                  //   totalDuration: result.duration.toFixed(2),
+                  // });
+                  mapRef.current.fitToCoordinates(result.coordinates, {
+                    edgePadding: {
+                      right: width / 20,
+                      bottom: height / 20,
+                      left: width / 20,
+                      top: height / 20,
+                    },
+                  });
+                }}
+                onError={(errorMessage) => {
+                  //
+                }}
+              />
+              <Marker
+                coordinate={{
+                  latitude: Number(driverStatus.tasks[1]?.latitude),
+                  longitude: Number(driverStatus.tasks[1]?.longitude),
+                  latitudeDelta: 0.0222,
+                  longitudeDelta: 0.032,
+                }}
+                image={imagePath.icDestination}
+              />
+              {!!driverStatus?.agent_location?.lat && (
+                <Marker.Animated
+                  ref={markerRef}
+                  coordinate={state.animateDriver}
+                  flat>
+                  <Image
+                    source={imagePath.icScooter}
+                    style={{
+                      transform: [{ rotate: `${state.headingAngle + 110}deg` }],
+                    }}
+                  />
+                </Marker.Animated>
+              )}
+            </MapView>
+            <TouchableOpacity
+              style={{
+                position: 'absolute',
+                bottom: 10,
+                right: 10,
+              }}
+              onPress={onCenter}>
+              <Image
+                style={{
+                  width: moderateScale(34),
+                  height: moderateScale(34),
+                  borderRadius: moderateScale(34 / 2),
+                }}
+                source={imagePath.mapNavigation}
+              />
+            </TouchableOpacity>
+          </View>
+          : null}
 
         {!!orderStatus && orderStatus?.current_status?.title == 'Placed' && (
           <View
