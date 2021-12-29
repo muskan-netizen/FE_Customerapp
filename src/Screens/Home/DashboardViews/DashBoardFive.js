@@ -48,6 +48,7 @@ import staticStrings from '../../../constants/staticStrings';
 import imagePath from '../../../constants/imagePath';
 import {appIds} from '../../../utils/constants/DynamicAppKeys';
 import DeviceInfo from 'react-native-device-info';
+import {Menu, MenuItem, MenuDivider} from 'react-native-material-menu';
 
 export default function DashBoardFive({
   handleRefresh = () => {},
@@ -57,6 +58,7 @@ export default function DashBoardFive({
   onPressCategory = () => {},
   navigation = {},
   toggleData = {},
+  onVendorFilterSeletion = () => {},
 }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -68,6 +70,7 @@ export default function DashBoardFive({
     newCategoryData: [],
     isVendorColumnList: false,
     vendorsData: [],
+    showMenu: false,
   });
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
@@ -81,7 +84,7 @@ export default function DashBoardFive({
     allCategory &&
     allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
   // const {bannerRef} = useRef();
-  const {slider1ActiveSlide, vendorsData} = state;
+  const {slider1ActiveSlide, vendorsData, showMenu} = state;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
 
@@ -101,6 +104,13 @@ export default function DashBoardFive({
   }, [appMainData?.vendors]);
 
   console.log('app main data', appMainData);
+
+  const onSelectedFilter = (selectedFilter) => {
+    updateState({
+      showMenu: false,
+    });
+    onVendorFilterSeletion(selectedFilter);
+  };
 
   const _renderItem = ({item, index}) => {
     return (
@@ -274,6 +284,7 @@ export default function DashBoardFive({
           }}>
           {type}
         </Text>
+
         {!!isViewAll && !!vendorsData && vendorsData.length > 1 && (
           <TouchableOpacity onPress={() => onViewAll(type, data)}>
             <Text style={styles.viewAllText}>{strings.VIEW_ALL}</Text>
@@ -418,17 +429,80 @@ export default function DashBoardFive({
         }>
         <Animatable.View animation={'fadeInUp'} delay={200}>
           {categoriesBanners()}
-          {vendorsData && !!vendorsData?.length && (
+          {
             <>
               <FlatList
                 scrollEnabled={false}
-                ListHeaderComponent={() =>
-                  listHeader(
-                    `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`,
-                    appMainData.vendors,
-                    true,
-                  )
-                }
+                ListHeaderComponent={() => (
+                  <View>
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: 'row',
+                        alignSelf: 'flex-end',
+                        paddingVertical: moderateScaleVertical(8),
+                        borderTopLeftRadius: moderateScale(5),
+                        borderBottomLeftRadius: moderateScale(5),
+                        borderWidth: 0.3,
+                        borderColor: colors.textGreyB,
+                        paddingLeft: moderateScale(5),
+                        paddingHorizontal: moderateScale(5),
+                      }}
+                      onPress={() =>
+                        updateState({
+                          showMenu: true,
+                        })
+                      }>
+                      <Image
+                        style={{
+                          height: moderateScaleVertical(16),
+                          width: moderateScale(16),
+                          resizeMode: 'contain',
+                        }}
+                        source={imagePath.sort}
+                      />
+                      <Text
+                        style={{
+                          fontSize: textScale(14),
+                          marginHorizontal: moderateScale(5),
+                          fontFamily: fontFamily.regular,
+                        }}>
+                        {'Relevance'}
+                      </Text>
+                      <View>
+                        <Menu
+                          style={{
+                            marginLeft: moderateScale(width / 1.6),
+                            marginTop: moderateScaleVertical(40),
+                          }}
+                          onRequestClose={() =>
+                            updateState({
+                              showMenu: false,
+                            })
+                          }
+                          visible={showMenu}>
+                          {[
+                            {id: 1, type: 'Open'},
+                            {id: 2, type: 'Close'},
+                            {id: 3, type: 'Best Seller'},
+                          ]?.map((item, index) => {
+                            return (
+                              <MenuItem onPress={() => onSelectedFilter(item)}>
+                                {item?.type}
+                              </MenuItem>
+                            );
+                          })}
+                        </Menu>
+                      </View>
+                    </TouchableOpacity>
+                    {vendorsData &&
+                      !!vendorsData?.length &&
+                      listHeader(
+                        `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`,
+                        appMainData.vendors,
+                        true,
+                      )}
+                  </View>
+                )}
                 showsVerticalScrollIndicator={false}
                 alwaysBounceVertical={true}
                 // ref={ref}
@@ -469,7 +543,7 @@ export default function DashBoardFive({
                 </View>
               )}
             </>
-          )}
+          }
 
           {businessType !== 'laundry' && (
             <View style={{}}>

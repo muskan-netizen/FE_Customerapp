@@ -72,6 +72,9 @@ export default function Home({route, navigation}) {
     saveAllUserAddress,
     isLoadingB: false,
     searchDataLoader: false,
+    openVendor: 0,
+    closeVendor: 0,
+    bestSeller: 0,
   });
 
   const {
@@ -84,6 +87,9 @@ export default function Home({route, navigation}) {
     saveAllUserAddress,
     isLoadingB,
     searchDataLoader,
+    openVendor,
+    closeVendor,
+    bestSeller,
   } = state;
 
   const {profile} = appData;
@@ -280,6 +286,12 @@ export default function Home({route, navigation}) {
           : location?.longitude,
       };
     }
+    let vendorFilterData = {
+      close_vendor: closeVendor,
+      open_vendor: openVendor,
+      best_vendor: bestSeller,
+    };
+    console.log(vendorFilterData, 'vendorFilterData');
     {
       selectedTabType
         ? actions
@@ -287,6 +299,7 @@ export default function Home({route, navigation}) {
               {
                 type: dineInType ? dineInType : dineInType,
                 ...latlongObj,
+                ...vendorFilterData,
               },
               {
                 code: appData?.profile?.code,
@@ -468,7 +481,7 @@ export default function Home({route, navigation}) {
     if (!saveAllUserAddress) {
       homeData();
     }
-  }, [location]);
+  }, [location, bestSeller, openVendor, closeVendor]);
 
   //On Press banner
   const bannerPress = (data) => {
@@ -640,6 +653,38 @@ export default function Home({route, navigation}) {
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
+
+  const onVendorFilterSeletion = (selectedFilter) => {
+    switch (selectedFilter?.id) {
+      case 1:
+        updateState({
+          isLoadingB: true,
+          openVendor: 1,
+          closeVendor: 0,
+          bestSeller: 0,
+        });
+        break;
+      case 2:
+        updateState({
+          isLoadingB: true,
+          openVendor: 0,
+          closeVendor: 1,
+          bestSeller: 0,
+        });
+        break;
+      case 3:
+        updateState({
+          isLoadingB: true,
+          openVendor: 0,
+          closeVendor: 0,
+          bestSeller: 1,
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
   const renderHomeScreen = () => {
     const case_ = 5;
     switch (appStyle?.homePageLayout) {
@@ -705,6 +750,7 @@ export default function Home({route, navigation}) {
               selcetedToggle={selcetedToggle}
               toggleData={appData}
               navigation={navigation}
+              onVendorFilterSeletion={onVendorFilterSeletion}
             />
           </>
         );

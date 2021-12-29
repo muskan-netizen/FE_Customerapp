@@ -70,6 +70,7 @@ const MarketCard3 = ({
     data.banner.image_path || data.image.image_path,
     '800/400',
   );
+
   return (
     <TouchableOpacity
       activeOpacity={1}
@@ -240,8 +241,6 @@ const MarketCard3 = ({
                     <Text numberOfLines={1} style={styles.distanceTimeStyle}>
                       {checkEvenOdd(data?.timeofLineOfSightDistance)}-
                       {checkEvenOdd(data?.timeofLineOfSightDistance + 5)}
-                      {''}
-                      {strings.MINS}
                     </Text>
                   </View>
                 )}
