@@ -5,7 +5,7 @@ platform :ios, '11.0'
 
 
 
-##RoyoOrder Target
+# ##RoyoOrder Target
 target 'RoyoOrder' do
   permissions_path = '../node_modules/react-native-permissions/ios'
   rn_maps_path = '../node_modules/react-native-maps'
@@ -2031,7 +2031,6 @@ target 'DoleyPharmacy' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-
 end
 
 #Bezalio Target
