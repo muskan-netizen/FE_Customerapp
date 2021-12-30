@@ -1547,7 +1547,7 @@ export default function OrderDetail({ navigation, route }) {
     return (
       <View>
         {!!driverStatus?.order &&
-          driverStatus?.order.status == 'assigned' && orderStatus.current_status.id == 5 ?
+          driverStatus?.order.status == 'assigned' && driverStatus?.agent_location?.lat ?
           <UserDetail
             data={driverStatus}
             type={strings.DRIVER}
@@ -1555,7 +1555,7 @@ export default function OrderDetail({ navigation, route }) {
           />
           : null}
         {!!driverStatus &&
-          !!driverStatus?.agent_location?.lat && orderStatus.current_status.id == 5 ?
+          !!driverStatus?.agent_location?.lat?
           <View style={{ width: '100%', height: height / 2.2 }}>
             <MapView
               ref={mapRef}
@@ -1608,6 +1608,15 @@ export default function OrderDetail({ navigation, route }) {
                 onError={(errorMessage) => {
                   //
                 }}
+              />
+               <Marker
+                coordinate={{
+                  latitude: Number(driverStatus.tasks[0]?.latitude),
+                  longitude: Number(driverStatus.tasks[0]?.longitude),
+                  latitudeDelta: 0.0222,
+                  longitudeDelta: 0.032,
+                }}
+                image={imagePath.icDestination}
               />
               <Marker
                 coordinate={{
