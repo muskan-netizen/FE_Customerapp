@@ -239,6 +239,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   }, []);
 
   useEffect(() => {
+    console.log('driverStatus', driverStatus);
     if (
       driverStatus != '' &&
       driverStatus != null &&
@@ -460,68 +461,78 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
     }
   };
 
-  const _ModalMainView = () => (
-    <View
-      style={{
-        height: height / 5,
-        backgroundColor: colors.white,
-      }}>
-      {!!isShowRating && (
-        <ScrollView horizontal>
-          {productInfo?.map((item, index) => {
-            return (
-              <View
-                style={{
-                  justifyContent: 'center',
-                }}>
-                <Image
+  const _ModalMainView = () => {
+    console.log('checking isShowRating', !!isShowRating);
+    return (
+      <View
+        style={{
+          height: height / 5,
+          backgroundColor: colors.white,
+          alignItems: 'center',
+          borderRadius: moderateScale(10),
+        }}>
+        <TouchableOpacity
+          onPress={_modalClose}
+          style={{position: 'absolute', right: 0, top: 0}}>
+          <Image source={imagePath.cross} />
+        </TouchableOpacity>
+        {!!isShowRating && (
+          <ScrollView horizontal>
+            {productInfo?.map((item, index) => {
+              return (
+                <View
                   style={{
-                    resizeMode: 'contain',
-                    height: moderateScale(60),
-                    width: moderateScale(60),
-                    alignSelf: 'center',
-                  }}
-                  source={{
-                    uri: getImageUrl(
-                      item.image.proxy_url,
-                      item.image.image_path,
-                      '150/150',
-                    ),
-                    priority: FastImage.priority.high,
-                  }}
-                />
-                <View style={{marginTop: moderateScaleVertical(10)}}>
-                  <StarRating
-                    disabled={false}
-                    maxStars={5}
-                    rating={item?.product_rating?.rating}
-                    selectedStar={(rating) => onStarRatingPress(item, rating)}
-                    fullStarColor={colors.ORANGE}
-                    starSize={30}
+                    justifyContent: 'center',
+                  }}>
+                  <Image
+                    style={{
+                      resizeMode: 'contain',
+                      height: moderateScale(60),
+                      width: moderateScale(60),
+                      alignSelf: 'center',
+                    }}
+                    source={{
+                      uri: getImageUrl(
+                        item.image.proxy_url,
+                        item.image.image_path,
+                        '150/150',
+                      ),
+                      priority: FastImage.priority.high,
+                    }}
                   />
+                  <View style={{marginTop: moderateScaleVertical(10)}}>
+                    <StarRating
+                      disabled={false}
+                      maxStars={5}
+                      rating={item?.product_rating?.rating}
+                      selectedStar={(rating) => onStarRatingPress(item, rating)}
+                      fullStarColor={colors.ORANGE}
+                      starSize={30}
+                    />
+                  </View>
+                  {!!item?.product_rating && (
+                    <TouchableOpacity
+                      hitSlop={{top: 100, bottom: 100, left: 125, right: 125}}
+                      onPress={() => rateYourOrder(item)}>
+                      <Text
+                        style={{
+                          marginVertical: moderateScaleVertical(20),
+                          textAlign: 'center',
+                          fontSize: moderateScale(14),
+                          fontFamily: fontFamily.medium,
+                        }}>
+                        {strings.WRITE_A_REVIEW}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
-                {!!item?.product_rating && (
-                  <TouchableOpacity
-                    hitSlop={{top: 100, bottom: 100, left: 125, right: 125}}
-                    onPress={() => rateYourOrder(item)}>
-                    <Text
-                      style={{
-                        marginVertical: moderateScaleVertical(20),
-                        textAlign: 'center',
-                        fontSize: moderateScale(14),
-                        fontFamily: fontFamily.medium,
-                      }}>
-                      {strings.WRITE_A_REVIEW}
-                    </Text>
-                  </TouchableOpacity>
-                )}
-              </View>
-            );
-          })}
-        </ScrollView>
-      )}
-    </View>
-  );
+              );
+            })}
+          </ScrollView>
+        )}
+      </View>
+    );
+  };
 
   //order detail View
   const _selectOrderDetailView = () => {
@@ -1021,65 +1032,68 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                     <View
                       style={{
                         flexDirection: 'row',
-                        alignItems: 'center',
+                        // alignItems: 'center',
                         justifyContent: 'space-between',
                       }}>
+                      {console.log('>>>>>>>>', orderFullDetail)}
                       {orderFullDetail.order_details.products.map((val) => {
                         return (
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              alignItems: 'center',
-                              marginBottom: moderateScaleVertical(8),
-                            }}>
+                          <View>
                             <View
                               style={{
                                 flexDirection: 'row',
+                                justifyContent: 'space-between',
                                 alignItems: 'center',
                               }}>
-                              <FastImage
-                                source={{
-                                  uri: getImageUrl(
-                                    val?.image.image_fit,
-                                    val?.image.image_path,
-                                    '100/100',
-                                  ),
-                                  priority: FastImage.priority.high,
-                                }}
+                              <View
                                 style={{
-                                  height: moderateScale(40),
-                                  width: moderateScale(40),
-                                  borderRadius: moderateScale(4),
-                                }}
-                              />
-
-                              <Text
-                                style={{
-                                  ...styles.statusText,
-                                  color: isDarkMode
-                                    ? MyDarkTheme.colors.text
-                                    : colors.black,
-                                  marginLeft: moderateScale(10),
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
                                 }}>
-                                {val?.product_name || ''}
-                              </Text>
-                            </View>
-                            {!!orderFullDetail?.avgrating &&
-                              Number(orderFullDetail?.avgrating) !== 0 && (
-                                <StarRating
-                                  disabled={true}
-                                  maxStars={5}
-                                  rating={orderFullDetail?.avgrating}
-                                  selectedStar={(rating) =>
-                                    onStarRatingPress(item, rating)
-                                  }
-                                  fullStarColor={'#DD812E'}
-                                  starSize={15}
+                                <FastImage
+                                  source={{
+                                    uri: getImageUrl(
+                                      val?.image.image_fit,
+                                      val?.image.image_path,
+                                      '100/100',
+                                    ),
+                                    priority: FastImage.priority.high,
+                                  }}
+                                  style={{
+                                    height: moderateScale(40),
+                                    width: moderateScale(40),
+                                    borderRadius: moderateScale(4),
+                                  }}
                                 />
-                              )}
 
-                            {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Text
+                                  style={{
+                                    ...styles.statusText,
+                                    color: isDarkMode
+                                      ? MyDarkTheme.colors.text
+                                      : colors.black,
+                                    marginLeft: moderateScale(10),
+                                    width: moderateScale(200),
+                                    // backgroundColor: 'red',
+                                  }}>
+                                  {val?.product_name || ''}
+                                </Text>
+                              </View>
+                              {!!orderFullDetail?.avgrating &&
+                                Number(orderFullDetail?.avgrating) !== 0 && (
+                                  <StarRating
+                                    disabled={true}
+                                    maxStars={5}
+                                    rating={orderFullDetail?.avgrating}
+                                    selectedStar={(rating) =>
+                                      onStarRatingPress(item, rating)
+                                    }
+                                    fullStarColor={'#DD812E'}
+                                    starSize={15}
+                                  />
+                                )}
+
+                              {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Image source={imagePath.startwo} />
                         <TouchableOpacity>
                           <Text style={{
@@ -1089,17 +1103,96 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                           }}>Add Rating</Text>
                         </TouchableOpacity>
                       </View> */}
+                            </View>
+                            <View
+                              style={{
+                                // flexDirection: 'row',
+                                // alignItems: 'center',
+                                justifyContent: 'space-between',
+                                marginBottom: moderateScaleVertical(8),
+                              }}>
+                              {orderFullDetail.order_details.products.length >
+                                0 && (
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    marginBottom: moderateScaleVertical(5),
+                                  }}>
+                                  <Text
+                                    style={{
+                                      ...styles.statusText,
+                                      color: isDarkMode
+                                        ? MyDarkTheme.colors.text
+                                        : colors.black,
+                                      // marginLeft: moderateScale(10),
+                                    }}>
+                                    {'No. of items:'}
+                                  </Text>
+                                  <Text
+                                    style={{
+                                      ...styles.statusText,
+                                      color: isDarkMode
+                                        ? MyDarkTheme.colors.text
+                                        : colors.black,
+                                      marginLeft: moderateScale(10),
+                                    }}>
+                                    {
+                                      orderFullDetail.order_details.products
+                                        .length
+                                    }
+                                  </Text>
+                                </View>
+                              )}
+                              {val.user_product_order_form &&
+                                JSON.parse(val.user_product_order_form).length >
+                                  0 &&
+                                JSON.parse(val.user_product_order_form).map(
+                                  (el) => {
+                                    return (
+                                      <View
+                                        style={{
+                                          flexDirection: 'row',
+                                        }}>
+                                        <Text
+                                          style={{
+                                            ...styles.statusText,
+                                            color: isDarkMode
+                                              ? MyDarkTheme.colors.text
+                                              : colors.black,
+                                            // marginLeft: moderateScale(10),
+                                          }}>
+                                          {el.question}:
+                                        </Text>
+                                        <Text
+                                          style={{
+                                            ...styles.statusText,
+                                            color: isDarkMode
+                                              ? MyDarkTheme.colors.text
+                                              : colors.black,
+                                            marginLeft: moderateScale(10),
+                                          }}>
+                                          {el.answer || 'NA'}
+                                        </Text>
+                                      </View>
+                                    );
+                                  },
+                                )}
+                            </View>
                           </View>
                         );
                       })}
-                      <View style={{flexDirection: 'row'}}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          marginTop: moderateScaleVertical(10),
+                        }}>
                         <Text
                           style={{
                             ...styles.statusText,
                             color: isDarkMode
                               ? MyDarkTheme.colors.text
                               : colors.black,
-                            marginLeft: moderateScale(10),
+                            // marginLeft: moderateScale(10),
                           }}>
                           {`${orderDetail?.color} ,`}
                         </Text>
@@ -1115,6 +1208,14 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
                         </Text>
                       </View>
                     </View>
+                    {/* <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}>
+                      {console.log(JSON.parse(val.user_product_order_form))}
+                    </View> */}
                   </View>
                 ) : (
                   <View style={{marginBottom: moderateScaleVertical(24)}} />
@@ -1200,11 +1301,19 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
           </BottomSheetScrollView>
         </BottomSheet>
       </View>
-      <BottomViewModal
-        show={isVisible}
+      {/* <BottomViewModal
+        show={true}
         mainContainView={_ModalMainView}
         closeModal={_modalClose}
-      />
+      /> */}
+      {console.log('isVisibleisVisibleisVisible', isVisible)}
+      <Modal
+        isVisible={isVisible}
+        onBackdropPress={_modalClose}
+        animationIn="zoomIn"
+        animationOut="zoomOut">
+        {_ModalMainView()}
+      </Modal>
       <Modal
         isVisible={showModal}
         onBackdropPress={() => updateState({showModal: false})}

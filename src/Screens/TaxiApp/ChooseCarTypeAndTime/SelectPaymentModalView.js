@@ -752,7 +752,7 @@ export default function SelectPaymentModalView({
                       fontFamily: fontFamily.medium,
                       color: isDarkMode ? colors.white : colors.blackC,
                     }}>
-                    {item?.translations[0]?.name}
+                    {item?.translations[0]?.name} :-
                   </Text>
                 </View>
                 <View
