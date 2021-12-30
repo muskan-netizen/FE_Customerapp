@@ -102,4 +102,7 @@ export default {
   CART_SCREEN: 'cartScreen',
   SIMPLIFY: 'simplify',
   SQUARE: 'square',
+  INVENTORY: 'inventory',
+  UDHAARLEDGER: 'udhaarLedger',
+  SALES_EXPENSES: 'salesExpenses',
 };

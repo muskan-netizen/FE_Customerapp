@@ -740,4 +740,7 @@ Amount`,
   ORDER: 'Order',
   SELECT_VIA_MAP: 'Select via map',
   CUSTOMIZZATION_FOR: 'Customizations for',
+  INVENTORY:"Inventory",
+  UDHAARLEDGER:"Udhaar ledger",
+  SALES_EXPENSES:"Sales / Expenses"
 };

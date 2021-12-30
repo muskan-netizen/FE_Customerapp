@@ -52,6 +52,9 @@ import {
   Paylink,
   Yoco,
   AllinonePyments,
+  Inventory,
+  UdhaarLedger,
+  SalesExpenses,
 } from '../Screens';
 import AccountTemplateFive from '../Screens/Account/AccountTemplateFive';
 import AccountTemplateFour from '../Screens/Account/AccountTemplateFour';
@@ -310,6 +313,21 @@ export default function ({navigation}) {
       <Stack.Screen
         name={navigationStrings.ALL_IN_ONE_PAYMENTS}
         component={AllinonePyments}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.INVENTORY}
+        component={Inventory}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.UDHAARLEDGER}
+        component={UdhaarLedger}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.SALES_EXPENSES}
+        component={SalesExpenses}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
