@@ -142,6 +142,7 @@ export default function TaxiHomeDashbord({
   let findCabCategory = appMainData?.categories?.find(
     (x) => x?.redirect_to == staticStrings.PICKUPANDDELIEVRY,
   );
+
   console.log(findCabCategory, 'findCabCategory');
   const {appData, themeColors, appStyle, languages} = useSelector(
     (state) => state?.initBoot,
@@ -176,7 +177,6 @@ export default function TaxiHomeDashbord({
 
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
-  const newCategoryAry = [...appMainData?.categories];
 
   const moveToNewScreen =
     (screenName, data = {}) =>
