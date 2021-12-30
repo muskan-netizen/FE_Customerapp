@@ -1519,8 +1519,8 @@ export default function OrderDetail({ navigation, route }) {
     mapRef.current.fitToCoordinates(
       [
         {
-          latitude: Number(driverStatus?.agent_location?.lat),
-          longitude: Number(driverStatus?.agent_location?.long),
+          latitude: Number(driverStatus.tasks[0]?.latitude),
+          longitude: Number(driverStatus.tasks[0]?.longitude),
         },
         {
           latitude: Number(driverStatus.tasks[1]?.latitude),
