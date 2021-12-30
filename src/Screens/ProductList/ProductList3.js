@@ -961,8 +961,8 @@ export default function Products({route, navigation}) {
     differentAddsOnsQty = null,
   ) => {
     let quantityToIncreaseDecrease = !!item?.batch_count
-    ? Number(item?.batch_count)
-    : 1;
+      ? Number(item?.batch_count)
+      : 1;
     if (categoryInfo?.is_vendor_closed && !categoryInfo?.show_slot) {
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
@@ -981,7 +981,7 @@ export default function Products({route, navigation}) {
     }
 
     tempQty = tempQty + 1;
-  
+
     if (type == 1) {
       quanitity = Number(isExistqty) + quantityToIncreaseDecrease;
     } else {
@@ -1499,12 +1499,13 @@ export default function Products({route, navigation}) {
     index,
     type,
   ) => {
+    let batchCount= !!item?.batch_count?item?.batch_count:1
     let differentAddsOnsQty = 0;
     let cloneArr = differentAddsOns;
     let updateLocallyAddOns = cloneArr.map((val) => {
       differentAddsOnsQty = differentAddsOnsQty + val.quantity;
       if (cartId == val.id) {
-        return {...val, quantity: type == 1 ? qty + 1 : qty - 1};
+        return {...val, quantity: type == 1 ? qty + batchCount : qty - batchCount};
       }
       return val;
     });
@@ -1517,7 +1518,7 @@ export default function Products({route, navigation}) {
       index,
       type,
       null,
-      type == 1 ? differentAddsOnsQty + 1 : differentAddsOnsQty - 1, //send updated total quantity
+      type == 1 ? differentAddsOnsQty + batchCount : differentAddsOnsQty - batchCount, //send updated total quantity
     );
     updateState({differentAddsOns: updateLocallyAddOns});
   };
@@ -2705,6 +2706,7 @@ export default function Products({route, navigation}) {
     );
   };
   const renderSectionItem = ({item, index, section}) => {
+    console.log(item, 'itemitemitemInSec');
     return (
       <View>
         <ProductCard3

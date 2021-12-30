@@ -55,6 +55,10 @@ const DifferentAddOns = ({
     setSelectedItem(item);
 
     var totalProductQty = 0;
+    var batchCount = !!item?.product?.batch_count
+      ? item?.product?.batch_count
+      : 1;
+
     if (!!storeLocalQty) {
       totalProductQty = storeLocalQty;
     } else {
@@ -75,7 +79,7 @@ const DifferentAddOns = ({
       selectedDiffAdsOnSection,
       index,
       type,
-      type == 1 ? totalProductQty + 1 : totalProductQty - 1, //update total quantity
+      type == 1 ? totalProductQty + batchCount : totalProductQty - batchCount, //update total quantity
     );
   };
 
