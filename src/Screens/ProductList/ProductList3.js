@@ -86,6 +86,7 @@ let activeIdx = 0;
 
 export default function Products({route, navigation}) {
   const bottomSheetRef = useRef(null);
+  console.log(route.params, 'route.params');
   const {data} = route.params;
   // console.log(data, 'datadatadata');
   const routeData = data?.fetchOffers;
@@ -293,7 +294,8 @@ export default function Products({route, navigation}) {
     const unsubscribe = navigation.addListener('focus', () => {
       updateState({pageNo: 1});
       getAllListItems();
-      console.log('checking route params >>>>', productListId);
+      console.log('checking route params >>>>1', productListId);
+      console.log(routeData, 'routeData');
       if (productListId?.vendor && routeData) {
         fetchOffers();
       }
@@ -591,6 +593,7 @@ export default function Products({route, navigation}) {
             filterData: res?.data?.filterData,
             vendorCategories: res?.data?.categories,
           });
+          console.log(filterArray, 'filterArrayfilterArray');
           fetchTags(filterArray);
         } else {
           // console.log('get product list by vendor id >>>> ', res);
@@ -622,8 +625,10 @@ export default function Products({route, navigation}) {
       let tagsArr = [];
       filterArray.forEach((el) => {
         // console.log('checking data for tags >>>', el);
-        el.data.forEach((data) => {
-          tagsArr.push(...data.tags);
+        el.data.forEach((data_) => {
+          if (data_ && data_.tags) {
+            tagsArr.push(...data_.tags);
+          }
         });
       });
       tagsArr = _.uniqBy(tagsArr, 'tag_id');
@@ -1689,6 +1694,7 @@ export default function Products({route, navigation}) {
 
   const fetchOffers = () => {
     console.log('offerlist api', productListId);
+
     // return;
     let data = {};
     // data['vendor_id'] = 2;
@@ -1707,8 +1713,8 @@ export default function Products({route, navigation}) {
         if (res && res.data) {
           updateState({offerList: res.data});
         }
-      })
-      .catch(errorMethod);
+      });
+    // .catch(errorMethod);
   };
 
   const RenderMenuView = () => {
@@ -1980,6 +1986,7 @@ export default function Products({route, navigation}) {
                         }}>
                         {data?.name || categoryInfo?.name || ''}
                       </Text>
+
                       {!!categoryInfo &&
                         !!categoryInfo?.product_avg_average_rating && (
                           <View

@@ -184,6 +184,9 @@ const shortCodes = {
   skoop: 'ff2327',
   kudhyo: '300420',
   bharatMove: 'e2ec5e',
+  sofia: 'e2ef1a',
+  mml: '348045',
+  bimol: '94fc5b',
 };
 
 const appIds = {
@@ -918,6 +921,18 @@ const appIds = {
   bharatMove: Platform.select({
     ios: 'com.bharatMove',
     android: 'com.bharatMove',
+  }),
+  sofia: Platform.select({
+    ios: 'com.app.sofia',
+    android: 'com.app.sofia',
+  }),
+  mml: Platform.select({
+    ios: 'com.mml',
+    android: 'com.mml',
+  }),
+  bimol: Platform.select({
+    ios: 'com.bimol',
+    android: 'com.bimol',
   }),
 };
 
