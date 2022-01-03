@@ -515,8 +515,8 @@ const appIds = {
     android: 'com.totum4U',
   }),
   hmc: Platform.select({
-    ios: 'com.hmc.customer',
-    android: 'com.hmc',
+    ios: 'com.eatkareem.hmchalal',
+    android: 'com.eatkareem.hmchalal',
   }),
   groupy: Platform.select({
     ios: 'com.groupy',

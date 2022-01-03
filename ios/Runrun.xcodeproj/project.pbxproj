@@ -2705,6 +2705,7 @@
 		8479ECFA273FE9590090FB2A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8479ECF9273FE9590090FB2A /* GoogleService-Info.plist */; };
 		847AFDAD2771DB9900866398 /* Runrun(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 844804A92653C92A0050AA67 /* Runrun(Production).xcconfig */; };
 		847C01FC2763561300A96CE8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847C01FB2763561200A96CE8 /* GoogleService-Info.plist */; };
+		847C0529277DCE2E00DC8E49 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847C0528277DCE2D00DC8E49 /* GoogleService-Info.plist */; };
 		847CF671276337A000A96CE8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		847CF672276337A000A96CE8 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		847CF673276337A000A96CE8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -2786,7 +2787,7 @@
 		847F6E2427203FDA00C7A32F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847F6E2327203FDA00C7A32F /* Images.xcassets */; };
 		847F6F1A2720428800C7A32F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 847F6F192720428700C7A32F /* GoogleService-Info.plist */; };
 		8480076A26CE20340014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		8480076B26CE20340014F500 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		8480076B26CE20340014F500 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8480076C26CE20340014F500 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		8480076D26CE20340014F500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848007AD26CE260D0014F500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -3212,7 +3213,7 @@
 		848C3CBC27146B5000D492B5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848C3CBB27146B5000D492B5 /* Images.xcassets */; };
 		848C3D2C27146C4100D492B5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 848C3D2B27146C4000D492B5 /* GoogleService-Info.plist */; };
 		848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		848CEF8126CE229D0077C918 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		848CEF8126CE229D0077C918 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		848CEF8226CE229D0077C918 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		848CEF8326CE229D0077C918 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		848D76B92748F70100FE87AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -3372,7 +3373,6 @@
 		8490339026EB761000E4AE5A /* HMC(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8490338F26EB761000E4AE5A /* HMC(Development).xcconfig */; };
 		8490343E26EB762D00E4AE5A /* HMC(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8490343D26EB762D00E4AE5A /* HMC(Production).xcconfig */; };
 		8490344026EB763E00E4AE5A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8490343F26EB763D00E4AE5A /* Images.xcassets */; };
-		8490354726EB7A0500E4AE5A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8490354626EB7A0400E4AE5A /* GoogleService-Info.plist */; };
 		849036B226EB855500E4AE5A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		849036B326EB855500E4AE5A /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		849036B426EB855500E4AE5A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -6403,6 +6403,7 @@
 		8479ECF9273FE9590090FB2A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8479EEB7273FEA710090FB2A /* ShooraFresh.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShooraFresh.entitlements; sourceTree = "<group>"; };
 		847C01FB2763561200A96CE8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		847C0528277DCE2D00DC8E49 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		847C7BFD27578F080052560B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		847CF6B2276337A000A96CE8 /* Sponge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sponge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		847CF9792763387900A96CE8 /* Sponge(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Sponge(Development).xcconfig"; sourceTree = "<group>"; };
@@ -6549,7 +6550,6 @@
 		8490343D26EB762D00E4AE5A /* HMC(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "HMC(Production).xcconfig"; sourceTree = "<group>"; };
 		8490343F26EB763D00E4AE5A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8490349926EB790B00E4AE5A /* HMC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HMC.entitlements; sourceTree = "<group>"; };
-		8490354626EB7A0400E4AE5A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8490370026EB855600E4AE5A /* Groupy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Groupy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8490385F26EB863C00E4AE5A /* Groupy(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Groupy(Development).xcconfig"; sourceTree = "<group>"; };
 		8490390F26EB865C00E4AE5A /* Groupy(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Groupy(Production).xcconfig"; sourceTree = "<group>"; };
@@ -11260,7 +11260,7 @@
 		8490338E26EB758A00E4AE5A /* HMC */ = {
 			isa = PBXGroup;
 			children = (
-				8490354626EB7A0400E4AE5A /* GoogleService-Info.plist */,
+				847C0528277DCE2D00DC8E49 /* GoogleService-Info.plist */,
 				8490338F26EB761000E4AE5A /* HMC(Development).xcconfig */,
 				8490343D26EB762D00E4AE5A /* HMC(Production).xcconfig */,
 				8490343F26EB763D00E4AE5A /* Images.xcassets */,
@@ -21373,6 +21373,7 @@
 				8490344026EB763E00E4AE5A /* Images.xcassets in Resources */,
 				84D1CE2F2703529D00C05E36 /* notification.wav in Resources */,
 				849032CB26EB749E00E4AE5A /* SFProText-Medium.ttf in Resources */,
+				847C0529277DCE2E00DC8E49 /* GoogleService-Info.plist in Resources */,
 				849032CE26EB749E00E4AE5A /* Plists in Resources */,
 				849032CF26EB749E00E4AE5A /* Futura-Normal.ttf in Resources */,
 				849032D026EB749E00E4AE5A /* Eina02-Bold.ttf in Resources */,
@@ -21383,7 +21384,6 @@
 				849032D326EB749E00E4AE5A /* FuturaBT-Heavy.ttf in Resources */,
 				8496BC5A26F1B862001AAB4C /* Metropolis-Regular.otf in Resources */,
 				849032D426EB749E00E4AE5A /* CircularStd-Bold.ttf in Resources */,
-				8490354726EB7A0500E4AE5A /* GoogleService-Info.plist in Resources */,
 				849032D726EB749E00E4AE5A /* SFProText-Bold.ttf in Resources */,
 				849032D826EB749E00E4AE5A /* Eina02-SemiBold.ttf in Resources */,
 			);
@@ -63509,7 +63509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848CEF8026CE229D0077C918 /* AppDelegate.m in Sources */,
-				848CEF8126CE229D0077C918 /* BuildFile in Sources */,
+				848CEF8126CE229D0077C918 /* (null) in Sources */,
 				848CEF8226CE229D0077C918 /* Royo.swift in Sources */,
 				848CEF8326CE229D0077C918 /* main.m in Sources */,
 			);
@@ -63583,7 +63583,7 @@
 				84FFFF2026D672E600F2B059 /* Royo.swift in Sources */,
 				84FFFF2126D672E600F2B059 /* main.m in Sources */,
 				8480076A26CE20340014F500 /* AppDelegate.m in Sources */,
-				8480076B26CE20340014F500 /* BuildFile in Sources */,
+				8480076B26CE20340014F500 /* (null) in Sources */,
 				8480076C26CE20340014F500 /* Royo.swift in Sources */,
 				8480076D26CE20340014F500 /* main.m in Sources */,
 			);
@@ -71574,7 +71574,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				DEVELOPMENT_TEAM = SZX8462NHS;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
