@@ -1217,6 +1217,12 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+          case appIds.pinkydeli:
+          updateState({
+            shortCode: shortCodes.pinkydeli,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);

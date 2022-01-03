@@ -187,6 +187,7 @@ const shortCodes = {
   sofia: 'e2ef1a',
   mml: '348045',
   bimol: '94fc5b',
+  pinkydeli: '66c095',
 };
 
 const appIds = {
@@ -933,6 +934,10 @@ const appIds = {
   bimol: Platform.select({
     ios: 'com.bimol',
     android: 'com.bimol',
+  }),
+  pinkydeli: Platform.select({
+    ios: 'com.app.pinkydeli',
+    android: 'com.codebrew.pinkydeli',
   }),
 };
 
