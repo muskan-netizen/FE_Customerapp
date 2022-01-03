@@ -258,7 +258,14 @@ const RoyoHome = (props) => {
     labels: labels,
     datasets: [
       {
-        data: datasets,
+        data: [
+          Math.random() * 100,
+          Math.random() * 100,
+          Math.random() * 100,
+          Math.random() * 100,
+          Math.random() * 100,
+          Math.random() * 100,
+        ],
         colors: [
           (opacity = 1) => `rgba(4, 14, 22, ${opacity})`,
           (opacity = 1) => `rgba(74, 144, 242, ${opacity})`,

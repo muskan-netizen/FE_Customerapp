@@ -259,7 +259,7 @@ const RoyoOrder = (props) => {
       <View style={styles.container}>
         <MultiScreen
           tabTextStyle={{marginTop: moderateScaleVertical(0)}}
-          screenName={['new', 'confirmed', 'cancelled', 'completed']}
+          screenName={['New', 'Confirmed', 'Cancelled', 'Completed']}
           selectedScreen={(index) => selectedOrder(index)}
           selectedScreenIndex={activeIndex}
         />
