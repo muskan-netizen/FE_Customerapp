@@ -447,7 +447,7 @@ const OrderCardVendorComponent2 = ({
                 </Text>
               </View>
             </View>
-            {selectedTab &&
+            {/* {selectedTab &&
             data?.dispatch_traking_url &&
             data?.product_details[0]?.category_type !=
               staticStrings.PICKUPANDDELIEVRY &&
@@ -471,7 +471,7 @@ const OrderCardVendorComponent2 = ({
                   </Text>
                 </View>
               </TouchableOpacity>
-            ) : null}
+            ) : null} */}
 
             {selectedTab &&
             (selectedTab != strings.ACTIVE_ORDERS ||
