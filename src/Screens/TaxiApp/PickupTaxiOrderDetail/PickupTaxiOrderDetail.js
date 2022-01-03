@@ -1266,7 +1266,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                                               : colors.black,
                                             // marginLeft: moderateScale(10),
                                           }}>
-                                          {el.question}:
+                                          {el?.question}:
                                         </Text>
                                         <Text
                                           style={{
@@ -1276,7 +1276,7 @@ export default function PickupTaxiOrderDetail({ navigation, route }) {
                                               : colors.black,
                                             marginLeft: moderateScale(10),
                                           }}>
-                                          {el.answer || 'NA'}
+                                          {el?.answer || 'NA'}
                                         </Text>
                                       </View>
                                     );
