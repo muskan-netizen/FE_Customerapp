@@ -1034,11 +1034,11 @@ android {
          }
          hmc{
             dimension "appType"
-            versionCode 1
-            versionName "1.0"
+            versionCode 136
+            versionName "2.4.9"
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            applicationId 'com.hmc'
+            applicationId 'com.eatkareem.hmchalal'
             resValue "string", "app_name", "HMC"
             resValue "string", "host_name", ""
          }
