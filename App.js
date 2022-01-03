@@ -114,7 +114,6 @@ const App = () => {
 
     AsyncStorage.getItem('autoConnectEnabled').then((res) => {
       if (res !== null) {
-        console.log('hit connect funcions >>>>');
         ConnectBTFunction();
       }
     });
