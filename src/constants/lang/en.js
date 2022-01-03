@@ -736,4 +736,6 @@ Amount`,
   ORDERDELIVERED: 'Your order has been delivered',
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
   ORDER: 'Order',
+  RELEVANCE: 'Relevance',
+  BESTSELLER: 'Best Seller',
 };

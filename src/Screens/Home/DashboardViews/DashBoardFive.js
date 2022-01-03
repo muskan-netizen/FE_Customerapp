@@ -48,7 +48,12 @@ import staticStrings from '../../../constants/staticStrings';
 import imagePath from '../../../constants/imagePath';
 import {appIds} from '../../../utils/constants/DynamicAppKeys';
 import DeviceInfo from 'react-native-device-info';
-import {Menu, MenuItem, MenuDivider} from 'react-native-material-menu';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 
 export default function DashBoardFive({
   handleRefresh = () => {},
@@ -71,6 +76,11 @@ export default function DashBoardFive({
     isVendorColumnList: false,
     vendorsData: [],
     showMenu: false,
+    allFilters: [
+      {id: 1, type: strings.OPEN},
+      {id: 2, type: strings.CLOSE},
+      {id: 3, type: strings.BESTSELLER},
+    ],
   });
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
@@ -84,7 +94,7 @@ export default function DashBoardFive({
     allCategory &&
     allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
   // const {bannerRef} = useRef();
-  const {slider1ActiveSlide, vendorsData, showMenu} = state;
+  const {slider1ActiveSlide, vendorsData, showMenu, allFilters} = state;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
 
@@ -402,11 +412,6 @@ export default function DashBoardFive({
     );
   }
 
-  console.log(
-    'themeColors.primary_colorthemeColors.primary_color',
-    themeColors.primary_color,
-  );
-
   return (
     <View style={{flex: 1}}>
       {/* <SearchBar2
@@ -435,65 +440,58 @@ export default function DashBoardFive({
                 scrollEnabled={false}
                 ListHeaderComponent={() => (
                   <View>
-                    <TouchableOpacity
-                      style={{
-                        flexDirection: 'row',
-                        alignSelf: 'flex-end',
-                        paddingVertical: moderateScaleVertical(8),
-                        borderTopLeftRadius: moderateScale(5),
-                        borderBottomLeftRadius: moderateScale(5),
-                        borderWidth: 0.3,
-                        borderColor: colors.textGreyB,
-                        paddingLeft: moderateScale(5),
-                        paddingHorizontal: moderateScale(5),
-                      }}
-                      onPress={() =>
-                        updateState({
-                          showMenu: true,
-                        })
-                      }>
-                      <Image
-                        style={{
-                          height: moderateScaleVertical(16),
-                          width: moderateScale(16),
-                          resizeMode: 'contain',
-                        }}
-                        source={imagePath.sort}
-                      />
-                      <Text
-                        style={{
-                          fontSize: textScale(14),
-                          marginHorizontal: moderateScale(5),
-                          fontFamily: fontFamily.regular,
-                        }}>
-                        {'Relevance'}
-                      </Text>
-                      <View>
-                        <Menu
+                    <Menu style={{alignSelf: 'flex-end'}}>
+                      <MenuTrigger>
+                        <View
                           style={{
-                            marginLeft: moderateScale(width / 1.6),
-                            marginTop: moderateScaleVertical(40),
-                          }}
-                          onRequestClose={() =>
-                            updateState({
-                              showMenu: false,
-                            })
-                          }
-                          visible={showMenu}>
-                          {[
-                            {id: 1, type: 'Open'},
-                            {id: 2, type: 'Close'},
-                            {id: 3, type: 'Best Seller'},
-                          ]?.map((item, index) => {
-                            return (
-                              <MenuItem onPress={() => onSelectedFilter(item)}>
-                                {item?.type}
-                              </MenuItem>
-                            );
-                          })}
-                        </Menu>
-                      </View>
-                    </TouchableOpacity>
+                            flexDirection: 'row',
+                            alignSelf: 'flex-end',
+                            paddingVertical: moderateScaleVertical(8),
+                            borderTopLeftRadius: moderateScale(5),
+                            borderBottomLeftRadius: moderateScale(5),
+                            borderWidth: 0.3,
+                            borderColor: colors.textGreyB,
+                            paddingLeft: moderateScale(5),
+                            paddingHorizontal: moderateScale(5),
+                            marginTop: moderateScaleVertical(8),
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <Image
+                            style={{
+                              height: moderateScaleVertical(16),
+                              width: moderateScale(16),
+                              resizeMode: 'contain',
+                            }}
+                            source={imagePath.sort}
+                          />
+                          <Text
+                            style={{
+                              fontSize: textScale(14),
+                              marginHorizontal: moderateScale(5),
+                              fontFamily: fontFamily.regular,
+                            }}>
+                            {strings.RELEVANCE}
+                          </Text>
+                        </View>
+                      </MenuTrigger>
+                      <MenuOptions
+                        customStyles={{
+                          optionsContainer: {
+                            marginTop: moderateScaleVertical(50),
+                          },
+                        }}>
+                        {allFilters?.map((item, index) => {
+                          return (
+                            <MenuOption
+                              onSelect={() => onSelectedFilter(item)}
+                              text={item?.type}
+                              style={{marginVertical: moderateScaleVertical(5)}}
+                            />
+                          );
+                        })}
+                      </MenuOptions>
+                    </Menu>
                     {vendorsData &&
                       !!vendorsData?.length &&
                       listHeader(

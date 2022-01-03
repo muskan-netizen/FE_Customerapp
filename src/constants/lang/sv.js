@@ -707,4 +707,6 @@ export default {
   MYRIDES: 'My Rides',
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
   ORDER: 'Order',
+  RELEVANCE: 'Relevance',
+  BESTSELLER: 'Best Seller',
 };
