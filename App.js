@@ -73,7 +73,7 @@ const App = () => {
       var data = deepLinkUrl?.split('=').pop();
       let removePer = decodeURI(data);
       let sendingData = JSON.parse(removePer);
-      console.log(sendingData, 'split url');
+
       // return;
       setTimeout(() => {
         NavigationService.navigate(navigationStrings.TAB_ROUTES, {

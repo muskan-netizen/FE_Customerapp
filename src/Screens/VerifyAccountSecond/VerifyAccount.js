@@ -217,7 +217,7 @@ export default function VerifyAccountSecond({navigation, route}) {
               ) {
                 navigation.goBack();
               } else {
-                navigation.push(navigationStrings.DRAWER_ROUTES);
+                navigation.push(navigationStrings.TAB_ROUTES);
               }
             }
           } else if (res?.data?.client_preference?.verify_email) {
@@ -229,7 +229,7 @@ export default function VerifyAccountSecond({navigation, route}) {
               ) {
                 navigation.goBack();
               } else {
-                navigation.push(navigationStrings.DRAWER_ROUTES);
+                navigation.push(navigationStrings.TAB_ROUTES);
               }
             }
           } else if (res?.data?.client_preference?.verify_phone) {
@@ -241,7 +241,7 @@ export default function VerifyAccountSecond({navigation, route}) {
               ) {
                 navigation.goBack();
               } else {
-                navigation.push(navigationStrings.DRAWER_ROUTES);
+                navigation.push(navigationStrings.TAB_ROUTES);
               }
             }
           }
@@ -364,7 +364,7 @@ export default function VerifyAccountSecond({navigation, route}) {
         ) ? null : (
           <TouchableOpacity
             // onPress={() => navigation.push(navigationStrings.TAB_ROUTES)}>
-            onPress={() => navigation.push(navigationStrings.DRAWER_ROUTES)}>
+            onPress={() => navigation.push(navigationStrings.TAB_ROUTES)}>
             <Text style={styles.skipText}>{strings.SKIP}</Text>
           </TouchableOpacity>
         )}
@@ -526,9 +526,11 @@ export default function VerifyAccountSecond({navigation, route}) {
                     marginTop: moderateScaleVertical(40),
                     marginHorizontal: moderateScale(20),
                   }}>
-                  <Text style={styles.header}>{'Verify Phone number'}</Text>
+                  <Text style={styles.header}>
+                    {strings.VERIFY_PHONE_NUMBER}
+                  </Text>
                   <Text style={styles.txtSmall}>
-                    {'Enter the code we just sent you on your mobile'}
+                    {strings.ENTER_CODE_SENT_TO_MOBILE}
                   </Text>
                 </View>
                 <View

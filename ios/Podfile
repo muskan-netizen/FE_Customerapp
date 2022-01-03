@@ -3,9 +3,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
 platform :ios, '11.0'
 
-
-
-# ##RoyoOrder Target
+#RoyoOrder Target
 target 'RoyoOrder' do
   permissions_path = '../node_modules/react-native-permissions/ios'
   rn_maps_path = '../node_modules/react-native-maps'
@@ -35,7 +33,7 @@ target 'Runrun' do
 end
 
 
-##Tranzit Target
+# ##Tranzit Target
 target 'Tranzit' do
   permissions_path = '../node_modules/react-native-permissions/ios'
  rn_maps_path = '../node_modules/react-native-maps'
@@ -578,7 +576,7 @@ target 'Drus' do
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
 
 end
-
+#
 #Yahu Target
 target 'Yahu' do
   permissions_path = '../node_modules/react-native-permissions/ios'
@@ -1135,19 +1133,19 @@ target 'Totum4U' do
 
 end
 
-#HMC Target
-target 'HMC' do
-  permissions_path = '../node_modules/react-native-permissions/ios'
- rn_maps_path = '../node_modules/react-native-maps'
-  config = use_native_modules!
-  use_react_native!(:path => config["reactNativePath"])
-  pod 'react-native-google-maps', :path => rn_maps_path
-  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
-  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
-  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
-  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+ #HMC Target
+ target 'HMC' do
+   permissions_path = '../node_modules/react-native-permissions/ios'
+  rn_maps_path = '../node_modules/react-native-maps'
+   config = use_native_modules!
+   use_react_native!(:path => config["reactNativePath"])
+   pod 'react-native-google-maps', :path => rn_maps_path
+   pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
 
-end
+ end
 
 #Groupy Target
 target 'Groupy' do
@@ -1588,7 +1586,7 @@ target 'Tranznet' do
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
 
 end
-
+#
 #GoodWheelz Target
 target 'GoodWheelz' do
   permissions_path = '../node_modules/react-native-permissions/ios'
@@ -1604,7 +1602,7 @@ target 'GoodWheelz' do
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
 
 end
-
+#
 #Agrionline Target
 target 'Agrionline' do
   permissions_path = '../node_modules/react-native-permissions/ios'
@@ -1622,17 +1620,17 @@ target 'Agrionline' do
 end
 #Sambiga Target
 target 'Sambiga' do
-  permissions_path = '../node_modules/react-native-permissions/ios'
+ permissions_path = '../node_modules/react-native-permissions/ios'
 
- rn_maps_path = '../node_modules/react-native-maps'
-  config = use_native_modules!
-  use_react_native!(:path => config["reactNativePath"])
-  pod 'react-native-google-maps', :path => rn_maps_path
+rn_maps_path = '../node_modules/react-native-maps'
+ config = use_native_modules!
+ use_react_native!(:path => config["reactNativePath"])
+ pod 'react-native-google-maps', :path => rn_maps_path
 
-  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
-  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
-  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
-  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+ pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+ pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+ pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+ pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
 
 end
 
@@ -2031,6 +2029,7 @@ target 'DoleyPharmacy' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+
 end
 
 #Bezalio Target
@@ -2672,6 +2671,53 @@ target 'BharatMove' do
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+end
+#Sofia Target
+target 'Sofia' do
+ permissions_path = '../node_modules/react-native-permissions/ios'
+
+rn_maps_path = '../node_modules/react-native-maps'
+ config = use_native_modules!
+ use_react_native!(:path => config["reactNativePath"])
+ pod 'react-native-google-maps', :path => rn_maps_path
+
+ pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+ pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+ pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+ pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+
+end
+
+#MML Target
+target 'MML' do
+ permissions_path = '../node_modules/react-native-permissions/ios'
+
+rn_maps_path = '../node_modules/react-native-maps'
+ config = use_native_modules!
+ use_react_native!(:path => config["reactNativePath"])
+ pod 'react-native-google-maps', :path => rn_maps_path
+
+ pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+ pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+ pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+ pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+
+end
+
+#Bimol Target
+target 'Bimol' do
+ permissions_path = '../node_modules/react-native-permissions/ios'
+
+rn_maps_path = '../node_modules/react-native-maps'
+ config = use_native_modules!
+ use_react_native!(:path => config["reactNativePath"])
+ pod 'react-native-google-maps', :path => rn_maps_path
+
+ pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+ pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+ pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+ pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+
 end
 
 post_install do |installer|

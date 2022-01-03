@@ -1,6 +1,6 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { cloneDeep, debounce } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import {cloneDeep, debounce} from 'lodash';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   FlatList,
@@ -10,15 +10,15 @@ import {
   Vibration,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dark-mode';
+import {useDarkMode} from 'react-native-dark-mode';
 import DeviceInfo from 'react-native-device-info';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useSelector } from 'react-redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useSelector} from 'react-redux';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
 import DisplayModal from '../../Components/DisplayModal';
 import Header from '../../Components/Header';
 import HomeServiceVariantAddons from '../../Components/HomeServiceVariantAddons';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
+import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import NoDataFound from '../../Components/NoDataFound';
 import ProductCard3 from '../../Components/ProductCard3';
 import VariantAddons from '../../Components/VariantAddons';
@@ -29,14 +29,14 @@ import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import { removeItem } from '../../utils/utils';
+import {removeItem} from '../../utils/utils';
 
 import {
   moderateScale,
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
+import {MyDarkTheme} from '../../styles/theme';
 import {
   getImageUrl,
   hapticEffects,
@@ -56,8 +56,8 @@ var tempQty = 0;
 
 let activeIdx = 0;
 
-export default function BrandProducts2({ route, navigation }) {
-  const { data } = route.params;
+export default function BrandProducts2({route, navigation}) {
+  const {data} = route.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -143,7 +143,7 @@ export default function BrandProducts2({ route, navigation }) {
     selectedDiffAdsOnId: 0,
   });
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const updateState = (data) => setState((state) => ({...state, ...data}));
   const {
     brand,
     brandData,
@@ -187,19 +187,19 @@ export default function BrandProducts2({ route, navigation }) {
   } = state;
 
   //Redux Store data
-  const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
+  const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =
     useSelector((state) => state?.initBoot);
   const userData = useSelector((state) => state?.auth?.userData);
   const fontFamily = appStyle?.fontSizeData;
   //Screen styling
-  const styles = stylesFunc({ themeColors, fontFamily });
+  const styles = stylesFunc({themeColors, fontFamily});
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-      () => {
-        navigation.navigate(screenName, { data });
-      };
+    () => {
+      navigation.navigate(screenName, {data});
+    };
   useEffect(() => {
     updateState({
       sortFilterMap: sortFilters[0].value,
@@ -213,14 +213,14 @@ export default function BrandProducts2({ route, navigation }) {
 
   //Get brand Products based on change with language and currencies
   useEffect(() => {
-    updateState({ pageNo: 1 });
+    updateState({pageNo: 1});
     getListOfBrandProducts();
   }, [languages, currencies]);
 
   //On focus changes
   useFocusEffect(
     React.useCallback(() => {
-      updateState({ pageNo: 1 });
+      updateState({pageNo: 1});
       getListOfBrandProducts();
     }, [
       sleectdBrands,
@@ -249,13 +249,13 @@ export default function BrandProducts2({ route, navigation }) {
     let sortExist = slectedSortBy.length;
     {
       filterExist
-        ? updateState({ showFilterSlectedIcon: true })
-        : updateState({ showFilterSlectedIcon: false });
+        ? updateState({showFilterSlectedIcon: true})
+        : updateState({showFilterSlectedIcon: false});
     }
     {
       sortExist
-        ? updateState({ showSortSelectedicon: true })
-        : updateState({ showSortSelectedicon: false });
+        ? updateState({showSortSelectedicon: true})
+        : updateState({showSortSelectedicon: false});
     }
     {
       !!filterExist || !!sortExist
@@ -325,7 +325,12 @@ export default function BrandProducts2({ route, navigation }) {
 
   //Handing error coming from API
   const errorMethod = (error) => {
-    updateState({ btnLoader, isLoading: false, isRefreshing: false, isLoadingB: false });
+    updateState({
+      btnLoader,
+      isLoading: false,
+      isRefreshing: false,
+      isLoadingB: false,
+    });
     showError(error?.message || error?.error);
   };
 
@@ -379,33 +384,23 @@ export default function BrandProducts2({ route, navigation }) {
     });
   };
 
-
-
   const addProductsWithoutCustomize = (item, index, type) => {
     console.log('very nice', item);
     let itemToUpdate = cloneDeep(item);
-    let quanitity = !!itemToUpdate?.qty ? itemToUpdate?.qty : itemToUpdate?.check_if_in_cart_app[0].quantity;
-    let productId = !!itemToUpdate?.cart_product_id ? itemToUpdate?.cart_product_id : itemToUpdate?.check_if_in_cart_app[0].id;
-    let parentCartId = !!cartId ? cartId : itemToUpdate?.check_if_in_cart_app[0].cart_id;
+    let quanitity = !!itemToUpdate?.qty
+      ? itemToUpdate?.qty
+      : itemToUpdate?.check_if_in_cart_app[0].quantity;
+    let productId = !!itemToUpdate?.cart_product_id
+      ? itemToUpdate?.cart_product_id
+      : itemToUpdate?.check_if_in_cart_app[0].id;
+    let parentCartId = !!cartId
+      ? cartId
+      : itemToUpdate?.check_if_in_cart_app[0].cart_id;
 
     if (type == 1) {
-      addDeleteCartItems(
-        item,
-        quanitity,
-        productId,
-        parentCartId,
-        index,
-        1,
-      );
+      addDeleteCartItems(item, quanitity, productId, parentCartId, index, 1);
     } else {
-      addDeleteCartItems(
-        item,
-        quanitity,
-        productId,
-        parentCartId,
-        index,
-        2,
-      );
+      addDeleteCartItems(item, quanitity, productId, parentCartId, index, 2);
     }
   };
 
@@ -430,12 +425,12 @@ export default function BrandProducts2({ route, navigation }) {
           },
           differentAddsOnsModal: true,
         });
-        return { data: res?.data, goNext: true };
+        return {data: res?.data, goNext: true};
       }
-      return { data: res?.data, goNext: false };
+      return {data: res?.data, goNext: false};
     } catch (error) {
       console.log('error raised,error');
-      return { data: null, goNext: false };
+      return {data: null, goNext: false};
     }
   };
 
@@ -443,13 +438,18 @@ export default function BrandProducts2({ route, navigation }) {
     let itemToUpdate = cloneDeep(item);
     console.log('check item to update', itemToUpdate);
     // return;
-    if (item.add_on.length == 0 && item.variantSet.length == 0) { // hit in case of simple products withou any customization
+    if (item.add_on.length == 0 && item.variantSet.length == 0) {
+      // hit in case of simple products withou any customization
       addProductsWithoutCustomize(item, index, type);
       return;
     }
 
-    let productId = !!itemToUpdate?.cart_product_id ? itemToUpdate?.cart_product_id : itemToUpdate?.check_if_in_cart_app[0]?.id;
-    let parentCartId = !!cartId ? cartId : itemToUpdate.check_if_in_cart_app[0]?.cart_id;
+    let productId = !!itemToUpdate?.cart_product_id
+      ? itemToUpdate?.cart_product_id
+      : itemToUpdate?.check_if_in_cart_app[0]?.id;
+    let parentCartId = !!cartId
+      ? cartId
+      : itemToUpdate.check_if_in_cart_app[0]?.cart_id;
 
     var totalProductQty = 0;
     if (itemToUpdate?.variant && itemToUpdate?.check_if_in_cart_app) {
@@ -461,9 +461,12 @@ export default function BrandProducts2({ route, navigation }) {
     var isExistqty = itemToUpdate?.qty ? itemToUpdate?.qty : totalProductQty; //this variable contain only local product quantity
     var tempQty = 0; //this variable contain latest updated quantity of products
 
-    if ((type == 2 && item?.add_on?.length > 0) || item?.variantSet?.length > 0) {
+    if (
+      (type == 2 && item?.add_on?.length > 0) ||
+      item?.variantSet?.length > 0
+    ) {
       //hit in case of subtruction
-      let apiData = { cart_id: parentCartId, product_id: item.id };
+      let apiData = {cart_id: parentCartId, product_id: item.id};
       let checkIsAvailable = await getDiffAddsOn(apiData, item); //check products with different addOns is exist or not.
       // console.log("check available", checkIsAvailable)
 
@@ -473,11 +476,13 @@ export default function BrandProducts2({ route, navigation }) {
           tempQty = tempQty + val?.quantity; //store updated total quantity of products
         });
 
-      if (!!checkIsAvailable?.goNext) { //if different adOns is exist then open DifferentAddOns Modal.
+      if (!!checkIsAvailable?.goNext) {
+        //if different adOns is exist then open DifferentAddOns Modal.
         return;
       }
     }
-    if (type == 2) { // direct subtract customize items if products added with same addons
+    if (type == 2) {
+      // direct subtract customize items if products added with same addons
       addDeleteCartItems(
         item,
         tempQty == 0 ? isExistqty : tempQty,
@@ -489,8 +494,9 @@ export default function BrandProducts2({ route, navigation }) {
       return;
     }
 
-    if (type == 1) { //hit in case of add new products
-      let apiData = { cart_id: parentCartId, product_id: item.id };
+    if (type == 1) {
+      //hit in case of add new products
+      let apiData = {cart_id: parentCartId, product_id: item.id};
       let header = {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
@@ -515,7 +521,7 @@ export default function BrandProducts2({ route, navigation }) {
           console.log('is++ exist qty', tempQty == 0 ? isExistqty : tempQty);
           console.log('is++ update local qty', res.data?.quantity);
 
-          updateState({ repeatItems: addData });
+          updateState({repeatItems: addData});
         }
       } catch (error) {
         console.log('error riased++++', error);
@@ -531,11 +537,14 @@ export default function BrandProducts2({ route, navigation }) {
     }
     playHapticEffect(hapticEffects.impactLight);
     let getTypeId = !!item?.category && item?.category.category_detail?.type_id;
-    updateState({ selectedItemID: item?.id, btnLoader: true });
+    updateState({selectedItemID: item?.id, btnLoader: true});
     let isSingleVendor = await checkSingleVendor(item.id);
     console.log('is singel vendor', isSingleVendor);
 
-    if (isSingleVendor.isSingleVendorEnabled == 1 && isSingleVendor.otherVendorExists == 1) {
+    if (
+      isSingleVendor.isSingleVendorEnabled == 1 &&
+      isSingleVendor.otherVendorExists == 1
+    ) {
       updateState({
         updateQtyLoader: false,
         selectedItemID: -1,
@@ -544,7 +553,7 @@ export default function BrandProducts2({ route, navigation }) {
       Alert.alert('', strings.ALREADY_EXIST, [
         {
           text: strings.CANCEL,
-          onPress: () => { },
+          onPress: () => {},
           // style: 'destructive',
         },
         {
@@ -580,7 +589,9 @@ export default function BrandProducts2({ route, navigation }) {
 
     let data = {};
     data['sku'] = item.sku;
-    data['quantity'] = 1;
+    data['quantity'] = !!item?.minimum_order_count
+      ? Number(item?.minimum_order_count)
+      : 1;
     data['product_variant_id'] = item?.variant[0]?.id;
     data['type'] = dineInType;
     actions
@@ -592,12 +603,14 @@ export default function BrandProducts2({ route, navigation }) {
       })
       .then((res) => {
         actions.cartItemQty(res);
-        updateState({ cartId: res.data.id });
+        updateState({cartId: res.data.id});
         let updateArray = brandData.map((val, i) => {
           if (val.id == item.id) {
             return {
               ...val,
-              qty: 1,
+              qty: !!item?.minimum_order_count
+                ? Number(item?.minimum_order_count)
+                : 1,
               cart_product_id: res.data.cart_product_id,
               isRemove: false,
             };
@@ -644,18 +657,28 @@ export default function BrandProducts2({ route, navigation }) {
 
     tempQty = tempQty + 1;
 
+    let quantityToIncreaseDecrease = !!item?.batch_count
+      ? Number(item?.batch_count)
+      : 1;
+
     if (type == 1) {
-      quanitity = Number(isExistqty) + 1;
+      quanitity = Number(isExistqty) + quantityToIncreaseDecrease;
     } else {
-      quanitity = Number(isExistqty) - 1;
+      let quantityToDecreaseOnMinimum = !!item?.minimum_order_count
+        ? Number(item?.minimum_order_count)
+        : 1;
+
+      if (
+        Number(isExistqty - item?.batch_count) <
+        Number(item?.minimum_order_count)
+      ) {
+        quanitity = 0;
+      } else {
+        quanitity = Number(isExistqty) - quantityToIncreaseDecrease;
+      }
     }
 
-    updateLocally(
-      quanitity,
-      item,
-      isExistproductId,
-      differentAddsOnsQty,
-    );
+    updateLocally(quanitity, item, isExistproductId, differentAddsOnsQty);
 
     timeOut = setTimeout(
       () => {
@@ -725,8 +748,8 @@ export default function BrandProducts2({ route, navigation }) {
   };
 
   const checkSingleVendor = async (id) => {
-    let vendorData = { vendor_id: categoryInfo?.id };
-    updateState({ selectedItemID: id });
+    let vendorData = {vendor_id: categoryInfo?.id};
+    updateState({selectedItemID: id});
     return new Promise((resolve, reject) => {
       actions
         .checkSingleVendor(vendorData, {
@@ -741,14 +764,14 @@ export default function BrandProducts2({ route, navigation }) {
         })
         .catch((error) => {
           reject(error);
-          updateState({ selectedItemID: -1 });
+          updateState({selectedItemID: -1});
         });
     });
   };
 
   const errorMethodSecond = (error, addonSet = []) => {
     console.log(error.message.alert, 'Error>>>>>');
-    updateState({ updateQtyLoader: false });
+    updateState({updateQtyLoader: false});
     if (error?.message?.alert == 1) {
       updateState({
         isLoading: false,
@@ -764,7 +787,7 @@ export default function BrandProducts2({ route, navigation }) {
           onPress: () => console.log('Cancel Pressed'),
           // style: 'destructive',
         },
-        { text: 'Clear Cart', onPress: () => clearCart(addonSet) },
+        {text: 'Clear Cart', onPress: () => clearCart(addonSet)},
       ]);
     } else {
       updateState({
@@ -828,10 +851,7 @@ export default function BrandProducts2({ route, navigation }) {
   };
 
   //decrementing/removeing products from cart
-  const removeProductFromCart = (
-    itemToUpdate,
-    diffAdOnId = 0,
-  ) => {
+  const removeProductFromCart = (itemToUpdate, diffAdOnId = 0) => {
     // console.log("item to update remove item", itemToUpdate)
 
     let updateLocallyAddOns = [];
@@ -842,22 +862,25 @@ export default function BrandProducts2({ route, navigation }) {
           return val;
         }
       });
-      updateState({ differentAddsOns: updateLocallyAddOns });
+      updateState({differentAddsOns: updateLocallyAddOns});
     }
 
     let data = {};
     let isExistproductId = diffAdOnId;
-    let isExistCartId = !!itemToUpdate?.check_if_in_cart_app && !!itemToUpdate?.check_if_in_cart_app.length > 0 ? itemToUpdate?.check_if_in_cart_app[0]?.cart_id : cartId;
-
+    let isExistCartId =
+      !!itemToUpdate?.check_if_in_cart_app &&
+      !!itemToUpdate?.check_if_in_cart_app.length > 0
+        ? itemToUpdate?.check_if_in_cart_app[0]?.cart_id
+        : cartId;
 
     data['cart_id'] = isExistCartId;
     data['cart_product_id'] = isExistproductId;
     data['type'] = dineInType;
 
     console.log('itemToUpdate', itemToUpdate);
-    console.log("sending data", data)
+    console.log('sending data', data);
 
-    updateState({ btnLoader: true });
+    updateState({btnLoader: true});
     actions
       .removeProductFromCart(data, {
         code: appData?.profile?.code,
@@ -889,15 +912,12 @@ export default function BrandProducts2({ route, navigation }) {
           selectedItemID: -1,
           btnLoader: false,
         });
-
       })
       .catch(errorMethod);
   };
 
-
-
   //render Products list based on brand ID
-  const renderProduct = ({ item, index }) => {
+  const renderProduct = ({item, index}) => {
     return (
       <ProductCard3
         data={item}
@@ -917,11 +937,10 @@ export default function BrandProducts2({ route, navigation }) {
     );
   };
 
-
   const _onAddtoWishlist = (item) => {
     playHapticEffect(hapticEffects.rigid);
     if (!!userData?.auth_token) {
-      updateState({ isLoadingB: true });
+      updateState({isLoadingB: true});
       actions
         .updateProductWishListData(
           `/${item.id}`,
@@ -940,12 +959,12 @@ export default function BrandProducts2({ route, navigation }) {
         .catch(errorMethod);
     } else {
       showError(strings.UNAUTHORIZED_MESSAGE);
-      updateState({ isLoadingB: false });
+      updateState({isLoadingB: false});
     }
   };
 
   const clearCartAndAddProduct = async (item) => {
-    updateState({ updateQtyLoader: true });
+    updateState({updateQtyLoader: true});
     actions
       .clearCart(
         {},
@@ -971,25 +990,25 @@ export default function BrandProducts2({ route, navigation }) {
       if (i.id == item.id) {
         if (item.inwishlist) {
           i.inwishlist = null;
-          return { ...i, inwishlist: null };
+          return {...i, inwishlist: null};
         } else {
-          return { ...i, inwishlist: { product_id: i.id } };
+          return {...i, inwishlist: {product_id: i.id}};
         }
       } else {
         return i;
       }
     });
-    updateState({ brandData: newArray });
+    updateState({brandData: newArray});
   };
 
   //pagination of data
-  const onEndReached = ({ distanceFromEnd }) => {
-    updateState({ pageNo: pageNo + 1 });
+  const onEndReached = ({distanceFromEnd}) => {
+    updateState({pageNo: pageNo + 1});
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({ pageNo: 1, isRefreshing: true });
+    updateState({pageNo: 1, isRefreshing: true});
   };
 
   const onEndReachedDelayed = debounce(onEndReached, 1000, {
@@ -998,10 +1017,10 @@ export default function BrandProducts2({ route, navigation }) {
   });
 
   const shortModalFun = () => {
-    updateState({ isSortEnabled: true });
+    updateState({isSortEnabled: true});
   };
   const closeOptionModal = () => {
-    updateState({ isSortEnabled: false });
+    updateState({isSortEnabled: false});
   };
 
   //Update short filter status
@@ -1017,19 +1036,19 @@ export default function BrandProducts2({ route, navigation }) {
                 if (i.id == -2) {
                   return {
                     ...j,
-                    value: { selected: j?.value?.selected ? false : true },
+                    value: {selected: j?.value?.selected ? false : true},
                   };
                 } else {
                   return {
                     ...j,
-                    value: { selected: j?.value?.selected ? false : true },
+                    value: {selected: j?.value?.selected ? false : true},
                   };
                 }
               } else {
                 if (i.id == -2) {
                   return {
                     ...j,
-                    value: { selected: false },
+                    value: {selected: false},
                   };
                 } else {
                   return j;
@@ -1037,7 +1056,7 @@ export default function BrandProducts2({ route, navigation }) {
               }
             });
 
-            updateState({ sortFilterMap: checkArray });
+            updateState({sortFilterMap: checkArray});
             return {
               ...i,
               value: checkArray,
@@ -1074,7 +1093,6 @@ export default function BrandProducts2({ route, navigation }) {
     index,
   });
 
-
   const updateCartItems = (item, quanitity, productId, cartID) => {
     playHapticEffect(hapticEffects.impactLight);
 
@@ -1087,7 +1105,7 @@ export default function BrandProducts2({ route, navigation }) {
           isRemove: false,
         };
       }
-      updateState({ storeLocalQty: quanitity });
+      updateState({storeLocalQty: quanitity});
       return val;
     });
     updateState({
@@ -1095,11 +1113,10 @@ export default function BrandProducts2({ route, navigation }) {
       brandData: updateArray,
       isVisibleModal: false,
     });
-
   };
 
   const hideDifferentAddOns = () => {
-    updateState({ differentAddsOnsModal: false, differentAddsOns: [] });
+    updateState({differentAddsOnsModal: false, differentAddsOns: []});
   };
 
   const difAddOnsAdded = async (
@@ -1116,7 +1133,7 @@ export default function BrandProducts2({ route, navigation }) {
     let updateLocallyAddOns = cloneArr.map((val) => {
       differentAddsOnsQty = differentAddsOnsQty + val.quantity;
       if (cartId == val.id) {
-        return { ...val, quantity: type == 1 ? qty + 1 : qty - 1 };
+        return {...val, quantity: type == 1 ? qty + 1 : qty - 1};
       }
       return val;
     });
@@ -1130,12 +1147,12 @@ export default function BrandProducts2({ route, navigation }) {
       null,
       type == 1 ? differentAddsOnsQty + 1 : differentAddsOnsQty - 1, //send updated total quantity
     );
-    updateState({ differentAddsOns: updateLocallyAddOns });
+    updateState({differentAddsOns: updateLocallyAddOns});
   };
 
   const onRepeat = async () => {
     // console.log("repeate items", repeatItems)
-    const { item, isExistqty, productId, parentCartId, updateLocalQty } =
+    const {item, isExistqty, productId, parentCartId, updateLocalQty} =
       repeatItems;
     await addDeleteCartItems(
       item,
@@ -1146,7 +1163,7 @@ export default function BrandProducts2({ route, navigation }) {
       1,
       updateLocalQty,
     );
-    updateState({ repeatItems: null });
+    updateState({repeatItems: null});
   };
 
   const onAddNew = () => {
@@ -1175,14 +1192,14 @@ export default function BrandProducts2({ route, navigation }) {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3
-              ? imagePath.icBackb
-              : imagePath.back
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={brand.name || brand.translation[0].title}
         headerStyle={
           isDarkMode
-            ? { backgroundColor: MyDarkTheme.colors.background }
-            : { backgroundColor: colors.white }
+            ? {backgroundColor: MyDarkTheme.colors.background}
+            : {backgroundColor: colors.white}
         }
         rightIcon={
           appStyle?.homePageLayout === 3
@@ -1196,13 +1213,13 @@ export default function BrandProducts2({ route, navigation }) {
           })()
         }
       />
-      <View style={{ height: 1, backgroundColor: colors.borderLight }} />
+      <View style={{height: 1, backgroundColor: colors.borderLight}} />
       <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
         {state.isLoading && <ListEmptyProduct isLoading={state.isLoading} />}
         {!state.isLoading && (
           <>
             {/* //Top section slider */}
-            <View style={{ marginTop: 20 }} />
+            <View style={{marginTop: 20}} />
             {/* Brand Banner View */}
 
             <View
@@ -1222,9 +1239,9 @@ export default function BrandProducts2({ route, navigation }) {
                   source={{
                     uri: getImageUrl(
                       brandDetail?.image_banner?.image_fit ||
-                      brandDetail.image.image_fit,
+                        brandDetail.image.image_fit,
                       brandDetail?.image_banner?.image_path ||
-                      brandDetail.image.image_path,
+                        brandDetail.image.image_path,
                       '1000/1000',
                     ),
                   }}
@@ -1356,11 +1373,11 @@ export default function BrandProducts2({ route, navigation }) {
               keyExtractor={(item, index) => String(index)}
               keyboardShouldPersistTaps="always"
               showsVerticalScrollIndicator={false}
-              style={{ flex: 1, marginTop: moderateScale(10) }}
+              style={{flex: 1, marginTop: moderateScale(10)}}
               contentContainerStyle={{
                 flexGrow: 1,
               }}
-              ItemSeparatorComponent={() => <View style={{ height: 18 }} />}
+              ItemSeparatorComponent={() => <View style={{height: 18}} />}
               getItemLayout={getItemLayout}
               initialNumToRender={12}
               maxToRenderPerBatch={10}
@@ -1378,10 +1395,12 @@ export default function BrandProducts2({ route, navigation }) {
               ListEmptyComponent={
                 <NoDataFound
                   isLoading={state.isLoading}
-                  containerStyle={{ marginTop: moderateScaleVertical(width / 8) }}
+                  containerStyle={{marginTop: moderateScaleVertical(width / 8)}}
                 />
               }
-              ListFooterComponent={() => <View style={{ height: moderateScale(80) }} />}
+              ListFooterComponent={() => (
+                <View style={{height: moderateScale(80)}} />
+              )}
             />
             <View>
               {isSortEnabled && (
@@ -1410,12 +1429,12 @@ export default function BrandProducts2({ route, navigation }) {
               isVisible={isVisibleModal}
               productdetail={selectedCartItem}
               onClose={() =>
-                updateState({ isVisibleModal: false, showShimmer: true })
+                updateState({isVisibleModal: false, showShimmer: true})
               }
               showShimmer={showShimmer}
-              shimmerClose={(val) => updateState({ showShimmer: val })}
+              shimmerClose={(val) => updateState({showShimmer: val})}
               updateCartItems={updateCartItems}
-            // modeOfService={selectedCartItem?.mode_of_service}
+              // modeOfService={selectedCartItem?.mode_of_service}
             />
           )}
         </View>
@@ -1428,11 +1447,11 @@ export default function BrandProducts2({ route, navigation }) {
               isVisible={isVisibleModal}
               productdetail={selectedCartItem}
               onClose={() =>
-                updateState({ isVisibleModal: false, showShimmer: true })
+                updateState({isVisibleModal: false, showShimmer: true})
               }
               typeId={typeId}
               showShimmer={showShimmer}
-              shimmerClose={(val) => updateState({ showShimmer: val })}
+              shimmerClose={(val) => updateState({showShimmer: val})}
               updateCartItems={updateCartItems}
             />
           )}
@@ -1453,12 +1472,11 @@ export default function BrandProducts2({ route, navigation }) {
         visible={updateQtyLoader}
       />
 
-
       {/* Add new addons and repeat item view */}
       {!!repeatItems && (
         <RepeatModal
           data={repeatItems?.item}
-          modalHide={() => updateState({ repeatItems: null })}
+          modalHide={() => updateState({repeatItems: null})}
           onRepeat={onRepeat}
           onAddNew={onAddNew}
         />
@@ -1477,7 +1495,6 @@ export default function BrandProducts2({ route, navigation }) {
           selectedDiffAdsOnId={selectedDiffAdsOnId}
         />
       )}
-
     </WrapperContainer>
   );
 }
