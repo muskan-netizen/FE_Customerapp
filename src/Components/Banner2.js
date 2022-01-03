@@ -31,6 +31,7 @@ const Banner2 = ({
   childView = null,
   showLightbox = false,
   BackgroundImageStyle = {},
+  autoPlay = true,
 }) => {
   const {themeColors} = useSelector((state) => state?.initBoot);
 
@@ -111,7 +112,7 @@ const Banner2 = ({
         ref={bannerRef}
         data={bannerData}
         renderItem={bannerDataImages}
-        autoplay={true}
+        autoplay={autoPlay}
         loop={true}
         autoplayInterval={3000}
         sliderWidth={sliderWidth}

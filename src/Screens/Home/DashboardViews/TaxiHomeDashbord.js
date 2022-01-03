@@ -142,6 +142,7 @@ export default function TaxiHomeDashbord({
   let findCabCategory = appMainData?.categories?.find(
     (x) => x?.redirect_to == staticStrings.PICKUPANDDELIEVRY,
   );
+
   console.log(findCabCategory, 'findCabCategory');
   const {appData, themeColors, appStyle, languages} = useSelector(
     (state) => state?.initBoot,
@@ -176,7 +177,7 @@ export default function TaxiHomeDashbord({
 
   //update state
   const updateState = (data) => setState((state) => ({...state, ...data}));
- 
+  
   const moveToNewScreen =
     (screenName, data = {}) =>
     () => {
@@ -581,7 +582,7 @@ export default function TaxiHomeDashbord({
             sliderWidth={sliderWidth + 20}
             itemWidth={itemWidth + 20}
             onSnapToItem={(index) => updateState({slider1ActiveSlide: index})}
-            onPress={(item) => bannerPress(item)}
+            // onPress={(item) => bannerPress(item)}
           />
           <View style={{height: moderateScaleVertical(5)}} />
         </>

@@ -70,4 +70,4 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
 });
-export default React.memo(Modal);
+export default React.memo(ModalView);

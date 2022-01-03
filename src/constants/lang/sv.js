@@ -174,6 +174,7 @@ export default {
   POPULARITY: 'Popularitet',
   MOST_PURCHASED: 'Mest köpt',
   HOME: 'Hem',
+  HOME_1: 'Home',
   HOLD_ON: 'Vänta',
   EXIT_WARNING: 'Är du säker på att du vill sluta?',
   YES: 'Ja',
@@ -706,5 +707,10 @@ export default {
   ORDERDELIVERED: 'Your order has been delivered',
   MYRIDES: 'My Rides',
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
+  INVOICE: 'Invoice',
+  PROOF: 'Proof',
   ORDER: 'Order',
+  SELECT_VIA_MAP: 'Select via map',
+  HOUSE_NO: 'House No.',
+  CUSTOMIZZATION_FOR: 'Customizations for',
 };

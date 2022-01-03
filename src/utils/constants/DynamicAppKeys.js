@@ -181,6 +181,12 @@ const shortCodes = {
   movingwheelsdelivery: '46ee7c',
   safewalks: 'bb699c',
   dimavega: 'd25db3',
+  skoop: 'ff2327',
+  kudhyo: '300420',
+  bharatMove: 'e2ec5e',
+  sofia: 'e2ef1a',
+  mml: '348045',
+  bimol: '94fc5b',
 };
 
 const appIds = {
@@ -509,8 +515,8 @@ const appIds = {
     android: 'com.totum4U',
   }),
   hmc: Platform.select({
-    ios: 'com.hmc.customer',
-    android: 'com.hmc',
+    ios: 'com.eatkareem.hmchalal',
+    android: 'com.eatkareem.hmchalal',
   }),
   groupy: Platform.select({
     ios: 'com.groupy',
@@ -903,6 +909,30 @@ const appIds = {
   dimavega: Platform.select({
     ios: 'com.dimavega',
     android: 'com.dimavega',
+  }),
+  skoop: Platform.select({
+    ios: 'com.app.skoop',
+    android: 'com.app.skoop',
+  }),
+  kudhyo: Platform.select({
+    ios: 'com.kudhyo',
+    android: 'com.kudhyo',
+  }),
+  bharatMove: Platform.select({
+    ios: 'com.bharatMove',
+    android: 'com.bharatMove',
+  }),
+  sofia: Platform.select({
+    ios: 'com.app.sofia',
+    android: 'com.app.sofia',
+  }),
+  mml: Platform.select({
+    ios: 'com.mml',
+    android: 'com.mml',
+  }),
+  bimol: Platform.select({
+    ios: 'com.bimol',
+    android: 'com.bimol',
   }),
 };
 

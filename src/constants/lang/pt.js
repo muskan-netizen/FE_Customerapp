@@ -169,6 +169,7 @@ export default {
   POPULARITY: 'Popularidade',
   MOST_PURCHASED: 'A maioria comprada',
   HOME: 'Casa',
+  HOME_1: 'Home',
   HOLD_ON: 'Esperar',
   EXIT_WARNING: 'Tem certeza que quer desistir?',
   YES: 'Sim',
@@ -696,5 +697,10 @@ export default {
   OUTFORDELIVERY: 'Your driver is heading to you',
   ORDERDELIVERED: 'Your order has been delivered',
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
+  INVOICE: 'Invoice',
+  PROOF: 'Proof',
   ORDER: 'Order',
+  SELECT_VIA_MAP: 'Select via map',
+  HOUSE_NO: 'House No',
+  CUSTOMIZZATION_FOR: 'Customizations for',
 };

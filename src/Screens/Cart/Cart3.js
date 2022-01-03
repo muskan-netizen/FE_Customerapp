@@ -447,12 +447,23 @@ export default function Cart({navigation, route}) {
 
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
+    console.log(item, 'itemitemitemitem');
     let quanitity = null;
     let itemToUpdate = cloneDeep(item);
+    let quantityToIncrease = !!itemToUpdate?.product?.batch_count
+      ? Number(itemToUpdate?.product?.batch_count)
+      : 1;
     if (type == 1) {
-      quanitity = Number(itemToUpdate.quantity) + 1;
+      quanitity = Number(itemToUpdate.quantity) + quantityToIncrease;
     } else {
-      quanitity = Number(itemToUpdate.quantity) - 1;
+      if (
+        Number(itemToUpdate.quantity - itemToUpdate?.product?.batch_count) <=
+        itemToUpdate?.product?.minimum_order_count
+      ) {
+        quanitity = 0;
+      } else {
+        quanitity = Number(itemToUpdate.quantity) - quantityToIncrease;
+      }
     }
     if (quanitity) {
       let data = {};
