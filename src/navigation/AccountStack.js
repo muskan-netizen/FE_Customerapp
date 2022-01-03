@@ -55,6 +55,9 @@ import {
   Inventory,
   UdhaarLedger,
   SalesExpenses,
+  AddProduct,
+  AddNewCustomer,
+  CustomerEarningHistory,
 } from '../Screens';
 import AccountTemplateFive from '../Screens/Account/AccountTemplateFive';
 import AccountTemplateFour from '../Screens/Account/AccountTemplateFour';
@@ -96,7 +99,6 @@ export default function ({navigation}) {
         }
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.MY_ORDERS}
         component={MyOrders}
@@ -159,19 +161,16 @@ export default function ({navigation}) {
         }
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.TRACKING}
         component={Tracking}
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.TRACKDETAIL}
         component={TrackDetail}
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
         component={
@@ -181,13 +180,11 @@ export default function ({navigation}) {
         }
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.BRANDDETAIL}
         component={BrandProducts}
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.SEND_PRODUCT}
         component={SendProduct}
@@ -198,55 +195,46 @@ export default function ({navigation}) {
         component={BuyProduct}
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.VENDOR}
         component={appStyle?.homePageLayout === 2 ? Vendors2 : Vendors}
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.DELIVERY}
         component={Delivery}
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.PRODUCT_LIST}
         component={appStyle?.homePageLayout === 2 ? ProductList2 : ProductList}
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.RATEORDER}
         component={RateOrder}
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.SENDREFFERAL}
         component={SendRefferal}
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.CMSLINKS}
         component={CMSLinks}
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.WEBLINKS}
         component={WebLinks}
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.WEBPAYMENTS}
         component={WebPayment}
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.TRACKORDER}
         component={MyOrders}
@@ -257,7 +245,6 @@ export default function ({navigation}) {
         component={PickupOrderDetail}
         options={{headerShown: false, tabBarVisible: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.WEBVIEWSCREEN}
         // component={WebviewScreen}
@@ -299,7 +286,6 @@ export default function ({navigation}) {
         component={Payfast}
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={navigationStrings.YOCO}
         component={Yoco}
@@ -328,6 +314,21 @@ export default function ({navigation}) {
       <Stack.Screen
         name={navigationStrings.SALES_EXPENSES}
         component={SalesExpenses}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.ADD_PRODUCT}
+        component={AddProduct}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.ADD_NEW_CUSTOMER}
+        component={AddNewCustomer}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={navigationStrings.CUSTOMER_EARNING_HISTORY}
+        component={CustomerEarningHistory}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

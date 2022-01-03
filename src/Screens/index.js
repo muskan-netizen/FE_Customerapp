@@ -110,3 +110,6 @@ export {default as Square} from './PaymentGateways/Square';
 export {default as Inventory} from './Inventory/Inventory';
 export {default as SalesExpenses} from './SalesExpenses/SalesExpenses';
 export {default as UdhaarLedger} from './UdhaarLedger/UdhaarLedger';
+export {default as AddProduct} from './AddProduct/AddProduct';
+export {default as AddNewCustomer} from './AddNewCustomer/AddNewCustomer';
+export {default as CustomerEarningHistory} from './CustomerEarningHistory/CustomerEarningHistory';

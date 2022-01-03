@@ -343,7 +343,7 @@ export default function Account3({navigation}) {
                     centerContainerStyle={{flexDirection: 'row'}}
                     leftIconStyle={{flex: 0.1, alignItems: 'center'}}
                     onPress={moveToNewScreen(navigationStrings.INVENTORY)}
-                    iconLeft={imagePath.loyalty}
+                    iconLeft={imagePath.icInventory}
                     centerHeading={strings.INVENTORY}
                     containerStyle={styles.containerStyle2}
                     centerHeadingStyle={{
@@ -357,7 +357,7 @@ export default function Account3({navigation}) {
                     centerContainerStyle={{flexDirection: 'row'}}
                     leftIconStyle={{flex: 0.1, alignItems: 'center'}}
                     onPress={moveToNewScreen(navigationStrings.UDHAARLEDGER)}
-                    iconLeft={imagePath.loyalty}
+                    iconLeft={imagePath.icUdhaarl}
                     centerHeading={strings.UDHAARLEDGER}
                     containerStyle={styles.containerStyle2}
                     centerHeadingStyle={{
@@ -371,7 +371,7 @@ export default function Account3({navigation}) {
                     centerContainerStyle={{flexDirection: 'row'}}
                     leftIconStyle={{flex: 0.1, alignItems: 'center'}}
                     onPress={moveToNewScreen(navigationStrings.SALES_EXPENSES)}
-                    iconLeft={imagePath.loyalty}
+                    iconLeft={imagePath.icSales}
                     centerHeading={strings.SALES_EXPENSES}
                     containerStyle={styles.containerStyle2}
                     centerHeadingStyle={{

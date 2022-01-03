@@ -9,11 +9,19 @@ import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import colors from '../../styles/colors';
 import {MyDarkTheme} from '../../styles/theme';
+import InventoryComp from '../../Components/InventoryComp';
+import {
+  moderateScale,
+  moderateScaleVertical,
+} from '../../styles/responsiveSize';
+import GradientButton from '../../Components/GradientButton';
+import navigationStrings from '../../navigation/navigationStrings';
 
-export default function Inventory() {
+export default function Inventory({navigation, route}) {
   const {themeColor, themeToggle, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
+  const fontFamily = appStyle?.fontSizeData;
 
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -21,7 +29,8 @@ export default function Inventory() {
   return (
     <WrapperContainer
       bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+        // isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+        colors.white
       }
       statusBarColor={colors.white}
       // isLoadingB={isLoadingB}
@@ -41,7 +50,26 @@ export default function Inventory() {
             : {backgroundColor: colors.white}
         }
       />
-      <View style={{flex: 1}}></View>
+      <View style={{flex: 1, marginHorizontal: moderateScale(15)}}>
+        <InventoryComp />
+        <InventoryComp />
+        <InventoryComp />
+      </View>
+      <GradientButton
+        colorsArray={[colors.seaGreen, colors.seaGreen]}
+        textStyle={{
+          fontFamily: fontFamily.medium,
+        }}
+        marginTop={moderateScaleVertical(10)}
+        btnText={`+ ${strings.ADD_PRODUCT}`}
+        onPress={() => navigation.navigate(navigationStrings.ADD_PRODUCT)}
+        containerStyle={{
+          width: '40%',
+          borderRadius: moderateScale(5),
+          alignSelf: 'flex-end',
+          marginBottom: moderateScale(10),
+          marginRight: moderateScale(10),
+        }}></GradientButton>
     </WrapperContainer>
   );
 }

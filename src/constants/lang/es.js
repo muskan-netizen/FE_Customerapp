@@ -351,7 +351,7 @@ export default {
   COMMENTSOPTIONAL: 'Comentarios (Opcional):',
   HEY_MSG: '¡Hola!',
   GREETING_MSG: '¿Qué estás buscando hoy?',
-  NEAR_VENDOR: 'Mejores comercios cerca tuyo',
+  NEAR_VENDOR: 'Socios Compadres',
   ITEM_NOT_DELIVERABLE:
     'Este comercio no realiza entregas hasta la dirección indicada. Por favor selecciona otra dirección o elegí otro comercio',
   VIEW_ALL_VENDORS: 'Ver todos los comercios',
@@ -596,7 +596,8 @@ export default {
   TIP_AMOUNT: 'Cantidad de propina',
   CONFIRM_DESTINATION: 'Confirm Destination',
   CONFIRM_VEHICLE: 'Confirm Vehicle',
-  SPECIAL_INSTRUCTION: 'Special Instruction',
+  SPECIAL_INSTRUCTION:
+    '¿Alguna solicitud especial que necesites decirle a nuestro socio compadre?',
   SCEDULEPICKUP: 'Schedule Pickup',
   SCEDULEDROP: 'Schedule Dropoff',
   COMMENTFORPICKUPDRIVER: 'Comment for Pickup Driver',

@@ -105,4 +105,7 @@ export default {
   INVENTORY: 'inventory',
   UDHAARLEDGER: 'udhaarLedger',
   SALES_EXPENSES: 'salesExpenses',
+  ADD_PRODUCT: 'addProduct',
+  ADD_NEW_CUSTOMER: 'addNewCustomer',
+  CUSTOMER_EARNING_HISTORY: 'customerEarningHistory',
 };
