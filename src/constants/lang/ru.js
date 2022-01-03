@@ -707,8 +707,11 @@ export default {
   OUTFORDELIVERY: 'Your driver is heading to you',
   ORDERDELIVERED: 'Your order has been delivered',
   PLEASE_RECHARGE_WALLET: 'Please Recharge Your Wallet',
+  INVOICE: 'Invoice',
+  PROOF: 'Proof',
   ORDER: 'Order',
-  SELECT_VIA_MAP:"Select via map",
+  SELECT_VIA_MAP: 'Select via map',
   HOUSE_NO: 'House No.',
   PLEASE_ENTER_VALID_NUMERIC: 'Please enter numeric value for',
+  CUSTOMIZZATION_FOR: 'Customizations for',
 };

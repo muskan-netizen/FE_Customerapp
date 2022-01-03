@@ -222,7 +222,7 @@ export default function DashBoardFive({
       '800/600',
     );
     const isSVG = imageURI ? imageURI.includes('.svg') : null;
-    console.log("svg url",imageURI)
+    console.log('svg url', imageURI);
     return (
       <TouchableOpacity
         activeOpacity={0.7}

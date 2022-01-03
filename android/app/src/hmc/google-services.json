@@ -7,34 +7,26 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:17112101652:android:db5e4524a359c7a2d60801",
+        "mobilesdk_app_id": "1:17112101652:android:9658411089e16d09d60801",
         "android_client_info": {
-          "package_name": "com.hmc"
+          "package_name": "com.eatkareem.hmchalal"
         }
       },
       "oauth_client": [
         {
-          "client_id": "17112101652-16gicolj9hfqtdvd3dopava5sj7tqsii.apps.googleusercontent.com",
+          "client_id": "17112101652-p7fvslldo7u28ed18vnebnb1c06qakiv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.hmc",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+            "package_name": "com.eatkareem.hmchalal",
+            "certificate_hash": "4238303688c4192aeaf074ad7cd9f46d78a87f1d"
           }
         },
         {
-          "client_id": "17112101652-gj7qpqt4s2v8hubqr9nkuu07actqarnp.apps.googleusercontent.com",
+          "client_id": "17112101652-u68k1v3bkfcmk7hitreodp4okrh94gt7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.hmc",
-            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
-          }
-        },
-        {
-          "client_id": "17112101652-l44ngsh00b0etvdnuj07gbmmbnuvk9j6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hmc",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+            "package_name": "com.eatkareem.hmchalal",
+            "certificate_hash": "01b5bd09b84a2f26f2b99cd7648f8a1c063e6570"
           }
         },
         {
@@ -55,10 +47,10 @@
               "client_type": 3
             },
             {
-              "client_id": "17112101652-11mik17ncf27nqtufgf5jlg6pb4pet9d.apps.googleusercontent.com",
+              "client_id": "17112101652-0uh0029ipmdg48b0m9qmqo343mel6v3p.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.hmc"
+                "bundle_id": "com.hmc.customer"
               }
             }
           ]

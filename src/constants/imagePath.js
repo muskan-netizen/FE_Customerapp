@@ -472,5 +472,14 @@ export default {
   checkBox2Active: require('../assets/images/ic_check2.png'),
   checkBox2InActive: require('../assets/images/ic_check1.png'),
   emptyCart3: require('../assets/images/emptyCart3.png'),
-  markerPin: require('../assets/images/markerPin.png')
+  markerPin: require('../assets/images/markerPin.png'),
+
+  icContactus: require('../assets/images/RoyoorderNewImages/ic_contactus.png'),
+  icInventory: require('../assets/images/RoyoorderNewImages/ic_inventory.png'),
+  icSales: require('../assets/images/RoyoorderNewImages/ic_sales.png'),
+  icMinus: require('../assets/images/RoyoorderNewImages/ic_minus.png'),
+  icStore: require('../assets/images/RoyoorderNewImages/ic_store.png'),
+  icStore2: require('../assets/images/RoyoorderNewImages/ic_store2.png'),
+  icUdhaarl: require('../assets/images/RoyoorderNewImages/ic_udhaarl.png'),
+  icPlus2: require('../assets/images/RoyoorderNewImages/ic_plus2.png'),
 };

@@ -49,11 +49,15 @@ const BannerHome = ({
   const bannerDataImages = ({item, index}) => {
     const imageUrl = item?.image?.path
       ? getImageUrl(
-          item.image.path.proxy_url,
-          item.image.path.image_path,
+          item?.image?.path?.proxy_url,
+          item?.image?.path?.image_path,
           '2000/600',
         )
-      : getImageUrl(item.image.proxy_url, item.image.image_path, '2000/600');
+      : getImageUrl(
+          item?.image?.proxy_url,
+          item?.image?.image_path,
+          '2000/600',
+        );
 
     return (
       <>
@@ -94,7 +98,7 @@ const BannerHome = ({
     <CardView style={[styles.cardViewStyle, cardViewStyle]}>
       <Carousel
         ref={bannerRef}
-        data={bannerData}
+        data={bannerData && bannerData?.length?bannerData:[]}
         renderItem={bannerDataImages}
         autoplay={true}
         loop={true}

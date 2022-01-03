@@ -137,7 +137,7 @@ export default function Signup({navigation}) {
               !!res.data?.verify_details?.is_email_verified &&
               !!res.data?.verify_details?.is_phone_verified
             ) {
-              navigation.push(navigationStrings.DRAWER_ROUTES);
+              navigation.push(navigationStrings.TAB_ROUTES);
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
@@ -149,12 +149,12 @@ export default function Signup({navigation}) {
               !!res.data?.verify_details?.is_email_verified ||
               !!res.data?.verify_details?.is_phone_verified
             ) {
-              navigation.push(navigationStrings.DRAWER_ROUTES);
+              navigation.push(navigationStrings.TAB_ROUTES);
             } else {
               moveToNewScreen(navigationStrings.VERIFY_ACCOUNT, {})();
             }
           } else {
-            navigation.push(navigationStrings.DRAWER_ROUTES);
+            navigation.push(navigationStrings.TAB_ROUTES);
           }
         }
       })
