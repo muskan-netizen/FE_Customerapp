@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   FlatList,
+  PermissionsAndroid,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
@@ -27,6 +28,7 @@ import {
   textScale,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
+import Contacts from 'react-native-contacts';
 
 export default function AddNewCustomer({navigation, route}) {
   const paramData = route?.params;
@@ -35,7 +37,7 @@ export default function AddNewCustomer({navigation, route}) {
   );
   const [state, setState] = useState({
     isAddCustomerModal: false,
-    allContacts: !!paramData?.data ? paramData?.data : [],
+    allContacts: [],
   });
   const {isAddCustomerModal, allContacts} = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -45,11 +47,26 @@ export default function AddNewCustomer({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
+  useEffect(() => {
+    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
+      title: 'Contacts',
+      message: 'This app would like to view your contacts.',
+      buttonPositive: 'Please accept bare mortal',
+    }).then(
+      Contacts.getAll()
+        .then((contacts) => {
+          console.log(contacts, 'allContacts');
+          updateState({
+            allContacts: contacts,
+          });
+        })
+        .catch((e) => {
+          console.log(e, 'errorcontacts');
+        }),
+    );
+  }, []);
+
   const getAllTransc = ({item, index}) => {
-    console.log(item, 'itemssss');
-
-    // return;
-
     return (
       <View
         style={{
@@ -76,7 +93,7 @@ export default function AddNewCustomer({navigation, route}) {
               fontSize: textScale(14),
               fontFamily: fontFamily.bold,
             }}>
-            {item?.displayName?.charAt(0).toUpperCase()}
+            {(item?.displayName || item?.givenName).charAt(0).toUpperCase()}
           </Text>
         </View>
         <View
@@ -91,7 +108,9 @@ export default function AddNewCustomer({navigation, route}) {
               borderTopWidth: index !== 0 ? 0.7 : 0,
               borderColor: colors.backgroundGreyB,
             }}>
-            <Text>{item?.displayName}</Text>
+            <Text>
+              {item?.displayName || `${item?.givenName} ${item?.familyName}`}
+            </Text>
 
             <Text>{item?.phoneNumbers[0]?.number}</Text>
           </TouchableOpacity>
@@ -216,7 +235,7 @@ export default function AddNewCustomer({navigation, route}) {
           <Image source={imagePath.icAdd1} />
           <Text
             style={{
-              marginLeft: moderateScale(10),
+              marginLeft: moderateScale(5),
               color: colors.seaGreen,
               fontSize: textScale(14),
             }}>
