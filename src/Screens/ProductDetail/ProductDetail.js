@@ -770,6 +770,7 @@ export default function ProductDetail({route, navigation}) {
                 {/* <View style={{ flex: 0.2 }}><Image source={imagePath.fav} /></View> */}
                 <View style={{flex: 1, alignItems: 'center'}}>
                   <Banner2
+                    autoPlay={false}
                     resizeMode="contain"
                     bannerRef={bannerRef}
                     bannerData={productDetailData?.product_media}

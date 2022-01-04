@@ -1199,6 +1199,24 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
+        case appIds.sofia:
+          updateState({
+            shortCode: shortCodes.sofia,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.mml:
+          updateState({
+            shortCode: shortCodes.mml,
+            isShortcodePrefilled: true,
+          });
+          break;
+        case appIds.bimol:
+          updateState({
+            shortCode: shortCodes.bimol,
+            isShortcodePrefilled: true,
+          });
+          break;
       }
     })();
   }, []);
