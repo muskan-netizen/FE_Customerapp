@@ -173,6 +173,7 @@ export default {
   HIGH_TO_LOW: 'Hög till låg',
   POPULARITY: 'Popularitet',
   MOST_PURCHASED: 'Mest köpt',
+  NEWLY_ADDED: 'Newly Added',
   HOME: 'Hem',
   HOLD_ON: 'Vänta',
   EXIT_WARNING: 'Är du säker på att du vill sluta?',
@@ -709,4 +710,5 @@ export default {
   ORDER: 'Order',
   RELEVANCE: 'Relevance',
   BESTSELLER: 'Best Seller',
+  NEAR_BY: 'Near By',
 };

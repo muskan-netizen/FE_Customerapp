@@ -78,13 +78,13 @@ export default function Products({route, navigation}) {
           {
             id: 1,
             label: 'A - Z',
-            labelValue: 'a-z',
+            labelValue: 'a_to_z',
             parent: strings.SORT_BY,
           },
           {
             id: 2,
             label: 'Z - A',
-            labelValue: 'z-a',
+            labelValue: 'z_to_a',
             parent: strings.SORT_BY,
           },
           {
@@ -107,8 +107,8 @@ export default function Products({route, navigation}) {
           },
           {
             id: 6,
-            label: strings.MOST_PURCHASED,
-            labelValue: 'most_purcahsed',
+            label: strings.NEWLY_ADDED,
+            labelValue: 'newly_added',
             parent: strings.SORT_BY,
           },
         ],

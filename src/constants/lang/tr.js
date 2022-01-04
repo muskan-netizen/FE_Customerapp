@@ -170,6 +170,7 @@ export default {
   HIGH_TO_LOW: 'Yüksekten Alçağa',
   POPULARITY: 'Popülerlik',
   MOST_PURCHASED: 'En çok satın alınan',
+  NEWLY_ADDED: 'Newly Added',
   HOME: 'Ev',
   HOLD_ON: 'Bekle',
   EXIT_WARNING: 'Çıkmak istediğinizden emin misiniz?',
@@ -720,4 +721,5 @@ export default {
   ORDER: 'Order',
   RELEVANCE: 'Relevance',
   BESTSELLER: 'Best Seller',
+  NEAR_BY: 'Near By',
 };

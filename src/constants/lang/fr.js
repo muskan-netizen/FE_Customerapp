@@ -178,6 +178,7 @@ export default {
   HIGH_TO_LOW: 'Élevé à faible',
   POPULARITY: 'popularité',
   MOST_PURCHASED: 'Le plus acheté',
+  NEWLY_ADDED: 'Newly Added',
   ACCUEIL: 'Maison',
   HOLD_ON: 'Attendez',
   EXIT_WARNING: `Êtes vous sûre de vouloir quitter l'application ?`,
@@ -774,4 +775,5 @@ montant`,
   ORDER: 'Order',
   RELEVANCE: 'Relevance',
   BESTSELLER: 'Best Seller',
+  NEAR_BY: 'Near By',
 };

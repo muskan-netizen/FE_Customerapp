@@ -54,6 +54,7 @@ import {
   MenuOption,
   MenuTrigger,
 } from 'react-native-popup-menu';
+import {string} from 'is_js';
 
 export default function DashBoardFive({
   handleRefresh = () => {},
@@ -70,23 +71,25 @@ export default function DashBoardFive({
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
+
+  const {appData, themeColors, appStyle} = useSelector(
+    (state) => state?.initBoot,
+  );
+  console.log(
+    appData?.profile?.preferences?.is_hyperlocal,
+    'appData?.profile?.preferences?.is_hyperlocal',
+  );
+
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     newCategoryData: [],
     isVendorColumnList: false,
     vendorsData: [],
     showMenu: false,
-    allFilters: [
-      {id: 1, type: strings.OPEN},
-      {id: 2, type: strings.CLOSE},
-      {id: 3, type: strings.BESTSELLER},
-    ],
   });
 
   const appMainData = useSelector((state) => state?.home?.appMainData);
-  const {appData, themeColors, appStyle} = useSelector(
-    (state) => state?.initBoot,
-  );
+
   let businessType = appData?.profile?.preferences?.business_type || null;
 
   const allCategory = appMainData?.categories;
@@ -94,7 +97,7 @@ export default function DashBoardFive({
     allCategory &&
     allCategory.find((x) => x?.redirect_to == staticStrings.BRAND);
   // const {bannerRef} = useRef();
-  const {slider1ActiveSlide, vendorsData, showMenu, allFilters} = state;
+  const {slider1ActiveSlide, vendorsData, showMenu} = state;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
 
@@ -120,6 +123,22 @@ export default function DashBoardFive({
       showMenu: false,
     });
     onVendorFilterSeletion(selectedFilter);
+  };
+
+  const homeAllFilters = () => {
+    let homeFilter = [
+      {id: 1, type: strings.OPEN},
+      {id: 2, type: strings.CLOSE},
+      {id: 3, type: strings.BESTSELLER},
+    ];
+    if (appData?.profile?.preferences?.is_hyperlocal) {
+      homeFilter.push({id: 4, type: strings.NEAR_BY});
+    } else {
+      if (homeFilter.length > 3) {
+        homeFilter.pop();
+      }
+    }
+    return homeFilter;
   };
 
   const _renderItem = ({item, index}) => {
@@ -481,12 +500,14 @@ export default function DashBoardFive({
                             marginTop: moderateScaleVertical(50),
                           },
                         }}>
-                        {allFilters?.map((item, index) => {
+                        {homeAllFilters()?.map((item, index) => {
                           return (
                             <MenuOption
                               onSelect={() => onSelectedFilter(item)}
                               text={item?.type}
-                              style={{marginVertical: moderateScaleVertical(5)}}
+                              style={{
+                                marginVertical: moderateScaleVertical(5),
+                              }}
                             />
                           );
                         })}

@@ -172,6 +172,7 @@ export default {
   HIGH_TO_LOW: 'Cost : High to Low',
   POPULARITY: 'Popularity',
   MOST_PURCHASED: 'Most purchased',
+  NEWLY_ADDED: 'Newly Added',
   HOME: 'Home',
   HOME_1: 'Home',
   HOLD_ON: 'Hold On',
@@ -738,4 +739,5 @@ Amount`,
   ORDER: 'Order',
   RELEVANCE: 'Relevance',
   BESTSELLER: 'Best Seller',
+  NEAR_BY: 'Near By',
 };

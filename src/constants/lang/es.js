@@ -170,6 +170,7 @@ export default {
   HIGH_TO_LOW: 'Mayor a menor',
   POPULARITY: 'Popularidad',
   MOST_PURCHASED: 'Más vendido',
+  NEWLY_ADDED: 'Newly Added',
   HOME: 'Inicio',
   HOLD_ON: 'Espera',
   EXIT_WARNING: '¿Estás seguro que querés salir?',
@@ -734,4 +735,5 @@ export default {
   ORDER: 'Order',
   RELEVANCE: 'Relevance',
   BESTSELLER: 'Best Seller',
+  NEAR_BY: 'Near By',
 };

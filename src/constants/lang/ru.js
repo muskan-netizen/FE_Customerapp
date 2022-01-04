@@ -172,6 +172,7 @@ export default {
   HIGH_TO_LOW: 'От высокого до низкого',
   POPULARITY: 'Популярность',
   MOST_PURCHASED: 'Самые покупаемые',
+  NEWLY_ADDED: 'Newly Added',
   HOME: 'Дом',
   HOLD_ON: 'Подождать',
   EXIT_WARNING: 'Вы уверены, что хотите бросить курить?',
@@ -709,4 +710,5 @@ export default {
   ORDER: 'Order',
   RELEVANCE: 'Relevance',
   BESTSELLER: 'Best Seller',
+  NEAR_BY: 'Near By',
 };

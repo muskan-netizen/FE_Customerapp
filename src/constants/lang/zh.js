@@ -164,6 +164,7 @@ export default {
   HIGH_TO_LOW: '从高到低',
   POPULARITY: '人气',
   MOST_PURCHASED: '购买最多的',
+  NEWLY_ADDED: 'Newly Added',
   HOME: '家',
   HOLD_ON: '坚持',
   EXIT_WARNING: '你确定要退出吗？',
@@ -680,4 +681,5 @@ export default {
   ORDER: 'Order',
   RELEVANCE: 'Relevance',
   BESTSELLER: 'Best Seller',
+  NEAR_BY: 'Near By',
 };

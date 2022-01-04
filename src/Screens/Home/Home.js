@@ -75,6 +75,7 @@ export default function Home({route, navigation}) {
     openVendor: 0,
     closeVendor: 0,
     bestSeller: 0,
+    nearMe: 1,
   });
 
   const {
@@ -90,6 +91,7 @@ export default function Home({route, navigation}) {
     openVendor,
     closeVendor,
     bestSeller,
+    nearMe,
   } = state;
 
   const {profile} = appData;
@@ -290,6 +292,7 @@ export default function Home({route, navigation}) {
       close_vendor: closeVendor,
       open_vendor: openVendor,
       best_vendor: bestSeller,
+      near_me: nearMe,
     };
     console.log(vendorFilterData, 'vendorFilterData');
     {
@@ -662,6 +665,7 @@ export default function Home({route, navigation}) {
           openVendor: 1,
           closeVendor: 0,
           bestSeller: 0,
+          nearMe: 0,
         });
         break;
       case 2:
@@ -670,6 +674,7 @@ export default function Home({route, navigation}) {
           openVendor: 0,
           closeVendor: 1,
           bestSeller: 0,
+          nearMe: 0,
         });
         break;
       case 3:
@@ -678,6 +683,16 @@ export default function Home({route, navigation}) {
           openVendor: 0,
           closeVendor: 0,
           bestSeller: 1,
+          nearMe: 0,
+        });
+        break;
+      case 4:
+        updateState({
+          isLoadingB: true,
+          openVendor: 0,
+          closeVendor: 0,
+          bestSeller: 0,
+          nearMe: 1,
         });
         break;
       default:
