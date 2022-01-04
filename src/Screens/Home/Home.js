@@ -20,10 +20,7 @@ import {
   getNearestLocation,
   showError,
 } from '../../utils/helperFunctions';
-import {
-  checkContactPermission,
-  chekLocationPermission,
-} from '../../utils/permissions';
+import {chekLocationPermission} from '../../utils/permissions';
 import {
   DashBoardFive,
   DashBoardFour,
@@ -178,12 +175,6 @@ export default function Home({route, navigation}) {
   }, [updateTime]);
   useEffect(() => {
     Geocoder.init(profile?.preferences?.map_key, {language: 'en'}); // set the language
-  }, []);
-
-  useEffect(() => {
-    checkContactPermission()
-      .then((res) => console.log(res, 'resresres'))
-      .catch((err) => console.log(err, 'errrrrrrr'));
   }, []);
 
   useEffect(() => {

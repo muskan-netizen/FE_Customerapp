@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  FlatList,
 } from 'react-native';
 import {useDarkMode} from 'react-native-dark-mode';
 import {useSelector} from 'react-redux';
@@ -28,13 +29,15 @@ import {
 import {MyDarkTheme} from '../../styles/theme';
 
 export default function AddNewCustomer({navigation, route}) {
+  const paramData = route?.params;
   const {themeColor, themeToggle, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
   const [state, setState] = useState({
     isAddCustomerModal: false,
+    allContacts: !!paramData?.data ? paramData?.data : [],
   });
-  const {isAddCustomerModal} = state;
+  const {isAddCustomerModal, allContacts} = state;
   const updateState = (data) => setState((state) => ({...state, ...data}));
 
   const fontFamily = appStyle?.fontSizeData;
@@ -42,7 +45,11 @@ export default function AddNewCustomer({navigation, route}) {
   const darkthemeusingDevice = useDarkMode();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
-  const getAllTransc = () => {
+  const getAllTransc = ({item, index}) => {
+    console.log(item, 'itemssss');
+
+    // return;
+
     return (
       <View
         style={{
@@ -69,7 +76,7 @@ export default function AddNewCustomer({navigation, route}) {
               fontSize: textScale(14),
               fontFamily: fontFamily.bold,
             }}>
-            JD
+            {item?.displayName?.charAt(0).toUpperCase()}
           </Text>
         </View>
         <View
@@ -79,16 +86,15 @@ export default function AddNewCustomer({navigation, route}) {
             marginLeft: moderateScale(25),
             flex: 1,
           }}>
-          <View>
-            <Text>John Doe</Text>
-            <Text
-              style={{
-                color: colors.blackOpacity30,
-                marginTop: moderateScaleVertical(3),
-              }}>
-              78827138236
-            </Text>
-          </View>
+          <TouchableOpacity
+            style={{
+              borderTopWidth: index !== 0 ? 0.7 : 0,
+              borderColor: colors.backgroundGreyB,
+            }}>
+            <Text>{item?.displayName}</Text>
+
+            <Text>{item?.phoneNumbers[0]?.number}</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -217,7 +223,14 @@ export default function AddNewCustomer({navigation, route}) {
             Add New Customer
           </Text>
         </TouchableOpacity>
-        <ScrollView
+
+        <FlatList
+          data={allContacts}
+          showsVerticalScrollIndicator={false}
+          renderItem={getAllTransc}
+        />
+
+        {/* <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             backgroundColor: colors.grey2,
@@ -233,7 +246,7 @@ export default function AddNewCustomer({navigation, route}) {
           {getAllTransc()}
           {getAllTransc()}
           {getAllTransc()}
-        </ScrollView>
+        </ScrollView> */}
       </View>
       <Modal
         isVisible={isAddCustomerModal}

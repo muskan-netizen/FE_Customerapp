@@ -145,7 +145,6 @@ export const chekLocationPermission = (showAlert = true) =>
   });
 
 export const checkContactPermission = () => {
-  console.log('sdkjhgkjf');
   return new Promise(async (resolve, reject) => {
     try {
       check(
@@ -154,7 +153,6 @@ export const checkContactPermission = () => {
           : PERMISSIONS.ANDROID.READ_CONTACTS,
       )
         .then((result) => {
-          console.log(result, 'resultjdfgjhdfkjh');
           switch (result) {
             case RESULTS.UNAVAILABLE:
               showError(strings.LOCATION_UNAVAILABLE);
@@ -166,7 +164,7 @@ export const checkContactPermission = () => {
                   : PERMISSIONS.ANDROID.READ_CONTACTS,
               )
                 .then((result) => {
-                  return resolve(result);
+                  return reject(result);
                 })
                 .catch((error) => {
                   return reject(error);
@@ -179,23 +177,22 @@ export const checkContactPermission = () => {
             case RESULTS.GRANTED:
               return resolve(result);
             case RESULTS.BLOCKED:
-              if (showAlert) {
-                Alert.alert('', 'Contact permission permanantly disabled!!', [
-                  {
-                    text: strings.CANCEL,
-                    onPress: () => resolve('goback'),
+              Alert.alert('', 'Contact permission permanantly disabled!!', [
+                {
+                  text: strings.CANCEL,
+                  onPress: () => console.log('Cancle pressed'),
+                },
+                {
+                  text: strings.CONFIRM,
+                  onPress: () => {
+                    // const locationPath = 'LOCATION_SERVICES';
+                    // openAppSetting(locationPath);
+                    console.log('Confirm pressed');
                   },
-                  {
-                    text: strings.CONFIRM,
-                    onPress: () => {
-                      // const locationPath = 'LOCATION_SERVICES';
-                      // openAppSetting(locationPath);
-                      console.log('pressed on confirm');
-                    },
-                  },
-                ]);
-              }
-              return resolve(result);
+                },
+              ]);
+
+              return reject(result);
           }
         })
         .catch((error) => {

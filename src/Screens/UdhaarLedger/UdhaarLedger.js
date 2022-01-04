@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  PermissionsAndroid,
   ScrollView,
   StyleSheet,
   Text,
@@ -23,6 +24,8 @@ import {
   textScale,
 } from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
+import Contacts from 'react-native-contacts';
+import {checkContactPermission} from '../../utils/permissions';
 
 export default function UdhaarLedger({navigation, route}) {
   const {themeColor, themeToggle, appStyle} = useSelector(
@@ -97,6 +100,29 @@ export default function UdhaarLedger({navigation, route}) {
         </View>
       </TouchableOpacity>
     );
+  };
+  const moveToNewScreen =
+    (screenName, data = {}) =>
+    () => {
+      navigation.navigate(screenName, {data});
+    };
+
+  const addNewCustomer = async () => {
+    checkContactPermission()
+      .then((res) => {
+        Contacts.getAll()
+          .then((res) => {
+            moveToNewScreen(navigationStrings.ADD_NEW_CUSTOMER, res)();
+          })
+          .catch(errorMethod);
+      })
+      .catch((error) => {
+        console.log(error, 'errorOccured');
+      });
+  };
+
+  const errorMethod = (error) => {
+    showError(error?.message || error?.error || error);
   };
 
   return (
@@ -187,9 +213,7 @@ export default function UdhaarLedger({navigation, route}) {
           }}
           marginTop={moderateScaleVertical(10)}
           btnText={`+ ${strings.ADD_CUSTOMER}`}
-          onPress={() =>
-            navigation.navigate(navigationStrings.ADD_NEW_CUSTOMER)
-          }
+          onPress={addNewCustomer}
           borderRadius={moderateScale(5)}
           containerStyle={{
             width: '40%',
