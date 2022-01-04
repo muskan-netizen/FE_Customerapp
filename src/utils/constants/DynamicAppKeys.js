@@ -936,8 +936,8 @@ const appIds = {
     android: 'com.bimol',
   }),
   pinkydeli: Platform.select({
-    ios: 'com.app.pinkydeli',
-    android: 'com.codebrew.pinkydeli',
+    ios: 'com.codebrew.pinkydeli',
+    android: 'com.app.pinkydeli',
   }),
 };
 

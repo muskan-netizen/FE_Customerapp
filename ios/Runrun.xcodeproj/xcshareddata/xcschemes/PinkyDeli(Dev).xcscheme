@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84CA5FD32783253B000A53F1"
+               BlueprintIdentifier = "847EE40A27840F410003197D"
                BuildableName = "PinkyDeli.app"
                BlueprintName = "PinkyDeli"
                ReferencedContainer = "container:Runrun.xcodeproj">
@@ -44,7 +44,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84CA5FD32783253B000A53F1"
+            BlueprintIdentifier = "847EE40A27840F410003197D"
             BuildableName = "PinkyDeli.app"
             BlueprintName = "PinkyDeli"
             ReferencedContainer = "container:Runrun.xcodeproj">
@@ -61,7 +61,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84CA5FD32783253B000A53F1"
+            BlueprintIdentifier = "847EE40A27840F410003197D"
             BuildableName = "PinkyDeli.app"
             BlueprintName = "PinkyDeli"
             ReferencedContainer = "container:Runrun.xcodeproj">

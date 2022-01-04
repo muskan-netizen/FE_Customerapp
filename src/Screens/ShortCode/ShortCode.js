@@ -1217,7 +1217,7 @@ export default function ShortCode({route, navigation}) {
             isShortcodePrefilled: true,
           });
           break;
-          case appIds.pinkydeli:
+        case appIds.pinkydeli:
           updateState({
             shortCode: shortCodes.pinkydeli,
             isShortcodePrefilled: true,
@@ -1257,15 +1257,17 @@ export default function ShortCode({route, navigation}) {
 
     if (!!res?.primary_language?.id) {
       header = {
-        code: shortCode,
+        // code: shortCode,
+        code: '245bae',
         language: res?.primary_language?.id,
       };
     } else {
       header = {
-        code: shortCode,
+        code: '245bae',
+        // code: shortCode,
       };
     }
-
+console.log(header,"header");
     actions
       .initApp({}, header, false, null, null, true)
       .then((res) => {
@@ -1278,6 +1280,8 @@ export default function ShortCode({route, navigation}) {
         homeData(res.data);
       })
       .catch((error) => {
+        console.log(error,"error>>>error>>error");
+
         updateState({
           isLoading: false,
           changeInShortCode: false,

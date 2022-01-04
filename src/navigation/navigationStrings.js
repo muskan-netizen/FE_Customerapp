@@ -120,4 +120,5 @@ export default {
   CART_SCREEN: 'cartScreen',
   SIMPLIFY: 'simplify',
   SQUARE: 'square',
+  PAGARME:'pagarme'
 };
