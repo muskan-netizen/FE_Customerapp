@@ -611,6 +611,11 @@ export default function Products({route, navigation}) {
               vendorCategories: res?.data?.categories,
               // vendorCategoryItms: res?.data?.categories[0]?.products,
             });
+          }else{
+            updateState({
+              isLoading: false,
+              isRefreshing: false,
+            })
           }
         }
         if (res?.data) {
